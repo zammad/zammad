@@ -5,16 +5,16 @@ class AddKarma < ActiveRecord::Migration
       t.integer :user_id,                           null: false
       t.integer :score,                             null: false
       t.string  :level,               limit: 200,   null: false
-      t.timestamps                                  null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :karma_users, [:user_id], unique: true
 
     create_table :karma_activities do |t|
-      t.column :name,                :string, limit: 200,    null: false
-      t.column :description,         :string, limit: 200,    null: false
-      t.column :score,               :integer,               null: false
-      t.column :once_ttl,            :integer,               null: false
-      t.timestamps                                           null: false
+      t.string  :name,                limit: 200,    null: false
+      t.string  :description,         limit: 200,    null: false
+      t.integer :score,                              null: false
+      t.integer :once_ttl,                           null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :karma_activities, [:name], unique: true
     Karma::Activity.create_or_update(
@@ -91,7 +91,7 @@ class AddKarma < ActiveRecord::Migration
       t.integer :activity_id,                   null: false
       t.integer :score,                         null: false
       t.integer :score_total,                   null: false
-      t.timestamps                              null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :karma_activity_logs, [:user_id]
     add_index :karma_activity_logs, [:created_at]

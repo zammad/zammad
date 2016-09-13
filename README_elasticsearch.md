@@ -1,11 +1,11 @@
 # Setup a Elasticsearch
 
 * Install Elasticsearch
-  https://www.elastic.co/downloads/elasticsearch
+  https://www.elastic.co/downloads/elasticsearch (2.4.x)
 
 * Install attachment plugin
   cd /usr/share/elasticsearch
-  bin/plugin -install elasticsearch/elasticsearch-mapper-attachments/2.5.0
+  bin/plugin install mapper-attachments
 
 * Configure elasticsearch
   /etc/sysconfig/elasticsearch
@@ -31,7 +31,5 @@
   # optional - max attachment size which is used by es, default is 50 mb
   * rails r "Setting.set('es_attachment_max_size_in_mb', 50)"
 
-
 * Create elastic search indexes
   * rake searchindex:rebuild # drop/create/reload
-

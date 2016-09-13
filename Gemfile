@@ -12,7 +12,7 @@ gem 'activerecord-session_store'
 gem 'json'
 
 # Supported DBs
-gem 'mysql2', '~> 0.3.20', group: :mysql
+gem 'mysql2', group: :mysql
 gem 'pg', group: :postgres
 
 group :assets do

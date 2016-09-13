@@ -5,7 +5,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :note,                 :string, limit: 250, null: true
       t.column :updated_by_id,        :integer,            null: false
       t.column :created_by_id,        :integer,            null: false
-      t.timestamps                                         null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :ticket_state_types, [:name], unique: true
 
@@ -18,7 +18,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :active,               :boolean,             null: false, default: true
       t.column :updated_by_id,        :integer,             null: false
       t.column :created_by_id,        :integer,             null: false
-      t.timestamps                                          null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :ticket_states, [:name], unique: true
 
@@ -28,7 +28,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :active,               :boolean,            null: false, default: true
       t.column :updated_by_id,        :integer,            null: false
       t.column :created_by_id,        :integer,            null: false
-      t.timestamps                                         null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :ticket_priorities, [:name], unique: true
     create_table :tickets do |t|
@@ -36,38 +36,38 @@ class CreateTicket < ActiveRecord::Migration
       t.references :priority,                                             null: false
       t.references :state,                                                null: false
       t.references :organization,                                         null: true
-      t.column :number,                           :string,  limit: 60,    null: false
-      t.column :title,                            :string,  limit: 250,   null: false
+      t.column :number,                           :string,    limit: 60,  null: false
+      t.column :title,                            :string,    limit: 250, null: false
       t.column :owner_id,                         :integer,               null: false
       t.column :customer_id,                      :integer,               null: false
-      t.column :note,                             :string,  limit: 250,   null: true
-      t.column :first_response,                   :timestamp,             null: true
-      t.column :first_response_escal_date,        :timestamp,             null: true
-      t.column :first_response_sla_time,          :timestamp,             null: true
+      t.column :note,                             :string,    limit: 250, null: true
+      t.column :first_response,                   :timestamp, limit: 3,   null: true
+      t.column :first_response_escal_date,        :timestamp, limit: 3,   null: true
+      t.column :first_response_sla_time,          :timestamp, limit: 3,   null: true
       t.column :first_response_in_min,            :integer,               null: true
       t.column :first_response_diff_in_min,       :integer,               null: true
-      t.column :close_time,                       :timestamp,             null: true
-      t.column :close_time_escal_date,            :timestamp,             null: true
-      t.column :close_time_sla_time,              :timestamp,             null: true
+      t.column :close_time,                       :timestamp, limit: 3,   null: true
+      t.column :close_time_escal_date,            :timestamp, limit: 3,   null: true
+      t.column :close_time_sla_time,              :timestamp, limit: 3,   null: true
       t.column :close_time_in_min,                :integer,               null: true
       t.column :close_time_diff_in_min,           :integer,               null: true
-      t.column :update_time_escal_date,           :timestamp,             null: true
-      t.column :update_time_sla_time,             :timestamp,             null: true
+      t.column :update_time_escal_date,           :timestamp, limit: 3,   null: true
+      t.column :update_time_sla_time,             :timestamp, limit: 3,   null: true
       t.column :update_time_in_min,               :integer,               null: true
       t.column :update_time_diff_in_min,          :integer,               null: true
-      t.column :last_contact,                     :timestamp,             null: true
-      t.column :last_contact_agent,               :timestamp,             null: true
-      t.column :last_contact_customer,            :timestamp,             null: true
+      t.column :last_contact,                     :timestamp, limit: 3,   null: true
+      t.column :last_contact_agent,               :timestamp, limit: 3,   null: true
+      t.column :last_contact_customer,            :timestamp, limit: 3,   null: true
       t.column :create_article_type_id,           :integer,               null: true
       t.column :create_article_sender_id,         :integer,               null: true
       t.column :article_count,                    :integer,               null: true
-      t.column :escalation_time,                  :timestamp,             null: true
-      t.column :pending_time,                     :timestamp,             null: true
-      t.column :type,                             :string, limit: 100,    null: true
-      t.column :preferences,                      :text,   limit: 500.kilobytes + 1, null: true
+      t.column :escalation_time,                  :timestamp, limit: 3,   null: true
+      t.column :pending_time,                     :timestamp, limit: 3,   null: true
+      t.column :type,                             :string,    limit: 100, null: true
+      t.column :preferences,                      :text,      limit: 500.kilobytes + 1, null: true
       t.column :updated_by_id,                    :integer,               null: false
       t.column :created_by_id,                    :integer,               null: false
-      t.timestamps                                                        null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :tickets, [:state_id]
     add_index :tickets, [:priority_id]
@@ -102,7 +102,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :key,            :string, limit: 50,  null: false
       t.column :value,          :string, limit: 50,  null: true
       t.column :created_by_id,  :integer,            null: false
-      t.timestamps                                   null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :ticket_flags, [:tickets_id, :created_by_id]
     add_index :ticket_flags, [:tickets_id, :key]
@@ -114,7 +114,7 @@ class CreateTicket < ActiveRecord::Migration
       t.references :ticket_articles,                              null: true
       t.column :time_unit,      :decimal, precision: 6, scale: 2, null: false
       t.column :created_by_id,  :integer,                         null: false
-      t.timestamps                                                null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :ticket_time_accounting, [:tickets_id]
     add_index :ticket_time_accounting, [:ticket_articles_id]
@@ -127,7 +127,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :active,               :boolean,            null: false, default: true
       t.column :updated_by_id,        :integer,            null: false
       t.column :created_by_id,        :integer,            null: false
-      t.timestamps                                         null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :ticket_article_types, [:name], unique: true
 
@@ -136,7 +136,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :note,                 :string, limit: 250, null: true
       t.column :updated_by_id,        :integer,            null: false
       t.column :created_by_id,        :integer,            null: false
-      t.timestamps                                         null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :ticket_article_senders, [:name], unique: true
 
@@ -159,7 +159,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :preferences,          :text,   limit: 500.kilobytes + 1, null: true
       t.column :updated_by_id,        :integer,                null: false
       t.column :created_by_id,        :integer,                null: false
-      t.timestamps                                             null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :ticket_articles, [:ticket_id]
     add_index :ticket_articles, [:message_id_md5]
@@ -175,7 +175,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :key,                 :string, limit: 50, null: false
       t.column :value,               :string, limit: 50, null: true
       t.column :created_by_id,       :integer,           null: false
-      t.timestamps                                       null: false
+      t.timestamps limit: 3,  null: false
     end
     add_index :ticket_article_flags, [:ticket_articles_id, :created_by_id], name: 'index_ticket_article_flags_on_articles_id_and_created_by_id'
     add_index :ticket_article_flags, [:ticket_articles_id, :key]
@@ -201,7 +201,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :active,               :boolean,              null: false, default: true
       t.column :updated_by_id,        :integer,              null: false
       t.column :created_by_id,        :integer,              null: false
-      t.timestamps                                           null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :overviews, [:name]
 
@@ -228,7 +228,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :active,               :boolean,             null: false, default: true
       t.column :updated_by_id,        :integer,             null: false
       t.column :created_by_id,        :integer,             null: false
-      t.timestamps                                          null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :triggers, [:name], unique: true
 
@@ -238,17 +238,17 @@ class CreateTicket < ActiveRecord::Migration
       t.column :condition,            :string,  limit: 2500, null: false
       t.column :perform,              :string,  limit: 2500, null: false
       t.column :disable_notification, :boolean,              null: false, default: true
-      t.column :last_run_at,          :timestamp,            null: true
-      t.column :next_run_at,          :timestamp,            null: true
+      t.column :last_run_at,          :timestamp, limit: 3,  null: true
+      t.column :next_run_at,          :timestamp, limit: 3,  null: true
       t.column :running,              :boolean,              null: false, default: false
       t.column :processed,            :integer,              null: false, default: 0
       t.column :matching,             :integer,              null: false
-      t.column :pid,                  :string, limit: 250,   null: true
-      t.column :note,                 :string, limit: 250,   null: true
+      t.column :pid,                  :string,  limit: 250,  null: true
+      t.column :note,                 :string,  limit: 250,  null: true
       t.column :active,               :boolean,              null: false, default: false
       t.column :updated_by_id,        :integer,              null: false
       t.column :created_by_id,        :integer,              null: false
-      t.timestamps null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :jobs, [:name], unique: true
 
@@ -258,14 +258,14 @@ class CreateTicket < ActiveRecord::Migration
       t.column :content_type, :string, limit: 250,   null: false
       t.column :active,       :boolean,              null: false, default: true
       t.column :note,         :string, limit: 250,   null: true
-      t.timestamps                                   null: false
+      t.timestamps limit: 3, null: false
     end
 
     create_table :link_types do |t|
       t.column :name,         :string, limit: 250,   null: false
       t.column :note,         :string, limit: 250,   null: true
       t.column :active,       :boolean,              null: false, default: true
-      t.timestamps                                   null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :link_types, [:name],     unique: true
 
@@ -273,7 +273,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :name,         :string, limit: 250,   null: false
       t.column :note,         :string, limit: 250,   null: true
       t.column :active,       :boolean,              null: false, default: true
-      t.timestamps                                   null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :link_objects, [:name],   unique: true
 
@@ -283,7 +283,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :link_object_source_value,     :integer,   null: false
       t.column :link_object_target_id,        :integer,   null: false
       t.column :link_object_target_value,     :integer,   null: false
-      t.timestamps                                        null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :links, [:link_object_source_id, :link_object_source_value, :link_object_target_id, :link_object_target_value, :link_type_id], unique: true, name: 'links_uniq_total'
 
@@ -296,7 +296,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :note,           :string, limit: 250,  null: true
       t.column :updated_by_id,  :integer,             null: false
       t.column :created_by_id,  :integer,             null: false
-      t.timestamps                                    null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :postmaster_filters, [:channel]
 
@@ -307,10 +307,10 @@ class CreateTicket < ActiveRecord::Migration
       t.column :content,              :text,    limit: 10.megabytes + 1, null: false
       t.column :note,                 :string,  limit: 250,  null: true
       t.column :active,               :boolean,              null: false, default: true
-      t.column :foreign_id,           :integer,               null: true
+      t.column :foreign_id,           :integer,              null: true
       t.column :updated_by_id,        :integer,              null: false
       t.column :created_by_id,        :integer,              null: false
-      t.timestamps                                           null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :text_modules, [:user_id]
     add_index :text_modules, [:name]
@@ -328,7 +328,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :options,              :string,  limit: 2500, null: false
       t.column :updated_by_id,        :integer,              null: false
       t.column :created_by_id,        :integer,              null: false
-      t.timestamps                                           null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :templates, [:user_id]
     add_index :templates, [:name]
@@ -345,14 +345,14 @@ class CreateTicket < ActiveRecord::Migration
       t.column :area,           :string, limit: 100,   null: false
       t.column :options,        :text,   limit: 500.kilobytes + 1,  null: true
       t.column :active,         :boolean,              null: false, default: true
-      t.column :preferences,    :string, limit: 2000, null: true
+      t.column :preferences,    :string, limit: 2000,  null: true
       t.column :last_log_in,    :text,   limit: 500.kilobytes + 1, null: true
       t.column :last_log_out,   :text,   limit: 500.kilobytes + 1, null: true
-      t.column :status_in,      :string, limit: 100,  null: true
-      t.column :status_out,     :string, limit: 100,  null: true
+      t.column :status_in,      :string, limit: 100,   null: true
+      t.column :status_out,     :string, limit: 100,   null: true
       t.column :updated_by_id,  :integer,              null: false
       t.column :created_by_id,  :integer,              null: false
-      t.timestamps                                     null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :channels, [:area]
 
@@ -365,7 +365,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :condition,            :string, limit: 5000,     null: true
       t.column :updated_by_id,        :integer,                 null: false
       t.column :created_by_id,        :integer,                 null: false
-      t.timestamps                                              null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :slas, [:name], unique: true
 
@@ -376,7 +376,7 @@ class CreateTicket < ActiveRecord::Migration
       t.string  :note,                   limit: 250,  null: true
       t.integer :updated_by_id,                       null: false
       t.integer :created_by_id,                       null: false
-      t.timestamps                                    null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :macros, [:name], unique: true
 
@@ -389,7 +389,7 @@ class CreateTicket < ActiveRecord::Migration
       t.string  :preferences,            limit: 5000, null: true
       t.integer :updated_by_id,                       null: false
       t.integer :created_by_id,                       null: false
-      t.timestamps                                    null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :chats, [:name], unique: true
 
@@ -399,7 +399,7 @@ class CreateTicket < ActiveRecord::Migration
       t.string  :note,                   limit: 250,  null: true
       t.integer :updated_by_id,                       null: false
       t.integer :created_by_id,                       null: false
-      t.timestamps                                    null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :chat_topics, [:name], unique: true
 
@@ -412,7 +412,7 @@ class CreateTicket < ActiveRecord::Migration
       t.text    :preferences,            limit: 100.kilobytes + 1, null: true
       t.integer :updated_by_id,                       null: true
       t.integer :created_by_id,                       null: true
-      t.timestamps                                    null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :chat_sessions, [:session_id]
     add_index :chat_sessions, [:state]
@@ -423,7 +423,7 @@ class CreateTicket < ActiveRecord::Migration
       t.integer :chat_session_id,                     null: false
       t.string  :content,                limit: 5000, null: false
       t.integer :created_by_id,                       null: true
-      t.timestamps                                    null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :chat_messages, [:chat_session_id]
 
@@ -432,7 +432,7 @@ class CreateTicket < ActiveRecord::Migration
       t.integer :concurrent,                          null: false, default: 5
       t.integer :updated_by_id,                       null: false
       t.integer :created_by_id,                       null: false
-      t.timestamps                                    null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :chat_agents, [:active]
     add_index :chat_agents, [:updated_by_id], unique: true
@@ -444,7 +444,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :active,         :boolean,              null: false, default: true
       t.column :updated_by_id,  :integer,              null: false
       t.column :created_by_id,  :integer,              null: false
-      t.timestamps                                     null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :report_profiles, [:name], unique: true
 

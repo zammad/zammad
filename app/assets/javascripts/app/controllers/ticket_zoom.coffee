@@ -34,7 +34,10 @@ class App.TicketZoom extends App.Controller
 
     # check if ticket has beed updated every 30 min
     update = =>
-      @fetch()
+      if !@initFetched
+        @fetch()
+        return
+      @fetch(true)
     @interval(update, 1800000, 'pull_check')
 
     # fetch new data if triggered
@@ -50,23 +53,27 @@ class App.TicketZoom extends App.Controller
 
     # after a new websocket connection, check if ticket has changed
     @bind('spool:sent', =>
-      @fetch()
+      if @initSpoolSent
+        @fetch(true)
+        return
+      @initSpoolSent = true
     )
 
   fetchMayBe: (data) =>
     if @ticketUpdatedAtLastCall
       if new Date(data.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
-        @log('debug', 'no fetch, current ticket already there or requested')
+        console.log('debug no fetch, current ticket already there or requested')
         return
       if new Date(data.updated_at).getTime() < new Date(@ticketUpdatedAtLastCall).getTime()
-        @log('debug', 'no fetch, current ticket already newser or requested')
+        console.log('debug no fetch, current ticket already newser or requested')
         return
+    @ticketUpdatedAtLastCall = data.updated_at
 
     fetchDelayed = =>
       @fetch()
     @delay(fetchDelayed, 1000, "ticket-zoom-#{@ticket_id}")
 
-  fetch: =>
+  fetch: (ignoreSame = false) =>
     return if !@Session.get()
 
     # get data
@@ -77,20 +84,36 @@ class App.TicketZoom extends App.Controller
       processData: true
       queue: true
       success: (data, status, xhr) =>
+        console.log('fetched', ignoreSame)
 
         # check if ticket has changed
         newTicketRaw = data.assets.Ticket[@ticket_id]
+        console.log(newTicketRaw.updated_at)
+        console.log(@ticketUpdatedAtLastCall)
+
         if @ticketUpdatedAtLastCall
 
-          # return if ticket hasnt changed
-          return if @ticketUpdatedAtLastCall is newTicketRaw.updated_at
+          # ignore if record is already shown
+          if ignoreSame && new Date(newTicketRaw.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
+            console.log('debug no fetched, current ticket already there or requested')
+            return
 
-          # notify if ticket changed not by my self
+          # do not render if newer ticket is already requested
+          if new Date(newTicketRaw.updated_at).getTime() < new Date(@ticketUpdatedAtLastCall).getTime()
+            console.log('fetched no fetch, current ticket already newer')
+            return
+
+          # remember current record if newer as requested record
+          if new Date(newTicketRaw.updated_at).getTime() > new Date(@ticketUpdatedAtLastCall).getTime()
+            @ticketUpdatedAtLastCall = newTicketRaw.updated_at
+        else
+          @ticketUpdatedAtLastCall = newTicketRaw.updated_at
+
+        # notify if ticket changed not by my self
+        if @initFetched
           if newTicketRaw.updated_by_id isnt @Session.get('id')
             App.TaskManager.notify(@task_key)
-
-        # remember current data
-        @ticketUpdatedAtLastCall = newTicketRaw.updated_at
+        @initFetched = true
 
         @load(data)
         App.SessionStorage.set(@key, data)
@@ -710,7 +733,7 @@ class App.TicketZoom extends App.Controller
         newTicketRaw = data.assets.Ticket[ticket.id]
         @ticketUpdatedAtLastCall = newTicketRaw.updated_at
 
-        App.SessionStorage.set(@key, data)
+        #App.SessionStorage.set(@key, data)
         @load(data)
 
         # reset article - should not be resubmited on next ticket update

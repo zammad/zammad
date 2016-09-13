@@ -451,6 +451,7 @@ class AgentTicketTagTest < TestCase
         body: 'some body 223äöü - tags no new 1',
       },
     )
+    sleep 2
 
     click(css: '.active .sidebar .js-newTagLabel')
     set(
@@ -459,6 +460,7 @@ class AgentTicketTagTest < TestCase
     )
     sleep 2
     sendkey(value: :tab)
+    sleep 1
     click(css: '.active .sidebar .js-newTagLabel')
     set(
       css: '.active .sidebar .js-newTagInput',
@@ -466,6 +468,7 @@ class AgentTicketTagTest < TestCase
     )
     sleep 2
     sendkey(value: :tab)
+    sleep 1
     click(css: '.active .sidebar .js-newTagLabel')
     set(
       css: '.active .sidebar .js-newTagInput',
@@ -473,6 +476,7 @@ class AgentTicketTagTest < TestCase
     )
     sleep 2
     sendkey(value: :tab)
+    sleep 1
     click(css: '.active .sidebar .js-newTagLabel')
     set(
       css: '.active .sidebar .js-newTagInput',
@@ -480,6 +484,7 @@ class AgentTicketTagTest < TestCase
     )
     sleep 2
     sendkey(value: :tab)
+    sleep 1
 
     # verify tags
     tags_verify(

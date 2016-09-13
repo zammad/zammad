@@ -9,11 +9,11 @@ class CreateCtiLog < ActiveRecord::Migration
       t.string  :to_comment,             limit: 250,  null: true
       t.string  :call_id,                limit: 250,  null: false
       t.string  :comment,                limit: 500,  null: true
-      t.timestamp :start,                             null: true
-      t.timestamp :end,                               null: true
+      t.timestamp :start,                limit: 3,    null: true
+      t.timestamp :end,                  limit: 3,    null: true
       t.boolean   :done,                              null: false, default: true
       t.text :preferences,            limit: 500.kilobytes + 1, null: true
-      t.timestamps null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :cti_logs, [:call_id], unique: true
     add_index :cti_logs, [:direction]
@@ -27,7 +27,7 @@ class CreateCtiLog < ActiveRecord::Migration
       t.integer :o_id,                               null: false
       t.integer :user_id,                            null: true
       t.text    :preferences,            limit: 500.kilobytes + 1, null: true
-      t.timestamps null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :cti_caller_ids, [:caller_id]
     add_index :cti_caller_ids, [:caller_id, :level]

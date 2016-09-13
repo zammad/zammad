@@ -6,7 +6,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.column :active,               :boolean,               null: false, default: true
       t.column :updated_by_id,        :integer,               null: false
       t.column :created_by_id,        :integer,               null: false
-      t.timestamps                                            null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :networks, [:name], unique: true
 
@@ -16,7 +16,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.column :active,               :boolean,               null: false, default: true
       t.column :updated_by_id,        :integer,               null: false
       t.column :created_by_id,        :integer,               null: false
-      t.timestamps                                            null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :network_category_types, [:name], unique: true
 
@@ -25,7 +25,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.column :key,                  :string, limit: 250, null: false
       t.column :updated_by_id,        :integer,               null: false
       t.column :created_by_id,        :integer,               null: false
-      t.timestamps                                            null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :network_privacies, [:name], unique: true
 
@@ -39,7 +39,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.column :active,               :boolean,               null: false, default: true
       t.column :updated_by_id,        :integer,               null: false
       t.column :created_by_id,        :integer,               null: false
-      t.timestamps                                            null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :network_categories, [:network_id]
 
@@ -63,7 +63,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.column :body,                 :string, limit: 20_000, null: false
       t.column :updated_by_id,        :integer,               null: false
       t.column :created_by_id,        :integer,               null: false
-      t.timestamps                                            null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :network_item_comments, [:network_item_id]
 
@@ -71,7 +71,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.references :network_item,                             null: false
       t.column :updated_by_id,        :integer,               null: false
       t.column :created_by_id,        :integer,               null: false
-      t.timestamps                                            null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :network_item_plus, [:network_item_id, :created_by_id], unique: true
 
@@ -79,7 +79,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.references :network_categories,                       null: false
       t.column :updated_by_id,        :integer,               null: false
       t.column :created_by_id,        :integer,               null: false
-      t.timestamps                                            null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :network_category_subscriptions, [:network_categories_id, :created_by_id], unique: true, name: 'index_network_category_subscriptions_on_network_c_i_and_c'
 
@@ -87,7 +87,7 @@ class CreateNetwork < ActiveRecord::Migration
       t.references :network_item,                             null: false
       t.column :updated_by_id,        :integer,               null: false
       t.column :created_by_id,        :integer,               null: false
-      t.timestamps                                            null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :network_item_subscriptions, [:network_item_id, :created_by_id], unique: true, name: 'index_network_item_subscriptions_on_item_id_and_created_by_id'
 

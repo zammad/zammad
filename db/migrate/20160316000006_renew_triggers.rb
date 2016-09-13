@@ -10,7 +10,7 @@ class RenewTriggers < ActiveRecord::Migration
       t.column :active,               :boolean,             null: false, default: true
       t.column :updated_by_id,        :integer,             null: false
       t.column :created_by_id,        :integer,             null: false
-      t.timestamps                                          null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :triggers, [:name], unique: true
 
@@ -31,7 +31,7 @@ class RenewTriggers < ActiveRecord::Migration
       t.column :active,               :boolean,              null: false, default: false
       t.column :updated_by_id,        :integer,              null: false
       t.column :created_by_id,        :integer,              null: false
-      t.timestamps null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :jobs, [:name], unique: true
 

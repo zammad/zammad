@@ -49,9 +49,9 @@ class App._CollectionSingletonBase
     delete @callbacks[counter]
 
   fetch: =>
-    if App.WebSocket.support() && App.WebSocket.channel()
-      App.WebSocket.send(event: @event)
-      return
+    #if App.WebSocket.support() && App.WebSocket.channel()
+    #  App.WebSocket.send(event: @event)
+    #  return
 
     return if @fetchActive
     @fetchActive = true

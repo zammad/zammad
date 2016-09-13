@@ -361,7 +361,7 @@ class UsersController < ApplicationController
     end
 
     # build result list
-    if !params[:full]
+    if params[:label]
       users = []
       user_all.each { |user|
         realname = user.firstname.to_s + ' ' + user.lastname.to_s
@@ -377,18 +377,27 @@ class UsersController < ApplicationController
       return
     end
 
-    user_ids = []
-    assets   = {}
-    user_all.each { |user|
-      assets = user.assets(assets)
-      user_ids.push user.id
-    }
+    if params[:full]
+      user_ids = []
+      assets   = {}
+      user_all.each { |user|
+        assets = user.assets(assets)
+        user_ids.push user.id
+      }
 
-    # return result
-    render json: {
-      assets: assets,
-      user_ids: user_ids.uniq,
+      # return result
+      render json: {
+        assets: assets,
+        user_ids: user_ids.uniq,
+      }
+      return
+    end
+
+    list = []
+    user_all.each { |user|
+      list.push user.attributes
     }
+    render json: list, status: :ok
   end
 
   # @path       [GET] /users/recent

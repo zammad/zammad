@@ -393,7 +393,9 @@ class TicketsController < ApplicationController
   def search
 
     # permit nested conditions
-    params.require(:condition).permit!
+    if params[:condition]
+      params.require(:condition).permit!
+    end
 
     # build result list
     tickets = Ticket.search(

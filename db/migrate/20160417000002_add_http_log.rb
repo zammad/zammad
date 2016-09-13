@@ -12,7 +12,7 @@ class AddHttpLog < ActiveRecord::Migration
       t.column :response,             :string, limit: 10_000, null: false
       t.column :updated_by_id,        :integer,              null: true
       t.column :created_by_id,        :integer,              null: true
-      t.timestamps                                           null: false
+      t.timestamps limit: 3, null: false
     end
     add_index :http_logs, [:facility]
     add_index :http_logs, [:created_by_id]
