@@ -35,8 +35,6 @@ class OtrsImportTest < ActiveSupport::TestCase
   test 'check dynamic fields' do
     local_objects = ObjectManager::Attribute.list_full
 
-    assert_equal(75, local_objects.size, 'dynamic field count')
-
     object_attribute_names = local_objects.reject { |local_object|
       local_object[:object] != 'Ticket'
     }.collect { |local_object|
