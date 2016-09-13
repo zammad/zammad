@@ -317,7 +317,7 @@ module Import::OTRS
 
     # dynamic fields
     dynamic_fields = load('DynamicField')
-    #settings(dynamic_fields, settings)
+    object_manager(dynamic_fields)
 
     # email accounts
     #accounts = load('PostMasterAccount')
@@ -606,6 +606,19 @@ module Import::OTRS
       map[:Ticket].each { |key, value|
         next if !record.key?(key.to_s)
         ticket_new[value] = record[key.to_s]
+      }
+
+      record.keys.each { |key|
+
+        key_string = key.to_s
+
+        next if !key_string.start_with?('DynamicField_')
+        dynamic_field_name = key_string[13, key_string.length]
+
+        next if skip_fields.include?( dynamic_field_name )
+        dynamic_field_name = convert_df_name(dynamic_field_name)
+
+        ticket_new[dynamic_field_name.to_sym] = record[key_string]
       }
 
       # find owner
@@ -1345,6 +1358,127 @@ module Import::OTRS
     }
   end
 
+  # dynamic fields
+  def self.object_manager(dynamic_fields)
+
+    dynamic_fields.each { |dynamic_field|
+
+      if dynamic_field['ObjectType'] != 'Ticket'
+        log "ERROR: Unsupported dynamic field object type '#{dynamic_field['ObjectType']}' for dynamic field '#{dynamic_field['Name']}'"
+        next
+      end
+
+      next if skip_fields.include?( dynamic_field['Name'] )
+
+      internal_name = convert_df_name(dynamic_field['Name'])
+
+      attribute = ObjectManager::Attribute.get(
+        object: dynamic_field['ObjectType'],
+        name:   internal_name,
+      )
+      next if !attribute.nil?
+
+      object_manager_config = {
+        object:  dynamic_field['ObjectType'],
+        name:    internal_name,
+        display: dynamic_field['Label'],
+        screens: {
+          view: {
+            '-all-' => {
+              shown: true,
+            },
+          },
+        },
+        active:        true,
+        editable:      dynamic_field['InternalField'] == '0',
+        position:      dynamic_field['FieldOrder'],
+        created_by_id: 1,
+        updated_by_id: 1,
+      }
+
+      if dynamic_field['FieldType'] == 'Text'
+
+        object_manager_config[:data_type]   = 'input'
+        object_manager_config[:data_option] = {
+          default:   dynamic_field['Config']['DefaultValue'],
+          type:      'text',
+          maxlength: 255,
+          null:      false,
+        }
+      elsif dynamic_field['FieldType'] == 'TextArea'
+
+        object_manager_config[:data_type]   = 'textarea'
+        object_manager_config[:data_option] = {
+          default: dynamic_field['Config']['DefaultValue'],
+          rows:    dynamic_field['Config']['Rows'],
+          null:    false,
+        }
+      elsif dynamic_field['FieldType'] == 'Checkbox'
+
+        object_manager_config[:data_type]   = 'boolean'
+        object_manager_config[:data_option] = {
+          default: dynamic_field['Config']['DefaultValue'] == '1',
+          options: {
+            true  => 'Yes',
+            false => 'No',
+          },
+          null:      false,
+          translate: true,
+        }
+      elsif dynamic_field['FieldType'] == 'DateTime'
+
+        object_manager_config[:data_type]   = 'datetime'
+        object_manager_config[:data_option] = {
+          future: dynamic_field['Config']['YearsInFuture'] != '0',
+          past:   dynamic_field['Config']['YearsInPast'] != '0',
+          diff:   dynamic_field['Config']['DefaultValue'].to_i / 60 / 60,
+          null:   false,
+        }
+      elsif dynamic_field['FieldType'] == 'Date'
+
+        object_manager_config[:data_type]   = 'date'
+        object_manager_config[:data_option] = {
+          future: dynamic_field['Config']['YearsInFuture'] != '0',
+          past:   dynamic_field['Config']['YearsInPast'] != '0',
+          diff:   dynamic_field['Config']['DefaultValue'].to_i / 60 / 60 / 24,
+          null:   false,
+        }
+      elsif dynamic_field['FieldType'] == 'Dropdown'
+
+        object_manager_config[:data_type]   = 'select'
+        object_manager_config[:data_option] = {
+          default:   '',
+          multiple:  false,
+          options:   dynamic_field['Config']['PossibleValues'],
+          null:      dynamic_field['Config']['PossibleNone'] == '1',
+          translate: dynamic_field['Config']['TranslatableValues'] == '1',
+        }
+      elsif dynamic_field['FieldType'] == 'Multiselect'
+
+        object_manager_config[:data_type]   = 'select'
+        object_manager_config[:data_option] = {
+          default:   '',
+          multiple:  true,
+          options:   dynamic_field['Config']['PossibleValues'],
+          null:      dynamic_field['Config']['PossibleNone'] == '1',
+          translate: dynamic_field['Config']['TranslatableValues'] == '1',
+        }
+      else
+        log "ERROR: Unsupported dynamic field field type '#{dynamic_field['FieldType']}' for dynamic field '#{dynamic_field['Name']}'"
+        next
+      end
+
+      ObjectManager::Attribute.add( object_manager_config )
+      ObjectManager::Attribute.migration_execute(false)
+    }
+
+  end
+
+  def self.convert_df_name(dynamic_field_name)
+    new_name = dynamic_field_name.underscore
+    new_name.sub(/\_id(s)?\z/, "_no#{$1}")
+  end
+
   # log
   def self.log(message)
     thread_no = Thread.current[:thread_no] || '-'
@@ -1458,6 +1592,10 @@ module Import::OTRS
     article['created_by_id'] = user.id
 
     true
+  end
+
+  def self.skip_fields
+    %w(ProcessManagementProcessID ProcessManagementActivityID ZammadMigratorChanged ZammadMigratorChangedOld)
   end
 
 end
