@@ -236,7 +236,8 @@ class ActivityStreamTest < ActiveSupport::TestCase
         create: {
           user: {
             login: 'someemail@example.com',
-            email: 'Bob Smith II <someemail@example.com>',
+            email: 'someemail@example.com',
+            firstname: 'Bob Smith II',
             updated_by_id: current_user.id,
             created_by_id: current_user.id,
           },
@@ -302,7 +303,8 @@ class ActivityStreamTest < ActiveSupport::TestCase
         create: {
           user: {
             login: 'someemail@example.com',
-            email: 'Bob Smith II <someemail@example.com>',
+            email: 'someemail@example.com',
+            firstname: 'Bob Smith II',
             updated_by_id: current_user.id,
             created_by_id: current_user.id,
           },

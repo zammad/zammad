@@ -176,7 +176,7 @@ class UsersController < ApplicationController
     end
 
     # check if user already exists
-    if user.email
+    if !user.email.empty?
       exists = User.where(email: user.email.downcase).first
       raise Exceptions::UnprocessableEntity, 'User already exists!' if exists
     end
@@ -187,7 +187,7 @@ class UsersController < ApplicationController
       Setting.set('system_init_done', true)
 
       # fetch org logo
-      if user.email
+      if !user.email.empty?
         Service::Image.organization_suggest(user.email)
       end
 

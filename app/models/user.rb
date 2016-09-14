@@ -32,8 +32,9 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
-  before_create   :check_name, :check_email, :check_login, :check_password, :check_preferences_default, :validate_roles
-  before_update   :check_password, :check_name, :check_email, :check_login, :check_preferences_default, :validate_roles
+  before_validation :check_name, :check_email, :check_login, :check_password
+  before_create   :check_preferences_default, :validate_roles
+  before_update   :check_preferences_default, :validate_roles
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy
@@ -751,14 +752,17 @@ returns
   end
 
   def check_email
-    return if !email
-    self.email = email.downcase
+    return if email.empty?
+    self.email = email.downcase.strip
+    return if id == 1
+    raise Exceptions::UnprocessableEntity, 'Invalid email' if email !~ /@/
+    raise Exceptions::UnprocessableEntity, 'Invalid email' if email =~ /\s/
   end
 
   def check_login
 
     # use email as login if not given
-    if !login && email
+    if login.empty? && !email.empty?
       self.login = email
     end
 
@@ -769,10 +773,13 @@ returns
       end
     end
 
-    # check if login already exists
-    return if !login
+    # if no email, complain about missing login
+    if id != 1 && login.empty? && email.empty?
+      raise Exceptions::UnprocessableEntity, 'Attribute \'login\' required!'
+    end
 
-    self.login = login.downcase
+    # check if login already exists
+    self.login = login.downcase.strip
     check      = true
     while check
       exists = User.find_by(login: login)
