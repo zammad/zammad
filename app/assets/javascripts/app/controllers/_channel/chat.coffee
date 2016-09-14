@@ -105,6 +105,7 @@ class App.ChannelChat extends App.ControllerContent
 
   isOpen: true
   browserWidth: 1280
+  browserWidthMax: 1280
   previewUrl: ''
   previewScale: 1
 
@@ -192,11 +193,15 @@ class App.ChannelChat extends App.ControllerContent
 
     return if @browserWidth is 'fit'
 
-    if width < @el.width()
+    if width < @el.width() && width == 375
       @chat.addClass('is-fullscreen').css 'transform', "translateY(#{ @getChatOffset(true) }px)"
       @browser.css('width', "#{ width }px")
     else
-      @previewScale = @el.width()/width
+      if @el.width() > width && width == @browserWidthMax
+        @previewScale = 1
+      else
+        @previewScale = @el.width()/width
+
       @chat.css 'transform', "translateY(#{ @getChatOffset() * @previewScale }px) scale(#{ @previewScale })"
       @website.css
         transform: "scale(#{ @previewScale })"
