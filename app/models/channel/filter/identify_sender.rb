@@ -128,7 +128,10 @@ module Channel::Filter::IdentifySender
   def self.user_create(data)
 
     # return existing
-    user = User.find_by(login: data[:email].downcase)
+    user = User.find_by(email: data[:email].downcase)
+    if !user
+      user = User.find_by(login: data[:email].downcase)
+    end
 
     # check if firstname or lastname need to be updated
     if user
