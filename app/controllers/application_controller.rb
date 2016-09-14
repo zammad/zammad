@@ -597,6 +597,11 @@ class ApplicationController < ActionController::Base
       offset = (params[:page].to_i - 1) * params[:per_page].to_i
       limit = params[:per_page].to_i
     end
+
+    if per_page > 500
+      per_page = 500
+    end
+
     generic_objects = if offset > 0
                         object.limit(params[:per_page]).offset(offset).limit(limit)
                       else

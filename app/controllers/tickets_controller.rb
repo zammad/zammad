@@ -13,6 +13,10 @@ class TicketsController < ApplicationController
       per_page = params[:per_page].to_i
     end
 
+    if per_page > 100
+      per_page = 100
+    end
+
     access_condition = Ticket.access_condition(current_user)
     tickets = Ticket.where(access_condition).offset(offset).limit(per_page)
 
@@ -397,6 +401,15 @@ class TicketsController < ApplicationController
       params.require(:condition).permit!
     end
 
+    # set limit for pagination if needed
+    if params[:page] && params[:per_page]
+      params[:limit] = params[:page].to_i * params[:per_page].to_i
+    end
+
+    if params[:limit] && params[:limit].to_i > 100
+      params[:limit].to_i = 100
+    end
+
     # build result list
     tickets = Ticket.search(
       limit: params[:limit],
@@ -404,6 +417,12 @@ class TicketsController < ApplicationController
       condition: params[:condition],
       current_user: current_user,
     )
+
+    # do pagination if needed
+    if params[:page] && params[:per_page]
+      offset = (params[:page].to_i - 1) * params[:per_page].to_i
+      tickets = tickets.slice(offset, params[:per_page].to_i) || []
+    end
 
     if params[:expand]
       list = []

@@ -20,6 +20,10 @@ class UsersController < ApplicationController
       per_page = params[:per_page].to_i
     end
 
+    if per_page > 500
+      per_page = 500
+    end
+
     # only allow customer to fetch him self
     users = if !current_user.permissions?('admin.user') && !current_user.permissions?('ticket.agent')
               User.where(id: current_user.id).offset(offset).limit(per_page)
@@ -331,6 +335,10 @@ class UsersController < ApplicationController
     # set limit for pagination if needed
     if params[:page] && params[:per_page]
       params[:limit] = params[:page].to_i * params[:per_page].to_i
+    end
+
+    if params[:limit] && params[:limit].to_i > 500
+      params[:limit].to_i = 500
     end
 
     query_params = {
