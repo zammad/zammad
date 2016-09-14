@@ -15,7 +15,7 @@ class Stats::TicketInProcess
     # get all tickets where I worked on today (owner & closed today)
     closed_state_ids = Ticket::State.by_category('closed').map(&:id)
     closed_ticket_ids = Ticket.select('id').where(
-      'owner_id = ? AND state_id IN (?) AND close_time > ?',
+      'owner_id = ? AND state_id IN (?) AND close_at > ?',
       user.id, closed_state_ids, Time.zone.now - 1.day
     ).limit(100).map(&:id)
 

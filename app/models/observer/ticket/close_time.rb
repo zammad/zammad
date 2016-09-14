@@ -18,8 +18,8 @@ class Observer::Ticket::CloseTime < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    # check if close_time is already set
-    return true if record.close_time
+    # check if close_at is already set
+    return true if record.close_at
 
     # check if ticket is closed now
     return if !record.state_id
@@ -27,7 +27,7 @@ class Observer::Ticket::CloseTime < ActiveRecord::Observer
     state_type = Ticket::StateType.lookup(id: state.state_type_id)
     return true if state_type.name != 'closed'
 
-    # set close_time
-    record.close_time = Time.zone.now
+    # set close_at
+    record.close_at = Time.zone.now
   end
 end

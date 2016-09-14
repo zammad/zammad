@@ -2,7 +2,7 @@ Ticket ist eskaliert (<%= d 'ticket.title' %>)
 
 <div>Hallo <%= d 'recipient.firstname' %>,</div>
 <br>
-<div>Ticket (<%= d 'ticket.title' %>) von "<b><%= d 'ticket.customer.longname' %></b>" ist seit "<%= d 'ticket.escalation_time' %>" eskaliert!</div>
+<div>Ticket (<%= d 'ticket.title' %>) von "<b><%= d 'ticket.customer.longname' %></b>" ist seit "<%= d 'ticket.escalation_at' %>" eskaliert!</div>
 <br>
 <% if @objects[:article] %>
   <div>

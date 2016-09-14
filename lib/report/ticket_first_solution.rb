@@ -51,14 +51,14 @@ returns
         stop = start + 1.minute
       end
       query, bind_params, tables = Ticket.selector2sql(params[:selector])
-      ticket_list = Ticket.select('tickets.id, tickets.close_time, tickets.created_at').where(
-        'tickets.close_time IS NOT NULL AND tickets.close_time >= ? AND tickets.close_time < ?',
+      ticket_list = Ticket.select('tickets.id, tickets.close_at, tickets.created_at').where(
+        'tickets.close_at IS NOT NULL AND tickets.close_at >= ? AND tickets.close_at < ?',
         start,
         stop,
       ).where(query, *bind_params).joins(tables)
       count = 0
       ticket_list.each { |ticket|
-        closed_at  = ticket.close_time
+        closed_at  = ticket.close_at
         created_at = ticket.created_at
         if (closed_at - (60 * 15) ) < created_at
           count += 1
@@ -90,8 +90,8 @@ returns
 
   def self.items(params)
     query, bind_params, tables = Ticket.selector2sql(params[:selector])
-    ticket_list = Ticket.select('tickets.id, tickets.close_time, tickets.created_at').where(
-      'tickets.close_time IS NOT NULL AND tickets.close_time >= ? AND tickets.close_time < ?',
+    ticket_list = Ticket.select('tickets.id, tickets.close_at, tickets.created_at').where(
+      'tickets.close_at IS NOT NULL AND tickets.close_at >= ? AND tickets.close_at < ?',
       params[:range_start],
       params[:range_end],
     ).where(query, *bind_params).joins(tables)
@@ -99,7 +99,7 @@ returns
     assets = {}
     ticket_ids = []
     ticket_list.each { |ticket|
-      closed_at  = ticket.close_time
+      closed_at  = ticket.close_at
       created_at = ticket.created_at
       if (closed_at - (60 * 15) ) < created_at
         count += 1

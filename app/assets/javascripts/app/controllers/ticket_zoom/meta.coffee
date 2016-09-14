@@ -3,7 +3,7 @@ class App.TicketZoomMeta extends App.ObserverController
   observe:
     number: true
     created_at: true
-    escalation_time: true
+    escalation_at: true
 
   render: (ticket) =>
     @html App.view('ticket_zoom/meta')(

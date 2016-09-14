@@ -437,27 +437,24 @@ If you\'re reading this message in your email, click the ticket number link that
       owner_id
       customer_id
       note
-      first_response
-      first_response_escal_date
-      first_response_sla_time
+      first_response_at
+      first_response_escalation_at
       first_response_in_min
       first_response_diff_in_min
-      close_time
-      close_time_escal_date
-      close_time_sla_time
-      close_time_in_min
-      close_time_diff_in_min
-      update_time_escal_date
-      update_time_sla_time
-      update_time_in_min
-      update_time_diff_in_min
-      last_contact
-      last_contact_agent
-      last_contact_customer
+      close_at
+      close_escalation_at
+      close_in_min
+      close_diff_in_min
+      update_escalation_at
+      update_in_min
+      update_diff_in_min
+      last_contact_at
+      last_contact_agent_at
+      last_contact_customer_at
       create_article_type_id
       create_article_sender_id
       article_count
-      escalation_time
+      escalation_at
       pending_time
       type
       preferences

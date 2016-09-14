@@ -524,7 +524,7 @@ class TicketsController < ApplicationController
                         .count
 
         # closed
-        closed = Ticket.where('close_time > ? AND close_time < ?', date_start, date_end  )
+        closed = Ticket.where('close_at > ? AND close_at < ?', date_start, date_end  )
                        .where(access_condition)
                        .where(condition)
                        .count
@@ -595,7 +595,7 @@ class TicketsController < ApplicationController
         created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end ).where(condition).count
 
         # closed
-        closed = Ticket.where('close_time > ? AND close_time < ?', date_start, date_end  ).where(condition).count
+        closed = Ticket.where('close_at > ? AND close_at < ?', date_start, date_end  ).where(condition).count
 
         data = {
           month: date_to_check.month,

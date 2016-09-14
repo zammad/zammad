@@ -47,23 +47,23 @@ class App.Overview extends App.Model
           name:   'Owner'
         },
         {
-          value:  'last_contact'
+          value:  'last_contact_at'
           name:   'Last contact'
         },
         {
-          value:  'last_contact_agent'
+          value:  'last_contact_agent_at'
           name:   'Last contact (Agent)'
         },
         {
-          value:  'last_contact_customer'
+          value:  'last_contact_customer_at'
           name:   'Last contact (Customer)'
         },
         {
-          value:  'first_response'
+          value:  'first_response_at'
           name:   'First Response'
         },
         {
-          value:  'close_time'
+          value:  'close_at'
           name:   'Close time'
         },
         {
@@ -90,21 +90,21 @@ class App.Overview extends App.Model
       null:    false
       translate: true
       options:
-        number:                 'Number'
-        title:                  'Title'
-        customer:               'Customer'
-        state:                  'State'
-        priority:               'Priority'
-        group:                  'Group'
-        owner:                  'Owner'
-        last_contact:           'Last contact'
-        last_contact_agent:     'Last contact (Agent)'
-        last_contact_customer:  'Last contact (Customer)'
-        first_response:         'First Response'
-        close_time:             'Close time'
-        article_count:          'Article Count'
-        updated_at:             'Updated at'
-        created_at:             'Created at'
+        number:                   'Number'
+        title:                    'Title'
+        customer:                 'Customer'
+        state:                    'State'
+        priority:                 'Priority'
+        group:                    'Group'
+        owner:                    'Owner'
+        last_contact_at:          'Last contact'
+        last_contact_agent_at:    'Last contact (Agent)'
+        last_contact_customer_at: 'Last contact (Customer)'
+        first_response_at:        'First Response'
+        close_at:                 'Close time'
+        article_count:            'Article Count'
+        updated_at:               'Updated at'
+        created_at:               'Created at'
       class:   'span4'
     },
     {
