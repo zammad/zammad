@@ -1,3 +1,3 @@
 <small class="task-subline">
-  <%- @C('ticket_hook') %> <span class="ticket-number js-objectNumber" data-number="<%- @C('ticket_hook') %><%- @ticket.number %>"><%- @ticket.number %></span> - <%- @T('created') %> <%- @humanTime(@ticket.created_at) %> <% if !@isCustomer && @ticket.escalation_time: %> - <%- @T('escalation') %> <%- @humanTime(@ticket.escalation_time, true) %><% end %>
+  <%- @C('ticket_hook') %> <span class="ticket-number js-objectNumber" data-number="<%- @C('ticket_hook') %><%- @ticket.number %>"><%- @ticket.number %></span> - <%- @T('created') %> <%- @humanTime(@ticket.created_at) %> <% if !@isCustomer && @ticket.escalation_at: %> - <%- @T('escalation') %> <%- @humanTime(@ticket.escalation_at, true) %><% end %>
 </small>

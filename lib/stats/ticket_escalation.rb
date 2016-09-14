@@ -11,12 +11,12 @@ class Stats::TicketEscalation
 
     # owned tickets
     own_escalated = Ticket.where(
-      'owner_id = ? AND group_id IN (?) AND state_id IN (?) AND escalation_time < ?', user.id, group_ids, open_state_ids, Time.zone.now
+      'owner_id = ? AND group_id IN (?) AND state_id IN (?) AND escalation_at < ?', user.id, group_ids, open_state_ids, Time.zone.now
     ).count
 
     # all tickets
     all_escalated = Ticket.where(
-      'group_id IN (?) AND state_id IN (?) AND escalation_time < ?', group_ids, open_state_ids, Time.zone.now
+      'group_id IN (?) AND state_id IN (?) AND escalation_at < ?', group_ids, open_state_ids, Time.zone.now
     ).count
 
     average = '-'

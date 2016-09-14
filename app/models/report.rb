@@ -25,7 +25,7 @@ class Report
         selected: true,
         dataDownload: true,
         adapter: Report::TicketGenericTime,
-        params: { field: 'close_time' },
+        params: { field: 'close_at' },
       },
       {
         name: 'backlog',

@@ -58,8 +58,8 @@ returns
 
       # early exit if nothing current state is not escalation relativ
       if !force
-        return false if escalation_time.nil?
-        self.escalation_time = nil
+        return false if escalation_at.nil?
+        self.escalation_at = nil
         return true
       end
     end
@@ -76,22 +76,22 @@ returns
       preferences[:escalation_calculation] = {}
 
       # nothing to change
-      return false if !escalation_time
-      self.escalation_time = nil
+      return false if !escalation_at
+      self.escalation_at = nil
       return true
     end
 
-    # get last_update
-    if !last_contact_customer && !last_contact_agent
-      last_update = created_at
-    elsif !last_contact_customer && last_contact_agent
-      last_update = last_contact_agent
-    elsif last_contact_customer && !last_contact_agent
-      last_update = last_contact_customer
-    elsif last_contact_agent > last_contact_customer
-      last_update = last_contact_agent
-    elsif last_contact_agent < last_contact_customer
-      last_update = last_contact_customer
+    # get last_update_at
+    if !last_contact_customer_at && !last_contact_agent_at
+      last_update_at = created_at
+    elsif !last_contact_customer_at && last_contact_agent_at
+      last_update_at = last_contact_agent_at
+    elsif last_contact_customer_at && !last_contact_agent_at
+      last_update_at = last_contact_customer_at
+    elsif last_contact_agent_at > last_contact_customer_at
+      last_update_at = last_contact_agent_at
+    elsif last_contact_agent_at < last_contact_customer_at
+      last_update_at = last_contact_customer_at
     end
 
     # check if calculation need be done
@@ -107,23 +107,23 @@ returns
     if sla_changed == true || calendar_changed == true
       force = true
     end
-    first_response_changed = true
-    if escalation_calculation['first_response'] == first_response
-      first_response_changed = false
+    first_response_at_changed = true
+    if escalation_calculation['first_response_at'] == first_response_at
+      first_response_at_changed = false
     end
-    last_update_changed = true
-    if escalation_calculation['last_update'] == last_update
-      last_update_changed = false
+    last_update_at_changed = true
+    if escalation_calculation['last_update_at'] == last_update_at
+      last_update_at_changed = false
     end
-    close_time_changed = true
-    if escalation_calculation['close_time'] == close_time
-      close_time_changed = false
+    close_at_changed = true
+    if escalation_calculation['close_at'] == close_at
+      close_at_changed = false
     end
 
     if !force && preferences[:escalation_calculation]
-      if first_response_changed == false &&
-         last_update_changed == false &&
-         close_time_changed == false &&
+      if first_response_at_changed == false &&
+         last_update_at_changed == false &&
+         close_at_changed == false &&
          sla_changed == false &&
          calendar_changed == false &&
          escalation_calculation['escalation_disabled'] == escalation_disabled
@@ -132,11 +132,11 @@ returns
     end
 
     # reset escalation attributes
-    self.escalation_time = nil
+    self.escalation_at = nil
     if force == true
-      self.first_response_escal_date = nil
-      self.update_time_escal_date    = nil
-      self.close_time_escal_date     = nil
+      self.first_response_escalation_at = nil
+      self.update_escalation_at    = nil
+      self.close_escalation_at     = nil
     end
     biz = Biz::Schedule.new do |config|
 
@@ -175,17 +175,17 @@ returns
     history_data = nil
 
     # calculate first response escalation
-    if force == true || first_response_changed == true
+    if force == true || first_response_at_changed == true
       if !history_data
         history_data = history_get
       end
       if sla.first_response_time
-        self.first_response_escal_date = destination_time(created_at, sla.first_response_time, biz, history_data)
+        self.first_response_escalation_at = destination_time(created_at, sla.first_response_time, biz, history_data)
       end
 
       # get response time in min
-      if first_response
-        self.first_response_in_min = pending_minutes(created_at, first_response, biz, history_data, 'business_minutes')
+      if first_response_at
+        self.first_response_in_min = pending_minutes(created_at, first_response_at, biz, history_data, 'business_minutes')
       end
 
       # set time to show if sla is raised or not
@@ -195,65 +195,65 @@ returns
     end
 
     # calculate update time escalation
-    if force == true || last_update_changed == true
+    if force == true || last_update_at_changed == true
       if !history_data
         history_data = history_get
       end
-      if sla.update_time && last_update
-        self.update_time_escal_date = destination_time(last_update, sla.update_time, biz, history_data)
+      if sla.update_time && last_update_at
+        self.update_escalation_at = destination_time(last_update_at, sla.update_time, biz, history_data)
       end
 
       # get update time in min
-      if last_update && last_update != created_at
-        self.update_time_in_min = pending_minutes(created_at, last_update, biz, history_data, 'business_minutes')
+      if last_update_at && last_update_at != created_at
+        self.update_in_min = pending_minutes(created_at, last_update_at, biz, history_data, 'business_minutes')
       end
 
       # set sla time
-      if sla.update_time && update_time_in_min
-        self.update_time_diff_in_min = sla.update_time - update_time_in_min
+      if sla.update_time && update_in_min
+        self.update_diff_in_min = sla.update_time - update_in_min
       end
     end
 
     # calculate close time escalation
-    if force == true || close_time_changed == true
+    if force == true || close_at_changed == true
       if !history_data
         history_data = history_get
       end
       if sla.solution_time
-        self.close_time_escal_date = destination_time(created_at, sla.solution_time, biz, history_data)
+        self.close_escalation_at = destination_time(created_at, sla.solution_time, biz, history_data)
       end
 
       # get close time in min
-      if close_time
-        self.close_time_in_min = pending_minutes(created_at, close_time, biz, history_data, 'business_minutes')
+      if close_at
+        self.close_in_min = pending_minutes(created_at, close_at, biz, history_data, 'business_minutes')
       end
 
       # set time to show if sla is raised or not
-      if sla.solution_time && close_time_in_min
-        self.close_time_diff_in_min = sla.solution_time - close_time_in_min
+      if sla.solution_time && close_in_min
+        self.close_diff_in_min = sla.solution_time - close_in_min
       end
     end
 
     # set closest escalation time
     if escalation_disabled
-      self.escalation_time = nil
+      self.escalation_at = nil
     else
-      if !first_response && first_response_escal_date
-        self.escalation_time = first_response_escal_date
+      if !first_response_at && first_response_escalation_at
+        self.escalation_at = first_response_escalation_at
       end
-      if update_time_escal_date && ((!escalation_time && update_time_escal_date) || update_time_escal_date < escalation_time)
-        self.escalation_time = update_time_escal_date
+      if update_escalation_at && ((!escalation_at && update_escalation_at) || update_escalation_at < escalation_at)
+        self.escalation_at = update_escalation_at
       end
-      if !close_time && close_time_escal_date && ((!escalation_time && close_time_escal_date) || close_time_escal_date < escalation_time)
-        self.escalation_time = close_time_escal_date
+      if !close_at && close_escalation_at && ((!escalation_at && close_escalation_at) || close_escalation_at < escalation_at)
+        self.escalation_at = close_escalation_at
       end
     end
 
     # remember already counted time to do on next update only the diff
     preferences[:escalation_calculation] = {
-      first_response: first_response,
-      last_update: last_update,
-      close_time: close_time,
+      first_response_at: first_response_at,
+      last_update_at: last_update_at,
+      close_at: close_at,
       sla_id: sla.id,
       sla_updated_at: sla.updated_at,
       calendar_id: calendar.id,

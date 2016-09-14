@@ -41,27 +41,24 @@ class CreateTicket < ActiveRecord::Migration
       t.column :owner_id,                         :integer,               null: false
       t.column :customer_id,                      :integer,               null: false
       t.column :note,                             :string,    limit: 250, null: true
-      t.column :first_response,                   :timestamp, limit: 3,   null: true
-      t.column :first_response_escal_date,        :timestamp, limit: 3,   null: true
-      t.column :first_response_sla_time,          :timestamp, limit: 3,   null: true
+      t.column :first_response_at,                :timestamp, limit: 3,   null: true
+      t.column :first_response_escalation_at,     :timestamp, limit: 3,   null: true
       t.column :first_response_in_min,            :integer,               null: true
       t.column :first_response_diff_in_min,       :integer,               null: true
-      t.column :close_time,                       :timestamp, limit: 3,   null: true
-      t.column :close_time_escal_date,            :timestamp, limit: 3,   null: true
-      t.column :close_time_sla_time,              :timestamp, limit: 3,   null: true
-      t.column :close_time_in_min,                :integer,               null: true
-      t.column :close_time_diff_in_min,           :integer,               null: true
-      t.column :update_time_escal_date,           :timestamp, limit: 3,   null: true
-      t.column :update_time_sla_time,             :timestamp, limit: 3,   null: true
-      t.column :update_time_in_min,               :integer,               null: true
-      t.column :update_time_diff_in_min,          :integer,               null: true
-      t.column :last_contact,                     :timestamp, limit: 3,   null: true
-      t.column :last_contact_agent,               :timestamp, limit: 3,   null: true
-      t.column :last_contact_customer,            :timestamp, limit: 3,   null: true
+      t.column :close_at,                         :timestamp, limit: 3,   null: true
+      t.column :close_escalation_at,              :timestamp, limit: 3,   null: true
+      t.column :close_in_min,                     :integer,               null: true
+      t.column :close_diff_in_min,                :integer,               null: true
+      t.column :update_escalation_at,             :timestamp, limit: 3,   null: true
+      t.column :update_in_min,                    :integer,               null: true
+      t.column :update_diff_in_min,               :integer,               null: true
+      t.column :last_contact_at,                  :timestamp, limit: 3,   null: true
+      t.column :last_contact_agent_at,            :timestamp, limit: 3,   null: true
+      t.column :last_contact_customer_at,         :timestamp, limit: 3,   null: true
       t.column :create_article_type_id,           :integer,               null: true
       t.column :create_article_sender_id,         :integer,               null: true
       t.column :article_count,                    :integer,               null: true
-      t.column :escalation_time,                  :timestamp, limit: 3,   null: true
+      t.column :escalation_at,                    :timestamp, limit: 3,   null: true
       t.column :pending_time,                     :timestamp, limit: 3,   null: true
       t.column :type,                             :string,    limit: 100, null: true
       t.column :preferences,                      :text,      limit: 500.kilobytes + 1, null: true
@@ -77,20 +74,20 @@ class CreateTicket < ActiveRecord::Migration
     add_index :tickets, [:number], unique: true
     add_index :tickets, [:title]
     add_index :tickets, [:created_at]
-    add_index :tickets, [:first_response]
-    add_index :tickets, [:first_response_escal_date]
+    add_index :tickets, [:first_response_at]
+    add_index :tickets, [:first_response_escalation_at]
     add_index :tickets, [:first_response_in_min]
     add_index :tickets, [:first_response_diff_in_min]
-    add_index :tickets, [:close_time]
-    add_index :tickets, [:close_time_escal_date]
-    add_index :tickets, [:close_time_in_min]
-    add_index :tickets, [:close_time_diff_in_min]
-    add_index :tickets, [:escalation_time]
-    add_index :tickets, [:update_time_in_min]
-    add_index :tickets, [:update_time_diff_in_min]
-    add_index :tickets, [:last_contact]
-    add_index :tickets, [:last_contact_agent]
-    add_index :tickets, [:last_contact_customer]
+    add_index :tickets, [:close_at]
+    add_index :tickets, [:close_escalation_at]
+    add_index :tickets, [:close_in_min]
+    add_index :tickets, [:close_diff_in_min]
+    add_index :tickets, [:escalation_at]
+    add_index :tickets, [:update_in_min]
+    add_index :tickets, [:update_diff_in_min]
+    add_index :tickets, [:last_contact_at]
+    add_index :tickets, [:last_contact_agent_at]
+    add_index :tickets, [:last_contact_customer_at]
     add_index :tickets, [:create_article_type_id]
     add_index :tickets, [:create_article_sender_id]
     add_index :tickets, [:created_by_id]

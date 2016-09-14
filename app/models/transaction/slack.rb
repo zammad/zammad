@@ -66,10 +66,10 @@ class Transaction::Slack
       sent_value = ticket.pending_time
     elsif @item[:type] == 'escalation'
       template = 'ticket_escalation'
-      sent_value = ticket.escalation_time
+      sent_value = ticket.escalation_at
     elsif @item[:type] == 'escalation_warning'
       template = 'ticket_escalation_warning'
-      sent_value = ticket.escalation_time
+      sent_value = ticket.escalation_at
     else
       raise "unknown type for notification #{@item[:type]}"
     end
@@ -95,7 +95,7 @@ class Transaction::Slack
     # good, warning, danger
     color = '#000000'
     ticket_state_type = ticket.state.state_type.name
-    if ticket.escalation_time && ticket.escalation_time < Time.zone.now
+    if ticket.escalation_at && ticket.escalation_at < Time.zone.now
       color = '#f35912'
     elsif ticket_state_type == 'pending reminder'
       if ticket.pending_time && ticket.pending_time < Time.zone.now

@@ -129,7 +129,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket3.update_columns(escalation_time: '2015-02-06 10:00:00')
+    ticket3.update_columns(escalation_at: '2015-02-06 10:00:00')
     assert(ticket3, 'ticket created')
     assert_equal(ticket3.customer.id, customer2.id)
     assert_equal(ticket3.organization_id, nil)
@@ -287,7 +287,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert_equal(ticket_count, 1)
 
     condition = {
-      'ticket.escalation_time' => {
+      'ticket.escalation_at' => {
         operator: 'is not',
         value: nil,
       }

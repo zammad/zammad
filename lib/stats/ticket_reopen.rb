@@ -6,7 +6,7 @@ class Stats::TicketReopen
 
     # get my closed tickets
     total = Ticket.select('id').where(
-      'owner_id = ? AND close_time > ?',
+      'owner_id = ? AND close_at > ?',
       user.id, Time.zone.now - 7.days
     ).count
 
@@ -67,8 +67,8 @@ class Stats::TicketReopen
     return if object != 'Ticket'
     ticket = Ticket.lookup(id: o_id)
 
-    # check if close_time is already set / if not, ticket is not reopend
-    return if !ticket.close_time
+    # check if close_at is already set / if not, ticket is not reopend
+    return if !ticket.close_at
 
     # only if state id has changed
     return if !changes['state_id']

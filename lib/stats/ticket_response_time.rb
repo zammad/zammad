@@ -13,10 +13,10 @@ class Stats::TicketResponseTime
     return if ticket.owner_id != 1 && ticket.owner_id != article_created_by_id
 
     # return if customer send at least
-    return if ticket.last_contact_customer > ticket.last_contact_agent
+    return if ticket.last_contact_customer_at > ticket.last_contact_agent_at
 
     # TODO: only business hours
-    response_time_taken = ticket.last_contact_agent - ticket.last_contact_customer
+    response_time_taken = ticket.last_contact_agent_at - ticket.last_contact_customer_at
 
     (response_time_taken / 60).round
   end

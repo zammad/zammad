@@ -185,7 +185,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'partner', ticket.customer.login )
     assert_equal( 'Partner der betreut', ticket.organization.name )
     assert_equal( Time.zone.parse('2014-11-20 22:33:41 +0000').gmtime.to_s, ticket.created_at.to_s )
-    assert_equal( nil, ticket.close_time )
+    assert_equal( nil, ticket.close_at )
 
     # check history
     #  - create entry
@@ -200,7 +200,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'jn2', ticket.customer.login )
     assert_equal( 'Znuny GmbH', ticket.organization.name )
     assert_equal( Time.zone.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.created_at.to_s )
-    assert_equal( Time.zone.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.close_time.to_s )
+    assert_equal( Time.zone.parse('2014-11-20 23:24:20 +0000').gmtime.to_s, ticket.close_at.to_s )
 
     # check history
     #  - create entry
@@ -215,7 +215,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'betreuterkunde2', ticket.customer.login )
     assert_equal( 'Noch ein betreuter Kunde', ticket.organization.name )
     assert_equal( Time.zone.parse('2014-11-21 00:17:40 +0000').gmtime.to_s, ticket.created_at.to_s )
-    assert_equal( Time.zone.parse('2014-11-21 00:21:08 +0000').gmtime.to_s, ticket.close_time.to_s )
+    assert_equal( Time.zone.parse('2014-11-21 00:21:08 +0000').gmtime.to_s, ticket.close_at.to_s )
 
     # ticket dynamic fields
     ticket = Ticket.find(591)

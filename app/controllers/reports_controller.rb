@@ -37,7 +37,7 @@ class ReportsController < ApplicationController
     }
 
     #created = aggs(start, stop, range, 'created_at', profile.condition)
-    #closed = aggs(start, stop, range, 'close_time', profile.condition)
+    #closed = aggs(start, stop, range, 'close_at', profile.condition)
     #first_solution =
     #reopend = backend(start, stop, range, Report::TicketReopened, profile.condition)
 
@@ -208,7 +208,7 @@ class ReportsController < ApplicationController
       worksheet.write(row, 4, ticket.customer.fullname)
       worksheet.write(row, 5, ticket.created_at)
       worksheet.write(row, 6, ticket.updated_at)
-      worksheet.write(row, 7, ticket.close_time)
+      worksheet.write(row, 7, ticket.close_at)
     }
 
     workbook.close
