@@ -3219,20 +3219,20 @@ Overview.create_if_not_exists(
   prio: 1050,
   role_id: overview_role.id,
   condition: {
-    'ticket.escalation_time' => {
+    'ticket.escalation_at' => {
       operator: 'within next (relative)',
       value: '10',
       range: 'minute',
     },
   },
   order: {
-    by: 'escalation_time',
+    by: 'escalation_at',
     direction: 'ASC',
   },
   view: {
-    d: %w(title customer group owner escalation_time),
-    s: %w(title customer group owner escalation_time),
-    m: %w(number title customer group owner escalation_time),
+    d: %w(title customer group owner escalation_at),
+    s: %w(title customer group owner escalation_at),
+    m: %w(number title customer group owner escalation_at),
     view_mode_default: 's',
   },
 )

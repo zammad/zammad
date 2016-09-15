@@ -23,7 +23,7 @@ returns
     local_params[:params][:field] = 'created_at'
     created = Report::TicketGenericTime.aggs(local_params)
 
-    local_params[:params][:field] = 'close_time'
+    local_params[:params][:field] = 'close_at'
     closed = Report::TicketGenericTime.aggs(local_params)
 
     result = []

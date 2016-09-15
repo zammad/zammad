@@ -172,7 +172,7 @@ class CalendarSubscriptions::Tickets
         operator: 'is',
         value: owner_ids,
       },
-      'ticket.escalation_time' => {
+      'ticket.escalation_at' => {
         operator: 'is not',
         value: nil,
       }
@@ -189,17 +189,17 @@ class CalendarSubscriptions::Tickets
 
     tickets.each do |ticket|
 
-      next if !ticket.escalation_time
+      next if !ticket.escalation_at
 
       event_data = {}
 
-      escalation_time = ticket.escalation_time
-      if escalation_time < Time.zone.today
-        escalation_time = Time.zone.today
+      escalation_at = ticket.escalation_at
+      if escalation_at < Time.zone.today
+        escalation_at = Time.zone.today
       end
 
-      event_data[:dtstart]     = Icalendar::Values::DateTime.new(escalation_time, 'tzid' => @tzid)
-      event_data[:dtend]       = Icalendar::Values::DateTime.new(escalation_time, 'tzid' => @tzid)
+      event_data[:dtstart]     = Icalendar::Values::DateTime.new(escalation_at, 'tzid' => @tzid)
+      event_data[:dtend]       = Icalendar::Values::DateTime.new(escalation_at, 'tzid' => @tzid)
       event_data[:summary]     = "#{translated_ticket_escalation}: '#{ticket.title}' #{customer}: #{ticket.customer.longname}"
       event_data[:description] = "T##{ticket.number}"
       if alarm?

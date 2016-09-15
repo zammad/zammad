@@ -35,23 +35,20 @@ class Ticket < ApplicationModel
       create_article_type_id: true,
       create_article_sender_id: true,
       article_count: true,
-      first_response: true,
-      first_response_escal_date: true,
-      first_response_sla_time: true,
+      first_response_at: true,
+      first_response_escalation_at: true,
       first_response_in_min: true,
       first_response_diff_in_min: true,
-      close_time: true,
-      close_time_escal_date: true,
-      close_time_sla_time: true,
-      close_time_in_min: true,
-      close_time_diff_in_min: true,
-      update_time_escal_date: true,
-      update_time_sla_time: true,
-      update_time_in_min: true,
-      update_time_diff_in_min: true,
-      last_contact: true,
-      last_contact_agent: true,
-      last_contact_customer: true,
+      close_at: true,
+      close_escalation_at: true,
+      close_in_min: true,
+      close_diff_in_min: true,
+      update_escalation_at: true,
+      update_in_min: true,
+      update_diff_in_min: true,
+      last_contact_at: true,
+      last_contact_agent_at: true,
+      last_contact_customer_at: true,
     }
   )
 
@@ -228,7 +225,7 @@ returns
 
     # get max warning diff
 
-    tickets = where('escalation_time <= ?', Time.zone.now + 15.minutes)
+    tickets = where('escalation_at <= ?', Time.zone.now + 15.minutes)
 
     tickets.each { |ticket|
 
@@ -242,7 +239,7 @@ returns
       end
 
       # send escalation
-      if ticket.escalation_time < Time.zone.now
+      if ticket.escalation_at < Time.zone.now
         Transaction::BackgroundJob.run(
           object: 'Ticket',
           type: 'escalation',
@@ -447,7 +444,7 @@ condition example
       pre_condition: 'specific',
       value: 4711,
     },
-    'ticket.escalation_time' => {
+    'ticket.escalation_at' => {
       operator: 'is not', # not
       value: nil,
     }

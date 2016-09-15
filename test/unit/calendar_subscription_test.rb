@@ -134,7 +134,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket5.update_columns(escalation_time: '2016-02-07 17:39:00')
+    ticket5.update_columns(escalation_at: '2016-02-07 17:39:00')
 
     ticket6 = Ticket.create!(
       title: 'some title1 - escalation - group_default',
@@ -147,7 +147,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket6.update_columns(escalation_time: '2016-02-07 16:37:00')
+    ticket6.update_columns(escalation_at: '2016-02-07 16:37:00')
 
     ticket7 = Ticket.create!(
       title: 'some title2 - new - group_calendar',
@@ -206,7 +206,7 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket11.update_columns(escalation_time: '2016-02-08 18:37:00')
+    ticket11.update_columns(escalation_at: '2016-02-08 18:37:00')
 
     ticket12 = Ticket.create!(
       title: 'some title2 - escalation - group_default',
@@ -219,8 +219,8 @@ class CalendarSubscriptionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    ticket12.update_columns(escalation_time: '2016-02-08 18:38:00')
-    Cache.clear # set escalation_time manually, to clear cache to have correct content later
+    ticket12.update_columns(escalation_at: '2016-02-08 18:38:00')
+    Cache.clear # set escalation_at manually, to clear cache to have correct content later
 
     # check agent 1
     calendar_subscriptions = CalendarSubscriptions.new(agent1)

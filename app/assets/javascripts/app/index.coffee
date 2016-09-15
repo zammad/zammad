@@ -204,8 +204,7 @@ class App extends Spine.Controller
         items = emailAddresses.parseAddressList(line)
 
         # line was not parsable
-        if !items
-          return line
+        return App.Utils.htmlEscape(line) if !items
 
         # set markup
         result = ''

@@ -55,6 +55,10 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
       per_page = params[:per_page].to_i
     end
 
+    if per_page > 500
+      per_page = 500
+    end
+
     # only allow customer to fetch his own organization
     organizations = []
     if !current_user.permissions?('admin.organization') && !current_user.permissions?('ticket.agent')
@@ -225,6 +229,10 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     # set limit for pagination if needed
     if params[:page] && params[:per_page]
       params[:limit] = params[:page].to_i * params[:per_page].to_i
+    end
+
+    if params[:limit] && params[:limit].to_i > 500
+      params[:limit].to_i = 500
     end
 
     query_params = {
