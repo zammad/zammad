@@ -19,9 +19,9 @@ class App.WidgetLink extends App.Controller
     # fetch item on demand
     # get data
     @ajax(
-      id:    "links_#{@object.id}_#{@object_type}"
-      type:  'GET'
-      url:   "#{@apiPath}/links"
+      id:   "links_#{@object.id}_#{@object_type}"
+      type: 'GET'
+      url:  "#{@apiPath}/links"
       data:
         link_object:       @object_type
         link_object_value: @object.id
@@ -54,6 +54,7 @@ class App.WidgetLink extends App.Controller
     @html App.view('link/info')(
       links: list
     )
+    @ticketPopups('left')
 
   delete: (e) =>
     e.preventDefault()
@@ -124,11 +125,11 @@ class App.LinkAdd extends App.ControllerModal
     list = []
     for ticket_id in @ticket_ids_by_customer
       if ticket_id isnt @ticket.id
-        ticketItem = App.Ticket.fullLocal( ticket_id )
+        ticketItem = App.Ticket.fullLocal(ticket_id)
         list.push ticketItem
     new App.ControllerTable(
       el:       content.find('#ticket-merge-customer-tickets')
-      overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
+      overview: ['number', 'title', 'state', 'group', 'created_at']
       model:    App.Ticket
       objects:  list
       radio:    true
@@ -141,21 +142,21 @@ class App.LinkAdd extends App.ControllerModal
         list.push ticketItem
     new App.ControllerTable(
       el:       content.find('#ticket-merge-recent-tickets')
-      overview: [ 'number', 'title', 'state', 'group', 'created_at' ]
+      overview: ['number', 'title', 'state', 'group', 'created_at']
       model:    App.Ticket
       objects:  list
       radio:    true
     )
 
     content.delegate('[name="ticket_number"]', 'focus', (e) ->
-      $(e.target).parents().find('[name="radio"]').prop( 'checked', false )
+      $(e.target).parents().find('[name="radio"]').prop('checked', false)
     )
 
     content.delegate('[name="radio"]', 'click', (e) ->
       if $(e.target).prop('checked')
         ticket_id = $(e.target).val()
         ticket    = App.Ticket.fullLocal( ticket_id )
-        $(e.target).parents().find('[name="ticket_number"]').val( ticket.number )
+        $(e.target).parents().find('[name="ticket_number"]').val(ticket.number)
     )
     content
 

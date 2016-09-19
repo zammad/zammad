@@ -1,7 +1,7 @@
 <label><%- @T('Links') %></label>
 <% for type of @links: %>
 <div class="ticketLinks">
-  <div class="list-title"><%- @T( type ) %></div>
+  <div class="list-title"><%- @T(type) %></div>
   <ol class="tasks tasks--standalone">
     <% for item in @links[type]: %>
     <li class="task">
