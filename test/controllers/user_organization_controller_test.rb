@@ -321,6 +321,24 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result.class, Array)
     assert(result.length >= 3)
 
+    get '/api/v1/users?limit=40&page=1&per_page=2', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    users = User.order(:id).limit(2)
+    assert_equal(users[0].id, result[0]['id'])
+    assert_equal(users[1].id, result[1]['id'])
+    assert_equal(2, result.count)
+
+    get '/api/v1/users?limit=40&page=2&per_page=2', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    users = User.order(:id).limit(4)
+    assert_equal(users[2].id, result[0]['id'])
+    assert_equal(users[3].id, result[1]['id'])
+    assert_equal(2, result.count)
+
     # create user with admin role
     firstname = "First test#{rand(999_999_999)}"
     role = Role.lookup(name: 'Admin')
@@ -467,6 +485,24 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(result.class, Array)
     assert(result.length >= 3)
+
+    get '/api/v1/organizations?limit=40&page=1&per_page=2', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    organizations = Organization.order(:id).limit(2)
+    assert_equal(organizations[0].id, result[0]['id'])
+    assert_equal(organizations[1].id, result[1]['id'])
+    assert_equal(2, result.count)
+
+    get '/api/v1/organizations?limit=40&page=2&per_page=2', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    organizations = Organization.order(:id).limit(4)
+    assert_equal(organizations[2].id, result[0]['id'])
+    assert_equal(organizations[3].id, result[1]['id'])
+    assert_equal(2, result.count)
 
     # show/:id
     get "/api/v1/organizations/#{@organization.id}", {}, @headers.merge('Authorization' => credentials)
