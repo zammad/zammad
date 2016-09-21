@@ -235,7 +235,7 @@ class CreateBase < ActiveRecord::Migration
       t.string :client_id,                          null: false
       t.string :key,                   limit: 100,  null: false
       t.string :callback,              limit: 100,  null: false
-      t.text :state,                   limit: 2.megabytes + 1, null: true
+      t.text :state,                   limit: 20.megabytes + 1, null: true
       t.string :params,                limit: 2000, null: true
       t.integer :prio,                              null: false
       t.boolean :notify,                            null: false, default: false
