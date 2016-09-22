@@ -12,10 +12,17 @@ class PermissionTest < ActiveSupport::TestCase
 
   test 'user permission' do
 
-    Permission.create_if_not_exists(
+    permission1 = Permission.create_or_update(
       name: 'admin.permission1',
       note: 'Admin Interface',
       preferences: {},
+      active: true,
+    )
+    permission2 = Permission.create_or_update(
+      name: 'admin.permission2',
+      note: 'Admin Interface',
+      preferences: {},
+      active: true,
     )
     role_permission1 = Role.create_or_update(
       name: 'AdminPermission1',
@@ -27,6 +34,7 @@ class PermissionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    role_permission1.permission_revoke('admin')
     role_permission1.permission_grand('admin.permission1')
     user_with_permission1 = User.create_or_update(
       login: 'setting-permission1',
@@ -39,24 +47,43 @@ class PermissionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+
     assert_equal(true, user_with_permission1.permissions?('admin.permission1'))
     assert_equal(true, user_with_permission1.permissions?('admin.*'))
     assert_equal(false, user_with_permission1.permissions?('admi.*'))
     assert_equal(false, user_with_permission1.permissions?('admin.permission2'))
     assert_equal(false, user_with_permission1.permissions?('admin'))
 
+    permission1.active = false
+    permission1.save!
+
+    assert_equal(false, user_with_permission1.permissions?('admin.permission1'))
+    assert_equal(false, user_with_permission1.permissions?('admin.*'))
+    assert_equal(false, user_with_permission1.permissions?('admi.*'))
+    assert_equal(false, user_with_permission1.permissions?('admin.permission2'))
+    assert_equal(false, user_with_permission1.permissions?('admin'))
+
+    role_permission1.permission_grand('admin')
+
+    assert_equal(false, user_with_permission1.permissions?('admin.permission1'))
+    assert_equal(true, user_with_permission1.permissions?('admin.*'))
+    assert_equal(false, user_with_permission1.permissions?('admi.*'))
+    assert_equal(true, user_with_permission1.permissions?('admin.permission2'))
+    assert_equal(true, user_with_permission1.permissions?('admin'))
+
   end
 
   test 'user permission with invalid role' do
 
-    Permission.create_if_not_exists(
-      name: 'admin.permission2',
+    permission3 = Permission.create_or_update(
+      name: 'admin.permission3',
       note: 'Admin Interface',
       preferences: {},
+      active: true,
     )
-    role_permission2 = Role.create_or_update(
+    role_permission3 = Role.create_or_update(
       name: 'AdminPermission2',
-      note: 'To configure your permission2.',
+      note: 'To configure your permission3.',
       preferences: {
         not: ['Customer'],
       },
@@ -65,32 +92,32 @@ class PermissionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    role_permission2.permission_grand('admin.permission2')
-    user_with_permission2 = User.create_or_update(
-      login: 'setting-permission2',
+    role_permission3.permission_grand('admin.permission3')
+    user_with_permission3 = User.create_or_update(
+      login: 'setting-permission3',
       firstname: 'Setting',
       lastname: 'Admin Permission2',
-      email: 'setting-admin-permission2@example.com',
+      email: 'setting-admin-permission3@example.com',
       password: 'some_pw',
       active: true,
-      roles: [role_permission2],
+      roles: [role_permission3],
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(true, user_with_permission2.permissions?('admin.permission2'))
-    assert_equal(true, user_with_permission2.permissions?('admin.*'))
-    assert_equal(false, user_with_permission2.permissions?('admi.*'))
-    assert_equal(false, user_with_permission2.permissions?('admin.permission3'))
-    assert_equal(false, user_with_permission2.permissions?('admin'))
+    assert_equal(true, user_with_permission3.permissions?('admin.permission3'))
+    assert_equal(true, user_with_permission3.permissions?('admin.*'))
+    assert_equal(false, user_with_permission3.permissions?('admi.*'))
+    assert_equal(false, user_with_permission3.permissions?('admin.permission4'))
+    assert_equal(false, user_with_permission3.permissions?('admin'))
 
-    role_permission2.active = false
-    role_permission2.save
-    user_with_permission2.reload
-    assert_equal(false, user_with_permission2.permissions?('admin.permission2'))
-    assert_equal(false, user_with_permission2.permissions?('admin.*'))
-    assert_equal(false, user_with_permission2.permissions?('admi.*'))
-    assert_equal(false, user_with_permission2.permissions?('admin.permission3'))
-    assert_equal(false, user_with_permission2.permissions?('admin'))
+    role_permission3.active = false
+    role_permission3.save
+    user_with_permission3.reload
+    assert_equal(false, user_with_permission3.permissions?('admin.permission3'))
+    assert_equal(false, user_with_permission3.permissions?('admin.*'))
+    assert_equal(false, user_with_permission3.permissions?('admi.*'))
+    assert_equal(false, user_with_permission3.permissions?('admin.permission4'))
+    assert_equal(false, user_with_permission3.permissions?('admin'))
 
   end
 

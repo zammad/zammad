@@ -334,7 +334,7 @@ returns
 
   def permissions
     list = {}
-    Object.const_get('Permission').select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?)', role_ids).pluck(:name, :preferences).each { |permission|
+    Object.const_get('Permission').select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?) AND permissions.active = ?', role_ids, true).pluck(:name, :preferences).each { |permission|
       next if permission[1]['selectable'] == false
       list[permission[0]] = true
     }
@@ -375,10 +375,12 @@ returns
       if local_key =~ /\.\*$/
         local_key.sub!('.*', '.%')
         permissions = Object.const_get('Permission').with_parents(local_key)
-        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?)', role_ids, true, permissions, local_key).pluck(:preferences)
+        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?) AND permissions.active = ?', role_ids, true, permissions, local_key, true).pluck(:preferences)
       else
+        permission = Object.const_get('Permission').lookup(name: local_key)
+        break if permission && permission.active == false
         permissions = Object.const_get('Permission').with_parents(local_key)
-        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?)', role_ids, true, permissions).pluck(:preferences)
+        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?) AND permissions.active = ?', role_ids, true, permissions, true).pluck(:preferences)
       end
       list.each { |preferences|
         next if preferences[:selectable] == false
@@ -420,7 +422,7 @@ returns
         permission_ids.push permission.id
       }
       next if permission_ids.empty?
-      Role.joins(:roles_permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ?', permission_ids, true).uniq().pluck(:id).each { |role_id|
+      Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).uniq().pluck(:id).each { |role_id|
         role_ids.push role_id
       }
       total_role_ids.push role_ids

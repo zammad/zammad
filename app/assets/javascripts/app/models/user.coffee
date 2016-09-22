@@ -188,6 +188,11 @@ class App.User extends App.Model
     # if any permission exists
     return true if _.contains(keys, '*')
 
+    # verify direct permissions
+    for key in keys
+      permission = App.Permission.findByAttribute('name', key)
+      return false if permission && permission.active is false
+
     # get all permissions of user
     permissions = {}
     for role_id in @role_ids
@@ -195,7 +200,8 @@ class App.User extends App.Model
       if role.active is true
         for permission_id in role.permission_ids
           permission = App.Permission.find(permission_id)
-          permissions[permission.name] = true
+          if permission.active is true
+            permissions[permission.name] = true
 
     for localKey in keys
       requiredPermissions = localKey.split('+')
