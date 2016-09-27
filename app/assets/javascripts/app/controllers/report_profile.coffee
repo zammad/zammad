@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.report_profile'
+  header: 'Report Profile'
   constructor: ->
     super
 
@@ -8,7 +9,6 @@ class Index extends App.ControllerContent
       id: @id
       genericObject: 'ReportProfile'
       pageData:
-        title: 'Report Profile'
         home: 'report_profiles'
         object: 'Report Profile'
         objects: 'Report Profiles'

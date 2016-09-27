@@ -36,18 +36,18 @@ class MaintenanceSessionMessageTest < TestCase
 
     set(
       browser: browser1,
-      css: '#content .js-Message input[name="head"]',
+      css: '.content.active .js-Message input[name="head"]',
       value: title_html,
     )
     set(
       browser: browser1,
-      css: '#content .js-Message .js-textarea[data-name="message"]',
+      css: '.content.active .js-Message .js-textarea[data-name="message"]',
       value: message_html,
     )
 
     click(
       browser: browser1,
-      css: '#content .js-Message button.js-submit',
+      css: '.content.active .js-Message button.js-submit',
     )
 
     watch_for(
@@ -84,18 +84,18 @@ class MaintenanceSessionMessageTest < TestCase
 
     set(
       browser: browser1,
-      css: '#content .js-Message input[name="head"]',
+      css: '.content.active .js-Message input[name="head"]',
       value: title_html + ' #2',
     )
     set(
       browser: browser1,
-      css: '#content .js-Message .js-textarea[data-name="message"]',
+      css: '.content.active .js-Message .js-textarea[data-name="message"]',
       value: message_html + ' #2',
     )
 
     click(
       browser: browser1,
-      css: '#content .js-Message button.js-submit',
+      css: '.content.active .js-Message button.js-submit',
     )
 
     watch_for(
@@ -132,21 +132,21 @@ class MaintenanceSessionMessageTest < TestCase
 
     set(
       browser: browser1,
-      css: '#content .js-Message input[name="head"]',
+      css: '.content.active .js-Message input[name="head"]',
       value: title_html + ' #3',
     )
     set(
       browser: browser1,
-      css: '#content .js-Message .js-textarea[data-name="message"]',
+      css: '.content.active .js-Message .js-textarea[data-name="message"]',
       value: message_html + ' #3',
     )
     click(
       browser: browser1,
-      css: '#content .js-Message input[name="reload"] + .icon-checkbox.icon-unchecked',
+      css: '.content.active .js-Message input[name="reload"] + .icon-checkbox.icon-unchecked',
     )
     click(
       browser: browser1,
-      css: '#content .js-Message button.js-submit',
+      css: '.content.active .js-Message button.js-submit',
     )
 
     watch_for(

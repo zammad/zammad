@@ -84,46 +84,10 @@ class App.TicketZoom extends App.Controller
       processData: true
       queue: true
       success: (data, status, xhr) =>
-        console.log('fetched', ignoreSame)
-
-        # check if ticket has changed
-        newTicketRaw = data.assets.Ticket[@ticket_id]
-        console.log(newTicketRaw.updated_at)
-        console.log(@ticketUpdatedAtLastCall)
-
-        if @ticketUpdatedAtLastCall
-
-          # ignore if record is already shown
-          if ignoreSame && new Date(newTicketRaw.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
-            console.log('debug no fetched, current ticket already there or requested')
-            return
-
-          # do not render if newer ticket is already requested
-          if new Date(newTicketRaw.updated_at).getTime() < new Date(@ticketUpdatedAtLastCall).getTime()
-            console.log('fetched no fetch, current ticket already newer')
-            return
-
-          # remember current record if newer as requested record
-          if new Date(newTicketRaw.updated_at).getTime() > new Date(@ticketUpdatedAtLastCall).getTime()
-            @ticketUpdatedAtLastCall = newTicketRaw.updated_at
-        else
-          @ticketUpdatedAtLastCall = newTicketRaw.updated_at
-
-        # notify if ticket changed not by my self
-        if @initFetched
-          if newTicketRaw.updated_by_id isnt @Session.get('id')
-            App.TaskManager.notify(@task_key)
-        @initFetched = true
-
-        @load(data)
+        @load(data, ignoreSame)
         App.SessionStorage.set(@key, data)
 
-        if !@doNotLog
-          @doNotLog = 1
-          @recentView('Ticket', @ticket_id)
-
       error: (xhr) =>
-
         statusText = xhr.statusText
         status     = xhr.status
         detail     = xhr.responseText
@@ -160,7 +124,40 @@ class App.TicketZoom extends App.Controller
           )
     )
 
-  load: (data) =>
+  load: (data, ignoreSame = false, local = false) =>
+
+    # check if ticket has changed
+    newTicketRaw = data.assets.Ticket[@ticket_id]
+    console.log(newTicketRaw.updated_at)
+    console.log(@ticketUpdatedAtLastCall)
+
+    if @ticketUpdatedAtLastCall
+
+      # ignore if record is already shown
+      if ignoreSame && new Date(newTicketRaw.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
+        console.log('debug no fetched, current ticket already there or requested')
+        return
+
+      # do not render if newer ticket is already requested
+      if new Date(newTicketRaw.updated_at).getTime() < new Date(@ticketUpdatedAtLastCall).getTime()
+        console.log('fetched no fetch, current ticket already newer')
+        return
+
+      # remember current record if newer as requested record
+      if new Date(newTicketRaw.updated_at).getTime() > new Date(@ticketUpdatedAtLastCall).getTime()
+        @ticketUpdatedAtLastCall = newTicketRaw.updated_at
+    else
+      @ticketUpdatedAtLastCall = newTicketRaw.updated_at
+
+    # notify if ticket changed not by my self
+    if @initFetched
+      if newTicketRaw.updated_by_id isnt @Session.get('id')
+        App.TaskManager.notify(@task_key)
+    @initFetched = true
+
+    if !@doNotLog
+      @doNotLog = 1
+      @recentView('Ticket', @ticket_id)
 
     # remember article ids
     @ticket_article_ids = data.ticket_article_ids
@@ -182,7 +179,7 @@ class App.TicketZoom extends App.Controller
     @ticket.article = undefined
 
     # render page
-    @render()
+    @render(local)
 
   meta: =>
 
@@ -217,38 +214,68 @@ class App.TicketZoom extends App.Controller
     # set all notifications to seen
     App.OnlineNotification.seen('Ticket', @ticket_id)
 
-    scrollToPosition = (position, delay) =>
-      scrollToDelay = =>
-        if position is 'article'
-          @scrollToArticle(@last_article_id)
-          return
-        @scrollToBottom()
-      @delay(scrollToDelay, delay, 'scrollToPosition')
-
-    # scroll to article if given
-    if params.article_id && params.article_id isnt @last_article_id
-      @last_article_id = params.article_id
-      scrollToPosition('article', 300)
-
     # if controller is executed twice, go to latest article (e. g. click on notification)
     if @activeState
-      scrollToPosition('bottom', 300)
-      return
+      if @ticket_article_ids
+        @shown = false
     @activeState = true
-
-    # if ticket is shown the first time
-    if !@shown
-      @shown = true
-
-      # trigger shown to article
-      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
-
-      # scroll to end of page
-      scrollToPosition('bottom', 100)
+    @pagePosition(params)
 
     @positionPageHeaderStart()
     @autosaveStart()
     @shortcutNavigationStart()
+
+  pagePosition: (params = {}) =>
+
+    # remember for later
+    return if params.type is 'init' && !@shown
+
+    if params.article_id
+      article_id = params.article_id
+      params.article_id = undefined
+    else if @pagePositionData
+      article_id = @pagePositionData
+      @pagePositionData = undefined
+
+    # scroll to article if given
+    scrollToPosition = (position, delay) =>
+      scrollToDelay = =>
+        if position is 'article'
+          @scrollToArticle(article_id)
+          @positionPageHeaderUpdate()
+          return
+        @scrollToBottom()
+        @positionPageHeaderUpdate()
+      @delay(scrollToDelay, delay, 'scrollToPosition')
+
+    # trigger shown to article
+    if !@shown
+      @shown = true
+      App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
+      scrollToPosition('bottom', 50)
+      return
+
+    # scroll to article if given
+    if article_id && article_id isnt @last_article_id
+      @last_article_id = article_id
+      scrollToPosition('article', 300)
+      return
+
+    # scroll to end if new article has been added
+    if !@last_ticket_article_ids || !_.isEqual(_.sortBy(@last_ticket_article_ids), _.sortBy(@ticket_article_ids))
+      @last_ticket_article_ids = @ticket_article_ids
+      scrollToPosition('bottom', 100)
+      return
+
+  setPosition: (position) =>
+    @$('.main').scrollTop(position)
+
+  currentPosition: =>
+    element = @$('.main .ticketZoom')
+    offset = element.offset()
+    if offset
+      position = offset.top
+    Math.abs(position)
 
   hide: =>
     @activeState = false
@@ -354,7 +381,7 @@ class App.TicketZoom extends App.Controller
 
     @scrollHeaderPos = scroll
 
-  render: =>
+  render: (local) =>
 
     # update taskbar with new meta data
     App.TaskManager.touch(@task_key)
@@ -458,28 +485,15 @@ class App.TicketZoom extends App.Controller
       if @sidebar.linkWidget
         @sidebar.linkWidget.reload(@links)
 
-    if @shown
+    if !@initDone
+      if @article_id
+        @pagePositionData = @article_id
+      @pagePosition(type: 'init')
+      @initDone = true
+      return
 
-      # scroll to article if given
-      if @article_id && @article_id isnt @last_article_id
-        @last_article_id = @article_id
-        scrollTo = =>
-          @scrollToArticle(@article_id)
-        @delay(scrollTo, 300)
-
-      # scroll to end if new article has been added
-      if !@last_ticket_article_ids || !_.isEqual(_.sortBy(@last_ticket_article_ids), _.sortBy(@ticket_article_ids))
-        @last_ticket_article_ids = @ticket_article_ids
-        @scrollToBottom()
-        @positionPageHeaderUpdate()
-
-    return if @initDone
-    @initDone = true
-
-    # if shown was before init rendering, start actions again
-    return if !@shown
-    @positionPageHeaderStart()
-    App.Event.trigger('ui::ticket::shown', { ticket_id: @ticket_id })
+    return if local
+    @pagePosition(type: 'init')
 
   scrollToArticle: (article_id) =>
     articleContainer = document.getElementById("article-#{article_id}")
@@ -499,7 +513,9 @@ class App.TicketZoom extends App.Controller
     realContentHeight += @$('.ticket-article').height()
     realContentHeight += @$('.article-new').height()
     viewableContentHeight = @$('.main').height()
-    return if viewableContentHeight > realContentHeight
+    if viewableContentHeight > realContentHeight
+      @main.scrollTop(0)
+      return
     @main.scrollTop( @main.prop('scrollHeight') )
 
   autosaveStop: =>
@@ -729,12 +745,8 @@ class App.TicketZoom extends App.Controller
       processData: true
       success: (data) =>
 
-        # remember current data
-        newTicketRaw = data.assets.Ticket[ticket.id]
-        @ticketUpdatedAtLastCall = newTicketRaw.updated_at
-
         #App.SessionStorage.set(@key, data)
-        @load(data)
+        @load(data, true, true)
 
         # reset article - should not be resubmited on next ticket update
         ticket.article = undefined

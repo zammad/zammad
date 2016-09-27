@@ -1,5 +1,6 @@
 class App.TicketOverview extends App.Controller
   className: 'overviews'
+  activeFocus: 'nav'
 
   constructor: ->
     super
@@ -18,12 +19,22 @@ class App.TicketOverview extends App.Controller
       view: @view
 
     @contentController = new Table
-      el:   elLocal.find('.overview-table')
-      view: @view
+      el:          elLocal.find('.overview-table')
+      view:        @view
+      keyboardOn:  @keyboardOn
+      keyboardOff: @keyboardOff
 
     @html elLocal
 
+    @el.find('.main').on('click', =>
+      @activeFocus = 'overview'
+    )
+    @el.find('.sidebar').on('click', =>
+      @activeFocus = 'nav'
+    )
+
     @bind 'overview:fetch', =>
+      return if !@view
       update = =>
         App.OverviewListCollection.fetch(@view)
       @delay(update, 2800, 'overview:fetch')
@@ -36,6 +47,7 @@ class App.TicketOverview extends App.Controller
     "#ticket/view/#{@view}"
 
   show: (params) =>
+    @keyboardOn()
 
     # highlight navbar
     @navupdate '#ticket/view'
@@ -70,16 +82,109 @@ class App.TicketOverview extends App.Controller
       )
 
   hide: =>
+    @keyboardOff()
+
     if @navBarController
       @navBarController.active(false)
     if @navBarControllerVertical
       @navBarControllerVertical.active(false)
 
+  setPosition: (position) =>
+    @$('.main').scrollTop(position)
+
+  currentPosition: =>
+    @$('.main').scrollTop()
+
   changed: ->
     false
 
   release: ->
-    # no
+    @keyboardOff()
+    super
+
+  keyboardOn: =>
+    $(window).off 'keydown.overview_navigation'
+    $(window).on 'keydown.overview_navigation', @listNavigate
+
+  keyboardOff: ->
+    $(window).off 'keydown.overview_navigation'
+
+  listNavigate: (e) =>
+    if e.keyCode is 38 # up
+      e.preventDefault()
+      @nudge(e, -1)
+      return
+    else if e.keyCode is 40 # down
+      e.preventDefault()
+      @nudge(e, 1)
+      return
+    else if e.keyCode is 32 # space
+      e.preventDefault()
+      if @activeFocus is 'overview'
+        @$('.table-overview table tbody tr.is-hover td.js-checkbox-field label input').first().click()
+    else if e.keyCode is 9 # tab
+      e.preventDefault()
+      if @activeFocus is 'nav'
+        @activeFocus = 'overview'
+        @nudge(e, 1)
+      else
+        @activeFocus = 'nav'
+    else if e.keyCode is 13 # enter
+      if @activeFocus is 'overview'
+        location = @$('.table-overview table tbody tr.is-hover a').first().attr('href')
+        if location
+          @navigate location
+
+  nudge: (e, position) ->
+
+    if @activeFocus is 'overview'
+      items = @$('.table-overview table tbody')
+      current = items.find('tr.is-hover')
+
+      if !current.size()
+        items.find('tr').first().addClass('is-hover')
+        return
+
+      if position is 1
+        next = current.next('tr')
+        if next.size()
+          current.removeClass('is-hover')
+          next.addClass('is-hover')
+      else
+        prev = current.prev('tr')
+        if prev.size()
+          current.removeClass('is-hover')
+          prev.addClass('is-hover')
+
+      if next
+        @scrollToIfNeeded(next, true)
+      if prev
+        @scrollToIfNeeded(prev, true)
+
+    else
+      # get current
+      items = @$('.sidebar')
+      current = items.find('li.active')
+
+      if !current.size()
+        location = items.find('li a').first().attr('href')
+        if location
+          @navigate location
+        return
+
+      if position is 1
+        next = current.next('li')
+        if next.size()
+          @navigate next.find('a').attr('href')
+      else
+        prev = current.prev('li')
+        if prev.size()
+          @navigate prev.find('a').attr('href')
+
+      if next
+        @scrollToIfNeeded(next, true)
+      if prev
+        @scrollToIfNeeded(prev, true)
 
 class Navbar extends App.Controller
   elements:
@@ -204,6 +309,7 @@ class Table extends App.Controller
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
       return if !@authenticateCheck()
+      return if !@view
       @render(App.OverviewListCollection.get(@view))
 
   release: =>
@@ -380,7 +486,7 @@ class Table extends App.Controller
             [ callbackLinkToTicket, callbackTicketTitleAdd ]
         bindCheckbox:
           events:
-            'click':  callbackCheckbox
+            'click': callbackCheckbox
       )
 
     @setSelected(@selected)
@@ -440,10 +546,12 @@ class Table extends App.Controller
 
   settings: (e) =>
     e.preventDefault()
+    @keyboardOff()
     new App.OverviewSettings(
-      overview_id: @overview.id
-      view_mode:   @view_mode
-      container:   @el.closest('.content')
+      overview_id:     @overview.id
+      view_mode:       @view_mode
+      container:       @el.closest('.content')
+      onCloseCallback: @keyboardOn
     )
 
 class BulkForm extends App.Controller
@@ -734,6 +842,10 @@ class App.OverviewSettings extends App.ControllerModal
       autofocus: false
     )
     controller.form
+
+  onClose: =>
+    if @onCloseCallback
+      @onCloseCallback()
 
   onSubmit: (e) =>
     params = @formParam(e.target)

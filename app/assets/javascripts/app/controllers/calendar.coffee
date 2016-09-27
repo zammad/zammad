@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.calendar'
+  header: 'Calendars'
   events:
     'click .js-new':         'new'
     'click .js-edit':        'edit'
@@ -73,7 +74,7 @@ class Index extends App.ControllerContent
   new: =>
     new App.ControllerGenericNew(
       pageData:
-        title: 'Calendars'
+        title: @header
         object: 'Calendar'
         objects: 'Calendars'
       genericObject: 'Calendar'
@@ -87,7 +88,7 @@ class Index extends App.ControllerContent
     new App.ControllerGenericEdit(
       id: id
       pageData:
-        title: 'Calendars'
+        title: @header
         object: 'Calendar'
         objects: 'Calendars'
       genericObject: 'Calendar'

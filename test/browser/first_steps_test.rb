@@ -112,7 +112,7 @@ class FirstStepsTest < TestCase
     click(css: '.active.content a[href="#channels/form"]')
     sleep 2
     switch(
-      css: '#content .js-formSetting',
+      css: '.content.active .js-formSetting',
       type: 'on',
     )
     click(css: '#navigation a[href="#dashboard"]')

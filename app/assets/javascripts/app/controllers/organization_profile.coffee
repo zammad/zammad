@@ -62,6 +62,12 @@ class App.OrganizationProfile extends App.Controller
       genericObject: organization
     )
 
+  setPosition: (position) =>
+    @$('.profile').scrollTop(position)
+
+  currentPosition: =>
+    @$('.profile').scrollTop()
+
 class ActionRow extends App.ObserverController
   model: 'Organization'
   observe:

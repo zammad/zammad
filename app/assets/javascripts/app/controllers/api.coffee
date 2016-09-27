@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.api'
+  header: 'API'
   events:
     'click .action':  'action'
     'change .js-TokenAccess input': 'toggleTokenAccess'
@@ -12,9 +13,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-
-    @title 'API', true
-
     App.Setting.fetchFull(
       @render
       force: false

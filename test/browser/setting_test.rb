@@ -19,7 +19,7 @@ class SettingTest < TestCase
       css: '.language_item [name="locale"]',
       value: 'English (United States)',
     )
-    click(css: '.content button[type="submit"]')
+    click(css: '.content.active button[type="submit"]')
     sleep 2
 
     # change settings
@@ -28,7 +28,7 @@ class SettingTest < TestCase
     click(css: 'a[href="#third_party_auth"]')
     sleep 2
     switch(
-      css: '#content .js-setting[data-name="auth_facebook"]',
+      css: '.content.active .js-setting[data-name="auth_facebook"]',
       type: 'off',
     )
 
@@ -50,7 +50,7 @@ class SettingTest < TestCase
 
     # set yes
     switch(
-      css: '#content .js-setting[data-name="auth_facebook"]',
+      css: '.content.active .js-setting[data-name="auth_facebook"]',
       type: 'on',
     )
 
@@ -124,7 +124,7 @@ class SettingTest < TestCase
     )
     sleep 2
     switch(
-      css: '#content .js-setting[data-name="auth_facebook"]',
+      css: '.content.active .js-setting[data-name="auth_facebook"]',
       type: 'off',
     )
 

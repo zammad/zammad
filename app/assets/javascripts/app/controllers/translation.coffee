@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.translation'
+  header: 'Translations'
   events:
     'click .js-pushChanges': 'pushChanges'
     'click .js-resetChanges': 'resetChanges'
@@ -7,8 +8,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-
-    @title 'Translations', true
     @locale = App.i18n.get()
     @render()
     @bind('i18n:translation_update_todo', =>
@@ -80,7 +79,13 @@ class Index extends App.ControllerContent
         @toggleAction()
     )
 
+  hide: =>
+    @rerender()
+
   release: =>
+    @rerender()
+
+  rerender: =>
     rerender = ->
       App.Event.trigger('ui:rerender')
     if @translationList && @translationList.changes()

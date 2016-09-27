@@ -1,11 +1,11 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'user_preferences.password'
+  header: 'Password'
   events:
     'submit form': 'update'
 
   constructor: ->
     super
-    @title 'Password', true
     @render()
 
   render: =>

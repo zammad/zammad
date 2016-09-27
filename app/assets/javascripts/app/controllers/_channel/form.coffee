@@ -1,6 +1,7 @@
 # coffeelint: disable=no_unnecessary_double_quotes
-class App.ChannelForm extends App.ControllerContent
+class App.ChannelForm extends App.ControllerSubContent
   requiredPermission: 'admin.channel_formular'
+  header: 'Form'
   events:
     'change form.js-params': 'updateParams'
     'keyup form.js-params': 'updateParams'
@@ -12,7 +13,6 @@ class App.ChannelForm extends App.ControllerContent
 
   constructor: ->
     super
-    @title 'Form'
     App.Setting.fetchFull(
       @render
       force: false

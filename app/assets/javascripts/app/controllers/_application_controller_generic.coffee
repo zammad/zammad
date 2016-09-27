@@ -373,19 +373,65 @@ class App.ControllerTabs extends App.Controller
     @lastActiveTab = $(e.target).attr('href')
     @Config.set('lastTab', @lastActiveTab)
 
-class App.ControllerNavSidbar extends App.ControllerContent
+class App.ControllerNavSidbar extends App.Controller
   constructor: (params) ->
     super
-
-    @navupdate ''
 
     if @authenticateRequired
       @authenticateCheckRedirect()
 
-    @params = params
+    @user = App.User.find(App.Session.get('id'))
+
+    @render(true)
+
+    @bind('ui:rerender',
+      =>
+        @render(true)
+        @updateNavigation(true)
+    )
+
+  show: (params) =>
+    @navupdate ''
+    @shown = true
+    for key, value of params
+      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+        @[key] = value
+    @updateNavigation()
+    if @activeController && _.isFunction(@activeController.show)
+      @activeController.show(params)
+
+  hide: =>
+    @shown = false
+    if @activeController && _.isFunction(@activeController.hide)
+      @activeController.hide()
+
+  render: (force = false) =>
+    groups = @groupsSorted()
+    selectedItem = @selectedItem(groups)
+
+    @html App.view('generic/navbar_level2/index')(
+      className: @configKey
+    )
+    @$('.sidebar').html App.view('generic/navbar_level2/navbar')(
+      groups: groups
+      className: @configKey
+      selectedItem: selectedItem
+    )
+
+  updateNavigation: (force) =>
+    groups = @groupsSorted()
+    selectedItem = @selectedItem(groups)
+    return if !selectedItem
+    return if !force && @lastTarget && selectedItem.target is @lastTarget
+    @lastTarget = selectedItem.target
+    @$('.sidebar li').removeClass('active')
+    @$(".sidebar li a[href=\"#{selectedItem.target}\"]").parent().addClass('active')
+
+    @executeController(selectedItem)
+
+  groupsSorted: =>
 
     # get accessable groups
-    user = App.User.find(App.Session.get('id'))
     groups = App.Config.get(@configKey)
     groupsUnsorted = []
     for key, item of groups
@@ -395,13 +441,15 @@ class App.ControllerNavSidbar extends App.ControllerContent
         else
           match = false
           for permissionName in item.permission
-            if !match && user.permission(permissionName)
+            if !match && @user.permission(permissionName)
               match = true
               groupsUnsorted.push item
-    @groupsSorted = _.sortBy(groupsUnsorted, (item) -> return item.prio)
+    _.sortBy(groupsUnsorted, (item) -> return item.prio)
+
+  selectedItem: (groups) =>
 
     # get items of group
-    for group in @groupsSorted
+    for group in groups
       items = App.Config.get(@configKey)
       itemsUnsorted = []
       for key, item of items
@@ -412,76 +460,57 @@ class App.ControllerNavSidbar extends App.ControllerContent
             else
               match = false
               for permissionName in item.permission
-                if !match && user && user.permission(permissionName)
+                if !match && @user && @user.permission(permissionName)
                   match = true
                   itemsUnsorted.push item
 
       group.items = _.sortBy(itemsUnsorted, (item) -> return item.prio)
 
-    # check last selected item
-    selectedItem = undefined
-    selectedItemMeta = App.Config.get("Runtime::#{@configKey}")
-    keepLastMenuFor = 1000 * 60 * 10
-    if selectedItemMeta && selectedItemMeta.date && new Date < new Date( selectedItemMeta.date.getTime() + keepLastMenuFor )
-      selectedItem = selectedItemMeta.selectedItem
-
     # set active item
-    for group in @groupsSorted
+    selectedItem = undefined
+    for group in groups
       if group.items
         for item in group.items
-          if !@target && !selectedItem
-            item.active = true
-            selectedItem = item
-          else if @target && item.target is window.location.hash
-            item.active = true
-            selectedItem = item
-          else if @target && window.location.hash.match(item.target)
+          if item.target.match("/#{@target}$")
             item.active = true
             selectedItem = item
           else
             item.active = false
 
-    @renderContainer(selectedItem)
-    @renderNavBar(selectedItem)
+    if !selectedItem
+      for group in groups
+        break if selectedItem
+        if group.items
+          for item in group.items
+            item.active = true
+            selectedItem = item
+            break
 
-    @bind(
-      'ui:rerender'
-      =>
-        @renderNavBar(selectedItem)
-    )
-
-  renderContainer: =>
-    return if $( ".#{@configKey}" )[0]
-    @html App.view('generic/navbar_level2/index')(
-      className: @configKey
-    )
-
-  renderNavBar: (selectedItem) =>
-
-    # remember latest selected item
-    selectedItemMeta =
-      selectedItem: selectedItem
-      date: new Date
-    App.Config.set("Runtime::#{@configKey}", selectedItemMeta)
-
-    @$('.sidebar').html App.view('generic/navbar_level2/navbar')(
-      groups:     @groupsSorted
-      className:  @configKey
-    )
-    if selectedItem
-      @$('li').removeClass('active')
-      @$("a[href=\"#{selectedItem.target}\"]").parent().addClass('active')
-      @executeController(selectedItem)
+    selectedItem
 
   executeController: (selectedItem) =>
 
-    # in case of rerendering
-    if @activeController && @activeController.render
-      @activeController.render()
-      return
+    if @activeController
+      @activeController.el.remove()
+      @activeController = undefined
 
-    @params.el = @$('.main')
-    @activeController = new selectedItem.controller(@params)
+    @$('.main').append('<div>')
+    @activeController = new selectedItem.controller(
+      el: @$('.main div')
+    )
+
+  setPosition: (position) =>
+    return if @shown
+    return if !position
+    if position.main
+      @$('.main').scrollTop(position.main)
+    if position.main
+      @$('.sidebar').scrollTop(position.sidebar)
+
+  currentPosition: =>
+    data =
+      main: @$('.main').scrollTop()
+      sidebar: @$('.sidebar').scrollTop()
 
 class App.GenericHistory extends App.ControllerModal
   buttonClose: true

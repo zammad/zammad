@@ -1193,7 +1193,7 @@ class TestCase < Test::Unit::TestCase
 
   file_upload(
     browser: browser1,
-    css:     '.active .attachmentPlaceholder-inputHolder input'
+    css:     '.content.active .attachmentPlaceholder-inputHolder input'
     files:   ['path/in/home/some_file.ext'], # 'test/fixtures/test1.pdf'
   )
 
@@ -1571,12 +1571,12 @@ wait untill text in selector disabppears
     )
     click(
       browser: instance,
-      css:  'a[href="#manage/overviews"]',
+      css:  '.content.active a[href="#manage/overviews"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  '#content a[data-type="new"]',
+      css:  '.content.active a[data-type="new"]',
       mute_log: true,
     )
     modal_ready(browser: instance)
@@ -1669,16 +1669,16 @@ wait untill text in selector disabppears
 
     click(
       browser: instance,
-      css:  'a[href="#manage"]',
+      css: 'a[href="#manage"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a[href="#manage/overviews"]',
+      css: '.content.active a[href="#manage/overviews"]',
       mute_log: true,
     )
 
-    instance.execute_script("$(\"#content td:contains('#{data[:name]}')\").first().click()")
+    instance.execute_script("$(\".content.active td:contains('#{data[:name]}')\").first().click()")
     sleep 2
 
     if data[:name]
@@ -1797,18 +1797,18 @@ wait untill text in selector disabppears
 
     click(
       browser: instance,
-      css:  'a[href="#new"]',
+      css: 'a[href="#new"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a[href="#ticket/create"]',
+      css: 'a[href="#ticket/create"]',
       mute_log: true,
     )
 
     found = false
     7.times {
-      element = instance.find_elements(css: '.active .newTicket')[0]
+      element = instance.find_elements(css: '.content.active .newTicket')[0]
       if element
         found = true
         break
@@ -1824,23 +1824,23 @@ wait untill text in selector disabppears
       if data[:group] == '-NONE-'
 
         # check if owner selection exists
-        count = instance.find_elements(css: '.active .newTicket select[name="group_id"] option').count
+        count = instance.find_elements(css: '.content.active .newTicket select[name="group_id"] option').count
         assert_equal(0, count, 'owner selection should not be showm')
 
         # check count of agents, should be only 3 / - selection + master + agent on init screen
-        count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
+        count = instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').count
         assert_equal(3, count, 'check if owner selection is - selection + master + agent per default')
 
       else
 
         # check count of agents, should be only 1 / - selection on init screen
         if !params[:disable_group_check]
-          count = instance.find_elements(css: '.active .newTicket select[name="owner_id"] option').count
+          count = instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').count
           assert_equal(1, count, 'check if owner selection is empty per default')
         end
         select(
           browser:  instance,
-          css:      '.active .newTicket select[name="group_id"]',
+          css:      '.content.active .newTicket select[name="group_id"]',
           value:    data[:group],
           mute_log: true,
         )
@@ -1850,7 +1850,7 @@ wait untill text in selector disabppears
     if data[:priority]
       select(
         browser:  instance,
-        css:      '.active .newTicket select[name="priority_id"]',
+        css:      '.content.active .newTicket select[name="priority_id"]',
         value:    data[:priority],
         mute_log: true,
       )
@@ -1858,7 +1858,7 @@ wait untill text in selector disabppears
     if data[:state]
       select(
         browser:  instance,
-        css:      '.active .newTicket select[name="state_id"]',
+        css:      '.content.active .newTicket select[name="state_id"]',
         value:    data[:state],
         mute_log: true,
       )
@@ -1866,7 +1866,7 @@ wait untill text in selector disabppears
     if data[:title]
       set(
         browser:  instance,
-        css:      '.active .newTicket input[name="title"]',
+        css:      '.content.active .newTicket input[name="title"]',
         value:    data[:title],
         clear:    true,
         mute_log: true,
@@ -1875,20 +1875,20 @@ wait untill text in selector disabppears
     if data[:body]
       set(
         browser:  instance,
-        css:      '.active .newTicket div[data-name=body]',
+        css:      '.content.active .newTicket div[data-name=body]',
         value:    data[:body],
         clear:    true,
         mute_log: true,
       )
     end
     if data[:customer]
-      element = instance.find_elements(css: '.active .newTicket input[name="customer_id_completion"]')[0]
+      element = instance.find_elements(css: '.content.active .newTicket input[name="customer_id_completion"]')[0]
       element.click
       element.clear
 
       # ff issue, sometimes focus event gets dropped
       # if drowdown is not open, try it again
-      if !instance.find_elements(css: '.active .newTicket .js-recipientDropdown.open')[0]
+      if !instance.find_elements(css: '.content.active .newTicket .js-recipientDropdown.open')[0]
         instance.execute_script('$(".active .newTicket .js-recipientDropdown").addClass("open")')
       end
 
@@ -1899,8 +1899,8 @@ wait untill text in selector disabppears
       sleep 0.4
       # ff issue, sometimes enter event gets dropped
       # take user manually
-      if instance.find_elements(css: '.active .newTicket .js-recipientDropdown.open')[0]
-        instance.find_elements(css: '.active .newTicket .recipientList-entry.js-user.is-active')[0].click
+      if instance.find_elements(css: '.content.active .newTicket .js-recipientDropdown.open')[0]
+        instance.find_elements(css: '.content.active .newTicket .recipientList-entry.js-user.is-active')[0].click
         sleep 0.4
       end
     end
@@ -1909,7 +1909,7 @@ wait untill text in selector disabppears
       params[:custom_data_select].each { |local_key, local_value|
         select(
           browser: instance,
-          css:     ".active .newTicket select[name=\"#{local_key}\"]",
+          css:     ".content.active .newTicket select[name=\"#{local_key}\"]",
           value:   local_value,
         )
       }
@@ -1918,7 +1918,7 @@ wait untill text in selector disabppears
       params[:custom_data_input].each { |local_key, local_value|
         set(
           browser: instance,
-          css:     ".active .newTicket input[name=\"#{local_key}\"]",
+          css:     ".content.active .newTicket input[name=\"#{local_key}\"]",
           value:   local_value,
           clear:   true,
         )
@@ -1928,7 +1928,7 @@ wait untill text in selector disabppears
     if data[:attachment]
       file_upload(
         browser: instance,
-        css: '#content .text-1',
+        css: '.content.active .text-1',
         value: 'some text',
       )
     end
@@ -1941,7 +1941,7 @@ wait untill text in selector disabppears
     #instance.execute_script('$(".content.active .newTicket form").submit();')
     click(
       browser: instance,
-      css:  '.active .newTicket button.js-submit',
+      css:  '.content.active .newTicket button.js-submit',
       mute_log: true,
     )
 
@@ -1954,7 +1954,7 @@ wait untill text in selector disabppears
         id.gsub!(//,)
         id.gsub!(%r{^.+?/(\d+)$}, '\\1')
 
-        element = instance.find_elements(css: '.active .ticketZoom-header .ticket-number')[0]
+        element = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0]
         if element
           number = element.text
           ticket = {
@@ -2045,10 +2045,10 @@ wait untill text in selector disabppears
     if data[:customer]
 
       # select tab
-      click(browser: instance, css: '.active .tabsSidebar-tab[data-tab="customer"]')
+      click(browser: instance, css: '.content.active .tabsSidebar-tab[data-tab="customer"]')
 
-      click(browser: instance, css: '.active div[data-tab="customer"] .js-actions .icon-arrow-down')
-      click(browser: instance, css: '.active div[data-tab="customer"] .js-actions [data-type="customer-change"]')
+      click(browser: instance, css: '.content.active div[data-tab="customer"] .js-actions .icon-arrow-down')
+      click(browser: instance, css: '.content.active div[data-tab="customer"] .js-actions [data-type="customer-change"]')
       watch_for(
         browser: instance,
         css: '.modal',
@@ -2072,12 +2072,12 @@ wait untill text in selector disabppears
 
       watch_for(
         browser: instance,
-        css: '.active .tabsSidebar',
+        css: '.content.active .tabsSidebar',
         value: data[:customer],
       )
 
       # select tab
-      click(browser: instance, css: '.active .tabsSidebar-tab[data-tab="ticket"]')
+      click(browser: instance, css: '.content.active .tabsSidebar-tab[data-tab="ticket"]')
 
     end
     if data[:body]
@@ -2102,17 +2102,17 @@ wait untill text in selector disabppears
       if data[:group] == '-NONE-'
 
         # check if owner selection exists
-        count = instance.find_elements(css: '.active .sidebar select[name="group_id"] option').count
+        count = instance.find_elements(css: '.content.active .sidebar select[name="group_id"] option').count
         assert_equal(0, count, 'owner selection should not be showm')
 
         # check count of agents, should be only 3 / - selection + master + agent on init screen
-        count = instance.find_elements(css: '.active .sidebar select[name="owner_id"] option').count
+        count = instance.find_elements(css: '.content.active .sidebar select[name="owner_id"] option').count
         assert_equal(3, count, 'check if owner selection is - selection + master + agent per default')
 
       else
         select(
           browser:  instance,
-          css:      '.active .sidebar select[name="group_id"]',
+          css:      '.content.active .sidebar select[name="group_id"]',
           value:    data[:group],
           mute_log: true,
         )
@@ -2123,7 +2123,7 @@ wait untill text in selector disabppears
     if data[:priority]
       select(
         browser:  instance,
-        css:      '.active .sidebar select[name="priority_id"]',
+        css:      '.content.active .sidebar select[name="priority_id"]',
         value:    data[:priority],
         mute_log: true,
       )
@@ -2132,7 +2132,7 @@ wait untill text in selector disabppears
     if data[:state]
       select(
         browser:  instance,
-        css:      '.active .sidebar select[name="state_id"]',
+        css:      '.content.active .sidebar select[name="state_id"]',
         value:    data[:state],
         mute_log: true,
       )
@@ -2313,7 +2313,7 @@ wait untill text in selector disabppears
     screenshot(browser: instance, comment: 'ticket_open_by_overview_search')
     instance.find_elements(partial_link_text: params[:number])[0].click
     sleep 1
-    number = instance.find_elements(css: '.active .ticketZoom-header .ticket-number')[0].text
+    number = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0].text
     if number !~ /#{params[:number]}/
       screenshot(browser: instance, comment: 'ticket_open_by_overview_failed')
       raise "unable to search/find ticket #{params[:number]}!"
@@ -2359,7 +2359,7 @@ wait untill text in selector disabppears
     #instance.find_element(partial_link_text: params[:number] } ).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:number]}') .nav-tab-icon\").first().click()")
     sleep 1
-    number = instance.find_elements(css: '.active .ticketZoom-header .ticket-number')[0].text
+    number = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0].text
     if number !~ /#{params[:number]}/
       screenshot(browser: instance, comment: 'ticket_open_by_search_failed')
       raise "unable to search/find ticket #{params[:number]}!"
@@ -2395,7 +2395,7 @@ wait untill text in selector disabppears
     #instance.find_element(partial_link_text: params[:title] } ).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
     sleep 1
-    title = instance.find_elements(css: '.active .ticketZoom-header .js-objectTitle')[0].text
+    title = instance.find_elements(css: '.content.active .ticketZoom-header .js-objectTitle')[0].text
     if title !~ /#{params[:title]}/
       screenshot(browser: instance, comment: 'ticket_open_by_title_failed')
       raise "unable to search/find ticket #{params[:title]}!"
@@ -2483,7 +2483,7 @@ wait untill text in selector disabppears
     #instance.find_element(partial_link_text: params[:value] } ).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
-    name = instance.find_elements(css: '.active h1')[0].text
+    name = instance.find_elements(css: '.content.active h1')[0].text
     if name !~ /#{params[:value]}/
       screenshot(browser: instance, comment: 'organization_open_by_search_failed')
       raise "unable to search/find org #{params[:value]}!"
@@ -2518,7 +2518,7 @@ wait untill text in selector disabppears
     #instance.find_element(partial_link_text: params[:value]).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
-    name = instance.find_elements(css: '.active h1')[0].text
+    name = instance.find_elements(css: '.content.active h1')[0].text
     if name !~ /#{params[:value]}/
       screenshot(browser: instance, comment: 'user_open_by_search_failed')
       raise "unable to search/find user #{params[:value]}!"
@@ -2557,12 +2557,12 @@ wait untill text in selector disabppears
     )
     click(
       browser: instance,
-      css:  'a[href="#manage/users"]',
+      css:  '.content.active a[href="#manage/users"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a[data-type="new"]',
+      css:  '.content.active a[data-type="new"]',
       mute_log: true,
     )
     modal_ready(browser: instance)
@@ -2630,12 +2630,12 @@ wait untill text in selector disabppears
     )
     click(
       browser: instance,
-      css:  'a[href="#manage/slas"]',
+      css:  '.content.active a[href="#manage/slas"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a.js-new',
+      css:  '.content.active a.js-new',
       mute_log: true,
     )
     modal_ready(browser: instance)
@@ -2688,12 +2688,12 @@ wait untill text in selector disabppears
     )
     click(
       browser: instance,
-      css:  'a[href="#manage/text_modules"]',
+      css:  '.content.active a[href="#manage/text_modules"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a[data-type="new"]',
+      css:  '.content.active a[data-type="new"]',
       mute_log: true,
     )
     modal_ready(browser: instance)
@@ -2749,23 +2749,23 @@ wait untill text in selector disabppears
 
     click(
       browser: instance,
-      css:  'a[href="#manage"]',
+      css: 'a[href="#manage"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a[href="#channels/email"]',
+      css: '.content.active a[href="#channels/email"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a[href="#c-signature"]',
+      css: '.content.active a[href="#c-signature"]',
       mute_log: true,
     )
     sleep 4
     click(
       browser: instance,
-      css:  '#content #c-signature a[data-type="new"]',
+      css: '.content.active #c-signature a[data-type="new"]',
       mute_log: true,
     )
     modal_ready(browser: instance)
@@ -2819,17 +2819,17 @@ wait untill text in selector disabppears
 
     click(
       browser: instance,
-      css:  'a[href="#manage"]',
+      css: 'a[href="#manage"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a[href="#manage/groups"]',
+      css: '.content.active a[href="#manage/groups"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a[data-type="new"]',
+      css: '.content.active a[data-type="new"]',
       mute_log: true,
     )
     modal_ready(browser: instance)
@@ -2859,14 +2859,14 @@ wait untill text in selector disabppears
           data[:member].each { |login|
             instance.find_elements(css: 'a[href="#manage"]')[0].click
             sleep 1
-            instance.find_elements(css: 'a[href="#manage/users"]')[0].click
+            instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
             sleep 3
-            element = instance.find_elements(css: '#content [name="search"]')[0]
+            element = instance.find_elements(css: '.content.active [name="search"]')[0]
             element.clear
             element.send_keys(login)
             sleep 3
-            #instance.find_elements(:css => '#content table [data-id]')[0].click
-            instance.execute_script('$("#content table [data-id] td").first().click()')
+            #instance.find_elements(:css => '.content.active table [data-id]')[0].click
+            instance.execute_script('$(".content.active  table [data-id] td").first().click()')
             sleep 3
             #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
             instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
@@ -2915,12 +2915,12 @@ wait untill text in selector disabppears
     )
     click(
       browser: instance,
-      css:  'a[href="#manage/roles"]',
+      css: '.content.active a[href="#manage/roles"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a[data-type="new"]',
+      css: '.content.active a[data-type="new"]',
       mute_log: true,
     )
     modal_ready(browser: instance)
@@ -2961,14 +2961,14 @@ wait untill text in selector disabppears
           data[:member].each { |login|
             instance.find_elements(css: 'a[href="#manage"]')[0].click
             sleep 1
-            instance.find_elements(css: 'a[href="#manage/users"]')[0].click
+            instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
             sleep 3
-            element = instance.find_elements(css: '#content [name="search"]')[0]
+            element = instance.find_elements(css: '.content.active  [name="search"]')[0]
             element.clear
             element.send_keys(login)
             sleep 3
-            #instance.find_elements(:css => '#content table [data-id]')[0].click
-            instance.execute_script('$("#content table [data-id] td").first().click()')
+            #instance.find_elements(:css => '.content.active table [data-id]')[0].click
+            instance.execute_script('$(".content.active table [data-id] td").first().click()')
             sleep 3
             #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
             instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
@@ -3017,10 +3017,10 @@ wait untill text in selector disabppears
     )
     click(
       browser: instance,
-      css:  'a[href="#manage/roles"]',
+      css:  '.content.active a[href="#manage/roles"]',
       mute_log: true,
     )
-    instance.execute_script('$(\'#content table tr td:contains(" ' + data[:name] + '")\').first().click()')
+    instance.execute_script('$(\'.content.active table tr td:contains(" ' + data[:name] + '")\').first().click()')
 
     modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=name]')[0]
@@ -3070,14 +3070,14 @@ wait untill text in selector disabppears
           data[:member].each { |login|
             instance.find_elements(css: 'a[href="#manage"]')[0].click
             sleep 1
-            instance.find_elements(css: 'a[href="#manage/users"]')[0].click
+            instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
             sleep 3
-            element = instance.find_elements(css: '#content [name="search"]')[0]
+            element = instance.find_elements(css: '.content.active [name="search"]')[0]
             element.clear
             element.send_keys(login)
             sleep 3
-            #instance.find_elements(:css => '#content table [data-id]')[0].click
-            instance.execute_script('$("#content table [data-id] td").first().click()')
+            #instance.find_elements(:css => '.content.active table [data-id]')[0].click
+            instance.execute_script('$(".content.active table [data-id] td").first().click()')
             sleep 3
             #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
             instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
@@ -3204,13 +3204,13 @@ wait untill text in selector disabppears
     )
     click(
       browser: instance,
-      css:  'a[href="#system/object_manager"]',
+      css:  '.content.active a[href="#system/object_manager"]',
       mute_log: true,
     )
     sleep 4
     click(
       browser: instance,
-      css:  '#content .js-new',
+      css:  '.content.active .js-new',
       mute_log: true,
     )
     modal_ready(browser: instance)
@@ -3316,20 +3316,20 @@ wait untill text in selector disabppears
 
     click(
       browser: instance,
-      css:  'a[href="#manage"]',
+      css: 'a[href="#manage"]',
       mute_log: true,
     )
     click(
       browser: instance,
-      css:  'a[href="#system/object_manager"]',
+      css: '.content.active a[href="#system/object_manager"]',
       mute_log: true,
     )
     sleep 4
 
     instance = params[:browser] || @browser
     data     = params[:data]
-    r = instance.execute_script("$(\"#content td:contains('#{data[:name]}')\").first().closest('tr').find('.js-delete').click()")
-    p "rrr #{r.inspect}"
+    r = instance.execute_script("$(\".content.active td:contains('#{data[:name]}')\").first().closest('tr').find('.js-delete').click()")
+    #p "rrr #{r.inspect}"
   end
 
 =begin
@@ -3353,17 +3353,17 @@ wait untill text in selector disabppears
     )
     click(
       browser: instance,
-      css:  'a[href="#system/object_manager"]',
+      css:  '.content.active a[href="#system/object_manager"]',
       mute_log: true,
     )
     sleep 4
 
-    element = instance.find_elements(css: '#content .js-discard').first
+    element = instance.find_elements(css: '.content.active .js-discard').first
     element.click
 
     watch_for_disappear(
       browser: instance,
-      css:     '#content .js-discard',
+      css:     '.content.active .js-discard',
     )
 
   end

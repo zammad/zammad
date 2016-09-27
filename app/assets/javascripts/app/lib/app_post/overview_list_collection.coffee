@@ -39,7 +39,7 @@ class _Singleton
     #    view: view
     #  )
     #  return
-
+    throw 'No view to fetch list!' if !view
     App.OverviewIndexCollection.fetch()
     return if @fetchActive[view]
     @fetchActive[view] = true

@@ -1,11 +1,11 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.session'
+  header: 'Sessions'
   events:
     'click .js-delete': 'destroy'
 
   constructor: ->
     super
-    @title 'Sessions', true
     @load()
     @interval(
       =>

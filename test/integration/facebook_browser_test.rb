@@ -43,71 +43,71 @@ class FacebookBrowserTest < TestCase
     tasks_close_all()
 
     click(css: 'a[href="#manage"]')
-    click(css: 'a[href="#channels/facebook"]')
+    click(css: '.content.active a[href="#channels/facebook"]')
 
-    click(css: '#content .js-configApp')
+    click(css: '.content.active .js-configApp')
     modal_ready()
     set(
-      css: '#content .modal [name=application_id]',
+      css: '.content.active .modal [name=application_id]',
       value: app_id,
     )
     set(
-      css: '#content .modal [name=application_secret]',
+      css: '.content.active .modal [name=application_secret]',
       value: 'wrong',
     )
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal .js-submit')
 
     watch_for(
-      css: '#content .modal .alert',
+      css: '.content.active .modal .alert',
       value: 'Error',
     )
 
     set(
-      css: '#content .modal [name=application_secret]',
+      css: '.content.active .modal [name=application_secret]',
       value: app_secret,
     )
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal .js-submit')
 
     watch_for_disappear(
-      css: '#content .modal .alert',
+      css: '.content.active .modal .alert',
       value: 'Error',
     )
 
     watch_for(
-      css: '#content .js-new',
+      css: '.content.active .js-new',
       value: 'add account',
     )
 
-    click(css: '#content .js-configApp')
+    click(css: '.content.active .js-configApp')
     modal_ready()
     set(
-      css: '#content .modal [name=application_secret]',
+      css: '.content.active .modal [name=application_secret]',
       value: 'wrong',
     )
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal .js-submit')
 
     watch_for(
-      css: '#content .modal .alert',
+      css: '.content.active .modal .alert',
       value: 'Error',
     )
 
     set(
-      css: '#content .modal [name=application_secret]',
+      css: '.content.active .modal [name=application_secret]',
       value: app_secret,
     )
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal .js-submit')
 
     watch_for_disappear(
-      css: '#content .modal .alert',
+      css: '.content.active .modal .alert',
       value: 'Error',
     )
 
     watch_for(
-      css: '#content .js-new',
+      css: '.content.active .js-new',
       value: 'add account',
     )
 
-    click(css: '#content .js-new')
+    click(css: '.content.active .js-new')
 
     watch_for(
       css: 'body',
@@ -131,7 +131,7 @@ class FacebookBrowserTest < TestCase
     #sleep 10
 
     #watch_for(
-    #  css: '#content .modal',
+    #  css: '.content.active .modal',
     #  value: '',
     #)
 
@@ -140,44 +140,44 @@ class FacebookBrowserTest < TestCase
       value: 'Dashboard',
     )
 
-    select(css: '#content .modal [name="pages::' + page_id + '::group_id"]', value: 'Users')
+    select(css: '.content.active .modal [name="pages::' + page_id + '::group_id"]', value: 'Users')
     sleep 1
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal .js-submit')
     sleep 5
 
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: 'Hansi Merkur',
     )
     exists(
-      css: '#content .main .action:nth-child(1)'
+      css: '.content.active .main .action:nth-child(1)'
     )
     exists_not(
-      css: '#content .main .action:nth-child(2)'
+      css: '.content.active .main .action:nth-child(2)'
     )
 
-    click(css: '#content .js-new')
+    click(css: '.content.active .js-new')
 
     sleep 10
 
     #click(css: '#login_button_inline')
 
     #watch_for(
-    #  css: '#content .modal',
+    #  css: '.content.active .modal',
     #  value: 'Search Terms',
     #)
 
-    click(css: '#content .modal .js-close')
+    click(css: '.content.active .modal .js-close')
 
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: 'Hansi Merkur',
     )
     exists(
-      css: '#content .main .action:nth-child(1)'
+      css: '.content.active .main .action:nth-child(1)'
     )
     exists_not(
-      css: '#content .main .action:nth-child(2)'
+      css: '.content.active .main .action:nth-child(2)'
     )
 
     # watch till post is in app

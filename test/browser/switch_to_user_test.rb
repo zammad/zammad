@@ -12,18 +12,18 @@ class SwitchToUserTest < TestCase
     tasks_close_all()
 
     click(css: 'a[href="#manage"]')
-    click(css: 'a[href="#manage/users"]')
+    click(css: '.content.active a[href="#manage/users"]')
 
     set(
-      css:   '#content .js-search',
+      css:   '.content.active .js-search',
       value: 'nicole',
     )
     sleep 3
 
-    @browser.mouse.move_to(@browser.find_elements({ css: '#content .table-overview tbody tr:first-child' } )[0])
+    @browser.mouse.move_to(@browser.find_elements({ css: '.content.active .table-overview tbody tr:first-child' } )[0])
     sleep 0.5
     click(
-      css: '#content .icon-switchView',
+      css: '.content.active .icon-switchView',
     )
     sleep 3
 

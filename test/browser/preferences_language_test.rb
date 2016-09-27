@@ -50,7 +50,7 @@ class PreferencesLanguageTest < TestCase
       css: '.language_item [name="locale"]',
       value: 'Deutsch',
     )
-    click(css: '.content button[type="submit"]')
+    click(css: '.content.active button[type="submit"]')
     watch_for(
       css: 'body',
       value: 'Sprache',
@@ -163,7 +163,7 @@ class PreferencesLanguageTest < TestCase
       css: '.language_item [name="locale"]',
       value: 'English (United States)',
     )
-    click(css: '.content button[type="submit"]')
+    click(css: '.content.active button[type="submit"]')
     sleep 2
     watch_for(
       css: 'body',
@@ -279,7 +279,7 @@ class PreferencesLanguageTest < TestCase
       css: '.language_item [name="locale"]',
       value: 'Deutsch',
     )
-    click(css: '.content button[type="submit"]')
+    click(css: '.content.active button[type="submit"]')
     sleep 4
     watch_for(
       css: 'body',
@@ -324,7 +324,7 @@ class PreferencesLanguageTest < TestCase
       css: '.language_item [name="locale"]',
       value: 'English (United States)',
     )
-    click(css: '.content button[type="submit"]')
+    click(css: '.content.active button[type="submit"]')
     sleep 2
     watch_for(
       css: 'body',

@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.tag'
+  header: 'Tags'
   events:
     'change .js-newTagSetting input': 'setTagNew'
     'submit .js-create': 'create'
@@ -9,7 +10,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-    @title 'Tags', true
     @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
 
   release: =>
@@ -27,7 +27,6 @@ class Index extends App.ControllerContent
 
   setTagNew: (e) =>
     value = @tagNewSetting.prop('checked')
-    console.log('aa', value)
     App.Setting.set('tag_new', value)
 
   create: (e) =>

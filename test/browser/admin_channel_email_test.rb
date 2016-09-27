@@ -21,9 +21,9 @@ class AdminChannelEmailTest < TestCase
     tasks_close_all()
 
     click(css: 'a[href="#manage"]')
-    click(css: 'a[href="#channels/email"]')
+    click(css: '.content.active a[href="#channels/email"]')
 
-    click(css: '#content .js-channelNew')
+    click(css: '.content.active .js-channelNew')
 
     modal_ready()
 
@@ -55,15 +55,15 @@ class AdminChannelEmailTest < TestCase
 
     # delete all channels
     loop do
-      break if !@browser.find_elements(css: '#content .js-channelDelete')[0]
-      click(css: '#content .js-channelDelete')
+      break if !@browser.find_elements(css: '.content.active .js-channelDelete')[0]
+      click(css: '.content.active .js-channelDelete')
       sleep 2
       click(css: '.modal .js-submit')
       sleep 2
     end
 
     # re-create
-    click(css: '#content .js-channelNew')
+    click(css: '.content.active .js-channelNew')
 
     modal_ready()
 
@@ -93,12 +93,12 @@ class AdminChannelEmailTest < TestCase
     exists_not(css: '.modal')
 
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: mailbox_user,
     )
 
     # set invalid folder
-    click(css: '#content .js-editInbound')
+    click(css: '.content.active .js-editInbound')
 
     modal_ready()
 

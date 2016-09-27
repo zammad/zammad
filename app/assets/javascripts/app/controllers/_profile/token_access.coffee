@@ -1,12 +1,12 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'user_preferences.access_token'
+  header: 'Token Access'
   events:
     'click .js-delete': 'delete'
     'click .js-create': 'create'
 
   constructor: ->
     super
-    @title 'Token Access', true
 
     @load()
     @interval(

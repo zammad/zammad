@@ -63,6 +63,12 @@ class App.UserProfile extends App.Controller
       genericObject: user
     )
 
+  setPosition: (position) =>
+    @$('.profile').scrollTop(position)
+
+  currentPosition: =>
+    @$('.profile').scrollTop()
+
 class ActionRow extends App.ObserverController
   model: 'User'
   observe:

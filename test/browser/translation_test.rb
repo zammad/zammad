@@ -18,7 +18,7 @@ class TranslationTest < TestCase
       css: '.language_item [name="locale"]',
       value: 'English (United States)',
     )
-    click(css: '.content button[type="submit"]')
+    click(css: '.content.active button[type="submit"]')
     sleep 2
     watch_for(
       css: 'body',
@@ -29,7 +29,7 @@ class TranslationTest < TestCase
     click(css: 'a[href="#system/translation"]')
 
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: 'English is the source language, so we have nothing to translate',
     )
 
@@ -40,7 +40,7 @@ class TranslationTest < TestCase
       css: '.language_item [name="locale"]',
       value: 'Deutsch',
     )
-    click(css: '.content button[type="submit"]')
+    click(css: '.content.active button[type="submit"]')
     watch_for(
       css: 'body',
       value: 'Sprache',
@@ -51,7 +51,7 @@ class TranslationTest < TestCase
 
     notify_close(optional: true) # to be not in click area
     set(
-      css: '#content input.js-Item[data-source="Translations"]',
+      css: '.content.active input.js-Item[data-source="Translations"]',
       value: 'Übersetzung2',
     )
     sleep 5 # wait until nofify is gone
@@ -65,11 +65,11 @@ class TranslationTest < TestCase
     click(css: 'a[href="#system/translation"]')
 
     match(
-      css: '#content .sidebar',
+      css: '.content.active .sidebar',
       value: 'Übersetzung2',
     )
     match(
-      css: '#content input.js-Item[data-source="Translations"]',
+      css: '.content.active input.js-Item[data-source="Translations"]',
       value: 'Übersetzung2',
     )
 
@@ -79,11 +79,11 @@ class TranslationTest < TestCase
     sleep 5
 
     match(
-      css: '#content .sidebar',
+      css: '.content.active .sidebar',
       value: 'Übersetzung2',
     )
     match_not(
-      css: '#content input.js-Item[data-source="Translations"]',
+      css: '.content.active input.js-Item[data-source="Translations"]',
       value: 'Übersetzung2',
     )
 
@@ -95,15 +95,15 @@ class TranslationTest < TestCase
     sleep 2
 
     match_not(
-      css: '#content .sidebar',
+      css: '.content.active .sidebar',
       value: 'Übersetzung2',
     )
     match_not(
-      css: '#content input.js-Item[data-source="Translations"]',
+      css: '.content.active input.js-Item[data-source="Translations"]',
       value: 'Übersetzung2',
     )
     match_not(
-      css: '#content .sidebar',
+      css: '.content.active .sidebar',
       value: 'Übersetzung2',
     )
 
@@ -156,7 +156,7 @@ class TranslationTest < TestCase
     sleep 4
 
     match(
-      css: '#content input.js-Item[data-source="Overviews"]',
+      css: '.content.active input.js-Item[data-source="Overviews"]',
       value: 'Übersichten123',
     )
 
@@ -184,7 +184,7 @@ class TranslationTest < TestCase
       css: '.language_item [name="locale"]',
       value: 'English (United States)',
     )
-    click(css: '.content button[type="submit"]')
+    click(css: '.content.active button[type="submit"]')
     sleep 2
     watch_for(
       css: 'body',
@@ -232,11 +232,11 @@ class TranslationTest < TestCase
     sleep 4
 
     match(
-      css: '#content input.js-Item[data-source="Overviews"]',
+      css: '.content.active input.js-Item[data-source="Overviews"]',
       value: 'Overviews123',
     )
     match_not(
-      css: '#content',
+      css: '.content.active',
       value: 'English is the source language, so we have nothing to translate',
     )
 
@@ -245,7 +245,7 @@ class TranslationTest < TestCase
     )
 
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: 'English is the source language, so we have nothing to translate',
     )
 

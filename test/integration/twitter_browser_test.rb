@@ -46,70 +46,70 @@ class TwitterBrowserTest < TestCase
     tasks_close_all()
 
     click(css: 'a[href="#manage"]')
-    click(css: 'a[href="#channels/twitter"]')
-    click(css: '#content .js-configApp')
+    click(css: '.content.active a[href="#channels/twitter"]')
+    click(css: '.content.active .js-configApp')
     sleep 2
     set(
-      css: '#content .modal [name=consumer_key]',
+      css: '.content.active .modal [name=consumer_key]',
       value: consumer_key,
     )
     set(
-      css: '#content .modal [name=consumer_secret]',
+      css: '.content.active .modal [name=consumer_secret]',
       value: 'wrong',
     )
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal .js-submit')
 
     watch_for(
-      css: '#content .modal .alert',
+      css: '.content.active .modal .alert',
       value: 'Authorization Required',
     )
 
     set(
-      css: '#content .modal [name=consumer_secret]',
+      css: '.content.active .modal [name=consumer_secret]',
       value: consumer_secret,
     )
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal .js-submit')
 
     watch_for_disappear(
-      css: '#content .modal .alert',
+      css: '.content.active .modal .alert',
       value: 'Authorization Required',
     )
 
     watch_for(
-      css: '#content .js-new',
+      css: '.content.active .js-new',
       value: 'add account',
     )
 
-    click(css: '#content .js-configApp')
+    click(css: '.content.active .js-configApp')
 
     set(
-      css: '#content .modal [name=consumer_secret]',
+      css: '.content.active .modal [name=consumer_secret]',
       value: 'wrong',
     )
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal .js-submit')
 
     watch_for(
-      css: '#content .modal .alert',
+      css: '.content.active .modal .alert',
       value: 'Authorization Required',
     )
 
     set(
-      css: '#content .modal [name=consumer_secret]',
+      css: '.content.active .modal [name=consumer_secret]',
       value: consumer_secret,
     )
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal .js-submit')
 
     watch_for_disappear(
-      css: '#content .modal .alert',
+      css: '.content.active .modal .alert',
       value: 'Authorization Required',
     )
 
     watch_for(
-      css: '#content .js-new',
+      css: '.content.active .js-new',
       value: 'add account',
     )
 
-    click(css: '#content .js-new')
+    click(css: '.content.active .js-new')
 
     sleep 10
 
@@ -131,59 +131,59 @@ class TwitterBrowserTest < TestCase
     #)
 
     watch_for(
-      css: '#content .modal',
+      css: '.content.active .modal',
       value: 'Search Terms',
     )
 
     # add hash tag to search
-    click(css: '#content .modal .js-searchTermAdd')
-    set(css: '#content .modal [name="search::term"]', value: hash)
-    select(css: '#content .modal [name="search::group_id"]', value: 'Users')
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal .js-searchTermAdd')
+    set(css: '.content.active .modal [name="search::term"]', value: hash)
+    select(css: '.content.active .modal [name="search::group_id"]', value: 'Users')
+    click(css: '.content.active .modal .js-submit')
     sleep 5
 
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: 'Bob Mutschler',
     )
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: "@#{twitter_user_login}",
     )
     exists(
-      css: '#content .main .action:nth-child(1)'
+      css: '.content.active .main .action:nth-child(1)'
     )
     exists_not(
-      css: '#content .main .action:nth-child(2)'
+      css: '.content.active .main .action:nth-child(2)'
     )
 
     # add account again
-    click(css: '#content .js-new')
+    click(css: '.content.active .js-new')
 
     sleep 10
 
     click(css: '#allow')
 
     watch_for(
-      css: '#content .modal',
+      css: '.content.active .modal',
       value: 'Search Terms',
     )
 
-    click(css: '#content .modal .js-close')
+    click(css: '.content.active .modal .js-close')
 
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: 'Bob Mutschler',
     )
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: "@#{twitter_user_login}",
     )
     exists(
-      css: '#content .main .action:nth-child(1)'
+      css: '.content.active .main .action:nth-child(1)'
     )
     exists_not(
-      css: '#content .main .action:nth-child(2)'
+      css: '.content.active .main .action:nth-child(2)'
     )
 
     # wait till new streaming of channel is active
@@ -203,14 +203,14 @@ class TwitterBrowserTest < TestCase
     )
 
     # watch till tweet is in app
-    click( text: 'Overviews' )
+    click(text: 'Overviews')
 
     # enable full overviews
     execute(
       js: '$(".content.active .sidebar").css("display", "block")',
     )
 
-    click( text: 'Unassigned & Open' )
+    click(text: 'Unassigned & Open')
     sleep 6 # till overview is rendered
 
     watch_for(
@@ -224,7 +224,7 @@ class TwitterBrowserTest < TestCase
     )
 
     # reply via app
-    click( css: '.content.active [data-type="twitterStatusReply"]' )
+    click(css: '.content.active [data-type="twitterStatusReply"]')
 
     ticket_update(
       data: {
@@ -246,7 +246,7 @@ class TwitterBrowserTest < TestCase
       value: '1234567890',
     )
 
-    click( css: '.content.active [data-type="twitterStatusReply"]' )
+    click(css: '.content.active [data-type="twitterStatusReply"]')
     sleep 2
 
     re_hash = "#{hash}re#{rand(99_999)}"

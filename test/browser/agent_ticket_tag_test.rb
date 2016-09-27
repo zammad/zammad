@@ -247,12 +247,12 @@ class AgentTicketTagTest < TestCase
     )
     click(
       browser: browser2,
-      css: 'a[href="#manage/tags"]',
+      css: '.content.active a[href="#manage/tags"]',
     )
     sleep 3
     execute(
       browser: browser2,
-      js: "$('#content .js-name:contains(\"tag3\")').click()",
+      js: "$('.content.active .js-name:contains(\"tag3\")').click()",
     )
     sleep 2
     set(
@@ -301,12 +301,12 @@ class AgentTicketTagTest < TestCase
     )
     click(
       browser: browser2,
-      css: 'a[href="#manage/tags"]',
+      css: '.content.active a[href="#manage/tags"]',
     )
     sleep 3
     execute(
       browser: browser2,
-      js: "$('#content .js-name:contains(\"tag5\")').closest('tr').find('.js-delete').click()",
+      js: "$('.content.active .js-name:contains(\"tag5\")').closest('tr').find('.js-delete').click()",
     )
     sleep 2
     click(
@@ -357,32 +357,32 @@ class AgentTicketTagTest < TestCase
     tasks_close_all()
 
     click(css: 'a[href="#manage"]')
-    click(css: 'a[href="#manage/tags"]')
+    click(css: '.content.active a[href="#manage/tags"]')
     switch(
-      css:  '#content .js-newTagSetting',
+      css:  '.content.active .js-newTagSetting',
       type: 'off',
     )
 
     set(
-      css: '#content .js-create input[name="name"]',
+      css: '.content.active .js-create input[name="name"]',
       value: tag_prefix + ' A',
     )
-    click(css: '#content .js-create .js-submit')
+    click(css: '.content.active .js-create .js-submit')
     set(
-      css: '#content .js-create input[name="name"]',
+      css: '.content.active .js-create input[name="name"]',
       value: tag_prefix + ' a',
     )
-    click(css: '#content .js-create .js-submit')
+    click(css: '.content.active .js-create .js-submit')
     set(
-      css: '#content .js-create input[name="name"]',
+      css: '.content.active .js-create input[name="name"]',
       value: tag_prefix + ' B',
     )
-    click(css: '#content .js-create .js-submit')
+    click(css: '.content.active .js-create .js-submit')
     set(
-      css: '#content .js-create input[name="name"]',
+      css: '.content.active .js-create input[name="name"]',
       value: tag_prefix + ' C',
     )
-    click(css: '#content .js-create .js-submit')
+    click(css: '.content.active .js-create .js-submit')
 
     # set tag (by tab)
     ticket1 = ticket_create(
@@ -509,9 +509,9 @@ class AgentTicketTagTest < TestCase
     )
 
     click(css: 'a[href="#manage"]')
-    click(css: 'a[href="#manage/tags"]')
+    click(css: '.content.active a[href="#manage/tags"]')
     switch(
-      css:  '#content .js-newTagSetting',
+      css:  '.content.active .js-newTagSetting',
       type: 'on',
     )
   end

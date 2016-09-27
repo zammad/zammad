@@ -1,5 +1,6 @@
-class App.ChannelChat extends App.ControllerContent
+class App.ChannelChat extends App.ControllerSubContent
   requiredPermission: 'admin.channel_chat'
+  header: 'Chat'
   events:
     'change .js-params': 'updateParams'
     'input .js-params': 'updateParams'
@@ -111,7 +112,6 @@ class App.ChannelChat extends App.ControllerContent
 
   constructor: ->
     super
-    @title 'Chat'
     if @Session.get('email')
       @previewUrl = "www.#{@Session.get('email').replace(/^.+?\@/, '')}"
 

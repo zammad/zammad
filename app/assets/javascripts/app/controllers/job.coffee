@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.scheduler'
+  header: 'Scheduler'
   constructor: ->
     super
 
@@ -9,7 +10,6 @@ class Index extends App.ControllerContent
       genericObject: 'Job'
       defaultSortBy: 'name'
       pageData:
-        title: 'Scheduler'
         home: 'Jobs'
         object: 'Scheduler'
         objects: 'Schedulers'

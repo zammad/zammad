@@ -1,11 +1,11 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'user_preferences.device'
+  header: 'Devices'
   events:
     'click [data-type=delete]': 'delete'
 
   constructor: ->
     super
-    @title 'Devices', true
     @load()
     @interval(
       =>
