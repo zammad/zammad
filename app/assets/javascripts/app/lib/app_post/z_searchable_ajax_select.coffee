@@ -5,7 +5,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
 
     # convert requested object
     # e.g. Ticket to ticket or AnotherObject to another_object
-    objectString = underscored( @options.attribute.object )
+    objectString = underscored(@options.attribute.object)
 
     # create common accessors
     @apiPath = App.Config.get('api_path')
@@ -45,13 +45,13 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
     @searchResultCache[@cacheKey] = data
 
     # load assets
-    App.Collection.loadAssets( data.assets )
+    App.Collection.loadAssets(data.assets)
 
     # get options from search result
     options = []
     for object in data.result
       if object.type is 'Ticket'
-        ticket = App.Ticket.find( object.id )
+        ticket = App.Ticket.find(object.id)
         data =
           name:  "##{ticket.number} - #{ticket.title}"
           value: ticket.id
@@ -63,7 +63,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
           value: user.id
         options.push data
       else if object.type is 'Organization'
-        organization = App.Organization.find( object.id )
+        organization = App.Organization.find(object.id)
         data =
           name:  "#{organization.displayName()}"
           value: organization.id

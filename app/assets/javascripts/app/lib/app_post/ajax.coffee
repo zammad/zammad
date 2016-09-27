@@ -149,10 +149,10 @@ class _ajaxSingleton
     abortedIds
 
   runNextInQueue: =>
-    if @queueList && @queueList[0]
-      @queueRunning = true
-      data = @queueList.shift()
-      @addCurrentRequest(params['id'], data, true)
+    return if !@queueList || !@queueList[0]
+    @queueRunning = true
+    data = @queueList.shift()
+    @addCurrentRequest(data['id'], data, true)
 
   _show_spinner: =>
     @count++
