@@ -576,7 +576,7 @@ class App.Model extends Spine.Model
       # lookup relations
       if attribute.relation
 
-        # relations if if not calling object, to prevent loops
+        # relations - not calling object it self, to prevent loops
         if !_.contains(classNames, @className)
 
           # only if relation model exists

@@ -2691,13 +2691,6 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
-  name: 'admin.channel_web',
-  note: 'Manage %s',
-  preferences: {
-    translations: ['Channel - Web']
-  },
-)
-Permission.create_if_not_exists(
   name: 'admin.channel_email',
   note: 'Manage %s',
   preferences: {

@@ -2,12 +2,8 @@
 class App.UiElement.selectTicketAttributes extends App.UiElement.ApplicationUiElement
   @render: (attribute, params) ->
 
-    configureAttributes = App.Ticket.configure_attributes
-    for row, localAttribute of App.Ticket.attributesGet()
-      configureAttributes.push localAttribute
     attributeOptionsArray = []
-    attributeOptions = {}
-    for row in configureAttributes
+    for name, row of App.Ticket.attributesGet()
 
       # ignore passwords
       if row.type isnt 'password' && row.type isnt 'tag' && row.name isnt 'tags'
@@ -19,13 +15,13 @@ class App.UiElement.selectTicketAttributes extends App.UiElement.ApplicationUiEl
         else if row.name.substr(row.name.length-3,3) is '_id'
           nameTmp = row.name.substr(0, row.name.length-3)
 
-        if !attributeOptions[ nameTmp ]
-          attributeOptions[ nameTmp ] = row.display
-          attributeOptionsArray.push(
-            {
-              value:  nameTmp
-              name:   row.display
-            }
-          )
-    attribute.options = attributeOptions
+        attributeOptionsArray.push(
+          {
+            value:  nameTmp
+            name:   row.display
+          }
+        )
+
+    attribute.sortBy = null
+    attribute.options = attributeOptionsArray
     App.UiElement.select.render(attribute, params)
