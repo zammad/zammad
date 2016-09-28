@@ -169,14 +169,14 @@ class App.ControllerGenericIndex extends App.Controller
     # append content table
     params = _.extend(
       {
-        el:         @$('.table-overview')
-        model:      App[ @genericObject ]
-        objects:    objects
+        el: @$('.table-overview')
+        model: App[ @genericObject ]
+        objects: objects
         bindRow:
           events:
-            'click': @edit
+            click: @edit
         container: @container
-        explanation: @pageData.explanation or 'none'
+        explanation: @pageData.explanation
         groupBy: @groupBy
         dndCallback: @dndCallback
       },
@@ -504,7 +504,7 @@ class App.ControllerNavSidbar extends App.Controller
     return if !position
     if position.main
       @$('.main').scrollTop(position.main)
-    if position.main
+    if position.sidebar
       @$('.sidebar').scrollTop(position.sidebar)
 
   currentPosition: =>

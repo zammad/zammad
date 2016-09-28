@@ -10,7 +10,7 @@ class App.Ticket extends App.Model
       { name: 'group_id',                 display: 'Group',        tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', width: '10%', edit: true },
       { name: 'owner_id',                 display: 'Owner',        tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', width: '12%', edit: true },
       { name: 'state_id',                 display: 'State',        tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', width: '12%', edit: true, customer: true },
-      { name: 'pending_time',             display: 'Pending Time', tag: 'datetime', null: true, width: '130px' },
+      { name: 'pending_time',             display: 'Pending till', tag: 'datetime', null: true, width: '130px' },
       { name: 'priority_id',              display: 'Priority',     tag: 'select',   multiple: false, null: false, relation: 'TicketPriority', default: '2 normal', width: '12%', edit: true, customer: true },
       { name: 'article_count',            display: 'Article#',     readonly: 1, width: '12%' },
       { name: 'escalation_at',            display: 'Escalation',              tag: 'datetime', null: true, readonly: 1, width: '110px', class: 'escalation' },
@@ -26,7 +26,7 @@ class App.Ticket extends App.Model
     ]
 
   uiUrl: ->
-    '#ticket/zoom/' + @id
+    "#ticket/zoom/#{@id}"
 
   getState: ->
     type = App.TicketState.find(@state_id)

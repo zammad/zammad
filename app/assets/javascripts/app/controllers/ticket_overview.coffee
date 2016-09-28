@@ -764,50 +764,24 @@ class App.OverviewSettings extends App.ControllerModal
           25: '25'
         },
       })
-    attributeOptions = {}
-    attributeOptionsArray = []
-    configure_attributes = App.Ticket.configure_attributes
-    for row, attribute of App.Ticket.attributesGet()
-      configure_attributes.push attribute
-    for row in configure_attributes
 
-      # ignore passwords
-      if row.type isnt 'password'
-        name = row.name
-
-        # get correct data name
-        if row.name.substr(row.name.length-4,4) is '_ids'
-          name = row.name.substr(0, row.name.length-4)
-        else if row.name.substr(row.name.length-3,3) is '_id'
-          name = row.name.substr(0, row.name.length-3)
-
-        if !attributeOptions[ name ]
-          attributeOptions[ name ] = row.display
-          attributeOptionsArray.push(
-            {
-              value:  name
-              name:   row.display
-            }
-          )
     @configure_attributes_article.push({
       name:    "view::#{@view_mode}"
       display: 'Attributes'
-      tag:     'checkbox'
+      tag:     'checkboxTicketAttributes'
       default: @overview.view[@view_mode]
       null:    false
       translate: true
-      sortBy: null
-      options: attributeOptionsArray
+      sortBy:  null
     },
     {
       name:    'order::by'
       display: 'Order'
-      tag:     'select'
+      tag:     'selectTicketAttributes'
       default: @overview.order.by
       null:    false
       translate: true
-      sortBy: null
-      options: attributeOptionsArray
+      sortBy:  null
     },
     {
       name:    'order::direction'
@@ -817,8 +791,8 @@ class App.OverviewSettings extends App.ControllerModal
       null:    false
       translate: true
       options:
-        ASC:   'up'
-        DESC:  'down'
+        ASC:  'up'
+        DESC: 'down'
     },
     {
       name:    'group_by'
