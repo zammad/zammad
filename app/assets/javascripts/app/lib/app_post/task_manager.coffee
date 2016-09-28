@@ -87,6 +87,8 @@ class _taskManagerSingleton extends App.Controller
     App.Interval.set(@taskUpdateLoop, 3000, 'check_update_to_server_pending', 'task')
 
   init: ->
+    @domStore          = {}
+    @shownStore        = {}
     @workers           = {}
     @allTasksByKey     = {}
     @tasksToUpdate     = {}
@@ -220,13 +222,6 @@ class _taskManagerSingleton extends App.Controller
     if params.show
       @el.find('#content').empty()
 
-      # hide all tasks
-      @el.find('.content').addClass('hide').removeClass('active')
-
-    # create div for task if not exists
-    if !@el.find("##{@domID(params.key)}")[0]
-      @el.append("<div id=\"#{@domID(params.key)}\" class=\"content horizontal flex\"></div>")
-
     # set all tasks to active false, only new/selected one to active
     if params.show
       for key, task of @allTasksByKey
@@ -252,8 +247,15 @@ class _taskManagerSingleton extends App.Controller
     @log 'debug', 'controller start try...', params
 
     # create clean params
-    params_app             = _.clone(params.params)
-    params_app['el']       = $("##{@domID(params.key)}")
+    params_app = _.clone(params.params)
+    domKey = @domID(params.key)
+    domStoreItem = @domStore[domKey]
+    if domStoreItem
+      el = domStoreItem.el
+    else
+      el = $("<div id=\"#{domKey}\" class=\"content horizontal flex\"></div>")
+      @domStore[domKey] = { el: el }
+    params_app['el'] = el
     params_app['task_key'] = params.key
     if !params.show
       params_app['doNotLog'] = 1
@@ -274,33 +276,61 @@ class _taskManagerSingleton extends App.Controller
 
   showControllerHideOthers: (thisKey, params_app) =>
     for key of @workers
+      if key isnt thisKey
+        if @shownStore[key] isnt false
+          @hide(key)
+    $('#content').addClass('hide')
+
+    for key of @workers
       if key is thisKey
         @show(key, params_app)
-      else
-        @hide(key)
 
   # show task content
-  show: (key, params_app) ->
-    @el.find("##{@domID(key)}").removeClass('hide').addClass('active')
-
+  show: (key, params_app) =>
     controller = @workers[ key ]
-    return false if !controller
+    @shownStore[key] = true
 
-    # set controller state to active
-    if controller.active && _.isFunction(controller.active)
-      controller.active(true)
+    domKey = @domID(key)
+    domStoreItem = @domStore[domKey]
+    localEl = domStoreItem.el
+    if !@$("##{domKey}").get(0) && localEl
+      @el.append(localEl)
+    @$("##{domKey}").removeClass('hide').addClass('active')
 
-    # execute controllers show
-    if controller.show && _.isFunction(controller.show)
-      controller.show(params_app)
+    if controller
+
+      # set position of view
+      position = @domStore[@domID(key)].position
+      if position
+        controller.setPosition(position)
+
+      # set controller state to active
+      if controller.active && _.isFunction(controller.active)
+        controller.active(true)
+
+      # execute controllers show
+      if controller.show && _.isFunction(controller.show)
+        controller.show(params_app)
 
     true
 
   # hide task content
-  hide: (key) ->
-    @el.find("##{@domID(key)}").addClass('hide').removeClass('active')
-
+  hide: (key) =>
     controller = @workers[ key ]
+    @shownStore[key] = false
+
+    if @$("##{@domID(key)}").get(0)
+      domKey = @domID(key)
+      domStoreItem = @domStore[domKey]
+
+      if controller && _.isFunction(controller.currentPosition)
+        position = controller.currentPosition()
+        domStoreItem.position = position
+        @$("##{@domID(key)}").addClass('hide').removeClass('active')
+        domStoreItem.el = @$("##{@domID(key)}").detach()
+      else
+        @$("##{@domID(key)}").addClass('hide').removeClass('active')
+
     return false if !controller
 
     # set controller state to active
@@ -310,6 +340,8 @@ class _taskManagerSingleton extends App.Controller
     # execute controllers hide
     if controller.hide && _.isFunction(controller.hide)
       controller.hide()
+
+    @anyPopoversDestroy()
 
     true
 
@@ -339,7 +371,6 @@ class _taskManagerSingleton extends App.Controller
 
   # remove task certain task from tasks
   remove: (key) =>
-
     task = @allTasksByKey[key]
     delete @allTasksByKey[key]
     return if !task
@@ -386,13 +417,23 @@ class _taskManagerSingleton extends App.Controller
 
   # release one task
   release: (key) =>
+    domKey = @domID(key)
+    localDomStore = @domStore[domKey]
+    if localDomStore
+      if localDomStore.el
+        $('#app').append("<div id=\"#{domKey}_trash\" class=\"hide\"></div>")
+        $("#app ##{domKey}_trash").append(localDomStore.el).remove()
+      localDomStore = undefined
+    delete @domStore[@domID(key)]
+    worker = @workers[key]
+    if worker
+      worker = undefined
+    delete @workers[key]
     try
-      @el.find("##{@domID(key)}").html('')
-      @el.find("##{@domID(key)}").remove()
+      @$("##{@domID(key)}").html('')
+      @$("##{@domID(key)}").remove()
     catch
       @log 'notice', "invalid key '#{key}'"
-
-    delete @workers[ key ]
 
   # reset while tasks
   reset: =>

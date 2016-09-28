@@ -58,6 +58,14 @@ class App.CTI extends App.Controller
       'cti_rerender'
     )
 
+    # after a new websocket connection, load again
+    @bind('spool:sent', =>
+      if @initSpoolSent
+        @load()
+        return
+      @initSpoolSent = true
+    )
+
   # fetch data, render view
   load: ->
     @ajax(
@@ -190,6 +198,12 @@ class App.CTI extends App.Controller
       data:        JSON.stringify(user: {cti: state})
       processData: true
     )
+
+  setPosition: (position) =>
+    @$('.main').scrollTop(position)
+
+  currentPosition: =>
+    @$('.main').scrollTop()
 
 class CTIRouter extends App.ControllerPermanent
   requiredPermission: 'cti.agent'

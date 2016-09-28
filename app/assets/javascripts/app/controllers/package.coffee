@@ -1,11 +1,11 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.package'
+  header: 'Packages'
   events:
     'click .action':  'action'
 
   constructor: ->
     super
-    @title 'Packages', true
     @load()
 
   load: ->

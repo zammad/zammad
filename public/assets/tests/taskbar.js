@@ -55,6 +55,7 @@ test( "taskbar basic tests", function() {
   equal($('#taskbars .content.active').text(), "some test controller message:'#2',show:'true',hide:'false',active:'true'", "check active content!")
 
   equal($('#taskbars #content_permanent_TestKey1').text(), "some test controller message:'#1',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey2').text(), "some test controller message:'#2',show:'true',hide:'false',active:'true'", "check active content!")
 
   // check task history
   equal(App.TaskManager.nextTaskUrl(), '#/some/url/#2')
@@ -69,13 +70,29 @@ test( "taskbar basic tests", function() {
     show:       false,
     persistent: false,
   })
-  equal($('#taskbars .content').length, 3, "check available active contents")
+  equal($('#taskbars .content').length, 2, "check available active contents")
   equal($('#taskbars .content.active').length, 1, "check available active contents")
   equal($('#taskbars .content.active').text(), "some test controller message:'#2',show:'true',hide:'false',active:'true'")
 
   equal($('#taskbars #content_permanent_TestKey1').text(), "some test controller message:'#1',show:'true',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'false',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey2').text(), "some test controller message:'#2',show:'true',hide:'false',active:'true'", "check active content!")
 
+  App.TaskManager.execute({
+    key:        'TestKey3',
+    controller: 'TestController1',
+    params:     {
+      message: '#3',
+    },
+    show:       true,
+    persistent: false,
+  })
+  equal($('#taskbars .content').length, 3, "check available active contents")
+  equal($('#taskbars .content.active').length, 1, "check available active contents")
+  equal($('#taskbars .content.active').text(), "some test controller message:'#3',show:'true',hide:'true',active:'true'", "check active content!")
+
+  equal($('#taskbars #content_permanent_TestKey1').text(), "some test controller message:'#1',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey2').text(), "some test controller message:'#2',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'true',hide:'true',active:'true'", "check active content!")
 
   App.TaskManager.execute({
     key:        'TestKey4',
@@ -86,14 +103,13 @@ test( "taskbar basic tests", function() {
     show:       false,
     persistent: true,
   })
-  equal($('#taskbars .content').length, 4, "check available active contents")
+  equal($('#taskbars .content').length, 3, "check available active contents")
   equal($('#taskbars .content.active').length, 1, "check available active contents")
-  equal($('#taskbars .content.active').text(), "some test controller message:'#2',show:'true',hide:'false',active:'true'")
+  equal($('#taskbars .content.active').text(), "some test controller message:'#3',show:'true',hide:'true',active:'true'", "check active content!")
 
   equal($('#taskbars #content_permanent_TestKey1').text(), "some test controller message:'#1',show:'true',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'false',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey4').text(), "some test controller message:'#4',show:'false',hide:'true',active:'false'", "check active content!")
-
+  equal($('#taskbars #content_permanent_TestKey2').text(), "some test controller message:'#2',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'true',hide:'true',active:'true'", "check active content!")
 
   App.TaskManager.execute({
     key:        'TestKey5',
@@ -104,15 +120,14 @@ test( "taskbar basic tests", function() {
     show:       true,
     persistent: true,
   })
-  equal($('#taskbars .content').length, 5, "check available active contents")
+  equal($('#taskbars .content').length, 4, "check available active contents")
   equal($('#taskbars .content.active').length, 1, "check available active contents")
   equal($('#taskbars .content.active').text(), "some test controller message:'#5',show:'true',hide:'false',active:'true'")
 
   equal($('#taskbars #content_permanent_TestKey1').text(), "some test controller message:'#1',show:'true',hide:'true',active:'false'", "check active content!")
   equal($('#taskbars #content_permanent_TestKey2').text(), "some test controller message:'#2',show:'true',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'false',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey4').text(), "some test controller message:'#4',show:'false',hide:'true',active:'false'", "check active content!")
-
+  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey5').text(), "some test controller message:'#5',show:'true',hide:'false',active:'true'", "check active content!")
 
   App.TaskManager.execute({
     key:        'TestKey6',
@@ -123,28 +138,27 @@ test( "taskbar basic tests", function() {
     show:       true,
     persistent: false,
   })
-  equal($('#taskbars .content').length, 6, "check available active contents")
-  equal($('#taskbars .content.active').length, 1, "check available active contents")
-  equal($('#taskbars .content.active').text(), "some test controller message:'#6',show:'true',hide:'false',active:'true'")
-
-  equal($('#taskbars #content_permanent_TestKey1').text(), "some test controller message:'#1',show:'true',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey2').text(), "some test controller message:'#2',show:'true',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'false',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey4').text(), "some test controller message:'#4',show:'false',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey5').text(), "some test controller message:'#5',show:'true',hide:'true',active:'false'", "check active content!")
-
-
-  // remove task#2
-  App.TaskManager.remove('TestKey2')
-
   equal($('#taskbars .content').length, 5, "check available active contents")
   equal($('#taskbars .content.active').length, 1, "check available active contents")
   equal($('#taskbars .content.active').text(), "some test controller message:'#6',show:'true',hide:'false',active:'true'")
 
   equal($('#taskbars #content_permanent_TestKey1').text(), "some test controller message:'#1',show:'true',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'false',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey4').text(), "some test controller message:'#4',show:'false',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey2').text(), "some test controller message:'#2',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'true',hide:'true',active:'false'", "check active content!")
   equal($('#taskbars #content_permanent_TestKey5').text(), "some test controller message:'#5',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey6').text(), "some test controller message:'#6',show:'true',hide:'false',active:'true'", "check active content!")
+
+  // remove task#2
+  App.TaskManager.remove('TestKey2')
+
+  equal($('#taskbars .content').length, 4, "check available active contents")
+  equal($('#taskbars .content.active').length, 1, "check available active contents")
+  equal($('#taskbars .content.active').text(), "some test controller message:'#6',show:'true',hide:'false',active:'true'")
+
+  equal($('#taskbars #content_permanent_TestKey1').text(), "some test controller message:'#1',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey5').text(), "some test controller message:'#5',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey6').text(), "some test controller message:'#6',show:'true',hide:'false',active:'true'", "check active content!")
 
   // activate task#3
   App.TaskManager.execute({
@@ -156,13 +170,14 @@ test( "taskbar basic tests", function() {
     show:       true,
     persistent: false,
   })
-  equal($('#taskbars .content').length, 5, "check available active contents")
+  equal($('#taskbars .content').length, 4, "check available active contents")
   equal($('#taskbars .content.active').length, 1, "check available active contents")
   equal($('#taskbars .content.active').text(), "some test controller message:'#3',show:'true',hide:'true',active:'true'")
 
   equal($('#taskbars #content_permanent_TestKey1').text(), "some test controller message:'#1',show:'true',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey4').text(), "some test controller message:'#4',show:'false',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'true',hide:'true',active:'true'", "check active content!")
   equal($('#taskbars #content_permanent_TestKey5').text(), "some test controller message:'#5',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey6').text(), "some test controller message:'#6',show:'true',hide:'true',active:'false'", "check active content!")
 
 
   // activate task#1
@@ -175,19 +190,20 @@ test( "taskbar basic tests", function() {
     show:       true,
     persistent: false,
   })
-  equal($('#taskbars .content').length, 5, "check available active contents")
+  equal($('#taskbars .content').length, 4, "check available active contents")
   equal($('#taskbars .content.active').length, 1, "check available active contents")
   equal($('#taskbars .content.active').text(), "some test controller message:'#1',show:'true',hide:'true',active:'true'")
 
+  equal($('#taskbars #content_permanent_TestKey1').text(), "some test controller message:'#1',show:'true',hide:'true',active:'true'", "check active content!")
   equal($('#taskbars #content_permanent_TestKey3').text(), "some test controller message:'#3',show:'true',hide:'true',active:'false'", "check active content!")
-  equal($('#taskbars #content_permanent_TestKey4').text(), "some test controller message:'#4',show:'false',hide:'true',active:'false'", "check active content!")
   equal($('#taskbars #content_permanent_TestKey5').text(), "some test controller message:'#5',show:'true',hide:'true',active:'false'", "check active content!")
+  equal($('#taskbars #content_permanent_TestKey6').text(), "some test controller message:'#6',show:'true',hide:'true',active:'false'", "check active content!")
 
   // remove task#1
   App.TaskManager.remove('TestKey1')
 
   // verify if task#3 is active
-  equal($('#taskbars .content').length, 4, "check available active contents")
+  equal($('#taskbars .content').length, 3, "check available active contents")
   equal($('#taskbars .content.active').length, 0, "check available active contents")
   equal($('#taskbars .content.active').text(), "")
 
@@ -195,7 +211,7 @@ test( "taskbar basic tests", function() {
   App.TaskManager.remove('TestKey3')
 
   // verify if task#5 is active
-  equal($('#taskbars .content').length, 3, "check available active contents")
+  equal($('#taskbars .content').length, 2, "check available active contents")
   equal($('#taskbars .content.active').length, 0, "check available active contents")
   equal($('#taskbars .content.active').text(), "")
 
@@ -203,7 +219,7 @@ test( "taskbar basic tests", function() {
   App.TaskManager.remove('TestKey5')
 
   // verify if task#5 is active
-  equal($('#taskbars .content').length, 3, "check available active contents")
+  equal($('#taskbars .content').length, 2, "check available active contents")
   equal($('#taskbars .content.active').length, 0, "check available active contents")
   equal($('#taskbars .content.active').text(), "")
 
@@ -217,7 +233,7 @@ test( "taskbar basic tests", function() {
     show:       true,
     persistent: false,
   })
-  equal($('#taskbars .content').length, 4, "check available active contents")
+  equal($('#taskbars .content').length, 3, "check available active contents")
   equal($('#taskbars .content.active').length, 1, "check available active contents")
   equal($('#taskbars .content.active').text(), "some test controller message:'#7',show:'true',hide:'false',active:'true'", "check active content!")
 
@@ -225,7 +241,7 @@ test( "taskbar basic tests", function() {
   App.TaskManager.remove('TestKey7')
 
   // verify if task#5 is active
-  equal($('#taskbars .content').length, 3, "check available active contents")
+  equal($('#taskbars .content').length, 2, "check available active contents")
   equal($('#taskbars .content.active').length, 0, "check available active contents")
   equal($('#taskbars .content.active').text(), "")
 

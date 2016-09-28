@@ -1,4 +1,4 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.channel_twitter'
   events:
     'click .js-new':       'new'
@@ -65,6 +65,11 @@ class Index extends App.ControllerContent
 
     if @channel_id
       @edit(undefined, @channel_id)
+
+  show: (params) =>
+    for key, value of params
+      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+        @[key] = value
 
   configApp: =>
     external_credential = App.ExternalCredential.findByAttribute('name', 'twitter')

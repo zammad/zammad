@@ -26,9 +26,9 @@ class UsersController < ApplicationController
 
     # only allow customer to fetch him self
     users = if !current_user.permissions?('admin.user') && !current_user.permissions?('ticket.agent')
-              User.where(id: current_user.id).offset(offset).limit(per_page)
+              User.where(id: current_user.id).order(id: 'ASC').offset(offset).limit(per_page)
             else
-              User.all.offset(offset).limit(per_page)
+              User.all.order(id: 'ASC').offset(offset).limit(per_page)
             end
 
     if params[:expand]

@@ -33,7 +33,7 @@ class MaintenanceModeTest < TestCase
 
     switch(
       browser:  browser1,
-      css:      '#content .js-modeSetting',
+      css:      '.content.active .js-modeSetting',
       type:     'on',
       no_check: true,
     )
@@ -41,12 +41,12 @@ class MaintenanceModeTest < TestCase
     # check warning
     watch_for(
       browser: browser1,
-      css: '#content .modal .modal-header',
+      css: '.content.active .modal .modal-header',
       value: 'confirm',
     )
     click(
       browser: browser1,
-      css: '#content .modal .js-submit',
+      css: '.content.active .modal .js-submit',
     )
 
     watch_for(
@@ -92,7 +92,7 @@ class MaintenanceModeTest < TestCase
 
     switch(
       browser: browser1,
-      css:  '#content .js-modeSetting',
+      css:  '.content.active .js-modeSetting',
       type: 'off',
     )
 
@@ -121,7 +121,7 @@ class MaintenanceModeTest < TestCase
 
     switch(
       browser:  browser1,
-      css:      '#content .js-modeSetting',
+      css:      '.content.active .js-modeSetting',
       type:     'on',
       no_check: true,
     )
@@ -129,12 +129,12 @@ class MaintenanceModeTest < TestCase
     # check warning
     watch_for(
       browser: browser1,
-      css: '#content .modal .modal-header',
+      css: '.content.active .modal .modal-header',
       value: 'confirm',
     )
     click(
       browser: browser1,
-      css: '#content .modal .js-submit',
+      css: '.content.active .modal .js-submit',
     )
 
     watch_for(
@@ -148,7 +148,7 @@ class MaintenanceModeTest < TestCase
 
     switch(
       browser: browser1,
-      css:  '#content .js-modeSetting',
+      css:  '.content.active .js-modeSetting',
       type: 'off',
     )
 

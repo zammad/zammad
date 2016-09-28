@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.user'
+  header: 'Users'
   elements:
     '.js-search': 'searchInput'
   events:
@@ -7,10 +8,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-
-    # set title
-    @title 'Users', true
-
     @render()
 
   render: ->

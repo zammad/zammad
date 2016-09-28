@@ -62,10 +62,10 @@ class AdminObjectManagerTest < TestCase
     )
 
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: 'Database Update required',
     )
-    click(css: '#content .tab-pane.active div.js-execute')
+    click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
       css: '.modal',
       value: 'restart',
@@ -76,7 +76,7 @@ class AdminObjectManagerTest < TestCase
     )
     sleep 5
     watch_for(
-      css: '#content',
+      css: '.content.active',
     )
 
     # create new ticket
@@ -113,11 +113,11 @@ class AdminObjectManagerTest < TestCase
     click(css: 'a[href="#manage"]')
     click(css: 'a[href="#system/object_manager"]')
     watch_for(
-      css: '#content table',
+      css: '.content.active table',
       value: 'browser_test1',
     )
     match_not(
-      css: '#content',
+      css: '.content.active',
       value: 'Database Update required',
     )
     object_manager_attribute_delete(
@@ -126,14 +126,14 @@ class AdminObjectManagerTest < TestCase
       },
     )
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: 'Database Update required',
     )
     watch_for(
-      css: '#content table',
+      css: '.content.active table',
       value: 'browser_test1',
     )
-    click(css: '#content .tab-pane.active div.js-execute')
+    click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
       css: '.modal',
       value: 'restart',
@@ -144,14 +144,14 @@ class AdminObjectManagerTest < TestCase
     )
     sleep 5
     watch_for(
-      css: '#content',
+      css: '.content.active',
     )
     match_not(
-      css: '#content',
+      css: '.content.active',
       value: 'Database Update required',
     )
     match_not(
-      css: '#content table',
+      css: '.content.active table',
       value: 'browser_test1',
     )
   end
@@ -263,10 +263,10 @@ class AdminObjectManagerTest < TestCase
     )
 
     watch_for(
-      css: '#content',
+      css: '.content.active',
       value: 'Database Update required',
     )
-    click(css: '#content .tab-pane.active div.js-execute')
+    click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
       css: '.modal',
       value: 'restart',
@@ -277,7 +277,7 @@ class AdminObjectManagerTest < TestCase
     )
     sleep 5
     watch_for(
-      css: '#content',
+      css: '.content.active',
     )
 
     # create new ticket
@@ -345,7 +345,7 @@ class AdminObjectManagerTest < TestCase
         name: 'browser_test7',
       },
     )
-    click(css: '#content .tab-pane.active div.js-execute')
+    click(css: '.content.active .tab-pane.active div.js-execute')
     watch_for(
       css: '.modal',
       value: 'restart',
@@ -356,34 +356,34 @@ class AdminObjectManagerTest < TestCase
     )
     sleep 5
     watch_for(
-      css: '#content',
+      css: '.content.active',
     )
     match_not(
-      css: '#content',
+      css: '.content.active',
       value: 'Database Update required',
     )
     match_not(
-      css: '#content table',
+      css: '.content.active table',
       value: 'browser_test2',
     )
     match_not(
-      css: '#content table',
+      css: '.content.active table',
       value: 'browser_test3',
     )
     match_not(
-      css: '#content table',
+      css: '.content.active table',
       value: 'browser_test4',
     )
     match_not(
-      css: '#content table',
+      css: '.content.active table',
       value: 'browser_test5',
     )
     match_not(
-      css: '#content table',
+      css: '.content.active table',
       value: 'browser_test6',
     )
     match_not(
-      css: '#content table',
+      css: '.content.active table',
       value: 'browser_test7',
     )
   end

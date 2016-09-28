@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.trigger'
+  header: 'Triggers'
   constructor: ->
     super
 
@@ -9,7 +10,6 @@ class Index extends App.ControllerContent
       genericObject: 'Trigger'
       defaultSortBy: 'name'
       pageData:
-        title: 'Triggers'
         home: 'triggers'
         object: 'Trigger'
         objects: 'Triggers'

@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.macro'
+  header: 'Macros'
   constructor: ->
     super
 
@@ -8,7 +9,6 @@ class Index extends App.ControllerContent
       id: @id
       genericObject: 'Macro'
       pageData:
-        title: 'Macros'
         home: 'macros'
         object: 'Macro'
         objects: 'Macros'

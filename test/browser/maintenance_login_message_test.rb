@@ -25,7 +25,7 @@ class MaintenanceLoginMessageTest < TestCase
     message = "test <b>#{string}</b>"
     set(
       browser: browser1,
-      css: '#content .js-loginPreview [data-name="message"]',
+      css: '.content.active .js-loginPreview [data-name="message"]',
       value: message,
     )
     click(
@@ -45,7 +45,7 @@ class MaintenanceLoginMessageTest < TestCase
 
     switch(
       browser: browser1,
-      css:  '#content .js-loginSetting',
+      css:  '.content.active .js-loginSetting',
       type: 'on',
     )
 
@@ -57,7 +57,7 @@ class MaintenanceLoginMessageTest < TestCase
 
     switch(
       browser: browser1,
-      css:  '#content .js-loginSetting',
+      css:  '.content.active .js-loginSetting',
       type: 'off',
     )
 

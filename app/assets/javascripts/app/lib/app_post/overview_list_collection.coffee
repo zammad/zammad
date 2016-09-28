@@ -6,6 +6,9 @@ class _Singleton
     @counter = 0
 
     App.Event.bind 'ticket_overview_list', (data) =>
+      if data.assets
+        App.Collection.loadAssets(data.assets)
+        delete data.assets
       if !@overview[data.overview.view]
         @overview[data.overview.view] = {}
       @overview[data.overview.view] = data
@@ -39,7 +42,7 @@ class _Singleton
     #    view: view
     #  )
     #  return
-
+    throw 'No view to fetch list!' if !view
     App.OverviewIndexCollection.fetch()
     return if @fetchActive[view]
     @fetchActive[view] = true
@@ -54,6 +57,7 @@ class _Singleton
         @fetchActive[view] = false
         if data.assets
           App.Collection.loadAssets(data.assets)
+          delete data.assets
         @overview[data.index.overview.view] = data.index
         @callback(view, data.index)
       error: =>

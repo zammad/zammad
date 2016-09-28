@@ -318,6 +318,12 @@ class App.CustomerChat extends App.Controller
     @clearDelay(@idleTimeoutId)
     @idleTimeoutId = undefined
 
+  setPosition: (position) =>
+    @$('.main').scrollTop(position)
+
+  currentPosition: =>
+    @$('.main').scrollTop()
+
 class CustomerChatRouter extends App.ControllerPermanent
   requiredPermission: 'chat.agent'
   constructor: (params) ->

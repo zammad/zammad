@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.sla'
+  header: 'SLAs'
   events:
     'click .js-new':         'new'
     'click .js-edit':        'edit'

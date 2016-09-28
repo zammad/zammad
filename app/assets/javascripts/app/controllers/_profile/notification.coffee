@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'user_preferences.notifications+ticket.agent'
+  header: 'Notifications'
   events:
     'submit form': 'update'
     'change .js-notificationSound': 'previewSound'
@@ -45,7 +46,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-    @title 'Notifications', true
     @render()
 
   render: =>

@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.maintenance'
+  header: 'Maintenance'
   events:
     'change .js-modeSetting input': 'setMode'
     'change .js-loginSetting input': 'setLogin'
@@ -12,9 +13,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-
-    @title 'Maintenance', true
-
     @subscribeId = App.Setting.subscribe(@render, initFetch: true, clear: false)
 
   release: =>

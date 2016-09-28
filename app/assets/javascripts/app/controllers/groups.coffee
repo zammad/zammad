@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.group'
+  header: 'Groups'
   constructor: ->
     super
 
@@ -8,7 +9,6 @@ class Index extends App.ControllerContent
       id: @id
       genericObject: 'Group'
       pageData:
-        title:     'Groups'
         home:      'groups'
         object:    'Group'
         objects:   'Groups'

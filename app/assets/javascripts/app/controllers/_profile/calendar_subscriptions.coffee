@@ -1,5 +1,6 @@
-class CalendarSubscriptions extends App.ControllerContent
+class CalendarSubscriptions extends App.ControllerSubContent
   requiredPermission: 'user_preferences.calendar+ticket.agent'
+  header: 'Calendar'
   elements:
     'input[type=checkbox]': 'options'
     'output': 'output'
@@ -11,7 +12,6 @@ class CalendarSubscriptions extends App.ControllerContent
 
   constructor: ->
     super
-    @title 'Calendar', true
 
     @translationTable =
       new_open: App.i18n.translatePlain('new & open')

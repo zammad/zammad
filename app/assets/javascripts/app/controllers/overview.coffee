@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'admin.overview'
+  header: 'Overviews'
   constructor: ->
     super
 
@@ -10,7 +11,6 @@ class Index extends App.ControllerContent
       defaultSortBy: 'prio'
       #groupBy: 'role'
       pageData:
-        title: 'Overviews'
         home: 'overviews'
         object: 'Overview'
         objects: 'Overviews'

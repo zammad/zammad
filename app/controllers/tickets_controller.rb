@@ -18,7 +18,7 @@ class TicketsController < ApplicationController
     end
 
     access_condition = Ticket.access_condition(current_user)
-    tickets = Ticket.where(access_condition).offset(offset).limit(per_page)
+    tickets = Ticket.where(access_condition).order(id: 'ASC').offset(offset).limit(per_page)
 
     if params[:expand]
       list = []

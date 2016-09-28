@@ -22,11 +22,11 @@ class FormTest < TestCase
     )
     click(
       browser: agent,
-      css: 'a[href="#channels/form"]',
+      css: '.content.active a[href="#channels/form"]',
     )
     switch(
       browser: agent,
-      css: '#content .js-formSetting',
+      css: '.content.active .js-formSetting',
       type: 'off',
     )
 
@@ -43,7 +43,7 @@ class FormTest < TestCase
     )
     switch(
       browser: agent,
-      css: '#content .js-formSetting',
+      css: '.content.active .js-formSetting',
       type: 'on',
     )
 

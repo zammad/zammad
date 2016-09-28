@@ -1,5 +1,6 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'user_preferences.avatar'
+  header: 'Avatar'
   elements:
     '.js-upload':      'fileInput'
     '.avatar-gallery': 'avatarGallery'
@@ -12,7 +13,6 @@ class Index extends App.ControllerContent
 
   constructor: ->
     super
-    @title 'Avatar', true
     @avatars = []
     @loadAvatarList()
 

@@ -1,11 +1,11 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'user_preferences.language'
+  header: 'Language'
   events:
     'submit form': 'update'
 
   constructor: ->
     super
-    @title 'Language', true
     @render()
 
   render: =>

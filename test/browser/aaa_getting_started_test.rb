@@ -175,15 +175,15 @@ class AaaGettingStartedTest < TestCase
       css: 'a[href="#manage"]',
     )
     click(
-      css: 'a[href="#settings/branding"]',
+      css: '.content.active a[href="#settings/branding"]',
     )
 
     match(
-      css: '#content input[name="organization"]',
+      css: '.content.active input[name="organization"]',
       value: 'Some Organization',
     )
     click(
-      css: 'a[href="#settings/system"]',
+      css: '.content.active a[href="#settings/system"]',
     )
 
     fqdn = nil
@@ -192,7 +192,7 @@ class AaaGettingStartedTest < TestCase
     end
     raise "Unable to get fqdn based on #{browser_url}" if !fqdn
     match(
-      css: '#content input[name="fqdn"]',
+      css: '.content.active input[name="fqdn"]',
       value: fqdn,
     )
   end

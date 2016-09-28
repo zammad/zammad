@@ -89,27 +89,28 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
     # push overviews
     results = []
-    index_and_lists.each { |index|
+    index_and_lists.each { |data|
 
       # do not deliver unchanged lists
-      next if @last_overview[index[:overview][:id]] == index
-      @last_overview[index[:overview][:id]] = index
+      next if @last_overview[data[:overview][:id]] == data
+      @last_overview[data[:overview][:id]] = data
 
       assets = {}
-      overview = Overview.lookup(id: index[:overview][:id])
+      overview = Overview.lookup(id: data[:overview][:id])
       if asset_needed?(overview)
         assets = overview.assets(assets)
       end
-      index[:tickets].each { |ticket_meta|
+      data[:tickets].each { |ticket_meta|
         ticket = Ticket.lookup(id: ticket_meta[:id])
         next if !asset_needed?(ticket)
         assets = ticket.assets(assets)
       }
+      data[:assets] = assets
 
       if !@client
         result = {
           event: 'ticket_overview_list',
-          data: index,
+          data: data,
         }
         results.push result
       else
@@ -118,12 +119,8 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
         # send update to browser
         @client.send(
-          event: 'loadAssets',
-          data: assets,
-        )
-        @client.send(
           event: 'ticket_overview_list',
-          data: index,
+          data: data,
         )
       end
     }

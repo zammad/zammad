@@ -15,48 +15,48 @@ class PreferencesTokenAccessTest < TestCase
     click(css: 'a[href="#profile"]')
     click(css: 'a[href="#profile/token_access"]')
 
-    click(css: '#content .js-create')
+    click(css: '.content.active .js-create')
     watch_for(
       css: '.modal .modal-title',
       value: 'Add a Personal Access Token'
     )
 
     set(
-      css:   '#content .modal .js-input',
+      css:   '.content.active .modal .js-input',
       value: 'Some App#1',
     )
     set(
-      css:   '#content .modal .js-datepicker',
+      css:   '.content.active .modal .js-datepicker',
       value: '05/15/2022',
     )
     sendkey(value: :tab)
-    click(css: '#content .modal input[value="ticket.agent"] ~ .label-text')
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal input[value="ticket.agent"] ~ .label-text')
+    click(css: '.content.active .modal .js-submit')
     watch_for(
       css: '.modal .modal-title',
       value: 'Your New Personal Access Token'
     )
     click(css: '.modal .js-submit')
     watch_for(
-      css: '#content .js-tokenList',
+      css: '.content.active .js-tokenList',
       value: 'Some App#1'
     )
     watch_for(
-      css: '#content .js-tokenList',
+      css: '.content.active .js-tokenList',
       value: '05/15/2022'
     )
 
-    click(css: '#content .js-create')
+    click(css: '.content.active .js-create')
     watch_for(
       css: '.modal .modal-title',
       value: 'Add a Personal Access Token'
     )
     set(
-      css:   '#content .modal .js-input',
+      css:   '.content.active .modal .js-input',
       value: 'Some App#2',
     )
-    click(css: '#content .modal input[value="ticket.agent"] ~ .label-text')
-    click(css: '#content .modal .js-submit')
+    click(css: '.content.active .modal input[value="ticket.agent"] ~ .label-text')
+    click(css: '.content.active .modal .js-submit')
 
     watch_for(
       css: '.modal .modal-title',
@@ -64,20 +64,20 @@ class PreferencesTokenAccessTest < TestCase
     )
     click(css: '.modal .js-submit')
     watch_for(
-      css: '#content .js-tokenList',
+      css: '.content.active .js-tokenList',
       value: 'Some App#2'
     )
 
-    click(css: '#content .js-tokenList a')
+    click(css: '.content.active .js-tokenList a')
     watch_for(
-      css: '#content .modal .modal-header',
+      css: '.content.active .modal .modal-header',
       value: 'confirm',
     )
     click(
-      css: '#content .modal .js-submit',
+      css: '.content.active .modal .js-submit',
     )
     watch_for_disappear(
-      css: '#content .js-tokenList',
+      css: '.content.active .js-tokenList',
       value: 'Some App#2'
     )
 

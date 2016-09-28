@@ -23,11 +23,11 @@ class ChatTest < TestCase
     )
     click(
       browser: agent,
-      css: 'a[href="#channels/chat"]',
+      css: '.content.active a[href="#channels/chat"]',
     )
     switch(
       browser: agent,
-      css: '#content .js-chatSetting',
+      css: '.content.active .js-chatSetting',
       type: 'off',
     )
 
@@ -60,11 +60,11 @@ class ChatTest < TestCase
     )
     click(
       browser: agent,
-      css: 'a[href="#channels/chat"]',
+      css: '.content.active a[href="#channels/chat"]',
     )
     switch(
       browser: agent,
-      css: '#content .js-chatSetting',
+      css: '.content.active .js-chatSetting',
       type: 'on',
     )
     sleep 15 # wait for rerendering

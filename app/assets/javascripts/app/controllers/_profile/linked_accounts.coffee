@@ -1,11 +1,11 @@
-class Index extends App.ControllerContent
+class Index extends App.ControllerSubContent
   requiredPermission: 'user_preferences.linked_accounts'
+  header: 'Linked Accounts'
   events:
     'click .js-remove': 'remove'
 
   constructor: ->
     super
-    @title 'Linked Accounts', true
     @render()
 
   render: =>

@@ -134,19 +134,19 @@ class JobTest < ActiveSupport::TestCase
     assert_not(job1.executable?)
 
     job1.last_run_at = Time.zone.now - 15.minutes
-    job1.save
+    job1.save!
     assert_not(job1.executable?)
 
     job1.updated_at = Time.zone.now - 15.minutes
-    job1.save
+    job1.save!
     assert(job1.executable?)
 
     job1.active = false
-    job1.save
+    job1.save!
     assert_not(job1.executable?)
 
     job1.active = true
-    job1.save
+    job1.save!
     assert_not(job1.executable?)
 
     assert_not(job1.in_timeplan?)
@@ -161,11 +161,11 @@ class JobTest < ActiveSupport::TestCase
       6 => 'Sat',
     }
     job1.timeplan['days'][day_map[time.wday]] = true
-    job1.save
-    assert_not(job1.in_timeplan?)
+    job1.save!
+    assert_not(job1.in_timeplan?(time))
     job1.timeplan['hours'][time.hour.to_s] = true
-    job1.save
-    assert_not(job1.in_timeplan?)
+    job1.save!
+    assert_not(job1.in_timeplan?(time))
     min = time.min
     if min < 9
       min = 0
@@ -181,19 +181,19 @@ class JobTest < ActiveSupport::TestCase
       min = 50
     end
     job1.timeplan['minutes'][min.to_s] = true
-    job1.save
-    assert(job1.in_timeplan?)
+    job1.save!
+    assert(job1.in_timeplan?(time))
 
     job1.timeplan['hours'][time.hour] = true
-    job1.save
+    job1.save!
 
     job1.timeplan['minutes'][min] = true
-    job1.save
-    assert(job1.in_timeplan?)
+    job1.save!
+    assert(job1.in_timeplan?(time))
 
     # execute jobs
     job1.updated_at = Time.zone.now - 15.minutes
-    job1.save
+    job1.save!
     Job.run
 
     assert(job1.next_run_at)
@@ -223,7 +223,7 @@ class JobTest < ActiveSupport::TestCase
 
     # execute jobs again
     job1.updated_at = Time.zone.now - 15.minutes
-    job1.save
+    job1.save!
     Job.run
 
     # verify changes on tickets
@@ -547,13 +547,13 @@ class JobTest < ActiveSupport::TestCase
     assert_equal('2016-03-25 01:40:00 UTC', next_run_at.to_s)
 
     job1.last_run_at = Time.zone.parse('2016-03-18 10:00:01 UTC')
-    job1.save
+    job1.save!
     time_now = Time.zone.parse('2016-03-18 10:00:02 UTC')
     next_run_at = job1.next_run_at_calculate(time_now)
     assert_equal('2016-03-18 10:40:00 UTC', next_run_at.to_s)
 
     job1.last_run_at = Time.zone.parse('2016-03-18 10:40:01 UTC')
-    job1.save
+    job1.save!
     time_now = Time.zone.parse('2016-03-18 10:40:02 UTC')
     next_run_at = job1.next_run_at_calculate(time_now)
     assert_equal('2016-03-21 01:00:00 UTC', next_run_at.to_s)
@@ -631,13 +631,13 @@ class JobTest < ActiveSupport::TestCase
     assert_equal('2016-03-18 00:00:00 UTC', next_run_at.to_s)
 
     job1.last_run_at = Time.zone.parse('2016-03-17 23:45:01 UTC')
-    job1.save
+    job1.save!
     time_now = Time.zone.parse('2016-03-17 23:51:23 UTC')
     next_run_at = job1.next_run_at_calculate(time_now)
     assert_equal('2016-03-18 00:00:00 UTC', next_run_at.to_s)
 
     job1.last_run_at = Time.zone.parse('2016-03-17 23:59:01 UTC')
-    job1.save
+    job1.save!
     time_now = Time.zone.parse('2016-03-17 23:59:23 UTC')
     next_run_at = job1.next_run_at_calculate(time_now)
     assert_equal('2016-03-18 00:40:00 UTC', next_run_at.to_s)

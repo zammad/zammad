@@ -645,8 +645,18 @@ class App.ControllerPermanent extends App.Controller
 
     super
 
-    $('.content').addClass('hide')
     @navShow()
+
+class App.ControllerSubContent extends App.Controller
+  constructor: ->
+    if @requiredPermission
+      @permissionCheckRedirect(@requiredPermission)
+
+    super
+
+  show: =>
+    return if !@header
+    @title @header, true
 
 class App.ControllerContent extends App.Controller
   constructor: ->
@@ -655,10 +665,10 @@ class App.ControllerContent extends App.Controller
 
     super
 
-    $('.content').addClass('hide')
-    $('#content').removeClass('hide')
-    @navShow()
+    # hide tasks
     App.TaskManager.hideAll()
+    $('#content').removeClass('hide').removeClass('active')
+    @navShow()
 
 class App.ControllerModal extends App.Controller
   authenticateRequired: false

@@ -460,6 +460,86 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_response(200)
   end
 
+  test '02.05 ticket pagination' do
+    title = "ticket pagination #{rand(999_999_999)}"
+    tickets = []
+    (1..20).each { |count|
+      ticket = Ticket.create!(
+        title: "#{title} - #{count}",
+        group: Group.lookup(name: 'Users'),
+        customer_id: @customer_without_org.id,
+        state: Ticket::State.lookup(name: 'new'),
+        priority: Ticket::Priority.lookup(name: '2 normal'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      Ticket::Article.create!(
+        type: Ticket::Article::Type.lookup(name: 'note'),
+        sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+        from: 'sender',
+        subject: 'subject',
+        body: 'some body',
+        ticket_id: ticket.id,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      tickets.push ticket
+      sleep 1
+    }
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(tickets[19].id, result['tickets'][0])
+    assert_equal(tickets[0].id, result['tickets'][19])
+    assert_equal(20, result['tickets_count'])
+
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=10", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(tickets[19].id, result['tickets'][0])
+    assert_equal(tickets[10].id, result['tickets'][9])
+    assert_equal(10, result['tickets_count'])
+
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40&page=1&per_page=5", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(tickets[19].id, result['tickets'][0])
+    assert_equal(tickets[15].id, result['tickets'][4])
+    assert_equal(5, result['tickets_count'])
+
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40&page=2&per_page=5", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(tickets[14].id, result['tickets'][0])
+    assert_equal(tickets[10].id, result['tickets'][4])
+    assert_equal(5, result['tickets_count'])
+
+    get '/api/v1/tickets?limit=40&page=1&per_page=5', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    tickets = Ticket.order(:id).limit(5)
+    assert_equal(tickets[0].id, result[0]['id'])
+    assert_equal(tickets[4].id, result[4]['id'])
+    assert_equal(5, result.count)
+
+    get '/api/v1/tickets?limit=40&page=2&per_page=5', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    tickets = Ticket.order(:id).limit(10)
+    assert_equal(tickets[5].id, result[0]['id'])
+    assert_equal(tickets[9].id, result[4]['id'])
+    assert_equal(5, result.count)
+
+  end
+
   test '03.01 ticket create with customer minimal' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-customer1@example.com', 'customer1pw')
     params = {

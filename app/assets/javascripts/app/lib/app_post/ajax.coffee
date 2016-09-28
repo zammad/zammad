@@ -40,25 +40,25 @@ class _ajaxSingleton
     cache: false
     async: true
 
-  current_request: {}
-  queue_list: []
-  queue_running: false
+  currentRequest: {}
+  queueList: []
+  queueRunning: false
   count: 0
 
   constructor: (@args) ->
 
     # run queue
-    @_run()
+    @runNextInQueue()
 
     # bindings
-    $(document).bind( 'ajaxSend', =>
+    $(document).bind('ajaxSend', =>
       @_show_spinner()
-    ).bind( 'ajaxComplete', =>
+    ).bind('ajaxComplete', =>
       @_hide_spinner()
     )
 
     # show error messages
-    $(document).bind( 'ajaxError', ( e, jqxhr, settings, exception ) ->
+    $(document).bind('ajaxError', (e, jqxhr, settings, exception) ->
       status = jqxhr.status
       detail = jqxhr.responseText
       if !status && !detail
@@ -80,68 +80,79 @@ class _ajaxSingleton
 
       # show error message
       new App.ControllerModal(
-        head:          'StatusCode: ' + status
-        contentInline: '<pre>' + App.Utils.htmlEscape(detail) + '</pre>'
+        head:          "StatusCode: #{status}"
+        contentInline: "<pre>#{App.Utils.htmlEscape(detail)}</pre>"
         buttonClose:   true
         buttonSubmit:  false
       )
     )
 
   request: (params) ->
-    data = $.extend({}, @defaults, params )
+    data = $.extend({}, @defaults, params)
 
     # execute call with id, clear old call first if exists
     if params['id']
-      @abort( params['id'] )
-      @current_request[ params['id'] ] = $.ajax( data )
+      @abort(params['id'])
+      @addCurrentRequest(params['id'], data)
       return params['id']
 
     # generate a uniq rand id
-    params['id'] = 'rand-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
+    params['id'] = "rand-#{new Date().getTime()}-#{Math.floor(Math.random() * 99999)}"
 
     # queue request
     if params['queue']
-      @queue_list.push data
-      if !@queue_running
-        @_run()
+      @queueList.push data
+      if !@queueRunning
+        @runNextInQueue()
 
     # execute request
     else
-      @current_request[ params['id'] ] = $.ajax(data)
-
+      @addCurrentRequest(params['id'], data)
     params['id']
+
+  addCurrentRequest: (id, data, queueRunning) =>
+    data.complete = =>
+      if queueRunning
+        @queueRunning = false
+      @removeCurrentRequest(id)
+      if queueRunning
+        @runNextInQueue()
+    @currentRequest[id] = $.ajax(data)
+    return if data.async is true
+    @removeCurrentRequest(id)
+
+  removeCurrentRequest: (id) =>
+    @currentRequest[id] = undefined
+    delete @currentRequest[id]
 
   abort: (id) =>
 
-    # abort current_request
-    if @current_request[ id ]
-      @current_request[ id ].abort()
-      delete @current_request[ id ]
+    # abort currentRequest
+    if @currentRequest[id]
+      @currentRequest[id].abort()
+      @currentRequest[id] = undefined
+      delete @currentRequest[id]
 
     # remove from queue list
-    @queue_list = _.filter(
-      @queue_list
+    @queueList = _.filter(
+      @queueList
       (item) ->
         return item if item['id'] isnt id
         return
     )
 
   abortAll: =>
-    return if !@current_request
     abortedIds = []
-    for id, ajax of @current_request
+    for id, ajax of @currentRequest
       @abort(id)
       abortedIds.push id
     abortedIds
 
-  _run: =>
-    if @queue_list && @queue_list[0]
-      @queue_running = true
-      request = @queue_list.shift()
-      request.complete = =>
-        @queue_running = false
-        @_run()
-      @current_request[ request['id'] ] = $.ajax( request )
+  runNextInQueue: =>
+    return if !@queueList || !@queueList[0]
+    @queueRunning = true
+    data = @queueList.shift()
+    @addCurrentRequest(data['id'], data, true)
 
   _show_spinner: =>
     @count++

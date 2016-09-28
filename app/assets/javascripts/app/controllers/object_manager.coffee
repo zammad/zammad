@@ -1,11 +1,8 @@
 # coffeelint: disable=duplicate_key
 class Index extends App.ControllerTabs
   requiredPermission: 'admin.object'
-  header: 'Object Manager'
   constructor: ->
     super
-
-    @title 'Objects', true
 
     # get data
     @startLoading()
@@ -32,7 +29,8 @@ class Index extends App.ControllerTabs
 
     @render()
 
-class Items extends App.ControllerContent
+class Items extends App.ControllerSubContent
+  header: 'Object Manager'
   events:
     'click .js-delete':  'destroy'
     'click .js-new':     'new'
