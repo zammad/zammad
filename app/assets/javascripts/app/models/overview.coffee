@@ -13,99 +13,18 @@ class App.Overview extends App.Model
     {
       name:    'view::s'
       display: 'Attributes'
-      tag:     'checkbox'
+      tag:     'checkboxTicketAttributes'
       default: ['number', 'title', 'state', 'created_at']
       null:    false
       translate: true
-      options: [
-        {
-          value:  'number'
-          name:   'Number'
-        },
-        {
-          value:  'title'
-          name:   'Title'
-        },
-        {
-          value:  'customer'
-          name:   'Customer'
-        },
-        {
-          value:  'state'
-          name:   'State'
-        },
-        {
-          value:  'priority'
-          name:   'Priority'
-        },
-        {
-          value:  'group'
-          name:   'Group'
-        },
-        {
-          value:  'owner'
-          name:   'Owner'
-        },
-        {
-          value:  'last_contact_at'
-          name:   'Last contact'
-        },
-        {
-          value:  'last_contact_agent_at'
-          name:   'Last contact (Agent)'
-        },
-        {
-          value:  'last_contact_customer_at'
-          name:   'Last contact (Customer)'
-        },
-        {
-          value:  'first_response_at'
-          name:   'First Response'
-        },
-        {
-          value:  'close_at'
-          name:   'Close time'
-        },
-        {
-          value:  'article_count'
-          name:   'Article Count'
-        },
-        {
-          value:  'updated_at'
-          name:   'Updated at'
-        },
-        {
-          value:  'created_at'
-          name:   'Created at'
-        },
-      ]
-      class:      'medium'
     },
-
     {
-      name: 'order::by',
+      name:    'order::by',
       display: 'Order',
-      tag:     'select'
+      tag:     'selectTicketAttributes'
       default: 'created_at'
       null:    false
       translate: true
-      options:
-        number:                   'Number'
-        title:                    'Title'
-        customer:                 'Customer'
-        state:                    'State'
-        priority:                 'Priority'
-        group:                    'Group'
-        owner:                    'Owner'
-        last_contact_at:          'Last contact'
-        last_contact_agent_at:    'Last contact (Agent)'
-        last_contact_customer_at: 'Last contact (Customer)'
-        first_response_at:        'First Response'
-        close_at:                 'Close time'
-        article_count:            'Article Count'
-        updated_at:               'Updated at'
-        created_at:               'Created at'
-      class:   'span4'
     },
     {
       name:    'order::direction'
@@ -117,7 +36,6 @@ class App.Overview extends App.Model
       options:
         ASC:   'up'
         DESC:  'down'
-      class:   'span4'
     },
     {
       name:    'group_by'
@@ -133,7 +51,6 @@ class App.Overview extends App.Model
         priority:               'Priority'
         group:                  'Group'
         owner:                  'Owner'
-      class:   'span4'
     },
     { name: 'active',         display: 'Active',      tag: 'active', default: true },
     { name: 'created_by_id',  display: 'Created by',  relation: 'User', readonly: 1 },
