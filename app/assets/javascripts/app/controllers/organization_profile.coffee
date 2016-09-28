@@ -40,15 +40,20 @@ class App.OrganizationProfile extends App.Controller
       organization: organization
     ))
 
-    new ActionRow(
-      el:        elLocal.find('.js-action')
+    new Organization(
       object_id: organization.id
+      el: elLocal.find('.js-name')
     )
 
     new Object(
       el:        elLocal.find('.js-object-container')
       object_id: organization.id
       task_key:  @task_key
+    )
+
+    new ActionRow(
+      el:        elLocal.find('.js-action')
+      object_id: organization.id
     )
 
     new App.TicketStats(
@@ -76,7 +81,7 @@ class ActionRow extends App.ObserverController
   render: (organization) =>
 
     # start action controller
-    showHistory = ->
+    showHistory = =>
       new App.OrganizationHistory(
         organization_id: organization.id
         container: @el.closest('.content')
@@ -181,6 +186,14 @@ class Object extends App.ObserverController
       data[name] = value
       org.updateAttributes(data)
       @log 'debug', 'update', name, value, org
+
+class Organization extends App.ObserverController
+  model: 'Organization'
+  observe:
+    name: true
+
+  render: (organization) =>
+    @html App.Utils.htmlEscape(organization.displayName())
 
 class Member extends App.ObserverController
   model: 'User'

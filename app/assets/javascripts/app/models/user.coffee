@@ -115,7 +115,7 @@ class App.User extends App.Model
     if data['accounts']
       for account of data['accounts']
         if account == 'twitter'
-          data['accounts'][account]['link'] = 'http://twitter.com/' + data['accounts'][account]['username']
+          data['accounts'][account]['link'] = 'https://twitter.com/' + data['accounts'][account]['username']
         if account == 'facebook'
           data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
 

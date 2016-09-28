@@ -3,7 +3,7 @@
     <div class="profile-section vertical centered">
       <div class="align-right profile-action js-action"></div>
       <%- @user.avatar("80") %>
-      <h1><%= @user.displayName() %></h1>
+      <h1 class="js-name"></h1>
       <% if @user.organization: %>
         <div class="profile-organization js-organization"></div>
       <% end %>

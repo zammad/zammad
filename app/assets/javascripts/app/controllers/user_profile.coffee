@@ -41,15 +41,26 @@ class App.UserProfile extends App.Controller
       user: user
     ))
 
-    new ActionRow(
-      el:        elLocal.find('.js-action')
+    new User(
       object_id: user.id
+      el: elLocal.find('.js-name')
     )
+
+    if user.organization_id
+      new Organization(
+        object_id: user.organization_id
+        el: elLocal.find('.js-organization')
+      )
 
     new Object(
       el:        elLocal.find('.js-object-container')
       object_id: user.id
       task_key:  @task_key
+    )
+
+    new ActionRow(
+      el:        elLocal.find('.js-action')
+      object_id: user.id
     )
 
     new App.TicketStats(
@@ -164,12 +175,6 @@ class Object extends App.ObserverController
       maxlength: 250
     })
 
-    if user.organization_id
-      new Organization(
-        object_id: user.organization_id
-        el: @$('.js-organization')
-      )
-
   update: (e) =>
     name  = $(e.target).attr('data-name')
     value = $(e.target).html()
@@ -190,6 +195,15 @@ class Organization extends App.ObserverController
     @html App.view('user_profile/organization')(
       organization: organization
     )
+
+class User extends App.ObserverController
+  model: 'User'
+  observe:
+    firstname: true
+    lastname: true
+
+  render: (user) =>
+    @html App.Utils.htmlEscape(user.displayName())
 
 class Router extends App.ControllerPermanent
   requiredPermission: 'ticket.agent'
