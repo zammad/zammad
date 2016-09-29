@@ -233,7 +233,7 @@ class App.Model extends Spine.Model
     # subscribe and reload data / fetch new data if triggered
     subscribeId = undefined
     if bind
-      subscribeId = App[ @className ].subscribe_item(id, callback)
+      subscribeId = App[ @className ].subscribeItem(id, callback)
 
     # execute if object already exists
     if !force && App[ @className ].exists(id)
@@ -345,6 +345,7 @@ class App.Model extends Spine.Model
       App.Event.bind(
         events
         =>
+          return if _.isEmpty(@SUBSCRIPTION_COLLECTION)
           App.Log.debug('Model', "server notify collection change #{@className}")
           @fetchFull(
             ->
@@ -394,13 +395,13 @@ class App.Model extends Spine.Model
   subscribe: (callback, type) ->
 
     # remember record id and callback
-    App[ @constructor.className ].subscribe_item(@id, callback)
+    App[ @constructor.className ].subscribeItem(@id, callback)
 
-  @subscribe_item: (id, callback) ->
+  @subscribeItem: (id, callback) ->
 
     # init bind
-    if !@_subscribe_item_bindDone
-      @_subscribe_item_bindDone = true
+    if !@_subscribeItemBindDone
+      @_subscribeItemBindDone = true
 
       # subscribe and render data after local change
       @bind(
@@ -454,16 +455,16 @@ class App.Model extends Spine.Model
       App.Event.bind(
         events
         (item) =>
-          if @SUBSCRIPTION_ITEM && @SUBSCRIPTION_ITEM[ item.id ]
-            App.Log.debug('Model', "server change on #{@className}.find(#{item.id}) #{item.updated_at}")
-            callback = =>
-              genericObject = undefined
-              if App[ @className ].exists(item.id)
-                genericObject = App[ @className ].find(item.id)
-              if !genericObject || new Date(item.updated_at) > new Date(genericObject.updated_at)
-                App.Log.debug('Model', "request #{@className}.find(#{item.id}) from server")
-                @full(item.id, false, true)
-            App.Delay.set(callback, 600, item.id, "full-#{@className}-#{item.id}")
+          return if !@SUBSCRIPTION_ITEM || !@SUBSCRIPTION_ITEM[ item.id ]
+          App.Log.debug('Model', "server change on #{@className}.find(#{item.id}) #{item.updated_at}")
+          callback = =>
+            genericObject = undefined
+            if App[ @className ].exists(item.id)
+              genericObject = App[ @className ].find(item.id)
+            if !genericObject || new Date(item.updated_at) > new Date(genericObject.updated_at)
+              App.Log.debug('Model', "request #{@className}.find(#{item.id}) from server")
+              @full(item.id, false, true)
+          App.Delay.set(callback, 600, item.id, "full-#{@className}-#{item.id}")
         "Item::Subscribe::#{@className}"
       )
 
@@ -471,13 +472,13 @@ class App.Model extends Spine.Model
       App.Event.bind(
         events
         (item) =>
-          if @SUBSCRIPTION_ITEM && @SUBSCRIPTION_ITEM[ item.id ]
-            return if !App[ @className ].exists(item.id)
-            genericObject = App[ @className ].find(item.id)
-            App.Log.debug('Model', "server delete on #{@className}.find(#{item.id}) #{item.updated_at}")
-            callback = ->
-              genericObject.trigger('destroy', genericObject)
-            App.Delay.set(callback, 500, item.id, "delete-#{@className}-#{item.id}")
+          return if !@SUBSCRIPTION_ITEM || !@SUBSCRIPTION_ITEM[ item.id ]
+          return if !App[ @className ].exists(item.id)
+          genericObject = App[ @className ].find(item.id)
+          App.Log.debug('Model', "server delete on #{@className}.find(#{item.id}) #{item.updated_at}")
+          callback = ->
+            genericObject.trigger('destroy', genericObject)
+          App.Delay.set(callback, 500, item.id, "delete-#{@className}-#{item.id}")
         "Item::SubscribeDelete::#{@className}"
       )
 
