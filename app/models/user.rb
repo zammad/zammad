@@ -654,9 +654,9 @@ returns
 
 =begin
 
-update/sync default preferences of users in a dedecated role
+update/sync default preferences of users in a dedecated permissions
 
-  result = User.update_default_preferences('Agent', force)
+  result = User.update_default_preferences_by_permission('ticket.agent', force)
 
 returns
 
@@ -664,24 +664,47 @@ returns
 
 =end
 
-  def self.update_default_preferences(role_name, force = false)
+  def self.update_default_preferences_by_permission(permission_name, force = false)
+    permission = Object.const_get('Permission').lookup(name: permission_name)
+    return if !permission
+    default = Rails.configuration.preferences_default_by_permission
+    return false if !default
+    default.deep_stringify_keys!
+    User.with_permissions(permission.name).each { |user|
+      next if !default[permission.name]
+      has_changed = false
+      default[permission.name].each { |key, value|
+        next if !force && user.preferences[key]
+        has_changed = true
+        user.preferences[key] = value
+      }
+      if has_changed
+        user.save!
+      end
+    }
+    true
+  end
+
+=begin
+
+update/sync default preferences of users in a dedecated role
+
+  result = User.update_default_preferences_by_role('Agent', force)
+
+returns
+
+  result = true # false
+
+=end
+
+  def self.update_default_preferences_by_role(role_name, force = false)
     role = Role.lookup(name: role_name)
+    return if !role
     default = Rails.configuration.preferences_default_by_permission
     return false if !default
     default.deep_stringify_keys!
     role.permissions.each { |permission|
-      User.with_permissions(permission.name).each { |user|
-        next if !default[permission.name]
-        has_changed = false
-        default[permission.name].each { |key, value|
-          next if !force && user.preferences[key]
-          has_changed = true
-          user.preferences[key] = value
-        }
-        if has_changed
-          user.save!
-        end
-      }
+      User.update_default_preferences_by_permission(permission.name, force)
     }
     true
   end
