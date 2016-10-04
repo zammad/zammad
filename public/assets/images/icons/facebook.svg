@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
     <title>facebook</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="facebook" sketch:type="MSArtboardGroup" fill="#50E3C2">
-            <path d="M1.805369,1 C1.302013,1 1,1.402685 1,1.805369 L1,15.194631 C1,15.697987 1.402685,16 1.805369,16 L9.053691,16 L9.053691,10.161074 L7.040268,10.161074 L7.040268,7.845638 L9.053691,7.845638 L9.053691,6.134228 C9.053691,4.221477 10.261745,3.114094 11.973154,3.114094 C12.778523,3.114094 13.483221,3.214765 13.684564,3.214765 L13.684564,5.228188 L12.47651,5.228188 C11.57047,5.228188 11.369128,5.630872 11.369128,6.33557 L11.369128,7.744966 L13.583893,7.744966 L13.281879,10.060403 L11.369128,10.060403 L11.369128,15.999329 L15.194631,15.999329 C15.697987,15.999329 16,15.596644 16,15.19396 L16,1.704698 C16,1.402685 15.597315,1 15.194631,1 L1.805369,1 L1.805369,1 Z" id="facebook-channel-white" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="facebook" fill="#50E3C2">
+            <path d="M1.805369,1 C1.302013,1 1,1.402685 1,1.805369 L1,15.194631 C1,15.697987 1.402685,16 1.805369,16 L9.053691,16 L9.053691,10.161074 L7.040268,10.161074 L7.040268,7.845638 L9.053691,7.845638 L9.053691,6.134228 C9.053691,4.221477 10.261745,3.114094 11.973154,3.114094 C12.778523,3.114094 13.483221,3.214765 13.684564,3.214765 L13.684564,5.228188 L12.47651,5.228188 C11.57047,5.228188 11.369128,5.630872 11.369128,6.33557 L11.369128,7.744966 L13.583893,7.744966 L13.281879,10.060403 L11.369128,10.060403 L11.369128,15.999329 L15.194631,15.999329 C15.697987,15.999329 16,15.596644 16,15.19396 L16,1.704698 C16,1.402685 15.597315,1 15.194631,1 L1.805369,1 L1.805369,1 Z" id="facebook-channel-white"></path>
         </g>
     </g>
 </svg>

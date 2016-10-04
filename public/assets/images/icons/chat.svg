@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
     <title>chat</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="chat" sketch:type="MSArtboardGroup" fill="#50E3C2">
-            <path d="M2,5.00585866 C2,3.89805351 2.89821238,3 3.99079514,3 L20.0092049,3 C21.1086907,3 22,3.89706013 22,5.00585866 L22,14.9941413 C22,16.1019465 21.1017876,17 20.0092049,17 L3.99079514,17 C2.89130934,17 2,16.1029399 2,14.9941413 L2,5.00585866 Z M12,17 L18,21 L18,17 L12,17 Z" id="Chat" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="chat" fill="#50E3C2">
+            <path d="M2,5.00585866 C2,3.89805351 2.89821238,3 3.99079514,3 L20.0092049,3 C21.1086907,3 22,3.89706013 22,5.00585866 L22,14.9941413 C22,16.1019465 21.1017876,17 20.0092049,17 L3.99079514,17 C2.89130934,17 2,16.1029399 2,14.9941413 L2,5.00585866 Z M12,17 L18,21 L18,17 L12,17 Z" id="Chat"></path>
         </g>
     </g>
 </svg>

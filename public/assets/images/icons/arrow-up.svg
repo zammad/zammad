@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
     <title>arrow-up</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="arrow-up" sketch:type="MSArtboardGroup" fill="#50E3C2">
-            <path d="M10.807178,7 L12.207036,5.571574 L7.20703601,0.671574 L6.50000101,-0.02132 L5.80000001,0.67868 L0.900000013,5.57868 L2.31421401,6.992894 L6.50000101,2.885787 L10.807178,7 Z" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="arrow-up" fill="#50E3C2">
+            <polygon points="10.064178 -0.76432 8.63575201 -2.164178 3.73575201 2.835822 3.04285801 3.542857 3.74285801 4.242858 8.64285801 9.142858 10.057072 7.728644 5.94996501 3.542857"></polygon>
         </g>
     </g>
 </svg>
