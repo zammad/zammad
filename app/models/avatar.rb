@@ -37,7 +37,7 @@ add an avatar based on auto detection (email address)
 
 =begin
 
-add a avatar
+add avatar by upload
 
   Avatar.add(
     object: 'User',
@@ -52,6 +52,20 @@ add a avatar
       mime_type: 'image/png',
     },
     source: 'web',
+    deletable: true,
+    updated_by_id: 1,
+    created_by_id: 1,
+  )
+
+add avatar by url
+
+  Avatar.add(
+    object: 'User',
+    o_id: user.id,
+    default: true,
+    url: ...,
+    source: 'web',
+    deletable: true,
     updated_by_id: 1,
     created_by_id: 1,
   )
@@ -162,7 +176,7 @@ add a avatar
     record[:store_hash] = Digest::MD5.hexdigest(data[:resize][:content])
     if avatar_already_exists && avatar_already_exists.store_hash == record[:store_hash]
       avatar_already_exists.touch
-      return
+      return avatar_already_exists
     end
 
     # store images
