@@ -6,6 +6,7 @@ class App.WidgetAvatar extends App.ObserverController
     lastname: true
     email: true
     image: true
+    vip: true
   globalRerender: false
 
   render: (user) =>
