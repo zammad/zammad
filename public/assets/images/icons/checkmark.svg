@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="16px" height="14px" viewBox="0 0 16 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="14px" viewBox="0 0 16 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
     <title>checkmark</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="checkmark" sketch:type="MSArtboardGroup" fill="#50E3C2">
-            <path d="M6.476597,13.837073 C10.286418,5.701257 15.863199,1.595794 15.863199,1.595794 L15.863199,0 C15.863199,0 9.949658,2.606564 5.367566,8.72169 C5.367566,8.72169 3.233543,6.417349 2.015964,5.847399 C0.798385,5.277449 0,7.235263 0,7.235263 C0,7.235263 3.028698,10.053302 6.476597,13.837073 L6.476597,13.837073 Z" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="checkmark" fill="#50E3C2">
+            <path d="M15.863199,1.595794 L15.863199,0 C15.863199,0 9.949658,2.606564 5.367566,8.72169 C5.367566,8.72169 3.233543,6.417349 2.015964,5.847399 C0.798385,5.277449 0,7.235263 0,7.235263 C0,7.235263 3.028698,10.053302 6.476597,13.837073 C10.286418,5.701257 15.863199,1.595794 15.863199,1.595794 Z"></path>
         </g>
     </g>
 </svg>

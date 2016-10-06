@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
     <title>pen</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="pen" sketch:type="MSArtboardGroup" fill="#50E3C2">
-            <path d="M12.3877926,2.1117741 L10.8240015,1.12914966 C10.4294734,0.881530154 9.9097496,1.00072014 9.66120614,1.39478626 L9.04492922,2.37556279 L12.0357664,4.25396004 L12.6525053,3.27410747 C12.9001248,2.87911739 12.7823207,2.35893163 12.3877926,2.1117741 L12.3877926,2.1117741 Z M3.72388162,10.8496014 L6.71471876,12.7270746 L11.5890349,4.96771404 L8.59634985,3.08839284 L3.72388162,10.8496014 L3.72388162,10.8496014 Z M3.26606272,13.236173 L3.20000005,15 L4.76101931,14.1744476 L6.21162614,13.4084903 L3.32611969,11.5947698 L3.26606272,13.236173 L3.26606272,13.236173 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="pen" fill="#50E3C2">
+            <path d="M12.3877926,2.1117741 L10.8240015,1.12914966 C10.4294734,0.881530154 9.9097496,1.00072014 9.66120614,1.39478626 L9.04492922,2.37556279 L12.0357664,4.25396004 L12.6525053,3.27410747 C12.9001248,2.87911739 12.7823207,2.35893163 12.3877926,2.1117741 L12.3877926,2.1117741 Z M3.72388162,10.8496014 L6.71471876,12.7270746 L11.5890349,4.96771404 L8.59634985,3.08839284 L3.72388162,10.8496014 L3.72388162,10.8496014 Z M3.26606272,13.236173 L3.20000005,15 L4.76101931,14.1744476 L6.21162614,13.4084903 L3.32611969,11.5947698 L3.26606272,13.236173 L3.26606272,13.236173 Z" id="Shape"></path>
         </g>
     </g>
 </svg>
