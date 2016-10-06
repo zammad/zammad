@@ -49,7 +49,7 @@ class StatsStore < ApplicationModel
 
 =begin
 
-  item = StatsStore.snyc(
+  item = StatsStore.sync(
     object: 'User',
     o_id: current_user.id,
     key: 'dashboard',
