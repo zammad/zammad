@@ -93,7 +93,19 @@
     </table>
   </form>
 
-  <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:
+  <label class="formGroup-label"><%- @T('Preview') %></label>
+
+  <div class="browser form-demo js-browser">
+    <div class="browser-body js-browserBody">
+      <div class="browser-website centered vertical fit">
+        <div class="btn js-formBtn"><%- @T('Feedback') %></div>
+        <div class="js-formInline" style="width: 300px;"></div>
+        <script id="zammad_form_script" src="/assets/form/form.js"></script>
+      </div>
+    </div>
+  </div>
+
+  <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:</p>
 
   <pre><code class="language-html js-paramsBlock">&lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
 

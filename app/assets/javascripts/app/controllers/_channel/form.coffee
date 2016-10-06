@@ -47,6 +47,17 @@ class App.ChannelForm extends App.ControllerSubContent
           paramString += "    #{key}: '#{quote(value)}'"
     @$('.js-modal-params').html(paramString)
 
+    # rebuild preview
+    if params.modal
+      @$('.js-formInline').addClass('hide')
+      @$('.js-formBtn').removeClass('hide')
+      @$('.js-formBtn').ZammadForm(params)
+      @$('.js-formBtn').text('Feedback')
+    else
+      @$('.js-formBtn').addClass('hide')
+      @$('.js-formInline').removeClass('hide')
+      @$('.js-formInline').ZammadForm(params)
+
   toggleFormSetting: =>
     value = @formSetting.prop('checked')
     App.Setting.set('form_ticket_create', value)
