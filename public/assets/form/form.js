@@ -105,7 +105,8 @@ $(function() {
   }
 
   Plugin.prototype.init = function () {
-    var _this = this
+    var _this = this,
+      params = {}
 
     _this.log('debug', 'init', this._src)
 
@@ -117,8 +118,12 @@ $(function() {
     _this.log('debug', 'endpoint_submit: ' + _this.endpoint_submit)
 
     // load config
+    if (this.options.test) {
+      params.test = true
+    }
     $.ajax({
       url: _this.endpoint_config,
+      data: params
     }).done(function(data) {
       _this.log('debug', 'config:', data)
       _this._config = data
@@ -209,12 +214,16 @@ $(function() {
     var _this = this,
       params = {}
 
-    $.each( _this.$form.serializeArray(), function( index, item ) {
+    $.each( _this.$form.serializeArray(), function(index, item) {
       params[item.name] = item.value
     })
 
     if (!params.title) {
       params.title = this.options.messageTitle
+    }
+
+    if (this.options.test) {
+      params.test = true
     }
     _this.log('debug', 'params', params)
     return params

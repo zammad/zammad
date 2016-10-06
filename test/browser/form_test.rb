@@ -30,6 +30,82 @@ class FormTest < TestCase
       type: 'off',
     )
 
+    # admin preview test
+    sleep 1
+    click(
+      browser: agent,
+      css: '.content.active .js-formBtn',
+    )
+
+    sleep 10
+    set(
+      browser: agent,
+      css: 'body div.zammad-form-modal [name="name"]',
+      value: 'some sender',
+    )
+    set(
+      browser: agent,
+      css: 'body div.zammad-form-modal [name="body"]',
+      value: '',
+    )
+    click(
+      browser: agent,
+      css: 'body div.zammad-form-modal button[type="submit"]',
+    )
+    exists(
+      browser: agent,
+      css: 'body div.zammad-form-modal .has-error [name="body"]',
+    )
+    set(
+      browser: agent,
+      css: 'body div.zammad-form-modal [name="body"]',
+      value: 'new body',
+    )
+    set(
+      browser: agent,
+      css: 'body div.zammad-form-modal [name="email"]',
+      value: 'somebody@notexistinginanydomainspacealsonothere.nowhere',
+    )
+    click(
+      browser: agent,
+      css: 'body div.zammad-form-modal button[type="submit"]',
+    )
+    exists(
+      browser: agent,
+      css: 'body div.zammad-form-modal .has-error [name="email"]',
+    )
+    set(
+      browser: agent,
+      css: 'body div.zammad-form-modal [name="email"]',
+      value: 'notexistinginanydomainspacealsonothere@znuny.com',
+    )
+    click(
+      browser: agent,
+      css: 'body div.zammad-form-modal button[type="submit"]',
+    )
+    exists(
+      browser: agent,
+      css: 'body div.zammad-form-modal .has-error [name="email"]',
+    )
+    set(
+      browser: agent,
+      css: 'body div.zammad-form-modal [name="email"]',
+      value: 'discard@znuny.com',
+    )
+    click(
+      browser: agent,
+      css: 'body div.zammad-form-modal button[type="submit"]',
+    )
+    watch_for(
+      browser: agent,
+      css:     'body div.zammad-form-modal',
+      value:   'Thank you for your inquiry',
+    )
+    # click on backgroud (not on thank you dialog)
+    element = agent.find_elements({ css: 'body div.zammad-form-modal' })[0]
+    agent.action.move_to(element, 200, 200).perform
+    agent.action.click.perform
+
     customer = browser_instance
     location(
       browser: customer,
@@ -59,7 +135,7 @@ class FormTest < TestCase
 
     exists_not(
       browser: customer,
-      css: 'body div.modal',
+      css: 'body div.zammad-form-modal',
     )
 
     # modal dialog
@@ -69,28 +145,28 @@ class FormTest < TestCase
     )
     exists(
       browser: customer,
-      css: 'body div.modal',
+      css: 'body div.zammad-form-modal',
     )
 
     # fill form valid data - but too fast
     set(
       browser: customer,
-      css: 'body div.modal [name="name"]',
+      css: 'body div.zammad-form-modal [name="name"]',
       value: 'some name',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="email"]',
+      css: 'body div.zammad-form-modal [name="email"]',
       value: 'discard@znuny.com',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="body"]',
+      css: 'body div.zammad-form-modal [name="body"]',
       value: "some text\nnew line",
     )
     click(
       browser: customer,
-      css: 'body div.modal button[type="submit"]',
+      css: 'body div.zammad-form-modal button[type="submit"]',
     )
 
     # check warning
@@ -101,54 +177,54 @@ class FormTest < TestCase
     # fill form invalid data - within correct time
     set(
       browser: customer,
-      css: 'body div.modal [name="name"]',
+      css: 'body div.zammad-form-modal [name="name"]',
       value: 'some name',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="email"]',
+      css: 'body div.zammad-form-modal [name="email"]',
       value: 'invalid_email',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="body"]',
+      css: 'body div.zammad-form-modal [name="body"]',
       value: "some text\nnew line",
     )
     click(
       browser: customer,
-      css: 'body div.modal button[type="submit"]',
+      css: 'body div.zammad-form-modal button[type="submit"]',
     )
     sleep 10
     exists(
       browser: customer,
-      css: 'body div.modal',
+      css: 'body div.zammad-form-modal',
     )
 
     # fill form valid data
     set(
       browser: customer,
-      css: 'body div.modal [name="email"]',
+      css: 'body div.zammad-form-modal [name="email"]',
       value: 'discard@znuny.com',
     )
     click(
       browser: customer,
-      css: 'body div.modal button[type="submit"]',
+      css: 'body div.zammad-form-modal button[type="submit"]',
     )
     watch_for(
       browser: customer,
-      css:     'body div.modal',
+      css:     'body div.zammad-form-modal',
       value:   'Thank you for your inquiry',
     )
 
     # click on backgroud (not on thank you dialog)
-    element = customer.find_elements({ css: 'body div.modal' })[0]
+    element = customer.find_elements({ css: 'body div.zammad-form-modal' })[0]
     customer.action.move_to(element, 200, 200).perform
     customer.action.click.perform
 
     sleep 1
     exists_not(
       browser: customer,
-      css: 'body div.modal',
+      css: 'body div.zammad-form-modal',
     )
 
     # fill form invalid data - within correct time
@@ -159,100 +235,100 @@ class FormTest < TestCase
     sleep 10
     set(
       browser: customer,
-      css: 'body div.modal [name="name"]',
+      css: 'body div.zammad-form-modal [name="name"]',
       value: '',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="email"]',
+      css: 'body div.zammad-form-modal [name="email"]',
       value: 'discard@znuny.com',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="body"]',
+      css: 'body div.zammad-form-modal [name="body"]',
       value: "some text\nnew line",
     )
     click(
       browser: customer,
-      css: 'body div.modal button[type="submit"]',
+      css: 'body div.zammad-form-modal button[type="submit"]',
     )
     exists(
       browser: customer,
-      css: 'body div.modal .has-error [name="name"]',
+      css: 'body div.zammad-form-modal .has-error [name="name"]',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="name"]',
+      css: 'body div.zammad-form-modal [name="name"]',
       value: 'some sender',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="body"]',
+      css: 'body div.zammad-form-modal [name="body"]',
       value: '',
     )
     click(
       browser: customer,
-      css: 'body div.modal button[type="submit"]',
+      css: 'body div.zammad-form-modal button[type="submit"]',
     )
     exists(
       browser: customer,
-      css: 'body div.modal .has-error [name="body"]',
+      css: 'body div.zammad-form-modal .has-error [name="body"]',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="body"]',
+      css: 'body div.zammad-form-modal [name="body"]',
       value: 'new body',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="email"]',
+      css: 'body div.zammad-form-modal [name="email"]',
       value: 'somebody@notexistinginanydomainspacealsonothere.nowhere',
     )
     click(
       browser: customer,
-      css: 'body div.modal button[type="submit"]',
+      css: 'body div.zammad-form-modal button[type="submit"]',
     )
     exists(
       browser: customer,
-      css: 'body div.modal .has-error [name="email"]',
+      css: 'body div.zammad-form-modal .has-error [name="email"]',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="email"]',
+      css: 'body div.zammad-form-modal [name="email"]',
       value: 'notexistinginanydomainspacealsonothere@znuny.com',
     )
     click(
       browser: customer,
-      css: 'body div.modal button[type="submit"]',
+      css: 'body div.zammad-form-modal button[type="submit"]',
     )
     exists(
       browser: customer,
-      css: 'body div.modal .has-error [name="email"]',
+      css: 'body div.zammad-form-modal .has-error [name="email"]',
     )
     set(
       browser: customer,
-      css: 'body div.modal [name="email"]',
+      css: 'body div.zammad-form-modal [name="email"]',
       value: 'discard@znuny.com',
     )
     click(
       browser: customer,
-      css: 'body div.modal button[type="submit"]',
+      css: 'body div.zammad-form-modal button[type="submit"]',
     )
     watch_for(
       browser: customer,
-      css:     'body div.modal',
+      css:     'body div.zammad-form-modal',
       value:   'Thank you for your inquiry',
     )
 
     # click on backgroud (not on thank you dialog)
-    element = customer.find_elements({ css: 'body div.modal' })[0]
+    element = customer.find_elements({ css: 'body div.zammad-form-modal' })[0]
     customer.action.move_to(element, 200, 200).perform
     customer.action.click.perform
 
     sleep 1
     exists_not(
       browser: customer,
-      css: 'body div.modal',
+      css: 'body div.zammad-form-modal',
     )
 
     # inline form

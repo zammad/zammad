@@ -48,6 +48,7 @@ class App.ChannelForm extends App.ControllerSubContent
     @$('.js-modal-params').html(paramString)
 
     # rebuild preview
+    params.test = true
     if params.modal
       @$('.js-formInline').addClass('hide')
       @$('.js-formBtn').removeClass('hide')

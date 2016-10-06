@@ -16,6 +16,10 @@ class FormController < ApplicationController
       endpoint: endpoint,
     }
 
+    if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
+      config[:enabled] = true
+    end
+
     render json: config, status: :ok
   end
 
@@ -115,6 +119,7 @@ class FormController < ApplicationController
   private
 
   def enabled?
+    return true if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
     return true if Setting.get('form_ticket_create')
     response_access_deny
     false
