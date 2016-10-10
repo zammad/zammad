@@ -50,6 +50,7 @@ $(function() {
   defaults = {
     debug: false,
     noCSS: false,
+    prefixCSS: 'zammad-form-',
     showTitle: false,
     messageTitle: 'Zammad Form',
     messageSubmit: 'Submit',
@@ -242,12 +243,12 @@ $(function() {
     _this.modalOpenTime = new Date()
     _this.log('debug', 'modalOpenTime:', _this.modalOpenTime)
 
-    var element = '<div class="zammad-form-modal">\
-      <div class="zammad-form-modal-backdrop js-close"></div>\
-      <div class="zammad-form-modal-body">\
-        <form class="zammad-form"></form>\
+    var element = "<div class=\"" + _this.options.prefixCSS + "modal\">\
+      <div class=\"" + _this.options.prefixCSS + "modal-backdrop js-close\"></div>\
+      <div class=\"" + _this.options.prefixCSS + "modal-body\">\
+        <form class=\"zammad-form\"></form>\
       </div>\
-    </div>'
+    </div>"
 
     if (!this.options.modal) {
       element = '<div><form class="zammad-form"></form></div>'
