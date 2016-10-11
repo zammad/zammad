@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="34px" height="7px" viewBox="0 0 34 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
     <title>line-right-arrow</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="line-right-arrow" fill="#50E3C2">
-            <polygon id="Shape" points="31 2.99999999 0 2.99999999 0 3.99999999 31 3.99999999"></polygon>
-            <polygon id="Triangle-1-Copy" points="34 8.8817842e-16 34 7 27 3.5"></polygon>
+            <path d="M27,3.99999999 L-8.8817842e-16,3.99999999 L-8.8817842e-16,2.99999999 L27,2.99999999 L27,0 L34,3.5 L27,7 L27,3.99999999 Z" id="Combined-Shape"></path>
         </g>
     </g>
 </svg>
