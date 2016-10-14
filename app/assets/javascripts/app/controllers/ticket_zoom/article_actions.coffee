@@ -211,12 +211,12 @@ class App.TicketZoomArticleActions extends App.Controller
     recipients = article.from
     if article.to
       if recipients
-        recipients += ' '
+        recipients += ', '
       recipients += article.to
 
     if recipients
       recipientString = ''
-      recipientScreenNames = recipients.split(' ')
+      recipientScreenNames = recipients.split(',')
       for recipientScreenName in recipientScreenNames
 
         # exclude already listed screen name

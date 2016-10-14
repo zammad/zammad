@@ -295,21 +295,29 @@ class App.TicketZoomArticleNew extends App.Controller
     if params.type is 'twitter status'
       rawHTML = @$('[data-name=body]').html()
       cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
-      if cleanHTML && cleanHTML.html() != rawHTML
+
+      # if markup is included, strip it out
+      if cleanHTML && cleanHTML.html() isnt rawHTML && "<div>#{cleanHTML.html()}</div>" isnt rawHTML
         @$('[data-name=body]').html(cleanHTML)
       params.content_type = 'text/plain'
       params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
+
     if params.type is 'twitter direct-message'
       rawHTML = @$('[data-name=body]').html()
       cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
-      if cleanHTML && cleanHTML.html() != rawHTML
+
+      # if markup is included, strip it out
+      if cleanHTML && cleanHTML.html() isnt rawHTML && "<div>#{cleanHTML.html()}</div>" isnt rawHTML
         @$('[data-name=body]').html(cleanHTML)
       params.content_type = 'text/plain'
       params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
+
     if params.type is 'facebook feed comment'
       rawHTML = @$('[data-name=body]').html()
       cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
-      if cleanHTML && cleanHTML.html() != rawHTML
+
+      # if markup is included, strip it out
+      if cleanHTML && cleanHTML.html() isnt rawHTML && "<div>#{cleanHTML.html()}</div>" isnt rawHTML
         @$('[data-name=body]').html(cleanHTML)
       params.content_type = 'text/plain'
       params.body = App.Utils.html2text(params.body, true)
@@ -372,7 +380,6 @@ class App.TicketZoomArticleNew extends App.Controller
           return false
 
     if params.type is 'twitter status'
-      params.body
       textLength = @maxTextLength - params.body.length
       return false if textLength < 0
 

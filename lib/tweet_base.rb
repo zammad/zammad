@@ -163,7 +163,7 @@ class TweetBase
           if !to
             to = ''
           else
-            to + ', '
+            to += ', '
           end
           to += "@#{local_user.screen_name}"
         }
