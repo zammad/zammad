@@ -374,9 +374,10 @@ class App.TicketZoomArticleNew extends App.Controller
         return false
 
     # check attachment
-    if params.body
-      if App.Utils.checkAttachmentReference(params.body) && attachmentCount < 1
-        if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
+    if params.body && attachmentCount < 1
+      matchingWord = App.Utils.checkAttachmentReference(params.body)
+      if matchingWord
+        if !confirm(App.i18n.translateContent('You use %s in text but no attachment is attached. Do you want to continue?', matchingWord))
           return false
 
     if params.type is 'twitter status'

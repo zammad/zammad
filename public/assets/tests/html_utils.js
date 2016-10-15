@@ -38,7 +38,6 @@ test("textCleanup", function() {
   result = App.Utils.textCleanup(source)
   equal(result, should, source)
 
-
 });
 
 // text2html
@@ -890,6 +889,44 @@ test("identify signature", function() {
 
 });
 
+// check attachment references
+test("check replace tags", function() {
+  var message = 'some not existing'
+  var result = false
+  var verify = App.Utils.checkAttachmentReference(message)
+  equal(verify, result)
+
+  message = 'some attachment for you'
+  result = 'Attachment'
+  verify = App.Utils.checkAttachmentReference(message)
+  equal(verify, result)
+
+  message = 'your attachment.'
+  result = 'Attachment'
+  verify = App.Utils.checkAttachmentReference(message)
+  equal(verify, result)
+
+  message = 'some otherattachment for you'
+  result = false
+  verify = App.Utils.checkAttachmentReference(message)
+  equal(verify, result)
+
+  message = 'some attachmentother for you'
+  result = false
+  verify = App.Utils.checkAttachmentReference(message)
+  equal(verify, result)
+
+  message = 'someattachment'
+  result = false
+  verify = App.Utils.checkAttachmentReference(message)
+  equal(verify, result)
+
+  message = 'As enclosed you will find.'
+  result = 'Enclosed'
+  verify = App.Utils.checkAttachmentReference(message)
+  equal(verify, result)
+});
+
 // replace tags
 test("check replace tags", function() {
 
@@ -988,7 +1025,6 @@ test("check replace tags", function() {
   }
   verify = App.Utils.replaceTags(message, data)
   equal(verify, result)
-
 
 });
 

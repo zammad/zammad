@@ -594,18 +594,17 @@ class App.Utils
   # check if attachment is referenced in message
   @checkAttachmentReference: (message) ->
     return false if !message
-    return true if message.match(/attachment/i)
     matchwords = ['Attachment', 'attachment', 'Attached', 'attached', 'Enclosed', 'enclosed', 'Enclosure', 'enclosure']
     for word in matchwords
 
       # en
-      attachmentTranslatedRegExp = new RegExp(word, 'i')
-      return true if message.match(attachmentTranslatedRegExp)
+      attachmentTranslatedRegExp = new RegExp("\\W#{word}\\W", 'i')
+      return word if message.match(attachmentTranslatedRegExp)
 
       # user locale
       attachmentTranslated = App.i18n.translateContent(word)
-      attachmentTranslatedRegExp = new RegExp(attachmentTranslated, 'i')
-      return true if message.match(attachmentTranslatedRegExp)
+      attachmentTranslatedRegExp = new RegExp("\\W#{attachmentTranslated}\\W", 'i')
+      return attachmentTranslated if message.match(attachmentTranslatedRegExp)
     false
 
   # human readable file size
