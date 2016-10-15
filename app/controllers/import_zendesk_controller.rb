@@ -23,7 +23,7 @@ class ImportZendeskController < ApplicationController
       'Connection refused'                                        => 'Connection refused!',
     }
 
-    response = UserAgent.request( params[:url] )
+    response = UserAgent.request(params[:url])
 
     if !response.success?
       message_human = ''
@@ -36,6 +36,15 @@ class ImportZendeskController < ApplicationController
         result: 'invalid',
         message_human: message_human,
         message: response.error.to_s,
+      }
+      return
+    end
+
+    # since 2016-10-15 a redirect to a signup page has been implemented
+    if response.body =~ /(Take it for a risk-free|Take it for a risk-free)/i
+      render json: {
+        result: 'invalid',
+        message_human: 'Hostname not found!',
       }
       return
     end
