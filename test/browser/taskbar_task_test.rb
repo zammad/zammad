@@ -74,7 +74,7 @@ class TaskbarTaskTest < TestCase
       css: '.active .newTicket [data-name="body"]',
       value: 'OUTBOUND BODY TEST#1',
     )
-    sleep 2
+    sleep 3
 
     logout()
     sleep 4
