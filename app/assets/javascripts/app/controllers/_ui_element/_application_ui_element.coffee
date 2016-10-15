@@ -8,36 +8,36 @@ class App.UiElement.ApplicationUiElement
 
     return if !attribute.options
 
+    # arrays can only get ordered
     if _.isArray(attribute.options)
-      # reverse if we have to exit early, if configured
-      if attribute.order
-        if attribute.order == 'DESC'
-          attribute.options = attribute.options.reverse()
-        return
 
-    options_by_name = []
-    for i in attribute.options
-      options_by_name.push i['name'].toString().toLowerCase()
-    options_by_name = options_by_name.sort()
-
-    options_new = []
-    options_new_used = {}
-    for i in options_by_name
-      for ii, vv in attribute.options
-        if !options_new_used[ ii['value'] ] && i.toString().toLowerCase() is ii['name'].toString().toLowerCase()
-          options_new_used[ ii['value'] ] = 1
-          options_new.push ii
-    attribute.options = options_new
-
-    # do a final reverse, if configured
-    if attribute.order
-      if attribute.order == 'DESC'
+      # reverse - we have to exit early
+      if attribute.order && attribute.order == 'DESC'
         attribute.options = attribute.options.reverse()
+      return
+
+    # sort by name
+    optionsByName = []
+    optionsByNameWithValue = {}
+    for i, value of attribute.options
+      valueTmp = value.toString().toLowerCase()
+      optionsByName.push valueTmp
+      optionsByNameWithValue[valueTmp] = i
+    optionsByName = optionsByName.sort()
+
+    # do a reverse, if needed
+    if attribute.order && attribute.order == 'DESC'
+      optionsByName = optionsByName.reverse()
+
+    optionsNew = []
+    for i in optionsByName
+      optionsNew.push optionsByNameWithValue[i]
+    attribute.options = optionsNew
 
   @addNullOption: (attribute) ->
     return if !attribute.options
     return if !attribute.nulloption
-    if _.isArray( attribute.options )
+    if _.isArray(attribute.options)
       attribute.options.unshift({ name: '-', value: '' })
     else
       attribute.options[''] = '-'
@@ -64,6 +64,7 @@ class App.UiElement.ApplicationUiElement
           name:  name_new
           value: key
         }
+    attribute.sortBy = null
 
   @getRelationOptionList: (attribute, params) ->
 
@@ -154,18 +155,20 @@ class App.UiElement.ApplicationUiElement
 
       # if active or if active doesn't exist
       if item.active || !activeSupport || isSelected
-        name_new = '?'
+        nameNew = '?'
         if item.displayName
-          name_new = item.displayName()
+          nameNew = item.displayName()
         else if item.name
-          name_new = item.name
+          nameNew = item.name
         if attribute.translate
-          name_new = App.i18n.translateInline(name_new)
+          nameNew = App.i18n.translateInline(nameNew)
         attribute.options.push {
-          name:  name_new,
+          name:  nameNew,
           value: item.id,
           note:  item.note,
         }
+
+    attribute.sortBy = null
 
   # execute filter
   @filterOption: (attribute) ->

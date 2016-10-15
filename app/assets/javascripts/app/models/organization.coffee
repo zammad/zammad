@@ -25,7 +25,7 @@ Mit **Organisationen** können Sie Kunden **gruppieren**. Dies hat u. a. zwei be
 '''
 
   uiUrl: ->
-    '#organization/profile/' + @id
+    "#organization/profile/#{@id}"
 
   icon: ->
     'organization'
@@ -37,7 +37,7 @@ Mit **Organisationen** können Sie Kunden **gruppieren**. Dies hat u. a. zwei be
       data['members'] = []
       for user_id in data['member_ids']
         if App.User.exists(user_id)
-          user = App.User.find(user_id)
+          user = App.User.findNative(user_id)
           data['members'].push user
     data
 

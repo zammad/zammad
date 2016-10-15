@@ -7,7 +7,7 @@ class App.TicketList extends App.Controller
   render: =>
 
     openTicket = (id,e) =>
-      ticket = App.Ticket.fullLocal(id)
+      ticket = App.Ticket.findNative(id)
       @navigate ticket.uiUrl()
     callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) ->
       attribute.title = object.title

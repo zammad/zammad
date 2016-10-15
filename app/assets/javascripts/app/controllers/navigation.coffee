@@ -174,9 +174,6 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
   render: ->
 
-    # reset result cache
-    @searchResultCache = {}
-
     user = App.Session.get()
     @html App.view('navigation')(
       user: user

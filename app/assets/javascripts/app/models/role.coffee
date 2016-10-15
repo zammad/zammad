@@ -30,7 +30,7 @@ class App.Role extends App.Model
       data['permissions'] = []
       for permission_id in data['permission_ids']
         if App.Permission.exists(permission_id)
-          permission = App.Permission.find(permission_id)
+          permission = App.Permission.findNative(permission_id)
           data['permissions'].push permission
 
     data

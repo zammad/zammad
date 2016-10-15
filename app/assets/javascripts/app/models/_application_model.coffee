@@ -588,7 +588,7 @@ class App.Model extends Spine.Model
 
                 # only if relation record exists in collection
                 if App[ attribute.relation ].exists(data[attribute.name])
-                  item = App[attribute.relation].find(data[attribute.name])
+                  item = App[attribute.relation].findNative(data[attribute.name])
                   item = App[attribute.relation]._fillUp(item, classNames.concat(@className))
                   data[withoutId] = item
                 else
@@ -630,11 +630,11 @@ class App.Model extends Spine.Model
     all_complied = []
     if !params
       for item in all
-        item_new = @find(item.id)
+        item_new = @findNative(item.id)
         all_complied.push @_fillUp(item_new)
       return all_complied
     for item in all
-      item_new = @find(item.id)
+      item_new = @findNative(item.id)
       all_complied.push @_fillUp(item_new)
 
     # filter search
@@ -693,7 +693,7 @@ class App.Model extends Spine.Model
     collection
 
   @_filterExtended: (collection, filters) ->
-    collection = _.filter( collection, (item) ->
+    collection = _.filter(collection, (item) ->
 
       # check all filters
       for filter in filters
@@ -704,7 +704,7 @@ class App.Model extends Spine.Model
 
           if matchInner isnt false
             reg = new RegExp( value, 'i' )
-            if item[ key ] isnt undefined && item[ key ] isnt null && item[ key ].match( reg )
+            if item[ key ] isnt undefined && item[ key ] isnt null && item[ key ].match(reg)
               matchInner = true
             else
               matchInner = false
@@ -729,3 +729,10 @@ class App.Model extends Spine.Model
         else if item.updated_at > updated_at
           updated_at = item.updated_at
     updated_at
+
+  @updatedAt: (id) ->
+    return if !@irecords[id]
+    @irecords[id].updated_at
+
+  @findNative: (id) ->
+    @irecords[id] or notFound?(id)
