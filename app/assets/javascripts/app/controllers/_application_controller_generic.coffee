@@ -1137,18 +1137,16 @@ class App.ObserverController extends App.Controller
     #console.trace()
     @log 'debug', 'new', @object_id, @model
 
-    object = App[@model].fullLocal(@object_id)
-    if !object
-      App[@model].full(@object_id, @maybeRender)
+    if App[@model].exists(@object_id)
+      @maybeRender( App[@model].fullLocal(@object_id) )
     else
-      @maybeRender(object)
+      App[@model].full(@object_id, @maybeRender)
 
     # rerender, e. g. on language change
     if @globalRerender
       @bind('ui:rerender', =>
         @lastAttributres = undefined
-        object = App[@model].fullLocal(@object_id)
-        @maybeRender(object)
+        @maybeRender( App[@model].fullLocal(@object_id) )
       )
 
   subscribe: (object, typeOfChange) =>

@@ -40,7 +40,7 @@ class AgentTicketAttachmentTest < TestCase
 
     # add attachment, attachment check should quiet
     file_upload(
-      css:   '.active .attachmentPlaceholder-inputHolder input',
+      css:   '.content.active .attachmentPlaceholder-inputHolder input',
       files: ['test/fixtures/upload2.jpg', 'test/fixtures/upload1.txt'],
     )
 
@@ -54,13 +54,13 @@ class AgentTicketAttachmentTest < TestCase
     # check if ticket is shown and attachment exists
     location_check(url: '#ticket/zoom/')
     sleep 2
-    ticket_number = @browser.find_elements({ css: '.active .ticketZoom-header .ticket-number' })[0].text
+    ticket_number = @browser.find_elements({ css: '.content.active .ticketZoom-header .ticket-number' })[0].text
     match(
-      css: '.active .ticket-article-item:nth-child(1) .attachments',
+      css: '.content.active .ticket-article-item:nth-child(1) .attachments',
       value: 'upload2.jpg',
     )
     match(
-      css: '.active .ticket-article-item:nth-child(1) .attachments',
+      css: '.content.active .ticket-article-item:nth-child(1) .attachments',
       value: 'upload1.txt',
     )
 
@@ -77,7 +77,7 @@ class AgentTicketAttachmentTest < TestCase
     )
 
     # submit form
-    click(css: '.active .js-submit')
+    click(css: '.content.active .js-submit')
     sleep 2
 
     # check warning
@@ -86,12 +86,12 @@ class AgentTicketAttachmentTest < TestCase
 
     # add attachment, attachment check should quiet
     file_upload(
-      css:   '.active .attachmentPlaceholder-inputHolder input',
+      css:   '.content.active .attachmentPlaceholder-inputHolder input',
       files: ['test/fixtures/upload1.txt'],
     )
 
     # submit form
-    click(css: '.active .js-submit')
+    click(css: '.content.active .js-submit')
     sleep 2
 
     # no warning
@@ -113,34 +113,34 @@ class AgentTicketAttachmentTest < TestCase
 
     # check content and edit screen in instance 1
     match(
-      css: '.active div.ticket-article',
+      css: '.content.active div.ticket-article',
       value: 'test 6 - ticket 1-1',
     )
     match_not(
-      css: '.active .ticket-article-item:nth-child(3) .attachments',
+      css: '.content.active .ticket-article-item:nth-child(3) .attachments',
       value: 'upload2.jpg',
     )
     match(
-      css: '.active .ticket-article-item:nth-child(3) .attachments',
+      css: '.content.active .ticket-article-item:nth-child(3) .attachments',
       value: 'upload1.txt',
     )
 
     # add attachment without body
     file_upload(
-      css:   '.active .attachmentPlaceholder-inputHolder input',
+      css:   '.content.active .attachmentPlaceholder-inputHolder input',
       files: ['test/fixtures/upload2.jpg', 'test/fixtures/upload1.txt'],
     )
 
     # submit form
-    click(css: '.active .js-submit')
+    click(css: '.content.active .js-submit')
     sleep 2
 
     # check warning
     match(
-      css: '.active .modal',
+      css: '.content.active .modal',
       value: 'missing',
     )
-    click(css: '.active .modal .js-cancel')
+    click(css: '.content.active .modal .js-cancel')
     sleep 2
 
     ticket_update(
@@ -151,7 +151,7 @@ class AgentTicketAttachmentTest < TestCase
     )
 
     # submit form
-    click(css: '.active .js-submit')
+    click(css: '.content.active .js-submit')
     sleep 2
 
     # discard changes should gone away
@@ -166,11 +166,11 @@ class AgentTicketAttachmentTest < TestCase
       },
     )
     match(
-      css: '.active .ticket-article-item:nth-child(4) .attachments',
+      css: '.content.active .ticket-article-item:nth-child(4) .attachments',
       value: 'upload2.jpg',
     )
     match(
-      css: '.active .ticket-article-item:nth-child(4) .attachments',
+      css: '.content.active .ticket-article-item:nth-child(4) .attachments',
       value: 'upload1.txt',
     )
     #
@@ -216,10 +216,10 @@ class AgentTicketAttachmentTest < TestCase
     )
 
     # check if customer has changed in second browser
-    click(browser: browser1, css: '.active .tabsSidebar-tab[data-tab="customer"]')
+    click(browser: browser1, css: '.content.active .tabsSidebar-tab[data-tab="customer"]')
     watch_for(
       browser: browser1,
-      css: '.active .tabsSidebar',
+      css: '.content.active .tabsSidebar',
       value: user_email,
     )
 
@@ -228,17 +228,17 @@ class AgentTicketAttachmentTest < TestCase
     #
 
     # modify customer
-    click(browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
-    click(browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
+    click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
     sleep 2
     set(browser: browser1, css: '.modal [name="address"]', value: 'some new address')
     click(browser: browser1, css: '.modal .js-submit')
 
     # verify is customer has chnaged other browser too
-    click(browser: browser2, css: '.active .tabsSidebar-tab[data-tab="customer"]')
+    click(browser: browser2, css: '.content.active .tabsSidebar-tab[data-tab="customer"]')
     watch_for(
       browser: browser2,
-      css: '.active .sidebar[data-tab="customer"]',
+      css: '.content.active .sidebar[data-tab="customer"]',
       value: 'some new address',
     )
 
@@ -247,8 +247,8 @@ class AgentTicketAttachmentTest < TestCase
     #
 
     # change org of customer, check if org is shown in sidebar
-    click(browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
-    click(browser: browser1, css: '.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
+    click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
     sleep 2
     set(browser: browser1, css: '.modal .js-input', value: 'zammad')
     click(browser: browser1, css: '.modal .js-input')
@@ -258,10 +258,10 @@ class AgentTicketAttachmentTest < TestCase
 
     # check if org has changed in second browser
     sleep 3
-    click(browser: browser2, css: '.active .tabsSidebar-tab[data-tab="organization"]')
+    click(browser: browser2, css: '.content.active .tabsSidebar-tab[data-tab="organization"]')
     watch_for(
       browser: browser2,
-      css: '.active .sidebar[data-tab="organization"]',
+      css: '.content.active .sidebar[data-tab="organization"]',
       value: 'Zammad Foundation',
     )
 

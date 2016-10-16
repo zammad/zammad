@@ -490,7 +490,7 @@ class Model extends Module
 
   trigger: ->
     Events.trigger.apply this, arguments # fire off the instance event
-    return true if arguments[0] is 'refresh' # Don't trigger refresh events, because ... ?
+    #return true if arguments[0] is 'refresh' # Don't trigger refresh events, because ... ?
     @constructor.trigger arguments... # fire off the class event
 
 Model::on  = Model::bind

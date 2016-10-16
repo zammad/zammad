@@ -414,8 +414,7 @@ class App.Model extends Spine.Model
           App.Log.debug('Model', "local change #{@className}", items)
           for item in items
             for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
-              item = App[ @className ]._fillUp(item)
-              callback(item, 'change')
+              callback(App[ @className ]._fillUp(item), 'change')
       )
       @bind(
         'destroy'
@@ -427,8 +426,7 @@ class App.Model extends Spine.Model
           App.Log.debug('Model', "local destroy #{@className}", items)
           for item in items
             for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
-              item = App[ @className ]._fillUp(item)
-              callback(item, 'destroy')
+              callback(App[ @className ]._fillUp(item), 'destroy')
       )
 
       @changeTable = {}
@@ -444,10 +442,9 @@ class App.Model extends Spine.Model
             for key, callback of App[ @className ].SUBSCRIPTION_ITEM[ item.id ]
 
               # only trigger callbacks if object has changed
-              if !@changeTable[key] || @changeTable[key] isnt item.updated_at
+              if !@changeTable[key] || @changeTable[key] < item.updated_at
                 @changeTable[key] = item.updated_at
-                item = App[ @className ]._fillUp(item)
-                callback(item, 'refresh')
+                callback(App[@className]._fillUp(item), 'refresh')
       )
 
       # subscribe and render data after server change
