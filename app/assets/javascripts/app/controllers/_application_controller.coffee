@@ -61,14 +61,14 @@ class App.Controller extends Spine.Controller
   clearDelay: (delay_id) =>
     App.Delay.clear(delay_id, @controllerId)
 
-  delay: (callback, timeout, delay_id) =>
-    App.Delay.set(callback, timeout, delay_id, @controllerId)
+  delay: (callback, timeout, delay_id, queue = true) =>
+    App.Delay.set(callback, timeout, delay_id, @controllerId, queue)
 
   clearInterval: (interval_id) =>
     App.Interval.clear(interval_id, @controllerId)
 
-  interval: (callback, interval, interval_id) =>
-    App.Interval.set(callback, interval, interval_id, @controllerId)
+  interval: (callback, interval, interval_id, queue = true) =>
+    App.Interval.set(callback, interval, interval_id, @controllerId, queue)
 
   releaseController: =>
     App.Event.unbindLevel(@controllerId)
@@ -226,9 +226,9 @@ class App.Controller extends Spine.Controller
     false
 
   permissionCheck: (key) ->
-    user_id = App.Session.get('id')
-    return false if !user_id
-    user = App.User.find(user_id)
+    userId = App.Session.get('id')
+    return false if !userId
+    user = App.User.findNative(userId)
     return false if !user
     user.permission(key)
 
@@ -282,9 +282,9 @@ class App.Controller extends Spine.Controller
     if @permissionCheck('ticket.agent')
       @$('div.ticket-popover, span.ticket-popover').bind('click', (e) =>
         id = $(e.target).data('id')
-        if id
-          ticket = App.Ticket.find(id)
-          @navigate ticket.uiUrl()
+        return if !id
+        ticket = App.Ticket.findNative(id)
+        @navigate ticket.uiUrl()
       )
 
     @ticketPopupsDestroy()
@@ -299,12 +299,12 @@ class App.Controller extends Spine.Controller
       delay:      100
       placement:  position
       title: ->
-        ticket_id = $(@).data('id')
-        ticket    = App.Ticket.fullLocal(ticket_id)
+        ticketId = $(@).data('id')
+        ticket   = App.Ticket.find(ticketId)
         App.Utils.htmlEscape(ticket.title)
       content: ->
-        ticket_id = $(@).data('id')
-        ticket    = App.Ticket.fullLocal(ticket_id)
+        ticketId = $(@).data('id')
+        ticket   = App.Ticket.fullLocal(ticketId)
         html = App.view('popover/ticket')(
           ticket: ticket
         )
@@ -326,9 +326,9 @@ class App.Controller extends Spine.Controller
     return if !@permissionCheck('ticket.agent')
     @$('div.user-popover, span.user-popover').bind('click', (e) =>
       id = $(e.target).data('id')
-      if id
-        user = App.User.find(id)
-        @navigate user.uiUrl()
+      return if !id
+      user = App.User.findNative(id)
+      @navigate user.uiUrl()
     )
 
     @userPopupsDestroy()
@@ -342,12 +342,12 @@ class App.Controller extends Spine.Controller
       delay:      100
       placement:  "auto #{position}"
       title: ->
-        user_id = $(@).data('id')
-        user    = App.User.fullLocal(user_id)
+        userId = $(@).data('id')
+        user   = App.User.find(userId)
         App.Utils.htmlEscape(user.displayName())
       content: ->
-        user_id = $(@).data('id')
-        user    = App.User.fullLocal(user_id)
+        userId = $(@).data('id')
+        user   = App.User.fullLocal(userId)
 
         # get display data
         userData = []
@@ -384,9 +384,9 @@ class App.Controller extends Spine.Controller
 
     @$('div.organization-popover, span.organization-popover').bind('click', (e) =>
       id = $(e.target).data('id')
-      if id
-        organization = App.Organization.find(id)
-        @navigate organization.uiUrl()
+      return if !id
+      organization = App.Organization.find(id)
+      @navigate organization.uiUrl()
     )
 
     @organizationPopupsDestroy()
@@ -401,7 +401,7 @@ class App.Controller extends Spine.Controller
       placement:  "auto #{position}"
       title: ->
         organization_id = $(@).data('id')
-        organization    = App.Organization.fullLocal(organization_id)
+        organization    = App.Organization.find(organization_id)
         App.Utils.htmlEscape(organization.name)
       content: ->
         organization_id = $(@).data('id')
@@ -460,8 +460,8 @@ class App.Controller extends Spine.Controller
           type = $(@).filter('[data-type]').data('type')
           tickets = []
           if ticket_list[type]
-            for ticket_id in ticket_list[type]
-              tickets.push App.Ticket.fullLocal(ticket_id)
+            for ticketId in ticket_list[type]
+              tickets.push App.Ticket.fullLocal(ticketId)
 
           # insert data
           html = App.view('popover/user_ticket_list')(
@@ -525,14 +525,14 @@ class App.Controller extends Spine.Controller
 
     # lookup real data
     if App[item.object] && App[item.object].exists(item.o_id)
-      object            = App[item.object].find(item.o_id)
+      object            = App[item.object].findNative(item.o_id)
       item.objectNative = object
       item.link         = object.uiUrl()
       item.title        = object.displayName()
       item.object_name  = object.objectDisplayName()
       item.cssIcon      = object.iconActivity(@Session.get())
 
-    item.created_by = App.User.find(item.created_by_id)
+    item.created_by = App.User.findNative(item.created_by_id)
     item
 
   # central method, is getting called on every ticket form change
