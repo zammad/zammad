@@ -83,9 +83,6 @@ class _taskManagerSingleton extends App.Controller
     @offlineModus = params.offlineModus
     @tasksInitial()
 
-    # send updates to server
-    App.Interval.set(@taskUpdateLoop, 3000, 'check_update_to_server_pending', 'task')
-
   init: ->
     @domStore          = {}
     @shownStore        = {}
@@ -220,7 +217,7 @@ class _taskManagerSingleton extends App.Controller
 
     # empty static content if task is shown
     if params.show
-      @el.find('#content').empty()
+      @$('#content').empty()
 
     # set all tasks to active false, only new/selected one to active
     if params.show
@@ -279,7 +276,7 @@ class _taskManagerSingleton extends App.Controller
       if key isnt thisKey
         if @shownStore[key] isnt false
           @hide(key)
-    $('#content').addClass('hide')
+    @$('#content').addClass('hide')
 
     for key of @workers
       if key is thisKey
@@ -292,17 +289,20 @@ class _taskManagerSingleton extends App.Controller
 
     domKey = @domID(key)
     domStoreItem = @domStore[domKey]
-    localEl = domStoreItem.el
-    if !@$("##{domKey}").get(0) && localEl
-      @el.append(localEl)
-    @$("##{domKey}").removeClass('hide').addClass('active')
+    if !@$("##{domKey}").get(0) && domStoreItem && domStoreItem.el
+      @el.append(domStoreItem.el)
+      @$("##{domKey}").removeClass('hide').addClass('active')
+
+      if controller
+
+        # set position of view
+        if domStoreItem.position
+          controller.setPosition(domStoreItem.position)
+
+    else
+      @$("##{domKey}").removeClass('hide').addClass('active')
 
     if controller
-
-      # set position of view
-      position = @domStore[@domID(key)].position
-      if position
-        controller.setPosition(position)
 
       # set controller state to active
       if controller.active && _.isFunction(controller.active)
@@ -319,17 +319,18 @@ class _taskManagerSingleton extends App.Controller
     controller = @workers[ key ]
     @shownStore[key] = false
 
-    if @$("##{@domID(key)}").get(0)
+    element = @$("##{@domID(key)}")
+    if element.get(0)
       domKey = @domID(key)
       domStoreItem = @domStore[domKey]
 
       if controller && _.isFunction(controller.currentPosition)
         position = controller.currentPosition()
         domStoreItem.position = position
-        @$("##{@domID(key)}").addClass('hide').removeClass('active')
-        domStoreItem.el = @$("##{@domID(key)}").detach()
+        element.addClass('hide').removeClass('active')
+        domStoreItem.el = element.detach()
       else
-        @$("##{@domID(key)}").addClass('hide').removeClass('active')
+        element.addClass('hide').removeClass('active')
 
     return false if !controller
 
@@ -423,6 +424,7 @@ class _taskManagerSingleton extends App.Controller
       if localDomStore.el
         $('#app').append("<div id=\"#{domKey}_trash\" class=\"hide\"></div>")
         $("#app ##{domKey}_trash").append(localDomStore.el).remove()
+        localDomStore.el = undefined
       localDomStore = undefined
     delete @domStore[@domID(key)]
     worker = @workers[key]
@@ -430,8 +432,9 @@ class _taskManagerSingleton extends App.Controller
       worker = undefined
     delete @workers[key]
     try
-      @$("##{@domID(key)}").html('')
-      @$("##{@domID(key)}").remove()
+      element = @$("##{@domID(key)}")
+      element.html('')
+      element.remove()
     catch
       @log 'notice', "invalid key '#{key}'"
 
@@ -484,6 +487,7 @@ class _taskManagerSingleton extends App.Controller
   taskUpdate: (task, mute = false) ->
     @log 'debug', 'UPDATE task', task, mute
     @tasksToUpdate[ task.key ] = 'toUpdate'
+    @taskUpdateTrigger()
     return if mute
     @touch(task.key)
 
@@ -498,7 +502,12 @@ class _taskManagerSingleton extends App.Controller
         @title task.meta.title
 
       App.Event.trigger('taskUpdate', [task])
-    App.Delay.set(delay, 20, "task-#{key}")
+    App.Delay.set(delay, 20, "task-#{key}", undefined)
+
+  taskUpdateTrigger: =>
+
+    # send updates to server
+    App.Delay.set(@taskUpdateLoop, 2000, 'check_update_to_server_pending', 'task', true)
 
   taskUpdateLoop: =>
     return if @offlineModus
@@ -531,6 +540,7 @@ class _taskManagerSingleton extends App.Controller
         800
         undefined
         'task'
+        true
       )
       return
 
@@ -544,7 +554,7 @@ class _taskManagerSingleton extends App.Controller
   tasksAutoCleanupDelay: =>
     delay = =>
       @tasksAutoCleanup()
-    App.Delay.set(delay, 10000, 'task-autocleanup')
+    App.Delay.set(delay, 12000, 'task-autocleanup', undefined, true)
 
   tasksAutoCleanup: =>
 
@@ -598,6 +608,7 @@ class _taskManagerSingleton extends App.Controller
               taskCount * 350
               undefined
               'task'
+              true
             )
 
     # initial load of taskbar collection
@@ -617,6 +628,7 @@ class _taskManagerSingleton extends App.Controller
           taskCount * 350
           undefined
           'task'
+          true
         )
 
     App.Event.trigger 'taskbar:ready'

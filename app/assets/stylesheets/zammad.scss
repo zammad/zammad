@@ -916,7 +916,8 @@ th.align-right {
   border-color: hsl(0,0%,95%);
 }
 
-.table-hover > tbody > tr:hover > td {
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr.is-hover > td {
   background: white;
 }
 

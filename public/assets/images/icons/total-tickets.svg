@@ -1,43 +1,43 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="48px" height="83px" viewBox="0 0 48 83" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="83px" viewBox="0 0 48 83" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
     <title>total-tickets</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="total-tickets" sketch:type="MSArtboardGroup">
-            <g id="total" sketch:type="MSLayerGroup">
-                <path d="M37.5,83 L0,83 L10,75 L47.5,75 L37.5,83 L37.5,83 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,80 L0,80 L10,73 L47.5,73 L37.5,80 L37.5,80 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,78 L0,78 L10,70 L47.5,70 L37.5,78 L37.5,78 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,75 L0,75 L10,68 L47.5,68 L37.5,75 L37.5,75 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,73 L0,73 L10,65 L47.5,65 L37.5,73 L37.5,73 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,70 L0,70 L10,63 L47.5,63 L37.5,70 L37.5,70 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,68 L0,68 L10,60 L47.5,60 L37.5,68 L37.5,68 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,65 L0,65 L10,58 L47.5,58 L37.5,65 L37.5,65 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,63 L0,63 L10,55 L47.5,55 L37.5,63 L37.5,63 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,60 L0,60 L10,53 L47.5,53 L37.5,60 L37.5,60 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,58 L0,58 L10,50 L47.5,50 L37.5,58 L37.5,58 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,55 L0,55 L10,48 L47.5,48 L37.5,55 L37.5,55 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,53 L0,53 L10,45 L47.5,45 L37.5,53 L37.5,53 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,50 L0,50 L10,43 L47.5,43 L37.5,50 L37.5,50 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,48 L0,48 L10,40 L47.5,40 L37.5,48 L37.5,48 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,45 L0,45 L10,38 L47.5,38 L37.5,45 L37.5,45 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,43 L0,43 L10,35 L47.5,35 L37.5,43 L37.5,43 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,40 L0,40 L10,33 L47.5,33 L37.5,40 L37.5,40 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,38 L0,38 L10,30 L47.5,30 L37.5,38 L37.5,38 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,35 L0,35 L10,28 L47.5,28 L37.5,35 L37.5,35 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,33 L0,33 L10,25 L47.5,25 L37.5,33 L37.5,33 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,30 L0,30 L10,23 L47.5,23 L37.5,30 L37.5,30 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,28 L0,28 L10,20 L47.5,20 L37.5,28 L37.5,28 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,25 L0,25 L10,18 L47.5,18 L37.5,25 L37.5,25 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,23 L0,23 L10,15 L47.5,15 L37.5,23 L37.5,23 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,20 L0,20 L10,13 L47.5,13 L37.5,20 L37.5,20 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,18 L0,18 L10,10 L47.5,10 L37.5,18 L37.5,18 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,15 L0,15 L10,8 L47.5,8 L37.5,15 L37.5,15 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,13 L0,13 L10,5 L47.5,5 L37.5,13 L37.5,13 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,10 L0,10 L10,3 L47.5,3 L37.5,10 L37.5,10 Z" id="Shape" fill="#FFFFFF" sketch:type="MSShapeGroup"></path>
-                <path d="M37.5,8 L0,8 L10,0 L47.5,0 L37.5,8 L37.5,8 Z" id="Shape" fill="#DDE5E8" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="total-tickets">
+            <g id="total">
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 83 0 83 10 75 47.5 75"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 80 0 80 10 73 47.5 73"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 78 0 78 10 70 47.5 70"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 75 0 75 10 68 47.5 68"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 73 0 73 10 65 47.5 65"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 70 0 70 10 63 47.5 63"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 68 0 68 10 60 47.5 60"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 65 0 65 10 58 47.5 58"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 63 0 63 10 55 47.5 55"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 60 0 60 10 53 47.5 53"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 58 0 58 10 50 47.5 50"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 55 0 55 10 48 47.5 48"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 53 0 53 10 45 47.5 45"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 50 0 50 10 43 47.5 43"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 48 0 48 10 40 47.5 40"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 45 0 45 10 38 47.5 38"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 43 0 43 10 35 47.5 35"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 40 0 40 10 33 47.5 33"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 38 0 38 10 30 47.5 30"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 35 0 35 10 28 47.5 28"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 33 0 33 10 25 47.5 25"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 30 0 30 10 23 47.5 23"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 28 0 28 10 20 47.5 20"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 25 0 25 10 18 47.5 18"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 23 0 23 10 15 47.5 15"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 20 0 20 10 13 47.5 13"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 18 0 18 10 10 47.5 10"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 15 0 15 10 8 47.5 8"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 13 0 13 10 5 47.5 5"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" points="37.5 10 0 10 10 3 47.5 3"></polygon>
+                <polygon id="Shape" fill="#DDE5E8" points="37.5 8 0 8 10 0 47.5 0"></polygon>
             </g>
         </g>
     </g>

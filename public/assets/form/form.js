@@ -11,10 +11,10 @@
 <script>
 $(function() {
   $('#feedback-form').ZammadForm({
-    messageTitle: 'Feedback Form',
-    messageSubmit: 'Submit',
-    messageThankYou: 'Thank you for your inquiry! We\'ll contact you soon as possible.',
-    messageNoConfig: 'Unable to load form config from server. Maybe featrue is disabled.',
+    messageTitle: 'Feedback Form', // optional
+    messageSubmit: 'Submit', // optional
+    messageThankYou: 'Thank you for your inquiry! We\'ll contact you soon as possible.', // optional
+    messageNoConfig: 'Unable to load form config from server. Maybe featrue is disabled.', // optional
     showTitle: true,
     modal: true,
     attributes: [
@@ -50,6 +50,7 @@ $(function() {
   defaults = {
     debug: false,
     noCSS: false,
+    prefixCSS: 'zammad-form-',
     showTitle: false,
     messageTitle: 'Zammad Form',
     messageSubmit: 'Submit',
@@ -80,11 +81,11 @@ $(function() {
     ]
   };
 
-  function Plugin( element, options ) {
+  function Plugin(element, options) {
     this.element  = element;
     this.$element = $(element)
 
-    this.options = $.extend( {}, defaults, options) ;
+    this.options = $.extend({}, defaults, options);
 
     this._defaults = defaults;
     this._name     = pluginName;
@@ -99,14 +100,14 @@ $(function() {
     this.endpoint_config = this._src.replace(this._script_location, this._endpoint_config)
     this.endpoint_submit = this._src.replace(this._script_location, this._endpoint_submit)
 
-    this._config  = {}
+    this._config = {}
 
     this.init();
   }
 
-
   Plugin.prototype.init = function () {
-    var _this = this
+    var _this = this,
+      params = {}
 
     _this.log('debug', 'init', this._src)
 
@@ -118,8 +119,12 @@ $(function() {
     _this.log('debug', 'endpoint_submit: ' + _this.endpoint_submit)
 
     // load config
+    if (this.options.test) {
+      params.test = true
+    }
     $.ajax({
       url: _this.endpoint_config,
+      data: params
     }).done(function(data) {
       _this.log('debug', 'config:', data)
       _this._config = data
@@ -140,7 +145,7 @@ $(function() {
 
     // bind form on call
     else {
-      this.$element.on('click', function (e) {
+      this.$element.off('click.zammad-form').on('click.zammad-form', function (e) {
         e.preventDefault()
         _this.render()
         return true
@@ -175,6 +180,9 @@ $(function() {
       }
     }
 
+    // disable form
+    _this.$form.find('button').prop('disabled', true)
+
     $.ajax({
       method: 'post',
       url: _this.endpoint_submit,
@@ -189,6 +197,7 @@ $(function() {
         $.each(data.errors, function( key, value ) {
           _this.$form.find('[name=' + key + ']').closest('.form-group').addClass('has-error')
         })
+        _this.$form.find('button').prop('disabled', false)
         return
       }
 
@@ -196,6 +205,7 @@ $(function() {
       _this.thanks()
 
     }).fail(function() {
+      _this.$form.find('button').prop('disabled', false)
       alert('Faild to submit form!')
     });
   }
@@ -205,12 +215,16 @@ $(function() {
     var _this = this,
       params = {}
 
-    $.each( _this.$form.serializeArray(), function( index, item ) {
+    $.each( _this.$form.serializeArray(), function(index, item) {
       params[item.name] = item.value
     })
 
     if (!params.title) {
       params.title = this.options.messageTitle
+    }
+
+    if (this.options.test) {
+      params.test = true
     }
     _this.log('debug', 'params', params)
     return params
@@ -229,12 +243,12 @@ $(function() {
     _this.modalOpenTime = new Date()
     _this.log('debug', 'modalOpenTime:', _this.modalOpenTime)
 
-    var element = '<div class="modal">\
-      <div class="modal-backdrop js-close"></div>\
-      <div class="modal-body">\
-        <form class="zammad-form"></form>\
+    var element = "<div class=\"" + _this.options.prefixCSS + "modal\">\
+      <div class=\"" + _this.options.prefixCSS + "modal-backdrop js-close\"></div>\
+      <div class=\"" + _this.options.prefixCSS + "modal-body\">\
+        <form class=\"zammad-form\"></form>\
       </div>\
-    </div>'
+    </div>"
 
     if (!this.options.modal) {
       element = '<div><form class="zammad-form"></form></div>'
@@ -245,7 +259,7 @@ $(function() {
     if (this.options.showTitle && this.options.messageTitle != '') {
       $form.append('<h2>' + this.options.messageTitle + '</h2>')
     }
-    $.each(this.options.attributes, function( index, value ) {
+    $.each(this.options.attributes, function(index, value) {
       var item = $('<div class="form-group"><label>' + value.display + '</label></div>')
       if (value.tag == 'input') {
         item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + value.placeholder + '">')
@@ -261,14 +275,14 @@ $(function() {
     this.$form  = $form
 
     // bind on close
-    $element.find('.js-close').on('click', function (e) {
+    $element.find('.js-close').off('click.zammad-form').on('click.zammad-form', function (e) {
       e.preventDefault()
       _this.closeModal()
       return true
     })
 
     // bind form submit
-    $element.on('submit', function (e) {
+    $element.off('submit.zammad-form').on('submit.zammad-form', function (e) {
       e.preventDefault()
       _this.submit()
       return true
@@ -327,12 +341,17 @@ $(function() {
     $('.js-logDisplay').prepend('<div>' + logString + '</div>')
   }
 
-  $.fn[pluginName] = function ( options ) {
+  $.fn[pluginName] = function (options) {
     return this.each(function () {
-      if (!$.data(this, 'plugin_' + pluginName)) {
-        $.data(this, 'plugin_' + pluginName,
-        new Plugin( this, options ));
+      var instance = $.data(this, 'plugin_' + pluginName)
+      if (instance) {
+        instance.$element.empty()
+        $.data(this, 'plugin_' + pluginName, undefined)
       }
+      $.data(
+        this, 'plugin_' + pluginName,
+        new Plugin(this, options)
+      );
     });
   }
 

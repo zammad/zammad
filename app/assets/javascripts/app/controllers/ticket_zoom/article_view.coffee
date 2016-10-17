@@ -55,6 +55,7 @@ class ArticleViewItem extends App.ObserverController
     'click .js-unfold':    'unfold'
 
   constructor: ->
+    super
     @seeMore = false
 
     # set expand of text area only once
@@ -67,8 +68,6 @@ class ArticleViewItem extends App.ObserverController
       # set see more
       @setSeeMore()
     )
-
-    super
 
   setHighlighter: =>
     return if @el.is(':hidden')

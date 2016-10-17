@@ -654,9 +654,9 @@ returns
 
 =begin
 
-update/sync default preferences of users in a dedecated role
+update/sync default preferences of users in a dedecated permissions
 
-  result = User.update_default_preferences('Agent')
+  result = User.update_default_preferences_by_permission('ticket.agent', force)
 
 returns
 
@@ -664,35 +664,84 @@ returns
 
 =end
 
-  def self.update_default_preferences(role_name)
+  def self.update_default_preferences_by_permission(permission_name, force = false)
+    permission = Object.const_get('Permission').lookup(name: permission_name)
+    return if !permission
+    default = Rails.configuration.preferences_default_by_permission
+    return false if !default
+    default.deep_stringify_keys!
+    User.with_permissions(permission.name).each { |user|
+      next if !default[permission.name]
+      has_changed = false
+      default[permission.name].each { |key, value|
+        next if !force && user.preferences[key]
+        has_changed = true
+        user.preferences[key] = value
+      }
+      if has_changed
+        user.save!
+      end
+    }
+    true
+  end
+
+=begin
+
+update/sync default preferences of users in a dedecated role
+
+  result = User.update_default_preferences_by_role('Agent', force)
+
+returns
+
+  result = true # false
+
+=end
+
+  def self.update_default_preferences_by_role(role_name, force = false)
     role = Role.lookup(name: role_name)
-    User.of_role(role_name).each { |user|
-      user.check_notifications(role)
-      user.check_preferences_default
-      user.save
+    return if !role
+    default = Rails.configuration.preferences_default_by_permission
+    return false if !default
+    default.deep_stringify_keys!
+    role.permissions.each { |permission|
+      User.update_default_preferences_by_permission(permission.name, force)
     }
     true
   end
 
   def check_notifications(o)
-    default = Rails.configuration.preferences_default_by_role
+    default = Rails.configuration.preferences_default_by_permission
     return if !default
     default.deep_stringify_keys!
-    return if !default[o.name]
-    if !@preferences_default
-      @preferences_default = {}
-    end
-    default[o.name].each { |key, value|
-      next if @preferences_default[key]
-      @preferences_default[key] = value
+    has_changed = false
+    o.permissions.each { |permission|
+      next if !default[permission.name]
+      default[permission.name].each { |key, value|
+        next if preferences[key]
+        preferences[key] = value
+        has_changed = true
+      }
     }
+
+    return true if !has_changed
+
+    if id
+      save!
+      return true
+    end
+
+    @preferences_default = preferences
+    true
   end
 
   def check_preferences_default
     return if !@preferences_default
     return if @preferences_default.empty?
+
     preferences_tmp = @preferences_default.merge(preferences)
     self.preferences = preferences_tmp
+    @preferences_default = nil
+    true
   end
 
   private

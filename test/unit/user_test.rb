@@ -289,13 +289,14 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'user default preferences' do
+    name = rand(999_999_999)
     groups = Group.where(name: 'Users')
     roles  = Role.where(name: 'Agent')
     agent1 = User.create_or_update(
-      login: 'agent-default-preferences1@example.com',
+      login: "agent-default-preferences#{name}@example.com",
       firstname: 'Preferences',
-      lastname: 'Agent1',
-      email: 'agent-default-preferences1@example.com',
+      lastname: "Agent#{name}",
+      email: "agent-default-preferences#{name}@example.com",
       password: 'agentpw',
       active: true,
       roles: roles,
@@ -306,6 +307,7 @@ class UserTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    agent1 = User.find(agent1.id)
     assert(agent1.preferences)
     assert(agent1.preferences['locale'])
     assert_equal(agent1.preferences['locale'], 'de-de')
@@ -316,10 +318,10 @@ class UserTest < ActiveSupport::TestCase
 
     roles = Role.where(name: 'Customer')
     customer1 = User.create_or_update(
-      login: 'customer-default-preferences1@example.com',
+      login: "customer-default-preferences#{name}@example.com",
       firstname: 'Preferences',
-      lastname: 'Customer1',
-      email: 'customer-default-preferences1@example.com',
+      lastname: "Customer#{name}",
+      email: "customer-default-preferences#{name}@example.com",
       password: 'customerpw',
       active: true,
       roles: roles,
@@ -329,13 +331,16 @@ class UserTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    customer1 = User.find(customer1.id)
     assert(customer1.preferences)
     assert(customer1.preferences['locale'])
     assert_equal(customer1.preferences['locale'], 'de-de')
     assert_not(customer1.preferences['notification_config'])
 
+    customer1 = User.find(customer1.id)
     customer1.roles = Role.where(name: 'Agent')
-    customer1.save
+    customer1 = User.find(customer1.id)
+
     assert(customer1.preferences)
     assert(customer1.preferences['locale'])
     assert_equal(customer1.preferences['locale'], 'de-de')
@@ -380,12 +385,13 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+    name = rand(999_999_999)
     assert_raises(RuntimeError) {
       User.create_or_update(
-        login: 'customer-role1@example.com',
+        login: "customer-role#{name}@example.com",
         firstname: 'Role',
-        lastname: 'Customer1',
-        email: 'customer-role1@example.com',
+        lastname: "Customer#{name}",
+        email: "customer-role#{name}@example.com",
         password: 'customerpw',
         active: true,
         roles: [test_role_1, test_role_3],
@@ -395,10 +401,10 @@ class UserTest < ActiveSupport::TestCase
     }
     assert_raises(RuntimeError) {
       User.create_or_update(
-        login: 'customer-role1@example.com',
+        login: "customer-role#{name}@example.com",
         firstname: 'Role',
-        lastname: 'Customer1',
-        email: 'customer-role1@example.com',
+        lastname: "Customer#{name}",
+        email: "customer-role#{name}@example.com",
         password: 'customerpw',
         active: true,
         roles: [test_role_2, test_role_3],
@@ -407,10 +413,10 @@ class UserTest < ActiveSupport::TestCase
       )
     }
     user1 = User.create_or_update(
-      login: 'customer-role1@example.com',
+      login: "customer-role#{name}@example.com",
       firstname: 'Role',
-      lastname: 'Customer1',
-      email: 'customer-role1@example.com',
+      lastname: "Customer#{name}",
+      email: "customer-role#{name}@example.com",
       password: 'customerpw',
       active: true,
       roles: [test_role_1, test_role_2],
@@ -422,10 +428,10 @@ class UserTest < ActiveSupport::TestCase
     assert_not(user1.role_ids.include?(test_role_3.id))
     assert_not(user1.role_ids.include?(test_role_4.id))
     user1 = User.create_or_update(
-      login: 'customer-role1@example.com',
+      login: "customer-role#{name}@example.com",
       firstname: 'Role',
-      lastname: 'Customer1',
-      email: 'customer-role1@example.com',
+      lastname: "Customer#{name}",
+      email: "customer-role#{name}@example.com",
       password: 'customerpw',
       active: true,
       roles: [test_role_1, test_role_4],
@@ -438,10 +444,10 @@ class UserTest < ActiveSupport::TestCase
     assert(user1.role_ids.include?(test_role_4.id))
     assert_raises(RuntimeError) {
       User.create_or_update(
-        login: 'customer-role1@example.com',
+        login: "customer-role#{name}@example.com",
         firstname: 'Role',
-        lastname: 'Customer1',
-        email: 'customer-role1@example.com',
+        lastname: "Customer#{name}",
+        email: "customer-role#{name}@example.com",
         password: 'customerpw',
         active: true,
         roles: [test_role_1, test_role_3],
@@ -451,10 +457,10 @@ class UserTest < ActiveSupport::TestCase
     }
     assert_raises(RuntimeError) {
       User.create_or_update(
-        login: 'customer-role1@example.com',
+        login: "customer-role#{name}@example.com",
         firstname: 'Role',
-        lastname: 'Customer1',
-        email: 'customer-role1@example.com',
+        lastname: "Customer#{name}",
+        email: "customer-role#{name}@example.com",
         password: 'customerpw',
         active: true,
         roles: [test_role_2, test_role_3],
@@ -470,36 +476,37 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'permission default' do
-    admin_count = User.of_role('Admin').count
+    name = rand(999_999_999)
+    admin_count = User.with_permissions('admin').count
     admin = User.create_or_update(
-      login: 'admin-role1@example.com',
+      login: "admin-role#{name}@example.com",
       firstname: 'Role',
-      lastname: 'Admin1',
-      email: 'admin-role1@example.com',
+      lastname: "Admin#{name}",
+      email: "admin-role#{name}@example.com",
       password: 'adminpw',
       active: true,
       roles: Role.where(name: %w(Admin Agent)),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    agent_count = User.of_role('Agent').count
+    agent_count = User.with_permissions('ticket.agent').count
     agent = User.create_or_update(
-      login: 'agent-role1@example.com',
+      login: "agent-role#{name}@example.com",
       firstname: 'Role',
-      lastname: 'Agent1',
-      email: 'agent-role1@example.com',
+      lastname: "Agent#{name}",
+      email: "agent-role#{name}@example.com",
       password: 'agentpw',
       active: true,
       roles: Role.where(name: 'Agent'),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    customer_count = User.of_role('Customer').count
+    customer_count = User.with_permissions('ticket.customer').count
     customer = User.create_or_update(
-      login: 'customer-role1@example.com',
+      login: "customer-role#{name}@example.com",
       firstname: 'Role',
-      lastname: 'Customer1',
-      email: 'customer-role1@example.com',
+      lastname: "Customer#{name}",
+      email: "customer-role#{name}@example.com",
       password: 'customerpw',
       active: true,
       roles: Role.where(name: 'Customer'),

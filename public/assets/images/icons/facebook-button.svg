@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="29px" height="22px" viewBox="0 0 29 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="29px" height="22px" viewBox="0 0 29 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
     <title>facebook-button</title>
     <desc>Created with Sketch.</desc>
     <defs>
@@ -9,10 +9,10 @@
             <stop stop-color="#E6EAF1" offset="100%"></stop>
         </linearGradient>
     </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="facebook-button" sketch:type="MSArtboardGroup">
-            <path d="M0,17 L29,17 L29,22 L0,22 L0,17 Z" id="bar" fill="#778EBA" sketch:type="MSShapeGroup"></path>
-            <path d="M17.9191655,22 L17.9191655,11.9437767 L15,11.9437767 L15,7.97364464 L17.9773243,7.97364464 L17.9773243,3.93510204 C17.9773243,1.85079647 19.5752523,0 22.028952,0 L27,0 L27,3.80793996 L23.1369773,3.80793996 C22.0660533,3.80793996 21.9436541,3.84603385 21.9436541,4.84117843 L21.9356322,7.97364464 L25.4873949,7.97364464 L25.1013409,11.9437767 L21.8759692,11.9437767 L21.9768096,22 L17.9191655,22 Z" id="f" fill="url(#linearGradient-1)" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="facebook-button">
+            <polygon id="bar" fill="#778EBA" points="0 17 29 17 29 22 0 22"></polygon>
+            <path d="M17.9191655,22 L17.9191655,11.9437767 L15,11.9437767 L15,7.97364464 L17.9773243,7.97364464 L17.9773243,3.93510204 C17.9773243,1.85079647 19.5752523,0 22.028952,0 L27,0 L27,3.80793996 L23.1369773,3.80793996 C22.0660533,3.80793996 21.9436541,3.84603385 21.9436541,4.84117843 L21.9356322,7.97364464 L25.4873949,7.97364464 L25.1013409,11.9437767 L21.8759692,11.9437767 L21.9768096,22 L17.9191655,22 Z" id="f" fill="url(#linearGradient-1)"></path>
         </g>
     </g>
 </svg>

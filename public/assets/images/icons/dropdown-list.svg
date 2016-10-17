@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="19px" height="14px" viewBox="0 0 19 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="14px" viewBox="0 0 19 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
     <title>dropdown-list</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="dropdown-list" sketch:type="MSArtboardGroup" fill="#50E3C2">
-            <path d="M0,0 L19,0 L19,2 L0,2 L0,0 Z M0,4 L19,4 L19,6 L0,6 L0,4 Z M0,8 L19,8 L19,10 L0,10 L0,8 Z M0,12 L19,12 L19,14 L0,14 L0,12 Z" id="list" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="dropdown-list" fill="#50E3C2">
+            <path d="M0,0 L19,0 L19,2 L0,2 L0,0 Z M0,4 L19,4 L19,6 L0,6 L0,4 Z M0,8 L19,8 L19,10 L0,10 L0,8 Z M0,12 L19,12 L19,14 L0,14 L0,12 Z" id="list"></path>
         </g>
     </g>
 </svg>

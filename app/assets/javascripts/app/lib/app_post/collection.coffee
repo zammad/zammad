@@ -102,13 +102,13 @@ class _collectionSingleton extends Spine.Module
         @log 'debug', 'refresh try', params.type, key
 
         # check if new object is newer, just load newer objects
-        if object.updated_at && appObject.exists(key)
-          exists = appObject.find(key)
+        if object.updated_at
+          currentUpdatedAt = appObject.updatedAt(key)
           objectToLoad = undefined
-          if exists.updated_at
-            if exists.updated_at < object.updated_at
+          if currentUpdatedAt
+            if currentUpdatedAt < object.updated_at
               objectToLoad = object
-              @log 'debug', 'refresh newser', params.type, key
+              @log 'debug', 'refresh newer', params.type, key
           else
             objectToLoad = object
             @log 'debug', 'refresh try no updated_at', params.type, key

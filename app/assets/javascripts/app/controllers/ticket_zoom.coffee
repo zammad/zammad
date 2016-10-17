@@ -75,6 +75,9 @@ class App.TicketZoom extends App.Controller
 
   fetch: (ignoreSame = false) =>
     return if !@Session.get()
+    queue = false
+    if !@initFetched
+      queue = true
 
     # get data
     @ajax(
@@ -82,7 +85,7 @@ class App.TicketZoom extends App.Controller
       type:  'GET'
       url:   "#{@apiPath}/tickets/#{@ticket_id}?all=true"
       processData: true
-      queue: true
+      queue: queue
       success: (data, status, xhr) =>
         @load(data, ignoreSame)
         App.SessionStorage.set(@key, data)
@@ -196,7 +199,7 @@ class App.TicketZoom extends App.Controller
 
     # set icon and title based on ticket
     if @ticket_id && App.Ticket.exists(@ticket_id)
-      ticket         = App.Ticket.find(@ticket_id)
+      ticket         = App.Ticket.findNative(@ticket_id)
       meta.head      = ticket.title
       meta.title     = "##{ticket.number} - #{ticket.title}"
       meta.class     = "task-state-#{ ticket.getState() }"
@@ -489,6 +492,7 @@ class App.TicketZoom extends App.Controller
       if @article_id
         @pagePositionData = @article_id
       @pagePosition(type: 'init')
+      @positionPageHeaderStart()
       @initDone = true
       return
 

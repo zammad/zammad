@@ -115,25 +115,25 @@ class App.User extends App.Model
     if data['accounts']
       for account of data['accounts']
         if account == 'twitter'
-          data['accounts'][account]['link'] = 'http://twitter.com/' + data['accounts'][account]['username']
+          data['accounts'][account]['link'] = 'https://twitter.com/' + data['accounts'][account]['username']
         if account == 'facebook'
           data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
 
     if data.organization_id
-      data.organization = App.Organization.find(data.organization_id)
+      data.organization = App.Organization.findNative(data.organization_id)
 
     if data['role_ids']
       data['roles'] = []
       for role_id in data['role_ids']
         if App.Role.exists(role_id)
-          role = App.Role.find(role_id)
+          role = App.Role.findNative(role_id)
           data['roles'].push role
 
     if data['group_ids']
       data['groups'] = []
       for group_id in data['group_ids']
         if App.Group.exists(group_id)
-          group = App.Group.find(group_id)
+          group = App.Group.findNative(group_id)
           data['groups'].push group
 
     data
@@ -191,10 +191,10 @@ class App.User extends App.Model
     # get all permissions of user
     permissions = {}
     for role_id in @role_ids
-      role = App.Role.find(role_id)
+      role = App.Role.findNative(role_id)
       if role.active is true
         for permission_id in role.permission_ids
-          permission = App.Permission.find(permission_id)
+          permission = App.Permission.findNative(permission_id)
           permissions[permission.name] = true
 
     for localKey in keys

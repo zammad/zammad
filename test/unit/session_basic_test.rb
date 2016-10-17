@@ -186,22 +186,6 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(result1, result2, 'check collections')
   end
 
-  test 'c rss' do
-    user = User.lookup(id: 1)
-    collection_client1 = Sessions::Backend::Rss.new(user, {}, false, '123-1')
-
-    # get whole collections
-    result1 = collection_client1.push
-    #puts "RSS1: #{result1.inspect}"
-    assert(!result1.empty?, 'check rss')
-    sleep 0.5
-
-    # next check should be empty
-    result1 = collection_client1.push
-    #puts "R1: #{result1.inspect}"
-    assert(!result1, 'check rss - recall')
-  end
-
   test 'c activity stream' do
 
     # create users

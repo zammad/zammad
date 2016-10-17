@@ -29,7 +29,7 @@ class Index extends App.ControllerSubContent
   render: (data) =>
 
     # if no twitter app is registered, show intro
-    if !App.ExternalCredential.findByAttribute(name: 'twitter')
+    if !App.ExternalCredential.findByAttribute('name', 'twitter')
       @html App.view('twitter/index')()
       return
 

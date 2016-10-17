@@ -48,9 +48,9 @@ module Zammad
     # define cache store
     config.cache_store = :file_store, "#{Rails.root}/tmp/cache_file_store_#{Rails.env}"
 
-    # default preferences by role
-    config.preferences_default_by_role = {
-      Agent: {
+    # default preferences by permission
+    config.preferences_default_by_permission = {
+      'ticket.agent' => {
         notification_config: {
           matrix: {
             create: {

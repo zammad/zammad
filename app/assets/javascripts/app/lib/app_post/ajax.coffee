@@ -30,6 +30,16 @@ class App.Ajax
       _instance ?= new _ajaxSingleton
     _instance.abortAll()
 
+  @queue: ->
+    if _instance == undefined
+      _instance ?= new _ajaxSingleton
+    _instance.queue()
+
+  @current: ->
+    if _instance == undefined
+      _instance ?= new _ajaxSingleton
+    _instance.current()
+
 # The actual Singleton class
 class _ajaxSingleton
   defaults:
@@ -91,24 +101,24 @@ class _ajaxSingleton
     data = $.extend({}, @defaults, params)
 
     # execute call with id, clear old call first if exists
-    if params['id']
-      @abort(params['id'])
-      @addCurrentRequest(params['id'], data)
-      return params['id']
+    if data['id']
+      @abort(data['id'])
+      @addCurrentRequest(data['id'], data)
+      return data['id']
 
     # generate a uniq rand id
-    params['id'] = "rand-#{new Date().getTime()}-#{Math.floor(Math.random() * 99999)}"
+    data['id'] = "rand-#{new Date().getTime()}-#{Math.floor(Math.random() * 99999)}"
 
     # queue request
-    if params['queue']
+    if data['queue']
       @queueList.push data
       if !@queueRunning
         @runNextInQueue()
 
     # execute request
     else
-      @addCurrentRequest(params['id'], data)
-    params['id']
+      @addCurrentRequest(data['id'], data)
+    data['id']
 
   addCurrentRequest: (id, data, queueRunning) =>
     data.complete = =>
@@ -153,6 +163,12 @@ class _ajaxSingleton
     @queueRunning = true
     data = @queueList.shift()
     @addCurrentRequest(data['id'], data, true)
+
+  queue: =>
+    @queueList
+
+  current: =>
+    @currentRequest
 
   _show_spinner: =>
     @count++

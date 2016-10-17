@@ -744,7 +744,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['ticket_id'])
-    assert_equal('Tickets Customer1', result['from'])
+    assert_equal('Tickets Customer1 <tickets-customer1@example.com>', result['from'])
     assert_equal('some subject', result['subject'])
     assert_equal('some body', result['body'])
     assert_equal('text/plain', result['content_type'])

@@ -16,6 +16,10 @@ class FormController < ApplicationController
       endpoint: endpoint,
     }
 
+    if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
+      config[:enabled] = true
+    end
+
     render json: config, status: :ok
   end
 
@@ -87,27 +91,26 @@ class FormController < ApplicationController
       )
     end
 
+    # set current user
+    UserInfo.current_user_id = customer.id
+
     ticket = Ticket.create(
       group_id: 1,
       customer_id: customer.id,
       title: params[:title],
       state_id: Ticket::State.find_by(name: 'new').id,
       priority_id: Ticket::Priority.find_by(name: '2 normal').id,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
     )
-
     article = Ticket::Article.create(
       ticket_id: ticket.id,
       type_id: Ticket::Article::Type.find_by(name: 'web').id,
       sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
       body: params[:body],
-      from: email,
       subject: params[:title],
       internal: false,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
     )
+
+    UserInfo.current_user_id = 1
 
     result = {}
     render json: result, status: :ok
@@ -116,6 +119,7 @@ class FormController < ApplicationController
   private
 
   def enabled?
+    return true if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
     return true if Setting.get('form_ticket_create')
     response_access_deny
     false

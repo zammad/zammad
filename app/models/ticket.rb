@@ -57,6 +57,7 @@ class Ticket < ApplicationModel
       create_article_type_id: true,
       create_article_sender_id: true,
       article_count: true,
+      preferences: true,
     }
   )
 

@@ -41,7 +41,6 @@ class App.TicketZoomSidebar extends App.ObserverController
     organization_id: true
 
   render: (ticket) =>
-
     editTicket = (el) =>
       el.append('<form><fieldset class="edit"></fieldset></form><div class="tags"></div><div class="links"></div>')
 
@@ -91,7 +90,7 @@ class App.TicketZoomSidebar extends App.ObserverController
         callback: editTicket
       }
     ]
-    if !@permissionCheck('ticket.customer')
+    if @permissionCheck('ticket.agent')
       @sidebarItems[0]['actions'] = [
         {
           name:     'ticket-history'
@@ -109,7 +108,7 @@ class App.TicketZoomSidebar extends App.ObserverController
           callback: changeCustomer
         },
       ]
-    if !@permissionCheck('ticket.customer')
+    if @permissionCheck('ticket.agent')
       editCustomer = (e, el) =>
         new App.ControllerGenericEdit(
           id: ticket.customer_id

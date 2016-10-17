@@ -1,5 +1,5 @@
 <div class="page-header">
-  <div class="page-header-title"><h1><%- @T( 'Notifications' ) %></h1></div>
+  <div class="page-header-title"><h1><%- @T('Notifications') %></h1></div>
 </div>
 
 <form class="page-content form--flexibleWidth">
@@ -22,19 +22,19 @@
             <%- @T(value.name) %>
           <td class="u-positionOrigin">
             <label class="checkbox-replacement checkbox-replacement--fullscreen">
-              <input type="checkbox" name="matrix.<%= key %>.criteria.owned_by_me" value="true" <% if value.criteria.owned_by_me: %>checked<% end %>/>
+              <input type="checkbox" name="matrix.<%= key %>.criteria.owned_by_me" value="true" <% if value.criteria && value.criteria.owned_by_me: %>checked<% end %>/>
               <%- @Icon('checkbox', 'icon-unchecked') %>
               <%- @Icon('checkbox-checked', 'icon-checked') %>
             </label>
           <td class="u-positionOrigin">
             <label class="checkbox-replacement checkbox-replacement--fullscreen">
-              <input type="checkbox" name="matrix.<%= key %>.criteria.owned_by_nobody" value="true"  <% if value.criteria.owned_by_nobody: %>checked<% end %>/>
+              <input type="checkbox" name="matrix.<%= key %>.criteria.owned_by_nobody" value="true"  <% if value.criteria && value.criteria.owned_by_nobody: %>checked<% end %>/>
               <%- @Icon('checkbox', 'icon-unchecked') %>
               <%- @Icon('checkbox-checked', 'icon-checked') %>
             </label>
           <td class="u-positionOrigin">
             <label class="checkbox-replacement checkbox-replacement--fullscreen">
-              <input type="checkbox" name="matrix.<%= key %>.criteria.no" value="true"  <% if value.criteria.no: %>checked<% end %>/>
+              <input type="checkbox" name="matrix.<%= key %>.criteria.no" value="true"  <% if  value.criteria && value.criteria.no: %>checked<% end %>/>
               <%- @Icon('checkbox', 'icon-unchecked') %>
               <%- @Icon('checkbox-checked', 'icon-checked') %>
             </label>

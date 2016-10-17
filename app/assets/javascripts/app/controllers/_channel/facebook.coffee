@@ -30,7 +30,7 @@ class Index extends App.ControllerSubContent
   render: (data) =>
 
     # if no facebook app is registered, show intro
-    if !App.ExternalCredential.findByAttribute(name: 'facebook')
+    if !App.ExternalCredential.findByAttribute('name', 'facebook')
       @html App.view('facebook/index')()
       return
 

@@ -12,7 +12,6 @@ class Sessions::Client
     backends = [
       'Sessions::Backend::TicketOverviewList',
       'Sessions::Backend::Collections',
-      'Sessions::Backend::Rss',
       'Sessions::Backend::ActivityStream',
       'Sessions::Backend::TicketCreate',
     ]

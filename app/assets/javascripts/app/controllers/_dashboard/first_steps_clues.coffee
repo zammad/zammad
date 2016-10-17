@@ -12,6 +12,7 @@ class App.FirstStepsClues extends App.Controller
       container: '.search-holder'
       headline: 'Search'
       text: 'Here you can search for ticket, customers and organizations. Use the wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §"some phrase"§.'
+      actions: []
     }
     {
       container: '.user-menu'
@@ -52,9 +53,6 @@ class App.FirstStepsClues extends App.Controller
     'click .js-close': 'close'
 
   constructor: (params) ->
-
-    # disable active navbar elements
-    $('.main-navigation .active').removeClass('active')
 
     $('#app').append('<div class="js-modal--clue"></div>')
     params.el = $('#app .js-modal--clue')
@@ -108,12 +106,12 @@ class App.FirstStepsClues extends App.Controller
   cleanUp: (callback) ->
     @hideWindow =>
       clue = @clues[@position]
-      container = $(clue.container)
+      container = $("#app #{clue.container}")
       container.removeClass('selected-clue')
 
       # undo click perform by doing it again
       if clue.actions
-        @perform clue.actions, container
+        @perform clue.actions, container, 'cleanup'
 
       if callback
         callback()
@@ -130,11 +128,11 @@ class App.FirstStepsClues extends App.Controller
 
   showClue: =>
     clue = @clues[@position]
-    container = $(clue.container)
+    container = $("#app #{clue.container}")
     container.addClass('selected-clue')
 
     if clue.actions
-      @perform clue.actions, container
+      @perform clue.actions, container, 'show'
 
     # calculate bounding box after actions
     # to take toggled child nodes into account
@@ -309,7 +307,7 @@ class App.FirstStepsClues extends App.Controller
 
     dimensions
 
-  perform: (actions, container) ->
+  perform: (actions, container, type) ->
     for action in actions
       if action.indexOf(' ') < 0
         # 'click'
@@ -321,5 +319,14 @@ class App.FirstStepsClues extends App.Controller
         target = container.find( action.substr action.indexOf(' ') + 1 )
 
       switch eventName
-        when 'click' then target.trigger('click')
-        when 'hover' then target.toggleClass('is-hovered')
+        when 'click'
+          target.trigger('click')
+        when 'hover'
+
+          # disable active navbar elements
+          $('#app .navigation .is-active').removeClass('is-active')
+
+          if type is 'show'
+            target.addClass('is-hovered')
+          else
+            target.removeClass('is-hovered')

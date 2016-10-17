@@ -33,6 +33,9 @@ class Index extends App.ControllerContent
       @render()
       'rerender'
     )
+    @bind('ui:rerender', =>
+      @render()
+    )
 
   render: (data = {}) ->
     auth_provider_all = {
@@ -85,10 +88,10 @@ class Index extends App.ControllerContent
     )
 
     # set focus to username or password
-    if !$(@el).find('[name="username"]').val()
-      $(@el).find('[name="username"]').focus()
+    if !@$('[name="username"]').val()
+      @$('[name="username"]').focus()
     else
-      $(@el).find('[name="password"]').focus()
+      @$('[name="password"]').focus()
 
     # scroll to top
     @scrollTo()
@@ -143,7 +146,7 @@ class Index extends App.ControllerContent
 
     # login shake
     @delay(
-      => @shake( @el.find('.hero-unit') ),
+      => @shake( @$('.hero-unit') )
       600
     )
 

@@ -24,7 +24,11 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
     return if type['name'] == 'facebook feed comment'
 
     return if !record.created_by_id
-    user        = User.find(record.created_by_id)
+    user = User.find(record.created_by_id)
+    if type.name == 'web'
+      record.from = "#{user.firstname} #{user.lastname} <#{user.email}>"
+      return
+    end
     record.from = "#{user.firstname} #{user.lastname}"
   end
 end

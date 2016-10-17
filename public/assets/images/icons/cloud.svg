@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.4 (15575) - http://www.bohemiancoding.com/sketch -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
     <title>cloud</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="cloud" sketch:type="MSArtboardGroup" fill="#50E3C2">
-            <path d="M4,13.999888 C3.990204,13.999963 3.9804,14 3.970588,14 C1.777693,14 0,12.14026 0,9.846154 C0,7.700205 1.555494,5.93433 3.551288,5.715194 C3.760756,3.627287 5.448725,2 7.5,2 C9.551274,2 11.239244,3.627287 11.448712,5.715194 C13.444505,5.93433 15,7.700205 15,9.846154 C15,12.14026 13.222307,14 11.029412,14 C11.019599,14 11.009795,13.999963 11,13.999888 L4,14 L4,13.999888 Z" id="cloud-tab-dark" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="cloud" fill="#50E3C2">
+            <path d="M12.8448437,7.02625 C12.8475,6.96859375 12.8492187,6.91046875 12.8492187,6.8521875 C12.849375,4.7246875 11.123125,3 8.99375,3 C7.45171875,3 6.12171875,3.90484375 5.50515625,5.21171875 C5.16265625,4.9675 4.73953125,4.8228125 4.28140625,4.8228125 C3.1415625,4.8228125 2.21765625,5.71609375 2.21765625,6.8178125 C2.21765625,6.98140625 2.2384375,7.1403125 2.276875,7.29234375 C0.97671875,7.5690625 0,8.745 0,10.1540625 C0,11.76875 1.2825,13 2.86453125,13 L12.25875,13 C13.7726562,13 15,11.7071875 15,10.0165625 C15,8.550625 14.0770313,7.32609375 12.8448437,7.02625 L12.8448437,7.02625 Z" id="Shape"></path>
         </g>
     </g>
 </svg>

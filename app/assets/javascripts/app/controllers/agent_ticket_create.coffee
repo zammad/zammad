@@ -450,9 +450,10 @@ class App.TicketCreate extends App.Controller
     # save ticket, create article
     # check attachment
     if article['body']
-      if App.Utils.checkAttachmentReference(article['body'])
-        if @$('.richtext .attachments .attachment').length < 1
-          if !confirm( App.i18n.translateContent('You use attachment in text but no attachment is attached. Do you want to continue?') )
+      if @$('.richtext .attachments .attachment').length < 1
+        matchingWord = App.Utils.checkAttachmentReference(article['body'])
+        if matchingWord
+          if !confirm(App.i18n.translateContent('You use %s in text but no attachment is attached. Do you want to continue?', matchingWord))
             return
 
     # disable form

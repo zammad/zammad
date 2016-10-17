@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="29px" height="22px" viewBox="0 0 29 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <!-- Generator: Sketch 3.5.2 (25235) - http://www.bohemiancoding.com/sketch -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="29px" height="22px" viewBox="0 0 29 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
     <title>email-button</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-        <g id="email-button" sketch:type="MSArtboardGroup" fill="#FFFFFF">
-            <path d="M3.692327,4 L25.3063956,4 L14.4948188,13.2789684 L3.692327,4 Z M26,5.55434383 L26,19 L3,19 L3,5.55530843 L13.9696218,14.9778358 L14.4960016,15.4299778 L15.0225136,14.9779923 L26,5.55434383 Z" id="mail" sketch:type="MSShapeGroup"></path>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="email-button" fill="#FFFFFF">
+            <path d="M3.692327,4 L25.3063956,4 L14.4948188,13.2789684 L3.692327,4 Z M26,5.55434383 L26,19 L3,19 L3,5.55530843 L13.9696218,14.9778358 L14.4960016,15.4299778 L15.0225136,14.9779923 L26,5.55434383 Z" id="mail"></path>
         </g>
     </g>
 </svg>

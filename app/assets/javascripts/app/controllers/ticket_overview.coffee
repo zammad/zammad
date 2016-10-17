@@ -338,12 +338,12 @@ class Table extends App.Controller
     tickets  = data.tickets
 
     # get ticket list
-    ticket_list_show = []
+    ticketListShow = []
     for ticket in tickets
-      ticket_list_show.push App.Ticket.fullLocal(ticket.id)
+      ticketListShow.push App.Ticket.fullLocal(ticket.id)
 
     # if customer and no ticket exists, show the following message only
-    if !ticket_list_show[0] && @permissionCheck('ticket.customer')
+    if !ticketListShow[0] && @permissionCheck('ticket.customer')
       @html App.view('customer_not_ticket_exists')()
       return
 
@@ -388,7 +388,7 @@ class Table extends App.Controller
     if @view_mode is 'm'
       table = App.view('agent_ticket_view/detail')(
         overview: @overview
-        objects:  ticket_list_show
+        objects:  ticketListShow
         checkbox: checkbox
       )
       table = $(table)
@@ -403,9 +403,9 @@ class Table extends App.Controller
       openTicket = (id,e) =>
 
         # open ticket via task manager to provide task with overview info
-        ticket = App.Ticket.fullLocal(id)
+        ticket = App.Ticket.findNative(id)
         App.TaskManager.execute(
-          key:        'Ticket-' + ticket.id
+          key:        "Ticket-#{ticket.id}"
           controller: 'TicketZoom'
           params:
             ticket_id:   ticket.id
@@ -457,7 +457,7 @@ class Table extends App.Controller
         overview:       @overview.view.s
         el:             @$('.table-overview')
         model:          App.Ticket
-        objects:        ticket_list_show
+        objects:        ticketListShow
         checkbox:       checkbox
         groupBy:        @overview.group_by
         orderBy:        @overview.order.by
@@ -524,16 +524,16 @@ class Table extends App.Controller
   getSelected: ->
     @ticketIDs = []
     @$('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
-      ticket_id = $(element).val()
-      @ticketIDs.push ticket_id
+      ticketId = $(element).val()
+      @ticketIDs.push ticketId
     )
     @ticketIDs
 
   setSelected: (ticketIDs) ->
     @$('.table-overview').find('[name="bulk"]').each( (index, element) ->
-      ticket_id = $(element).val()
-      for ticket_id_selected in ticketIDs
-        if ticket_id_selected is ticket_id
+      ticketId = $(element).val()
+      for ticketIdSelected in ticketIDs
+        if ticketIdSelected is ticketId
           $(element).attr('checked', true)
     )
 

@@ -28,6 +28,11 @@ class App.Event
       _instance ?= new _eventSingleton
     _instance.unbindLevel(level)
 
+  @count: ->
+    if _instance == undefined
+      _instance ?= new _eventSingleton
+    _instance.count()
+
   @_allBindings: ->
     if _instance == undefined
       _instance ?= new _eventSingleton
@@ -67,10 +72,8 @@ class _eventSingleton extends Spine.Module
       # bind
       if one
         @log 'debug', 'one', event, callback
-        Spine.one(event, callback)
       else
         @log 'debug', 'bind', event, callback
-        Spine.bind(event, callback)
 
   unbind: (events, callback, level) ->
 
@@ -91,13 +94,24 @@ class _eventSingleton extends Spine.Module
           return item if item.event isnt event
       )
       @log 'debug', 'unbind', event, callback
-      Spine.unbind(event, callback)
 
   trigger: (events, data) ->
     eventList = events.split(' ')
-    for event in eventList
-      @log 'debug', 'trigger', event, data
-      Spine.trigger event, data
+
+    for level, bindLevel of @eventCurrent
+      for key, bindMeta of bindLevel
+        for event in eventList
+          if bindMeta.event is event
+            bindMeta.callback(data)
+            if bindMeta.one is true
+              @unbind(event, bindMeta.callback, level)
+
+  count: ->
+    return 0 if !@eventCurrent
+    count = 0
+    for levelName, levelValue of @eventCurrent
+      count += Object.keys(levelValue).length
+    count
 
   _allBindings: ->
     @eventCurrent

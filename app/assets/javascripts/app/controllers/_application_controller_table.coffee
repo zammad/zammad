@@ -152,8 +152,9 @@ class App.ControllerTable extends App.Controller
 
     # check if table is empty
     if _.isEmpty(@objects)
-      table = App.view('generic/admin/empty')
+      table = App.view('generic/admin/empty')(
         explanation: @explanation
+      )
       return $(table)
 
     # get header data
@@ -234,7 +235,7 @@ class App.ControllerTable extends App.Controller
               # if we need to sort a relation
               if header.relation
                 if item[header.name]
-                  App[header.relation].find(item[header.name]).displayName()
+                  App[header.relation].findNative(item[header.name]).displayName()
                 else
                   ''
               else
