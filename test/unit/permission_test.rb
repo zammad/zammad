@@ -71,6 +71,8 @@ class PermissionTest < ActiveSupport::TestCase
     assert_equal(true, user_with_permission1.permissions?('admin.permission2'))
     assert_equal(true, user_with_permission1.permissions?('admin'))
 
+    role_permission1.permission_revoke('admin')
+
   end
 
   test 'user permission with invalid role' do
