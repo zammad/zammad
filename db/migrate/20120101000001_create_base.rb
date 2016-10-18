@@ -109,6 +109,7 @@ class CreateBase < ActiveRecord::Migration
       t.string :name,                   limit: 255, null: false
       t.string :note,                   limit: 500, null: true
       t.string :preferences,            limit: 10_000, null: true
+      t.boolean :active,                               null: false, default: true
       t.timestamps limit: 3, null: false
     end
     add_index :permissions, [:name], unique: true
