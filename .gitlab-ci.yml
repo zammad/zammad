@@ -394,7 +394,7 @@ test:browser:integration:api_client_php:
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - git clone git@github.com:zammad/zammad-api-client-php || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - wget http://$IP:$BROWSER_PORT/api/v1/getting_started/auto_wizard
-    - cd zammad_api_client_php
+    - cd zammad-api-client-php
     - composer install
     - export ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_URL=http://$IP:$BROWSER_PORT
     - export ZAMMAD_PHP_API_CLIENT_UNIT_TESTS_USERNAME=master@example.com
