@@ -141,7 +141,6 @@ class Index extends App.ControllerContent
 
 App.Config.set('import/otrs', Index, 'Routes')
 App.Config.set('otrs', {
-  image: 'otrs-logo.png'
   title: 'OTRS'
   name:  'OTRS'
   class: 'js-otrs'
