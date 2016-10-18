@@ -195,6 +195,8 @@ class App.User extends App.Model
       if role.active is true
         for permission_id in role.permission_ids
           permission = App.Permission.findNative(permission_id)
+          if !permission
+            throw "No such permission for id #{permission_id}"
           permissions[permission.name] = true
 
     for localKey in keys
