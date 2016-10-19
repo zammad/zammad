@@ -12,6 +12,8 @@ done
 #export RAILS_ENV=test
 export RAILS_ENV=production
 export RAILS_SERVE_STATIC_FILES=true
+export ZAMMAD_SETTING_TTL=15
+export Z_LOCALES=en-us:de-de
 
 bundle install
 
@@ -38,11 +40,12 @@ rails r "Setting.set('developer_mode', true)"
 pumactl --pidfile tmp/pids/puma.pid stop
 script/websocket-server.rb stop
 
-rails s puma -d --pid tmp/pids/puma.pid --bind 0.0.0.0 --port 4445
+#rails s puma -d --pid tmp/pids/puma.pid --bind 0.0.0.0 --port 4445
+rails s puma --pid tmp/pids/puma.pid --bind 0.0.0.0 --port 4445 &
 script/websocket-server.rb start -d
 script/scheduler.rb start
 
-sleep 10
+sleep 16
 
 #export REMOTE_URL='http://medenhofer:765d0dd4-994b-4e15-9f89-13f3aedeb462@ondemand.saucelabs.com:80/wd/hub' BROWSER_OS='Windows 2012' BROWSER_VERSION=35 BROWSER=firefox
 #export REMOTE_URL='http://192.168.178.32:4444/wd/hub'

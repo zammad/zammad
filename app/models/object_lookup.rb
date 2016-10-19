@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ObjectLookup < ApplicationModel
   @@cache_object = {} # rubocop:disable Style/ClassVars

@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class UserDevicesController < ApplicationController
   before_action { authentication_check(permission: 'user_preferences.device') }

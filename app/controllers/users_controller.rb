@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class UsersController < ApplicationController
   before_action :authentication_check, except: [:create, :password_reset_send, :password_reset_verify, :image]
