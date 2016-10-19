@@ -26,7 +26,7 @@ class UserAccessTokenController < ApplicationController
       }
     }
     permissions = []
-    Permission.all.order(:name).each { |permission|
+    Permission.all.where(active: true).order(:name).each { |permission|
       next if !local_permissions_new.key?(permission.name) && !current_user.permissions?(permission.name)
       permission_attributes = permission.attributes
       if local_permissions_new[permission.name] == false
