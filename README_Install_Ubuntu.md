@@ -2,8 +2,9 @@
 ## With MySQL
 
 ### Prerequisites
-* apt-get install curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev mysql-server
+* apt-get install curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev mysql-server nginx
 * mysql --defaults-extra-file=/etc/mysql/debian.cnf -e "CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'Your_Pass_Word!'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
+* ln -s /opt/zammad/contrib/nginx-zammad.conf /etc/nginx/sites-enabled/zammad.conf
 
 ### Add User
 * useradd zammad -m -d /opt/zammad -s /bin/bash
@@ -34,6 +35,6 @@
 * rake assets:precompile
 
 ### Start Zammad
-* rails s -b 0.0.0.0 -p 3000
+* rails s -p 3000
 * script/websocket-server.rb start
 * script/scheduler.rb start
