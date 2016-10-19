@@ -17,11 +17,8 @@ before:
   - ruby -v
   - env
   - cp config/database.yml.pkgr config/database.yml
-  - echo "gem 'pg'" >> Gemfile.local
-  - echo "gem 'mysql2', '~> 0.3.20'" >> Gemfile.local
-  - sed -i "s/specs:/specs:\\n    pg (0.18.4)/g" Gemfile.lock
-  - sed -i "s/DEPENDENCIES/DEPENDENCIES\\n  pg/g" Gemfile.lock
-  - "#cat Gemfile.lock"
+  - echo "gem 'mysql2'" >> Gemfile.local
+  - "cat Gemfile.lock"
   - contrib/cleanup.sh
 
 env:
