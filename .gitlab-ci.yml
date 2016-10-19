@@ -171,6 +171,7 @@ test:integration:user_agent:
     - rake db:migrate
     - ruby -I test/ test/integration/user_agent_test.rb
     - rake db:drop
+  allow_failure: true
 
 test:integration:user_device:
   stage: test
