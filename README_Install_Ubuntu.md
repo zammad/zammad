@@ -38,5 +38,8 @@
 * rails s -p 3000
 * script/websocket-server.rb start
 * script/scheduler.rb start
+
+### Restart nginx as root
+* exit
 * systemctl restart nginx
 
