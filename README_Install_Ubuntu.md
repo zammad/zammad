@@ -1,5 +1,5 @@
 # Installation on Ubuntu 16.04 Server
-## With MySQL
+## With Nginx & MySQL
 
 ### Prerequisites
 * apt-get install curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev mysql-server nginx
