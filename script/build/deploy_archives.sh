@@ -2,8 +2,8 @@
 
 set -ex
 
-if ! echo $CI_BUILD_REF_NAME | grep stable-; then
-  echo 'deploy archives only for stable branches'
+if [ "$CI_BUILD_REF_NAME" != "$CI_BUILD_TAG" ]; then
+  echo 'deploy archives only for tag releases'
   exit 0
 fi
 
