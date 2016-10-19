@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 class Ticket::State < ApplicationModel
   belongs_to    :state_type, class_name: 'Ticket::StateType'
   belongs_to    :next_state, class_name: 'Ticket::State'

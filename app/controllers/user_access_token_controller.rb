@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class UserAccessTokenController < ApplicationController
   before_action { authentication_check(permission: 'user_preferences.access_token') }
@@ -26,7 +26,7 @@ class UserAccessTokenController < ApplicationController
       }
     }
     permissions = []
-    Permission.all.order(:name).each { |permission|
+    Permission.all.where(active: true).order(:name).each { |permission|
       next if !local_permissions_new.key?(permission.name) && !current_user.permissions?(permission.name)
       permission_attributes = permission.attributes
       if local_permissions_new[permission.name] == false

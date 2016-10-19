@@ -231,7 +231,7 @@ class CreateTicket < ActiveRecord::Migration
 
     create_table :jobs do |t|
       t.column :name,                 :string,  limit: 250,  null: false
-      t.column :timeplan,             :string,  limit: 500,  null: false
+      t.column :timeplan,             :string,  limit: 1000, null: false
       t.column :condition,            :string,  limit: 2500, null: false
       t.column :perform,              :string,  limit: 2500, null: false
       t.column :disable_notification, :boolean,              null: false, default: true
@@ -445,9 +445,42 @@ class CreateTicket < ActiveRecord::Migration
     end
     add_index :report_profiles, [:name], unique: true
 
+    create_table :karma_users do |t|
+      t.integer :user_id,                           null: false
+      t.integer :score,                             null: false
+      t.string  :level,               limit: 200,   null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :karma_users, [:user_id], unique: true
+
+    create_table :karma_activities do |t|
+      t.string  :name,                limit: 200,    null: false
+      t.string  :description,         limit: 200,    null: false
+      t.integer :score,                              null: false
+      t.integer :once_ttl,                           null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :karma_activities, [:name], unique: true
+
+    create_table :karma_activity_logs do |t|
+      t.integer :o_id,                          null: false
+      t.integer :object_lookup_id,              null: false
+      t.integer :user_id,                       null: false
+      t.integer :activity_id,                   null: false
+      t.integer :score,                         null: false
+      t.integer :score_total,                   null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :karma_activity_logs, [:user_id]
+    add_index :karma_activity_logs, [:created_at]
+    add_index :karma_activity_logs, [:o_id, :object_lookup_id]
+
   end
 
   def self.down
+    drop_table :karma_activity_logs
+    drop_table :karma_activities
+    drop_table :karma_users
     drop_table :report_profiles
     drop_table :chat_topics
     drop_table :chat_sessions

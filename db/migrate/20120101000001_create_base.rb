@@ -109,6 +109,7 @@ class CreateBase < ActiveRecord::Migration
       t.string :name,                   limit: 255, null: false
       t.string :note,                   limit: 500, null: true
       t.string :preferences,            limit: 10_000, null: true
+      t.boolean :active,                               null: false, default: true
       t.timestamps limit: 3, null: false
     end
     add_index :permissions, [:name], unique: true
@@ -517,6 +518,85 @@ class CreateBase < ActiveRecord::Migration
     end
 
     add_index :delayed_jobs, [:priority, :run_at], name: 'delayed_jobs_priority'
+
+    create_table :external_syncs do |t|
+      t.string  :source,                 limit: 100,  null: false
+      t.string  :source_id,              limit: 200,  null: false
+      t.string  :object,                 limit: 100,  null: false
+      t.integer :o_id,                                null: false
+      t.text    :last_payload,           limit: 500.kilobytes + 1, null: true
+      t.timestamps limit: 3, null: false
+    end
+    add_index :external_syncs, [:source, :source_id], unique: true
+    add_index :external_syncs, [:source, :source_id, :object, :o_id], name: 'index_external_syncs_on_source_and_source_id_and_object_o_id'
+    add_index :external_syncs, [:object, :o_id]
+
+    create_table :cti_logs do |t|
+      t.string  :direction,              limit: 20,   null: false
+      t.string  :state,                  limit: 20,   null: false
+      t.string  :from,                   limit: 100,  null: false
+      t.string  :from_comment,           limit: 250,  null: true
+      t.string  :to,                     limit: 100,  null: false
+      t.string  :to_comment,             limit: 250,  null: true
+      t.string  :call_id,                limit: 250,  null: false
+      t.string  :comment,                limit: 500,  null: true
+      t.timestamp :start,                limit: 3,    null: true
+      t.timestamp :end,                  limit: 3,    null: true
+      t.boolean   :done,                              null: false, default: true
+      t.text :preferences,            limit: 500.kilobytes + 1, null: true
+      t.timestamps limit: 3, null: false
+    end
+    add_index :cti_logs, [:call_id], unique: true
+    add_index :cti_logs, [:direction]
+    add_index :cti_logs, [:from]
+
+    create_table :cti_caller_ids do |t|
+      t.string  :caller_id,              limit: 100, null: false
+      t.string  :comment,                limit: 500, null: true
+      t.string  :level,                  limit: 100, null: false
+      t.string  :object,                 limit: 100, null: false
+      t.integer :o_id,                               null: false
+      t.integer :user_id,                            null: true
+      t.text    :preferences,            limit: 500.kilobytes + 1, null: true
+      t.timestamps limit: 3, null: false
+    end
+    add_index :cti_caller_ids, [:caller_id]
+    add_index :cti_caller_ids, [:caller_id, :level]
+    add_index :cti_caller_ids, [:caller_id, :user_id]
+    add_index :cti_caller_ids, [:object, :o_id]
+
+    create_table :stats_stores do |t|
+      t.references :stats_store_object,             null: false
+      t.integer :o_id,                              null: false
+      t.string  :key,                   limit: 250, null: true
+      t.integer :related_o_id,                      null: true
+      t.integer :related_stats_store_object_id,     null: true
+      t.string  :data,                 limit: 2500, null: true
+      t.integer :created_by_id,                     null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :stats_stores, [:o_id]
+    add_index :stats_stores, [:key]
+    add_index :stats_stores, [:stats_store_object_id]
+    add_index :stats_stores, [:created_by_id]
+    add_index :stats_stores, [:created_at]
+
+    create_table :http_logs do |t|
+      t.column :direction,            :string, limit: 20,    null: false
+      t.column :facility,             :string, limit: 100,   null: false
+      t.column :method,               :string, limit: 100,   null: false
+      t.column :url,                  :string, limit: 255,   null: false
+      t.column :status,               :string, limit: 20,    null: true
+      t.column :ip,                   :string, limit: 50,    null: true
+      t.column :request,              :string, limit: 10_000, null: false
+      t.column :response,             :string, limit: 10_000, null: false
+      t.column :updated_by_id,        :integer,              null: true
+      t.column :created_by_id,        :integer,              null: true
+      t.timestamps limit: 3, null: false
+    end
+    add_index :http_logs, [:facility]
+    add_index :http_logs, [:created_by_id]
+    add_index :http_logs, [:created_at]
 
   end
 end

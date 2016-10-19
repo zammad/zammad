@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Role < ApplicationModel
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
@@ -107,7 +107,7 @@ returns
         permission_ids.push permission.id
       }
       next if permission_ids.empty?
-      Role.joins(:roles_permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ?', permission_ids, true).uniq().each { |role|
+      Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).uniq().each { |role|
         roles.push role
       }
     }

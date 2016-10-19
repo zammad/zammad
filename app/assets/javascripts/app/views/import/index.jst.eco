@@ -9,7 +9,7 @@
               <% if item.image: %>
                 <img class="logo" src="<%= @C('image_path') + '/' + item.image %>" alt="<%= item.name %>" height="37">
               <% else: %>
-                <%= item.name %>
+                <%= item.name %> (Beta)
               <% end %>
             </a>
           <% end %>
