@@ -25,7 +25,7 @@
 * rvm install 2.3.1
 * gem install bundler
 
-### Install zammad
+### Install Zammad
 * bundle install --without test development postgres
 * cp config/database.yml.dist config/database.yml
 * vi config/database.yml
@@ -38,3 +38,5 @@
 * rails s -p 3000
 * script/websocket-server.rb start
 * script/scheduler.rb start
+* systemctl restart nginx
+
