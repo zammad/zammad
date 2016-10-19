@@ -34,8 +34,6 @@
 * rake assets:precompile
 
 ### Start Zammad
-* rake assets:precompile
-* puma -p 3000 # application web server
-* script/websocket-server.rb start # non blocking websocket server
-* script/scheduler.rb start # generate overviews on demand, just send changed data to browser
-
+* rails s -b 0.0.0.0 -p 3000
+* script/websocket-server.rb start
+* script/scheduler.rb start
