@@ -407,7 +407,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: true,
+  state: false,
   preferences: {
     prio: 1,
     permission: ['admin.system'],
@@ -1317,33 +1317,6 @@ Setting.create_if_not_exists(
     ],
   },
   state: '',
-  preferences: {
-    authentication: true,
-    permission: ['admin.channel_web'],
-  },
-  frontend: true
-)
-
-Setting.create_if_not_exists(
-  title: 'Enable Ticket View/Update',
-  name: 'customer_ticket_view',
-  area: 'CustomerWeb::Base',
-  description: 'Defines if a customer view and update his own tickets.',
-  options: {
-    form: [
-      {
-        display: '',
-        null: true,
-        name: 'customer_ticket_view',
-        tag: 'boolean',
-        options: {
-          true  => 'yes',
-          false => 'no',
-        },
-      },
-    ],
-  },
-  state: true,
   preferences: {
     authentication: true,
     permission: ['admin.channel_web'],
@@ -3057,12 +3030,12 @@ Ticket::Article.create(
 Thank you for choosing Zammad.
 
 You will find updates and patches at http://zammad.org/. Online
-documentation is available at http://guides.zammad.org/. You can also
-use our forums at http://forums.zammad.org/
+documentation is available at http://zammad.org/documentation. Get
+involved (discussions, contributing, ...) at http://zammad.org/participate.
 
 Regards,
 
-The Zammad Project
+Your Zammad Team
 ',
   internal: false,
 )
@@ -5158,6 +5131,33 @@ Scheduler.create_or_update(
   updated_by_id: 1,
   created_by_id: 1,
 )
+Scheduler.create_or_update(
+  name: 'Generate user based stats.',
+  method: 'Stats.generate',
+  period: 11.minutes,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_or_update(
+  name: 'Delete old stats store entries.',
+  method: 'StatsStore.cleanup',
+  period: 31.days,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Cleanup HttpLog',
+  method: 'HttpLog.cleanup',
+  period: 24 * 60 * 60,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
 
 Trigger.create_or_update(
   name: 'auto reply (on new tickets)',
@@ -5268,6 +5268,73 @@ Trigger.create_or_update(
   active: false,
   created_by_id: 1,
   updated_by_id: 1,
+)
+
+Karma::Activity.create_or_update(
+  name: 'ticket create',
+  description: 'You have created a ticket',
+  score: 10,
+  once_ttl: 60,
+)
+Karma::Activity.create_or_update(
+  name: 'ticket close',
+  description: 'You have closed a ticket',
+  score: 5,
+  once_ttl: 60,
+)
+Karma::Activity.create_or_update(
+  name: 'ticket answer 1h',
+  description: 'You have answered a ticket within 1h',
+  score: 25,
+  once_ttl: 60,
+)
+Karma::Activity.create_or_update(
+  name: 'ticket answer 2h',
+  description: 'You have answered a ticket within 2h',
+  score: 20,
+  once_ttl: 60,
+)
+Karma::Activity.create_or_update(
+  name: 'ticket answer 12h',
+  description: 'You have answered a ticket within 12h',
+  score: 10,
+  once_ttl: 60,
+)
+Karma::Activity.create_or_update(
+  name: 'ticket answer 24h',
+  description: 'You have answered a ticket within 24h',
+  score: 5,
+  once_ttl: 60,
+)
+Karma::Activity.create_or_update(
+  name: 'ticket pending state',
+  description: 'Usage of advanced features',
+  score: 2,
+  once_ttl: 60,
+)
+Karma::Activity.create_or_update(
+  name: 'ticket escalated',
+  description: 'You have escalated tickets',
+  score: -5,
+  once_ttl: 60 * 60 * 24,
+)
+Karma::Activity.create_or_update(
+  name: 'ticket reminder overdue (+2 days)',
+  description: 'You have tickets that are over 2 days overdue',
+  score: -5,
+  once_ttl: 60 * 60 * 24,
+)
+Karma::Activity.create_or_update(
+  name: 'text module',
+  description: 'Usage of advanced features',
+  score: 4,
+  once_ttl: 60 * 30,
+)
+Karma::Activity.create_or_update(
+  name: 'tagging',
+  description: 'Usage of advanced features',
+  score: 4,
+  once_ttl: 60 * 60 * 4,
 )
 
 # reset primary key sequences
