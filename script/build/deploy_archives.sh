@@ -22,7 +22,7 @@ tar -czf /tmp/zammad-${CI_BUILD_TAG}.tar.gz .
 tar -cjf /tmp/zammad-${CI_BUILD_TAG}.tar.bz2 .
 
 # zip
-zip /tmp/zammad-${CI_BUILD_TAG}.zip ./*
+zip -r /tmp/zammad-${CI_BUILD_TAG}.zip ./*
 
 # publish
 scp /tmp/zammad-${CI_BUILD_TAG}.tar.* $ARCHIVE_SCP_TARGET
