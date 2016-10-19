@@ -39,7 +39,7 @@ pre:github:
   tags:
     - deploy
   script:
-    - script/build/sync_repo.sh git@github.com:martini/zammad.git
+    - script/build/sync_repo.sh git@github.com:zammad/zammad.git
 
 test:unit:mysql:
   stage: test
