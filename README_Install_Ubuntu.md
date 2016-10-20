@@ -35,9 +35,9 @@
 * rake assets:precompile
 
 ### Start Zammad
-* rails s -p 3000 &>>  log/zammad.log &
-* script/websocket-server.rb start &>>  log/zammad.log &
-* script/scheduler.rb start &>>  log/zammad.log &
+* rails s -p 3000 &>> log/zammad.log &
+* script/websocket-server.rb start &>> log/zammad.log &
+* script/scheduler.rb start &>> log/zammad.log &
 
 ### Restart nginx as root
 * exit
