@@ -3029,9 +3029,9 @@ Ticket::Article.create(
 
 Thank you for choosing Zammad.
 
-You will find updates and patches at http://zammad.org/. Online
-documentation is available at http://zammad.org/documentation. Get
-involved (discussions, contributing, ...) at http://zammad.org/participate.
+You will find updates and patches at https://zammad.org/. Online
+documentation is available at https://zammad.org/documentation. Get
+involved (discussions, contributing, ...) at https://zammad.org/participate.
 
 Regards,
 

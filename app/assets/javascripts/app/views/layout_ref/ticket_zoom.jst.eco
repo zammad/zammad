@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <div class="scrollPageHeader tabsSidebar-sidebarSpacer" 
+      <div class="scrollPageHeader tabsSidebar-sidebarSpacer"
         data-anchor-target=".ticketZoom .page-header"
         data-128-top-bottom="transform: translateY(-64px);"
         data-64-top-bottom="transform: translateY(0px);"
@@ -57,7 +57,7 @@
             <h1 contenteditable="true" class="ticket-title-update" data-placeholder="Enter Title...">Welcome to Zammad! We want to entertain you and your whole family!</h1>
           </div>
           <div class="ticket-meta">
-            <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - erstellte <span class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" title="11.07.2014 12:10">11.07.2014</span> 
+            <small class="task-subline">Ticket# <span class="ticket-number">10001</span> - erstellte <span class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" title="11.07.2014 12:10">11.07.2014</span>
             </small>
           </div>
         </div>
@@ -86,12 +86,12 @@
   <br/>
   Thank you for installing Zammad.<br/>
   <br/>
-  You will find updates and patches at <a href="http://zammad.org/" title="http://zammad.org/" target="_blank">http://zammad.org/</a>. Online<br/>
-  documentation is available at <a href="http://guides.zammad.org/" title="http://guides.zammad.org/" target="_blank">http://guides.zammad.org/</a>. You can also<br/>
-  use our forums at <a href="http://forums.zammad.org/" title="http://forums.zammad.org/" target="_blank">http://forums.zammad.org/</a><br/>
+  You will find updates and patches at <a href="https://zammad.org/" title="https://zammad.org/" target="_blank">https://zammad.org/</a>. Online<br/>
+  documentation is available at <a href="https://zammad.org/documentation/" title="https://zammad.org/documentation/" target="_blank">https://zammad.org/documentation/</a>. Get involved<br/>
+  (discussions, contributing, ...) at <a href="https://zammad.org/participate" title="https://zammad.org/participate" target="_blank">https://zammad.org/participate</a>.<br/>
   <br/>
   Regards,<br/>
-  The <a href="http://Zammad.org" title="http://Zammad.org" target="_blank">Zammad.org</a> Project
+  The <a href="https://zammad.org" title="https://zammad.org" target="_blank">zammad.org</a> Project
                   </div>
                   <div class="textBubble-overflowContainer">
                     <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
@@ -130,7 +130,7 @@
           <small class="task-subline"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" title="2014-07-11 12:10">2014-07-11</time></small>
         </div>
 
-        <div class="ticket-article-item agent note" data-id="23" id="article-23">      
+        <div class="ticket-article-item agent note" data-id="23" id="article-23">
           <div class="article-meta-clip top">
             <div class="article-content-meta top hide">
               <div class="article-meta top">
@@ -219,7 +219,7 @@
           <small class="task-subline"><time class="humanTimeFromNow" data-time="2014-07-11T10:10:32.000Z" title="2014-07-11 12:10">2014-07-11</time></small>
         </div>
 
-        <div class="ticket-article-item agent note" data-id="23" id="article-23">      
+        <div class="ticket-article-item agent note" data-id="23" id="article-23">
           <div class="article-meta-clip top">
             <div class="article-content-meta top hide">
               <div class="article-meta top">
