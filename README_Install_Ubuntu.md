@@ -32,6 +32,7 @@
 * bundle install --without test development postgres
 * cp config/database.yml.dist config/database.yml
 * vi config/database.yml
+  * insert mysql user, pass & host
 * rake db:create
 * rake db:migrate
 * rake db:seed
