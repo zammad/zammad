@@ -199,18 +199,64 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(6, agent_state[:seads_total])
     assert_equal(true, agent_state[:active])
 
+    chat_session6.user_id = agent1.id
     chat_session6.state = 'running'
     chat_session6.save
 
+    Chat::Message.create(
+      chat_session_id: chat_session6.id,
+      content: 'message 1',
+      created_by_id: agent1.id,
+    )
+    sleep 1
+    Chat::Message.create(
+      chat_session_id: chat_session6.id,
+      content: 'message 2',
+      created_by_id: agent1.id,
+    )
+    sleep 1
+    Chat::Message.create(
+      chat_session_id: chat_session6.id,
+      content: 'message 3',
+      created_by_id: agent1.id,
+    )
+    sleep 1
+    Chat::Message.create(
+      chat_session_id: chat_session6.id,
+      content: 'message 4',
+      created_by_id: nil,
+    )
+
     # check customer state
-    assert_equal('no_seats_available', chat.customer_state[:state])
-    assert_equal(5, chat.customer_state[:queue])
+    customer_state = chat.customer_state
+    assert_equal('no_seats_available', customer_state[:state])
+    assert_equal(5, customer_state[:queue])
+
+    # customer chat state
+    customer_state = chat.customer_state(chat_session6.session_id)
+    assert_equal('reconnect', customer_state[:state])
+    assert(customer_state[:session])
+    assert_equal(Array, customer_state[:session].class)
+    assert_equal('message 1', customer_state[:session][0]['content'])
+    assert_equal('message 2', customer_state[:session][1]['content'])
+    assert_equal('message 3', customer_state[:session][2]['content'])
+    assert_equal('message 4', customer_state[:session][3]['content'])
+    assert_equal('Notification Agent1', customer_state[:agent][:name])
+    assert_equal(nil, customer_state[:agent][:avatar])
 
     # check agent1 state
     agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(5, agent_state[:waiting_chat_count])
     assert_equal(1, agent_state[:running_chat_count])
-    assert_equal([], agent_state[:active_sessions])
+    assert_equal(Array, agent_state[:active_sessions].class)
+    assert_equal(chat.id, agent_state[:active_sessions][0]['chat_id'])
+    assert_equal(agent1.id, agent_state[:active_sessions][0]['user_id'])
+    assert(agent_state[:active_sessions][0]['messages'])
+    assert_equal(Array, agent_state[:active_sessions][0]['messages'].class)
+    assert_equal('message 1', agent_state[:active_sessions][0]['messages'][0]['content'])
+    assert_equal('message 2', agent_state[:active_sessions][0]['messages'][1]['content'])
+    assert_equal('message 3', agent_state[:active_sessions][0]['messages'][2]['content'])
+    assert_equal('message 4', agent_state[:active_sessions][0]['messages'][3]['content'])
     assert_equal(0, agent_state[:seads_available])
     assert_equal(6, agent_state[:seads_total])
     assert_equal(true, agent_state[:active])
@@ -235,7 +281,15 @@ class ChatTest < ActiveSupport::TestCase
     agent_state = Chat.agent_state_with_sessions(agent1.id)
     assert_equal(5, agent_state[:waiting_chat_count])
     assert_equal(1, agent_state[:running_chat_count])
-    assert_equal([], agent_state[:active_sessions])
+    assert_equal(Array, agent_state[:active_sessions].class)
+    assert_equal(chat.id, agent_state[:active_sessions][0]['chat_id'])
+    assert_equal(agent1.id, agent_state[:active_sessions][0]['user_id'])
+    assert(agent_state[:active_sessions][0]['messages'])
+    assert_equal(Array, agent_state[:active_sessions][0]['messages'].class)
+    assert_equal('message 1', agent_state[:active_sessions][0]['messages'][0]['content'])
+    assert_equal('message 2', agent_state[:active_sessions][0]['messages'][1]['content'])
+    assert_equal('message 3', agent_state[:active_sessions][0]['messages'][2]['content'])
+    assert_equal('message 4', agent_state[:active_sessions][0]['messages'][3]['content'])
     assert_equal(-2, agent_state[:seads_available])
     assert_equal(4, agent_state[:seads_total])
     assert_equal(true, agent_state[:active])
