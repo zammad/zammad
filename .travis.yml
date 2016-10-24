@@ -15,8 +15,8 @@ before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev
   - mysql -u root -e "CREATE USER 'some_user'@'localhost' IDENTIFIED BY 'some_pass';"
-  - mysql -u root -e "GRANT ALL PRIVILEGES ON zammad_prod.* TO 'some_user'@'localhost';"
-  - export RAILS_ENV=production
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON zammad*.* TO 'some_user'@'localhost';"
+  - export RAILS_ENV=development
   - cp config/database.yml.dist config/database.yml
 install:
 - bundle install --without test development postgres
