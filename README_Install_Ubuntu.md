@@ -53,4 +53,3 @@
 ### Restart nginx as root
 * exit
 * systemctl restart nginx
-

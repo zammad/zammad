@@ -129,10 +129,10 @@ class AaaStringTest < ActiveSupport::TestCase
     result = 'test'
     assert_equal(result, html.html2text)
 
-    html = "\n<div><a href=\"http://zammad.org\">Best Tool of the World</a>
+    html = "\n<div><a href=\"https://zammad.org\">Best Tool of the World</a>
      some other text</div>
     <div>"
-    result = "[1] Best Tool of the Worldsome other text\n\n[1] http://zammad.org"
+    result = "[1] Best Tool of the Worldsome other text\n\n[1] https://zammad.org"
     assert_equal(result, html.html2text)
 
     html = "<!-- some comment -->
@@ -397,10 +397,10 @@ P.S.: You receive this e-mail because you are listed in our database as person w
 [1] http://www.teamviewer.example/en/company/unsubscribe.aspx?id=1009645&ident=xxx'
     assert_equal(result, html.html2text)
 
-    html   = "<div><br>Dave and leaned her 
-days adam.</div><span style=\"color:#F7F3FF; font-size:8px\">Maybe we 
-want any help me that.<br>Next morning charlie saw at their 
-father.<br>Well as though adam took out here. Melvin will be more money. 
+    html   = "<div><br>Dave and leaned her
+days adam.</div><span style=\"color:#F7F3FF; font-size:8px\">Maybe we
+want any help me that.<br>Next morning charlie saw at their
+father.<br>Well as though adam took out here. Melvin will be more money.
 Called him into this one last thing.<br>Men-----------------------
 <br />"
     result = 'Dave and leaned her days adam.

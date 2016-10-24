@@ -15,9 +15,9 @@ Get Zammad
 ----------
 
 ````shell
-    test -d ~/zammad/ || mkdir ~/zammad 
+    test -d ~/zammad/ || mkdir ~/zammad
     cd ~/zammad/
-    curl -L -O http://zammad.org/zammad-latest.tar.bz2 | tar -xj
+    curl -L -O http://ftp.zammad.com/zammad-latest.tar.bz2 | tar -xj
 ````
 
 Install Zammad

@@ -6,8 +6,8 @@ class MaintenanceSessionMessageTest < TestCase
     string       = rand(99_999_999_999_999_999).to_s
     title_html   = "test <b>#{string}</b>"
     title_text   = "test <b>#{string}<\/b>"
-    message_html = "message <b>1äöüß</b> #{string}\n\n\nhttp://zammad.org"
-    message_text = "message <b>1äöüß</b> #{string}\n\n\nhttp://zammad.org"
+    message_html = "message <b>1äöüß</b> #{string}\n\n\nhttps://zammad.org"
+    message_text = "message <b>1äöüß</b> #{string}\n\n\nhttps://zammad.org"
 
     # check #1
     browser1 = browser_instance
