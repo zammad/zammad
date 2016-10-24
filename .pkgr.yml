@@ -15,8 +15,6 @@ targets:
     dependencies:
       - httpd
       - postgresql
-      - postgresql-server
-      - postgresql-devel
 before:
   - uname -a
   - ruby -v
