@@ -19,7 +19,7 @@ before_install:
   - export RAILS_ENV=development
   - cp config/database.yml.dist config/database.yml
 install:
-- bundle install --without test development postgres
+- bundle install --without postgres
 script:
 - rake db:create
 - rake db:migrate
