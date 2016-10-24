@@ -97,15 +97,15 @@
                     </div>
 
                     <div>
-                      You will find updates and patches at <a href="http://zammad.org/" target="_blank" title="http://zammad.org/">http://zammad.org/</a>. Online
+                      You will find updates and patches at <a href="https://zammad.org/" target="_blank" title="https://zammad.org/">https://zammad.org/</a>. Online
                     </div>
 
                     <div>
-                      documentation is available at <a href="http://guides.zammad.org/" target="_blank" title="http://guides.zammad.org/">http://guides.zammad.org/</a>. You can also
+                      documentation is available at <a href="https://zammad.org/documentation/" target="_blank" title="https://zammad.org/documentation/>https://zammad.org/documentation/</a>. You can also
                     </div>
 
                     <div>
-                      use our forums at <a href="http://forums.zammad.org/" target="_blank" title="http://forums.zammad.org/">http://forums.zammad.org/</a>
+                      get involved (discussions, contributing, ...) at <a href="https://zammad.org/participate" target="_blank" title="https://zammad.org/participate">https://zammad.org/participate</a>.
                     </div>
 
                     <div>
@@ -121,7 +121,7 @@
                     </div>
 
                     <div>
-                      The <a href="http://Zammad.org" target="_blank" title="http://Zammad.org">Zammad.org</a> Project
+                      The <a href="https://zammad.org" target="_blank" title="https://zammad.org">zammad.org</a> Project
                     </div>
 
                     <div class="textBubble-overflowContainer hide">
@@ -625,7 +625,7 @@
                     <option selected value="1">
                       Users
                     </option>
-                  </select> 
+                  </select>
                 </div><span class="help-inline"></span> <span class="help-block"></span>
               </div>
             </div>
@@ -649,7 +649,7 @@
                     <option selected value="4">
                       Hans Huber
                     </option>
-                  </select> 
+                  </select>
                 </div><span class="help-inline"></span> <span class="help-block"></span>
               </div>
             </div>
@@ -677,7 +677,7 @@
                     <option value="3">
                       pending reminder
                     </option>
-                  </select> 
+                  </select>
                 </div><span class="help-inline"></span> <span class="help-block"></span>
               </div>
             </div>
@@ -717,7 +717,7 @@
                     <option value="3">
                       3 high
                     </option>
-                  </select> 
+                  </select>
                 </div><span class="help-inline"></span> <span class="help-block"></span>
               </div>
             </div>
@@ -896,7 +896,7 @@
           <option value="3">
             pending
           </option>
-        </select> 
+        </select>
       </div>
 
       <div class="form-group is-changed">
@@ -912,7 +912,7 @@
           <option value="3">
             3 high
           </option>
-        </select> 
+        </select>
       </div>
 
       <div class="form-group">
@@ -932,7 +932,7 @@
           <option selected value="1">
             Users
           </option>
-        </select> 
+        </select>
       </div>
 
       <div class="form-group">
@@ -944,7 +944,7 @@
           <option value="3">
             Felix Niklas
           </option>
-        </select> 
+        </select>
       </div>
     </form>
 

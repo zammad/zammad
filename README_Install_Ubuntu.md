@@ -14,7 +14,7 @@
 ### Get Zammad
 * su zammad
 * cd ~
-* wget http://ftp.zammad.com/zammad-latest.tar.gz
+* wget https://ftp.zammad.com/zammad-latest.tar.gz
 * tar -xzf zammad-latest.tar.gz
 * exit
 
@@ -53,4 +53,3 @@
 ### Restart nginx as root
 * exit
 * systemctl restart nginx
-

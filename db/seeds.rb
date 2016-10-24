@@ -3029,9 +3029,9 @@ Ticket::Article.create(
 
 Thank you for choosing Zammad.
 
-You will find updates and patches at http://zammad.org/. Online
-documentation is available at http://zammad.org/documentation. Get
-involved (discussions, contributing, ...) at http://zammad.org/participate.
+You will find updates and patches at https://zammad.org/. Online
+documentation is available at https://zammad.org/documentation. Get
+involved (discussions, contributing, ...) at https://zammad.org/participate.
 
 Regards,
 
@@ -5193,7 +5193,7 @@ Trigger.create_or_update(
 <br/>
 <div>Your #{config.product_name} Team</div>
 <br/>
-<div><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></div>',
+<div><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></div>',
       'recipient' => 'ticket_customer',
       'subject' => 'Thanks for your inquiry (#{ticket.title})',
     },
@@ -5232,7 +5232,7 @@ Trigger.create_or_update(
 <br/>
 <div>Your #{config.product_name} Team</div>
 <br/>
-<div><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></div>',
+<div><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></div>',
       'recipient' => 'ticket_customer',
       'subject' => 'Thanks for your follow up (#{ticket.title})',
     },
@@ -5260,7 +5260,7 @@ Trigger.create_or_update(
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
 </p>
 <br/>
-<p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
+<p><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></p>',
       'recipient' => 'ticket_customer',
       'subject' => 'Owner has changed (#{ticket.title})',
     },
