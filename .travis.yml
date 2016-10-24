@@ -6,6 +6,8 @@ addons:
     - mysql-server-5.6
     - mysql-client-core-5.6
     - mysql-client-5.6
+services:
+  - mysql
 language: ruby
 rvm:
   - 2.3.1
