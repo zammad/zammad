@@ -18,3 +18,9 @@ before_install:
   - mysql -u root -e 'GRANT ALL PRIVILEGES ON zammad_prod.* TO some_user@localhost;'
   - export RAILS_ENV=production
   - cp config/database.yml.dist config/database.yml
+install:
+- bundle install --without test development postgres
+- rake db:create
+- rake db:migrate
+- rake db:seed
+- rake assets:precompile
