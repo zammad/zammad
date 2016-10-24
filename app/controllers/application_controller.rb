@@ -602,7 +602,7 @@ class ApplicationController < ActionController::Base
       per_page = 500
     end
 
-    generic_objects = if offset > 0
+    generic_objects = if offset.positive?
                         object.limit(params[:per_page]).order(id: 'ASC').offset(offset).limit(limit)
                       else
                         object.all.order(id: 'ASC').offset(offset).limit(limit)

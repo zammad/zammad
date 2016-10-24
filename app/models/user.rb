@@ -384,11 +384,11 @@ returns
       end
       list.each { |preferences|
         next if preferences[:selectable] == false
-        Cache.write(key, true, expires_in: 20.seconds)
+        Cache.write(key, true, expires_in: 10.seconds)
         return true
       }
     }
-    Cache.write(key, false, expires_in: 20.seconds)
+    Cache.write(key, false, expires_in: 10.seconds)
     false
   end
 

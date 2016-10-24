@@ -380,7 +380,7 @@ returns:
       object_lookup_id: object_id,
       o_id: o_id,
     ).count
-    return if count > 0
+    return if count.positive?
 
     Avatar.create(
       o_id: o_id,
