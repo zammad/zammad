@@ -11,7 +11,12 @@ targets:
       - postgresql
       - postgresql-server
       - postgresql-devel
-
+  ubuntu-16.04:
+    dependencies:
+      - httpd
+      - postgresql
+      - postgresql-server
+      - postgresql-devel
 before:
   - uname -a
   - ruby -v
