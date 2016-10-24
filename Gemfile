@@ -107,9 +107,8 @@ group :development, :test do
   gem 'coffeelint'
 end
 
-gem 'puma'
-
-gem 'unicorn', group: :production
+gem 'puma', group: :puma
+gem 'unicorn', group: :unicorn
 
 
 # load onw gem's
