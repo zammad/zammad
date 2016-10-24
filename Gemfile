@@ -108,7 +108,9 @@ group :development, :test do
 end
 
 gem 'puma'
-gem 'unicorn', :production
+
+gem 'unicorn', group: :production
+
 
 # load onw gem's
 local_gemfile = File.join(File.dirname(__FILE__), 'Gemfile.local')
