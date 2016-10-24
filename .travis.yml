@@ -1,9 +1,17 @@
+dist: trusty
+sudo: required
+addons:
+  apt:
+    packages:
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
 language: ruby
 rvm:
   - 2.3.1
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev mysql-server
-  - mysql --defautls-file=/etc/mysql/debian.cnf -e 'CREATE USER `some_user`@`localhost` IDENTIFIED BY `some_pass`; GRANT ALL PRIVILEGES ON zammad_prod.* TO `some_user`@`localhost`; FLUSH PRIVILEGES;'
+  - sudo apt-get install -y curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev
+  - mysql -uroot -e 'CREATE USER `some_user`@`localhost` IDENTIFIED BY `some_pass`; GRANT ALL PRIVILEGES ON zammad_prod.* TO `some_user`@`localhost`; FLUSH PRIVILEGES;'
   - export RAILS_ENV=production
   - cp config/database.yml.dist config/database.yml
