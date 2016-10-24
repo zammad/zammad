@@ -306,6 +306,34 @@ class UsersController < ApplicationController
     model_destory_render(User, params)
   end
 
+  # @path       [GET] /users/me
+  #
+  # @summary          Returns the User record of current user.
+  # @notes            The requestor need to have a valid authentication.
+  #
+  # @parameter        full         [Bool]    If set a Asset structure with all connected Assets gets returned.
+  #
+  # @response_message 200 [User] User record matching the requested identifier.
+  # @response_message 401        Invalid session.
+  def me
+
+    if params[:expand]
+      user = current_user.attributes_with_relation_names
+      render json: user, status: :ok
+      return
+    end
+
+    if params[:full]
+      full = User.full(current_user.id)
+      render json: full
+      return
+    end
+
+    user = current_user.attributes_with_associations
+    user.delete('password')
+    render json: user
+  end
+
   # @path       [GET] /users/search
   #
   # @tag Search

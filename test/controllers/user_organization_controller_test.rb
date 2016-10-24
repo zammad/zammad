@@ -147,10 +147,22 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('authentication failed', result['error'])
+
+    # me
+    get '/api/v1/users/me', {}, @headers
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('authentication failed', result['error'])
   end
 
   test 'auth tests - not existing user' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('not_existing@example.com', 'adminpw')
+
+    # me
+    get '/api/v1/users/me', {}, @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('authentication failed', result['error'])
 
     get '/api/v1/users', {}, @headers.merge('Authorization' => credentials)
     assert_response(401)
@@ -198,6 +210,13 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # email auth
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
+
+    # me
+    get '/api/v1/users/me', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert(result)
+    assert_equal(result['email'], 'rest-admin@example.com')
 
     # index
     get '/api/v1/users', {}, @headers.merge('Authorization' => credentials)
@@ -307,6 +326,13 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-agent@example.com', 'agentpw')
 
+    # me
+    get '/api/v1/users/me', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert(result)
+    assert_equal(result['email'], 'rest-agent@example.com')
+
     # index
     get '/api/v1/users', {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
@@ -407,6 +433,13 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-customer1@example.com', 'customer1pw')
 
+    # me
+    get '/api/v1/users/me', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert(result)
+    assert_equal(result['email'], 'rest-customer1@example.com')
+
     # index
     get '/api/v1/users', {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
@@ -448,6 +481,13 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
   test 'user index with customer2' do
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-customer2@example.com', 'customer2pw')
+
+    # me
+    get '/api/v1/users/me', {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert(result)
+    assert_equal(result['email'], 'rest-customer2@example.com')
 
     # index
     get '/api/v1/users', {}, @headers.merge('Authorization' => credentials)

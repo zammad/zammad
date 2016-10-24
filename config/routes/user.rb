@@ -15,6 +15,8 @@ Zammad::Application.routes.draw do
   match api_path + '/users/avatar',                to: 'users#avatar_destroy',        via: :delete
   match api_path + '/users/avatar/set',            to: 'users#avatar_set_default',    via: :post
 
+  match api_path + '/users/me',                    to: 'users#me',                    via: :get
+
   match api_path + '/users',                       to: 'users#index',                 via: :get
   match api_path + '/users/:id',                   to: 'users#show',                  via: :get
   match api_path + '/users/history/:id',           to: 'users#history',               via: :get
