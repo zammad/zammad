@@ -14,7 +14,6 @@ if ActiveRecord::Base.connection_config[:adapter] == 'mysql2'
   (major, minor) = server_version.split('.')
   if server_vendor == 'MySQL'
     if major.to_i < 5 || (major.to_i == 5 && minor.to_i < 6)
-
       # rubocop:disable Rails/Output
       # rubocop:disable Rails/Exit
       p '+++++++++++++++++++++++++++++++++++++++++++++++++++++'
@@ -24,16 +23,16 @@ if ActiveRecord::Base.connection_config[:adapter] == 'mysql2'
       # rubocop:enable Rails/Exit
       # rubocop:enable Rails/Output
     end
-  elsif major.to_i < 10
-
-    # rubocop:disable Rails/Output
-    # rubocop:disable Rails/Exit
-    p '+++++++++++++++++++++++++++++++++++++++++++++++++++++'
-    p '+ I\'m sorry, MariaDB 10.0+ is required              +'
-    p '+++++++++++++++++++++++++++++++++++++++++++++++++++++'
-    exit 1
-    # rubocop:enable Rails/Exit
-    # rubocop:enable Rails/Output
-
   end
-end
+  elsif server_vendor == 'MariaDB'
+    if major.to_i < 10
+     # rubocop:disable Rails/Output
+     # rubocop:disable Rails/Exit
+     p '+++++++++++++++++++++++++++++++++++++++++++++++++++++'
+     p '+ I\'m sorry, MariaDB 10.0+ is required              +'
+     p '+++++++++++++++++++++++++++++++++++++++++++++++++++++'
+     exit 1
+     # rubocop:enable Rails/Exit
+     # rubocop:enable Rails/Output
+    end
+  end
