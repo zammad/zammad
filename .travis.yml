@@ -26,5 +26,5 @@ script:
 - rake db:seed
 - rake test:units
 - rake test:controllers
-- rake db:drop
 - rake assets:precompile
+- rake db:drop
