@@ -400,7 +400,7 @@ P.S.: You receive this e-mail because you are listed in our database as person w
     html   = "<div><br>Dave and leaned her
 days adam.</div><span style=\"color:#F7F3FF; font-size:8px\">Maybe we
 want any help me that.<br>Next morning charlie saw at their
-father.<br>Well as though adam took out here. Melvin will be more money.
+father.<br>Well as though adam took out here. Melvin will be more money. 
 Called him into this one last thing.<br>Men-----------------------
 <br />"
     result = 'Dave and leaned her days adam.
