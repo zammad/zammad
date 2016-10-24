@@ -1,5 +1,7 @@
 dist: trusty
 sudo: required
+notifications:
+  email: false
 addons:
   apt:
     packages:
