@@ -1,3 +1,5 @@
+notifications: false
+
 targets:
   centos-6:
     dependencies:
@@ -19,12 +21,6 @@ targets:
     dependencies:
       - nginx
       - postgresql
-    after_install:
-      - zammad scale web=1 websocket=1 worker=1
-      - systemctl restart zammad
-      - /opt/zammad/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
-      - ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
-      - sytemctl restart nginx
 before:
   - uname -a
   - ruby -v
@@ -42,4 +38,5 @@ env:
 services:
   - postgres
 
-notifications: false
+after_install:
+  - zammad scale web=1 websocket=1 worker=1
