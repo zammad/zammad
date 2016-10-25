@@ -55,7 +55,7 @@ if [ -d /etc/nginx/sites-enabled ]; then
     # copy nginx config 
     cp ${ZAMMAD_DIR}/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
     # creating symlink
-    ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
+    test -h /etc/nginx/sites-available/zammad.conf || ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
     # restart nginx
     systemctl restart nginx
 fi
