@@ -9,8 +9,11 @@ ZAMMAD_DIR="/opt/zammad"
 DB="zammad_production"
 DB_USER="zammad"
 
-# get existing db pass
-DB_PASS="$(grep "password:" < ${ZAMMAD_DIR}/config/database.yml | sed 's/.*password://')"
+# check if database.yml exists
+if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
+    # get existing db pass
+    DB_PASS="$(grep "password:" < ${ZAMMAD_DIR}/config/database.yml | sed 's/.*password://')"
+fi
 
 # check if db pass exists
 if [ -z "${DB_PASS}" ]; then
@@ -55,7 +58,7 @@ if [ -d /etc/nginx/sites-enabled ]; then
     # copy nginx config 
     test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
     # creating symlink
-    test -h /etc/nginx/sites-available/zammad.conf || ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
+    test -f /etc/nginx/sites-available/zammad.conf || ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
     # restart nginx
     systemctl restart nginx
 fi
