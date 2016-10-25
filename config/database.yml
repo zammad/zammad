@@ -5,7 +5,7 @@ production:
   timeout: 5000
   encoding: utf8
   username: <% ENV['DB_USER'] %>
-  password: <% ENV['DB_PW']
+  password: <% ENV['DB_PW'] %>
   host: 127.0.0.1
 
 development:
@@ -15,7 +15,7 @@ development:
   timeout: 5000
   encoding: utf8
   username: <% ENV['DB_USER'] %>
-  password: <% ENV['DB_PW']
+  password: <% ENV['DB_PW'] %>
   host: 127.0.0.1
 
 # Warning: The database defined as "test" will be erased and
