@@ -1,5 +1,4 @@
 notifications: false
-
 targets:
   centos-6:
     dependencies:
@@ -21,7 +20,6 @@ targets:
     dependencies:
       - nginx
       - postgresql
-
 before:
   - uname -a
   - ruby -v
@@ -30,15 +28,11 @@ before:
   - echo "gem 'mysql2'" >> Gemfile.local
   - "cat Gemfile.lock"
   - contrib/cleanup.sh
-
 env:
   - RAILS_ENV=production
   - PORT=3000
   - RAILS_SERVE_STATIC_FILES=true
-
 services:
   - postgres
-
 after_install:
   - "/usr/bin/zammad scale web=1 websocket=1 worker=1"
-
