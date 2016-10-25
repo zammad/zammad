@@ -5,11 +5,12 @@
 
 PATH=/opt/zammad/bin:/opt/zammad/vendor/bundle/bin:/sbin:/bin:/usr/sbin:/usr/bin:
 
+ZAMMAD_DIR="/opt/zammad"
 DB="zammad_production"
 DB_USER="zammad"
 
 # get existing db pass
-DB_PASS="$(grep "password:" < /opt/zammad/config/database.yml | sed 's/.*password://')"
+DB_PASS="$(grep "password:" < ${ZAMMAD_DIR}/config/database.yml | sed 's/.*password://')"
 
 # check if db pass exists
 if [ -z "${DB_PASS}" ]; then
@@ -27,7 +28,7 @@ if [ -z "${DB_PASS}" ]; then
     echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
 
     # update configfile
-    sed -e "s/  password:/  password: ${DB_PASS}/" < /opt/zammad/config/database.yml.pkgr > /opt/zammad/config/database.yml
+    sed -e "s/  password:/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
 
     # zammad config set
     zammad config:set DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@127.0.0.1/${DB}
@@ -48,3 +49,13 @@ zammad run rake db:migrate
 
 # start zammad
 systemctl start zammad
+
+# nginx config
+if [ -d /etc/nginx/sites-enabled ]; then
+    # copy nginx config 
+    cp ${ZAMMAD_DIR}/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
+    # creating symlink
+    ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
+    # restart nginx
+    systemctl restart nginx
+fi
