@@ -53,7 +53,7 @@ systemctl start zammad
 # nginx config
 if [ -d /etc/nginx/sites-enabled ]; then
     # copy nginx config 
-    cp ${ZAMMAD_DIR}/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
+    test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
     # creating symlink
     test -h /etc/nginx/sites-available/zammad.conf || ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
     # restart nginx
