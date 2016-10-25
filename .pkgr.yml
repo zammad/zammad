@@ -36,4 +36,7 @@ env:
 services:
   - postgres
 
+after_install:
+  - zammad scale web=1 websocket=1 worker=1
+
 notifications: false
