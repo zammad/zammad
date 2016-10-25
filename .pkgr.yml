@@ -11,9 +11,13 @@ targets:
       - postgresql
       - postgresql-server
       - postgresql-devel
+  debian-7:
+    dependencies:
+      - nginx
+      - postgresql
   ubuntu-16.04:
     dependencies:
-      - httpd
+      - nginx
       - postgresql
 before:
   - uname -a
