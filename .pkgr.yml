@@ -34,5 +34,3 @@ env:
   - RAILS_SERVE_STATIC_FILES=true
 services:
   - postgres
-after_install:
-  - "/usr/bin/zammad scale web=1 websocket=1 worker=1"
