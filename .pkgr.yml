@@ -14,11 +14,9 @@ targets:
       - postgresql-devel
   debian-8:
     dependencies:
-      - nginx
       - postgresql
   ubuntu-16.04:
     dependencies:
-      - nginx
       - postgresql
 before:
   - uname -a
