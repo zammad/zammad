@@ -13,7 +13,7 @@ targets:
       - postgresql
       - postgresql-server
       - postgresql-devel
-  debian-7:
+  debian-8:
     dependencies:
       - nginx
       - postgresql
@@ -21,6 +21,7 @@ targets:
     dependencies:
       - nginx
       - postgresql
+
 before:
   - uname -a
   - ruby -v
@@ -37,3 +38,7 @@ env:
 
 services:
   - postgres
+
+after:
+  - zammad scale web=1 websocket=1 worker=1
+
