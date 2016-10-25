@@ -4,7 +4,14 @@ require 'facebook'
 
 class Channel::Driver::Facebook
 
-  def fetch (options, channel)
+=begin
+
+  instance = Channel::Driver::Facebook.new
+  instance.fetch(channel.options, channel)
+
+=end
+
+  def fetch(options, channel)
     @channel  = channel
     @sync     = options['sync']
     @pages    = options['pages']
