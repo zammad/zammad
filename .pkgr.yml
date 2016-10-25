@@ -19,6 +19,11 @@ targets:
     dependencies:
       - nginx
       - postgresql
+    after_install:
+      - zammad scale web=1 websocket=1 worker=1
+      - /opt/zammad/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
+      - ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
+      - sytemctl nginx restart
 before:
   - uname -a
   - ruby -v
@@ -35,8 +40,5 @@ env:
 
 services:
   - postgres
-
-after_install:
-  - zammad scale web=1 websocket=1 worker=1
 
 notifications: false
