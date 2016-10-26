@@ -43,7 +43,7 @@ else
     # update configfile
     sed -e "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
 
-    install -m 600 ${ZAMMAD_DIR}/config/database.yml ${ZAMMAD_DIR}/config/database.yml.bak
+    cp ${ZAMMAD_DIR}/config/database.yml ${ZAMMAD_DIR}/config/database.yml.bak
 
     # zammad config set
     zammad config:set DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@127.0.0.1/${DB}
