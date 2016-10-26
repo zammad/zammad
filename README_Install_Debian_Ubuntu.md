@@ -1,4 +1,4 @@
-# Installation on Ubuntu 16.04 Server / Debian 7, 8
+# Installation on Debian 7, 8 / Ubuntu 16.04 Server
 ## With Nginx & MySQL
 
 ### Prerequisites
