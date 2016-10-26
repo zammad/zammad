@@ -9,10 +9,10 @@ ZAMMAD_DIR="/opt/zammad"
 DB="zammad_production"
 DB_USER="zammad"
 
-echo -e "# (Re)Create init scripts"
+echo "# (Re)Create init scripts"
 zammad scale web=1 websocket=1 worker=1
 
-echo -e "# Stopping Zammad"
+echo "# Stopping Zammad"
 systemctl stop zammad
 
 # check if database.yml exists
@@ -53,7 +53,7 @@ else
     zammad run rake db:seed
 fi
 
-echo -e "# Starting Zammad"
+echo "# Starting Zammad"
 systemctl start zammad
 
 # nginx config
@@ -68,10 +68,10 @@ if [ -d /etc/nginx/sites-enabled ]; then
 	echo -e "\nAdd your FQDN to servername directive in /etc/nginx/sites/enabled/zammad.conf anmd restart nginx if you're not testing localy!\n"
     fi
 
-    echo -e "\nOpen http://localhost in your browser to start using Zammad!\n"
-
-    # restart nginx
+    echo "# Restarting Nginx"
     systemctl restart nginx
+
+    echo -e "\nOpen http://localhost in your browser to start using Zammad!\n"
 else
     echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad!\n"
 fi
