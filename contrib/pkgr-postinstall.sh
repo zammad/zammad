@@ -9,28 +9,26 @@ ZAMMAD_DIR="/opt/zammad"
 DB="zammad_production"
 DB_USER="zammad"
 
-echo -e "# (Re)Create init scripts"
+echo "# (Re)creating init scripts"
 zammad scale web=1 websocket=1 worker=1
 
-echo -e "# Stopping Zammad"
+echo "# Stopping Zammad"
 systemctl stop zammad
 
-# check if database.yml exists
-if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
-    # get existing password
-    DB_PASS="$(grep "password:" < ${ZAMMAD_DIR}/config/database.yml | sed 's/.*password: //')"
-
-    #zammad config set
-    zammad config:set DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@127.0.0.1/${DB}
+# check if database.yml.bak exists
+if [ -f ${ZAMMAD_DIR}/config/database.yml.bak ]; then
+    # copy database.yml.bak to database.yml
+    cp ${ZAMMAD_DIR}/config/database.yml.bak ${ZAMMAD_DIR}/config/database.yml
 
     # db migration
-    echo -e "# database.yml exists. Updating db..."
+    echo "# database.yml.bak exists. Updating db..."
     zammad run rake db:migrate
 else
+    # create new password
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
     # create database
-    echo -e "database.yml not found. Creating new db..."
+    echo "# database.yml not found. Creating new db..."
     su - postgres -c "createdb -E UTF8 ${DB}"
 
     # create postgres user
@@ -40,7 +38,10 @@ else
     echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
 
     # update configfile
-    sed -e "s/  password:/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+    sed "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+
+    # save database config for updates
+    cp ${ZAMMAD_DIR}/config/database.yml ${ZAMMAD_DIR}/config/database.yml.bak
 
     # zammad config set
     zammad config:set DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@127.0.0.1/${DB}
@@ -50,7 +51,7 @@ else
     zammad run rake db:seed
 fi
 
-echo -e "# Starting Zammad"
+echo "# Starting Zammad"
 systemctl start zammad
 
 # nginx config
@@ -65,10 +66,10 @@ if [ -d /etc/nginx/sites-enabled ]; then
 	echo -e "\nAdd your FQDN to servername directive in /etc/nginx/sites/enabled/zammad.conf anmd restart nginx if you're not testing localy!\n"
     fi
 
-    echo -e "\nOpen http://localhost in your browser to start using Zammad!\n"
-
-    # restart nginx
+    echo "# Restarting Nginx"
     systemctl restart nginx
+
+    echo -e "\nOpen http://localhost in your browser to start using Zammad!\n"
 else
     echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad!\n"
 fi
