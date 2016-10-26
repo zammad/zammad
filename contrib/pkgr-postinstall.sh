@@ -30,7 +30,11 @@ if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     echo -e "# database.yml exists. Updating db..."
     zammad run rake db:migrate
 else
+    # create new password
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
+
+    # save password for updates
+    echo "${DB_PASS}" > ${ZAMMAD_DIR}/config/db.pass
 
     # create database
     echo -e "# database.yml not found. Creating new db..."
