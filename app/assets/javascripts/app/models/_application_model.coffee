@@ -544,6 +544,10 @@ class App.Model extends Spine.Model
         if data.assets
           App.Collection.loadAssets(data.assets)
 
+          # in case of no record_ids are there, no inital render is fired
+          if _.isEmpty(data.record_ids)
+            App[@className].trigger('refresh')
+
         # find / load object
         else
           App[@className].refresh(data)
