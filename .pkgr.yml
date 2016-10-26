@@ -25,7 +25,7 @@ before:
   - cp config/database.yml.pkgr config/database.yml
   - echo "gem 'mysql2'" >> Gemfile.local
   - "cat Gemfile.lock"
-  - contribcleanup.sh
+  - contrib/cleanup.sh
 env:
   - RAILS_ENV=production
   - PORT=3000
