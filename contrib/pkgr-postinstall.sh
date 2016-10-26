@@ -15,13 +15,10 @@ zammad scale web=1 websocket=1 worker=1
 echo "# Stopping Zammad"
 systemctl stop zammad
 
-# check if database.yml exists
-if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
-    # get existing password
-    DB_PASS="$(cat ${ZAMMAD_DIR}/config/db.pass)"
-
-    # update configfile
-    sed -e "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+# check if database.yml.bak exists
+if [ -f ${ZAMMAD_DIR}/config/database.yml.bak ]; then
+    # copy database.yml.bak to database.yml
+    cp ${ZAMMAD_DIR}/config/database.yml.bak ${ZAMMAD_DIR}/config/database.yml
 
     #zammad config set
     zammad config:set DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@127.0.0.1/${DB}
@@ -32,9 +29,6 @@ if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
 else
     # create new password
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
-
-    # save password for updates
-    echo "${DB_PASS}" > ${ZAMMAD_DIR}/config/db.pass
 
     # create database
     echo -e "# database.yml not found. Creating new db..."
@@ -48,6 +42,8 @@ else
 
     # update configfile
     sed -e "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+
+    install -m 600 ${ZAMMAD_DIR}/config/database.yml ${ZAMMAD_DIR}/config/database.yml.bak
 
     # zammad config set
     zammad config:set DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@127.0.0.1/${DB}
