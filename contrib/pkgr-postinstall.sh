@@ -20,18 +20,15 @@ if [ -f ${ZAMMAD_DIR}/config/database.yml.bak ]; then
     # copy database.yml.bak to database.yml
     cp ${ZAMMAD_DIR}/config/database.yml.bak ${ZAMMAD_DIR}/config/database.yml
 
-    #zammad config set
-    zammad config:set DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@127.0.0.1/${DB}
-
     # db migration
-    echo -e "# database.yml exists. Updating db..."
+    echo "# database.yml.bak exists. Updating db..."
     zammad run rake db:migrate
 else
     # create new password
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
     # create database
-    echo -e "# database.yml not found. Creating new db..."
+    echo "# database.yml not found. Creating new db..."
     su - postgres -c "createdb -E UTF8 ${DB}"
 
     # create postgres user
@@ -41,8 +38,9 @@ else
     echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
 
     # update configfile
-    sed -e "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+    sed "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
 
+    # save database config for updates
     cp ${ZAMMAD_DIR}/config/database.yml ${ZAMMAD_DIR}/config/database.yml.bak
 
     # zammad config set
