@@ -9,19 +9,28 @@ ZAMMAD_DIR="/opt/zammad"
 DB="zammad_production"
 DB_USER="zammad"
 
+echo -e "# (Re)Create init scripts"
+zammad scale web=1 websocket=1 worker=1
+
+echo -e "# Stopping Zammad"
+systemctl stop zammad
+
 # check if database.yml exists
 if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
-    # get existing db pass
-    DB_PASS="$(grep "password:" < ${ZAMMAD_DIR}/config/database.yml | sed 's/.*password://')"
-fi
+    # get existing password
+    DB_PASS="$(grep "password:" < ${ZAMMAD_DIR}/config/database.yml | sed 's/.*password: //')"
 
-# check if db pass exists
-if [ -z "${DB_PASS}" ]; then
-    # create new db pass
+    #zammad config set
+    zammad config:set DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@127.0.0.1/${DB}
+
+    # db migration
+    echo -e "# database.yml exists. Updating db..."
+    zammad run rake db:migrate
+else
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
     # create database
-    cd /tmp
+    echo -e "database.yml not found. Creating new db..."
     su - postgres -c "createdb -E UTF8 ${DB}"
 
     # create postgres user
@@ -41,16 +50,7 @@ if [ -z "${DB_PASS}" ]; then
     zammad run rake db:seed
 fi
 
-# create init scripts
-zammad scale web=1 websocket=1 worker=1
-
-# stop zammad
-systemctl stop zammad
-
-# db migration
-zammad run rake db:migrate
-
-# start zammad
+echo -e "# Starting Zammad"
 systemctl start zammad
 
 # nginx config
@@ -65,10 +65,10 @@ if [ -d /etc/nginx/sites-enabled ]; then
 	echo -e "\nAdd your FQDN to servername directive in /etc/nginx/sites/enabled/zammad.conf anmd restart nginx if you're not testing localy!\n"
     fi
 
-    echo -e "\nOpen http://localhost in your browser to start!\n"
+    echo -e "\nOpen http://localhost in your browser to start using Zammad!\n"
 
     # restart nginx
     systemctl restart nginx
 else
-    echo -e "\nOpen http://localhost:3000 in your browser to start!\n"
+    echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad!\n"
 fi
