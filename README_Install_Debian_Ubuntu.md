@@ -8,9 +8,8 @@
 * useradd zammad -m -d /opt/zammad -s /bin/bash
 * echo "export RAILS_ENV=production" >> /opt/zammad/.bashrc
 
-### Create MySQL User zammad
+### Create MySQL User zammad (for Debian: upgrade MySQL to v5.6+ before, see: http://dev.mysql.com/downloads/repo/apt/)
 * mysql --defaults-extra-file=/etc/mysql/debian.cnf -e "CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'Your_Pass_Word!'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
-* for Debian: need upgrade MySQL to v5.6+, see: http://dev.mysql.com/downloads/repo/apt/
 
 ### Get Zammad
 * su zammad
@@ -22,7 +21,7 @@
 ### Create Nginx Config
 * cp /opt/zammad/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
 * vi /etc/nginx/sites-available/zammad.conf
-  * change "zammad.example.com" to your domain
+  * change servername "localhost" to your domain if your're not testing localy
 * ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
 
 ### Install Environnment
