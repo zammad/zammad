@@ -1,4 +1,4 @@
-# Installation on Ubuntu 16.04 Server
+# Installation on Ubuntu 16.04 Server / Debian 7, 8
 ## With Nginx & MySQL
 
 ### Prerequisites
@@ -10,6 +10,7 @@
 
 ### Create MySQL User zammad
 * mysql --defaults-extra-file=/etc/mysql/debian.cnf -e "CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'Your_Pass_Word!'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
+* for Debian: need upgrade MySQL to v5.6+, see: http://dev.mysql.com/downloads/repo/apt/
 
 ### Get Zammad
 * su zammad
