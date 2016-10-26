@@ -9,7 +9,7 @@ ZAMMAD_DIR="/opt/zammad"
 DB="zammad_production"
 DB_USER="zammad"
 
-echo "# (Re)Create init scripts"
+echo "# (Re)creating init scripts"
 zammad scale web=1 websocket=1 worker=1
 
 echo "# Stopping Zammad"
