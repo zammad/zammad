@@ -25,11 +25,11 @@ before:
   - cp config/database.yml.pkgr config/database.yml
   - echo "gem 'mysql2'" >> Gemfile.local
   - "cat Gemfile.lock"
-  - contrib/packager.io/cleanup.sh
+  - contribcleanup.sh
 env:
   - RAILS_ENV=production
   - PORT=3000
   - RAILS_SERVE_STATIC_FILES=true
 services:
   - postgres
-after_install: contrib/packager.io/postinstall.sh
+after_install: contrib/pkgr-postinstall.sh
