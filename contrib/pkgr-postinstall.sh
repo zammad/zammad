@@ -33,7 +33,7 @@ else
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
     # create database
-    echo -e "database.yml not found. Creating new db..."
+    echo -e "# database.yml not found. Creating new db..."
     su - postgres -c "createdb -E UTF8 ${DB}"
 
     # create postgres user
