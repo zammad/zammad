@@ -57,8 +57,18 @@ systemctl start zammad
 if [ -d /etc/nginx/sites-enabled ]; then
     # copy nginx config 
     test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
-    # creating symlink
-    test -f /etc/nginx/sites-available/zammad.conf || ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
+
+    if [ ! -f /etc/nginx/sites-available/zammad.conf ]
+	# creating symlink
+	ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
+	
+	# show message
+	echo -e "\nOpen http://localhost in your browser to start or add your FQDN to servername directive in /etc/nginx/sites/enabled/zammad.conf if you're not testing localy!\n"
+    fi
+
     # restart nginx
     systemctl restart nginx
+else
+    # show message
+    echo -e "\nOpen http://localhost:3000 in your browser to start!\n"
 fi
