@@ -1,8 +1,8 @@
-# Installation on Ubuntu 16.04 Server
+# Installation on Debian 7, 8 / Ubuntu 16.04 Server
 ## With Nginx & MySQL
 
 ### Prerequisites
-* apt-get install curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev mysql-server nginx
+* apt-get install curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev mysql-server nginx gawk
 
 ### Add User
 * useradd zammad -m -d /opt/zammad -s /bin/bash
@@ -10,6 +10,7 @@
 
 ### Create MySQL User zammad
 * mysql --defaults-extra-file=/etc/mysql/debian.cnf -e "CREATE USER 'zammad'@'localhost' IDENTIFIED BY 'Your_Pass_Word!'; GRANT ALL PRIVILEGES ON zammad_prod.* TO 'zammad'@'localhost'; FLUSH PRIVILEGES;"
+* for Debian: need upgrade MySQL to v5.6+, see: http://dev.mysql.com/downloads/repo/apt/
 
 ### Get Zammad
 * su zammad
