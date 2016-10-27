@@ -18,7 +18,7 @@ targets:
   ubuntu-16.04:
     dependencies:
       - postgresql
-  sles-12
+  sles-12:
     dependencies:
       - postgresql
 before:

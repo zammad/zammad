@@ -10,13 +10,10 @@ DB="zammad_production"
 DB_USER="zammad"
 
 # check which init system is used
-SYSTEMD="$(which systemd)"
-UPSTART="$(which initctl)"
-
-if [ -n ${UPSTART} ]; then
-    INIT_COMMAND="initctl"
-elif [ -n ${SYSTEMD} ]; then
-    INIT_CMD="systemd"
+if [ -n "$(which initctl)" ]; then
+    INIT_CMD="initctl"
+elif [ -n "$(which systemctl)" ]; then
+    INIT_CMD="systemctl"
 else
     function sysvinit () {
 	service $2 $1
