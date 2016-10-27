@@ -9,19 +9,32 @@ ZAMMAD_DIR="/opt/zammad"
 DB="zammad_production"
 DB_USER="zammad"
 
+# check which init system is used
+SYSTEMD="$(which systemd)"
+UPSTART="$(which initctl)"
+
+if [ -n ${UPSTART} ]; then
+    INIT_COMMAND="initctl"
+elif [ -n ${SYSTEMD} ]; then
+    INIT_CMD="systemd"
+else
+    function sysvinit () {
+	service $2 $1
+    }
+
+    INIT_CMD="sysvinit"
+fi
+
 echo "# (Re)creating init scripts"
 zammad scale web=1 websocket=1 worker=1
 
 echo "# Stopping Zammad"
-systemctl stop zammad
+${INIT_CMD} stop zammad
 
-# check if database.yml.bak exists
-if [ -f ${ZAMMAD_DIR}/config/database.yml.bak ]; then
-    # copy database.yml.bak to database.yml
-    cp ${ZAMMAD_DIR}/config/database.yml.bak ${ZAMMAD_DIR}/config/database.yml
-
+# check if database.yml exists
+if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     # db migration
-    echo "# database.yml.bak exists. Updating db..."
+    echo "# database.yml exists. Updating db..."
     zammad run rake db:migrate
 else
     # create new password
@@ -40,19 +53,13 @@ else
     # update configfile
     sed "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
 
-    # save database config for updates
-    cp ${ZAMMAD_DIR}/config/database.yml ${ZAMMAD_DIR}/config/database.yml.bak
-
-    # zammad config set
-    zammad config:set DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@127.0.0.1/${DB}
-
     # fill database
     zammad run rake db:migrate 
     zammad run rake db:seed
 fi
 
 echo "# Starting Zammad"
-systemctl start zammad
+${INIT_CMD} start zammad
 
 # nginx config
 if [ -d /etc/nginx/sites-enabled ]; then
@@ -67,7 +74,7 @@ if [ -d /etc/nginx/sites-enabled ]; then
     fi
 
     echo "# Restarting Nginx"
-    systemctl restart nginx
+    ${INIT_CMD} restart nginx
 
     echo -e "\nOpen http://localhost in your browser to start using Zammad!\n"
 else
