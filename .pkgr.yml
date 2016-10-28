@@ -18,11 +18,13 @@ targets:
   ubuntu-16.04:
     dependencies:
       - postgresql
+  sles-12:
+    dependencies:
+      - postgresql
 before:
   - uname -a
   - ruby -v
   - env
-  - cp config/database.yml.pkgr config/database.yml
   - echo "gem 'mysql2'" >> Gemfile.local
   - "cat Gemfile.lock"
   - contrib/cleanup.sh

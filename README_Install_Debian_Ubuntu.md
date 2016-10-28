@@ -19,7 +19,7 @@
 * exit
 
 ### Create Nginx Config
-* cp /opt/zammad/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
+* cp /opt/zammad/contrib/nginx/zammad.conf /etc/nginx/sites-available/zammad.conf
 * vi /etc/nginx/sites-available/zammad.conf
   * change servername "localhost" to your domain if your're not testing localy
 * ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf

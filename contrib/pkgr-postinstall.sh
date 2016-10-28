@@ -9,19 +9,28 @@ ZAMMAD_DIR="/opt/zammad"
 DB="zammad_production"
 DB_USER="zammad"
 
+# check which init system is used
+if [ -n $(which initctl) ]; then
+    INIT_CMD="initctl"
+elif [ -n $(which systemctl) ]; then
+    INIT_CMD="systemctl"
+else
+    function sysvinit () {
+	service $2 $1
+    }
+    INIT_CMD="sysvinit"
+fi
+
 echo "# (Re)creating init scripts"
 zammad scale web=1 websocket=1 worker=1
 
 echo "# Stopping Zammad"
-systemctl stop zammad
+${INIT_CMD} stop zammad
 
-# check if database.yml.bak exists
-if [ -f ${ZAMMAD_DIR}/config/database.yml.bak ]; then
-    # copy database.yml.bak to database.yml
-    cp ${ZAMMAD_DIR}/config/database.yml.bak ${ZAMMAD_DIR}/config/database.yml
-
+# check if database.yml exists
+if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     # db migration
-    echo "# database.yml.bak exists. Updating db..."
+    echo "# database.yml exists. Updating db..."
     zammad run rake db:migrate
 else
     # create new password
@@ -40,36 +49,33 @@ else
     # update configfile
     sed "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
 
-    # save database config for updates
-    cp ${ZAMMAD_DIR}/config/database.yml ${ZAMMAD_DIR}/config/database.yml.bak
-
-    # zammad config set
-    zammad config:set DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@127.0.0.1/${DB}
-
     # fill database
     zammad run rake db:migrate 
     zammad run rake db:seed
 fi
 
 echo "# Starting Zammad"
-systemctl start zammad
+${INIT_CMD} start zammad
 
 # nginx config
-if [ -d /etc/nginx/sites-enabled ]; then
-    # copy nginx config 
-    test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
-
-    if [ ! -f /etc/nginx/sites-available/zammad.conf ]; then
-	# creating symlink
-	ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
-	
-	echo -e "\nAdd your FQDN to servername directive in /etc/nginx/sites/enabled/zammad.conf anmd restart nginx if you're not testing localy!\n"
+if [ -n $(which nginx) ]; then
+    # copy nginx config
+    # debian / ubuntu
+    if [ -d /etc/nginx/sites-enabled ]; then
+	NGINX_CONF="/etc/nginx/sites-enabled/zammad.conf"
+	test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/sites-available/zammad.conf
+	test -h ${NGINX_CONF} || ln -s /etc/nginx/sites-available/zammad.conf ${NGINX_CONF}
+    # centos / sles
+    elif [ -d /etc/nginx/conf.d ]; then
+	NGINX_CONF="/etc/nginx/conf.d/zammad.conf"
+	test -f ${NGINX_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${NGINX_CONF}
     fi
 
     echo "# Restarting Nginx"
-    systemctl restart nginx
+    ${INIT_CMD} restart nginx
 
-    echo -e "\nOpen http://localhost in your browser to start using Zammad!\n"
+    echo -e "\nAdd your FQDN to servername directive in ${NGINX_CONF} and restart nginx if you're not testing localy"
+    echo -e "or open http://localhost in your browser to start using Zammad.\n"
 else
-    echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad!\n"
+    echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad.\n"
 fi
