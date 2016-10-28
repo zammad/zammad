@@ -62,10 +62,10 @@ class App.TicketZoom extends App.Controller
   fetchMayBe: (data) =>
     if @ticketUpdatedAtLastCall
       if new Date(data.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
-        console.log('debug no fetch, current ticket already there or requested')
+        #console.log('debug no fetch, current ticket already there or requested')
         return
       if new Date(data.updated_at).getTime() < new Date(@ticketUpdatedAtLastCall).getTime()
-        console.log('debug no fetch, current ticket already newser or requested')
+        #console.log('debug no fetch, current ticket already newser or requested')
         return
     @ticketUpdatedAtLastCall = data.updated_at
 
@@ -131,19 +131,19 @@ class App.TicketZoom extends App.Controller
 
     # check if ticket has changed
     newTicketRaw = data.assets.Ticket[@ticket_id]
-    console.log(newTicketRaw.updated_at)
-    console.log(@ticketUpdatedAtLastCall)
+    #console.log(newTicketRaw.updated_at)
+    #console.log(@ticketUpdatedAtLastCall)
 
     if @ticketUpdatedAtLastCall
 
       # ignore if record is already shown
       if ignoreSame && new Date(newTicketRaw.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
-        console.log('debug no fetched, current ticket already there or requested')
+        #console.log('debug no fetched, current ticket already there or requested')
         return
 
       # do not render if newer ticket is already requested
       if new Date(newTicketRaw.updated_at).getTime() < new Date(@ticketUpdatedAtLastCall).getTime()
-        console.log('fetched no fetch, current ticket already newer')
+        #console.log('fetched no fetch, current ticket already newer')
         return
 
       # remember current record if newer as requested record
