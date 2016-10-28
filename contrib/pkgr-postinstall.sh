@@ -59,21 +59,24 @@ echo "# Starting Zammad"
 ${INIT_CMD} start zammad
 
 # nginx config
-if [ -d /etc/nginx/sites-enabled ]; then
+if [ -n "$(which nginx)" ];then
     # copy nginx config 
-    test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/sites-available/zammad.conf /etc/nginx/sites-available/zammad.conf
-
-    if [ ! -f /etc/nginx/sites-available/zammad.conf ]; then
-	# creating symlink
-	ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
-	
-	echo -e "\nAdd your FQDN to servername directive in /etc/nginx/sites/enabled/zammad.conf anmd restart nginx if you're not testing localy!\n"
+    # debian / ubuntu
+    if [ -d /etc/nginx/sites-enabled ]; then
+	NGINX_CONF="/etc/nginx/sites-enabled/zammad.conf"
+	test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/sites-available/zammad.conf
+	test -f /etc/nginx/sites-available/zammad.conf || ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
+    # centos / sles
+    elif [ -d /etc/nginx/conf.d ]; then
+	NGINX_CONF="/etc/nginx/conf.d/zammad.conf"
+	test -f /etc/nginx/conf.d/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/conf.d/zammad.conf
     fi
 
     echo "# Restarting Nginx"
     ${INIT_CMD} restart nginx
 
-    echo -e "\nOpen http://localhost in your browser to start using Zammad!\n"
+    echo -e "\nAdd your FQDN to servername directive in ${NGINX_CONF} and restart nginx if you're not testing localy"
+    echo -e "or open http://localhost in your browser to start using Zammad.\n"
 else
-    echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad!\n"
+    echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad.\n"
 fi
