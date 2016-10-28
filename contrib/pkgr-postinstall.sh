@@ -65,11 +65,11 @@ if [ -n "$(which nginx)" ];then
     if [ -d /etc/nginx/sites-enabled ]; then
 	NGINX_CONF="/etc/nginx/sites-enabled/zammad.conf"
 	test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/sites-available/zammad.conf
-	test -f /etc/nginx/sites-available/zammad.conf || ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
+	test -h ${NGINX_CONF} || ln -s /etc/nginx/sites-available/zammad.conf ${NGINX_CONF}
     # centos / sles
     elif [ -d /etc/nginx/conf.d ]; then
 	NGINX_CONF="/etc/nginx/conf.d/zammad.conf"
-	test -f /etc/nginx/conf.d/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/conf.d/zammad.conf
+	test -f ${NGINX_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${NGINX_CONF}
     fi
 
     echo "# Restarting Nginx"
