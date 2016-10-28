@@ -10,15 +10,14 @@ DB="zammad_production"
 DB_USER="zammad"
 
 # check which init system is used
-if [ -n "$(which initctl)" ]; then
+if [ -n $(which initctl) ]; then
     INIT_CMD="initctl"
-elif [ -n "$(which systemctl)" ]; then
+elif [ -n $(which systemctl) ]; then
     INIT_CMD="systemctl"
 else
     function sysvinit () {
 	service $2 $1
     }
-
     INIT_CMD="sysvinit"
 fi
 
@@ -59,8 +58,8 @@ echo "# Starting Zammad"
 ${INIT_CMD} start zammad
 
 # nginx config
-if [ -n "$(which nginx)" ];then
-    # copy nginx config 
+if [ -n $(which nginx) ]; then
+    # copy nginx config
     # debian / ubuntu
     if [ -d /etc/nginx/sites-enabled ]; then
 	NGINX_CONF="/etc/nginx/sites-enabled/zammad.conf"
