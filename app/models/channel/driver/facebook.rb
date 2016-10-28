@@ -86,7 +86,7 @@ class Channel::Driver::Facebook
       next if page_to_sync_params['group_id'].empty?
       page_client = Facebook.new(page['access_token'])
 
-      posts = page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,comments')
+      posts = page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,permalink_url,comments{id,from,to,message,created_time}')
       posts.each { |post|
 
         # ignore older messages

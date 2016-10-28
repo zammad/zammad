@@ -208,7 +208,7 @@ class TweetBase
       ticket.save!
     end
 
-    Ticket::Article.create(
+    Ticket::Article.create!(
       from:        from,
       to:          to,
       body:        tweet.text,
