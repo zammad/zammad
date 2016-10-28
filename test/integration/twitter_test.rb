@@ -42,6 +42,8 @@ class TwitterTest < ActiveSupport::TestCase
   system_login_without_at = system_login[1, system_login.length]
   system_token            = ENV['TWITTER_SYSTEM_TOKEN']
   system_token_secret     = ENV['TWITTER_SYSTEM_TOKEN_SECRET']
+  hash_tag1               = "#zarepl#{rand(999)}"
+  hash_tag2               = "#citheo#{rand(999)}"
 
   # me_bauer (is customer and is following armin_theo)
   if !ENV['TWITTER_CUSTOMER_LOGIN']
@@ -53,9 +55,10 @@ class TwitterTest < ActiveSupport::TestCase
   if !ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
     raise "ERROR: Need CUSTOMER_TOKEN_SECRET - hint TWITTER_CUSTOMER_TOKEN_SECRET='1234'"
   end
-  customer_login        = ENV['TWITTER_CUSTOMER_LOGIN']
-  customer_token        = ENV['TWITTER_CUSTOMER_TOKEN']
-  customer_token_secret = ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
+  customer_login            = ENV['TWITTER_CUSTOMER_LOGIN']
+  customer_login_without_at = customer_login[1, customer_login.length]
+  customer_token            = ENV['TWITTER_CUSTOMER_TOKEN']
+  customer_token_secret     = ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
 
   # add channel
   current = Channel.where(area: 'Twitter::Account')
@@ -77,11 +80,11 @@ class TwitterTest < ActiveSupport::TestCase
       sync: {
         search: [
           {
-            term: '#citheo42',
+            term: hash_tag2,
             group_id: group.id,
           },
           {
-            term: '#zarepl24',
+            term: hash_tag1,
             group_id: 1,
           },
         ],
@@ -100,7 +103,7 @@ class TwitterTest < ActiveSupport::TestCase
 
   test 'a new outbound and reply' do
 
-    hash   = '#citheo42' + rand(999_999).to_s
+    hash   = "#{hash_tag2}#{rand(999_999)}"
     user   = User.find(2)
     text   = "Today the weather is really #{rand_word}... #{hash}"
     ticket = Ticket.create!(
@@ -133,6 +136,10 @@ class TwitterTest < ActiveSupport::TestCase
     assert_equal(system_login, article.from, 'ticket article from')
     assert_equal('', article.to, 'ticket article to')
 
+    ticket = Ticket.find(article.ticket_id)
+    ticket.state = Ticket::State.find_by(name: 'closed')
+    ticket.save!
+
     # reply by me_bauer
     client = Twitter::REST::Client.new do |config|
       config.consumer_key        = consumer_key
@@ -143,7 +150,6 @@ class TwitterTest < ActiveSupport::TestCase
 
     tweet_found = false
     client.user_timeline(system_login_without_at).each { |tweet|
-
       next if tweet.id.to_s != article.message_id.to_s
       tweet_found = true
       break
@@ -161,7 +167,7 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 10
     article = nil
-    1.times {
+    2.times {
       Channel.fetch
 
       # check if follow up article has been created
@@ -176,6 +182,8 @@ class TwitterTest < ActiveSupport::TestCase
     assert_equal(tweet.id.to_s, article.message_id, 'ticket article inbound message_id')
     assert_equal(2, article.ticket.articles.count, 'ticket article inbound count')
     assert_equal(reply_text.utf8_to_3bytesutf8, ticket.articles.last.body, 'ticket article inbound body')
+
+    assert_equal('open', ticket.reload.state.name)
 
     channel = Channel.find(channel.id)
     assert_equal('', channel.last_log_out)
@@ -194,7 +202,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token_secret = customer_token_secret
     end
 
-    hash  = "#zarepl24 ##{hash_gen}"
+    hash  = "#{hash_tag1} ##{hash_gen}"
     text  = "Today #{rand_word}... #{hash}"
     tweet = client.update(
       text,
@@ -215,6 +223,7 @@ class TwitterTest < ActiveSupport::TestCase
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_equal(nil, article.to, 'ticket article to')
     ticket = article.ticket
+    assert_equal('new', ticket.reload.state.name)
 
     # send reply
     reply_text = "#{customer_login} on my side #weather#{hash_gen}"
@@ -229,6 +238,7 @@ class TwitterTest < ActiveSupport::TestCase
     )
 
     Scheduler.worker(true)
+    assert_equal('open', ticket.reload.state.name)
 
     article = Ticket::Article.find(article.id)
     assert(article, "outbound article created, text: #{reply_text}")
@@ -249,6 +259,39 @@ class TwitterTest < ActiveSupport::TestCase
     assert_equal('ok', channel.status_out)
     assert_equal('', channel.last_log_in)
     assert_equal('ok', channel.status_in)
+
+    ticket = Ticket.find(article.ticket_id)
+    ticket.state = Ticket::State.find_by(name: 'closed')
+    ticket.save!
+
+    # reply with zammad user directly
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = system_token
+      config.access_token_secret = system_token_secret
+    end
+
+    hash  = "#{hash_tag1} ##{hash_gen}"
+    text  = "Today #{system_login} #{rand_word}... #{hash}"
+    tweet = client.update(
+      text,
+    )
+
+    # fetch check system account
+    sleep 20
+    article = nil
+    2.times {
+      Channel.fetch
+
+      # check if ticket and article has been created
+      article = Ticket::Article.find_by(message_id: tweet.id)
+      break if article
+      sleep 20
+    }
+
+    assert(article, "Can't find tweet id #{tweet.id}/#{text}")
+    assert_equal('closed', ticket.reload.state.name)
   end
 
   test 'c new by direct message inbound' do
@@ -406,7 +449,8 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = customer_token
       config.access_token_secret = customer_token_secret
     end
-    hash  = '#zarepl24 #' + hash_gen
+
+    hash  = "#{hash_tag1} ##{hash_gen}"
     text  = "Today... #{rand_word} #{hash}"
     tweet = client.update(
       text,
@@ -429,7 +473,7 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token        = customer_token
       config.access_token_secret = customer_token_secret
     end
-    hash  = '#zarepl24 #' + rand(999_999).to_s
+    hash  = "#{hash_tag1} ##{rand(999_999)}"
     text  = "Today... #{rand_word}  #{hash}"
     tweet = client.update(
       text,

@@ -267,7 +267,7 @@ result
       ticket_state = get_state(page, post, ticket)
       if ticket_state.name != ticket.state.name
         ticket.state = ticket_state
-        ticket.save
+        ticket.save!
       end
 
       article = {
