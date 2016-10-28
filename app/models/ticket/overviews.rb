@@ -92,7 +92,7 @@ returns
 
     list = []
     overviews.each { |overview|
-      query_condition, bind_condition = Ticket.selector2sql(overview.condition, user)
+      query_condition, bind_condition, tables = Ticket.selector2sql(overview.condition, user)
 
       order_by = "#{overview.order[:by]} #{overview.order[:direction]}"
       if overview.group_by && !overview.group_by.empty?
@@ -102,6 +102,7 @@ returns
       ticket_result = Ticket.select('id, updated_at')
                             .where(access_condition)
                             .where(query_condition, *bind_condition)
+                            .joins(tables)
                             .order(order_by)
                             .limit(500)
                             .pluck(:id, :updated_at)

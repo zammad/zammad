@@ -76,8 +76,12 @@ returns
       preferences[:escalation_calculation] = {}
 
       # nothing to change
-      return false if !escalation_at
+      return false if !escalation_at && !first_response_escalation_at && !update_escalation_at && !close_escalation_at
       self.escalation_at = nil
+      self.first_response_escalation_at = nil
+      self.escalation_at = nil
+      self.update_escalation_at = nil
+      self.close_escalation_at = nil
       return true
     end
 
@@ -287,8 +291,8 @@ returns
       if !sla.condition || sla.condition.empty?
         sla_selected = sla
       elsif sla.condition
-        query_condition, bind_condition = Ticket.selector2sql(sla.condition)
-        ticket = Ticket.where(query_condition, *bind_condition).find_by(id: id)
+        query_condition, bind_condition, tables = Ticket.selector2sql(sla.condition)
+        ticket = Ticket.where(query_condition, *bind_condition).joins(tables).find_by(id: id)
         next if !ticket
         sla_selected = sla
         break

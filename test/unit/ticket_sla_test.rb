@@ -1460,4 +1460,170 @@ class TicketSlaTest < ActiveSupport::TestCase
 
   end
 
+  test 'ticket ticket.title and article.subject' do
+
+    ticket = Ticket.create!(
+      title: 'some title SLATEST1 for you',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_at: '2016-03-21 12:30:00 UTC',
+      updated_at: '2016-03-21 12:30:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article_inbound = Ticket::Article.create!(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some title SLATEST2 for you',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2016-03-21 12:30:00 UTC',
+      updated_at: '2016-03-21 12:30:00 UTC',
+    )
+
+    calendar = Calendar.create_or_update(
+      name: 'EU 5',
+      timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sat: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+        sun: {
+          active: true,
+          timeframes: [ ['09:00', '18:00'] ]
+        },
+      },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    sla = Sla.create_or_update(
+      name: 'test sla - ticket.title & article.subject',
+      condition: {
+        'ticket.priority_id' => {
+          operator: 'is',
+          value: %w(1 2 3),
+        },
+        'article.subject' => {
+          operator: 'contains',
+          value: 'SLATEST2',
+        },
+      },
+      calendar_id: calendar.id,
+      first_response_time: 60,
+      update_time: 120,
+      solution_time: 180,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Scheduler.worker(true)
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.escalation_at.gmtime.to_s, '2016-03-21 13:30:00 UTC', 'ticket.escalation_at verify 1')
+    assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2016-03-21 13:30:00 UTC', 'ticket.first_response_escalation_at verify 1')
+    assert_equal(ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3')
+    assert_equal(ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3')
+    assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-03-21 14:30:00 UTC', 'ticket.update_escalation_at verify 1')
+    assert_equal(ticket.close_escalation_at.gmtime.to_s, '2016-03-21 15:30:00 UTC', 'ticket.close_escalation_at verify 1')
+    assert_equal(ticket.close_in_min, nil, 'ticket.close_in_min verify 3')
+    assert_equal(ticket.close_diff_in_min, nil, 'ticket.close_diff_in_min# verify 3')
+
+    sla = Sla.create_or_update(
+      name: 'test sla - ticket.title & article.subject',
+      condition: {
+        'ticket.priority_id' => {
+          operator: 'is',
+          value: %w(1 2 3),
+        },
+        'ticket.title' => {
+          operator: 'contains',
+          value: 'SLATEST1',
+        },
+      },
+      calendar_id: calendar.id,
+      first_response_time: 60,
+      update_time: 120,
+      solution_time: 180,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Scheduler.worker(true)
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.escalation_at.gmtime.to_s, '2016-03-21 13:30:00 UTC', 'ticket.escalation_at verify 1')
+    assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2016-03-21 13:30:00 UTC', 'ticket.first_response_escalation_at verify 1')
+    assert_equal(ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3')
+    assert_equal(ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3')
+    assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-03-21 14:30:00 UTC', 'ticket.update_escalation_at verify 1')
+    assert_equal(ticket.close_escalation_at.gmtime.to_s, '2016-03-21 15:30:00 UTC', 'ticket.close_escalation_at verify 1')
+    assert_equal(ticket.close_in_min, nil, 'ticket.close_in_min verify 3')
+    assert_equal(ticket.close_diff_in_min, nil, 'ticket.close_diff_in_min# verify 3')
+
+    sla = Sla.create_or_update(
+      name: 'test sla - ticket.title & article.subject',
+      condition: {
+        'ticket.priority_id' => {
+          operator: 'is',
+          value: %w(1 2 3),
+        },
+        'ticket.title' => {
+          operator: 'contains',
+          value: 'SLATEST2',
+        },
+      },
+      calendar_id: calendar.id,
+      first_response_time: 60,
+      update_time: 120,
+      solution_time: 180,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Scheduler.worker(true)
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.escalation_at, nil, 'ticket.escalation_at verify 1')
+    assert_equal(ticket.first_response_escalation_at, nil, 'ticket.first_response_escalation_at verify 1')
+    assert_equal(ticket.first_response_in_min, nil, 'ticket.first_response_in_min verify 3')
+    assert_equal(ticket.first_response_diff_in_min, nil, 'ticket.first_response_diff_in_min verify 3')
+    assert_equal(ticket.update_escalation_at, nil, 'ticket.update_escalation_at verify 1')
+    assert_equal(ticket.close_escalation_at, nil, 'ticket.close_escalation_at verify 1')
+    assert_equal(ticket.close_in_min, nil, 'ticket.close_in_min verify 3')
+    assert_equal(ticket.close_diff_in_min, nil, 'ticket.close_diff_in_min# verify 3')
+
+    delete = sla.destroy
+    assert(delete, 'sla destroy')
+
+    delete = ticket.destroy
+    assert(delete, 'ticket destroy')
+
+  end
+
 end
