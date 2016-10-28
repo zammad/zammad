@@ -10,15 +10,14 @@ DB="zammad_production"
 DB_USER="zammad"
 
 # check which init system is used
-if [ -n "$(which initctl)" ]; then
+if [ -n $(which initctl) ]; then
     INIT_CMD="initctl"
-elif [ -n "$(which systemctl)" ]; then
+elif [ -n $(which systemctl) ]; then
     INIT_CMD="systemctl"
 else
     function sysvinit () {
 	service $2 $1
     }
-
     INIT_CMD="sysvinit"
 fi
 
@@ -59,17 +58,17 @@ echo "# Starting Zammad"
 ${INIT_CMD} start zammad
 
 # nginx config
-if [ -n "$(which nginx)" ];then
-    # copy nginx config 
+if [ -n $(which nginx) ]; then
+    # copy nginx config
     # debian / ubuntu
     if [ -d /etc/nginx/sites-enabled ]; then
 	NGINX_CONF="/etc/nginx/sites-enabled/zammad.conf"
 	test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/sites-available/zammad.conf
-	test -f /etc/nginx/sites-available/zammad.conf || ln -s /etc/nginx/sites-available/zammad.conf /etc/nginx/sites-enabled/zammad.conf
+	test -h ${NGINX_CONF} || ln -s /etc/nginx/sites-available/zammad.conf ${NGINX_CONF}
     # centos / sles
     elif [ -d /etc/nginx/conf.d ]; then
 	NGINX_CONF="/etc/nginx/conf.d/zammad.conf"
-	test -f /etc/nginx/conf.d/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/conf.d/zammad.conf
+	test -f ${NGINX_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${NGINX_CONF}
     fi
 
     echo "# Restarting Nginx"
