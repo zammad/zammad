@@ -8,26 +8,17 @@ OpenBSD and Mac OS 10.x. Do you receive many e-mails and want to answer them
 with a team of agents? You're going to love Zammad!
 
 
-# Installing & Getting Started
+* Installing & Getting Started - https://zammad.org/documentation
 
-https://zammad.org/documentation
+* Screenshots - https://zammad.org/screenshots
 
+* Features - https://zammad.com/features
 
-# Screenshots
+* Tour - https://zammad.com/tour
 
-https://zammad.org/screenshots
-
-
-# Features
-
-https://zammad.com/features
-
-
-# Tour
-
-https://zammad.com/tour
+* REST API - https://zammad.org/documentation/api/intro
 
 
 Thanks! ❤️ ❤️ ❤️
 
- Zammad Team
+ Your Zammad Team
