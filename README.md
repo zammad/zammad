@@ -12,5 +12,5 @@ You're going to love Zammad!
 Install & Getting Started
 -------------------------
 
-Have a look on the Zammad documetnation @ https://zammad.org/documentation
+Have a look into the Zammad documetnation @ https://zammad.org/documentation
 
