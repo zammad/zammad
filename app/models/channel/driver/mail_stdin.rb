@@ -12,13 +12,17 @@ e. g.
 
   cat test/fixtures/mail1.box | rails r 'Channel::Driver::MailStdin.new'
 
+e. g. if you want to trust on mail headers
+
+  cat test/fixtures/mail1.box | rails r 'Channel::Driver::MailStdin.new(trusted: true)'
+
 =end
 
-  def initialize
+  def initialize(params = {})
     Rails.logger.info 'read main from STDIN'
 
     msg = ARGF.read
 
-    process({}, msg)
+    process(params, msg)
   end
 end
