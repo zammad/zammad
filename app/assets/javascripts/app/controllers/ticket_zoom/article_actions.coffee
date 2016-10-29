@@ -218,15 +218,22 @@ class App.TicketZoomArticleActions extends App.Controller
       recipientString = ''
       recipientScreenNames = recipients.split(',')
       for recipientScreenName in recipientScreenNames
+        if recipientScreenName
+          recipientScreenName = recipientScreenName.trim().toLowerCase()
 
-        # exclude already listed screen name
-        if !body || !body.match(recipientScreenName)
+          # exclude already listed screen name
+          exclude = false
+          if body && body.toLowerCase().match(recipientScreenName)
+            exclude = true
 
           # exclude own screen_name
-          if !body || !body.match(@ticket.preferences.channel_screen_name)
+          if recipientScreenName is "@#{@ticket.preferences.channel_screen_name}".toLowerCase()
+            exclude = true
+
+          if exclude is false
             if recipientString isnt ''
               recipientString += ' '
-            recipientString += recipientScreenName.trim()
+            recipientString += recipientScreenName
 
     if body
       articleNew.body = "#{recipientString} #{body}&nbsp;"
