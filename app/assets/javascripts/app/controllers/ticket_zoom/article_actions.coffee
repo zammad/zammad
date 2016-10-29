@@ -240,7 +240,7 @@ class App.TicketZoomArticleActions extends App.Controller
     else
       articleNew.body = "#{recipientString}&nbsp;"
 
-    App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
+    App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew, position: 'end' } )
 
   twitterDirectMessageReply: (e) =>
     e.preventDefault()
