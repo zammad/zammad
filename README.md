@@ -9,8 +9,8 @@ twitter, chat and e-mails. It is distributed under the GNU AFFERO General Public
 You're going to love Zammad!
 
 
-Install & Getting Started
+Installing & Getting Started
 -------------------------
 
-Have a look into the Zammad documetnation @ https://zammad.org/documentation
+Have a look into the Zammad documentation @ https://zammad.org/documentation
 
