@@ -66,6 +66,7 @@ class Index extends App.ControllerSubContent
 
     if @channel_id
       @edit(undefined, @channel_id)
+      @channel_id = undefined
 
   show: (params) =>
     for key, value of params
@@ -73,48 +74,10 @@ class Index extends App.ControllerSubContent
         @[key] = value
 
   configApp: =>
-    external_credential = App.ExternalCredential.findByAttribute('name', 'facebook')
-    contentInline = $(App.view('facebook/app_config')(
-      external_credential: external_credential
-      callbackUrl: @callbackUrl
-    ))
-    contentInline.find('.js-select').on('click', (e) =>
-      @selectAll(e)
-    )
-    modal = new App.ControllerModal(
-      head: 'Connect Facebook App'
+    new AppConfig(
       container: @el.parents('.content')
-      contentInline: contentInline
-      shown: true
-      button: 'Connect'
-      cancel: true
-      small: true
-      onSubmit: (e) =>
-        @formDisable(e)
-
-        # verify app credentals
-        @ajax(
-          id:   'facebook_app_verify'
-          type: 'POST'
-          url:  "#{@apiPath}/external_credentials/facebook/app_verify"
-          data: JSON.stringify(modal.formParams())
-          processData: true
-          success: (data, status, xhr) =>
-            if data.attributes
-              if !external_credential
-                external_credential = new App.ExternalCredential
-              external_credential.load(name: 'facebook', credentials: modal.formParams())
-              external_credential.save(
-                done: =>
-                  @load()
-                  modal.close()
-                fail: ->
-                  modal.element().find('.alert').removeClass('hidden').text('Unable to create entry.')
-              )
-              return
-            @formEnable(e)
-            modal.element().find('.alert').removeClass('hidden').text(data.error || 'Unable to verify App.')
-        )
+      callbackUrl: @callbackUrl
+      load: @load
     )
 
   new: (e) ->
@@ -128,59 +91,11 @@ class Index extends App.ControllerSubContent
     if !channel
       @navigate '#channels/facebook'
       return
-    if !channel.options.sync
-      channel.options.sync = {}
-    if !channel.options.sync.wall
-      channel.options.sync.wall = {}
-    if !channel.options.sync.pages
-      channel.options.sync.pages = {}
-    content = $( App.view('facebook/account_edit')(channel: channel) )
 
-    groupSelection = (selected_id, el, prefix) ->
-      selection = App.UiElement.select.render(
-        name: "#{prefix}::group_id"
-        multiple: false
-        limit: 100
-        null: false
-        relation: 'Group'
-        nulloption: true
-        value: selected_id
-        class: 'form-control--small'
-      )
-      el.html(selection)
-
-    groupSelection(channel.options.sync.wall.group_id, content.find('.js-wall .js-groups'), 'wall')
-    if channel.options.pages
-      for page in channel.options.pages
-        pageConfigured = false
-        for page_id, pageParams of channel.options.sync.pages
-          if page.id is page_id
-            pageConfigured = true
-            groupSelection(pageParams.group_id, content.find(".js-groups[data-page-id=#{page.id}]"), "pages::#{page.id}")
-        if !pageConfigured
-          groupSelection('', content.find(".js-groups[data-page-id=#{page.id}]"), "pages::#{page.id}")
-
-    modal = new App.ControllerModal(
-      head: 'Facebook Account'
+    new AccountEdit(
+      channel: channel
       container: @el.parents('.content')
-      contentInline: content
-      shown: true
-      cancel: true
-      onSubmit: (e) =>
-        @formDisable(e)
-        channel.options.sync = modal.formParams()
-        @ajax(
-          id:   'channel_facebook_update'
-          type: 'POST'
-          url:  "#{@apiPath}/channels/facebook_verify/#{channel.id}"
-          data: JSON.stringify(channel.attributes())
-          processData: true
-          success: (data, status, xhr) =>
-            @load()
-            modal.close()
-          fail: =>
-            @formEnable(e)
-        )
+      load: @load
     )
 
   delete: (e) =>
@@ -197,6 +112,117 @@ class Index extends App.ControllerSubContent
     new App.ControllerGenericDescription(
       description: App.Twitter.description
       container:   @el.closest('.content')
+    )
+
+class AppConfig extends App.ControllerModal
+  head: 'Connect Facebook App'
+  shown: true
+  button: 'Connect'
+  buttonCancel: true
+  small: true
+
+  content: ->
+    @external_credential = App.ExternalCredential.findByAttribute('name', 'facebook')
+    content = $(App.view('facebook/app_config')(
+      external_credential: @external_credential
+      callbackUrl: @callbackUrl
+    ))
+    content.find('.js-select').on('click', (e) =>
+      @selectAll(e)
+    )
+    content
+
+  onClosed: =>
+    return if !@isChanged
+    @isChanged = false
+    @load()
+
+  onSubmit: (e) =>
+    @formDisable(e)
+
+    # verify app credentals
+    @ajax(
+      id:   'facebook_app_verify'
+      type: 'POST'
+      url:  "#{@apiPath}/external_credentials/facebook/app_verify"
+      data: JSON.stringify(@formParams())
+      processData: true
+      success: (data, status, xhr) =>
+        if data.attributes
+          if !@external_credential
+            @external_credential = new App.ExternalCredential
+          @external_credential.load(name: 'facebook', credentials: @formParams())
+          @external_credential.save(
+            done: =>
+              @isChanged = true
+              @close()
+            fail: ->
+              @el.find('.alert').removeClass('hidden').text('Unable to create entry.')
+          )
+          return
+        @formEnable(e)
+        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to verify App.')
+    )
+
+class AccountEdit extends App.ControllerModal
+  head: 'Facebook Account'
+  shown: true
+  buttonCancel: true
+
+  content: ->
+    if !@channel.options.sync
+      @channel.options.sync = {}
+    if !@channel.options.sync.wall
+      @channel.options.sync.wall = {}
+    if !@channel.options.sync.pages
+      @channel.options.sync.pages = {}
+    content = $( App.view('facebook/account_edit')(channel: @channel) )
+
+    groupSelection = (selected_id, el, prefix) ->
+      selection = App.UiElement.select.render(
+        name: "#{prefix}::group_id"
+        multiple: false
+        limit: 100
+        null: false
+        relation: 'Group'
+        nulloption: true
+        value: selected_id
+        class: 'form-control--small'
+      )
+      el.html(selection)
+
+    groupSelection(@channel.options.sync.wall.group_id, content.find('.js-wall .js-groups'), 'wall')
+    if @channel.options.pages
+      for page in @channel.options.pages
+        pageConfigured = false
+        for page_id, pageParams of @channel.options.sync.pages
+          if page.id is page_id
+            pageConfigured = true
+            groupSelection(pageParams.group_id, content.find(".js-groups[data-page-id=#{page.id}]"), "pages::#{page.id}")
+        if !pageConfigured
+          groupSelection('', content.find(".js-groups[data-page-id=#{page.id}]"), "pages::#{page.id}")
+
+    content
+
+  onClosed: =>
+    return if !@isChanged
+    @isChanged = false
+    @load()
+
+  onSubmit: (e) =>
+    @formDisable(e)
+    @channel.options.sync = @formParams()
+    @ajax(
+      id:   'channel_facebook_update'
+      type: 'POST'
+      url:  "#{@apiPath}/channels/facebook_verify/#{@channel.id}"
+      data: JSON.stringify(@channel.attributes())
+      processData: true
+      success: (data, status, xhr) =>
+        @isChanged = true
+        @close()
+      fail: =>
+        @formEnable(e)
     )
 
 App.Config.set('Facebook', { prio: 5100, name: 'Facebook', parent: '#channels', target: '#channels/facebook', controller: Index, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')
