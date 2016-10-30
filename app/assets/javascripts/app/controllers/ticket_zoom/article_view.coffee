@@ -120,6 +120,17 @@ class ArticleViewItem extends App.ObserverController
           article['html'] = App.Utils.text2html(body)
           article['html'] = article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
 
+    # check if email link need to be updated
+    if article.type.name is 'email'
+      if !article.preferences.links
+        article.preferences.links = [
+          {
+            name: 'Raw'
+            url: "#{@Config.get('api_path')}/ticket_article_plain/#{article.id}"
+            target: '_blank'
+          }
+        ]
+
     if article.preferences.delivery_message
       @html App.view('ticket_zoom/article_view_delivery_failed')(
         ticket:     @ticket

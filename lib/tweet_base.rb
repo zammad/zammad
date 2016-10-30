@@ -126,11 +126,13 @@ class TweetBase
       title = "#{title[0, 80]}..."
     end
 
+    state = get_state(channel, tweet)
+
     Ticket.create(
       customer_id: user.id,
       title:       title,
       group_id:    group_id,
-      state:       Ticket::State.find_by(name: 'new'),
+      state:       state,
       priority:    Ticket::Priority.find_by(name: '2 normal'),
       preferences: {
         channel_id: channel.id,
@@ -139,7 +141,7 @@ class TweetBase
     )
   end
 
-  def to_article(tweet, user, ticket)
+  def to_article(tweet, user, ticket, channel)
 
     Rails.logger.debug 'Create article from tweet...'
     Rails.logger.debug tweet.inspect
@@ -151,13 +153,22 @@ class TweetBase
     from = nil
     article_type = nil
     in_reply_to = nil
+    preferences = {}
     if tweet.class == Twitter::DirectMessage
       article_type = 'twitter direct-message'
       to = "@#{tweet.recipient.screen_name}"
       from = "@#{tweet.sender.screen_name}"
+      preferences = {
+        created_at: tweet.created_at,
+        recipient_id: tweet.recipient.id,
+        recipient_screen_name: tweet.recipient.screen_name,
+        sender_id: tweet.sender.id,
+        sender_screen_name: tweet.sender.screen_name,
+      }
     elsif tweet.class == Twitter::Tweet
       article_type = 'twitter status'
       from = "@#{tweet.user.screen_name}"
+      mention_ids = []
       if tweet.user_mentions
         tweet.user_mentions.each { |local_user|
           if !to
@@ -166,9 +177,24 @@ class TweetBase
             to += ', '
           end
           to += "@#{local_user.screen_name}"
+          mention_ids.push local_user.id
         }
       end
       in_reply_to = tweet.in_reply_to_status_id
+
+      preferences = {
+        mention_ids: mention_ids,
+        geo: tweet.geo,
+        retweeted: tweet.retweeted?,
+        possibly_sensitive: tweet.possibly_sensitive?,
+        in_reply_to_user_id: tweet.in_reply_to_user_id,
+        place: tweet.place,
+        retweet_count: tweet.retweet_count,
+        source: tweet.source,
+        favorited: tweet.favorited?,
+        truncated: tweet.truncated?,
+      }
+
     else
       raise "Unknown tweet type '#{tweet.class}'"
     end
@@ -176,12 +202,13 @@ class TweetBase
     UserInfo.current_user_id = user.id
 
     # set ticket state to open if not new
-    if ticket.state.name != 'new'
-      ticket.state = Ticket::State.find_by(name: 'open')
-      ticket.save
+    ticket_state = get_state(channel, tweet, ticket)
+    if ticket_state.name != ticket.state.name
+      ticket.state = ticket_state
+      ticket.save!
     end
 
-    Ticket::Article.create(
+    Ticket::Article.create!(
       from:        from,
       to:          to,
       body:        tweet.text,
@@ -191,6 +218,16 @@ class TweetBase
       type_id:     Ticket::Article::Type.find_by(name: article_type).id,
       sender_id:   Ticket::Article::Sender.find_by(name: 'Customer').id,
       internal:    false,
+      preferences: {
+        twitter: preferences,
+        links: [
+          {
+            url: "https://twitter.com/statuses/#{tweet.id}",
+            target: '_blank',
+            name: 'on Twitter',
+          },
+        ],
+      }
     )
   end
 
@@ -227,7 +264,7 @@ class TweetBase
       user = to_user(tweet)
       if tweet.class == Twitter::DirectMessage
         ticket = to_ticket(tweet, user, group_id, channel)
-        to_article(tweet, user, ticket)
+        to_article(tweet, user, ticket, channel)
       elsif tweet.class == Twitter::Tweet
         if tweet.in_reply_to_status_id && tweet.in_reply_to_status_id.to_s != ''
           existing_article = Ticket::Article.find_by(message_id: tweet.in_reply_to_status_id)
@@ -246,7 +283,7 @@ class TweetBase
         if !ticket
           ticket = to_ticket(tweet, user, group_id, channel)
         end
-        to_article(tweet, user, ticket)
+        to_article(tweet, user, ticket, channel)
       else
         raise "Unknown tweet type '#{tweet.class}'"
       end
@@ -288,15 +325,34 @@ class TweetBase
     tweet
   end
 
+  def get_state(channel, tweet, ticket = nil)
+
+    tweet_user = user(tweet)
+
+    # no changes in post is from page user it self
+    if channel.options[:user][:id].to_s == tweet_user.id.to_s
+      if !ticket
+        return Ticket::State.find_by(name: 'closed') if !ticket
+      end
+      return ticket.state
+    end
+
+    state = Ticket::State.find_by(name: 'new')
+    return state if !ticket
+    return ticket.state if ticket.state.name == 'new'
+    Ticket::State.find_by(name: 'open')
+  end
+
   def tweet_limit_reached(tweet)
-    max_count = 60
+    max_count = 120
     if @connection_type == 'stream'
-      max_count = 15
+      max_count = 30
     end
     type_id = Ticket::Article::Type.lookup(name: 'twitter status').id
     created_at = Time.zone.now - 15.minutes
-    if Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count > max_count
-      Rails.logger.info "Tweet limit reached, ignored tweed id (#{tweet.id})"
+    created_count = Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count
+    if created_count > max_count
+      Rails.logger.info "Tweet limit of #{created_count}/#{max_count} reached, ignored tweed id (#{tweet.id})"
       return true
     end
     false
@@ -309,8 +365,9 @@ class TweetBase
     end
     type_id = Ticket::Article::Type.lookup(name: 'twitter direct-message').id
     created_at = Time.zone.now - 15.minutes
-    if Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count > max_count
-      Rails.logger.info "Tweet direct message limit reached, ignored tweed id (#{tweet.id})"
+    created_count = Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count
+    if created_count > max_count
+      Rails.logger.info "Tweet direct message limit reached #{created_count}/#{max_count}, ignored tweed id (#{tweet.id})"
       return true
     end
     false

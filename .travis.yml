@@ -1,0 +1,32 @@
+dist: trusty
+sudo: required
+notifications:
+  email: false
+addons:
+  apt:
+    packages:
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
+services:
+  - mysql
+language: ruby
+rvm:
+  - 2.3.1
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev postfix
+  - mysql -u root -e "CREATE USER 'some_user'@'localhost' IDENTIFIED BY 'some_pass';"
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'some_user'@'localhost';"
+  - export RAILS_ENV=development
+  - cp config/database.yml.dist config/database.yml
+install:
+- bundle install --without postgres
+script:
+- rake db:create
+- rake db:migrate
+- rake db:seed
+- rake test:units
+- rake test:controllers
+- rake assets:precompile
+- rake db:drop

@@ -24,19 +24,19 @@ class FirstStepsController < ApplicationController
       from_active = true
     end
     twitter_active = false
-    if Channel.where(area: 'Twitter::Account').count > 0
+    if Channel.where(area: 'Twitter::Account').count.positive?
       twitter_active = true
     end
     facebook_active = false
-    if Channel.where(area: 'Facebook::Account').count > 0
+    if Channel.where(area: 'Facebook::Account').count.positive?
       facebook_active = true
     end
     email_active = false
-    if Channel.where(area: 'Email::Account').count > 0
+    if Channel.where(area: 'Email::Account').count.positive?
       email_active = true
     end
     text_module_active = false
-    if TextModule.count > 0
+    if TextModule.count.positive?
       text_module_active = true
     end
     macro_active = false

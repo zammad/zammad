@@ -1,3 +1,4 @@
+notifications: false
 targets:
   centos-6:
     dependencies:
@@ -11,22 +12,26 @@ targets:
       - postgresql
       - postgresql-server
       - postgresql-devel
-
+  debian-8:
+    dependencies:
+      - postgresql
+  ubuntu-16.04:
+    dependencies:
+      - postgresql
+  sles-12:
+    dependencies:
+      - postgresql
 before:
   - uname -a
   - ruby -v
   - env
-  - cp config/database.yml.pkgr config/database.yml
   - echo "gem 'mysql2'" >> Gemfile.local
   - "cat Gemfile.lock"
   - contrib/cleanup.sh
-
 env:
   - RAILS_ENV=production
   - PORT=3000
   - RAILS_SERVE_STATIC_FILES=true
-
 services:
   - postgres
-
-notifications: false
+after_install: contrib/pkgr-postinstall.sh

@@ -45,7 +45,7 @@ returns
 
 =end
 
-  def fetch (options, channel)
+  def fetch(options, channel)
 
     options = check_external_credential(options)
 
@@ -174,7 +174,7 @@ returns
 
 stream tweets from twitter account
 
-  stream_instance.stream
+  instance.stream
 
 returns
 
@@ -278,7 +278,16 @@ returns
       next if search[:group_id].to_s.empty?
       result_type = search[:type] || 'mixed'
       Rails.logger.debug " - searching for '#{search[:term]}'"
+      older_import = 0
+      older_import_max = 20
       @rest_client.client.search(search[:term], result_type: result_type).collect { |tweet|
+
+        # ignore older messages
+        if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
+          older_import += 1
+          Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
+          next
+        end
         next if Ticket::Article.find_by(message_id: tweet.id)
         break if @rest_client.tweet_limit_reached(tweet)
         @rest_client.to_group(tweet, search[:group_id], @channel)
@@ -292,7 +301,16 @@ returns
     return if !@sync[:mentions][:group_id]
     return if @sync[:mentions][:group_id].to_s.empty?
     Rails.logger.debug ' - searching for mentions'
+    older_import = 0
+    older_import_max = 20
     @rest_client.client.mentions_timeline.each { |tweet|
+
+      # ignore older messages
+      if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
+        older_import += 1
+        Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
+        next
+      end
       next if Ticket::Article.find_by(message_id: tweet.id)
       break if @rest_client.tweet_limit_reached(tweet)
       @rest_client.to_group(tweet, @sync[:mentions][:group_id], @channel)
@@ -305,7 +323,16 @@ returns
     return if !@sync[:direct_messages][:group_id]
     return if @sync[:direct_messages][:group_id].to_s.empty?
     Rails.logger.debug ' - searching for direct_messages'
+    older_import = 0
+    older_import_max = 20
     @rest_client.client.direct_messages.each { |tweet|
+
+      # ignore older messages
+      if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
+        older_import += 1
+        Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
+        next
+      end
       next if Ticket::Article.find_by(message_id: tweet.id)
       break if @rest_client.direct_message_limit_reached(tweet)
       @rest_client.to_group(tweet, @sync[:direct_messages][:group_id], @channel)

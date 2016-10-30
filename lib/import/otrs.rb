@@ -1085,7 +1085,7 @@ module Import::OTRS
 
       # check if login is already used
       login_in_use = User.where( "login = ? AND id != #{user_new[:id]}", user_new[:login].downcase ).count
-      if login_in_use > 0
+      if login_in_use.positive?
         user_new[:login] = "#{user_new[:login]}_#{user_new[:id]}"
       end
 

@@ -100,7 +100,7 @@ class Job < ApplicationModel
   def next_run_at_calculate(time = Time.zone.now)
     if last_run_at
       diff = time - last_run_at
-      if diff > 0
+      if diff.positive?
         time = time + 10.minutes
       end
     end

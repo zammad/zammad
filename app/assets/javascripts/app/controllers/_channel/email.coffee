@@ -34,15 +34,14 @@ class App.ChannelEmail extends App.ControllerTabs
 
 class App.ChannelEmailFilter extends App.Controller
   events:
-    'click [data-type=new]':  'new'
+    'click [data-type=new]': 'new'
 
   constructor: ->
     super
-
-    App.PostmasterFilter.subscribe( @render, initFetch: true )
+    App.PostmasterFilter.subscribe(@render, initFetch: true)
 
   render: =>
-    data = App.PostmasterFilter.search( sortBy: 'name' )
+    data = App.PostmasterFilter.search(sortBy: 'name')
 
     template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
@@ -131,11 +130,10 @@ class App.ChannelEmailSignature extends App.Controller
 
   constructor: ->
     super
-
-    App.Signature.subscribe( @render, initFetch: true )
+    App.Signature.subscribe(@render, initFetch: true)
 
   render: =>
-    data = App.Signature.search( sortBy: 'name' )
+    data = App.Signature.search(sortBy: 'name')
 
     template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 

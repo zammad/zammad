@@ -127,6 +127,7 @@ class FacebookTest < ActiveSupport::TestCase
 
     # check if first article has been created
     article = Ticket::Article.find_by(message_id: post['id'])
+    assert_equal('new', article.ticket.state.name)
 
     assert(article, "article post '#{post['id']}' imported")
     assert_equal(article.from, customer_name, 'ticket article inbound body')
@@ -150,6 +151,7 @@ class FacebookTest < ActiveSupport::TestCase
 
     # check if second article has been created
     article = Ticket::Article.find_by(message_id: comment['id'])
+    assert_equal('new', article.ticket.reload.state.name)
 
     assert(article, "article comment '#{comment['id']}' imported")
     assert_equal(article.from, customer_name, 'ticket article inbound body')
@@ -171,6 +173,7 @@ class FacebookTest < ActiveSupport::TestCase
 
     article = Ticket::Article.find_by(message_id: post['id'])
     ticket = article.ticket
+    assert_equal('new', ticket.state.name)
     assert(article, "article post '#{post['id']}' imported")
 
     # check customer
@@ -191,11 +194,16 @@ class FacebookTest < ActiveSupport::TestCase
     )
 
     Scheduler.worker(true)
+    assert_equal('open', ticket.reload.state.name)
 
     outbound_article = Ticket::Article.find(outbound_article.id)
     assert(outbound_article, 'outbound article created')
     assert_equal(outbound_article.from, page_name, 'ticket article outbound count')
     assert_equal(outbound_article.ticket.articles.count, 2, 'ticket article outbound count')
+
+    ticket = Ticket.find(outbound_article.ticket_id)
+    ticket.state = Ticket::State.find_by(name: 'closed')
+    ticket.save!
 
     post_comment = 'The peacock feather is fallen off.'
     comment      = customer_client.put_comment(post['id'], post_comment)
@@ -207,6 +215,7 @@ class FacebookTest < ActiveSupport::TestCase
 
     article = Ticket::Article.find_by(message_id: comment['id'])
     assert(article, "article comment '#{comment['id']}' imported")
+    assert_equal('open', ticket.reload.state.name)
 
     # reply via ticket
     reply_text = "Please send it to our address and add the ticket number #{article.ticket.number}."

@@ -27,7 +27,7 @@ class Karma::ActivityLog < ApplicationModel
       end
 
       local_score_total = score_total + activity.score
-      if local_score_total < 0
+      if local_score_total.negative?
         local_score_total = 0
       end
 

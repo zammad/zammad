@@ -236,7 +236,7 @@ returns
           next if !item[:name]
           attributes[assoc.name.to_s].push item[:name]
         }
-        if ref.count > 0 && attributes[assoc.name.to_s].empty?
+        if ref.count.positive? && attributes[assoc.name.to_s].empty?
           attributes.delete(assoc.name.to_s)
         end
         next

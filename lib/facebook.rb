@@ -204,36 +204,33 @@ result
     return if !user
 
     # prepare title
-
     title = post['message']
     if title.length > 80
       title = "#{title[0, 80]}..."
     end
 
-    Ticket.create(
+    state = get_state(page, post)
+    Ticket.create!(
       customer_id: user.id,
       title:       title,
       group_id:    group_id,
-      state:       Ticket::State.find_by(name: 'new'),
+      state:       state,
       priority:    Ticket::Priority.find_by(name: '2 normal'),
       preferences: {
         channel_id: channel.id,
         channel_fb_object_id: page['id'],
+        facebook: {
+          permalink_url: post['permalink_url'],
+        }
       },
     )
   end
 
-  def to_article(post, ticket, _page)
+  def to_article(post, ticket, page)
 
     Rails.logger.debug 'Create article from post...'
     Rails.logger.debug post.inspect
     Rails.logger.debug ticket.inspect
-
-    # set ticket state to open if not new
-    if ticket.state.name != 'new'
-      ticket.state = Ticket::State.find_by(name: 'open')
-      ticket.save
-    end
 
     user = to_user(post)
     return if !user
@@ -265,8 +262,37 @@ result
       articles += nested_comments(post['comments']['data'], post['id'])
     end
 
+    base_url = nil
+    if ticket.preferences['facebook'] && ticket.preferences['facebook']['permalink_url']
+      base_url = ticket.preferences['facebook']['permalink_url']
+    end
+
     articles.each { |article|
       next if Ticket::Article.find_by(message_id: article[:message_id])
+
+      # set ticket state to open if not new
+      ticket_state = get_state(page, post, ticket)
+      if ticket_state.name != ticket.state.name
+        ticket.state = ticket_state
+        ticket.save!
+      end
+
+      links = []
+      if base_url
+        url = base_url
+        realtive_id = article[:message_id].split('_')[1]
+        if realtive_id
+          url += "?comment_id=#{realtive_id}"
+        end
+        links = [
+          {
+            url: url,
+            target: '_blank',
+            name: 'on Facebook',
+          },
+        ]
+      end
+
       article = {
         #to:        @account['name'],
         ticket_id: ticket.id,
@@ -274,6 +300,9 @@ result
         sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
         created_by_id: 1,
         updated_by_id: 1,
+        preferences: {
+          links: links,
+        },
       }.merge(article)
       Ticket::Article.create(article)
     }
@@ -312,6 +341,23 @@ result
 
   private
 
+  def get_state(page, post, ticket = nil)
+
+    # no changes in post is from page user it self
+    if post['from'] && post['from']['id'].to_s == page['id'].to_s
+      if !ticket
+        return Ticket::State.find_by(name: 'closed') if !ticket
+      end
+      return ticket.state
+    end
+
+    state = Ticket::State.find_by(name: 'new')
+    return state if !ticket
+
+    return ticket.state if ticket.state.name == 'new'
+    Ticket::State.find_by(name: 'open')
+  end
+
   def access_token_for_page(lookup)
     access_token = nil
     pages.each { |page|
@@ -336,14 +382,14 @@ result
       user = to_user(comment)
       next if !user
       article_data = {
-        from:         "#{user.firstname} #{user.lastname}",
-        body:       comment['message'],
-        message_id: comment['id'],
-        type_id:    Ticket::Article::Type.find_by( name: 'facebook feed comment' ).id,
+        from:        "#{user.firstname} #{user.lastname}",
+        body:        comment['message'],
+        message_id:  comment['id'],
+        type_id:     Ticket::Article::Type.find_by(name: 'facebook feed comment').id,
         in_reply_to: in_reply_to
       }
       result.push(article_data)
-      sub_comments = @client.get_object( "#{comment['id']}/comments" )
+      sub_comments = @client.get_object("#{comment['id']}/comments", fields: 'id,from,to,message,created_time')
       sub_articles = nested_comments(sub_comments, comment['id'])
       result += sub_articles
     }

@@ -41,7 +41,7 @@ class Chat::Session < ApplicationModel
   def position
     return if state != 'waiting'
     position = 0
-    Chat::Session.where(state: 'waiting').order('created_at ASC').each { |chat_session|
+    Chat::Session.where(state: 'waiting').order(created_at: :asc).each { |chat_session|
       position += 1
       break if chat_session.id == id
     }
@@ -52,7 +52,7 @@ class Chat::Session < ApplicationModel
     chat_session = Chat::Session.find_by(session_id: session_id)
     return if !chat_session
     session_attributes = []
-    Chat::Message.where(chat_session_id: chat_session.id).each { |message|
+    Chat::Message.where(chat_session_id: chat_session.id).order(created_at: :asc).each { |message|
       session_attributes.push message.attributes
     }
     session_attributes
@@ -60,10 +60,10 @@ class Chat::Session < ApplicationModel
 
   def self.active_chats_by_user_id(user_id)
     actice_sessions = []
-    Chat::Session.where(state: 'running', user_id: user_id).order('created_at ASC').each { |session|
+    Chat::Session.where(state: 'running', user_id: user_id).order(created_at: :asc).each { |session|
       session_attributes = session.attributes
       session_attributes['messages'] = []
-      Chat::Message.where(chat_session_id: session.id).each { |message|
+      Chat::Message.where(chat_session_id: session.id).order(created_at: :asc).each { |message|
         session_attributes['messages'].push message.attributes
       }
       actice_sessions.push session_attributes
