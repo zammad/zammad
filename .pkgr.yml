@@ -2,9 +2,11 @@ notifications: false
 targets:
   centos-6:
     dependencies:
+      - nginx
       - postgresql-server
   centos-7:
     dependencies:
+      - nginx
       - postgresql-server
   debian-8:
     dependencies:
@@ -30,5 +32,4 @@ env:
   - PORT=3000
 services:
   - postgres
-before_install: contrib/packager.io/preinstall.sh
 after_install: contrib/packager.io/postinstall.sh
