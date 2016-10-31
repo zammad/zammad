@@ -40,8 +40,11 @@ else
 	echo "preparing postgresql server"
 	postgresql-setup initdb
 	
-	echo "allow login via username and password in postgresql"
-	echo -e "\n# created for zammad\nlocal	all	all	trust\n	host	all	127.0.0.1/32	trust" >> /var/lib/pgsql/data/pg_hba.conf
+	echo "backuping postgres config"
+	test -f /var/lib/pgsql/data/pg_hba.conf.bak || cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
+
+	"allow login via username and password in postgresql"
+	egrep -v "$#.*$" < /var/lib/pgsql/data/pg_hba.conf.bak | sed 's/ident/trustg' > /var/lib/pgsql/data/pg_hba.conf
 
 	echo "restarting postgresql server"
 	${INIT_CMD} restart postgresql
