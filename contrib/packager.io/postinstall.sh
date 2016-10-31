@@ -44,7 +44,7 @@ else
 	test -f /var/lib/pgsql/data/pg_hba.conf.bak || cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
 
 	"allow login via username and password in postgresql"
-	egrep -v "$#.*$" < /var/lib/pgsql/data/pg_hba.conf.bak | sed 's/ident/trustg' > /var/lib/pgsql/data/pg_hba.conf
+	egrep -v "^#.*$" < /var/lib/pgsql/data/pg_hba.conf.bak | sed 's/ident/trust/g' > /var/lib/pgsql/data/pg_hba.conf
 
 	echo "restarting postgresql server"
 	${INIT_CMD} restart postgresql
