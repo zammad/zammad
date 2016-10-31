@@ -40,8 +40,14 @@ else
 	echo "preparing postgresql server"
 	postgresql-setup initdb
 	
+	echo "allow login via username and password in postgresql"
+	echo -e "\n# created for zammad\nlocal	all	all	trust\n	host	all	127.0.0.1/32	trust" >> /var/lib/pgsql/data/pg_hba.conf
+
 	echo "restarting postgresql server"
 	${INIT_CMD} restart postgresql
+
+	echo "create postgresql bootstart"
+	${INIT_CMD} enable postgresql.service
     fi
 
     # create database
