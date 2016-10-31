@@ -10,9 +10,9 @@ DB="zammad_production"
 DB_USER="zammad"
 
 # check which init system is used
-if [ -n $(which initctl) ]; then
+if [ -n "$(which initctl)" ]; then
     INIT_CMD="initctl"
-elif [ -n $(which systemctl) ]; then
+elif [ -n "$(which systemctl)" ]; then
     INIT_CMD="systemctl"
 else
     function sysvinit () {
@@ -36,6 +36,14 @@ else
     # create new password
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
+    if [ -n "$(which postgresql-setup)" ]; then
+	echo "preparing postgresql server"
+	postgresql-setup initdb
+	
+	echo "restarting postgresql server"
+	${INIT_CMD} restart postgresql
+    fi
+
     # create database
     echo "# database.yml not found. Creating new db..."
     su - postgres -c "createdb -E UTF8 ${DB}"
@@ -58,7 +66,7 @@ echo "# Starting Zammad"
 ${INIT_CMD} start zammad
 
 # nginx config
-if [ -n $(which nginx) ]; then
+if [ -n "$(which nginx)" ]; then
     # copy nginx config
     # debian / ubuntu
     if [ -d /etc/nginx/sites-enabled ]; then
