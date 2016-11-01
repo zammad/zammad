@@ -59,7 +59,7 @@ OAuth URLs are:
   <table class="settings-list" style="width: 100%;">
     <thead>
       <tr>
-        <th width="40%"><%- @T('Title') %>
+        <th width="40%"><%- @T('Action') %>
         <th width="60%"><%- @T('URL') %>
     </thead>
     <tbody>
@@ -69,9 +69,6 @@ OAuth URLs are:
       <tr>
         <td><%- @T('Getting an Access Token') %>
         <td><%= @C('http_type') %>://<%= @C('fqdn') %>/oauth/token
-      <tr>
-        <td><%- @T('Revoking Access') %>
-        <td><%= @C('http_type') %>://<%= @C('fqdn') %>/oauth/applications
     </tbody>
   </table>
 </div>

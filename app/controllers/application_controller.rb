@@ -301,7 +301,6 @@ class ApplicationController < ActionController::Base
       return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
     end
 
-=begin
     # check oauth2 token based authentication
     token = Doorkeeper::OAuth::Token.from_bearer_authorization(request)
     if token
@@ -314,14 +313,14 @@ class ApplicationController < ActionController::Base
         raise Exceptions::NotAuthorized, 'OAuth2 token is expired!'
       end
 
-      if access_token.scopes.empty?
-        raise Exceptions::NotAuthorized, 'OAuth2 scope missing for token!'
-      end
+      # if access_token.scopes.empty?
+      #   raise Exceptions::NotAuthorized, 'OAuth2 scope missing for token!'
+      # end
 
       user = User.find(access_token.resource_owner_id)
       return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
     end
-=end
+
     false
   end
 

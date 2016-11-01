@@ -28,6 +28,7 @@ end
 
 gem 'autoprefixer-rails'
 
+gem 'doorkeeper'
 gem 'oauth2'
 
 gem 'omniauth'
