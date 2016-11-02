@@ -32,7 +32,7 @@ ${INIT_CMD} stop zammad
 if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     # db migration
     echo "# database.yml found. Updating db..."
-    su -c "zammad run rake db:migrate" zammad
+    zammad run rake db:migrate
 else
     echo "# database.yml not found. Creating new db..."
 
@@ -110,8 +110,8 @@ else
     fi
 
     # fill database
-    su -c "zammad run rake db:migrate" zammad
-    su -c "zammad run rake db:seed" zammad
+    zammad run rake db:migrate
+    zammad run rake db:seed
 
 fi
 
