@@ -10,7 +10,7 @@ targets:
   centos-7:
     dependencies:
       - nginx
-      - mysql-server
+      - postgresql-server
   debian-8:
     dependencies:
       - nginx
