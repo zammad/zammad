@@ -45,42 +45,47 @@ else
 
 	# centos
 	if [ -n "$(which postgresql-setup)" ]; then
-	    echo "preparing postgresql server"
-	    postgresql-setup initdb
-	
-	    echo "restarting postgresql server"
-	    ${INIT_CMD} restart postgresql
+    	    echo "preparing postgresql server"
+    	    postgresql-setup initdb
 
-	    echo "creating postgresql bootstart"
-	    ${INIT_CMD} enable postgresql.service
+    	    echo "backuping postgres config"
+    	    test -f /var/lib/pgsql/data/pg_hba.conf.bak || cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
 
-	    cp ${ZAMMAD_DIR}/config/database.yml.pkgr ${ZAMMAD_DIR}/config/database.yml
+    	    echo "allow login via username and password in postgresql"
+    	    sed 's/ident/trust/g' < /var/lib/pgsql/data/pg_hba.conf.bak > /var/lib/pgsql/data/pg_hba.conf
 
-	# ubuntu
-	else
-	    # create postgres user
-	    echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql
+    	    echo "restarting postgresql server"
+    	    ${INIT_CMD} restart postgresql
 
-	    # grant privileges
-	    echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
-
-	    # update configfile
-	    sed -e "s/.*username:.*/  username: ${DB_USER}/" -e "s/.*password:.*/  password: ${DB_PASS}/" -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+    	    echo "create postgresql bootstart"
+    	    ${INIT_CMD} enable postgresql.service
 	fi
 
-    # create database
-    su - postgres -c "createdb -E UTF8 ${DB}"
+        # create database
+        su - postgres -c "createdb -E UTF8 ${DB}"
+
+        # create postgres user
+        echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql 
+
+        # grant privileges
+        echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
+
+        # update configfile
+        sed -e "s/.*adapter:.*/  adapter: postgresql/" \
+        -e "s/.*username:.*/  username: ${DB_USER}/" \
+        -e  "s/.*password:.*/  password: ${DB_PASS}/" \
+        -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
 
     # mysql / mariadb
     elif [ -n "$(which mysqld)" ];then
 	echo "installing zammd on mysql"
 
 	if [ -f "${MY_CNF}" ]; then
-	    MYSQL_CREDENTIALS="--defaults-file=${MY_CNF}"
+    	    MYSQL_CREDENTIALS="--defaults-file=${MY_CNF}"
 	else
-	    echo -n "Please enter your MySQL root password:"
-	    read -s MYSQL_ROOT_PASS
-	    MYSQL_CREDENTIALS="-u root -p${MYSQL_ROOT_PASS}"
+    	    echo -n "Please enter your MySQL root password:"
+    	    read -s MYSQL_ROOT_PASS
+    	    MYSQL_CREDENTIALS="-u root -p${MYSQL_ROOT_PASS}"
 	fi
 
 	echo "creating zammad mysql db"
@@ -89,17 +94,19 @@ else
 	echo "creating zammad mysql user"
 	mysql ${MYSQL_CREDENTIALS} -e "CREATE USER \"${DB_USER}\"@\"${DB_HOST}\" IDENTIFIED BY \"${DB_PASS}\";"
 
-	echo "grant privileges to new mysql user"
+        echo "grant privileges to new mysql user"
 	mysql ${MYSQL_CREDENTIALS} -e "GRANT ALL PRIVILEGES ON ${DB}.* TO \"${DB_USER}\"@\"${DB_HOST}\"; FLUSH PRIVILEGES;"
 
 	# update configfile
-	sed -e "s/.*username:.*/  username: ${DB_USER}/" -e "s/.*password:.*/  password: ${DB_PASS}/" -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
+	sed -e "s/.*adapter:.*/  adapter: mysql2/" \
+    	    -e "s/.*username:.*/  username: ${DB_USER}/" \
+    	    -e  "s/.*password:.*/  password: ${DB_PASS}/" \
+    	    -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
 
-    # sqlite / no local db
+	# sqlite / no local db
     elif [ -n "$(which sqlite)" ];then
 	echo "installing zammad on sqlite"
 	echo "in fact this does nothing at the moment. use this to install zammad without a local database. sqlite should only be used in dev environment anyway."
-
     fi
 
     # fill database
@@ -111,14 +118,14 @@ fi
 echo "# Starting Zammad"
 ${INIT_CMD} start zammad
 
-# nginx config
+# copy nginx config
 if [ -n "$(which nginx)" ]; then
-    # copy nginx config
     # debian / ubuntu
     if [ -d /etc/nginx/sites-enabled ]; then
 	NGINX_CONF="/etc/nginx/sites-enabled/zammad.conf"
 	test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/sites-available/zammad.conf
 	test -h ${NGINX_CONF} || ln -s /etc/nginx/sites-available/zammad.conf ${NGINX_CONF}
+
     # centos / sles
     elif [ -d /etc/nginx/conf.d ]; then
 	NGINX_CONF="/etc/nginx/conf.d/zammad.conf"
