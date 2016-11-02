@@ -31,19 +31,17 @@ ${INIT_CMD} stop zammad
 # check if database.yml exists
 if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     # db migration
-    echo "# database.yml exists. Updating db..."
+    echo "# database.yml found. Updating db..."
     su -c "zammad run rake db:migrate" zammad
 else
+    echo "# database.yml not found. Creating new db..."
+
     # create new password
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
     # postgresql
     if [ -n "$(which psql)" ]; then
 	echo "installing zammad on postgresql"
-
-	# create database
-	echo "# database.yml not found. Creating new db..."
-	su - postgres -c "createdb -E UTF8 ${DB}"
 
 	# centos
 	if [ -n "$(which postgresql-setup)" ]; then
@@ -67,8 +65,11 @@ else
 	    echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
 
 	    # update configfile
-	    sed "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+	    sed -e "s/.*username:.*/  username: ${DB_USER}/" -e "s/.*password:.*/  password: ${DB_PASS}/" -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
 	fi
+
+    # create database
+    su - postgres -c "createdb -E UTF8 ${DB}"
 
     # mysql / mariadb
     elif [ -n "$(which mysqld)" ];then
