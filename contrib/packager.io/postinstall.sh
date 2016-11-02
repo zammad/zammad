@@ -51,7 +51,7 @@ else
 	    echo "restarting postgresql server"
 	    ${INIT_CMD} restart postgresql
 
-	    echo "create postgresql bootstart"
+	    echo "creating postgresql bootstart"
 	    ${INIT_CMD} enable postgresql.service
 
 	    cp ${ZAMMAD_DIR}/config/database.yml.pkgr ${ZAMMAD_DIR}/config/database.yml
@@ -59,7 +59,7 @@ else
 	# ubuntu
 	else
 	    # create postgres user
-	    echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql 
+	    echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql
 
 	    # grant privileges
 	    echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
