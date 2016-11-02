@@ -1,3 +1,6 @@
+name: zammad
+description: Zammad is a web based open source helpdesk/customer support system
+homepage: https://zammad.org
 notifications: false
 targets:
   centos-6:
