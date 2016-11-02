@@ -37,8 +37,9 @@ else
     # create new password
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
-    # postgresql db
+    # postgresql
     if [ -n "$(which psql)" ]; then
+	echo "installing zammad on postgresql"
 
 	# create database
 	echo "# database.yml not found. Creating new db..."
@@ -69,8 +70,10 @@ else
 	    sed "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
 	fi
 
-    # mysql db
+    # mysql / mariadb
     elif [ -n "$(which mysqld)" ];then
+	echo "installing zammd on mysql"
+
 	if [ -f "${MY_CNF}" ]; then
 	    MYSQL_CREDENTIALS="--defaults-file=${MY_CNF}"
 	else
@@ -90,6 +93,11 @@ else
 
 	# update configfile
 	sed -e "s/.*username:.*/  username: ${DB_USER}/" -e "s/.*password:.*/  password: ${DB_PASS}/" -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
+
+    # sqlite / no local db
+    elif [ -n "$(which sqlite)" ];then
+	echo "installing zammad on sqlite"
+	echo "in fact this does nothing at the moment. use this to install zammad without a local database. sqlite should only be used in dev environment anyway."
 
     fi
 
@@ -118,9 +126,7 @@ if [ -n "$(which nginx)" ]; then
 
     echo "# Restarting Nginx"
     ${INIT_CMD} restart nginx
-
-    echo -e "\nAdd your FQDN to servername directive in ${NGINX_CONF} and restart nginx if you're not testing localy"
-    echo -e "or open http://localhost in your browser to start using Zammad.\n"
-else
-    echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad.\n"
 fi
+
+echo -e "\nAdd your FQDN to servername directive in ${NGINX_CONF} and restart nginx if you're not testing localy"
+echo -e "or open http://localhost in your browser to start using Zammad.\n"
