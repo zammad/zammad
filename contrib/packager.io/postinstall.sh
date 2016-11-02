@@ -70,7 +70,7 @@ else
 	fi
 
     # mysql db
-    elif [-n "$(which mysqld)" ];then
+    elif [ -n "$(which mysqld)" ];then
 	if [ -f "${MY_CNF}" ]; then
 	    MYSQL_CREDENTIALS="--defaults-file=${MY_CNF}"
 	else
