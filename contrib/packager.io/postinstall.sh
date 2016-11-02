@@ -34,7 +34,7 @@ if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     echo "# database.yml found. Updating db..."
     zammad run rake db:migrate
 else
-    echo "# database.yml not found. Creating new db..."
+    echo "# database.yml not found. Creating db..."
 
     # create new password
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
@@ -61,16 +61,16 @@ else
     	    ${INIT_CMD} enable postgresql.service
 	fi
 
-        # create database
+        echo "creating zammad postgresql db"
         su - postgres -c "createdb -E UTF8 ${DB}"
 
-        # create postgres user
+	echo "creating zammad postgresql user"
         echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql 
 
-        # grant privileges
+        echo "grant privileges to new postgresql user"
         echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
 
-        # update configfile
+        echo "updating database.yml"
         sed -e "s/.*adapter:.*/  adapter: postgresql/" \
         -e "s/.*username:.*/  username: ${DB_USER}/" \
         -e  "s/.*password:.*/  password: ${DB_PASS}/" \
@@ -97,7 +97,7 @@ else
         echo "grant privileges to new mysql user"
 	mysql ${MYSQL_CREDENTIALS} -e "GRANT ALL PRIVILEGES ON ${DB}.* TO \"${DB_USER}\"@\"${DB_HOST}\"; FLUSH PRIVILEGES;"
 
-	# update configfile
+        echo "updating database.yml"
 	sed -e "s/.*adapter:.*/  adapter: mysql2/" \
     	    -e "s/.*username:.*/  username: ${DB_USER}/" \
     	    -e  "s/.*password:.*/  password: ${DB_PASS}/" \
