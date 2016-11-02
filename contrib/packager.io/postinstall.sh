@@ -8,6 +8,7 @@ PATH=/opt/zammad/bin:/opt/zammad/vendor/bundle/bin:/sbin:/bin:/usr/sbin:/usr/bin
 ZAMMAD_DIR="/opt/zammad"
 DB="zammad_production"
 DB_USER="zammad"
+MY_CNF="/etc/mysql/debian.cnf"
 
 # check which init system is used
 if [ -n "$(which initctl)" ]; then
@@ -31,44 +32,70 @@ ${INIT_CMD} stop zammad
 if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     # db migration
     echo "# database.yml exists. Updating db..."
-    zammad run rake db:migrate
+    su -c "zammad run rake db:migrate" zammad
 else
     # create new password
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
-    if [ -n "$(which postgresql-setup)" ]; then
-	echo "preparing postgresql server"
-	postgresql-setup initdb
+    # postgresql db
+    if [ -n "${which postgresql}" ]; then
+
+	# create database
+	echo "# database.yml not found. Creating new db..."
+	su - postgres -c "createdb -E UTF8 ${DB}"
+
+	# centos
+	if [ -n "$(which postgresql-setup)" ]; then
+	    echo "preparing postgresql server"
+	    postgresql-setup initdb
 	
-	echo "backuping postgres config"
-	test -f /var/lib/pgsql/data/pg_hba.conf.bak || cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
+	    echo "restarting postgresql server"
+	    ${INIT_CMD} restart postgresql
 
-	"allow login via username and password in postgresql"
-	egrep -v "^#.*$" < /var/lib/pgsql/data/pg_hba.conf.bak | sed 's/ident/trust/g' > /var/lib/pgsql/data/pg_hba.conf
+	    echo "create postgresql bootstart"
+	    ${INIT_CMD} enable postgresql.service
 
-	echo "restarting postgresql server"
-	${INIT_CMD} restart postgresql
+	    cp ${ZAMMAD_DIR}/config/database.yml.pkgr ${ZAMMAD_DIR}/config/database.yml
 
-	echo "create postgresql bootstart"
-	${INIT_CMD} enable postgresql.service
+	# ubuntu
+	else
+	    # create postgres user
+	    echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql 
+
+	    # grant privileges
+	    echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
+
+	    # update configfile
+	    sed "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+	fi
+
+    # mysql db
+    elif [-n "$(which mysqld)" ];then
+	if [ -f "${MY_CNF}" ]; then
+	    MYSQL_CREDENTIALS="--defaults-file=${MY_CNF}"
+	else
+	    echo -n "Please enter your MySQL root password:"
+	    read -s MYSQL_ROOT_PASS
+	    MYSQL_CREDENTIALS="-u root -p${MYSQL_ROOT_PASS}"
+	fi
+
+	echo "creating zammad mysql db"
+	mysql ${MYSQL_CREDENTIALS} -e "CREATE DATABASE ${DB} DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;"
+
+	echo "creating zammad mysql user"
+	mysql ${MYSQL_CREDENTIALS} -e "CREATE USER \"${DB_USER}\"@\"${DB_HOST}\" IDENTIFIED BY \"${DB_PASS}\";"
+
+	echo "grant privileges to new mysql user"
+	mysql ${MYSQL_CREDENTIALS} -e "GRANT ALL PRIVILEGES ON ${DB}.* TO \"${DB_USER}\"@\"${DB_HOST}\"; FLUSH PRIVILEGES;"
+
+	# update configfile
+	sed "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.dist > ${ZAMMAD_DIR}/config/database.yml
     fi
 
-    # create database
-    echo "# database.yml not found. Creating new db..."
-    su - postgres -c "createdb -E UTF8 ${DB}"
-
-    # create postgres user
-    echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql 
-
-    # grant privileges
-    echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
-
-    # update configfile
-    sed "s/.*password:.*/  password: ${DB_PASS}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
-
     # fill database
-    zammad run rake db:migrate 
-    zammad run rake db:seed
+    su -c "zammad run rake db:migrate" zammad
+    su -c "zammad run rake db:seed" zammad
+
 fi
 
 echo "# Starting Zammad"
