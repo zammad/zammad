@@ -38,7 +38,7 @@ else
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
     # postgresql db
-    if [ -n "${which postgresql}" ]; then
+    if [ -n "${which psql}" ]; then
 
 	# create database
 	echo "# database.yml not found. Creating new db..."
