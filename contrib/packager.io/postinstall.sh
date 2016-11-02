@@ -77,7 +77,7 @@ else
         -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
 
     # mysql / mariadb
-    elif [ -n "$(which mysqld)" ];then
+    elif [ -n "$(which mysql)" ];then
 	echo "installing zammd on mysql"
 
 	if [ -f "${MY_CNF}" ]; then
