@@ -3,23 +3,23 @@ targets:
   centos-6:
     dependencies:
       - nginx
-      - postgresql-server
+      - postgresql-server|mysql-server|mariadb-server
   centos-7:
     dependencies:
       - nginx
-      - postgresql-server
+      - postgresql-server|mysql-server|mariadb-server
   debian-8:
     dependencies:
       - nginx
-      - postgresql
+      - postgresql|mysql-server|mariadb-server
   ubuntu-16.04:
     dependencies:
       - nginx
-      - postgresql
+      - postgresql|mysql-server|mariadb-server
   sles-12:
     dependencies:
       - nginx
-      - postgresql-server
+      - postgresql-server|mysql-server|mariadb-server
 before:
   - uname -a
   - ruby -v
