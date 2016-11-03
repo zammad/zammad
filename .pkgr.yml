@@ -22,7 +22,7 @@ targets:
   sles-12:
     dependencies:
       - nginx
-      - postgresql-server|mysql-server|mariadb-server
+      - postgresql-server
 before:
   - uname -a
   - ruby -v
