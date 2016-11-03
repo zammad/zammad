@@ -727,6 +727,17 @@ test("identify signature", function() {
   message = "<p><span>test 123</span></p><p><span>test 123</span></p><p><span>--</span></p><p><span>Bob Smith</span></p><div></div>"
   should  = "<p><span>test 123</span></p><p><span>test 123</span></p><p><span><span class=\"js-signatureMarker\"></span>--</span></p><p><span>Bob Smith</span></p><div></div>"
   result  = App.Utils.signatureIdentify(message, true)
+  equal(result, should)
+
+  message = "Test reply to zammad<br><br>Am 24.10.2016 18:55 schrieb &quot;Android Support&quot; &lt;android-support@example.com&gt;:<br><br>&gt; <u></u><br>&gt; Sehr geehrte Damen"
+  should  = "Test reply to zammad<br><br><span class=\"js-signatureMarker\"></span>Am 24.10.2016 18:55 schrieb &quot;Android Support&quot; &lt;android-support@example.com&gt;:<br><br>&gt; <u></u><br>&gt; Sehr geehrte Damen"
+  result  = App.Utils.signatureIdentify(message, true)
+  equal(result, should)
+
+  message = "<br>&lt; On 20 Oct 2016, at 12:23, Martin Edenhofer via Zammad Helpdesk wrote:<br>"
+  should = "<br><span class=\"js-signatureMarker\"></span>&lt; On 20 Oct 2016, at 12:23, Martin Edenhofer via Zammad Helpdesk wrote:<br>"
+  result  = App.Utils.signatureIdentify(message, true)
+  equal(result, should)
 
   // apple
   // en

@@ -403,7 +403,7 @@ class App.Utils
       lineCount = 0
       for line in textToSearchInLines
         lineCount += 1
-        if line && line.match( /^.{6,10}\s.{3,10}\s-\s.{1,250}\s(wrote|schrieb):/ )
+        if line && line.match( /^.{6,10}\s.{3,10}\s-\s.{1,250}\s(wrote|schrieb|a écrit|escribió):/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -461,7 +461,7 @@ class App.Utils
       lineCount = 0
       for line in textToSearchInLines
         lineCount += 1
-        if line && line.match( /^.{1,250}\s(wrote|schrieb):/ )
+        if line && line.match( /^.{1,250}\s(wrote|schrieb|a écrit|escribió):/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -469,6 +469,21 @@ class App.Utils
           markers.push marker
           return
     searchForWord14(textToSearchInLines, markers)
+
+    # gmail
+    # Am 24.10.2016 18:55 schrieb "xxx" <somebody@example.com>:
+    searchForGmail = (textToSearchInLines, markers) ->
+      lineCount = 0
+      for line in textToSearchInLines
+        lineCount += 1
+        if line && line.match( /.{1,250}\s(wrote|schrieb|a écrit|escribió)\s.{1,250}:/ )
+          marker =
+            line:      cleanup(line)
+            lineCount: lineCount
+            type:      'gmail'
+          markers.push marker
+          return
+    searchForGmail(textToSearchInLines, markers)
 
     # marker template
     markerTemplate = '<span class="js-signatureMarker"></span>'

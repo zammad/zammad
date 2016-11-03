@@ -97,6 +97,8 @@ class ArticleViewItem extends App.ObserverController
         body = body.split('<br>')
         body.splice(article.preferences.signature_detection, 0, signatureDetected)
         body = body.join('<br>')
+      else
+        body = App.Utils.signatureIdentify(body)
       article['html'] = body
     else
 
