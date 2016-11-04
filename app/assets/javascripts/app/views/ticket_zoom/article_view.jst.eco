@@ -28,7 +28,6 @@
     </div>
   </div>
 </div>
-
 <div class="article-content">
   <% if @article.sender.name isnt 'Agent': %>
   <%    position = 'left' %>
@@ -46,7 +45,7 @@
             <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
           </div>
         </div>
-        <% if !_.isEmpty( @article.attachments ): %>
+        <% if !_.isEmpty(@article.attachments): %>
           <div class="attachments attachments--list">
             <%- @Icon('paperclip') %>
             <div class="attachments-title"><%- @article.attachments.length %> <%- @T('Attached Files') %></div>
@@ -62,7 +61,6 @@
     </div>
   </div>
 </div>
-
 <div class="article-meta-clip bottom">
   <div class="article-content-meta bottom hide">
     <div class="article-meta bottom">
@@ -71,8 +69,10 @@
         <div class="article-meta-value">
           <%- @Icon(@article.type.name, 'article-meta-icon') %>
           <%- @T(@article.type.name) %>
-          <% if @article.type.name is 'email': %>
-          <a class="text-muted" href="<%= App.Config.get('api_path') %>/ticket_article_plain/<%= @article.id %>" target="_blank"><%- @T('raw') %></a>
+          <% if @article.preferences.links: %>
+            <% for item in @article.preferences.links: %>
+              <a class="text-muted" href="<%- item.url %>" target="<%- item.target %>"><%- @T(item.name) %></a>
+            <% end %>
           <% end %>
         </div>
       </div>

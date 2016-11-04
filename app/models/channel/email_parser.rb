@@ -380,13 +380,15 @@ retrns
     FileUtils.mkpath path
     md5 = Digest::MD5.hexdigest(msg)
     filename = "#{path}/#{md5}.eml"
-    Rails.logger.error "ERROR: Can't process email, store it for bug reporting under #{filename}"
+    message = "ERROR: Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
+    p message # rubocop:disable Rails/Output
+    p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
+    Rails.logger.error message
     Rails.logger.error 'ERROR: ' + e.inspect
     File.open(filename, 'wb') { |file|
       file.write msg
     }
     raise e.inspect + e.backtrace.inspect
-
   end
 
   def _process(channel, msg)
@@ -624,8 +626,9 @@ retrns
 
 end
 
-# workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/fixtures/mail9.box)
 module Mail
+
+  # workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/fixtures/mail9.box)
   module Encodings
     def self.value_decode(str)
       # Optimization: If there's no encoded-words in the string, just return it
@@ -660,4 +663,19 @@ module Mail
       end.join('')
     end
   end
+
+  # issue#348 - IMAP mail fetching stops because of broken spam email (e. g. broken Content-Transfer-Encoding value see test/fixtures/mail43.box)
+  # https://github.com/zammad/zammad/issues/348
+  class Body
+    def decoded
+      if !Encodings.defined?(encoding)
+        #raise UnknownEncodingType, "Don't know how to decode #{encoding}, please call #encoded and decode it yourself."
+        Rails.logger.info "UnknownEncodingType: Don't know how to decode #{encoding}!"
+        raw_source
+      else
+        Encodings.get_encoding(encoding).decode(raw_source)
+      end
+    end
+  end
+
 end

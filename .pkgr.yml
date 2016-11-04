@@ -1,35 +1,38 @@
+name: zammad
+description: Zammad is a web based open source helpdesk/customer support system
+homepage: https://zammad.org
 notifications: false
 targets:
   centos-6:
     dependencies:
-      - httpd
-      - postgresql
+      - nginx
       - postgresql-server
-      - postgresql-devel
   centos-7:
     dependencies:
-      - httpd
-      - postgresql
+      - nginx
       - postgresql-server
-      - postgresql-devel
   debian-8:
     dependencies:
-      - postgresql
+      - nginx|apache2
+      - postgresql|mysql-server|mariadb-server|sqlite
   ubuntu-16.04:
     dependencies:
-      - postgresql
+      - nginx|apache2
+      - postgresql|mysql-server|mariadb-server|sqlite
+  sles-12:
+    dependencies:
+      - nginx
+      - postgresql-server
 before:
   - uname -a
   - ruby -v
   - env
-  - cp config/database.yml.pkgr config/database.yml
   - echo "gem 'mysql2'" >> Gemfile.local
   - "cat Gemfile.lock"
-  - contrib/packager.io/cleanup.sh
+  - contrib/cleanup.sh
 env:
   - RAILS_ENV=production
   - PORT=3000
-  - RAILS_SERVE_STATIC_FILES=true
 services:
   - postgres
 after_install: contrib/packager.io/postinstall.sh

@@ -65,6 +65,7 @@ class Index extends App.ControllerSubContent
 
     if @channel_id
       @edit(undefined, @channel_id)
+      @channel_id = undefined
 
   show: (params) =>
     for key, value of params
@@ -72,48 +73,10 @@ class Index extends App.ControllerSubContent
         @[key] = value
 
   configApp: =>
-    external_credential = App.ExternalCredential.findByAttribute('name', 'twitter')
-    contentInline = $(App.view('twitter/app_config')(
-      external_credential: external_credential
-      callbackUrl: @callbackUrl
-    ))
-    contentInline.find('.js-select').on('click', (e) =>
-      @selectAll(e)
-    )
-    modal = new App.ControllerModal(
-      head: 'Connect Twitter App'
+    new AppConfig(
       container: @el.parents('.content')
-      contentInline: contentInline
-      shown: true
-      button: 'Connect'
-      cancel: true
-      small: true
-      onSubmit: (e) =>
-        @formDisable(e)
-
-        # verify app credentals
-        @ajax(
-          id:   'twitter_app_verify'
-          type: 'POST'
-          url:  "#{@apiPath}/external_credentials/twitter/app_verify"
-          data: JSON.stringify(modal.formParams())
-          processData: true
-          success: (data, status, xhr) =>
-            if data.attributes
-              if !external_credential
-                external_credential = new App.ExternalCredential
-              external_credential.load(name: 'twitter', credentials: modal.formParams())
-              external_credential.save(
-                done: =>
-                  @load()
-                  modal.close()
-                fail: ->
-                  modal.element().find('.alert').removeClass('hidden').text('Unable to create entry.')
-              )
-              return
-            @formEnable(e)
-            modal.element().find('.alert').removeClass('hidden').text(data.error || 'Unable to verify App.')
-        )
+      callbackUrl: @callbackUrl
+      load: @load
     )
 
   new: (e) ->
@@ -127,7 +90,86 @@ class Index extends App.ControllerSubContent
     if !channel
       @navigate '#channels/twitter'
       return
-    content = $( App.view('twitter/account_edit')(channel: channel) )
+
+    new AccountEdit(
+      channel: channel
+      container: @el.parents('.content')
+      load: @load
+    )
+
+  delete: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Channel.find(id)
+    new App.ControllerGenericDestroyConfirm(
+      item:      item
+      container: @el.closest('.content')
+      callback:  @load
+    )
+
+  description: (e) =>
+    new App.ControllerGenericDescription(
+      description: App.Twitter.description
+      container:   @el.closest('.content')
+    )
+
+class AppConfig extends App.ControllerModal
+  head: 'Connect Twitter App'
+  shown: true
+  button: 'Connect'
+  buttonCancel: true
+  small: true
+
+  content: ->
+    @external_credential = App.ExternalCredential.findByAttribute('name', 'twitter')
+    content = $(App.view('twitter/app_config')(
+      external_credential: @external_credential
+      callbackUrl: @callbackUrl
+    ))
+    content.find('.js-select').on('click', (e) =>
+      @selectAll(e)
+    )
+    content
+
+  onClosed: =>
+    return if !@isChanged
+    @isChanged = false
+    @load()
+
+  onSubmit: (e) =>
+    @formDisable(e)
+
+    # verify app credentals
+    @ajax(
+      id:   'twitter_app_verify'
+      type: 'POST'
+      url:  "#{@apiPath}/external_credentials/twitter/app_verify"
+      data: JSON.stringify(@formParams())
+      processData: true
+      success: (data, status, xhr) =>
+        if data.attributes
+          if !@external_credential
+            @external_credential = new App.ExternalCredential
+          @external_credential.load(name: 'twitter', credentials: @formParams())
+          @external_credential.save(
+            done: =>
+              @isChanged = true
+              @close()
+            fail: =>
+              @el.find('.alert').removeClass('hidden').text('Unable to create entry.')
+          )
+          return
+        @formEnable(e)
+        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to verify App.')
+    )
+
+class AccountEdit extends App.ControllerModal
+  head: 'Twitter Account'
+  shown: true
+  buttonCancel: true
+
+  content: ->
+    content = $( App.view('twitter/account_edit')(channel: @channel) )
 
     createGroupSelection = (selected_id, prefix) ->
       return App.UiElement.select.render(
@@ -137,7 +179,7 @@ class Index extends App.ControllerSubContent
         null: false
         relation: 'Group'
         nulloption: true
-        default: selected_id
+        value: selected_id
         class: 'form-control--small'
       )
 
@@ -166,8 +208,8 @@ class Index extends App.ControllerSubContent
         select = createGroupSelection(item.group_id, 'search')
         content.find(".js-termGroup[data-index=\"#{i}\"]").replaceWith select
 
-    if channel.options && channel.options.sync && channel.options.sync.search
-      @searchTerms = channel.options.sync.search
+    if @channel.options && @channel.options.sync && @channel.options.sync.search
+      @searchTerms = @channel.options.sync.search
     else
       @searchTerms = []
 
@@ -176,60 +218,43 @@ class Index extends App.ControllerSubContent
     content.find('.js-searchTermAdd').click(addSearchTerm)
     content.find('.js-searchTermList').on('click', '.js-searchTermRemove', removeSearchTerm)
 
-    content.find('.js-mentionsGroup').replaceWith createGroupSelection(channel.options.sync.mentions.group_id, 'mentions')
-    content.find('.js-directMessagesGroup').replaceWith createGroupSelection(channel.options.sync.direct_messages.group_id, 'direct_messages')
+    content.find('.js-mentionsGroup').replaceWith createGroupSelection(@channel.options.sync.mentions.group_id, 'mentions')
+    content.find('.js-directMessagesGroup').replaceWith createGroupSelection(@channel.options.sync.direct_messages.group_id, 'direct_messages')
+    content
 
-    modal = new App.ControllerModal(
-      head: 'Twitter Account'
-      container: @el.parents('.content')
-      contentInline: content
-      shown: true
-      cancel: true
-      onSubmit: (e) =>
-        @formDisable(e)
-        params = modal.formParams()
-        search = []
-        position = 0
-        if params.search
-          if _.isArray(params.search.term)
-            for key in params.search.term
-              item =
-                term: params.search.term[position]
-                group_id: params.search.group_id[position]
-              search.push item
-              position += 1
-          else
-            search.push params.search
-        params.search = search
-        channel.options.sync = params
-        @ajax(
-          id:   'channel_twitter_update'
-          type: 'POST'
-          url:  "#{@apiPath}/channels/twitter_verify/#{channel.id}"
-          data: JSON.stringify(channel.attributes())
-          processData: true
-          success: (data, status, xhr) =>
-            @load()
-            modal.close()
-          fail: =>
-            @formEnable(e)
-        )
-    )
+  onClosed: =>
+    return if !@isChanged
+    @isChanged = false
+    @load()
 
-  delete: (e) =>
-    e.preventDefault()
-    id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    new App.ControllerGenericDestroyConfirm(
-      item:      item
-      container: @el.closest('.content')
-      callback:  @load
-    )
-
-  description: (e) =>
-    new App.ControllerGenericDescription(
-      description: App.Twitter.description
-      container:   @el.closest('.content')
+  onSubmit: (e) =>
+    @formDisable(e)
+    params = @formParams()
+    search = []
+    position = 0
+    if params.search
+      if _.isArray(params.search.term)
+        for key in params.search.term
+          item =
+            term: params.search.term[position]
+            group_id: params.search.group_id[position]
+          search.push item
+          position += 1
+      else
+        search.push params.search
+    params.search = search
+    @channel.options.sync = params
+    @ajax(
+      id:   'channel_twitter_update'
+      type: 'POST'
+      url:  "#{@apiPath}/channels/twitter_verify/#{@channel.id}"
+      data: JSON.stringify(@channel.attributes())
+      processData: true
+      success: (data, status, xhr) =>
+        @isChanged = true
+        @close()
+      fail: =>
+        @formEnable(e)
     )
 
 App.Config.set('Twitter', { prio: 5000, name: 'Twitter', parent: '#channels', target: '#channels/twitter', controller: Index, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')

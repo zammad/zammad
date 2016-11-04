@@ -141,6 +141,11 @@ class App.TicketZoomArticleNew extends App.Controller
       # preselect article type
       @setArticleType(data.type.name)
 
+      # set focus at end of field
+      if data.position is 'end'
+        @placeCaretAtEnd(@textarea.get(0))
+        return
+
       # set focus into field
       @textarea.focus()
     )
@@ -157,6 +162,22 @@ class App.TicketZoomArticleNew extends App.Controller
     @bind('ui:rerender', =>
       @render()
     )
+
+  placeCaretAtEnd: (el) ->
+    el.focus()
+    if typeof window.getSelection isnt 'undefined' && typeof document.createRange isnt 'undefined'
+      range = document.createRange()
+      range.selectNodeContents(el)
+      range.collapse(false)
+      sel = window.getSelection()
+      sel.removeAllRanges()
+      sel.addRange(range)
+      return
+    if typeof document.body.createTextRange isnt 'undefined'
+      textRange = document.body.createTextRange()
+      textRange.moveToElementText(el)
+      textRange.collapse(false)
+      textRange.select()
 
   isIE10: ->
     Function('/*@cc_on return document.documentMode===10@*/')()
@@ -293,32 +314,17 @@ class App.TicketZoomArticleNew extends App.Controller
         params.type_id   = type.id
 
     if params.type is 'twitter status'
-      rawHTML = @$('[data-name=body]').html()
-      cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
-
-      # if markup is included, strip it out
-      if cleanHTML && cleanHTML.html() isnt rawHTML && "<div>#{cleanHTML.html()}</div>" isnt rawHTML
-        @$('[data-name=body]').html(cleanHTML)
+      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
       params.content_type = 'text/plain'
       params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
 
     if params.type is 'twitter direct-message'
-      rawHTML = @$('[data-name=body]').html()
-      cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
-
-      # if markup is included, strip it out
-      if cleanHTML && cleanHTML.html() isnt rawHTML && "<div>#{cleanHTML.html()}</div>" isnt rawHTML
-        @$('[data-name=body]').html(cleanHTML)
+      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
       params.content_type = 'text/plain'
       params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
 
     if params.type is 'facebook feed comment'
-      rawHTML = @$('[data-name=body]').html()
-      cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
-
-      # if markup is included, strip it out
-      if cleanHTML && cleanHTML.html() isnt rawHTML && "<div>#{cleanHTML.html()}</div>" isnt rawHTML
-        @$('[data-name=body]').html(cleanHTML)
+      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
       params.content_type = 'text/plain'
       params.body = App.Utils.html2text(params.body, true)
 

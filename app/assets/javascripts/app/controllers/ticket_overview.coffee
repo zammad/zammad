@@ -110,6 +110,10 @@ class App.TicketOverview extends App.Controller
     $(window).off 'keydown.overview_navigation'
 
   listNavigate: (e) =>
+
+    # ignore if focus is in bulk action
+    return if $(e.target).is('textarea, input, select')
+
     if e.keyCode is 38 # up
       e.preventDefault()
       @nudge(e, -1)

@@ -108,7 +108,7 @@ class App.ControllerForm extends App.Controller
     if @fullForm
       if !@formClass
         @formClass = ''
-      fieldset = $('<form class="' + @formClass + '"><button class="btn">' + App.i18n.translateContent('Submit') + '</button></form>').prepend( fieldset )
+      fieldset = $('<form class="' + @formClass + '" autocomplete="off"><button class="btn">' + App.i18n.translateContent('Submit') + '</button></form>').prepend( fieldset )
 
     # bind form events
     if @events
@@ -489,21 +489,21 @@ class App.ControllerForm extends App.Controller
     inputSelectObject = {}
     for key of param
       parts = key.split '::'
-      if parts[0] && parts[1]
-        if parts[1] && !inputSelectObject[ parts[0] ]
+      if parts[0] && parts[1] isnt undefined
+        if parts[1] isnt undefined && !inputSelectObject[ parts[0] ]
           inputSelectObject[ parts[0] ] = {}
-        if parts[2] && !inputSelectObject[ parts[0] ][ parts[1] ]
+        if parts[2] isnt undefined && !inputSelectObject[ parts[0] ][ parts[1] ]
           inputSelectObject[ parts[0] ][ parts[1] ] = {}
-        if parts[3] && !inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ]
+        if parts[3] isnt undefined && !inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ]
           inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ] = {}
 
-        if parts[3]
+        if parts[3] isnt undefined
           inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ][ parts[3] ] = param[ key ]
           delete param[ key ]
-        else if parts[2]
+        else if parts[2] isnt undefined
           inputSelectObject[ parts[0] ][ parts[1] ][ parts[2] ] = param[ key ]
           delete param[ key ]
-        else if parts[1]
+        else if parts[1] isnt undefined
           inputSelectObject[ parts[0] ][ parts[1] ] = param[ key ]
           delete param[ key ]
 

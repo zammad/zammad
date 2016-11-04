@@ -157,7 +157,7 @@ class App.Utils
     html
 
   # htmlOnlyWithRichtext = App.Utils.htmlRemoveRichtext(html)
-  @htmlRemoveRichtext: (html) ->
+  @htmlRemoveRichtext: (html, parent = true) ->
     return html if !html
     html = @_checkTypeOf(html)
 
@@ -165,7 +165,8 @@ class App.Utils
     @_removeComments(html)
 
     # remove style and class
-    @_removeAttributes(html)
+    if parent
+      @_removeAttributes(html)
 
     # remove work markup
     @_removeWordMarkup(html)
@@ -241,16 +242,17 @@ class App.Utils
     catch err
       return $("<div>#{item}</div>")
 
-  @_removeAttributes: (html) ->
-    html.find('*')
-      .removeAttr('style')
-      .removeAttr('class')
-      .removeAttr('title')
-      .removeAttr('lang')
-      .removeAttr('type')
-      .removeAttr('id')
-      .removeAttr('wrap')
-      .removeAttrs(/data-/)
+  @_removeAttributes: (html, parent = true) ->
+    if parent
+      html.find('*')
+        .removeAttr('style')
+        .removeAttr('class')
+        .removeAttr('title')
+        .removeAttr('lang')
+        .removeAttr('type')
+        .removeAttr('id')
+        .removeAttr('wrap')
+        .removeAttrs(/data-/)
     html
       .removeAttr('style')
       .removeAttr('class')
@@ -401,7 +403,7 @@ class App.Utils
       lineCount = 0
       for line in textToSearchInLines
         lineCount += 1
-        if line && line.match( /^.{6,10}\s.{3,10}\s-\s.{1,250}\s(wrote|schrieb):/ )
+        if line && line.match( /^.{6,10}\s.{3,10}\s-\s.{1,250}\s(wrote|schrieb|a écrit|escribió):/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -459,7 +461,7 @@ class App.Utils
       lineCount = 0
       for line in textToSearchInLines
         lineCount += 1
-        if line && line.match( /^.{1,250}\s(wrote|schrieb):/ )
+        if line && line.match( /^.{1,250}\s(wrote|schrieb|a écrit|escribió):/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -467,6 +469,21 @@ class App.Utils
           markers.push marker
           return
     searchForWord14(textToSearchInLines, markers)
+
+    # gmail
+    # Am 24.10.2016 18:55 schrieb "xxx" <somebody@example.com>:
+    searchForGmail = (textToSearchInLines, markers) ->
+      lineCount = 0
+      for line in textToSearchInLines
+        lineCount += 1
+        if line && line.match( /.{1,250}\s(wrote|schrieb|a écrit|escribió)\s.{1,250}:/ )
+          marker =
+            line:      cleanup(line)
+            lineCount: lineCount
+            type:      'gmail'
+          markers.push marker
+          return
+    searchForGmail(textToSearchInLines, markers)
 
     # marker template
     markerTemplate = '<span class="js-signatureMarker"></span>'

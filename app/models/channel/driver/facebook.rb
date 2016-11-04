@@ -76,6 +76,9 @@ class Channel::Driver::Facebook
     return if !@sync
     return if !@sync['pages']
 
+    older_import = 0
+    older_import_max = 12
+
     @sync['pages'].each { |page_to_sync_id, page_to_sync_params|
       page = get_page(page_to_sync_id)
       next if !page
@@ -83,8 +86,16 @@ class Channel::Driver::Facebook
       next if page_to_sync_params['group_id'].empty?
       page_client = Facebook.new(page['access_token'])
 
-      posts = page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,comments')
+      posts = page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,permalink_url,comments{id,from,to,message,created_time}')
       posts.each { |post|
+
+        # ignore older messages
+        if (@channel.created_at - 15.days) > Time.zone.parse(post['created_time']) || older_import >= older_import_max
+          older_import += 1
+          Rails.logger.debug "post to old: #{post['id']}/#{post['created_time']}"
+          next
+        end
+
         page_client.to_group(post, page_to_sync_params['group_id'], @channel, page)
       }
     }

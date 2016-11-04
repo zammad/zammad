@@ -42,21 +42,41 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
       article.from = "@#{tweet.sender.screen_name}"
       article.to = "@#{tweet.recipient.screen_name}"
 
+      article.preferences['twitter'] = {
+        created_at: tweet.created_at,
+        recipient_id: tweet.recipient.id,
+        recipient_screen_name: tweet.recipient.screen_name,
+        sender_id: tweet.sender.id,
+        sender_screen_name: tweet.sender.screen_name,
+      }
+
     # regular tweet
     elsif tweet.class == Twitter::Tweet
       article.from = "@#{tweet.user.screen_name}"
       if tweet.user_mentions
         to = ''
-        twitter_mention_ids = []
+        mention_ids = []
         tweet.user_mentions.each { |user|
           if to != ''
             to += ' '
           end
           to += "@#{user.screen_name}"
-          twitter_mention_ids.push user.id
+          mention_ids.push user.id
         }
         article.to = to
-        article.preferences[:twitter_mention_ids] = twitter_mention_ids
+        article.preferences['twitter'] = {
+          mention_ids: mention_ids,
+          geo: tweet.geo,
+          retweeted: tweet.retweeted?,
+          possibly_sensitive: tweet.possibly_sensitive?,
+          in_reply_to_user_id: tweet.in_reply_to_user_id,
+          place: tweet.place,
+          retweet_count: tweet.retweet_count,
+          source: tweet.source,
+          favorited: tweet.favorited?,
+          truncated: tweet.truncated?,
+          created_at: tweet.created_at,
+        }
       end
     else
       raise "Unknown tweet type '#{tweet.class}'"
@@ -68,6 +88,14 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     article.preferences['delivery_status_date'] = Time.zone.now
 
     article.message_id = tweet.id.to_s
+    article.preferences['links'] = [
+      {
+        url: "https://twitter.com/statuses/#{tweet.id}",
+        target: '_blank',
+        name: 'on Twitter',
+      },
+    ]
+
     article.save!
 
     Rails.logger.info "Send twitter (#{tweet.class}) to: '#{article.to}' (from #{article.from})"

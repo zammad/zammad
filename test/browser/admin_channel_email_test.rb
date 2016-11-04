@@ -23,10 +23,24 @@ class AdminChannelEmailTest < TestCase
     click(css: 'a[href="#manage"]')
     click(css: '.content.active a[href="#channels/email"]')
 
+    # check if postmaster filter are shown
+    click(css: '.content.active a[href="#c-filter"]')
+    match(
+      css: '.content.active #c-filter .overview',
+      value: 'No Entries',
+    )
+
+    # check if signatures are shown
+    click(css: '.content.active a[href="#c-signature"]')
+    match(
+      css: '.content.active #c-signature .overview',
+      value: 'default',
+    )
+
+    click(css: '.content.active a[href="#c-account"]')
     click(css: '.content.active .js-channelNew')
 
     modal_ready()
-
     set(
       css: '.modal input[name="realname"]',
       value: 'My System',

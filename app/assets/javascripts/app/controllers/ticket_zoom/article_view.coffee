@@ -97,6 +97,8 @@ class ArticleViewItem extends App.ObserverController
         body = body.split('<br>')
         body.splice(article.preferences.signature_detection, 0, signatureDetected)
         body = body.join('<br>')
+      else
+        body = App.Utils.signatureIdentify(body)
       article['html'] = body
     else
 
@@ -119,6 +121,17 @@ class ArticleViewItem extends App.ObserverController
           body = App.Utils.textCleanup(body)
           article['html'] = App.Utils.text2html(body)
           article['html'] = article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
+
+    # check if email link need to be updated
+    if article.type.name is 'email'
+      if !article.preferences.links
+        article.preferences.links = [
+          {
+            name: 'Raw'
+            url: "#{@Config.get('api_path')}/ticket_article_plain/#{article.id}"
+            target: '_blank'
+          }
+        ]
 
     if article.preferences.delivery_message
       @html App.view('ticket_zoom/article_view_delivery_failed')(

@@ -210,8 +210,7 @@ result
     end
 
     state = get_state(page, post)
-
-    Ticket.create(
+    Ticket.create!(
       customer_id: user.id,
       title:       title,
       group_id:    group_id,
@@ -220,6 +219,9 @@ result
       preferences: {
         channel_id: channel.id,
         channel_fb_object_id: page['id'],
+        facebook: {
+          permalink_url: post['permalink_url'],
+        }
       },
     )
   end
@@ -260,6 +262,11 @@ result
       articles += nested_comments(post['comments']['data'], post['id'])
     end
 
+    base_url = nil
+    if ticket.preferences['facebook'] && ticket.preferences['facebook']['permalink_url']
+      base_url = ticket.preferences['facebook']['permalink_url']
+    end
+
     articles.each { |article|
       next if Ticket::Article.find_by(message_id: article[:message_id])
 
@@ -267,7 +274,23 @@ result
       ticket_state = get_state(page, post, ticket)
       if ticket_state.name != ticket.state.name
         ticket.state = ticket_state
-        ticket.save
+        ticket.save!
+      end
+
+      links = []
+      if base_url
+        url = base_url
+        realtive_id = article[:message_id].split('_')[1]
+        if realtive_id
+          url += "?comment_id=#{realtive_id}"
+        end
+        links = [
+          {
+            url: url,
+            target: '_blank',
+            name: 'on Facebook',
+          },
+        ]
       end
 
       article = {
@@ -277,6 +300,9 @@ result
         sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
         created_by_id: 1,
         updated_by_id: 1,
+        preferences: {
+          links: links,
+        },
       }.merge(article)
       Ticket::Article.create(article)
     }
@@ -363,7 +389,7 @@ result
         in_reply_to: in_reply_to
       }
       result.push(article_data)
-      sub_comments = @client.get_object("#{comment['id']}/comments")
+      sub_comments = @client.get_object("#{comment['id']}/comments", fields: 'id,from,to,message,created_time')
       sub_articles = nested_comments(sub_comments, comment['id'])
       result += sub_articles
     }
