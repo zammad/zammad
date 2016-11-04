@@ -4,6 +4,7 @@
  - 2016-10-28 Implemented issue#[317](https://github.com/zammad/zammad/issues/317) - Display origin url from tweet/facebook post in article view.
 
 ## Zammad 1.0.1
+ - 2016-11-04 Fixed issue#[312](https://github.com/zammad/zammad/issues/312) - In object manager, blank line in object deleted all values for selections.
  - 2016-11-04 Fixed issue#[286](https://github.com/zammad/zammad/issues/286) - Answers from google mail shows complete quote.
  - 2016-11-03 Fixed issue#[348](https://github.com/zammad/zammad/issues/348) - IMAP mail fetching stops because of broken spam email (invalid Content-Transfer-Encoding header)
  - 2016-10-29 Fixed issue#[326](https://github.com/zammad/zammad/issues/326) - Create emails via fetchmail / procmail.

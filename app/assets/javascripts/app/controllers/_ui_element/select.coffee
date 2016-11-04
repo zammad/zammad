@@ -30,4 +30,4 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
     @filterOption(attribute, params)
 
     # return item
-    $( App.view('generic/select')( attribute: attribute ) )
+    $( App.view('generic/select')(attribute: attribute) )
