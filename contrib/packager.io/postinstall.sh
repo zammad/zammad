@@ -134,7 +134,10 @@ if [ -n "$(which nginx)" ]; then
 
     echo "# Restarting Nginx"
     ${INIT_CMD} restart nginx
+    
+    echo -e "\nAdd your FQDN to servername directive in ${NGINX_CONF} and restart nginx if you're not testing localy"
+    echo -e "or open http://localhost in your browser to start using Zammad.\n"
+else
+    echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad.\n"
 fi
 
-echo -e "\nAdd your FQDN to servername directive in ${NGINX_CONF} and restart nginx if you're not testing localy"
-echo -e "or open http://localhost in your browser to start using Zammad.\n"
