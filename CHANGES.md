@@ -1,6 +1,7 @@
 # Changes
 
 ## Zammad 1.1.0
+ - 2016-04-11 Implemented issue#[349](https://github.com/zammad/zammad/issues/349) - ticket search cache issue.
  - 2016-10-28 Implemented issue#[317](https://github.com/zammad/zammad/issues/317) - Display origin url from tweet/facebook post in article view.
 
 ## Zammad 1.0.1
