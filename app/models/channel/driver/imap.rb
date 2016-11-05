@@ -68,15 +68,7 @@ returns
       @imap = Net::IMAP.new(options[:host], port, ssl, nil, false)
     end
 
-    # try LOGIN, if not - try plain
-    begin
-      @imap.authenticate('LOGIN', options[:user], options[:password])
-    rescue => e
-      if e.to_s !~ /(unsupported\s(authenticate|authentication)\smechanism|not\ssupported)/i
-        raise e
-      end
-      @imap.login(options[:user], options[:password])
-    end
+    @imap.login(options[:user], options[:password])
 
     # select folder
     if !options[:folder] || options[:folder].empty?
