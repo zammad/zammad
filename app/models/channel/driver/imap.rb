@@ -46,12 +46,23 @@ returns
     result: 'ok', # 'verify not ok'
   }
 
+example
+
+  params = {
+    host: 'outlook.office365.com',
+    user: 'xxx@znuny.onmicrosoft.com',
+    password: 'xxx',
+  }
+  channel = Channel.last
+  instance = Channel::Driver::Imap.new
+  result = instance.fetch(params, channel, 'verify')
+
 =end
 
   def fetch (options, channel, check_type = '', verify_string = '')
     ssl  = true
     port = 993
-    if options.key?(:ssl) && options[:ssl].to_s == 'false'
+    if options.key?(:ssl) && options[:ssl] == false
       ssl  = false
       port = 143
     end
