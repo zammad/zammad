@@ -13,15 +13,15 @@ class _globalSearchSingleton extends Spine.Module
     @apiPath = App.Config.get('api_path')
 
   execute: (params) ->
-    query     = params.query
-    render    = params.render
-    limit     = params.limit || 10
-    cache_key = query + '_' + limit
+    query    = params.query
+    render   = params.render
+    limit    = params.limit || 10
+    cacheKey = "#{query}_#{limit}"
 
     # use cache for search result
     currentTime = new Date
-    if @searchResultCache[cache_key] && @searchResultCache[cache_key].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
-      render(@searchResultCache[cache_key].result)
+    if @searchResultCache[cacheKey] && @searchResultCache[cacheKey].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
+      render(@searchResultCache[cacheKey].result)
       return
 
     App.Ajax.request(
@@ -49,11 +49,11 @@ class _globalSearchSingleton extends Spine.Module
             App.Log.error('_globalSearchSingleton', "No such model App.#{item.type}")
 
         diff = false
-        if @searchResultCache[cache_key]
-          diff = difference(@searchResultCache[cache_key].resultRaw, data.result)
+        if @searchResultCache[cacheKey]
+          diff = difference(@searchResultCache[cacheKey].resultRaw, data.result)
 
         # cache search result
-        @searchResultCache[cache_key] =
+        @searchResultCache[cacheKey] =
           result: result
           resultRaw: data.result
           limit: limit
