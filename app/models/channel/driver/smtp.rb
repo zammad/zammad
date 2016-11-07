@@ -31,7 +31,16 @@ class Channel::Driver::Smtp
       options[:port] = 25
     end
     if !options.key?(:domain)
-      options[:domain] = Setting.get('fqdn')
+
+      # set fqdn, if local fqdn - use domain of sender
+      fqdn = Setting.get('fqdn')
+      if fqdn =~ /(localhost|\.local^|\.loc^)/i && (attr['from'] || attr[:from])
+        domain = Mail::Address.new(attr['from'] || attr[:from]).domain
+        if domain
+          fqdn = domain
+        end
+      end
+      options[:domain] = fqdn
     end
     if !options.key?(:enable_starttls_auto)
       options[:enable_starttls_auto] = true
