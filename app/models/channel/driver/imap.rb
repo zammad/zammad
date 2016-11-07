@@ -183,10 +183,9 @@ example
       # delete email from server after article was created
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
       next if !msg
-      if process(channel, msg)
-        @imap.store(message_id, '+FLAGS', [:Deleted])
-        count_fetched += 1
-      end
+      process(channel, msg, false)
+      @imap.store(message_id, '+FLAGS', [:Deleted])
+      count_fetched += 1
     end
     @imap.expunge()
     disconnect

@@ -145,10 +145,9 @@ returns
       end
 
       # delete email from server after article was created
-      if process(channel, m.pop)
-        m.delete
-        count_fetched += 1
-      end
+      process(channel, m.pop, false)
+      m.delete
+      count_fetched += 1
     end
     disconnect
     if count.zero?
