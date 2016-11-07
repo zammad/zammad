@@ -376,8 +376,8 @@ test:browser:integration:api_client_ruby:
     - RAILS_ENV=test rake db:create
     - cp contrib/auto_wizard_test.json auto_wizard.json
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - git clone git@github.com:martini/zammad_api_client_ruby.git || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
-    - cd zammad_api_client_ruby
+    - git clone git@github.com:zammad/zammad-api-client-ruby.git || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - cd zammad-api-client-ruby
     - bundle install
     - export TEST_URL=http://$IP:$BROWSER_PORT
     - rspec || (cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1)
