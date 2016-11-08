@@ -6,6 +6,10 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
+
+# clear old caches to start from scratch
+Cache.clear
+
 Setting.create_if_not_exists(
   title: 'System Init Done',
   name: 'system_init_done',
