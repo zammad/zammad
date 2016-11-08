@@ -14,7 +14,7 @@ returns
 
 =end
 
-  def history_log (type, user_id, data = {})
+  def history_log(type, user_id, data = {})
     data[:o_id]                   = self['id']
     data[:history_type]           = type
     data[:history_object]         = self.class.name
