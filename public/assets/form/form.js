@@ -16,6 +16,7 @@ $(function() {
     messageThankYou: 'Thank you for your inquiry! We\'ll contact you soon as possible.', // optional
     messageNoConfig: 'Unable to load form config from server. Maybe featrue is disabled.', // optional
     showTitle: true,
+    lang: 'de', // optional, <html lang="xx"> will be used per default
     modal: true,
     attributes: [
       {
@@ -48,6 +49,7 @@ $(function() {
 
   var pluginName = 'ZammadForm',
   defaults = {
+    lang: undefined,
     debug: false,
     noCSS: false,
     prefixCSS: 'zammad-form-',
@@ -78,14 +80,38 @@ $(function() {
         placeholder: 'Your Message...',
         rows: 7,
       },
-    ]
+    ],
+    translations: {
+      de: {
+        'Name': 'Name',
+        'Your Name': 'Ihr Name',
+        'Email': 'E-Mail',
+        'Your Email': 'Ihre E-Mail',
+        'Message': 'Nachricht',
+        'Your Message...': 'Ihre Nachricht...',
+      },
+      es: {
+        'Name': 'Nombre',
+        'Your Name': 'tu Nombre',
+        'Email': 'correo electrónico',
+        'Your Email': 'Tu correo electrónico',
+        'Message': 'Mensaje',
+        'Your Message...': 'tu Mensaje...',
+      },
+      fr: {
+        'Name': 'Prénom',
+        'Your Name': 'Votre nom',
+        'Email': 'Email',
+        'Your Email': 'Votre Email',
+        'Message': 'Message',
+        'Your Message...': 'Votre message...',
+      },
+    }
   };
 
   function Plugin(element, options) {
-    this.element  = element;
+    this.element  = element
     this.$element = $(element)
-
-    this.options = $.extend({}, defaults, options);
 
     this._defaults = defaults;
     this._name     = pluginName;
@@ -100,9 +126,18 @@ $(function() {
     this.endpoint_config = this._src.replace(this._script_location, this._endpoint_config)
     this.endpoint_submit = this._src.replace(this._script_location, this._endpoint_submit)
 
+    this.options = $.extend({}, defaults, options)
+    if (!this.options.lang) {
+      this.options.lang = $('html').attr('lang')
+    }
+    if (this.options.lang) {
+      this.options.lang = this.options.lang.replace(/-.+?$/, '')
+      this.log('debug', "lang: " + this.options.lang)
+    }
+
     this._config = {}
 
-    this.init();
+    this.init()
   }
 
   Plugin.prototype.init = function () {
@@ -260,12 +295,12 @@ $(function() {
       $form.append('<h2>' + this.options.messageTitle + '</h2>')
     }
     $.each(this.options.attributes, function(index, value) {
-      var item = $('<div class="form-group"><label>' + value.display + '</label></div>')
+      var item = $('<div class="form-group"><label>' + _this.T(value.display) + '</label></div>')
       if (value.tag == 'input') {
-        item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + value.placeholder + '">')
+        item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '">')
       }
       else if (value.tag == 'textarea') {
-        item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + value.placeholder + '" rows="' + value.rows + '"></textarea>')
+        item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '"></textarea>')
       }
       $form.append(item)
     })
@@ -339,6 +374,31 @@ $(function() {
       }
     })
     $('.js-logDisplay').prepend('<div>' + logString + '</div>')
+  }
+
+  // translation method
+  Plugin.prototype.T = function() {
+    var string = arguments[0]
+    var items = 2 <= arguments.length ? slice.call(arguments, 1) : []
+    if (this.options.lang && this.options.lang !== 'en') {
+      if (!this.options.translations[this.options.lang]) {
+        this.log('debug', "Translation '" + this.options.lang + "' needed!")
+      }
+      else {
+        translations = this.options.translations[this.options.lang]
+        if (!translations[string]) {
+          this.log('debug', "Translation needed for '" + this.options.lang + "' " + string + "'")
+        }
+        string = translations[string] || string
+      }
+    }
+    if (items) {
+      for (i = 0, len = items.length; i < len; i++) {
+        item = items[i]
+        string = string.replace(/%s/, item)
+      }
+    }
+    return string
   }
 
   $.fn[pluginName] = function (options) {
