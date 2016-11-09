@@ -553,6 +553,11 @@ pre code.hljs {
     }
   }
 
+  &.btn--textLarge {
+    @extend .btn--text;
+    margin: 0px;
+  }
+
   &.btn--quad {
     padding: 10px 12px 9px;
 
@@ -673,7 +678,7 @@ pre code.hljs {
     margin-left: 0;
   }
 
-  .btn--text {
+  .btn--text, .btn--textLarge {
     padding: 6px 10px 5px; /* reporting main.eco */
     display: inline-block;
     border-radius: 3px;
