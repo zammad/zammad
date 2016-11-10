@@ -27,7 +27,7 @@ class Channel::Driver::Smtp
     return if Setting.get('import_mode')
 
     # set smtp defaults
-    if !options.key?(:port)
+    if !options.key?(:port) || options[:port].empty?
       options[:port] = 25
     end
     if !options.key?(:domain)
