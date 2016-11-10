@@ -364,13 +364,22 @@ class Channel::EmailParser
   parser = Channel::EmailParser.new
   ticket, article, user = parser.process(channel, email_raw_string)
 
-retrns
+returns
 
   [ticket, article, user]
 
+do not raise an exception - e. g. if used by scheduler
+
+  parser = Channel::EmailParser.new
+  ticket, article, user = parser.process(channel, email_raw_string, fakse)
+
+returns
+
+  [ticket, article, user] || false
+
 =end
 
-  def process(channel, msg)
+  def process(channel, msg, exception = true)
 
     _process(channel, msg)
   rescue => e
@@ -388,6 +397,7 @@ retrns
     File.open(filename, 'wb') { |file|
       file.write msg
     }
+    return false if exception == false
     raise e.inspect + e.backtrace.inspect
   end
 

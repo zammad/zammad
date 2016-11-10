@@ -1,6 +1,9 @@
 class CreateBase < ActiveRecord::Migration
   def up
 
+    # clear old caches to start from scratch
+    Cache.clear
+
     create_table :sessions do |t|
       t.string :session_id,  null: false
       t.boolean :persistent, null: true

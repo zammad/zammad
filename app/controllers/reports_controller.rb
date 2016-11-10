@@ -7,6 +7,12 @@ class ReportsController < ApplicationController
 
   # GET /api/reports/config
   def reporting_config
+    if !Report.enabled?
+      render json: {
+        error: 'Elasticsearch need to be configured!',
+      }
+      return
+    end
     render json: {
       config: Report.config,
       profiles: Report::Profile.list,
@@ -138,17 +144,16 @@ class ReportsController < ApplicationController
       range = 'hour'
     elsif params[:timeRange] == 'week'
       start = Date.commercial(params[:year], params[:week]).iso8601
-      stop = Date.parse(start).end_of_week
+      stop = Date.parse(start).end_of_week.iso8601
       range = 'week'
     elsif params[:timeRange] == 'month'
       start = Date.parse("#{params[:year]}-#{params[:month]}-01}").iso8601
-      stop = Date.parse(start).end_of_month
+      stop = Date.parse(start).end_of_month.iso8601
       range = 'day'
     else
-      start     = "#{params[:year]}-01-01"
-      stop_date = Date.parse(start).end_of_month
-      stop      = "#{stop_date.year}-#{stop_date.month}-#{stop_date.day}"
-      range     = 'month'
+      start = "#{params[:year]}-01-01"
+      stop = Date.parse("#{params[:year]}-12-31").iso8601
+      range = 'month'
     end
     {
       profile: profile,

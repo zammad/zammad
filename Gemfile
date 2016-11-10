@@ -105,6 +105,9 @@ group :development, :test do
   gem 'pre-commit'
   gem 'rubocop'
   gem 'coffeelint'
+
+  # changelog generation
+  gem 'github_changelog_generator'
 end
 
 gem 'puma'

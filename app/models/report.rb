@@ -1,5 +1,9 @@
 class Report
 
+  def self.enabled?
+    !Setting.get('es_url').empty?
+  end
+
   def self.config
     config = {}
     config[:metric] = {}

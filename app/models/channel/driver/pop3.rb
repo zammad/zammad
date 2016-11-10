@@ -47,7 +47,7 @@ returns
   def fetch (options, channel, check_type = '', verify_string = '')
     ssl  = true
     port = 995
-    if options.key?(:ssl) && options[:ssl].to_s == 'false'
+    if options.key?(:ssl) && options[:ssl] == false
       ssl  = false
       port = 110
     end
@@ -145,10 +145,9 @@ returns
       end
 
       # delete email from server after article was created
-      if process(channel, m.pop)
-        m.delete
-        count_fetched += 1
-      end
+      process(channel, m.pop, false)
+      m.delete
+      count_fetched += 1
     end
     disconnect
     if count.zero?

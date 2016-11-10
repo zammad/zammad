@@ -60,6 +60,9 @@ returns
       if !force
         return false if escalation_at.nil?
         self.escalation_at = nil
+        if preferences['escalation_calculation']
+          preferences['escalation_calculation']['escalation_disabled'] = escalation_disabled
+        end
         return true
       end
     end
@@ -82,6 +85,9 @@ returns
       self.escalation_at = nil
       self.update_escalation_at = nil
       self.close_escalation_at = nil
+      if preferences['escalation_calculation']
+        preferences['escalation_calculation']['escalation_disabled'] = escalation_disabled
+      end
       return true
     end
 
@@ -116,7 +122,7 @@ returns
       first_response_at_changed = false
     end
     last_update_at_changed = true
-    if escalation_calculation['last_update_at'] == last_update_at
+    if escalation_calculation['last_update_at'] == last_update_at && !changes['state_id']
       last_update_at_changed = false
     end
     close_at_changed = true
@@ -189,7 +195,7 @@ returns
 
       # get response time in min
       if first_response_at
-        self.first_response_in_min = pending_minutes(created_at, first_response_at, biz, history_data, 'business_minutes')
+        self.first_response_in_min = period_working_minutes(created_at, first_response_at, biz, history_data)
       end
 
       # set time to show if sla is raised or not
@@ -209,7 +215,7 @@ returns
 
       # get update time in min
       if last_update_at && last_update_at != created_at
-        self.update_in_min = pending_minutes(created_at, last_update_at, biz, history_data, 'business_minutes')
+        self.update_in_min = period_working_minutes(created_at, last_update_at, biz, history_data)
       end
 
       # set sla time
@@ -229,7 +235,7 @@ returns
 
       # get close time in min
       if close_at
-        self.close_in_min = pending_minutes(created_at, close_at, biz, history_data, 'business_minutes')
+        self.close_in_min = period_working_minutes(created_at, close_at, biz, history_data)
       end
 
       # set time to show if sla is raised or not
@@ -318,46 +324,66 @@ returns
   def destination_time(start_time, move_minutes, biz, history_data)
     destination_time = biz.time(move_minutes, :minutes).after(start_time)
 
-    # go step by step to end of pending_minutes until pending_minutes is 0
-    pending_start_time = start_time
-    500.times.each {
+    # go step by step to end of move_minutes until move_minutes is 0
+    200.times.each { |_count|
 
       # check if we have pending time in the range to the destination time
-      pending_minutes = pending_minutes(pending_start_time, destination_time, biz, history_data)
+      working_minutes = period_working_minutes(start_time, destination_time, biz, history_data, true)
+      move_minutes -= working_minutes
 
       # skip if no pending time is given
-      break if !pending_minutes || pending_minutes <= 0
+      break if move_minutes <= 0
 
       # set pending destination to start time and add pending time to destination time
-      pending_start_time = destination_time
-      destination_time   = biz.time(pending_minutes, :minutes).after(destination_time)
+      start_time       = destination_time
+      destination_time = biz.time(move_minutes, :minutes).after(start_time)
     }
-
     destination_time
   end
 
-  # get business minutes of pending time
-  #  type = business_minutes (pending time in business minutes)
-  #  type = non_business_minutes (pending time in non business minutes)
-  def pending_minutes(start_time, end_time, biz, history_data, type = 'non_business_minutes')
+  # get period working minutes time in minutes
+  def period_working_minutes(start_time, end_time, biz, history_list, add_current = false)
 
     working_time_in_min      = 0
-    total_time_in_min        = 0
     last_state               = nil
     last_state_change        = nil
-    last_state_is_pending    = false
-    pending_minutes          = 0
     ignore_escalation_states = Ticket::State.where(
       ignore_escalation: true,
     ).map(&:name)
 
-    history_data.each { |history_item|
+    # add state changes till now
+    if add_current && changes['state_id'] && changes['state_id'][0] && changes['state_id'][1]
+      last_history_state = nil
+      history_list.each { |history_item|
+        next if !history_item['attribute']
+        next if history_item['attribute'] != 'state'
+        next if history_item['id']
+        last_history_state = history_item
+      }
+      local_updated_at = updated_at
+      if changes['updated_at'] && changes['updated_at'][1]
+        local_updated_at = changes['updated_at'][1]
+      end
+      history_item = {
+        'attribute' => 'state',
+        'created_at' => local_updated_at,
+        'value_from' => Ticket::State.find(changes['state_id'][0]).name,
+        'value_to' => Ticket::State.find(changes['state_id'][1]).name,
+      }
+      if last_history_state
+        last_history_state = history_item
+      else
+        history_list.push history_item
+      end
+    end
+
+    history_list.each { |history|
 
       # ignore if it isn't a state change
-      next if !history_item['attribute']
-      next if history_item['attribute'] != 'state'
+      next if !history['attribute']
+      next if history['attribute'] != 'state'
 
-      created_at = history_item['created_at']
+      created_at = history['created_at']
 
       # ignore all newer state before start_time
       next if created_at < start_time
@@ -372,53 +398,38 @@ returns
 
       # get initial state and time
       if !last_state
-        last_state        = history_item['value_from']
+        last_state        = history['value_from']
         last_state_change = start_time
       end
 
       # check if time need to be counted
       counted = true
-      if ignore_escalation_states.include?(history_item['value_from'])
+      if ignore_escalation_states.include?(history['value_from'])
         counted = false
       end
 
-      diff = biz.within(last_state_change, created_at).in_minutes
       if counted
-        # puts "Diff count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{created_at}"
-        working_time_in_min = working_time_in_min + diff
-        # else
-        # puts "Diff not count #{history_item['value_from']} -> #{history_item['value_to']} / #{last_state_change} -> #{created_at}"
-      end
-      total_time_in_min = total_time_in_min + diff
-
-      last_state_is_pending = false
-      if ignore_escalation_states.include?(history_item['value_to'])
-        last_state_is_pending = true
+        diff = biz.within(last_state_change, created_at).in_minutes
+        working_time_in_min += diff
       end
 
       # remember for next loop last state
-      last_state        = history_item['value_to']
+      last_state        = history['value_to']
       last_state_change = created_at
     }
 
-    # if last state isnt pending, count rest
-    if !last_state_is_pending && last_state_change && last_state_change < end_time
+    # if we have time to count after history entries has finished
+    if last_state_change && last_state_change < end_time
       diff = biz.within(last_state_change, end_time).in_minutes
-      working_time_in_min = working_time_in_min + diff
-      total_time_in_min = total_time_in_min + diff
+      working_time_in_min += diff
     end
 
     # if we have not had any state change
     if !last_state_change
       diff = biz.within(start_time, end_time).in_minutes
-      working_time_in_min = working_time_in_min + diff
-      total_time_in_min = total_time_in_min + diff
+      working_time_in_min += diff
     end
 
-    #puts "#{type}:working_time_in_min:#{working_time_in_min}|free_time:#{total_time_in_min - working_time_in_min}"
-    if type == 'non_business_minutes'
-      return total_time_in_min - working_time_in_min
-    end
     working_time_in_min
   end
 
