@@ -2,8 +2,9 @@
 class App.UiElement.ical_feed extends App.UiElement.ApplicationUiElement
   @render: (attribute, params) ->
 
-    ical_feeds = App.Config.get('ical_feeds') || {}
-    item = $( App.view('generic/ical_feed')( attribute: attribute, ical_feeds: ical_feeds ) )
+    icalFeeds = App.Config.get('ical_feeds') || {}
+    icalFeedsSorted = App.Utils.sortByValue(icalFeeds)
+    item = $( App.view('generic/ical_feed')( attribute: attribute, icalFeeds: icalFeedsSorted ) )
 
     updateCheckList = ->
       return if item.find('.js-checkList').prop('checked')
@@ -25,7 +26,7 @@ class App.UiElement.ical_feed extends App.UiElement.ApplicationUiElement
         item.find('.js-shadow').val( item.find('.js-list').val() )
 
     # set inital state
-    if ical_feeds[attribute.value]
+    if icalFeeds[attribute.value]
       updateCheckList()
     else
       updateCheckManual()

@@ -59,7 +59,9 @@ class App.UiElement.holiday_selector
 
       # check if entry already exists
       exists = item.find("[data-date=#{date}]").get(0)
-      return if exists
+      if exists
+        alert(App.i18n.translateInline('Aready exists!'))
+        return
 
       # reset form input
       $(e.target).closest('tr').find('.js-summary').val('')

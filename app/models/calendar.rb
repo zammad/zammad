@@ -220,6 +220,12 @@ returns
 
   def sync(without_save = nil)
     return if !ical_url
+
+    # only sync every 5 days
+    cache_key = "CalendarIcal::#{id}"
+    cache = Cache.get(cache_key)
+    return if !last_log && cache && cache[:ical_url] == ical_url
+
     begin
       events = {}
       if ical_url && !ical_url.empty?
@@ -255,6 +261,11 @@ returns
         }
       }
       self.last_log = nil
+      cache = Cache.write(
+        cache_key,
+        { public_holidays: public_holidays, ical_url: ical_url },
+        { expires_in: 5.days },
+      )
     rescue => e
       self.last_log = e.inspect
     end
@@ -312,23 +323,23 @@ returns
 
   # check if min one is set to default true
   def min_one_check
-    Calendar.all.each { |calendar|
-      return true if calendar.default
-    }
-    first = Calendar.order(:created_at, :id).limit(1).first
-    first.default = true
-    first.save
+    if !Calendar.find_by(default: true)
+      first = Calendar.order(:created_at, :id).limit(1).first
+      first.default = true
+      first.save
+    end
 
     # check if sla's are refer to an existing calendar
+    default_calendar = Calendar.find_by(default: true)
     Sla.all.each { |sla|
       if !sla.calendar_id
-        sla.calendar_id = first.id
-        sla.save
+        sla.calendar_id = default_calendar.id
+        sla.save!
         next
       end
       if !Calendar.find_by(id: sla.calendar_id)
-        sla.calendar_id = first.id
-        sla.save
+        sla.calendar_id = default_calendar.id
+        sla.save!
       end
     }
   end
@@ -342,9 +353,10 @@ returns
   def validate_public_holidays
 
     # fillup feed info
+    before = public_holidays_was
     public_holidays.each { |day, meta|
-      if public_holidays_was && public_holidays_was[day] && public_holidays_was[day]['feed']
-        meta['feed'] = public_holidays_was[day]['feed']
+      if before && before[day] && before[day]['feed']
+        meta['feed'] = before[day]['feed']
       end
       meta['active'] = if meta['active']
                          true
