@@ -1,5 +1,28 @@
 class NotificationFactory::Template
 
+=begin
+
+examples how to use
+
+    message_subject = NotificationFactory::Template.new(
+      {
+        ticket: Ticket.first,
+      },
+      'de-de',
+      'some template <b><%= d "ticket.title", false %></b> <%= c "fqdn", false %>',
+      false
+    ).render
+
+    message_body = NotificationFactory::Template.new(
+      {
+        ticket: Ticket.first,
+      },
+      'de-de',
+      'some template <b><%= d "ticket.title", true %></b> <%= c "fqdn", true %>',
+    ).render
+
+=end
+
   def initialize(objects, locale, template, escape = true)
     @objects = objects
     @locale = locale || 'en-us'
