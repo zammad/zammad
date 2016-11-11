@@ -14,7 +14,7 @@
   <thead>
     <tr>
       <th><%- @T('Name') %></th>
-      <th><%- @T('Permission') %></th>
+      <th><%- @T('Permissions') %></th>
       <th><%- @T('Created') %></th>
       <th><%- @T('Expires') %></th>
       <th><%- @T('Last used') %></th>

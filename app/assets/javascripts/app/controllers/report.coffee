@@ -12,6 +12,12 @@ class Index extends App.ControllerContent
       processData: true
       success: (data) =>
         @stopLoading()
+        if data.error
+          @renderScreenError(
+            detail:     data.error
+            objectName: 'Report'
+          )
+          return
         @config = data.config
         App.Collection.load(type: 'ReportProfile', data: data.profiles)
         @render()

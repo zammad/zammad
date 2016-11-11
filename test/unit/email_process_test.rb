@@ -1997,6 +1997,24 @@ Some Text',
           },
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail43.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'Kontakte',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail44.box'),
+        success: false,
+      },
     ]
     process(files)
   end
@@ -2158,7 +2176,7 @@ Some Text',
 
   def process(files)
     files.each { |file|
-      result = Channel::EmailParser.new.process(file[:channel]||{}, file[:data])
+      result = Channel::EmailParser.new.process(file[:channel]||{}, file[:data], false)
       if file[:success]
         if result && result.class == Array && result[1]
           assert( true )

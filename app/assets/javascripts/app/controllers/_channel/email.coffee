@@ -528,6 +528,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
       { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
       { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
+      { name: 'options::port',      display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false },
       { name: 'options::folder',    display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false },
     ]
 
@@ -566,6 +567,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
         { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
         { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
         { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
+        { name: 'options::port',     display: 'Port',     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')

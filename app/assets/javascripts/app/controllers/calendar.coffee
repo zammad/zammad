@@ -51,7 +51,7 @@ class Index extends App.ControllerSubContent
           if itemTime < till && itemTime > from
             if calendar.public_holidays[day] && calendar.public_holidays[day].active
               public_holidays_preview[day] = calendar.public_holidays[day]
-      calendar.public_holidays_preview = public_holidays_preview
+      calendar.public_holidays_preview = App.Utils.sortByKey(public_holidays_preview)
 
     # show description button, only if content exists
     showDescription = false
@@ -78,7 +78,6 @@ class Index extends App.ControllerSubContent
         object: 'Calendar'
         objects: 'Calendars'
       genericObject: 'Calendar'
-      callback:      @load
       container:     @el.closest('.content')
       large:         true
     )
@@ -92,7 +91,6 @@ class Index extends App.ControllerSubContent
         object: 'Calendar'
         objects: 'Calendars'
       genericObject: 'Calendar'
-      callback:      @load
       container:     @el.closest('.content')
       large:         true
     )
@@ -107,17 +105,12 @@ class Index extends App.ControllerSubContent
       callback:  @load
     )
 
-  default: (e) =>
+  default: (e) ->
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
     item = App.Calendar.find(id)
     item.default = true
-    item.save(
-      done: =>
-        @load()
-      fail: =>
-        @load()
-    )
+    item.save()
 
   description: (e) =>
     new App.ControllerGenericDescription(

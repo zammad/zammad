@@ -780,6 +780,29 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.owner_id' => {
         operator: 'is',
+        pre_condition: 'specific',
+        #value: agent1.id, # value is not set, no result should be shown
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
+    assert_equal(ticket_count, nil)
+
+    ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
+    assert_equal(ticket_count, nil)
+
+    condition = {
+      'ticket.group_id' => {
+        operator: 'is',
+        value: group.id,
+      },
+      'ticket.owner_id' => {
+        operator: 'is',
         pre_condition: 'not_set',
       },
     }

@@ -551,9 +551,9 @@ test("form handler check with and without fieldset", function() {
   }
 
   var formChanges = function(params, attribute, attributes, classname, form, ui) {
-    console.log('FROM', form)
+    //console.log('FROM', form)
     if (params['select1'] === 'b') {
-      console.log('lala', params)
+      //console.log('select1 -> b', params)
       var item = {
         name:    'select2',
         display: 'Select2',
@@ -566,7 +566,7 @@ test("form handler check with and without fieldset", function() {
       form.find('[name="select2"]').closest('.form-group').replaceWith(newElement)
     }
     if (params['select1'] === 'a') {
-      console.log('lala', params)
+      //console.log('select1 -> a', params)
       var item = {
         name:    'select2',
         display: 'Select2',
@@ -938,8 +938,35 @@ test("form params check", function() {
     select3: '',
     select4: '',
   }
-  console.log('params', params)
-  console.log('test_params', test_params)
+  //console.log('params', params)
+  //console.log('test_params', test_params)
+  deepEqual(params, test_params, 'form param check')
+
+});
+
+test("form params check direct", function() {
+
+  $('#forms').append('<hr><h1>form params check direct</h1><form id="form10"><input name="a" value="b"><input name="l::l::l1" value="d"><input name="l::l::" value><input name="f::f::" value><input name="f::f::f1" value="e"></form>')
+  var el = $('#form10')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    a: 'b',
+    l: {
+      l: {
+        l1: 'd',
+        '': '',
+      },
+    },
+    f: {
+      f: {
+        f1: 'e',
+        '': '',
+      },
+    },
+  }
+  //console.log('params', params)
+  //console.log('test_params', test_params)
   deepEqual(params, test_params, 'form param check')
 
 });

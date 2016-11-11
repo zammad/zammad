@@ -159,10 +159,13 @@ stream all accounts
           updated_at: channel.updated_at
         }
 
+        # start channels with delay
+        sleep @@channel_stream.count
+
         # start threads for each channel
         @@channel_stream[channel.id][:thread] = Thread.new {
           begin
-            logger.debug "Started stream channel for '#{channel.id}' (#{channel.area})..."
+            logger.info "Started stream channel for '#{channel.id}' (#{channel.area})..."
             @@channel_stream[channel.id][:stream_instance] = channel.stream_instance
             @@channel_stream[channel.id][:stream_instance].stream
             @@channel_stream[channel.id][:stream_instance].disconnect

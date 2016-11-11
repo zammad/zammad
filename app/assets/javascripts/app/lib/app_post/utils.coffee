@@ -403,7 +403,7 @@ class App.Utils
       lineCount = 0
       for line in textToSearchInLines
         lineCount += 1
-        if line && line.match( /^.{6,10}\s.{3,10}\s-\s.{1,250}\s(wrote|schrieb):/ )
+        if line && line.match( /^.{6,10}\s.{3,10}\s-\s.{1,250}\s(wrote|schrieb|a écrit|escribió):/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -461,7 +461,7 @@ class App.Utils
       lineCount = 0
       for line in textToSearchInLines
         lineCount += 1
-        if line && line.match( /^.{1,250}\s(wrote|schrieb):/ )
+        if line && line.match( /^.{1,250}\s(wrote|schrieb|a écrit|escribió):/ )
           marker =
             line:      cleanup(line)
             lineCount: lineCount
@@ -469,6 +469,21 @@ class App.Utils
           markers.push marker
           return
     searchForWord14(textToSearchInLines, markers)
+
+    # gmail
+    # Am 24.10.2016 18:55 schrieb "xxx" <somebody@example.com>:
+    searchForGmail = (textToSearchInLines, markers) ->
+      lineCount = 0
+      for line in textToSearchInLines
+        lineCount += 1
+        if line && line.match( /.{1,250}\s(wrote|schrieb|a écrit|escribió)\s.{1,250}:/ )
+          marker =
+            line:      cleanup(line)
+            lineCount: lineCount
+            type:      'gmail'
+          markers.push marker
+          return
+    searchForGmail(textToSearchInLines, markers)
 
     # marker template
     markerTemplate = '<span class="js-signatureMarker"></span>'
@@ -650,6 +665,46 @@ class App.Utils
 
     # check length, remove longer positions
     "#{result[1]}.#{result[2].substr(0,positions)}"
+
+  @sortByValue: (options, order = 'ASC') ->
+    # sort by name
+    byNames = []
+    byNamesWithValue = {}
+    for i, value of options
+      valueTmp = value.toString().toLowerCase()
+      byNames.push valueTmp
+      byNamesWithValue[valueTmp] = [i, value]
+    byNames = byNames.sort()
+
+    # do a reverse, if needed
+    if order == 'DESC'
+      byNames = byNames.reverse()
+
+    optionsNew = {}
+    for i in byNames
+      ref = byNamesWithValue[i]
+      optionsNew[ref[0]] = ref[1]
+    optionsNew
+
+  @sortByKey: (options, order = 'ASC') ->
+    # sort by name
+    byKeys = []
+    for i, value of options
+      if i.toString
+        iTmp = i.toString().toLowerCase()
+      else
+        iTmp = i
+      byKeys.push iTmp
+    byKeys = byKeys.sort()
+
+    # do a reverse, if needed
+    if order == 'DESC'
+      byKeys = byKeys.reverse()
+
+    optionsNew = {}
+    for i in byKeys
+      optionsNew[i] = options[i]
+    optionsNew
 
   @formatTime: (num, digits) ->
 

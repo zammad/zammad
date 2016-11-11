@@ -37,7 +37,7 @@ class Index extends App.ControllerSubContent
       new App.ControllerTable(
         el:           @$('.js-appList')
         model:        App.Application
-        table_id:     'applications'
+        tableId:      'applications'
         objects:      App.Application.all()
         bindRow:
           events:

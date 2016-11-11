@@ -624,13 +624,7 @@ module Import::Zendesk
     article_sender_agent    = Ticket::Article::Sender.lookup(name: 'Agent')
     article_sender_system   = Ticket::Article::Sender.lookup(name: 'System')
 
-    article_type_web                   = Ticket::Article::Type.lookup(name: 'web')
-    article_type_note                  = Ticket::Article::Type.lookup(name: 'note')
-    article_type_email                 = Ticket::Article::Type.lookup(name: 'email')
-    article_type_twitter_status        = Ticket::Article::Type.lookup(name: 'twitter status')
-    article_type_twitter_dm            = Ticket::Article::Type.lookup(name: 'twitter direct-message')
-    article_type_facebook_feed_post    = Ticket::Article::Type.lookup(name: 'facebook feed post')
-    article_type_facebook_feed_comment = Ticket::Article::Type.lookup(name: 'facebook feed comment')
+    initialize_article_types
 
     @client.tickets.all! { |zendesk_ticket|
       custom_fields = get_custom_fields(zendesk_ticket.custom_fields)
@@ -659,28 +653,7 @@ module Import::Zendesk
                                                          article_sender_system.id
                                                        end
 
-      if zendesk_ticket.via.channel == 'web'
-        local_ticket_fields[:create_article_type_id] = article_type_web.id
-      elsif zendesk_ticket.via.channel == 'email'
-        local_ticket_fields[:create_article_type_id] = article_type_email.id
-      elsif zendesk_ticket.via.channel == 'sample_ticket'
-        local_ticket_fields[:create_article_type_id] = article_type_note.id
-      elsif zendesk_ticket.via.channel == 'twitter'
-
-        local_ticket_fields[:create_article_type_id] = if zendesk_ticket.via.source.rel == 'mention'
-                                                         article_type_twitter_status.id
-                                                       else
-                                                         article_type_twitter_dm.id
-                                                       end
-
-      elsif zendesk_ticket.via.channel == 'facebook'
-
-        local_ticket_fields[:create_article_type_id] = if zendesk_ticket.via.source.rel == 'post'
-                                                         article_type_facebook_feed_post.id
-                                                       else
-                                                         article_type_facebook_feed_comment.id
-                                                       end
-      end
+      local_ticket_fields[:create_article_type_id] = article_type_lookup(zendesk_ticket.via)
 
       local_ticket = Ticket.find_by(id: local_ticket_fields[:id])
       if local_ticket
@@ -730,31 +703,14 @@ module Import::Zendesk
                                              article_sender_system.id
                                            end
 
-        if zendesk_article.via.channel == 'web'
-          local_article_fields[:type_id]    = article_type_web.id
-        elsif zendesk_article.via.channel == 'email'
-          local_article_fields[:from]       = zendesk_article.via.source.from.address
-          local_article_fields[:to]         = zendesk_article.via.source.to.address # Notice zendesk_article.via.from.original_recipients=[\"another@gmail.com\", \"support@example.zendesk.com\"]
-          local_article_fields[:type_id]    = article_type_email.id
-        elsif zendesk_article.via.channel == 'sample_ticket'
-          local_article_fields[:type_id]    = article_type_note.id
-        elsif zendesk_article.via.channel == 'twitter'
-          local_article_fields[:type_id] = if zendesk_article.via.source.rel == 'mention'
-                                             article_type_twitter_status.id
-                                           else
-                                             article_type_twitter_dm.id
-                                           end
+        local_article_fields[:type_id] = article_type_lookup(zendesk_article.via)
 
+        if zendesk_article.via.channel == 'email'
+          local_article_fields[:from] = zendesk_article.via.source.from.address
+          local_article_fields[:to]   = zendesk_article.via.source.to.address # Notice zendesk_article.via.from.original_recipients=[\"another@gmail.com\", \"support@example.zendesk.com\"]
         elsif zendesk_article.via.channel == 'facebook'
-
           local_article_fields[:from] = zendesk_article.via.source.from.facebook_id
           local_article_fields[:to]   = zendesk_article.via.source.to.facebook_id
-
-          local_article_fields[:type_id] = if zendesk_article.via.source.rel == 'post'
-                                             article_type_facebook_feed_post.id
-                                           else
-                                             article_type_facebook_feed_comment.id
-                                           end
         end
 
         # create article
@@ -1070,4 +1026,45 @@ module Import::Zendesk
     fields
   end
 
+  def initialize_article_types
+    article_types    = ['web', 'note', 'email', 'twitter status',
+                        'twitter direct-message', 'facebook feed post',
+                        'facebook feed comment']
+    @article_type_id = {}
+    article_types.each do |article_type|
+
+      article_type_key = article_type.gsub(/\s|\-/, '_').to_sym
+
+      @article_type_id[article_type_key] = Ticket::Article::Type.lookup(name: article_type).id
+    end
+  end
+
+  def article_type_lookup(via)
+    case via.channel
+    when 'web'
+      @article_type_id[:web]
+    when 'email'
+      @article_type_id[:email]
+    when 'sample_ticket'
+      @article_type_id[:note]
+    when 'twitter'
+      if via.source.rel == 'mention'
+        @article_type_id[:twitter_status]
+      else
+        @article_type_id[:twitter_direct_message]
+      end
+    when 'facebook'
+      if via.source.rel == 'post'
+        @article_type_id[:facebook_feed_post]
+      else
+        @article_type_id[:facebook_feed_comment]
+      end
+    # fallback for other not (yet) supported article types
+    # See:
+    # https://support.zendesk.com/hc/en-us/articles/203661746-Zendesk-Glossary#topic_zie_aqe_tf
+    # https://support.zendesk.com/hc/en-us/articles/203661596-About-Zendesk-Support-channels
+    else
+      @article_type_id[:web]
+    end
+  end
 end

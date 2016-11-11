@@ -46,14 +46,28 @@ returns
     result: 'ok', # 'verify not ok'
   }
 
+example
+
+  params = {
+    host: 'outlook.office365.com',
+    user: 'xxx@znuny.onmicrosoft.com',
+    password: 'xxx',
+  }
+  channel = Channel.last
+  instance = Channel::Driver::Imap.new
+  result = instance.fetch(params, channel, 'verify')
+
 =end
 
   def fetch (options, channel, check_type = '', verify_string = '')
     ssl  = true
     port = 993
-    if options.key?(:ssl) && options[:ssl].to_s == 'false'
+    if options.key?(:ssl) && options[:ssl] == false
       ssl  = false
       port = 143
+    end
+    if options.key?(:port) && !options[:port].empty?
+      port = options[:port]
     end
 
     Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
@@ -68,15 +82,7 @@ returns
       @imap = Net::IMAP.new(options[:host], port, ssl, nil, false)
     end
 
-    # try LOGIN, if not - try plain
-    begin
-      @imap.authenticate('LOGIN', options[:user], options[:password])
-    rescue => e
-      if e.to_s !~ /(unsupported\s(authenticate|authentication)\smechanism|not\ssupported)/i
-        raise e
-      end
-      @imap.login(options[:user], options[:password])
-    end
+    @imap.login(options[:user], options[:password])
 
     # select folder
     if !options[:folder] || options[:folder].empty?
@@ -180,10 +186,9 @@ returns
       # delete email from server after article was created
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
       next if !msg
-      if process(channel, msg)
-        @imap.store(message_id, '+FLAGS', [:Deleted])
-        count_fetched += 1
-      end
+      process(channel, msg, false)
+      @imap.store(message_id, '+FLAGS', [:Deleted])
+      count_fetched += 1
     end
     @imap.expunge()
     disconnect

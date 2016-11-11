@@ -6,7 +6,7 @@
       <%- @Icon('checkbox-checked', 'icon-checked') %>
     </label>
   <td><%- @Tdate(@placeholderDate) %>
-  <td><input class="form-control form-control--small js-summary" type="text" name="<%= @placeholderSummary %>" value="<%= @placeholderSummary %>" required/>
+  <td class="settings-list-control-cell"><input class="form-control form-control--small js-summary" type="text" name="<%= @nameSummary %>" value="<%= @placeholderSummary %>" required/>
   <td class="settings-list-row-control">
     <div class="btn btn--text js-remove">
       <%- @Icon('trash') %> <%- @T('Remove') %>

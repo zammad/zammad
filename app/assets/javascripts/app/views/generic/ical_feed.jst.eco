@@ -10,7 +10,7 @@
   <div class="u-inlineBlock u-positionOrigin">
     <select class="form-control form-control--small js-list">
       <option value="">-</option>
-      <% for url, name of @ical_feeds: %>
+      <% for url, name of @icalFeeds: %>
         <option value="<%= url %>" <% if @attribute.value is url: %>selected<%end%>><%- @T(name) %></option>
       <% end %>
     </select>
