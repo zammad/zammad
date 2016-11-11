@@ -156,7 +156,7 @@ class App.Search extends App.Controller
       for item in localList
         ticket_ids.push item.id
       new App.TicketList(
-        table_id:   "find_#{model}"
+        tableId:   "find_#{model}"
         el:         @$('.js-content')
         columns:    [ 'number', 'title', 'customer', 'group', 'owner', 'created_at' ]
         ticket_ids: ticket_ids
@@ -167,10 +167,10 @@ class App.Search extends App.Controller
         object = App[@model].fullLocal(id)
         @navigate object.uiUrl()
       new App.ControllerTable(
-        table_id: "find_#{model}"
-        el:       @$('.js-content')
-        model:    App[model]
-        objects:  list
+        tableId: "find_#{model}"
+        el:      @$('.js-content')
+        model:   App[model]
+        objects: list
         bindRow:
           events:
             'click': openObject

@@ -18,7 +18,7 @@
     <% end %>
     <% for item, i in @header: %>
       <th class="js-tableHead<%= " #{ item.className }" if item.className %><%= " align-#{ item.align }" if item.align %>" style="<% if item.displayWidth: %>width:<%= item.displayWidth %>px<% end %>" data-column-key="<%= item.name %>">
-        <div class="table-column-head<%= ' js-sort' if @table_id %>">
+        <div class="table-column-head<%= ' js-sort' if @tableId %>">
           <div class="table-column-title">
           <%- @T(item.display) %>
           </div>
@@ -28,7 +28,7 @@
           <% end %>
           </div>
         </div>
-        <% if @table_id && !item.unresizable && i < @header.length - 1: %>
+        <% if @tableId && !item.unresizable && i < @header.length - 1: %>
           <div class="table-col-resize js-col-resize"></div>
         <% end %>
       </th>

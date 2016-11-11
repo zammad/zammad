@@ -112,10 +112,11 @@ class Index extends App.ControllerSubContent
 
     @$('.table-overview').html('')
     new App.ControllerTable(
-      el:       @$('.table-overview')
-      model:    App.User
-      objects:  users
-      class:    'user-list'
+      tableId: 'users_admin_overview'
+      el:      @$('.table-overview')
+      model:   App.User
+      objects: users
+      class:   'user-list'
       callbackHeader: [callbackHeader]
       callbackAttributes:
         switch_to: [
@@ -166,12 +167,13 @@ class Index extends App.ControllerSubContent
       data:
         limit: 40
         role_ids: role_ids
-        full:  1
-      processData: true,
+        full: 1
+      processData: true
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
         @renderResult(data.user_ids)
-      complete: =>
+        @stopLoading()
+      error: =>
         @stopLoading()
     )
 
