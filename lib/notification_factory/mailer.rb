@@ -221,7 +221,7 @@ returns
   def self.template(data)
 
     if data[:templateInline]
-      return NotificationFactory::Template.new(data[:objects], data[:locale], data[:templateInline], false).render
+      return NotificationFactory::Renderer.new(data[:objects], data[:locale], data[:templateInline], false).render
     end
 
     template = NotificationFactory.template_read(
@@ -231,8 +231,8 @@ returns
       type: 'mailer',
     )
 
-    message_subject = NotificationFactory::Template.new(data[:objects], data[:locale], template[:subject], false).render
-    message_body = NotificationFactory::Template.new(data[:objects], data[:locale], template[:body]).render
+    message_subject = NotificationFactory::Renderer.new(data[:objects], data[:locale], template[:subject], false).render
+    message_body = NotificationFactory::Renderer.new(data[:objects], data[:locale], template[:body]).render
 
     if !data[:raw]
       application_template = NotificationFactory.application_template_read(
@@ -241,7 +241,7 @@ returns
       )
       data[:objects][:message] = message_body
       data[:objects][:standalone] = data[:standalone]
-      message_body = NotificationFactory::Template.new(data[:objects], data[:locale], application_template).render
+      message_body = NotificationFactory::Renderer.new(data[:objects], data[:locale], application_template).render
     end
     {
       subject: message_subject,
