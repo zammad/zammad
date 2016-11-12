@@ -21,7 +21,7 @@ https://zammad.org/screenshots
 
 ## REST API
 
-en/latest/api-intro.html
+http://zammad.readthedocs.io/en/latest/api-intro.html
 
 
 ## Contributing
