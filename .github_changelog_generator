@@ -4,5 +4,7 @@ output=CHANGELOG.md
 since-tag=1.0.0
 bug-labels=bug,minor bug,security
 enhancement-labels=enhancement,feature
+issues-wo-labels=false
+include-labels=security,trigger,UX/UI,admin area,API,blocker,browser,bug,channel,chat,duplicate,enhancement,feature,import,minor bug
 issue-line-labels=enhancement,feature,bug,minor bug,security
 exclude-tags=9.0.1,0.9.1,v0.1.8,v0.1.7,unittests_passed
