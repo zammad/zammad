@@ -39,14 +39,23 @@ examples how to use
   def d(key, escape = nil)
 
     # do validaton, ignore some methodes
-    if key =~ /(`|\.(|\s*)(save|destroy|delete|remove|drop|update\(|update_att|create\(|new|all|where|find))/i
-      return "#{key} (not allowed)"
-    end
+    return "\#{#{key} / not allowed}" if !data_key_valid?(key)
 
-    value            = nil
-    object_methods   = key.split('.')
-    object_name      = object_methods.shift.to_sym
-    object_refs      = @objects[object_name]
+    value          = nil
+    object_methods = key.split('.')
+    object_name    = object_methods.shift
+
+    # if no object is given, just return
+    return "\#{no such object}" if object_name.empty?
+    object_refs = @objects[object_name] || @objects[object_name.to_sym]
+
+    # if object is not in avalable objects, just return
+    return "\#{#{object_name} / no such object}" if !object_refs
+
+    # if content of method is a complex datatype, just return
+    if object_methods.empty? && object_refs.class != String && object_refs.class != Float && object_refs.class != Fixnum
+      return "\#{#{key} / no such method}"
+    end
     object_methods_s = ''
     object_methods.each { |method_raw|
 
@@ -57,12 +66,17 @@ examples how to use
       end
       object_methods_s += method
 
-      # if method exists
-      if !object_refs.respond_to?( method.to_sym )
+      if object_methods_s == ''
         value = "\#{#{object_name}.#{object_methods_s} / no such method}"
         break
       end
-      object_refs = object_refs.send( method.to_sym )
+
+      # if method exists
+      if !object_refs.respond_to?(method.to_sym)
+        value = "\#{#{object_name}.#{object_methods_s} / no such method}"
+        break
+      end
+      object_refs = object_refs.send(method.to_sym)
     }
     placeholder = if !value
                     object_refs
@@ -121,4 +135,10 @@ examples how to use
     return key if escape.nil? && !@escape
     h key
   end
+
+  def data_key_valid?(key)
+    return false if key =~ /`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find)/i
+    true
+  end
+
 end

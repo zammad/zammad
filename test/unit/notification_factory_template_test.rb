@@ -37,4 +37,23 @@ class NotificationFactoryTemplateTest < ActiveSupport::TestCase
     result = described_class.new(template_before).to_s
     assert_equal(template_after, result)
   end
+
+  test 'empty tag' do
+
+    template_before = '<%= d "#{}" %>'
+    template_after  = '<%= d "#{}" %>'
+
+    result = described_class.new(template_before).to_s
+    assert_equal(template_after, result)
+  end
+
+  test 'empty tag with space' do
+
+    template_before = '<%= d "#{ }" %>'
+    template_after  = '<%= d "#{ }" %>'
+
+    result = described_class.new(template_before).to_s
+    assert_equal(template_after, result)
+  end
+
 end
