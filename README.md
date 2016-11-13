@@ -12,7 +12,7 @@ You're going to love Zammad!
 
 ## Installing & Getting Started
 
-https://zammad.readthedocs.io
+https://docs.zammad.org
 
 ## Screenshots
 
@@ -21,7 +21,7 @@ https://zammad.org/screenshots
 
 ## REST API
 
-https://zammad.readthedocs.io/en/latest/api-intro.html
+https://docs.zammad.org/en/latest/api-intro.html
 
 
 ## Contributing
