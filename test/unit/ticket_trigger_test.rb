@@ -13,7 +13,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       },
       perform: {
         'notification.email' => {
-          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}',
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
           'recipient' => 'ticket_customer',
           'subject' => 'Thanks for your inquiry (#{ticket.title})!',
         },
@@ -60,12 +60,25 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert(ticket1, 'ticket1 created')
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
 
     assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
-    assert_equal(0, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
 
     Observer::Transaction.commit
@@ -75,13 +88,14 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
-    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal(%w(aa kk), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
     article1 = ticket1.articles.last
     assert_match('Zammad <zammad@localhost>', article1.from)
     assert_match('nicole.braun@zammad.org', article1.to)
     assert_match('Thanks for your inquiry (some <b>title</b>  äöüß)!', article1.subject)
     assert_match('Braun<br>some &lt;b&gt;title&lt;/b&gt;', article1.body)
+    assert_match('&gt; some message &lt;b&gt;note&lt;/b&gt;<br>&gt; new line', article1.body)
     assert_equal('text/html', article1.content_type)
 
     ticket1.priority = Ticket::Priority.lookup(name: '2 normal')
@@ -93,7 +107,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
-    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal(%w(aa kk), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
 
     ticket1.state = Ticket::State.lookup(name: 'open')
@@ -105,7 +119,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
     assert_equal('open', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
-    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal(%w(aa kk), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
 
     ticket1.state = Ticket::State.lookup(name: 'new')
@@ -118,7 +132,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
-    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal(3, ticket1.articles.count, 'ticket1.articles verify')
     assert_equal(%w(aa kk), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
     article1 = ticket1.articles.last
     assert_match('Zammad <zammad@localhost>', article1.from)
@@ -154,6 +168,56 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('2 normal', ticket2.priority.name, 'ticket2.priority verify')
     assert_equal(0, ticket2.articles.count, 'ticket2.articles verify')
     assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket2.id))
+
+    ticket3 = Ticket.create(
+      title: "some <b>title</b>\n äöüß3",
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket3, 'ticket3 created')
+    Ticket::Article.create(
+      ticket_id: ticket3.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert_equal('some <b>title</b>  äöüß3', ticket3.title, 'ticket3.title verify')
+    assert_equal('Users', ticket3.group.name, 'ticket3.group verify')
+    assert_equal('new', ticket3.state.name, 'ticket3.state verify')
+    assert_equal('2 normal', ticket3.priority.name, 'ticket3.priority verify')
+    assert_equal(1, ticket3.articles.count, 'ticket3.articles verify')
+    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket3.id))
+
+    Observer::Transaction.commit
+
+    ticket3 = Ticket.lookup(id: ticket3.id)
+    assert_equal('some <b>title</b>  äöüß3', ticket3.title, 'ticket3.title verify')
+    assert_equal('Users', ticket3.group.name, 'ticket3.group verify')
+    assert_equal('new', ticket3.state.name, 'ticket3.state verify')
+    assert_equal('3 high', ticket3.priority.name, 'ticket3.priority verify')
+    assert_equal(2, ticket3.articles.count, 'ticket3.articles verify')
+    assert_equal(%w(aa kk), Tag.tag_list(object: 'Ticket', o_id: ticket3.id))
+    article3 = ticket3.articles.last
+    assert_match('Zammad <zammad@localhost>', article3.from)
+    assert_match('nicole.braun@zammad.org', article3.to)
+    assert_match('Thanks for your inquiry (some <b>title</b>  äöüß3)!', article3.subject)
+    assert_match('Braun<br>some &lt;b&gt;title&lt;/b&gt;', article3.body)
+    assert_match('&gt; some message note<br>&gt; new line', article3.body)
+    assert_no_match('&gt; some message &lt;b&gt;note&lt;/b&gt;<br>&gt; new line', article3.body)
+    assert_equal('text/html', article3.content_type)
 
     Trigger.destroy_all
   end

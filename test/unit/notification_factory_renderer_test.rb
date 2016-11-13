@@ -3,29 +3,40 @@ require 'test_helper'
 
 class NotificationFactoryRendererTest < ActiveSupport::TestCase
 
-  # TODO: should be mocked somehow
-  Translation.load('de-de')
-
   # RSpec incoming!
   def described_class
     NotificationFactory::Renderer
   end
 
-  Group  = Struct.new(:name)
-  State  = Struct.new(:name)
-  User   = Struct.new(:firstname, :lastname, :longname, :fullname)
-  Ticket = Struct.new(:id, :title, :group, :owner, :state)
-
-  group        = Group.new('Users')
-  state        = State.new('new')
-  owner        = User.new('Notification<b>xxx</b>', 'Agent1<b>yyy</b>', 'Notification<b>xxx</b> Agent1<b>yyy</b>', 'Notification<b>xxx</b> Agent1<b>yyy</b> (Zammad)')
-  current_user = User.new('CurrentUser<b>xxx</b>', 'Agent2<b>yyy</b>', 'CurrentUser<b>xxx</b> Agent2<b>yyy</b>', 'CurrentUser<b>xxx</b> Agent2<b>yyy</b> (Zammad)')
-  recipient    = User.new('Recipient<b>xxx</b>', 'Customer1<b>yyy</b>', 'Recipient<b>xxx</b> Customer1<b>yyy</b>', 'Recipient<b>xxx</b> Customer1<b>yyy</b> (Zammad)')
-  ticket       = Ticket.new(1, '<b>Welcome to Zammad!</b>', group, owner, state)
+  group        = Group.new(name: 'Users')
+  owner        = User.new(firstname: 'Notification<b>xxx</b>', lastname: 'Agent1<b>yyy</b>')
+  current_user = User.new(firstname: 'CurrentUser<b>xxx</b>', lastname: 'Agent2<b>yyy</b>')
+  recipient    = User.new(firstname: 'Recipient<b>xxx</b>', lastname: 'Customer1<b>yyy</b>')
+  state        = Ticket::State.new(name: 'new')
+  ticket       = Ticket.new(
+    id: 1,
+    title: '<b>Welcome to Zammad!</b>',
+    group: group,
+    owner: owner,
+    state: state,
+    created_at: Time.zone.parse('2016-11-12 12:00:00 UTC'),
+    updated_at: Time.zone.parse('2016-11-12 14:00:00 UTC'),
+  )
+  article_html1 = Ticket::Article.new(
+    body: 'test <b>hello</b><br>some new line',
+    content_type: 'text/html',
+  )
+  article_plain1 = Ticket::Article.new(
+    body: "test <b>hello</b>\nsome new line",
+    content_type: 'text/plain',
+  )
+  article_plain2 = Ticket::Article.new(
+    body: "test <b>hello</b>\nsome new line",
+  )
 
   test 'replace object attribute' do
 
-    template = "<%= d 'ticket.title' %>"
+    template = "\#{ticket.title}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -35,7 +46,27 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML(ticket.title), result)
 
-    template = "<%= d 'ticket. title' %>"
+    template = "\#{ticket.created_at}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(ticket.created_at.to_s, result)
+
+    template = "\#{ticket.updated_at}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(ticket.updated_at.to_s, result)
+
+    template = "\#{ticket. title}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -45,7 +76,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML(ticket.title), result)
 
-    template = "<%= d 'ticket.\n title' %>"
+    template = "\#{ticket.\n title}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -55,7 +86,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML(ticket.title), result)
 
-    template = "<%= d 'ticket.\t title' %>"
+    template = "\#{ticket.\t title}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -65,7 +96,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML(ticket.title), result)
 
-    template = "<%= d 'ticket.\t\n title\t' %>"
+    template = "\#{ticket.\t\n title\t}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -74,14 +105,51 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       template,
     ).render
     assert_equal(CGI.escapeHTML(ticket.title), result)
+
+    template = "\#{ticket.\" title\t}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(CGI.escapeHTML(ticket.title), result)
+
+    template = "some test<br>\#{article.body}"
+    result = described_class.new(
+      {
+        article: article_html1,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal('some test<br>&gt; test hello<br>&gt; some new line<br>', result)
+
+    result = described_class.new(
+      {
+        article: article_plain1,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal('some test<br>&gt; test &lt;b&gt;hello&lt;/b&gt;<br>&gt; some new line<br>', result)
+
+    result = described_class.new(
+      {
+        article: article_plain2,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal('some test<br>&gt; test &lt;b&gt;hello&lt;/b&gt;<br>&gt; some new line<br>', result)
 
   end
 
   test 'config' do
 
-    setting  = 'fqdn'
-    template = "<%= c '#{setting}' %>"
-
+    setting = 'fqdn'
+    template = "\#{config.#{setting}}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -89,13 +157,11 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       'en-us',
       template,
     ).render
-
     assert_equal(Setting.get(setting), result)
 
     setting1 = 'fqdn'
     setting2 = 'product_name'
-    template = "some <%= c '#{setting1}' %> and <%= c '#{setting2}' %>"
-
+    template = "some \#{config.#{setting1}} and \#{config.#{setting2}}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -103,14 +169,25 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       'en-us',
       template,
     ).render
+    assert_equal("some #{Setting.get(setting1)} and #{Setting.get(setting2)}", result)
 
+    setting1 = 'fqdn'
+    setting2 = 'product_name'
+    template = "some \#{ config.#{setting1}} and \#{\tconfig.#{setting2}}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
     assert_equal("some #{Setting.get(setting1)} and #{Setting.get(setting2)}", result)
   end
 
   test 'translation' do
 
-    template = "<%= t 'new' %>"
-
+    #template = "<%= t 'new' %>"
+    template = "\#{t('new')}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -118,11 +195,9 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       'de-de',
       template,
     ).render
-
     assert_equal('neu', result)
 
-    template = "some text <%= t 'new' %> and <%= t 'open' %>"
-
+    template = "some text \#{t('new')} and \#{t('open')}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -130,14 +205,33 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       'de-de',
       template,
     ).render
+    assert_equal('some text neu and offen', result)
 
+    template = "some text \#{t('new') } and \#{ t('open')}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'de-de',
+      template,
+    ).render
+    assert_equal('some text neu and offen', result)
+
+    template = "some text \#{\nt('new') } and \#{ t('open')\t}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'de-de',
+      template,
+    ).render
     assert_equal('some text neu and offen', result)
 
   end
 
   test 'chained function calls' do
 
-    template = "<%= t d 'ticket.state.name' %>"
+    template = "\#{t(ticket.state.name)}"
 
     result = described_class.new(
       {
@@ -152,7 +246,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
 
   test 'not existing object and attribute' do
 
-    template = "<%= d '' %>"
+    template = "\#{}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -162,7 +256,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{no such object}'), result)
 
-    template = "<%= d 'notexsiting.notexsiting' %>"
+    template = "\#{notexsiting.notexsiting}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -172,7 +266,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{notexsiting / no such object}'), result)
 
-    template = "<%= d 'ticket.notexsiting' %>"
+    template = "\#{ticket.notexsiting}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -182,7 +276,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.notexsiting / no such method}'), result)
 
-    template = "<%= d 'ticket.' %>"
+    template = "\#{ticket.}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -192,7 +286,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket. / no such method}'), result)
 
-    template = "<%= d 'ticket.title.notexsiting' %>"
+    template = "\#{ticket.title.notexsiting}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -202,7 +296,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.title.notexsiting / no such method}'), result)
 
-    template = "<%= d 'ticket.notexsiting.notexsiting' %>"
+    template = "\#{ticket.notexsiting.notexsiting}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -212,7 +306,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.notexsiting / no such method}'), result)
 
-    template = "<%= d 'notexsiting' %>"
+    template = "\#{notexsiting}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -222,7 +316,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{notexsiting / no such object}'), result)
 
-    template = "<%= d 'notexsiting.' %>"
+    template = "\#{notexsiting.}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -232,7 +326,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{notexsiting / no such object}'), result)
 
-    template = "<%= d 'string' %>"
+    template = "\#{string}"
     result = described_class.new(
       {
         string: 'some string',
@@ -242,7 +336,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('some string'), result)
 
-    template = "<%= d 'fixum' %>"
+    template = "\#{fixum}"
     result = described_class.new(
       {
         fixum: 123,
@@ -252,7 +346,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('123'), result)
 
-    template = "<%= d 'float' %>"
+    template = "\#{float}"
     result = described_class.new(
       {
         float: 123.99,
@@ -266,7 +360,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
 
   test 'data key validation' do
 
-    template = "<%= d 'ticket.title `echo 1`' %>"
+    template = "\#{ticket.title `echo 1`}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -274,9 +368,9 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       'en-us',
       template,
     ).render
-    assert_equal(CGI.escapeHTML('#{ticket.title `echo 1` / not allowed}'), result)
+    assert_equal(CGI.escapeHTML('#{ticket.title`echo1` / not allowed}'), result)
 
-    template = "<%= d 'ticket.destroy' %>"
+    template = "\#{ticket.destroy}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -286,7 +380,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.destroy / not allowed}'), result)
 
-    template = "<%= d 'ticket.save' %>"
+    template = "\#{ticket.save}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -296,7 +390,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.save / not allowed}'), result)
 
-    template = "<%= d 'ticket.update' %>"
+    template = "\#{ticket.update}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -306,37 +400,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.update / not allowed}'), result)
 
-    template = "<%= d 'ticket.delete' %>"
-    result = described_class.new(
-      {
-        ticket: ticket,
-      },
-      'en-us',
-      template,
-    ).render
-    assert_equal(CGI.escapeHTML('#{ticket.delete / not allowed}'), result)
-
-    template = "<%= d 'ticket.remove' %>"
-    result = described_class.new(
-      {
-        ticket: ticket,
-      },
-      'en-us',
-      template,
-    ).render
-    assert_equal(CGI.escapeHTML('#{ticket.remove / not allowed}'), result)
-
-    template = "<%= d 'ticket.drop' %>"
-    result = described_class.new(
-      {
-        ticket: ticket,
-      },
-      'en-us',
-      template,
-    ).render
-    assert_equal(CGI.escapeHTML('#{ticket.drop / not allowed}'), result)
-
-    template = "<%= d 'ticket.create' %>"
+    template = "\#{ticket.create}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -346,7 +410,47 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.create / not allowed}'), result)
 
-    template = "<%= d 'ticket.new' %>"
+    template = "\#{ticket.delete}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(CGI.escapeHTML('#{ticket.delete / not allowed}'), result)
+
+    template = "\#{ticket.remove}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(CGI.escapeHTML('#{ticket.remove / not allowed}'), result)
+
+    template = "\#{ticket.drop}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(CGI.escapeHTML('#{ticket.drop / not allowed}'), result)
+
+    template = "\#{ticket.create}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(CGI.escapeHTML('#{ticket.create / not allowed}'), result)
+
+    template = "\#{ticket.new}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -356,7 +460,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.new / not allowed}'), result)
 
-    template = "<%= d 'ticket.update_att' %>"
+    template = "\#{ticket.update_att}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -366,7 +470,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.update_att / not allowed}'), result)
 
-    template = "<%= d 'ticket.all' %>"
+    template = "\#{ticket.all}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -376,7 +480,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.all / not allowed}'), result)
 
-    template = "<%= d 'ticket.find' %>"
+    template = "\#{ticket.find}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -386,7 +490,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.find / not allowed}'), result)
 
-    template = "<%= d 'ticket.where' %>"
+    template = "\#{ticket.where}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -396,7 +500,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML('#{ticket.where / not allowed}'), result)
 
-    template = "<%= d 'ticket. destroy' %>"
+    template = "\#{ticket. destroy}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -404,9 +508,9 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       'en-us',
       template,
     ).render
-    assert_equal(CGI.escapeHTML('#{ticket. destroy / not allowed}'), result)
+    assert_equal(CGI.escapeHTML('#{ticket.destroy / not allowed}'), result)
 
-    template = "<%= d 'ticket.\n destroy' %>"
+    template = "\#{ticket.\n destroy}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -414,9 +518,9 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       'en-us',
       template,
     ).render
-    assert_equal(CGI.escapeHTML("\#{ticket.\n destroy / not allowed}"), result)
+    assert_equal(CGI.escapeHTML("\#{ticket.destroy / not allowed}"), result)
 
-    template = "<%= d 'ticket.\t destroy' %>"
+    template = "\#{ticket.\t destroy}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -424,9 +528,9 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       'en-us',
       template,
     ).render
-    assert_equal(CGI.escapeHTML("\#{ticket.\t destroy / not allowed}"), result)
+    assert_equal(CGI.escapeHTML("\#{ticket.destroy / not allowed}"), result)
 
-    template = "<%= d 'ticket.\r destroy' %>"
+    template = "\#{ticket.\r destroy}"
     result = described_class.new(
       {
         ticket: ticket,
@@ -434,7 +538,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       'en-us',
       template,
     ).render
-    assert_equal(CGI.escapeHTML("\#{ticket.\r destroy / not allowed}"), result)
+    assert_equal(CGI.escapeHTML("\#{ticket.destroy / not allowed}"), result)
 
   end
 
