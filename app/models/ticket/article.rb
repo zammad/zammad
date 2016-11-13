@@ -121,6 +121,49 @@ returns
     Ticket::Article.where('ticket_id = ? AND sender_id NOT IN (?)', ticket_id, sender.id).order('created_at DESC').first
   end
 
+=begin
+
+get body as html
+
+  article = Ticket::Article.find(123)
+  article.body_as_html
+
+=end
+
+  def body_as_html
+    return '' if !body
+    return body if content_type && content_type =~ %r{text/html}i
+    body.text2html
+  end
+
+=begin
+
+get body as text
+
+  article = Ticket::Article.find(123)
+  article.body_as_text
+
+=end
+
+  def body_as_text
+    return '' if !body
+    return body if !content_type || content_type.empty? || content_type =~ %r{text/plain}i
+    body.html2text
+  end
+
+=begin
+
+get body as text with quote sign "> " at the beginning of each line
+
+  article = Ticket::Article.find(123)
+  article.body_as_text
+
+=end
+
+  def body_as_text_with_quote
+    body_as_text.word_wrap.message_quote
+  end
+
   private
 
   # strip not wanted chars

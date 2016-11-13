@@ -82,6 +82,8 @@ GEM
     docile (1.1.5)
     domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
+    doorkeeper (4.2.0)
+      railties (>= 4.2)
     eco (1.0.0)
       coffee-script
       eco-source
@@ -366,6 +368,7 @@ DEPENDENCIES
   daemons
   delayed_job_active_record
   diffy
+  doorkeeper
   eco
   em-websocket
   email_verifier

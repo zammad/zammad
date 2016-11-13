@@ -9,7 +9,7 @@ examples how to use
         ticket: Ticket.first,
       },
       'de-de',
-      'some template <b><%= d "ticket.title", false %></b> <%= c "fqdn", false %>',
+      'some template <b>#{ticket.title}</b> {config.fqdn}',
       false
     ).render
 
@@ -18,7 +18,7 @@ examples how to use
         ticket: Ticket.first,
       },
       'de-de',
-      'some template <b><%= d "ticket.title", true %></b> <%= c "fqdn", true %>',
+      'some template <b>#{ticket.title}</b> #{config.fqdn}',
     ).render
 
 =end
@@ -26,7 +26,7 @@ examples how to use
   def initialize(objects, locale, template, escape = true)
     @objects = objects
     @locale = locale || 'en-us'
-    @template = NotificationFactory::Template.new(template)
+    @template = NotificationFactory::Template.new(template, escape)
     @escape = escape
   end
 
@@ -40,6 +40,25 @@ examples how to use
 
     # do validaton, ignore some methodes
     return "\#{#{key} / not allowed}" if !data_key_valid?(key)
+
+    # aliases
+    map = {
+      'article.body' => 'article.body_as_text_with_quote.text2html',
+    }
+    if map[key]
+      key = map[key]
+    end
+
+    # escape in html mode
+    if escape
+      no_escape = {
+        'article.body_as_html' => true,
+        'article.body_as_text_with_quote.text2html' => true,
+      }
+      if no_escape[key]
+        escape = false
+      end
+    end
 
     value          = nil
     object_methods = key.split('.')
@@ -76,7 +95,11 @@ examples how to use
         value = "\#{#{object_name}.#{object_methods_s} / no such method}"
         break
       end
-      object_refs = object_refs.send(method.to_sym)
+      begin
+        object_refs = object_refs.send(method.to_sym)
+      rescue => e
+        object_refs = "\#{#{object_name}.#{object_methods_s} / e.message}"
+      end
     }
     placeholder = if !value
                     object_refs
@@ -100,27 +123,6 @@ examples how to use
     escaping(translation, escape)
   end
 
-  # a_html - article body in html
-  # a_html(article)
-  def a_html(article)
-    content_type = d "#{article}.content_type", false
-    if content_type =~ /html/
-      return d "#{article}.body", false
-    end
-    d("#{article}.body", false).text2html
-  end
-
-  # a_text - article body in text
-  # a_text(article)
-  def a_text(article)
-    content_type = d "#{article}.content_type", false
-    body = d "#{article}.body", false
-    if content_type =~ /html/
-      body = body.html2text
-    end
-    (body.strip + "\n").gsub(/^(.*?)$/, '> \\1')
-  end
-
   # h - htmlEscape
   # h('fqdn', htmlEscape)
   def h(key)
@@ -137,7 +139,7 @@ examples how to use
   end
 
   def data_key_valid?(key)
-    return false if key =~ /`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find)/i
+    return false if key =~ /`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find)/i && key !~ /(update|create)d_at/i
     true
   end
 

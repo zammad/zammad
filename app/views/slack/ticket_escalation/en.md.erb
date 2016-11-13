@@ -1,7 +1,7 @@
-# <%= d 'ticket.title' %>
-_<<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>|Ticket#<%= d 'ticket.number' %>>: Escalated at <%= d 'ticket.escalation_at' %>_
-A ticket (<%= d 'ticket.title' %>) from "<%= d 'ticket.customer.longname' %>" is escalated since "<%= d 'ticket.escalation_at' %>"!
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Escalated at #{ticket.escalation_at}_
+A ticket (#{ticket.title}) from "#{ticket.customer.longname}" is escalated since "#{ticket.escalation_at}"!
 
 <% if @objects[:article] %>
-<%= a_text 'article' %>
+#{article.body_as_text}
 <% end %>

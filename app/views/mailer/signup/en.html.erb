@@ -1,9 +1,9 @@
-Confirm your <%= c 'product_name' %> account, <%= d 'user.firstname' %> <%= d 'user.lastname' %>
+Confirm your #{config.product_name} account, #{user.firstname} #{user.lastname}
 
-<div>Hi <%= d 'user.firstname' %>,</div>
+<div>Hi #{user.firstname},</div>
 <br>
-<div>Confirm your email address to complete your <%= c 'product_name' %> account. It's easy, just click the link below.</div>
+<div>Confirm your email address to complete your #{config.product_name} account. It's easy, just click the link below.</div>
 <br>
-<div><a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#email_verify/<%= d 'token.name' %>"><%= c 'http_type' %>://<%= c 'fqdn' %>/#email_verify/<%= d 'token.name' %></a></div>
+<div><a href="#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</a></div>
 <br>
-<div>Your <%= c 'product_name' %> Team</div>
+<div>Your #{config.product_name} Team</div>
