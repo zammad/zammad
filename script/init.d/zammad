@@ -11,7 +11,7 @@
 ### END INIT INFO
 
 
-APP_ROOT="/home/zammad/zammad"
+APP_ROOT="/opt/zammad"
 PID_PATH="$APP_ROOT/tmp/pids"
 WEB_SERVER_PID="$PID_PATH/puma.pid"
 WEBSOCKET_SERVER_PID="$PID_PATH/websocket.pid"
