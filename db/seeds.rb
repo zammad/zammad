@@ -4663,6 +4663,75 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force: true,
   object: 'Organization',
+  name: 'domain_assignment',
+  display: 'Domain based assignment',
+  data_type: 'boolean',
+  data_option: {
+    null: true,
+    default: false,
+    note: 'Assign Users based on users domain.',
+    item_class: 'formGroup--halfSize',
+    options: {
+      true: 'yes',
+      false: 'no',
+    },
+    translate: true,
+  },
+  editable: false,
+  active: true,
+  screens: {
+    edit: {
+      Admin: {
+        null: false,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 1410,
+)
+
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Organization',
+  name: 'domain',
+  display: 'Domain',
+  data_type: 'input',
+  data_option: {
+    type: 'text',
+    maxlength: 150,
+    null: true,
+    item_class: 'formGroup--halfSize',
+  },
+  editable: false,
+  active: true,
+  screens: {
+    edit: {
+      '-all-' => {
+        null: true,
+      },
+    },
+    view: {
+      '-all-' => {
+        shown: true,
+      },
+    },
+  },
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 1420,
+)
+
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Organization',
   name: 'note',
   display: 'Note',
   data_type: 'richtext',
