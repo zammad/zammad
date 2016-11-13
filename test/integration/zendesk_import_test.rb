@@ -258,6 +258,8 @@ class ZendeskImportTest < ActiveSupport::TestCase
       id
       name
       shared
+      domain
+      domain_assignment
       active
       note
       updated_by_id
