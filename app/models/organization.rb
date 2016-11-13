@@ -13,6 +13,9 @@ class Organization < ApplicationModel
   has_many                :members,  class_name: 'User'
   validates               :name,     presence: true
 
+  before_create :domain_cleanup
+  before_update :domain_cleanup
+
   activity_stream_support permission: 'admin.role'
   history_support
   search_index_support
@@ -20,6 +23,15 @@ class Organization < ApplicationModel
   latest_change_support
 
   private
+
+  def domain_cleanup
+    return if !domain
+    return if domain.empty?
+    domain.gsub!(/@/, '')
+    domain.gsub!(/\s*/, '')
+    domain.strip!
+    domain.downcase!
+  end
 
   def cache_delete
     super
