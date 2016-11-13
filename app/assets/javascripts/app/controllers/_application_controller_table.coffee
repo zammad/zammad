@@ -78,14 +78,15 @@ class App.ControllerTable extends App.Controller
       e.preventDefault()
       console.log('checkboxClick', e.target)
 
-    callbackHeader = (header) ->
-      console.log('current header is', header)
+    callbackHeader = (headers) ->
+      console.log('current header is', headers)
       # add new header item
       attribute =
         name: 'some name'
         display: 'Some Name'
-      header.push attribute
-      console.log('new header is', header)
+      headers.push attribute
+      console.log('new header is', headers)
+      headers
 
     callbackAttributes = (value, object, attribute, header, refObject) ->
       console.log('data of item col', value, object, attribute, header, refObject)
