@@ -308,6 +308,10 @@ class ApplicationController < ActionController::Base
       logger.debug "oauth2 token auth check '#{token}'"
       access_token = Doorkeeper::AccessToken.by_token(token)
 
+      if !access_token
+        raise Exceptions::NotAuthorized, 'Invalid token!'
+      end
+
       # check expire
       if access_token.expires_in && (access_token.created_at + access_token.expires_in) < Time.zone.now
         raise Exceptions::NotAuthorized, 'OAuth2 token is expired!'

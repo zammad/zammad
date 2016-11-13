@@ -52,6 +52,7 @@ curl -u <%= @S('email') %>:some_password <%= @C('http_type') %>://<%= @C('fqdn')
 <button class="btn js-appNew"><%- @T('New Application') %></button>
 
 <br>
+<br>
 
 <div>
 OAuth URLs are:

@@ -34,20 +34,47 @@ class Index extends App.ControllerSubContent
       App.Setting.unsubscribe(@subscribeApplicationId)
 
     table = =>
+
+      callbackHeader = (headers) ->
+        attribute =
+          name: 'view'
+          display: 'View'
+        headers.splice(3, 0, attribute)
+        attribute =
+          name: 'token'
+          display: 'Token'
+        headers.splice(4, 0, attribute)
+        headers
+
+      callbackViewAttributes = (value, object, attribute, header, refObject) ->
+        value = 'X'
+        value
+
+      callbackTokenAttributes = (value, object, attribute, header, refObject) ->
+        value = 'X'
+        value
+
       new App.ControllerTable(
-        el:           @$('.js-appList')
-        model:        App.Application
-        table_id:     'applications'
-        objects:      App.Application.all()
+        el:       @$('.js-appList')
+        model:    App.Application
+        table_id: 'applications'
+        objects:  App.Application.all()
         bindRow:
           events:
             'click': @appEdit
+        bindCol:
+          view:
+            events:
+              'click': @appView
+          token:
+            events:
+              'click': @appToken
+        callbackHeader: [callbackHeader]
+        callbackAttributes:
+          view: [callbackViewAttributes]
+          token: [callbackTokenAttributes]
       )
     table()
-    #App.Application.fetchFull(
-    #  table
-    #  clear: true
-    #)
     @subscribeApplicationId = App.Application.subscribe(table, initFetch: true, clear: true)
 
 
@@ -82,6 +109,18 @@ class Index extends App.ControllerSubContent
     value = @PasswordAccess.prop('checked')
     App.Setting.set('api_password_access', value)
 
+  appToken: (id, e) ->
+    e.preventDefault()
+    new ViewAppTokenModal(
+      app: App.Application.find(id)
+    )
+
+  appView: (id, e) ->
+    e.preventDefault()
+    new ViewAppModal(
+      app: App.Application.find(id)
+    )
+
   appNew: (e) ->
     e.preventDefault()
     new App.ControllerGenericNew(
@@ -105,6 +144,53 @@ class Index extends App.ControllerSubContent
       callback: =>
         @render()
       container: @el.closest('.content')
+    )
+
+class ViewAppModal extends App.ControllerModal
+  headPrefix: 'App'
+  buttonSubmit: false
+  buttonCancel: true
+  shown: true
+  small: true
+  events:
+    'click .js-select': 'selectAll'
+
+  constructor: (params) ->
+    @head = params.app.name
+    super
+
+  content: ->
+    "AppID: <input class=\"js-select\" type=\"text\" value=\"#{@app.uid}\">
+    <br>
+    Secret: <input class=\"js-select\" type=\"text\" value=\"#{@app.secret}\">"
+
+class ViewAppTokenModal extends App.ControllerModal
+  headPrefix: 'Generate Token'
+  buttonSubmit: 'Generate Token'
+  buttonCancel: true
+  shown: true
+  small: true
+  events:
+    'click .js-select': 'selectAll'
+
+  constructor: (params) ->
+    @head = params.app.name
+    super
+
+  content: ->
+    "#{App.i18n.translateContent('Generate Access Token for |%s|', App.Session.get().displayNameLong())}"
+
+  onSubmit: =>
+    @ajax(
+      id:          'application_token'
+      type:        'POST'
+      url:         "#{@apiPath}/applications/token"
+      processData: true
+      data:        JSON.stringify(id: @app.id)
+      success:     (data, status, xhr) =>
+        @contentInline = "#{App.i18n.translateContent('New Access Token is')}: <input class=\"js-select\" type=\"text\" value=\"#{data.token}\">"
+        @update()
+        @$('.js-submit').remove()
     )
 
 App.Config.set('API', { prio: 1200, name: 'API', parent: '#system', target: '#system/api', controller: Index, permission: ['admin.api'] }, 'NavBarAdmin')

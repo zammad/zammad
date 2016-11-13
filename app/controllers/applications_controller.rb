@@ -1,4 +1,4 @@
-# Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
+# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ApplicationsController < ApplicationController
   before_action { authentication_check(permission: 'admin.api') }
@@ -13,7 +13,9 @@ class ApplicationsController < ApplicationController
         if !assets[:Application]
           assets[:Application] = {}
         end
-        assets[:Application][item.id] = item.attributes
+        application = item.attributes
+        application[:clients] = Doorkeeper::AccessToken.where(application_id: item.id).count
+        assets[:Application][item.id] = application
       }
       render json: {
         record_ids: item_ids,
@@ -23,6 +25,11 @@ class ApplicationsController < ApplicationController
     end
 
     render json: all, status: :ok
+  end
+
+  def token
+    access_token = Doorkeeper::AccessToken.create!(application_id: params[:id], resource_owner_id: current_user.id)
+    render json: { token: access_token.token }, status: :ok
   end
 
   def show
@@ -59,6 +66,7 @@ class ApplicationsController < ApplicationController
     params_data.delete('uid')
     params_data.delete('secret')
     params_data.delete('created_at')
+    params_data.delete('updated_at')
     params_data
   end
 end
