@@ -78,7 +78,7 @@ class NotificationFactorySlackTemplateTest < ActiveSupport::TestCase
     )
 
     assert_match('# Welcome to Zammad!', result[:subject])
-    assert_match('User&lt;b&gt;xxx&lt;/b&gt', result[:body])
+    assert_match('User<b>xxx</b>', result[:body])
     assert_match('Created by', result[:body])
     assert_match('<b>test123</b>', result[:body])
     assert_no_match('Dein', result[:body])
@@ -113,7 +113,7 @@ class NotificationFactorySlackTemplateTest < ActiveSupport::TestCase
       },
     )
     assert_match('# Welcome to Zammad!', result[:subject])
-    assert_match('User&lt;b&gt;xxx&lt;/b&gt', result[:body])
+    assert_match('User<b>xxx</b>', result[:body])
     assert_match('state: aaa -> bbb', result[:body])
     assert_match('group: xxx -> yyy', result[:body])
     assert_no_match('Dein', result[:body])

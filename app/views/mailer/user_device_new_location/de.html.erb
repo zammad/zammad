@@ -1,19 +1,19 @@
-<%= c 'product_name' %>-Anmeldung von einem anderen Land erfasst
+#{config.product_name}-Anmeldung von einem anderen Land erfasst
 
-<div>Hallo <%= d 'user.firstname' %>,</div>
+<div>Hallo #{user.firstname},</div>
 <br>
-<div>es sieht aus, als ob Du Dich um "<%= d 'user_device.created_at' %>" von einem <b>bekannten Gerät aus einem anderen Land angemeldet hast</b>:</div>
+<div>es sieht aus, als ob Du Dich um "#{user_device.created_at}" von einem <b>bekannten Gerät aus einem anderen Land angemeldet hast</b>:</div>
 <br>
 <div>
-Dein Gerät: <%= d 'user_device.name' %><br>
-Deine Lokation (relativ): <%= d 'user_device.location' %><br>
-Deine IP: <%= d 'user_device.ip' %><br>
+Dein Gerät: #{user_device.name}<br>
+Deine Lokation (relativ): #{user_device.location}<br>
+Deine IP: #{user_device.ip}<br>
 </div>
 <br>
 <div>Das neue Land wurde in die Liste der bekannten Geräte hinzugefügt, diese Liste kannst Du hier einsehen:</div>
 <br>
-<div><%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/devices</div>
+<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
 <br>
 <div>Wenn dies nicht Du warst, entferne die neue Lokation aus der Liste, ändere Dein Account-Passwort und kontaktieren Deinen Administrator. Jemand könnte unberechtigten Zugriff auf Dein Konto bekommen haben.</div>
 <br>
-<div>Dein <%= c 'product_name' %> Team</div>
+<div>Dein #{config.product_name} Team</div>
