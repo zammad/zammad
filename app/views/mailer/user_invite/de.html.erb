@@ -1,13 +1,13 @@
-Einladung zu <%= c 'product_name' %> über <%= c 'fqdn' %>
+Einladung zu #{config.product_name} über #{config.fqdn}
 
-<div>Hallo <%= d 'user.firstname' %>,</div>
+<div>Hallo #{user.firstname},</div>
 <br>
-<div>Ich (<%= d 'current_user.firstname' %> <%= d 'current_user.lastname' %>) möchte Dich zu <%= c 'product_name' %> einladen - unsere Kundensupport / Ticket System Platform.</div>
+<div>Ich (#{current_user.firstname} #{current_user.lastname}) möchte Dich zu #{config.product_name} einladen - unsere Kundensupport / Ticket System Platform.</div>
 <br>
-<div>Um sich anzumelden kann <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#password_reset_verify/<%= d 'token.name' %>">hier</a> das Password gesetzt werden.</div>
+<div>Um sich anzumelden kann <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">hier</a> das Password gesetzt werden.</div>
 <br>
 <div>Enjoy,</div>
 <br>
-<div><%= d 'current_user.firstname' %> <%= d 'current_user.lastname' %></div>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
 <br>
-<div>Dein <%= c 'product_name' %> Team</div>
+<div>Dein #{config.product_name} Team</div>

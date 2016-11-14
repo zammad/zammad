@@ -1,15 +1,15 @@
-Zurücksetzen Deines <%= c 'product_name' %> Passworts
+Zurücksetzen Deines #{config.product_name} Passworts
 
-<div>Hallo <%= d 'user.firstname' %>,</div>
+<div>Hallo #{user.firstname},</div>
 <br>
-<div>wir haben eine Anfrage zum Zurücksetzen des Passworts für <%= c 'product_name' %> Account <b><%= d 'user.login' %></b> erhalten.</div>
+<div>wir haben eine Anfrage zum Zurücksetzen des Passworts für #{config.product_name} Account <b>#{user.login}</b> erhalten.</div>
 <br>
 <div>Wenn Sie Ihr Passwort zurückzusetzen wollen, klicken Sie auf den unten stehenden Link (oder kopieren Sie die URL in den Browser einfügen):</div>
 <br>
-<div><a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#password_reset_verify/<%= d 'token.name' %>"><%= c 'http_type' %>://<%= c 'fqdn' %>/#password_reset_verify/<%= d 'token.name' %></a></div>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
 <br>
 <div>Dieser Link führt Sie zu einer Seite, auf der Sie Ihr Passwort ändern können.</div>
 <br>
 <div>Wenn Sie Ihr Passwort nicht zurücksetzen wollen, ignorieren Sie diese Meldung. Das Passwort bleibt unverändert.</div>
 <br>
-<div>Dein <%= c 'product_name' %> Team</div>
+<div>Dein #{config.product_name} Team</div>

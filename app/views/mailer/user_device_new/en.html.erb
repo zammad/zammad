@@ -1,19 +1,19 @@
-<%= c 'product_name' %> signin detected from a new device
+#{config.product_name} signin detected from a new device
 
-<div>Hi <%= d 'user.firstname' %>,</div>
+<div>Hi #{user.firstname},</div>
 <br>
-<div>It looks like you signed into your account <b>using a new device</b> on "<%= d 'user_device.created_at' %>":</div>
+<div>It looks like you signed into your account <b>using a new device</b> on "#{user_device.created_at}":</div>
 <br>
 <div>
-Your device: <%= d 'user_device.name' %><br>
-Your location (relative): <%= d 'user_device.location' %><br>
-Your IP: <%= d 'user_device.ip' %><br>
+Your device: #{user_device.name}<br>
+Your location (relative): #{user_device.location}<br>
+Your IP: #{user_device.ip}<br>
 </div>
 <br>
 <div>Your device has been added to your list of known devices, which you can view here:</div>
 <br>
-<div><%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/devices</div>
+<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
 <br>
 <div>If this wasn't you, remove the device, changing your account password, and contacting your administrator. Somebody might have gained unauthorized access to your account.</div>
 <br>
-<div>Your <%= c 'product_name' %> Team</div>
+<div>Your #{config.product_name} Team</div>
