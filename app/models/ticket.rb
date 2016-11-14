@@ -738,22 +738,21 @@ perform changes on ticket
         }
 
         # get subject
-        value['subject'].gsub!(/\#\{config\.(.+?)\}/, '<%= c "\\1", false %>')
-        value['subject'].gsub!(/\#\{(.+?)\}/, '<%= d "\\1", false %>')
         subject = NotificationFactory::Mailer.template(
           templateInline: value['subject'],
           locale: 'en-en',
           objects: objects,
+          quote: false,
         )
         subject = subject_build(subject)
 
-        value['body'].gsub!(/\#\{config\.(.+?)\}/, '<%= c "\\1", true %>')
-        value['body'].gsub!(/\#\{(.+?)\}/, '<%= d "\\1", true %>')
         body = NotificationFactory::Mailer.template(
           templateInline: value['body'],
           locale: 'en-en',
           objects: objects,
+          quote: true,
         )
+
         Ticket::Article.create(
           ticket_id: id,
           to: recipient_string,

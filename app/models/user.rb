@@ -33,7 +33,7 @@ class User < ApplicationModel
   include User::SearchIndex
 
   before_validation :check_name, :check_email, :check_login, :check_password
-  before_create   :check_preferences_default, :validate_roles
+  before_create   :check_preferences_default, :validate_roles, :domain_based_assignment
   before_update   :check_preferences_default, :validate_roles
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
@@ -854,6 +854,20 @@ returns
         raise "Role #{role.name} conflicts with #{local_role.name}" if role_ids.include?(local_role.id)
       }
     }
+  end
+
+  def domain_based_assignment
+    return if !email
+    return if organization_id
+    begin
+      domain = Mail::Address.new(email).domain
+      return if !domain
+      organization = Organization.find_by(domain: domain.downcase, domain_assignment: true)
+      return if !organization
+      self.organization_id = organization.id
+    rescue
+      return
+    end
   end
 
   def avatar_for_email_check

@@ -20,6 +20,9 @@
 /public/assets/app/*
 /public/assets/custom/*
 
+# Ignore custom gem file
+Gemfile.local
+
 # Ignore .project files
 /.project
 

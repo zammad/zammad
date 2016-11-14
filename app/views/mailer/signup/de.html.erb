@@ -1,9 +1,9 @@
-Bestätigung des <%= c 'product_name' %> Accounts, <%= d 'user.firstname' %> <%= d 'user.lastname' %>
+Bestätigung des #{config.product_name} Accounts, #{user.firstname} #{user.lastname}
 
-<div>Hallo <%= d 'user.firstname' %>,</div>
+<div>Hallo #{user.firstname},</div>
 <br>
-<div>bestätige Deine E-Mail-Adresse um Deine Registrierung bei <%= c 'product_name' %> abzuschließen. Es ist einfach - klick einfach auf den Link unten.</div>
+<div>bestätige Deine E-Mail-Adresse um Deine Registrierung bei #{config.product_name} abzuschließen. Es ist einfach - klick einfach auf den Link unten.</div>
 <br>
-<div><a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#email_verify/<%= d 'token.name' %>"><%= c 'http_type' %>://<%= c 'fqdn' %>/#email_verify/<%= d 'token.name' %></a></div>
+<div><a href="#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</a></div>
 <br>
-<div>Dein <%= c 'product_name' %> Team</div>
+<div>Dein #{config.product_name} Team</div>
