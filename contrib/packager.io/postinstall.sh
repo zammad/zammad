@@ -11,9 +11,9 @@ DB_USER="zammad"
 MY_CNF="/etc/mysql/debian.cnf"
 
 # check which init system is used
-if [ -n "$(which initctl)" ]; then
+if [ -n "$(which initctl 2> /dev/null)" ]; then
     INIT_CMD="initctl"
-elif [ -n "$(which systemctl)" ]; then
+elif [ -n "$(which systemctl 2> /dev/null)" ]; then
     INIT_CMD="systemctl"
 else
     function sysvinit () {
@@ -40,45 +40,45 @@ else
     DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
 
     # postgresql
-    if [ -n "$(which psql)" ]; then
-	echo "installing zammad on postgresql"
+    if [ -n "$(which psql 2> /dev/null)" ]; then
+	echo "# Installing zammad on postgresql"
 
 	# centos
-	if [ -n "$(which postgresql-setup)" ]; then
-        echo "preparing postgresql server"
+	if [ -n "$(which postgresql-setup 2> /dev/null)" ]; then
+        echo "# Preparing postgresql server"
         postgresql-setup initdb
 
-        echo "backuping postgres config"
+        echo "# Backuping postgres config"
         test -f /var/lib/pgsql/data/pg_hba.conf.bak || cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
 
-        echo "allow login via username and password in postgresql"
+        echo "# Allow login via username and password in postgresql"
         sed 's/ident/trust/g' < /var/lib/pgsql/data/pg_hba.conf.bak > /var/lib/pgsql/data/pg_hba.conf
 
-        echo "restarting postgresql server"
+        echo "# Restarting postgresql server"
         ${INIT_CMD} restart postgresql
 
-        echo "create postgresql bootstart"
+        echo "# Creating postgresql bootstart"
         ${INIT_CMD} enable postgresql.service
 	fi
 
-        echo "creating zammad postgresql db"
+        echo "# Creating zammad postgresql db"
         su - postgres -c "createdb -E UTF8 ${DB}"
 
-        echo "creating zammad postgresql user"
+        echo "# Creating zammad postgresql user"
         echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql 
 
-        echo "grant privileges to new postgresql user"
+        echo "# Grant privileges to new postgresql user"
         echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
 
-        echo "updating database.yml"
+        echo "# Updating database.yml"
         sed -e "s/.*adapter:.*/  adapter: postgresql/" \
         -e "s/.*username:.*/  username: ${DB_USER}/" \
         -e  "s/.*password:.*/  password: ${DB_PASS}/" \
         -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
 
     # mysql / mariadb
-    elif [ -n "$(which mysql)" ];then
-        echo "installing zammd on mysql"
+    elif [ -n "$(which mysql 2> /dev/null)" ];then
+        echo "# Installing zammd on mysql"
 
         if [ -f "${MY_CNF}" ]; then
             MYSQL_CREDENTIALS="--defaults-file=${MY_CNF}"
@@ -88,25 +88,25 @@ else
             MYSQL_CREDENTIALS="-u root -p${MYSQL_ROOT_PASS}"
         fi
 
-        echo "creating zammad mysql db"
+        echo "# Creating zammad mysql db"
         mysql ${MYSQL_CREDENTIALS} -e "CREATE DATABASE ${DB} DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;"
 
-        echo "creating zammad mysql user"
+        echo "# Creating zammad mysql user"
         mysql ${MYSQL_CREDENTIALS} -e "CREATE USER \"${DB_USER}\"@\"${DB_HOST}\" IDENTIFIED BY \"${DB_PASS}\";"
 
-            echo "grant privileges to new mysql user"
+            echo "# Grant privileges to new mysql user"
         mysql ${MYSQL_CREDENTIALS} -e "GRANT ALL PRIVILEGES ON ${DB}.* TO \"${DB_USER}\"@\"${DB_HOST}\"; FLUSH PRIVILEGES;"
 
-            echo "updating database.yml"
+            echo "# Updating database.yml"
         sed -e "s/.*adapter:.*/  adapter: mysql2/" \
                 -e "s/.*username:.*/  username: ${DB_USER}/" \
                 -e  "s/.*password:.*/  password: ${DB_PASS}/" \
                 -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
 
 	# sqlite / no local db
-    elif [ -n "$(which sqlite)" ];then
-    	echo "installing zammad on sqlite"
-    	echo "in fact this does nothing at the moment. use this to install zammad without a local database. sqlite should only be used in dev environment anyway."
+    elif [ -n "$(which sqlite 2> /dev/null)" ];then
+    	echo "# Installing zammad on sqlite"
+    	echo "# In fact this does nothing at the moment. use this to install zammad without a local database. sqlite should only be used in dev environment anyway."
     fi
 
     # fill database
@@ -119,19 +119,21 @@ echo "# Starting Zammad"
 ${INIT_CMD} start zammad
 
 # on centos, allow nginx to connect to application server
-if [ -n "$(which setsebool)" ]; then
+if [ -n "$(which setsebool 2> /dev/null)" ]; then
+    echo "# Adding SE Linux rules"
     setsebool httpd_can_network_connect on -P
 fi
 
 # on centos, open port 80 and 443
-if [ -n "$(which firewall-cmd)" ]; then
+if [ -n "$(which firewall-cmd 2> /dev/null)" ]; then
+    echo "# Adding firewall rules"
     firewall-cmd --zone=public --add-port=80/tcp --permanent
     firewall-cmd --zone=public --add-port=443/tcp --permanent
     firewall-cmd --reload
 fi
 
 # copy nginx config
-if [ -n "$(which nginx)" ]; then
+if [ -n "$(which nginx 2> /dev/null)" ]; then
     # debian / ubuntu
     if [ -d /etc/nginx/sites-enabled ]; then
 	NGINX_CONF="/etc/nginx/sites-enabled/zammad.conf"
@@ -144,10 +146,10 @@ if [ -n "$(which nginx)" ]; then
 	test -f ${NGINX_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${NGINX_CONF}
     fi
 
-    echo "restarting Nginx"
+    echo "# Restarting Nginx"
     ${INIT_CMD} restart nginx
 
-    echo "create Nginx bootstart"
+    echo "# Creating Nginx bootstart"
     ${INIT_CMD} enable nginx
 
     echo -e "############################################################################################################"
