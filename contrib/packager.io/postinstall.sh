@@ -45,20 +45,20 @@ else
 
 	# centos
 	if [ -n "$(which postgresql-setup 2> /dev/null)" ]; then
-        echo "# Preparing postgresql server"
-        postgresql-setup initdb
+    	    echo "# Preparing postgresql server"
+    	    postgresql-setup initdb
 
-        echo "# Backuping postgres config"
-        test -f /var/lib/pgsql/data/pg_hba.conf.bak || cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
+    	    echo "# Backuping postgres config"
+    	    test -f /var/lib/pgsql/data/pg_hba.conf.bak || cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
 
-        echo "# Allow login via username and password in postgresql"
-        sed 's/ident/trust/g' < /var/lib/pgsql/data/pg_hba.conf.bak > /var/lib/pgsql/data/pg_hba.conf
+    	    echo "# Allow login via username and password in postgresql"
+    	    sed 's/ident/trust/g' < /var/lib/pgsql/data/pg_hba.conf.bak > /var/lib/pgsql/data/pg_hba.conf
 
-        echo "# Restarting postgresql server"
-        ${INIT_CMD} restart postgresql
+    	    echo "# Restarting postgresql server"
+    	    ${INIT_CMD} restart postgresql
 
-        echo "# Creating postgresql bootstart"
-        ${INIT_CMD} enable postgresql.service
+    	    echo "# Creating postgresql bootstart"
+    	    ${INIT_CMD} enable postgresql.service
 	fi
 
         echo "# Creating zammad postgresql db"
