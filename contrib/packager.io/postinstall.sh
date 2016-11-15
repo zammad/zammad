@@ -98,14 +98,14 @@ else
         echo "# Creating zammad mysql user"
         mysql ${MYSQL_CREDENTIALS} -e "CREATE USER \"${DB_USER}\"@\"${DB_HOST}\" IDENTIFIED BY \"${DB_PASS}\";"
 
-            echo "# Grant privileges to new mysql user"
+        echo "# Grant privileges to new mysql user"
         mysql ${MYSQL_CREDENTIALS} -e "GRANT ALL PRIVILEGES ON ${DB}.* TO \"${DB_USER}\"@\"${DB_HOST}\"; FLUSH PRIVILEGES;"
 
-            echo "# Updating database.yml"
+        echo "# Updating database.yml"
         sed -e "s/.*adapter:.*/  adapter: mysql2/" \
-                -e "s/.*username:.*/  username: ${DB_USER}/" \
-                -e  "s/.*password:.*/  password: ${DB_PASS}/" \
-                -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
+            -e "s/.*username:.*/  username: ${DB_USER}/" \
+            -e  "s/.*password:.*/  password: ${DB_PASS}/" \
+            -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
 
 	# sqlite / no local db
     elif [ -n "$(which sqlite 2> /dev/null)" ];then
@@ -175,11 +175,11 @@ if [ -n "$(which apache2 2> /dev/null)" ] || [ -n "$(which httpd 2> /dev/null)" 
 	test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/apache2/zammad.conf ${WEBSERVER_CONF}
     fi
 
-    echo "# Restarting webserver ${WEBSERVER_CMD}"
-    ${INIT_CMD} restart ${WEBSERVER_CMD}
-
     echo "# Creating webserver bootstart"
     ${INIT_CMD} enable ${WEBSERVER_CMD}
+
+    echo "# Restarting webserver ${WEBSERVER_CMD}"
+    ${INIT_CMD} restart ${WEBSERVER_CMD}
 
     echo -e "####################################################################################"
     echo -e "\nAdd your FQDN to servername directive in ${WEBSERVER_CONF}"
