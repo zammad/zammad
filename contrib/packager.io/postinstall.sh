@@ -132,33 +132,53 @@ if [ -n "$(which firewall-cmd 2> /dev/null)" ]; then
     firewall-cmd --reload
 fi
 
-# copy nginx config
-if [ -n "$(which nginx 2> /dev/null)" ]; then
+# copy webserver config
+if [ -n "$(which apache2 2> /dev/null)" ] || [ -n "$(which httpd 2> /dev/null)" ] || [ -n "$(which nginx 2> /dev/null)" ] ; then
+    # Nginx
     # debian / ubuntu
     if [ -d /etc/nginx/sites-enabled ]; then
-	NGINX_CONF="/etc/nginx/sites-enabled/zammad.conf"
+	WEBSERVER_CONF="/etc/nginx/sites-enabled/zammad.conf"
+	WEBSERVER_CMD="nginx"
 	test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/sites-available/zammad.conf
-	test -h ${NGINX_CONF} || ln -s /etc/nginx/sites-available/zammad.conf ${NGINX_CONF}
-
+	test -h ${WEBSERVER_CONF} || ln -s /etc/nginx/sites-available/zammad.conf ${WEBSERVER_CONF}
     # centos / sles
     elif [ -d /etc/nginx/conf.d ]; then
-	NGINX_CONF="/etc/nginx/conf.d/zammad.conf"
-	test -f ${NGINX_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${NGINX_CONF}
+	WEBSERVER_CONF="/etc/nginx/conf.d/zammad.conf"
+	WEBSERVER_CMD="nginx"
+	test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${WEBSERVER_CONF}
+    # Apache2
+    # debian / ubuntu
+    elif [ -d /etc/apache2/sites-enabled ]; then
+	WEBSERVER_CONF="/etc/apache2/sites-enabled/zammad.conf"
+	WEBSERVER_CMD="apache2"
+	test -f /etc/apache2/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/apache2/zammad.conf /etc/apache2/sites-available/zammad.conf
+	test -h ${WEBSERVER_CONF} || ln -s /etc/apache2/sites-available/zammad.conf ${WEBSERVER_CONF}
+	
+	echo "# Activating Apache2 modules"
+	a2enmod proxy
+	a2enmod proxy_http
+	a2enmod proxy_wstunnel
+    # centos / sles
+    elif [ -d /etc/httpd/conf.d ]; then
+	WEBSERVER_CONF="/etc/httpd/conf.d/zammad.conf"
+	WEBSERVER_CMD="httpd"
+	test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/apache2/zammad.conf ${WEBSERVER_CONF}
     fi
 
-    echo "# Restarting Nginx"
-    ${INIT_CMD} restart nginx
+    echo "# Restarting webserver ${WEBSERVER_CMD}"
+    ${INIT_CMD} restart ${WEBSERVER_CMD}
 
-    echo "# Creating Nginx bootstart"
-    ${INIT_CMD} enable nginx
+    echo "# Creating webserver bootstart"
+    ${INIT_CMD} enable ${WEBSERVER_CMD}
 
-    echo -e "############################################################################################################"
-    echo -e "\nAdd your FQDN to servername directive in ${NGINX_CONF} and restart nginx if you're not testing localy"
+    echo -e "####################################################################################"
+    echo -e "\nAdd your FQDN to servername directive in ${WEBSERVER_CONF}"
+    echo -e "and restart your webserver if you're not testing localy"
     echo -e "or open http://localhost in your browser to start using Zammad.\n"
-    echo -e "############################################################################################################"
+    echo -e "####################################################################################"
 else
-    echo -e "############################################################################################################"
+    echo -e "####################################################################################"
     echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad.\n"
-    echo -e "############################################################################################################"
+    echo -e "####################################################################################"
 fi
 
