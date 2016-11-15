@@ -11,10 +11,10 @@ DB_USER="zammad"
 MY_CNF="/etc/mysql/debian.cnf"
 
 # check which init system is used
-if [ -n "$(which initctl 2> /dev/null)" ]; then
-    INIT_CMD="initctl"
-elif [ -n "$(which systemctl 2> /dev/null)" ]; then
+if [ -n "$(which systemctl 2> /dev/null)" ]; then
     INIT_CMD="systemctl"
+elif [ -n "$(which initctl 2> /dev/null)" ]; then
+    INIT_CMD="initctl"
 else
     function sysvinit () {
 	service $2 $1
@@ -24,6 +24,9 @@ fi
 
 echo "# (Re)creating init scripts"
 zammad scale web=1 websocket=1 worker=1
+
+echo "# Enabling Zammad on boot"
+${INIT_CMD} enable zammad
 
 echo "# Stopping Zammad"
 ${INIT_CMD} stop zammad
@@ -53,13 +56,14 @@ else
 
     	    echo "# Allow login via username and password in postgresql"
     	    sed 's/ident/trust/g' < /var/lib/pgsql/data/pg_hba.conf.bak > /var/lib/pgsql/data/pg_hba.conf
-
-    	    echo "# Restarting postgresql server"
-    	    ${INIT_CMD} restart postgresql
-
-    	    echo "# Creating postgresql bootstart"
-    	    ${INIT_CMD} enable postgresql.service
 	fi
+
+	# centos / ubuntu / sles
+	echo "# Creating postgresql bootstart"
+    	${INIT_CMD} enable postgresql.service
+
+	echo "# Restarting postgresql server"
+    	${INIT_CMD} restart postgresql
 
         echo "# Creating zammad postgresql db"
         su - postgres -c "createdb -E UTF8 ${DB}"
@@ -72,13 +76,13 @@ else
 
         echo "# Updating database.yml"
         sed -e "s/.*adapter:.*/  adapter: postgresql/" \
-        -e "s/.*username:.*/  username: ${DB_USER}/" \
-        -e  "s/.*password:.*/  password: ${DB_PASS}/" \
-        -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
+    	    -e "s/.*username:.*/  username: ${DB_USER}/" \
+    	    -e "s/.*password:.*/  password: ${DB_PASS}/" \
+    	    -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
 
     # mysql / mariadb
     elif [ -n "$(which mysql 2> /dev/null)" ];then
-        echo "# Installing zammd on mysql"
+        echo "# Installing zammad on mysql"
 
         if [ -f "${MY_CNF}" ]; then
             MYSQL_CREDENTIALS="--defaults-file=${MY_CNF}"
@@ -141,11 +145,17 @@ if [ -n "$(which apache2 2> /dev/null)" ] || [ -n "$(which httpd 2> /dev/null)" 
 	WEBSERVER_CMD="nginx"
 	test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/sites-available/zammad.conf
 	test -h ${WEBSERVER_CONF} || ln -s /etc/nginx/sites-available/zammad.conf ${WEBSERVER_CONF}
-    # centos / sles
+    # centos
     elif [ -d /etc/nginx/conf.d ]; then
 	WEBSERVER_CONF="/etc/nginx/conf.d/zammad.conf"
 	WEBSERVER_CMD="nginx"
 	test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${WEBSERVER_CONF}
+    elif [ -d /etc/YaST2 ]; then
+	WEBSERVER_CONF="/etc/nginx/vhosts.d/zammad.conf"
+	WEBSERVER_CMD="nginx"
+	test -d /etc/nginx/vhosts.d || mkdir -p /etc/nginx/vhosts.d
+	test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${WEBSERVER_CONF}
+	
     # Apache2
     # debian / ubuntu
     elif [ -d /etc/apache2/sites-enabled ]; then
@@ -158,7 +168,7 @@ if [ -n "$(which apache2 2> /dev/null)" ] || [ -n "$(which httpd 2> /dev/null)" 
 	a2enmod proxy
 	a2enmod proxy_http
 	a2enmod proxy_wstunnel
-    # centos / sles
+    # centos
     elif [ -d /etc/httpd/conf.d ]; then
 	WEBSERVER_CONF="/etc/httpd/conf.d/zammad.conf"
 	WEBSERVER_CMD="httpd"
@@ -181,4 +191,3 @@ else
     echo -e "\nOpen http://localhost:3000 in your browser to start using Zammad.\n"
     echo -e "####################################################################################"
 fi
-
