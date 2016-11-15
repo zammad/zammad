@@ -27,7 +27,6 @@ before:
   - uname -a
   - ruby -v
   - env
-  - echo "gem 'mysql2'" >> Gemfile.local
   - "cat Gemfile.lock"
   - contrib/cleanup.sh
 env:
