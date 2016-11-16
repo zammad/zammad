@@ -715,13 +715,14 @@ test("form postmaster filter", function() {
       },
     },
     set: {
-      'x-zammad-ticket-customer': {
-        value: 'customer'
+      'x-zammad-ticket-customer_id': {
+        value: 'customer',
+        value_completion: ''
       },
       'x-zammad-ticket-group_id': {
         value: '1'
       },
-      'x-zammad-ticket-owner': {
+      'x-zammad-ticket-owner_id': {
         value: 'owner',
         value_completion: ''
       },
@@ -757,13 +758,14 @@ test("form postmaster filter", function() {
       }
     },
     set: {
-      'x-zammad-ticket-customer': {
-        value: 'customer'
+      'x-zammad-ticket-customer_id': {
+        value: 'customer',
+        value_completion: ''
       },
       'x-zammad-ticket-group_id': {
         value: '1'
       },
-      'x-zammad-ticket-owner': {
+      'x-zammad-ticket-owner_id': {
         value: 'owner',
         value_completion: ''
       },
@@ -774,7 +776,7 @@ test("form postmaster filter", function() {
   };
   deepEqual(params, test_params, 'form param check')
   el.find('[name="set::x-zammad-ticket-priority_id::value"]').closest('.js-filterElement').find('.js-remove').click()
-  el.find('[name="set::x-zammad-ticket-customer::value"]').closest('.js-filterElement').find('.js-remove').click()
+  el.find('[name="set::x-zammad-ticket-customer_id::value"]').closest('.js-filterElement').find('.js-remove').click()
   App.Delay.set(function() {
       test("form param check after remove click", function() {
         params = App.ControllerForm.params(el)
@@ -792,7 +794,7 @@ test("form postmaster filter", function() {
             }
           },
           set: {
-            'x-zammad-ticket-owner': {
+            'x-zammad-ticket-owner_id': {
               value: 'owner',
               value_completion: ''
             },
