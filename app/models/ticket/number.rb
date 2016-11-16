@@ -20,7 +20,7 @@ returns
     # generate number
     49_999.times {
       number = adapter.generate
-      ticket = Ticket.find_by( number: number )
+      ticket = Ticket.find_by(number: number)
       return number if !ticket
     }
     raise "Can't generate new ticket number!"
