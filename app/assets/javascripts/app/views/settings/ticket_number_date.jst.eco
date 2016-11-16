@@ -1,0 +1,6 @@
+<div class="js-date js-formPreferencesItem hidden" data-backend="Ticket::Number::Date">
+  <label class="formGroup-label"><%- @T('Options') %></label>
+  <div><%- @T('With Checksum the counter will be appended with a checksum at the end. The format looks like "%s" (e. g. %s).', 'Year.Month.Day.SystemID.Counter.CheckSum', '2012070110101520, 2012070110101535') %></div>
+  <br>
+  <form class="js-formItem"></form>
+</div>

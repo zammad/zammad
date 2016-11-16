@@ -1,4 +1,5 @@
 class App.SettingsAreaItem extends App.Controller
+  template: 'settings/item'
   events:
     'submit form': 'update'
 
@@ -21,8 +22,12 @@ class App.SettingsAreaItem extends App.Controller
     # form
     @configure_attributes = @setting.options['form']
 
+    for attribute in @configure_attributes
+      if attribute.tag is 'boolean'
+        attribute.translate = true
+
     # item
-    @html App.view('settings/item')(
+    @html App.view(@template)(
       setting: @setting
     )
 
