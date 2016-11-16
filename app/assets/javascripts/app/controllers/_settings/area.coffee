@@ -35,10 +35,11 @@ class App.SettingsArea extends App.Controller
 
     elements = []
     for setting in settings
-      if setting.preferences.controller && App[setting.preferences.controller]
-        item = new App[setting.preferences.controller](setting: setting)
-      else
-        item = new App.SettingsAreaItem(setting: setting)
-      elements.push item.el
+      if setting.preferences.hidden isnt true
+        if setting.preferences.controller && App[setting.preferences.controller]
+          item = new App[setting.preferences.controller](setting: setting)
+        else
+          item = new App.SettingsAreaItem(setting: setting)
+        elements.push item.el
 
     @html elements

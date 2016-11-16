@@ -6,6 +6,9 @@ class Index extends App.ControllerIntegrationBase
     ['This service shows you contacts of incoming calls and a caller list in realtime.']
     ['Also caller id of outbound calls can be changed.']
   ]
+  events:
+    'click .js-select': 'selectAll'
+    'change .js-switch input': 'switch'
 
   render: =>
     super
