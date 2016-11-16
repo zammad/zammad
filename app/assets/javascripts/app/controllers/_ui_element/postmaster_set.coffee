@@ -16,8 +16,11 @@ class App.UiElement.postmaster_set
             relation: 'TicketState'
           },
           {
-            value:    'x-zammad-ticket-customer'
+            value:    'x-zammad-ticket-customer_id'
             name:     'Customer'
+            relation: 'User'
+            tag:      'user_autocompletion'
+            disableCreateUser: true,
           },
           {
 
@@ -26,10 +29,11 @@ class App.UiElement.postmaster_set
             relation: 'Group'
           },
           {
-            value:    'x-zammad-ticket-owner'
+            value:    'x-zammad-ticket-owner_id'
             name:     'Owner'
-            relation: 'User',
-            tag:      'user_autocompletion',
+            relation: 'User'
+            tag:      'user_autocompletion'
+            disableCreateUser: true,
           },
           {
             value:    'x-zammad-ignore'
