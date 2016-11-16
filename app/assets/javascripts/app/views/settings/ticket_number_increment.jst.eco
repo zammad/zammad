@@ -1,0 +1,6 @@
+<div class="js-increment js-formPreferencesItem hidden" data-backend="Ticket::Number::Increment">
+  <label class="formGroup-label"><%- @T('Options') %></label>
+  <div><%- @T('With Checksum the counter will be appended with a checksum at the end. The format looks like "%s" (e. g. %s).', 'SystemID.Counter.CheckSum', '10101384, 10101392') %></div>
+  <br>
+  <form class="js-formItem"></form>
+</div>

@@ -435,7 +435,7 @@ class App.ControllerForm extends App.Controller
         else
           value = parseInt(value)
       if param[item.name] isnt undefined
-        if typeof param[item.name] is 'string'
+        if typeof param[item.name] is 'string' || typeof param[item.name] is 'boolean' || typeof param[item.name] is 'number'
           param[item.name] = [param[item.name], value]
         else
           param[item.name].push value
