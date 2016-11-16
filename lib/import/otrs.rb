@@ -632,13 +632,20 @@ module Import::OTRS
         ticket_new.delete(:owner)
       end
 
+      record['Articles'].each { |article|
+        # utf8 encode
+        _utf8_encode(article)
+        # lookup customers to create first
+        _article_based_customers(article)
+      }
+
       # find customer
       if ticket_new[:customer]
         user = User.lookup(login: ticket_new[:customer].downcase)
         ticket_new[:customer_id] = if user
                                      user.id
                                    else
-                                     1
+                                     _first_customer_id(record['Articles'])
                                    end
         ticket_new.delete(:customer)
       else
@@ -663,16 +670,6 @@ module Import::OTRS
           next
         end
       end
-
-      # utf8 encode
-      record['Articles'].each { |article|
-        _utf8_encode(article)
-      }
-
-      # lookup customers to create first
-      record['Articles'].each { |article|
-        _article_based_customers(article)
-      }
 
       record['Articles'].each do |article|
 
@@ -1598,4 +1595,16 @@ module Import::OTRS
     %w(ProcessManagementProcessID ProcessManagementActivityID ZammadMigratorChanged ZammadMigratorChangedOld)
   end
 
+  def self._first_customer_id(articles)
+    user_id = 1
+    articles.each { |article|
+      next if article['sender'] != 'customer'
+      next if article['from'].empty?
+
+      user_id = article['created_by_id'].to_i
+      break
+    }
+
+    user_id
+  end
 end
