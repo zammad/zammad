@@ -1599,10 +1599,9 @@ module Import::OTRS
     user_id = 1
     articles.each { |article|
       next if article['sender'] != 'customer'
-      next if article['created_by_id'].to_i != 1
       next if article['from'].empty?
 
-      user_id = article['created_by_id']
+      user_id = article['created_by_id'].to_i
       break
     }
 
