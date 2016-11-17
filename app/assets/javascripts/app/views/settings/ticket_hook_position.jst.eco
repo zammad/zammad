@@ -1,7 +1,6 @@
 <form class="settings-entry" id="<%= @setting.name %>">
   <h2><%- @T(@setting.title) %></h2>
-  <p class="help-text">
-  <%- @T('The format of the subject.') %>
+  <p class="help-text"><%- @T('The format of the subject.') %></p>
   <ul>
     <li><%- @T('|Right| means |Some Subject [Ticket#12345]|') %>
     <li><%- @T('|Left| means |[Ticket#12345] Some Subject|') %>

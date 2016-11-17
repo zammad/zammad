@@ -259,7 +259,7 @@ Setting.create_if_not_exists(
 
 Setting.create_if_not_exists(
   title: 'Storage Mechanism',
-  name: 'storage',
+  name: 'storage_provider',
   area: 'System::Storage',
   description: '"Database" stores all attachments in the database (not recommended for storing large amounts of data). "Filesystem" stores the data on the filesystem. You can switch between the modules even on a system that is already in production without any loss of data.',
   options: {
@@ -267,17 +267,19 @@ Setting.create_if_not_exists(
       {
         display: '',
         null: true,
-        name: 'storage',
+        name: 'storage_provider',
         tag: 'select',
+        tranlate: true,
         options: {
           'DB' => 'Database',
-          'FS' => 'Filesystem',
+          'File' => 'Filesystem',
         },
       },
     ],
   },
   state: 'DB',
   preferences: {
+    controller: 'SettingsAreaStorageProvider',
     online_service_disable: true,
     permission: ['admin.system'],
   },
