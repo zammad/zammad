@@ -844,6 +844,22 @@ result
     references
   end
 
+=begin
+
+get all articles of a ticket in correct order (overwrite active record default method)
+
+  artilces = ticket.articles
+
+result
+
+  [article1, articl2]
+
+=end
+
+  def articles
+    Ticket::Article.where(ticket_id: id).order(:created_at, :id)
+  end
+
   private
 
   def check_generate
