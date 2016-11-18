@@ -81,8 +81,8 @@
     </div>
   </div>
   <div class="poweredBy">
-    <a href="https://zammad.org"><%- @Icon('logo') %></a>.
-    <a href="https://zammad.org"><%- @T('Powered by') %></a>.
-    <a href="https://zammad.org"><%- @Icon('logotype', 'logotype') %></a>.    
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logo') %></a>
+    <%- @T('Powered by') %>
+    <a href="https://zammad.org" target="_blank"><%- @Icon('logotype', 'logotype') %></a>
   </div>
 </div>
