@@ -206,7 +206,7 @@ class App.Utils
 
     # Replace all x tags with the type of replacementTag
     html.find('textarea').each( ->
-      outer = @outerHTML;
+      outer = @outerHTML
 
       # Replace opening tag
       regex = new RegExp('<' + @tagName, 'i')
