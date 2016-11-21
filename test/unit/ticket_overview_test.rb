@@ -8,6 +8,14 @@ class TicketOverviewTest < ActiveSupport::TestCase
   customer1 = nil
   customer2 = nil
   customer3 = nil
+  overview1 = nil
+  overview2 = nil
+  overview3 = nil
+  overview4 = nil
+  overview5 = nil
+  overview6 = nil
+  overview7 = nil
+  overview8 = nil
   test 'aaa - setup' do
 
     # create base
@@ -93,7 +101,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     Overview.destroy_all
     UserInfo.current_user_id = 1
     overview_role = Role.find_by(name: 'Agent')
-    Overview.create_or_update(
+    overview1 = Overview.create_or_update(
       name: 'My assigned Tickets',
       link: 'my_assigned',
       prio: 1000,
@@ -120,7 +128,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       },
     )
 
-    Overview.create_or_update(
+    overview2 = Overview.create_or_update(
       name: 'Unassigned & Open',
       link: 'all_unassigned',
       prio: 1010,
@@ -146,7 +154,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
         view_mode_default: 's',
       },
     )
-    Overview.create_or_update(
+    overview3 = Overview.create_or_update(
       name: 'My Tickets 2',
       link: 'my_tickets_2',
       prio: 1020,
@@ -173,9 +181,36 @@ class TicketOverviewTest < ActiveSupport::TestCase
         view_mode_default: 's',
       },
     )
+    overview4 = Overview.create_or_update(
+      name: 'My Tickets only with Note',
+      link: 'my_tickets_onyl_with_note',
+      prio: 1030,
+      role_id: overview_role.id,
+      user_ids: [agent1.id],
+      condition: {
+        'article.type_id' => {
+          operator: 'is',
+          value: Ticket::Article::Type.find_by(name: 'note').id,
+        },
+        'ticket.owner_id' => {
+          operator: 'is',
+          pre_condition: 'current_user.id',
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w(title customer group created_at),
+        s: %w(title customer group created_at),
+        m: %w(number title customer group created_at),
+        view_mode_default: 's',
+      },
+    )
 
     overview_role = Role.find_by(name: 'Customer')
-    Overview.create_or_update(
+    overview5 = Overview.create_or_update(
       name: 'My Tickets',
       link: 'my_tickets',
       prio: 1100,
@@ -201,7 +236,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
         view_mode_default: 's',
       },
     )
-    Overview.create_or_update(
+    overview6 = Overview.create_or_update(
       name: 'My Organization Tickets',
       link: 'my_organization_tickets',
       prio: 1200,
@@ -228,7 +263,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
         view_mode_default: 's',
       },
     )
-    Overview.create_or_update(
+    overview7 = Overview.create_or_update(
       name: 'My Organization Tickets (open)',
       link: 'my_organization_tickets_open',
       prio: 1200,
@@ -258,7 +293,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     )
 
     overview_role = Role.find_by(name: 'Admin')
-    Overview.create_or_update(
+    overview8 = Overview.create_or_update(
       name: 'Not Shown Admin',
       link: 'not_shown_admin',
       prio: 9900,
@@ -282,14 +317,15 @@ class TicketOverviewTest < ActiveSupport::TestCase
     )
   end
 
-  test 'ticket create' do
+  test 'bbb overiview index' do
 
     result = Ticket::Overviews.all(
       current_user: agent1,
     )
-    assert_equal(2, result.count)
+    assert_equal(3, result.count)
     assert_equal('My assigned Tickets', result[0].name)
     assert_equal('Unassigned & Open', result[1].name)
+    assert_equal('My Tickets only with Note', result[2].name)
 
     result = Ticket::Overviews.all(
       current_user: agent2,
@@ -319,6 +355,503 @@ class TicketOverviewTest < ActiveSupport::TestCase
     )
     assert_equal(1, result.count)
     assert_equal('My Tickets', result[0].name)
+
+  end
+
+  test 'ccc overiview content' do
+
+    Ticket.destroy_all
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:name], 'My Tickets only with Note')
+    assert_equal(result[2][:overview][:view], 'my_tickets_onyl_with_note')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+    assert_equal(result[2][:count], 0)
+
+    result = Ticket::Overviews.index(agent2)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:name], 'My Tickets 2')
+    assert_equal(result[2][:overview][:view], 'my_tickets_2')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+
+    ticket1 = Ticket.create(
+      title: 'overview test 1',
+      group: Group.lookup(name: 'OverviewTest'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article1 = Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message... 123',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_not(result[1][:tickets].empty?)
+    assert_equal(result[1][:tickets][0][:id], ticket1.id)
+    assert_equal(result[1][:count], 1)
+    assert_equal(result[2][:overview][:name], 'My Tickets only with Note')
+    assert_equal(result[2][:overview][:view], 'my_tickets_onyl_with_note')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+    assert_equal(result[2][:count], 0)
+
+    result = Ticket::Overviews.index(agent2)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:name], 'My Tickets 2')
+    assert_equal(result[2][:overview][:view], 'my_tickets_2')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+
+    ticket2 = Ticket.create(
+      title: 'overview test 2',
+      group: Group.lookup(name: 'OverviewTest'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '3 high'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article2 = Ticket::Article.create(
+      ticket_id: ticket2.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message... 123',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_not(result[1][:tickets].empty?)
+    assert_equal(result[1][:tickets][0][:id], ticket1.id)
+    assert_equal(result[1][:tickets][1][:id], ticket2.id)
+    assert_equal(result[1][:count], 2)
+    assert_equal(result[2][:overview][:name], 'My Tickets only with Note')
+    assert_equal(result[2][:overview][:view], 'my_tickets_onyl_with_note')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+    assert_equal(result[2][:count], 0)
+
+    result = Ticket::Overviews.index(agent2)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:name], 'My Tickets 2')
+    assert_equal(result[2][:overview][:view], 'my_tickets_2')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+
+    ticket2.owner_id = agent1.id
+    ticket2.save!
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[0][:tickets][0][:id], ticket2.id)
+    assert_equal(result[0][:count], 1)
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_not(result[1][:tickets].empty?)
+    assert_equal(result[1][:tickets][0][:id], ticket1.id)
+    assert_equal(result[1][:count], 1)
+    assert_equal(result[2][:overview][:name], 'My Tickets only with Note')
+    assert_equal(result[2][:overview][:view], 'my_tickets_onyl_with_note')
+    assert_equal(result[2][:tickets].class, Array)
+    assert_equal(result[2][:tickets][0][:id], ticket2.id)
+    assert_equal(result[2][:count], 1)
+
+    result = Ticket::Overviews.index(agent2)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:name], 'My Tickets 2')
+    assert_equal(result[2][:overview][:view], 'my_tickets_2')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+
+    ticket3 = Ticket.create(
+      title: 'overview test 3',
+      group: Group.lookup(name: 'OverviewTest'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '1 low'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article3 = Ticket::Article.create(
+      ticket_id: ticket3.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message... 123',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[0][:tickets][0][:id], ticket2.id)
+    assert_equal(result[0][:count], 1)
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_not(result[1][:tickets].empty?)
+    assert_equal(result[1][:tickets][0][:id], ticket1.id)
+    assert_equal(result[1][:tickets][1][:id], ticket3.id)
+    assert_equal(result[1][:count], 2)
+    assert_equal(result[2][:overview][:id], overview4.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets only with Note')
+    assert_equal(result[2][:overview][:view], 'my_tickets_onyl_with_note')
+    assert_equal(result[2][:tickets].class, Array)
+    assert_equal(result[2][:tickets][0][:id], ticket2.id)
+    assert_equal(result[2][:count], 1)
+
+    result = Ticket::Overviews.index(agent2)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:id], overview3.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets 2')
+    assert_equal(result[2][:overview][:view], 'my_tickets_2')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+
+    overview2.order = {
+      by: 'created_at',
+      direction: 'DESC',
+    }
+    overview2.save!
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[0][:tickets][0][:id], ticket2.id)
+    assert_equal(result[0][:count], 1)
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_not(result[1][:tickets].empty?)
+    assert_equal(result[1][:tickets][0][:id], ticket3.id)
+    assert_equal(result[1][:tickets][1][:id], ticket1.id)
+    assert_equal(result[1][:count], 2)
+    assert_equal(result[2][:overview][:id], overview4.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets only with Note')
+    assert_equal(result[2][:overview][:view], 'my_tickets_onyl_with_note')
+    assert_equal(result[2][:tickets].class, Array)
+    assert_equal(result[2][:tickets][0][:id], ticket2.id)
+    assert_equal(result[2][:count], 1)
+
+    result = Ticket::Overviews.index(agent2)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:id], overview3.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets 2')
+    assert_equal(result[2][:overview][:view], 'my_tickets_2')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+
+    overview2.order = {
+      by: 'priority_id',
+      direction: 'DESC',
+    }
+    overview2.save!
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[0][:tickets][0][:id], ticket2.id)
+    assert_equal(result[0][:count], 1)
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_not(result[1][:tickets].empty?)
+    assert_equal(result[1][:tickets][0][:id], ticket1.id)
+    assert_equal(result[1][:tickets][1][:id], ticket3.id)
+    assert_equal(result[1][:count], 2)
+    assert_equal(result[2][:overview][:id], overview4.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets only with Note')
+    assert_equal(result[2][:overview][:view], 'my_tickets_onyl_with_note')
+    assert_equal(result[2][:tickets].class, Array)
+    assert_equal(result[2][:tickets][0][:id], ticket2.id)
+    assert_equal(result[2][:count], 1)
+
+    result = Ticket::Overviews.index(agent2)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:id], overview3.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets 2')
+    assert_equal(result[2][:overview][:view], 'my_tickets_2')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+
+    overview2.order = {
+      by: 'priority_id',
+      direction: 'ASC',
+    }
+    overview2.save!
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[0][:tickets][0][:id], ticket2.id)
+    assert_equal(result[0][:count], 1)
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_not(result[1][:tickets].empty?)
+    assert_equal(result[1][:tickets][0][:id], ticket3.id)
+    assert_equal(result[1][:tickets][1][:id], ticket1.id)
+    assert_equal(result[1][:count], 2)
+    assert_equal(result[2][:overview][:id], overview4.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets only with Note')
+    assert_equal(result[2][:overview][:view], 'my_tickets_onyl_with_note')
+    assert_equal(result[2][:tickets].class, Array)
+    assert_equal(result[2][:tickets][0][:id], ticket2.id)
+    assert_equal(result[2][:count], 1)
+
+    result = Ticket::Overviews.index(agent2)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:id], overview3.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets 2')
+    assert_equal(result[2][:overview][:view], 'my_tickets_2')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+
+    overview2.order = {
+      by: 'priority',
+      direction: 'DESC',
+    }
+    overview2.save!
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[0][:tickets][0][:id], ticket2.id)
+    assert_equal(result[0][:count], 1)
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_not(result[1][:tickets].empty?)
+    assert_equal(result[1][:tickets][0][:id], ticket1.id)
+    assert_equal(result[1][:tickets][1][:id], ticket3.id)
+    assert_equal(result[1][:count], 2)
+    assert_equal(result[2][:overview][:id], overview4.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets only with Note')
+    assert_equal(result[2][:overview][:view], 'my_tickets_onyl_with_note')
+    assert_equal(result[2][:tickets].class, Array)
+    assert_equal(result[2][:tickets][0][:id], ticket2.id)
+    assert_equal(result[2][:count], 1)
+
+    result = Ticket::Overviews.index(agent2)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:id], overview3.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets 2')
+    assert_equal(result[2][:overview][:view], 'my_tickets_2')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
+
+    overview2.order = {
+      by: 'priority',
+      direction: 'ASC',
+    }
+    overview2.save!
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[0][:tickets][0][:id], ticket2.id)
+    assert_equal(result[0][:count], 1)
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_not(result[1][:tickets].empty?)
+    assert_equal(result[1][:tickets][0][:id], ticket3.id)
+    assert_equal(result[1][:tickets][1][:id], ticket1.id)
+    assert_equal(result[1][:count], 2)
+    assert_equal(result[2][:overview][:id], overview4.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets only with Note')
+    assert_equal(result[2][:overview][:view], 'my_tickets_onyl_with_note')
+    assert_equal(result[2][:tickets].class, Array)
+    assert_equal(result[2][:tickets][0][:id], ticket2.id)
+    assert_equal(result[2][:count], 1)
+
+    result = Ticket::Overviews.index(agent2)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'My assigned Tickets')
+    assert_equal(result[0][:overview][:view], 'my_assigned')
+    assert_equal(result[0][:count], 0)
+    assert_equal(result[0][:tickets].class, Array)
+    assert(result[0][:tickets].empty?)
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'Unassigned & Open')
+    assert_equal(result[1][:overview][:view], 'all_unassigned')
+    assert_equal(result[1][:tickets].class, Array)
+    assert(result[1][:tickets].empty?)
+    assert_equal(result[1][:count], 0)
+    assert_equal(result[2][:overview][:id], overview3.id)
+    assert_equal(result[2][:overview][:name], 'My Tickets 2')
+    assert_equal(result[2][:overview][:view], 'my_tickets_2')
+    assert_equal(result[2][:tickets].class, Array)
+    assert(result[2][:tickets].empty?)
 
   end
 
