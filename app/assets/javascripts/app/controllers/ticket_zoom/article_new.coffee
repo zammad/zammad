@@ -48,6 +48,7 @@ class App.TicketZoomArticleNew extends App.Controller
         possibleArticleType['email'] = true
 
     # gets referenced in @setArticleType
+    @internalSelector = true
     @type = @defaults['type'] || 'note'
     @articleTypes = []
     if possibleArticleType.note
@@ -114,6 +115,9 @@ class App.TicketZoomArticleNew extends App.Controller
           features:   ['attachment']
         },
       ]
+
+    if @permissionCheck('ticket.customer')
+      @internalSelector = false
 
     @textareaHeight =
       open:   148
@@ -194,11 +198,12 @@ class App.TicketZoomArticleNew extends App.Controller
     ticket = App.Ticket.fullLocal(@ticket_id)
 
     @html App.view('ticket_zoom/article_new')(
-      ticket:       ticket
-      articleTypes: @articleTypes
-      article:      @defaults
-      form_id:      @form_id
-      isCustomer:   @permissionCheck('ticket.customer')
+      ticket:           ticket
+      articleTypes:     @articleTypes
+      article:          @defaults
+      form_id:          @form_id
+      isCustomer:       @permissionCheck('ticket.customer')
+      internalSelector: @internalSelector
     )
     @setArticleType(@type)
 
