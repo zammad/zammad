@@ -339,8 +339,6 @@ get count of tickets and tickets which match on selector
   end
 
   def self.selector2query(selector, _current_user, aggs_interval, limit)
-    filter_must = []
-    filter_must_not = []
     query_must = []
     query_must_not = []
     if selector && !selector.empty?
@@ -355,9 +353,9 @@ get count of tickets and tickets which match on selector
           t[:term][key_tmp] = data['value']
         end
         if data['operator'] == 'is'
-          filter_must.push t
+          query_must.push t
         elsif data['operator'] == 'is not'
-          filter_must_not.push t
+          query_must_not.push t
         elsif data['operator'] == 'contains'
           query_must.push t
         elsif data['operator'] == 'contains not'
@@ -391,43 +389,18 @@ get count of tickets and tickets which match on selector
         from: aggs_interval[:from],
         to: aggs_interval[:to],
       }
-      filter_must.push r
+      query_must.push r
     end
 
-    if !query_must.empty? || !query_must_not.empty?
-      if !data[:query][:filtered]
-        data[:query][:filtered] = {}
-      end
-      if !data[:query][:filtered][:query]
-        data[:query][:filtered][:query] = {}
-      end
-      if !data[:query][:filtered][:query][:bool]
-        data[:query][:filtered][:query][:bool] = {}
-      end
+    if !data[:query][:bool]
+      data[:query][:bool] = {}
     end
+
     if !query_must.empty?
-      data[:query][:filtered][:query][:bool][:must] = query_must
+      data[:query][:bool][:must] = query_must
     end
     if !query_must_not.empty?
-      data[:query][:filtered][:query][:bool][:must_not] = query_must_not
-    end
-
-    if !filter_must.empty? || !filter_must.empty?
-      if !data[:query][:filtered]
-        data[:query][:filtered] = {}
-      end
-      if !data[:query][:filtered][:filter]
-        data[:query][:filtered][:filter] = {}
-      end
-      if !data[:query][:filtered][:filter][:bool]
-        data[:query][:filtered][:filter][:bool] = {}
-      end
-    end
-    if !filter_must.empty?
-      data[:query][:filtered][:filter][:bool][:must] = filter_must
-    end
-    if !filter_must_not.empty?
-      data[:query][:filtered][:filter][:bool][:must_not] = filter_must_not
+      data[:query][:bool][:must_not] = query_must_not
     end
 
     # add sort

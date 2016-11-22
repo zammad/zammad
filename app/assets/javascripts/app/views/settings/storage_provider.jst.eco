@@ -1,0 +1,22 @@
+<form class="settings-entry" id="<%= @setting.name %>">
+  <h2><%- @T(@setting.title) %></h2>
+  <p class="help-text"><%- @T('You can switch between the backend for new attachments even on a system that is already in production without any loss of data.') %></p>
+  <p class="help-text"><%- @T('If you want to move already stored attachments from one backend to another, you need to execute the following via console.') %></p>
+  </p>
+  <p class="help-text"><%- @T('Move all from "%s" to "%s"', 'filesystem', 'database') %>:</p>
+  </p>
+  <code>
+  rails&gt; Store::File.move('File', 'DB')
+  </code>
+  <p class="help-text"><%- @T('Move all from "%s" to "%s"', 'database', 'filesystem') %>:</p>
+  </p>
+  <code>
+  rails&gt; Store::File.move('DB', 'File')
+  </code>
+  <br>
+  <br>
+  <div class="horizontal end">
+    <div class="form-item flex"></div>
+    <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
+  </div>
+</form>

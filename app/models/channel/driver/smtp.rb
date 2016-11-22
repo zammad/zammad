@@ -49,16 +49,21 @@ class Channel::Driver::Smtp
       options[:openssl_verify_mode] = 'none'
     end
     mail = Channel::EmailBuild.build(attr, notification)
-    mail.delivery_method :smtp, {
+    smtp_params = {
       openssl_verify_mode: options[:openssl_verify_mode],
       address: options[:host],
       port: options[:port],
       domain: options[:domain],
-      user_name: options[:user],
-      password: options[:password],
       enable_starttls_auto: options[:enable_starttls_auto],
-      authentication: options[:authentication],
     }
+
+    # add authentication only if needed
+    if options[:user] && !options[:user].empty?
+      smtp_params[:user_name] = options[:user]
+      smtp_params[:password] = options[:password]
+      smtp_params[:authentication] = options[:authentication]
+    end
+    mail.delivery_method :smtp, smtp_params
     mail.deliver
   end
 end

@@ -1,0 +1,13 @@
+<form class="settings-entry" id="<%= @setting.name %>">
+  <h2><%- @T(@setting.title) %></h2>
+  <p class="help-text"><%- @T('The format of the subject.') %></p>
+  <ul>
+    <li><%- @T('|Right| means |Some Subject [Ticket#12345]|') %>
+    <li><%- @T('|Left| means |[Ticket#12345] Some Subject|') %>
+    <li><%- @T('|None| means |Some Subject| (without ticket number). In the last case you should enable "postmaster___follow___up___search___in" to recognize followups based on email headers and/or body.') %>
+  </ul>
+  <div class="horizontal end">
+    <div class="js-form form-item flex"></div>
+    <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
+  </div>
+</form>

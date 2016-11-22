@@ -90,13 +90,36 @@ returns
     # get only tickets with permissions
     access_condition = Ticket.access_condition(user)
 
+    ticket_attributes = Ticket.new.attributes
     list = []
     overviews.each { |overview|
       query_condition, bind_condition, tables = Ticket.selector2sql(overview.condition, user)
 
-      order_by = "#{overview.order[:by]} #{overview.order[:direction]}"
+      # validate direction
+      raise "Invalid order direction '#{overview.order[:direction]}'" if overview.order[:direction] && overview.order[:direction] !~ /^(ASC|DESC)$/i
+
+      # check if order by exists
+      order_by = overview.order[:by]
+      if !ticket_attributes.key?(order_by)
+        order_by = if ticket_attributes.key?("#{order_by}_id")
+                     "#{order_by}_id"
+                   else
+                     'created_at'
+                   end
+      end
+      order_by = "tickets.#{order_by} #{overview.order[:direction]}"
+
+      # check if group by exists
       if overview.group_by && !overview.group_by.empty?
-        order_by = "#{overview.group_by}_id, #{order_by}"
+        group_by = overview.group_by
+        if !ticket_attributes.key?(group_by)
+          group_by = if ticket_attributes.key?("#{group_by}_id")
+                       "#{group_by}_id"
+                     end
+        end
+        if group_by
+          order_by = "tickets.#{group_by}, #{order_by}"
+        end
       end
 
       ticket_result = Ticket.select('id, updated_at')
@@ -115,9 +138,10 @@ returns
         }
         tickets.push ticket_item
       }
-      count = Ticket.where(access_condition).where(query_condition, *bind_condition).count()
+      count = Ticket.where(access_condition).where(query_condition, *bind_condition).joins(tables).count()
       item = {
         overview: {
+          name: overview.name,
           id: overview.id,
           view: overview.link,
           updated_at: overview.updated_at,

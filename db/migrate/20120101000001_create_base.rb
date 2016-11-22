@@ -577,7 +577,7 @@ class CreateBase < ActiveRecord::Migration
       t.string  :key,                   limit: 250, null: true
       t.integer :related_o_id,                      null: true
       t.integer :related_stats_store_object_id,     null: true
-      t.string  :data,                 limit: 2500, null: true
+      t.string  :data,                 limit: 5000, null: true
       t.integer :created_by_id,                     null: false
       t.timestamps limit: 3, null: false
     end

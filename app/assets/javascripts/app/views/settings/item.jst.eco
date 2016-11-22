@@ -1,6 +1,6 @@
 <form class="settings-entry" id="<%= @setting.name %>">
   <h2><%- @T(@setting.title) %></h2>
-  <p class="help-text"><%- @RichText(@setting.description) %></p>
+  <p class="help-text"><%- @T(@setting.description) %></p>
   <div class="horizontal end">
     <div class="form-item flex"></div>
     <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>

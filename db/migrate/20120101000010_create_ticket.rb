@@ -186,18 +186,18 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_counters, [:generator], unique: true
 
     create_table :overviews do |t|
-      t.references :role,                                    null: false
-      t.column :name,                 :string,  limit: 250,  null: false
-      t.column :link,                 :string,  limit: 250,  null: false
-      t.column :prio,                 :integer,              null: false
-      t.column :condition,            :string,  limit: 2500, null: false
-      t.column :order,                :string,  limit: 2500, null: false
-      t.column :group_by,             :string,  limit: 250,  null: true
-      t.column :organization_shared,  :boolean,              null: false, default: false
-      t.column :view,                 :string,  limit: 1000, null: false
-      t.column :active,               :boolean,              null: false, default: true
-      t.column :updated_by_id,        :integer,              null: false
-      t.column :created_by_id,        :integer,              null: false
+      t.references :role,                                      null: false
+      t.column :name,                 :string,  limit: 250,    null: false
+      t.column :link,                 :string,  limit: 250,    null: false
+      t.column :prio,                 :integer,                null: false
+      t.column :condition,            :text, limit: 500.kilobytes + 1, null: false
+      t.column :order,                :string,  limit: 2500,   null: false
+      t.column :group_by,             :string,  limit: 250,    null: true
+      t.column :organization_shared,  :boolean,                null: false, default: false
+      t.column :view,                 :string,  limit: 1000,   null: false
+      t.column :active,               :boolean,                null: false, default: true
+      t.column :updated_by_id,        :integer,                null: false
+      t.column :created_by_id,        :integer,                null: false
       t.timestamps limit: 3, null: false
     end
     add_index :overviews, [:name]
@@ -217,34 +217,34 @@ class CreateTicket < ActiveRecord::Migration
     add_index :overviews_groups, [:group_id]
 
     create_table :triggers do |t|
-      t.column :name,                 :string, limit: 250,  null: false
-      t.column :condition,            :string, limit: 2500, null: false
-      t.column :perform,              :string, limit: 2500, null: false
-      t.column :disable_notification, :boolean,             null: false, default: true
-      t.column :note,                 :string, limit: 250,  null: true
-      t.column :active,               :boolean,             null: false, default: true
-      t.column :updated_by_id,        :integer,             null: false
-      t.column :created_by_id,        :integer,             null: false
+      t.column :name,                 :string, limit: 250,    null: false
+      t.column :condition,            :text, limit: 500.kilobytes + 1, null: false
+      t.column :perform,              :text, limit: 500.kilobytes + 1, null: false
+      t.column :disable_notification, :boolean,               null: false, default: true
+      t.column :note,                 :string, limit: 250,    null: true
+      t.column :active,               :boolean,               null: false, default: true
+      t.column :updated_by_id,        :integer,               null: false
+      t.column :created_by_id,        :integer,               null: false
       t.timestamps limit: 3, null: false
     end
     add_index :triggers, [:name], unique: true
 
     create_table :jobs do |t|
-      t.column :name,                 :string,  limit: 250,  null: false
-      t.column :timeplan,             :string,  limit: 1000, null: false
-      t.column :condition,            :string,  limit: 2500, null: false
-      t.column :perform,              :string,  limit: 2500, null: false
-      t.column :disable_notification, :boolean,              null: false, default: true
-      t.column :last_run_at,          :timestamp, limit: 3,  null: true
-      t.column :next_run_at,          :timestamp, limit: 3,  null: true
-      t.column :running,              :boolean,              null: false, default: false
-      t.column :processed,            :integer,              null: false, default: 0
-      t.column :matching,             :integer,              null: false
-      t.column :pid,                  :string,  limit: 250,  null: true
-      t.column :note,                 :string,  limit: 250,  null: true
-      t.column :active,               :boolean,              null: false, default: false
-      t.column :updated_by_id,        :integer,              null: false
-      t.column :created_by_id,        :integer,              null: false
+      t.column :name,                 :string,  limit: 250,    null: false
+      t.column :timeplan,             :string,  limit: 2500,   null: false
+      t.column :condition,            :text, limit: 500.kilobytes + 1, null: false
+      t.column :perform,              :text, limit: 500.kilobytes + 1, null: false
+      t.column :disable_notification, :boolean,                null: false, default: true
+      t.column :last_run_at,          :timestamp, limit: 3,    null: true
+      t.column :next_run_at,          :timestamp, limit: 3,    null: true
+      t.column :running,              :boolean,                null: false, default: false
+      t.column :processed,            :integer,                null: false, default: 0
+      t.column :matching,             :integer,                null: false
+      t.column :pid,                  :string,  limit: 250,    null: true
+      t.column :note,                 :string,  limit: 250,    null: true
+      t.column :active,               :boolean,                null: false, default: false
+      t.column :updated_by_id,        :integer,                null: false
+      t.column :created_by_id,        :integer,                null: false
       t.timestamps limit: 3, null: false
     end
     add_index :jobs, [:name], unique: true
@@ -285,14 +285,14 @@ class CreateTicket < ActiveRecord::Migration
     add_index :links, [:link_object_source_id, :link_object_source_value, :link_object_target_id, :link_object_target_value, :link_type_id], unique: true, name: 'links_uniq_total'
 
     create_table :postmaster_filters do |t|
-      t.column :name,           :string, limit: 250,  null: false
-      t.column :channel,        :string, limit: 250,  null: false
-      t.column :match,          :string, limit: 5000, null: false
-      t.column :perform,        :string, limit: 5000, null: false
-      t.column :active,         :boolean,             null: false, default: true
-      t.column :note,           :string, limit: 250,  null: true
-      t.column :updated_by_id,  :integer,             null: false
-      t.column :created_by_id,  :integer,             null: false
+      t.column :name,           :string, limit: 250,    null: false
+      t.column :channel,        :string, limit: 250,    null: false
+      t.column :match,          :text, limit: 500.kilobytes + 1, null: false
+      t.column :perform,        :text, limit: 500.kilobytes + 1, null: false
+      t.column :active,         :boolean,               null: false, default: true
+      t.column :note,           :string, limit: 250,    null: true
+      t.column :updated_by_id,  :integer,               null: false
+      t.column :created_by_id,  :integer,               null: false
       t.timestamps limit: 3, null: false
     end
     add_index :postmaster_filters, [:channel]
@@ -359,7 +359,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :first_response_time,  :integer,                 null: true
       t.column :update_time,          :integer,                 null: true
       t.column :solution_time,        :integer,                 null: true
-      t.column :condition,            :string, limit: 5000,     null: true
+      t.column :condition,            :text, limit: 500.kilobytes + 1, null: true
       t.column :updated_by_id,        :integer,                 null: false
       t.column :created_by_id,        :integer,                 null: false
       t.timestamps limit: 3, null: false
@@ -367,12 +367,12 @@ class CreateTicket < ActiveRecord::Migration
     add_index :slas, [:name], unique: true
 
     create_table :macros do |t|
-      t.string  :name,                   limit: 250,  null: true
-      t.string  :perform,                limit: 5000, null: false
-      t.boolean :active,                              null: false, default: true
-      t.string  :note,                   limit: 250,  null: true
-      t.integer :updated_by_id,                       null: false
-      t.integer :created_by_id,                       null: false
+      t.string  :name,                   limit: 250,    null: true
+      t.text    :perform,                limit: 500.kilobytes + 1, null: false
+      t.boolean :active,                                null: false, default: true
+      t.string  :note,                   limit: 250,    null: true
+      t.integer :updated_by_id,                         null: false
+      t.integer :created_by_id,                         null: false
       t.timestamps limit: 3, null: false
     end
     add_index :macros, [:name], unique: true
@@ -436,11 +436,11 @@ class CreateTicket < ActiveRecord::Migration
     add_index :chat_agents, [:created_by_id], unique: true
 
     create_table :report_profiles do |t|
-      t.column :name,           :string, limit: 150,   null: true
-      t.column :condition,      :string, limit: 6000,  null: true
-      t.column :active,         :boolean,              null: false, default: true
-      t.column :updated_by_id,  :integer,              null: false
-      t.column :created_by_id,  :integer,              null: false
+      t.column :name,           :string, limit: 150,    null: true
+      t.column :condition,      :text, limit: 500.kilobytes + 1, null: true
+      t.column :active,         :boolean,               null: false, default: true
+      t.column :updated_by_id,  :integer,               null: false
+      t.column :created_by_id,  :integer,               null: false
       t.timestamps limit: 3, null: false
     end
     add_index :report_profiles, [:name], unique: true

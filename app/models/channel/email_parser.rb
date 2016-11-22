@@ -394,6 +394,7 @@ returns
     p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
     Rails.logger.error message
     Rails.logger.error 'ERROR: ' + e.inspect
+    Rails.logger.error 'ERROR: ' + e.backtrace.inspect
     File.open(filename, 'wb') { |file|
       file.write msg
     }
