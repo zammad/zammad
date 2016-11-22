@@ -30,4 +30,6 @@ env:
   - PORT=3000
 services:
   - postgres
+after:
+  - curl -H "Content-Type: application/json" --data '{"build": true}' -X POST https://registry.hub.docker.com/u/monotek/zammad/trigger/673cdf9b-dd8d-4f34-b8f2-ad808d9aa83b/
 after_install: contrib/packager.io/postinstall.sh
