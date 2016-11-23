@@ -608,7 +608,7 @@ pre code.hljs {
   margin-left: 15px;
 }
 
-.vertical > .btn + .btn {
+.vertical > .btn:not(.hidden) + .btn {
   margin-left: 0;
   margin-top: 10px;
 }
@@ -5389,6 +5389,10 @@ footer {
     margin-top: 12px;
   }
 
+  .box ul {
+    padding-left: 10px;
+  }
+
   .box .two-columns {
     margin-left: -4px;
     margin-right: -4px;
@@ -5437,6 +5441,15 @@ footer {
       width: 100%;
     }
   }
+
+.horizontal > .box {
+  margin-top: 4px;
+  margin-bottom: 4px;
+
+  & + .box {
+    border-left-width: 0;
+  }
+}
 
 .formset-inset {
   margin: 34px -24px 24px;
@@ -8439,6 +8452,10 @@ body.fit {
   align-self: end;
 }
 
+.span-width {
+  flex-basis: 100%;
+}
+
 .two-columns,
 .three-columns,
 .wrap {
@@ -8472,4 +8489,18 @@ body.fit {
 .align-center {
   margin-left: auto;
   margin-right: auto;
+}
+
+.spacer {
+  width: 10px; 
+  height: 10px; 
+}
+
+.double-spacer {
+  width: 20px;
+  height: 20px;
+}
+
+.flex-spacer {
+  flex: 1;
 }
