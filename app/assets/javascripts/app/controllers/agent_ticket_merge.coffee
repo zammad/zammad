@@ -26,12 +26,14 @@ class App.TicketMerge extends App.ControllerModal
     content = $( App.view('agent_ticket_merge')() )
 
     new App.TicketList(
+      tableId:    'ticket-merge-customer-tickets'
       el:         content.find('#ticket-merge-customer-tickets')
       ticket_ids: @ticket_ids_by_customer
       radio:      true
     )
 
     new App.TicketList(
+      tableId:    'ticket-merge-recent-tickets'
       el:         content.find('#ticket-merge-recent-tickets')
       ticket_ids: @ticket_ids_recent_viewed
       radio:      true
