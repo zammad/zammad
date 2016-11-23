@@ -4406,6 +4406,7 @@ footer {
   .article-content {
     color: hsl(60,1%,34%);
     position: relative;
+    z-index: 1;
     padding: 0 55px;
   }
 
@@ -4749,6 +4750,10 @@ footer {
 
   .pop-selectable:last-child {
     border-radius: 0 4px 4px 0;
+  }
+
+  .pop-selectable:only-child {
+    border-radius: 4px;
   }
 
   .pop-selectable-icon {
