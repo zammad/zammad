@@ -192,6 +192,7 @@ class App.UiElement.ticket_selector
   @ticketTable: (ticket_ids, ticket_count, item) ->
     item.find('.js-previewCounter').html(ticket_count)
     new App.TicketList(
+      tableId:    'ticket-selector'
       el:         item.find('.js-previewTable')
       ticket_ids: ticket_ids
     )
