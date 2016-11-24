@@ -32,8 +32,8 @@ module Channel::EmailBuild
       attr['X-Auto-Response-Suppress'] = 'All'
     end
 
-    #attr['X-Powered-BY'] = 'Zammad - Support/Helpdesk (http://www.zammad.org/)'
-    attr['X-Mailer'] = 'Zammad Mail Service (1.x)'
+    attr['X-Powered-By'] = 'Zammad - Helpdesk/Support (https://zammad.org/)'
+    attr['X-Mailer'] = 'Zammad Mail Service'
 
     # set headers
     attr.each do |key, value|
