@@ -5447,11 +5447,7 @@ Karma::Activity.create_or_update(
 )
 
 # reset primary key sequences
-if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
-  ActiveRecord::Base.connection.tables.each do |t|
-    ActiveRecord::Base.connection.reset_pk_sequence!(t)
-  end
-end
+DbHelper.import_post
 
 # install locales and translations
 Locale.create_if_not_exists(
