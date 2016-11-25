@@ -9,7 +9,8 @@ class App.GlobalSearch
 class _globalSearchSingleton extends Spine.Module
 
   constructor: ->
-    @searchResultCache = {}
+    @searchResultCache = undefined
+    @searchResultCacheByKey = {}
     @apiPath = App.Config.get('api_path')
 
   execute: (params) ->
@@ -20,8 +21,8 @@ class _globalSearchSingleton extends Spine.Module
 
     # use cache for search result
     currentTime = new Date
-    if @searchResultCache[cacheKey] && @searchResultCache[cacheKey].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
-      render(@searchResultCache[cacheKey].result)
+    if @searchResultCacheByKey[cacheKey] && @searchResultCacheByKey[cacheKey].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
+      @renderTry(render, @searchResultCacheByKey[cacheKey].result, cacheKey)
       return
 
     App.Ajax.request(
@@ -31,7 +32,7 @@ class _globalSearchSingleton extends Spine.Module
       data:
         query: query
         limit: limit
-      processData: true,
+      processData: true
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
         result = {}
@@ -48,19 +49,21 @@ class _globalSearchSingleton extends Spine.Module
           else
             App.Log.error('_globalSearchSingleton', "No such model App.#{item.type}")
 
-        diff = false
-        if @searchResultCache[cacheKey]
-          diff = difference(@searchResultCache[cacheKey].resultRaw, data.result)
-
-        # cache search result
-        @searchResultCache[cacheKey] =
-          result: result
-          resultRaw: data.result
-          limit: limit
-          time: new Date
-
-        # if result hasn't changed, do not rerender
-        return if diff isnt false && _.isEmpty(diff)
-
-        render(result)
+        @renderTry(render, result, cacheKey)
     )
+
+  renderTry: (render, result, cacheKey) =>
+
+    # if result hasn't changed, do not rerender
+    diff = false
+    if @searchResultCache
+      diff = difference(@searchResultCache, result)
+    return if diff isnt false && _.isEmpty(diff)
+
+    # cache search result
+    @searchResultCache = result
+    @searchResultCacheByKey[cacheKey] =
+      result: result
+      time: new Date
+
+    render(result)
