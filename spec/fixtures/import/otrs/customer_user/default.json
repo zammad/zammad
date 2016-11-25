@@ -1,0 +1,348 @@
+{
+  "CustomerCompanyCity": "test712259",
+  "Config": {
+    "CustomerUserEmailUniqCheck": 1,
+    "CustomerUserSearchListLimit": 250,
+    "CustomerCompanySupport": 1,
+    "CustomerValid": "valid_id",
+    "CustomerUserSearchFields": [
+      "login",
+      "first_name",
+      "last_name",
+      "customer_id"
+    ],
+    "CustomerUserSearchPrefix": "*",
+    "Params": {
+      "Table": "customer_user",
+      "CaseSensitive": 0
+    },
+    "CustomerUserListFields": [
+      "first_name",
+      "last_name",
+      "email"
+    ],
+    "Map": [
+      [
+        "UserTitle",
+        "Title",
+        "title",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserFirstname",
+        "Firstname",
+        "first_name",
+        1,
+        1,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserLastname",
+        "Lastname",
+        "last_name",
+        1,
+        1,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserLogin",
+        "Username",
+        "login",
+        1,
+        1,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserPassword",
+        "Password",
+        "pw",
+        0,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserEmail",
+        "Email",
+        "email",
+        1,
+        1,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserCustomerID",
+        "CustomerID",
+        "customer_id",
+        0,
+        1,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserPhone",
+        "Phone",
+        "phone",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserFax",
+        "Fax",
+        "fax",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserMobile",
+        "Mobile",
+        "mobile",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserStreet",
+        "Street",
+        "street",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserZip",
+        "Zip",
+        "zip",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserCity",
+        "City",
+        "city",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserCountry",
+        "Country",
+        "country",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "UserComment",
+        "Comment",
+        "comments",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "ValidID",
+        "Valid",
+        "valid_id",
+        0,
+        1,
+        "int",
+        "",
+        0
+      ]
+    ],
+    "CustomerKey": "login",
+    "CustomerUserSearchSuffix": "*",
+    "Module": "Kernel::System::CustomerUser::DB",
+    "CacheTTL": 86400,
+    "Selections": {},
+    "CustomerID": "customer_id",
+    "Name": "Database Backend",
+    "CustomerUserPostMasterSearchFields": [
+      "email"
+    ],
+    "CustomerUserNameFields": [
+      "title",
+      "first_name",
+      "last_name"
+    ]
+  },
+  "UserCustomerID": "test712259",
+  "CustomerCompanyComment": "test712259",
+  "Source": "CustomerUser",
+  "UserTitle": "",
+  "CompanyConfig": {
+    "CustomerCompanySearchFields": [
+      "customer_id",
+      "name"
+    ],
+    "CustomerCompanyListFields": [
+      "customer_id",
+      "name"
+    ],
+    "Module": "Kernel::System::CustomerCompany::DB",
+    "CustomerCompanyKey": "customer_id",
+    "CustomerCompanySearchSuffix": "*",
+    "CacheTTL": 86400,
+    "CustomerCompanySearchListLimit": 250,
+    "CustomerCompanySearchPrefix": "",
+    "CustomerCompanyValid": "valid_id",
+    "Params": {
+      "Table": "customer_company",
+      "CaseSensitive": 0
+    },
+    "Map": [
+      [
+        "CustomerID",
+        "CustomerID",
+        "customer_id",
+        0,
+        1,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyName",
+        "Customer",
+        "name",
+        1,
+        1,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyStreet",
+        "Street",
+        "street",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyZIP",
+        "Zip",
+        "zip",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyCity",
+        "City",
+        "city",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyCountry",
+        "Country",
+        "country",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyURL",
+        "URL",
+        "url",
+        1,
+        0,
+        "var",
+        "[% Data.CustomerCompanyURL | html %]",
+        0
+      ],
+      [
+        "CustomerCompanyComment",
+        "Comment",
+        "comments",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "ValidID",
+        "Valid",
+        "valid_id",
+        0,
+        1,
+        "int",
+        "",
+        0
+      ]
+    ],
+    "Name": "Database Backend"
+  },
+  "UserZip": null,
+  "UserLastname": "test669673",
+  "ChangeBy": "1",
+  "CreateTime": "2014-06-07 02:31:31",
+  "UserLogin": "test669673",
+  "UserPhone": null,
+  "CustomerID": "test712259",
+  "CustomerCompanyValidID": "1",
+  "CustomerCompanyZIP": "test712259",
+  "UserCountry": null,
+  "UserPassword": "f8be19af2f25837a31eff9131b0e47a5173290652c04a48b49b86474d48825ee",
+  "ValidID": "1",
+  "UserRefreshTime": "0",
+  "UserEmail": "qa100@t-online.de",
+  "UserComment": "",
+  "UserID": "test669673",
+  "UserFirstname": "test669673",
+  "CustomerCompanyCountry": "test712259",
+  "UserFax": null,
+  "CreateBy": "1",
+  "ChangeTime": "2014-06-07 02:31:31",
+  "UserShowTickets": "25",
+  "UserStreet": null,
+  "CustomerCompanyURL": "test712259",
+  "CustomerCompanyName": "test712259",
+  "UserMobile": null,
+  "CustomerCompanyStreet": "test712259",
+  "UserCity": null
+}

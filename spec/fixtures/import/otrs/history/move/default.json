@@ -1,0 +1,15 @@
+{
+  "HistoryID": "238",
+  "PriorityID": "3",
+  "CreateTime": "2014-05-12 13:42:41",
+  "OwnerID": "1",
+  "QueueID": "5",
+  "HistoryType": "Move",
+  "TypeID": "1",
+  "HistoryTypeID": "16",
+  "ArticleID": 0,
+  "StateID": "4",
+  "CreateBy": "1",
+  "TicketID": "39",
+  "Name": "%%Source%%5%%Target%%2"
+}

@@ -5,7 +5,8 @@ module Import
 end
 module Import::Zendesk
 
-  module_function
+  # rubocop:disable Style/ModuleFunction
+  extend self
 
   def start
     Rails.logger.info 'Start import...'

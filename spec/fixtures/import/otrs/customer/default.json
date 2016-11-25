@@ -1,0 +1,130 @@
+{
+  "ChangeTime": "2014-06-06 12:41:03",
+  "ChangeBy": "1",
+  "ValidID": "2",
+  "CustomerCompanyCity": "test922896",
+  "CreateTime": "2014-06-06 12:41:03",
+  "CustomerCompanyURL": "test922896",
+  "Config": {
+    "CustomerCompanySearchFields": [
+      "customer_id",
+      "name"
+    ],
+    "CustomerCompanyListFields": [
+      "customer_id",
+      "name"
+    ],
+    "Module": "Kernel::System::CustomerCompany::DB",
+    "CustomerCompanyKey": "customer_id",
+    "CustomerCompanySearchSuffix": "*",
+    "CacheTTL": 86400,
+    "CustomerCompanySearchListLimit": 250,
+    "CustomerCompanySearchPrefix": "",
+    "CustomerCompanyValid": "valid_id",
+    "Params": {
+      "Table": "customer_company",
+      "CaseSensitive": 0
+    },
+    "Map": [
+      [
+        "CustomerID",
+        "CustomerID",
+        "customer_id",
+        0,
+        1,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyName",
+        "Customer",
+        "name",
+        1,
+        1,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyStreet",
+        "Street",
+        "street",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyZIP",
+        "Zip",
+        "zip",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyCity",
+        "City",
+        "city",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyCountry",
+        "Country",
+        "country",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "CustomerCompanyURL",
+        "URL",
+        "url",
+        1,
+        0,
+        "var",
+        "[% Data.CustomerCompanyURL | html %]",
+        0
+      ],
+      [
+        "CustomerCompanyComment",
+        "Comment",
+        "comments",
+        1,
+        0,
+        "var",
+        "",
+        0
+      ],
+      [
+        "ValidID",
+        "Valid",
+        "valid_id",
+        0,
+        1,
+        "int",
+        "",
+        0
+      ]
+    ],
+    "Name": "Database Backend"
+  },
+  "CustomerCompanyName": "test922896",
+  "CustomerCompanyCountry": "test922896",
+  "CustomerID": "test922896",
+  "CustomerCompanyStreet": "test922896",
+  "CustomerCompanyComment": "test922896",
+  "CustomerCompanyZIP": "test922896",
+  "Source": "CustomerCompany",
+  "CreateBy": "1"
+}
