@@ -128,6 +128,21 @@ module Channel::EmailBuild
 
 =begin
 
+  quoted_in_one_line = Channel::EmailBuild.recipient_line('Somebody @ "Company"', 'some.body@example.com')
+
+returnes
+
+  '"Somebody @ \"Company\"" <some.body@example.com>'
+
+=end
+
+  def self.recipient_line(realname, email)
+    return "#{realname} <#{email}>" if realname =~ /^[A-z]+$/i
+    "\"#{realname.gsub('"', '\"')}\" <#{email}>"
+  end
+
+=begin
+
 Check if string is a complete html document. If not, add head and css styles.
 
   full_html_document_string = Channel::EmailBuild.html_complete_check(html_string)
