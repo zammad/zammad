@@ -51,11 +51,7 @@ get config setting
 =end
 
   def self.get(name)
-    if load
-      logger.debug "Setting.get(#{name.inspect}) # no cache"
-    else
-      logger.debug "Setting.get(#{name.inspect}) # from cache"
-    end
+    load
     @@current[:settings_config][name]
   end
 
