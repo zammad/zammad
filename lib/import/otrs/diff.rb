@@ -29,7 +29,7 @@ module Import
       end
 
       def ticket_diff
-        import_regular('Ticket', diff: true)
+        import('Ticket', diff: true)
       end
     end
   end

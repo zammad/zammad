@@ -38,7 +38,7 @@ module Import
       end
 
       def base_done
-        Group.count + ::Ticket::State.count + ::Ticket::Priority.count
+        ::Group.count + ::Ticket::State.count + ::Ticket::Priority.count
       end
 
       def base_total
@@ -46,7 +46,7 @@ module Import
       end
 
       def user_done
-        User.count
+        ::User.count
       end
 
       def user_total
@@ -54,7 +54,7 @@ module Import
       end
 
       def ticket_done
-        Ticket.count
+        ::Ticket.count
       end
 
       def ticket_total

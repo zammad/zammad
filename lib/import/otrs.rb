@@ -49,11 +49,15 @@ module Import
       true
     end
 
+    def connection_test
+      Import::OTRS::Requester.connection_test
+    end
+
     private
 
     def checks
       check_import_mode
-      Import::OTRS::Requester.connection_test
+      connection_test
     end
 
     def prerequisites
@@ -63,9 +67,9 @@ module Import
       Store::Object.create_if_not_exists(name: 'Ticket::Article')
     end
 
-    def import(remote_object)
+    def import(remote_object, args = {})
       log "loading #{remote_object}..."
-      import_action(remote_object)
+      import_action(remote_object, args)
     end
 
     def threaded_import(remote_object, args = {})
