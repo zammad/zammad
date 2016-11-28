@@ -15,7 +15,6 @@ module Import
         UserFirstname: :firstname,
         UserLastname:  :lastname,
         UserLogin:     :login,
-        UserPw:        :password,
       }.freeze
 
       def initialize(user)
@@ -80,8 +79,8 @@ module Import
       end
 
       def password(user)
-        return if !user[:password]
-        "{sha2}#{user[:password]}"
+        return if !user['UserPw']
+        "{sha2}#{user['UserPw']}"
       end
 
       def group_ids(user)
