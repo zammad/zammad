@@ -7,9 +7,9 @@
         <p>
           <%- @T('Download and install the OTRS Migration Plugin on your OTRS System') %>:
         </p>
-        <a class="btn btn--primary btn--download js-download" download href="https://portal.znuny.com/api/addon_repos/public/617/latest"><%- @Icon('download') %> <%- @T('Migration Plugin for OTRS 5') %></a>
-        <a class="btn btn--primary btn--download js-download" download href="https://portal.znuny.com/api/addon_repos/public/383/latest"><%- @Icon('download') %> <%- @T('Migration Plugin for OTRS 4') %></a>
-        <a class="btn btn--primary btn--download js-download" download href="https://portal.znuny.com/api/addon_repos/public/287/latest"><%- @Icon('download') %> <%- @T('Migration Plugin for OTRS 3.3 - 3.1') %></a>
+        <a class="btn btn--primary btn--download js-download" target=_blank href="https://portal.znuny.com/api/addon_repos/public/617/latest"><%- @Icon('download') %> <%- @T('Migration Plugin for OTRS 5') %></a>
+        <a class="btn btn--primary btn--download js-download" target=_blank href="https://portal.znuny.com/api/addon_repos/public/383/latest"><%- @Icon('download') %> <%- @T('Migration Plugin for OTRS 4') %></a>
+        <a class="btn btn--primary btn--download js-download" target=_blank href="https://portal.znuny.com/api/addon_repos/public/287/latest"><%- @Icon('download') %> <%- @T('Migration Plugin for OTRS 3.3 - 3.1') %></a>
       </div>
       <div class="wizard-controls horizontal center">
         <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
