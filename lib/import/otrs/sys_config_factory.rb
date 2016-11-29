@@ -15,7 +15,7 @@ module Import
       private
 
       def direct_settings
-        %w(FQDN HttpType SystemID Organization TicketHook)
+        %w(HttpType SystemID Organization TicketHook)
       end
 
       def direct_copy?(setting)
