@@ -288,9 +288,11 @@ class _i18nSingleton extends Spine.Module
     @_notTranslated[locale][key] = true
 
   date: (time, offset) =>
+    return time if !time
     @convert(time, offset, @mapTime['date'] || @dateFormat)
 
   timestamp: (time, offset) =>
+    return time if !time
     @convert(time, offset, @mapTime['timestamp'] || @timestampFormat)
 
   convert: (time, offset, format) ->
