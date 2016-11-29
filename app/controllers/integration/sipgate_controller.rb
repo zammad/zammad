@@ -4,14 +4,11 @@ require 'builder'
 
 class Integration::SipgateController < ApplicationController
 
+  before_filter :check_configured
+
   # notify about inbound call / block inbound call
   def in
-    http_log_config facility: 'sipgate.io'
-    return if !configured?
-
     if params['event'] == 'newCall'
-
-      config = Setting.get('sipgate_config')
       config_inbound = config[:inbound] || {}
       block_caller_ids = config_inbound[:block_caller_ids] || []
 
@@ -46,10 +43,6 @@ class Integration::SipgateController < ApplicationController
 
   # set caller id of outbound call
   def out
-    http_log_config facility: 'sipgate.io'
-    return if !configured?
-
-    config = Setting.get('sipgate_config')
     config_outbound = config[:outbound][:routing_table]
     default_caller_id = config[:outbound][:default_caller_id]
 
@@ -89,25 +82,29 @@ class Integration::SipgateController < ApplicationController
 
   private
 
-  def configured?
+  def check_configured
+    http_log_config facility: 'sipgate.io'
+
     if !Setting.get('sipgate_integration')
       xml_error('Feature is disable, please contact your admin to enable it!')
-      return false
+      return
     end
-    config = Setting.get('sipgate_config')
     if !config || !config[:inbound] || !config[:outbound]
       xml_error('Feature not configured, please contact your admin!')
-      return false
+      return
     end
-    true
+  end
+
+  def config
+    @config ||= Setting.get('sipgate_config')
   end
 
   def update_log(params)
-
     user = params['user']
-    if params['user'] && params['user'].class == Array
-      user = params['user'].join(', ')
+    if Array === user
+      user = user.join(', ')
     end
+
     from_comment = nil
     to_comment = nil
     preferences = nil
@@ -119,12 +116,10 @@ class Integration::SipgateController < ApplicationController
       to_comment, preferences = update_log_item('to')
     end
 
-    comment = nil
-    if params['cause']
-      comment = params['cause']
-    end
+    comment = params['cause']
 
-    if params['event'] == 'newCall'
+    case params['event']
+    when 'newCall':
       Cti::Log.create(
         direction: params['direction'],
         from: params['from'],
@@ -136,7 +131,7 @@ class Integration::SipgateController < ApplicationController
         state: params['event'],
         preferences: preferences,
       )
-    elsif params['event'] == 'answer'
+    when 'answer':
       log = Cti::Log.find_by(call_id: params['callId'])
       raise "No such call_id #{params['callId']}" if !log
       log.state = 'answer'
@@ -146,7 +141,7 @@ class Integration::SipgateController < ApplicationController
       end
       log.comment = comment
       log.save
-    elsif params['event'] == 'hangup'
+    when 'hangup':
       log = Cti::Log.find_by(call_id: params['callId'])
       raise "No such call_id #{params['callId']}" if !log
       if params['direction'] == 'in' && log.state == 'newCall'
