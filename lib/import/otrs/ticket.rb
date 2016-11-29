@@ -66,8 +66,17 @@ module Import
       end
 
       def map(ticket)
+        ensure_map(default_map(ticket))
+      end
+
+      def ensure_map(mapped)
+        return mapped if mapped[:title]
+        mapped[:title] = '**EMPTY**'
+        mapped
+      end
+
+      def default_map(ticket)
         {
-          title:         '',
           owner_id:      owner_id(ticket),
           customer_id:   customer_id(ticket),
           created_by_id: 1,

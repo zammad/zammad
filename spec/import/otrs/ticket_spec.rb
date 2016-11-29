@@ -65,4 +65,36 @@ RSpec.describe Import::OTRS::Ticket do
       updates_with(zammad_structure)
     end
   end
+
+  context 'no title' do
+
+    let(:object_structure) { load_ticket_json('no_title') }
+    let(:zammad_structure) {
+      {
+        title: '**EMPTY**',
+        owner_id: 1,
+        customer_id: 1,
+        created_by_id: '3',
+        updated_by_id: 1,
+        updated_at: '2014-11-21 00:21:08',
+        created_at: '2014-11-21 00:17:40',
+        number: '20141121305000012',
+        group_id: '1',
+        state_id: '2',
+        priority_id: '3',
+        id: '730',
+        close_at: '2014-11-21 00:21:08'
+      }
+    }
+
+    it 'creates' do
+      import_backend_expectations
+      creates_with(zammad_structure)
+    end
+
+    it 'updates' do
+      import_backend_expectations
+      updates_with(zammad_structure)
+    end
+  end
 end
