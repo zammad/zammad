@@ -12,7 +12,8 @@ end
 
 RSpec.shared_examples 'Import::OTRS::History' do
   it 'responds to init_callback' do
-    expect(History).to receive(:add)
+    expect(::History).to receive(:add)
+    allow(::History::Attribute).to receive(:find_by).and_return(true)
     blank_instance = described_class.new({})
     expect(blank_instance).to respond_to('init_callback')
   end

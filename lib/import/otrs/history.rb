@@ -25,10 +25,21 @@ module Import
       def ensure_history_attribute
         history_attribute = @history_attributes[:history_attribute]
         return if !history_attribute
-        @@created_history_attributes ||= {}
-        return if @@created_history_attributes[history_attribute]
+        return if history_attribute_exists?(history_attribute)
         @@created_history_attributes[history_attribute] = true
         ::History.attribute_lookup(history_attribute)
+      end
+
+      def history_attribute_exists?(name)
+        @@created_history_attributes ||= {}
+        return false if !@@created_history_attributes[name]
+
+        # make sure the history attribute is added before we
+        # we perform further import
+        # otherwise the following import logic (add) will
+        # try to add the history attribute, too
+        sleep 1 until ::History::Attribute.find_by(name: name)
+        true
       end
     end
   end
