@@ -17,7 +17,7 @@ targets:
       - postgresql|mysql-server|mariadb-server|sqlite
   sles-12:
     dependencies:
-      - nginx|apache2
+      - nginx
       - postgresql-server
 before:
   - uname -a
