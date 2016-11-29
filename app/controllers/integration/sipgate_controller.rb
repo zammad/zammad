@@ -28,12 +28,12 @@ class Integration::SipgateController < ApplicationController
         if params['user']
           params['comment'] = "#{params['user']} -> reject, busy"
         end
-        update_log(params)
+        Cti::Log.process(params)
         return true
       }
     end
 
-    update_log(params)
+    Cti::Log.process(params)
 
     xml = Builder::XmlMarkup.new(indent: 2)
     xml.instruct!
@@ -77,7 +77,7 @@ class Integration::SipgateController < ApplicationController
     if from
       params['from'] = from
     end
-    update_log(params)
+    Cti::Log.process(params)
   end
 
   private
@@ -97,107 +97,6 @@ class Integration::SipgateController < ApplicationController
 
   def config
     @config ||= Setting.get('sipgate_config')
-  end
-
-  def update_log(params)
-    user = params['user']
-    if Array === user
-      user = user.join(', ')
-    end
-
-    from_comment = nil
-    to_comment = nil
-    preferences = nil
-    if params['direction'] == 'in'
-      to_comment = user
-      from_comment, preferences = update_log_item('from')
-    else
-      from_comment = user
-      to_comment, preferences = update_log_item('to')
-    end
-
-    comment = params['cause']
-
-    case params['event']
-    when 'newCall':
-      Cti::Log.create(
-        direction: params['direction'],
-        from: params['from'],
-        from_comment: from_comment,
-        to: params['to'],
-        to_comment: to_comment,
-        call_id: params['callId'],
-        comment: comment,
-        state: params['event'],
-        preferences: preferences,
-      )
-    when 'answer':
-      log = Cti::Log.find_by(call_id: params['callId'])
-      raise "No such call_id #{params['callId']}" if !log
-      log.state = 'answer'
-      log.start = Time.zone.now
-      if user
-        log.to_comment = user
-      end
-      log.comment = comment
-      log.save
-    when 'hangup':
-      log = Cti::Log.find_by(call_id: params['callId'])
-      raise "No such call_id #{params['callId']}" if !log
-      if params['direction'] == 'in' && log.state == 'newCall'
-        log.done = false
-      end
-      if params['direction'] == 'in' && log.to_comment == 'voicemail'
-        log.done = false
-      end
-      log.state = 'hangup'
-      log.end = Time.zone.now
-      log.comment = comment
-      log.save
-    else
-      raise "Unknown event #{params['event']}"
-    end
-
-  end
-
-  def update_log_item(direction)
-    from_comment_known = ''
-    from_comment_maybe = ''
-    preferences_known = {}
-    preferences_known[direction] = []
-    preferences_maybe = {}
-    preferences_maybe[direction] = []
-    caller_ids = Cti::CallerId.lookup(params[direction])
-    caller_ids.each { |record|
-      if record.level == 'known'
-        preferences_known[direction].push record
-      else
-        preferences_maybe[direction].push record
-      end
-      comment = ''
-      if record.user_id
-        user = User.lookup(id: record.user_id)
-        if user
-          comment += user.fullname
-        end
-      elsif !record.comment.empty?
-        comment += record.comment
-      end
-      if record.level == 'known'
-        if !from_comment_known.empty?
-          from_comment_known += ','
-        end
-        from_comment_known += comment
-      else
-        if !from_comment_maybe.empty?
-          from_comment_maybe += ','
-        end
-        from_comment_maybe += comment
-      end
-    }
-    return [from_comment_known, preferences_known] if !from_comment_known.empty?
-    return ["maybe #{from_comment_maybe}", preferences_maybe] if !from_comment_maybe.empty?
-    nil
   end
 
   def xml_error(error)
