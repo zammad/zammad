@@ -8,7 +8,7 @@ module Channel::Filter::SenderIsSystemAddress
     return if mail[ 'x-zammad-ticket-create-article-sender'.to_sym ]
     return if mail[ 'x-zammad-article-sender'.to_sym ]
 
-    # check if sender addesss is system
+    # check if sender address is system
     form = 'raw-from'.to_sym
     return if !mail[form]
     return if !mail[:to]
