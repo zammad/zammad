@@ -9,6 +9,9 @@ with a team of agents?
 
 You're going to love Zammad!
 
+## Statuses
+
+[![Build Status](https://travis-ci.org/zammad/zammad.svg?branch=develop)](https://travis-ci.org/zammad/zammad) [![Documentation Status](https://readthedocs.org/projects/zammad/badge/?version=latest)](https://docs.zammad.org)
 
 ## Installing & Getting Started
 
@@ -32,3 +35,4 @@ https://zammad.org/participate
 Thanks! ❤️ ❤️ ❤️
 
  Your Zammad Team
+
