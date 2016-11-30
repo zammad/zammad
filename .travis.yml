@@ -19,7 +19,8 @@ before_install:
   - mysql -u root -e "CREATE USER 'some_user'@'localhost' IDENTIFIED BY 'some_pass';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'some_user'@'localhost';"
   - export RAILS_ENV=development
-  - cp config/database.yml.dist config/database.yml
+  - export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'
+  - cp config/database.yml.test config/database.yml
 install:
 - bundle install --without postgres
 script:
