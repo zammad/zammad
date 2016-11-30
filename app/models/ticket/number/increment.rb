@@ -70,7 +70,7 @@ module Ticket::Number::Increment
   end
 
   def check(string)
-    return if !string || string.empty?
+    return if string.blank?
 
     # get config
     system_id           = Setting.get('system_id') || ''

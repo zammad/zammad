@@ -22,9 +22,7 @@ store new device for user if device not already known
   def self.add(user_agent, ip, user_id, fingerprint, type)
 
     # since gem browser 2 is not handling nil for user_agent, set it to ''
-    if user_agent.nil?
-      user_agent = ''
-    end
+    user_agent ||= ''
 
     # get location info
     location_details = Service::GeoIp.location(ip)
@@ -79,7 +77,7 @@ store new device for user if device not already known
       name = browser[:plattform]
     end
     if browser[:name] && browser[:name] != 'Other'
-      if name && !name.empty?
+      if name.present?
         name += ', '
       end
       name += browser[:name]
