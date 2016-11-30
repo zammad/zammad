@@ -31,7 +31,7 @@ class ChatsController < ApplicationController
   end
 
   def destroy
-    model_destory_render(Chat, params)
+    model_destroy_render(Chat, params)
   end
 
 end

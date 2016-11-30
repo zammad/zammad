@@ -99,7 +99,7 @@ curl http://localhost/api/v1/online_notifications/{id}.json -v -u #{login}:#{pas
 
   def destroy
     return if !access?
-    model_destory_render(OnlineNotification, params)
+    model_destroy_render(OnlineNotification, params)
   end
 
 =begin

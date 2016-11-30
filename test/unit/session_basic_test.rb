@@ -98,7 +98,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(data[:user]['id'], agent1.id, 'check if user id is correct')
 
     # destroy session
-    Sessions.destory(client_id1)
+    Sessions.destroy(client_id1)
 
     # check if session exists
     assert(!Sessions.session_exists?(client_id1), 'check if session exists')

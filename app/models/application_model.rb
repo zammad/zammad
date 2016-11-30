@@ -1591,7 +1591,7 @@ check string/varchar size and cut them if needed
 
 =begin
 
-destory object dependencies, will be executed automatically
+destroy object dependencies, will be executed automatically
 
 =end
 

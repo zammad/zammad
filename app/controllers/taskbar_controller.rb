@@ -34,7 +34,7 @@ class TaskbarController < ApplicationController
     access(taskbar)
 
     taskbar.destroy
-    model_destory_render_item()
+    model_destroy_render_item()
   end
 
   private

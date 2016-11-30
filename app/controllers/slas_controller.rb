@@ -164,7 +164,7 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password} -H "Content-Ty
 =end
 
   def destroy
-    model_destory_render(Sla, params)
+    model_destroy_render(Sla, params)
   end
 
 end

@@ -175,6 +175,6 @@ Test:
 =end
 
   def destroy
-    model_destory_render(PostmasterFilter, params)
+    model_destroy_render(PostmasterFilter, params)
   end
 end

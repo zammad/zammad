@@ -77,7 +77,7 @@ class ObjectManagerAttributesController < ApplicationController
       object_lookup_id: object_manager_attribute.object_lookup_id,
       name: object_manager_attribute.name,
     )
-    model_destory_render_item
+    model_destroy_render_item
   end
 
   # POST /object_manager_attributes_discard_changes

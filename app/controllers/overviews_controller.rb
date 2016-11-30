@@ -156,6 +156,6 @@ curl http://localhost/api/v1/overviews/#{id}.json -v -u #{login}:#{password} -H 
 =end
 
   def destroy
-    model_destory_render(Overview, params)
+    model_destroy_render(Overview, params)
   end
 end
