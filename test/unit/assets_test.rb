@@ -84,7 +84,7 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user3.id]), 'check assets' )
 
     # touch org, check if user1 has changed
-    sleep 2
+    travel 2.seconds
     org2 = Organization.find(org.id)
     org2.note = "some note...#{rand(9_999_999_999_999)}"
     org2.save
@@ -232,7 +232,7 @@ class AssetsTest < ActiveSupport::TestCase
     assert_nil( assets[:User][user3.id], 'check assets' )
 
     # touch user 2, check if org has changed
-    sleep 2
+    travel 2.seconds
     user_new_2 = User.find(user2.id)
     user_new_2.lastname = 'assets2'
     user_new_2.save

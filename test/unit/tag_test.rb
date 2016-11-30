@@ -184,7 +184,7 @@ class TagTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 2
+    travel 2.seconds
     Tag.tag_add(
       object: 'Ticket',
       o_id: ticket1.id,
@@ -266,7 +266,7 @@ class TagTest < ActiveSupport::TestCase
     assert(tags_ticket2.include?('some tag4'))
 
     # rename tag
-    sleep 2
+    travel 2.seconds
     tag_item3 = Tag::Item.find_by(name: 'some tag3')
     Tag::Item.rename(
       id: tag_item3.id,
@@ -300,7 +300,7 @@ class TagTest < ActiveSupport::TestCase
     assert(tags_ticket2.include?('some tag4'))
 
     # merge tags
-    sleep 2
+    travel 2.seconds
     Tag::Item.rename(
       id: tag_item3.id,
       name: 'some tag2',
@@ -333,7 +333,7 @@ class TagTest < ActiveSupport::TestCase
     assert_not(Tag::Item.find_by(id: tag_item3.id))
 
     # remove tag item
-    sleep 2
+    travel 2.seconds
     tag_item4 = Tag::Item.find_by(name: 'some TAG4')
     Tag::Item.remove(tag_item4.id)
 

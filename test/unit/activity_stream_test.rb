@@ -4,7 +4,6 @@ require 'test_helper'
 class ActivityStreamTest < ActiveSupport::TestCase
   admin_user = nil
   current_user = nil
-  activity_record_delay = nil
   test 'aaa - setup' do
     role  = Role.lookup(name: 'Admin')
     group = Group.lookup(name: 'Users')
@@ -21,12 +20,6 @@ class ActivityStreamTest < ActiveSupport::TestCase
       created_by_id: 1
     )
     current_user = User.lookup(email: 'nicole.braun@zammad.org')
-
-    activity_record_delay = if ENV['ZAMMAD_ACTIVITY_RECORD_DELAY']
-                              ENV['ZAMMAD_ACTIVITY_RECORD_DELAY'].to_i.seconds
-                            else
-                              90.seconds
-                            end
   end
 
   test 'ticket+user' do
@@ -101,7 +94,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       test[:check][2][:o_id]          = ticket.id
       test[:check][2][:created_at]    = ticket.created_at
       test[:check][2][:created_by_id] = current_user.id
-      sleep 2
+      travel 2.seconds
 
       test[:create][:article][:ticket_id] = ticket.id
       article = Ticket::Article.create(test[:create][:article])
@@ -129,7 +122,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
         article.update_attributes(test[:update][:article])
       end
 
-      sleep activity_record_delay + 1
+      travel 1.second
       if test[:update][:ticket]
         ticket.update_attributes(test[:update][:ticket])
       end
@@ -196,7 +189,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       test[:check][0][:o_id]          = organization.id
       test[:check][0][:created_at]    = organization.created_at
       test[:check][0][:created_by_id] = current_user.id
-      sleep 2
+      travel 2.seconds
 
       assert_equal(organization.class.to_s, 'Organization')
 
@@ -205,7 +198,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
         test[:check][1][:o_id]          = organization.id
         test[:check][1][:updated_at]    = organization.updated_at
         test[:check][1][:created_by_id] = current_user.id
-        sleep activity_record_delay - 1
+        travel 1.second
       end
 
       if test[:update2][:organization]
@@ -353,7 +346,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       end
 
       # to verify update which need to be logged
-      sleep activity_record_delay + 1
+      travel 1.second
 
       if test[:update2][:user]
         user.update_attributes(test[:update2][:user])
