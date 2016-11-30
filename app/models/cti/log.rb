@@ -259,7 +259,7 @@ returns
       comment = params['cause']
       event   = params['event']
       user    = params['user']
-      if Array === user
+      if user.class == Array
         user = user.join(', ')
       end
 
@@ -268,15 +268,15 @@ returns
       preferences = nil
       if params['direction'] == 'in'
         to_comment = user
-        from_comment, preferences = CallerId.get_comment_preferences(params['from'], params['direction'])
+        from_comment, preferences = CallerId.get_comment_preferences(params['from'], 'from')
       else
         from_comment = user
-        to_comment, preferences = CallerId.get_comment_preferences(params['to'], params['direction'])
+        to_comment, preferences = CallerId.get_comment_preferences(params['to'], 'to')
       end
 
       case event
       when 'newCall'
-        self.create(
+        create(
           direction: params['direction'],
           from: params['from'],
           from_comment: from_comment,
@@ -288,7 +288,7 @@ returns
           preferences: preferences,
         )
       when 'answer'
-        log = self.find_by(call_id: params['callId'])
+        log = find_by(call_id: params['callId'])
         raise "No such call_id #{params['callId']}" if !log
         log.state = 'answer'
         log.start = Time.zone.now
@@ -298,7 +298,7 @@ returns
         log.comment = comment
         log.save
       when 'hangup'
-        log = self.find_by(call_id: params['callId'])
+        log = find_by(call_id: params['callId'])
         raise "No such call_id #{params['callId']}" if !log
         if params['direction'] == 'in' && log.state == 'newCall'
           log.done = false
