@@ -1,0 +1,8 @@
+Zammad::Application.routes.draw do
+  api_path = Rails.configuration.api_path
+
+  match api_path + '/monitoring/health_check',         to: 'monitoring#health_check', via: :get
+  match api_path + '/monitoring/status',               to: 'monitoring#status',       via: :get
+  match api_path + '/monitoring/token',                to: 'monitoring#token',        via: :post
+
+end

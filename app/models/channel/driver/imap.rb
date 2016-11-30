@@ -73,7 +73,7 @@ example
     Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
 
     # on check, reduce open_timeout to have faster probing
-    timeout = 12
+    timeout = 24
     if check_type == 'check'
       timeout = 6
     end

@@ -1,0 +1,15 @@
+{
+  "ID": "47",
+  "ChangeTime": "2016-05-25 11:14:05",
+  "InternalField": "0",
+  "ValidID": "1",
+  "CreateTime": "2016-05-25 11:14:05",
+  "Label": "Checkbox Example",
+  "FieldOrder": "26",
+  "Config": {
+    "DefaultValue": "1"
+  },
+  "FieldType": "Checkbox",
+  "Name": "CheckboxExample",
+  "ObjectType": "Ticket"
+}

@@ -61,8 +61,8 @@ returns
     #@pop.set_debug_output $stderr
 
     # on check, reduce open_timeout to have faster probing
-    @pop.open_timeout = 8
-    @pop.read_timeout = 12
+    @pop.open_timeout = 12
+    @pop.read_timeout = 24
     if check_type == 'check'
       @pop.open_timeout = 4
       @pop.read_timeout = 6

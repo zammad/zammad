@@ -211,4 +211,20 @@ text
     assert_equal(html_should, html_with_fixes)
   end
 
+  test 'from checks' do
+
+    quoted_in_one_line = Channel::EmailBuild.recipient_line('Somebody @ "Company"', 'some.body@example.com')
+    assert_equal('"Somebody @ \"Company\"" <some.body@example.com>', quoted_in_one_line)
+
+    quoted_in_one_line = Channel::EmailBuild.recipient_line('Somebody', 'some.body@example.com')
+    assert_equal('Somebody <some.body@example.com>', quoted_in_one_line)
+
+    quoted_in_one_line = Channel::EmailBuild.recipient_line('Somebody | Some Org', 'some.body@example.com')
+    assert_equal('"Somebody | Some Org" <some.body@example.com>', quoted_in_one_line)
+
+    quoted_in_one_line = Channel::EmailBuild.recipient_line('Test Master Agent via Support', 'some.body@example.com')
+    assert_equal('"Test Master Agent via Support" <some.body@example.com>', quoted_in_one_line)
+
+  end
+
 end

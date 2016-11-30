@@ -1575,11 +1575,11 @@ Setting.create_if_not_exists(
   frontend: false
 )
 
-Setting.create_or_update(
+Setting.create_if_not_exists(
   title: 'API Token Access',
   name: 'api_token_access',
   area: 'API::Base',
-  description: 'Enable REST API using tokens (not username/email addeess and password). Each user need to create own access tokens in user profile.',
+  description: 'Enable REST API using tokens (not username/email address and password). Each user need to create own access tokens in user profile.',
   options: {
     form: [
       {
@@ -1600,7 +1600,7 @@ Setting.create_or_update(
   },
   frontend: false
 )
-Setting.create_or_update(
+Setting.create_if_not_exists(
   title: 'API Password Access',
   name: 'api_password_access',
   area: 'API::Base',
@@ -1622,6 +1622,28 @@ Setting.create_or_update(
   state: true,
   preferences: {
     permission: ['admin.api'],
+  },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Monitoring Token',
+  name: 'monitoring_token',
+  area: 'HealthCheck::Base',
+  description: 'Token for Monitoring.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'monitoring_token',
+        tag: 'input',
+      },
+    ],
+  },
+  state: SecureRandom.urlsafe_base64(40),
+  preferences: {
+    permission: ['admin.monitoring'],
   },
   frontend: false
 )
@@ -2763,6 +2785,13 @@ Permission.create_if_not_exists(
   note: 'Manage %s',
   preferences: {
     translations: ['Translations']
+  },
+)
+Permission.create_if_not_exists(
+  name: 'admin.monitoring',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Monitoring']
   },
 )
 Permission.create_if_not_exists(
@@ -5418,11 +5447,7 @@ Karma::Activity.create_or_update(
 )
 
 # reset primary key sequences
-if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
-  ActiveRecord::Base.connection.tables.each do |t|
-    ActiveRecord::Base.connection.reset_pk_sequence!(t)
-  end
-end
+DbHelper.import_post
 
 # install locales and translations
 Locale.create_if_not_exists(

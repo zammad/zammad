@@ -32,8 +32,8 @@ module Channel::EmailBuild
       attr['X-Auto-Response-Suppress'] = 'All'
     end
 
-    #attr['X-Powered-BY'] = 'Zammad - Support/Helpdesk (http://www.zammad.org/)'
-    attr['X-Mailer'] = 'Zammad Mail Service (1.x)'
+    attr['X-Powered-By'] = 'Zammad - Helpdesk/Support (https://zammad.org/)'
+    attr['X-Mailer'] = 'Zammad Mail Service'
 
     # set headers
     attr.each do |key, value|
@@ -124,6 +124,21 @@ module Channel::EmailBuild
       end
     end
     mail
+  end
+
+=begin
+
+  quoted_in_one_line = Channel::EmailBuild.recipient_line('Somebody @ "Company"', 'some.body@example.com')
+
+returnes
+
+  '"Somebody @ \"Company\"" <some.body@example.com>'
+
+=end
+
+  def self.recipient_line(realname, email)
+    return "#{realname} <#{email}>" if realname =~ /^[A-z]+$/i
+    "\"#{realname.gsub('"', '\"')}\" <#{email}>"
   end
 
 =begin

@@ -14,7 +14,9 @@
  *
  * Date: October 15, 2012
  *
- * Zammad modification: remove overflow:hidden when maximum height is reached
+ * Zammad modification: 
+ *   - remove overflow:hidden when maximum height is reached
+ *   - mirror box-sizing
  *
  */
 
@@ -44,8 +46,7 @@ jQuery.fn.autoGrow = function(options) {
       if (jQuery(textarea).height() != jQuery(mirror).height()) {
         jQuery(textarea).height(jQuery(mirror).height());
 
-        var maxHeight = parseInt(jQuery(textarea).css('max-height'), 10);
-        var overflow = jQuery(mirror).height() > maxHeight ? '' : 'hidden'
+        var overflow = jQuery(mirror).height() > maxHeight ? '' : 'hidden';
         jQuery(textarea).css('overflow', overflow);
       }
     }
@@ -56,6 +57,9 @@ jQuery.fn.autoGrow = function(options) {
 
     // Create a mirror
     var mirror = createMirror(this);
+
+    // Store max-height
+    var maxHeight = parseInt(jQuery(this).css('max-height'), 10);
     
     // Style the mirror
     mirror.style.display = 'none';
@@ -70,6 +74,8 @@ jQuery.fn.autoGrow = function(options) {
     mirror.style.fontFamily = jQuery(this).css('font-family');
     mirror.style.fontSize = jQuery(this).css('font-size');
     mirror.style.lineHeight = jQuery(this).css('line-height');
+    mirror.style.letterSpacing = jQuery(this).css('letter-spacing');
+    mirror.style.boxSizing = jQuery(this).css('boxSizing');
 
     // Style the textarea
     this.style.overflow = "hidden";
@@ -77,6 +83,7 @@ jQuery.fn.autoGrow = function(options) {
 
     // Bind the textarea's event
     this.onkeyup = growTextarea;
+    this.onfocus = growTextarea;
 
     // Fire the event for text already present
     sendContentToMirror(this);

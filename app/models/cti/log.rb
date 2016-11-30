@@ -254,6 +254,67 @@ returns
       }
     end
 
+    # processes a incoming event
+    def self.process(params)
+      comment = params['cause']
+      event   = params['event']
+      user    = params['user']
+      if user.class == Array
+        user = user.join(', ')
+      end
+
+      from_comment = nil
+      to_comment = nil
+      preferences = nil
+      if params['direction'] == 'in'
+        to_comment = user
+        from_comment, preferences = CallerId.get_comment_preferences(params['from'], 'from')
+      else
+        from_comment = user
+        to_comment, preferences = CallerId.get_comment_preferences(params['to'], 'to')
+      end
+
+      case event
+      when 'newCall'
+        create(
+          direction: params['direction'],
+          from: params['from'],
+          from_comment: from_comment,
+          to: params['to'],
+          to_comment: to_comment,
+          call_id: params['callId'],
+          comment: comment,
+          state: event,
+          preferences: preferences,
+        )
+      when 'answer'
+        log = find_by(call_id: params['callId'])
+        raise "No such call_id #{params['callId']}" if !log
+        log.state = 'answer'
+        log.start = Time.zone.now
+        if user
+          log.to_comment = user
+        end
+        log.comment = comment
+        log.save
+      when 'hangup'
+        log = find_by(call_id: params['callId'])
+        raise "No such call_id #{params['callId']}" if !log
+        if params['direction'] == 'in' && log.state == 'newCall'
+          log.done = false
+        end
+        if params['direction'] == 'in' && log.to_comment == 'voicemail'
+          log.done = false
+        end
+        log.state = 'hangup'
+        log.end = Time.zone.now
+        log.comment = comment
+        log.save
+      else
+        raise ArgumentError, "Unknown event #{event}"
+      end
+    end
+
     def push_event
       users = User.with_permissions('cti.agent')
       users.each { |user|

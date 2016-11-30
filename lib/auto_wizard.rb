@@ -146,6 +146,9 @@ returns
       }
     }
 
+    # reset primary key sequences
+    DbHelper.import_post
+
     # remove auto wizard file
     FileUtils.rm auto_wizard_file_location
 
