@@ -241,7 +241,7 @@ returns
       preferences_maybe = {}
       preferences_maybe[direction] = []
 
-      self.lookup(caller_id).each { |record|
+      lookup(caller_id).each { |record|
         if record.level == 'known'
           preferences_known[direction].push record
         else
