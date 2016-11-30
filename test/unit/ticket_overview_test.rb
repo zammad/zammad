@@ -548,7 +548,8 @@ class TicketOverviewTest < ActiveSupport::TestCase
     assert_equal(result[2][:tickets].class, Array)
     assert(result[2][:tickets].empty?)
 
-    sleep 1
+    travel_to Time.zone.now + 1.second # because of mysql millitime issues
+
     ticket3 = Ticket.create(
       title: 'overview test 3',
       group: Group.lookup(name: 'OverviewTest'),
