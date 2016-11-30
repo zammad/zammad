@@ -1,5 +1,4 @@
 class App.Search extends App.Controller
-  searchResultCache: {}
   elements:
     '.js-search': 'searchInput'
 
@@ -24,6 +23,11 @@ class App.Search extends App.Controller
     App.TaskManager.touch(@task_key)
 
     @throttledSearch = _.throttle @search, 200
+
+    @globalSearch = new App.GlobalSearch(
+      render: @renderResult
+      limit: 50
+    )
 
     @render()
 
@@ -52,10 +56,11 @@ class App.Search extends App.Controller
     @navupdate(url: '#search', type: 'menu')
     return if _.isEmpty(params.query)
     @$('.js-search').val(params.query).trigger('change')
+    return if @shown
     @throttledSearch(true)
 
   hide: ->
-    # nothing
+    @shown = false
 
   changed: ->
     # nothing
@@ -117,11 +122,7 @@ class App.Search extends App.Controller
     @query = query
     @updateTask()
 
-    App.GlobalSearch.execute(
-      query: @query
-      render: @renderResult
-      limit: 50
-    )
+    @globalSearch.search(query: @query)
 
   renderResult: (result = []) =>
     @result = result

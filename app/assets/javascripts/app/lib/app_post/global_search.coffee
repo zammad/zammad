@@ -1,37 +1,27 @@
-class App.GlobalSearch
-  _instance = undefined
-
-  @execute: (args) ->
-    if _instance == undefined
-      _instance ?= new _globalSearchSingleton
-    _instance.execute(args)
-
-class _globalSearchSingleton extends Spine.Module
-
+class App.GlobalSearch extends App.Controller
   constructor: ->
-    @searchResultCache = undefined
-    @searchResultCacheByKey = {}
+    super
+    @searchResultCache = {}
+    @lastQuery = undefined
     @apiPath = App.Config.get('api_path')
+    @ajaxId = "search-#{Math.floor( Math.random() * 999999 )}"
 
-  execute: (params) ->
-    query    = params.query
-    render   = params.render
-    limit    = params.limit || 10
-    cacheKey = "#{query}_#{limit}"
+  search: (params) =>
+    query = params.query
 
     # use cache for search result
     currentTime = new Date
-    if @searchResultCacheByKey[cacheKey] && @searchResultCacheByKey[cacheKey].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
-      @renderTry(render, @searchResultCacheByKey[cacheKey].result, cacheKey)
+    if @searchResultCache[query] && @searchResultCache[query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
+      @renderTry(@searchResultCache[query].result, query)
       return
 
     App.Ajax.request(
-      id:    'search'
+      id:    @ajaxId
       type:  'GET'
       url:   "#{@apiPath}/search"
       data:
         query: query
-        limit: limit
+        limit: @limit || 10
       processData: true
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
@@ -49,21 +39,24 @@ class _globalSearchSingleton extends Spine.Module
           else
             App.Log.error('_globalSearchSingleton', "No such model App.#{item.type}")
 
-        @renderTry(render, result, cacheKey)
+        @renderTry(result, query)
     )
 
-  renderTry: (render, result, cacheKey) =>
+  renderTry: (result, query) =>
 
     # if result hasn't changed, do not rerender
     diff = false
-    if @searchResultCache
-      diff = difference(@searchResultCache, result)
+    if @lastQuery is query && @searchResultCache[query]
+      diff = difference(@searchResultCache[query].result, result)
     return if diff isnt false && _.isEmpty(diff)
+    @lastQuery = query
 
     # cache search result
-    @searchResultCache = result
-    @searchResultCacheByKey[cacheKey] =
+    @searchResultCache[query] =
       result: result
       time: new Date
 
-    render(result)
+    @render(result)
+
+  close: =>
+    @lastQuery = undefined
