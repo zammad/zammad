@@ -20,7 +20,7 @@ class TriggersController < ApplicationController
   end
 
   def destroy
-    model_destory_render(Trigger, params)
+    model_destroy_render(Trigger, params)
   end
 
 end

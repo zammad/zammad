@@ -303,7 +303,7 @@ class UsersController < ApplicationController
   def destroy
     permission_check('admin.user')
     model_references_check(User, params)
-    model_destory_render(User, params)
+    model_destroy_render(User, params)
   end
 
   # @path       [GET] /users/me

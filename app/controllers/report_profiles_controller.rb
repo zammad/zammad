@@ -136,7 +136,7 @@ curl http://localhost/api/report_profiles.json -v -u #{login}:#{password} -H "Co
 =end
 
   def destroy
-    model_destory_render(Report::Profile, params)
+    model_destroy_render(Report::Profile, params)
   end
 
 end

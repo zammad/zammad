@@ -36,7 +36,7 @@ class CalendarsController < ApplicationController
   end
 
   def destroy
-    model_destory_render(Calendar, params)
+    model_destroy_render(Calendar, params)
   end
 
 end
