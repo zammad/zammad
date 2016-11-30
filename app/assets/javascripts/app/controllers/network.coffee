@@ -2,19 +2,19 @@ class Index extends App.ControllerContent
   events:
     'click [data-type=network-new]':              'network_new'
     'click [data-type=network-edit]':             'network_edit'
-    'click [data-type=network-destroy]':          'network_destory'
+    'click [data-type=network-destroy]':          'network_destroy'
     'click [data-type=network-category-new]':     'network_category_new'
     'click [data-type=network-category-edit]':    'network_category_edit'
     'click [data-type=network-category-destroy]': 'network_category_destroy'
 
   constructor: ->
     super
-    
+
     # set title
     @title 'Network'
     @render()
     @navupdate '#network'
-    
+
   render: ->
     networks = App.Network.all()
     network_categories = App.NetworkCategory.all()
@@ -23,11 +23,11 @@ class Index extends App.ControllerContent
 
     for network_category in network_categories
       @log 'notice', network_category
-      
+
     @html App.view('network')(
       networks: App.Network.all(),
     )
-    
+
   network_new: (e) ->
     e.preventDefault()
     new App.ControllerGenericNewWindow(
@@ -38,7 +38,7 @@ class Index extends App.ControllerContent
       success: =>
         @render()
     )
-        
+
   network_edit: (e) ->
     e.preventDefault()
     @id = $(e.target).parents('[data-id]').data('id')
@@ -51,8 +51,8 @@ class Index extends App.ControllerContent
       success: =>
         @render()
     )
-    
-  network_destory: (e) ->
+
+  network_destroy: (e) ->
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
     item = App.Network.find(id)

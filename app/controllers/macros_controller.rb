@@ -150,6 +150,6 @@ curl http://localhost/api/v1/macros.json -v -u #{login}:#{password} -H "Content-
 =end
 
   def destroy
-    model_destory_render(Macro, params)
+    model_destroy_render(Macro, params)
   end
 end

@@ -216,7 +216,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
   def destroy
     permission_check('ticket.agent')
     model_references_check(Organization, params)
-    model_destory_render(Organization, params)
+    model_destroy_render(Organization, params)
   end
 
   # GET /api/v1/organizations/search

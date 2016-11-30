@@ -50,9 +50,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     client_id1 = '1234'
     client_id2 = '123456'
     client_id3 = 'abc'
-    Sessions.destory(client_id1)
-    Sessions.destory(client_id2)
-    Sessions.destory(client_id3)
+    Sessions.destroy(client_id1)
+    Sessions.destroy(client_id2)
+    Sessions.destroy(client_id3)
     Sessions.create(client_id1, agent1.attributes, { type: 'websocket' })
     Sessions.create(client_id2, agent2.attributes, { type: 'ajax' })
     Sessions.create(client_id3, agent3.attributes, { type: 'ajax' })
@@ -64,7 +64,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # check if session still exists after idle cleanup
     sleep 1
-    Sessions.destory_idle_sessions(3)
+    Sessions.destroy_idle_sessions(3)
     assert(Sessions.session_exists?(client_id1), 'check if session exists after 1 sec')
     assert(Sessions.session_exists?(client_id2), 'check if session exists after 1 sec')
     assert(Sessions.session_exists?(client_id3), 'check if session exists after 1 sec')
@@ -74,7 +74,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     Sessions.touch(client_id1)
     Sessions.touch(client_id2)
     Sessions.touch(client_id3)
-    Sessions.destory_idle_sessions(3)
+    Sessions.destroy_idle_sessions(3)
     assert(Sessions.session_exists?(client_id1), 'check if session exists after touch')
     assert(Sessions.session_exists?(client_id2), 'check if session exists after touch')
     assert(Sessions.session_exists?(client_id3), 'check if session exists after touch')
@@ -155,7 +155,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # check if session still exists after idle cleanup
     sleep 4
-    client_ids = Sessions.destory_idle_sessions(3)
+    client_ids = Sessions.destroy_idle_sessions(3)
 
     # check client sessions
     assert(!Sessions.session_exists?(client_id1), 'check if session is removed')
@@ -216,9 +216,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     client_id1_0 = '1234-1'
     client_id1_1 = '1234-2'
     client_id2   = '123456'
-    Sessions.destory(client_id1_0)
-    Sessions.destory(client_id1_1)
-    Sessions.destory(client_id2)
+    Sessions.destroy(client_id1_0)
+    Sessions.destroy(client_id1_1)
+    Sessions.destroy(client_id2)
 
     # start jobs
     jobs = Thread.new {
@@ -281,7 +281,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # check if session still exists after idle cleanup
     sleep 4
-    client_ids = Sessions.destory_idle_sessions(3)
+    client_ids = Sessions.destroy_idle_sessions(3)
 
     # check client sessions
     assert(!Sessions.session_exists?(client_id1_0), 'check if session is removed')

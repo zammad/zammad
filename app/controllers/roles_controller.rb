@@ -137,6 +137,6 @@ Test:
 =end
 
   def destroy
-    model_destory_render(Role, params)
+    model_destroy_render(Role, params)
   end
 end

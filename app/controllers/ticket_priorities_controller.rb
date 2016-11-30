@@ -31,6 +31,6 @@ class TicketPrioritiesController < ApplicationController
   def destroy
     permission_check('admin.object')
     model_references_check(Ticket::Priority, params)
-    model_destory_render(Ticket::Priority, params)
+    model_destroy_render(Ticket::Priority, params)
   end
 end

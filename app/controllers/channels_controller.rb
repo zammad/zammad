@@ -42,7 +42,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
   def destroy
     permission_check('admin')
     check_access
-    model_destory_render(Channel, params)
+    model_destroy_render(Channel, params)
   end
 
   def twitter_index
