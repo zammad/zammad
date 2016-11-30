@@ -4,7 +4,7 @@ require 'builder'
 
 class Integration::SipgateController < ApplicationController
 
-  before_filter :check_configured
+  before_action :check_configured
 
   # notify about inbound call / block inbound call
   def in
