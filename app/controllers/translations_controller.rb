@@ -66,6 +66,6 @@ class TranslationsController < ApplicationController
   # DELETE /translations/1
   def destroy
     permission_check('admin.translation')
-    model_destory_render(Translation, params)
+    model_destroy_render(Translation, params)
   end
 end

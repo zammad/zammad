@@ -20,7 +20,7 @@ class ExternalCredentialsController < ApplicationController
   end
 
   def destroy
-    model_destory_render(ExternalCredential, params)
+    model_destroy_render(ExternalCredential, params)
   end
 
   def app_verify

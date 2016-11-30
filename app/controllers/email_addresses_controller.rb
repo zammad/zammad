@@ -149,6 +149,6 @@ curl http://localhost/api/v1/email_addresses/#{id}.json -v -u #{login}:#{passwor
 
   def destroy
     permission_check('admin.channel_email')
-    model_destory_render(EmailAddress, params)
+    model_destroy_render(EmailAddress, params)
   end
 end

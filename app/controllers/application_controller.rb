@@ -561,13 +561,13 @@ class ApplicationController < ActionController::Base
     render json: generic_object.attributes_with_associations, status: :ok
   end
 
-  def model_destory_render(object, params)
+  def model_destroy_render(object, params)
     generic_object = object.find(params[:id])
     generic_object.destroy!
-    model_destory_render_item()
+    model_destroy_render_item()
   end
 
-  def model_destory_render_item ()
+  def model_destroy_render_item ()
     render json: {}, status: :ok
   end
 

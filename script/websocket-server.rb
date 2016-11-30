@@ -128,7 +128,7 @@ EventMachine.run {
         @clients.delete client_id
       end
 
-      Sessions.destory(client_id)
+      Sessions.destroy(client_id)
     }
 
     # manage messages
@@ -277,7 +277,7 @@ EventMachine.run {
     }
 
     # close unused ajax long polling sessions
-    clients = Sessions.destory_idle_sessions(idle_time_in_sec)
+    clients = Sessions.destroy_idle_sessions(idle_time_in_sec)
     clients.each { |client_id|
       log 'notice', 'closing idle long polling connection', client_id
     }

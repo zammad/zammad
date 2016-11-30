@@ -150,6 +150,6 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
 
   def destroy
     permission_check('admin.text_module')
-    model_destory_render(TextModule, params)
+    model_destroy_render(TextModule, params)
   end
 end
