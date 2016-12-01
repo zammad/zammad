@@ -30,8 +30,8 @@ class Channel::Driver::Smtp
     if !options.key?(:port) || options[:port].empty?
       options[:port] = 25
     end
-    if !options.key?(:domain)
 
+    if !options.key?(:domain)
       # set fqdn, if local fqdn - use domain of sender
       fqdn = Setting.get('fqdn')
       if fqdn =~ /(localhost|\.local^|\.loc^)/i && (attr['from'] || attr[:from])
@@ -58,7 +58,7 @@ class Channel::Driver::Smtp
     }
 
     # add authentication only if needed
-    if options[:user] && !options[:user].empty?
+    if options[:user].present?
       smtp_params[:user_name] = options[:user]
       smtp_params[:password] = options[:password]
       smtp_params[:authentication] = options[:authentication]

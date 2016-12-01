@@ -51,7 +51,7 @@ returns
       ssl  = false
       port = 110
     end
-    if options.key?(:port) && !options[:port].empty?
+    if options.key?(:port) && options[:port].present?
       port = options[:port]
 
       # disable ssl for non ssl ports

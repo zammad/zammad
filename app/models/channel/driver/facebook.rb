@@ -82,8 +82,7 @@ class Channel::Driver::Facebook
     @sync['pages'].each { |page_to_sync_id, page_to_sync_params|
       page = get_page(page_to_sync_id)
       next if !page
-      next if !page_to_sync_params['group_id']
-      next if page_to_sync_params['group_id'].empty?
+      next if page_to_sync_params['group_id'].blank?
       page_client = Facebook.new(page['access_token'])
 
       posts = page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,permalink_url,comments{id,from,to,message,created_time}')
