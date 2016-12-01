@@ -7,7 +7,7 @@ class Channel::Driver::Sendmail
     return if Setting.get('import_mode')
 
     mail = Channel::EmailBuild.build(attr, notification)
-    mail.delivery_method :sendmail
+    mail.delivery_method(Rails.env.test? ? :test : :sendmail)
     mail.deliver
   end
 end
