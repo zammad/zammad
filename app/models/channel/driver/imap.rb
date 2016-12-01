@@ -68,6 +68,11 @@ example
     end
     if options.key?(:port) && !options[:port].empty?
       port = options[:port]
+
+      # disable ssl for non ssl ports
+      if port == 143 && !options.key?(:ssl)
+        ssl = false
+      end
     end
 
     Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
