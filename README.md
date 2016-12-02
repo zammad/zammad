@@ -9,7 +9,6 @@ with a team of agents?
 
 You're going to love Zammad!
 
-
 ## Statusbadges
 
 - Build: [![Build Status](https://travis-ci.org/zammad/zammad.svg?branch=develop)](https://travis-ci.org/zammad/zammad)
