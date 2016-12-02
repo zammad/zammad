@@ -25,8 +25,7 @@ class Organization < ApplicationModel
   private
 
   def domain_cleanup
-    return if !domain
-    return if domain.empty?
+    return if domain.blank?
     domain.gsub!(/@/, '')
     domain.gsub!(/\s*/, '')
     domain.strip!

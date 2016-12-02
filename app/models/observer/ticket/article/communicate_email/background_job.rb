@@ -23,9 +23,9 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
 
     # send email
     if !ticket.group.email_address_id
-      log_error(record, "No email address definde for group id '#{ticket.group.id}'!")
+      log_error(record, "No email address defined for group id '#{ticket.group.id}'!")
     elsif !ticket.group.email_address.channel_id
-      log_error(record, "No channel definde for email_address id '#{ticket.group.email_address_id}'!")
+      log_error(record, "No channel defined for email_address id '#{ticket.group.email_address_id}'!")
     end
 
     channel = ticket.group.email_address.channel

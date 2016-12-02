@@ -52,9 +52,13 @@ class FormTest < TestCase
       browser: agent,
       css: 'body div.zammad-form-modal button[type="submit"]',
     )
-    exists(
+    watch_for(
       browser: agent,
       css: 'body div.zammad-form-modal .has-error [name="body"]',
+    )
+    watch_for_disappear(
+      browser: agent,
+      css: 'body div.zammad-form-modal button[type="submit"][disabled]',
     )
     set(
       browser: agent,
@@ -70,9 +74,13 @@ class FormTest < TestCase
       browser: agent,
       css: 'body div.zammad-form-modal button[type="submit"]',
     )
-    exists(
+    watch_for(
       browser: agent,
       css: 'body div.zammad-form-modal .has-error [name="email"]',
+    )
+    watch_for_disappear(
+      browser: agent,
+      css: 'body div.zammad-form-modal button[type="submit"][disabled]',
     )
     set(
       browser: agent,
@@ -83,9 +91,13 @@ class FormTest < TestCase
       browser: agent,
       css: 'body div.zammad-form-modal button[type="submit"]',
     )
-    exists(
+    watch_for(
       browser: agent,
       css: 'body div.zammad-form-modal .has-error [name="email"]',
+    )
+    watch_for_disappear(
+      browser: agent,
+      css: 'body div.zammad-form-modal button[type="submit"][disabled]',
     )
     set(
       browser: agent,
@@ -111,8 +123,7 @@ class FormTest < TestCase
       browser: customer,
       url:     "#{browser_url}/assets/form/form.html",
     )
-    sleep 4
-    match(
+    watch_for(
       browser: customer,
       css: '.js-logDisplay',
       value: 'Faild to load form config, feature is disabled',
@@ -143,7 +154,7 @@ class FormTest < TestCase
       browser: customer,
       css: '#feedback-form-modal',
     )
-    exists(
+    watch_for(
       browser: customer,
       css: 'body div.zammad-form-modal',
     )
@@ -252,9 +263,13 @@ class FormTest < TestCase
       browser: customer,
       css: 'body div.zammad-form-modal button[type="submit"]',
     )
-    exists(
+    watch_for(
       browser: customer,
       css: 'body div.zammad-form-modal .has-error [name="name"]',
+    )
+    watch_for_disappear(
+      browser: customer,
+      css: 'body div.zammad-form-modal button[type="submit"][disabled]',
     )
     set(
       browser: customer,
@@ -270,9 +285,13 @@ class FormTest < TestCase
       browser: customer,
       css: 'body div.zammad-form-modal button[type="submit"]',
     )
-    exists(
+    watch_for(
       browser: customer,
       css: 'body div.zammad-form-modal .has-error [name="body"]',
+    )
+    watch_for_disappear(
+      browser: customer,
+      css: 'body div.zammad-form-modal button[type="submit"][disabled]',
     )
     set(
       browser: customer,
@@ -288,9 +307,13 @@ class FormTest < TestCase
       browser: customer,
       css: 'body div.zammad-form-modal button[type="submit"]',
     )
-    exists(
+    watch_for(
       browser: customer,
       css: 'body div.zammad-form-modal .has-error [name="email"]',
+    )
+    watch_for_disappear(
+      browser: customer,
+      css: 'body div.zammad-form-modal button[type="submit"][disabled]',
     )
     set(
       browser: customer,
@@ -301,9 +324,13 @@ class FormTest < TestCase
       browser: customer,
       css: 'body div.zammad-form-modal button[type="submit"]',
     )
-    exists(
+    watch_for(
       browser: customer,
       css: 'body div.zammad-form-modal .has-error [name="email"]',
+    )
+    watch_for_disappear(
+      browser: customer,
+      css: 'body div.zammad-form-modal button[type="submit"][disabled]',
     )
     set(
       browser: customer,

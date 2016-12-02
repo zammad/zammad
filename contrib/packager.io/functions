@@ -1,0 +1,201 @@
+#!/bin/bash
+#
+# packager.io postinstall script functions
+#
+
+function detect_os () {
+    . "/etc/os-release"
+
+    if [ "${ID}" == "debian" ] || [ "${ID}" == "ubuntu" ]; then
+	OS="DEBIAN"
+    elif [ "${ID}" == "centos" ] || [ "${ID}" == "fedora" ] || [ "${ID}" == "rhel" ]; then
+	OS="REDHAT"
+    elif [ "${ID}" == "opensuse" ] || [ "${ID}" == "sles" ] || [ "${ID}" == "suse" ]; then
+	OS="SUSE"
+    else
+	OS="UNKNOWN"
+    fi
+
+    if [ "${DEBUG_OUTPUT}" == "yes" ]; then
+	echo "OS is ${OS} based"
+    fi
+}
+
+function detect_initcmd () {
+    if [ -n "$(which systemctl 2> /dev/null)" ]; then
+	INIT_CMD="systemctl"
+    elif [ -n "$(which initctl 2> /dev/null)" ]; then
+	INIT_CMD="initctl"
+    else
+	function sysvinit () {
+	    service $2 $1
+	}
+	INIT_CMD="sysvinit"
+    fi
+
+    if [ "${DEBUG_OUTPUT}" == "yes" ]; then
+	echo "INIT CMD = ${INIT_CMD}"
+    fi
+}
+
+function detect_database () {
+    if [ -n "$(which psql 2> /dev/null)" ]; then
+	ADAPTER="postgresql"
+    elif [ -n "$(which mysql 2> /dev/null)" ]; then
+	ADAPTER="mysql2"
+    fi
+
+    if [ "${DEBUG_OUTPUT}" == "yes" ]; then
+	echo "Use ${ADAPTER} adapter in database.yml"
+    fi
+}
+
+function detect_webserver () {
+    if [ -n "$(which nginx 2> /dev/null)" ] ; then
+	WEBSERVER="nginx"
+	WEBSERVER_CMD="nginx"
+	if [ "${OS}" == "DEBIAN" ]; then
+	    WEBSERVER_CONF="/etc/nginx/sites-enabled/zammad.conf"
+	elif [ "${OS}" == "REDHAT" ]; then
+	    WEBSERVER_CONF="/etc/nginx/conf.d/zammad.conf"
+	elif [ "${OS}" == "SUSE" ]; then
+	    WEBSERVER_CONF="/etc/nginx/vhosts.d/zammad.conf"
+	fi
+    elif [ -n "$(which apache2 2> /dev/null)" ]; then
+	WEBSERVER="apache2"
+	WEBSERVER_CMD="apache2"
+	if [ "${OS}" == "DEBIAN" ]; then
+	    WEBSERVER_CONF="/etc/apache2/sites-enabled/zammad.conf"
+	fi
+    elif [ -n "$(which httpd 2> /dev/null)" ]; then
+	WEBSERVER="apache2"
+	WEBSERVER_CMD="httpd"
+	if [ "${OS}" == "REDHAT" ]; then
+	    WEBSERVER_CONF="/etc/httpd/conf.d/zammad.conf"
+	elif [ "${OS}" == "SUSE" ]; then
+	    WEBSERVER_CONF="/etc/apache2/vhosts.d/zammad.conf"
+	fi
+    fi
+
+    if [ "${DEBUG_OUTPUT}" == "yes" ]; then
+	echo "Webserver is ${WEBSERVER_CMD}"
+    fi
+}
+
+function create_initscripts () {
+    echo "# (Re)creating init scripts"
+    zammad scale web=${ZAMMAD_WEBS} websocket=${ZAMMAD_WEBSOCKETS} worker=${ZAMMAD_WORKERS}
+
+    echo "# Enabling Zammad on boot"
+    ${INIT_CMD} enable zammad
+}
+
+function start_zammad () {
+    echo "# Starting Zammad"
+    ${INIT_CMD} start zammad
+}
+
+function stop_zammad () {
+    echo "# Stopping Zammad"
+    ${INIT_CMD} stop zammad
+}
+
+function create_database_password () {
+    DB_PASS="$(tr -dc A-Za-z0-9 < /dev/urandom | head -c10)"
+}
+
+function create_postgresql_db () {
+    if [ -n "$(which postgresql-setup 2> /dev/null)" ]; then
+        echo "# Preparing postgresql server"
+        postgresql-setup initdb
+    fi
+
+    echo "# Creating postgresql bootstart"
+    ${INIT_CMD} enable postgresql.service
+
+    echo "# Restarting postgresql server"
+    ${INIT_CMD} restart postgresql
+
+    echo "# Creating zammad postgresql db"
+    su - postgres -c "createdb -E UTF8 ${DB}"
+
+    echo "# Creating zammad postgresql user"
+    echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql 
+
+    echo "# Grant privileges to new postgresql user"
+    echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
+}
+
+function create_mysql_db () {
+    if [ -f "${MY_CNF}" ]; then
+    	MYSQL_CREDENTIALS="--defaults-file=${MY_CNF}"
+    else
+	echo -n "Please enter your MySQL root password:"
+        read -s MYSQL_ROOT_PASS
+        MYSQL_CREDENTIALS="-u root -p${MYSQL_ROOT_PASS}"
+    fi
+
+    echo "# Creating zammad mysql db"
+    mysql ${MYSQL_CREDENTIALS} -e "CREATE DATABASE ${DB} DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;"
+
+    echo "# Creating zammad mysql user"
+    mysql ${MYSQL_CREDENTIALS} -e "CREATE USER \"${DB_USER}\"@\"${DB_HOST}\" IDENTIFIED BY \"${DB_PASS}\";"
+
+    echo "# Grant privileges to new mysql user"
+    mysql ${MYSQL_CREDENTIALS} -e "GRANT ALL PRIVILEGES ON ${DB}.* TO \"${DB_USER}\"@\"${DB_HOST}\"; FLUSH PRIVILEGES;"
+}
+
+function update_database_yml () {
+    if [ "${OS}" == "REDHAT" ] || [ "${OS}" == "SUSE" ]; then
+	if [ "${ADAPTER}" == "postgresql" ]; then
+	    DB_PASS=""
+	fi
+    fi
+
+    echo "# Updating database.yml"
+    sed -e "s/.*adapter:.*/  adapter: ${ADAPTER}/" \
+	-e "s/.*username:.*/  username: ${DB_USER}/" \
+        -e "s/.*password:.*/  password: ${DB_PASS}/" \
+        -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+}
+
+function initialise_database () {
+    zammad run rake db:migrate
+    zammad run rake db:seed
+}
+
+function update_database () {
+    echo "# database.yml found. Updating db..."
+    zammad run rake db:migrate
+}
+
+function create_webserver_config () {
+    if [ "${OS}" == "DEBIAN" ]; then
+	test -f /etc/${WEBSERVER}/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf /etc/${WEBSERVER}/sites-available/zammad.conf
+	test -h ${WEBSERVER_CONF} || ln -s /etc/${WEBSERVER}/sites-available/zammad.conf ${WEBSERVER_CONF}
+    else
+	test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf ${WEBSERVER_CONF}
+    fi
+
+    echo "# Creating webserver bootstart"
+    ${INIT_CMD} enable ${WEBSERVER_CMD}
+
+    echo "# Restarting webserver ${WEBSERVER_CMD}"
+    ${INIT_CMD} restart ${WEBSERVER_CMD}
+}
+
+function final_message () {
+    echo -e "####################################################################################"
+    echo -e "\nAdd your FQDN to servername directive in ${WEBSERVER_CONF}"
+    echo -e "and restart your webserver if you're not testing localy"
+    echo -e "or open http://localhost in your browser to start using Zammad.\n"
+    if [ "${OS}" == "REDHAT" ]; then
+	echo -e "\n Remember to enable selinux and firewall rules!\n"
+	echo -e "Use the follwing commands:"
+	echo -e "	setsebool httpd_can_network_connect on -P"
+	echo -e "	firewall-cmd --zone=public --add-port=80/tcp --permanent"
+	echo -e "	firewall-cmd --zone=public --add-port=443/tcp --permanent"
+	echo -e "	firewall-cmd --reload\n"
+    fi
+    echo -e "####################################################################################"
+}

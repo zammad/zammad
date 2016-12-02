@@ -51,8 +51,13 @@ returns
       ssl  = false
       port = 110
     end
-    if options.key?(:port) && !options[:port].empty?
+    if options.key?(:port) && options[:port].present?
       port = options[:port]
+
+      # disable ssl for non ssl ports
+      if port == 110 && !options.key?(:ssl)
+        ssl = false
+      end
     end
 
     Rails.logger.info "fetching pop3 (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"

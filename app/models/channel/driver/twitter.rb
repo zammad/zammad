@@ -269,13 +269,10 @@ returns
   private
 
   def fetch_search
-    return if !@sync[:search]
-    return if @sync[:search].empty?
+    return if @sync[:search].blank?
     @sync[:search].each { |search|
-      next if !search[:term]
-      next if search[:term].to_s.empty?
-      next if !search[:group_id]
-      next if search[:group_id].to_s.empty?
+      next if search[:term].blank?
+      next if search[:group_id].blank?
       result_type = search[:type] || 'mixed'
       Rails.logger.debug " - searching for '#{search[:term]}'"
       older_import = 0
@@ -296,10 +293,8 @@ returns
   end
 
   def fetch_mentions
-    return if !@sync[:mentions]
-    return if @sync[:mentions].empty?
-    return if !@sync[:mentions][:group_id]
-    return if @sync[:mentions][:group_id].to_s.empty?
+    return if @sync[:mentions].blank?
+    return if @sync[:mentions][:group_id].blank?
     Rails.logger.debug ' - searching for mentions'
     older_import = 0
     older_import_max = 20
@@ -318,10 +313,8 @@ returns
   end
 
   def fetch_direct_messages
-    return if !@sync[:direct_messages]
-    return if @sync[:direct_messages].empty?
-    return if !@sync[:direct_messages][:group_id]
-    return if @sync[:direct_messages][:group_id].to_s.empty?
+    return if @sync[:direct_messages].blank?
+    return if @sync[:direct_messages][:group_id].blank?
     Rails.logger.debug ' - searching for direct_messages'
     older_import = 0
     older_import_max = 20

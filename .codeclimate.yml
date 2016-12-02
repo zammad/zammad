@@ -14,14 +14,12 @@ engines:
       languages:
       - ruby
       - javascript
-      - python
-      - php
   eslint:
     enabled: true
   fixme:
     enabled: true
   phpmd:
-    enabled: true
+    enabled: false
   rubocop:
     enabled: true
 ratings:
@@ -38,8 +36,6 @@ ratings:
   - "**.js"
   - "**.jsx"
   - "**.module"
-  - "**.php"
-  - "**.py"
 exclude_paths:
 - config/
 - db/

@@ -1240,18 +1240,26 @@ class TestCase < Test::Unit::TestCase
       if element #&& element.displayed?
         begin
 
-          # match pn attribute
-          text = if params[:attribute]
-                   element.attribute(params[:attribute])
-                 elsif params[:css] =~ /(input|textarea)/i
-                   element.attribute('value')
-                 else
-                   element.text
-                 end
-          if text =~ /#{params[:value]}/i
-            assert(true, "'#{params[:value]}' found in '#{text}'")
+          # watch for selector
+          if !params[:attribute] && !params[:value]
+            assert(true, "'#{params[:css]}' found")
             sleep 0.5
             return true
+
+          # match pn attribute
+          else
+            text = if params[:attribute]
+                     element.attribute(params[:attribute])
+                   elsif params[:css] =~ /(input|textarea)/i
+                     element.attribute('value')
+                   else
+                     element.text
+                   end
+            if text =~ /#{params[:value]}/i
+              assert(true, "'#{params[:value]}' found in '#{text}'")
+              sleep 0.5
+              return true
+            end
           end
         rescue
           # try again
@@ -1260,7 +1268,10 @@ class TestCase < Test::Unit::TestCase
       sleep 0.5
     }
     screenshot(browser: instance, comment: 'watch_for_failed')
-    raise "'#{params[:value]}' found in '#{text}'"
+    if !params[:attribute] && !params[:value]
+      raise "'#{params[:css]}' not found"
+    end
+    raise "'#{params[:value]}' not found in '#{text}'"
   end
 
 =begin

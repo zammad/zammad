@@ -163,7 +163,7 @@ returns
         }
       }
       config.hours = hours
-      if !hours || hours.empty?
+      if hours.blank?
         raise "No configured hours found in calendar #{calendar.inspect}"
       end
 
