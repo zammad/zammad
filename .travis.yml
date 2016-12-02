@@ -6,6 +6,7 @@ notifications:
 env:
   - DB=mysql
   - DB=postgresql
+  - Z_LOCALES=en-us:de-de
 addons:
   postgresql: "9.4"
   apt:
