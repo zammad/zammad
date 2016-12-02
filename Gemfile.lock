@@ -222,7 +222,6 @@ GEM
     parser (2.3.1.2)
       ast (~> 2.2)
     pg (0.18.4)
-    phony (2.15.29)
     pkg-config (1.1.7)
     pluginator (1.3.0)
     power_assert (0.3.1)
@@ -416,7 +415,6 @@ DEPENDENCIES
   omniauth-oauth2
   omniauth-twitter
   pg
-  phony
   pre-commit
   puma
   rack-livereload

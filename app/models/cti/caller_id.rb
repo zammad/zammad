@@ -2,6 +2,8 @@ module Cti
   class CallerId < ApplicationModel
     self.table_name = 'cti_caller_ids'
 
+    DefaultCountryId = '49'
+
 =begin
 
   Cti::CallerId.maybe_add(
@@ -197,40 +199,21 @@ returns
 =end
 
     def self.parse_text(text)
-      caller_ids = []
-
-      # 022 1234567
-      # 021 123 2345
-      # 0271233211
-      # 021-233-9123
-      # 09 123 32112
-      # 021 2331231 or 021 321123123
-      # 622 32281
-      # 5754321
-      # 092213212
-      # (09)1234321
-      # +41 30 53 00 00 000
-      # +42 160 0000000
-      # +43 (0) 30 60 00 00 00-0
-      # 0043 (0) 30 60 00 00 00-0
-
-      default_country_id = '49'
-      text.gsub!(/([\d|\s|\-|\(|\)]{6,26})/) {
-        number = $1.strip
-        number.sub!(/^00/, '')
-        number.sub!(/\(0\)/, '')
-        number.gsub!(/(\s|\-|\(|\))/, '')
-        if !Phony.plausible?(number)
-          if number =~ /^0/
-            number.gsub!(/^0/, default_country_id)
-          else
-            number = "#{default_country_id}#{number}"
-          end
-          next if !Phony.plausible?(number)
+      # see specs for example
+      text.scan(/([\d|\s|\-|\(|\)]{6,26})/).map do |match|
+        number = match[0]
+        number.gsub!(/[\s-]/, '')
+        number.gsub!(/^(00)?(\d\d)\(0?(\d*)\)/, "\\1\\2\\3")
+        number.gsub!(/\D/,"")
+        case number
+        when /^00/
+          number[2..-1]
+        when /^0/
+          DefaultCountryId + number[1..-1]
+        else
+          number
         end
-        caller_ids.push number
-      }
-      caller_ids
+      end
     end
 
     def self.get_comment_preferences(caller_id, direction)
@@ -241,7 +224,7 @@ returns
       preferences_maybe = {}
       preferences_maybe[direction] = []
 
-      lookup(caller_id).each { |record|
+      lookup(parse_text(caller_id)).each { |record|
         if record.level == 'known'
           preferences_known[direction].push record
         else
