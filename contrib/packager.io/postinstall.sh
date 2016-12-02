@@ -3,10 +3,12 @@
 # packager.io postinstall script
 #
 
+set -ex
+
 PATH=/opt/zammad/bin:/opt/zammad/vendor/bundle/bin:/sbin:/bin:/usr/sbin:/usr/bin:
 
 ZAMMAD_DIR="/opt/zammad"
-DB="zammad_production"
+DB="zammad"
 DB_USER="zammad"
 MY_CNF="/etc/mysql/debian.cnf"
 
@@ -17,7 +19,7 @@ elif [ -n "$(which initctl 2> /dev/null)" ]; then
     INIT_CMD="initctl"
 else
     function sysvinit () {
-	service $2 $1
+        service $2 $1
     }
     INIT_CMD="sysvinit"
 fi
@@ -44,41 +46,40 @@ else
 
     # postgresql
     if [ -n "$(which psql 2> /dev/null)" ]; then
-	echo "# Installing zammad on postgresql"
+        echo "# Installing zammad on postgresql"
 
-	# centos
-	if [ -n "$(which postgresql-setup 2> /dev/null)" ]; then
-    	    echo "# Preparing postgresql server"
-    	    postgresql-setup initdb
+        # centos
+        if [ -n "$(which postgresql-setup 2> /dev/null)" ]; then
+            echo "# Preparing postgresql server"
+            postgresql-setup initdb
 
-    	    echo "# Backuping postgres config"
-    	    test -f /var/lib/pgsql/data/pg_hba.conf.bak || cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
+            #echo "# Backuping postgres config"
+            #test -f /var/lib/pgsql/data/pg_hba.conf.bak || cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf.bak
 
-    	    echo "# Allow login via username and password in postgresql"
-    	    sed 's/ident/trust/g' < /var/lib/pgsql/data/pg_hba.conf.bak > /var/lib/pgsql/data/pg_hba.conf
-	fi
+            #echo "# Allow login via username and password in postgresql"
+            #sed 's/ident/trust/g' < /var/lib/pgsql/data/pg_hba.conf.bak > /var/lib/pgsql/data/pg_hba.conf
+        fi
 
-	# centos / ubuntu / sles
-	echo "# Creating postgresql bootstart"
-    	${INIT_CMD} enable postgresql.service
+        # centos / ubuntu / sles
+        echo "# Creating postgresql bootstart"
+        ${INIT_CMD} enable postgresql.service
 
-	echo "# Restarting postgresql server"
-    	${INIT_CMD} restart postgresql
-
-        echo "# Creating zammad postgresql db"
-        su - postgres -c "createdb -E UTF8 ${DB}"
+        echo "# Restarting postgresql server"
+        ${INIT_CMD} restart postgresql
 
         echo "# Creating zammad postgresql user"
-        echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql 
+        echo "CREATE USER \"${DB_USER}\";" | su - postgres -c psql
+
+        echo "# Creating zammad postgresql db"
+        su - postgres -c "createdb -E UTF8 ${DB} -O \"${DB_USER}\""
 
         echo "# Grant privileges to new postgresql user"
         echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
 
         echo "# Updating database.yml"
         sed -e "s/.*adapter:.*/  adapter: postgresql/" \
-    	    -e "s/.*username:.*/  username: ${DB_USER}/" \
-    	    -e "s/.*password:.*/  password: ${DB_PASS}/" \
-    	    -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
+            -e "s/.*username:.*/  username: ${DB_USER}/" \
+            -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
 
     # mysql / mariadb
     elif [ -n "$(which mysql 2> /dev/null)" ];then
@@ -107,10 +108,10 @@ else
             -e  "s/.*password:.*/  password: ${DB_PASS}/" \
             -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.dist > ${ZAMMAD_DIR}/config/database.yml
 
-	# sqlite / no local db
+    # sqlite / no local db
     elif [ -n "$(which sqlite 2> /dev/null)" ];then
-    	echo "# Installing zammad on sqlite"
-    	echo "# In fact this does nothing at the moment. use this to install zammad without a local database. sqlite should only be used in dev environment anyway."
+        echo "# Installing zammad on sqlite"
+        echo "# In fact this does nothing at the moment. use this to install zammad without a local database. sqlite should only be used in dev environment anyway."
     fi
 
     # fill database
@@ -138,41 +139,57 @@ fi
 
 # copy webserver config
 if [ -n "$(which apache2 2> /dev/null)" ] || [ -n "$(which httpd 2> /dev/null)" ] || [ -n "$(which nginx 2> /dev/null)" ] ; then
+
     # Nginx
     # debian / ubuntu
     if [ -d /etc/nginx/sites-enabled ]; then
-	WEBSERVER_CONF="/etc/nginx/sites-enabled/zammad.conf"
-	WEBSERVER_CMD="nginx"
-	test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/sites-available/zammad.conf
-	test -h ${WEBSERVER_CONF} || ln -s /etc/nginx/sites-available/zammad.conf ${WEBSERVER_CONF}
+        WEBSERVER_CONF="/etc/nginx/sites-enabled/zammad.conf"
+        WEBSERVER_CMD="nginx"
+        test -f /etc/nginx/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf /etc/nginx/sites-available/zammad.conf
+        test -h ${WEBSERVER_CONF} || ln -s /etc/nginx/sites-available/zammad.conf ${WEBSERVER_CONF}
+
     # centos
     elif [ -d /etc/nginx/conf.d ]; then
-	WEBSERVER_CONF="/etc/nginx/conf.d/zammad.conf"
-	WEBSERVER_CMD="nginx"
-	test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${WEBSERVER_CONF}
+        WEBSERVER_CONF="/etc/nginx/conf.d/zammad.conf"
+        WEBSERVER_CMD="nginx"
+        test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${WEBSERVER_CONF}
+
+    # sles
     elif [ -d /etc/YaST2 ]; then
-	WEBSERVER_CONF="/etc/nginx/vhosts.d/zammad.conf"
-	WEBSERVER_CMD="nginx"
-	test -d /etc/nginx/vhosts.d || mkdir -p /etc/nginx/vhosts.d
-	test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${WEBSERVER_CONF}
-	
+        WEBSERVER_CONF="/etc/nginx/vhosts.d/zammad.conf"
+        WEBSERVER_CMD="nginx"
+        test -d /etc/nginx/vhosts.d || mkdir -p /etc/nginx/vhosts.d
+        test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/nginx/zammad.conf ${WEBSERVER_CONF}
+
     # Apache2
     # debian / ubuntu
     elif [ -d /etc/apache2/sites-enabled ]; then
-	WEBSERVER_CONF="/etc/apache2/sites-enabled/zammad.conf"
-	WEBSERVER_CMD="apache2"
-	test -f /etc/apache2/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/apache2/zammad.conf /etc/apache2/sites-available/zammad.conf
-	test -h ${WEBSERVER_CONF} || ln -s /etc/apache2/sites-available/zammad.conf ${WEBSERVER_CONF}
-	
-	echo "# Activating Apache2 modules"
-	a2enmod proxy
-	a2enmod proxy_http
-	a2enmod proxy_wstunnel
+        WEBSERVER_CONF="/etc/apache2/sites-enabled/zammad.conf"
+        WEBSERVER_CMD="apache2"
+        test -f /etc/apache2/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/apache2/zammad.conf /etc/apache2/sites-available/zammad.conf
+        test -h ${WEBSERVER_CONF} || ln -s /etc/apache2/sites-available/zammad.conf ${WEBSERVER_CONF}
+
+        echo "# Activating Apache2 modules"
+        a2enmod proxy
+        a2enmod proxy_http
+        a2enmod proxy_wstunnel
+
+    # sles
+    elif [ -d /etc/apache2/vhosts.d ]; then
+        WEBSERVER_CONF="/etc/apache2/vhosts.d/zammad.conf"
+        WEBSERVER_CMD="apache2"
+        test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/apache2/zammad.conf ${WEBSERVER_CONF}
+
+        echo "# Activating Apache2 modules"
+        a2enmod proxy
+        a2enmod proxy_http
+        a2enmod proxy_wstunnel
+
     # centos
     elif [ -d /etc/httpd/conf.d ]; then
-	WEBSERVER_CONF="/etc/httpd/conf.d/zammad.conf"
-	WEBSERVER_CMD="httpd"
-	test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/apache2/zammad.conf ${WEBSERVER_CONF}
+        WEBSERVER_CONF="/etc/httpd/conf.d/zammad.conf"
+        WEBSERVER_CMD="httpd"
+        test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/apache2/zammad.conf ${WEBSERVER_CONF}
     fi
 
     echo "# Creating webserver bootstart"
