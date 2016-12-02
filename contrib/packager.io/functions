@@ -4,7 +4,7 @@
 #
 
 function detect_os () {
-    . "/etc/os-release"
+    . /etc/os-release
 
     if [ "${ID}" == "debian" ] || [ "${ID}" == "ubuntu" ]; then
 	OS="DEBIAN"
@@ -173,6 +173,11 @@ function create_webserver_config () {
     if [ "${OS}" == "DEBIAN" ]; then
 	test -f /etc/${WEBSERVER}/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf /etc/${WEBSERVER}/sites-available/zammad.conf
 	test -h ${WEBSERVER_CONF} || ln -s /etc/${WEBSERVER}/sites-available/zammad.conf ${WEBSERVER_CONF}
+	if [ "${WEBSERVER}" == "apache2" ]; then
+	    a2enmod proxy
+	    a2enmod proxy_http
+	    a2enmod proxy_wstunnel
+	fi
     else
 	test -f ${WEBSERVER_CONF} || cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf ${WEBSERVER_CONF}
     fi
