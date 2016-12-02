@@ -10,18 +10,18 @@
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
+# Ignore local changes to schema.rb (e. g. through extentions)
+/db/schema.rb
+
 # Ignore all logfiles and tempfiles.
-/log/*.log
-/tmp/websocket*
-/tmp/cache*
-/tmp/pids/*
-/tmp/*.png
+/log
+/tmp
 /public/assets/*.*
-/public/assets/app/*
-/public/assets/custom/*
+/public/assets/app
+/public/assets/custom
 
 # Ignore custom gem file
-Gemfile.local
+/Gemfile.local
 
 # Ignore .project files
 /.project
@@ -36,10 +36,7 @@ Gemfile.local
 .*.swp
 
 # Ignore coverage stuff
-/coverage/*
-
-# Ignore local changes to schema.rb (e. g. through extentions)
-db/schema.rb
+/coverage
 
 # Ignore Rubymine config
 /.idea
