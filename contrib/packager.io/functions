@@ -192,14 +192,14 @@ function create_webserver_config () {
 function final_message () {
     echo -e "####################################################################################"
     echo -e "\nAdd your FQDN to servername directive in ${WEBSERVER_CONF}"
-    echo -e "and restart your webserver if you're not testing localy"
-    echo -e "or open http://localhost in your browser to start using Zammad.\n"
+    echo -e "and restart your webserver if you're not testing locally"
+    echo -e "or open http://localhost/ in your browser to start using Zammad.\n"
     if [ "${OS}" == "REDHAT" ]; then
 	echo -e "\n Remember to enable selinux and firewall rules!\n"
 	echo -e "Use the follwing commands:"
 	echo -e "	setsebool httpd_can_network_connect on -P"
-	echo -e "	firewall-cmd --zone=public --add-port=80/tcp --permanent"
-	echo -e "	firewall-cmd --zone=public --add-port=443/tcp --permanent"
+	echo -e "	firewall-cmd --zone=public --add-service=http --permanent"
+	echo -e "	firewall-cmd --zone=public --add-service=https --permanent"
 	echo -e "	firewall-cmd --reload\n"
     fi
     echo -e "####################################################################################"
