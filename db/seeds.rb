@@ -5455,8 +5455,8 @@ Locale.create_if_not_exists(
   alias: 'en',
   name: 'English (United States)',
 )
-Locale.load
-Translation.load
+Locale.sync
+Translation.sync
 Calendar.init_setup
 
 # install all packages in auto_install

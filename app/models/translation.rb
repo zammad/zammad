@@ -8,6 +8,23 @@ class Translation < ApplicationModel
 
 =begin
 
+sync translations from local if exists, otherwise from online
+
+all:
+
+  Translation.sync
+
+  Translation.sync(locale) # e. g. 'en-us' or 'de-de'
+
+=end
+
+  def self.sync(dedicated_locale = nil)
+    return true if load_from_file(dedicated_locale)
+    load
+  end
+
+=begin
+
 load translations from online
 
 all:
@@ -21,62 +38,9 @@ dedicated:
 =end
 
   def self.load(dedicated_locale = nil)
-    locales_list = []
-    if !dedicated_locale
-      locales = Locale.to_sync
-      locales.each { |locale|
-        locales_list.push locale.locale
-      }
-    else
-      locales_list = [dedicated_locale]
-    end
-    locales_list.each { |locale|
-      url = "https://i18n.zammad.com/api/v1/translations/#{locale}"
-      if !UserInfo.current_user_id
-        UserInfo.current_user_id = 1
-      end
-      result = UserAgent.get(
-        url,
-        {},
-        {
-          json: true,
-          open_timeout: 6,
-          read_timeout: 16,
-        }
-      )
-      raise "Can't load translations from #{url}: #{result.error}" if !result.success?
-
-      translations = Translation.where(locale: locale).all
-      ActiveRecord::Base.transaction do
-        result.data.each { |translation_raw|
-
-          # handle case insensitive sql
-          translation = nil
-          translations.each { |item|
-            next if item.format != translation_raw['format']
-            next if item.source != translation_raw['source']
-            translation = item
-            break
-          }
-          if translation
-
-            # verify if update is needed
-            update_needed = false
-            translation_raw.each { |key, _value|
-              if translation_raw[key] != translation[key]
-                update_needed = true
-                break
-              end
-            }
-            if update_needed
-              translation.update_attributes(translation_raw.symbolize_keys!)
-              translation.save
-            end
-          else
-            Translation.create(translation_raw.symbolize_keys!)
-          end
-        }
-      end
+    locals_to_sync(dedicated_locale).each { |locale|
+      fetch(locale)
+      load_from_file(locale)
     }
     true
   end
@@ -244,6 +208,126 @@ translate strings in ruby context, e. g. for notifications
     }
 
     string
+  end
+
+=begin
+
+load locales from local
+
+all:
+
+  Translation.load_from_file
+
+  or
+
+  Translation.load_from_file(locale) # e. g. 'en-us' or 'de-de'
+
+=end
+
+  def self.load_from_file(dedicated_locale = nil)
+    directory = Rails.root.join('config/translations')
+    locals_to_sync(dedicated_locale).each { |locale|
+      file = Rails.root.join("#{directory}/#{locale}.yml")
+      return false if !File.exist?(file)
+      data = YAML.load_file(file)
+      to_database(locale, data)
+    }
+    true
+  end
+
+=begin
+
+fetch translation from remote and store them in local file system
+
+all:
+
+  Translation.fetch
+
+  or
+
+  Translation.fetch(locale) # e. g. 'en-us' or 'de-de'
+
+=end
+
+  def self.fetch(dedicated_locale = nil)
+    locals_to_sync(dedicated_locale).each { |locale|
+      url = "https://i18n.zammad.com/api/v1/translations/#{locale}"
+      if !UserInfo.current_user_id
+        UserInfo.current_user_id = 1
+      end
+      result = UserAgent.get(
+        url,
+        {},
+        {
+          json: true,
+          open_timeout: 8,
+          read_timeout: 24,
+        }
+      )
+      raise "Can't load translations from #{url}: #{result.error}" if !result.success?
+
+      directory = Rails.root.join('config/translations')
+      if !File.directory?(directory)
+        Dir.mkdir(directory, 0o755)
+      end
+      file = Rails.root.join("#{directory}/#{locale}.yml")
+      File.open(file, 'w') do |out|
+        YAML.dump(result.data, out)
+      end
+    }
+    true
+  end
+
+  private_class_method def self.to_database(locale, data)
+    translations = Translation.where(locale: locale).all
+    ActiveRecord::Base.transaction do
+      data.each { |translation_raw|
+
+        # handle case insensitive sql
+        translation = nil
+        translations.each { |item|
+          next if item.format != translation_raw['format']
+          next if item.source != translation_raw['source']
+          translation = item
+          break
+        }
+        if translation
+
+          # verify if update is needed
+          update_needed = false
+          translation_raw.each { |key, _value|
+
+            # if translation target has changes
+            next unless translation_raw[key] != translation.target
+
+            # do not update translations which are already changed by user
+            if translation.target == translation.target_initial
+              update_needed = true
+              break
+            end
+          }
+          if update_needed
+            translation.update_attributes(translation_raw.symbolize_keys!)
+            translation.save
+          end
+        else
+          Translation.create(translation_raw.symbolize_keys!)
+        end
+      }
+    end
+  end
+
+  private_class_method def self.locals_to_sync(dedicated_locale = nil)
+    locales_list = []
+    if !dedicated_locale
+      locales = Locale.to_sync
+      locales.each { |locale|
+        locales_list.push locale.locale
+      }
+    else
+      locales_list = [dedicated_locale]
+    end
+    locales_list
   end
 
   private

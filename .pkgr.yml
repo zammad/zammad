@@ -25,6 +25,9 @@ before:
   - env
   - "cat Gemfile.lock"
   - contrib/cleanup.sh
+after:
+  - rails r 'Locale.fetch'
+  - rails r 'Translation.fetch'
 env:
   - RAILS_ENV=production
   - PORT=3000
