@@ -94,6 +94,7 @@ group :development, :test do
   # code coverage
   gem 'simplecov'
   gem 'simplecov-rcov'
+  gem 'coveralls',         require: false
 
   # UI tests w/ Selenium
   gem 'selenium-webdriver'
@@ -108,7 +109,6 @@ group :development, :test do
   gem 'pre-commit'
   gem 'rubocop'
   gem 'coffeelint'
-  gem 'coveralls',         require: false
 
   # changelog generation
   gem 'github_changelog_generator'
