@@ -4,6 +4,8 @@ require 'rails/test_help'
 require 'cache'
 require 'simplecov'
 require 'simplecov-rcov'
+require 'coveralls'
+Coveralls.wear!('rails')
 
 #ActiveSupport::TestCase.test_order = :sorted
 
@@ -14,7 +16,10 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::RcovFormatter,
+    Coveralls::SimpleCov::Formatter
+  ]
   SimpleCov.start
   fixtures :all
 

@@ -108,6 +108,7 @@ group :development, :test do
   gem 'pre-commit'
   gem 'rubocop'
   gem 'coffeelint'
+  gem 'coveralls',         require: false
 
   # changelog generation
   gem 'github_changelog_generator'
