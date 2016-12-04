@@ -5,7 +5,7 @@ require 'cache'
 require 'simplecov'
 require 'simplecov-rcov'
 require 'coveralls'
-Coveralls.wear!('rails')
+Coveralls.wear!
 
 #ActiveSupport::TestCase.test_order = :sorted
 
@@ -20,6 +20,7 @@ class ActiveSupport::TestCase
     SimpleCov::Formatter::RcovFormatter,
     Coveralls::SimpleCov::Formatter
   ]
+  merge_timeout = 3600
   SimpleCov.start
   fixtures :all
 
