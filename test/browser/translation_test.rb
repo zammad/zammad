@@ -289,7 +289,7 @@ class TranslationTest < TestCase
     )
     watch_for_disappear(
       css: '.content.active .modal',
-      timeout: 5 * 60,
+      timeout: 6 * 60,
     )
 
     click(css: 'a[href="#current_user"]')
