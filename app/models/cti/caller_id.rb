@@ -23,7 +23,7 @@ module Cti
         o_id:      data[:o_id],
         user_id:   data[:user_id],
       )
-      return if !record.new_record?
+      return record if !record.new_record?
       record.comment = data[:comment]
       record.save!
     end
