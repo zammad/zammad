@@ -2,7 +2,7 @@ module Cti
   class CallerId < ApplicationModel
     self.table_name = 'cti_caller_ids'
 
-    DefaultCountryId = '49'
+    DEFAULT_COUNTRY_ID = '49'.freeze
 
 =begin
 
@@ -207,13 +207,13 @@ returns
 
     def self.normalize_number(number)
       number = number.gsub(/[\s-]/, '')
-      number.gsub!(/^(00)?(\+?\d\d)\(0?(\d*)\)/, "\\1\\2\\3")
-      number.gsub!(/\D/,"")
+      number.gsub!(/^(00)?(\+?\d\d)\(0?(\d*)\)/, '\\1\\2\\3')
+      number.gsub!(/\D/, '')
       case number
       when /^00/
         number[2..-1]
       when /^0/
-        DefaultCountryId + number[1..-1]
+        DEFAULT_COUNTRY_ID + number[1..-1]
       else
         number
       end
