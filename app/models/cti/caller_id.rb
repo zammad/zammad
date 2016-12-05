@@ -119,7 +119,7 @@ returns
       attributes.each { |_attribute, value|
         next if value.class != String
         next if value.empty?
-        local_caller_ids = Cti::CallerId.parse_text(value)
+        local_caller_ids = Cti::CallerId.extract_numbers(value)
         next if local_caller_ids.empty?
         caller_ids = caller_ids.concat(local_caller_ids)
       }
@@ -190,7 +190,7 @@ returns
 
 =begin
 
-  caller_ids = Cti::CallerId.parse_text('...')
+  caller_ids = Cti::CallerId.extract_numbers('...')
 
 returns
 
@@ -198,21 +198,24 @@ returns
 
 =end
 
-    def self.parse_text(text)
+    def self.extract_numbers(text)
       # see specs for example
       text.scan(/([\d|\s|\-|\(|\)]{6,26})/).map do |match|
-        number = match[0]
-        number.gsub!(/[\s-]/, '')
-        number.gsub!(/^(00)?(\d\d)\(0?(\d*)\)/, "\\1\\2\\3")
-        number.gsub!(/\D/,"")
-        case number
-        when /^00/
-          number[2..-1]
-        when /^0/
-          DefaultCountryId + number[1..-1]
-        else
-          number
-        end
+        normalize_number(match[0])
+      end
+    end
+
+    def self.normalize_number(number)
+      number = number.gsub(/[\s-]/, '')
+      number.gsub!(/^(00)?(\+?\d\d)\(0?(\d*)\)/, "\\1\\2\\3")
+      number.gsub!(/\D/,"")
+      case number
+      when /^00/
+        number[2..-1]
+      when /^0/
+        DefaultCountryId + number[1..-1]
+      else
+        number
       end
     end
 
@@ -224,7 +227,7 @@ returns
       preferences_maybe = {}
       preferences_maybe[direction] = []
 
-      lookup(parse_text(caller_id)).each { |record|
+      lookup(extract_numbers(caller_id)).each { |record|
         if record.level == 'known'
           preferences_known[direction].push record
         else
