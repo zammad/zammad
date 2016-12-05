@@ -2,6 +2,7 @@
 require 'browser_test_helper'
 
 class TranslationTest < TestCase
+
   def test_preferences
     @browser = browser_instance
     login(
@@ -250,4 +251,60 @@ class TranslationTest < TestCase
     )
 
   end
+
+  def test_admin_sync
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
+    click(css: 'a[href="#profile/language"]')
+    select(
+      css: '.language_item [name="locale"]',
+      value: 'Deutsch',
+    )
+    click(css: '.content.active button[type="submit"]')
+    watch_for(
+      css: 'body',
+      value: 'Sprache',
+    )
+
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#system/translation"]')
+
+    watch_for(
+      css: '.content.active',
+      value: 'Inline Übersetzung',
+    )
+
+    click(css: '.content.active .js-syncChanges')
+    watch_for(
+      css: '.content.active .modal',
+      value: 'Letzte Übersetzung laden',
+    )
+    watch_for_disappear(
+      css: '.content.active .modal',
+      timeout: 5 * 60,
+    )
+
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
+    click(css: 'a[href="#profile/language"]')
+    select(
+      css: '.language_item [name="locale"]',
+      value: 'English (United States)',
+    )
+    click(css: '.content.active button[type="submit"]')
+    watch_for(
+      css: 'body',
+      value: 'Language',
+    )
+
+  end
+
 end

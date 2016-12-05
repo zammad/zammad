@@ -164,14 +164,16 @@ class Index extends App.ControllerSubContent
       type:        'GET'
       url:         "#{@apiPath}/translations/sync/#{locale.locale}"
       processData: false
-      complete: (data, status, xhr) =>
+      success: =>
         loader.update(locale.name, false)
         locale = locales.shift()
         if _.isEmpty(locales)
           hide()
           return
         @_syncChanges(locale, locales, loader, hide)
-      )
+      error: ->
+        hide()
+    )
 
   updateOnServer: (params, event) =>
 
