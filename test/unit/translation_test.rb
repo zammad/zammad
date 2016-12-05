@@ -3,12 +3,12 @@ require 'test_helper'
 
 class TranslationTest < ActiveSupport::TestCase
 
-  test 'setup' do
+  test '1 - setup' do
     Translation.reset('de-de')
     Translation.load('de-de')
   end
 
-  test 'basics' do
+  test '2 - basics' do
     tests = [
       {
         locale: 'en',
@@ -37,7 +37,7 @@ class TranslationTest < ActiveSupport::TestCase
     }
   end
 
-  test 'own translation tests' do
+  test '3 - own translation tests' do
     locale = 'de-de'
 
     # check for custom changes
@@ -97,7 +97,7 @@ class TranslationTest < ActiveSupport::TestCase
 
   end
 
-  test 'file based import' do
+  test '4 - file based import' do
 
     # locales
     directory = Rails.root.join('config')
@@ -120,6 +120,10 @@ class TranslationTest < ActiveSupport::TestCase
     Translation.fetch(locale)
     assert(File.exist?(file))
 
+  end
+
+  test '5 - restore' do
+    Translation.load('de-de')
   end
 
 end
