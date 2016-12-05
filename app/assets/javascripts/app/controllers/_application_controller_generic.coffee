@@ -169,6 +169,7 @@ class App.ControllerGenericIndex extends App.Controller
     # append content table
     params = _.extend(
       {
+        tableId: "#{@genericObject}-generic-overview"
         el: @$('.table-overview')
         model: App[ @genericObject ]
         objects: objects

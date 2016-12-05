@@ -501,9 +501,11 @@ condition example
       selector = selector_raw.stringify_keys
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
 
-      # validate value / allow empty but only if pre_condition exists
+      # validate value / allow empty but only if pre_condition exists and is not specific
       if !selector.key?('value') || ((selector['value'].class == String || selector['value'].class == Array) && (selector['value'].respond_to?(:empty?) && selector['value'].empty?))
-        return nil if selector['pre_condition'].nil? || (selector['pre_condition'].respond_to?(:empty?) && selector['pre_condition'].empty?)
+        return nil if selector['pre_condition'].nil?
+        return nil if selector['pre_condition'].respond_to?(:empty?) && selector['pre_condition'].empty?
+        return nil if selector['pre_condition'] == 'specific'
       end
 
       # validate pre_condition values
@@ -736,22 +738,21 @@ perform changes on ticket
         }
 
         # get subject
-        value['subject'].gsub!(/\#\{config\.(.+?)\}/, '<%= c "\\1", false %>')
-        value['subject'].gsub!(/\#\{(.+?)\}/, '<%= d "\\1", false %>')
         subject = NotificationFactory::Mailer.template(
           templateInline: value['subject'],
           locale: 'en-en',
           objects: objects,
+          quote: false,
         )
         subject = subject_build(subject)
 
-        value['body'].gsub!(/\#\{config\.(.+?)\}/, '<%= c "\\1", true %>')
-        value['body'].gsub!(/\#\{(.+?)\}/, '<%= d "\\1", true %>')
         body = NotificationFactory::Mailer.template(
           templateInline: value['body'],
           locale: 'en-en',
           objects: objects,
+          quote: true,
         )
+
         Ticket::Article.create(
           ticket_id: id,
           to: recipient_string,
@@ -841,6 +842,22 @@ result
       references.delete(item)
     }
     references
+  end
+
+=begin
+
+get all articles of a ticket in correct order (overwrite active record default method)
+
+  artilces = ticket.articles
+
+result
+
+  [article1, articl2]
+
+=end
+
+  def articles
+    Ticket::Article.where(ticket_id: id).order(:created_at, :id)
   end
 
   private

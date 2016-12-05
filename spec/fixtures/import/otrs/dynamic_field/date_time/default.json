@@ -1,0 +1,19 @@
+{
+  "ID": "16",
+  "ChangeTime": "2014-09-12 09:31:58",
+  "InternalField": "1",
+  "ValidID": "1",
+  "CreateTime": "2014-06-26 09:53:21",
+  "Label": "DateTime Example",
+  "FieldOrder": "16",
+  "Config": {
+    "YearsPeriod": "1",
+    "YearsInFuture": "1",
+    "DefaultValue": "259200",
+    "YearsInPast": "9",
+    "Link": ""
+  },
+  "FieldType": "DateTime",
+  "Name": "DateTimeExample",
+  "ObjectType": "Ticket"
+}

@@ -1,0 +1,24 @@
+{
+  "ID": "4",
+  "ChangeTime": "2014-09-12 09:31:58",
+  "InternalField": "0",
+  "ValidID": "1",
+  "CreateTime": "2014-05-29 20:11:41",
+  "Label": "Multiselec tExample",
+  "FieldOrder": "4",
+  "Config": {
+    "TranslatableValues": "0",
+    "PossibleValues": {
+      "Hamburg": "Hamburg",
+      "München": "München",
+      "Köln": "Köln",
+      "Berlin": "Berlin"
+    },
+    "TreeView": "0",
+    "DefaultValue": "",
+    "PossibleNone": "0"
+  },
+  "FieldType": "Multiselect",
+  "Name": "MultiselectExample",
+  "ObjectType": "Ticket"
+}

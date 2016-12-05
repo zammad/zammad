@@ -5,7 +5,8 @@ module Import
 end
 module Import::Zendesk
 
-  module_function
+  # rubocop:disable Style/ModuleFunction
+  extend self
 
   def start
     Rails.logger.info 'Start import...'
@@ -998,8 +999,7 @@ module Import::Zendesk
 
   # reset primary key sequences
   def self._reset_pk(table)
-    return if ActiveRecord::Base.connection_config[:adapter] != 'postgresql'
-    ActiveRecord::Base.connection.reset_pk_sequence!(table)
+    DbHelper.import_post(table)
   end
 
   def get_custom_fields(custom_fields)

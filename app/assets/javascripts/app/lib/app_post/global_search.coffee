@@ -1,37 +1,28 @@
-class App.GlobalSearch
-  _instance = undefined
-
-  @execute: (args) ->
-    if _instance == undefined
-      _instance ?= new _globalSearchSingleton
-    _instance.execute(args)
-
-class _globalSearchSingleton extends Spine.Module
-
+class App.GlobalSearch extends App.Controller
   constructor: ->
+    super
     @searchResultCache = {}
+    @lastQuery = undefined
     @apiPath = App.Config.get('api_path')
+    @ajaxId = "search-#{Math.floor( Math.random() * 999999 )}"
 
-  execute: (params) ->
-    query    = params.query
-    render   = params.render
-    limit    = params.limit || 10
-    cacheKey = "#{query}_#{limit}"
+  search: (params) =>
+    query = params.query
 
     # use cache for search result
     currentTime = new Date
-    if @searchResultCache[cacheKey] && @searchResultCache[cacheKey].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
-      render(@searchResultCache[cacheKey].result)
+    if @searchResultCache[query] && @searchResultCache[query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
+      @renderTry(@searchResultCache[query].result, query)
       return
 
     App.Ajax.request(
-      id:    'search'
+      id:    @ajaxId
       type:  'GET'
       url:   "#{@apiPath}/search"
       data:
         query: query
-        limit: limit
-      processData: true,
+        limit: @limit || 10
+      processData: true
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
         result = {}
@@ -48,19 +39,24 @@ class _globalSearchSingleton extends Spine.Module
           else
             App.Log.error('_globalSearchSingleton', "No such model App.#{item.type}")
 
-        diff = false
-        if @searchResultCache[cacheKey]
-          diff = difference(@searchResultCache[cacheKey].resultRaw, data.result)
-
-        # cache search result
-        @searchResultCache[cacheKey] =
-          result: result
-          resultRaw: data.result
-          limit: limit
-          time: new Date
-
-        # if result hasn't changed, do not rerender
-        return if diff isnt false && _.isEmpty(diff)
-
-        render(result)
+        @renderTry(result, query)
     )
+
+  renderTry: (result, query) =>
+
+    # if result hasn't changed, do not rerender
+    diff = false
+    if @lastQuery is query && @searchResultCache[query]
+      diff = difference(@searchResultCache[query].result, result)
+    return if diff isnt false && _.isEmpty(diff)
+    @lastQuery = query
+
+    # cache search result
+    @searchResultCache[query] =
+      result: result
+      time: new Date
+
+    @render(result)
+
+  close: =>
+    @lastQuery = undefined

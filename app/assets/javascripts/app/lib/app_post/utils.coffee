@@ -206,7 +206,7 @@ class App.Utils
 
     # Replace all x tags with the type of replacementTag
     html.find('textarea').each( ->
-      outer = @outerHTML;
+      outer = @outerHTML
 
       # Replace opening tag
       regex = new RegExp('<' + @tagName, 'i')
@@ -665,6 +665,46 @@ class App.Utils
 
     # check length, remove longer positions
     "#{result[1]}.#{result[2].substr(0,positions)}"
+
+  @sortByValue: (options, order = 'ASC') ->
+    # sort by name
+    byNames = []
+    byNamesWithValue = {}
+    for i, value of options
+      valueTmp = value.toString().toLowerCase()
+      byNames.push valueTmp
+      byNamesWithValue[valueTmp] = [i, value]
+    byNames = byNames.sort()
+
+    # do a reverse, if needed
+    if order == 'DESC'
+      byNames = byNames.reverse()
+
+    optionsNew = {}
+    for i in byNames
+      ref = byNamesWithValue[i]
+      optionsNew[ref[0]] = ref[1]
+    optionsNew
+
+  @sortByKey: (options, order = 'ASC') ->
+    # sort by name
+    byKeys = []
+    for i, value of options
+      if i.toString
+        iTmp = i.toString().toLowerCase()
+      else
+        iTmp = i
+      byKeys.push iTmp
+    byKeys = byKeys.sort()
+
+    # do a reverse, if needed
+    if order == 'DESC'
+      byKeys = byKeys.reverse()
+
+    optionsNew = {}
+    for i in byKeys
+      optionsNew[i] = options[i]
+    optionsNew
 
   @formatTime: (num, digits) ->
 

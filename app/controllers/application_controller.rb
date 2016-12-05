@@ -301,7 +301,6 @@ class ApplicationController < ActionController::Base
       return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
     end
 
-=begin
     # check oauth2 token based authentication
     token = Doorkeeper::OAuth::Token.from_bearer_authorization(request)
     if token
@@ -309,19 +308,23 @@ class ApplicationController < ActionController::Base
       logger.debug "oauth2 token auth check '#{token}'"
       access_token = Doorkeeper::AccessToken.by_token(token)
 
+      if !access_token
+        raise Exceptions::NotAuthorized, 'Invalid token!'
+      end
+
       # check expire
       if access_token.expires_in && (access_token.created_at + access_token.expires_in) < Time.zone.now
         raise Exceptions::NotAuthorized, 'OAuth2 token is expired!'
       end
 
-      if access_token.scopes.empty?
-        raise Exceptions::NotAuthorized, 'OAuth2 scope missing for token!'
-      end
+      # if access_token.scopes.empty?
+      #   raise Exceptions::NotAuthorized, 'OAuth2 scope missing for token!'
+      # end
 
       user = User.find(access_token.resource_owner_id)
       return authentication_check_prerequesits(user, 'token_auth', auth_param) if user
     end
-=end
+
     false
   end
 
@@ -558,13 +561,13 @@ class ApplicationController < ActionController::Base
     render json: generic_object.attributes_with_associations, status: :ok
   end
 
-  def model_destory_render(object, params)
+  def model_destroy_render(object, params)
     generic_object = object.find(params[:id])
     generic_object.destroy!
-    model_destory_render_item()
+    model_destroy_render_item()
   end
 
-  def model_destory_render_item ()
+  def model_destroy_render_item ()
     render json: {}, status: :ok
   end
 

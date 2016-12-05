@@ -342,10 +342,10 @@
   float: left;
   width: auto;
   height: auto;
-  min-height: 1.4em !important;
   max-height: 6em;
+  min-height: 1.4em !important;
   font-family: inherit;
-  line-height: inherit;
+  line-height: 1.4em;
   font-size: inherit;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -353,6 +353,7 @@
   border: none !important;
   background: none;
   box-shadow: none !important;
+  box-sizing: content-box;
   outline: none;
   resize: none;
   -webkit-flex: 1;

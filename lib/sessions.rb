@@ -46,9 +46,9 @@ returns
       file.write content
     }
 
-    # destory old session if needed
+    # destroy old session if needed
     if File.exist?(path)
-      Sessions.destory(client_id)
+      Sessions.destroy(client_id)
     end
 
     # move to destination directory
@@ -160,7 +160,7 @@ returns
 
 destroy session
 
-  Sessions.destory(client_id)
+  Sessions.destroy(client_id)
 
 returns
 
@@ -168,7 +168,7 @@ returns
 
 =end
 
-  def self.destory(client_id)
+  def self.destroy(client_id)
     path = "#{@path}/#{client_id}"
     FileUtils.rm_rf path
   end
@@ -177,7 +177,7 @@ returns
 
 destroy idle session
 
-  list_of_client_ids = Sessions.destory_idle_sessions
+  list_of_client_ids = Sessions.destroy_idle_sessions
 
 returns
 
@@ -185,13 +185,13 @@ returns
 
 =end
 
-  def self.destory_idle_sessions(idle_time_in_sec = 240)
+  def self.destroy_idle_sessions(idle_time_in_sec = 240)
     list_of_closed_sessions = []
     clients                 = Sessions.list
     clients.each { |client_id, client|
       if !client[:meta] || !client[:meta][:last_ping] || ( client[:meta][:last_ping].to_i + idle_time_in_sec ) < Time.now.utc.to_i
         list_of_closed_sessions.push client_id
-        Sessions.destory(client_id)
+        Sessions.destroy(client_id)
       end
     }
     list_of_closed_sessions
@@ -248,14 +248,14 @@ returns
 
     # if no session dir exists, session got destoried
     if !File.exist? session_dir
-      destory(client_id)
+      destroy(client_id)
       log('debug', "missing session directory for '#{client_id}', remove session.")
       return
     end
 
     # if only session file is missing, then it's an error behavior
     if !File.exist? session_file
-      destory(client_id)
+      destroy(client_id)
       log('error', "missing session file for '#{client_id}', remove session.")
       return
     end
@@ -272,7 +272,7 @@ returns
       }
     rescue => e
       log('error', e.inspect)
-      destory(client_id)
+      destroy(client_id)
       log('error', "error in reading/parsing session file '#{session_file}', remove session.")
       return
     end

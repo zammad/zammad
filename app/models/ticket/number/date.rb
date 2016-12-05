@@ -43,6 +43,14 @@ module Ticket::Number::Date
     # vehikel number. The modulus to 10 of this sum is substracted from
     # 10. See: http://www.pruefziffernberechnung.de/F/Fahrzeugnummer.shtml
     # (german)
+
+    # fix for https://github.com/zammad/zammad/issues/413 - can be removed later
+    if config.class == FalseClass || config.class == TrueClass
+      config = {
+        checksum: config
+      }
+    end
+
     if config[:checksum]
       chksum = 0
       mult   = 1
@@ -65,7 +73,7 @@ module Ticket::Number::Date
   end
 
   def check(string)
-    return if !string || string.empty?
+    return if string.blank?
 
     # get config
     system_id           = Setting.get('system_id') || ''

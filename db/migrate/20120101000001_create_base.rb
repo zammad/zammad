@@ -125,6 +125,8 @@ class CreateBase < ActiveRecord::Migration
     create_table :organizations do |t|
       t.string :name,                   limit: 100, null: false
       t.boolean :shared,                            null: false, default: true
+      t.string :domain,                 limit: 250, null: true,  default: ''
+      t.boolean :domain_assignment,                 null: false, default: false
       t.boolean :active,                            null: false, default: true
       t.string :note,                   limit: 250, null: true,  default: ''
       t.integer :updated_by_id,                     null: false
@@ -132,6 +134,7 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps limit: 3,   null: false
     end
     add_index :organizations, [:name], unique: true
+    add_index :organizations, [:domain]
 
     create_table :roles_users, id: false do |t|
       t.integer :user_id
@@ -574,7 +577,7 @@ class CreateBase < ActiveRecord::Migration
       t.string  :key,                   limit: 250, null: true
       t.integer :related_o_id,                      null: true
       t.integer :related_stats_store_object_id,     null: true
-      t.string  :data,                 limit: 2500, null: true
+      t.string  :data,                 limit: 5000, null: true
       t.integer :created_by_id,                     null: false
       t.timestamps limit: 3, null: false
     end

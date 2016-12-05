@@ -6,7 +6,7 @@ get notification settings for user and notification type
 
   result = NotificationFactory::Mailer.notification_settings(user, ticket, type)
 
-  type: create | update | reminder_reached | pending
+  type: create | update | reminder_reached | escalation (escalation_warning)
 
 returns
 
@@ -21,6 +21,15 @@ returns
 =end
 
   def self.notification_settings(user, ticket, type)
+
+    # map types if needed
+    map = {
+      'escalation_warning' => 'escalation'
+    }
+    if map[type]
+      type = map[type]
+    end
+
     return if !user.preferences
     return if !user.preferences['notification_config']
     matrix = user.preferences['notification_config']['matrix']
@@ -190,11 +199,12 @@ retunes
   )
 
   result = NotificationFactory::Mailer.template(
-    templateInline: "Invitation to <%= c 'product_name' %> at <%= c 'fqdn' %>",
+    templateInline: "Invitation to \#{config.product_name} at \#{config.fqdn}",
     locale: 'en-us',
     objects:  {
       recipient: User.find(2),
     },
+    quote: true, # html quoting
   )
 
 only raw subject/body
@@ -221,7 +231,7 @@ returns
   def self.template(data)
 
     if data[:templateInline]
-      return NotificationFactory::Template.new(data[:objects], data[:locale], data[:templateInline], false).render
+      return NotificationFactory::Renderer.new(data[:objects], data[:locale], data[:templateInline], data[:quote]).render
     end
 
     template = NotificationFactory.template_read(
@@ -231,8 +241,8 @@ returns
       type: 'mailer',
     )
 
-    message_subject = NotificationFactory::Template.new(data[:objects], data[:locale], template[:subject], false).render
-    message_body = NotificationFactory::Template.new(data[:objects], data[:locale], template[:body]).render
+    message_subject = NotificationFactory::Renderer.new(data[:objects], data[:locale], template[:subject], false).render
+    message_body = NotificationFactory::Renderer.new(data[:objects], data[:locale], template[:body]).render
 
     if !data[:raw]
       application_template = NotificationFactory.application_template_read(
@@ -241,7 +251,7 @@ returns
       )
       data[:objects][:message] = message_body
       data[:objects][:standalone] = data[:standalone]
-      message_body = NotificationFactory::Template.new(data[:objects], data[:locale], application_template).render
+      message_body = NotificationFactory::Renderer.new(data[:objects], data[:locale], application_template).render
     end
     {
       subject: message_subject,

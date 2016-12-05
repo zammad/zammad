@@ -33,7 +33,7 @@ class User < ApplicationModel
   include User::SearchIndex
 
   before_validation :check_name, :check_email, :check_login, :check_password
-  before_create   :check_preferences_default, :validate_roles
+  before_create   :check_preferences_default, :validate_roles, :domain_based_assignment
   before_update   :check_preferences_default, :validate_roles
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
@@ -154,18 +154,7 @@ returns
 =end
 
   def role?(role_name)
-
-    result = false
-    roles.each { |role|
-      if role_name.class == Array
-        next if !role_name.include?(role.name)
-      elsif role.name != role_name
-        next
-      end
-      result = true
-      break
-    }
-    result
+    roles.where(name: role_name).any?
   end
 
 =begin
@@ -226,16 +215,13 @@ returns
   def self.authenticate(username, password)
 
     # do not authenticate with nothing
-    return if !username || username == ''
-    return if !password || password == ''
+    return if username.blank? || password.blank?
 
     # try to find user based on login
     user = User.find_by(login: username.downcase, active: true)
 
     # try second lookup with email
-    if !user
-      user = User.find_by(email: username.downcase, active: true)
-    end
+    user ||= User.find_by(email: username.downcase, active: true)
 
     # check failed logins
     max_login_failed = Setting.get('password_max_login_failed').to_i || 10
@@ -249,7 +235,7 @@ returns
     # set login failed +1
     if !user_auth && user
       sleep 1
-      user.login_failed = user.login_failed + 1
+      user.login_failed += 1
       user.save
     end
 
@@ -454,15 +440,13 @@ returns
 =end
 
   def self.password_reset_new_token(username)
-    return if !username || username == ''
+    return if username.blank?
 
     # try to find user based on login
     user = User.find_by(login: username.downcase, active: true)
 
     # try second lookup with email
-    if !user
-      user = User.find_by(email: username.downcase, active: true)
-    end
+    user ||= User.find_by(email: username.downcase, active: true)
 
     # check if email address exists
     return if !user
@@ -737,8 +721,7 @@ returns
   end
 
   def check_preferences_default
-    return if !@preferences_default
-    return if @preferences_default.empty?
+    return if @preferences_default.blank?
 
     preferences_tmp = @preferences_default.merge(preferences)
     self.preferences = preferences_tmp
@@ -856,9 +839,22 @@ returns
     }
   end
 
-  def avatar_for_email_check
+  def domain_based_assignment
     return if !email
-    return if email.empty?
+    return if organization_id
+    begin
+      domain = Mail::Address.new(email).domain
+      return if !domain
+      organization = Organization.find_by(domain: domain.downcase, domain_assignment: true)
+      return if !organization
+      self.organization_id = organization.id
+    rescue
+      return
+    end
+  end
+
+  def avatar_for_email_check
+    return if email.blank?
     return if email !~ /@/
     return if !changes['email'] && updated_at > Time.zone.now - 10.days
 
@@ -886,7 +882,7 @@ returns
   def check_password
 
     # set old password again if not given
-    if password == '' || !password
+    if password.blank?
 
       # get current record
       if id

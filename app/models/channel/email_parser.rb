@@ -74,9 +74,7 @@ class Channel::EmailParser
     mail = Mail.new(msg)
 
     # set all headers
-    mail.header.fields.each { |field|
-      next if !field.name
-
+    mail.header.fields.select(&:name).each { |field|
       # full line, encode, ready for storage
       data[field.name.to_s.downcase.to_sym] = Encode.conv('utf8', field.to_s)
 
@@ -318,12 +316,10 @@ class Channel::EmailParser
     end
 
     # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
-    if !filename
-      filename = file.header[:content_location].to_s
-    end
+    filename ||= file.header[:content_location].to_s
 
     # generate file name
-    if !filename || filename.empty?
+    if filename.blank?
       attachment_count = 0
       (1..1000).each { |count|
         filename_exists = false
@@ -394,6 +390,7 @@ returns
     p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
     Rails.logger.error message
     Rails.logger.error 'ERROR: ' + e.inspect
+    Rails.logger.error 'ERROR: ' + e.backtrace.inspect
     File.open(filename, 'wb') { |file|
       file.write msg
     }

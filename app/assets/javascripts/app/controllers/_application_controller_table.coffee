@@ -14,14 +14,16 @@ class App.ControllerTable extends App.Controller
     super
 
     # apply personal preferences
-    data = @preferencesGet()
-    if data['order']
-      for key, value of data['order']
-        @[key] = value
+    data = {}
+    if @tableId
+      data = @preferencesGet()
+      if data.order
+        for key, value of data.order
+          @[key] = value
 
     @headerWidth = {}
-    if data['headerWidth']
-      for key, value of data['headerWidth']
+    if data.headerWidth
+      for key, value of data.headerWidth
         @headerWidth[key] = value
 
     @availableWidth = @el.width()
@@ -76,14 +78,15 @@ class App.ControllerTable extends App.Controller
       e.preventDefault()
       console.log('checkboxClick', e.target)
 
-    callbackHeader = (header) ->
-      console.log('current header is', header)
+    callbackHeader = (headers) ->
+      console.log('current header is', headers)
       # add new header item
       attribute =
         name: 'some name'
         display: 'Some Name'
-      header.push attribute
-      console.log('new header is', header)
+      headers.push attribute
+      console.log('new header is', headers)
+      headers
 
     callbackAttributes = (value, object, attribute, header, refObject) ->
       console.log('data of item col', value, object, attribute, header, refObject)
@@ -91,7 +94,7 @@ class App.ControllerTable extends App.Controller
       value
 
     new App.ControllerTable(
-      table_id: 'some_id_to_idientify_user_based_table_preferences'
+      tableId: 'some_id_to_idientify_user_based_table_preferences'
       el:       element
       overview: ['host', 'user', 'adapter', 'active']
       model:    App.Channel
@@ -282,12 +285,12 @@ class App.ControllerTable extends App.Controller
         @objects = @objects.concat groupObjects[group]
         groupObjects[group] = [] # release old array
 
-    if @table_id
+    if @tableId
       @calculateHeaderWidths()
 
     # get content
     table = App.view('generic/table')(
-      table_id:   @table_id
+      tableId:    @tableId
       header:     @headers
       attributes: attributes
       objects:    @objects
@@ -363,7 +366,7 @@ class App.ControllerTable extends App.Controller
             )
 
     # if we have a personalised table
-    if @table_id
+    if @tableId
       # enable resize column
       table.on 'mousedown', '.js-col-resize', @onColResizeMousedown
       table.on 'click', '.js-col-resize', @stopPropagation
@@ -551,4 +554,4 @@ class App.ControllerTable extends App.Controller
     data
 
   preferencesStoreKey: =>
-    "tablePrefs:#{@table_id}"
+    "tablePrefs:#{@tableId}"

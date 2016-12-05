@@ -25,7 +25,7 @@
         <% end %>
     <% end %>
 
-    <tr>
+    <tr class="settings-list-controlRow">
       <td>
       <td class="settings-list-control-cell js-datePicker">
         <!-- not supported right now by ff

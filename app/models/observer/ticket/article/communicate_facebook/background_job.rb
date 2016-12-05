@@ -7,9 +7,7 @@ class Observer::Ticket::Article::CommunicateFacebook::BackgroundJob
     article = Ticket::Article.find(@article_id)
 
     # set retry count
-    if !article.preferences['delivery_retry']
-      article.preferences['delivery_retry'] = 0
-    end
+    article.preferences['delivery_retry'] ||= 0
     article.preferences['delivery_retry'] += 1
 
     ticket = Ticket.lookup(id: article.ticket_id)
@@ -24,7 +22,7 @@ class Observer::Ticket::Article::CommunicateFacebook::BackgroundJob
     end
 
     # fill in_reply_to
-    if !article.in_reply_to || article.in_reply_to.empty?
+    if article.in_reply_to.blank?
       article.in_reply_to = ticket.articles.first.message_id
     end
 

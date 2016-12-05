@@ -29,6 +29,7 @@ class Observer::Transaction < ActiveRecord::Observer
     sync_backends = []
     Setting.where(area: 'Transaction::Backend::Sync').order(:name).each { |setting|
       backend = Setting.get(setting.name)
+      next if params[:disable] && params[:disable].include?(backend)
       sync_backends.push Kernel.const_get(backend)
     }
 

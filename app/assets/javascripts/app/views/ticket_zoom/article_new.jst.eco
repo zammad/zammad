@@ -21,6 +21,7 @@
         <% end %>
       </div>
     </div>
+    <% if @internalSelector: %>
     <div class="editControls-item is-hidden js-toggleVisibility js-selectInternalPublic">
       <div class="editControls-iconHolder">
         <div class="editControls-icon icon-internal" title="<%- @Ti("set to public") %>">
@@ -31,6 +32,7 @@
         </div>
       </div>
     </div>
+    <% end %>
   </div>
   <div class="article-content bubble-gap">
     <div class="internal-border">

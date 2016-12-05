@@ -21,7 +21,7 @@ returns
     # collect article data
     # add tags
     tags = Tag.tag_list(object: 'Ticket', o_id: id)
-    if tags && !tags.empty?
+    if tags.present?
       attributes[:tag] = tags
     end
 

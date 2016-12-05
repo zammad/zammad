@@ -13,8 +13,8 @@
   <div class="box box--message">
     <h2><%- @T('Inline translation') %></h2>
     <p><%- @T('To do easier translations you can enable and disable inline translation feature by pressing "%s".', 'ctrl+alt+t') %></p>
-    <p><%- @T('Text with disabled inline translations looks like') %> <button class="btn btn-primary"><%- @Ti('Some Text') %></button></p>
-    <p><%- @T('Text with enabled inline translations looks like') %> <button class="btn btn-primary"><span class="translation" contenteditable="true"><%- @Ti('Some Text') %></button></span></p>
+    <p><%- @T('Text with disabled inline translations looks like') %> <button class="btn btn-primary"><%- @Ti('Some Text') %></button></p>
+    <p><%- @T('Text with enabled inline translations looks like') %> <button class="btn btn-primary"><span class="translation" contenteditable="true"><%- @Ti('Some Text') %></button></span></p>
     <p><%- @T('Just click into the marker and update the words just in place. Enjoy!') %></p>
     <p><%- @T('If you want to translate it via the translation table, just go ahead below.') %></p>
   </div>

@@ -27,11 +27,11 @@ class Channel::Driver::Smtp
     return if Setting.get('import_mode')
 
     # set smtp defaults
-    if !options.key?(:port)
+    if !options.key?(:port) || options[:port].empty?
       options[:port] = 25
     end
-    if !options.key?(:domain)
 
+    if !options.key?(:domain)
       # set fqdn, if local fqdn - use domain of sender
       fqdn = Setting.get('fqdn')
       if fqdn =~ /(localhost|\.local^|\.loc^)/i && (attr['from'] || attr[:from])
@@ -49,16 +49,21 @@ class Channel::Driver::Smtp
       options[:openssl_verify_mode] = 'none'
     end
     mail = Channel::EmailBuild.build(attr, notification)
-    mail.delivery_method :smtp, {
+    smtp_params = {
       openssl_verify_mode: options[:openssl_verify_mode],
       address: options[:host],
       port: options[:port],
       domain: options[:domain],
-      user_name: options[:user],
-      password: options[:password],
       enable_starttls_auto: options[:enable_starttls_auto],
-      authentication: options[:authentication],
     }
+
+    # add authentication only if needed
+    if options[:user].present?
+      smtp_params[:user_name] = options[:user]
+      smtp_params[:password] = options[:password]
+      smtp_params[:authentication] = options[:authentication]
+    end
+    mail.delivery_method :smtp, smtp_params
     mail.deliver
   end
 end

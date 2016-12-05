@@ -75,92 +75,19 @@ returnes preset of ical feeds
 returns
 
   {
-    'US' => 'http://www.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics',
+    'http://www.google.com/calendar/ical/en.usa%23holiday%40group.v.calendar.google.com/public/basic.ics' => 'US',
     ...
   }
 
 =end
 
   def self.ical_feeds
-    gfeeds = {
-      'Australia' => 'en.australian',
-      'Austria' => 'de.austrian',
-      'Argentina' => 'en.ar',
-      'Bahamas' => 'en.bs',
-      'Belarus' => 'en.by',
-      'Brazil' => 'en.brazilian',
-      'Bulgaria' => 'en.bulgarian',
-      'Canada' => 'en.canadian',
-      'China' => 'en.china',
-      'Chile' => 'en.cl',
-      'Costa Rica' => 'en.cr',
-      'Colombia' => 'en.co',
-      'Croatia' => 'en.croatian',
-      'Cuba' => 'en.cu',
-      'Cyprus' => 'de.cy',
-      'Switzerland' => 'de.ch',
-      'Denmark' => 'da.danish',
-      'Netherlands' => 'nl.dutch',
-      'Egypt' => 'en.eg',
-      'Ethiopia' => 'en.et',
-      'Ecuador' => 'en.ec',
-      'Estonia' => 'en.ee',
-      'Finland' => 'en.finnish',
-      'France' => 'en.french',
-      'Germany' => 'de.german',
-      'Greece' => 'en.greek',
-      'Ghana' => 'en.gh',
-      'Hong Kong' => 'en.hong_kong',
-      'Haiti' => 'en.ht',
-      'Hungary' => 'en.hungarian',
-      'India' => 'en.indian',
-      'Indonesia' => 'en.indonesian',
-      'Iran' => 'en.ir',
-      'Ireland' => 'en.irish',
-      'Italy' => 'it.italian',
-      'Israel' => 'en.jewish',
-      'Japan' => 'en.japanese',
-      'Kuwait' => 'en.kw',
-      'Latvia' => 'en.latvian',
-      'Liechtenstein' => 'en.li',
-      'Lithuania' => 'en.lithuanian',
-      'Luxembourg' => 'en.lu',
-      'Malaysia' => 'en.malaysia',
-      'Mexico' => 'en.mexican',
-      'Morocco' => 'en.ma',
-      'Mauritius' => 'en.mu',
-      'Moldova' => 'en.md',
-      'New Zealand' => 'en.new_zealand',
-      'Norway' => 'en.norwegian',
-      'Philippines' => 'en.philippines',
-      'Poland' => 'en.polish',
-      'Portugal' => 'en.portuguese',
-      'Pakistan' => 'en.pk',
-      'Russia' => 'en.russian',
-      'Senegal' => 'en.sn',
-      'Singapore' => 'en.singapore',
-      'South Africa' => 'en.sa',
-      'South Korean' => 'en.south_korea',
-      'Spain' => 'en.spain',
-      'Slovakia' => 'en.slovak',
-      'Serbia' => 'en.rs',
-      'Slovenia' => 'en.slovenian',
-      'Sweden' => 'en.swedish',
-      'Taiwan' => 'en.taiwan',
-      'Thai' => 'en.th',
-      'Turkey' => 'en.turkish',
-      'UK' => 'en.uk',
-      'US' => 'en.usa',
-      'Ukraine' => 'en.ukrainian',
-      'Uruguay' => 'en.uy',
-      'Vietnam' => 'en.vietnamese',
-      'Venezuela' => 'en.ve',
-    }
-    all_feeds = {}
-    gfeeds.each { |key, name|
-      all_feeds["http://www.google.com/calendar/ical/#{name}%23holiday%40group.v.calendar.google.com/public/basic.ics"] = key
-    }
-    all_feeds
+    data = YAML.load_file(Rails.root.join('config/holiday_calendars.yml'))
+    url  = data['url']
+
+    data['countries'].map do |country, domain|
+      [(url % { domain: domain }), country]
+    end.to_h
   end
 
 =begin
@@ -201,7 +128,7 @@ returns
 =end
 
   def self.sync
-    Calendar.all.each(&:sync)
+    Calendar.find_each(&:sync)
     true
   end
 
@@ -220,6 +147,12 @@ returns
 
   def sync(without_save = nil)
     return if !ical_url
+
+    # only sync every 5 days
+    cache_key = "CalendarIcal::#{id}"
+    cache = Cache.get(cache_key)
+    return if !last_log && cache && cache[:ical_url] == ical_url
+
     begin
       events = {}
       if ical_url && !ical_url.empty?
@@ -255,6 +188,11 @@ returns
         }
       }
       self.last_log = nil
+      cache = Cache.write(
+        cache_key,
+        { public_holidays: public_holidays, ical_url: ical_url },
+        { expires_in: 5.days },
+      )
     rescue => e
       self.last_log = e.inspect
     end
@@ -302,7 +240,7 @@ returns
   # if changed calendar is default, set all others default to false
   def sync_default
     return if !default
-    Calendar.all.each { |calendar|
+    Calendar.find_each { |calendar|
       next if calendar.id == id
       next if !calendar.default
       calendar.default = false
@@ -312,23 +250,23 @@ returns
 
   # check if min one is set to default true
   def min_one_check
-    Calendar.all.each { |calendar|
-      return true if calendar.default
-    }
-    first = Calendar.order(:created_at, :id).limit(1).first
-    first.default = true
-    first.save
+    if !Calendar.find_by(default: true)
+      first = Calendar.order(:created_at, :id).limit(1).first
+      first.default = true
+      first.save
+    end
 
     # check if sla's are refer to an existing calendar
-    Sla.all.each { |sla|
+    default_calendar = Calendar.find_by(default: true)
+    Sla.find_each { |sla|
       if !sla.calendar_id
-        sla.calendar_id = first.id
-        sla.save
+        sla.calendar_id = default_calendar.id
+        sla.save!
         next
       end
       if !Calendar.find_by(id: sla.calendar_id)
-        sla.calendar_id = first.id
-        sla.save
+        sla.calendar_id = default_calendar.id
+        sla.save!
       end
     }
   end
@@ -342,9 +280,10 @@ returns
   def validate_public_holidays
 
     # fillup feed info
+    before = public_holidays_was
     public_holidays.each { |day, meta|
-      if public_holidays_was && public_holidays_was[day] && public_holidays_was[day]['feed']
-        meta['feed'] = public_holidays_was[day]['feed']
+      if before && before[day] && before[day]['feed']
+        meta['feed'] = before[day]['feed']
       end
       meta['active'] = if meta['active']
                          true

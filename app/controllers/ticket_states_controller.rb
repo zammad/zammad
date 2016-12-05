@@ -31,6 +31,6 @@ class TicketStatesController < ApplicationController
   def destroy
     permission_check('admin.object')
     return if model_references_check(Ticket::State, params)
-    model_destory_render(Ticket::State, params)
+    model_destroy_render(Ticket::State, params)
   end
 end

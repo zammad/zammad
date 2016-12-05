@@ -24,7 +24,9 @@ class Transaction::BackgroundJob
 
   def perform
     Setting.where(area: 'Transaction::Backend::Async').order(:name).each { |setting|
-      backend = Kernel.const_get(Setting.get(setting.name))
+      backend = Setting.get(setting.name)
+      next if @params[:disable] && @params[:disable].include?(backend)
+      backend = Kernel.const_get(backend)
       Observer::Transaction.execute_singel_backend(backend, @item, @params)
     }
   end

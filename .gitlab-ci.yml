@@ -9,7 +9,6 @@ stages:
   - pre
   - test
   - browser
-  - deploy
 
 pre:rubocop:
   stage: pre
@@ -40,6 +39,32 @@ pre:github:
     - deploy
   script:
     - script/build/sync_repo.sh git@github.com:zammad/zammad.git
+
+test:rspec:mysql:
+  stage: test
+  tags:
+    - core
+    - mysql
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - rake db:seed
+    - rspec
+    - rake db:drop
+
+test:rspec:postgresql:
+  stage: test
+  tags:
+    - core
+    - postgresql
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - rake db:seed
+    - rspec
+    - rake db:drop
 
 test:unit:mysql:
   stage: test
@@ -1023,12 +1048,3 @@ test:browser:integration:zendesk_chrome:
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - ruby -I test/ test/integration/zendesk_import_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
-
-deploy:archives:
-  stage: deploy
-  tags:
-    - deploy
-  only:
-    - tags
-  script:
-    - script/build/deploy_archives.sh

@@ -21,8 +21,7 @@ add an avatar based on auto detection (email address)
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    return if !data[:url]
-    return if data[:url].empty?
+    return if data[:url].blank?
 
     Avatar.add(
       object: data[:object],
@@ -96,7 +95,7 @@ add avatar by url
 
     # check if avatar with url already exists
     avatar_already_exists = nil
-    if data[:source] && !data[:source].empty?
+    if data[:source].present?
       avatar_already_exists = Avatar.find_by(
         object_lookup_id: object_id,
         o_id: data[:o_id],
@@ -105,7 +104,7 @@ add avatar by url
     end
 
     # fetch image based on http url
-    if data[:url] && data[:url] =~ /^http/
+    if data[:url] =~ /^http/
 
       # check if source ist already updated within last 2 minutes
       if avatar_already_exists && avatar_already_exists.source_url == data[:url]

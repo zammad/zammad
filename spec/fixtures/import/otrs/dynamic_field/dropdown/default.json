@@ -1,0 +1,25 @@
+{
+  "ID": "40",
+  "ChangeTime": "2016-05-25 11:14:06",
+  "InternalField": "0",
+  "ValidID": "1",
+  "CreateTime": "2014-08-21 14:54:15",
+  "Label": "Dropdown Example",
+  "FieldOrder": "30",
+  "Config": {
+    "TranslatableValues": "0",
+    "PossibleValues": {
+      "Hamburg": "Hamburg",
+      "München": "München",
+      "Köln": "Köln",
+      "Berlin": "Berlin"
+    },
+    "TreeView": "0",
+    "DefaultValue": "",
+    "Link": "",
+    "PossibleNone": "1"
+  },
+  "FieldType": "Dropdown",
+  "Name": "DropdownExample",
+  "ObjectType": "Ticket"
+}

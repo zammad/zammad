@@ -143,6 +143,6 @@ Test:
 
   def destroy
     permission_check(['admin.channel_email'])
-    model_destory_render(Signature, params)
+    model_destroy_render(Signature, params)
   end
 end

@@ -1,5 +1,5 @@
-# <%= d 'ticket.title' %>
-_<<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>|Ticket#<%= d 'ticket.number' %>>: Updated by <%= d 'current_user.longname' %> at <%= d 'ticket.updated_at' %>_
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Updated by #{current_user.longname} at #{ticket.updated_at}_
 <% if @objects[:changes] && !@objects[:changes].empty? %>
   <% @objects[:changes].each do |key, value| %>
   * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>
@@ -7,5 +7,5 @@ _<<%= c 'http_type' %>://<%= c 'fqdn' %>/#ticket/zoom/<%= d 'ticket.id' %>|Ticke
 <% end %>
 
 <% if @objects[:article] %>
-<%= a_text 'article' %>
+#{article.body_as_text}
 <% end %>

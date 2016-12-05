@@ -1,0 +1,39 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Monitoring') %><small></small></h1>
+  </div>
+</div>
+<div class="page-content">
+
+  <div class="settings-entry">
+    <div class="page-header-title">
+      <h2><%- @T('Current Token') %></h2>
+    </div>
+    <p><input class="js-select js-token" type="text" value="<%= @data.token %>" readonly></p>
+    <button class="btn btn--primary js-resetToken"><%- @T('Reset') %></button>
+  </div>
+
+  <div class="settings-entry">
+    <div class="page-header-title">
+      <h2><%- @T('Health Check') %></h2>
+    </div>
+    <p><%- @T('Health information can be retrieved as JSON using') %>:</p>
+    <input class="js-select js-url" type="text" value="<%- @C('http_type') %>://<%- @C('fqdn') %>/<%- @C('api_path') %>/monitoring/health_check?token=<%= @data.token %>" readonly></p>
+  </div>
+
+  <div class="settings-entry">
+    <div class="page-header-title">
+      <h2><% if _.isEmpty(@data.issues): %><%- @Icon('status', 'ok inline') %><% else: %><%- @Icon('status', 'error inline') %><% end %> <%- @T('Current Status') %></h2>
+    </div>
+    <ul>
+      <% if _.isEmpty(@data.issues): %>
+        <li><%- @T('no issues') %>
+      <% else: %>
+        <% for issue in @data.issues: %>
+          <li><%= issue %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+
+</div>
