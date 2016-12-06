@@ -19,7 +19,7 @@ returns
   def self.to_sync
     locales = Locale.where(active: true)
     if Rails.env.test?
-      locales = Locale.where(active: true, locale: ['en-us'])
+      locales = Locale.where(active: true, locale: ['en-us', 'de-de'])
     end
 
     # read used locales based on env, e. g. export Z_LOCALES='en-us:de-de'
