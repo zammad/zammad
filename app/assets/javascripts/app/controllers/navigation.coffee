@@ -25,6 +25,10 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
     @throttledSearch = _.throttle @search, 200
 
+    @globalSearch = new App.GlobalSearch(
+      render: @renderResult
+    )
+
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
       @renderMenu()
@@ -127,15 +131,15 @@ class App.Navigation extends App.ControllerWidgetPermanent
     items = @getItems(navbar: @Config.get('NavBarRight'))
 
     # get open tabs to repopen on rerender
-    open_tab = {}
+    openTab = {}
     @$('.open').children('a').each( (i,d) ->
       href = $(d).attr('href')
-      open_tab[href] = true
+      openTab[href] = true
     )
 
     @$('.navbar-items-personal').html App.view('navigation/personal')(
-      items:    items
-      open_tab: open_tab
+      items:   items
+      openTab: openTab
     )
 
     # only start avatar widget on existing session
@@ -151,6 +155,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     # remove result if not result exists
     if _.isEmpty(result)
       @searchContainer.removeClass('open')
+      @globalSearch.close()
       @searchResult.html('')
       return
 
@@ -275,6 +280,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
   emptyAndClose: =>
     @searchInput.val('')
     @searchContainer.removeClass('filled').removeClass('open').removeClass('focused')
+    @globalSearch.close()
 
     # remove not needed popovers
     @delay(@anyPopoversDestroy, 100, 'removePopovers')
@@ -282,6 +288,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
   andClose: =>
     @searchInput.blur()
     @searchContainer.removeClass('open')
+    @globalSearch.close()
     @delay(@anyPopoversDestroy, 100, 'removePopovers')
 
   search: =>
@@ -290,11 +297,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     return if query is @query
     @query = query
     @searchContainer.toggleClass('filled', !!@query)
-
-    App.GlobalSearch.execute(
-      query: @query
-      render: @renderResult
-    )
+    @globalSearch.search(query: @query)
 
   getItems: (data) ->
     navbar =  _.values(data.navbar)

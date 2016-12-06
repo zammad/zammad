@@ -8,7 +8,7 @@ get locals to sync
 
 all:
 
-  Locale.sync
+  Locale.to_sync
 
 returns
 
@@ -19,7 +19,7 @@ returns
   def self.to_sync
     locales = Locale.where(active: true)
     if Rails.env.test?
-      locales = Locale.where(active: true, locale: ['en-us'])
+      locales = Locale.where(active: true, locale: ['en-us', 'de-de'])
     end
 
     # read used locales based on env, e. g. export Z_LOCALES='en-us:de-de'
@@ -27,6 +27,21 @@ returns
       locales = Locale.where(active: true, locale: ENV['Z_LOCALES'].split(':') )
     end
     locales
+  end
+
+=begin
+
+sync locales from local if exists, otherwise from online
+
+all:
+
+  Locale.sync
+
+=end
+
+  def self.sync
+    return true if load_from_file
+    load
   end
 
 =begin
@@ -40,6 +55,39 @@ all:
 =end
 
   def self.load
+    data = fetch
+    to_database(data)
+  end
+
+=begin
+
+load locales from local
+
+all:
+
+  Locale.load_from_file
+
+=end
+
+  def self.load_from_file
+    file = Rails.root.join('config/locales.yml')
+    return false if !File.exist?(file)
+    data = YAML.load_file(file)
+    to_database(data)
+    true
+  end
+
+=begin
+
+fetch locales from remote and store them in local file system
+
+all:
+
+  Locale.fetch
+
+=end
+
+  def self.fetch
     url = 'https://i18n.zammad.com/api/v1/locales'
 
     result = UserAgent.get(
@@ -53,8 +101,16 @@ all:
     raise "Can't load locales from #{url}" if !result
     raise "Can't load locales from #{url}: #{result.error}" if !result.success?
 
+    file = Rails.root.join('config/locales.yml')
+    File.open(file, 'w') do |out|
+      YAML.dump(result.data, out)
+    end
+    result.data
+  end
+
+  private_class_method def self.to_database(data)
     ActiveRecord::Base.transaction do
-      result.data.each { |locale|
+      data.each { |locale|
         exists = Locale.find_by(locale: locale['locale'])
         if exists
           exists.update(locale.symbolize_keys!)
@@ -63,7 +119,6 @@ all:
         end
       }
     end
-    true
   end
 
 end

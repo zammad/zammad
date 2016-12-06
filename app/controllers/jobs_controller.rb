@@ -20,7 +20,7 @@ class JobsController < ApplicationController
   end
 
   def destroy
-    model_destory_render(Job, params)
+    model_destroy_render(Job, params)
   end
 
 end

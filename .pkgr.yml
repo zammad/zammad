@@ -25,6 +25,8 @@ before:
   - env
   - "cat Gemfile.lock"
   - contrib/cleanup.sh
+after:
+  - contrib/after.sh
 env:
   - RAILS_ENV=production
   - PORT=3000

@@ -12,7 +12,7 @@
     <h2><%- @T('Token Access') %> (HTTP Token Authentication)</h2>
   </div>
 
-<p><%- @T('Enable REST API using tokens (not username/email addeess and password). Each user need to create own access tokens in user profile.') %></p>
+<p><%- @T('Enable REST API using tokens (not username/email address and password). Each user need to create own access tokens in user profile.') %></p>
 
 <p><%- @T('Example') %>:</p>
 

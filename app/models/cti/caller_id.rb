@@ -233,5 +233,45 @@ returns
       caller_ids
     end
 
+    def self.get_comment_preferences(caller_id, direction)
+      from_comment_known = ''
+      from_comment_maybe = ''
+      preferences_known = {}
+      preferences_known[direction] = []
+      preferences_maybe = {}
+      preferences_maybe[direction] = []
+
+      lookup(caller_id).each { |record|
+        if record.level == 'known'
+          preferences_known[direction].push record
+        else
+          preferences_maybe[direction].push record
+        end
+        comment = ''
+        if record.user_id
+          user = User.lookup(id: record.user_id)
+          if user
+            comment += user.fullname
+          end
+        elsif !record.comment.empty?
+          comment += record.comment
+        end
+        if record.level == 'known'
+          if !from_comment_known.empty?
+            from_comment_known += ','
+          end
+          from_comment_known += comment
+        else
+          if !from_comment_maybe.empty?
+            from_comment_maybe += ','
+          end
+          from_comment_maybe += comment
+        end
+      }
+      return [from_comment_known, preferences_known] if !from_comment_known.empty?
+      return ["maybe #{from_comment_maybe}", preferences_maybe] if !from_comment_maybe.empty?
+      nil
+    end
+
   end
 end

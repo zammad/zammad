@@ -149,6 +149,6 @@ curl http://localhost/api/v1/groups/{id} -v -u #{login}:#{password} -H "Content-
 =end
 
   def destroy
-    model_destory_render(Group, params)
+    model_destroy_render(Group, params)
   end
 end

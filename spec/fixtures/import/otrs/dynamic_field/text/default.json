@@ -1,0 +1,16 @@
+{
+  "ID": "8",
+  "ChangeTime": "2014-09-12 09:31:58",
+  "InternalField": "0",
+  "ValidID": "1",
+  "CreateTime": "2014-06-19 12:11:23",
+  "Label": "Text Example",
+  "FieldOrder": "8",
+  "Config": {
+    "DefaultValue": "",
+    "Link": ""
+  },
+  "FieldType": "Text",
+  "Name": "TextExample",
+  "ObjectType": "Ticket"
+}

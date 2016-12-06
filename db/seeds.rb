@@ -1579,7 +1579,7 @@ Setting.create_if_not_exists(
   title: 'API Token Access',
   name: 'api_token_access',
   area: 'API::Base',
-  description: 'Enable REST API using tokens (not username/email addeess and password). Each user need to create own access tokens in user profile.',
+  description: 'Enable REST API using tokens (not username/email address and password). Each user need to create own access tokens in user profile.',
   options: {
     form: [
       {
@@ -5455,8 +5455,8 @@ Locale.create_if_not_exists(
   alias: 'en',
   name: 'English (United States)',
 )
-Locale.load
-Translation.load
+Locale.sync
+Translation.sync
 Calendar.init_setup
 
 # install all packages in auto_install

@@ -1,5 +1,5 @@
 class App.Macro extends App.Model
-  @configure 'Macro', 'name', 'perform', 'active'
+  @configure 'Macro', 'name', 'perform', 'note', 'active'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/macros'
   @configure_attributes = [

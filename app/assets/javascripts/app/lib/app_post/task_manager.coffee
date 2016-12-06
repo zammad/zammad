@@ -544,7 +544,7 @@ class _taskManagerSingleton extends App.Controller
       )
       return
 
-    # destory task in backend
+    # destroy task in backend
     delete @tasksToUpdate[ task.key ]
 
     # if task isnt already stored on backend

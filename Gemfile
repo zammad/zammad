@@ -85,13 +85,16 @@ gem 'diffy'
 # in production environments by default.
 group :development, :test do
 
+  gem 'rspec-rails'
   gem 'test-unit'
   gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'sqlite3'
 
   # code coverage
   gem 'simplecov'
   gem 'simplecov-rcov'
+  gem 'coveralls',         require: false
 
   # UI tests w/ Selenium
   gem 'selenium-webdriver'

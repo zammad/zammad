@@ -97,15 +97,15 @@ class App.TicketZoomArticleActions extends App.Controller
       recipientUsed = {}
       for recipient in recipients
         if !_.isEmpty(recipient.address)
-          localRecipientAddeess = recipient.address.toString().toLowerCase()
-          if !recipientUsed[localRecipientAddeess]
-            recipientUsed[localRecipientAddeess] = true
-            localAddess = false
+          localRecipientAddress = recipient.address.toString().toLowerCase()
+          if !recipientUsed[localRecipientAddress]
+            recipientUsed[localRecipientAddress] = true
+            localAddress = false
             for address in localAddresses
-              if localRecipientAddeess is address.email.toString().toLowerCase()
-                recipientUsed[localRecipientAddeess] = true
-                localAddess = true
-            if !localAddess
+              if localRecipientAddress is address.email.toString().toLowerCase()
+                recipientUsed[localRecipientAddress] = true
+                localAddress = true
+            if !localAddress
               forgeinRecipients.push recipient
 
       # check if reply all is neede
@@ -327,12 +327,12 @@ class App.TicketZoomArticleActions extends App.Controller
             for recipient in recipients
               if !_.isEmpty(recipient.address)
 
-                # check if addess is not local
-                localAddess = false
+                # check if address is not local
+                localAddress = false
                 for address in localAddresses
                   if !_.isEmpty(recipient.address) && recipient.address.toString().toLowerCase() == address.email.toString().toLowerCase()
-                    localAddess = true
-                if !localAddess
+                    localAddress = true
+                if !localAddress
 
                   # filter for uniq recipients
                   if !recipientAddresses[ recipient.address.toString().toLowerCase() ]

@@ -1,0 +1,19 @@
+{
+  "ID": "46",
+  "ChangeTime": "2016-05-25 11:14:06",
+  "InternalField": "0",
+  "ValidID": "1",
+  "CreateTime": "2014-11-23 20:01:32",
+  "Label": "Date Example",
+  "FieldOrder": "40",
+  "Config": {
+    "YearsPeriod": "0",
+    "YearsInFuture": "0",
+    "DefaultValue": "0",
+    "YearsInPast": "0",
+    "Link": ""
+  },
+  "FieldType": "Date",
+  "Name": "DateExample",
+  "ObjectType": "Ticket"
+}

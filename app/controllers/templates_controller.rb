@@ -144,6 +144,6 @@ curl http://localhost/api/v1/templates.json -v -u #{login}:#{password} -H "Conte
 
   def destroy
     permission_check(['admin.template', 'ticket.agent'])
-    model_destory_render(Template, params)
+    model_destroy_render(Template, params)
   end
 end
