@@ -3,7 +3,7 @@
 # packager.io after script
 #
 
-PATH=`pwd`/bin:`pwd`/vendor/bundle/bin:$PATH
+PATH=$(pwd)/bin:$(pwd)/vendor/bundle/bin:$PATH
 
 set -e
 
