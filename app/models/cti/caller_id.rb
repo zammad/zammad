@@ -25,6 +25,9 @@ module Cti
         o_id:      data[:o_id],
         user_id:   data[:user_id],
       )
+      # p "------------------"
+      # p record
+
       return record if !record.new_record?
       record.comment = data[:comment]
       record.save!
@@ -41,11 +44,23 @@ returns
 =end
 
     def self.lookup(caller_id)
-      where(caller_id: caller_id)
-        .group(:user_id, :id) \
-        # first known, then maybe, last others
-        .order("level != 'known', level != 'maybe', id DESC")
-        .limit(20)
+
+      result = []
+      ['known', 'maybe', nil].each { |level|
+
+        search_params = {
+          caller_id: caller_id,
+        }
+
+        if level
+          search_params[:level] = level
+        end
+
+        result = Cti::CallerId.where(search_params).group(:user_id, :id).order(id: 'DESC').limit(20)
+
+        break if result.present?
+      }
+      result
     end
 
 =begin
