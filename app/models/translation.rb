@@ -311,6 +311,10 @@ all:
             translation.save
           end
         else
+          if !UserInfo.current_user_id
+            translation_raw['updated_by_id'] = 1
+            translation_raw['created_by_id'] = 1
+          end
           Translation.create(translation_raw.symbolize_keys!)
         end
       }
