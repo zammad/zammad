@@ -786,6 +786,7 @@ returns
   end
 
   def check_email
+    return if Setting.get('import_mode')
     return if email.empty?
     self.email = email.downcase.strip
     return if id == 1
