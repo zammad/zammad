@@ -18,22 +18,16 @@ module Cti
 =end
 
     def self.maybe_add(data)
-      records = Cti::CallerId.where(
+      record = find_or_initialize_by(
         caller_id: data[:caller_id],
-        level: data[:level],
-        object: data[:object],
-        o_id: data[:o_id],
-        user_id: data[:user_id],
+        level:     data[:level],
+        object:    data[:object],
+        o_id:      data[:o_id],
+        user_id:   data[:user_id],
       )
-      return if records[0]
-      Cti::CallerId.create(
-        caller_id: data[:caller_id],
-        comment: data[:comment],
-        level: data[:level],
-        object: data[:object],
-        o_id: data[:o_id],
-        user_id: data[:user_id],
-      )
+      return record if !record.new_record?
+      record.comment = data[:comment]
+      record.save!
     end
 
 =begin
@@ -47,28 +41,11 @@ returns
 =end
 
     def self.lookup(caller_id)
-      result = Cti::CallerId.where(
-        caller_id: caller_id,
-        level: 'known',
-      ).group(:user_id, :id).order(id: 'DESC').limit(20)
-      if !result[0]
-        result = Cti::CallerId.where(
-          caller_id: caller_id,
-          level: 'maybe',
-        ).group(:user_id, :id).order(id: 'DESC').limit(20)
-      end
-      if !result[0]
-        result = Cti::CallerId.where(
-          caller_id: caller_id,
-        ).order('id DESC').limit(20)
-      end
-
-      # in case do lookups in external sources
-      if !result[0]
-        # ...
-      end
-
-      result
+      where(caller_id: caller_id)
+        .group(:user_id, :id) \
+        # first known, then maybe, last others
+        .order("level != 'known', level != 'maybe', id DESC")
+        .limit(20)
     end
 
 =begin
@@ -145,15 +122,16 @@ returns
 =end
 
     def self.rebuild
-      Cti::CallerId.delete_all
-      map = config
-      map.each { |item|
-        level = item[:level]
-        model = item[:model]
-        item[:model].find_each(batch_size: 500) do |record|
-          build_item(record, model, level)
-        end
-      }
+      transaction do
+        delete_all
+        config.each { |item|
+          level = item[:level]
+          model = item[:model]
+          item[:model].find_each(batch_size: 500) do |record|
+            build_item(record, model, level)
+          end
+        }
+      end
     end
 
 =begin
