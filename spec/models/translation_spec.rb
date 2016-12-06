@@ -47,6 +47,7 @@ RSpec.describe Translation do
 
       # add custom changes
       translation = Translation.find_by(locale: locale, source: 'open')
+      expect(translation.class).to be(Translation)
       expect(translation.target).to eq('offen')
       expect(translation.target_initial).to eq('offen')
       translation.target = 'offen2'
