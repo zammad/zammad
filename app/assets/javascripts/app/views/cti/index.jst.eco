@@ -46,7 +46,7 @@
             <% if shown: %>
               <small><%= item.from %></small>
             <% else: %>
-              <%= item.from %>
+              <a data-type="new" href="#"><%= item.from %></a>
             <% end %>
           </td>
           <td>
