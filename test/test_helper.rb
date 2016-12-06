@@ -16,10 +16,10 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-    SimpleCov::Formatter::RcovFormatter,
-    Coveralls::SimpleCov::Formatter
-  ]
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+                                                                   SimpleCov::Formatter::RcovFormatter,
+                                                                   Coveralls::SimpleCov::Formatter
+                                                                 ])
   merge_timeout = 3600
   SimpleCov.start
   fixtures :all
