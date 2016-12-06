@@ -41,7 +41,7 @@ RSpec.describe Import::OTRS::User do
         'GroupID' => '2',
       }
     ]
-    expect(Import::OTRS::Requester).to receive(:load).with('Queue').and_return(queue_list)
+    allow(Import::OTRS::Requester).to receive(:load).with('Queue').and_return(queue_list)
 
     group_list = [
       {
@@ -50,13 +50,13 @@ RSpec.describe Import::OTRS::User do
       },
       {
         'ID'   => '3',
-        'Name' => 'another_group',
+        'Name' => 'admin',
       },
     ]
-    expect(Import::OTRS::Requester).to receive(:load).with('Group').and_return(group_list)
+    allow(Import::OTRS::Requester).to receive(:load).with('Group').and_return(group_list)
 
-    role_list = [{ 'ID' => '3', 'GroupIDs' => %w(2 3) }]
-    expect(Import::OTRS::Requester).to receive(:load).with('Role').and_return(role_list)
+    role_list = [{ 'ID' => '3', 'GroupIDs' => { '2' => ['rw'], '3' => ['rw'] } }]
+    allow(Import::OTRS::Requester).to receive(:load).with('Role').and_return(role_list)
   end
 
   let(:import_object) { ::User }
@@ -72,7 +72,7 @@ RSpec.describe Import::OTRS::User do
         updated_by_id: 1,
         active: true,
         source: 'OTRS Import',
-        role_ids: [2],
+        role_ids: [2, 1],
         group_ids: ['1'],
         password: '{sha2}9faaba2ab242a99bbb6992e9424386375f6757c17e6484ae570f39d9cad9f28ea',
         updated_at: '2014-04-28 10:53:18',
