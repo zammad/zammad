@@ -2,6 +2,7 @@
 module Import
   module OTRS
     class History
+      include Import::Helper
 
       def initialize(history)
         init_callback(history)
@@ -17,6 +18,7 @@ module Import
 
       def add
         ::History.add(@history_attributes)
+        reset_primary_key_sequence('histories')
       end
 
       # make sure that no other thread is importing just the same
