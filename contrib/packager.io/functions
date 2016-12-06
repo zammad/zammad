@@ -21,6 +21,18 @@ function detect_os () {
     fi
 }
 
+function detect_docker() {
+    if [ -n "$(grep docker < /proc/1/cgroup)" ]; then
+	DOCKER="yes"
+    else 
+	DOCKER="no"
+    fi
+
+    if [ "${DEBUG_OUTPUT}" == "yes" ]; then
+	echo "os runs in docker container = ${DOCKER}"
+    fi
+}
+
 function detect_initcmd () {
     if [ -n "$(which systemctl 2> /dev/null)" ]; then
 	INIT_CMD="systemctl"
@@ -33,10 +45,15 @@ function detect_initcmd () {
 	INIT_CMD="sysvinit"
     fi
 
+    if [ "${DOCKER}" == "yes" ]; then
+	INIT_CMD="initctl"
+    fi
+
     if [ "${DEBUG_OUTPUT}" == "yes" ]; then
 	echo "INIT CMD = ${INIT_CMD}"
     fi
 }
+
 
 function detect_database () {
     if [ -n "$(which psql 2> /dev/null)" ]; then

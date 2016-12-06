@@ -15,6 +15,8 @@ set -e
 
 detect_os
 
+detect_docker
+
 detect_initcmd
 
 detect_database
