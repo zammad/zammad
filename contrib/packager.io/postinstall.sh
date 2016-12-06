@@ -5,7 +5,7 @@
 
 PATH=/opt/zammad/bin:/opt/zammad/vendor/bundle/bin:/sbin:/bin:/usr/sbin:/usr/bin:
 
-set -e
+#set -e
 
 # import config
 . /opt/zammad/contrib/packager.io/config
