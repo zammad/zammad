@@ -3,12 +3,9 @@ require 'test_helper'
 
 class TranslationTest < ActiveSupport::TestCase
 
-  test '1 - setup' do
+  test '1 - basics' do
     Translation.reset('de-de')
-    Translation.load('de-de')
-  end
-
-  test '2 - basics' do
+    Translation.sync('de-de')
     tests = [
       {
         locale: 'en',
@@ -37,7 +34,9 @@ class TranslationTest < ActiveSupport::TestCase
     }
   end
 
-  test '3 - own translation tests' do
+  test '2 - own translation tests' do
+    Translation.reset('de-de')
+    Translation.sync('de-de')
     locale = 'de-de'
 
     # check for custom changes
@@ -77,7 +76,6 @@ class TranslationTest < ActiveSupport::TestCase
       assert(translation)
       assert_equal(locale, translation.locale)
       if translation.source == 'open'
-        p translation
         assert_equal('offen2', translation.target)
         assert_equal('offen', translation.target_initial)
       else
@@ -97,7 +95,7 @@ class TranslationTest < ActiveSupport::TestCase
 
   end
 
-  test '4 - file based import' do
+  test '3 - file based import' do
 
     # locales
     directory = Rails.root.join('config')
@@ -120,10 +118,6 @@ class TranslationTest < ActiveSupport::TestCase
     Translation.fetch(locale)
     assert(File.exist?(file))
 
-  end
-
-  test '5 - restore' do
-    Translation.load('de-de')
   end
 
 end
