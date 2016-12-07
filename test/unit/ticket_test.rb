@@ -43,7 +43,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket.close_at, nil, 'ticket.close_at verify - inbound')
 
     # create inbound article #2
-    sleep 2
+    travel 2.seconds
     article_inbound2 = Ticket::Article.create(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
@@ -91,7 +91,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket.close_at, nil, 'ticket.close_at verify - note')
 
     # create outbound article
-    sleep 2
+    travel 2.seconds
     article_outbound = Ticket::Article.create(
       ticket_id: ticket.id,
       from: 'some_recipient@example.com',
@@ -139,7 +139,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket.close_at, nil, 'ticket.close_at verify - outbound')
 
     # create inbound article #4
-    sleep 2
+    travel 2.seconds
     article_inbound4 = Ticket::Article.create(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
@@ -207,7 +207,7 @@ class TicketTest < ActiveSupport::TestCase
     )
     assert_equal(Ticket.latest_change.to_s, ticket1.updated_at.to_s)
 
-    sleep 1
+    travel 1.second
 
     ticket2 = Ticket.create(
       title: 'latest change 2',
@@ -220,13 +220,13 @@ class TicketTest < ActiveSupport::TestCase
     )
     assert_equal(Ticket.latest_change.to_s, ticket2.updated_at.to_s)
 
-    sleep 1
+    travel 1.second
 
     ticket1.title = 'latest change 1 - 1'
     ticket1.save
     assert_equal(Ticket.latest_change.to_s, ticket1.updated_at.to_s)
 
-    sleep 1
+    travel 1.second
 
     ticket1.touch
     assert_equal(Ticket.latest_change.to_s, ticket1.updated_at.to_s)

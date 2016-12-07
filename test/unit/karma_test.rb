@@ -329,7 +329,7 @@ class KarmaTest < ActiveSupport::TestCase
       item: 'Tag1',
       created_by_id: agent1.id,
     )
-    #sleep 5
+    #travel 5.seconds
     Tag.tag_add(
       object: 'Ticket',
       o_id: ticket1.id,
