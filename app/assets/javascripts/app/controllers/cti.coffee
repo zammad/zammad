@@ -1,7 +1,7 @@
 class App.CTI extends App.Controller
   events:
     'click .js-check': 'done',
-    'click [data-type=new]': 'new_user'
+    'click .js-new-user': 'new_user'
 
   constructor: ->
     super
