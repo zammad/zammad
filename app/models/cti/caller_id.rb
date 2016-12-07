@@ -25,8 +25,6 @@ module Cti
         o_id:      data[:o_id],
         user_id:   data[:user_id],
       )
-      # p "------------------"
-      # p record
 
       return record if !record.new_record?
       record.comment = data[:comment]
