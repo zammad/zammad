@@ -15,10 +15,16 @@
 
 # Ignore all logfiles and tempfiles.
 /log
-/tmp
+/tmp/*
+/tmp/pids/*
 /public/assets/*.*
 /public/assets/app
 /public/assets/custom
+
+# except /tmp/pids/ which is needed for certain Zammad processes
+!/tmp
+!/tmp/pids
+!/tmp/pids/.keep
 
 # Ignore custom gem file
 /Gemfile.local
