@@ -67,7 +67,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(check_if_collection_exists(result1, :Role), 'check collections - after init')
     assert(check_if_collection_exists(result1, :Signature), 'check collections - after init')
     assert(check_if_collection_exists(result1, :EmailAddress), 'check collections - after init')
-    sleep 1
+    travel 1.second
     result2 = collection_client2.push
     assert(result2, 'check collections')
     assert(check_if_collection_exists(result2, :Group), 'check collections - after init')
@@ -108,7 +108,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     # change collection
     group = Group.first
     group.touch
-    sleep 3
+    travel 3.seconds
 
     # get whole collections
     result1 = collection_client1.push
@@ -130,6 +130,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(result2.empty?, 'check collections - recall')
     result3 = collection_client3.push
     assert(result3.empty?, 'check collections - recall')
+    travel_back
   end
 
   def check_if_collection_exists(results, collection, attributes = nil)

@@ -38,17 +38,17 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     assert(!result1, 'check ticket_overview_index - recall')
 
     # next check should be empty / no changes
-    sleep 3
+    travel 3.seconds
     result1 = client1.push
     assert(!result1, 'check ticket_overview_index - recall 2')
 
     # create ticket
     ticket = Ticket.create(title: '12323', group_id: 1, priority_id: 1, state_id: 1, customer_id: 1)
-    sleep 3
+    travel 3.seconds
 
     result1 = client1.push
     assert(result1, 'check ticket_overview_index - recall 3')
-    sleep 3
+    travel 3.seconds
 
     # chnage overview
     overviews = Ticket::Overviews.all(
@@ -70,6 +70,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     Sessions::Backend::TicketOverviewList.reset(user.id)
     result1 = client1.push
     assert(result1, 'check ticket_overview_index - recall 7')
+    travel_back
 
   end
 

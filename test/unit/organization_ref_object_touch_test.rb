@@ -81,7 +81,7 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
     assert_equal(ticket.customer.id, customer1.id)
     assert_equal(ticket.organization.id, organization1.id)
 
-    sleep 4
+    travel 4.seconds
 
     organization1.name = 'Ref Object Update Org 1/1'
     organization1.save
@@ -101,7 +101,7 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
       assert(false, 'customer1.updated_at has not been updated')
     end
 
-    sleep 4
+    travel 4.seconds
 
     customer2.organization_id = organization1.id
     customer2.save
@@ -123,5 +123,6 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
 
     delete = ticket.destroy
     assert(delete, 'ticket destroy')
+    travel_back
   end
 end

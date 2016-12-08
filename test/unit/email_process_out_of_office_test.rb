@@ -27,7 +27,7 @@ class EmailProcessOutOfOfficeTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
 
     # exchange out of office example #1
     email_raw_string = "From: me@example.com
@@ -86,7 +86,7 @@ Some Text"
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('closed', ticket.state.name)
-
+    travel_back
   end
 
   test 'process with out of office check - zimbra' do
@@ -113,7 +113,7 @@ Some Text"
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
 
     # exchange out of office example #1
     email_raw_string = "From: me@example.com
@@ -164,7 +164,7 @@ Some Text"
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('closed', ticket.state.name)
-
+    travel_back
   end
 
   test 'process with out of office check - cloud' do
@@ -191,7 +191,7 @@ Some Text"
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
 
     # exchange out of office example #1
     email_raw_string = "From: me@example.com
@@ -237,7 +237,7 @@ Some Text"
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('closed', ticket.state.name)
-
+    travel_back
   end
 
   test 'process with out of office check - gmail' do
@@ -264,7 +264,7 @@ Some Text"
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
 
     # gmail out of office example #1
     email_raw_string = "From: me@example.com
@@ -294,6 +294,7 @@ Some Text 2"
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('open', ticket_p.state.name)
+    travel_back
   end
 
 end
