@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class SearchControllerTest < ActionDispatch::IntegrationTest
-  setup do
+  def base_data
 
     # clear cache
     Cache.clear
@@ -192,6 +192,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'settings index with nobody' do
+    base_data
 
     params = {
       query: 'test 1234',
@@ -222,6 +223,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'settings index with admin' do
+    base_data
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('search-admin@example.com', 'adminpw')
 
@@ -295,6 +297,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'settings index with agent' do
+    base_data
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('search-agent@example.com', 'agentpw')
 
@@ -368,6 +371,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'settings index with customer 1' do
+    base_data
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('search-customer1@example.com', 'customer1pw')
 
@@ -413,6 +417,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'settings index with customer 2' do
+    base_data
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('search-customer2@example.com', 'customer2pw')
 

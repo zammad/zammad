@@ -32,6 +32,8 @@ class EmailProcessBounceTest < ActiveSupport::TestCase
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('new', ticket_p.state.name)
+    travel_back
+    ticket.destroy
   end
 
 end

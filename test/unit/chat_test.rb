@@ -351,7 +351,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(1, agent_state[:seads_available])
     assert_equal(4, agent_state[:seads_total])
     assert_equal(false, agent_state[:active])
-
+    travel_back
   end
 
 end

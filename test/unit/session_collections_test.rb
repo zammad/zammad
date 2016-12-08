@@ -130,6 +130,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(result2.empty?, 'check collections - recall')
     result3 = collection_client3.push
     assert(result3.empty?, 'check collections - recall')
+    travel_back
   end
 
   def check_if_collection_exists(results, collection, attributes = nil)

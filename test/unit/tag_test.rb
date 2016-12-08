@@ -359,6 +359,6 @@ class TagTest < ActiveSupport::TestCase
     assert_not_equal(ticket1_lookup4.updated_at.to_s, ticket1_lookup3.updated_at.to_s)
     ticket2_lookup4 = Ticket.lookup(id: ticket2.id)
     assert_not_equal(ticket2_lookup4.updated_at.to_s, ticket2_lookup3.updated_at.to_s)
-
+    travel_back
   end
 end

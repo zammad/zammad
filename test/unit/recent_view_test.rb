@@ -54,6 +54,7 @@ class RecentViewTest < ActiveSupport::TestCase
 
     list = RecentView.list(user1)
     assert(!list[0], 'check if recent view list is empty')
+    travel_back
   end
 
   test 'existing tests' do
