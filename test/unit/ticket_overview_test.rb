@@ -452,6 +452,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     assert_equal(result[2][:tickets].class, Array)
     assert(result[2][:tickets].empty?)
 
+    travel 1.second # because of mysql millitime issues
     ticket2 = Ticket.create(
       title: 'overview test 2',
       group: Group.lookup(name: 'OverviewTest'),
@@ -548,6 +549,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     assert_equal(result[2][:tickets].class, Array)
     assert(result[2][:tickets].empty?)
 
+    travel 1.second # because of mysql millitime issues
     ticket3 = Ticket.create(
       title: 'overview test 3',
       group: Group.lookup(name: 'OverviewTest'),

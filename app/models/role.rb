@@ -52,7 +52,7 @@ get signup roles
 
   Role.signup_roles
 
-returnes
+returns
 
   [role1, role2, ...]
 
@@ -68,7 +68,7 @@ get signup role ids
 
   Role.signup_role_ids
 
-returnes
+returns
 
   [role1, role2, ...]
 

@@ -86,7 +86,7 @@ Some Text"
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('closed', ticket.state.name)
-
+    travel_back
   end
 
   test 'process with out of office check - zimbra' do
@@ -164,7 +164,7 @@ Some Text"
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('closed', ticket.state.name)
-
+    travel_back
   end
 
   test 'process with out of office check - cloud' do
@@ -237,7 +237,7 @@ Some Text"
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('closed', ticket.state.name)
-
+    travel_back
   end
 
   test 'process with out of office check - gmail' do
@@ -294,6 +294,7 @@ Some Text 2"
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('open', ticket_p.state.name)
+    travel_back
   end
 
 end

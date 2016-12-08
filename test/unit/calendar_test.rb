@@ -88,6 +88,7 @@ class CalendarTest < ActiveSupport::TestCase
 
     assert_equal(true, calendar2.default)
     assert_equal(false, calendar3.default)
+    travel_back
   end
 
 end

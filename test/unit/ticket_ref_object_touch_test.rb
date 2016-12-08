@@ -109,11 +109,12 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
     else
       assert(false, 'organization1.updated_at has not been updated')
     end
+    travel_back
   end
 
   test 'c - check if customer (not organization) has been updated' do
 
-    sleep 6
+    travel 8.seconds
     ticket = Ticket.create(
       title: "some title2\n äöüß",
       group: Group.lookup(name: 'Users'),
@@ -162,6 +163,6 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
     else
       assert(true, 'organization1.updated_at has not been updated')
     end
-
+    travel_back
   end
 end

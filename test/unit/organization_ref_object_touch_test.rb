@@ -123,5 +123,6 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
 
     delete = ticket.destroy
     assert(delete, 'ticket destroy')
+    travel_back
   end
 end

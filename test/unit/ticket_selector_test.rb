@@ -995,7 +995,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     ticket_count, tickets = Ticket.selectors(condition, 10)
     assert_equal(ticket_count, 0)
-
+    travel_back
   end
 
 end

@@ -50,6 +50,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     Sessions::CacheIn.delete('last_run_delete')
     result = Sessions::CacheIn.get('last_run_delete')
     assert_equal(nil, nil, 'check delete')
+    travel_back
   end
 
   test 'c session create / update' do
@@ -184,6 +185,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     result2 = collection_client2.push
     assert(!result2, 'check collections - after destroy - recall')
     assert_equal(result1, result2, 'check collections')
+    travel_back
   end
 
   test 'c activity stream' do
@@ -205,6 +207,14 @@ class SessionBasicTest < ActiveSupport::TestCase
     )
     agent1.roles = roles
     assert(agent1.save, 'create/update agent1')
+
+    # create min. on activity record
+    random_name = "Random:#{rand(9_999_999_999)}"
+    Group.create_or_update(
+      name: random_name,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
 
     as_client1 = Sessions::Backend::ActivityStream.new(agent1, {}, false, '123-1', 3)
 
@@ -230,6 +240,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     # get as stream
     result1 = as_client1.push
     assert( result1, 'check as agent1 - recall 3')
+    travel_back
   end
 
   test 'c ticket_create' do
@@ -259,6 +270,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     # get as stream
     result1 = ticket_create_client1.push
     assert(result1, 'check ticket_create - recall 3')
+    travel_back
   end
 
 end

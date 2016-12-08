@@ -6,7 +6,7 @@ class AssetsTest < ActiveSupport::TestCase
 
     roles  = Role.where(name: %w(Agent Admin))
     groups = Group.all
-    org    = Organization.create_or_update(
+    org1   = Organization.create_or_update(
       name: 'some user org',
       updated_by_id: 1,
       created_by_id: 1,
@@ -21,7 +21,7 @@ class AssetsTest < ActiveSupport::TestCase
       active: true,
       updated_by_id: 1,
       created_by_id: 1,
-      organization_id: org.id,
+      organization_id: org1.id,
       roles: roles,
       groups: groups,
     )
@@ -54,10 +54,10 @@ class AssetsTest < ActiveSupport::TestCase
     user3 = User.find(user3.id)
     assets = user3.assets({})
 
-    org = Organization.find(org.id)
-    attributes = org.attributes_with_associations
+    org1 = Organization.find(org1.id)
+    attributes = org1.attributes_with_associations
     attributes.delete('user_ids')
-    assert( diff(attributes, assets[:Organization][org.id]), 'check assets')
+    assert( diff(attributes, assets[:Organization][org1.id]), 'check assets')
 
     user1 = User.find(user1.id)
     attributes = user1.attributes_with_associations
@@ -84,8 +84,8 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user3.id]), 'check assets' )
 
     # touch org, check if user1 has changed
-    sleep 2
-    org2 = Organization.find(org.id)
+    travel 2.seconds
+    org2 = Organization.find(org1.id)
     org2.note = "some note...#{rand(9_999_999_999_999)}"
     org2.save
 
@@ -105,7 +105,7 @@ class AssetsTest < ActiveSupport::TestCase
     assets = user3.assets({})
     attributes = org2.attributes_with_associations
     attributes.delete('user_ids')
-    assert( diff(attributes, assets[:Organization][org.id]), 'check assets')
+    assert( diff(attributes, assets[:Organization][org1.id]), 'check assets')
 
     user1 = User.find(user1.id)
     attributes = user1.attributes_with_associations
@@ -130,6 +130,13 @@ class AssetsTest < ActiveSupport::TestCase
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user3.id]), 'check assets' )
+    travel_back
+
+    user1.destroy
+    user2.destroy
+    user3.destroy
+    org1.destroy
+    org2.destroy
 
   end
 
@@ -148,8 +155,8 @@ class AssetsTest < ActiveSupport::TestCase
       roles: roles,
     )
 
-    roles  = Role.where( name: %w(Customer) )
-    org    = Organization.create_or_update(
+    roles = Role.where( name: %w(Customer) )
+    org   = Organization.create_or_update(
       name: 'some customer org',
       updated_by_id: admin1.id,
       created_by_id: 1,
@@ -261,6 +268,13 @@ class AssetsTest < ActiveSupport::TestCase
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user_new_2.id]), 'check assets' )
+    travel_back
+
+    user1.destroy
+    user2.destroy
+    user3.destroy
+    org.destroy
+    org_new.destroy
 
   end
 
