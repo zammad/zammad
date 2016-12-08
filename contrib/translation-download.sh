@@ -21,6 +21,6 @@ rake db:drop
 
 rm -rf ../tmp/cache*
 
-if [ -n "$(cat ../config/database.yml| grep zammad_test.sqlite3)" ]; then
+if [ -n "$(grep zammad_test.sqlite3 < ../config/database.yml)" ]; then
     rm ../config/database.yml
 fi
