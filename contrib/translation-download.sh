@@ -1,11 +1,9 @@
 #!/bin/bash
 #
-# download localistaions
+# download translations
 #
 
-RAILS_ENV="test"
-
-#set -e
+set -e
 
 # download locales and translations to make a offline installation possible
 gem install bundle

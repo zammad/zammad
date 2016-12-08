@@ -1,0 +1,145 @@
+---
+- locale: bg
+  alias: ''
+  name: Bulgarian (Български)
+  active: true
+- locale: cs
+  alias: ''
+  name: Czech (Česky)
+  active: true
+- locale: da
+  alias: ''
+  name: Dansk
+  active: true
+- locale: de-de
+  alias: de
+  name: Deutsch
+  active: true
+- locale: el
+  alias: ''
+  name: Greek (Ελληνικά)
+  active: true
+- locale: et
+  alias: ''
+  name: Eesti
+  active: true
+- locale: en-us
+  alias: en
+  name: English (United States)
+  active: true
+- locale: en-ca
+  alias: ''
+  name: English (Canada)
+  active: true
+- locale: en-gb
+  alias: ''
+  name: English (Great Britain)
+  active: true
+- locale: es-es
+  alias: es
+  name: Español
+  active: true
+- locale: es-co
+  alias: ''
+  name: Español (Colombia)
+  active: true
+- locale: es-mx
+  alias: ''
+  name: Español (México)
+  active: true
+- locale: fi
+  alias: ''
+  name: Suomi
+  active: true
+- locale: fr-fr
+  alias: fr
+  name: Français
+  active: true
+- locale: fr-ca
+  alias: ''
+  name: Français (Canada)
+  active: true
+- locale: hr
+  alias: ''
+  name: Hrvatski
+  active: true
+- locale: hu
+  alias: ''
+  name: Magyar
+  active: true
+- locale: it-it
+  alias: it
+  name: Italiano
+  active: true
+- locale: ja
+  alias: ''
+  name: Japanese (日本語)
+  active: true
+- locale: lt
+  alias: ''
+  name: Lietuvių kalba
+  active: true
+- locale: lv
+  alias: ''
+  name: Latvijas
+  active: true
+- locale: no-no
+  alias: nb
+  name: Norsk bokmål
+  active: true
+- locale: nl-nl
+  alias: nl
+  name: Nederlands
+  active: true
+- locale: pl
+  alias: ''
+  name: Polski
+  active: true
+- locale: pt-pt
+  alias: pt
+  name: Português
+  active: true
+- locale: pt-br
+  alias: pt
+  name: Português Brasileiro
+  active: true
+- locale: ru
+  alias: ''
+  name: Russian (Русский)
+  active: true
+- locale: sk
+  alias: ''
+  name: Slovak (Slovenčina)
+  active: true
+- locale: sl
+  alias: ''
+  name: Slovenian (Slovenčina)
+  active: true
+- locale: sv-se
+  alias: sv
+  name: Svenska
+  active: true
+- locale: tr
+  alias: ''
+  name: Türkçe
+  active: true
+- locale: uk
+  alias: ''
+  name: Ukrainian (Українська)
+  active: true
+- locale: vi
+  alias: ''
+  name: Vietnam (ViɆt Nam)
+  active: true
+- locale: zh-cn
+  alias: ''
+  name: Chinese (Sim.) (简体中文)
+  active: true
+- locale: zj-tw
+  alias: ''
+  name: Chinese (Tradi.) (正體中文)
+  active: true
+- locale: hi-in
+  alias: hi
+  name: Hindi (हिंदी)
+  active: true
