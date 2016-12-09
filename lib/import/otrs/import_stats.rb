@@ -21,8 +21,6 @@ module Import
         }
       end
 
-      private
-
       def statistic
 
         # check cache
@@ -36,6 +34,8 @@ module Import
         Cache.write('import_otrs_stats', statistic)
         statistic
       end
+
+      private
 
       def base_done
         ::Group.count + ::Ticket::State.count + ::Ticket::Priority.count
