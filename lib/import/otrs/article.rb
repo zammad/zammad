@@ -36,8 +36,7 @@ module Import
       def import(article)
         create_or_update(map(article))
 
-        return if !article['Attachments']
-        return if article['Attachments'].empty?
+        return if article['Attachments'].blank?
 
         Import::OTRS::Article::AttachmentFactory.import(
           attachments:   article['Attachments'],
@@ -69,6 +68,14 @@ module Import
       end
 
       def map(article)
+        mapped = map_default(article)
+        # if no content type is set make sure to remove it
+        # so Zammad can set the default content type
+        mapped.delete(:content_type) if mapped[:content_type].blank?
+        mapped
+      end
+
+      def map_default(article)
         {
           created_by_id: 1,
           updated_by_id: 1,
