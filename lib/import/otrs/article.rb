@@ -5,21 +5,22 @@ module Import
       include Import::OTRS::Helper
 
       MAPPING = {
-        TicketID:   :ticket_id,
-        ArticleID:  :id,
-        Body:       :body,
-        From:       :from,
-        To:         :to,
-        Cc:         :cc,
-        Subject:    :subject,
-        InReplyTo:  :in_reply_to,
-        MessageID:  :message_id,
-        #ReplyTo:   :reply_to,
-        References: :references,
-        Changed:    :updated_at,
-        Created:    :created_at,
-        ChangedBy:  :updated_by_id,
-        CreatedBy:  :created_by_id,
+        TicketID:    :ticket_id,
+        ArticleID:   :id,
+        Body:        :body,
+        From:        :from,
+        To:          :to,
+        Cc:          :cc,
+        Subject:     :subject,
+        InReplyTo:   :in_reply_to,
+        MessageID:   :message_id,
+        #ReplyTo:    :reply_to,
+        References:  :references,
+        ContentType: :content_type,
+        Changed:     :updated_at,
+        Created:     :created_at,
+        ChangedBy:   :updated_by_id,
+        CreatedBy:   :created_by_id,
       }.freeze
 
       def initialize(article)
