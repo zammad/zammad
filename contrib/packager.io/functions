@@ -6,7 +6,7 @@
 function debug() {
     if [ "${DEBUG}" == "yes" ]; then
 	echo "DEBUG MODE ON"
-	set -e
+	set -ex
     fi
 }
 
