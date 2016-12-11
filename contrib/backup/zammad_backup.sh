@@ -17,7 +17,7 @@ delete_old_backups
 if [ -f ${ZAMMAD_DIR}/${DATABASE_CONFIG} ]; then
     get_db_credentials
 else
-    echo "${ZAMMAD_DIR}//${DATABASE_CONFIG} is missing. is zammad configured yet?"
+    echo "${ZAMMAD_DIR}/${DATABASE_CONFIG} is missing. is zammad configured yet?"
     exit 1
 fi
 

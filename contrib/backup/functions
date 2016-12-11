@@ -12,7 +12,7 @@ function get_backup_date () {
 }
 
 function delete_old_backups () {
-    find ${BACKUP_DIR}/*_zammad_*.gz -maxdepth 2 -mindepth 2 -type f -mtime +${HOLD_DAYS} -exec rm -r \;
+    find ${BACKUP_DIR}/*_zammad_*.gz -type f -mtime +${HOLD_DAYS} -exec rm -r \;
 }
 
 function get_db_credentials () {
@@ -43,7 +43,7 @@ function backup_db () {
 	mysqldump --opt --single-transaction ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
     elif [ "${DB_ADAPTER}" == "postgresql" ]; then
 	su -c "pg_dump ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz" postgres
-    else 
+    else
 	echo "ADAPTER not found. if its sqlite backup is already saved in filebackup"
     fi
 }
