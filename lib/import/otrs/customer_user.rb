@@ -48,7 +48,7 @@ module Import
 
         # only update roles if different (reduce sql statements)
         if @local_customer.role_ids == customer[:role_ids]
-          user.delete(:role_ids)
+          customer.delete(:role_ids)
         end
 
         log "update User.find_by(login: #{customer[:login]})"
