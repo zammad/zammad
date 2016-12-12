@@ -1664,7 +1664,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_at: '2016-11-01 13:56:21 UTC',
     )
 
-    # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 7:00-16:00
+    # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 7:00-18:00
     calendar = Calendar.create_or_update(
       name: 'EU',
       timezone: 'Europe/Berlin',
@@ -1841,6 +1841,187 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.escalation_at.gmtime.to_s, '2016-11-09 10:26:36 UTC', 'ticket.escalation_at verify 1')
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2016-11-02 09:00:00 UTC', 'ticket.first_response_escalation_at verify 1')
     assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-11-09 10:26:36 UTC', 'ticket.update_escalation_at verify 1')
+    assert_equal(ticket.close_escalation_at, nil, 'ticket.close_escalation_at verify 1')
+
+    delete = sla.destroy
+    assert(delete, 'sla destroy')
+
+    delete = ticket.destroy
+    assert(delete, 'ticket destroy')
+  end
+
+  test 'ticket sla + observer check' do
+
+    # cleanup
+    delete = Sla.destroy_all
+    assert(delete, 'sla destroy_all')
+    delete = Ticket.destroy_all
+    assert(delete, 'ticket destroy_all')
+
+    ticket = Ticket.create!(
+      title: 'some title observer#1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_at: '2016-11-01 13:56:21 UTC',
+      updated_at: '2016-11-01 13:56:21 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket, 'ticket created')
+    assert_equal(ticket.escalation_at, nil, 'ticket.escalation_at verify')
+
+    article_customer = Ticket::Article.create!(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'web').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2016-11-01 13:56:21 UTC',
+      updated_at: '2016-11-01 13:56:21 UTC',
+    )
+
+    # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 7:00-18:00
+    calendar = Calendar.create_or_update(
+      name: 'EU',
+      timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: {
+          active: true,
+          timeframes: [ ['08:00', '20:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['08:00', '20:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['08:00', '20:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['08:00', '20:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['08:00', '20:00'] ]
+        },
+        sat: {
+          active: false,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        sun: {
+          active: false,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+      },
+      public_holidays: {
+        '2016-11-01' => {
+          'active' => true,
+          'summary' => 'test 1',
+        },
+      },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sla = Sla.create_or_update(
+      name: 'test sla 1',
+      condition: {},
+      calendar_id: calendar.id,
+      first_response_time: 60,
+      update_time: 120,
+      solution_time: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Scheduler.worker(true)
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.escalation_at.gmtime.to_s, '2016-11-02 08:00:00 UTC', 'ticket.escalation_at verify 1')
+    assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2016-11-02 08:00:00 UTC', 'ticket.first_response_escalation_at verify 1')
+    assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-11-02 09:00:00 UTC', 'ticket.update_escalation_at verify 1')
+    assert_equal(ticket.close_escalation_at, nil, 'ticket.close_escalation_at verify 1')
+
+    article_agent = Ticket::Article.create!(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Agent').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2016-11-07 13:26:36 UTC',
+      updated_at: '2016-11-07 13:26:36 UTC',
+    )
+
+    Scheduler.worker(true)
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.escalation_at.gmtime.to_s, '2016-11-07 15:26:36 UTC', 'ticket.escalation_at verify 1')
+    assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2016-11-02 08:00:00 UTC', 'ticket.first_response_escalation_at verify 1')
+    assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-11-07 15:26:36 UTC', 'ticket.update_escalation_at verify 1')
+    assert_equal(ticket.close_escalation_at, nil, 'ticket.close_escalation_at verify 1')
+
+    # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 3:00-18:00
+    calendar.update_attributes(
+      business_hours: {
+        mon: {
+          active: true,
+          timeframes: [ ['04:00', '20:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['04:00', '20:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['04:00', '20:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['04:00', '20:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['04:00', '20:00'] ]
+        },
+        sat: {
+          active: false,
+          timeframes: [ ['04:00', '13:00'] ]
+        },
+        sun: {
+          active: false,
+          timeframes: [ ['04:00', '17:00'] ]
+        },
+      },
+      public_holidays: {
+        '2016-11-01' => {
+          'active' => true,
+          'summary' => 'test 1',
+        },
+      },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Scheduler.worker(true)
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.escalation_at.gmtime.to_s, '2016-11-07 15:26:36 UTC', 'ticket.escalation_at verify 1')
+    assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2016-11-02 04:00:00 UTC', 'ticket.first_response_escalation_at verify 1')
+    assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-11-07 15:26:36 UTC', 'ticket.update_escalation_at verify 1')
     assert_equal(ticket.close_escalation_at, nil, 'ticket.close_escalation_at verify 1')
 
     delete = sla.destroy

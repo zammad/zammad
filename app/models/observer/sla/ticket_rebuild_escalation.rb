@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
-  observe 'sla'
+  observe 'sla', 'calendar'
 
   def after_create(record)
     _rebuild(record)
@@ -31,7 +31,13 @@ class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
 
     # check if condition has changed
     changed = false
-    %w(condition calendar_id first_response_time update_time solution_time).each { |item|
+    fields_to_check = nil
+    fields_to_check = if record.class == Sla
+                        %w(condition calendar_id first_response_time update_time solution_time)
+                      else
+                        %w(timezone business_hours default ical_url public_holidays)
+                      end
+    fields_to_check.each { |item|
       next if !record.changes[item]
       next if record.changes[item][0] == record.changes[item][1]
       changed = true
