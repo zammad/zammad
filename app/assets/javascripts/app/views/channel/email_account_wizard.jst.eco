@@ -1,6 +1,6 @@
 <div class="modal-dialog wizard">
 
-  <form class="modal-content setup wizard js-intro">
+  <form  autocomplete="off" class="modal-content setup wizard js-intro">
     <!-- dummy to prevent chrome to ask for password save -->
     <input style="display:none">
     <input type="password" style="display:none">
@@ -27,7 +27,7 @@
     </div>
   </form>
 
-  <form class="modal-content setup wizard hide js-probe">
+  <form  autocomplete="off" class="modal-content setup wizard hide js-probe">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
@@ -44,7 +44,7 @@
     <div class="modal-footer"></div>
   </form>
 
-  <form class="modal-content setup wizard hide js-test">
+  <form  autocomplete="off" class="modal-content setup wizard hide js-test">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
@@ -61,7 +61,7 @@
     <div class="modal-footer"></div>
   </form>
 
-  <form class="modal-content setup wizard hide js-verify">
+  <form  autocomplete="off" class="modal-content setup wizard hide js-verify">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
@@ -79,7 +79,7 @@
     <div class="modal-footer"></div>
   </form>
 
-  <form class="modal-content setup wizard hide js-inbound">
+  <form  autocomplete="off" class="modal-content setup wizard hide js-inbound">
     <!-- dummy to prevent chrome to ask for password save -->
     <input style="display:none">
     <input type="password" style="display:none">
@@ -106,7 +106,7 @@
     </div>
   </form>
 
-  <form class="modal-content setup wizard hide js-inbound-acknowledge">
+  <form  autocomplete="off" class="modal-content setup wizard hide js-inbound-acknowledge">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
@@ -129,7 +129,7 @@
     </div>
   </form>
 
-  <form class="modal-content setup wizard hide js-outbound">
+  <form  autocomplete="off" class="modal-content setup wizard hide js-outbound">
     <!-- dummy to prevent chrome to ask for password save -->
     <input style="display:none">
     <input type="password" style="display:none">

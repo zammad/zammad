@@ -130,7 +130,7 @@ module Channel::EmailBuild
 
   quoted_in_one_line = Channel::EmailBuild.recipient_line('Somebody @ "Company"', 'some.body@example.com')
 
-returnes
+returns
 
   '"Somebody @ \"Company\"" <some.body@example.com>'
 
