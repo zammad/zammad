@@ -9,7 +9,6 @@ module Import
       MAPPING = {
         Changed: :updated_at,
         Created: :created_at,
-        CreateBy: :created_by_id,
         TicketNumber: :number,
         QueueID: :group_id,
         StateID: :state_id,
@@ -79,7 +78,7 @@ module Import
         {
           owner_id:      owner_id(ticket),
           customer_id:   customer_id(ticket),
-          created_by_id: 1,
+          created_by_id: created_by_id(ticket),
           updated_by_id: 1,
         }
           .merge(from_mapping(ticket))
@@ -119,15 +118,22 @@ module Import
         customer = ticket['CustomerUserID']
 
         return default if !customer
-        user = user_lookup(customer)
 
+        user = user_lookup(customer)
         return user.id if user
 
         first_customer_id = first_customer_id(ticket['Articles'])
-
         return first_customer_id if first_customer_id
 
         default
+      end
+
+      def created_by_id(ticket)
+        default = 1
+        return ticket['CreateBy'] if ticket['CreateBy'].to_i != default
+        return default if ticket['Articles'].blank?
+        return default if ticket['Articles'].first['SenderType'] != 'customer'
+        customer_id(ticket)
       end
 
       def user_lookup(login)
@@ -137,10 +143,11 @@ module Import
       def first_customer_id(articles)
         user_id = nil
         articles.each { |article|
-          next if article['sender'] != 'customer'
-          next if article['from'].empty?
-
-          user_id = article['created_by_id'].to_i
+          next if article['SenderType'] != 'customer'
+          next if article['From'].empty?
+          user = Import::OTRS::ArticleCustomer.find(article)
+          break if !user
+          user_id = user.id
           break
         }
         user_id
