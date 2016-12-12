@@ -221,6 +221,8 @@ class App.ChannelEmailAccountOverview extends App.Controller
   events:
     'click .js-channelNew': 'wizard'
     'click .js-channelDelete': 'delete'
+    'click .js-channelDisable': 'disable'
+    'click .js-channelEnable': 'enable'
     'click .js-channelGroupChange': 'groupChange'
     'click .js-editInbound': 'editInbound'
     'click .js-editOutbound': 'editOutbound'
@@ -327,6 +329,30 @@ class App.ChannelEmailAccountOverview extends App.Controller
       item:      item
       container: @el.closest('.content')
       callback:  @load
+    )
+
+  disable: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Channel.find(id)
+    item.active = false
+    item.save(
+      done: =>
+        @load()
+      fail: =>
+        @load()
+    )
+
+  enable: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Channel.find(id)
+    item.active = true
+    item.save(
+      done: =>
+        @load()
+      fail: =>
+        @load()
     )
 
   groupChange: (e) =>

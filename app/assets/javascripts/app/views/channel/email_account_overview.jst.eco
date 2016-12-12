@@ -41,7 +41,7 @@
   <p><%- @T('You have no configured account right now.') %></p>
 <% else: %>
   <% for channel in @account_channels: %>
-  <div class="action" data-id="<%- channel.id %>">
+  <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%- channel.id %>">
     <div class="action-flow" style="width: 100%;">
       <div class="action-block action-block--flex">
         <div class="horizontal">
@@ -135,7 +135,12 @@
       </div>
     </div>
     <div class="action-controls">
-      <div class="sla-toggle btn btn--danger btn--secondary js-channelDelete"><%- @T('Delete') %></div>
+      <% if channel.active is true: %>
+        <div class="btn btn--secondary js-channelDisable"><%- @T('Disable') %></div>
+      <% else: %>
+        <div class="btn btn--secondary js-channelEnable"><%- @T('Enable') %></div>
+      <% end %>
+      <div class="btn btn--danger btn--secondary js-channelDelete"><%- @T('Delete') %></div>
     </div>
   </div>
   <% end %>
