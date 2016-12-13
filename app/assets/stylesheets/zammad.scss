@@ -1594,7 +1594,6 @@ input[type=time] {
 
 input.timeframe,
 input.time {
-  width: 4.5ch;
   box-sizing: content-box;
   padding: 0 6px;
   line-height: 42px;
@@ -1603,6 +1602,13 @@ input.time {
   &.form-control--small {
     line-height: 31px;
   }
+}
+
+input.timeframe {
+  width: 5.5ch;
+}
+input.time {
+  width: 4.5ch;
 }
 
 input.time.time--12 {
