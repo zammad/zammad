@@ -485,13 +485,21 @@
     },
 
     highlightHour: function() {
+      var time = this.$element.val(),
+        timeArray = time.replace(/[^0-9\:]/g, '').split(':'),
+        hour = timeArray[0] ? timeArray[0].toString() : timeArray.toString(),
+        hour_max_length = hour.toString().length
       this.highlightedUnit = 'hour';
-      this.setSelectionRange(0, 2);
+      this.setSelectionRange(0, hour_max_length);
     },
 
     highlightMinute: function() {
+      var time = this.$element.val(),
+        timeArray = time.replace(/[^0-9\:]/g, '').split(':'),
+        hour = timeArray[0] ? timeArray[0].toString() : timeArray.toString(),
+        hour_max_length = hour.toString().length
       this.highlightedUnit = 'minute';
-      this.setSelectionRange(3, 5);
+      this.setSelectionRange(hour_max_length+1, hour_max_length+3);
     },
 
     highlightSecond: function() {
@@ -790,7 +798,8 @@
 
         hour = timeArray[0] ? timeArray[0].toString() : timeArray.toString();
 
-        if(this.explicitMode && hour.length > 2 && (hour.length % 2) !== 0 ) {
+        var hour_max_length = this.maxHours.toString().length
+        if(this.explicitMode && hour.length > hour_max_length && (hour.length % 2) !== 0 ) {
           this.clear();
           return;
         }
@@ -804,9 +813,9 @@
           hour = hour.slice(0, -2);
         }
 
-        if (hour.length > 2) {
-          minute = hour.slice(-2);
-          hour = hour.slice(0, -2);
+        if (hour.length > hour_max_length) {
+          minute = hour.slice(-hour_max_length);
+          hour = hour.slice(0, -hour_max_length);
         }
 
         if (minute.length > 2) {
@@ -840,7 +849,7 @@
 
         if (hour > this.maxHours) {
           // No day/date handling.
-          hour = this.maxHours - 1;
+          hour = this.maxHours;
         }
 
         if (this.showMeridian) {
