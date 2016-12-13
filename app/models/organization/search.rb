@@ -61,7 +61,9 @@ returns
         items = SearchIndexBackend.search(query, limit, 'Organization')
         organizations = []
         items.each { |item|
-          organizations.push Organization.lookup(id: item[:id])
+          organization = Organization.lookup(id: item[:id])
+          next if !organization
+          organizations.push organization
         }
         return organizations
       end

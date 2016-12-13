@@ -143,7 +143,9 @@ returns
       end
       tickets = []
       items.each { |item|
-        tickets.push Ticket.lookup(id: item[:id])
+        ticket = Ticket.lookup(id: item[:id])
+        next if !ticket
+        tickets.push ticket
       }
       return tickets
     end
