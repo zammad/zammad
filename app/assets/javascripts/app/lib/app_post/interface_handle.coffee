@@ -15,8 +15,9 @@ class App.Run extends App.Controller
     App.Collection.init()
 
     # check if session already exists/try to get session data from server
-    App.Auth.loginCheck()
+    App.Auth.loginCheck(@start)
 
+  start: =>
     # create web socket connection
     App.WebSocket.connect()
 
