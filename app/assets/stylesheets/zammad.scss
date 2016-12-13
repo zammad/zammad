@@ -3684,6 +3684,10 @@ footer {
   font-family: inherit;
 }
 
+.tooltip-inner {
+  max-width: 400px;
+}
+
 .popover {
   font-family: inherit;
   width: 372px;
@@ -7383,11 +7387,11 @@ output {
   .action-flow {
     display: flex;
     flex-wrap: wrap;
-    
+
     &.action-flow--noWrap {
       flex-wrap: nowrap;
     }
-    
+
     &.action-flow--row {
       flex-basis: 100%;
     }
@@ -7403,7 +7407,7 @@ output {
     margin-left: -9px;
     margin-right: -9px;
   }
-  
+
   h2 {
     margin-bottom: 0;
   }
@@ -7412,7 +7416,7 @@ output {
   .action-controls,
   .action-row {
     padding: 10px;
-    
+
     h2:first-child,
     h3:first-child {
       margin-top: 0;
@@ -7428,7 +7432,7 @@ output {
   .action-row {
     flex-basis: 100%;
   }
-  
+
   h3 {
     color: hsl(0,0%,60%);
     margin-top: 0;
@@ -7446,7 +7450,7 @@ output {
     color: hsl(197,16%,65%);
     cursor: default;
   }
-    
+
   .action-flow-icon {
     width: 15px;
     height: 24px;
@@ -7460,15 +7464,15 @@ output {
     display: flex;
     margin-left: auto;
     align-self: flex-end;
-    
+
     .btn {
       align-self: center;
     }
   }
 }
 
-  
-/* 
+
+/*
   datepicker resets some css it potentially inherits when its rendered inside a table
 */
 

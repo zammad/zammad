@@ -60,7 +60,7 @@ class Index extends App.ControllerSubContent
     new App.ControllerGenericNew(
       pageData:
         title: 'SLAs'
-        object: 'Sla'
+        object: 'SLA'
         objects: 'SLAs'
       genericObject: 'Sla'
       container:     @el.closest('.content')

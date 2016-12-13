@@ -108,7 +108,7 @@ class App.ControllerForm extends App.Controller
     if @fullForm
       if !@formClass
         @formClass = ''
-      fieldset = $('<form class="' + @formClass + '" autocomplete="off"><button class="btn">' + App.i18n.translateContent('Submit') + '</button></form>').prepend( fieldset )
+      fieldset = $('<form class="' + @formClass + '" autocomplete="off"><button class="btn">' + App.i18n.translateContent('Submit') + '</button></form>').prepend(fieldset)
 
     # bind form events
     if @events
@@ -117,8 +117,11 @@ class App.ControllerForm extends App.Controller
           evs = eventSelector.split(' ')
           fieldset.find( evs[1] ).bind( evs[0], (e) -> callback(e) )
 
+    # bind tool tips
+    fieldset.find('.js-helpMessage').tooltip()
+
     # return form
-    return fieldset
+    fieldset
 
   ###
 
