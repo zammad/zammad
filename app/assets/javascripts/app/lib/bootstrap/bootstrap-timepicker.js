@@ -838,7 +838,7 @@
           minute = 59;
         }
 
-        if (hour >= this.maxHours) {
+        if (hour > this.maxHours) {
           // No day/date handling.
           hour = this.maxHours - 1;
         }
@@ -859,7 +859,7 @@
         } else if (hour < 12 && timeMode === 2) {
           hour += 12;
         } else {
-          if (hour >= this.maxHours) {
+          if (hour > this.maxHours) {
             hour = this.maxHours - 1;
           } else if ((hour < 0) || (hour === 12 && timeMode === 1)){
             hour = 0;
