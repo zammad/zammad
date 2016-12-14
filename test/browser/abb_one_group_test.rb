@@ -57,9 +57,72 @@ class AgentTicketActionLevel0Test < TestCase
       css: '.modal [name="email"]',
       value: "#{agent}@example.com",
     )
-    exists_not(
-      css: '.modal select[name="group_ids"]',
+    exists(
+      displayed: false,
+      css: '.modal [name="group_ids"]',
     )
+    exists(
+      css: '.modal [name="group_ids"]:checked',
+    )
+    click(
+      css: '.modal button.btn.btn--primary',
+      fast: true,
+    )
+    watch_for(
+      css:   'body div.modal',
+      value: 'Sending',
+    )
+    watch_for_disappear(
+      css:   'body div.modal',
+      value: 'Sending',
+    )
+
+    click(css: '#navigation a[href="#dashboard"]')
+    click(css: '.active.content .tab[data-area="first-steps-widgets"]')
+    watch_for(
+      css:   '.active.content',
+      value: 'Configuration',
+    )
+    click(css: '.active.content .js-inviteAgent')
+    modal_ready()
+    set(
+      css: '.modal [name="firstname"]',
+      value: 'Bob2',
+    )
+    set(
+      css: '.modal [name="lastname"]',
+      value: 'Smith2',
+    )
+    set(
+      css: '.modal [name="email"]',
+      value: "#{agent}2@example.com",
+    )
+
+    # disable agent role
+    uncheck(
+      css: '.modal [name="role_ids"][value=2]',
+    )
+
+    exists(
+      displayed: false,
+      css: '.modal [name="group_ids"]',
+    )
+    exists_not(
+      css: '.modal [name="group_ids"]:checked',
+    )
+
+    # enable agent role
+    check(
+      css: '.modal [name="role_ids"][value=2]',
+    )
+
+    exists(
+      css: '.modal [name="group_ids"]',
+    )
+    exists(
+      css: '.modal [name="group_ids"]:checked',
+    )
+
     click(
       css: '.modal button.btn.btn--primary',
       fast: true,

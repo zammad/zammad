@@ -4,6 +4,8 @@ require 'test_helper'
 
 class EmailProcessTest < ActiveSupport::TestCase
   test 'process simple' do
+    Ticket.destroy_all
+    
     files = [
       {
         data: 'From: me@example.com

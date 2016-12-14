@@ -23,9 +23,7 @@ class Index extends App.ControllerSubContent
       url:   "#{@apiPath}/monitoring/health_check"
       success: (data) =>
         @stopLoading()
-        console.log('111', data, @data)
         return if @data && data.token is @data.token && data.healthy is @data.healthy && data.message is @data.message
-        console.log('222')
         @data = data
         @render()
     )

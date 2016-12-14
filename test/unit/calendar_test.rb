@@ -19,7 +19,7 @@ class CalendarTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
     calendar2 = Calendar.create_or_update(
       name: 'US 2',
       timezone: 'America/Los_Angeles',
@@ -88,6 +88,7 @@ class CalendarTest < ActiveSupport::TestCase
 
     assert_equal(true, calendar2.default)
     assert_equal(false, calendar3.default)
+    travel_back
   end
 
 end

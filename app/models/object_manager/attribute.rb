@@ -663,6 +663,14 @@ to send no browser reload event, pass false
       raise 'At least one letters is needed'
     elsif name =~ /^(destroy|true|false|integer|select|drop|create|alter|index|table|varchar|blob|date|datetime|timestamp)$/
       raise "#{name} is a reserved word, please choose a different one"
+
+    # do not allow model method names as attributes
+    else
+      model = Kernel.const_get(object_lookup.name)
+      record = model.new
+      if record.respond_to?(name.to_sym) && !record.attributes.key?(name)
+        raise "#{name} is a reserved word, please choose a different one"
+      end
     end
     true
   end

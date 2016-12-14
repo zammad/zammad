@@ -1594,7 +1594,6 @@ input[type=time] {
 
 input.timeframe,
 input.time {
-  width: 4.5ch;
   box-sizing: content-box;
   padding: 0 6px;
   line-height: 42px;
@@ -1603,6 +1602,13 @@ input.time {
   &.form-control--small {
     line-height: 31px;
   }
+}
+
+input.timeframe {
+  width: 5.5ch;
+}
+input.time {
+  width: 4.5ch;
 }
 
 input.time.time--12 {
@@ -3682,6 +3688,10 @@ footer {
 
 .tooltip {
   font-family: inherit;
+}
+
+.tooltip-inner {
+  max-width: 400px;
 }
 
 .popover {
@@ -7383,11 +7393,11 @@ output {
   .action-flow {
     display: flex;
     flex-wrap: wrap;
-    
+
     &.action-flow--noWrap {
       flex-wrap: nowrap;
     }
-    
+
     &.action-flow--row {
       flex-basis: 100%;
     }
@@ -7403,7 +7413,7 @@ output {
     margin-left: -9px;
     margin-right: -9px;
   }
-  
+
   h2 {
     margin-bottom: 0;
   }
@@ -7412,7 +7422,7 @@ output {
   .action-controls,
   .action-row {
     padding: 10px;
-    
+
     h2:first-child,
     h3:first-child {
       margin-top: 0;
@@ -7428,7 +7438,7 @@ output {
   .action-row {
     flex-basis: 100%;
   }
-  
+
   h3 {
     color: hsl(0,0%,60%);
     margin-top: 0;
@@ -7446,7 +7456,7 @@ output {
     color: hsl(197,16%,65%);
     cursor: default;
   }
-    
+
   .action-flow-icon {
     width: 15px;
     height: 24px;
@@ -7460,15 +7470,15 @@ output {
     display: flex;
     margin-left: auto;
     align-self: flex-end;
-    
+
     .btn {
       align-self: center;
     }
   }
 }
 
-  
-/* 
+
+/*
   datepicker resets some css it potentially inherits when its rendered inside a table
 */
 

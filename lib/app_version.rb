@@ -55,7 +55,7 @@ types:
   restart_auto -> app is restarting
   config_changed -> config has changed
 
-returnes
+returns
 
   {
     event: 'maintenance'

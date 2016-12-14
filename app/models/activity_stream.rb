@@ -50,11 +50,7 @@ add a new activity entry for an object
 
     # resturn if old entry is really fresh
     if result
-      activity_record_delay = if ENV['ZAMMAD_ACTIVITY_RECORD_DELAY']
-                                ENV['ZAMMAD_ACTIVITY_RECORD_DELAY'].to_i.seconds
-                              else
-                                90.seconds
-                              end
+      activity_record_delay = 90.seconds
       return result if result.created_at.to_i >= ( data[:created_at].to_i - activity_record_delay )
     end
 
@@ -97,13 +93,10 @@ return all activity entries of an user
 =end
 
   def self.list(user, limit)
-    # do not return an activity stream for custoers
+    # do not return an activity stream for customers
     return [] if !user.permissions?('ticket.agent') && !user.permissions?('admin')
 
-    permission_ids = []
-    user.roles.each { |role|
-      permission_ids = permission_ids.concat(role.permission_ids)
-    }
+    permission_ids = user.permissions_with_child_ids
     group_ids = user.group_ids
 
     stream = if group_ids.empty?

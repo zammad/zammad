@@ -19,7 +19,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(false, result, 'check 1 - expired')
 
     # should be expired
-    sleep 2
+    travel 2.seconds
     result = Sessions::CacheIn.expired('last_run_test')
     assert_equal(true, result, 'check 1 - expired')
 
@@ -32,7 +32,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(false, result, 'check 1 - expired')
 
     # ignore expired
-    sleep 2
+    travel 2.seconds
     result = Sessions::CacheIn.get('last_run_test', ignore_expire: true)
     assert_equal(true, result, 'check 1 - ignore_expire')
 
@@ -50,6 +50,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     Sessions::CacheIn.delete('last_run_delete')
     result = Sessions::CacheIn.get('last_run_delete')
     assert_equal(nil, nil, 'check delete')
+    travel_back
   end
 
   test 'c session create / update' do
@@ -124,14 +125,14 @@ class SessionBasicTest < ActiveSupport::TestCase
     # next check should be empty
     result1 = collection_client1.push
     assert(!result1, 'check collections - recall')
-    sleep 1
+    travel 1.second
     result2 = collection_client2.push
     assert(!result2, 'check collections - recall')
 
     # change collection
     group = Group.first
     group.touch
-    sleep 4
+    travel 4.seconds
 
     # get whole collections
     result1 = collection_client1.push
@@ -149,7 +150,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # change collection
     group = Group.create(name: "SomeGroup::#{rand(999_999)}", active: true)
-    sleep 4
+    travel 4.seconds
 
     # get whole collections
     result1 = collection_client1.push
@@ -159,7 +160,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(result1, result2, 'check collections')
 
     # check again after create
-    sleep 4
+    travel 4.seconds
     result1 = collection_client1.push
     assert(!result1, 'check collections - after create - recall')
     result2 = collection_client2.push
@@ -168,7 +169,7 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # change collection
     group.destroy
-    sleep 4
+    travel 4.seconds
 
     # get whole collections
     result1 = collection_client1.push
@@ -178,12 +179,13 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(result1, result2, 'check collections')
 
     # check again after destroy
-    sleep 4
+    travel 4.seconds
     result1 = collection_client1.push
     assert(!result1, 'check collections - after destroy - recall')
     result2 = collection_client2.push
     assert(!result2, 'check collections - after destroy - recall')
     assert_equal(result1, result2, 'check collections')
+    travel_back
   end
 
   test 'c activity stream' do
@@ -206,30 +208,39 @@ class SessionBasicTest < ActiveSupport::TestCase
     agent1.roles = roles
     assert(agent1.save, 'create/update agent1')
 
+    # create min. on activity record
+    random_name = "Random:#{rand(9_999_999_999)}"
+    Group.create_or_update(
+      name: random_name,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
     as_client1 = Sessions::Backend::ActivityStream.new(agent1, {}, false, '123-1', 3)
 
     # get as stream
     result1 = as_client1.push
     assert(result1, 'check as agent1')
-    sleep 1
+    travel 1.second
 
     # next check should be empty
     result1 = as_client1.push
     assert(!result1, 'check as agent1 - recall')
 
     # next check should be empty
-    sleep 4
+    travel 4.seconds
     result1 = as_client1.push
     assert(!result1, 'check as agent1 - recall 2')
 
     agent1.update_attribute(:email, 'activity-stream-agent11@example.com')
     ticket = Ticket.create(title: '12323', group_id: 1, priority_id: 1, state_id: 1, customer_id: 1)
 
-    sleep 4
+    travel 4.seconds
 
     # get as stream
     result1 = as_client1.push
     assert( result1, 'check as agent1 - recall 3')
+    travel_back
   end
 
   test 'c ticket_create' do
@@ -254,11 +265,12 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     Group.create(name: "SomeTicketCreateGroup::#{rand(999_999)}", active: true)
 
-    sleep 4
+    travel 4.seconds
 
     # get as stream
     result1 = ticket_create_client1.push
     assert(result1, 'check ticket_create - recall 3')
+    travel_back
   end
 
 end

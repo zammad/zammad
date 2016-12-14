@@ -380,6 +380,32 @@ returns
 
 =begin
 
+returns all accessable permission ids of user
+
+  user = User.find(123)
+  user.permissions_with_child_ids
+
+returns
+
+  [permission1_id, permission2_id, permission3_id]
+
+=end
+
+  def permissions_with_child_ids
+    where = ''
+    where_bind = [true]
+    permissions.each { |permission_name, _value|
+      where += ' OR ' if where != ''
+      where += 'permissions.name = ? OR permissions.name LIKE ?'
+      where_bind.push permission_name
+      where_bind.push "#{permission_name}.%"
+    }
+    return [] if where == ''
+    Object.const_get('Permission').where("permissions.active = ? AND (#{where})", *where_bind).pluck(:id)
+  end
+
+=begin
+
 get all users with permission
 
   users = User.with_permissions('admin.session')

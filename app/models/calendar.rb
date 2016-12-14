@@ -68,7 +68,7 @@ returns calendar object
 
 =begin
 
-returnes preset of ical feeds
+returns preset of ical feeds
 
   feeds = Calendar.ical_feeds
 

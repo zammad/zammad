@@ -11,7 +11,7 @@ class Permission < ApplicationModel
 
   permissions = Permission.with_parents('some_key.sub_key')
 
-returnes
+returns
 
   ['some_key.sub_key', 'some_key']
 

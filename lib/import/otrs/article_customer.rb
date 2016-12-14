@@ -4,44 +4,44 @@ module Import
       include Import::Helper
 
       def initialize(article)
-        user = import(article)
-        return if !user
-        article['created_by_id'] = user.id
+        import(article)
       rescue Exceptions::UnprocessableEntity => e
         log "ERROR: Can't extract customer from Article #{article[:id]}"
+      end
+
+      class << self
+
+        def find(article)
+          email = extract_email(article['From'])
+          user   = ::User.find_by(email: email)
+          user ||= ::User.find_by(login: email)
+          user
+        end
+
+        def extract_email(from)
+          Mail::Address.new(from).address
+        rescue
+          return from if from !~ /<\s*([^\s]+)/
+          $1
+        end
       end
 
       private
 
       def import(article)
-        find_user_or_create(article)
+        find_or_create(article)
       end
 
-      def extract_email(from)
-        Mail::Address.new(from).address
-      rescue
-        return from if from !~ /<\s*([^\s]+)/
-        $1
+      def find_or_create(article)
+        return if self.class.find(article)
+        create(article)
       end
 
-      def find_user_or_create(article)
-        user = user_found?(article)
-        return user if user
-        create_user(article)
-      end
-
-      def user_found?(article)
-        email = extract_email(article['From'])
-        user   = ::User.find_by(email: email)
-        user ||= ::User.find_by(login: email)
-        user
-      end
-
-      def create_user(article)
-        email = extract_email(article['From'])
+      def create(article)
+        email = self.class.extract_email(article['From'])
         ::User.create(
           login:         email,
-          firstname:     extract_display_name(article['from']),
+          firstname:     extract_display_name(article['From']),
           lastname:      '',
           email:         email,
           password:      '',
@@ -53,7 +53,7 @@ module Import
       rescue ActiveRecord::RecordNotUnique
         log "User #{email} was handled by another thread, taking this."
 
-        return if user_found?(article)
+        return if self.class.find(article)
 
         log "User #{email} wasn't created sleep and retry."
         sleep rand 3

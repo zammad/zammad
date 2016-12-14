@@ -3,10 +3,10 @@
 # process all database filter
 module Channel::Filter::Database
 
-  def self.run( _channel, mail )
+  def self.run(_channel, mail)
 
     # process postmaster filter
-    filters = PostmasterFilter.where( active: true, channel: 'email' ).order(:name, :created_at)
+    filters = PostmasterFilter.where(active: true, channel: 'email').order(:name, :created_at)
     filters.each { |filter|
       Rails.logger.info " process filter #{filter.name} ..."
       all_matches_ok = true

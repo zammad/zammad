@@ -21,7 +21,7 @@ class App.Auth
         params.error(xhr, statusText, error)
     )
 
-  @loginCheck: ->
+  @loginCheck: (callback) ->
     params =
       fingerprint: App.Browser.fingerprint()
     App.Log.debug 'Auth', 'loginCheck'
@@ -35,6 +35,9 @@ class App.Auth
 
         # set login (config, session, ...)
         @_login(data, 'check')
+
+        if callback
+          callback()
 
       error: (xhr, statusText, error) =>
         @_loginError()

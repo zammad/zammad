@@ -208,19 +208,19 @@ class ChatTest < ActiveSupport::TestCase
       content: 'message 1',
       created_by_id: agent1.id,
     )
-    sleep 1
+    travel 1.second
     Chat::Message.create(
       chat_session_id: chat_session6.id,
       content: 'message 2',
       created_by_id: agent1.id,
     )
-    sleep 1
+    travel 1.second
     Chat::Message.create(
       chat_session_id: chat_session6.id,
       content: 'message 3',
       created_by_id: agent1.id,
     )
-    sleep 1
+    travel 1.second
     Chat::Message.create(
       chat_session_id: chat_session6.id,
       content: 'message 4',
@@ -351,7 +351,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(1, agent_state[:seads_available])
     assert_equal(4, agent_state[:seads_total])
     assert_equal(false, agent_state[:active])
-
+    travel_back
   end
 
 end

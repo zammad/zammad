@@ -407,6 +407,26 @@ class ObjectManagerTest < ActiveSupport::TestCase
     }
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
+    assert_raises(RuntimeError) {
+      attribute18 = ObjectManager::Attribute.add(
+        object: 'Ticket',
+        name: 'delete',
+        display: 'Test 18',
+        data_type: 'input',
+        data_option: {
+          maxlength: 200,
+          type: 'text',
+          null: false,
+        },
+        active: true,
+        screens: {},
+        position: 20,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+    }
+    assert_equal(false, ObjectManager::Attribute.pending_migration?)
+
   end
 
   test 'b object manager attribute' do

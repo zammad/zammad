@@ -452,6 +452,7 @@ class EmailNotification extends App.WizardFullScreen
         { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
         { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
         { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
+        { name: 'options::port',     display: 'Port',     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
@@ -479,7 +480,7 @@ class EmailNotification extends App.WizardFullScreen
       success: (data, status, xhr) =>
         if data.result is 'ok'
           for key, value of data.settings
-            App.Config.set( key, value )
+            App.Config.set(key, value)
           if App.Config.get('system_online_service')
             @navigate 'getting_started/channel/email_pre_configured'
           else
@@ -674,13 +675,40 @@ class ChannelEmail extends App.WizardFullScreen
       { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
       { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
+      { name: 'options::ssl',       display: 'SSL',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
+      { name: 'options::port',      display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
     ]
+
+    showHideFolder = (params, attribute, attributes, classname, form, ui) ->
+      return if !params
+      if params.adapter is 'imap'
+        ui.show('options::folder')
+        return
+      ui.hide('options::folder')
+
+    handlePort = (params, attribute, attributes, classname, form, ui) ->
+      return if !params
+      return if !params.options
+      currentPort = @$('.base-inbound-settings [name="options::port"]').val()
+      if params.options.ssl is true
+        if !currentPort || currentPort is '143'
+          @$('.base-inbound-settings [name="options::port"]').val('993')
+        return
+      if params.options.ssl is false
+        if !currentPort || currentPort is '993'
+          @$('.base-inbound-settings [name="options::port"]').val('143')
+        return
+
     new App.ControllerForm(
       el:    @$('.base-inbound-settings'),
       model:
         configure_attributes: configureAttributesInbound
         className: ''
       params: @account.inbound
+      handlers: [
+        showHideFolder,
+        handlePort,
+      ]
     )
 
   toggleOutboundAdapter: =>
@@ -699,6 +727,7 @@ class ChannelEmail extends App.WizardFullScreen
         { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
         { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
         { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
+        { name: 'options::port',     display: 'Port',     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')

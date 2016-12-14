@@ -1,5 +1,5 @@
 <div class="modal-dialog">
-  <form>
+  <form autocomplete="off">
     <div class="modal-content">
       <div class="modal-header">
   <% if @buttonClose: %>
