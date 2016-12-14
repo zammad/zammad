@@ -166,7 +166,7 @@ returns
     else
       query_condition, bind_condition, tables = selector2sql(condition)
       tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
-                          .from("tickets#{tables}")
+                          .joins(tables)
                           .where(access_condition)
                           .where(query_condition, *bind_condition)
                           .order('tickets.created_at DESC')
