@@ -1,16 +1,33 @@
 # Change Log
 
-## [1.0.1](https://github.com/zammad/zammad/tree/1.0.1) (2016-11-14)
-[Full Changelog](https://github.com/zammad/zammad/compare/1.0.0...1.0.1)
+## [1.0.2](https://github.com/zammad/zammad/tree/1.0.2) (2016-12-14)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.0.1...1.0.2)
 
 **Implemented enhancements:**
 
-- Missing translation/edit abilities \(Notification mails, contact form\) [\#388](https://github.com/zammad/zammad/issues/388) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
-- Automatically join users to organizations based on the email address [\#356](https://github.com/zammad/zammad/issues/356) [[feature](https://github.com/zammad/zammad/labels/feature)]
-- Create emails via fetchmail / procmail [\#326](https://github.com/zammad/zammad/issues/326) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
-- Display origin url from tweet/facebook post [\#317](https://github.com/zammad/zammad/issues/317) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
-- Vagrant version [\#253](https://github.com/zammad/zammad/issues/253) [[feature](https://github.com/zammad/zammad/labels/feature)]
-- Page posts from facebook and tweets from twitter as tickets [\#251](https://github.com/zammad/zammad/issues/251) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Provide a Debian Package [\#209](https://github.com/zammad/zammad/issues/209) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+
+**Fixed bugs:**
+- Wrong recipient on reply to Received call [\#206](https://github.com/zammad/zammad/issues/206) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- New users won't get initial user group [\#249](https://github.com/zammad/zammad/issues/249) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- bugfix: added missing join table [\#541](https://github.com/zammad/zammad/pull/541) [[bug](https://github.com/zammad/zammad/labels/bug)] ([TeaMoe](https://github.com/TeaMoe))
+- Object manager allows method names as attributes [\#433](https://github.com/zammad/zammad/issues/433) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Max times for escalation 99 hours [\#418](https://github.com/zammad/zammad/issues/418) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Pending event time after 22:59 jumps back to 22:59 [\#329](https://github.com/zammad/zammad/issues/329) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- "Get latest Translations" fails\(?\) without error [\#502](https://github.com/zammad/zammad/issues/502) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Token without expiration timestamp expires "01/01/1970"  [\#478](https://github.com/zammad/zammad/issues/478) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- "Password has been changed" email contains unresolved placeholders [\#468](https://github.com/zammad/zammad/issues/468) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Search result won't get updated after focus is lost and new search is started [\#466](https://github.com/zammad/zammad/issues/466) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Missing quotation marks on sender address [\#402](https://github.com/zammad/zammad/issues/402) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- New overview with article conditions not working [\#448](https://github.com/zammad/zammad/issues/448) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Customer should not have the internal attribute to set in customer interface. [\#437](https://github.com/zammad/zammad/issues/437) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to set owner + customer in postmaster/email filter [\#419](https://github.com/zammad/zammad/issues/419) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Can't process email / Error creating ticket with changed Ticket Number Format [\#413](https://github.com/zammad/zammad/issues/413) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- "Ticket will escalate soon" in online notifications is not translated. [\#408](https://github.com/zammad/zammad/issues/408) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
+
+## [1.0.1](https://github.com/zammad/zammad/tree/1.0.1) (2016-11-14)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.0.0...1.0.1)
 
 **Fixed bugs:**
 
