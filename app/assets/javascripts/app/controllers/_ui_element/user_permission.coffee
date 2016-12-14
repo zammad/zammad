@@ -102,11 +102,19 @@ class App.UiElement.user_permission
       if !checked
         if rolesWithGroupPlugin[role_id] is 'group'
           item.find('.js-groupList').addClass('hidden')
+
+          # select groups if only one is available
+          if hideGroups
+            item.find('.js-groupList [name=group_ids]').prop('checked', false)
         return
 
       # if role with groups plugin is selected, show group selection
       if rolesWithGroupPlugin[role_id] is 'group'
         item.find('.js-groupList:not(.js-groupListHide)').removeClass('hidden')
+
+        # select groups if only one is available
+        if hideGroups
+          item.find('.js-groupList [name=group_ids]').prop('checked', true)
 
       for trigger in triggers
         trigger.trigger('change')

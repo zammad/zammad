@@ -547,6 +547,12 @@ class TestCase < Test::Unit::TestCase
     css: '.some_class',
   )
 
+  exists(
+    displayed: false, # true|false
+    browser: browser1,
+    css: '.some_class',
+  )
+
 =end
 
   def exists(params)
@@ -558,6 +564,16 @@ class TestCase < Test::Unit::TestCase
       screenshot(browser: instance, comment: 'exists_failed')
       raise "#{params[:css]} dosn't exist, but should"
     end
+
+    if params.key?(:displayed)
+      if params[:displayed] == true && !instance.find_elements(css: params[:css])[0].displayed?
+        raise "#{params[:css]} is not displayed, but should"
+      end
+      if params[:displayed] == false && instance.find_elements(css: params[:css])[0].displayed?
+        raise "#{params[:css]} is displayed, but should not"
+      end
+    end
+
     true
   end
 
