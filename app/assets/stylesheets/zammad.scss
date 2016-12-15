@@ -107,6 +107,10 @@ blockquote {
   font-size: inherit;
 }
 
+ul {
+  padding-left: 10px;
+}
+
 #app {
   display: flex;
   flex: 1;
@@ -5399,10 +5403,6 @@ footer {
     margin-top: 12px;
   }
 
-  .box ul {
-    padding-left: 10px;
-  }
-
   .box .two-columns {
     margin-left: -4px;
     margin-right: -4px;
@@ -5855,6 +5855,7 @@ footer {
 
   .dropdown ul {
     margin: 0;
+    padding: 0;
   }
 
   .dropdown li,
