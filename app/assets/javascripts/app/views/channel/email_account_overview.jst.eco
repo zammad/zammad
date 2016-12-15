@@ -108,7 +108,7 @@
         <% if !_.isEmpty(channel.last_log_out): %>
         <div class="alert alert--danger">
           <%= channel.last_log_out %>
-        <div>
+        </div>
         <% end %>
 
         <hr>
