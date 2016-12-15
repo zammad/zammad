@@ -189,7 +189,28 @@ class TicketTest < ActiveSupport::TestCase
 
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.state.name, 'closed', 'state verify')
-    assert_equal(ticket.pending_time, nil )
+    assert_equal(ticket.pending_time, nil)
+
+    # delete article
+    article_note = Ticket::Article.create(
+      ticket_id: ticket.id,
+      from: 'some person',
+      subject: 'some note',
+      body: 'some message',
+      internal: true,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.article_count, 7, 'ticket.article_count verify - note')
+
+    article_note.destroy
+
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.article_count, 6, 'ticket.article_count verify - note')
 
     delete = ticket.destroy
     assert(delete, 'ticket destroy')
