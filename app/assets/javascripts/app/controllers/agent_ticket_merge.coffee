@@ -3,6 +3,7 @@ class App.TicketMerge extends App.ControllerModal
   buttonCancel: true
   buttonSubmit: true
   head: 'Merge'
+  large: true
   shown: false
 
   constructor: ->
@@ -56,11 +57,16 @@ class App.TicketMerge extends App.ControllerModal
     @formDisable(e)
     params = @formParam(e.target)
 
+    if !params.master_ticket_number
+      alert(App.i18n.translateInline('%s required!', 'Ticket#'))
+      @formEnable(e)
+      return
+
     # merge tickets
     @ajax(
       id:    'ticket_merge'
       type:  'GET'
-      url:   "#{@apiPath}/ticket_merge/#{@ticket.id}/#{params['master_ticket_number']}"
+      url:   "#{@apiPath}/ticket_merge/#{@ticket.id}/#{params.master_ticket_number}"
       processData: true,
       success: (data, status, xhr) =>
 

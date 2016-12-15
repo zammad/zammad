@@ -813,6 +813,7 @@ class App.ControllerModal extends App.Controller
     @onCancel(e)
 
   submit: (e) =>
+    e.stopPropagation()
     e.preventDefault()
     @onSubmit(e)
 
