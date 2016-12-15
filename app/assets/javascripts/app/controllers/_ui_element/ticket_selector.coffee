@@ -368,9 +368,11 @@ class App.UiElement.ticket_selector
       if config.relation is 'User'
         config.multiple = false
         config.nulloption = false
+        config.guess = false
       if config.relation is 'Organization'
         config.multiple = false
         config.nulloption = false
+        config.guess = false
       if config.tag is 'checkbox'
         config.tag = 'select'
       tagSearch = "#{config.tag}_search"
