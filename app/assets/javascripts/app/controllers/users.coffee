@@ -52,7 +52,7 @@ class Index extends App.ControllerSubContent
         display:    'Action'
         className:  'actionCell'
         translation: true
-        width: '222px'
+        width: '200px'
       header.push attribute
       header
 
