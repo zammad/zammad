@@ -64,6 +64,13 @@ module Import
       end
 
       def map(customer)
+        mapped = map_default(customer)
+        mapped[:created_at] ||= DateTime.current
+        mapped[:updated_at] ||= DateTime.current
+        mapped
+      end
+
+      def map_default(customer)
         {
           created_by_id:   1,
           updated_by_id:   1,
