@@ -21,7 +21,7 @@ class App.User extends App.Model
   ]
   @configure_overview = [
 #    'login', 'firstname', 'lastname', 'email', 'updated_at',
-    'login', 'firstname', 'lastname',
+    'login', 'firstname', 'lastname', 'organization'
   ]
 
   uiUrl: ->
