@@ -6,7 +6,7 @@
 
 # Ignore bundler config
 /.bundle
-
+/.rbenv-vars
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
