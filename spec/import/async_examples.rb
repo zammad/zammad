@@ -1,4 +1,4 @@
-RSpec.shared_examples 'Import::OTRS::Async' do
+RSpec.shared_examples 'Import::Async' do
   it 'responds to start_bg' do
     expect(described_class).to respond_to('start_bg')
   end

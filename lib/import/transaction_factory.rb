@@ -7,11 +7,7 @@ module Import
 
     def import(records)
       ActiveRecord::Base.transaction do
-        pre_import_hook(records)
-        records.each do |record|
-          next if skip?(record)
-          backend_class(record).new(record)
-        end
+        import_action(records)
       end
     end
   end
