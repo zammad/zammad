@@ -40,6 +40,7 @@ module Import
         {
           id:                       ticket.id,
           title:                    ticket.subject,
+          owner_id:                 Import::Zendesk::UserFactory.local_id( ticket.assignee ) || 1,
           note:                     ticket.description,
           group_id:                 Import::Zendesk::GroupFactory.local_id( ticket.group_id ) || 1,
           customer_id:              local_user_id,

@@ -11,6 +11,7 @@ RSpec.describe Import::Zendesk::Ticket do
       id:                1337,
       subject:           'The ticket title',
       description:       'An example ticket',
+      assignee:          69,
       requester_id:      42,
       group_id:          909,
       organization_id:   101,
@@ -29,6 +30,7 @@ RSpec.describe Import::Zendesk::Ticket do
       title:                    ticket.subject,
       note:                     ticket.description,
       group_id:                 3,
+      owner_id:                 101,
       customer_id:              local_user_id,
       organization_id:          89,
       state:                    13,
@@ -43,6 +45,7 @@ RSpec.describe Import::Zendesk::Ticket do
     }
 
     expect(Import::Zendesk::UserFactory).to receive(:local_id).with( ticket.requester_id ).and_return(local_user_id)
+    expect(Import::Zendesk::UserFactory).to receive(:local_id).with( ticket.assignee ).and_return(expected_structure[:owner_id])
 
     expect(Import::Zendesk::GroupFactory).to receive(:local_id).with( ticket.group_id ).and_return(expected_structure[:group_id])
     expect(Import::Zendesk::OrganizationFactory).to receive(:local_id).with( ticket.organization_id ).and_return(expected_structure[:organization_id])
@@ -70,6 +73,7 @@ RSpec.describe Import::Zendesk::Ticket do
       id:                1337,
       subject:           'The ticket title',
       description:       'An example ticket',
+      assignee:          69,
       requester_id:      42,
       group_id:          909,
       organization_id:   101,
@@ -88,6 +92,7 @@ RSpec.describe Import::Zendesk::Ticket do
       title:                    ticket.subject,
       note:                     ticket.description,
       group_id:                 3,
+      owner_id:                 101,
       customer_id:              local_user_id,
       organization_id:          89,
       state:                    13,
@@ -102,6 +107,7 @@ RSpec.describe Import::Zendesk::Ticket do
     }
 
     expect(Import::Zendesk::UserFactory).to receive(:local_id).with( ticket.requester_id ).and_return(local_user_id)
+    expect(Import::Zendesk::UserFactory).to receive(:local_id).with( ticket.assignee ).and_return(expected_structure[:owner_id])
 
     expect(Import::Zendesk::GroupFactory).to receive(:local_id).with( ticket.group_id ).and_return(expected_structure[:group_id])
     expect(Import::Zendesk::OrganizationFactory).to receive(:local_id).with( ticket.organization_id ).and_return(expected_structure[:organization_id])
