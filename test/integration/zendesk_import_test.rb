@@ -384,7 +384,7 @@ If you\'re reading this message in your email, click the ticket number link that
 
     checks = [
       {
-        id: 5,
+        message_id: 39_984_258_725,
         data: {
           count: 1,
           1 => {
@@ -396,7 +396,7 @@ If you\'re reading this message in your email, click the ticket number link that
         },
       },
       {
-        id: 7,
+        message_id: 32_817_827_921,
         data: {
           count: 1,
           1 => {
@@ -410,7 +410,7 @@ If you\'re reading this message in your email, click the ticket number link that
     ]
 
     checks.each { |check|
-      article = Ticket::Article.find(check[:id])
+      article = Ticket::Article.find_by(message_id: check[:message_id])
 
       assert_equal(check[:data][:count], article.attachments.count, 'attachemnt count')
 
