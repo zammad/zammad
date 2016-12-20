@@ -418,6 +418,42 @@ returns
 
 =begin
 
+reference if association id check
+
+  model = Model.find(123)
+  attributes = model.association_id_check('attribute_id', value)
+
+returns
+
+  true | false
+
+=end
+
+  def association_id_check(attribute_id, value)
+    return true if value.nil?
+
+    attributes.each { |key, _value|
+      next if key != attribute_id
+
+      # check if id is assigned
+      key_short = key[ key.length - 3, key.length ]
+      next if key_short != '_id'
+      key_short = key[ 0, key.length - 3 ]
+
+      self.class.reflect_on_all_associations.map { |assoc|
+        next if assoc.name.to_s != key_short
+        item = assoc.class_name.constantize
+        return false if !item.respond_to?(:find_by)
+        ref_object = item.find_by(id: value)
+        return false if !ref_object
+        return true
+      }
+    }
+    true
+  end
+
+=begin
+
 set created_by_id & updated_by_id if not given based on UserInfo (current session)
 
 Used as before_create callback, no own use needed

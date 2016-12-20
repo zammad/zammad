@@ -42,6 +42,7 @@ module Channel::Filter::Database
       next if !all_matches_ok
 
       filter[:perform].each { |key, meta|
+        next if !Channel::EmailParser.check_attributes_by_x_headers(key, meta['value'])
         Rails.logger.info "  perform '#{key.downcase}' = '#{meta.inspect}'"
         mail[ key.downcase.to_sym ] = meta['value']
       }

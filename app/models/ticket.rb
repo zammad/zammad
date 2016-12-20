@@ -49,6 +49,7 @@ class Ticket < ApplicationModel
       last_contact_at: true,
       last_contact_agent_at: true,
       last_contact_customer_at: true,
+      preferences: true,
     }
   )
 
@@ -414,7 +415,7 @@ get count of tickets and tickets which match on selector
 
 generate condition query to search for tickets based on condition
 
-  query_condition, bind_condition = selector2sql(params[:condition], current_user)
+  query_condition, bind_condition, tables = selector2sql(params[:condition], current_user)
 
 condition example
 
@@ -879,7 +880,8 @@ result
 
     return if !customer_id
 
-    customer = User.find(customer_id)
+    customer = User.find_by(id: customer_id)
+    return if !customer
     return if organization_id == customer.organization_id
 
     self.organization_id = customer.organization_id
