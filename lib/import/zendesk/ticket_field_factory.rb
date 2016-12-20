@@ -17,7 +17,7 @@ module Import
       # rubocop:disable Style/ModuleFunction
       extend self
 
-      def skip?(field)
+      def skip?(field, *_args)
         # check if the Ticket object already has a same named column / attribute
         # so we want to skip instead of importing it
         Ticket.column_names.include?( local_attribute(field) )

@@ -8,7 +8,7 @@ module Import
 
       private
 
-      def import_loop(records, &import_block)
+      def import_loop(records, *_args, &import_block)
         records.all!(&import_block)
       end
     end

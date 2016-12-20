@@ -7,13 +7,13 @@ module Import
       # rubocop:disable Style/ModuleFunction
       extend self
 
-      def skip?(record)
+      def skip?(record, *_args)
         return true if !importable?(record)
         return true if skip_field?(record['Name'])
         false
       end
 
-      def backend_class(record)
+      def backend_class(record, *_args)
         "Import::OTRS::DynamicField::#{record['FieldType']}".constantize
       end
 

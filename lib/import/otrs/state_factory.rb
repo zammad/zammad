@@ -6,7 +6,7 @@ module Import
       # rubocop:disable Style/ModuleFunction
       extend self
 
-      def pre_import_hook(_records)
+      def pre_import_hook(_records, *_args)
         backup
       end
 
