@@ -254,15 +254,11 @@ class TicketArticlesController < ApplicationController
     article = Ticket::Article.find(params[:id])
     article_permission(article)
 
-    list = Store.list(
-      object: 'Ticket::Article::Mail',
-      o_id: params[:id],
-    )
+    file = article.as_raw
 
     # find file
-    return if !list
+    return if !file
 
-    file = Store.find(list.first)
     send_data(
       file.content,
       filename: file.filename,

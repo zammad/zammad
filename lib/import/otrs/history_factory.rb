@@ -6,12 +6,12 @@ module Import
       # rubocop:disable Style/ModuleFunction
       extend self
 
-      def skip?(record)
+      def skip?(record, *_args)
         return true if !determine_class(record)
         false
       end
 
-      def backend_class(record)
+      def backend_class(record, *_args)
         "Import::OTRS::History::#{determine_class(record)}".constantize
       end
 

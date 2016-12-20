@@ -69,14 +69,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     record.save!
 
     # store mail plain
-    Store.add(
-      object: 'Ticket::Article::Mail',
-      o_id: record.id,
-      data: message.to_s,
-      filename: "ticket-#{ticket.number}-#{record.id}.eml",
-      preferences: {},
-      created_by_id: record.created_by_id,
-    )
+    record.save_as_raw(message.to_s)
 
     # add history record
     recipient_list = ''

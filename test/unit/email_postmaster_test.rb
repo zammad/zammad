@@ -270,6 +270,130 @@ Some Text"
 
     PostmasterFilter.destroy_all
 
+    PostmasterFilter.create(
+      name: 'used',
+      match: {
+        from: {
+          operator: 'contains',
+          value: 'me@example.com',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-group_id' => {
+          value: group1.id,
+        },
+        'x-Zammad-Article-Internal' => {
+          value: true,
+        },
+        'x-Zammad-Ticket-customer_id' => {
+          value: '',
+          value_completion: '',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: ME Bob <me@example.com>
+To: customer@example.com
+Subject: some subject
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+    assert_equal(group1.name, ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('some subject', ticket.title)
+    assert_equal('me@example.com', ticket.customer.email)
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create(
+      name: 'used',
+      match: {
+        from: {
+          operator: 'contains',
+          value: 'me@example.com',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-group_id' => {
+          value: group1.id,
+        },
+        'x-Zammad-Article-Internal' => {
+          value: true,
+        },
+        'x-Zammad-Ticket-customer_id' => {
+          value: 999_999,
+          value_completion: 'xxx',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: ME Bob <me@example.com>
+To: customer@example.com
+Subject: some subject
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+    assert_equal(group1.name, ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('some subject', ticket.title)
+    assert_equal('me@example.com', ticket.customer.email)
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create(
+      name: 'used',
+      match: {
+        from: {
+          operator: 'contains',
+          value: 'me@example.com',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-group_id' => {
+          value: group1.id,
+        },
+        'X-Zammad-Ticket-priority_id' => {
+          value: 888_888,
+        },
+        'x-Zammad-Article-Internal' => {
+          value: true,
+        },
+        'x-Zammad-Ticket-customer_id' => {
+          value: 999_999,
+          value_completion: 'xxx',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: ME Bob <me@example.com>
+To: customer@example.com
+Subject: some subject
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+    assert_equal(group1.name, ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('some subject', ticket.title)
+    assert_equal('me@example.com', ticket.customer.email)
+    assert_equal('2 normal', ticket.priority.name)
+
+    PostmasterFilter.destroy_all
   end
 
 end

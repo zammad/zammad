@@ -18,9 +18,9 @@ class App.Sla extends App.Model
   ]
 
   @description = '''
-**Service-Level-Agreements**, abgekürzt **SLAs**, unterstützen Sie gegenüber Kunden gewisse zeitliche Reaktionen einzuhalten. Somit können Sie z. B. sagen Kunden sollen immer nach spätestens 8 Stunden eine Reaktion von Ihnen bekommen. Falls es zu einer drohenden Unterschreitung oder einer Unterschreitung kommt, weißt Zammad Sie auf solche Ereignisse hin.
+** Service Level Agreements **, abbreviated ** SLAs **, help you to meet certain customers' time-related responses. Thus, for example, you can say customers should always get a response from you after 8 hours at the latest. In the event of an imminent violation or a breach, Zammad will alert you to such events.
 
-Es können **Reaktionszeit** (Zeit zwischen Erstellung eines Tickets und erster Reaktion eines Agenten), **Aktualisierungszeit** (Zeit zwischen Nachfrage eines Kunden und Reaktion eines Agenten) und **Lösungszeit** (Zeit zwischen Erstellung und schließen eines Tickets) definiert werden.
+It can be ** response time ** (time between the creation of a ticket and the first reaction of an agent), ** update time ** (time between a customer's request and an agent's reaction) and ** solution time ** (time between creation and closing a ticket ) To be defined.
 
-Drohenden Unterschreitungen oder Unterschreitungen werden in einer eigenen Ansicht in den Übersichten angezeigt. Zudem können **E-Mail Benachrichtigungen** konfiguriert werden.
+Any violations are displayed in a separate view in the overviews. You can also configure ** e-mail notifications **.
 '''

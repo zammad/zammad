@@ -4,13 +4,6 @@ module Import
 
     # rubocop:disable Style/ModuleFunction
     extend self
-
-    def import(records)
-      pre_import_hook(records)
-      records.each do |record|
-        next if skip?(record)
-        backend_class(record).new(record)
-      end
-    end
+    alias import import_action
   end
 end

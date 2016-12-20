@@ -11,7 +11,17 @@ module Channel::Filter::Trusted
         next if key !~ /^x-zammad/i
         mail.delete(key)
       }
+      return
     end
+
+    # verify values
+    mail.each { |key, value|
+      next if key !~ /^x-zammad/i
+
+      # no assoc exists, remove header
+      next if Channel::EmailParser.check_attributes_by_x_headers(key, value)
+      mail.delete(key.to_sym)
+    }
 
   end
 end
