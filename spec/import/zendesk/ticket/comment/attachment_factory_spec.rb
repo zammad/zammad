@@ -10,10 +10,9 @@ RSpec.describe Import::Zendesk::Ticket::Comment::AttachmentFactory do
     expect(described_class).to receive(:pre_import_hook)
     expect(described_class).to receive(:post_import_hook)
     record         = double()
-    local_article  = double()
+    local_article  = double(attachments: [])
     expect(Class).to receive(:new).with(record, local_article)
-    parameter = double()
-    expect(parameter).to receive(:each).and_yield(record)
+    parameter = [record]
     described_class.import(parameter, local_article)
   end
 end
