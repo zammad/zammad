@@ -15,7 +15,7 @@
           <input type="checkbox" value="<%= group.id %>" name="group_ids" <% if @groupsSelected[group.id]: %>checked<% end %>/>
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
-          <span class="label-text"><%= group.displayName() %> <% if group.note: %>- <span class="help-text"><%= group.note %></span><% end %></span>
+          <span class="label-text"><%= group.displayName() %> <% if group.note: %>- <span class="help-text"><%- group.note %></span><% end %></span>
         </label>
       <% end %>
     </div>
