@@ -8,24 +8,24 @@ Hi there - thanks for filling an issue. Please ensure the following things befor
 * This textblock will be removed automaticly when you submit the issue*
 -->
 
-# Infos:
+### Infos:
 
 * Used Zammad version: 
 * Operating system: 
 * Browser + version: 
 
 
-# Expected behavior:
+### Expected behavior:
 
 * 
 
 
-# Actual behavior:
+### Actual behavior:
 
 * 
 
 
-# Steps to reproduce the behavior:
+### Steps to reproduce the behavior:
 
 * 
 
