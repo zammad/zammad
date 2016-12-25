@@ -4,6 +4,7 @@ Hi there - thanks for filling an issue. Please ensure the following things befor
 - Search existing issues and the CHANGELOG.md for your issue - there might be a solution already
 - Make sure to use the latest version of Zammad if possible
 - Add the `log/production.log` file from your system. Attention: Make sure no confidential data is in it!
+- Please write the issue in english
 
 * This textblock will be removed automaticly when you submit the issue*
 -->
