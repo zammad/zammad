@@ -17,6 +17,7 @@ class App.SettingsAreaLogo extends App.Controller
     localElement.find('.js-loginPreview').html( App.view('generic/login_preview')(
       logoUrl: @logoUrl()
       logoChange: true
+      maintananceChange: false
     ))
     @html localElement
 
