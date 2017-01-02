@@ -572,6 +572,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    travel_back
 
     result = Ticket::Overviews.index(agent1)
     assert_equal(result[0][:overview][:id], overview1.id)

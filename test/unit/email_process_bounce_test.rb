@@ -27,7 +27,7 @@ class EmailProcessBounceTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
     email_raw_string = IO.binread('test/fixtures/mail33-undelivered-mail-returned-to-sender.box')
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket.id, ticket_p.id)

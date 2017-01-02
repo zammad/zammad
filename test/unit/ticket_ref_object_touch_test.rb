@@ -90,7 +90,7 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
       assert(false, 'organization1.updated_at has not been updated')
     end
 
-    sleep 4
+    travel 4.seconds
 
     delete = ticket.destroy
     assert(delete, 'ticket destroy')
@@ -144,7 +144,7 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
       assert(true, 'organization1.updated_at has not been updated')
     end
 
-    sleep 4
+    travel 4.seconds
 
     delete = ticket.destroy
     assert(delete, 'ticket destroy')

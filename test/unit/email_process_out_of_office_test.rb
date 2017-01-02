@@ -27,7 +27,7 @@ class EmailProcessOutOfOfficeTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
 
     # exchange out of office example #1
     email_raw_string = "From: me@example.com
@@ -113,7 +113,7 @@ Some Text"
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
 
     # exchange out of office example #1
     email_raw_string = "From: me@example.com
@@ -191,7 +191,7 @@ Some Text"
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
 
     # exchange out of office example #1
     email_raw_string = "From: me@example.com
@@ -264,7 +264,7 @@ Some Text"
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
 
     # gmail out of office example #1
     email_raw_string = "From: me@example.com

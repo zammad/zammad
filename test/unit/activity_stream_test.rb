@@ -4,7 +4,6 @@ require 'test_helper'
 class ActivityStreamTest < ActiveSupport::TestCase
   admin_user = nil
   current_user = nil
-  activity_record_delay = nil
   test 'aaa - setup' do
     roles = Role.where(name: %w(Admin Agent))
     group = Group.lookup(name: 'Users')
@@ -21,12 +20,6 @@ class ActivityStreamTest < ActiveSupport::TestCase
       created_by_id: 1
     )
     current_user = User.lookup(email: 'nicole.braun@zammad.org')
-
-    activity_record_delay = if ENV['ZAMMAD_ACTIVITY_RECORD_DELAY']
-                              ENV['ZAMMAD_ACTIVITY_RECORD_DELAY'].to_i.seconds
-                            else
-                              90.seconds
-                            end
   end
 
   test 'ticket+user' do
@@ -98,6 +91,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
   end
 
   test 'organization' do
+
     organization = Organization.create(
       name: 'some name',
       updated_by_id: current_user.id,
@@ -169,6 +163,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
   end
 
   test 'user with update check true' do
+
     user = User.create(
       login: 'someemail@example.com',
       email: 'someemail@example.com',
