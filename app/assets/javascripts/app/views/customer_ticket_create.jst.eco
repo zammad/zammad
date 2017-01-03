@@ -3,7 +3,7 @@
     <div class="newTicket">
       <div class="box box--newTicket">
         <div class="page-header">
-          <h1><%- @T( 'New Ticket' ) %></h1>
+          <h1><%- @T('New Ticket') %></h1>
         </div>
 
         <div class="page-content">
@@ -17,7 +17,6 @@
               <div class="ticket-form-middle horizontal two-columns"></div>
               <div class="ticket-form-bottom"></div>
             </div>
-
 
             <div class="form-controls">
               <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
