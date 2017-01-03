@@ -100,7 +100,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert(ticket1, 'ticket created')
     assert_equal(ticket1.customer.id, customer1.id)
     assert_equal(ticket1.organization.id, organization1.id)
-    sleep 1
+    travel 1.second
 
     ticket2 = Ticket.create!(
       title: 'some title2',
@@ -116,7 +116,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert(ticket2, 'ticket created')
     assert_equal(ticket2.customer.id, customer2.id)
     assert_equal(ticket2.organization_id, nil)
-    sleep 1
+    travel 1.second
 
     ticket3 = Ticket.create!(
       title: 'some title3',
@@ -133,7 +133,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     assert(ticket3, 'ticket created')
     assert_equal(ticket3.customer.id, customer2.id)
     assert_equal(ticket3.organization_id, nil)
-    sleep 1
+    travel 1.second
 
     # search not matching
     condition = {
@@ -995,7 +995,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
 
     ticket_count, tickets = Ticket.selectors(condition, 10)
     assert_equal(ticket_count, 0)
-
+    travel_back
   end
 
 end

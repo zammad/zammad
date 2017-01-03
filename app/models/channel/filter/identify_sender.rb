@@ -6,7 +6,7 @@ module Channel::Filter::IdentifySender
 
     customer_user_id = mail[ 'x-zammad-ticket-customer_id'.to_sym ]
     customer_user = nil
-    if !customer_user_id.empty?
+    if customer_user_id.present?
       customer_user = User.lookup(id: customer_user_id)
       if customer_user
         Rails.logger.debug "Took customer form x-zammad-ticket-customer_id header '#{customer_user_id}'."
@@ -16,10 +16,10 @@ module Channel::Filter::IdentifySender
     end
 
     # check if sender exists in database
-    if !customer_user && !mail[ 'x-zammad-customer-login'.to_sym ].empty?
+    if !customer_user && mail[ 'x-zammad-customer-login'.to_sym ].present?
       customer_user = User.find_by(login: mail[ 'x-zammad-customer-login'.to_sym ])
     end
-    if !customer_user && !mail[ 'x-zammad-customer-email'.to_sym ].empty?
+    if !customer_user && mail[ 'x-zammad-customer-email'.to_sym ].present?
       customer_user = User.find_by(email: mail[ 'x-zammad-customer-email'.to_sym ])
     end
     if !customer_user
@@ -64,7 +64,7 @@ module Channel::Filter::IdentifySender
     # find session user
     session_user_id = mail[ 'x-zammad-session-user-id'.to_sym ]
     session_user = nil
-    if !session_user_id.empty?
+    if session_user_id.present?
       session_user = User.lookup(id: session_user_id)
       if session_user
         Rails.logger.debug "Took session form x-zammad-session-user-id header '#{session_user_id}'."

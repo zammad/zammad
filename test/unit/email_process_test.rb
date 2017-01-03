@@ -4,6 +4,8 @@ require 'test_helper'
 
 class EmailProcessTest < ActiveSupport::TestCase
   test 'process simple' do
+    Ticket.destroy_all
+
     files = [
       {
         data: 'From: me@example.com
@@ -2016,8 +2018,9 @@ Some Text',
         success: false,
       },
     ]
-    process(files)
+    assert_process(files)
   end
+
   test 'process trusted' do
     files = [
       {
@@ -2060,8 +2063,36 @@ Some Text',
           },
         },
       },
+      {
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject
+X-Zammad-Ticket-Followup-State: closed
+X-Zammad-Ticket-priority_id: 777777
+X-Zammad-Article-sender_id: 999999
+x-Zammad-Article-type: phone
+x-Zammad-Article-Internal: true
+
+Some Text',
+        channel: {
+          trusted: true,
+        },
+        success: true,
+        result: {
+          0 => {
+            state: 'new',
+            priority: '2 normal',
+            title: 'some subject',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'phone',
+            internal: true,
+          },
+        },
+      },
     ]
-    process(files)
+    assert_process(files)
   end
 
   test 'process not trusted' do
@@ -2095,7 +2126,7 @@ Some Text',
         },
       },
     ]
-    process(files)
+    assert_process(files)
   end
 
   test 'process inactive group - a' do
@@ -2131,7 +2162,7 @@ Some Text',
         },
       },
     ]
-    process(files)
+    assert_process(files)
   end
 
   test 'process inactive group - b' do
@@ -2165,7 +2196,7 @@ Some Text',
         },
       },
     ]
-    process(files)
+    assert_process(files)
 
     Group.all.each {|group|
       next if !group_active_map.key?(group.id)
@@ -2174,7 +2205,7 @@ Some Text',
     }
   end
 
-  def process(files)
+  def assert_process(files)
     files.each { |file|
       result = Channel::EmailParser.new.process(file[:channel]||{}, file[:data], false)
       if file[:success]
@@ -2213,7 +2244,7 @@ Some Text',
             end
           end
         else
-          assert(false, 'ticket not created', file)
+          assert(false, 'ticket not created')
         end
       elsif !file[:success]
         if result && result.class == Array && result[1]

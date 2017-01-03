@@ -5,21 +5,22 @@ module Import
       include Import::OTRS::Helper
 
       MAPPING = {
-        TicketID:   :ticket_id,
-        ArticleID:  :id,
-        Body:       :body,
-        From:       :from,
-        To:         :to,
-        Cc:         :cc,
-        Subject:    :subject,
-        InReplyTo:  :in_reply_to,
-        MessageID:  :message_id,
-        #ReplyTo:   :reply_to,
-        References: :references,
-        Changed:    :updated_at,
-        Created:    :created_at,
-        ChangedBy:  :updated_by_id,
-        CreatedBy:  :created_by_id,
+        TicketID:    :ticket_id,
+        ArticleID:   :id,
+        Body:        :body,
+        From:        :from,
+        To:          :to,
+        Cc:          :cc,
+        Subject:     :subject,
+        InReplyTo:   :in_reply_to,
+        MessageID:   :message_id,
+        #ReplyTo:    :reply_to,
+        References:  :references,
+        ContentType: :content_type,
+        Changed:     :updated_at,
+        Created:     :created_at,
+        ChangedBy:   :updated_by_id,
+        CreatedBy:   :created_by_id,
       }.freeze
 
       def initialize(article)
@@ -35,8 +36,7 @@ module Import
       def import(article)
         create_or_update(map(article))
 
-        return if !article['Attachments']
-        return if article['Attachments'].empty?
+        return if article['Attachments'].blank?
 
         Import::OTRS::Article::AttachmentFactory.import(
           attachments:   article['Attachments'],
@@ -68,6 +68,14 @@ module Import
       end
 
       def map(article)
+        mapped = map_default(article)
+        # if no content type is set make sure to remove it
+        # so Zammad can set the default content type
+        mapped.delete(:content_type) if mapped[:content_type].blank?
+        mapped
+      end
+
+      def map_default(article)
         {
           created_by_id: 1,
           updated_by_id: 1,

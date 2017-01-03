@@ -2,6 +2,8 @@ module Cti
   class CallerId < ApplicationModel
     self.table_name = 'cti_caller_ids'
 
+    DEFAULT_COUNTRY_ID = '49'.freeze
+
 =begin
 
   Cti::CallerId.maybe_add(
@@ -16,22 +18,17 @@ module Cti
 =end
 
     def self.maybe_add(data)
-      records = Cti::CallerId.where(
+      record = find_or_initialize_by(
         caller_id: data[:caller_id],
-        level: data[:level],
-        object: data[:object],
-        o_id: data[:o_id],
-        user_id: data[:user_id],
+        level:     data[:level],
+        object:    data[:object],
+        o_id:      data[:o_id],
+        user_id:   data[:user_id],
       )
-      return if records[0]
-      Cti::CallerId.create(
-        caller_id: data[:caller_id],
-        comment: data[:comment],
-        level: data[:level],
-        object: data[:object],
-        o_id: data[:o_id],
-        user_id: data[:user_id],
-      )
+
+      return record if !record.new_record?
+      record.comment = data[:comment]
+      record.save!
     end
 
 =begin
@@ -45,27 +42,22 @@ returns
 =end
 
     def self.lookup(caller_id)
-      result = Cti::CallerId.where(
-        caller_id: caller_id,
-        level: 'known',
-      ).group(:user_id, :id).order(id: 'DESC').limit(20)
-      if !result[0]
-        result = Cti::CallerId.where(
-          caller_id: caller_id,
-          level: 'maybe',
-        ).group(:user_id, :id).order(id: 'DESC').limit(20)
-      end
-      if !result[0]
-        result = Cti::CallerId.where(
-          caller_id: caller_id,
-        ).order('id DESC').limit(20)
-      end
 
-      # in case do lookups in external sources
-      if !result[0]
-        # ...
-      end
+      result = []
+      ['known', 'maybe', nil].each { |level|
 
+        search_params = {
+          caller_id: caller_id,
+        }
+
+        if level
+          search_params[:level] = level
+        end
+
+        result = Cti::CallerId.where(search_params).group(:user_id, :id).order(id: 'DESC').limit(20)
+
+        break if result.present?
+      }
       result
     end
 
@@ -117,7 +109,7 @@ returns
       attributes.each { |_attribute, value|
         next if value.class != String
         next if value.empty?
-        local_caller_ids = Cti::CallerId.parse_text(value)
+        local_caller_ids = Cti::CallerId.extract_numbers(value)
         next if local_caller_ids.empty?
         caller_ids = caller_ids.concat(local_caller_ids)
       }
@@ -143,15 +135,16 @@ returns
 =end
 
     def self.rebuild
-      Cti::CallerId.delete_all
-      map = config
-      map.each { |item|
-        level = item[:level]
-        model = item[:model]
-        item[:model].find_each(batch_size: 500) do |record|
-          build_item(record, model, level)
-        end
-      }
+      transaction do
+        delete_all
+        config.each { |item|
+          level = item[:level]
+          model = item[:model]
+          item[:model].find_each(batch_size: 500) do |record|
+            build_item(record, model, level)
+          end
+        }
+      end
     end
 
 =begin
@@ -188,7 +181,7 @@ returns
 
 =begin
 
-  caller_ids = Cti::CallerId.parse_text('...')
+  caller_ids = Cti::CallerId.extract_numbers('...')
 
 returns
 
@@ -196,41 +189,26 @@ returns
 
 =end
 
-    def self.parse_text(text)
-      caller_ids = []
+    def self.extract_numbers(text)
+      # see specs for example
+      return [] if !text.is_a?(String)
+      text.scan(/([\d|\s|\-|\(|\)]{6,26})/).map do |match|
+        normalize_number(match[0])
+      end
+    end
 
-      # 022 1234567
-      # 021 123 2345
-      # 0271233211
-      # 021-233-9123
-      # 09 123 32112
-      # 021 2331231 or 021 321123123
-      # 622 32281
-      # 5754321
-      # 092213212
-      # (09)1234321
-      # +41 30 53 00 00 000
-      # +42 160 0000000
-      # +43 (0) 30 60 00 00 00-0
-      # 0043 (0) 30 60 00 00 00-0
-
-      default_country_id = '49'
-      text.gsub!(/([\d|\s|\-|\(|\)]{6,26})/) {
-        number = $1.strip
-        number.sub!(/^00/, '')
-        number.sub!(/\(0\)/, '')
-        number.gsub!(/(\s|\-|\(|\))/, '')
-        if !Phony.plausible?(number)
-          if number =~ /^0/
-            number.gsub!(/^0/, default_country_id)
-          else
-            number = "#{default_country_id}#{number}"
-          end
-          next if !Phony.plausible?(number)
-        end
-        caller_ids.push number
-      }
-      caller_ids
+    def self.normalize_number(number)
+      number = number.gsub(/[\s-]/, '')
+      number.gsub!(/^(00)?(\+?\d\d)\(0?(\d*)\)/, '\\1\\2\\3')
+      number.gsub!(/\D/, '')
+      case number
+      when /^00/
+        number[2..-1]
+      when /^0/
+        DEFAULT_COUNTRY_ID + number[1..-1]
+      else
+        number
+      end
     end
 
     def self.get_comment_preferences(caller_id, direction)
@@ -241,7 +219,7 @@ returns
       preferences_maybe = {}
       preferences_maybe[direction] = []
 
-      lookup(caller_id).each { |record|
+      lookup(extract_numbers(caller_id)).each { |record|
         if record.level == 'known'
           preferences_known[direction].push record
         else

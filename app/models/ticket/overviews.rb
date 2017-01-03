@@ -16,32 +16,31 @@ returns
 =end
 
   def self.all(data)
+    current_user = data[:current_user]
 
     # get customer overviews
-    if data[:current_user].role?('Customer')
-      role_id = Role.lookup(name: 'Customer').id
-      overviews = if data[:current_user].organization_id && data[:current_user].organization.shared
-                    Overview.where(role_id: role_id, active: true).order(:prio)
+    if current_user.permissions?('ticket.customer')
+      overviews = if current_user.organization_id && current_user.organization.shared
+                    Overview.where(role_id: current_user.role_ids, active: true).order(:prio)
                   else
-                    Overview.where(role_id: role_id, organization_shared: false, active: true).order(:prio)
+                    Overview.where(role_id: current_user.role_ids, organization_shared: false, active: true).order(:prio)
                   end
       overviews_list = []
       overviews.each { |overview|
         user_ids = overview.user_ids
-        next if !user_ids.empty? && !user_ids.include?(data[:current_user].id)
+        next if !user_ids.empty? && !user_ids.include?(current_user.id)
         overviews_list.push overview
       }
       return overviews_list
     end
 
     # get agent overviews
-    return if !data[:current_user].role?('Agent')
-    role_id = Role.lookup(name: 'Agent').id
-    overviews = Overview.where(role_id: role_id, active: true).order(:prio)
+    return [] if !current_user.permissions?('ticket.agent')
+    overviews = Overview.where(role_id: current_user.role_ids, active: true).order(:prio)
     overviews_list = []
     overviews.each { |overview|
       user_ids = overview.user_ids
-      next if !user_ids.empty? && !user_ids.include?(data[:current_user].id)
+      next if !user_ids.empty? && !user_ids.include?(current_user.id)
       overviews_list.push overview
     }
     overviews_list
@@ -86,6 +85,7 @@ returns
     overviews = Ticket::Overviews.all(
       current_user: user,
     )
+    return [] if overviews.blank?
 
     # get only tickets with permissions
     access_condition = Ticket.access_condition(user)

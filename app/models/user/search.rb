@@ -61,7 +61,9 @@ returns
         items = SearchIndexBackend.search(query, limit, 'User')
         users = []
         items.each { |item|
-          users.push User.lookup(id: item[:id])
+          user = User.lookup(id: item[:id])
+          next if !user
+          users.push user
         }
         return users
       end

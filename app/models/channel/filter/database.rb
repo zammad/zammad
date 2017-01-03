@@ -3,10 +3,10 @@
 # process all database filter
 module Channel::Filter::Database
 
-  def self.run( _channel, mail )
+  def self.run(_channel, mail)
 
     # process postmaster filter
-    filters = PostmasterFilter.where( active: true, channel: 'email' ).order(:name, :created_at)
+    filters = PostmasterFilter.where(active: true, channel: 'email').order(:name, :created_at)
     filters.each { |filter|
       Rails.logger.info " process filter #{filter.name} ..."
       all_matches_ok = true
@@ -42,6 +42,7 @@ module Channel::Filter::Database
       next if !all_matches_ok
 
       filter[:perform].each { |key, meta|
+        next if !Channel::EmailParser.check_attributes_by_x_headers(key, meta['value'])
         Rails.logger.info "  perform '#{key.downcase}' = '#{meta.inspect}'"
         mail[ key.downcase.to_sym ] = meta['value']
       }

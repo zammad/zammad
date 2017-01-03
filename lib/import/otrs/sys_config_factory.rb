@@ -5,7 +5,7 @@ module Import
       # rubocop:disable Style/ModuleFunction
       extend self
 
-      def import(settings)
+      def import(settings, *_args)
         settings.each do |setting|
           next if direct_copy?(setting)
           next if number_generator?(setting)

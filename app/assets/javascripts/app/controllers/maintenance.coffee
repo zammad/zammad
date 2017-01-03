@@ -22,6 +22,8 @@ class Index extends App.ControllerSubContent
     localElement = $(App.view('maintenance')())
     localElement.find('.js-loginPreview').html( App.view('generic/login_preview')(
       logoUrl: @logoUrl()
+      logoChange: false
+      maintananceChange: true
     ))
 
     localElement.find('.js-textarea').ce({

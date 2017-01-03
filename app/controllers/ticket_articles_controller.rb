@@ -42,7 +42,7 @@ class TicketArticlesController < ApplicationController
     articles = []
 
     if params[:expand]
-      ticket.articles.order('created_at ASC, id ASC').each { |article|
+      ticket.articles.each { |article|
 
         # ignore internal article if customer is requesting
         next if article.internal == true && current_user.permissions?('ticket.customer')
@@ -60,7 +60,7 @@ class TicketArticlesController < ApplicationController
     if params[:full]
       assets = {}
       record_ids = []
-      ticket.articles.order('created_at ASC, id ASC').each { |article|
+      ticket.articles.each { |article|
 
         # ignore internal article if customer is requesting
         next if article.internal == true && current_user.permissions?('ticket.customer')
@@ -75,7 +75,7 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    ticket.articles.order('created_at ASC, id ASC').each { |article|
+    ticket.articles.each { |article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && current_user.permissions?('ticket.customer')
@@ -254,15 +254,11 @@ class TicketArticlesController < ApplicationController
     article = Ticket::Article.find(params[:id])
     article_permission(article)
 
-    list = Store.list(
-      object: 'Ticket::Article::Mail',
-      o_id: params[:id],
-    )
+    file = article.as_raw
 
     # find file
-    return if !list
+    return if !file
 
-    file = Store.find(list.first)
     send_data(
       file.content,
       filename: file.filename,

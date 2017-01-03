@@ -7,7 +7,7 @@
         </div>
 
         <div class="page-content">
-          <form role="form" class="ticket-create">
+          <form role="form" class="ticket-create" autocomplete="off">
             <input type="hidden" name="form_id" value="<%= @form_id %>"/>
 
             <div class="ticket-form-top"></div>

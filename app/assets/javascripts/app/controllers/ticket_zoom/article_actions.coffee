@@ -123,6 +123,13 @@ class App.TicketZoomArticleActions extends App.Controller
         icon: 'reply'
         href: '#'
       }
+    if article.sender.name is 'Agent' && article.type.name is 'phone'
+      actions.push {
+        name: 'reply'
+        type: 'emailReply'
+        icon: 'reply'
+        href: '#'
+      }
     if article.type.name is 'twitter status'
       actions.push {
         name: 'reply'
@@ -284,6 +291,7 @@ class App.TicketZoomArticleActions extends App.Controller
     # get reference article
     article_id = $(e.target).parents('[data-id]').data('id')
     article    = App.TicketArticle.fullLocal(article_id)
+    ticket     = App.Ticket.fullLocal(article.ticket_id)
     type       = App.TicketArticleType.find(article.type_id)
     customer   = App.User.find(article.created_by_id)
 
@@ -304,15 +312,31 @@ class App.TicketZoomArticleActions extends App.Controller
 
     if type.name is 'email' || type.name is 'phone' || type.name is 'web'
 
-      if article.sender.name is 'Agent'
-        articleNew.to = article.to
-      else
-        articleNew.to = article.from
+      if type.name is 'phone'
+
+        # inbound call
+        if article.sender.name is 'Agent'
+          articleNew.to = article.to
+
+        # outbound call
+        else
+          articleNew.to = article.to
 
         # if sender is customer but in article.from is no email, try to get
         # customers email via customer user
         if articleNew.to && !articleNew.to.match(/@/)
-          articleNew.to = article.created_by.email
+          articleNew.to = ticket.customer.email
+
+      else
+        if article.sender.name is 'Agent'
+          articleNew.to = article.to
+        else
+          articleNew.to = article.from
+
+          # if sender is customer but in article.from is no email, try to get
+          # customers email via customer user
+          if articleNew.to && !articleNew.to.match(/@/)
+            articleNew.to = article.created_by.email
 
       # filter for uniq recipients
       recipientAddresses = {}

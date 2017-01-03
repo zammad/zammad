@@ -72,7 +72,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         data: {
           firstname:     'Bob',
           lastname:      'Smith',
-          login:         '1150734731',
+          login:         'bob.smith@znuny.com',
           email:         'bob.smith@znuny.com',
           active:        true,
           phone:         '00114124',
@@ -86,7 +86,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         data: {
           firstname:     'Hansimerkur',
           lastname:      '',
-          login:         '1202726471',
+          login:         'hansimerkur@znuny.com',
           email:         'hansimerkur@znuny.com',
           active:        true,
           lieblingstier: nil,
@@ -99,7 +99,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         data: {
           firstname: 'Bernd',
           lastname:  'Hofbecker',
-          login:     '1202726611',
+          login:     'bernd.hofbecker@znuny.com',
           email:     'bernd.hofbecker@znuny.com',
           active:    true,
         },
@@ -111,7 +111,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         data: {
           firstname: 'Zendesk',
           lastname:  '',
-          login:     '1202737821',
+          login:     'noreply@zendesk.com',
           email:     'noreply@zendesk.com',
           active:    true,
         },
@@ -123,7 +123,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         data: {
           firstname: 'Hans',
           lastname:  'Peter Wurst',
-          login:     '1205512622',
+          login:     'hansimerkur+zd-c1@znuny.com',
           email:     'hansimerkur+zd-c1@znuny.com',
           active:    true,
         },
@@ -384,7 +384,7 @@ If you\'re reading this message in your email, click the ticket number link that
 
     checks = [
       {
-        id: 5,
+        message_id: 39_984_258_725,
         data: {
           count: 1,
           1 => {
@@ -396,7 +396,7 @@ If you\'re reading this message in your email, click the ticket number link that
         },
       },
       {
-        id: 7,
+        message_id: 32_817_827_921,
         data: {
           count: 1,
           1 => {
@@ -410,7 +410,7 @@ If you\'re reading this message in your email, click the ticket number link that
     ]
 
     checks.each { |check|
-      article = Ticket::Article.find(check[:id])
+      article = Ticket::Article.find_by(message_id: check[:message_id])
 
       assert_equal(check[:data][:count], article.attachments.count, 'attachemnt count')
 

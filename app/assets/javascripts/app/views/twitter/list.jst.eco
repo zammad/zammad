@@ -11,7 +11,7 @@
 
 <div class="page-content">
 <% for channel in @channels: %>
-  <div class="action" data-id="<%= channel.id %>">
+  <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%= channel.id %>">
     <div class="action-block action-row">
       <h2><%- @Icon('status', 'supergood-color inline') %> <%= channel.options.user.name %> <span class="text-muted">@<%= channel.options.user.screen_name %></span></h2>
     </div>
@@ -61,8 +61,13 @@
       </div>
     </div>
     <div class="action-controls">
-      <div class="sla-toggle btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
-      <div class="sla-edit btn js-edit"><%- @T('Edit') %></div>
+      <div class="btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
+      <% if channel.active is true: %>
+        <div class="btn btn--secondary js-disable"><%- @T('Disable') %></div>
+      <% else: %>
+        <div class="btn btn--secondary js-enable"><%- @T('Enable') %></div>
+      <% end %>
+      <div class="btn js-edit"><%- @T('Edit') %></div>
     </div>
   </div>
 <% end %>

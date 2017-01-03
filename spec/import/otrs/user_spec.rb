@@ -12,10 +12,16 @@ RSpec.describe Import::OTRS::User do
 
   def updates_with(zammad_structure)
     expect(import_object).to receive(:find_by).and_return(existing_object)
-    expect(existing_object).to receive(:role_ids).and_return([])
+    # we delete the :role_ids from the zammad_structure to make sure that
+    # a) role_ids call returns the initial role_ids
+    # b) and update_attributes gets called without them
+    expect(existing_object).to receive(:role_ids).and_return(zammad_structure.delete(:role_ids))
     expect(existing_object).to receive(:update_attributes).with(zammad_structure)
     expect(import_object).not_to receive(:new)
     start_import_test
+  end
+
+  def role_delete_expecations(role_ids)
   end
 
   def load_user_json(file)
@@ -41,7 +47,7 @@ RSpec.describe Import::OTRS::User do
         'GroupID' => '2',
       }
     ]
-    expect(Import::OTRS::Requester).to receive(:load).with('Queue').and_return(queue_list)
+    allow(Import::OTRS::Requester).to receive(:load).with('Queue').and_return(queue_list)
 
     group_list = [
       {
@@ -50,13 +56,13 @@ RSpec.describe Import::OTRS::User do
       },
       {
         'ID'   => '3',
-        'Name' => 'another_group',
+        'Name' => 'admin',
       },
     ]
-    expect(Import::OTRS::Requester).to receive(:load).with('Group').and_return(group_list)
+    allow(Import::OTRS::Requester).to receive(:load).with('Group').and_return(group_list)
 
-    role_list = [{ 'ID' => '3', 'GroupIDs' => %w(2 3) }]
-    expect(Import::OTRS::Requester).to receive(:load).with('Role').and_return(role_list)
+    role_list = [{ 'ID' => '3', 'GroupIDs' => { '2' => ['rw'], '3' => ['rw'] } }]
+    allow(Import::OTRS::Requester).to receive(:load).with('Role').and_return(role_list)
   end
 
   let(:import_object) { ::User }
@@ -72,7 +78,7 @@ RSpec.describe Import::OTRS::User do
         updated_by_id: 1,
         active: true,
         source: 'OTRS Import',
-        role_ids: [2],
+        role_ids: [2, 1],
         group_ids: ['1'],
         password: '{sha2}9faaba2ab242a99bbb6992e9424386375f6757c17e6484ae570f39d9cad9f28ea',
         updated_at: '2014-04-28 10:53:18',

@@ -77,12 +77,12 @@
     </div>
     <div class="action-controls">
       <% if !calendar.default: %>
-        <div class="sla-toggle btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
-        <div class="sla-toggle btn btn--secondary js-default"><%- @T('Set as Default') %></div>
+        <div class="btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
+        <div class="btn btn--secondary js-default"><%- @T('Set as Default') %></div>
       <% else: %>
         <div class="btn btn--danger btn--secondary is-disabled"><%- @T('Delete') %></div>
       <% end %>
-      <div class="sla-edit btn js-edit"><%- @T('Edit') %></div>
+      <div class="btn js-edit"><%- @T('Edit') %></div>
     </div>
   </div>
   <% end %>

@@ -221,6 +221,8 @@ class App.ChannelEmailAccountOverview extends App.Controller
   events:
     'click .js-channelNew': 'wizard'
     'click .js-channelDelete': 'delete'
+    'click .js-channelDisable': 'disable'
+    'click .js-channelEnable': 'enable'
     'click .js-channelGroupChange': 'groupChange'
     'click .js-editInbound': 'editInbound'
     'click .js-editOutbound': 'editOutbound'
@@ -327,6 +329,30 @@ class App.ChannelEmailAccountOverview extends App.Controller
       item:      item
       container: @el.closest('.content')
       callback:  @load
+    )
+
+  disable: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Channel.find(id)
+    item.active = false
+    item.save(
+      done: =>
+        @load()
+      fail: =>
+        @load()
+    )
+
+  enable: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Channel.find(id)
+    item.active = true
+    item.save(
+      done: =>
+        @load()
+      fail: =>
+        @load()
     )
 
   groupChange: (e) =>
@@ -528,7 +554,8 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
       { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
       { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
-      { name: 'options::port',      display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false },
+      { name: 'options::ssl',       display: 'SSL',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
+      { name: 'options::port',      display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
       { name: 'options::folder',    display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false },
     ]
 
@@ -539,6 +566,19 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
         return
       ui.hide('options::folder')
 
+    handlePort = (params, attribute, attributes, classname, form, ui) ->
+      return if !params
+      return if !params.options
+      currentPort = @$('[name="options::port"]').val()
+      if params.options.ssl is true
+        if !currentPort || currentPort is '143'
+          @$('[name="options::port"]').val('993')
+        return
+      if params.options.ssl is false
+        if !currentPort || currentPort is '993'
+          @$('[name="options::port"]').val('143')
+        return
+
     new App.ControllerForm(
       el:    @$('.base-inbound-settings'),
       model:
@@ -546,7 +586,8 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
         className: ''
       params: @account.inbound
       handlers: [
-        showHideFolder
+        showHideFolder,
+        handlePort,
       ]
     )
 
@@ -593,6 +634,8 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
       # validate form
       errors = @formMeta.validate(params)
       if errors
+        delete errors.password
+      if !_.isEmpty(errors)
         @formValidate(form: e.target, errors: errors)
         return
 
@@ -877,6 +920,7 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
         { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
         { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
         { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
+        { name: 'options::port',     display: 'Port',     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
       ]
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
@@ -902,8 +946,8 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
     @ajax(
       id:   'email_outbound'
       type: 'POST'
-      url:  @apiPath + '/channels/email_notification'
-      data: JSON.stringify( params )
+      url:  "#{@apiPath}/channels/email_notification"
+      data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'

@@ -4,7 +4,7 @@
     <%- @tokens %>
   <% end %>
   <input name="<%- @attribute.name %>_completion" class="user-select token-input js-userSelect" autocapitalize="off" placeholder="<%- @attribute.placeholder %>" autocomplete="off" role="textbox" aria-autocomplete="list" value="<%= @name %>" aria-haspopup="true">
-  <%- @Icon('arrow-down', 'dropdown-arrow') %>
+  <% if @attribute.disableCreateUser isnt true: %><%- @Icon('arrow-down', 'dropdown-arrow') %><% end %>
 </div>
 
 <div class="dropdown-menu" aria-labelledby="customer_id">

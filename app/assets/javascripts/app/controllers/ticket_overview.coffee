@@ -424,11 +424,13 @@ class Table extends App.Controller
         attribute.link = object.uiUrl()
         value
       callbackUserPopover = (value, object, attribute, attributes, refObject) ->
+        return value if !refObject
         attribute.class = 'user-popover'
         attribute.data =
           id: refObject.id
         value
       callbackOrganizationPopover = (value, object, attribute, attributes, refObject) ->
+        return value if !refObject
         attribute.class = 'organization-popover'
         attribute.data =
           id: refObject.id

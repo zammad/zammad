@@ -30,6 +30,20 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
     record.ticket.save
   end
 
+  def after_destroy(record)
+    changed = false
+    if article_count_update(record)
+      changed = true
+    end
+
+    # save ticket
+    if !changed
+      record.ticket.touch
+      return
+    end
+    record.ticket.save
+  end
+
   # get article count
   def article_count_update(record)
     current_count = record.ticket.article_count

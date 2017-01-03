@@ -48,7 +48,7 @@ module Import
 
         # only update roles if different (reduce sql statements)
         if @local_customer.role_ids == customer[:role_ids]
-          user.delete(:role_ids)
+          customer.delete(:role_ids)
         end
 
         log "update User.find_by(login: #{customer[:login]})"
@@ -64,6 +64,13 @@ module Import
       end
 
       def map(customer)
+        mapped = map_default(customer)
+        mapped[:created_at] ||= DateTime.current
+        mapped[:updated_at] ||= DateTime.current
+        mapped
+      end
+
+      def map_default(customer)
         {
           created_by_id:   1,
           updated_by_id:   1,

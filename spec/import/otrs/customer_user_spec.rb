@@ -13,7 +13,10 @@ RSpec.describe Import::OTRS::CustomerUser do
   def updates_with(zammad_structure)
     expect_organization_lookup
     expect(import_object).to receive(:find_by).and_return(existing_object)
-    expect(existing_object).to receive(:role_ids).and_return([]).at_least(:once)
+    # we delete the :role_ids from the zammad_structure to make sure that
+    # a) role_ids call returns the initial role_ids
+    # b) and update_attributes gets called without them
+    expect(existing_object).to receive(:role_ids).and_return(zammad_structure.delete(:role_ids)).at_least(:once)
     expect(existing_object).to receive(:update_attributes).with(zammad_structure)
     expect(import_object).not_to receive(:new)
     start_import_test
@@ -34,7 +37,7 @@ RSpec.describe Import::OTRS::CustomerUser do
   let(:organization) { instance_double(Organization) }
   let(:organization_id) { 1337 }
 
-  context 'Customer User' do
+  context 'regular user' do
 
     let(:object_structure) { load_customer_json('default') }
     let(:zammad_structure) {
@@ -61,6 +64,51 @@ RSpec.describe Import::OTRS::CustomerUser do
         city:            nil,
         country:         nil
       }}
+
+    it 'creates' do
+      creates_with(zammad_structure)
+    end
+
+    it 'updates' do
+      updates_with(zammad_structure)
+    end
+  end
+
+  context 'no timestamps' do
+
+    let(:object_structure) { load_customer_json('no_timestamps') }
+    let(:zammad_structure) {
+      {
+        created_by_id:   '1',
+        updated_by_id:   '1',
+        active:          true,
+        source:          'OTRS Import',
+        organization_id: 1337,
+        role_ids:        [3],
+        updated_at:      DateTime.current,
+        created_at:      DateTime.current,
+        note:            '',
+        email:           'qa100@t-online.de',
+        firstname:       'test669673',
+        lastname:        'test669673',
+        login:           'test669673',
+        password:        'f8be19af2f25837a31eff9131b0e47a5173290652c04a48b49b86474d48825ee',
+        phone:           nil,
+        fax:             nil,
+        mobile:          nil,
+        street:          nil,
+        zip:             nil,
+        city:            nil,
+        country:         nil
+      }}
+
+    before(:each) do
+      travel_to DateTime.current
+    end
+
+    after(:each) do
+      travel_back
+    end
 
     it 'creates' do
       creates_with(zammad_structure)

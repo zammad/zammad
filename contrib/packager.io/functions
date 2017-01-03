@@ -3,6 +3,13 @@
 # packager.io postinstall script functions
 #
 
+function debug() {
+    if [ "${DEBUG}" == "yes" ]; then
+	echo "DEBUG MODE ON"
+	set -ex
+    fi
+}
+
 function detect_os () {
     . /etc/os-release
 
@@ -16,8 +23,20 @@ function detect_os () {
 	OS="UNKNOWN"
     fi
 
-    if [ "${DEBUG_OUTPUT}" == "yes" ]; then
+    if [ "${DEBUG}" == "yes" ]; then
 	echo "OS is ${OS} based"
+    fi
+}
+
+function detect_docker() {
+    if [ -n "$(grep docker < /proc/1/cgroup)" ]; then
+	DOCKER="yes"
+    else 
+	DOCKER="no"
+    fi
+
+    if [ "${DEBUG}" == "yes" ]; then
+	echo "os runs in docker container = ${DOCKER}"
     fi
 }
 
@@ -33,10 +52,15 @@ function detect_initcmd () {
 	INIT_CMD="sysvinit"
     fi
 
-    if [ "${DEBUG_OUTPUT}" == "yes" ]; then
+    if [ "${DOCKER}" == "yes" ]; then
+	INIT_CMD="initctl"
+    fi
+
+    if [ "${DEBUG}" == "yes" ]; then
 	echo "INIT CMD = ${INIT_CMD}"
     fi
 }
+
 
 function detect_database () {
     if [ -n "$(which psql 2> /dev/null)" ]; then
@@ -45,7 +69,7 @@ function detect_database () {
 	ADAPTER="mysql2"
     fi
 
-    if [ "${DEBUG_OUTPUT}" == "yes" ]; then
+    if [ "${DEBUG}" == "yes" ]; then
 	echo "Use ${ADAPTER} adapter in database.yml"
     fi
 }
@@ -77,7 +101,7 @@ function detect_webserver () {
 	fi
     fi
 
-    if [ "${DEBUG_OUTPUT}" == "yes" ]; then
+    if [ "${DEBUG}" == "yes" ]; then
 	echo "Webserver is ${WEBSERVER_CMD}"
     fi
 }

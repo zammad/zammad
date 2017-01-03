@@ -538,13 +538,7 @@ returns
         article.save!
 
         # store mail plain
-        Store.add(
-          object: 'Ticket::Article::Mail',
-          o_id: article.id,
-          data: msg,
-          filename: "ticket-#{ticket.number}-#{article.id}.eml",
-          preferences: {}
-        )
+        article.save_as_raw(msg)
 
         # store attachments
         if mail[:attachments]
@@ -580,6 +574,29 @@ returns
     [ticket, article, session_user, mail]
   end
 
+  def self.check_attributes_by_x_headers(header_name, value)
+    class_name = nil
+    attribute = nil
+    if header_name =~ /^x-zammad-(.+?)-(followup-|)(.*)$/i
+      class_name = $1
+      attribute = $3
+    end
+    return true if !class_name
+    if class_name.downcase == 'article'
+      class_name = 'Ticket::Article'
+    end
+    return true if !attribute
+    key_short = attribute[ attribute.length - 3, attribute.length ]
+    return true if key_short != '_id'
+
+    class_object = Object.const_get(class_name.to_classname)
+    return if !class_object
+    class_instance = class_object.new
+
+    return false if !class_instance.association_id_check(attribute, value)
+    true
+  end
+
   def set_attributes_by_x_headers(item_object, header_name, mail, suffix = false)
 
     # loop all x-zammad-hedaer-* headers
@@ -597,6 +614,8 @@ returns
         if suffix
           header = "x-zammad-#{header_name}-#{suffix}-#{key_short}"
         end
+
+        # only set value on _id if value/reference lookup exists
         if mail[ header.to_sym ]
           Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
           item_object.class.reflect_on_all_associations.map { |assoc|
@@ -606,15 +625,29 @@ returns
             Rails.logger.info "ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
             item = assoc.class_name.constantize
 
+            assoc_object = nil
+            assoc_has_object = false
             if item.respond_to?(:name)
+              assoc_has_object = true
               if item.lookup(name: mail[ header.to_sym ])
-                item_object[key] = item.lookup(name: mail[ header.to_sym ]).id
+                assoc_object = item.lookup(name: mail[ header.to_sym ])
               end
             elsif item.respond_to?(:login)
+              assoc_has_object = true
               if item.lookup(login: mail[ header.to_sym ])
-                item_object[key] = item.lookup(login: mail[ header.to_sym ]).id
+                assoc_object = item.lookup(login: mail[ header.to_sym ])
               end
             end
+
+            next if assoc_has_object == false
+
+            if assoc_object
+              item_object[key] = assoc_object.id
+              next
+            end
+
+            # no assoc exists, remove header
+            mail.delete(header.to_sym)
           }
         end
       end

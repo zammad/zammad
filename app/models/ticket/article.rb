@@ -164,6 +164,54 @@ get body as text with quote sign "> " at the beginning of each line
     body_as_text.word_wrap.message_quote
   end
 
+=begin
+
+get article as raw (e. g. if it's a email, the raw email)
+
+  article = Ticket::Article.find(123)
+  article.as_raw
+
+returns:
+
+  file # Store
+
+=end
+
+  def as_raw
+    list = Store.list(
+      object: 'Ticket::Article::Mail',
+      o_id: id,
+    )
+    return if !list
+    return if list.empty?
+    return if !list[0]
+    list[0]
+  end
+
+=begin
+
+save article as raw (e. g. if it's a email, the raw email)
+
+  article = Ticket::Article.find(123)
+  article.save_as_raw(msg)
+
+returns:
+
+  file # Store
+
+=end
+
+  def save_as_raw(msg)
+    Store.add(
+      object: 'Ticket::Article::Mail',
+      o_id: id,
+      data: msg,
+      filename: "ticket-#{ticket.number}-#{id}.eml",
+      preferences: {},
+      created_by_id: created_by_id,
+    )
+  end
+
   private
 
   # strip not wanted chars

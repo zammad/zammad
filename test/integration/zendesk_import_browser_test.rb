@@ -99,7 +99,7 @@ class ZendeskImportBrowserTest < TestCase
     watch_for(
       css:     '.js-ticket .js-done',
       value:   '143',
-      timeout: 300,
+      timeout: 600,
     )
 
     watch_for(

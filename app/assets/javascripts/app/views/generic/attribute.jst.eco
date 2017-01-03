@@ -1,6 +1,6 @@
 <div class="<%= @attribute.tag %> form-group<%= " #{ @attribute.item_class }" if @attribute.item_class %>">
   <div class="formGroup-label">
-    <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T( @attribute.display ) %> <span><% if !@attribute.null: %>*<% end %></span></label>
+    <label for="<%= @attribute.id %>"<% if @attribute.label_class: %> class="<%= @attribute.label_class %>"<% end %>><%- @T(@attribute.display) %> <span><% if !@attribute.null: %>*<% end %></span></label>
     <%- @item %>
     <% if @bookmarkable: %>
     <div class="align-right js-bookmark formGroup-bookmark">
@@ -8,7 +8,7 @@
     </div>
     <% end %>
     <% if @attribute.note: %>
-    <div class="help-message" title="<%- @Ti( @attribute.note ) + ' ' %>">
+    <div class="help-message js-helpMessage" title="<%- @Ti(@attribute.note) %>">
       <%- @Icon('help') %>
     </div>
     <% end %>
@@ -17,6 +17,6 @@
 	<% if @attribute.remove: %><span><a href="#" class="glyphicon glyphicon-minus"></a></span><% end %>
 	<% if @attribute.add: %><span><a href="#" class="glyphicon glyphicon-plus"></a></span><% end %>
     <span class="help-inline"></span>
-    <span class="help-block"><% if @attribute.help: %><%- @T( @attribute.help ) + ' ' %><% end %><%- @attribute.helpLink %></span>
+    <span class="help-block"><% if @attribute.help: %><%- @T(@attribute.help) %><% end %><%- @attribute.helpLink %></span>
   </div>
 </div>

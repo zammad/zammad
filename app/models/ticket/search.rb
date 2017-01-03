@@ -143,7 +143,9 @@ returns
       end
       tickets = []
       items.each { |item|
-        tickets.push Ticket.lookup(id: item[:id])
+        ticket = Ticket.lookup(id: item[:id])
+        next if !ticket
+        tickets.push ticket
       }
       return tickets
     end
@@ -162,8 +164,9 @@ returns
                           .order('tickets.created_at DESC')
                           .limit(limit)
     else
-      query_condition, bind_condition = selector2sql(condition)
+      query_condition, bind_condition, tables = selector2sql(condition)
       tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
+                          .joins(tables)
                           .where(access_condition)
                           .where(query_condition, *bind_condition)
                           .order('tickets.created_at DESC')

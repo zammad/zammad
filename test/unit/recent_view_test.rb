@@ -29,11 +29,11 @@ class RecentViewTest < ActiveSupport::TestCase
     RecentView.user_log_destroy(user1)
 
     RecentView.log(ticket1.class.to_s, ticket1.id, user1)
-    sleep 1
+    travel 1.second
     RecentView.log(ticket2.class.to_s, ticket2.id, user1)
-    sleep 1
+    travel 1.second
     RecentView.log(ticket1.class.to_s, ticket1.id, user1)
-    sleep 1
+    travel 1.second
     RecentView.log(ticket1.class.to_s, ticket1.id, user1)
 
     list = RecentView.list(user1)
@@ -54,6 +54,7 @@ class RecentViewTest < ActiveSupport::TestCase
 
     list = RecentView.list(user1)
     assert(!list[0], 'check if recent view list is empty')
+    travel_back
   end
 
   test 'existing tests' do

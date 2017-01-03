@@ -5,6 +5,8 @@ class Index extends App.ControllerSubContent
     'click .js-new':       'new'
     'click .js-edit':      'edit'
     'click .js-delete':    'delete'
+    'click .js-disable':   'disable'
+    'click .js-enable':    'enable'
     'click .js-configApp': 'configApp'
 
   constructor: ->
@@ -106,6 +108,30 @@ class Index extends App.ControllerSubContent
       item:      item
       container: @el.closest('.content')
       callback:  @load
+    )
+
+  disable: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Channel.find(id)
+    item.active = false
+    item.save(
+      done: =>
+        @load()
+      fail: =>
+        @load()
+    )
+
+  enable: (e) =>
+    e.preventDefault()
+    id   = $(e.target).closest('.action').data('id')
+    item = App.Channel.find(id)
+    item.active = true
+    item.save(
+      done: =>
+        @load()
+      fail: =>
+        @load()
     )
 
   description: (e) =>

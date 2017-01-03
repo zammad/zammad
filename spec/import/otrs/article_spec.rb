@@ -27,9 +27,8 @@ RSpec.describe Import::OTRS::Article do
   context 'customer phone' do
 
     let(:object_structure) { load_article_json('customer_phone_attachment') }
-
-    it 'creates' do
-      zammad_structure = {
+    let(:zammad_structure) {
+      {
         created_by_id: '3',
         updated_by_id: 1,
         ticket_id:     '730',
@@ -38,6 +37,7 @@ RSpec.describe Import::OTRS::Article do
         from:          '"Betreuter Kunde" <kunde2@kunde.de>,',
         to:            'Postmaster',
         cc:            '',
+        content_type:  'text/plain; charset=utf-8',
         subject:       'test #3',
         in_reply_to:   '',
         message_id:    '',
@@ -48,31 +48,49 @@ RSpec.describe Import::OTRS::Article do
         internal:      false,
         sender_id:     2
       }
+    }
+
+    it 'creates' do
       expect(Import::OTRS::Article::AttachmentFactory).to receive(:import)
       creates_with(zammad_structure)
     end
 
     it 'updates' do
-      zammad_structure = {
-        created_by_id: '3',
-        updated_by_id: 1,
-        ticket_id:     '730',
-        id:            '3970',
-        body:          'test #3',
-        from:          '"Betreuter Kunde" <kunde2@kunde.de>,',
-        to:            'Postmaster',
-        cc:            '',
-        subject:       'test #3',
-        in_reply_to:   '',
-        message_id:    '',
-        references:    '',
-        updated_at:    '2014-11-21 00:21:08',
-        created_at:    '2014-11-21 00:17:41',
-        type_id:       5,
-        internal:      false,
-        sender_id:     2
-      }
       expect(Import::OTRS::Article::AttachmentFactory).to receive(:import)
+      updates_with(zammad_structure)
+    end
+  end
+
+  context 'no content type' do
+
+    let(:object_structure) { load_article_json('no_content_type') }
+    let(:zammad_structure) {
+      {
+        created_by_id: '1',
+        updated_by_id: 1,
+        ticket_id: '999',
+        id: '999',
+        body: "Welcome!\n\nThank you for installing OTRS.\n\nYou will find updates and patches at http://www.otrs.com/open-source/.\nOnline documentation is available at http://doc.otrs.org/.\nYou can also use our mailing lists http://lists.otrs.org/\nor our forums at http://forums.otrs.org/\n\nRegards,\n\nThe OTRS Project\n",
+        from: 'OTRS Feedback <feedback@otrs.org>',
+        to: 'Your OTRS System <otrs@localhost>',
+        cc: nil,
+        subject: 'Welcome to OTRS!',
+        in_reply_to: nil,
+        message_id: '<007@localhost>',
+        references: nil,
+        updated_at: '2014-06-24 09:32:14',
+        created_at: '2010-08-02 14:00:00',
+        type_id: 1,
+        internal: false,
+        sender_id: 2
+      }
+    }
+
+    it 'creates' do
+      creates_with(zammad_structure)
+    end
+
+    it 'updates' do
       updates_with(zammad_structure)
     end
   end

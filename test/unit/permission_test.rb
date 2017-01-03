@@ -123,4 +123,48 @@ class PermissionTest < ActiveSupport::TestCase
 
   end
 
+  test 'user permission with childs' do
+
+    permission1 = Permission.create_or_update(
+      name: 'admin.permission_child1',
+      note: 'Admin Interface',
+      preferences: {},
+      active: true,
+    )
+    permission2 = Permission.create_or_update(
+      name: 'admin.permission_child2',
+      note: 'Admin Interface',
+      preferences: {},
+      active: false,
+    )
+    role_permission1 = Role.create_or_update(
+      name: 'AdminPermissionChild1',
+      note: 'To configure your permission child1.',
+      preferences: {
+        not: ['Customer'],
+      },
+      default_at_signup: false,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    role_permission1.permission_grand('admin')
+    user_with_permission1 = User.create_or_update(
+      login: 'setting-permission-child1',
+      firstname: 'Setting',
+      lastname: 'Admin Permission Child1',
+      email: 'setting-admin-permission-child1@example.com',
+      password: 'some_pw',
+      active: true,
+      roles: [role_permission1],
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(user_with_permission1.permissions_with_child_ids.include?(permission1.id))
+    assert_not(user_with_permission1.permissions_with_child_ids.include?(permission2.id))
+    assert(user_with_permission1.permissions_with_child_ids.include?(Permission.find_by(name: 'admin').id))
+
+    # cleanup
+    user_with_permission1.destroy
+    role_permission1.destroy
+  end
 end

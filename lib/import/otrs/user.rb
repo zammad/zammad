@@ -122,23 +122,23 @@ module Import
         local_roles.uniq
       end
 
-      def groups_from_otrs_groups(user)
+      def groups_from_otrs_groups(role_object)
         groups = Import::OTRS::Requester.load('Group')
-        groups_from_groups(user, groups)
+        groups_from_groups(role_object, groups)
       end
 
-      def groups_from_groups(user, groups)
+      def groups_from_groups(role_object, groups)
         result = []
         groups.each { |group|
-          result += groups_from_otrs_group(user, group)
+          result += groups_from_otrs_group(role_object, group)
         }
         result
       end
 
-      def groups_from_otrs_group(user, group)
+      def groups_from_otrs_group(role_object, group)
         result = []
-        return result if user['GroupIDs'].empty?
-        permissions = user['GroupIDs'][ group['ID'] ]
+        return result if role_object['GroupIDs'].empty?
+        permissions = role_object['GroupIDs'][ group['ID'] ]
 
         return result if !permissions
 
@@ -158,7 +158,7 @@ module Import
         roles  = Import::OTRS::Requester.load('Role')
         roles.each { |role|
           next if !user['RoleIDs'].include?(role['ID'])
-          result += groups_from_groups(user, role['GroupIDs'])
+          result += groups_from_otrs_groups(role['GroupIDs'])
         }
         result
       end

@@ -84,47 +84,48 @@ no reference "
     setting_orig = Setting.get('postmaster_follow_up_search_in')
     Setting.set('postmaster_follow_up_search_in', %w(body attachment references))
 
-    sleep 1
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_subject)
     assert_equal(ticket.id, ticket_p.id)
 
-    sleep 1
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_body)
     assert_equal(ticket.id, ticket_p.id)
 
-    sleep 1
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_attachment)
     assert_equal(ticket.id, ticket_p.id)
 
-    sleep 1
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references1)
     assert_equal(ticket.id, ticket_p.id)
 
-    sleep 1
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references2)
     assert_equal(ticket.id, ticket_p.id)
 
     Setting.set('postmaster_follow_up_search_in', setting_orig)
 
-    sleep 1
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_subject)
     assert_equal(ticket.id, ticket_p.id)
 
-    sleep 1
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_body)
     assert_not_equal(ticket.id, ticket_p.id)
 
-    sleep 1
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_attachment)
     assert_not_equal(ticket.id, ticket_p.id)
 
-    sleep 1
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references1)
     assert_not_equal(ticket.id, ticket_p.id)
 
-    sleep 1
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references2)
     assert_not_equal(ticket.id, ticket_p.id)
+    travel_back
   end
 
   test 'process with follow up check with two external reference headers' do
@@ -141,7 +142,7 @@ test 123
 "
     ticket_p1, article_p1, user_p1 = Channel::EmailParser.new.process({}, data1)
 
-    sleep 1
+    travel 1.second
 
     data1 = "From: me@example.com
 To: z@example.com
@@ -166,7 +167,7 @@ test 123
     assert_equal(ticket_p2.id, ticket_p3.id)
 
     Setting.set('postmaster_follow_up_search_in', setting_orig)
-
+    travel_back
   end
 
   test 'process with follow up check - with auto responses and no T# in subject_build' do
@@ -193,7 +194,7 @@ test 123
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
 
     # auto response without T# in subject, find follow up by references header
     email_raw_string = "From: bob@example.com
@@ -211,6 +212,7 @@ Some Text"
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('open', ticket.state.name)
+    travel_back
   end
 
   test 'process with follow up check - email with more forgein T#\'s in subject' do
@@ -237,7 +239,7 @@ Some Text"
       updated_by_id: 1,
       created_by_id: 1,
     )
-    sleep 1
+    travel 1.second
 
     system_id           = Setting.get('system_id')
     ticket_hook         = Setting.get('ticket_hook')
@@ -255,6 +257,7 @@ Some Text"
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('open', ticket.state.name)
+    travel_back
   end
 
   test 'process with follow up check - ticket initiated by customer without T# in subject and other people in Cc reply to all' do

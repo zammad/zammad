@@ -5,13 +5,9 @@ module Import
     # rubocop:disable Style/ModuleFunction
     extend self
 
-    def import(records)
+    def import(records, *args)
       ActiveRecord::Base.transaction do
-        pre_import_hook(records)
-        records.each do |record|
-          next if skip?(record)
-          backend_class(record).new(record)
-        end
+        import_action(records, *args)
       end
     end
   end

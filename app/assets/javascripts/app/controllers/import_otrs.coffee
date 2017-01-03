@@ -50,7 +50,6 @@ class Index extends App.ControllerContent
     @html App.view('import/otrs')()
 
   startDownload: (e) =>
-    e.preventDefault()
     @$('.js-otrs-link').removeClass('hide')
 
   showLink: (e) =>
