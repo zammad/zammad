@@ -28,6 +28,13 @@ class CustomerTicketCreateTest < TestCase
       css: '.newTicket [data-name="body"]',
       value: 'some body 123äöü',
     )
+    exists_not(
+      css: '.newTicket input[name="customer_id"]',
+    )
+    exists_not(
+      css: '.newTicket input[name="priority_id"]',
+    )
+
     click(css: '.newTicket button.js-submit')
     sleep 5
 
@@ -42,7 +49,7 @@ class CustomerTicketCreateTest < TestCase
 
     # update ticket
     set(
-      css: '.active [data-name="body"]',
+      css: '.content.active [data-name="body"]',
       value: 'some body 1234 äöüß',
       no_click: true,
     )
@@ -51,10 +58,10 @@ class CustomerTicketCreateTest < TestCase
       type: 'stayOnTab',
     )
 
-    click(css: '.active .js-submit')
+    click(css: '.content.active .js-submit')
 
     watch_for(
-      css: '.active div.ticket-article',
+      css: '.content.active div.ticket-article',
       value: 'some body 1234 äöüß',
     )
   end
