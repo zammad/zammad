@@ -1299,7 +1299,7 @@ label,
 fieldset {
   margin: 0 -4px;
   @extend .clearfix;
-  
+
   h2 {
     margin-left: 4px;
     margin-right: 4px;
@@ -1816,7 +1816,7 @@ input.has-error {
     appearance: textfield;
     border-radius: 19px;
     padding: 0 17px 0 42px;
-    
+
     &.is-empty + .empty-search {
       visibility: hidden;
     }
@@ -1831,7 +1831,7 @@ input.has-error {
     height: 41px;
     width: 50px;
     visibility: visible;
-    
+
     .icon {
       position: static;
       opacity: 0.5;
@@ -3092,7 +3092,7 @@ footer {
   .nav-tab-icon .icon.icon-loading {
     animation: rotateplane 1.2s infinite ease-in-out;
     fill: $supergood-color;
-    
+
     /*
       Safari font rendering bugfix while animating
       http://stackoverflow.com/questions/9733011/safari-changing-font-weights-when-unrelated-animations-are-running
@@ -3511,7 +3511,7 @@ footer {
   &.size-50 {
     width: 50px;
     height: 50px;
-      
+
     .icon-crown {
       width: 36px;
       margin-left: -18px;
@@ -3522,7 +3522,7 @@ footer {
   &.size-80 {
     width: 82px;
     height: 82px;
-      
+
     .icon-crown {
       width: 64px;
       margin-left: -32px;
@@ -3541,7 +3541,7 @@ footer {
     text-transform: uppercase;
     text-shadow: 0 1px rgba(0,0,0,.2);
     cursor: default;
-    
+
     &.size-30 {
       font-size: 10px;
       line-height: 32px;
@@ -3810,11 +3810,11 @@ footer {
     position: absolute;
     flex-direction: column;
     @extend .zIndex-5;
-    
+
     &.is-visible {
       display: flex;
     }
-    
+
     &.is-empty .popover-notificationsHeader {
       box-shadow: none;
     }
@@ -3837,7 +3837,7 @@ footer {
         0 2px hsla(240,4%,95%,.2);
       padding-bottom: 14px;
       flex-shrink: 0;
-      
+
       .btn {
         padding-top: 3px;
         padding-bottom: 5px;
@@ -3951,7 +3951,7 @@ footer {
   }
 
   .dashboard .stat-widget {
-    margin: 7px; 
+    margin: 7px;
     background: white;
     border: 1px solid #e5f0f5;
     border-radius: 1px;
@@ -4156,7 +4156,7 @@ footer {
     color: #444a4f;
     flex: 1;
     min-width: 0; /* Firefox wrong content-calculation with word-wrap workaround */
-    
+
     &:hover .activity-text {
       text-decoration: underline;
     }
@@ -4175,7 +4175,7 @@ footer {
     cursor: pointer;
     padding-left: 10px;
     padding-right: 27px;
-    
+
     .activity-remove-icon-holder {
       width: 19px;
       height: 19px;
@@ -4185,7 +4185,7 @@ footer {
       justify-content: center;
       background: hsl(0,0%,80%);
     }
-    
+
     .icon {
       fill: white;
       width: 9px;
@@ -4328,8 +4328,8 @@ footer {
 
 .ticketZoom {
   background: #f8f9fa;
-  /* 
-    force ticket zoom to show scrollbars 
+  /*
+    force ticket zoom to show scrollbars
     because we offset the tabs bar when the os shows scrollbars
   */
   min-height: 101%;
@@ -4487,7 +4487,7 @@ footer {
     border: 1px solid hsl(240,4%,95%);
     box-shadow: 0 0 1px rgba(0,0,0,.06) inset;
     position: relative;
-    
+
     /* email css reset */
     p {
       margin: 0;
@@ -4738,7 +4738,7 @@ footer {
     justify-content: center;
     border-radius: 4px;
     box-shadow: 0 1px 7px rgba(0,8,14,.13);
-    
+
     &.is-hidden {
       display: none;
     }
@@ -4897,7 +4897,7 @@ footer {
       visibility: hidden;
     }
 
-    .recipient-list input::placeholder { 
+    .recipient-list input::placeholder {
       color: #666;
     }
 
@@ -5070,7 +5070,7 @@ footer {
     align-content: stretch;
     position: relative;
     margin: 0 20px;
-    
+
     + hr {
       margin-top: 0;
     }
@@ -5089,12 +5089,12 @@ footer {
     margin-right: 5px;
     display: flex;
     align-items: center;
-    
+
     .dropdown {
       flex: 1;
       position: static;
     }
-    
+
     .dropdown-toggle {
       padding-top: 38px;
       padding-bottom: 24px;
@@ -5108,7 +5108,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     .icon {
       fill: black;
     }
@@ -5119,7 +5119,7 @@ footer {
   }
 
   .sidebar.bottom-form-shadow {
-    box-shadow: 
+    box-shadow:
       0 -1px rgba(0,0,0,.005) inset,
       0 -2px rgba(0,0,0,.005) inset,
       0 -3px rgba(0,0,0,.005) inset,
@@ -5276,7 +5276,7 @@ footer {
     justify-content: center;
     align-self: stretch;
     @extend .u-clickable;
-    
+
     .icon {
       width: 9px;
       height: 9px;
@@ -5305,7 +5305,7 @@ footer {
   padding: 10px;
   display: flex;
   justify-content: flex-end;
-  
+
   &.is-closed {
     margin-bottom: -60px;
   }
@@ -5330,13 +5330,13 @@ footer {
   display: flex;
   padding: 0;
   height: 100%;
-  
+
   & > .icon {
     position: absolute;
     top: 50%;
     transform: translateY(-50%) translateX(-50%);
   }
-  
+
   & > .box {
     width: calc(50% - 47px);
     margin: 34px;
@@ -5424,7 +5424,7 @@ footer {
     background: hsl(47,100%,93%);
     border-color: hsl(47,100%,75%);
     color: hsl(47,20%,67%);
-    
+
     h1, h2 {
       color: hsl(47,3%,28%);
     }
@@ -5446,7 +5446,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     progress {
       width: 100%;
     }
@@ -5504,7 +5504,7 @@ footer {
   cursor: default;
 }
 
-  /* 
+  /*
     selector needs to be stronger than .token-input
     in order to override input[type=text]
   */
@@ -5519,7 +5519,7 @@ footer {
     box-shadow: none;
     outline: none;
     flex: 1;
-    
+
     &:focus {
       box-shadow: none;
     }
@@ -5642,7 +5642,7 @@ footer {
   td .list {
     margin-top: -4px;
   }
-  
+
   .switchView {
     visibility: hidden;
     display: block;
@@ -5742,7 +5742,7 @@ footer {
 
   .modal-body {
     padding: 0 23px;
-    
+
     h2:first-child {
       margin-top: 0;
     }
@@ -5751,7 +5751,7 @@ footer {
     .alert.hidden:first-child + p {
       margin-top: 0;
     }
-    
+
     .table > thead > tr > th {
       background: hsl(197,20%,93%);
     }
@@ -5774,7 +5774,7 @@ footer {
 .modal.modal--local {
   display: block;
   padding-left: 40px;
-  
+
   .modal-backdrop {
     background: hsla(210,17%,93%,.55);
     opacity: 1;
@@ -5835,7 +5835,7 @@ footer {
 
   .dropdown-menu.dropdown-menu--light > li {
     color: hsl(202,70%,49%);
-    
+
     &.dropdown-header {
       color: hsl(198,19%,72%);
     }
@@ -5865,7 +5865,7 @@ footer {
     padding: 0 15px;
     cursor: pointer;
     white-space: nowrap;
-    
+
     &:focus {
       outline: none;
     }
@@ -5930,11 +5930,11 @@ footer {
       margin-left: auto;
       justify-content: flex-end;
       opacity: 0;
-      
+
       .icon {
         fill: white;
       }
-      
+
       &.is-selected {
         opacity: 1;
       }
@@ -6033,7 +6033,7 @@ footer {
     @extend .u-clickable;
     padding: 0 10px !important;
     background: hsl(206,7%,28%);
-    
+
     & + li {
       box-shadow: 0 1px rgba(255,255,255,.13) inset;
     }
@@ -6064,12 +6064,12 @@ footer {
     margin: 10px 0;
     display: flex;
     align-items: center;
-    
+
     &:last-child {
       margin-bottom: 0;
     }
   }
-  
+
   .userList-name {
     @extend .u-textTruncate;
     margin-left: 7px;
@@ -6141,11 +6141,11 @@ footer {
   margin-left: -1px;
   background: white;
   position: relative;
-  
+
   &:first-child {
     border-radius: 7px 0 0 7px;
   }
-  
+
   &:last-child {
     border-radius: 0 7px 7px 0;
   }
@@ -6153,7 +6153,7 @@ footer {
   &:only-child {
     border-radius: 7px;
   }
-  
+
   &.active {
     color: white;
     background: hsl(206,7%,28%);
@@ -6257,7 +6257,7 @@ footer {
 .wizard-body {
   flex: 1;
   padding-bottom: 15px;
-  
+
   .form-control {
     min-width: 0;
   }
@@ -6481,7 +6481,7 @@ label + .wizard-buttonList {
   border-top: none;
   border-bottom: none;
   position: relative;
-  
+
   [data-toggle=dropdown] {
     position: relative;
   }
@@ -6618,7 +6618,7 @@ label + .wizard-buttonList {
   padding: 60px;
   overflow: auto;
   flex: 1;
-  
+
   h1 {
     margin: 18px 0 0;
   }
@@ -6639,7 +6639,7 @@ label + .wizard-buttonList {
 
 .profile-section {
   padding: 20px 50px;
-  
+
   &.profile-memberSection {
     margin-bottom: 10px;
   }
@@ -6651,14 +6651,14 @@ label + .wizard-buttonList {
 
 .profile-action {
   margin-right: -20px;
-  
+
   .dropdown-toggle {
     margin-top: -20px;
     margin-right: -30px;
     margin-bottom: 8px;
     padding: 26px 40px 2px;
   }
-  
+
   label {
     margin: 0 8px;
     padding: 0;
@@ -6679,7 +6679,7 @@ label + .wizard-buttonList {
   flex: 1;
   margin: 8px 0 22px;
   color: hsl(209,28%,74%);
-  
+
   .stat-icon {
     margin-bottom: 10px;
   }
@@ -6701,7 +6701,7 @@ label + .wizard-buttonList {
   @extend .profile-detailsEntry;
   display: flex;
   align-items: center;
-  
+
   .avatar {
     margin-right: 10px;
   }
@@ -6729,7 +6729,7 @@ label + .wizard-buttonList {
 
 .profile .frequency.stat-widget {
   height: 230px;
-  
+
   .stat-bars {
     height: 100px;
   }
@@ -6744,7 +6744,7 @@ label + .wizard-buttonList {
   background: hsl(0,0%,87%);
   border-radius: 100%;
   opacity: 0.4;
-  
+
   svg {
     width: 32px;
     height: 32px;
@@ -6801,12 +6801,12 @@ label + .wizard-buttonList {
 
 .empty-space {
   padding: 50px;
-  
+
   svg {
     width: 200px;
     height: auto;
   }
-  
+
   .empty-space-tagline {
     color: hsl(198, 19%, 72%);
     margin-top: 15px;
@@ -6824,11 +6824,11 @@ label + .wizard-buttonList {
   background: hsl(197,20%,93%);
   padding: 7px;
   border: 1px solid hsl(198,19%,86%);
-  
+
   &:first-child {
     border-radius: 4px 4px 0 0;
   }
-  
+
   &:last-child {
     border-radius: 0 0 4px 4px;
   }
@@ -6836,17 +6836,17 @@ label + .wizard-buttonList {
   &:only-child {
     border-radius: 4px;
   }
-  
+
   & + .horizontal-filter {
     border-top: none;
   }
-  
+
   .horizontal-filter-body {
     display: flex;
     align-items: center;
     flex: 1;
   }
-  
+
   .controls,
   input {
     margin-right: 5px;
@@ -6857,11 +6857,11 @@ label + .wizard-buttonList {
     margin-right: 5px;
   }
 
-  select, 
+  select,
   input {
     border-color: hsl(198,19%,86%);
   }
-  
+
   input[type=text] {
     width: auto;
   }
@@ -6897,7 +6897,7 @@ output {
   display: inline-block;
   padding: 10px 12px 8px;
   background: hsl(201,62%,93%);
-  
+
   &[disabled] {
     border-color: hsl(358,53%,56%);
     background: hsl(358,53%,76%);
@@ -6909,7 +6909,7 @@ output {
   width: 50px;
   height: 30px;
   border-radius: 15px;
-  
+
   &.zammad-switch--small {
     width: 40px;
     height: 24px;
@@ -6955,7 +6955,7 @@ output {
     border-radius: inherit;
     left: 1px;
     top: 1px;
-    box-shadow: 
+    box-shadow:
       0 0 0 1px rgba(0,0,0,.05),
       0 1px 3px rgba(0,0,0,.2);
     background: white;
@@ -7003,10 +7003,10 @@ output {
   border-radius: 100%;
   background: white;
   cursor: pointer;
-  
+
   &:hover:not(.is-disabled) {
     border-color: hsl(198,19%,83%);
-    
+
     .icon {
       fill: black;
     }
@@ -7016,11 +7016,11 @@ output {
     cursor: not-allowed;
     opacity: 0.5;
   }
-  
+
   &:not(:last-child) {
     margin-right: 7px;
   }
-  
+
   .icon {
     fill: hsl(0,0%,61%);
   }
@@ -7040,9 +7040,9 @@ output {
 .form-group.day-time {
   padding: 10px 5px 6px;
   margin: 0;
-  
+
   label {
-    text-align: center; 
+    text-align: center;
   }
 
   .form-control {
@@ -7067,7 +7067,7 @@ output {
 
   &.is-invalid {
     border-radius: 3px;
-    box-shadow: 
+    box-shadow:
       0 0 0 2px white,
       0 0 0 4px hsl(0,90%,70%);
   }
@@ -7075,11 +7075,11 @@ output {
   &.settings-list--fixed {
     table-layout: fixed;
   }
-  
+
   &.settings-list--stretch {
     width: 100%;
   }
-  
+
   &:not(:last-child) {
     margin-bottom: 34px;
   }
@@ -7106,13 +7106,13 @@ output {
       height: 40px;
     }
   }
-  
+
   th, td {
     vertical-align: top;
     padding: 10px;
     border: 1px solid hsl(198,18%,86%);
   }
-  
+
   th {
     font-weight: normal;
     text-transform: uppercase;
@@ -7161,7 +7161,7 @@ output {
     color: hsl(199,19%,80%);
     text-decoration: line-through;
   }
-  
+
   & > thead > tr > th:first-child {
     border-top-left-radius: 4px;
   }
@@ -7245,7 +7245,7 @@ output {
   border-right: 1px solid hsl(198,18%,86%);
   border-bottom: 1px solid hsl(198,18%,86%);
   border-radius: 3px 3px 0 0;
-  
+
   &.select-box--vertical .select-value {
     flex-basis: 100%;
   }
@@ -7257,7 +7257,7 @@ output {
   &.select-box--six .select-value {
     flex-basis: calc(100%/6);
   }
-  
+
   .select-box-header {
     @extend label;
     margin: 0;
@@ -7279,30 +7279,30 @@ output {
     justify-content: center;
     min-height: 34px;
     background-clip: content-box;
-    box-shadow: 
+    box-shadow:
       1px 0 hsl(198,18%,86%) inset,
       0 1px hsl(198,18%,86%) inset;
     cursor: pointer;
-    
+
     &.is-selected {
       background-color: $highlight-color;
       box-shadow: none;
       color: white;
     }
   }
-  
+
   &:first-child {
-    margin-left: 0; 
+    margin-left: 0;
   }
-  
+
   &:last-child {
-    margin-right: 0; 
+    margin-right: 0;
   }
 }
 
 .searchableSelect {
   position: relative;
-  
+
   .form-control {
     padding-right: 37px;
   }
@@ -7310,7 +7310,7 @@ output {
   .searchableSelect-main {
     position: relative;
   }
-  
+
   .searchableSelect-shadow {
     display: none;
   }
@@ -7318,7 +7318,7 @@ output {
   .dropdown-menu {
     margin-top: -3px;
   }
-  
+
   &.dropdown li:hover:not(.is-active) {
     background: none;
   }
@@ -7490,7 +7490,7 @@ output {
   position: absolute;
   min-width: 0;
   cursor: default;
-  
+
   .datepicker-switch {
     padding: 12px 0;
     font-weight: bold;
@@ -7500,7 +7500,7 @@ output {
     letter-spacing: 0;
     line-height: 1.5;
     text-transform: none;
-    
+
     &:hover {
       background: hsl(240,10%,14%);
     }
@@ -7520,18 +7520,18 @@ output {
     padding: 12px 9px 0;
     vertical-align: top;
     text-align: center;
-    
+
     .icon {
       margin-top: 4px;
       fill: white;
       opacity: 1;
     }
-    
+
     &:hover {
       background: hsl(240,10%,14%);
     }
   }
-  
+
   .dow {
     text-transform: uppercase;
     font-size: 12px;
@@ -7553,15 +7553,15 @@ output {
     margin: 1%;
     padding: 5px 0;
   }
-  
+
   .day, .month, .year {
     text-align: center;
     font-size: 15px;
-    
+
     &:not(.disabled) {
       cursor: pointer;
     }
-    
+
     &.disabled,
     &.old,
     &.new {
@@ -7586,7 +7586,7 @@ output {
     text-align: center;
     padding: 2px 0 0;
     cursor: pointer;
-    
+
     &.hidden {
       display: none;
     }
@@ -7599,11 +7599,11 @@ output {
   left: 0;
   right: 0;
   @extend .zIndex-10;
-  
+
   .defaultTheme {
     pointer-events: none;
   }
-  
+
   .noty_bar {
     max-width: 500px;
     text-align: center;
@@ -7672,7 +7672,7 @@ output {
   align-items: center;
   justify-content: center;
   height: 133px;
-  
+
   .loading-text {
     margin-left: 10px;
   }
@@ -7684,7 +7684,7 @@ output {
   display: flex;
   flex-direction: column;
   padding: 0 14px;
-  
+
   .page-header {
     margin: 15px 6px 5px;
   }
@@ -7706,7 +7706,7 @@ output {
   color: hsl(0,0%,33%);
   transition: all 500ms;
   transform: scale(0);
-  
+
   &.is-open {
     flex: 1 0 25%;
     transform: scale(1);
@@ -7737,7 +7737,7 @@ output {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-    
+
   .status-badge {
     margin-left: 2px;
     vertical-align: middle;
@@ -7747,7 +7747,7 @@ output {
 
 .chat-status {
   margin-left: 10px;
-  
+
   &[data-status='online'] .icon {
     fill: $supergood-color;
   }
@@ -7772,7 +7772,7 @@ output {
     }
   }
 }
-  
+
 .chat-status-holder {
   position: relative;
 }
@@ -7781,7 +7781,7 @@ output {
 .chat-close {
   cursor: pointer;
   padding: 10px;
-  
+
   .btn {
     min-width: 80px;
     justify-content: center;
@@ -7802,11 +7802,11 @@ output {
   padding: 7px 10px 6px;
   color: hsl(0,0%,60%);
   cursor: pointer;
-  
+
   &.is-hidden {
     display: none;
   }
-  
+
   .icon {
     fill: hsl(210,5%,78%);
     margin-right: 8px;
@@ -7885,7 +7885,7 @@ output {
 
 .chat-loader {
   margin-right: -4px;
-  
+
   .icon {
     width: 12px;
     height: 12px;
@@ -7941,13 +7941,13 @@ output {
   transition: 500ms;
   width: 100%;
 }
-  
+
 .browser-body {
   position: relative;
   overflow: hidden;
   height: 450px;
   width: 100%;
-  
+
   .browser-website {
     position: relative;
     height: 100%;
@@ -7968,16 +7968,16 @@ output {
   display: flex;
   padding: 10px;
   border-bottom: 1px solid hsl(0,0%,90%);
-  
+
   .browser-input {
     position: relative;
     flex: 1;
     margin-right: 10px;
-    
+
     input {
       min-width: 0;
       padding-right: 40px;
-      
+
       &.is-loading + .loading.icon {
         display: block;
       }
@@ -8018,7 +8018,7 @@ output {
       width: 100%;
       height: 100%;
       border-radius: 0 !important;
-      
+
       .zammad-chat-header {
         border-radius: 0 !important;
         box-shadow:
@@ -8031,7 +8031,7 @@ output {
         border-radius: 0 0 5px 5px;
       }
     }
-    
+
     &.no-transition {
       transition: none;
     }
@@ -8046,29 +8046,29 @@ output {
 
     .zammad-chat-agent-status,
     .zammad-chat-header-icon-close,
-    .zammad-chat-agent { 
+    .zammad-chat-agent {
       display: none !important;
     }
 
-    &.is-open {      
+    &.is-open {
       .zammad-chat-agent {
         display: block !important;
       }
-      
+
       .zammad-chat-header-icon-close,
       .zammad-chat-agent-status {
         display: inline-block !important;
       }
-    
+
       .zammad-chat-welcome,
       .zammad-chat-header-icon-open {
         display: none !important;
       }
     }
-    
+
     &.is-fullscreen {
       height: 100%;
-      
+
       .zammad-chat-controls {
         border-radius: 0 0 5px 5px;
       }
@@ -8098,11 +8098,11 @@ output {
   display: flex;
   border: 1px solid hsla(206,100%,3%,0.08);
   border-radius: 3px;
-  
+
   .tab {
     height: 39px;
     padding-top: 11px;
-    
+
     &.is-selected {
       background: linear-gradient(hsla(202,50%,20%,0.1), hsla(202,50%,20%,.03));
     }
@@ -8129,17 +8129,17 @@ output {
   display: flex;
   padding: 0;
   line-height: 22px;
-  
+
   .columnSelect-shadow {
     display: none;
   }
 
-  .columnSelect-column--selected { 
+  .columnSelect-column--selected {
     flex: 1 1 66%;
     overflow: auto;
     padding: 7px;
   }
-  
+
   .columnSelect-column--sidebar {
     flex-basis: 33%;
     flex-shrink: 1;
@@ -8148,7 +8148,7 @@ output {
     display: flex;
     flex-direction: column;
     min-width: 0;
-    
+
     .columnSelect-option:hover {
       background: hsl(198,4%,91%);
     }
@@ -8159,7 +8159,7 @@ output {
     overflow: auto;
     padding: 7px;
   }
-  
+
   .columnSelect-option {
     cursor: pointer;
     user-select: none;
@@ -8168,7 +8168,7 @@ output {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    
+
     &:hover {
       background: hsl(198,4%,96%);
     }
@@ -8182,7 +8182,7 @@ output {
 
 .columnSelect-search {
   position: relative;
-  
+
   .icon {
     fill: hsl(198,4%,85%);
   }
@@ -8322,13 +8322,13 @@ output {
 
 */
 
-.horizontal, 
-.vertical, 
+.horizontal,
+.vertical,
 .centered {
   display: flex;
 }
-.horizontal.hide, 
-.vertical.hide, 
+.horizontal.hide,
+.vertical.hide,
 .centered.hide {
   display: none;
 }
@@ -8381,13 +8381,13 @@ body.fit {
 /*
 
   Firefox minimum content bugfix
-  
+
   https://github.com/philipwalton/flexbugs#1-minimum-content-sizing-of-flex-items-not-honored
 
-  "By default, flex items won’t shrink below their minimum 
-  content size (the length of the longest word or fixed-size element). 
+  "By default, flex items won’t shrink below their minimum
+  content size (the length of the longest word or fixed-size element).
   To change this, set the min-width or min-height property."
-  
+
 */
 .flex-shrink-horizontal {
   min-width: 0;
@@ -8490,11 +8490,11 @@ body.fit {
 }
 
 .space-left {
-  margin-left: 10px; 
+  margin-left: 10px;
 }
 
 .space-right {
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .align-center {
@@ -8503,8 +8503,8 @@ body.fit {
 }
 
 .spacer {
-  width: 10px; 
-  height: 10px; 
+  width: 10px;
+  height: 10px;
 }
 
 .double-spacer {

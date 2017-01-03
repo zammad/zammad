@@ -290,6 +290,11 @@ class _taskManagerSingleton extends App.Controller
     domKey = @domID(key)
     domStoreItem = @domStore[domKey]
     if !@$("##{domKey}").get(0) && domStoreItem && domStoreItem.el
+
+      # update shown times
+      @frontendTimeUpdateElement(domStoreItem.el)
+
+      # append to dom
       @el.append(domStoreItem.el)
       @$("##{domKey}").removeClass('hide').addClass('active')
 
