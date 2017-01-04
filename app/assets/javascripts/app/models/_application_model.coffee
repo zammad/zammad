@@ -184,7 +184,7 @@ class App.Model extends Spine.Model
 
   ###
 
-  @attributesGet: (screen = undefined, attributes = false) ->
+  @attributesGet: (screen = undefined, attributes = false, noDefaultAttributes = false) ->
     if !attributes
       attributes = clone(App[ @.className ].configure_attributes, true)
     else
@@ -203,7 +203,7 @@ class App.Model extends Spine.Model
           attributesNew[ attribute.name ] = attribute
 
     # if no screen is given or no attribute has this screen - use default attributes
-    if !screen || _.isEmpty(attributesNew)
+    if (!screen || _.isEmpty(attributesNew)) && !noDefaultAttributes
       for attribute in attributes
         attributesNew[ attribute.name ] = attribute
 
