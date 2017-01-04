@@ -109,8 +109,8 @@ class FormController < ApplicationController
       subject: params[:title],
       internal: false,
     )
-    
-    if params[:file] then
+
+    if params[:file]
       params[:file].each { |file|
         Store.add(
           object: 'Ticket::Article',
