@@ -109,6 +109,21 @@ class FormController < ApplicationController
       subject: params[:title],
       internal: false,
     )
+    
+    if params[:file] then
+      params[:file].each { |file|
+        Store.add(
+          object: 'Ticket::Article',
+          o_id: article.id,
+          data: File.read(file.tempfile),
+          filename: file.original_filename,
+          preferences: {
+            'content-alternative' => true,
+            'Mime-Type' => file.content_type
+          }
+        )
+      }
+    end
 
     UserInfo.current_user_id = 1
 
