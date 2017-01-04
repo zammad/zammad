@@ -243,6 +243,7 @@ class CreateBase < ActiveRecord::Migration
       t.string :key,                   limit: 100,  null: false
       t.string :callback,              limit: 100,  null: false
       t.text :state,                   limit: 20.megabytes + 1, null: true
+      t.text :preferences,             limit: 5.megabytes + 1, null: true
       t.string :params,                limit: 2000, null: true
       t.integer :prio,                              null: false
       t.boolean :notify,                            null: false, default: false
@@ -251,6 +252,7 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :taskbars, [:user_id]
     add_index :taskbars, [:client_id]
+    add_index :taskbars, [:key]
 
     create_table :tags do |t|
       t.references :tag_item,                       null: false

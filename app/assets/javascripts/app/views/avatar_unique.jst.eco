@@ -1,4 +1,4 @@
-<span class="avatar <%- @cssClass %> unique" style="background-position: -<%- @x %>px -<%- @y %>px;"<%- @placement %><%- @data %>>
+<span class="avatar <%- @cssClass %> avatar--unique" style="background-position: -<%- @x %>px -<%- @y %>px;"<%- @placement %><%- @data %>>
   <%- @Icon('crown') if @vip %>
   <%= @initials %>
 </span>

@@ -52,7 +52,7 @@
       <label><%- @T('Members') %></label>
       <div class="profile-details horizontal wrap">
         <div class="profile-organizationMember">
-          <span class="avatar unique user-popover  size-40" data-id="4" style="background-position: -97.5718417033075px -178.430732445616px;">AG</span>
+          <span class="avatar avatar--unique user-popover  size-40" data-id="4" style="background-position: -97.5718417033075px -178.430732445616px;">AG</span>
           <a href="#">Doreen Kubiak</a>
         </div>
         <div class="profile-organizationMember">
@@ -60,11 +60,11 @@
           <a href="#">Franz Xaver</a>
         </div>
         <div class="profile-organizationMember">
-          <span class="avatar unique user-popover  size-40" data-id="4" style="background-position: -27.5718417033075px -17.430732445616px;">JM</span>
+          <span class="avatar avatar--unique user-popover  size-40" data-id="4" style="background-position: -27.5718417033075px -17.430732445616px;">JM</span>
           <a href="#">Julius Müller</a>
         </div>
         <div class="profile-organizationMember">
-          <span class="avatar unique user-popover  size-40" data-id="4" style="background-position: -97.5718417033075px -178.430732445616px;">HH</span>
+          <span class="avatar avatar--unique user-popover  size-40" data-id="4" style="background-position: -97.5718417033075px -178.430732445616px;">HH</span>
           <a href="#">Hans Hubert</a>
         </div>
       </div>

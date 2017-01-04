@@ -52,7 +52,7 @@
       </div>
       <div class="page-header">
         <div class="flex vertical center">
-          <span class="avatar unique user-popover size-50" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;" data-original-title="" title="">NB</span>
+          <span class="avatar avatar--unique user-popover size-50" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;" data-original-title="" title="">NB</span>
           <div class="ticket-title">
             <h1 contenteditable="true" class="ticket-title-update" data-placeholder="Enter Title...">Welcome to Zammad! We want to entertain you and your whole family!</h1>
           </div>
@@ -76,7 +76,7 @@
             </div>
           </div>
           <div class="article-content">
-            <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
+            <span class="avatar avatar--unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
             <div class="flex bubble-gap internal-border">
               <div class="textBubble">
                 <div class="bubble-arrow"></div>
@@ -182,7 +182,7 @@
             </div>
           </div>
           <div class="article-content">
-            <span class="avatar unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
+            <span class="avatar avatar--unique user-popover " data-id="2" style="background-position: -96.5079185759074px -112.28590086669901px;" data-placement="left" data-original-title="" title="">NB</span>
             <div class="flex bubble-gap internal-border">
               <div class="textBubble"><div class="bubble-arrow"></div><div class="article-text" id="article-35098758344">Ich wollte mir die Lyrics von Maria herunterladen, aber ich schaff es einfach nicht, da raufzukommen. Schick mir bitte mein Passwort.
 
@@ -547,7 +547,7 @@
       <hr>
       <div class="sidebar-content">
         <div class="sidebar-block">
-          <span class="avatar unique userInfo-avatar size-50 user-popover" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;">NB</span>
+          <span class="avatar avatar--unique userInfo-avatar size-50 user-popover" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;">NB</span>
           <h3 title="Name">
             Nicole Braun
           </h3>
@@ -604,7 +604,7 @@
         <label>Members</label>
         <div class="userList">
           <div class="userList-entry">
-            <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span> <a class="userList-entry user-popover" data-id="2" data-original-title="" href="#user/profile/2" title="">Nicole Braun</a>
+            <span class="avatar avatar--unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span> <a class="userList-entry user-popover" data-id="2" data-original-title="" href="#user/profile/2" title="">Nicole Braun</a>
           </div>
         </div>
       </div>

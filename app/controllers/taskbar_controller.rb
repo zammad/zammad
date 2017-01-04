@@ -4,16 +4,13 @@ class TaskbarController < ApplicationController
   before_action :authentication_check
 
   def index
-
     current_user_tasks = Taskbar.where(user_id: current_user.id)
     model_index_render_result(current_user_tasks)
-
   end
 
   def show
     taskbar = Taskbar.find(params[:id])
     access(taskbar)
-
     model_show_render_item(taskbar)
   end
 
@@ -24,7 +21,6 @@ class TaskbarController < ApplicationController
   def update
     taskbar = Taskbar.find(params[:id])
     access(taskbar)
-
     taskbar.update_attributes!(Taskbar.param_cleanup(params))
     model_update_render_item(taskbar)
   end
@@ -32,7 +28,6 @@ class TaskbarController < ApplicationController
   def destroy
     taskbar = Taskbar.find(params[:id])
     access(taskbar)
-
     taskbar.destroy
     model_destroy_render_item()
   end

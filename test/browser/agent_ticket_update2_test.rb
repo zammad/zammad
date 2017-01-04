@@ -43,6 +43,17 @@ class AgentTicketUpdate2Test < TestCase
       value: 'some level 3 <b>body</b> 123äöü',
     )
 
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'AT', # agent1
+    )
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'TA', # master
+    )
+
     # change edit screen in instance 1
     ticket_update(
       browser: browser1,
@@ -58,6 +69,17 @@ class AgentTicketUpdate2Test < TestCase
       no_quote: true,
     )
 
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'AT', # agent1
+    )
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--changed',
+      value: 'TA', # master
+    )
+
     # update ticket in instance 2
     ticket_update(
       browser: browser2,
@@ -71,6 +93,16 @@ class AgentTicketUpdate2Test < TestCase
       css: '.content.active .js-reset',
       value: '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
+    )
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--changed',
+      value: 'AT', # agent1
+    )
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--changed',
+      value: 'TA', # master
     )
 
     click(
@@ -90,6 +122,17 @@ class AgentTicketUpdate2Test < TestCase
       data: {
         body: '',
       },
+    )
+
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'AT', # agent1
+    )
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--changed',
+      value: 'TA', # master
     )
 
     # check content and edit screen in instance 1
@@ -126,6 +169,17 @@ class AgentTicketUpdate2Test < TestCase
       no_quote: true,
     )
 
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'AT', # agent1
+    )
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'TA', # master
+    )
+
     # check content in instance 2
     watch_for(
       browser: browser2,
@@ -158,6 +212,17 @@ class AgentTicketUpdate2Test < TestCase
       css: '.content.active .js-reset',
       value: '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
+    )
+
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'AT', # agent1
+    )
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'TA', # master
     )
 
     # reload instances, verify again
@@ -193,6 +258,17 @@ class AgentTicketUpdate2Test < TestCase
       css: '.content.active .js-reset',
       value: '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
+    )
+
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'AT', # agent1
+    )
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'TA', # master
     )
 
     # change form of ticket, reset, reload and verify in instance 2
@@ -244,6 +320,17 @@ class AgentTicketUpdate2Test < TestCase
     )
     sleep 2
 
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--changed',
+      value: 'AT', # agent1
+    )
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'TA', # master
+    )
+
     reload(
       browser: browser2,
     )
@@ -258,6 +345,17 @@ class AgentTicketUpdate2Test < TestCase
       css: '.content.active .js-reset',
       value: '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
+    )
+
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--changed',
+      value: 'AT', # agent1
+    )
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'TA', # master
     )
 
     task_type(
@@ -276,6 +374,17 @@ class AgentTicketUpdate2Test < TestCase
       css: '.content.active .js-reset',
       value: '(Discard your unsaved changes.|Verwerfen der)',
       no_quote: true,
+    )
+
+    watch_for(
+      browser: browser1,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'AT', # agent1
+    )
+    watch_for(
+      browser: browser2,
+      css: '.content.active .js-attributeBar .js-avatar .avatar--not-changed',
+      value: 'TA', # master
     )
 
     # check if new article is empty

@@ -3508,6 +3508,20 @@ footer {
     fill: hsl(47,100%,59%);
   }
 
+  &-status {
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 999px;
+    background: hsl(234,10%,19%);
+    fill: white;
+    width: 21px;
+    height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &.size-50 {
     width: 50px;
     height: 50px;
@@ -3530,7 +3544,12 @@ footer {
     }
   }
 
-  &.unique {
+  &--idle {
+    filter: grayscale(100%);
+    opacity: 0.5;
+  }
+
+  &--unique {
     background-image: image_url("/assets/images/avatar-bg.png");
     background-size: 300px 226px;
     color: white;
@@ -5234,6 +5253,10 @@ footer {
 .tags,
 .links {
   margin: 20px 0;
+}
+
+.tags {
+  margin-top: 10px;
 }
 
 .userNotifications label + .btn {
@@ -8500,6 +8523,11 @@ body.fit {
 .align-center {
   margin-left: auto;
   margin-right: auto;
+}
+
+.half-spacer {
+  width: 5px;
+  height: 5px;
 }
 
 .spacer {

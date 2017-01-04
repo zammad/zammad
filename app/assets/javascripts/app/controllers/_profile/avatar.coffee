@@ -94,10 +94,10 @@ class Index extends App.ControllerSubContent
         # update avatar text if needed
         if activeAvatar.text()
           replaceAvatar.text(activeAvatar.text())
-          replaceAvatar.addClass('unique')
+          replaceAvatar.addClass('avatar--unique')
         else
           replaceAvatar.text('')
-          replaceAvatar.removeClass('unique')
+          replaceAvatar.removeClass('avatar--unique')
     )
     avatar
 
