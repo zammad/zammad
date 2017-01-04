@@ -1,13 +1,14 @@
 <div class="login branding centered darkBackground vertical">
+  <% if @maintananceChange: %>
+    <% if @C('maintenance_mode'): %>
+      <div class="hero-unit alert alert--danger"><%- @T('Zammad is currently in maintenance mode. Only administrators can login. Please wait until the maintenance window is over.') %></div>
+    <% end %>
 
-  <% if @C('maintenance_mode'): %>
-    <div class="hero-unit alert alert--danger"><%- @T('Zammad is currently in maintenance mode. Only administrators can login. Please wait until the maintenance window is over.') %></div>
-  <% end %>
-
-  <% if !@logoChange || @C('maintenance_login'): %>
-  <form>
-    <div contenteditable id="maintenance-message" data-name="message" class="hero-unit alert alert--success js-textarea js-Login" <% if !@C('maintenance_login'): %>style="opacity: 0.5;"<% end %>><%- @C('maintenance_login_message') %></div>
-  </form>
+    <% if !@logoChange || @C('maintenance_login'): %>
+    <form>
+      <div contenteditable id="maintenance-message" data-name="message" class="hero-unit alert alert--success js-textarea js-Login" <% if !@C('maintenance_login'): %>style="opacity: 0.5;"<% end %>><%- @C('maintenance_login_message') %></div>
+    </form>
+    <% end %>
   <% end %>
 
   <div class="hero-unit">

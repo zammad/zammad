@@ -78,7 +78,7 @@ example
     Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
 
     # on check, reduce open_timeout to have faster probing
-    timeout = 24
+    timeout = 30
     if check_type == 'check'
       timeout = 6
     end
@@ -96,10 +96,10 @@ example
       @imap.select(options[:folder])
     end
 
+    # sort messages by date on server (if not supported), if not fetch messages via search (first in, first out)
     begin
       message_ids = @imap.sort(['DATE'], ['ALL'], 'US-ASCII')
-    rescue => e
-      Rails.logger.error "Unable to use imap sort: #{e.inspect}, use imap search now"
+    rescue
       message_ids = @imap.search(['ALL'])
     end
 
