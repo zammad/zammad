@@ -76,7 +76,6 @@ class TicketsController < ApplicationController
   # POST /api/v1/tickets
   def create
     clean_params = Ticket.param_association_lookup(params)
-    clean_params = Ticket.param_cleanup(clean_params, true)
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
@@ -108,6 +107,7 @@ class TicketsController < ApplicationController
       clean_params[:customer_id] = customer.id
     end
 
+    clean_params = Ticket.param_cleanup(clean_params, true)
     ticket = Ticket.new(clean_params)
 
     # check if article is given
@@ -283,6 +283,8 @@ class TicketsController < ApplicationController
       ticket_lists = Ticket
                      .where(
                        customer_id: ticket.customer_id,
+                     ).where.not(
+                       state_id: Ticket::State.by_category('merged')
                      )
                      .where(access_condition)
                      .where('id != ?', [ ticket.id ])
@@ -303,7 +305,8 @@ class TicketsController < ApplicationController
       next if recent_view['object'] != 'Ticket'
       ticket_ids_recent_viewed.push recent_view['o_id']
       recent_view_ticket = Ticket.find(recent_view['o_id'])
-      assets             = recent_view_ticket.assets(assets)
+      next if recent_view_ticket.state.state_type.name == 'merged'
+      assets = recent_view_ticket.assets(assets)
     }
 
     # return result
@@ -491,6 +494,9 @@ class TicketsController < ApplicationController
     user_ticket_volume_by_year = []
     if params[:user_id]
       user = User.lookup(id: params[:user_id])
+      if !user
+        raise "No such user with id #{params[:user_id]}"
+      end
       condition = {
         'ticket.state_id' => {
           operator: 'is',
@@ -661,7 +667,7 @@ class TicketsController < ApplicationController
 
     # get related users
     article_ids = []
-    ticket.articles.order('created_at ASC, id ASC').each { |article|
+    ticket.articles.each { |article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && current_user.permissions?('ticket.customer')
