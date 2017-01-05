@@ -212,7 +212,7 @@ do($ = window.jQuery, window) ->
         'Start new conversation': 'Démarrer une nouvelle conversation'
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Si vous ne répondez pas dans les <strong>%s</strong> minutes, votre conversation avec %s va être fermée.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Si vous ne répondez pas dans les %s minutes, votre conversation va être fermée.'
-        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': ''
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Nous sommes désolés, il faut plus de temps que prévu pour obtenir un emplacement vide. Veuillez réessayer ultérieurement ou nous envoyer un courriel. Je vous remercie!'
     sessionId: undefined
     scrolledToBottom: true
     scrollSnapTolerance: 10
