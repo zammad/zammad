@@ -84,11 +84,12 @@ class Channel::EmailParser
 
     # get sender
     from = nil
-    ['from', 'reply-to', 'return-path'].each { |item|
+    ['reply-to', 'from', 'return-path'].each { |item|
       next if !mail[ item.to_sym ]
       from = mail[ item.to_sym ].value
       break if from
     }
+    data[:from_from] = from
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
@@ -523,7 +524,7 @@ returns
           sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
           content_type: mail[:content_type],
           body: mail[:body],
-          from: mail[:from],
+          from: mail[:from_from],
           to: mail[:to],
           cc: mail[:cc],
           subject: mail[:subject],
