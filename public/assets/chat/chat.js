@@ -1,91 +1,3 @@
-/*!
- * ----------------------------------------------------------------------------
- * "THE BEER-WARE LICENSE" (Revision 42):
- * <jevin9@gmail.com> wrote this file. As long as you retain this notice you
- * can do whatever you want with this stuff. If we meet some day, and you think
- * this stuff is worth it, you can buy me a beer in return. Jevin O. Sewaruth
- * ----------------------------------------------------------------------------
- *
- * Autogrow Textarea Plugin Version v3.0
- * http://www.technoreply.com/autogrow-textarea-plugin-3-0
- * 
- * THIS PLUGIN IS DELIVERD ON A PAY WHAT YOU WHANT BASIS. IF THE PLUGIN WAS USEFUL TO YOU, PLEASE CONSIDER BUYING THE PLUGIN HERE :
- * https://sites.fastspring.com/technoreply/instant/autogrowtextareaplugin
- *
- * Date: October 15, 2012
- *
- * Zammad modification: remove overflow:hidden when maximum height is reached
- *
- */
-
-jQuery.fn.autoGrow = function(options) {
-  return this.each(function() {
-    var settings = jQuery.extend({
-      extraLine: true,
-    }, options);
-
-    var createMirror = function(textarea) {
-      jQuery(textarea).after('<div class="autogrow-textarea-mirror"></div>');
-      return jQuery(textarea).next('.autogrow-textarea-mirror')[0];
-    }
-
-    var sendContentToMirror = function (textarea) {
-      mirror.innerHTML = String(textarea.value)
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/ /g, '&nbsp;')
-        .replace(/\n/g, '<br />') +
-        (settings.extraLine? '.<br/>.' : '')
-      ;
-
-      if (jQuery(textarea).height() != jQuery(mirror).height()) {
-        jQuery(textarea).height(jQuery(mirror).height());
-
-        var maxHeight = parseInt(jQuery(textarea).css('max-height'), 10);
-        var overflow = jQuery(mirror).height() > maxHeight ? '' : 'hidden'
-        jQuery(textarea).css('overflow', overflow);
-      }
-    }
-
-    var growTextarea = function () {
-      sendContentToMirror(this);
-    }
-
-    // Create a mirror
-    var mirror = createMirror(this);
-    
-    // Style the mirror
-    mirror.style.display = 'none';
-    mirror.style.wordWrap = 'break-word';
-    mirror.style.whiteSpace = 'normal';
-    mirror.style.padding = jQuery(this).css('paddingTop') + ' ' + 
-      jQuery(this).css('paddingRight') + ' ' + 
-      jQuery(this).css('paddingBottom') + ' ' + 
-      jQuery(this).css('paddingLeft');
-      
-    mirror.style.width = jQuery(this).css('width');
-    mirror.style.fontFamily = jQuery(this).css('font-family');
-    mirror.style.fontSize = jQuery(this).css('font-size');
-    mirror.style.lineHeight = jQuery(this).css('line-height');
-    mirror.style.letterSpacing = jQuery(this).css('letter-spacing');
-    mirror.style.boxSizing = jQuery(this).css('boxSizing');
-
-    // Style the textarea
-    this.style.overflow = "hidden";
-    this.style.minHeight = this.rows+"em";
-
-    // Bind the textarea's event
-    this.onkeyup = growTextarea;
-    this.onfocus = growTextarea;
-
-    // Fire the event for text already present
-    sendContentToMirror(this);
-
-  });
-};
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
@@ -469,7 +381,26 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         'You are on waiting list position <strong>%s</strong>.': 'Sie sind in der Warteliste an der Position <strong>%s</strong>.',
         'Start new conversation': 'Neue Konversation starten',
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation mit <strong>%s</strong> geschlossen.',
-        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation geschlossen.'
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation geschlossen.',
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Es tut uns leid, es dauert länger als erwartet, um einen freien Platz zu erhalten. Bitte versuchen Sie es zu einem späteren Zeitpunkt noch einmal oder schicken Sie uns eine E-Mail. Vielen Dank!'
+      },
+      fr: {
+        '<strong>Chat</strong> with us!': '<strong>Chattez</strong> avec nous!',
+        'Scroll down to see new messages': 'Faites défiler pour lire les nouveaux messages',
+        'Online': 'En-ligne',
+        'Online': 'En-ligne',
+        'Offline': 'Hors-ligne',
+        'Connecting': 'Connexion en cours',
+        'Connection re-established': 'Connexion rétablie',
+        'Today': 'Aujourdhui',
+        'Send': 'Envoyer',
+        'Compose your message...': 'Composez votre message...',
+        'All colleagues are busy.': 'Tous les collègues sont actuellement occupés.',
+        'You are on waiting list position <strong>%s</strong>.': 'Vous êtes actuellement en <strong>%s</strong> position dans la file d\'attente.',
+        'Start new conversation': 'Démarrer une nouvelle conversation',
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Si vous ne répondez pas dans les <strong>%s</strong> minutes, votre conversation avec %s va être fermée.',
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Si vous ne répondez pas dans les %s minutes, votre conversation va être fermée.',
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': ''
       }
     };
 
@@ -1424,6 +1355,98 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   return window.ZammadChat = ZammadChat;
 })(window.jQuery, window);
 
+/*!
+ * ----------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * <jevin9@gmail.com> wrote this file. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return. Jevin O. Sewaruth
+ * ----------------------------------------------------------------------------
+ *
+ * Autogrow Textarea Plugin Version v3.0
+ * http://www.technoreply.com/autogrow-textarea-plugin-3-0
+ * 
+ * THIS PLUGIN IS DELIVERD ON A PAY WHAT YOU WHANT BASIS. IF THE PLUGIN WAS USEFUL TO YOU, PLEASE CONSIDER BUYING THE PLUGIN HERE :
+ * https://sites.fastspring.com/technoreply/instant/autogrowtextareaplugin
+ *
+ * Date: October 15, 2012
+ *
+ * Zammad modification: 
+ *   - remove overflow:hidden when maximum height is reached
+ *   - mirror box-sizing
+ *
+ */
+
+jQuery.fn.autoGrow = function(options) {
+  return this.each(function() {
+    var settings = jQuery.extend({
+      extraLine: true,
+    }, options);
+
+    var createMirror = function(textarea) {
+      jQuery(textarea).after('<div class="autogrow-textarea-mirror"></div>');
+      return jQuery(textarea).next('.autogrow-textarea-mirror')[0];
+    }
+
+    var sendContentToMirror = function (textarea) {
+      mirror.innerHTML = String(textarea.value)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/ /g, '&nbsp;')
+        .replace(/\n/g, '<br />') +
+        (settings.extraLine? '.<br/>.' : '')
+      ;
+
+      if (jQuery(textarea).height() != jQuery(mirror).height()) {
+        jQuery(textarea).height(jQuery(mirror).height());
+
+        var overflow = jQuery(mirror).height() > maxHeight ? '' : 'hidden';
+        jQuery(textarea).css('overflow', overflow);
+      }
+    }
+
+    var growTextarea = function () {
+      sendContentToMirror(this);
+    }
+
+    // Create a mirror
+    var mirror = createMirror(this);
+
+    // Store max-height
+    var maxHeight = parseInt(jQuery(this).css('max-height'), 10);
+    
+    // Style the mirror
+    mirror.style.display = 'none';
+    mirror.style.wordWrap = 'break-word';
+    mirror.style.whiteSpace = 'normal';
+    mirror.style.padding = jQuery(this).css('paddingTop') + ' ' + 
+      jQuery(this).css('paddingRight') + ' ' + 
+      jQuery(this).css('paddingBottom') + ' ' + 
+      jQuery(this).css('paddingLeft');
+      
+    mirror.style.width = jQuery(this).css('width');
+    mirror.style.fontFamily = jQuery(this).css('font-family');
+    mirror.style.fontSize = jQuery(this).css('font-size');
+    mirror.style.lineHeight = jQuery(this).css('line-height');
+    mirror.style.letterSpacing = jQuery(this).css('letter-spacing');
+    mirror.style.boxSizing = jQuery(this).css('boxSizing');
+
+    // Style the textarea
+    this.style.overflow = "hidden";
+    this.style.minHeight = this.rows+"em";
+
+    // Bind the textarea's event
+    this.onkeyup = growTextarea;
+    this.onfocus = growTextarea;
+
+    // Fire the event for text already present
+    sendContentToMirror(this);
+
+  });
+};
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }

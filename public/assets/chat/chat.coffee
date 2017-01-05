@@ -195,6 +195,24 @@ do($ = window.jQuery, window) ->
         'Start new conversation': 'Neue Konversation starten'
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation mit <strong>%s</strong> geschlossen.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation geschlossen.'
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Es tut uns leid, es dauert länger als erwartet, um einen freien Platz zu erhalten. Bitte versuchen Sie es zu einem späteren Zeitpunkt noch einmal oder schicken Sie uns eine E-Mail. Vielen Dank!'
+      fr:
+        '<strong>Chat</strong> with us!': '<strong>Chattez</strong> avec nous!'
+        'Scroll down to see new messages': 'Faites défiler pour lire les nouveaux messages'
+        'Online': 'En-ligne'
+        'Online': 'En-ligne'
+        'Offline': 'Hors-ligne'
+        'Connecting': 'Connexion en cours'
+        'Connection re-established': 'Connexion rétablie'
+        'Today': 'Aujourdhui'
+        'Send': 'Envoyer'
+        'Compose your message...': 'Composez votre message...'
+        'All colleagues are busy.': 'Tous les collègues sont actuellement occupés.'
+        'You are on waiting list position <strong>%s</strong>.': 'Vous êtes actuellement en <strong>%s</strong> position dans la file d\'attente.'
+        'Start new conversation': 'Démarrer une nouvelle conversation'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Si vous ne répondez pas dans les <strong>%s</strong> minutes, votre conversation avec %s va être fermée.'
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Si vous ne répondez pas dans les %s minutes, votre conversation va être fermée.'
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': ''
     sessionId: undefined
     scrolledToBottom: true
     scrollSnapTolerance: 10
