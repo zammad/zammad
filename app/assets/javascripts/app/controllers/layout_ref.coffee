@@ -34,7 +34,7 @@ class Content extends App.ControllerContent
     width = 300
     height = 226
 
-    holder.addClass 'unique'
+    holder.addClass 'avatar--unique'
 
     rng = new Math.seedrandom(id)
     x = rng() * (width - size)
@@ -2192,6 +2192,16 @@ class TwitterConversationRef extends App.ControllerContent
           drag: true
 
 App.Config.set( 'layout_ref/twitter_conversation', TwitterConversationRef, 'Routes' )
+
+class UI extends App.ControllerContent
+  constructor: ->
+    super
+    @render()
+
+  render: ->
+    @html App.view('layout_ref/ui')()
+
+App.Config.set( 'layout_ref/ui', UI, 'Routes' )
 
 class ChatToTicketRef extends App.ControllerContent
 

@@ -313,12 +313,13 @@ class _i18nSingleton extends Spine.Module
     S = timeObject.getSeconds()
     M = timeObject.getMinutes()
     H = timeObject.getHours()
-    format = format.replace /dd/, s(d, 2)
-    format = format.replace /d/, d
-    format = format.replace /mm/, s(m, 2)
-    format = format.replace /m/, m
-    format = format.replace /yyyy/, y
-    format = format.replace /SS/, s(S, 2)
-    format = format.replace /MM/, s(M, 2)
-    format = format.replace /HH/, s(H, 2)
+    format = format
+      .replace(/dd/, s(d, 2))
+      .replace(/d/, d)
+      .replace(/mm/, s(m, 2))
+      .replace(/m/, m)
+      .replace(/yyyy/, y)
+      .replace(/SS/, s(S, 2))
+      .replace(/MM/, s(M, 2))
+      .replace(/HH/, s(H, 2))
     format

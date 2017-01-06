@@ -259,13 +259,15 @@ class App.Controller extends Spine.Controller
 
   frontendTimeUpdate: =>
     update = =>
-      ui = @
-      $('.humanTimeFromNow').each( ->
-        item = $(@)
-        currentVal = item.text()
-        ui.frontendTimeUpdateItem(item, currentVal)
-      )
+      @frontendTimeUpdateElement($('.humanTimeFromNow'))
     App.Interval.set(update, 61000, 'frontendTimeUpdate', 'ui')
+
+  frontendTimeUpdateElement: (el) =>
+    ui = @
+    el.find('.humanTimeFromNow').each( ->
+      item = $(@)
+      ui.frontendTimeUpdateItem(item, item.text())
+    )
 
   frontendTimeUpdateItem: (item, currentVal) =>
     timestamp = item.data('time')
@@ -305,13 +307,11 @@ class App.Controller extends Spine.Controller
       content: ->
         ticketId = $(@).data('id')
         ticket   = App.Ticket.fullLocal(ticketId)
-        html = App.view('popover/ticket')(
+        html = $(App.view('popover/ticket')(
           ticket: ticket
-        )
-        html = $(html)
+        ))
         html.find('.humanTimeFromNow').each(->
-          item = $(@)
-          ui.frontendTimeUpdateItem(item)
+          ui.frontendTimeUpdateItem($(@))
         )
         html
     )
@@ -464,13 +464,11 @@ class App.Controller extends Spine.Controller
               tickets.push App.Ticket.fullLocal(ticketId)
 
           # insert data
-          html = App.view('popover/user_ticket_list')(
+          html = $(App.view('popover/user_ticket_list')(
             tickets: tickets
-          )
-          html = $(html )
+          ))
           html.find('.humanTimeFromNow').each( ->
-            item = $(@)
-            ui.frontendTimeUpdateItem(item)
+            ui.frontendTimeUpdateItem($(@))
           )
           html
       )

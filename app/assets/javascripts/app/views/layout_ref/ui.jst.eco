@@ -1,0 +1,23 @@
+<div class="main flex">
+
+  <h1>Tiki</h1>
+
+  <% for state in ['supergood', 'good', 'ok', 'bad', 'super-bad']: %>
+    <%- @Icon("mood-#{state}", 'stat-icon mood-icon') %>
+  <% end %>
+  <hr>
+
+  <h1>Ticket traffic light colors</h1>
+
+    <%- @Icon("task-state", 'open') %>
+    <%- @Icon("task-state", 'pending') %>
+    <%- @Icon("task-state", 'escalating') %>
+    <%- @Icon("task-state", 'closed') %>
+
+  <hr>
+
+  <h1>Colors</h1>
+
+
+
+</div>

@@ -68,17 +68,18 @@ class Index extends App.ControllerContent
       params:     defaults
       noFieldset: true
     )
-    #new App.ControllerForm(
-    #  el:       @el.find('.ticket-form-bottom')
-    #  form_id:  @form_id
-    #  model:    App.Ticket
-    #  screen:   'create_bottom'#@article_attributes['screen']
-    #  handlers: [
-    #    formChanges
-    #  ]
-    #  filter:    @formMeta.filter
-    #  params:    defaults
-    #)
+    if !_.isEmpty(App.Ticket.attributesGet('create_bottom', false, true))
+      new App.ControllerForm(
+        el:       @el.find('.ticket-form-bottom')
+        form_id:  @form_id
+        model:    App.Ticket
+        screen:   'create_bottom'
+        handlers: [
+          @ticketFormChanges
+        ]
+        filter:    @formMeta.filter
+        params:    defaults
+      )
 
     new App.ControllerDrox(
       el:   @el.find('.sidebar')

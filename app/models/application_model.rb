@@ -93,6 +93,17 @@ returns
     clean_params = {}
     new.attributes.each { |attribute, _value|
       next if !data.key?(attribute.to_sym)
+
+      # check reference records, referenced by _id attributes
+      reflect_on_all_associations.map { |assoc|
+        class_name = assoc.options[:class_name]
+        next if !class_name
+        name = "#{assoc.name}_id".to_sym
+        next if !data.key?(name)
+        next if data[name].blank?
+        next if assoc.klass.lookup(id: data[name])
+        raise ArgumentError, "Invalid value for param '#{name}': #{data[name].inspect}"
+      }
       clean_params[attribute.to_sym] = data[attribute.to_sym]
     }
 

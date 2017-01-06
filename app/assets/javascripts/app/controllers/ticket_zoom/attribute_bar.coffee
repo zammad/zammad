@@ -47,6 +47,13 @@ class App.TicketZoomAttributeBar extends App.Controller
       resetButtonShown: resetButtonShown
     ))
     @setSecondaryAction(@secondaryAction, localeEl)
+
+    if @permissionCheck('ticket.agent')
+      new App.TaskbarWatcher(
+        task_key: @task_key
+        el:       localeEl.filter('.js-avatars')
+      )
+
     @html localeEl
 
   checkMacroChanges: =>

@@ -11,7 +11,6 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
     updateDataMap = (localParams, localAttribute, localAttributes, localClassname, localForm, localA) =>
       localItem = localForm.closest('.js-data')
-      console.log('updateDataMap', attribute, params)
       element = $(App.view("object_manager/attribute/#{localParams.data_type}")(
         attribute: attribute
         params: params
@@ -49,7 +48,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     objects =
       Ticket:
         Customer:
-          create:
+          create_bottom:
             shown: true
             required: false
           edit:
