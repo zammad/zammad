@@ -1,18 +1,10 @@
-APP_DIR="."
-UNICORN_DIR="#{APP_DIR}"
-UNICORN_WORKER="4"
-UNICORN_TIMEOUT="30"
-RAILS_PID_DIR="#{APP_DIR}/tmp/pids"
-RAILS_LOG_DIR="#{APP_DIR}/log"
+worker_processes 4
+timeout 30
+stderr_path 'log/unicorn_error.log'
+stdout_path 'log/unicorn_access.log'
+pid 'tmp/pids/unicorn.pid'
 
-worker_processes UNICORN_WORKER.to_i
-working_directory UNICORN_DIR
-timeout UNICORN_TIMEOUT.to_i
-pid "#{RAILS_PID_DIR}/unicorn.pid"
-stderr_path "#{RAILS_LOG_DIR}/unicorn_error.log"
-stdout_path "#{RAILS_LOG_DIR}/unicorn_access.log"
-
-before_fork do |server, worker|
+before_fork do |server, _worker|
   ##
   # When sent a USR2, Unicorn will suffix its pidfile with .oldbin and
   # immediately start loading up a new version of itself (loaded with a new
@@ -25,11 +17,11 @@ before_fork do |server, worker|
   # Using this method we get 0 downtime deploys.
 
   old_pid = "#{RAILS_PID_DIR}/unicorn.pid.oldbin"
-  if File.exists?(old_pid) && server.pid != old_pid
+  if File.exist?(old_pid) && server.pid != old_pid
     begin
-      Process.kill("QUIT", File.read(old_pid).to_i)
+      Process.kill('QUIT', File.read(old_pid).to_i)
     rescue Errno::ENOENT, Errno::ESRCH
-      # someone else did our job for us
+      logger.info 'Unicorn master already killed. Someone else did our job for us.'
     end
   end
 end
