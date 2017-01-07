@@ -113,7 +113,9 @@ group :development, :test do
   gem 'github_changelog_generator'
 end
 
-gem 'puma'
+gem 'puma', group: :puma
+gem 'unicorn', group: :unicorn
+
 
 # load onw gem's
 local_gemfile = File.join(File.dirname(__FILE__), 'Gemfile.local')

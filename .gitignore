@@ -4,11 +4,29 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
+# Ignore .swp files
+.*.swp
+
 # Ignore bundler config
 /.bundle
 
+# Ignore mac stuff
+.DS_Store
+
+# Ignore Rubymine config
+/.idea
+
+# Ignore .project files
+/.project
+
+# Ignore .rbenv-vars
+/.rbenv-vars
+
 # Ignore database config
 /config/database.yml
+
+# Ignore coverage stuff
+/coverage
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -16,37 +34,21 @@
 # Ignore local changes to schema.rb (e. g. through extentions)
 /db/schema.rb
 
+# Ignore custom gem file
+/Gemfile.local
+
+# Ignore node modules
+/node_modules
+
 # Ignore all logfiles and tempfiles.
 /log
-/tmp/*
-/tmp/pids/*
 /public/assets/*.*
 /public/assets/app
 /public/assets/custom
+/tmp/*
+/tmp/pids/*
 
 # except /tmp/pids/ which is needed for certain Zammad processes
 !/tmp
 !/tmp/pids
 !/tmp/pids/.keep
-
-# Ignore custom gem file
-/Gemfile.local
-
-# Ignore .project files
-/.project
-
-# Ignore local database settings
-/config/database.yml
-
-# Ignore mac stuff
-.DS_Store
-
-# Ignore .swp files
-.*.swp
-
-# Ignore coverage stuff
-/coverage
-
-# Ignore Rubymine config
-/.idea
-node_modules

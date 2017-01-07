@@ -152,6 +152,7 @@ GEM
     inflection (1.0.0)
     json (1.8.3)
     jwt (1.5.4)
+    kgio (2.11.0)
     koala (2.4.0)
       addressable
       faraday
@@ -271,6 +272,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
+    raindrops (0.17.0)
     rake (11.2.2)
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
@@ -371,6 +373,9 @@ GEM
       unf_ext
     unf_ext (0.0.7.2)
     unicode-display_width (1.1.1)
+    unicorn (5.2.0)
+      kgio (~> 2.6)
+      raindrops (~> 0.7)
     websocket (1.2.3)
     writeexcel (1.0.5)
     zendesk_api (1.14.0)
@@ -447,6 +452,7 @@ DEPENDENCIES
   therubyracer
   twitter
   uglifier
+  unicorn
   writeexcel
   zendesk_api
 
