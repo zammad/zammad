@@ -16,7 +16,7 @@ before_fork do |server, _worker|
   #
   # Using this method we get 0 downtime deploys.
 
-  old_pid = "#{RAILS_PID_DIR}/unicorn.pid.oldbin"
+  old_pid = 'tmp/pids/unicorn.pid.oldbin'
   if File.exist?(old_pid) && server.pid != old_pid
     begin
       Process.kill('QUIT', File.read(old_pid).to_i)
