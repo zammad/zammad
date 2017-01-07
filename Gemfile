@@ -12,6 +12,7 @@ gem 'activerecord-session_store'
 gem 'json'
 
 # Supported DBs
+gem 'activerecord-nulldb-adapter', group: :nulldb
 gem 'mysql2', group: :mysql
 gem 'pg', group: :postgres
 
