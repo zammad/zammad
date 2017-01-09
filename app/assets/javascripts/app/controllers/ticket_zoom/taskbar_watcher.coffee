@@ -51,8 +51,9 @@ class App.TaskbarWatcher extends App.Controller
           avatar.el.find('.avatar').append status
 
   start: =>
-    @intervalId = @interval(=>
-      App.TaskManager.preferencesTrigger(@task_key)
+    @intervalId = @interval(
+      =>
+        App.TaskManager.preferencesTrigger(@task_key)
       5 * 60000
       'ticket-watcher-interval'
     )
