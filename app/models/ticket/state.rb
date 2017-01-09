@@ -10,7 +10,7 @@ class Ticket::State < ApplicationModel
 
 list tickets by customer
 
-  states = Ticket::State.by_category('open') # open|closed|work_on|work_on_all|pending_reminder|pending_action
+  states = Ticket::State.by_category('open') # open|closed|work_on|work_on_all|pending_reminder|pending_action|merged
 
 returns:
 
@@ -42,6 +42,10 @@ returns:
     elsif category == 'closed'
       return Ticket::State.where(
         state_type_id: Ticket::StateType.where(name: %w(closed))
+      )
+    elsif category == 'merged'
+      return Ticket::State.where(
+        state_type_id: Ticket::StateType.where(name: %w(merged))
       )
     end
     raise "Unknown category '#{category}'"
