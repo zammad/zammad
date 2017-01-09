@@ -13,7 +13,7 @@ $(function() {
   $('#feedback-form').ZammadForm({
     messageTitle: 'Feedback Form', // optional
     messageSubmit: 'Submit', // optional
-    messageThankYou: 'Thank you for your inquiry! We\'ll contact you soon as possible.', // optional
+    messageThankYou: 'Thank you for your inquiry (#%s)! We\'ll contact you soon as possible.', // optional
     messageNoConfig: 'Unable to load form config from server. Maybe featrue is disabled.', // optional
     showTitle: true,
     lang: 'de', // optional, <html lang="xx"> will be used per default
@@ -237,7 +237,7 @@ $(function() {
       }
 
       // ticket has been created
-      _this.thanks()
+      _this.thanks(data)
 
     }).fail(function() {
       _this.$form.find('button').prop('disabled', false)
@@ -336,8 +336,12 @@ $(function() {
   }
 
   // thanks
-  Plugin.prototype.thanks = function(e) {
-    var message = $('<div class="js-thankyou">' + this.options.messageThankYou + '</div>')
+  Plugin.prototype.thanks = function(data) {
+    var thankYou = this.options.messageThankYou
+    if (data.ticket && data.ticket.number) {
+      thankYou = thankYou.replace('%s', data.ticket.number)
+    }
+    var message = $('<div class="js-thankyou">' + thankYou + '</div>')
     this.$form.html(message)
   }
 

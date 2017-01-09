@@ -35,7 +35,7 @@
           <label for="form-message-thank-you"><%- @T('Message after sending form') %></label>
         </div>
         <div class="controls">
-          <textarea type="text" id="form-message-thank-you" name="messageThankYou" rows="3"><%- @Ti('Thank you for your inquiry! We\'ll contact you soon as possible.') %></textarea>
+          <textarea type="text" id="form-message-thank-you" name="messageThankYou" rows="3"><%- @Ti('Thank you for your inquiry (#%s)! We\'ll contact you soon as possible.') %></textarea>
         </div>
       </div>
     </fieldset>
