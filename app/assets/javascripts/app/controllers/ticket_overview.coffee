@@ -71,7 +71,7 @@ class App.TicketOverview extends App.Controller
 
         $('#app').append @batchDragger
 
-        @draggedItems.each (i, item) =>
+        @draggedItems.each (i, item) ->
           dx = $(item).data('offset').left - $(item).offset().left - x
           dy = $(item).data('offset').top - $(item).offset().top - y
           $.Velocity.hook item, 'translateX', "#{dx}px"
@@ -103,8 +103,8 @@ class App.TicketOverview extends App.Controller
         scale: 1.1
       options:
         duration: 200
-        complete: =>
-          @hoveredBatchEntry.velocity "reverse",
+        complete: ->
+          @hoveredBatchEntry.velocity 'reverse',
             duration: 200
             complete: =>
               # clean scale
