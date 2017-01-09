@@ -112,7 +112,12 @@ class FormController < ApplicationController
 
     UserInfo.current_user_id = 1
 
-    result = {}
+    result = {
+      ticket: {
+        id: ticket.id,
+        number: ticket.number
+      }
+    }
     render json: result, status: :ok
   end
 
