@@ -13,11 +13,12 @@ $(function() {
   $('#feedback-form').ZammadForm({
     messageTitle: 'Feedback Form', // optional
     messageSubmit: 'Submit', // optional
-    messageThankYou: 'Thank you for your inquiry (#%s)! We\'ll contact you soon as possible.', // optional
-    messageNoConfig: 'Unable to load form config from server. Maybe featrue is disabled.', // optional
+    messageThankYou: 'Thank you for your inquiry (#%s)! We\'ll contact you as soon as possible.', // optional
+    messageNoConfig: 'Unable to load form config from server. Maybe feature is disabled.', // optional
     showTitle: true,
     lang: 'de', // optional, <html lang="xx"> will be used per default
     modal: true,
+    attachmentSupport: false,
     attributes: [
       {
         display: 'Name',
@@ -65,6 +66,7 @@ $(function() {
     messageSubmit: 'Submit',
     messageThankYou: 'Thank you for your inquiry! We\'ll contact you as soon as possible.',
     messageNoConfig: 'Unable to load form config from server. Maybe feature is disabled.',
+    attachmentSupport: false,
     attributes: [
       {
         display: 'Name',
@@ -95,6 +97,7 @@ $(function() {
         'Email': 'E-Mail',
         'Your Email': 'Ihre E-Mail',
         'Message': 'Nachricht',
+        'Attachments': 'Anhänge',
         'Your Message...': 'Ihre Nachricht...',
       },
       es: {
@@ -103,6 +106,7 @@ $(function() {
         'Email': 'correo electrónico',
         'Your Email': 'Tu correo electrónico',
         'Message': 'Mensaje',
+        'Attachments': 'archivos adjuntos',
         'Your Message...': 'tu Mensaje...',
       },
       fr: {
@@ -111,6 +115,7 @@ $(function() {
         'Email': 'Email',
         'Your Email': 'Votre Email',
         'Message': 'Message',
+        'Attachments': 'Pièces jointes',
         'Your Message...': 'Votre message...',
       },
     }
@@ -155,6 +160,17 @@ $(function() {
 
     if (!_this.options.noCSS) {
       _this.loadCss(_this.css_location)
+    }
+
+    if (_this.options.attachmentSupport === true || _this.options.attachmentSupport === 'true') {
+      var attachment = {
+        display: 'Attachments',
+        name: 'file[]',
+        tag: 'input',
+        type: 'file',
+        repeat: 1,
+      }
+      _this.options.attributes.push(attachment)
     }
 
     _this.log('debug', 'endpoint_config: ' + _this.endpoint_config)

@@ -118,8 +118,7 @@ class FormController < ApplicationController
           data: File.read(file.tempfile),
           filename: file.original_filename,
           preferences: {
-            'content-alternative' => true,
-            'Mime-Type' => file.content_type
+            'Mime-Type' => file.content_type,
           }
         )
       }
