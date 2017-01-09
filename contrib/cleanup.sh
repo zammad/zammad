@@ -11,3 +11,4 @@ rm app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 rm app/assets/javascripts/app/controllers/role.coffee
 rm app/assets/javascripts/app/controllers/report.coffee
 rm app/assets/javascripts/app/controllers/report_profile.coffee
+

@@ -6,7 +6,7 @@ Hi there - thanks for filling an issue. Please ensure the following things befor
 - Add the `log/production.log` file from your system. Attention: Make sure no confidential data is in it!
 - Please write the issue in english
 
-* This textblock will be removed automatically when you submit the issue*
+* The textblock between "<!-- -->" will be removed automatically when you submit the issue *
 -->
 
 ### Infos:
