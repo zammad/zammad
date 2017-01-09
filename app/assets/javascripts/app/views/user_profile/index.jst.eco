@@ -7,7 +7,6 @@
       <% if @user.organization: %>
         <div class="profile-organization js-organization"></div>
       <% end %>
-        <a href="#ticket/create/customer/<%= @user.id %>"><%- @T('New Ticket') %><a>
     </div>
     <div class="profile-section js-object-container"></div>
     <div class="profile-section js-ticket-stats"></div>
