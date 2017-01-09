@@ -1,0 +1,3 @@
+<div class="batch-dragger zIndex-10">
+	<div class="batch-dragger-counter js-batch-dragger-count"></div>
+</div>

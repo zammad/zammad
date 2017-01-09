@@ -1,13 +1,372 @@
 class App.TicketOverview extends App.Controller
   className: 'overviews'
   activeFocus: 'nav'
+  mouse:
+    x: null
+    y: null
+
+  elements:
+    '.js-batch-overlay':          'batchOverlay'
+    '.js-batch-overlay-backdrop': 'batchOverlayBackdrop'
+    '.js-batch-cancel':           'batchCancel'
+    '.js-batch-macro-circle':     'batchMacroCircle'
+    '.js-batch-assign-circle':    'batchAssignCircle'
+    '.js-batch-assign':           'batchAssign'
+    '.js-batch-macro':            'batchMacro'
+
+  events:
+    'mousedown .item':  'startDragItem'
+    'mouseenter .js-batch-overlay-entry': 'highlightBatchEntry'
+    'mouseleave .js-batch-overlay-entry': 'unhighlightBatchEntry'
 
   constructor: ->
     super
     @render()
 
+  startDragItem: (event) ->
+    @grabbedItem = $(event.currentTarget)
+    offset = @grabbedItem.offset()
+    @batchDragger = $(App.view('ticket_overview/batch_dragger')())
+    @grabbedItemClone = @grabbedItem.clone()
+    @grabbedItemClone.data('offset', @grabbedItem.offset())
+    @grabbedItemClone.addClass('batch-dragger-item js-main-item')
+    @batchDragger.append @grabbedItemClone
+
+    @batchDragger.data
+      startX: event.pageX
+      startY: event.pageY
+      dx: Math.min(event.pageX - offset.left, 180)
+      dy: event.pageY - offset.top
+      moved: false
+
+    $(document).on 'mousemove.item', @dragItem
+    $(document).one 'mouseup.item', @endDragItem
+    # TODO: fire @cancelDrag on ESC
+
+  dragItem: (event) =>
+    event.preventDefault()
+    pos = @batchDragger.data()
+    threshold = 3
+    x = event.pageX - pos.dx
+    y = event.pageY - pos.dy
+    dir = if event.pageY > pos.startY then 1 else -1
+
+    if !pos.moved
+      if Math.abs(event.pageX - pos.startX) > threshold or Math.abs(event.pageY - pos.startY) > threshold
+        @batchDragger.data 'moved', true
+        # check grabbed items batch checkbox to make sure its checked
+        # (could be grabbed without checking the checkbox it)
+        @grabbedItemWasntChecked = !@grabbedItem.find('[name="bulk"]').prop('checked')
+        @grabbedItem.find('[name="bulk"]').prop('checked', true)
+        @grabbedItemClone.find('[name="bulk"]').prop('checked', true)
+
+        additionalItems = @el.find('[name="bulk"]:checked').parents('.item').not(@grabbedItem)
+        additionalItemsClones = additionalItems.clone()
+        @draggedItems = @grabbedItemClone.add(additionalItemsClones)
+        # store offsets for later use
+        additionalItemsClones.each (i, item) -> $(@).data('offset', additionalItems.eq(i).offset())
+        @batchDragger.prepend additionalItemsClones.addClass('batch-dragger-item').get().reverse()
+        if(additionalItemsClones.length)
+          @batchDragger.find('.js-batch-dragger-count').text(@draggedItems.length)
+
+        $('#app').append @batchDragger
+
+        @draggedItems.each (i, item) =>
+          dx = $(item).data('offset').left - $(item).offset().left - x
+          dy = $(item).data('offset').top - $(item).offset().top - y
+          $.Velocity.hook item, 'translateX', "#{dx}px"
+          $.Velocity.hook item, 'translateY', "#{dy}px"
+
+        @moveDraggedItems(-dir)
+
+        @mouseY = event.pageY
+        @showBatchOverlay()
+      else
+        return
+
+    $.Velocity.hook @batchDragger, 'translateX', "#{x}px"
+    $.Velocity.hook @batchDragger, 'translateY', "#{y}px"
+
+  endDragItem: (event) =>
+    $(document).off 'mousemove.item'
+    $(document).off 'mouseup.item'
+    pos = @batchDragger.data()
+
+    if !@hoveredBatchEntry
+      @cleanUpDrag()
+      return
+
+    $.Velocity.hook @batchDragger, 'transformOriginX', "#{pos.dx}px"
+    $.Velocity.hook @batchDragger, 'transformOriginY', "#{pos.dy}px"
+    @hoveredBatchEntry.velocity
+      properties:
+        scale: 1.1
+      options:
+        duration: 200
+        complete: =>
+          @hoveredBatchEntry.velocity "reverse",
+            duration: 200
+            complete: =>
+              # clean scale
+              @hoveredBatchEntry.removeAttr('style')
+              @cleanUpDrag(true)
+              @performBatchAction @hoveredBatchEntry.attr('data-action')
+              @hoveredBatchEntry = null
+    @batchDragger.velocity
+      properties:
+        scale: 0
+      options:
+        duration: 200
+
+  cancelDrag: ->
+    $(document).off 'mousemove.item'
+    $(document).off 'mouseup.item'
+    @cleanUpDrag()
+
+  cleanUpDrag: (success) ->
+    @hideBatchOverlay()
+    $('.batch-dragger').remove()
+
+    if @grabbedItemWasntChecked
+      @grabbedItem.find('[name="bulk"]').prop('checked', false)
+
+    if success
+      # uncheck all checked items
+      @el.find('[name="bulk"]:checked').prop('checked', false)
+      @el.find('[name="bulk_all"]').prop('checked', false)
+
+  moveDraggedItems: (dir) ->
+    @draggedItems.velocity
+      properties:
+        translateX: 0
+        translateY: (i) => dir * i * @batchDragger.height()/2
+      options:
+        easing: 'ease-in-out'
+        duration: 300
+
+    @batchDragger.find('.js-batch-dragger-count').velocity
+      properties:
+        translateY: if dir < 0 then 0 else -@batchDragger.height()+8
+      options:
+        easing: 'ease-in-out'
+        duration: 300
+
+  performBatchAction: (action) ->
+    console.log "perform action #{action} on checked items"
+
+  showBatchOverlay: ->
+    @batchOverlay.show()
+    @batchOverlayBackdrop.velocity { opacity: [1, 0] }, { duration: 500 }
+    @batchOverlayShown = true
+    $(document).on 'mousemove.batchoverlay', @controlBatchOverlay
+
+  hideBatchOverlay: ->
+    $(document).off 'mousemove.batchoverlay'
+    @batchOverlayShown = false
+    @batchOverlayBackdrop.velocity { opacity: [0, 1] }, { duration: 300, queue: false }
+    @hideBatchCircles =>
+      @batchOverlay.hide()
+
+    if @batchAssignShown
+      @hideBatchAssign()
+
+    if @batchMacroShown
+      @hideBatchMacro()
+
+  controlBatchOverlay: (event) =>
+    # store to detect if the mouse is hovering a drag-action entry
+    # after an animation ended -> @highlightBatchEntryAtMousePosition
+    @mouse.x = event.pageX
+    @mouse.y = event.pageY
+
+    if event.pageY <= window.innerHeight/5*2
+      mouseInArea = 'top'
+    else if event.pageY > window.innerHeight/5*2 && event.pageY <= window.innerHeight/5*3
+      mouseInArea = 'middle'
+    else
+      mouseInArea = 'bottom'
+
+    switch mouseInArea
+      when 'top'
+        if !@batchMacroShown
+          @hideBatchCircles()
+          @showBatchMacro()
+          @moveDraggedItems(1)
+
+      when 'middle'
+        if @batchAssignShown
+          @hideBatchAssign()
+
+        if @batchMacroShown
+          @hideBatchMacro()
+
+        if !@batchCirclesShown
+          @showBatchCircles()
+
+      when 'bottom'
+        if !@batchAssignShown
+          @hideBatchCircles()
+          @showBatchAssign()
+          @moveDraggedItems(-1)
+
+  showBatchCircles: ->
+    @batchCirclesShown = true
+
+    @batchMacroCircle.velocity
+      properties:
+        translateY: [0, '-150%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+        delay: 200
+
+    @batchAssignCircle.velocity
+      properties:
+        translateY: [0, '150%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+        delay: 200
+
+  hideBatchCircles: (callback) ->
+    @batchMacroCircle.velocity
+      properties:
+        translateY: ['-150%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+
+    @batchAssignCircle.velocity
+      properties:
+        translateY: ['150%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        complete: callback
+        visibility: 'hidden'
+        queue: false
+
+    @batchCirclesShown = false
+
+  showBatchAssign: ->
+    return if !@batchOverlayShown # user might have dropped the item already
+    @batchAssignShown = true
+
+    @batchAssign.velocity
+      properties:
+        translateY: [0, '100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+        complete: @highlightBatchEntryAtMousePosition
+        delay: if @batchCirclesShown then 0 else 200
+
+    @batchCancel.css
+      top: 0
+      bottom: 'auto'
+
+    @batchCancel.velocity
+      properties:
+        translateY: [0, '100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+        delay: if @batchCirclesShown then 0 else 200
+
+  hideBatchAssign: ->
+    @batchAssign.velocity
+      properties:
+        translateY: ['100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+
+    @batchCancel.velocity
+      properties:
+        translateY: ['100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+
+    @batchAssignShown = false
+
+  showBatchMacro: ->
+    return if !@batchOverlayShown # user might have dropped the item already
+    @batchMacroShown = true
+
+    @batchMacro.velocity
+      properties:
+        translateY: [0, '-100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+        complete: @highlightBatchEntryAtMousePosition
+        delay: if @batchCirclesShown then 0 else 200
+
+    @batchCancel.css
+      top: 'auto'
+      bottom: 0
+    @batchCancel.velocity
+      properties:
+        translateY: [0, '-100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+        delay: if @batchCirclesShown then 0 else 200
+
+  hideBatchMacro: ->
+    @batchMacro.velocity
+      properties:
+        translateY: ['-100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+
+    @batchCancel.velocity
+      properties:
+        translateY: ['-100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+
+    @batchMacroShown = false
+
+  highlightBatchEntryAtMousePosition: =>
+    entryAtPoint = $(document.elementFromPoint(@mouse.x, @mouse.y)).closest('.js-batch-overlay-entry')
+    if(entryAtPoint.length)
+      @hoveredBatchEntry = entryAtPoint.addClass('is-hovered')
+
+  highlightBatchEntry: (event) ->
+    @hoveredBatchEntry = $(event.currentTarget).addClass('is-hovered')
+
+  unhighlightBatchEntry: (event) ->
+    @hoveredBatchEntry = null
+    $(event.currentTarget).removeClass('is-hovered')
+
   render: ->
-    elLocal = $(App.view('ticket_overview')())
+    elLocal = $(App.view('ticket_overview/index')())
 
     @navBarControllerVertical = new Navbar
       el:       elLocal.find('.overview-header')
@@ -397,10 +756,10 @@ class Table extends App.Controller
       )
       table = $(table)
       table.delegate('[name="bulk_all"]', 'click', (e) ->
-        if $(e.target).attr('checked')
-          $(e.target).closest('table').find('[name="bulk"]').attr('checked', true)
+        if $(e.currentTarget).prop('checked')
+          $(e.currentTarget).closest('table').find('[name="bulk"]').prop('checked', true)
         else
-          $(e.target).closest('table').find('[name="bulk"]').attr('checked', false)
+          $(e.currentTarget).closest('table').find('[name="bulk"]').prop('checked', false)
       )
       @$('.table-overview').append(table)
     else
@@ -440,6 +799,25 @@ class Table extends App.Controller
           @bulkForm.hide()
         else
           @bulkForm.show()
+
+        if @lastChecked && e.shiftKey
+          # check items in a row
+          currentItem = $(e.currentTarget).parents('.item')
+          lastCheckedItem = @lastChecked.parents('.item')
+          items = currentItem.parent().children()
+
+          if currentItem.index() > lastCheckedItem.index()
+            # current item is below last checked item
+            startId = lastCheckedItem.index()
+            endId = currentItem.index()
+          else
+            # current item is above last checked item
+            startId = currentItem.index()
+            endId = lastCheckedItem.index()
+
+          items.slice(startId+1, endId).find('[name="bulk"]').prop('checked', (-> !@checked))
+
+        @lastChecked = $(e.currentTarget)
       callbackIconHeader = (headers) ->
         attribute =
           name:        'icon'
@@ -523,8 +901,8 @@ class Table extends App.Controller
 
     # deselect bulk_all if one item is uncheck observ
     @$('.table-overview').delegate('[name="bulk"]', 'click', (e) ->
-      if !$(e.target).attr('checked')
-        $(e.target).parents().find('[name="bulk_all"]').attr('checked', false)
+      if !$(e.target).prop('checked')
+        $(e.target).parents().find('[name="bulk_all"]').prop('checked', false)
     )
 
   getSelected: ->
@@ -540,7 +918,7 @@ class Table extends App.Controller
       ticketId = $(element).val()
       for ticketIdSelected in ticketIDs
         if ticketIdSelected is ticketId
-          $(element).attr('checked', true)
+          $(element).prop('checked', true)
     )
 
   viewmode: (e) =>
