@@ -179,7 +179,7 @@ do($ = window.jQuery, window) ->
     state: 'offline'
     initialQueueDelay: 10000
     translations:
-      de:
+      'de':
         '<strong>Chat</strong> with us!': '<strong>Chatte</strong> mit uns!'
         'Scroll down to see new messages': 'Scrolle nach unten um neue Nachrichten zu sehen'
         'Online': 'Online'
@@ -196,7 +196,7 @@ do($ = window.jQuery, window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation mit <strong>%s</strong> geschlossen.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation geschlossen.'
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Es tut uns leid, es dauert länger als erwartet, um einen freien Platz zu erhalten. Bitte versuchen Sie es zu einem späteren Zeitpunkt noch einmal oder schicken Sie uns eine E-Mail. Vielen Dank!'
-      fr:
+      'fr':
         '<strong>Chat</strong> with us!': '<strong>Chattez</strong> avec nous!'
         'Scroll down to see new messages': 'Faites défiler pour lire les nouveaux messages'
         'Online': 'En-ligne'
@@ -213,7 +213,7 @@ do($ = window.jQuery, window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Si vous ne répondez pas dans les <strong>%s</strong> minutes, votre conversation avec %s va être fermée.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Si vous ne répondez pas dans les %s minutes, votre conversation va être fermée.'
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Nous sommes désolés, il faut plus de temps que prévu pour obtenir un emplacement vide. Veuillez réessayer ultérieurement ou nous envoyer un courriel. Je vous remercie!'
-      zh-cn:
+      'zh-cn':
         '<strong>Chat</strong> with us!': '发起<strong>即时对话</strong>!'
         'Scroll down to see new messages': '向下滚动以查看新消息'
         'Online': '在线'
@@ -230,7 +230,7 @@ do($ = window.jQuery, window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': '由于您超过 %s 分钟没有回复, 您与 <strong>%s</strong> 的会话已被关闭.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': '由于您超过 %s 分钟没有任何回复, 该对话已被关闭.'
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': '非常抱歉, 目前需要等候更长的时间才能接入对话, 请稍后重试或向我们发送电子邮件. 谢谢!'
-      zh-tw:
+      'zh-tw':
         '<strong>Chat</strong> with us!': '開始<strong>即時對话</strong>!'
         'Scroll down to see new messages': '向下滑動以查看新訊息'
         'Online': '線上'
@@ -302,7 +302,9 @@ do($ = window.jQuery, window) ->
       if !@options.lang
         @options.lang = $('html').attr('lang')
       if @options.lang
-        @options.lang = @options.lang.replace(/-.+?$/, '') # replace "-xx" of xx-xx
+        if !@translations[@options.lang]
+          @log.debug "lang: No #{@options.lang} found, try first two letters"
+          @options.lang = @options.lang.replace(/-.+?$/, '') # replace "-xx" of xx-xx
         @log.debug "lang: #{@options.lang}"
 
       # detect host
