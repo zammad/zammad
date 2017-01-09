@@ -227,6 +227,8 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStart()
     @autosaveStart()
     @shortcutNavigationStart()
+    return if !@attributeBar
+    @attributeBar.start()
 
   pagePosition: (params = {}) =>
 
@@ -285,6 +287,8 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
     @autosaveStop()
     @shortcutNavigationstop()
+    return if !@attributeBar
+    @attributeBar.stop()
 
   changed: =>
     return false if !@ticket
@@ -417,7 +421,8 @@ class App.TicketZoom extends App.Controller
         el:        elLocal.find('.ticket-meta')
       )
 
-      new App.TicketZoomAttributeBar(
+      @attributeBar = new App.TicketZoomAttributeBar(
+        ticket:      @ticket
         el:          elLocal.find('.js-attributeBar')
         overview_id: @overview_id
         callback:    @submit

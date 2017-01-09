@@ -2,6 +2,7 @@ class App.TaskbarWatcher extends App.Controller
   constructor: ->
     super
     @subscribeId = App.TaskManager.preferencesSubscribe(@task_key, @render)
+    App.TaskManager.preferencesTrigger(@task_key)
 
   release: =>
     return if !@subscribeId
@@ -10,23 +11,30 @@ class App.TaskbarWatcher extends App.Controller
   render: (preferences) =>
     return if !preferences
     return if !preferences.tasks
+
+    currentUserId = App.Session.get('id')
+    for watcher in preferences.tasks
+      if watcher.user_id != currentUserId
+        if watcher.last_contact
+          watcher.idle = false
+          diff = new Date().getTime() - new Date(watcher.last_contact).getTime()
+          if diff > 300000
+            watcher.idle = true
+
     return if !@diffrence(@lastTasks, preferences.tasks)
-    @lastTasks = preferences.tasks
+    @lastTasks = clone(preferences.tasks)
 
     watchers = []
-    currentUserId = App.Session.get('id')
     @el.empty()
     for watcher in preferences.tasks
       if watcher.user_id != currentUserId
         cssClass = []
-        lastContact = new Date(new Date(watcher.last_contact).getTime() + 5 * 60000)
-        if new Date() > lastContact
+        if watcher.idle
           cssClass.push('avatar--idle')
         if watcher.changed
           cssClass.push('avatar--changed')
         else
           cssClass.push('avatar--not-changed')
-
         @el.append('<div class="js-avatar"></div>')
         @el.append('<div class="half-spacer"></div>')
 
@@ -42,6 +50,17 @@ class App.TaskbarWatcher extends App.Controller
           status.append App.Utils.icon('pen')
           avatar.el.find('.avatar').append status
 
+  start: =>
+    @intervalId = @interval(=>
+      App.TaskManager.preferencesTrigger(@task_key)
+      5 * 60000
+      'ticket-watcher-interval'
+    )
+
+  stop: =>
+    return if !@intervalId
+    @clearInterval(@intervalId)
+
   diffrence: (lastTasks, newTasks) ->
     return true if !lastTasks
     return true if lastTasks.length != newTasks.length
@@ -49,7 +68,5 @@ class App.TaskbarWatcher extends App.Controller
       return true if !lastTasks[taskPosition] || !newTasks[taskPosition]
       return true if lastTasks[taskPosition].user_id != newTasks[taskPosition].user_id
       return true if lastTasks[taskPosition].changed != newTasks[taskPosition].changed
-      if lastTasks[taskPosition].last_contact
-        lastContact = new Date(new Date(lastTasks[taskPosition].last_contact).getTime() + 5 * 60000)
-        return true if new Date() > lastContact
+      return true if lastTasks[taskPosition].idle != newTasks[taskPosition].idle
     false

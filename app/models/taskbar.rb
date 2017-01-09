@@ -47,16 +47,18 @@ class Taskbar < ApplicationModel
     # find other same open tasks
     preferences[:tasks] = []
     Taskbar.where(key: key).order(:created_at).each { |taskbar|
-      changed = if taskbar.id == id
-                  state_changed?
-                else
-                  taskbar.state_changed?
-                end
+      if taskbar.id == id
+        local_changed = state_changed?
+        local_last_contact = last_contact
+      else
+        local_changed = taskbar.state_changed?
+        local_last_contact = taskbar.last_contact
+      end
       task = {
         id: taskbar.id,
         user_id: taskbar.user_id,
-        last_contact: taskbar.last_contact,
-        changed: changed,
+        last_contact: local_last_contact,
+        changed: local_changed,
       }
       preferences[:tasks].push task
     }

@@ -79,6 +79,10 @@ class App.TaskManager
     return if !_instance
     _instance.preferencesUnsubscribe(id)
 
+  @preferencesTrigger: (key) ->
+    return if !_instance
+    _instance.preferencesTrigger(key)
+
 class _taskManagerSingleton extends App.Controller
   @include App.LogInclude
 
@@ -93,7 +97,7 @@ class _taskManagerSingleton extends App.Controller
 
     @bind('taskbar:preferences', (data) =>
       @tasksPreferences[data.key] = data.preferences
-      @preferencesExecuteCallbacks(data.key)
+      @preferencesTrigger(data.key)
     )
 
   init: ->
@@ -228,7 +232,7 @@ class _taskManagerSingleton extends App.Controller
             delete ui.tasksToUpdate[params.key]
           ui.allTasksByKey[params.key] = @attributes()
           ui.tasksPreferences[params.key] = clone(@preferences)
-          ui.preferencesExecuteCallbacks(params.key)
+          ui.preferencesTrigger(params.key)
           for taskPosition of ui.allTasks
             if ui.allTasks[taskPosition] && ui.allTasks[taskPosition]['key'] is @key
               task = @attributes()
@@ -307,8 +311,10 @@ class _taskManagerSingleton extends App.Controller
 
   # show task content
   show: (key, params_app) =>
-    controller = @workers[ key ]
+    controller = @workers[key]
     @shownStore[key] = true
+
+    @preferencesTrigger(key)
 
     domKey = @domID(key)
     domStoreItem = @domStore[domKey]
@@ -344,7 +350,7 @@ class _taskManagerSingleton extends App.Controller
 
   # hide task content
   hide: (key) =>
-    controller = @workers[ key ]
+    controller = @workers[key]
     @shownStore[key] = false
 
     element = @$("##{@domID(key)}")
@@ -459,6 +465,7 @@ class _taskManagerSingleton extends App.Controller
     if worker
       worker = undefined
     delete @workers[key]
+    delete @tasksPreferences[key]
     try
       element = @$("##{@domID(key)}")
       element.html('')
@@ -612,6 +619,7 @@ class _taskManagerSingleton extends App.Controller
     for task in tasks
       task.active = false
       @allTasksByKey[task.key] = task.attributes()
+      @tasksPreferences[task.key] = task.preferences
 
     # reopen tasks
     App.Event.trigger 'taskbar:init'
@@ -683,7 +691,7 @@ class _taskManagerSingleton extends App.Controller
       if _.isEmpty(value)
         delete @tasksPreferencesCallbacks[key]
 
-  preferencesExecuteCallbacks: (key) =>
+  preferencesTrigger: (key) =>
     return if !@tasksPreferencesCallbacks[key]
     return if !@tasksPreferences[key]
     for subscribeId, callback of @tasksPreferencesCallbacks[key]
