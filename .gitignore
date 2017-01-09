@@ -45,6 +45,7 @@
 /public/assets/*.*
 /public/assets/app
 /public/assets/custom
+/public/assets/chat/node_modules
 /tmp/*
 /tmp/pids/*
 
