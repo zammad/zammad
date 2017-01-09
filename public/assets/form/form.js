@@ -40,6 +40,13 @@ $(function() {
         placeholder: 'Your Message...',
         rows: 7,
       },
+      {
+        display: 'Attachments',
+        name: 'file[]',
+        tag: 'input',
+        type: 'file',
+        repeat: 3,
+      },
     ]
   });
 });
@@ -56,8 +63,8 @@ $(function() {
     showTitle: false,
     messageTitle: 'Zammad Form',
     messageSubmit: 'Submit',
-    messageThankYou: 'Thank you for your inquiry! We\'ll contact you soon as possible.',
-    messageNoConfig: 'Unable to load form config from server. Maybe featrue is disabled.',
+    messageThankYou: 'Thank you for your inquiry! We\'ll contact you as soon as possible.',
+    messageNoConfig: 'Unable to load form config from server. Maybe feature is disabled.',
     attributes: [
       {
         display: 'Name',
@@ -222,6 +229,9 @@ $(function() {
       method: 'post',
       url: _this.endpoint_submit,
       data: _this.getParams(),
+      cache: false,
+      contentType: false,
+      processData: false,
     }).done(function(data) {
 
       // removed errors
@@ -247,22 +257,19 @@ $(function() {
 
   // get params
   Plugin.prototype.getParams = function() {
-    var _this = this,
-      params = {}
+    var _this = this
 
-    $.each( _this.$form.serializeArray(), function(index, item) {
-      params[item.name] = item.value
-    })
+    var formData = new FormData(_this.$form[0])
 
-    if (!params.title) {
-      params.title = this.options.messageTitle
+    if (!formData.has('title')) {
+      formData.append('title', this.options.messageTitle)
     }
 
     if (this.options.test) {
-      params.test = true
+      formData.append('test', true)
     }
-    _this.log('debug', 'params', params)
-    return params
+    _this.log('debug', 'formData', formData)
+    return formData
   }
 
   Plugin.prototype.closeModal = function() {
@@ -296,11 +303,13 @@ $(function() {
     }
     $.each(this.options.attributes, function(index, value) {
       var item = $('<div class="form-group"><label>' + _this.T(value.display) + '</label></div>')
-      if (value.tag == 'input') {
-        item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '">')
-      }
-      else if (value.tag == 'textarea') {
-        item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '"></textarea>')
+      for (var i=0; i < (value.repeat ? value.repeat : 1); i++) {
+        if (value.tag == 'input') {
+          item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '">')
+        }
+        else if (value.tag == 'textarea') {
+          item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '"></textarea>')
+        }
       }
       $form.append(item)
     })
