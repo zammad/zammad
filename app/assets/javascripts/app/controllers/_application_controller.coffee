@@ -259,7 +259,7 @@ class App.Controller extends Spine.Controller
 
   frontendTimeUpdate: =>
     update = =>
-      @frontendTimeUpdateElement($('.humanTimeFromNow'))
+      @frontendTimeUpdateElement($('#app'))
     App.Interval.set(update, 61000, 'frontendTimeUpdate', 'ui')
 
   frontendTimeUpdateElement: (el) =>
