@@ -11,12 +11,16 @@ You're going to love Zammad!
 
 ## Statusbadges
 
-- Current develop version DEB/RPM downloads: [![GitHub version](https://badge.fury.io/gh/zammad%2Fzammad.svg)](https://packager.io/gh/zammad/zammad#develop)
 - Build: [![Build Status](https://travis-ci.org/zammad/zammad.svg?branch=develop)](https://travis-ci.org/zammad/zammad)
 - Code: [![Code Climate](https://codeclimate.com/github/zammad/zammad/badges/gpa.svg)](https://codeclimate.com/github/zammad/zammad) [![Coverage Status](https://coveralls.io/repos/github/zammad/zammad/badge.svg)](https://coveralls.io/github/zammad/zammad)
 - Docs: [![Documentation Status](https://readthedocs.org/projects/zammad/badge/?version=latest)](https://docs.zammad.org)
-- Docker Image: [![](https://images.microbadger.com/badges/image/zammad/zammad.svg)](https://microbadger.com/images/zammad/zammad) [![](https://images.microbadger.com/badges/version/zammad/zammad.svg)](https://hub.docker.com/r/zammad/zammad/)
+- Issues: [![Percentage of issues still open](http://isitmaintained.com/badge/open/zammad/zammad.svg)](https://github.com/zammad/zammad/issues "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/zammad/zammad.svg)](https://github.com/zammad/zammad/issues?q=is%3Aissue+is%3Aclosed "Average time to resolve an issue")
+- Current develop version DEB/RPM downloads: [![GitHub version](https://badge.fury.io/gh/zammad%2Fzammad.svg)](https://packager.io/gh/zammad/zammad#develop)
+- Docker single container develop image: [![](https://images.microbadger.com/badges/image/zammad/zammad.svg)](https://microbadger.com/images/zammad/zammad) [![](https://images.microbadger.com/badges/version/zammad/zammad.svg)](https://hub.docker.com/r/zammad/zammad/)
+- Docker multi container stable image: [![](https://images.microbadger.com/badges/image/zammad/zammad-docker-compose.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose/)
+- License: [![](https://images.microbadger.com/badges/license/zammad/zammad:develop.svg)](https://microbadger.com/images/zammad/zammad:develop "AGPL-3.0")
 
+https://github.com/zammad/zammad/issues
 
 ## Installing & Getting Started
 
