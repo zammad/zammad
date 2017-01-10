@@ -2015,7 +2015,33 @@ Some Text',
       },
       {
         data: IO.binread('test/fixtures/mail44.box'),
-        success: false,
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: '精益生产闪婚,是谁的责任',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Clement.Si',
+              lastname: '',
+              fullname: 'Clement.Si',
+              email: 'claudia.shu@yahoo.com.',
+            },
+            {
+              firstname: '',
+              lastname: '',
+              fullname: 'abuse@domain.com',
+              email: 'abuse@domain.com',
+            },
+          ],
+        }
       },
     ]
     assert_process(files)
