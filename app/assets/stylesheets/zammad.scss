@@ -7639,10 +7639,7 @@ output {
   left: 0;
   right: 0;
   @extend .zIndex-10;
-
-  .defaultTheme {
-    pointer-events: none;
-  }
+  pointer-events: none;
 
   .noty_bar {
     max-width: 500px;
