@@ -107,7 +107,7 @@ class Transaction::Trigger
         next if ticket_count.zero?
         next if tickets.first.id != ticket.id
 
-        # check in min one attribute has changed
+        # check if min one attribute has changed
         if @item[:type] == 'update' && !article_selector
           match = false
           if has_changed_condition_exists && has_changed
@@ -116,6 +116,7 @@ class Transaction::Trigger
             trigger.condition.each do |key, _value|
               (object_name, attribute) = key.split('.', 2)
               next if object_name != 'ticket'
+              next if !@item[:changes]
               next if !@item[:changes][attribute]
               match = true
               break
