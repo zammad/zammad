@@ -89,7 +89,7 @@ class Channel::EmailParser
       from = mail[ item.to_sym ].value
       break if from
     }
-    data[:from_from] = from
+    data[:from_full] = from
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
@@ -524,7 +524,7 @@ returns
           sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
           content_type: mail[:content_type],
           body: mail[:body],
-          from: mail[:from_from],
+          from: mail[:from_full],
           to: mail[:to],
           cc: mail[:cc],
           subject: mail[:subject],
