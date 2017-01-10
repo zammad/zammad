@@ -17,7 +17,7 @@ You're going to love Zammad!
 - Issues: [![Percentage of issues still open](http://isitmaintained.com/badge/open/zammad/zammad.svg)](https://github.com/zammad/zammad/issues "Percentage of issues still open") [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/zammad/zammad.svg)](https://github.com/zammad/zammad/issues?q=is%3Aissue+is%3Aclosed "Average time to resolve an issue")
 - Current stable & develop DEB/RPM downloads: [![](https://img.shields.io/badge/Branch-develop-lightgrey.svg)](https://packager.io/gh/zammad/zammad#develop) [![](https://img.shields.io/badge/Branch-stable-lightgrey.svg)](https://packager.io/gh/zammad/zammad#stable)
 - Docker single container develop image: [![](https://images.microbadger.com/badges/image/zammad/zammad.svg)](https://microbadger.com/images/zammad/zammad) [![](https://images.microbadger.com/badges/version/zammad/zammad.svg)](https://hub.docker.com/r/zammad/zammad/)
-- Docker multi container stable image: [![](https://images.microbadger.com/badges/image/zammad/zammad-docker-compose.svg)](https://microbadger.com/images/zammad/zammad-docker-compose/) [![](https://img.shields.io/badge/version-stable-blue.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose)
+- Docker multi container stable image: [![](https://images.microbadger.com/badges/image/zammad/zammad-docker-compose:zammad.svg)](https://microbadger.com/images/zammad/zammad-docker-compose:zammad) [![](https://img.shields.io/badge/version-stable-blue.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose)
 - License: [![](https://img.shields.io/badge/License-AGPL 3.0-lightgrey.svg)](https://github.com/zammad/zammad/blob/develop/LICENSE)
 
 ## Installing & Getting Started
