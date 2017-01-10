@@ -5,10 +5,12 @@
 </div>
 <div class="page-content">
   <ul>
-    <% for auth_provider in @auth_providers: %>
-      <li> <%- @T( auth_provider.name ) %>
-        <% if !@user['accounts'] || !@user['accounts'][auth_provider.key]: %><a href="<%= auth_provider.url %>"><%- @T('Add') %></a>
-        <% else: %>"<%= @user['accounts'][auth_provider.key]['username'] %>" <a href="#" data-uid="<%= @user['accounts'][auth_provider.key]['uid'] %>" data-provider="<%= auth_provider.key %>" class="js-remove"><%- @T('remove') %></a>
+    <% for key, provider of @auth_providers: %>
+      <li> <%- @T( provider.name ) %>
+        <% if !@user['accounts'] || !@user['accounts'][key]: %><a href="<%= provider.url %>">
+          <%- @T('Add') %></a>
+        <% else: %>
+          "<%= @user['accounts'][key]['username'] %>" <a href="#" data-uid="<%= @user['accounts'][key]['uid'] %>" data-provider="<%= key %>" class="js-remove"><%- @T('remove') %></a>
         <% end %>
       </li>
     <% end %>
