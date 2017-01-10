@@ -48,6 +48,7 @@
 /public/assets/chat/node_modules
 /tmp/*
 /tmp/pids/*
+/storage/fs
 
 # except /tmp/pids/ which is needed for certain Zammad processes
 !/tmp
