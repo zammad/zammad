@@ -1,4 +1,9 @@
 {
+    "oauth2-button.svg": {
+        "author": "Felix Niklas",
+        "url": "",
+        "license": "MIT"
+    },
     "twitter-button.svg": {
         "author": "Twitter",
         "url": "twitter.com",

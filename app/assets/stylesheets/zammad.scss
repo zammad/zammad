@@ -2502,11 +2502,17 @@ ol.tabs li {
     background: hsl(10,78%,53%);
   }
 
+  &.auth-provider--oauth2 {
+    background: hsl(0,0%,15%);
+  }
+
   .provider-name {
     flex: 1;
   }
 
   .provider-icon {
+    width: 29px;
+    height: 24px;
     margin-right: 10px;
     margin-top: 1px;
   }
