@@ -8,9 +8,10 @@ module Import
       extend self
 
       def skip?(record, *_args)
-        return true if !importable?(record)
         return true if skip_field?(record['Name'])
-        false
+        return false if importable?(record)
+        @skip_fields.push(record['Name'])
+        true
       end
 
       def backend_class(record, *_args)
@@ -45,7 +46,8 @@ module Import
       end
 
       def skip_fields
-        %w(ProcessManagementProcessID ProcessManagementActivityID ZammadMigratorChanged ZammadMigratorChangedOld)
+        return @skip_fields if @skip_fields
+        @skip_fields = %w(ProcessManagementProcessID ProcessManagementActivityID ZammadMigratorChanged ZammadMigratorChangedOld)
       end
     end
   end
