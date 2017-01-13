@@ -3710,7 +3710,7 @@ ObjectManager::Attribute.add(
   data_type: 'select',
   data_option: {
     relation: 'TicketPriority',
-    nulloption: true,
+    nulloption: false,
     multiple: false,
     null: false,
     default: 2,
@@ -3728,7 +3728,6 @@ ObjectManager::Attribute.add(
     edit: {
       Agent: {
         null: false,
-        nulloption: false,
       },
     },
   },
@@ -5296,7 +5295,7 @@ Trigger.create_or_update(
     'notification.email' => {
       'body' => '<div>Your request <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
 <br/>
-<div>To provide additional information, please reply to this email or click on the following link:
+<div>To provide additional information, please reply to this email or click on the following link (for initial login, please request a new password):
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
 </div>
 <br/>
