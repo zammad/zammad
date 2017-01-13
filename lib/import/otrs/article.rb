@@ -69,10 +69,7 @@ module Import
 
       def map(article)
         mapped = map_default(article)
-        # if no content type is set make sure to remove it
-        # so Zammad can set the default content type
-        mapped.delete(:content_type) if mapped[:content_type].blank?
-        mapped
+        map_content_type(mapped)
       end
 
       def map_default(article)
@@ -83,6 +80,15 @@ module Import
           .merge(from_mapping(article))
           .merge(article_type(article))
           .merge(article_sender_type(article))
+      end
+
+      def map_content_type(mapped)
+        # if no content type is set make sure to remove it
+        # so Zammad can set the default content type
+        mapped.delete(:content_type) if mapped[:content_type].blank?
+        return mapped if !mapped[:content_type]
+        mapped[:content_type].sub!(/;\s?.+?$/, '')
+        mapped
       end
 
       def article_type(article)
