@@ -37,7 +37,7 @@ RSpec.describe Import::OTRS::Article do
         from:          '"Betreuter Kunde" <kunde2@kunde.de>,',
         to:            'Postmaster',
         cc:            '',
-        content_type:  'text/plain; charset=utf-8',
+        content_type:  'text/plain',
         subject:       'test #3',
         in_reply_to:   '',
         message_id:    '',

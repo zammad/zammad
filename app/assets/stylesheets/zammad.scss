@@ -2462,8 +2462,7 @@ ol.tabs li {
   padding: 0 10px 0 7px;
   margin-bottom: 10px;
   color: white !important;
-  line-height: 22px;
-  text-align: center;
+  line-height: 23px;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -2479,7 +2478,8 @@ ol.tabs li {
   }
 
   &.auth-provider--google {
-    background: #d8543c;
+    background: hsl(0,0%,93%);
+    color: hsl(0,0%,46%) !important;
   }
 
   &.auth-provider--twitter {
@@ -2494,13 +2494,25 @@ ol.tabs li {
     background: #006087;
   }
 
+  &.auth-provider--github {
+    background: hsl(0,0%,27%);
+  }
+
+  &.auth-provider--gitlab {
+    background: hsl(10,78%,53%);
+  }
+
+  &.auth-provider--oauth2 {
+    background: hsl(0,0%,15%);
+  }
+
   .provider-name {
     flex: 1;
   }
 
   .provider-icon {
     width: 29px;
-    height: 22px;
+    height: 24px;
     margin-right: 10px;
     margin-top: 1px;
   }
