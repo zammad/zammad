@@ -1506,7 +1506,7 @@ Setting.create_if_not_exists(
   title: 'Additional follow up detection',
   name: 'postmaster_follow_up_search_in',
   area: 'Email::Base',
-  description: 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up ckeck is executed.',
+  description: 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up check is executed.',
   options: {
     form: [
       {
