@@ -1365,7 +1365,7 @@ Setting.create_if_not_exists(
   title: 'Ticket Subject Size',
   name: 'ticket_subject_size',
   area: 'Email::Base',
-  description: 'Max size of the subjects in an email reply.',
+  description: 'Max size of the subject in an email reply.',
   options: {
     form: [
       {
