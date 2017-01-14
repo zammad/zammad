@@ -95,7 +95,7 @@ class IntegrationTest < TestCase
     )
     click(css: '.content.active .main .checkbox-replacement')
     select(
-      css: '.content.active .main select[name="group_id"]',
+      css: '.content.active .main select[name="group_ids"]',
       value: 'Users',
     )
     set(
@@ -110,7 +110,7 @@ class IntegrationTest < TestCase
     click(css: '.content.active .main .js-submit')
 
     match(
-      css: '.content.active .main select[name="group_id"]',
+      css: '.content.active .main select[name="group_ids"]',
       value: 'Users',
     )
     match(
@@ -128,7 +128,7 @@ class IntegrationTest < TestCase
     click(css: 'a[href="#system/integration/slack"]')
 
     match(
-      css: '.content.active .main select[name="group_id"]',
+      css: '.content.active .main select[name="group_ids"]',
       value: 'Users',
     )
     match(
@@ -143,7 +143,7 @@ class IntegrationTest < TestCase
     reload()
 
     match(
-      css: '.content.active .main select[name="group_id"]',
+      css: '.content.active .main select[name="group_ids"]',
       value: 'Users',
     )
     match(
