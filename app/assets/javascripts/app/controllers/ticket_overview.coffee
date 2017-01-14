@@ -14,10 +14,10 @@ class App.TicketOverview extends App.Controller
     '.js-batch-assign':           'batchAssign'
     '.js-batch-macro':            'batchMacro'
 
-  events:
-    'mousedown .item':  'startDragItem'
-    'mouseenter .js-batch-overlay-entry': 'highlightBatchEntry'
-    'mouseleave .js-batch-overlay-entry': 'unhighlightBatchEntry'
+  #events:
+  #  'mousedown .item':  'startDragItem'
+  #  'mouseenter .js-batch-overlay-entry': 'highlightBatchEntry'
+  #  'mouseleave .js-batch-overlay-entry': 'unhighlightBatchEntry'
 
   constructor: ->
     super
