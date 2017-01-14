@@ -964,7 +964,7 @@ Setting.create_if_not_exists(
   title: 'Minimal size',
   name: 'password_min_size',
   area: 'Security::Password',
-  description: 'Password need to have at least minimal size of characters.',
+  description: 'Password needs to have at least minimal size of characters.',
   options: {
     form: [
       {
@@ -1004,7 +1004,7 @@ Setting.create_if_not_exists(
   title: '2 lower and 2 upper characters',
   name: 'password_min_2_lower_2_upper_characters',
   area: 'Security::Password',
-  description: 'Password need to contain 2 lower and 2 upper characters.',
+  description: 'Password needs to contain 2 lower and 2 upper characters.',
   options: {
     form: [
       {
@@ -1029,7 +1029,7 @@ Setting.create_if_not_exists(
   title: 'Digit required',
   name: 'password_need_digit',
   area: 'Security::Password',
-  description: 'Password need to have at least one digit.',
+  description: 'Password needs to have at least one digit.',
   options: {
     form: [
       {
