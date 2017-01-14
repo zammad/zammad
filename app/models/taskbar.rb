@@ -33,6 +33,16 @@ class Taskbar < ApplicationModel
 
   def update_last_contact
     return true if local_update
+    return true if changes.empty?
+    if changes['notify']
+      count = 0
+      changes.each { |attribute, _value|
+        next if attribute == 'updated_at'
+        next if attribute == 'created_at'
+        count += 1
+      }
+      return true if count <= 1
+    end
     self.last_contact = Time.zone.now
   end
 
