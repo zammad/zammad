@@ -89,7 +89,7 @@ class FirstStepsController < ApplicationController
               class: 'js-testTicket',
             },
             {
-              name: 'Create Text Modues',
+              name: 'Create Text Modules',
               checked: text_module_active,
               location: '#manage/text_modules',
             },
