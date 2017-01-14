@@ -311,7 +311,7 @@ class String
 
     marker = '######SIGNATURE_MARKER######'
 
-    # search for signature seperator "--\n"
+    # search for signature separator "--\n"
     string.sub!(/^\s{0,2}--\s{0,2}$/) { |placeholder|
       placeholder = "#{marker}#{placeholder}"
     }

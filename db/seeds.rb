@@ -1431,8 +1431,8 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title: 'Sender Format Seperator',
-  name: 'ticket_define_email_from_seperator',
+  title: 'Sender Format Separator',
+  name: 'ticket_define_email_from_separator',
   area: 'Email::Base',
   description: 'Defines the separator between the agents real name and the given group email address.',
   options: {
@@ -1440,7 +1440,7 @@ Setting.create_if_not_exists(
       {
         display: '',
         null: false,
-        name: 'ticket_define_email_from_seperator',
+        name: 'ticket_define_email_from_separator',
         tag: 'input',
       },
     ],
