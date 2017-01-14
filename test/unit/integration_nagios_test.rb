@@ -177,6 +177,76 @@ Additional Info:
     assert_equal('CPU Load', ticket_1_2.preferences['nagios']['service'])
     assert_equal('WARNING', ticket_1_2.preferences['nagios']['state'])
 
+    # host down
+    email_raw_string = "To: support@example.com
+Subject: ** PROBLEM Host Alert: apn4711.dc.example.com is DOWN **
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.znuny.com>
+From: nagios@monitoring.example.com (nagios)
+
+***** Nagios *****
+
+Notification Type: PROBLEM
+
+Host: apn4711.dc.example.com
+Address: 127.0.0.1
+State: DOWN
+
+Date/Time: 2017-01-14 11:33:02 +0100
+
+Additional Info: CRITICAL - Host Unreachable (127.0.0.1)
+
+Comment: [] =
+"
+    ticket_3, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_3.state.name)
+    assert(ticket_3.preferences)
+    assert(ticket_3.preferences['integration'])
+    assert_equal('nagios', ticket_3.preferences['integration'])
+    assert(ticket_3.preferences['nagios'])
+    assert_equal('apn4711.dc.example.com', ticket_3.preferences['nagios']['host'])
+    assert_equal(nil, ticket_3.preferences['nagios']['service'])
+    assert_equal('DOWN', ticket_3.preferences['nagios']['state'])
+    assert_not_equal(ticket_3.id, ticket_1.id)
+
+    # host up
+    email_raw_string = "To: support@example.com
+Subject: ** RECOVERY Host Alert: apn4711.dc.example.com is UP **
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-nagios-5@monitoring.znuny.com>
+From: nagios@monitoring.example.com (nagios)
+
+***** Nagios *****
+
+Notification Type: RECOVERY
+
+Host: apn4711.dc.example.com
+Address: 127.0.0.1
+State: UP
+
+Date/Time: 2017-01-14 12:07:11 +0100
+
+Additional Info: PING OK - Packet loss = 0%, RTA = 21.37 ms
+
+Comment: [] =
+"
+    ticket_3_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal(ticket_3.id, ticket_3_1.id)
+    assert_equal('closed', ticket_3_1.state.name)
+    assert(ticket_3_1.preferences)
+    assert(ticket_3_1.preferences['integration'])
+    assert_equal('nagios', ticket_3_1.preferences['integration'])
+    assert(ticket_3_1.preferences['nagios'])
+    assert_equal('apn4711.dc.example.com', ticket_3.preferences['nagios']['host'])
+    assert_equal(nil, ticket_3_1.preferences['nagios']['service'])
+    assert_equal('DOWN', ticket_3_1.preferences['nagios']['state'])
+
     #Setting.set('nagios_integration', false)
 
   end

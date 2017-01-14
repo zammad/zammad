@@ -18,7 +18,7 @@ class Channel::Filter::MonitoringBase
     sender = Setting.get("#{integration}_sender")
     auto_close = Setting.get("#{integration}_auto_close")
     auto_close_state_id = Setting.get("#{integration}_auto_close_state_id")
-    state_recovery_match = 'OK'
+    state_recovery_match = '(OK|UP)'
 
     return if !mail[:from]
     return if !mail[:body]
