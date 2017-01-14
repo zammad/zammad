@@ -19,8 +19,8 @@
             </div>
 
             <div class="form-controls">
-              <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T( 'Cancel & Go Back' ) %></a>
-              <button type="submit" class="btn btn--success js-submit align-right"><%- @T( 'Create' ) %></button>
+              <a class="btn btn--text btn--subtle js-cancel" href="#/"><%- @T('Cancel & Go Back') %></a>
+              <button type="submit" class="btn btn--success js-submit align-right"><%- @T('Create') %></button>
             </div>
           </form>
         </div>

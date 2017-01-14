@@ -159,7 +159,10 @@ class App.TicketCreate extends App.Controller
   buildScreen: (params) =>
 
     if !params.ticket_id && !params.article_id
-      @render(options: { customer_id: params.customer_id })
+      if !_.isEmpty(params.customer_id)
+        @render(options: { customer_id: params.customer_id })
+        return
+      @render()
       return
 
     # fetch split ticket data
