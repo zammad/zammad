@@ -106,7 +106,7 @@ class FirstStepsController < ApplicationController
           ],
         },
         {
-          name: 'Additionals Channels',
+          name: 'Additional Channels',
           items: [
             {
               name: 'Twitter',
