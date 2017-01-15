@@ -1,14 +1,17 @@
 class Index extends App.ControllerContent
   className: 'getstarted fit'
   elements:
-    '.input-feedback':                      'urlStatus'
-    '[data-target=otrs-start-migration]':   'nextStartMigration'
-    '.otrs-link-error':                     'linkErrorMessage'
+    '.input-feedback':     'urlStatus'
+    '.js-migration-check': 'nextStartMigration'
+    '.otrs-link-error':    'linkErrorMessage'
+
   events:
     'click .js-otrs-link':       'showLink'
     'click .js-download':        'startDownload'
     'click .js-migration-start': 'startMigration'
+    'click .js-migration-check': 'checkMigration'
     'keyup #otrs-link':          'updateUrl'
+  updateMigrationDisplayLoop: 0
 
   constructor: ->
     super
@@ -61,6 +64,13 @@ class Index extends App.ControllerContent
     @$('[data-slide=otrs-plugin]').addClass('hide')
     @$('[data-slide=otrs-link]').addClass('hide')
     @$('[data-slide=otrs-import]').removeClass('hide')
+    @$('[data-slide=otrs-import-notice]').addClass('hide')
+
+  showImportNotice: =>
+    @$('[data-slide=otrs-plugin]').addClass('hide')
+    @$('[data-slide=otrs-link]').addClass('hide')
+    @$('[data-slide=otrs-import]').addClass('hide')
+    @$('[data-slide=otrs-import-notice]').removeClass('hide')
 
   updateUrl: (e) =>
     url = $(e.target).val()
@@ -86,12 +96,28 @@ class Index extends App.ControllerContent
             @urlStatus.attr('data-state', 'error')
             @linkErrorMessage.text(data.message_human || data.message)
             @nextStartMigration.addClass('hide')
-
       )
     @delay(callback, 700, 'import_otrs_url')
 
-  startMigration: (e) =>
+  checkMigration: (e) =>
     e.preventDefault()
+    @ajax(
+      id:          'import_otrs_check'
+      type:        'POST'
+      url:         "#{@apiPath}/import/otrs/import_check"
+      processData: true
+      success:     (data, status, xhr) =>
+        if data.result is 'ok'
+          @startMigration()
+          return
+        for issue in data.issues
+          @$(".js-#{issue}").removeClass('hide')
+        @showImportNotice()
+    )
+
+  startMigration: (e) =>
+    if e
+      e.preventDefault()
     @showImportState()
     @ajax(
       id:          'import_start'
@@ -100,10 +126,11 @@ class Index extends App.ControllerContent
       processData: true
       success:     (data, status, xhr) =>
         if data.result is 'ok'
-          @delay(@updateMigration, 3000)
+          @delay(@updateMigration, 2000)
     )
 
   updateMigration: =>
+    @updateMigrationDisplayLoop += 1
     @showImportState()
     @ajax(
       id:          'import_status'
@@ -121,6 +148,11 @@ class Index extends App.ControllerContent
           @$('.js-error').html(App.i18n.translateContent(data.message))
         else
           @$('.js-error').addClass('hide')
+
+        if data.message is 'not running' && @updateMigrationDisplayLoop > 10
+          @$('.js-error').removeClass('hide')
+          @$('.js-error').html(App.i18n.translateContent('Background process did not start or has not finished! Please contact your support.'))
+          return
 
         if data.result is 'in_progress'
           for key, item of data.data

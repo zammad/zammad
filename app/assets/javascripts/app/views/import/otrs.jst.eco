@@ -37,14 +37,13 @@
       </div>
       <div class="wizard-controls horizontal center">
         <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
-        <div class="btn btn--primary align-right hide js-migration-start" data-target="otrs-start-migration"><%- @T('Migrate OTRS Data') %></div>
+        <div class="btn btn--primary align-right hide js-migration-check"><%- @T('Migrate OTRS Data') %></div>
       </div>
     </div>
 
     <div class="wizard-slide vertical hide" data-slide="otrs-import">
       <h2><%- @T('OTRS Migration') %></h2>
       <div class="alert alert--danger hide js-error" role="alert"></div>
-
       <div class="wizard-body flex vertical justified">
         <table class="progressTable">
           <tr class="js-config">
@@ -87,6 +86,18 @@
       </div>
       <div class="wizard-controls horizontal center">
         <a href="#" class="btn btn--primary align-right hide js-finished"><%- @T('Done') %></a>
+      </div>
+    </div>
+
+    <div class="wizard-slide vertical hide" data-slide="otrs-import-notice">
+      <h2><%- @T('Notice') %></h2>
+      <div class="wizard-body flex vertical justified">
+        <p class="js-otrsProcesses hide"><%- @T('We detected OTRS BPM processes which can\'t get imported into Zammad, since we currently don\'t support these kind of workflows.') %></p>
+        <p class="js-otrsDynamicFields hide"><%- @T('We found many dynamic fields. We use a different approach towards ticket attributes. Zammad uses also tags in addition to custom fields to classify tickets. This difference may conflict with your current use of dynamic fields in OTRS.') %></p>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
+        <a href="#" class="btn btn--primary align-right js-migration-start"><%- @T('Continue anyway') %></a>
       </div>
     </div>
 
