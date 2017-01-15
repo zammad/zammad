@@ -10,6 +10,7 @@ class Index extends App.ControllerContent
     '.zendesk-api-token-error':              'apiTokenErrorMessage'
     '#zendesk-email':                        'zendeskEmail'
     '#zendesk-api-token':                    'zendeskApiToken'
+  updateMigrationDisplayLoop: 0
 
   events:
     'click .js-zendesk-credentials': 'showCredentials'
@@ -142,6 +143,7 @@ class Index extends App.ControllerContent
     )
 
   updateMigration: =>
+    @updateMigrationDisplayLoop += 1
     @showImportState()
     @ajax(
       id:          'import_status'
@@ -159,6 +161,11 @@ class Index extends App.ControllerContent
           @$('.js-error').html(App.i18n.translateContent(data.message))
         else
           @$('.js-error').addClass('hide')
+
+        if data.message is 'not running' && @updateMigrationDisplayLoop > 16
+          @$('.js-error').removeClass('hide')
+          @$('.js-error').html(App.i18n.translateContent('Background process did not start or has not finished! Please contact your support.'))
+          return
 
         if data.result is 'in_progress'
           for key, item of data.data
