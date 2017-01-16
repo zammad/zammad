@@ -62,7 +62,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :escalation_at,                    :timestamp, limit: 3,   null: true
       t.column :pending_time,                     :timestamp, limit: 3,   null: true
       t.column :type,                             :string,    limit: 100, null: true
-      t.column :time_unit,                        :decimal, precision: 6, scale: 2, null: false
+      t.column :time_unit,                        :decimal, precision: 6, scale: 2, null: true
       t.column :preferences,                      :text,      limit: 500.kilobytes + 1, null: true
       t.column :updated_by_id,                    :integer,               null: false
       t.column :created_by_id,                    :integer,               null: false

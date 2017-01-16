@@ -4,7 +4,7 @@ class AddTicketTimeAccounting373 < ActiveRecord::Migration
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
 
-    drop_table :ticket_time_accountings
+    drop_table :ticket_time_accounting
     create_table :ticket_time_accountings do |t|
       t.references :ticket,                                       null: false
       t.references :ticket_article,                               null: true
