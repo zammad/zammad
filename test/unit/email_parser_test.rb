@@ -197,6 +197,25 @@ Liebe Grüße!
         },
       },
       {
+        data: IO.binread('test/fixtures/mail11-reply-to.box'),
+        body_md5: '2b6c76ff8e6f6e4d2b77800a64321013',
+        attachments: [
+          {
+            md5: '08660cd33ce8c64b95bcf0207ff6c4d6',
+            filename: 'message.html',
+          },
+        ],
+        params: {
+          from: 'serviceteam@cylex.de',
+          from_email: 'serviceteam@cylex.de',
+          from_display_name: '',
+          subject: 'Eine schöne Adventszeit für ZNUNY GMBH - ENTERPRISE SERVICES FÜR OTRS',
+          to: 'enjoy_us@znuny.com',
+          content_type: 'text/html',
+          body: "<a href=\"http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-2/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b\" target=\"_blank\">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-2/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b</a><br>Lieber CYLEX Eintragsinhaber,<br>das Jahr neigt sich dem Ende und die besinnliche Zeit beginnt laut Kalender mit dem<br>1. Advent. Und wie immer wird es in der vorweihnachtlichen Zeit meist beruflich und privat<br>so richtig schön hektisch.<br>Um Ihre Weihnachtsstimmung in Schwung zu bringen kommen wir nun mit unserem Adventskalender ins Spiel. Denn 24 Tage werden Sie unsere netten Geschichten, Rezepte und Gewinnspiele sowie ausgesuchte Geschenktipps und Einkaufsgutscheine online begleiten. Damit lässt sich Ihre Freude auf das Fest garantiert mit jedem Tag steigern.<br><br>Einen gemütlichen Start in die Adventszeit wünscht Ihnen <a href=\"http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-1/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b\" target=\"_blank\">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-1/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b</a><br>Ihr CYLEX Team<br><br>P.S. Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den Link des Adventkalenders (<a href=\"http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-3/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b\" target=\"_blank\">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-3/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b</a>) in<br>       Ihrer Lesezeichen-Symbolleiste zu ergänzen.<br><br>Impressum<br>S.C. CYLEX INTERNATIONAL S.N.C.<br>Sat. Palota 119/A RO 417516 Palota Romania<br>Tel.: +49 208/62957-0 |<br>Geschäftsführer: Francisc Osvald<br>Handelsregister: J05/1591/2009<br>USt.IdNr.: RO26332771<br><br>E-Mail Kontakt<br>Homepage (<a href=\"http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-98/http%3a%2f%2fweb2.cylex.de%2fHomepage%2fHome.asp\" target=\"_blank\">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-98/http%3a%2f%2fweb2.cylex.de%2fHomepage%2fHome.asp</a>)<br>Newsletter abbestellen (<a href=\"http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-99/http%3a%2f%2fnewsletters.cylex.de%2funsubscribe.aspx%3fuid%3d4134001%26d%3dwww.cylex.de%26e%3denjoy%40znuny.com%26sc%3d3009%26l%3dd\" target=\"_blank\">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-99/http%3a%2f%2fnewsletters.cylex.de%2funsubscribe.aspx%3fuid%3d4134001%26d%3dwww.cylex.de%26e%3denjoy%40znuny.com%26sc%3d3009%26l%3dd</a>)",
+        },
+      },
+      {
         data: IO.binread('test/fixtures/mail12.box'),
         body_md5: 'b1036b57033f4f3781f4bc695f8023cd',
         attachments: [
