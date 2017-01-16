@@ -89,7 +89,11 @@ class Channel::EmailParser
       from = mail[ item.to_sym ].value
       break if from
     }
-    data[:from_full] = Mail::Address.new(from).format
+    begin
+      data[:from_full] = Mail::Address.new(from).format
+    rescue
+      data[:from_full] = from
+    end
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
