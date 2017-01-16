@@ -1,6 +1,6 @@
 <div class="main flex vertical centered darkBackground">
   <%- @Icon('full-logo', 'wizard-logo') %>
-  <form class="setup wizard js-admin">
+  <form class="setup wizard js-admin" autocomplete="off">
     <div class="wizard-slide">
       <h2><%- @T('Administrator Account') %></h2>
       <div class="wizard-body vertical justified js-admin-form"></div>

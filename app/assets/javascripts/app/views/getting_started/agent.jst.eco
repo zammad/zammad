@@ -1,6 +1,6 @@
 <div class="main flex vertical centered darkBackground">
   <%- @Icon('full-logo', 'wizard-logo') %>
-  <form class="setup wizard js-agent">
+  <form class="setup wizard js-agent" autocomplete="off">
     <div class="wizard-slide">
       <h2><%- @T('Invite Colleagues') %></h2>
       <div class="wizard-body vertical justified js-agent-form"></div>

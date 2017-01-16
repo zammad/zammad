@@ -1,6 +1,6 @@
 <div class="modal-dialog wizard">
 
-  <form  autocomplete="off" class="modal-content setup wizard js-intro">
+  <form  autocomplete="off" class="modal-content setup wizard js-intro" autocomplete="off">
     <!-- dummy to prevent chrome to ask for password save -->
     <input style="display:none">
     <input type="password" style="display:none">
@@ -79,7 +79,7 @@
     <div class="modal-footer"></div>
   </form>
 
-  <form  autocomplete="off" class="modal-content setup wizard hide js-inbound">
+  <form  autocomplete="off" class="modal-content setup wizard hide js-inbound" autocomplete="off">
     <!-- dummy to prevent chrome to ask for password save -->
     <input style="display:none">
     <input type="password" style="display:none">
@@ -129,7 +129,7 @@
     </div>
   </form>
 
-  <form  autocomplete="off" class="modal-content setup wizard hide js-outbound">
+  <form  autocomplete="off" class="modal-content setup wizard hide js-outbound" autocomplete="off">
     <!-- dummy to prevent chrome to ask for password save -->
     <input style="display:none">
     <input type="password" style="display:none">
