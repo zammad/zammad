@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.0.3](https://github.com/zammad/zammad/tree/1.0.3) (2016-12-16)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.0.2...1.0.3)
+
+**Fixed bugs:**
+
+- Imap sort errors with gmail in production.log [\#568](https://github.com/zammad/zammad/issues/568) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Agent - Group assignment shows "\<br\>" [\#566](https://github.com/zammad/zammad/issues/566) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Overview is not show it organization is used as row and first ticket has no organization \(app is not responding anymore\) [\#554](https://github.com/zammad/zammad/issues/554) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Error message at creation of new overview with not existing specific customer [\#545](https://github.com/zammad/zammad/issues/545) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Renaming standard roles breaks ticket views [\#499](https://github.com/zammad/zammad/issues/499) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- New users won't get initial user group [\#249](https://github.com/zammad/zammad/issues/249) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- add e.g. screenshots form clipboard doesn't work \(FireFox 45.3.0\) [\#235](https://github.com/zammad/zammad/issues/235) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
 ## [1.0.2](https://github.com/zammad/zammad/tree/1.0.2) (2016-12-14)
 [Full Changelog](https://github.com/zammad/zammad/compare/1.0.1...1.0.2)
 
