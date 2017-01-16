@@ -459,6 +459,7 @@ If you\'re reading this message in your email, click the ticket number link that
       escalation_at
       pending_time
       type
+      time_unit
       preferences
       updated_by_id
       created_by_id
