@@ -363,20 +363,20 @@ class Channel::EmailParser
 =begin
 
   parser = Channel::EmailParser.new
-  ticket, article, user = parser.process(channel, email_raw_string)
+  ticket, article, user, mail = parser.process(channel, email_raw_string)
 
 returns
 
-  [ticket, article, user]
+  [ticket, article, user, mail]
 
 do not raise an exception - e. g. if used by scheduler
 
   parser = Channel::EmailParser.new
-  ticket, article, user = parser.process(channel, email_raw_string, fakse)
+  ticket, article, user, mail = parser.process(channel, email_raw_string, false)
 
 returns
 
-  [ticket, article, user] || false
+  [ticket, article, user, mail] || false
 
 =end
 
