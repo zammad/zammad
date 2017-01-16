@@ -188,7 +188,7 @@ Liebe Grüße!
         ],
         params: {
           from: 'CYLEX Newsletter <carina.merkant@cylex.de>',
-          from_full: '"CYLEX Newsletter" <carina.merkant@cylex.de>',
+          from_full: 'CYLEX Newsletter <carina.merkant@cylex.de>',
           from_email: 'carina.merkant@cylex.de',
           from_display_name: 'CYLEX Newsletter',
           subject: 'Eine schöne Adventszeit für ZNUNY GMBH - ENTERPRISE SERVICES FÜR OTRS',
