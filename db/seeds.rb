@@ -1038,7 +1038,7 @@ Setting.create_if_not_exists(
   title: 'Minimal size',
   name: 'password_min_size',
   area: 'Security::Password',
-  description: 'Password need to have at least minimal size of characters.',
+  description: 'Password needs to have at least minimal size of characters.',
   options: {
     form: [
       {
@@ -1078,7 +1078,7 @@ Setting.create_if_not_exists(
   title: '2 lower and 2 upper characters',
   name: 'password_min_2_lower_2_upper_characters',
   area: 'Security::Password',
-  description: 'Password need to contain 2 lower and 2 upper characters.',
+  description: 'Password needs to contain 2 lower and 2 upper characters.',
   options: {
     form: [
       {
@@ -1103,7 +1103,7 @@ Setting.create_if_not_exists(
   title: 'Digit required',
   name: 'password_need_digit',
   area: 'Security::Password',
-  description: 'Password need to have at least one digit.',
+  description: 'Password needs to have at least one digit.',
   options: {
     form: [
       {
@@ -1439,7 +1439,7 @@ Setting.create_if_not_exists(
   title: 'Ticket Subject Size',
   name: 'ticket_subject_size',
   area: 'Email::Base',
-  description: 'Max size of the subjects in an email reply.',
+  description: 'Max size of the subject in an email reply.',
   options: {
     form: [
       {
@@ -1505,8 +1505,8 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title: 'Sender Format Seperator',
-  name: 'ticket_define_email_from_seperator',
+  title: 'Sender Format Separator',
+  name: 'ticket_define_email_from_separator',
   area: 'Email::Base',
   description: 'Defines the separator between the agents real name and the given group email address.',
   options: {
@@ -1514,7 +1514,7 @@ Setting.create_if_not_exists(
       {
         display: '',
         null: false,
-        name: 'ticket_define_email_from_seperator',
+        name: 'ticket_define_email_from_separator',
         tag: 'input',
       },
     ],
@@ -1580,7 +1580,7 @@ Setting.create_if_not_exists(
   title: 'Additional follow up detection',
   name: 'postmaster_follow_up_search_in',
   area: 'Email::Base',
-  description: 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up ckeck is executed.',
+  description: 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up check is executed.',
   options: {
     form: [
       {

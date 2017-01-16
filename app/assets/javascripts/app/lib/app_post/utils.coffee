@@ -320,9 +320,9 @@ class App.Utils
         str = str.replace(/(.+?)(<|>|&).+?$/, "$1").trim()
       str
 
-    # search for signature seperator "--\n"
+    # search for signature separator "--\n"
     markers = []
-    searchForSeperator = (textToSearchInLines, markers) ->
+    searchForSeparator = (textToSearchInLines, markers) ->
       lineCount = 0
       for line in textToSearchInLines
         lineCount += 1
@@ -330,10 +330,10 @@ class App.Utils
           marker =
             line:      line
             lineCount: lineCount
-            type:      'seperator'
+            type:      'separator'
           markers.push marker
           return
-    searchForSeperator(textToSearchInLines, markers)
+    searchForSeparator(textToSearchInLines, markers)
 
     # search for Thunderbird
     searchForThunderbird = (textToSearchInLines, markers) ->
@@ -517,7 +517,7 @@ class App.Utils
 
     # get first marker
     markers = _.sortBy(markers, 'lineCount')
-    if markers[0].type is 'seperator'
+    if markers[0].type is 'separator'
       regex = new RegExp("\>(\s{0,10}#{quote(App.Utils.htmlEscape(markers[0].line))})\s{0,10}\<")
       message.replace(regex, ">#{markerTemplate}\$1<")
     else
