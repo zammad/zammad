@@ -2035,6 +2035,51 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Time Accounting',
+  name: 'time_accounting',
+  area: 'Web::Base',
+  description: 'Enable time accounting.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'time_accounting',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission: ['admin.time_accounting'],
+  },
+  state: false,
+  frontend: true
+)
+
+Setting.create_if_not_exists(
+  title: 'Time Accounting Selector',
+  name: 'time_accounting_selector',
+  area: 'Web::Base',
+  description: 'Enable time accounting for this tickets.',
+  options: {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission: ['admin.time_accounting'],
+  },
+  state: {},
+  frontend: true
+)
+
+Setting.create_if_not_exists(
   title: 'New Tags',
   name: 'tag_new',
   area: 'Web::Base',

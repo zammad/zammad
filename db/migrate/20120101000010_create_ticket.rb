@@ -31,6 +31,7 @@ class CreateTicket < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :ticket_priorities, [:name], unique: true
+
     create_table :tickets do |t|
       t.references :group,                                                null: false
       t.references :priority,                                             null: false
@@ -61,6 +62,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :escalation_at,                    :timestamp, limit: 3,   null: true
       t.column :pending_time,                     :timestamp, limit: 3,   null: true
       t.column :type,                             :string,    limit: 100, null: true
+      t.column :time_unit,                        :decimal, precision: 6, scale: 2, null: false
       t.column :preferences,                      :text,      limit: 500.kilobytes + 1, null: true
       t.column :updated_by_id,                    :integer,               null: false
       t.column :created_by_id,                    :integer,               null: false
@@ -93,6 +95,7 @@ class CreateTicket < ActiveRecord::Migration
     add_index :tickets, [:created_by_id]
     add_index :tickets, [:pending_time]
     add_index :tickets, [:type]
+    add_index :tickets, [:time_unit]
 
     create_table :ticket_flags do |t|
       t.references :tickets,                         null: false
@@ -106,16 +109,17 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_flags, [:tickets_id]
     add_index :ticket_flags, [:created_by_id]
 
-    create_table :ticket_time_accounting do |t|
-      t.references :tickets,                                      null: false
-      t.references :ticket_articles,                              null: true
+    create_table :ticket_time_accountings do |t|
+      t.references :ticket,                                       null: false
+      t.references :ticket_article,                               null: true
       t.column :time_unit,      :decimal, precision: 6, scale: 2, null: false
       t.column :created_by_id,  :integer,                         null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :ticket_time_accounting, [:tickets_id]
-    add_index :ticket_time_accounting, [:ticket_articles_id]
-    add_index :ticket_time_accounting, [:created_by_id]
+    add_index :ticket_time_accountings, [:ticket_id]
+    add_index :ticket_time_accountings, [:ticket_article_id]
+    add_index :ticket_time_accountings, [:created_by_id]
+    add_index :ticket_time_accountings, [:time_unit]
 
     create_table :ticket_article_types do |t|
       t.column :name,                 :string, limit: 250, null: false

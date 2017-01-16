@@ -428,6 +428,8 @@ class App.TicketZoom extends App.Controller
         callback:    @submit
         task_key:    @task_key
       )
+      #if @shown
+      #  @attributeBar.start()
 
       @form_id = App.ControllerForm.formId()
 
@@ -660,7 +662,7 @@ class App.TicketZoom extends App.Controller
 
     taskAction = @$('.js-secondaryActionButtonLabel').data('type')
 
-    ticketParams = @formParam( @$('.edit') )
+    ticketParams = @formParam(@$('.edit'))
 
     # validate ticket
     ticket = App.Ticket.find(@ticket_id)
@@ -744,6 +746,35 @@ class App.TicketZoom extends App.Controller
         return
 
       ticket.article = article
+
+    if !ticket.article
+      @submitPost(e, ticket)
+      return
+
+    # verify if time accounting is enabled
+    if @Config.get('time_accounting') isnt true
+      @submitPost(e, ticket)
+      return
+
+
+    # verify if time accounting is active for ticket
+    if false
+      @submitPost(e, ticket)
+      return
+
+    # time tracking
+    new App.TicketZoomTimeAccounting(
+      container: @el.closest('.content')
+      ticket: ticket
+      cancelCallback: =>
+        @formEnable(e)
+      submitCallback: (params) =>
+        if params.time_unit
+          ticket.article.time_unit = params.time_unit
+        @submitPost(e, ticket)
+    )
+
+  submitPost: (e, ticket) =>
 
     # submit changes
     @ajax(

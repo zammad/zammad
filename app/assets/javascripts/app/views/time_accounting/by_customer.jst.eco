@@ -1,0 +1,23 @@
+<% if !@rows.length: %>
+  <table class="settings-list settings-list--stretch settings-list--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
+<% else: %>
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th><%- @T('Customer') %>
+    <th><%- @T('Organization') %>
+    <th><%- @T('Time Units') %>
+  </thead>
+  <tbody>
+  <% for row in @rows: %>
+  <tr>
+    <td><a href="#user/profile/<%- row.customer.id %>"><%= row.customer.email %></a>
+    <td><% if row.organization: %><%= row.organization.name %><% end %>
+    <td><%= row.time_unit %>
+  <% end %>
+  </tbody>
+</table>
+</div>
+<% end %>

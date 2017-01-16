@@ -398,6 +398,9 @@ class ApplicationController < ActionController::Base
       params[:sender_id] = Ticket::Article::Sender.lookup(name: sender).id
     end
 
+    # remember time accounting
+    time_unit = params[:time_unit]
+
     clean_params = Ticket::Article.param_association_lookup(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
 
@@ -446,6 +449,15 @@ class ApplicationController < ActionController::Base
       )
     end
     article.save!
+
+    # account time
+    if time_unit.present?
+      Ticket::TimeAccounting.create!(
+        ticket_id: article.ticket_id,
+        ticket_article_id: article.id,
+        time_unit: time_unit
+      )
+    end
 
     # remove attachments from upload cache
     return article if !form_id
