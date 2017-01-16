@@ -1936,30 +1936,6 @@ Some Text',
         }
       },
       {
-        data: IO.binread('test/fixtures/mail35-reply-to.box'),
-        success: true,
-        result: {
-          0 => {
-            priority: '2 normal',
-            title: 'Darlehen bieten jetzt bewerben',
-          },
-          1 => {
-            sender: 'Customer',
-            type: 'email',
-          },
-        },
-        verify: {
-          users: [
-            {
-              firstname: '',
-              lastname: '',
-              fullname: '"firstfinanceloanfirm@example.com"',
-              email: '"firstfinanceloanfirm@example.com"',
-            },
-          ],
-        }
-      },
-      {
         data: IO.binread('test/fixtures/mail37.box'),
         success: true,
         result: {
