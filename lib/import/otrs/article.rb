@@ -87,7 +87,7 @@ module Import
         # so Zammad can set the default content type
         mapped.delete(:content_type) if mapped[:content_type].blank?
         return mapped if !mapped[:content_type]
-        mapped[:content_type].sub!(/;\s?.+?$/, '')
+        mapped[:content_type].sub!(/[;,]\s?.+?$/, '')
         mapped
       end
 
