@@ -268,6 +268,10 @@ class AccountEdit extends App.ControllerModal
           position += 1
       else
         search.push params.search
+    if params.track_retweets
+      params.track_retweets = 1
+    else
+      params.track_retweets = 0
     params.search = search
     @channel.options.sync = params
     @ajax(

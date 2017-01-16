@@ -78,6 +78,7 @@ class TwitterTest < ActiveSupport::TestCase
         id: system_id,
       },
       sync: {
+        track_retweets: false,
         search: [
           {
             term: hash_tag2,

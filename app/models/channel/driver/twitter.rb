@@ -299,6 +299,8 @@ returns
     older_import = 0
     older_import_max = 20
     @rest_client.client.mentions_timeline.each { |tweet|
+      # skip retweets
+      break if !track_retweets? && tweet.retweet?
 
       # ignore older messages
       if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
@@ -340,6 +342,10 @@ returns
       options[:auth][:consumer_secret] = external_credential.credentials['consumer_secret']
     end
     options
+  end
+
+  def track_retweets?
+    @channel.options && @channel.options.sync && @channel.options.sync.track_retweets
   end
 
 end

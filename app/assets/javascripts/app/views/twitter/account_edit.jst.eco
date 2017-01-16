@@ -31,4 +31,8 @@
   <p class="description"><%- @T('Choose which group %s will get added to.', 'direct messages') %></p>
   <div class="js-directMessagesGroup"></div>
 
+  <h3>Retweets</h3>
+  <p class="description"><%- @T('Choose if %s should also be converted to tickets.', 'retweets') %></p>
+  <input name="track_retweets" type="checkbox" id="setting-chat" value="true" <% if @channel.options.sync.track_retweets: %>checked<% end %>> Track retweets
+
 </fieldset>
