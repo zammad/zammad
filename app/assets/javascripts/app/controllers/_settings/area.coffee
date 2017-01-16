@@ -27,6 +27,12 @@ class App.SettingsArea extends App.Controller
       )
       return if _.isEmpty(settings)
 
+    # filter disabled settings
+    settings = _.filter(settings, (setting) ->
+      return if setting.preferences && setting.preferences.disabled
+      setting
+    )
+
     # sort by prio
     settings = _.sortBy( settings, (setting) ->
       return if !setting.preferences

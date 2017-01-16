@@ -196,7 +196,18 @@ test:integration:user_agent:
     - rake db:migrate
     - ruby -I test/ test/integration/user_agent_test.rb
     - rake db:drop
-  allow_failure: true
+
+test:integration:user_agent_proxy:
+  stage: test
+  tags:
+    - core
+  script:
+    - export ZAMMAD_PROXY_TEST=true
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/user_agent_test.rb
+    - rake db:drop
 
 test:integration:user_device:
   stage: test

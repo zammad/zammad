@@ -262,7 +262,29 @@ returns
   end
 
   def self.get_http(uri, options)
-    http = Net::HTTP.new(uri.host, uri.port)
+
+    proxy = options['proxy'] || Setting.get('proxy')
+    if proxy.present?
+      if proxy =~ /^(.+?):(.+?)$/
+        proxy_host = $1
+        proxy_port = $2
+      else
+        raise "Invalid proxy address: #{proxy} - expect e.g. proxy.example.com:3128"
+      end
+
+      proxy_username = options['proxy_username'] || Setting.get('proxy_username')
+      if proxy_username.blank?
+        proxy_username = nil
+      end
+      proxy_password = options['proxy_password'] || Setting.get('proxy_password')
+      if proxy_password.blank?
+        proxy_password = nil
+      end
+
+      http = Net::HTTP::Proxy(proxy_host, proxy_port, proxy_username, proxy_password).new(uri.host, uri.port)
+    else
+      http = Net::HTTP.new(uri.host, uri.port)
+    end
 
     http.open_timeout = options[:open_timeout] || 4
     http.read_timeout = options[:read_timeout] || 10
