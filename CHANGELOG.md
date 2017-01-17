@@ -1,7 +1,42 @@
 # Change Log
 
-## [1.0.1](https://github.com/zammad/zammad/tree/1.0.1) (2016-11-14)
-[Full Changelog](https://github.com/zammad/zammad/compare/1.0.0...1.0.1)
+## [1.2.0](https://github.com/zammad/zammad/tree/1.2.0) (2017-01-16)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.1.0...1.2.0)
+
+**Implemented enhancements:**
+
+- Feature "Time recording" [\#373](https://github.com/zammad/zammad/issues/373) [[feature](https://github.com/zammad/zammad/labels/feature)]
+- Proxy support [\#439](https://github.com/zammad/zammad/issues/439) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Improved call log workflow [\#517](https://github.com/zammad/zammad/pull/517) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] ([TeaMoe](https://github.com/TeaMoe))
+- Create ticket with customer [\#514](https://github.com/zammad/zammad/pull/514) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)] ([TeaMoe](https://github.com/TeaMoe))
+- Versions françaises [\#578](https://github.com/zammad/zammad/pull/578) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)] [[translation](https://github.com/zammad/zammad/labels/translation)] ([GeraldElbaze-Medias-Cite](https://github.com/GeraldElbaze-Medias-Cite))
+- French for Chat widget [\#580](https://github.com/zammad/zammad/issues/580) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Show other active agents in ticket detail view \(collision prevention\) [\#352](https://github.com/zammad/zammad/issues/352) [[feature](https://github.com/zammad/zammad/labels/feature)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
+
+**Fixed bugs:**
+
+- OTRS import - long content type shows warning and gets cut [\#582](https://github.com/zammad/zammad/issues/582) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Setup asks for FQDN, but doesn't write to DB [\#462](https://github.com/zammad/zammad/issues/462) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Group restrictions not respected in slack notification [\#587](https://github.com/zammad/zammad/issues/587) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Keyboard shortcuts dialog breaks url bar [\#530](https://github.com/zammad/zammad/issues/530) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- OTRS import - unsupported DynamicField type fields cause import to abort [\#565](https://github.com/zammad/zammad/issues/565) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Gitlab Auth not working [\#596](https://github.com/zammad/zammad/issues/596) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Admin user login via Oauth [\#602](https://github.com/zammad/zammad/issues/602) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- If "new ticket created" popover is shown you can't click search box [\#597](https://github.com/zammad/zammad/issues/597) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- New ticket attributes are not shown for customer [\#576](https://github.com/zammad/zammad/issues/576) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Imap sort errors with gmail in production.log [\#568](https://github.com/zammad/zammad/issues/568) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Agent - Group assignment shows "\<br\>" [\#566](https://github.com/zammad/zammad/issues/566) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Renaming standard roles breaks ticket views [\#499](https://github.com/zammad/zammad/issues/499) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Overview is not show it organization is used as row and first ticket has no organization \(app is not responding anymore\) [\#554](https://github.com/zammad/zammad/issues/554) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Add organization to overview in manage users \(admin interface\) [\#552](https://github.com/zammad/zammad/issues/552) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- OTRS import: Empty created\_at of customer user record brakes import. [\#548](https://github.com/zammad/zammad/issues/548) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Layout broken if outbound channel has a error message [\#547](https://github.com/zammad/zammad/issues/547) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Do not show arrow down on ajax auto completion fields [\#546](https://github.com/zammad/zammad/issues/546) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Error message at creation of new overview with not existing specific customer [\#545](https://github.com/zammad/zammad/issues/545) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
+
+## [1.1.0](https://github.com/zammad/zammad/tree/1.1.0) (2016-11-14)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.0.1...1.1.0)
 
 **Implemented enhancements:**
 
@@ -39,7 +74,6 @@
 - Docker/Ubuntu Not starting postgresql-9.6 service [\#213](https://github.com/zammad/zammad/issues/213) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - Can´t choose Organization for Customer [\#211](https://github.com/zammad/zammad/issues/211) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - CentOS 7 HTTPS Error 404 - Not Found [\#210](https://github.com/zammad/zammad/issues/210) [[bug](https://github.com/zammad/zammad/labels/bug)]
-
 
 
 \* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
