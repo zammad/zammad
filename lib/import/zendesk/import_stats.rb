@@ -50,11 +50,22 @@ module Import
         }
 
         result.each { |object, _score|
-          result[ object ] = Import::Zendesk::Requester.client.send( object.underscore.to_sym ).count!
+          result[ object ] = statistic_count(object)
         }
 
         Cache.write('import_zendesk_stats', result)
         result
+      end
+
+      private
+
+      def statistic_count(object)
+        statistic_count_data(object).count!
+      end
+
+      def statistic_count_data(object)
+        return all_tickets if object == 'Tickets'
+        Import::Zendesk::Requester.client.send( object.underscore.to_sym )
       end
     end
   end

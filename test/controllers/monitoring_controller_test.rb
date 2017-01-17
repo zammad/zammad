@@ -375,6 +375,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Channel: Email::Notification out  ;scheduler not running', result['message'])
 
     dir = "#{Rails.root}/tmp/unprocessable_mail"
+    FileUtils.mkdir_p(dir)
     FileUtils.touch("#{dir}/test.eml")
 
     # health_check

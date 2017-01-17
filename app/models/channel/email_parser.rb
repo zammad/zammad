@@ -108,9 +108,18 @@ class Channel::EmailParser
       data[:from_display_name] = Mail::Address.new(from).display_name ||
                                  (Mail::Address.new(from).comments && Mail::Address.new(from).comments[0])
     rescue
-      data[:from_email]  = from
-      data[:from_local]  = from
-      data[:from_domain] = from
+      from.strip!
+      if from =~ /^(.+?)<(.+?)@(.+?)>$/
+        data[:from_email]        = "#{$2}@#{$3}"
+        data[:from_local]        = $2
+        data[:from_domain]       = $3
+        data[:from_display_name] = $1.strip
+        data[:from_display_name].delete!('"')
+      else
+        data[:from_email]  = from
+        data[:from_local]  = from
+        data[:from_domain] = from
+      end
     end
 
     # do extra decoding because we needed to use field.value

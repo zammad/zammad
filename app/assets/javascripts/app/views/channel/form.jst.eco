@@ -35,7 +35,7 @@
           <label for="form-message-thank-you"><%- @T('Message after sending form') %></label>
         </div>
         <div class="controls">
-          <textarea type="text" id="form-message-thank-you" name="messageThankYou" rows="3"><%- @Ti('Thank you for your inquiry! We\'ll contact you soon as possible.') %></textarea>
+          <textarea type="text" id="form-message-thank-you" name="messageThankYou" rows="3"><%- @Ti('Thank you for your inquiry (#%s)! We\'ll contact you as soon as possible.') %></textarea>
         </div>
       </div>
     </fieldset>
@@ -88,6 +88,16 @@
                 <%- @Icon('checkbox-checked', 'icon-checked') %>
               </span>
               <%- @T('Load no CSS for form. You need to generate your own CSS for the form.') %>
+            </label>
+        <tr>
+          <td>
+            <label class="inline-label">
+              <span class="checkbox-replacement checkbox-replacement--inline">
+                <input type="checkbox" name="attachmentSupport" value="true">
+                <%- @Icon('checkbox', 'icon-unchecked') %>
+                <%- @Icon('checkbox-checked', 'icon-checked') %>
+              </span>
+              <%- @T('Add attachment option to upload.') %>
             </label>
       </tbody>
     </table>

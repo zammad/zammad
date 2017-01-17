@@ -1,0 +1,18 @@
+To: James-Max ROGER <james-max.roger@example.com>, Support <zammad@example.com>
+Subject: Nouveau message contact élégibilité Zammad
+X-PHP-Originating-Script: 111:contact.php
+From: Ups Rémi <r.ordonaud@example.com>
+Message-Id: <20170111111111.8CEF15FB28@01.localdomain>
+Date: Fri,  6 Jan 2017 19:23:41 +0100 (CET)
+
+Nouveau message :
+=============================
+Nom: Orberer
+Prénom: Rémi
+Téléphone: xxxx
+Email: xxx@example.com
+Societé: KG
+Adresse: RdL
+CP: 11111
+Ville: Olèchena
+

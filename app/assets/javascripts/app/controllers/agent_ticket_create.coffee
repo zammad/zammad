@@ -159,6 +159,9 @@ class App.TicketCreate extends App.Controller
   buildScreen: (params) =>
 
     if !params.ticket_id && !params.article_id
+      if !_.isEmpty(params.customer_id)
+        @render(options: { customer_id: params.customer_id })
+        return
       @render()
       return
 
@@ -614,16 +617,20 @@ class Router extends App.ControllerPermanent
       if params['ticket_id'] && params['article_id']
         split = "/#{params['ticket_id']}/#{params['article_id']}"
 
+      if params.customer_id
+        split = "/customer/#{params.customer_id}"
+
       id = Math.floor( Math.random() * 99999 )
       @navigate "#ticket/create/id/#{id}#{split}"
       return
 
     # cleanup params
     clean_params =
-      ticket_id:  params.ticket_id
-      article_id: params.article_id
-      type:       params.type
-      id:         params.id
+      ticket_id:   params.ticket_id
+      article_id:  params.article_id
+      type:        params.type
+      customer_id: params.customer_id
+      id:          params.id
 
     App.TaskManager.execute(
       key:        "TicketCreateScreen-#{params['id']}"
@@ -636,6 +643,8 @@ class Router extends App.ControllerPermanent
 App.Config.set('ticket/create', Router, 'Routes')
 App.Config.set('ticket/create/', Router, 'Routes')
 App.Config.set('ticket/create/id/:id', Router, 'Routes')
+App.Config.set('ticket/create/customer/:customer_id', Router, 'Routes')
+App.Config.set('ticket/create/id/:id/customer/:customer_id', Router, 'Routes')
 
 # split ticket
 App.Config.set('ticket/create/:ticket_id/:article_id', Router, 'Routes')

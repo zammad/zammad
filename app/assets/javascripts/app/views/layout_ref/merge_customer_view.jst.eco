@@ -36,7 +36,7 @@
       <div class="ticketZoom-header">
         <div class="flex vertical center">
           <div class="js-avatar">
-            <span class="avatar unique size-50 user-popover" data-id="2" data-original-title="" style="background-position: -92.79607555375712px -106.24902447601627px;" title="">NB</span>
+            <span class="avatar avatar--unique size-50 user-popover" data-id="2" data-original-title="" style="background-position: -92.79607555375712px -106.24902447601627px;" title="">NB</span>
           </div>
 
           <div class="ticket-title">
@@ -71,7 +71,7 @@
 
           <div class="article-content">
             <div class="js-avatar">
-              <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span>
+              <span class="avatar avatar--unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span>
             </div>
 
             <div class="bubble-gap">
@@ -796,7 +796,7 @@
 
       <div class="sidebar-content">
         <div class="sidebar-block">
-          <span class="avatar unique userInfo-avatar size-50 user-popover" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;">NB</span>
+          <span class="avatar avatar--unique userInfo-avatar size-50 user-popover" data-id="2" style="background-position: -92.79607555375712px -106.24902447601627px;">NB</span>
 
           <h3 title="Name">Nicole Braun</h3>
         </div>
@@ -862,7 +862,7 @@
 
         <div class="userList">
           <div class="userList-entry">
-            <span class="avatar unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span> <a class="userList-entry user-popover" data-id="2" data-original-title="" href="#user/profile/2" title="">Nicole Braun</a>
+            <span class="avatar avatar--unique size-40 user-popover" data-id="2" data-original-title="" style="background-position: -96.5079185759074px -112.28590086669901px;" title="">NB</span> <a class="userList-entry user-popover" data-id="2" data-original-title="" href="#user/profile/2" title="">Nicole Braun</a>
           </div>
         </div>
       </div>

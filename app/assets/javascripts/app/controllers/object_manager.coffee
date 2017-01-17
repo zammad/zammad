@@ -83,7 +83,7 @@ class Items extends App.ControllerSubContent
 
   edit: (e) =>
     e.preventDefault()
-    id = $( e.target ).closest('tr').data('id')
+    id = $(e.target).closest('tr').data('id')
     new Edit(
       pageData:
         head:      @object
@@ -135,15 +135,21 @@ class New extends App.ControllerGenericNew
 
   onSubmit: (e) =>
     params = @formParam(e.target)
+
+    # show attributes for create_middle in two column style
+    if params.screens && params.screens.create_middle
+      for role, value of params.screens.create_middle
+        value.item_class = 'column'
+
     params.object = @pageData.head
-    object = new App[ @genericObject ]
+    object = new App[@genericObject]
     object.load(params)
 
     # validate
     errors = object.validate()
     if errors
       @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       return false
 
     # disable form
@@ -154,7 +160,7 @@ class New extends App.ControllerGenericNew
     object.save(
       done: ->
         if ui.callback
-          item = App[ ui.genericObject ].fullLocal(@id)
+          item = App[ui.genericObject].fullLocal(@id)
           ui.callback(item)
         ui.close()
 
@@ -167,11 +173,11 @@ class New extends App.ControllerGenericNew
 class Edit extends App.ControllerGenericEdit
 
   content: =>
-    @item = App[ @genericObject ].find( @id )
+    @item = App[@genericObject].find(@id)
     @head = @pageData.head || @pageData.object
 
     # set disabled attributes
-    configure_attributes = clone(App[ @genericObject ].configure_attributes)
+    configure_attributes = clone(App[@genericObject].configure_attributes)
     for attribute in configure_attributes
       if attribute.name is 'name'
         attribute.disabled = true
@@ -189,6 +195,12 @@ class Edit extends App.ControllerGenericEdit
 
   onSubmit: (e) =>
     params = @formParam(e.target)
+
+    # show attributes for create_middle in two column style
+    if params.screens && params.screens.create_middle
+      for role, value of params.screens.create_middle
+        value.item_class = 'column'
+
     params.object = @pageData.head
     @item.load(params)
 
@@ -196,7 +208,7 @@ class Edit extends App.ControllerGenericEdit
     errors = @item.validate()
     if errors
       @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       return false
 
     # disable form
@@ -207,7 +219,7 @@ class Edit extends App.ControllerGenericEdit
     @item.save(
       done: ->
         if ui.callback
-          item = App[ ui.genericObject ].fullLocal(@id)
+          item = App[ui.genericObject].fullLocal(@id)
           ui.callback(item)
         ui.close()
 

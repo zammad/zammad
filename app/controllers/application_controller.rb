@@ -176,6 +176,7 @@ class ApplicationController < ActionController::Base
 
   def user_device_log(user, type)
     switched_from_user_id = ENV['SWITCHED_FROM_USER_ID'] || session[:switched_from_user_id]
+    return true if params[:controller] == 'init' # do no device logging on static inital page
     return true if switched_from_user_id
     return true if !user
     return true if !user.permissions?('user_preferences.device')
@@ -397,6 +398,9 @@ class ApplicationController < ActionController::Base
       params[:sender_id] = Ticket::Article::Sender.lookup(name: sender).id
     end
 
+    # remember time accounting
+    time_unit = params[:time_unit]
+
     clean_params = Ticket::Article.param_association_lookup(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
 
@@ -445,6 +449,15 @@ class ApplicationController < ActionController::Base
       )
     end
     article.save!
+
+    # account time
+    if time_unit.present?
+      Ticket::TimeAccounting.create!(
+        ticket_id: article.ticket_id,
+        ticket_article_id: article.id,
+        time_unit: time_unit
+      )
+    end
 
     # remove attachments from upload cache
     return article if !form_id

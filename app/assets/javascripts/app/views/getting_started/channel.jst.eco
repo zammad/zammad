@@ -10,7 +10,7 @@
           <% for adapter in @adapters: %>
             <a href="<%= adapter.link %>" class="btn auth_provider auth_provider--wide <%= adapter.class %>">
               <div class="<%= adapter.class %> provider_icon"></div>
-              <div class="provider_name"><%- @T( adapter.name ) %></div>
+              <div class="provider_name"><%- @T(adapter.name) %></div>
             </a>
           <% end %>
 

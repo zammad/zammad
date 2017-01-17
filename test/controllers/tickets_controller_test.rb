@@ -127,10 +127,102 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(@agent.id, result['created_by_id'])
   end
 
-  test '01.04 ticket create with agent - minimal article with guess customer' do
+  test '01.04 ticket create with agent - wrong owner_id - 0' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #4',
+      group: 'Users',
+      priority: '2 normal',
+      owner_id: 0,
+      state: 'new',
+      customer_id: @customer_without_org.id,
+      article: {
+        body: 'some test 123',
+      },
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Invalid value for param \'owner_id\': 0', result['error'])
+  end
+
+  test '01.05 ticket create with agent - wrong owner_id - ""' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #5',
+      group: 'Users',
+      priority: '2 normal',
+      owner_id: '',
+      state: 'new',
+      customer_id: @customer_without_org.id,
+      article: {
+        body: 'some test 123',
+      },
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    #assert_response(422)
+    #result = JSON.parse(@response.body)
+    #assert_equal(Hash, result.class)
+    #assert_equal('Invalid value for param \'owner_id\': ""', result['error'])
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #5', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+  end
+
+  test '01.06 ticket create with agent - wrong owner_id - 99999' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #6',
+      group: 'Users',
+      priority: '2 normal',
+      owner_id: 99_999,
+      state: 'new',
+      customer_id: @customer_without_org.id,
+      article: {
+        body: 'some test 123',
+      },
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Invalid value for param \'owner_id\': 99999', result['error'])
+  end
+
+  test '01.07 ticket create with agent - wrong owner_id - nil' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #7',
+      group: 'Users',
+      priority: '2 normal',
+      owner_id: nil,
+      state: 'new',
+      customer_id: @customer_without_org.id,
+      article: {
+        body: 'some test 123',
+      },
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #7', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+  end
+
+  test '01.08 ticket create with agent - minimal article with guess customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #8',
       group: 'Users',
       priority: '2 normal',
       state: 'new',
@@ -144,7 +236,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
-    assert_equal('a new ticket #4', result['title'])
+    assert_equal('a new ticket #8', result['title'])
     assert_equal(User.lookup(email: 'some_new_customer@example.com').id, result['customer_id'])
     assert_equal(@agent.id, result['updated_by_id'])
     assert_equal(@agent.id, result['created_by_id'])

@@ -34,7 +34,7 @@ class Content extends App.ControllerContent
     width = 300
     height = 226
 
-    holder.addClass 'unique'
+    holder.addClass 'avatar--unique'
 
     rng = new Math.seedrandom(id)
     x = rng() * (width - size)

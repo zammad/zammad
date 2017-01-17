@@ -1,7 +1,7 @@
 <div class="main flex vertical centered darkBackground">
   <%- @Icon('full-logo', 'wizard-logo') %>
 
-  <form class="setup wizard js-outbound">
+  <form class="setup wizard js-outbound" autocomplete="off">
     <!-- dummy to prevent chrome to ask for password save -->
     <input style="display:none">
     <input type="password" style="display:none">

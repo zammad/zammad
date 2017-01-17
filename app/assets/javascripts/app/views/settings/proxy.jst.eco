@@ -1,0 +1,25 @@
+<form class="settings-entry" id="<%= @setting.name %>">
+  <h2><%- @T(@setting.title) %></h2>
+  <p class="help-text"><%- @T('Proxy address.') %></p>
+  <div class="horizontal end">
+    <div class="form-item flex">
+      <input type="text" name="proxy" value="<%= @proxy %>" placeholder="proxy.example.com:3128" class="form-control">
+    </div>
+  </div>
+  <p class="help-text"><%- @T('Username for proxy connection.') %></p>
+  <div class="horizontal end">
+    <div class="form-item flex">
+      <input type="text" name="proxy_username" value="<%= @proxy_username %>" class="form-control">
+    </div>
+  </div>
+  <p class="help-text"><%- @T('Password for proxy connection.') %></p>
+  <div class="horizontal end">
+    <div class="form-item flex">
+      <input type="text" name="proxy_password" value="<%= @proxy_password %>" class="form-control">
+    </div>
+  </div>
+  <div class="horizontal justify-end form-controls">
+    <button class="btn btn js-test"><%- @T('Test Connection') %></button>
+    <button class="btn btn--primary js-submit hide"><%- @T('Submit') %></button>
+  <div>
+</form>

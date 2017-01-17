@@ -395,6 +395,80 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Proxy Settings',
+  name: 'proxy',
+  area: 'System::Network',
+  description: 'Address of the proxy server for http and https resources.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'proxy',
+        tag: 'input',
+        placeholder: 'proxy.example.com:3128',
+      },
+    ],
+  },
+  state: '',
+  preferences: {
+    online_service_disable: true,
+    controller: 'SettingsAreaProxy',
+    prio: 1,
+    permission: ['admin.system'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Proxy User',
+  name: 'proxy_username',
+  area: 'System::Network',
+  description: 'Username for proxy connection.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'proxy_username',
+        tag: 'input',
+      },
+    ],
+  },
+  state: '',
+  preferences: {
+    disabled: true,
+    online_service_disable: true,
+    prio: 2,
+    permission: ['admin.system'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Proxy Password',
+  name: 'proxy_password',
+  area: 'System::Network',
+  description: 'Password for proxy connection.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'proxy_passowrd',
+        tag: 'input',
+      },
+    ],
+  },
+  state: '',
+  preferences: {
+    disabled: true,
+    online_service_disable: true,
+    prio: 3,
+    permission: ['admin.system'],
+  },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
   title: 'Send client stats',
   name: 'ui_send_client_stats',
   area: 'System::UI',
@@ -964,7 +1038,7 @@ Setting.create_if_not_exists(
   title: 'Minimal size',
   name: 'password_min_size',
   area: 'Security::Password',
-  description: 'Password need to have at least minimal size of characters.',
+  description: 'Password needs to have at least minimal size of characters.',
   options: {
     form: [
       {
@@ -1004,7 +1078,7 @@ Setting.create_if_not_exists(
   title: '2 lower and 2 upper characters',
   name: 'password_min_2_lower_2_upper_characters',
   area: 'Security::Password',
-  description: 'Password need to contain 2 lower and 2 upper characters.',
+  description: 'Password needs to contain 2 lower and 2 upper characters.',
   options: {
     form: [
       {
@@ -1029,7 +1103,7 @@ Setting.create_if_not_exists(
   title: 'Digit required',
   name: 'password_need_digit',
   area: 'Security::Password',
-  description: 'Password need to have at least one digit.',
+  description: 'Password needs to have at least one digit.',
   options: {
     form: [
       {
@@ -1365,7 +1439,7 @@ Setting.create_if_not_exists(
   title: 'Ticket Subject Size',
   name: 'ticket_subject_size',
   area: 'Email::Base',
-  description: 'Max size of the subjects in an email reply.',
+  description: 'Max size of the subject in an email reply.',
   options: {
     form: [
       {
@@ -1431,8 +1505,8 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title: 'Sender Format Seperator',
-  name: 'ticket_define_email_from_seperator',
+  title: 'Sender Format Separator',
+  name: 'ticket_define_email_from_separator',
   area: 'Email::Base',
   description: 'Defines the separator between the agents real name and the given group email address.',
   options: {
@@ -1440,7 +1514,7 @@ Setting.create_if_not_exists(
       {
         display: '',
         null: false,
-        name: 'ticket_define_email_from_seperator',
+        name: 'ticket_define_email_from_separator',
         tag: 'input',
       },
     ],
@@ -1506,7 +1580,7 @@ Setting.create_if_not_exists(
   title: 'Additional follow up detection',
   name: 'postmaster_follow_up_search_in',
   area: 'Email::Base',
-  description: 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up ckeck is executed.',
+  description: 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up check is executed.',
   options: {
     form: [
       {
@@ -1958,6 +2032,51 @@ Setting.create_if_not_exists(
   },
   state: '',
   frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Time Accounting',
+  name: 'time_accounting',
+  area: 'Web::Base',
+  description: 'Enable time accounting.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'time_accounting',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission: ['admin.time_accounting'],
+  },
+  state: false,
+  frontend: true
+)
+
+Setting.create_if_not_exists(
+  title: 'Time Accounting Selector',
+  name: 'time_accounting_selector',
+  area: 'Web::Base',
+  description: 'Enable time accounting for this tickets.',
+  options: {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission: ['admin.time_accounting'],
+  },
+  state: {},
+  frontend: true
 )
 
 Setting.create_if_not_exists(
@@ -3710,7 +3829,7 @@ ObjectManager::Attribute.add(
   data_type: 'select',
   data_option: {
     relation: 'TicketPriority',
-    nulloption: true,
+    nulloption: false,
     multiple: false,
     null: false,
     default: 2,
@@ -3728,7 +3847,6 @@ ObjectManager::Attribute.add(
     edit: {
       Agent: {
         null: false,
-        nulloption: false,
       },
     },
   },
@@ -5296,7 +5414,7 @@ Trigger.create_or_update(
     'notification.email' => {
       'body' => '<div>Your request <b>(#{config.ticket_hook}#{ticket.number})</b> has been received and will be reviewed by our support staff.</div>
 <br/>
-<div>To provide additional information, please reply to this email or click on the following link:
+<div>To provide additional information, please reply to this email or click on the following link (for initial login, please request a new password):
 <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}">#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}</a>
 </div>
 <br/>

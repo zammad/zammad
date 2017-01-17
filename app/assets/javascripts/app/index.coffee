@@ -212,7 +212,14 @@ class App extends Spine.Controller
           if result
             result = result + ', '
           if item.name
-            result = result + App.Utils.htmlEscape(item.name) + ' '
+            item.name = item.name
+              .replace(',', '')
+              .replace(';', '')
+              .replace('"', '')
+              .replace('\'', '')
+            if item.name.match(/\@|,|;|\^|\+|#|§|\$|%|&|\/|\(|\)|=|\?|\*/)
+              item.name = "\"#{item.name}\""
+            result = "#{result}#{App.Utils.htmlEscape(item.name)} "
           if item.address
             result = result + " <span class=\"text-muted\">&lt;#{App.Utils.htmlEscape(item.address)}&gt</span>"
         result

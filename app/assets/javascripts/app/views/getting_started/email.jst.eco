@@ -1,7 +1,7 @@
 <div class="main flex vertical centered darkBackground">
   <%- @Icon('full-logo', 'wizard-logo') %>
 
-  <form class="setup wizard js-intro">
+  <form class="setup wizard js-intro" autocomplete="off">
     <!-- dummy to prevent chrome to ask for password save -->
     <input style="display:none">
     <input type="password" style="display:none">
@@ -66,7 +66,7 @@
     </div>
   </form>
 
-  <form class="setup wizard hide js-inbound">
+  <form class="setup wizard hide js-inbound" autocomplete="off">
     <!-- dummy to prevent chrome to ask for password save -->
     <input style="display:none">
     <input type="password" style="display:none">
@@ -98,7 +98,7 @@
     </div>
   </form>
 
-  <form class="setup wizard hide js-outbound">
+  <form class="setup wizard hide js-outbound" autocomplete="off">
     <!-- dummy to prevent chrome to ask for password save -->
     <input style="display:none">
     <input type="password" style="display:none">

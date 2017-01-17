@@ -19,17 +19,31 @@ module PushMessages
       )
       return true
     end
-    Thread.current[:push_messages].push data
+    message = { type: 'broadcast', data: data }
+    Thread.current[:push_messages].push message
+  end
+
+  def self.send_to(user_id, data)
+    if !PushMessages.enabled?
+      Sessions.send_to(user_id, data)
+      return true
+    end
+    message = { type: 'send_to', user_id: user_id, data: data }
+    Thread.current[:push_messages].push message
   end
 
   def self.finish
     return false if !enabled?
-    Thread.current[:push_messages].each { |data|
-      Sessions.broadcast(
-        data[:message],
-        data[:type],
-        data[:current_user_id],
-      )
+    Thread.current[:push_messages].each { |message|
+      if message[:type] == 'send_to'
+        Sessions.send_to(message[:user_id], message[:data])
+      else
+        Sessions.broadcast(
+          message[:data][:message],
+          message[:data][:type],
+          message[:data][:current_user_id],
+        )
+      end
     }
     Thread.current[:push_messages] = nil
     true

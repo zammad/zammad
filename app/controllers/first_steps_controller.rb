@@ -61,7 +61,7 @@ class FirstStepsController < ApplicationController
               location: '#channels/email',
             },
             {
-              name: 'Invite Agents/Colleges to help working on Tickets',
+              name: 'Invite Agents/Colleagues to help working on Tickets',
               checked: invite_agents,
               location: '#',
               class: 'js-inviteAgent',
@@ -89,7 +89,7 @@ class FirstStepsController < ApplicationController
               class: 'js-testTicket',
             },
             {
-              name: 'Create Text Modues',
+              name: 'Create Text Modules',
               checked: text_module_active,
               location: '#manage/text_modules',
             },
@@ -106,7 +106,7 @@ class FirstStepsController < ApplicationController
           ],
         },
         {
-          name: 'Additionals Channels',
+          name: 'Additional Channels',
           items: [
             {
               name: 'Twitter',

@@ -42,7 +42,7 @@ class App.TicketZoomSidebar extends App.ObserverController
 
   render: (ticket) =>
     editTicket = (el) =>
-      el.append('<form><fieldset class="edit"></fieldset></form><div class="tags"></div><div class="links"></div>')
+      el.append(App.view('ticket_zoom/sidebar_ticket')())
 
       @edit = new Edit(
         object_id: ticket.id
@@ -52,7 +52,7 @@ class App.TicketZoomSidebar extends App.ObserverController
         markForm:  @markForm
       )
 
-      if !@permissionCheck('ticket.customer')
+      if @permissionCheck('ticket.agent')
         @tagWidget = new App.WidgetTag(
           el:          @el.find('.tags')
           object_type: 'Ticket'
@@ -64,6 +64,11 @@ class App.TicketZoomSidebar extends App.ObserverController
           object_type: 'Ticket'
           object:      ticket
           links:       @links
+        )
+
+        @timeUnitWidget = new App.TicketZoomTimeUnit(
+          el:        @el.find('.js-timeUnit')
+          object_id: ticket.id
         )
 
     showTicketHistory = =>

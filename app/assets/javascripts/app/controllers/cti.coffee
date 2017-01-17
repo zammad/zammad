@@ -1,6 +1,7 @@
 class App.CTI extends App.Controller
   events:
-    'click .js-check': 'done'
+    'click .js-check': 'done',
+    'click .js-userNew': 'userNew'
 
   constructor: ->
     super
@@ -166,6 +167,26 @@ class App.CTI extends App.Controller
       url:   "#{@apiPath}/cti/done/#{id}"
       data:  JSON.stringify(done: done)
     )
+
+  userNew: (e) ->
+    e.preventDefault()
+    phone = $(e.currentTarget).text()
+    new App.ControllerGenericNew(
+      pageData:
+        title:     'Users'
+        home:      'users'
+        object:    'User'
+        objects:   'Users'
+        navupdate: '#users'
+      genericObject: 'User'
+      item:
+        phone: phone
+      container: @el.closest('.content')
+      callback: @ticketNew
+    )
+
+  ticketNew: (customer) ->
+    @navigate "#ticket/create/customer/#{customer.id}"
 
   show: (params) =>
     @title 'CTI', true

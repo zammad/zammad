@@ -71,6 +71,18 @@ class App.TaskManager
     return if !_instance
     _instance.showControllerHideOthers()
 
+  @preferencesSubscribe: (key, callback) ->
+    return if !_instance
+    _instance.preferencesSubscribe(key, callback)
+
+  @preferencesUnsubscribe: (id) ->
+    return if !_instance
+    _instance.preferencesUnsubscribe(id)
+
+  @preferencesTrigger: (key) ->
+    return if !_instance
+    _instance.preferencesTrigger(key)
+
 class _taskManagerSingleton extends App.Controller
   @include App.LogInclude
 
@@ -83,15 +95,22 @@ class _taskManagerSingleton extends App.Controller
     @offlineModus = params.offlineModus
     @tasksInitial()
 
+    @bind('taskbar:preferences', (data) =>
+      @tasksPreferences[data.key] = data.preferences
+      @preferencesTrigger(data.key)
+    )
+
   init: ->
-    @domStore          = {}
-    @shownStore        = {}
-    @workers           = {}
-    @allTasksByKey     = {}
-    @tasksToUpdate     = {}
-    @activeTaskHistory = []
-    @queue             = []
-    @queueRunning      = false
+    @domStore                  = {}
+    @shownStore                = {}
+    @workers                   = {}
+    @allTasksByKey             = {}
+    @tasksToUpdate             = {}
+    @tasksPreferences          = {}
+    @tasksPreferencesCallbacks = {}
+    @activeTaskHistory         = []
+    @queue                     = []
+    @queueRunning              = false
 
   all: ->
 
@@ -206,13 +225,21 @@ class _taskManagerSingleton extends App.Controller
 
       # save new task and update task collection
       ui = @
+      @tasksToUpdate[params.key] = 'inCreate'
       task.save(
         done: ->
+          if ui.tasksToUpdate[params.key] is 'inCreate'
+            delete ui.tasksToUpdate[params.key]
           ui.allTasksByKey[params.key] = @attributes()
+          ui.tasksPreferences[params.key] = clone(@preferences)
+          ui.preferencesTrigger(params.key)
           for taskPosition of ui.allTasks
             if ui.allTasks[taskPosition] && ui.allTasks[taskPosition]['key'] is @key
               task = @attributes()
               ui.allTasks[taskPosition] = task
+        fail: ->
+          if ui.tasksToUpdate[params.key] is 'inCreate'
+            delete ui.tasksToUpdate[params.key]
       )
 
     # empty static content if task is shown
@@ -284,8 +311,10 @@ class _taskManagerSingleton extends App.Controller
 
   # show task content
   show: (key, params_app) =>
-    controller = @workers[ key ]
+    controller = @workers[key]
     @shownStore[key] = true
+
+    @preferencesTrigger(key)
 
     domKey = @domID(key)
     domStoreItem = @domStore[domKey]
@@ -321,7 +350,7 @@ class _taskManagerSingleton extends App.Controller
 
   # hide task content
   hide: (key) =>
-    controller = @workers[ key ]
+    controller = @workers[key]
     @shownStore[key] = false
 
     element = @$("##{@domID(key)}")
@@ -436,6 +465,7 @@ class _taskManagerSingleton extends App.Controller
     if worker
       worker = undefined
     delete @workers[key]
+    delete @tasksPreferences[key]
     try
       element = @$("##{@domID(key)}")
       element.html('')
@@ -491,7 +521,8 @@ class _taskManagerSingleton extends App.Controller
 
   taskUpdate: (task, mute = false) ->
     @log 'debug', 'UPDATE task', task, mute
-    @tasksToUpdate[ task.key ] = 'toUpdate'
+    return if @tasksToUpdate[task.key] is 'inCreate'
+    @tasksToUpdate[task.key] = 'toUpdate'
     @taskUpdateTrigger()
     return if mute
     @touch(task.key)
@@ -520,9 +551,11 @@ class _taskManagerSingleton extends App.Controller
       continue if !key
       task = @get(key)
       continue if !task
-      if @tasksToUpdate[ task.key ] is 'toUpdate'
-        @tasksToUpdate[ task.key ] = 'inProgress'
-        taskUpdate = new App.Taskbar
+      if @tasksToUpdate[task.key] is 'toUpdate'
+        @tasksToUpdate[task.key] = 'inProgress'
+        taskUpdate = App.Taskbar.findByAttribute('key', task.key)
+        if !taskUpdate
+          taskUpdate = new App.Taskbar
         taskUpdate.load(task)
         if taskUpdate.isOnline()
           ui = @
@@ -539,7 +572,7 @@ class _taskManagerSingleton extends App.Controller
   taskDestroy: (task) ->
 
     # check if update is still in process
-    if @tasksToUpdate[ task.key ] is 'inProgress'
+    if @tasksToUpdate[task.key] is 'inProgress' || @tasksToUpdate[task.key] is 'inCreate'
       App.Delay.set(
         => @taskDestroy(task)
         800
@@ -550,11 +583,13 @@ class _taskManagerSingleton extends App.Controller
       return
 
     # destroy task in backend
-    delete @tasksToUpdate[ task.key ]
+    delete @tasksToUpdate[task.key]
 
     # if task isnt already stored on backend
     return if !task.id
     App.Taskbar.destroy(task.id)
+
+    delete @tasksPreferences[task.key]
 
   tasksAutoCleanupDelay: =>
     delay = =>
@@ -584,6 +619,7 @@ class _taskManagerSingleton extends App.Controller
     for task in tasks
       task.active = false
       @allTasksByKey[task.key] = task.attributes()
+      @tasksPreferences[task.key] = task.preferences
 
     # reopen tasks
     App.Event.trigger 'taskbar:init'
@@ -637,3 +673,26 @@ class _taskManagerSingleton extends App.Controller
         )
 
     App.Event.trigger 'taskbar:ready'
+
+  preferencesSubscribe: (key, callback) =>
+    if !@tasksPreferencesCallbacks[key]
+      @tasksPreferencesCallbacks[key] = {}
+    subscribeId = "#{key}#{Math.floor(Math.random() * 999999)}"
+    @tasksPreferencesCallbacks[key][subscribeId] = callback
+    subscribeId
+
+  preferencesUnsubscribe: (id) =>
+    return if !@tasksPreferencesCallbacks
+    for key, value of @tasksPreferencesCallbacks
+      for subscribeId, callback of value
+        if subscribeId == id
+          delete value[subscribeId]
+    for key, value of @tasksPreferencesCallbacks
+      if _.isEmpty(value)
+        delete @tasksPreferencesCallbacks[key]
+
+  preferencesTrigger: (key) =>
+    return if !@tasksPreferencesCallbacks[key]
+    return if !@tasksPreferences[key]
+    for subscribeId, callback of @tasksPreferencesCallbacks[key]
+      callback(@tasksPreferences[key])

@@ -2,13 +2,13 @@
   <%- @Icon('full-logo', 'wizard-logo') %>
   <div class="import wizard">
     <div class="wizard-slide vertical" data-slide="zendesk-url">
-      <h2><%- @T('Zendesk URL') %></h2>
+      <h2><%- @T('%s URL', 'Zendesk') %></h2>
       <div class="wizard-body flex vertical justified">
         <p>
-          <%- @T('Enter the URL of your Zendesk system') %>:
+          <%- @T('Enter the URL of your %s system', 'Zendesk') %>:
         </p>
         <div class="form-group">
-          <label for="zendesk-url">Zendesk URL</label>
+          <label for="zendesk-url"><%- @T('%s URL', 'Zendesk') %></label>
           <div class="u-positionOrigin">
             <input type="url" id="zendesk-url" class="form-control" placeholder="https://example.zendesk.com/" name="zendesk-url">
             <div class="input-feedback centered">
@@ -27,20 +27,20 @@
     </div>
 
     <div class="wizard-slide vertical hide" data-slide="zendesk-credentials">
-      <h2><%- @T('Zendesk credentials') %></h2>
+      <h2><%- @T('%s credentials', 'Zendesk') %></h2>
       <div class="wizard-body flex vertical justified">
         <p>
-          <%- @T('Enter your Email address and the Zendesk API token gained from your') %> <a class="js-zendeskUrlApiToken" target="_blank"><%- @T('admin interface') %></a>
+          <a class="js-zendeskUrlApiToken" href="#" target="_blank"><%- @T('Enter your email address and the %s API token gained from your admin interface.', 'Zendesk') %></a>
         </p>
         <p>
-          <%- @T('Attention: These will be your login credentials after the import is completed.') %>
+          <%- @T('Attention: These will be your login password after the import is completed.') %>
         </p>
         <div class="form-group">
-          <label for="zendesk-email">Email address</label>
+          <label for="zendesk-email"><%- @T('Email') %></label>
           <div class="u-positionOrigin">
             <input type="email" id="zendesk-email" class="form-control" placeholder="admin@example.com" name="zendesk-email">
           </div>
-          <label for="zendesk-api-token">API token</label>
+          <label for="zendesk-api-token"><%- @T('API token') %></label>
           <div class="u-positionOrigin">
             <input type="email" id="zendesk-api-token" class="form-control" placeholder="XYZ3133723421111" name="zendesk-api-token">
             <div class="input-feedback centered">
@@ -54,12 +54,12 @@
       </div>
       <div class="wizard-controls horizontal center">
         <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
-        <div class="btn btn--primary align-right hide js-migration-start" data-target="zendesk-start-migration"><%- @T('Migrate Zendesk Data') %></div>
+        <div class="btn btn--primary align-right hide js-migration-start" data-target="zendesk-start-migration"><%- @T('Migrate %s Data', 'Zendesk') %></div>
       </div>
     </div>
 
     <div class="wizard-slide vertical hide" data-slide="zendesk-import">
-      <h2><%- @T('Zendesk Migration') %></h2>
+      <h2><%- @T('%s Migration', 'Zendesk') %></h2>
       <div class="alert alert--danger hide js-error" role="alert"></div>
       <div class="wizard-body flex vertical justified">
         <table class="progressTable">
@@ -102,7 +102,7 @@
         </table>
       </div>
       <div class="wizard-controls horizontal center">
-        <a href="#" class="btn btn--primary align-right hide js-finished"><%- @T('Done') %></a>
+        <a href="#" class="btn btn--primary align-right hide js-finished"><%- @T('done') %></a>
       </div>
     </div>
 

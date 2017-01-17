@@ -106,6 +106,9 @@ class ActionRow extends App.ObserverController
         container: @el.closest('.content')
       )
 
+    newTicket = =>
+      @navigate("ticket/create/customer/#{user.id}")
+
     actions = [
       {
         name:     'edit'
@@ -116,6 +119,11 @@ class ActionRow extends App.ObserverController
         name:     'history'
         title:    'History'
         callback: showHistory
+      }
+      {
+        name:     'ticket'
+        title:    'New Ticket'
+        callback: newTicket
       }
     ]
 

@@ -40,9 +40,9 @@ class Index extends App.ControllerContent
   render: (data = {}) ->
     auth_provider_all = {
       facebook: {
-        url:    '/auth/facebook'
-        name:   'Facebook'
-        config: 'auth_facebook'
+        url:    '/auth/facebook',
+        name:   'Facebook',
+        config: 'auth_facebook',
         class:  'facebook'
       },
       twitter: {
@@ -59,13 +59,13 @@ class Index extends App.ControllerContent
       },
       github: {
         url:    '/auth/github'
-        name:   'Github'
+        name:   'GitHub'
         config: 'auth_github'
         class:  'github'
       },
       gitlab: {
         url:    '/auth/gitlab'
-        name:   'Gitlab'
+        name:   'GitLab'
         config: 'auth_gitlab'
         class:  'gitlab'
       },
@@ -74,6 +74,12 @@ class Index extends App.ControllerContent
         name:   'Google'
         config: 'auth_google_oauth2'
         class:  'google'
+      },
+      oauth2: {
+        url:    '/auth/oauth2'
+        name:   'OAuth2'
+        config: 'auth_oauth2'
+        class:  'oauth2'
       },
     }
     auth_providers = []

@@ -1,0 +1,4 @@
+<div>
+  <label><%- @T('Accounted Time') %></label>
+  <div><%= @ticket.time_unit %></div>
+</div>

@@ -179,7 +179,7 @@ do($ = window.jQuery, window) ->
     state: 'offline'
     initialQueueDelay: 10000
     translations:
-      de:
+      'de':
         '<strong>Chat</strong> with us!': '<strong>Chatte</strong> mit uns!'
         'Scroll down to see new messages': 'Scrolle nach unten um neue Nachrichten zu sehen'
         'Online': 'Online'
@@ -195,6 +195,58 @@ do($ = window.jQuery, window) ->
         'Start new conversation': 'Neue Konversation starten'
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation mit <strong>%s</strong> geschlossen.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation geschlossen.'
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Es tut uns leid, es dauert länger als erwartet, um einen freien Platz zu erhalten. Bitte versuchen Sie es zu einem späteren Zeitpunkt noch einmal oder schicken Sie uns eine E-Mail. Vielen Dank!'
+      'fr':
+        '<strong>Chat</strong> with us!': '<strong>Chattez</strong> avec nous!'
+        'Scroll down to see new messages': 'Faites défiler pour lire les nouveaux messages'
+        'Online': 'En-ligne'
+        'Online': 'En-ligne'
+        'Offline': 'Hors-ligne'
+        'Connecting': 'Connexion en cours'
+        'Connection re-established': 'Connexion rétablie'
+        'Today': 'Aujourdhui'
+        'Send': 'Envoyer'
+        'Compose your message...': 'Composez votre message...'
+        'All colleagues are busy.': 'Tous les collègues sont actuellement occupés.'
+        'You are on waiting list position <strong>%s</strong>.': 'Vous êtes actuellement en <strong>%s</strong> position dans la file d\'attente.'
+        'Start new conversation': 'Démarrer une nouvelle conversation'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Si vous ne répondez pas dans les <strong>%s</strong> minutes, votre conversation avec %s va être fermée.'
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Si vous ne répondez pas dans les %s minutes, votre conversation va être fermée.'
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Nous sommes désolés, il faut plus de temps que prévu pour obtenir un emplacement vide. Veuillez réessayer ultérieurement ou nous envoyer un courriel. Je vous remercie!'
+      'zh-cn':
+        '<strong>Chat</strong> with us!': '发起<strong>即时对话</strong>!'
+        'Scroll down to see new messages': '向下滚动以查看新消息'
+        'Online': '在线'
+        'Online': '在线'
+        'Offline': '离线'
+        'Connecting': '连接中'
+        'Connection re-established': '正在重新建立连接'
+        'Today': '今天'
+        'Send': '发送'
+        'Compose your message...': '正在输入信息...'
+        'All colleagues are busy.': '所有工作人员都在忙碌中.'
+        'You are on waiting list position <strong>%s</strong>.': '您目前的等候位置是第 <strong>%s</strong> 位.'
+        'Start new conversation': '开始新的会话'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': '由于您超过 %s 分钟没有回复, 您与 <strong>%s</strong> 的会话已被关闭.'
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': '由于您超过 %s 分钟没有任何回复, 该对话已被关闭.'
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': '非常抱歉, 目前需要等候更长的时间才能接入对话, 请稍后重试或向我们发送电子邮件. 谢谢!'
+      'zh-tw':
+        '<strong>Chat</strong> with us!': '開始<strong>即時對话</strong>!'
+        'Scroll down to see new messages': '向下滑動以查看新訊息'
+        'Online': '線上'
+        'Online': '線上'
+        'Offline': '离线'
+        'Connecting': '連線中'
+        'Connection re-established': '正在重新建立連線中'
+        'Today': '今天'
+        'Send': '發送'
+        'Compose your message...': '正在輸入訊息...'
+        'All colleagues are busy.': '所有服務人員都在忙碌中.'
+        'You are on waiting list position <strong>%s</strong>.': '你目前的等候位置是第 <strong>%s</strong> 順位.'
+        'Start new conversation': '開始新的對話'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': '由於你超過 %s 分鐘沒有回應, 你與 <strong>%s</strong> 的對話已被關閉.'
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': '由於你超過 %s 分鐘沒有任何回應, 該對話已被關閉.'
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': '非常抱歉, 當前需要等候更長的時間方可排入對話程序, 請稍後重試或向我們寄送電子郵件. 謝謝!'
     sessionId: undefined
     scrolledToBottom: true
     scrollSnapTolerance: 10
@@ -250,7 +302,9 @@ do($ = window.jQuery, window) ->
       if !@options.lang
         @options.lang = $('html').attr('lang')
       if @options.lang
-        @options.lang = @options.lang.replace(/-.+?$/, '') # replace "-xx" of xx-xx
+        if !@translations[@options.lang]
+          @log.debug "lang: No #{@options.lang} found, try first two letters"
+          @options.lang = @options.lang.replace(/-.+?$/, '') # replace "-xx" of xx-xx
         @log.debug "lang: #{@options.lang}"
 
       # detect host

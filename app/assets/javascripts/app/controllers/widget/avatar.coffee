@@ -10,5 +10,5 @@ class App.WidgetAvatar extends App.ObserverController
   globalRerender: false
 
   render: (user) =>
-    @html(user.avatar @size, @position, undefined, false, false, @type)
+    @html(user.avatar(@size, @position, @cssClass, false, false, @type))
     @userPopups(@position)

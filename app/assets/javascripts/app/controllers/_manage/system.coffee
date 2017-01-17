@@ -11,6 +11,8 @@ class System extends App.ControllerTabs
     @tabs.push { name: 'Services',   'target': 'services', controller: App.SettingsArea, params: { area: 'System::Services' } }
     if !App.Config.get('system_online_service')
       @tabs.push { name: 'Storage',  'target': 'storage',  controller: App.SettingsArea, params: { area: 'System::Storage' } }
+    if !App.Config.get('system_online_service')
+      @tabs.push { name: 'Network',  'target': 'network',  controller: App.SettingsArea, params: { area: 'System::Network' } }
     @tabs.push { name: 'Frontend',   'target': 'ui',       controller: App.SettingsArea, params: { area: 'System::UI' } }
     @render()
 
