@@ -22,7 +22,7 @@
           <%- @Icon('plus-small') %>
     </tfoot>
   </table>
-  
+
   <h3><%- @T('Mentions Group') %></h3>
   <p class="description"><%- @T('Choose which group %s will get added to.', 'mentions') %></p>
   <div class="js-mentionsGroup"></div>
@@ -31,8 +31,8 @@
   <p class="description"><%- @T('Choose which group %s will get added to.', 'direct messages') %></p>
   <div class="js-directMessagesGroup"></div>
 
-  <h3>Retweets</h3>
+  <h3><%- @T('Retweets') %></h3>
   <p class="description"><%- @T('Choose if %s should also be converted to tickets.', 'retweets') %></p>
-  <input name="track_retweets" type="checkbox" id="setting-chat" value="true" <% if @channel.options.sync.track_retweets: %>checked<% end %>> Track retweets
+  <input name="track_retweets" type="checkbox" id="setting-chat" value="true" <% if @channel.options.sync.track_retweets: %>checked<% end %>> <%- @T('Track %s', 'retweets') %>
 
 </fieldset>
