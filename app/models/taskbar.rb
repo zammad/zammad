@@ -55,6 +55,7 @@ class Taskbar < ApplicationModel
     return true if local_update
 
     # find other same open tasks
+    preferences = {}
     preferences[:tasks] = []
     Taskbar.where(key: key).order(:created_at).each { |taskbar|
       if taskbar.id == id
