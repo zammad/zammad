@@ -763,6 +763,10 @@ class App.TicketZoom extends App.Controller
       return
 
     # time tracking
+    if @permissionCheck('ticket.customer')
+      @submitPost(e, ticket)
+      return
+
     new App.TicketZoomTimeAccounting(
       container: @el.closest('.content')
       ticket: ticket
