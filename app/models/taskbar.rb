@@ -56,7 +56,7 @@ class Taskbar < ApplicationModel
 
     # find other same open tasks
     if !preferences
-      preferences = {}
+      self.preferences = {}
     end
     preferences[:tasks] = []
     Taskbar.where(key: key).order(:created_at).each { |taskbar|
