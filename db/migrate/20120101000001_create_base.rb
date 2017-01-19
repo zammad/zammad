@@ -16,10 +16,10 @@ class CreateBase < ActiveRecord::Migration
 
     create_table :users do |t|
       t.references :organization,                 null: true
-      t.string :login,                limit: 100, null: false
+      t.string :login,                limit: 255, null: false
       t.string :firstname,            limit: 100, null: true, default: ''
       t.string :lastname,             limit: 100, null: true, default: ''
-      t.string :email,                limit: 140, null: true, default: ''
+      t.string :email,                limit: 255, null: true, default: ''
       t.string :image,                limit: 100, null: true
       t.string :image_source,         limit: 200, null: true
       t.string :web,                  limit: 100, null: true, default: ''
