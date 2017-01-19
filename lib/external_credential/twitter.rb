@@ -72,7 +72,8 @@ class ExternalCredential::Twitter
           limit: 20,
           search: [],
           mentions: {},
-          direct_messages: {}
+          direct_messages: {},
+          track_retweets: false
         }
       },
       active: true,

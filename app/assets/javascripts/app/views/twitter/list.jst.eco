@@ -60,6 +60,16 @@
         <% end %>
       </div>
     </div>
+    <div class="action-flow action-flow--row">
+      <div class="action-block">
+        <h3><%- @T('Retweets') %></h3>
+        <% if channel.options.sync.track_retweets: %>
+          <%- @T('Retweets are converted to Tickets') %>.
+        <% else: %>
+          <%- @T('Conversion of retweets to tickets is turned off') %>.
+        <% end %>
+      </div>
+    </div>
     <div class="action-controls">
       <div class="btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
       <% if channel.active is true: %>
