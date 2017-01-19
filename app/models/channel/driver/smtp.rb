@@ -30,7 +30,11 @@ class Channel::Driver::Smtp
     if !options.key?(:port) || options[:port].empty?
       options[:port] = 25
     end
-
+    if !options.key?(:ssl)
+      if options[:port].to_i == 465
+        options[:ssl] = true
+      end
+    end
     if !options.key?(:domain)
       # set fqdn, if local fqdn - use domain of sender
       fqdn = Setting.get('fqdn')
@@ -56,6 +60,11 @@ class Channel::Driver::Smtp
       domain: options[:domain],
       enable_starttls_auto: options[:enable_starttls_auto],
     }
+
+    # set ssl if needed
+    if options[:ssl].present?
+      smtp_params[:ssl] = options[:ssl]
+    end
 
     # add authentication only if needed
     if options[:user].present?
