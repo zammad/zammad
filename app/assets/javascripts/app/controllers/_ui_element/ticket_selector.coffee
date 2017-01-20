@@ -21,6 +21,8 @@ class App.UiElement.ticket_selector
       '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)']
       '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)']
       'boolean$': ['is', 'is not']
+      '^radio$': ['is', 'is not']
+      '^select$': ['is', 'is not']
       '^input$': ['contains', 'contains not']
       '^textarea$': ['contains', 'contains not']
 
@@ -29,6 +31,8 @@ class App.UiElement.ticket_selector
         '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)', 'has changed']
         '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)', 'has changed']
         'boolean$': ['is', 'is not', 'has changed']
+        '^radio$': ['is', 'is not', 'has changed']
+        '^select$': ['is', 'is not', 'has changed']
         '^input$': ['contains', 'contains not', 'has changed']
         '^textarea$': ['contains', 'contains not', 'has changed']
 
