@@ -2,6 +2,8 @@
 require 'exceptions'
 
 class ApplicationController < ActionController::Base
+  include ErrorHandling
+
   #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
   helper_method :current_user,
@@ -17,15 +19,6 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   before_action :transaction_begin, :set_user, :session_update, :user_device_check, :cors_preflight_check
   after_action  :transaction_end, :http_log, :set_access_control_headers
-
-  rescue_from StandardError, with: :server_error
-  rescue_from ExecJS::RuntimeError, with: :server_error
-  rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  rescue_from ActiveRecord::StatementInvalid, with: :unprocessable_entity
-  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
-  rescue_from ArgumentError, with: :unprocessable_entity
-  rescue_from Exceptions::UnprocessableEntity, with: :unprocessable_entity
-  rescue_from Exceptions::NotAuthorized, with: :unauthorized
 
   # For all responses in this controller, return the CORS access control headers.
   def set_access_control_headers
@@ -658,30 +651,6 @@ class ApplicationController < ActionController::Base
     render json: generic_objects, status: :ok
   end
 
-  def model_match_error(error)
-    data = {
-      error: error
-    }
-    if error =~ /Validation failed: (.+?)(,|$)/i
-      data[:error_human] = $1
-    end
-    if error =~ /(already exists|duplicate key|duplicate entry)/i
-      data[:error_human] = 'Object already exists!'
-    end
-    if error =~ /null value in column "(.+?)" violates not-null constraint/i
-      data[:error_human] = "Attribute '#{$1}' required!"
-    end
-    if error =~ /Field '(.+?)' doesn't have a default value/i
-      data[:error_human] = "Attribute '#{$1}' required!"
-    end
-
-    if Rails.env.production? && !data[:error_human].empty?
-      data[:error] = data[:error_human]
-      data.delete('error_human')
-    end
-    data
-  end
-
   def model_references_check(object, params)
     generic_object = object.find(params[:id])
     result = Models.references(object, generic_object.id)
@@ -689,68 +658,6 @@ class ApplicationController < ActionController::Base
     raise Exceptions::UnprocessableEntity, 'Can\'t delete, object has references.'
   rescue => e
     raise Exceptions::UnprocessableEntity, e
-  end
-
-  def not_found(e)
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    respond_to do |format|
-      format.json { render json: model_match_error(e.message), status: :not_found }
-      format.any {
-        @exception = e
-        @traceback = !Rails.env.production?
-        file = File.open(Rails.root.join('public', '404.html'), 'r')
-        render inline: file.read, status: :not_found
-      }
-    end
-  end
-
-  def unprocessable_entity(e)
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    respond_to do |format|
-      format.json { render json: model_match_error(e.message), status: :unprocessable_entity }
-      format.any {
-        @exception = e
-        @traceback = !Rails.env.production?
-        file = File.open(Rails.root.join('public', '422.html'), 'r')
-        render inline: file.read, status: :unprocessable_entity
-      }
-    end
-  end
-
-  def server_error(e)
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    respond_to do |format|
-      format.json { render json: model_match_error(e.message), status: 500 }
-      format.any {
-        @exception = e
-        @traceback = !Rails.env.production?
-        file = File.open(Rails.root.join('public', '500.html'), 'r')
-        render inline: file.read, status: 500
-      }
-    end
-  end
-
-  def unauthorized(e)
-    message = e.message
-    if message == 'Exceptions::NotAuthorized'
-      message = 'Not authorized'
-    end
-    error = model_match_error(message)
-    if error && error[:error]
-      response.headers['X-Failure'] = error[:error_human] || error[:error]
-    end
-    respond_to do |format|
-      format.json { render json: error, status: :unauthorized }
-      format.any {
-        @exception = e
-        @traceback = !Rails.env.production?
-        file = File.open(Rails.root.join('public', '401.html'), 'r')
-        render inline: file.read, status: :unauthorized
-      }
-    end
   end
 
   # check maintenance mode
