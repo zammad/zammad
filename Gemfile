@@ -112,6 +112,9 @@ group :development, :test do
 
   # changelog generation
   gem 'github_changelog_generator'
+
+  # Setting ENV for testing purposes
+  gem 'figaro'
 end
 
 gem 'puma', group: :puma

@@ -278,6 +278,7 @@ returns
       older_import = 0
       older_import_max = 20
       @rest_client.client.search(search[:term], result_type: result_type).collect { |tweet|
+        next if !track_retweets? && tweet.retweet?
 
         # ignore older messages
         if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
@@ -299,6 +300,7 @@ returns
     older_import = 0
     older_import_max = 20
     @rest_client.client.mentions_timeline.each { |tweet|
+      next if !track_retweets? && tweet.retweet?
 
       # ignore older messages
       if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
@@ -342,4 +344,7 @@ returns
     options
   end
 
+  def track_retweets?
+    @channel.options && @channel.options['sync'] && @channel.options['sync']['track_retweets']
+  end
 end
