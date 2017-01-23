@@ -437,8 +437,86 @@ class TwitterTest < ActiveSupport::TestCase
     assert_equal('ok', channel.status_in)
   end
 
-  test 'd streaming test' do
-    Thread.new {
+  test 'd track_retweets enabled' do
+
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = system_token
+      config.access_token_secret = system_token_secret
+    end
+
+    hash  = "#{hash_tag1} ##{hash_gen}"
+    text  = "Retweet me - I'm #{system_login} - #{rand_word}... #{hash}"
+    tweet = client.update(text)
+
+    client = Twitter::REST::Client.new(
+      consumer_key:        consumer_key,
+      consumer_secret:     consumer_secret,
+      access_token:        customer_token,
+      access_token_secret: customer_token_secret
+    )
+
+    retweet = client.retweet(tweet).first
+
+    # fetch check system account
+    sleep 15
+    article = nil
+    1.times {
+      Channel.fetch
+
+      # check if ticket and article has been created
+      article = Ticket::Article.find_by(message_id: retweet.id)
+      break if article
+      sleep 10
+    }
+
+    assert(article, "retweet article '#{text}' created")
+  end
+
+  test 'e track_retweets disabled' do
+
+    # disable track_retweets
+    channel[:options]['sync']['track_retweets'] = false
+    channel.save!
+
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = system_token
+      config.access_token_secret = system_token_secret
+    end
+
+    hash  = "#{hash_tag1} ##{hash_gen}"
+    text  = "Retweet me - I'm #{system_login} - #{rand_word}... #{hash}"
+    tweet = client.update(text)
+
+    client = Twitter::REST::Client.new(
+      consumer_key:        consumer_key,
+      consumer_secret:     consumer_secret,
+      access_token:        customer_token,
+      access_token_secret: customer_token_secret
+    )
+
+    retweet = client.retweet(tweet).first
+
+    # fetch check system account
+    sleep 15
+    article = nil
+    1.times {
+      Channel.fetch
+
+      # check if ticket and article has been created
+      article = Ticket::Article.find_by(message_id: retweet.id)
+      break if article
+      sleep 10
+    }
+
+    assert_equal(nil, article, "retweet article '#{text}' not created")
+  end
+
+  test 'f streaming test' do
+    thread = Thread.new {
       Channel.stream
     }
     sleep 10
@@ -536,9 +614,9 @@ class TwitterTest < ActiveSupport::TestCase
       access_token:        customer_token,
       access_token_secret: customer_token_secret
     )
-    hash  = '#citheo44' + rand(999_999).to_s
-    text  = "How about the #{rand_word}? " + hash
-    dm = client.create_direct_message(
+    hash = "#citheo44#{rand(999_999)}"
+    text = "How about the #{rand_word}? #{hash}"
+    dm   = client.create_direct_message(
       system_login_without_at,
       text,
     )
@@ -554,84 +632,8 @@ class TwitterTest < ActiveSupport::TestCase
     assert(article, "inbound article '#{text}' created")
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_equal(system_login, article.to, 'ticket article to')
-  end
-
-  test 'e track_retweets enabled' do
-
-    client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = consumer_key
-      config.consumer_secret     = consumer_secret
-      config.access_token        = system_token
-      config.access_token_secret = system_token_secret
-    end
-
-    hash  = "#{hash_tag1} ##{hash_gen}"
-    text  = "Retweet me - I'm #{system_login} - #{rand_word}... #{hash}"
-    tweet = client.update(text)
-
-    client = Twitter::REST::Client.new(
-      consumer_key:        consumer_key,
-      consumer_secret:     consumer_secret,
-      access_token:        customer_token,
-      access_token_secret: customer_token_secret
-    )
-
-    retweet = client.retweet(tweet).first
-
-    # fetch check system account
-    sleep 15
-    article = nil
-    1.times {
-      Channel.fetch
-
-      # check if ticket and article has been created
-      article = Ticket::Article.find_by(message_id: retweet.id)
-      break if article
-      sleep 10
-    }
-
-    assert(article, "retweet article '#{text}' created")
-  end
-
-  test 'f track_retweets disabled' do
-
-    # disable track_retweets
-    channel[:options]['sync']['track_retweets'] = false
-    channel.save!
-
-    client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = consumer_key
-      config.consumer_secret     = consumer_secret
-      config.access_token        = system_token
-      config.access_token_secret = system_token_secret
-    end
-
-    hash  = "#{hash_tag1} ##{hash_gen}"
-    text  = "Retweet me - I'm #{system_login} - #{rand_word}... #{hash}"
-    tweet = client.update(text)
-
-    client = Twitter::REST::Client.new(
-      consumer_key:        consumer_key,
-      consumer_secret:     consumer_secret,
-      access_token:        customer_token,
-      access_token_secret: customer_token_secret
-    )
-
-    retweet = client.retweet(tweet).first
-
-    # fetch check system account
-    sleep 15
-    article = nil
-    1.times {
-      Channel.fetch
-
-      # check if ticket and article has been created
-      article = Ticket::Article.find_by(message_id: retweet.id)
-      break if article
-      sleep 10
-    }
-
-    assert_equal(nil, article, "retweet article '#{text}' not created")
+    thread.exit
+    thread.join
   end
 
   def hash_gen
