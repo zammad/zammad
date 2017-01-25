@@ -84,8 +84,7 @@ class Index extends App.ControllerSubContent
           config['group_ids'].push group_id.toString()
 
     for sound in @sounds
-      if sound.file is App.OnlineNotification.soundFile()
-        sound.selected = true
+      sound.selected = sound.file is App.OnlineNotification.soundFile() ? true : false
 
     @html App.view('profile/notification')
       groups: groups
