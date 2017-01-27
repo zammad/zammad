@@ -32,7 +32,7 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
-  before_validation :check_name, :check_email, :check_login, :check_password
+  before_validation :check_name, :check_email, :check_login, :ensure_password
   before_create   :check_preferences_default, :validate_roles, :domain_based_assignment
   before_update   :check_preferences_default, :validate_roles
   after_create    :avatar_for_email_check
@@ -906,26 +906,23 @@ returns
     Avatar.remove('User', id)
   end
 
-  def check_password
-
-    # set old password again if not given
-    if password.blank?
-
-      # get current record
-      if id
-        #current = User.find(self.id)
-        #self.password = current.password
-        self.password = password_was
-      end
-
-    end
-
-    # crypt password if not already crypted
-    return if !password
-    return if password =~ /^\{sha2\}/
-
-    crypted       = Digest::SHA2.hexdigest(password)
-    self.password = "{sha2}#{crypted}"
+  def ensure_password
+    return if password_empty?
+    return if PasswordHash.crypted?(password)
+    self.password = PasswordHash.crypt(password)
   end
 
+  def password_empty?
+    # set old password again if not given
+    return if password.present?
+
+    # skip if it's not desired to set a password (yet)
+    return true if !password
+
+    # get current record
+    return if !id
+
+    self.password = password_was
+    true
+  end
 end

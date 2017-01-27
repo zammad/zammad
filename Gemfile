@@ -66,6 +66,9 @@ require 'yaml'
 
 gem 'net-ldap'
 
+# password security
+gem 'argon2'
+
 gem 'writeexcel'
 gem 'icalendar'
 gem 'browser'
@@ -85,7 +88,7 @@ gem 'diffy'
 # in production environments by default.
 group :development, :test do
 
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.5'
   gem 'test-unit'
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -115,6 +118,9 @@ group :development, :test do
 
   # Setting ENV for testing purposes
   gem 'figaro'
+
+  # Use Factory Girl for generating random test data
+  gem 'factory_girl_rails'
 end
 
 gem 'puma', group: :puma

@@ -11,6 +11,18 @@
 Cache.clear
 
 Setting.create_if_not_exists(
+  title: 'Application secret',
+  name: 'application_secret',
+  area: 'Core',
+  description: 'Defines the random application secret.',
+  options: {},
+  state: SecureRandom.hex(128),
+  preferences: {
+    permission: ['admin'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
   title: 'System Init Done',
   name: 'system_init_done',
   area: 'Core',
