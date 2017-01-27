@@ -121,10 +121,6 @@ group :development, :test do
 
   # Use Factory Girl for generating random test data
   gem 'factory_girl_rails'
-
-  # for easy starting of all processes via Procfile
-  # run "foreman start"
-  gem 'foreman'
 end
 
 gem 'puma', group: :puma

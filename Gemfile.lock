@@ -455,7 +455,7 @@ DEPENDENCIES
   rails (= 4.2.7.1)
   rails-observers
   rb-fsevent
-  rspec-rails (~> 3.5)
+  rspec-rails
   rubocop
   sass-rails
   selenium-webdriver
