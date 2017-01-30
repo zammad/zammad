@@ -277,7 +277,12 @@ $(function() {
 
     var formData = new FormData(_this.$form[0])
 
+    /* unfortunaly not working in safari and some IEs - https://developer.mozilla.org/en-US/docs/Web/API/FormData
     if (!formData.has('title')) {
+      formData.append('title', this.options.messageTitle)
+    }
+    */
+    if (!_this.$form.find('[name=title]').val()) {
       formData.append('title', this.options.messageTitle)
     }
 
