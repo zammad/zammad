@@ -79,14 +79,14 @@ class Channel::EmailParser
       data[field.name.to_s.downcase.to_sym] = Encode.conv('utf8', field.to_s)
 
       # if we need to access the lines by objects later again
-      data[ "raw-#{field.name.downcase}".to_sym ] = field
+      data["raw-#{field.name.downcase}".to_sym] = field
     }
 
     # get sender
     from = nil
     ['from', 'reply-to', 'return-path'].each { |item|
-      next if !mail[ item.to_sym ]
-      from = mail[ item.to_sym ].value
+      next if !mail[item.to_sym]
+      from = mail[item.to_sym].value
       break if from
     }
 
@@ -376,7 +376,7 @@ returns
 do not raise an exception - e. g. if used by scheduler
 
   parser = Channel::EmailParser.new
-  ticket, article, user = parser.process(channel, email_raw_string, fakse)
+  ticket, article, user = parser.process(channel, email_raw_string, false)
 
 returns
 
@@ -430,7 +430,7 @@ returns
     }
 
     # check ignore header
-    if mail[ 'x-zammad-ignore'.to_sym ] == 'true' || mail[ 'x-zammad-ignore'.to_sym ] == true
+    if mail['x-zammad-ignore'.to_sym] == 'true' || mail['x-zammad-ignore'.to_sym] == true
       Rails.logger.info "ignored email with msgid '#{mail[:message_id]}' from '#{mail[:from]}' because of x-zammad-ignore header"
       return true
     end
@@ -446,7 +446,7 @@ returns
     Transaction.execute(interface_handle: "#{original_interface_handle}.postmaster") do
 
       # get sender user
-      session_user_id = mail[ 'x-zammad-session-user-id'.to_sym ]
+      session_user_id = mail['x-zammad-session-user-id'.to_sym]
       if !session_user_id
         raise 'No x-zammad-session-user-id, no sender set!'
       end
@@ -459,11 +459,11 @@ returns
       UserInfo.current_user_id = session_user.id
 
       # get ticket# based on email headers
-      if mail[ 'x-zammad-ticket-id'.to_sym ]
-        ticket = Ticket.find_by(id: mail[ 'x-zammad-ticket-id'.to_sym ])
+      if mail['x-zammad-ticket-id'.to_sym]
+        ticket = Ticket.find_by(id: mail['x-zammad-ticket-id'.to_sym])
       end
-      if mail[ 'x-zammad-ticket-number'.to_sym ]
-        ticket = Ticket.find_by(number: mail[ 'x-zammad-ticket-number'.to_sym ])
+      if mail['x-zammad-ticket-number'.to_sym]
+        ticket = Ticket.find_by(number: mail['x-zammad-ticket-number'.to_sym])
       end
 
       # set ticket state to open if not new
@@ -482,8 +482,8 @@ returns
         end
 
         # set ticket to open again
-        if !mail[ 'x-zammad-ticket-followup-state'.to_sym ]
-          if state_type.name != 'new' && !mail[ 'x-zammad-out-of-office'.to_sym ]
+        if !mail['x-zammad-ticket-followup-state'.to_sym] && !mail['x-zammad-ticket-followup-state_id'.to_sym]
+          if state_type.name != 'new' && !mail['x-zammad-out-of-office'.to_sym]
             ticket.state = Ticket::State.find_by(name: 'open')
             ticket.save!
           end
@@ -626,25 +626,25 @@ returns
 
         # only set value on _id if value/reference lookup exists
         if mail[ header.to_sym ]
-          Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
+          Rails.logger.info "header #{header} found #{mail[header.to_sym]}"
           item_object.class.reflect_on_all_associations.map { |assoc|
 
             next if assoc.name.to_s != key_short
 
-            Rails.logger.info "ASSOC found #{assoc.class_name} lookup #{mail[ header.to_sym ]}"
+            Rails.logger.info "ASSOC found #{assoc.class_name} lookup #{mail[header.to_sym]}"
             item = assoc.class_name.constantize
 
             assoc_object = nil
             assoc_has_object = false
             if item.respond_to?(:name)
               assoc_has_object = true
-              if item.lookup(name: mail[ header.to_sym ])
-                assoc_object = item.lookup(name: mail[ header.to_sym ])
+              if item.lookup(name: mail[header.to_sym])
+                assoc_object = item.lookup(name: mail[header.to_sym])
               end
             elsif item.respond_to?(:login)
               assoc_has_object = true
-              if item.lookup(login: mail[ header.to_sym ])
-                assoc_object = item.lookup(login: mail[ header.to_sym ])
+              if item.lookup(login: mail[header.to_sym])
+                assoc_object = item.lookup(login: mail[header.to_sym])
               end
             end
 
@@ -666,9 +666,9 @@ returns
       if suffix
         header = "x-zammad-#{header_name}-#{suffix}-#{key}"
       end
-      if mail[ header.to_sym ]
-        Rails.logger.info "header #{header} found #{mail[ header.to_sym ]}"
-        item_object[key] = mail[ header.to_sym ]
+      if mail[header.to_sym]
+        Rails.logger.info "header #{header} found #{mail[header.to_sym]}"
+        item_object[key] = mail[header.to_sym]
       end
     }
   end
