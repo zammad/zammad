@@ -10,6 +10,7 @@
           <input type="checkbox" value="" name="bulk_all">
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
+          <%- @Icon('checkbox-indeterminate', 'icon-indeterminate') %>
         </label>
       </th>
     <% end %>

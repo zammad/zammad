@@ -755,7 +755,7 @@ class Table extends App.Controller
         checkbox: checkbox
       )
       table = $(table)
-      table.delegate('[name="bulk_all"]', 'click', (e) ->
+      table.delegate('[name="bulk_all"]', 'change', (e) ->
         if $(e.currentTarget).prop('checked')
           $(e.currentTarget).closest('table').find('[name="bulk"]').prop('checked', true)
         else
@@ -891,7 +891,7 @@ class Table extends App.Controller
       @bulkForm.show()
 
     # show/hide bulk action
-    @$('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'click', (e) =>
+    @$('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'change', (e) =>
       if @$('.table-overview').find('input[name="bulk"]:checked').length == 0
         @bulkForm.hide()
         @bulkForm.reset()
@@ -900,9 +900,21 @@ class Table extends App.Controller
     )
 
     # deselect bulk_all if one item is uncheck observ
-    @$('.table-overview').delegate('[name="bulk"]', 'click', (e) ->
-      if !$(e.target).prop('checked')
-        $(e.target).parents().find('[name="bulk_all"]').prop('checked', false)
+    @$('.table-overview').delegate('[name="bulk"]', 'change', (e) =>
+      bulkAll = @$('.table-overview').find('[name="bulk_all"]')
+      checkedCount = @$('.table-overview').find('input[name="bulk"]:checked').length
+      checkboxCount = @$('.table-overview').find('input[name="bulk"]').length
+
+      if checkedCount is 0
+        bulkAll.prop('indeterminate', false)
+        bulkAll.prop('checked', false)
+      else
+        if checkedCount is checkboxCount
+          bulkAll.prop('indeterminate', false)
+          bulkAll.prop('checked', true)
+        else
+          bulkAll.prop('checked', false)
+          bulkAll.prop('indeterminate', true)
     )
 
   getSelected: ->
