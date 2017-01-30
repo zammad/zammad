@@ -44,7 +44,6 @@ class App.TicketOverview extends App.Controller
     # TODO: fire @cancelDrag on ESC
 
   dragItem: (event) =>
-    event.preventDefault()
     pos = @batchDragger.data()
     threshold = 3
     x = event.pageX - pos.dx
@@ -52,8 +51,12 @@ class App.TicketOverview extends App.Controller
     dir = if event.pageY > pos.startY then 1 else -1
 
     if !pos.moved
-      if Math.abs(event.pageX - pos.startX) > threshold or Math.abs(event.pageY - pos.startY) > threshold
+      # trigger when moved a little up or down
+      # but don't trigge when moved left or right
+      # because the user might just want to select text
+      if Math.abs(event.pageY - pos.startY) - Math.abs(event.pageX - pos.startX) > threshold
         @batchDragger.data 'moved', true
+        @el.addClass('u-no-userselect')
         # check grabbed items batch checkbox to make sure its checked
         # (could be grabbed without checking the checkbox it)
         @grabbedItemWasntChecked = !@grabbedItem.find('[name="bulk"]').prop('checked')
@@ -84,6 +87,8 @@ class App.TicketOverview extends App.Controller
       else
         return
 
+    event.preventDefault()
+
     $.Velocity.hook @batchDragger, 'translateX', "#{x}px"
     $.Velocity.hook @batchDragger, 'translateY', "#{y}px"
 
@@ -103,15 +108,17 @@ class App.TicketOverview extends App.Controller
         scale: 1.1
       options:
         duration: 200
-        complete: ->
+        complete: =>
           @hoveredBatchEntry.velocity 'reverse',
             duration: 200
             complete: =>
               # clean scale
+              action = @hoveredBatchEntry.attr('data-action')
+              items = @el.find('[name="bulk"]:checked')
               @hoveredBatchEntry.removeAttr('style')
               @cleanUpDrag(true)
-              @performBatchAction @hoveredBatchEntry.attr('data-action')
-              @hoveredBatchEntry = null
+
+              @performBatchAction items, action
     @batchDragger.velocity
       properties:
         scale: 0
@@ -125,7 +132,9 @@ class App.TicketOverview extends App.Controller
 
   cleanUpDrag: (success) ->
     @hideBatchOverlay()
+    @el.removeClass('u-no-userselect')
     $('.batch-dragger').remove()
+    @hoveredBatchEntry = null
 
     if @grabbedItemWasntChecked
       @grabbedItem.find('[name="bulk"]').prop('checked', false)
@@ -151,8 +160,8 @@ class App.TicketOverview extends App.Controller
         easing: 'ease-in-out'
         duration: 300
 
-  performBatchAction: (action) ->
-    console.log "perform action #{action} on checked items"
+  performBatchAction: (items, action) ->
+    console.log "perform action #{action} on #{items.length} checked items"
 
   showBatchOverlay: ->
     @batchOverlay.show()

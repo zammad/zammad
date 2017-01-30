@@ -132,6 +132,10 @@ ul {
   user-select: none;
 }
 
+.u-no-userselect {
+  user-select: none;
+}
+
 .u-textTruncate {
   white-space: nowrap;
   overflow: hidden;
@@ -8367,6 +8371,7 @@ output {
   will-change: display;
   cursor: grabbing;
   overflow: hidden;
+  user-select: none;
   
   &-backdrop {
     @extend .fit;
