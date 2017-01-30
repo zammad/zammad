@@ -42,7 +42,7 @@
         <div class="textBubble-content" id="article-content-<%= @article.id %>" data-id="<%= @article.id %>">
           <div class="richtext-content"><%- @article.html %></div>
           <div class="textBubble-overflowContainer hide">
-            <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
+            <div class="btn btn--text js-toggleFold"><%- @T('See more') %></div>
           </div>
         </div>
         <% if !_.isEmpty(@article.attachments): %>

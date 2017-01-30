@@ -4585,6 +4585,12 @@ footer {
     left: 0;
     right: 0;
     background: white;
+    
+    &.is-open {
+      &:before {
+        opacity: 0;
+      }
+    }
 
     .btn {
       padding-top: 17px;
@@ -4600,6 +4606,7 @@ footer {
       top: -30px;
       height: 30px;
       background: linear-gradient(rgba(255,255,255,0), white);
+      transition: opacity 300ms;
     }
   }
 
