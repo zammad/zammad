@@ -325,4 +325,41 @@ Some Text"
     Setting.set('postmaster_follow_up_search_in', setting_orig)
   end
 
+  test 'process with follow up check - with none ticket# in subject' do
+
+    setting_orig = Setting.get('postmaster_follow_up_search_in')
+    Setting.set('postmaster_follow_up_search_in', [])
+    ticket_hook_position_orig = Setting.get('ticket_hook_position')
+    Setting.set('ticket_hook_position', 'none')
+
+    subject = 'some title'
+    email_raw_string = "From: me@example.com
+To: bob@example.com
+Subject: #{subject}
+Message-ID: <123456789-follow-up-test-ticket_hook_position-none@linuxhotel.de>
+
+Some Text"
+
+    ticket_p1, article_1, user_1, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket1 = Ticket.find(ticket_p1.id)
+    assert_equal(subject, ticket1.title)
+
+    # follow up possible because same subject
+    subject = 'new subject lalala'
+    email_raw_string = "From: bob@example.com
+To: me@example.com
+Subject: AW: #{subject}
+Message-ID: <123456789-follow-up-test-ticket_hook_position-none-2@linuxhotel.de>
+References: <123456789-follow-up-test-ticket_hook_position-none@linuxhotel.de>
+
+Some Text"
+
+    ticket_p2, article_p2, user_p2, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket2 = Ticket.find(ticket_p2.id)
+    assert_equal(ticket1.id, ticket2.id)
+
+    Setting.set('ticket_hook_position', ticket_hook_position_orig)
+    Setting.set('postmaster_follow_up_search_in', setting_orig)
+  end
+
 end
