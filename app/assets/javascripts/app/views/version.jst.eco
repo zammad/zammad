@@ -1,0 +1,8 @@
+<div class="page-header-title">
+  <h1><%- @T('Version') %><small></small></h1>
+</div>
+<div class="page-content">
+  <p>
+    <%- @T('This is Zammad version %s', @version) %>
+  </p>
+</div>
