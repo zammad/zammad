@@ -239,11 +239,14 @@ class TicketArticlesController < ApplicationController
 
     # find file
     file = Store.find(params[:id])
+
+    disposition = sanitized_disposition
+
     send_data(
       file.content,
       filename: file.filename,
       type: file.preferences['Content-Type'] || file.preferences['Mime-Type'],
-      disposition: 'inline'
+      disposition: disposition
     )
   end
 
@@ -271,4 +274,12 @@ class TicketArticlesController < ApplicationController
     )
   end
 
+  private
+
+  def sanitized_disposition
+    disposition = params.fetch(:disposition, 'inline')
+    valid_disposition = %w(inline attachment)
+    return disposition if valid_disposition.include?(disposition)
+    raise Exceptions::NotAuthorized, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
+  end
 end
