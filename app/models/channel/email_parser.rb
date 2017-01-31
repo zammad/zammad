@@ -602,7 +602,7 @@ returns
     return if !class_object
     class_instance = class_object.new
 
-    return false if !class_instance.association_id_check(attribute, value)
+    return false if !class_instance.association_id_validation(attribute, value)
     true
   end
 

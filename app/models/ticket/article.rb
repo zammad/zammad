@@ -1,11 +1,11 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 class Ticket::Article < ApplicationModel
+  include LogsActivityStream
+  include NotifiesClients
+  include Historisable
+
   load 'ticket/article/assets.rb'
   include Ticket::Article::Assets
-  load 'ticket/article/history_log.rb'
-  include Ticket::Article::HistoryLog
-  load 'ticket/article/activity_stream_log.rb'
-  include Ticket::Article::ActivityStreamLog
 
   belongs_to    :ticket
   belongs_to    :type,        class_name: 'Ticket::Article::Type'
@@ -16,28 +16,19 @@ class Ticket::Article < ApplicationModel
   before_create :check_subject, :check_message_id_md5
   before_update :check_subject, :check_message_id_md5
 
-  notify_clients_support
+  activity_stream_permission 'ticket.agent'
 
-  activity_stream_support(
-    permission: 'ticket.agent',
-    ignore_attributes: {
-      type_id: true,
-      sender_id: true,
-      preferences: true,
-    }
-  )
+  activity_stream_attributes_ignored :type_id,
+                                     :sender_id,
+                                     :preferences
 
-  history_support(
-    ignore_attributes: {
-      type_id: true,
-      sender_id: true,
-      preferences: true,
-      message_id: true,
-      from: true,
-      to: true,
-      cc: true,
-    }
-  )
+  history_attributes_ignored :type_id,
+                             :sender_id,
+                             :preferences,
+                             :message_id,
+                             :from,
+                             :to,
+                             :cc
 
   # fillup md5 of message id to search easier on very long message ids
   def check_message_id_md5
@@ -220,16 +211,32 @@ returns:
     subject.gsub!(/\s|\t|\r/, ' ')
   end
 
+  def history_log_attributes
+    {
+      related_o_id:           self['ticket_id'],
+      related_history_object: 'Ticket',
+    }
+  end
+
+  # callback function to overwrite
+  # default history stream log attributes
+  # gets called from activity_stream_log
+  def activity_stream_log_attributes
+    {
+      group_id: Ticket.find(ticket_id).group_id,
+    }
+  end
+
   class Flag < ApplicationModel
   end
 
   class Sender < ApplicationModel
+    include LatestChangeObserved
     validates :name, presence: true
-    latest_change_support
   end
 
   class Type < ApplicationModel
+    include LatestChangeObserved
     validates :name, presence: true
-    latest_change_support
   end
 end

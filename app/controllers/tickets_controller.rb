@@ -23,7 +23,7 @@ class TicketsController < ApplicationController
     if params[:expand]
       list = []
       tickets.each { |ticket|
-        list.push ticket.attributes_with_relation_names
+        list.push ticket.attributes_with_association_names
       }
       render json: list, status: :ok
       return
@@ -54,7 +54,7 @@ class TicketsController < ApplicationController
     ticket_permission(ticket)
 
     if params[:expand]
-      result = ticket.attributes_with_relation_names
+      result = ticket.attributes_with_association_names
       render json: result, status: :ok
       return
     end
@@ -75,7 +75,7 @@ class TicketsController < ApplicationController
 
   # POST /api/v1/tickets
   def create
-    clean_params = Ticket.param_association_lookup(params)
+    clean_params = Ticket.association_name_to_id_convert(params)
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
@@ -166,7 +166,7 @@ class TicketsController < ApplicationController
     end
 
     if params[:expand]
-      result = ticket.reload.attributes_with_relation_names
+      result = ticket.reload.attributes_with_association_names
       render json: result, status: :created
       return
     end
@@ -186,7 +186,7 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:id])
     ticket_permission(ticket)
 
-    clean_params = Ticket.param_association_lookup(params)
+    clean_params = Ticket.association_name_to_id_convert(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
 
     # overwrite params
@@ -204,7 +204,7 @@ class TicketsController < ApplicationController
     end
 
     if params[:expand]
-      result = ticket.reload.attributes_with_relation_names
+      result = ticket.reload.attributes_with_association_names
       render json: result, status: :ok
       return
     end
@@ -430,7 +430,7 @@ class TicketsController < ApplicationController
     if params[:expand]
       list = []
       tickets.each { |ticket|
-        list.push ticket.attributes_with_relation_names
+        list.push ticket.attributes_with_association_names
       }
       render json: list, status: :ok
       return

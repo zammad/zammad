@@ -394,7 +394,7 @@ class ApplicationController < ActionController::Base
     # remember time accounting
     time_unit = params[:time_unit]
 
-    clean_params = Ticket::Article.param_association_lookup(params)
+    clean_params = Ticket::Article.association_name_to_id_convert(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
 
     # overwrite params
@@ -514,7 +514,7 @@ class ApplicationController < ActionController::Base
   # model helper
   def model_create_render(object, params)
 
-    clean_params = object.param_association_lookup(params)
+    clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
 
     # create object
@@ -524,10 +524,10 @@ class ApplicationController < ActionController::Base
     generic_object.save!
 
     # set relations
-    generic_object.param_set_associations(params)
+    generic_object.associations_from_param(params)
 
     if params[:expand]
-      render json: generic_object.attributes_with_relation_names, status: :created
+      render json: generic_object.attributes_with_association_names, status: :created
       return
     end
 
@@ -535,7 +535,7 @@ class ApplicationController < ActionController::Base
   end
 
   def model_create_render_item(generic_object)
-    render json: generic_object.attributes_with_associations, status: :created
+    render json: generic_object.attributes_with_association_ids, status: :created
   end
 
   def model_update_render(object, params)
@@ -543,7 +543,7 @@ class ApplicationController < ActionController::Base
     # find object
     generic_object = object.find(params[:id])
 
-    clean_params = object.param_association_lookup(params)
+    clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
 
     generic_object.with_lock do
@@ -552,11 +552,11 @@ class ApplicationController < ActionController::Base
       generic_object.update_attributes!(clean_params)
 
       # set relations
-      generic_object.param_set_associations(params)
+      generic_object.associations_from_param(params)
     end
 
     if params[:expand]
-      render json: generic_object.attributes_with_relation_names, status: :ok
+      render json: generic_object.attributes_with_association_names, status: :ok
       return
     end
 
@@ -564,7 +564,7 @@ class ApplicationController < ActionController::Base
   end
 
   def model_update_render_item(generic_object)
-    render json: generic_object.attributes_with_associations, status: :ok
+    render json: generic_object.attributes_with_association_ids, status: :ok
   end
 
   def model_destroy_render(object, params)
@@ -581,7 +581,7 @@ class ApplicationController < ActionController::Base
 
     if params[:expand]
       generic_object = object.find(params[:id])
-      render json: generic_object.attributes_with_relation_names, status: :ok
+      render json: generic_object.attributes_with_association_names, status: :ok
       return
     end
 
@@ -596,7 +596,7 @@ class ApplicationController < ActionController::Base
   end
 
   def model_show_render_item(generic_object)
-    render json: generic_object.attributes_with_associations, status: :ok
+    render json: generic_object.attributes_with_association_ids, status: :ok
   end
 
   def model_index_render(object, params)
@@ -620,7 +620,7 @@ class ApplicationController < ActionController::Base
     if params[:expand]
       list = []
       generic_objects.each { |generic_object|
-        list.push generic_object.attributes_with_relation_names
+        list.push generic_object.attributes_with_association_names
       }
       render json: list, status: :ok
       return
@@ -642,7 +642,7 @@ class ApplicationController < ActionController::Base
 
     generic_objects_with_associations = []
     generic_objects.each { |item|
-      generic_objects_with_associations.push item.attributes_with_associations
+      generic_objects_with_associations.push item.attributes_with_association_ids
     }
     model_index_render_result(generic_objects_with_associations)
   end

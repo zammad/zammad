@@ -1,0 +1,21 @@
+# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+module ApplicationModel::CleansRecentView
+  extend ActiveSupport::Concern
+
+  included do
+    before_destroy :recent_view_destroy
+  end
+
+=begin
+
+delete object recent viewed list, will be executed automatically
+
+  model = Model.find(123)
+  model.recent_view_destroy
+
+=end
+
+  def recent_view_destroy
+    RecentView.log_destroy(self.class.to_s, id)
+  end
+end

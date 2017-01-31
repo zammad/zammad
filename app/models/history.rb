@@ -308,17 +308,6 @@ returns
     history_attribute
   end
 
-  private
-
-=begin
-
-nothing to do on destroying history entries
-
-=end
-
-  def destroy_dependencies
-  end
-
   class Object < ApplicationModel
   end
 

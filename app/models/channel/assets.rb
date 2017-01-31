@@ -29,7 +29,7 @@ returns
         data[ app_model ] = {}
       end
       if !data[ app_model ][ id ]
-        attributes = attributes_with_associations
+        attributes = attributes_with_association_ids
 
         # remove passwords if use is no admin
         access = false

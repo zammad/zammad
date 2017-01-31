@@ -47,7 +47,7 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     # get relations of data
     all = []
     items.each { |item|
-      all.push item.attributes_with_associations
+      all.push item.attributes_with_association_ids
     }
 
     # collect assets

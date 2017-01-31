@@ -1,10 +1,10 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 class Ticket::State < ApplicationModel
+  include LatestChangeObserved
+
   belongs_to    :state_type, class_name: 'Ticket::StateType'
   belongs_to    :next_state, class_name: 'Ticket::State'
   validates     :name, presence: true
-
-  latest_change_support
 
 =begin
 

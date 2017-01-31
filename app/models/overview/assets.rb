@@ -33,7 +33,7 @@ returns
         data[ app_model_user ] = {}
       end
       if !data[ app_model_overview ][ id ]
-        data[ app_model_overview ][ id ] = attributes_with_associations
+        data[ app_model_overview ][ id ] = attributes_with_association_ids
         if user_ids
           user_ids.each { |local_user_id|
             next if data[ app_model_user ][ local_user_id ]

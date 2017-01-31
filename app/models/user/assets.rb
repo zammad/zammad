@@ -29,7 +29,7 @@ returns
         data[ app_model ] = {}
       end
       if !data[ app_model ][ id ]
-        local_attributes = attributes_with_associations
+        local_attributes = attributes_with_association_ids
 
         # do not transfer crypted pw
         local_attributes['password'] = ''

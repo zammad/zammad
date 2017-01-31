@@ -17,7 +17,7 @@ class TicketArticlesController < ApplicationController
     article_permission(article)
 
     if params[:expand]
-      result = article.attributes_with_relation_names
+      result = article.attributes_with_association_names
       result[:attachments] = article.attachments
       render json: result, status: :ok
       return
@@ -29,7 +29,7 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    render json: article.attributes_with_relation_names
+    render json: article.attributes_with_association_names
   end
 
   # GET /ticket_articles/by_ticket/1
@@ -46,7 +46,7 @@ class TicketArticlesController < ApplicationController
 
         # ignore internal article if customer is requesting
         next if article.internal == true && current_user.permissions?('ticket.customer')
-        result = article.attributes_with_relation_names
+        result = article.attributes_with_association_names
 
         # add attachments
         result[:attachments] = article.attachments
@@ -79,7 +79,7 @@ class TicketArticlesController < ApplicationController
 
       # ignore internal article if customer is requesting
       next if article.internal == true && current_user.permissions?('ticket.customer')
-      articles.push article.attributes_with_relation_names
+      articles.push article.attributes_with_association_names
     }
     render json: articles
   end
@@ -91,7 +91,7 @@ class TicketArticlesController < ApplicationController
     article = article_create(ticket, params)
 
     if params[:expand]
-      result = article.attributes_with_relation_names
+      result = article.attributes_with_association_names
       result[:attachments] = article.attachments
       render json: result, status: :created
       return
@@ -103,7 +103,7 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    render json: article.attributes_with_relation_names, status: :created
+    render json: article.attributes_with_association_names, status: :created
   end
 
   # PUT /articles/1
@@ -117,13 +117,13 @@ class TicketArticlesController < ApplicationController
       raise Exceptions::NotAuthorized, 'Not authorized (ticket.agent or admin permission required)!'
     end
 
-    clean_params = Ticket::Article.param_association_lookup(params)
+    clean_params = Ticket::Article.association_name_to_id_convert(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
 
     article.update_attributes!(clean_params)
 
     if params[:expand]
-      result = article.attributes_with_relation_names
+      result = article.attributes_with_association_names
       result[:attachments] = article.attachments
       render json: result, status: :ok
       return
@@ -135,7 +135,7 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    render json: article.attributes_with_relation_names, status: :ok
+    render json: article.attributes_with_association_names, status: :ok
   end
 
   # DELETE /articles/1

@@ -1,11 +1,12 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Permission < ApplicationModel
+  include NotifiesClients
+  include LatestChangeObserved
+
   has_and_belongs_to_many :roles
   validates               :name, presence: true
   store                   :preferences
-  notify_clients_support
-  latest_change_support
 
 =begin
 
