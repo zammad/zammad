@@ -72,7 +72,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
     if params[:expand]
       list = []
       organizations.each { |organization|
-        list.push organization.attributes_with_relation_names
+        list.push organization.attributes_with_association_names
       }
       render json: list, status: :ok
       return
@@ -124,7 +124,7 @@ curl http://localhost/api/v1/organizations/#{id} -v -u #{login}:#{password}
     end
 
     if params[:expand]
-      organization = Organization.find(params[:id]).attributes_with_relation_names
+      organization = Organization.find(params[:id]).attributes_with_association_names
       render json: organization, status: :ok
       return
     end
@@ -256,7 +256,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     if params[:expand]
       list = []
       organization_all.each { |organization|
-        list.push organization.attributes_with_relation_names
+        list.push organization.attributes_with_association_names
       }
       render json: list, status: :ok
       return

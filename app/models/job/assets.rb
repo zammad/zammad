@@ -32,7 +32,7 @@ returns
         data[ User.to_app_model ] = {}
       end
       if !data[ app_model ][ id ]
-        data[ app_model ][ id ] = attributes_with_associations
+        data[ app_model ][ id ] = attributes_with_association_ids
         data = assets_of_selector('condition', data)
         data = assets_of_selector('perform', data)
       end

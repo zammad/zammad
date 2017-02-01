@@ -132,6 +132,10 @@ ul {
   user-select: none;
 }
 
+.u-no-userselect {
+  user-select: none;
+}
+
 .u-textTruncate {
   white-space: nowrap;
   overflow: hidden;
@@ -1018,76 +1022,82 @@ th.align-right {
   align-items: center;
   justify-content: center;
   position: relative;
+  
+  .icon-checked {
+    color: black;
+  }
+
+  .icon-unchecked {
+    color: hsl(60,1%,61%);
+  }
+
+  .icon-indeterminate {
+    display: none;
+    color: hsl(60,1%,61%);
+  }
+
+  &.is-disabled {
+    cursor: default;
+  }
+
+  &.checkbox-replacement--fullscreen,
+  &.radio-replacement--fullscreen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &.checkbox-replacement--inline,
+  &.radio-replacement--inline {
+    display: inline-flex;
+    margin-right: 3px;
+  }
+
+  input {
+    pointer-events: none;
+    position: absolute;
+    opacity: 0;
+
+    &:disabled ~ .icon {
+      opacity: 0.33;
+      fill: none;
+      cursor: default;
+    }
+
+    &:not(:checked) ~ .icon-checked,
+    &:checked ~ .icon-unchecked {
+      display: none;
+    }
+
+    &:focus:not(.is-active) ~ .icon-checked,
+    &:focus:not(.is-active) ~ .icon-unchecked {
+      box-shadow: 0 0 0 2px hsl(201,62%,90%);
+      color: hsl(200,71%,59%);
+    }
+
+    &:indeterminate {
+      ~ .icon-checked,
+      ~ .icon-unchecked {
+        display: none;
+      }
+      ~ .icon-indeterminate {
+        display: block;
+      }
+    }
+  }
+
+  + .label-text {
+    margin-left: 0;
+  }
 }
 
-.checkbox-replacement.checkbox-replacement--fullscreen,
-.radio-replacement.radio-replacement--fullscreen {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-
-.checkbox-replacement.checkbox-replacement--inline,
-.radio-replacement.radio-replacement--inline {
-  display: inline-flex;
-  margin-right: 3px;
-}
-
-.checkbox-replacement input,
-.radio-replacement input {
-  pointer-events: none;
-  position: absolute;
-  opacity: 0;
-}
-
-.checkbox-replacement .icon-checked,
-.radio-replacement .icon-checked {
-  color: black;
-}
-
-.checkbox-replacement .icon-unchecked,
-.radio-replacement .icon-unchecked {
-  color: hsl(60,1%,61%);
-}
-
-.checkbox-replacement.is-disabled,
-.radio-replacement.is-disabled {
-  cursor: default;
-}
-
-.checkbox-replacement input:disabled ~.icon,
-.radio-replacement input:disabled ~.icon {
-  opacity: 0.33;
-  fill: none;
-  cursor: default;
-}
-
-.checkbox-replacement input:not(:checked) ~ .icon-checked,
-.checkbox-replacement input:checked ~ .icon-unchecked,
-.radio-replacement input:not(:checked) ~ .icon-checked,
-.radio-replacement input:checked ~ .icon-unchecked {
-  display: none;
-}
-
-.checkbox-replacement input:focus:not(.is-active) ~ .icon-checked,
-.checkbox-replacement input:focus:not(.is-active) ~ .icon-unchecked,
-.radio-replacement input:focus:not(.is-active) ~ .icon-checked,
-.radio-replacement input:focus:not(.is-active) ~ .icon-unchecked, {
-  box-shadow: 0 0 0 2px hsl(201,62%,90%);
-  color: hsl(200,71%,59%);
-}
-
-.radio-replacement input:focus ~ .icon-checked,
-.radio-replacement input:focus ~ .icon-unchecked {
-  border-radius: 100%;
-}
-
-.checkbox-replacement + .label-text,
-.radio-replacement + .label-text {
-  margin-left: 0;
+.radio-replacement {
+  input:focus ~ .icon-checked,
+  input:focus ~ .icon-unchecked {
+    border-radius: 100%;
+  }
 }
 
 .table .checkbox-replacement,
@@ -2639,7 +2649,8 @@ ol.tabs li {
 }
 
 .icon-checkbox,
-.icon-checkbox-checked {
+.icon-checkbox-checked,
+.icon-checkbox-indeterminate {
   fill: white;
 }
 
@@ -3836,7 +3847,7 @@ footer {
 
   .popover .two-columns,
   .popover .three-columns {
-    margin-bottom: -8px;
+    margin-top: -8px;
   }
 
   .popover .column label {
@@ -3844,7 +3855,7 @@ footer {
   }
 
   .popover .column {
-    margin-bottom: 8px;
+    margin-top: 8px;
   }
 
   .popover--notifications {
@@ -4574,6 +4585,12 @@ footer {
     left: 0;
     right: 0;
     background: white;
+    
+    &.is-open {
+      &:before {
+        opacity: 0;
+      }
+    }
 
     .btn {
       padding-top: 17px;
@@ -4589,6 +4606,7 @@ footer {
       top: -30px;
       height: 30px;
       background: linear-gradient(rgba(255,255,255,0), white);
+      transition: opacity 300ms;
     }
   }
 
@@ -8360,6 +8378,7 @@ output {
   will-change: display;
   cursor: grabbing;
   overflow: hidden;
+  user-select: none;
   
   &-backdrop {
     @extend .fit;

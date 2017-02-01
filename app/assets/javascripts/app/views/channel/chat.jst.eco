@@ -159,7 +159,7 @@ $(function() {
 &lt;script&gt;
 $(function() {
   new ZammadChat({
-<span class="js-modal-params"></span>
+<span class="js-modal-params"></span>,
     show: false
   });
 });

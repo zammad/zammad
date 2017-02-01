@@ -43,7 +43,7 @@ class ObjectManagerAttributesController < ApplicationController
         position: 1550,
         editable: true,
       )
-      render json: object_manager_attribute.attributes_with_associations, status: :created
+      render json: object_manager_attribute.attributes_with_association_ids, status: :created
     rescue => e
       raise Exceptions::UnprocessableEntity, e
     end
@@ -64,7 +64,7 @@ class ObjectManagerAttributesController < ApplicationController
         position: 1550,
         editable: true,
       )
-      render json: object_manager_attribute.attributes_with_associations, status: :ok
+      render json: object_manager_attribute.attributes_with_association_ids, status: :ok
     rescue => e
       raise Exceptions::UnprocessableEntity, e
     end

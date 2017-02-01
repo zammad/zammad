@@ -42,7 +42,7 @@
         <div class="textBubble-content" id="article-content-<%= @article.id %>" data-id="<%= @article.id %>">
           <div class="richtext-content"><%- @article.html %></div>
           <div class="textBubble-overflowContainer hide">
-            <div class="btn btn--text js-unfold"><%- @T('See more') %></div>
+            <div class="btn btn--text js-toggleFold"><%- @T('See more') %></div>
           </div>
         </div>
         <% if !_.isEmpty(@article.attachments): %>
@@ -51,7 +51,7 @@
             <div class="attachments-title"><%- @article.attachments.length %> <%- @T('Attached Files') %></div>
             <% for attachment in @article.attachments: %>
               <div class="attachment">
-                <a class="attachment-name u-highlight" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>" target="_blank" data-type="attachment"><%= attachment.filename %></a>
+                <a class="attachment-name u-highlight" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>?disposition=attachment" target="_blank" data-type="attachment"><%= attachment.filename %></a>
                 <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
               </div>
             <% end %>

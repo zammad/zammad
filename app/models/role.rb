@@ -1,6 +1,10 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Role < ApplicationModel
+  include LogsActivityStream
+  include NotifiesClients
+  include LatestChangeObserved
+
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
   has_and_belongs_to_many :permissions, after_add: :cache_update, after_remove: :cache_update
   validates               :name,  presence: true
@@ -9,10 +13,9 @@ class Role < ApplicationModel
   before_create  :validate_permissions
   before_update  :validate_permissions
 
-  attributes_with_associations_support ignore: { user_ids: true }
-  activity_stream_support permission: 'admin.role'
-  notify_clients_support
-  latest_change_support
+  association_attributes_ignored :user_ids
+
+  activity_stream_permission 'admin.role'
 
 =begin
 

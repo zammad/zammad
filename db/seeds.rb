@@ -11,6 +11,18 @@
 Cache.clear
 
 Setting.create_if_not_exists(
+  title: 'Application secret',
+  name: 'application_secret',
+  area: 'Core',
+  description: 'Defines the random application secret.',
+  options: {},
+  state: SecureRandom.hex(128),
+  preferences: {
+    permission: ['admin'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
   title: 'System Init Done',
   name: 'system_init_done',
   area: 'Core',
@@ -2222,6 +2234,15 @@ Setting.create_if_not_exists(
   description: 'Define postmaster filter to identify follow ups (based on admin settings).',
   options: {},
   state: 'Channel::Filter::FollowUpCheck',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Define postmaster filter.',
+  name: '0200_postmaster_filter_follow_up_possible_check',
+  area: 'Postmaster::PreFilter',
+  description: 'Define postmaster filter to check if follow ups get created (based on admin settings).',
+  options: {},
+  state: 'Channel::Filter::FollowUpPossibleCheck',
   frontend: false
 )
 Setting.create_if_not_exists(
@@ -5052,7 +5073,6 @@ ObjectManager::Attribute.add(
     default: 'yes',
     options: {
       yes: 'yes',
-      reject: 'reject follow up/do not reopen Ticket',
       new_ticket: 'do not reopen Ticket but create new Ticket'
     },
     null: false,

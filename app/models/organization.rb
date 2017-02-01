@@ -1,6 +1,12 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Organization < ApplicationModel
+  include LogsActivityStream
+  include NotifiesClients
+  include LatestChangeObserved
+  include Historisable
+  include SearchIndexed
+
   load 'organization/permission.rb'
   include Organization::Permission
   load 'organization/assets.rb'
@@ -16,11 +22,7 @@ class Organization < ApplicationModel
   before_create :domain_cleanup
   before_update :domain_cleanup
 
-  activity_stream_support permission: 'admin.role'
-  history_support
-  search_index_support
-  notify_clients_support
-  latest_change_support
+  activity_stream_permission 'admin.role'
 
   private
 

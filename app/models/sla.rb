@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Sla < ApplicationModel
+  include NotifiesClients
+
   load 'sla/assets.rb'
   include Sla::Assets
 
@@ -8,7 +10,4 @@ class Sla < ApplicationModel
   store      :data
   validates  :name, presence: true
   belongs_to :calendar
-
-  notify_clients_support
-
 end

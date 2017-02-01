@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     if params[:expand]
       list = []
       users.each { |user|
-        list.push user.attributes_with_relation_names
+        list.push user.attributes_with_association_names
       }
       render json: list, status: :ok
       return
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
     users_all = []
     users.each { |user|
-      users_all.push User.lookup(id: user.id).attributes_with_associations
+      users_all.push User.lookup(id: user.id).attributes_with_association_ids
     }
     render json: users_all, status: :ok
   end
@@ -79,7 +79,7 @@ class UsersController < ApplicationController
     permission_check_local
 
     if params[:expand]
-      user = User.find(params[:id]).attributes_with_relation_names
+      user = User.find(params[:id]).attributes_with_association_names
       render json: user, status: :ok
       return
     end
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
       return
     end
 
-    user = User.find(params[:id]).attributes_with_associations
+    user = User.find(params[:id]).attributes_with_association_ids
     user.delete('password')
     render json: user
   end
@@ -109,10 +109,10 @@ class UsersController < ApplicationController
     # in case of authentication, set current_user to access later
     authentication_check_only({})
 
-    clean_params = User.param_association_lookup(params)
+    clean_params = User.association_name_to_id_convert(params)
     clean_params = User.param_cleanup(clean_params, true)
     user = User.new(clean_params)
-    user.param_set_associations(params)
+    user.associations_from_param(params)
 
     # check if it's first user, the admin user
     # inital admin account
@@ -227,12 +227,12 @@ class UsersController < ApplicationController
     end
 
     if params[:expand]
-      user = User.find(user.id).attributes_with_relation_names
+      user = User.find(user.id).attributes_with_association_names
       render json: user, status: :created
       return
     end
 
-    user_new = User.find(user.id).attributes_with_associations
+    user_new = User.find(user.id).attributes_with_association_ids
     user_new.delete('password')
     render json: user_new, status: :created
   end
@@ -253,7 +253,7 @@ class UsersController < ApplicationController
     permission_check_local
 
     user = User.find(params[:id])
-    clean_params = User.param_association_lookup(params)
+    clean_params = User.association_name_to_id_convert(params)
     clean_params = User.param_cleanup(clean_params, true)
 
     # permission check
@@ -264,29 +264,29 @@ class UsersController < ApplicationController
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
         user.role_ids = params[:role_ids]
-        user.param_set_associations({ role_ids: params[:role_ids], roles: params[:roles] })
+        user.associations_from_param({ role_ids: params[:role_ids], roles: params[:roles] })
       end
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:group_ids] || params[:groups])
         user.group_ids = params[:group_ids]
-        user.param_set_associations({ group_ids: params[:group_ids], groups: params[:groups] })
+        user.associations_from_param({ group_ids: params[:group_ids], groups: params[:groups] })
       end
 
       # only allow Admin's and Agent's
       if current_user.permissions?(['admin.user', 'ticket.agent']) && (params[:organization_ids] || params[:organizations])
-        user.param_set_associations({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
+        user.associations_from_param({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
       end
 
       if params[:expand]
-        user = User.find(user.id).attributes_with_relation_names
+        user = User.find(user.id).attributes_with_association_names
         render json: user, status: :ok
         return
       end
     end
 
     # get new data
-    user_new = User.find(user.id).attributes_with_associations
+    user_new = User.find(user.id).attributes_with_association_ids
     user_new.delete('password')
     render json: user_new, status: :ok
   end
@@ -318,7 +318,7 @@ class UsersController < ApplicationController
   def me
 
     if params[:expand]
-      user = current_user.attributes_with_relation_names
+      user = current_user.attributes_with_association_names
       render json: user, status: :ok
       return
     end
@@ -329,7 +329,7 @@ class UsersController < ApplicationController
       return
     end
 
-    user = current_user.attributes_with_associations
+    user = current_user.attributes_with_association_ids
     user.delete('password')
     render json: user
   end
@@ -390,7 +390,7 @@ class UsersController < ApplicationController
     if params[:expand]
       list = []
       user_all.each { |user|
-        list.push user.attributes_with_relation_names
+        list.push user.attributes_with_association_names
       }
       render json: list, status: :ok
       return

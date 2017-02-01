@@ -1,5 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-module ApplicationModel::HistoryLogBase
+module ApplicationModel::HistoryLoggable
+  extend ActiveSupport::Concern
 
 =begin
 
@@ -14,16 +15,27 @@ returns
 
 =end
 
-  def history_log (type, user_id, data = {})
-    data[:o_id]                   = self['id']
-    data[:history_type]           = type
-    data[:history_object]         = self.class.name
-    data[:related_o_id]           = nil
-    data[:related_history_object] = nil
-    data[:created_by_id]          = user_id
-    data[:updated_at]             = updated_at
-    data[:created_at]             = updated_at
-    History.add(data)
+  def history_log(type, user_id, attributes = {})
+
+    attributes.merge!(
+      o_id:                   self['id'],
+      history_type:           type,
+      history_object:         self.class.name,
+      related_o_id:           nil,
+      related_history_object: nil,
+      created_by_id:          user_id,
+      updated_at:             updated_at,
+      created_at:             updated_at,
+    ).merge!(history_log_attributes)
+
+    History.add(attributes)
+  end
+
+  # callback function to overwrite
+  # default history log attributes
+  # gets called from history_log
+  def history_log_attributes
+    {}
   end
 
 =begin

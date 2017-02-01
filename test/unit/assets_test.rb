@@ -55,12 +55,12 @@ class AssetsTest < ActiveSupport::TestCase
     assets = user3.assets({})
 
     org1 = Organization.find(org1.id)
-    attributes = org1.attributes_with_associations
+    attributes = org1.attributes_with_association_ids
     attributes.delete('user_ids')
     assert( diff(attributes, assets[:Organization][org1.id]), 'check assets')
 
     user1 = User.find(user1.id)
-    attributes = user1.attributes_with_associations
+    attributes = user1.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -68,7 +68,7 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user1.id]), 'check assets' )
 
     user2 = User.find(user2.id)
-    attributes = user2.attributes_with_associations
+    attributes = user2.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -76,7 +76,7 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user2.id]), 'check assets' )
 
     user3 = User.find(user3.id)
-    attributes = user3.attributes_with_associations
+    attributes = user3.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -89,12 +89,12 @@ class AssetsTest < ActiveSupport::TestCase
     org2.note = "some note...#{rand(9_999_999_999_999)}"
     org2.save
 
-    attributes = org2.attributes_with_associations
+    attributes = org2.attributes_with_association_ids
     attributes.delete('user_ids')
     assert( !diff(attributes, assets[:Organization][org2.id]), 'check assets' )
 
     user1_new = User.find(user1.id)
-    attributes = user1_new.attributes_with_associations
+    attributes = user1_new.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -103,12 +103,12 @@ class AssetsTest < ActiveSupport::TestCase
 
     # check new assets lookup
     assets = user3.assets({})
-    attributes = org2.attributes_with_associations
+    attributes = org2.attributes_with_association_ids
     attributes.delete('user_ids')
     assert( diff(attributes, assets[:Organization][org1.id]), 'check assets')
 
     user1 = User.find(user1.id)
-    attributes = user1.attributes_with_associations
+    attributes = user1.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -116,7 +116,7 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user1.id]), 'check assets' )
 
     user2 = User.find(user2.id)
-    attributes = user2.attributes_with_associations
+    attributes = user2.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -124,7 +124,7 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user2.id]), 'check assets' )
 
     user3 = User.find(user3.id)
-    attributes = user3.attributes_with_associations
+    attributes = user3.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -202,12 +202,12 @@ class AssetsTest < ActiveSupport::TestCase
 
     org = Organization.find(org.id)
     assets = org.assets({})
-    attributes = org.attributes_with_associations
+    attributes = org.attributes_with_association_ids
     attributes.delete('user_ids')
     assert( diff(attributes, assets[:Organization][org.id]), 'check assets' )
 
     admin1 = User.find(admin1.id)
-    attributes = admin1.attributes_with_associations
+    attributes = admin1.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -215,7 +215,7 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][admin1.id]), 'check assets' )
 
     user1 = User.find(user1.id)
-    attributes = user1.attributes_with_associations
+    attributes = user1.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -223,7 +223,7 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user1.id]), 'check assets' )
 
     user2 = User.find(user2.id)
-    attributes = user2.attributes_with_associations
+    attributes = user2.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -231,7 +231,7 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user2.id]), 'check assets' )
 
     user3 = User.find(user3.id)
-    attributes = user3.attributes_with_associations
+    attributes = user3.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -245,11 +245,11 @@ class AssetsTest < ActiveSupport::TestCase
     user_new_2.save
 
     org_new = Organization.find(org.id)
-    attributes = org_new.attributes_with_associations
+    attributes = org_new.attributes_with_association_ids
     attributes.delete('user_ids')
     assert( !diff(attributes, assets[:Organization][org_new.id]), 'check assets' )
 
-    attributes = user_new_2.attributes_with_associations
+    attributes = user_new_2.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')
@@ -258,11 +258,11 @@ class AssetsTest < ActiveSupport::TestCase
 
     # check new assets lookup
     assets = org_new.assets({})
-    attributes = org_new.attributes_with_associations
+    attributes = org_new.attributes_with_association_ids
     attributes.delete('user_ids')
     assert( diff(attributes, assets[:Organization][org_new.id]), 'check assets' )
 
-    attributes = user_new_2.attributes_with_associations
+    attributes = user_new_2.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes['password'] = ''
     attributes.delete('token_ids')

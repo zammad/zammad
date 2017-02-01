@@ -29,7 +29,7 @@ returns
       data[ app_model_ticket ] = {}
     end
     if !data[ app_model_ticket ][ id ]
-      data[ app_model_ticket ][ id ] = attributes_with_associations
+      data[ app_model_ticket ][ id ] = attributes_with_association_ids
     end
     %w(created_by_id updated_by_id owner_id customer_id).each { |local_user_id|
       next if !self[ local_user_id ]

@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Overview < ApplicationModel
+  include NotifiesClients
+  include LatestChangeObserved
+
   load 'overview/assets.rb'
   include Overview::Assets
 
@@ -12,9 +15,6 @@ class Overview < ApplicationModel
 
   before_create :fill_link_on_create, :fill_prio
   before_update :fill_link_on_update
-
-  notify_clients_support
-  latest_change_support
 
   private
 

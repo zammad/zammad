@@ -24,6 +24,11 @@ require 'digest/md5'
 # @property active          [Boolean] The flag that shows the active state of the User.
 # @property note            [String]  The note or comment stored to the User.
 class User < ApplicationModel
+  include LogsActivityStream
+  include NotifiesClients
+  include Historisable
+  include SearchIndexed
+
   load 'user/permission.rb'
   include User::Permission
   load 'user/assets.rb'
@@ -32,13 +37,12 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
-  before_validation :check_name, :check_email, :check_login, :check_password
+  before_validation :check_name, :check_email, :check_login, :ensure_password
   before_create   :check_preferences_default, :validate_roles, :domain_based_assignment
   before_update   :check_preferences_default, :validate_roles
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy
-  notify_clients_support
 
   has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
   has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, class_name: 'Role'
@@ -50,35 +54,31 @@ class User < ApplicationModel
 
   store                   :preferences
 
-  activity_stream_support(
-    permission: 'admin.user',
-    ignore_attributes: {
-      last_login: true,
-      login_failed: true,
-      image: true,
-      image_source: true,
-      preferences: true,
-    }
-  )
-  history_support(
-    ignore_attributes: {
-      password: true,
-      image: true,
-      image_source: true,
-      preferences: true,
-    }
-  )
-  search_index_support(
-    ignore_attributes: {
-      password: true,
-      image: true,
-      image_source: true,
-      source: true,
-      login_failed: true,
-      preferences: true,
-    },
-    ignore_ids: [1],
-  )
+  activity_stream_permission 'admin.user'
+
+  activity_stream_attributes_ignored :last_login,
+                                     :login_failed,
+                                     :image,
+                                     :image_source,
+                                     :preferences
+
+  history_attributes_ignored :password,
+                             :image,
+                             :image_source,
+                             :preferences
+
+  search_index_attributes_ignored :password,
+                                  :image,
+                                  :image_source,
+                                  :source,
+                                  :login_failed,
+                                  :preferences
+
+  def ignore_search_indexing?(_action)
+    # ignore internal user
+    return true if id == 1
+    false
+  end
 
 =begin
 
@@ -906,26 +906,23 @@ returns
     Avatar.remove('User', id)
   end
 
-  def check_password
-
-    # set old password again if not given
-    if password.blank?
-
-      # get current record
-      if id
-        #current = User.find(self.id)
-        #self.password = current.password
-        self.password = password_was
-      end
-
-    end
-
-    # crypt password if not already crypted
-    return if !password
-    return if password =~ /^\{sha2\}/
-
-    crypted       = Digest::SHA2.hexdigest(password)
-    self.password = "{sha2}#{crypted}"
+  def ensure_password
+    return if password_empty?
+    return if PasswordHash.crypted?(password)
+    self.password = PasswordHash.crypt(password)
   end
 
+  def password_empty?
+    # set old password again if not given
+    return if password.present?
+
+    # skip if it's not desired to set a password (yet)
+    return true if !password
+
+    # get current record
+    return if !id
+
+    self.password = password_was
+    true
+  end
 end
