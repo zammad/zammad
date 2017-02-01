@@ -94,7 +94,7 @@ returns
       'tickets.close_at IS NOT NULL AND tickets.close_at >= ? AND tickets.close_at < ?',
       params[:range_start],
       params[:range_end],
-    ).where(query, *bind_params).joins(tables)
+    ).where(query, *bind_params).joins(tables).order(close_at: :asc)
     count = 0
     assets = {}
     ticket_ids = []
