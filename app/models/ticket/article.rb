@@ -3,6 +3,7 @@ class Ticket::Article < ApplicationModel
   include LogsActivityStream
   include NotifiesClients
   include Historisable
+  include HtmlSanitized
 
   load 'ticket/article/assets.rb'
   include Ticket::Article::Assets
@@ -15,6 +16,8 @@ class Ticket::Article < ApplicationModel
   store         :preferences
   before_create :check_subject, :check_message_id_md5
   before_update :check_subject, :check_message_id_md5
+
+  sanitized_html :body
 
   activity_stream_permission 'ticket.agent'
 
@@ -201,6 +204,12 @@ returns:
       preferences: {},
       created_by_id: created_by_id,
     )
+  end
+
+  def sanitizeable?(attribute, _value)
+    return true if attribute != :body
+    return false if content_type.blank?
+    content_type =~ /html/i
   end
 
   private
