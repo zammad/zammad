@@ -282,9 +282,12 @@ class _i18nSingleton extends Spine.Module
     notTranslated
 
   removeNotTranslated: (locale, key) =>
+    return if !@_notTranslated[locale]
     delete @_notTranslated[locale][key]
 
   setNotTranslated: (locale, key) =>
+    if !@_notTranslated[locale]
+      @_notTranslated[locale] = {}
     @_notTranslated[locale][key] = true
 
   date: (time, offset) =>
