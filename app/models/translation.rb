@@ -257,7 +257,9 @@ all:
       end
       result = UserAgent.get(
         url,
-        {},
+        {
+          version: Version.get,
+        },
         {
           json: true,
           open_timeout: 8,
