@@ -2202,6 +2202,15 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title: 'Defines postmaster filter.',
+  name: '0014_postmaster_filter_own_notification_loop_detection',
+  area: 'Postmaster::PreFilter',
+  description: 'Define postmaster filter to check if email is a own created notification email, then ignore it to prevent email loops.',
+  options: {},
+  state: 'Channel::Filter::OwnNotificationLoopDetection',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Defines postmaster filter.',
   name: '0015_postmaster_filter_identify_sender',
   area: 'Postmaster::PreFilter',
   description: 'Defines postmaster filter to identify sender user.',
