@@ -19,6 +19,34 @@ Some Text',
         success: true,
       },
       {
+        data: "From: my_own_zammad@example.com
+To: customer_which_is_routed_into_my_zammad@example.com
+Subject: some subject
+Message-ID: <1234@#{Setting.get('fqdn')}>
+
+Some Text",
+        channel: {
+          trusted: false,
+        },
+        success: true,
+      },
+      {
+        data: "From: my_own_zammad@example.com
+To: customer_which_is_routed_into_my_zammad@example.com
+Subject: some subject
+Message-ID: <1234@#{Setting.get('fqdn')}>
+X-Loop: yes
+Precedence: bulk
+Auto-Submitted: auto-generated
+X-Auto-Response-Suppress: All
+
+Some Text",
+        channel: {
+          trusted: false,
+        },
+        success: false,
+      },
+      {
         data: "From: me@example.com
 To: customer@example.com
 Subject: äöü some subject

@@ -90,7 +90,8 @@ returns
     subject:      'sime subject',
     body:         'some body',
     content_type: '', # optional, e. g. 'text/html'
-    references:   ['message-id123', 'message-id456'],
+    message_id: '<some_message_id@fqdn>', # optional
+    references:   ['message-id123', 'message-id456'], # optional
     attachments:  [attachments...], # optional
   )
 
@@ -113,6 +114,7 @@ returns
         from: sender,
         to: data[:recipient][:email],
         subject: data[:subject],
+        message_id: data[:message_id],
         references: data[:references],
         body: data[:body],
         content_type: content_type,
@@ -131,7 +133,8 @@ returns
       recipient: User.find(2),
     },
     main_object: ticket.find(123), # optional
-    references: ['message-id123', 'message-id456'],
+    message_id: '<some_message_id@fqdn>', # optional
+    references: ['message-id123', 'message-id456'], # optional
     standalone: true, # default: false - will send header & footer
     attachments: [attachments...], # optional
   )
@@ -158,6 +161,7 @@ returns
       subject: result[:subject],
       body: result[:body],
       content_type: 'text/html',
+      message_id: data[:message_id],
       references: data[:references],
       attachments: data[:attachments],
     )
