@@ -63,6 +63,7 @@ class User < ApplicationModel
                                      :preferences
 
   history_attributes_ignored :password,
+                             :last_login,
                              :image,
                              :image_source,
                              :preferences
