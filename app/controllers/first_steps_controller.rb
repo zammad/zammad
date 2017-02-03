@@ -61,13 +61,13 @@ class FirstStepsController < ApplicationController
               location: '#channels/email',
             },
             {
-              name: 'Invite Agents/Colleagues to help working on Tickets',
+              name: 'Invite agents/colleagues to help working on tickets',
               checked: invite_agents,
               location: '#',
               class: 'js-inviteAgent',
             },
             {
-              name: 'Invite Customers to create issues in Zammad',
+              name: 'Invite customers to create issues in Zammad',
               checked: invite_customers,
               location: '#',
               class: 'js-inviteCustomer',
@@ -154,7 +154,7 @@ class FirstStepsController < ApplicationController
             class: 'js-testTicket',
           },
           {
-            name: 'Invite Customers to create issues in Zammad',
+            name: 'Invite customers to create issues in Zammad',
             checked: invite_customers,
             location: '#',
             class: 'js-inviteCustomer',

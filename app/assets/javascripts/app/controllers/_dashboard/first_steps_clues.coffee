@@ -3,7 +3,7 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.js-dashboardMenuItem'
       headline: 'Dashboard'
-      text: 'Here you see a quick overview about your and other agents performance.'
+      text: 'Here you see a quick overview of your and other agents\' performance.'
       actions: [
         'hover'
       ]
@@ -11,7 +11,7 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.search-holder'
       headline: 'Search'
-      text: 'Here you can search for ticket, customers and organizations. Use the wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §"some phrase"§.'
+      text: 'Here you can search for tickets, customers and organizations. Use the wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can use ||double quotes|| for searching phrases §"some phrase"§.'
       actions: []
     }
     {
@@ -35,7 +35,7 @@ class App.FirstStepsClues extends App.Controller
     {
       container: '.js-overviewsMenuItem'
       headline: 'Overviews'
-      text: 'Here you find your ticket overviews for open, my assigned or escalated tickets.'
+      text: 'Here you find your ticket overviews for open, assigned and escalated tickets.'
       actions: [
         'hover'
       ]

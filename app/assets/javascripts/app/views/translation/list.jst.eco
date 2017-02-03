@@ -1,4 +1,4 @@
-<h2><%- @T('Date & Datetime') %></h2>
+<h2><%- @T('Date & Time') %></h2>
 <table class="translationOverview js-translated table table-striped table-hover">
   <thead>
     <tr>

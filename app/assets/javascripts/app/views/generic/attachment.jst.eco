@@ -2,7 +2,7 @@
 <div class="article-attachment">
   <div class="attachmentPlaceholder">
     <span class="attachmentPlaceholder-inputHolder fileUpload">
-      <%- @T('select attachment..') %>
+      <%- @T('select attachment...') %>
       <input multiple="multiple" type="file" name="file" style="">
     </span>
   </div>
@@ -20,6 +20,6 @@
 </div>
 <div class="fit dropArea">
   <div class="dropArea-inner">
-    <%- @T('Drop Files here') %>
+    <%- @T('Drop files here') %>
   </div>
 </div>

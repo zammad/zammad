@@ -32,7 +32,7 @@ class Success extends App.ControllerContent
 
   render: =>
     @renderScreenSuccess(
-      detail: 'Woo hoo! Your email is verified!'
+      detail: 'Woo hoo! Your email address has been verified!'
     )
     delay = =>
       @navigate '#'

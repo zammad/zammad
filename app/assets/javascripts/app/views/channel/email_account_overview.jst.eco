@@ -20,7 +20,7 @@
 <div class="action">
   <div class="action-flow">
     <div class="action-block">
-      <%- @T('Notice') %>: <%- @T('Unlinked Email Addresses, assign it to a channel or delete it.') %></h3>
+      <%- @T('Notice') %>: <%- @T('Unassigned email addresses, assign them to a channel or delete them.') %></h3>
       <ul class="list">
       <% for email_address in @not_used_email_addresses: %>
         <li class="list-item" data-id="<%= email_address.id %>">

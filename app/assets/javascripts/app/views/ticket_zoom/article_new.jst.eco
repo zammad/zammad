@@ -63,7 +63,7 @@
           <div class="attachmentPlaceholder">
             <span class="attachmentPlaceholder-hint"><%- @T('Enter Answer or') %></span>
             <span class="attachmentPlaceholder-inputHolder">
-              <%- @T('select attachment..') %>
+              <%- @T('select attachment...') %>
               <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
             </span>
           </div>
@@ -81,7 +81,7 @@
         </div>
         <div class="dropArea">
           <div class="dropArea-inner">
-            <%- @T('Drop Files here') %>
+            <%- @T('Drop files here') %>
           </div>
         </div>
       </div>

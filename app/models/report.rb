@@ -47,7 +47,7 @@ class Report
       },
       {
         name: 'reopened',
-        display: 'Re-Open',
+        display: 'Reopened',
         selected: false,
         dataDownload: true,
         adapter: Report::TicketReopened,

@@ -40,7 +40,7 @@ class Widget extends App.Controller
           if data.taskbar_id isnt App.TaskManager.TaskbarId()
             @error = new App.SessionMessage(
               head:         'Session'
-              message:      'A new session with your account was created. This session will be stopped to prevent a conflict.'
+              message:      'A new session was created with your account. This session will be stopped to prevent a conflict.'
               keyboard:     false
               backdrop:     true
               buttonClose:  false

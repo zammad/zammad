@@ -11,7 +11,7 @@
     <li>
       <a href="#manage/overviews">Overviews</a>
     <li>
-      <a href="#manage/text_modules">TextModules</a>
+      <a href="#manage/text_modules">Text modules</a>
 
     <li class="active">
       <a href="#manage/slas">SLAs</a>

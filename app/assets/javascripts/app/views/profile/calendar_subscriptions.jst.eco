@@ -6,7 +6,7 @@
 <div class="page-content">
   <h2><%- @T('Ticket Subscriptions') %></h2>
 
-  <p><%- @T('See your tickets from within your favorite calendar by adding the following url to your calendar app.') %></p>
+  <p><%- @T('See your tickets from within your favorite calendar by adding the following URL to your calendar app.') %></p>
 
   <h3><label for="calendar-subscription-url"><%- @T('URL') %></label></h3>
   <form class="form--flexibleWidth">

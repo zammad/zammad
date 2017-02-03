@@ -47,7 +47,7 @@ class Modal extends App.ControllerModal
 
   content: =>
     if !@sent
-      return App.i18n.translateContent('Your account is not verified. Please click the link in the verification email.')
+      return App.i18n.translateContent('Your account has not been verified. Please click the link in the verification email.')
     content = App.i18n.translateContent('We\'ve sent an email to _%s_. Click the link in the email to verify your account.', @user.email)
     content += '<br><br>'
     content += App.i18n.translateContent('If you don\'t see the email, check other places it might be, like your junk, spam, social, or other folders.')

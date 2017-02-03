@@ -85,7 +85,7 @@ class Index extends App.ControllerContent
       el:   @el.find('.sidebar')
       data:
         header: App.i18n.translateInline('What can you do here?')
-        html:   App.i18n.translateInline('The way to communicate with us is this thing called "Ticket".') + ' ' + App.i18n.translateInline('Here you can create one.')
+        html:   App.i18n.translateInline('The way to communicate with us is this thing called "ticket".') + ' ' + App.i18n.translateInline('Here you can create one.')
     )
 
   cancel: ->

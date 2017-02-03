@@ -5,7 +5,7 @@
 </div>
 <div class="popover-content js-content">
   <div class="activity-placeholder js-noNotifications">
-    <%- @T("No unread Notifications for you. :) ") %>
+    <%- @T("No unread notifications for you. :) ") %>
   </div>
   <div class="js-items"></div>
 </div>

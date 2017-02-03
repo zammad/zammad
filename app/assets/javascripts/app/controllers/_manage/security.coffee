@@ -9,7 +9,7 @@ class Security extends App.ControllerTabs
       { name: 'Base',                     'target': 'base',             controller: App.SettingsArea, params: { area: 'Security::Base' } }
       { name: 'Password',                 'target': 'password',         controller: App.SettingsArea, params: { area: 'Security::Password' } }
       #{ name: 'Authentication',           'target': 'auth',            controller: App.SettingsArea, params: { area: 'Security::Authentication' } }
-      { name: 'Third-Party Applications', 'target': 'third_party_auth', controller: App.SettingsArea, params: { area: 'Security::ThirdPartyAuthentication' } }
+      { name: 'Third-party Applications', 'target': 'third_party_auth', controller: App.SettingsArea, params: { area: 'Security::ThirdPartyAuthentication' } }
     ]
     @render()
 

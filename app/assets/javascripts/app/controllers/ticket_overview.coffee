@@ -1139,7 +1139,7 @@ class BulkForm extends App.Controller
     @holder.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
     App.Event.trigger 'notify', {
       type: 'success'
-      msg: App.i18n.translateContent('Bulk-Action executed!')
+      msg: App.i18n.translateContent('Bulk action executed!')
     }
 
 class App.OverviewSettings extends App.ControllerModal
