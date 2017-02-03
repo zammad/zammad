@@ -66,7 +66,7 @@
       </div>
 
       <p>
-        <%- @T("You're already registered with your email adress if you've been in touch with our support team.") %><br>
+        <%- @T("You're already registered with your email address if you've been in touch with our support team.") %><br>
         <% if @C('user_lost_password'): %>
           <%- @T('You can request your password') %> <a href="#password_reset"><%- @T('here') %></a>.
         <% end %>
