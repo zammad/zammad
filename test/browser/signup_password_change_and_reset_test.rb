@@ -79,7 +79,7 @@ class SignupPasswordChangeAndResetTest < TestCase
     )
     watch_for(
       css: '#content',
-      value: 'Your email is verified',
+      value: 'Your email address has been verified',
     )
     exists_not(
       css: '.modal',
