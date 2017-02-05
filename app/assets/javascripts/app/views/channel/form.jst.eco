@@ -8,7 +8,7 @@
   </div>
 </div>
 <div class="page-content">
-  <p><%- @T('With form you can add a formular to your web page witch directly generates a Ticket for you.') %></p>
+  <p><%- @T('With form you can add a form to your web page which directly generates a ticket for you.') %></p>
 
   <h2><%- @T('Designer') %></h2>
   <form class="js-params">
@@ -87,7 +87,7 @@
                 <%- @Icon('checkbox', 'icon-unchecked') %>
                 <%- @Icon('checkbox-checked', 'icon-checked') %>
               </span>
-              <%- @T('Load no CSS for form. You need to generate your own CSS for the form.') %>
+              <%- @T('Don\'t load CSS for form. You need to generate your own CSS for the form.') %>
             </label>
         <tr>
           <td>
@@ -115,7 +115,7 @@
     </div>
   </div>
 
-  <p><%- @T('You need to add the following Java Script code snipped to your web page') %>:</p>
+  <p><%- @T('You need to add the following Javascript code snippet to your web page') %>:</p>
 
   <pre><code class="language-html js-paramsBlock">&lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
 

@@ -14,7 +14,7 @@ class Index extends App.ControllerSubContent
         objects: 'Macros'
         navupdate: '#macros'
         notes: [
-          'TextModules are ...'
+          'Text modules are ...'
         ]
         buttons: [
           { name: 'New Macro', 'data-type': 'new', class: 'btn--success' }

@@ -75,7 +75,7 @@ class Index extends App.ControllerSubContent
   success: (data, status, xhr) =>
     @notify(
       type: 'success'
-      msg:  App.i18n.translateContent('Successfully!')
+      msg:  App.i18n.translateContent('Successful!')
     )
     update = =>
       @render()

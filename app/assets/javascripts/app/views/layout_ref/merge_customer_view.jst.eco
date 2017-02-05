@@ -467,7 +467,7 @@
 
                 <div class="article-attachment">
                   <div class="attachmentPlaceholder">
-                    <span class="attachmentPlaceholder-hint">Enter Answer or</span> <span class="attachmentPlaceholder-inputHolder">select attachment.. <input multiple="multiple" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;" type="file"></span>
+                    <span class="attachmentPlaceholder-hint">Enter Answer or</span> <span class="attachmentPlaceholder-inputHolder">select attachment... <input multiple="multiple" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;" type="file"></span>
                   </div>
 
                   <div class="attachmentUpload hide">
@@ -487,7 +487,7 @@
 
                 <div class="dropArea">
                   <div class="dropArea-inner">
-                    Drop Files here
+                    Drop files here
                   </div>
                 </div>
               </div>

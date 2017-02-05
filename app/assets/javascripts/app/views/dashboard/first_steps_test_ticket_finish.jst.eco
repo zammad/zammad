@@ -1,4 +1,4 @@
-<p><%- @T('A Test Ticket has been created, you can find it in your overview "%s" %l.', @overviewName, @overviewUrl) %></p>
+<p><%- @T('A test ticket has been created, you can find it in your overview "%s" %l.', @overviewName, @overviewUrl) %></p>
 <div class="centered">
   <a class="btn btn--success flex" href="<%- @ticketUrl %>"><%- @T('Open Ticket# %s', @ticketNumber) %></a>
 </div>

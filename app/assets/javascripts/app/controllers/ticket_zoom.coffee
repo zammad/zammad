@@ -660,8 +660,6 @@ class App.TicketZoom extends App.Controller
       @formEnable(e)
       return
 
-    taskAction = @$('.js-secondaryActionButtonLabel').data('type')
-
     ticketParams = @formParam(@$('.edit'))
 
     # validate ticket
@@ -779,6 +777,8 @@ class App.TicketZoom extends App.Controller
     )
 
   submitPost: (e, ticket) =>
+
+    taskAction = @$('.js-secondaryActionButtonLabel').data('type')
 
     # submit changes
     @ajax(

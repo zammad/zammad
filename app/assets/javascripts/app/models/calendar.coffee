@@ -5,7 +5,7 @@ class App.Calendar extends App.Model
 
   @configure_attributes = [
     { name: 'name',           display: 'Name',            tag: 'input',    type: 'text', limit: 100, null: false },
-    { name: 'timezone',       display: 'Timezone',        tag: 'timezone', null: false }
+    { name: 'timezone',       display: 'Time zone',        tag: 'timezone', null: false }
     { name: 'business_hours', display: 'Business Hours',  tag: 'business_hours', null: true }
     { name: 'ical_url',       display: 'Holidays iCalendar Feed', tag: 'ical_feed', placeholder: 'http://example.com/public_holidays.ical', null: true }
     { name: 'public_holidays',display: 'Holidays',        tag: 'holiday_selector', null: true }

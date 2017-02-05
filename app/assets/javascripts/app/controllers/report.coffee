@@ -523,4 +523,4 @@ class Sidebar extends App.Controller
     @ui.storeParams()
 
 App.Config.set('report', Index, 'Routes')
-App.Config.set('Reporting', { prio: 8000, parent: '', name: 'Reporing', translate: true, target: '#report', icon: 'report', permission: ['report'] }, 'NavBarRight')
+App.Config.set('Reporting', { prio: 8000, parent: '', name: 'Reporting', translate: true, target: '#report', icon: 'report', permission: ['report'] }, 'NavBarRight')

@@ -111,7 +111,7 @@ class Remove extends App.ControllerModal
   head: 'Confirm'
 
   content: ->
-    App.i18n.translateContent('Tab has changed, you really want to close it?')
+    App.i18n.translateContent('Tab has changed, do you really want to close it?')
 
   onSubmit: =>
     @close()

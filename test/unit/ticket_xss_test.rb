@@ -65,9 +65,8 @@ class TicketXssTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert_equal("please tell me this doesn't work: <table>ada<tr></tr>
-</table><div class=\"adasd\" id=\"123\" data-abc=\"123\"></div><div>
-<a>LINK</a><a href=\"http://lalal.de\" rel=\"nofollow\" target=\"_blank\">aa</a><some_not_existing>ABC</some_not_existing>
-</div>", article3.body, 'article3.body verify - inbound')
+</table><div class=\"adasd\"></div><div>
+<a>LINK</a><a href=\"http://lalal.de\" rel=\"nofollow\" target=\"_blank\">aa</a>ABC</div>", article3.body, 'article3.body verify - inbound')
 
     article4 = Ticket::Article.create(
       ticket_id: ticket.id,
@@ -83,7 +82,7 @@ class TicketXssTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal("please tell me this doesn't work: <video>some video</video><foo>alal</foo>", article4.body, 'article4.body verify - inbound')
+    assert_equal("please tell me this doesn't work: <video>some video</video>alal", article4.body, 'article4.body verify - inbound')
 
     article5 = Ticket::Article.create(
       ticket_id: ticket.id,
@@ -92,14 +91,14 @@ class TicketXssTest < ActiveSupport::TestCase
       subject: 'some subject <script type="text/javascript">alert("XSS!");</script>',
       message_id: 'some@id',
       content_type: 'text/plain',
-      body: 'please tell me this doesn\'t work: <table>ada<tr></tr></table><div class="adasd" id="123" data-abc="123"></div><div><a href="javascript:someFunction()">LINK</a><a href="http://lalal.de">aa</a><some_not_existing>ABC</some_not_existing>',
+      body: 'please tell me this doesn\'t work: <table>ada<tr></tr></table><div class="adasd" id="123" data-signature-id="123"></div><div><a href="javascript:someFunction()">LINK</a><a href="http://lalal.de">aa</a><some_not_existing>ABC</some_not_existing>',
       internal: false,
       sender: Ticket::Article::Sender.find_by(name: 'Customer'),
       type: Ticket::Article::Type.find_by(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal('please tell me this doesn\'t work: <table>ada<tr></tr></table><div class="adasd" id="123" data-abc="123"></div><div><a href="javascript:someFunction()">LINK</a><a href="http://lalal.de">aa</a><some_not_existing>ABC</some_not_existing>', article5.body, 'article5.body verify - inbound')
+    assert_equal('please tell me this doesn\'t work: <table>ada<tr></tr></table><div class="adasd" id="123" data-signature-id="123"></div><div><a href="javascript:someFunction()">LINK</a><a href="http://lalal.de">aa</a><some_not_existing>ABC</some_not_existing>', article5.body, 'article5.body verify - inbound')
 
     article6 = Ticket::Article.create(
       ticket_id: ticket.id,
@@ -116,7 +115,7 @@ class TicketXssTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert_equal('some message article helper test1 <div>
-<img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<img src="cid:15.274327094.140939@zammad.example.com"><br>
+<img style="width: 85.5px; height: 49.5px;" src="cid:15.274327094.140938@zammad.example.com">asdasd<img src="cid:15.274327094.140939@zammad.example.com"><br>
 </div>', article6.body, 'article6.body verify - inbound')
 
     article7 = Ticket::Article.create(
@@ -134,7 +133,7 @@ class TicketXssTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert_equal('some message article helper test1 <div>
-<img style="width: 85.5px; height: 49.5px" src="api/v1/ticket_attachment/123/123/123">asdasd<img src="api/v1/ticket_attachment/123/123/123"><br>
+<img style="width: 85.5px; height: 49.5px;" src="api/v1/ticket_attachment/123/123/123">asdasd<img src="api/v1/ticket_attachment/123/123/123"><br>
 </div>', article7.body, 'article7.body verify - inbound')
 
     article8 = Ticket::Article.create(

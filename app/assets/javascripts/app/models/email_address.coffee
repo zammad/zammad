@@ -12,7 +12,7 @@ class App.EmailAddress extends App.Model
     )
 
   @configure_attributes = [
-    { name: 'realname',   display: 'Realname',  tag: 'input', type: 'text', limit: 250, null: false },
+    { name: 'realname',   display: 'Real name',  tag: 'input', type: 'text', limit: 250, null: false },
     { name: 'email',      display: 'Email',     tag: 'input', type: 'email', limit: 250, null: false },
     { name: 'channel_id', display: 'Channel',   tag: 'select', multiple: false, null: true, relation: 'Channel', nulloption: true, filter: @filterChannel, do_not_log: true },
     { name: 'note',       display: 'Note',      tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true },

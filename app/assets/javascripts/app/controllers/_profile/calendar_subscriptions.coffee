@@ -78,7 +78,7 @@ class CalendarSubscriptions extends App.ControllerSubContent
       =>
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent('Successfully!')
+          msg:  App.i18n.translateContent('Successful!')
         )
       true
     )
