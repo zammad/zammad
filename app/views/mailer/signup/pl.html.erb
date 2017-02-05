@@ -1,0 +1,9 @@
+Potwierdź swoje konto na #{config.product_name}, #{user.firstname} #{user.lastname}
+
+<div>Witaj #{user.firstname},</div>
+<br>
+<div>Potwierdź swój adres email aby aktywować swoje konto #{config.product_name}. To proste, użyj linku ponizej.</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</a></div>
+<br>
+<div>Zespół #{config.product_name}</div>
