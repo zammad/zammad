@@ -31,6 +31,7 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
+  rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update1_test.rb
   rm test/browser/agent_ticket_update2_test.rb
   rm test/browser/agent_ticket_update3_test.rb
@@ -87,6 +88,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
   # test/browser/agent_ticket_text_module_test.rb
+  # test/browser/agent_ticket_time_accounting_test.rb
   # test/browser/agent_ticket_update1_test.rb
   # test/browser/agent_ticket_update2_test.rb
   # test/browser/agent_ticket_update3_test.rb
@@ -143,6 +145,7 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/agent_ticket_overview_tab_test.rb
   # test/browser/agent_ticket_tag_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
+  rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update1_test.rb
   rm test/browser/agent_ticket_update2_test.rb
   rm test/browser/agent_ticket_update3_test.rb
@@ -199,6 +202,7 @@ elif [ "$LEVEL" == '4' ]; then
   # test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
+  rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update1_test.rb
   rm test/browser/agent_ticket_update2_test.rb
   rm test/browser/agent_ticket_update3_test.rb
@@ -254,6 +258,7 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
+  rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update1_test.rb
   rm test/browser/agent_ticket_update2_test.rb
   rm test/browser/agent_ticket_update3_test.rb
@@ -312,6 +317,7 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/agent_ticket_overview_tab_test.rb
   rm test/browser/agent_ticket_tag_test.rb
   rm test/browser/agent_ticket_text_module_test.rb
+  rm test/browser/agent_ticket_time_accounting_test.rb
   rm test/browser/agent_ticket_update1_test.rb
   rm test/browser/agent_ticket_update2_test.rb
   rm test/browser/agent_ticket_update3_test.rb
