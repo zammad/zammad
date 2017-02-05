@@ -15,8 +15,14 @@
       <div class="modal-footer">
   <% if @buttonCancel: %>
         <div class="modal-leftFooter">
-          <a class="btn <%= @buttonCancelClass %> js-cancel align-left" href="#/"><%- @T(@buttonCancel) %></a>
+          <a class="btn <%= @buttonCancelClass %> js-cancel align-left" href="#"><%- @T(@buttonCancel) %></a>
         </div>
+  <% else if @leftButtons: %>
+    <% for button in @leftButtons: %>
+        <div class="modal-leftFooter">
+          <div class="btn <%= button.className %> align-left" href="#"><%- @T(button.text) %></div>
+        </div>
+    <% end %>
   <% end %>
   <% for button in @centerButtons: %>
         <div class="modal-centerFooter">
