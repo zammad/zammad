@@ -14,7 +14,7 @@ module Channel::Filter::FollowUpCheck
       return true
     end
 
-    setting = Setting.get('postmaster_follow_up_search_in')
+    setting = Setting.get('postmaster_follow_up_search_in') || []
 
     # get ticket# from body
     if setting.include?('body')
