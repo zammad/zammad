@@ -890,7 +890,7 @@ returns
     return if !user
     return if !user.preferences[:locale]
 
-    self.preferences[:locale] = user.preferences[:locale]
+    preferences[:locale] = user.preferences[:locale]
   end
 
   def avatar_for_email_check
