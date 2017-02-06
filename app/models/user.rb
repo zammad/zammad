@@ -38,7 +38,7 @@ class User < ApplicationModel
   include User::SearchIndex
 
   before_validation :check_name, :check_email, :check_login, :ensure_password
-  before_create   :check_preferences_default, :validate_roles, :domain_based_assignment
+  before_create   :check_preferences_default, :validate_roles, :domain_based_assignment, :set_locale
   before_update   :check_preferences_default, :validate_roles
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
@@ -879,6 +879,18 @@ returns
     rescue
       return
     end
+  end
+
+  # sets locale of the user
+  def set_locale
+
+    # set the user's locale to the one of the "executing" user
+    return if !UserInfo.current_user_id
+    user = User.find_by( id: UserInfo.current_user_id )
+    return if !user
+    return if !user.preferences[:locale]
+
+    self.preferences[:locale] = user.preferences[:locale]
   end
 
   def avatar_for_email_check
