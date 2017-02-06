@@ -32,6 +32,7 @@ returns
       next if entry =~ %r{channel/}i
       next if entry =~ %r{observer/}i
       next if entry =~ %r{store/provider/}i
+      next if entry =~ %r{models/concerns/}i
       entry.gsub!(dir, '')
       entry = entry.to_classname
       model_class = load_adapter(entry)
