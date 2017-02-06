@@ -104,6 +104,50 @@ no reference "
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references2)
     assert_equal(ticket.id, ticket_p.id)
 
+    Setting.set('postmaster_follow_up_search_in', nil)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_subject)
+    assert_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_body)
+    assert_not_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_attachment)
+    assert_not_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references1)
+    assert_not_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references2)
+    assert_not_equal(ticket.id, ticket_p.id)
+
+    Setting.set('postmaster_follow_up_search_in', 'references')
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_subject)
+    assert_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_body)
+    assert_not_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_attachment)
+    assert_not_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references1)
+    assert_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references2)
+    assert_equal(ticket.id, ticket_p.id)
+
     Setting.set('postmaster_follow_up_search_in', setting_orig)
 
     travel 1.second
