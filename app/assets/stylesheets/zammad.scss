@@ -15,7 +15,29 @@ $navigationWidth: 260px;
 
 $highlight-color: hsl(205,90%,60%);
 
-$largeScreenBreakpoint: 1260px;
+@mixin desktop {
+  @media screen and (min-width: 1260px) {
+    @content;
+  }
+}
+
+@mixin small-desktop {
+  @media screen and (max-width: 1260px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
 
 html {
   height: 100%;
@@ -2725,7 +2747,7 @@ footer {
 
 .overviews {
   .sidebar {
-    @media only screen and (max-width: $largeScreenBreakpoint) {
+    @include small-desktop {
       display: none;
     }
   }
@@ -2758,7 +2780,7 @@ footer {
     width: 336px;
   }
 
-  @media only screen and (max-width: $largeScreenBreakpoint) {
+  @include small-desktop {
     display: flex;
   }
 }
@@ -2780,7 +2802,7 @@ footer {
     0 -2px rgba(0,0,0,.03),
     0 -3px rgba(0,0,0,.01);
 
-  @media only screen and (max-width: $largeScreenBreakpoint) {
+  @include small-desktop {
     left: $navigationWidth;
     min-width: $minWidth - $sidebarWidth;
   }
@@ -3633,6 +3655,12 @@ footer {
   background: white;
   border-right: 1px solid #e6e6e6;
   overflow: auto;
+  
+  @include small-desktop {
+    &.optional {
+      display: none;
+    }
+  }
 
   h2 {
     margin-top: 0;
@@ -8441,21 +8469,36 @@ output {
 
   &-box {
     background: hsl(232,9%,17%);
-    display: flex;
-    flex-wrap: wrap;
     width: 100%;
-    padding: 37px 25px;
     position: absolute;
     visibility: hidden;
     will-change: opacity, transition;
+    
+    &-inner {
+      margin: 37px 25px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      overflow: hidden;
+    }
   }
 
   &-assign {
-    padding-bottom: 87px; // 37px + 50px
+    padding-bottom: 50px;
     bottom: -50px; // extra space for bounce animation
+    
+    .batch-overlay-box-inner {
+      max-height: 318px;
+    
+      @media screen and (min-height: 800px) {
+
+      }
+    }
 
     &-entry {
       padding: 13px;
+      width: 116px;
+      height: 159px;
        
       &.is-hovered {
         .avatar {
@@ -8471,6 +8514,16 @@ output {
         transition: transform 120ms;
       }
 
+      &-name {
+        max-height: 34px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        word-break: break-word;
+      }
+
       &-detail {
         color: gray;
       }
@@ -8478,8 +8531,12 @@ output {
   }
 
   &-macro {
-    padding-top: 87px; // 37px + 50px
+    padding-top: 50px;
     top: -50px; // extra space for bounce animation
+
+    .batch-overlay-box-inner {
+      max-height: 146px;
+    }
     
     &-entry {
       margin: 13px;
@@ -8566,21 +8623,6 @@ output {
     }
   }
 }
-
-/*
-
-  ----------------
-   normal screens
-  ----------------
-
-*/
-
-@media only screen and (max-width: $largeScreenBreakpoint) {
-  .sidebar.optional {
-    display: none;
-  }
-}
-
 
 
 /*

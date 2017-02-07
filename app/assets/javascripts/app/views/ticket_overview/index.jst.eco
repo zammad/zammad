@@ -16,35 +16,202 @@
     <%- @Icon('arrow-down') %>
     <div class="batch-overlay-circle-label"><%- @T('assign tickets') %></div>
   </div>
+  <!-- 
+    sort assignes by important to not important
+    first assignes are always visible
+  -->
   <div class="batch-overlay-assign batch-overlay-box js-batch-assign">
-    <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
-      <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
-      <div class="batch-overlay-assign-entry-name">Hans Huber</div>
-    </div>
-    <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
-      <span class="avatar avatar--organization size-80 avatar--unique" style="background-position: -200px -60px;">
-        <%- @Icon('organization') %>
-      </span>
-      <div class="batch-overlay-assign-entry-name">Zammad</div>
-      <div class="batch-overlay-assign-entry-detail">3 Personen</div>
-    </div>
-    <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
-      <span class="avatar size-80 avatar--unique" style="background-position: -30px -10px;">FD</span>
-      <div class="batch-overlay-assign-entry-name">Felicity Dickens</div>
+    <div class="batch-overlay-box-inner">
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">1st Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
+        <div class="batch-overlay-assign-entry-name">Hans Huber</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar avatar--organization size-80 avatar--unique" style="background-position: -200px -60px;">
+          <%- @Icon('organization') %>
+        </span>
+        <div class="batch-overlay-assign-entry-name">Zammad</div>
+        <div class="batch-overlay-assign-entry-detail">3 Personen</div>
+      </div>
+      <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
+        <span class="avatar size-80 avatar--unique" style="background-position: -30px -10px;">FD</span>
+        <div class="batch-overlay-assign-entry-name">Felicity Dickens</div>
+      </div>
     </div>
   </div>
+  <!-- 
+    sort macros by not important to important
+    the last macros are visible on all screen sizes
+  -->
   <div class="batch-overlay-macro batch-overlay-box js-batch-macro">
-    <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
-      <div class="batch-overlay-macro-entry-name">Close</div>
-    </div>
-    <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
-      <div class="batch-overlay-macro-entry-name">Close &amp; Tag as Spam</div>
-    </div>
-    <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
-      <div class="batch-overlay-macro-entry-name">Close &amp; Reply we're on Holidays</div>
-    </div>
-    <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
-      <div class="batch-overlay-macro-entry-name">Escalate to 2nd level</div>
+    <div class="batch-overlay-box-inner">
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close &amp; Tag as Spam</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Close &amp; Reply we're on Holidays</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">Escalate to 2nd level</div>
+      </div>
+      <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
+        <div class="batch-overlay-macro-entry-name">1st Close</div>
+      </div>
     </div>
   </div>
 </div>
