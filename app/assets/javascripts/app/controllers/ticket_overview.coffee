@@ -24,57 +24,6 @@ class App.TicketOverview extends App.Controller
     @batchSupport = @permissionCheck('ticket.agent')
     @render()
 
-    return if !@batchSupport
-    users = [
-      App.User.find(2),
-      App.User.find(2),
-      App.User.find(2),
-    ]
-    groups = App.Group.all()
-
-    @batchAssign.html $(App.view('ticket_overview/batch_overlay_user_group')(
-      users: users
-      groups: groups
-    ))
-    macros = [
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close &amp; Tag as Spam'
-      },
-      {
-        name: 'Close &amp; Reply we\'re on Holidays'
-      },
-      {
-        name: 'Escalate to 2nd level'
-      },
-      {
-        name: '1st Close'
-      },
-    ]
-    @batchMacro.html $(App.view('ticket_overview/batch_overlay_macro')(
-      macros: macros
-    ))
-
   startDragItem: (event) =>
     return if !@batchSupport
     @grabbedItem = $(event.currentTarget)
@@ -125,6 +74,8 @@ class App.TicketOverview extends App.Controller
         @batchDragger.prepend additionalItemsClones.addClass('batch-dragger-item').get().reverse()
         if(additionalItemsClones.length)
           @batchDragger.find('.js-batch-dragger-count').text(@draggedItems.length)
+
+        @renderOptions()
 
         $('#app').append @batchDragger
 
@@ -218,6 +169,61 @@ class App.TicketOverview extends App.Controller
 
   performBatchAction: (items, action, id) ->
     console.log "perform action #{action} with id #{id} on #{items.length} checked items"
+
+    if action is 'macro'
+      @batchCount = items.length
+      @batchCountIndex = 0
+      macro = App.Macro.find(id)
+      for item in items
+        #console.log "perform action #{action} with id #{id} on ", $(item).val()
+        ticket = App.Ticket.find($(item).val())
+        App.Ticket.macro(
+          macro: macro.perform
+          ticket: ticket
+        )
+        ticket.save(
+          done: (r) =>
+            @batchCountIndex++
+
+            # refresh view after all tickets are proceeded
+            if @batchCountIndex == @batchCount
+              App.Event.trigger('overview:fetch')
+        )
+      return
+
+    if action is 'user_assign'
+      @batchCount = items.length
+      @batchCountIndex = 0
+      for item in items
+        #console.log "perform action #{action} with id #{id} on ", $(item).val()
+        ticket = App.Ticket.find($(item).val())
+        ticket.owner_id = id
+        ticket.save(
+          done: (r) =>
+            @batchCountIndex++
+
+            # refresh view after all tickets are proceeded
+            if @batchCountIndex == @batchCount
+              App.Event.trigger('overview:fetch')
+        )
+        return
+
+    if action is 'group_assign'
+      @batchCount = items.length
+      @batchCountIndex = 0
+      for item in items
+        #console.log "perform action #{action} with id #{id} on ", $(item).val()
+        ticket = App.Ticket.find($(item).val())
+        ticket.group_id = id
+        ticket.save(
+          done: (r) =>
+            @batchCountIndex++
+
+            # refresh view after all tickets are proceeded
+            if @batchCountIndex == @batchCount
+              App.Event.trigger('overview:fetch')
+        )
+      return
 
   showBatchOverlay: ->
     @batchOverlay.show()
@@ -462,6 +468,84 @@ class App.TicketOverview extends App.Controller
       update = =>
         App.OverviewListCollection.fetch(@view)
       @delay(update, 2800, 'overview:fetch')
+
+  renderOptions: =>
+    macros = App.Macro.all()
+    groups = App.Group.all()
+    users = []
+    items = @el.find('[name="bulk"]:checked')
+
+    # find all possible owners for selected tickets
+    possibleUsers = {}
+    possibleUserGroups = {}
+    for item in items
+      #console.log "selected items with id ", $(item).val()
+      ticket = App.Ticket.find($(item).val())
+      if !possibleUserGroups[ticket.group_id.toString()]
+        group = App.Group.find(ticket.group_id)
+        for user_id in group.user_ids
+          if !possibleUserGroups[ticket.group_id.toString()]
+            possibleUsers[user_id.toString()] = true
+          else
+            hit = false
+            for user_id, exists of possibleUsers
+              if possibleUsers[user_id.toString()]
+                hit = true
+            if !hit
+              delete possibleUsers[user_id.toString()]
+        possibleUserGroups[ticket.group_id.toString()] = true
+    for user_id, _exists of possibleUsers
+      user = App.User.find(user_id)
+      users.push user
+    ###
+    users = [
+      App.User.find(2),
+      App.User.find(2),
+      App.User.find(2),
+    ]
+    macros = [
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close &amp; Tag as Spam'
+      },
+      {
+        name: 'Close &amp; Reply we\'re on Holidays'
+      },
+      {
+        name: 'Escalate to 2nd level'
+      },
+      {
+        name: '1st Close'
+      },
+    ]
+    ###
+    @batchAssign.html $(App.view('ticket_overview/batch_overlay_user_group')(
+      users: users
+      groups: groups
+    ))
+    @batchMacro.html $(App.view('ticket_overview/batch_overlay_macro')(
+      macros: macros
+    ))
 
   active: (state) =>
     return @shown if state is undefined
