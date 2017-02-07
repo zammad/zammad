@@ -21,8 +21,10 @@ class App.TicketOverview extends App.Controller
 
   constructor: ->
     super
+    @batchSupport = @permissionCheck('ticket.agent')
     @render()
 
+    return if !@batchSupport
     users = [
       App.User.find(2),
       App.User.find(2),
@@ -74,6 +76,7 @@ class App.TicketOverview extends App.Controller
     ))
 
   startDragItem: (event) =>
+    return if !@batchSupport
     @grabbedItem = $(event.currentTarget)
     offset = @grabbedItem.offset()
     @batchDragger = $(App.view('ticket_overview/batch_dragger')())
@@ -94,6 +97,7 @@ class App.TicketOverview extends App.Controller
     # TODO: fire @cancelDrag on ESC
 
   dragItem: (event) =>
+    return if !@batchSupport
     pos = @batchDragger.data()
     threshold = 3
     x = event.pageX - pos.dx
@@ -143,6 +147,7 @@ class App.TicketOverview extends App.Controller
     $.Velocity.hook @batchDragger, 'translateY', "#{y}px"
 
   endDragItem: (event) =>
+    return if !@batchSupport
     $(document).off 'mousemove.item'
     $(document).off 'mouseup.item'
     pos = @batchDragger.data()
