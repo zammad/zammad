@@ -14,16 +14,66 @@ class App.TicketOverview extends App.Controller
     '.js-batch-assign':           'batchAssign'
     '.js-batch-macro':            'batchMacro'
 
-  #events:
-  #  'mousedown .item':  'startDragItem'
-  #  'mouseenter .js-batch-overlay-entry': 'highlightBatchEntry'
-  #  'mouseleave .js-batch-overlay-entry': 'unhighlightBatchEntry'
+  events:
+    'mousedown .item': 'startDragItem'
+    'mouseenter .js-batch-overlay-entry': 'highlightBatchEntry'
+    'mouseleave .js-batch-overlay-entry': 'unhighlightBatchEntry'
 
   constructor: ->
     super
     @render()
 
-  startDragItem: (event) ->
+    users = [
+      App.User.find(2),
+      App.User.find(2),
+      App.User.find(2),
+    ]
+    groups = App.Group.all()
+
+    @batchAssign.html $(App.view('ticket_overview/batch_overlay_user_group')(
+      users: users
+      groups: groups
+    ))
+    macros = [
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close &amp; Tag as Spam'
+      },
+      {
+        name: 'Close &amp; Reply we\'re on Holidays'
+      },
+      {
+        name: 'Escalate to 2nd level'
+      },
+      {
+        name: '1st Close'
+      },
+    ]
+    @batchMacro.html $(App.view('ticket_overview/batch_overlay_macro')(
+      macros: macros
+    ))
+
+  startDragItem: (event) =>
     @grabbedItem = $(event.currentTarget)
     offset = @grabbedItem.offset()
     @batchDragger = $(App.view('ticket_overview/batch_dragger')())
@@ -114,11 +164,12 @@ class App.TicketOverview extends App.Controller
             complete: =>
               # clean scale
               action = @hoveredBatchEntry.attr('data-action')
+              id = @hoveredBatchEntry.attr('data-id')
               items = @el.find('[name="bulk"]:checked')
               @hoveredBatchEntry.removeAttr('style')
               @cleanUpDrag(true)
 
-              @performBatchAction items, action
+              @performBatchAction items, action, id
     @batchDragger.velocity
       properties:
         scale: 0
@@ -160,8 +211,8 @@ class App.TicketOverview extends App.Controller
         easing: 'ease-in-out'
         duration: 300
 
-  performBatchAction: (items, action) ->
-    console.log "perform action #{action} on #{items.length} checked items"
+  performBatchAction: (items, action, id) ->
+    console.log "perform action #{action} with id #{id} on #{items.length} checked items"
 
   showBatchOverlay: ->
     @batchOverlay.show()
