@@ -470,8 +470,8 @@ class App.TicketOverview extends App.Controller
       @delay(update, 2800, 'overview:fetch')
 
   renderOptions: =>
-    macros = App.Macro.all()
-    groups = App.Group.all()
+    macros = App.Macro.findAllByAttribute('active', true)
+    groups = App.Group.findAllByAttribute('active', true)
     users = []
     items = @el.find('[name="bulk"]:checked')
 
@@ -495,8 +495,10 @@ class App.TicketOverview extends App.Controller
               delete possibleUsers[user_id.toString()]
         possibleUserGroups[ticket.group_id.toString()] = true
     for user_id, _exists of possibleUsers
-      user = App.User.find(user_id)
-      users.push user
+      if App.User.exists(user_id)
+        user = App.User.find(user_id)
+        if user.active is true
+          users.push user
     ###
     users = [
       App.User.find(2),
