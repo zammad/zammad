@@ -8478,7 +8478,7 @@ output {
       margin: 37px 25px;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: center;
       overflow: hidden;
     }
   }
@@ -8488,17 +8488,37 @@ output {
     bottom: -50px; // extra space for bounce animation
     
     .batch-overlay-box-inner {
-      max-height: 318px;
+      max-height: 310px;
     
-      @media screen and (min-height: 800px) {
+      @media screen and (min-height: 1000px) {
+        max-height: 465px;
+      }
+    }
 
+    &-group {
+      box-shadow: 0 0 35px hsla(0,0%,0%,.5);
+      
+      .batch-overlay-box-inner {
+        margin-top: 42px;
+        margin-bottom: 10px;
+      }
+
+      &-name {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 11px 13px 8px;
+        line-height: 1;
+        position: absolute;
+        background: hsl(233,10%,15%);
       }
     }
 
     &-entry {
       padding: 13px;
       width: 116px;
-      height: 159px;
+      height: 155px;
        
       &.is-hovered {
         .avatar {
@@ -8512,6 +8532,11 @@ output {
         margin-bottom: 10px;
         box-sizing: content-box;
         transition: transform 120ms;
+        cursor: inherit;
+        
+        &--organization {
+          background: hsl(191,68%,47%);
+        }
       }
 
       &-name {
@@ -8536,6 +8561,11 @@ output {
 
     .batch-overlay-box-inner {
       max-height: 146px;
+      margin: 24px 12px;
+    
+      @media screen and (min-height: 800px) {
+        max-height: 292px;
+      }
     }
     
     &-entry {

@@ -16,6 +16,12 @@
     <%- @Icon('arrow-down') %>
     <div class="batch-overlay-circle-label"><%- @T('assign tickets') %></div>
   </div>
-  <div class="batch-overlay-assign batch-overlay-box js-batch-assign"></div>
+  <div class="batch-overlay-assign batch-overlay-box js-batch-assign">
+    <div class="batch-overlay-box-inner js-batch-assign-inner"></div>
+  </div>
   <div class="batch-overlay-macro batch-overlay-box js-batch-macro"></div>
+  <div class="batch-overlay-assign batch-overlay-assign-group batch-overlay-box js-batch-assign-group">
+    <div class="batch-overlay-assign-group-name js-batch-assign-group-name"></div>
+    <div class="batch-overlay-box-inner js-batch-assign-group-inner"></div>
+  </div>
 </div>

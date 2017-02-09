@@ -4,15 +4,20 @@ class App.TicketOverview extends App.Controller
   mouse:
     x: null
     y: null
+  batchAnimationPaused: false
 
   elements:
-    '.js-batch-overlay':          'batchOverlay'
-    '.js-batch-overlay-backdrop': 'batchOverlayBackdrop'
-    '.js-batch-cancel':           'batchCancel'
-    '.js-batch-macro-circle':     'batchMacroCircle'
-    '.js-batch-assign-circle':    'batchAssignCircle'
-    '.js-batch-assign':           'batchAssign'
-    '.js-batch-macro':            'batchMacro'
+    '.js-batch-overlay':            'batchOverlay'
+    '.js-batch-overlay-backdrop':   'batchOverlayBackdrop'
+    '.js-batch-cancel':             'batchCancel'
+    '.js-batch-macro-circle':       'batchMacroCircle'
+    '.js-batch-assign-circle':      'batchAssignCircle'
+    '.js-batch-assign':             'batchAssign'
+    '.js-batch-assign-inner':       'batchAssignInner'
+    '.js-batch-assign-group':       'batchAssignGroup'
+    '.js-batch-assign-group-name':  'batchAssignGroupName'
+    '.js-batch-assign-group-inner': 'batchAssignGroupInner'
+    '.js-batch-macro':              'batchMacro'
 
   events:
     'mousedown .item': 'startDragItem'
@@ -85,7 +90,7 @@ class App.TicketOverview extends App.Controller
           $.Velocity.hook item, 'translateX', "#{dx}px"
           $.Velocity.hook item, 'translateY', "#{dy}px"
 
-        @moveDraggedItems(-dir)
+        @alignDraggedItems(-dir)
 
         @mouseY = event.pageY
         @showBatchOverlay()
@@ -151,7 +156,7 @@ class App.TicketOverview extends App.Controller
       @el.find('[name="bulk"]:checked').prop('checked', false)
       @el.find('[name="bulk_all"]').prop('checked', false)
 
-  moveDraggedItems: (dir) ->
+  alignDraggedItems: (dir) ->
     @draggedItems.velocity
       properties:
         translateX: 0
@@ -227,7 +232,10 @@ class App.TicketOverview extends App.Controller
 
   showBatchOverlay: ->
     @batchOverlay.show()
+    $('html').css('overflow', 'hidden')
     @batchOverlayBackdrop.velocity { opacity: [1, 0] }, { duration: 500 }
+    @batchMacroOffset = @batchMacro.offset().top + @batchMacro.outerHeight()
+    @batchAssignOffset = @batchAssign.offset().top
     @batchOverlayShown = true
     $(document).on 'mousemove.batchoverlay', @controlBatchOverlay
 
@@ -238,21 +246,33 @@ class App.TicketOverview extends App.Controller
     @hideBatchCircles =>
       @batchOverlay.hide()
 
+    $('html').css('overflow', '')
+
     if @batchAssignShown
       @hideBatchAssign()
 
     if @batchMacroShown
       @hideBatchMacro()
 
+    if @batchAssignGroupShown
+      @hideBatchAssignGroup()
+
   controlBatchOverlay: (event) =>
+    return if @batchAnimationPaused
     # store to detect if the mouse is hovering a drag-action entry
     # after an animation ended -> @highlightBatchEntryAtMousePosition
     @mouse.x = event.pageX
     @mouse.y = event.pageY
 
-    if event.pageY <= window.innerHeight/5*2
+    if @batchAssignGroupShown && @batchAssignGroupOffset != undefined
+      if @mouse.y < @batchAssignGroupOffset
+        @hideBatchAssignGroup()
+        @batchAnimationPaused = true
+      return
+
+    if @mouse.y <= @batchMacroOffset
       mouseInArea = 'top'
-    else if event.pageY > window.innerHeight/5*2 && event.pageY <= window.innerHeight/5*3
+    else if @mouse.y > @batchMacroOffset && @mouse.y <= @batchAssignOffset
       mouseInArea = 'middle'
     else
       mouseInArea = 'bottom'
@@ -262,7 +282,7 @@ class App.TicketOverview extends App.Controller
         if !@batchMacroShown
           @hideBatchCircles()
           @showBatchMacro()
-          @moveDraggedItems(1)
+          @alignDraggedItems(1)
 
       when 'middle'
         if @batchAssignShown
@@ -278,7 +298,7 @@ class App.TicketOverview extends App.Controller
         if !@batchAssignShown
           @hideBatchCircles()
           @showBatchAssign()
-          @moveDraggedItems(-1)
+          @alignDraggedItems(-1)
 
   showBatchCircles: ->
     @batchCirclesShown = true
@@ -338,7 +358,6 @@ class App.TicketOverview extends App.Controller
         duration: 500
         visibility: 'visible'
         complete: @highlightBatchEntryAtMousePosition
-        delay: if @batchCirclesShown then 0 else 200
 
     @batchCancel.css
       top: 0
@@ -352,7 +371,6 @@ class App.TicketOverview extends App.Controller
         easing: [1,-.55,.2,1.37]
         duration: 500
         visibility: 'visible'
-        delay: if @batchCirclesShown then 0 else 200
 
   hideBatchAssign: ->
     @batchAssign.velocity
@@ -363,6 +381,8 @@ class App.TicketOverview extends App.Controller
         duration: 300
         visibility: 'hidden'
         queue: false
+        complete: =>
+          $.Velocity.hook @batchAssign, 'translateY', '0%'
 
     @batchCancel.velocity
       properties:
@@ -374,6 +394,53 @@ class App.TicketOverview extends App.Controller
         queue: false
 
     @batchAssignShown = false
+
+  showBatchAssignGroup: =>
+    return if !@batchOverlayShown # user might have dropped the item already
+    @batchAssignGroupShown = true
+
+    groupId = @hoveredBatchEntry.attr('data-id')
+    group = App.Group.find(groupId)
+    users = []
+
+    users.push App.User.find(i) for i in group.user_ids
+
+    @batchAssignGroupName.text group.displayName()
+    @batchAssignGroupInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
+      users: users
+      groups: []
+    ))
+
+    # then adjust the size of the group that it almost overlaps the batch-assign box
+    @batchAssignGroupInner.height(@batchAssignInner.height())
+
+    @batchAssignGroup.velocity
+      properties:
+        translateY: [0, '100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 700
+        visibility: 'visible'
+        complete: =>
+          @highlightBatchEntryAtMousePosition()
+          @batchAssignGroupOffset = @batchAssignGroup.offset().top
+
+  hideBatchAssignGroup: ->
+    @batchAssignGroup.velocity
+      properties:
+        translateY: ['100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+        complete: =>
+          @batchAssignGroupShown = false
+          @batchAssignGroupHovered = false
+          setTimeout (=> @batchAnimationPaused = false), 1000
+
+    @batchAssignGroupOffset = undefined
 
   showBatchMacro: ->
     return if !@batchOverlayShown # user might have dropped the item already
@@ -388,7 +455,6 @@ class App.TicketOverview extends App.Controller
         duration: 500
         visibility: 'visible'
         complete: @highlightBatchEntryAtMousePosition
-        delay: if @batchCirclesShown then 0 else 200
 
     @batchCancel.css
       top: 'auto'
@@ -401,7 +467,6 @@ class App.TicketOverview extends App.Controller
         easing: [1,-.55,.2,1.37]
         duration: 500
         visibility: 'visible'
-        delay: if @batchCirclesShown then 0 else 200
 
   hideBatchMacro: ->
     @batchMacro.velocity
@@ -412,6 +477,8 @@ class App.TicketOverview extends App.Controller
         duration: 300
         visibility: 'hidden'
         queue: false
+        complete: =>
+          $.Velocity.hook @batchMacro, 'translateY', '0%'
 
     @batchCancel.velocity
       properties:
@@ -432,9 +499,26 @@ class App.TicketOverview extends App.Controller
   highlightBatchEntry: (event) ->
     @hoveredBatchEntry = $(event.currentTarget).addClass('is-hovered')
 
+    if @hoveredBatchEntry.attr('data-action') is 'group_assign'
+      @batchAssignGroupHintTimeout = setTimeout @blinkBatchEntry, 800
+      @batchAssignGroupTimeout = setTimeout @showBatchAssignGroup, 900
+
   unhighlightBatchEntry: (event) ->
+    if @hoveredBatchEntry.attr('data-action') is 'group_assign'
+      if @batchAssignGroupTimeout
+        clearTimeout @batchAssignGroupTimeout
+      if @batchAssignGroupHintTimeout
+        clearTimeout @batchAssignGroupHintTimeout
+
     @hoveredBatchEntry = null
     $(event.currentTarget).removeClass('is-hovered')
+
+  blinkBatchEntry: =>
+    @hoveredBatchEntry
+      .velocity({ opacity: [0.5, 1] }, { duration: 120 })
+      .velocity({ opacity: [1, 0.5] }, { duration: 60, delay: 40 })
+      .velocity({ opacity: [0.5, 1] }, { duration: 120 })
+      .velocity({ opacity: [1, 0.5] }, { duration: 60, delay: 40 })
 
   render: ->
     elLocal = $(App.view('ticket_overview/index')())
@@ -541,7 +625,7 @@ class App.TicketOverview extends App.Controller
       },
     ]
     ###
-    @batchAssign.html $(App.view('ticket_overview/batch_overlay_user_group')(
+    @batchAssignInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
       users: users
       groups: groups
     ))
