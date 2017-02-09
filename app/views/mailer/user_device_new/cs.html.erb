@@ -1,0 +1,21 @@
+#{config.product_name} Detekováno přihlášení z nového zařízení
+
+<div>Dobrý den,</div>
+<br>
+<div>vypadá to, že jste se do systému Zammad přihlásil <b>pomocí nového zařízení</b> v dobu "#{user_device.created_at}":</div>
+<br>
+<div>
+Vaše zařízení: #{user_device.name}<br>
+Vaše lokace (relativně): #{user_device.location}<br>
+Vaše IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Vaše zařízení bylo přidáno do vašeho seznamu známých zařízení, jenž si můžete prohlédnout na níže zmíněném odkazu:</div>
+<br>
+<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
+<br>
+<div>Pokud se nejedná o Vás, respektive o tom nic nevíte, odstraňte toto zařízení ze seznamu, změňte své heslo, případně smažte osobní přístupové tokeny a co nejdříve kontaktujte Vašeho administrátora. Takže nikdo jiný nebude mít neautorizovaný přístup do Vašeho účtu.</div>
+<br>
+<div>S pozdravem,</div>
+<br>
+<div>Team webu #{config.product_name}</div>
