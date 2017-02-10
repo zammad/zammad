@@ -21,8 +21,8 @@ class App.TicketOverview extends App.Controller
 
   events:
     'mousedown .item': 'startDragItem'
-    'mouseenter .js-batch-overlay-entry': 'highlightBatchEntry'
-    'mouseleave .js-batch-overlay-entry': 'unhighlightBatchEntry'
+    'mouseenter .js-hover-target': 'highlightBatchEntry'
+    'mouseleave .js-hover-target': 'unhighlightBatchEntry'
 
   constructor: ->
     super
@@ -492,26 +492,27 @@ class App.TicketOverview extends App.Controller
     @batchMacroShown = false
 
   highlightBatchEntryAtMousePosition: =>
-    entryAtPoint = $(document.elementFromPoint(@mouse.x, @mouse.y)).closest('.js-batch-overlay-entry')
+    entryAtPoint = $(document.elementFromPoint(@mouse.x, @mouse.y)).closest('.js-batch-overlay-entry .avatar')
     if(entryAtPoint.length)
-      @hoveredBatchEntry = entryAtPoint.addClass('is-hovered')
+      @hoveredBatchEntry = entryAtPoint.closest('.js-batch-overlay-entry').addClass('is-hovered')
 
   highlightBatchEntry: (event) ->
-    @hoveredBatchEntry = $(event.currentTarget).addClass('is-hovered')
+    @hoveredBatchEntry = $(event.currentTarget).closest('.js-batch-overlay-entry').addClass('is-hovered')
 
     if @hoveredBatchEntry.attr('data-action') is 'group_assign'
       @batchAssignGroupHintTimeout = setTimeout @blinkBatchEntry, 800
       @batchAssignGroupTimeout = setTimeout @showBatchAssignGroup, 900
 
   unhighlightBatchEntry: (event) ->
+    return if !@hoveredBatchEntry
     if @hoveredBatchEntry.attr('data-action') is 'group_assign'
       if @batchAssignGroupTimeout
         clearTimeout @batchAssignGroupTimeout
       if @batchAssignGroupHintTimeout
         clearTimeout @batchAssignGroupHintTimeout
 
+    @hoveredBatchEntry.removeClass('is-hovered')
     @hoveredBatchEntry = null
-    $(event.currentTarget).removeClass('is-hovered')
 
   blinkBatchEntry: =>
     @hoveredBatchEntry
