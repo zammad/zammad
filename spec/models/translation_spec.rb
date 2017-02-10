@@ -109,6 +109,7 @@ RSpec.describe Translation do
     end
 
     it 'check download of translations' do
+      version = Version.get
       locale = 'de-de'
       directory = Rails.root.join('config/translations')
       if File.directory?(directory)
