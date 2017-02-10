@@ -49,8 +49,6 @@ class App.TicketOverview extends App.Controller
 
     $(document).on 'mousemove.item', @dragItem
     $(document).one 'mouseup.item', @endDragItem
-
-    @mainContent.addClass('u-unclickable')
     # TODO: fire @cancelDrag on ESC
 
   dragItem: (event) =>
@@ -235,6 +233,7 @@ class App.TicketOverview extends App.Controller
       return
 
   showBatchOverlay: ->
+    @mainContent.addClass('u-unclickable')
     @batchOverlay.show()
     $('html').css('overflow', 'hidden')
     @batchOverlayBackdrop.velocity { opacity: [1, 0] }, { duration: 500 }
@@ -244,6 +243,7 @@ class App.TicketOverview extends App.Controller
     $(document).on 'mousemove.batchoverlay', @controlBatchOverlay
 
   hideBatchOverlay: ->
+    @mainContent.removeClass('u-unclickable')
     $(document).off 'mousemove.batchoverlay'
     @batchOverlayShown = false
     @batchOverlayBackdrop.velocity { opacity: [0, 1] }, { duration: 300, queue: false }
@@ -409,7 +409,9 @@ class App.TicketOverview extends App.Controller
 
     for user_id in group.user_ids
       if App.User.exists(user_id)
-        users.push App.User.find(user_id)
+        user = App.User.find(user_id)
+        if user.active is true
+          users.push user
 
     @batchAssignGroupName.text group.displayName()
     @batchAssignGroupInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
@@ -590,6 +592,14 @@ class App.TicketOverview extends App.Controller
         user = App.User.find(user_id)
         if user.active is true
           users.push user
+    for group in groups
+      valid_user_ids = []
+      for user_id in group.user_ids
+        if App.User.exists(user_id)
+          if App.User.find(user_id).active is true
+            valid_user_ids.push user_id
+      group.valid_user_ids = valid_user_ids
+
     ###
     users = [
       App.User.find(2),
