@@ -12,6 +12,7 @@ gem 'activerecord-session_store'
 gem 'json'
 
 # Supported DBs
+gem 'activerecord-nulldb-adapter', group: :nulldb
 gem 'mysql2', group: :mysql
 gem 'pg', group: :postgres
 
@@ -65,6 +66,9 @@ require 'yaml'
 
 gem 'net-ldap'
 
+# password security
+gem 'argon2'
+
 gem 'writeexcel'
 gem 'icalendar'
 gem 'browser'
@@ -111,9 +115,16 @@ group :development, :test do
 
   # changelog generation
   gem 'github_changelog_generator'
+
+  # Setting ENV for testing purposes
+  gem 'figaro'
+
+  # Use Factory Girl for generating random test data
+  gem 'factory_girl_rails'
 end
 
-gem 'puma'
+gem 'puma', group: :puma
+gem 'unicorn', group: :unicorn
 
 # load onw gem's
 local_gemfile = File.join(File.dirname(__FILE__), 'Gemfile.local')

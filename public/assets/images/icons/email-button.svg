@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="29px" height="22px" viewBox="0 0 29 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
+<svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
     <title>email-button</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="email-button" fill="#FFFFFF">
-            <path d="M3.692327,4 L25.3063956,4 L14.4948188,13.2789684 L3.692327,4 Z M26,5.55434383 L26,19 L3,19 L3,5.55530843 L13.9696218,14.9778358 L14.4960016,15.4299778 L15.0225136,14.9779923 L26,5.55434383 Z" id="mail"></path>
+            <path d="M3.692327,5 L25.3063956,5 L14.4948188,14.2789684 L3.692327,5 Z M26,6.55434383 L26,20 L3,20 L3,6.55530843 L13.9696218,15.9778358 L14.4960016,16.4299778 L15.0225136,15.9779923 L26,6.55434383 Z" id="mail"></path>
         </g>
     </g>
 </svg>

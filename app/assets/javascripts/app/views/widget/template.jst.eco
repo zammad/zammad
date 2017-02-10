@@ -10,7 +10,7 @@
   <hr>
   <form>
     <div class="form-group">
-      <label class="" for="template_name"><%- @T('Save as Template') %></label>
+      <label class="" for="template_name"><%- @T('Save as template') %></label>
       <input type="text" name="template_name" id="template_name" class="form-control" value="<%= @template.name %>"/>
     </div>
     <button type="submit" class="btn" data-type="template_save"><%- @T('Save') %></button>

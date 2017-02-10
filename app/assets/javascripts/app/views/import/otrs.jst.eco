@@ -2,14 +2,14 @@
   <%- @Icon('full-logo', 'wizard-logo') %>
   <div class="import wizard">
     <div class="wizard-slide vertical" data-slide="otrs-plugin">
-      <h2><%- @T('Download OTRS Migration Plugin') %></h2>
+      <h2><%- @T('Download %s Migration Plugin', 'OTRS') %></h2>
       <div class="wizard-body flex vertical justified">
         <p>
-          <%- @T('Download and install the OTRS Migration Plugin on your OTRS System') %>:
+          <%- @T('Download and install the %s Migration Plugin on your %s instance.', 'OTRS', 'OTRS') %>:
         </p>
-        <a class="btn btn--primary btn--download js-download" target=_blank href="https://portal.znuny.com/api/addon_repos/public/617/latest" download><%- @Icon('download') %> <%- @T('Migration Plugin for OTRS 5') %></a>
-        <a class="btn btn--primary btn--download js-download" target=_blank href="https://portal.znuny.com/api/addon_repos/public/383/latest" download><%- @Icon('download') %> <%- @T('Migration Plugin for OTRS 4') %></a>
-        <a class="btn btn--primary btn--download js-download" target=_blank href="https://portal.znuny.com/api/addon_repos/public/287/latest" download><%- @Icon('download') %> <%- @T('Migration Plugin for OTRS 3.3 - 3.1') %></a>
+        <a class="btn btn--primary btn--download js-download" target=_blank href="https://portal.znuny.com/api/addon_repos/public/617/latest" download><%- @Icon('download') %> <%- @T('Migration Plugin for %s', 'OTRS 5') %></a>
+        <a class="btn btn--primary btn--download js-download" target=_blank href="https://portal.znuny.com/api/addon_repos/public/383/latest" download><%- @Icon('download') %> <%- @T('Migration Plugin for %s', 'OTRS 4') %></a>
+        <a class="btn btn--primary btn--download js-download" target=_blank href="https://portal.znuny.com/api/addon_repos/public/287/latest" download><%- @Icon('download') %> <%- @T('Migration Plugin for %s', 'OTRS 3.3-3.1') %></a>
       </div>
       <div class="wizard-controls horizontal center">
         <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
@@ -17,13 +17,13 @@
       </div>
     </div>
     <div class="wizard-slide vertical hide" data-slide="otrs-link">
-      <h2><%- @T('Link OTRS') %></h2>
+      <h2><%- @T('Link %s', 'OTRS') %></h2>
       <div class="wizard-body flex vertical justified">
         <p>
           <%- @T('Enter the link provided by the plugin at the end of the installation to link the two systems') %>:
         </p>
         <div class="form-group">
-          <label for="otrs-link">OTRS Link</label>
+          <label for="otrs-link"><%- @T('Link %s', 'OTRS') %></label>
           <div class="u-positionOrigin">
             <input type="url" id="otrs-link" class="form-control" placeholder="http://example.com/otrs/public.pl?Action=ZammadMigrator;Key=31337" name="url">
             <div class="input-feedback centered">
@@ -37,14 +37,13 @@
       </div>
       <div class="wizard-controls horizontal center">
         <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
-        <div class="btn btn--primary align-right hide js-migration-start" data-target="otrs-start-migration"><%- @T('Migrate OTRS Data') %></div>
+        <div class="btn btn--primary align-right hide js-migration-check"><%- @T('Migrate %s Data', 'OTRS') %></div>
       </div>
     </div>
 
     <div class="wizard-slide vertical hide" data-slide="otrs-import">
-      <h2><%- @T('OTRS Migration') %></h2>
+      <h2><%- @T('%s Migration', 'OTRS') %></h2>
       <div class="alert alert--danger hide js-error" role="alert"></div>
-
       <div class="wizard-body flex vertical justified">
         <table class="progressTable">
           <tr class="js-config">
@@ -86,7 +85,19 @@
         </table>
       </div>
       <div class="wizard-controls horizontal center">
-        <a href="#" class="btn btn--primary align-right hide js-finished"><%- @T('Done') %></a>
+        <a href="#" class="btn btn--primary align-right hide js-finished"><%- @T('done') %></a>
+      </div>
+    </div>
+
+    <div class="wizard-slide vertical hide" data-slide="otrs-import-notice">
+      <h2><%- @T('Notice') %></h2>
+      <div class="wizard-body flex vertical justified">
+        <p class="js-otrsProcesses hide"><%- @T('We detected OTRS BPM processes which can\'t get imported into Zammad, since we currently don\'t support these kind of workflows.') %></p>
+        <p class="js-otrsDynamicFields hide"><%- @T('We found a lot of dynamic fields which are not common in Zammad, as we follow a different approach to ticket attributes. Zammad uses also tags in addition to custom fields to classify tickets. This difference can create a new philosophy of your ticket attributes / tags compared to your current use of dynamic fields in OTRS.') %></p>
+      </div>
+      <div class="wizard-controls horizontal center">
+        <a class="btn btn--text btn--secondary" href="#import"><%- @T('Go Back') %></a>
+        <a href="#" class="btn btn--primary align-right js-migration-start"><%- @T('Continue anyway') %></a>
       </div>
     </div>
 

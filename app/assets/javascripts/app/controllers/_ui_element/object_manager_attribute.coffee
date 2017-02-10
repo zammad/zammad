@@ -48,14 +48,14 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     objects =
       Ticket:
         Customer:
-          create_bottom:
+          create_middle:
             shown: true
             required: false
           edit:
             shown: true
             required: false
         Agent:
-          create_bottom:
+          create_middle:
             shown: true
             required: false
           edit:

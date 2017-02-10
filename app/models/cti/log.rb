@@ -215,6 +215,18 @@ example data, can be used for demo
     }
   )
 
+  Cti::Log.create(
+    direction: 'in',
+    from: '4930609854180',
+    to: '4930609811112',
+    call_id: '00008',
+    comment: '',
+    state: 'hangup',
+    start: Time.zone.now - 20.seconds,
+    'end': Time.zone.now,
+    preferences: {}
+  )
+
 =end
 
 =begin

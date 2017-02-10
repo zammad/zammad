@@ -52,11 +52,13 @@ class App.TicketZoomArticleNew extends App.Controller
     @type = @defaults['type'] || 'note'
     @articleTypes = []
     if possibleArticleType.note
+      internal = @Config.get('ui_ticket_zoom_article_new_internal')
+
       @articleTypes.push {
         name:       'note'
         icon:       'note'
         attributes: []
-        internal:   true,
+        internal:   internal,
         features:   ['attachment']
       }
     if possibleArticleType.email

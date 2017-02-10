@@ -259,7 +259,7 @@ class App.Controller extends Spine.Controller
 
   frontendTimeUpdate: =>
     update = =>
-      @frontendTimeUpdateElement($('.humanTimeFromNow'))
+      @frontendTimeUpdateElement($('#app'))
     App.Interval.set(update, 61000, 'frontendTimeUpdate', 'ui')
 
   frontendTimeUpdateElement: (el) =>
@@ -678,6 +678,7 @@ class App.ControllerModal extends App.Controller
   container: null
   buttonClass: 'btn--success'
   centerButtons: []
+  leftButtons: []
   buttonClose: true
   buttonCancel: false
   buttonCancelClass: 'btn--text btn--subtle'
@@ -729,6 +730,7 @@ class App.ControllerModal extends App.Controller
       buttonSubmit:      @buttonSubmit
       buttonClass:       @buttonClass
       centerButtons:     @centerButtons
+      leftButtons:       @leftButtons
     )
     modal.find('.modal-body').html content
     if !@initRenderingDone

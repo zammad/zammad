@@ -12,6 +12,11 @@ RSpec.describe Import::OTRS::DynamicFieldFactory do
     expect(described_class).to respond_to('skip_field?')
   end
 
+  it 'skips fields that have unsupported types' do
+    described_class.import([load_dynamic_field_json('unsupported/master_slave')])
+    expect(described_class.skip_field?('MasterSlave')).to be true
+  end
+
   it 'imports OTRS DynamicFields' do
     expect(Import::OTRS::DynamicField::Text).to receive(:new)
     start_import_test

@@ -14,10 +14,10 @@ class Index extends App.ControllerSubContent
         objects: 'TextModules'
         navupdate: '#text_modules'
         notes: [
-          'TextModules are ...'
+          'Text modules are ...'
         ]
         buttons: [
-          { name: 'New TextModule', 'data-type': 'new', class: 'btn--success' }
+          { name: 'New text module', 'data-type': 'new', class: 'btn--success' }
         ]
       container: @el.closest('.content')
     )

@@ -1,0 +1,3 @@
+<form>
+  <input type="text" name="time_unit" placeholder="<%- @T('Please enter your time which you want to account.') %>"/>
+</form>

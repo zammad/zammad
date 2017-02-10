@@ -67,7 +67,7 @@ returns
 
     # on check, reduce open_timeout to have faster probing
     @pop.open_timeout = 16
-    @pop.read_timeout = 30
+    @pop.read_timeout = 45
     if check_type == 'check'
       @pop.open_timeout = 4
       @pop.read_timeout = 6

@@ -1,16 +1,16 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 class Ticket::State < ApplicationModel
+  include LatestChangeObserved
+
   belongs_to    :state_type, class_name: 'Ticket::StateType'
   belongs_to    :next_state, class_name: 'Ticket::State'
   validates     :name, presence: true
-
-  latest_change_support
 
 =begin
 
 list tickets by customer
 
-  states = Ticket::State.by_category('open') # open|closed|work_on|work_on_all|pending_reminder|pending_action
+  states = Ticket::State.by_category('open') # open|closed|work_on|work_on_all|pending_reminder|pending_action|merged
 
 returns:
 
@@ -42,6 +42,10 @@ returns:
     elsif category == 'closed'
       return Ticket::State.where(
         state_type_id: Ticket::StateType.where(name: %w(closed))
+      )
+    elsif category == 'merged'
+      return Ticket::State.where(
+        state_type_id: Ticket::StateType.where(name: %w(merged))
       )
     end
     raise "Unknown category '#{category}'"

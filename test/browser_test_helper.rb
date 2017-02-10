@@ -963,6 +963,8 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+set type of task (closeTab, closeNextInOverview, stayOnTab)
+
   task_type(
     browser: browser1,
     type: 'stayOnTab',
@@ -975,7 +977,6 @@ class TestCase < Test::Unit::TestCase
     log('task_type', params)
 
     instance = params[:browser] || @browser
-
     if params[:type]
       instance.find_elements(css: '.content.active .js-secondaryActionButtonLabel')[0].click
       instance.find_elements(css: ".content.active .js-secondaryActionLabel[data-type=#{params[:type]}]")[0].click
@@ -2032,6 +2033,7 @@ wait untill text in selector disabppears
       key1: 'some value',
     },
     do_not_submit: true,
+    task_type: 'stayOnTab', # default: stayOnTab / possible: closeTab, closeNextInOverview, stayOnTab
   )
 
 =end
@@ -2203,14 +2205,13 @@ wait untill text in selector disabppears
       }
       if !found
         screenshot(browser: instance, comment: 'ticket_update_discard_message_failed')
-
         raise 'no discard message found'
       end
     end
 
     task_type(
       browser: instance,
-      type:    'stayOnTab',
+      type:    params[:task_type] || 'stayOnTab',
     )
 
     if params[:do_not_submit]
@@ -2219,6 +2220,13 @@ wait untill text in selector disabppears
     end
 
     instance.find_elements(css: '.content.active .js-submit')[0].click
+
+    # do not stay on tab
+    if params[:task_type] == 'closeTab' || params[:task_type] == 'closeNextInOverview'
+      sleep 1
+      screenshot(browser: instance, comment: 'ticket_update')
+      return
+    end
 
     9.times {
       begin
@@ -2316,6 +2324,13 @@ wait untill text in selector disabppears
     link:    "#ticket/view/#{name}",
   )
 
+  ticket_open_by_overview(
+    browser: browser2,
+    number:  ticket1[:number],
+    text:    title,
+    link:    "#ticket/view/#{name}",
+  )
+
 =end
 
   def ticket_open_by_overview(params)
@@ -2338,12 +2353,25 @@ wait untill text in selector disabppears
       js: '$(".content.active .sidebar").css("display", "none")',
     )
     screenshot(browser: instance, comment: 'ticket_open_by_overview_search')
-    instance.find_elements(partial_link_text: params[:number])[0].click
+    if params[:title]
+      element = instance.find_elements(partial_link_text: params[:title])[0]
+      if !element
+        screenshot(browser: instance, comment: 'ticket_open_by_overview_no_ticket_failed')
+        raise "unable to find ticket #{params[:title]} in overview #{params[:link]}!"
+      end
+    else
+      element = instance.find_elements(partial_link_text: params[:number])[0]
+      if !element
+        screenshot(browser: instance, comment: 'ticket_open_by_overview_no_ticket_failed')
+        raise "unable to find ticket #{params[:number]} in overview #{params[:link]}!"
+      end
+    end
+    element.click
     sleep 1
     number = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0].text
     if number !~ /#{params[:number]}/
-      screenshot(browser: instance, comment: 'ticket_open_by_overview_failed')
-      raise "unable to search/find ticket #{params[:number]}!"
+      screenshot(browser: instance, comment: 'ticket_open_by_overview_open_failed_failed')
+      raise "unable to open ticket #{params[:number]}!"
     end
     sleep 1
     assert(true, "ticket #{params[:number]} found")

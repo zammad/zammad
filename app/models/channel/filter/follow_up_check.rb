@@ -14,7 +14,7 @@ module Channel::Filter::FollowUpCheck
       return true
     end
 
-    setting = Setting.get('postmaster_follow_up_search_in')
+    setting = Setting.get('postmaster_follow_up_search_in') || []
 
     # get ticket# from body
     if setting.include?('body')
@@ -39,7 +39,7 @@ module Channel::Filter::FollowUpCheck
     end
 
     # get ticket# from references
-    if setting.include?('references') || mail[ 'x-zammad-is-auto-response'.to_sym ] == true
+    if setting.include?('references') || (mail[ 'x-zammad-is-auto-response'.to_sym ] == true || Setting.get('ticket_hook_position') == 'none')
 
       # get all references 'References' + 'In-Reply-To'
       references = ''
@@ -66,7 +66,7 @@ module Channel::Filter::FollowUpCheck
     end
 
     # get ticket# from references current email has same subject as inital article
-    if !mail[:subject].empty?
+    if mail[:subject].present?
 
       # get all references 'References' + 'In-Reply-To'
       references = ''

@@ -206,6 +206,7 @@ class Transaction::Notification
           current_user: current_user,
           changes: changes,
         },
+        message_id: "<notification.#{DateTime.current.to_s(:number)}.#{ticket.id}.#{user.id}.#{rand(999_999)}@#{Setting.get('fqdn')}>",
         references: ticket.get_references,
         main_object: ticket,
         attachments: attachments,

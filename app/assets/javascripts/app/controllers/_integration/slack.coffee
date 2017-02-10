@@ -4,7 +4,7 @@ class Index extends App.ControllerIntegrationBase
   featureConfig: 'slack_config'
   description: [
     ['This service sends notifications to your %s channel.', 'Slack']
-    ['To setup this Service you need to create a new |"Incoming webhook"| in your %s integration panel, and enter the Webhook URL below.', 'Slack']
+    ['To set up this service you need to create a new |"Incoming webhook"| in your %s integration panel, and enter the web hook URL below.', 'Slack']
   ]
   events:
     'click .js-submit': 'update'
@@ -26,12 +26,12 @@ class Index extends App.ControllerIntegrationBase
       escalation_warning: '5. Ticket Escalation Warning'
 
     configureAttributes = [
-      { name: 'types',    display: 'Trigger',  tag: 'checkbox', options: options, 'null': false, class: 'vertical', note: 'Where notification is sent.' },
-      { name: 'group_id', display: 'Group',    tag: 'select', relation: 'Group', multiple: true, 'null': false, note: 'Only for this groups.' },
-      { name: 'webhook',  display: 'Webhook',  tag: 'input', type: 'url',  limit: 200, 'null': false, placeholder: 'https://hooks.slack.com/services/...' },
-      { name: 'username', display: 'Username', tag: 'input', type: 'text', limit: 100, 'null': false, placeholder: 'username' },
-      { name: 'channel',  display: 'Channel',  tag: 'input', type: 'text', limit: 100, 'null': true, placeholder: '#channel' },
-      { name: 'icon_url', display: 'Icon Url', tag: 'input', type: 'url',  limit: 200, 'null': true, placeholder: 'https://example.com/logo.png' },
+      { name: 'types',     display: 'Trigger',  tag: 'checkbox', options: options, 'null': false, class: 'vertical', note: 'When notification is being sent.' },
+      { name: 'group_ids', display: 'Group',    tag: 'select', relation: 'Group', multiple: true, 'null': false, note: 'Only for these groups.' },
+      { name: 'webhook',   display: 'Webhook',  tag: 'input', type: 'url',  limit: 200, 'null': false, placeholder: 'https://hooks.slack.com/services/...' },
+      { name: 'username',  display: 'Username', tag: 'input', type: 'text', limit: 100, 'null': false, placeholder: 'username' },
+      { name: 'channel',   display: 'Channel',  tag: 'input', type: 'text', limit: 100, 'null': true, placeholder: '#channel' },
+      { name: 'icon_url',  display: 'Icon Url', tag: 'input', type: 'url',  limit: 200, 'null': true, placeholder: 'https://example.com/logo.png' },
     ]
 
     settings = []

@@ -92,7 +92,9 @@ all:
 
     result = UserAgent.get(
       url,
-      {},
+      {
+        version: Version.get,
+      },
       {
         json: true,
       }

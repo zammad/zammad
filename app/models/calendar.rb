@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Calendar < ApplicationModel
+  include NotifiesClients
+  include UniqNamed
+
   store :business_hours
   store :public_holidays
 
@@ -9,8 +12,6 @@ class Calendar < ApplicationModel
   after_create   :sync_default, :min_one_check
   after_update   :sync_default, :min_one_check
   after_destroy  :min_one_check
-
-  notify_clients_support
 
 =begin
 
@@ -38,7 +39,7 @@ returns calendar object
     calendar_details = Service::GeoCalendar.location(ip)
     return if !calendar_details
 
-    calendar_details['name'] = Calendar.genrate_uniq_name(calendar_details['name'])
+    calendar_details['name'] = Calendar.generate_uniq_name(calendar_details['name'])
     calendar_details['default'] = true
     calendar_details['created_by_id'] = 1
     calendar_details['updated_by_id'] = 1

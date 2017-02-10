@@ -1,0 +1,21 @@
+#{config.product_name} - detekováno přihlášení z jiného státu
+
+<div>Dobrý den,</div>
+<br>
+<div>Vypadá to, že používáte Váš účet se systému  <b>známým zařízením, ale z jiného státu</b> od "#{user_device.created_at}":</div>
+<br>
+<div>
+Vaše zařízení: #{user_device.name}<br>
+Vaše pozice (relativně): #{user_device.location}<br>
+Vaše IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Tento stát bude přidán do seznamu známých zařízení, jenž můžete shlédnout v níže zmíněném odkazu:</div>
+<br>
+<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
+<br>
+<div>Pokud se nejedná o Vás, respektive o tom nic nevíte, odstraňte toto zařízení ze seznamu, změňte své heslo, případně smažte osobní přístupové tokeny a co ne$
+<br>
+<div>S pozdravem,</div>
+<br>
+<div>Team webu #{config.product_name}</div>

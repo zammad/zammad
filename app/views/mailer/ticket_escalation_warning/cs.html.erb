@@ -1,0 +1,18 @@
+Bude eskalovat ticket (#{ticket.title})
+
+<div>Dobrý den,</div>
+<br>
+<div>ticket (#{ticket.title}) od "<b>#{ticket.customer.longname}</b>" bude "#{ticket.escalation_at}" eskalovat!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  #{t('Information')}:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+</div>

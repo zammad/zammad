@@ -22,8 +22,7 @@ class ImportOtrsController < ApplicationController
       'Connection refused'                                        => 'Connection refused!',
     }
 
-    response = UserAgent.request( params[:url] )
-
+    response = UserAgent.request(params[:url])
     if !response.success? && response.code.to_s !~ /^40.$/
       message_human = ''
       translation_map.each { |key, message|
@@ -46,12 +45,36 @@ class ImportOtrsController < ApplicationController
 
       if migrator_response['Success'] == 1
 
-        url_parts = params[:url].split(';')
-        key_parts = url_parts[1].split('=')
+        # set url and key for import endpoint
+        url = migrator_response['URL']
+        key = migrator_response['Key']
+
+        # get first part url, used for import_otrs_endpoint
+        if !url || !key
+          url_parts = params[:url].split(';')
+          if !url_parts[1] # in case of & instead of ;
+            url_parts = params[:url].split('&')
+          end
+          key_parts = url_parts[1].split('=')
+
+          if !key_parts[1]
+            render json: {
+              result: 'invalid',
+              message_human: 'Unable to get key from URL!'
+            }
+            return
+          end
+          if !url
+            url = url_parts[0]
+          end
+          if !key
+            key = key_parts[1]
+          end
+        end
 
         Setting.set('import_backend', 'otrs')
-        Setting.set('import_otrs_endpoint', url_parts[0])
-        Setting.set('import_otrs_endpoint_key', key_parts[1])
+        Setting.set('import_otrs_endpoint', url)
+        Setting.set('import_otrs_endpoint_key', key)
 
         result = {
           result: 'ok',
@@ -95,6 +118,38 @@ class ImportOtrsController < ApplicationController
 
     render json: {
       result: 'ok',
+    }
+  end
+
+  def import_check
+    statistic = Import::OTRS::Requester.list
+    issues = []
+
+    # check count of dynamic fields
+    dynamic_field_count = 0
+    dynamic_fields = Import::OTRS::Requester.load('DynamicField')
+    dynamic_fields.each { |dynamic_field|
+      next if dynamic_field['ValidID'].to_i != 1
+      dynamic_field_count += 1
+    }
+    if dynamic_field_count > 20
+      issues.push 'otrsDynamicFields'
+    end
+
+    # check if process exsists
+    sys_configs = Import::OTRS::Requester.load('SysConfig')
+    sys_configs.each { |sys_config|
+      next if sys_config['Key'] != 'Process'
+      issues.push 'otrsProcesses'
+    }
+
+    result = 'ok'
+    if !issues.empty?
+      result = 'failed'
+    end
+    render json: {
+      result: result,
+      issues: issues,
     }
   end
 

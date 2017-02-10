@@ -14,7 +14,7 @@
           <div class="js-textarea articleNewEdit-body" contenteditable="true"><%- @content %></div>
           <!-- .textBubble grows with textarea (and expanding clone) -->
           <div class="attachments"></div>
-          
+
           <!-- <div>
             <div class="attachment">
               <div class="attachment-name u-highlight">sega-genesis-box.gif</div>
@@ -53,7 +53,7 @@
           </div>
           <div class="fit dropArea">
             <div class="dropArea-inner">
-              <%- @T('Drop Files here') %>
+              <%- @T('Drop files here') %>
             </div>
           </div>
         </div>

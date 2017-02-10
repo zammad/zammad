@@ -23,7 +23,7 @@ App.Config.set(
   {
     name: 'Icinga'
     target: '#system/integration/icinga'
-    description: 'A open source monitoring tool.'
+    description: 'An open source monitoring tool.'
     controller: Index
     state: State
   }

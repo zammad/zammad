@@ -11,7 +11,7 @@
     <li>
       <a href="#manage/overviews">Overviews</a>
     <li>
-      <a href="#manage/text_modules">TextModules</a>
+      <a href="#manage/text_modules">Text modules</a>
 
     <li>
       <a href="#manage/slas">SLAs</a>
@@ -72,15 +72,15 @@
     </div>
   </div>
   <ul class="nav nav-tabs" role="tablist">
-    
+
       <li class="active"><a href="#c-account" role="tab" data-toggle="tab" aria-expanded="true">Accounts</a></li>
-    
+
       <li><a href="#c-filter" role="tab" data-toggle="tab">Filter</a></li>
-    
+
       <li><a href="#c-signature" role="tab" data-toggle="tab">Signatures</a></li>
-    
+
       <li><a href="#c-setting" role="tab" data-toggle="tab">Settings</a></li>
-    
+
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="c-account"></div>

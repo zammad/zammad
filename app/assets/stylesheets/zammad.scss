@@ -15,7 +15,29 @@ $navigationWidth: 260px;
 
 $highlight-color: hsl(205,90%,60%);
 
-$largeScreenBreakpoint: 1260px;
+@mixin desktop {
+  @media screen and (min-width: 1260px) {
+    @content;
+  }
+}
+
+@mixin small-desktop {
+  @media screen and (max-width: 1260px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
 
 html {
   height: 100%;
@@ -129,6 +151,10 @@ ul {
 
 .u-unselectable {
   pointer-events: none;
+  user-select: none;
+}
+
+.u-no-userselect {
   user-select: none;
 }
 
@@ -1018,76 +1044,82 @@ th.align-right {
   align-items: center;
   justify-content: center;
   position: relative;
+  
+  .icon-checked {
+    color: black;
+  }
+
+  .icon-unchecked {
+    color: hsl(60,1%,61%);
+  }
+
+  .icon-indeterminate {
+    display: none;
+    color: hsl(60,1%,61%);
+  }
+
+  &.is-disabled {
+    cursor: default;
+  }
+
+  &.checkbox-replacement--fullscreen,
+  &.radio-replacement--fullscreen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &.checkbox-replacement--inline,
+  &.radio-replacement--inline {
+    display: inline-flex;
+    margin-right: 3px;
+  }
+
+  input {
+    pointer-events: none;
+    position: absolute;
+    opacity: 0;
+
+    &:disabled ~ .icon {
+      opacity: 0.33;
+      fill: none;
+      cursor: default;
+    }
+
+    &:not(:checked) ~ .icon-checked,
+    &:checked ~ .icon-unchecked {
+      display: none;
+    }
+
+    &:focus:not(.is-active) ~ .icon-checked,
+    &:focus:not(.is-active) ~ .icon-unchecked {
+      box-shadow: 0 0 0 2px hsl(201,62%,90%);
+      color: hsl(200,71%,59%);
+    }
+
+    &:indeterminate {
+      ~ .icon-checked,
+      ~ .icon-unchecked {
+        display: none;
+      }
+      ~ .icon-indeterminate {
+        display: block;
+      }
+    }
+  }
+
+  + .label-text {
+    margin-left: 0;
+  }
 }
 
-.checkbox-replacement.checkbox-replacement--fullscreen,
-.radio-replacement.radio-replacement--fullscreen {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-
-.checkbox-replacement.checkbox-replacement--inline,
-.radio-replacement.radio-replacement--inline {
-  display: inline-flex;
-  margin-right: 3px;
-}
-
-.checkbox-replacement input,
-.radio-replacement input {
-  pointer-events: none;
-  position: absolute;
-  opacity: 0;
-}
-
-.checkbox-replacement .icon-checked,
-.radio-replacement .icon-checked {
-  color: black;
-}
-
-.checkbox-replacement .icon-unchecked,
-.radio-replacement .icon-unchecked {
-  color: hsl(60,1%,61%);
-}
-
-.checkbox-replacement.is-disabled,
-.radio-replacement.is-disabled {
-  cursor: default;
-}
-
-.checkbox-replacement input:disabled ~.icon,
-.radio-replacement input:disabled ~.icon {
-  opacity: 0.33;
-  fill: none;
-  cursor: default;
-}
-
-.checkbox-replacement input:not(:checked) ~ .icon-checked,
-.checkbox-replacement input:checked ~ .icon-unchecked,
-.radio-replacement input:not(:checked) ~ .icon-checked,
-.radio-replacement input:checked ~ .icon-unchecked {
-  display: none;
-}
-
-.checkbox-replacement input:focus:not(.is-active) ~ .icon-checked,
-.checkbox-replacement input:focus:not(.is-active) ~ .icon-unchecked,
-.radio-replacement input:focus:not(.is-active) ~ .icon-checked,
-.radio-replacement input:focus:not(.is-active) ~ .icon-unchecked, {
-  box-shadow: 0 0 0 2px hsl(201,62%,90%);
-  color: hsl(200,71%,59%);
-}
-
-.radio-replacement input:focus ~ .icon-checked,
-.radio-replacement input:focus ~ .icon-unchecked {
-  border-radius: 100%;
-}
-
-.checkbox-replacement + .label-text,
-.radio-replacement + .label-text {
-  margin-left: 0;
+.radio-replacement {
+  input:focus ~ .icon-checked,
+  input:focus ~ .icon-unchecked {
+    border-radius: 100%;
+  }
 }
 
 .table .checkbox-replacement,
@@ -2462,8 +2494,7 @@ ol.tabs li {
   padding: 0 10px 0 7px;
   margin-bottom: 10px;
   color: white !important;
-  line-height: 22px;
-  text-align: center;
+  line-height: 23px;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -2479,7 +2510,8 @@ ol.tabs li {
   }
 
   &.auth-provider--google {
-    background: #d8543c;
+    background: hsl(0,0%,93%);
+    color: hsl(0,0%,46%) !important;
   }
 
   &.auth-provider--twitter {
@@ -2494,13 +2526,25 @@ ol.tabs li {
     background: #006087;
   }
 
+  &.auth-provider--github {
+    background: hsl(0,0%,27%);
+  }
+
+  &.auth-provider--gitlab {
+    background: hsl(10,78%,53%);
+  }
+
+  &.auth-provider--oauth2 {
+    background: hsl(0,0%,15%);
+  }
+
   .provider-name {
     flex: 1;
   }
 
   .provider-icon {
     width: 29px;
-    height: 22px;
+    height: 24px;
     margin-right: 10px;
     margin-top: 1px;
   }
@@ -2627,7 +2671,8 @@ ol.tabs li {
 }
 
 .icon-checkbox,
-.icon-checkbox-checked {
+.icon-checkbox-checked,
+.icon-checkbox-indeterminate {
   fill: white;
 }
 
@@ -2702,7 +2747,7 @@ footer {
 
 .overviews {
   .sidebar {
-    @media only screen and (max-width: $largeScreenBreakpoint) {
+    @include small-desktop {
       display: none;
     }
   }
@@ -2735,7 +2780,7 @@ footer {
     width: 336px;
   }
 
-  @media only screen and (max-width: $largeScreenBreakpoint) {
+  @include small-desktop {
     display: flex;
   }
 }
@@ -2757,7 +2802,7 @@ footer {
     0 -2px rgba(0,0,0,.03),
     0 -3px rgba(0,0,0,.01);
 
-  @media only screen and (max-width: $largeScreenBreakpoint) {
+  @include small-desktop {
     left: $navigationWidth;
     min-width: $minWidth - $sidebarWidth;
   }
@@ -3580,6 +3625,23 @@ footer {
     }
   }
 
+  &--organization {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .icon-organization {
+      fill: currentColor;
+    }
+
+    &.size-80 {
+      .icon-organization {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
   .icon-logo {
     width: 100%;
     height: 100%;
@@ -3593,6 +3655,12 @@ footer {
   background: white;
   border-right: 1px solid #e6e6e6;
   overflow: auto;
+  
+  @include small-desktop {
+    &.optional {
+      display: none;
+    }
+  }
 
   h2 {
     margin-top: 0;
@@ -3807,7 +3875,7 @@ footer {
 
   .popover .two-columns,
   .popover .three-columns {
-    margin-bottom: -8px;
+    margin-top: -8px;
   }
 
   .popover .column label {
@@ -3815,7 +3883,7 @@ footer {
   }
 
   .popover .column {
-    margin-bottom: 8px;
+    margin-top: 8px;
   }
 
   .popover--notifications {
@@ -4545,6 +4613,12 @@ footer {
     left: 0;
     right: 0;
     background: white;
+    
+    &.is-open {
+      &:before {
+        opacity: 0;
+      }
+    }
 
     .btn {
       padding-top: 17px;
@@ -4560,6 +4634,7 @@ footer {
       top: -30px;
       height: 30px;
       background: linear-gradient(rgba(255,255,255,0), white);
+      transition: opacity 300ms;
     }
   }
 
@@ -7622,10 +7697,7 @@ output {
   left: 0;
   right: 0;
   @extend .zIndex-10;
-
-  .defaultTheme {
-    pointer-events: none;
-  }
+  pointer-events: none;
 
   .noty_bar {
     max-width: 500px;
@@ -8321,20 +8393,266 @@ output {
   margin: 20px 0 32px;
 }
 
-/*
+.batch-overlay {
+  @extend .fit;
+  z-index: 1;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 0.07em;
+  font-size: 0.95em;
+  line-height: 1.3;
+  display: none;
+  will-change: display;
+  cursor: grabbing;
+  overflow: hidden;
+  user-select: none;
+  
+  &-backdrop {
+    @extend .fit;
+    background: hsla(231,20%,8%,.8);
+    opacity: 0;
+    will-change: opacity;
+  }
+  
+  &-circle {
+    margin: 35px auto;
+    background: hsl(207,7%,29%);
+    border-radius: 100%;
+    border: 4px solid white;
+    width: 140px;
+    height: 140px;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    will-change: transform, opacity;
+    visibility: hidden;
+    
+    &--top {
+      top: 0;
+    }
+    
+    &--bottom {
+      bottom: 0;
+    }
 
-  ----------------
-   normal screens
-  ----------------
+    .icon {
+      fill: currentColor;
+      opacity: 1;
+    }
+    
+    &-label {
+      width: 50%;
+      margin: 10px 0;
+    }
+  }
 
-*/
+  &-cancel {
+    background: hsla(0,0%,100%,.21);
+    background-clip: padding-box;
+    border: 2px dashed hsla(0,0%,100%,.3);
+    border-radius: 8px;
+    padding: 28px;
+    margin: 50px 200px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    visibility: hidden;
+    will-change: opacity;
+  }
 
-@media only screen and (max-width: $largeScreenBreakpoint) {
-  .sidebar.optional {
-    display: none;
+  &-box {
+    background: hsl(232,9%,17%);
+    width: 100%;
+    position: absolute;
+    visibility: hidden;
+    will-change: opacity, transition;
+    
+    &-inner {
+      margin: 37px 25px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      overflow: hidden;
+    }
+  }
+
+  &-assign {
+    padding-bottom: 50px;
+    bottom: -50px; // extra space for bounce animation
+    
+    .batch-overlay-box-inner {
+      max-height: 310px;
+    
+      @media screen and (min-height: 1000px) {
+        max-height: 465px;
+      }
+    }
+
+    &-group {
+      box-shadow: 0 0 35px hsla(0,0%,0%,.5);
+      
+      .batch-overlay-box-inner {
+        margin-top: 42px;
+        margin-bottom: 10px;
+      }
+
+      &-name {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 11px 13px 8px;
+        line-height: 1;
+        position: absolute;
+        background: hsl(233,10%,15%);
+      }
+    }
+
+    &-entry {
+      padding: 13px;
+      width: 116px;
+      height: 155px;
+       
+      &.is-hovered {
+        .avatar {
+          border-color: $highlight-color;
+          transform: scale(1.05);
+        }
+      }
+
+      .avatar {
+        border: 4px solid hsl(231,5%,30%);
+        margin-bottom: 10px;
+        box-sizing: content-box;
+        transition: transform 120ms;
+        cursor: inherit;
+        
+        &--organization {
+          background: hsl(191,68%,47%);
+        }
+      }
+
+      &-name {
+        max-height: 34px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        word-break: break-word;
+      }
+
+      &-detail {
+        color: gray;
+      }
+    }
+  }
+
+  &-macro {
+    padding-top: 50px;
+    top: -50px; // extra space for bounce animation
+
+    .batch-overlay-box-inner {
+      max-height: 146px;
+      margin: 24px 12px;
+    
+      @media screen and (min-height: 800px) {
+        max-height: 292px;
+      }
+    }
+    
+    &-entry {
+      margin: 13px;
+      border: 4px solid hsl(231,5%,30%);
+      background: hsl(233,9%,24%);
+      border-radius: 100%;
+      height: 120px;
+      width: 120px;
+      padding: 13px 13px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9em;
+      
+      &.is-hovered {
+        border-color: $highlight-color;
+        transform: scale(1.05);
+      }
+    }
   }
 }
 
+.batch-dragger {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  width: 250px;
+  height: 40px;
+  will-change: transform;
+  
+  &-item {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background: hsl(200,100%,91%);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 11px 0 9px 11px;
+    box-shadow: 0 0 10px hsla(0,0%,0%,.28);
+    will-change: transform;
+    
+    a {
+      color: inherit;
+    }
+    
+    td {
+      display: block;
+      padding: 0 12px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      flex-shrink: 0;
+      
+      &:nth-child(3) {
+        flex-shrink: 1;
+      }
+      
+      &:nth-child(n+4) {
+        display: none;
+      }
+    }
+  }
+
+  &-counter {
+    position: absolute;
+    right: -8px;
+    bottom: -8px;
+    width: 25px;
+    height: 25px;
+    border-radius: 99px;
+    z-index: 1;
+    color: white;
+    background: $highlight-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px hsla(0,0%,0%,.28);
+    will-change: transform;
+    
+    &:empty {
+      display: none;
+    }
+  }
+}
 
 
 /*

@@ -3,11 +3,11 @@
   <div class="container">
     <div class="row">
       <div class="span12">
-        <p><%- @T('You have not created a Ticket yet.') %></p>
-        <p><%- @T('The way to communicate with us is this thing called "Ticket".') %></p>
+        <p><%- @T('You have not created a ticket yet.') %></p>
+        <p><%- @T('The way to communicate with us is this thing called "ticket".') %></p>
         <p><%- @T('Please click the button below to create your first one.') %></p>
 
-        <p><a class="btn btn--primary" href="#customer_ticket_new"><%- @T('Create your first Ticket') %></a></p>
+        <p><a class="btn btn--primary" href="#customer_ticket_new"><%- @T('Create your first ticket') %></a></p>
       </div>
     </div>
   </div>

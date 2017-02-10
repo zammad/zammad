@@ -33,7 +33,7 @@ returns
         data[ app_model_user ] = {}
       end
       if !data[ app_model_sla ][ id ]
-        data[ app_model_sla ][ id ] = attributes_with_associations
+        data[ app_model_sla ][ id ] = attributes_with_association_ids
         data = assets_of_selector('condition', data)
         if calendar_id
           calendar = Calendar.lookup(id: calendar_id)

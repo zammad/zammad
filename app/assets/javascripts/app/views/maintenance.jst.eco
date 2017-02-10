@@ -24,7 +24,7 @@
       </div>
       <h2>@<%- @T('Login') %></h2>
     </div>
-    <p><%- @T('Put a message on the login page. To change it, click on the text area below and change it inline.') %></p>
+    <p><%- @T('Put a message on the login page. To change it, click on the text area below and change it in-line.') %></p>
     <div class="js-loginPreview"></div>
   </div>
 

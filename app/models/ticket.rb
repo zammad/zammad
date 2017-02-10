@@ -1,68 +1,57 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Ticket < ApplicationModel
+  include LogsActivityStream
+  include NotifiesClients
+  include LatestChangeObserved
+  include Historisable
+  include SearchIndexed
+
   include Ticket::Escalation
   include Ticket::Subject
   load 'ticket/permission.rb'
   include Ticket::Permission
   load 'ticket/assets.rb'
   include Ticket::Assets
-  load 'ticket/history_log.rb'
-  include Ticket::HistoryLog
-  load 'ticket/activity_stream_log.rb'
-  include Ticket::ActivityStreamLog
   load 'ticket/search_index.rb'
   include Ticket::SearchIndex
   extend Ticket::Search
 
-  store           :preferences
-  before_create   :check_generate, :check_defaults, :check_title, :check_escalation_update
-  before_update   :check_defaults, :check_title, :reset_pending_time, :check_escalation_update
-  before_destroy  :destroy_dependencies
+  store          :preferences
+  before_create  :check_generate, :check_defaults, :check_title, :check_escalation_update
+  before_update  :check_defaults, :check_title, :reset_pending_time, :check_escalation_update
+  before_destroy :destroy_dependencies
 
   validates :group_id, presence: true
   validates :priority_id, presence: true
   validates :state_id, presence: true
 
-  notify_clients_support
+  activity_stream_permission 'ticket.agent'
 
-  latest_change_support
+  activity_stream_attributes_ignored :organization_id, # organization_id will channge automatically on user update
+                                     :create_article_type_id,
+                                     :create_article_sender_id,
+                                     :article_count,
+                                     :first_response_at,
+                                     :first_response_escalation_at,
+                                     :first_response_in_min,
+                                     :first_response_diff_in_min,
+                                     :close_at,
+                                     :close_escalation_at,
+                                     :close_in_min,
+                                     :close_diff_in_min,
+                                     :update_escalation_at,
+                                     :update_in_min,
+                                     :update_diff_in_min,
+                                     :last_contact_at,
+                                     :last_contact_agent_at,
+                                     :last_contact_customer_at,
+                                     :preferences
 
-  activity_stream_support(
-    permission: 'ticket.agent',
-    ignore_attributes: {
-      organization_id: true, # organization_id will channge automatically on user update
-      create_article_type_id: true,
-      create_article_sender_id: true,
-      article_count: true,
-      first_response_at: true,
-      first_response_escalation_at: true,
-      first_response_in_min: true,
-      first_response_diff_in_min: true,
-      close_at: true,
-      close_escalation_at: true,
-      close_in_min: true,
-      close_diff_in_min: true,
-      update_escalation_at: true,
-      update_in_min: true,
-      update_diff_in_min: true,
-      last_contact_at: true,
-      last_contact_agent_at: true,
-      last_contact_customer_at: true,
-      preferences: true,
-    }
-  )
-
-  history_support(
-    ignore_attributes: {
-      create_article_type_id: true,
-      create_article_sender_id: true,
-      article_count: true,
-      preferences: true,
-    }
-  )
-
-  search_index_support
+  history_attributes_ignored :create_article_type_id,
+                             :create_article_sender_id,
+                             :article_count,
+                             :preferences
 
   belongs_to    :group,                 class_name: 'Group'
   has_many      :articles,              class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update
@@ -861,6 +850,27 @@ result
     Ticket::Article.where(ticket_id: id).order(:created_at, :id)
   end
 
+  def history_get(fulldata = false)
+    list = History.list(self.class.name, self['id'], 'Ticket::Article')
+    return list if !fulldata
+
+    # get related objects
+    assets = {}
+    list.each { |item|
+      record = Kernel.const_get(item['object']).find(item['o_id'])
+      assets = record.assets(assets)
+
+      if item['related_object']
+        record = Kernel.const_get(item['related_object']).find( item['related_o_id'])
+        assets = record.assets(assets)
+      end
+    }
+    {
+      history: list,
+      assets: assets,
+    }
+  end
+
   private
 
   def check_generate
@@ -915,5 +925,4 @@ result
     # destroy online notifications
     OnlineNotification.remove(self.class.to_s, id)
   end
-
 end

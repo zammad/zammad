@@ -227,6 +227,8 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStart()
     @autosaveStart()
     @shortcutNavigationStart()
+    return if !@attributeBar
+    @attributeBar.start()
 
   pagePosition: (params = {}) =>
 
@@ -285,6 +287,8 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
     @autosaveStop()
     @shortcutNavigationstop()
+    return if !@attributeBar
+    @attributeBar.stop()
 
   changed: =>
     return false if !@ticket
@@ -417,12 +421,15 @@ class App.TicketZoom extends App.Controller
         el:        elLocal.find('.ticket-meta')
       )
 
-      new App.TicketZoomAttributeBar(
+      @attributeBar = new App.TicketZoomAttributeBar(
+        ticket:      @ticket
         el:          elLocal.find('.js-attributeBar')
         overview_id: @overview_id
         callback:    @submit
         task_key:    @task_key
       )
+      #if @shown
+      #  @attributeBar.start()
 
       @form_id = App.ControllerForm.formId()
 
@@ -653,9 +660,7 @@ class App.TicketZoom extends App.Controller
       @formEnable(e)
       return
 
-    taskAction = @$('.js-secondaryActionButtonLabel').data('type')
-
-    ticketParams = @formParam( @$('.edit') )
+    ticketParams = @formParam(@$('.edit'))
 
     # validate ticket
     ticket = App.Ticket.find(@ticket_id)
@@ -667,31 +672,19 @@ class App.TicketZoom extends App.Controller
     for key, value of ticketParams
       ticket[key] = value
 
-    # apply macro
-    for key, content of macro
-      attributes = key.split('.')
-      if attributes[0] is 'ticket'
-
-        # apply tag changes
-        if attributes[1] is 'tags'
-          if @sidebar && @sidebar.tagWidget
-            tags = content.value.split(',')
-            for tag in tags
-              if content.operator is 'remove'
-                @sidebar.tagWidget.remove(tag)
-              else
-                @sidebar.tagWidget.add(tag)
-
-        # apply user changes
-        else if attributes[1] is 'owner_id'
-          if content.pre_condition is 'current_user.id'
-            ticket[attributes[1]] = App.Session.get('id')
-          else
-            ticket[attributes[1]] = content.value
-
-        # apply direct value changes
-        else
-          ticket[attributes[1]] = content.value
+    App.Ticket.macro(
+      macro: macro
+      ticket: ticket
+      callback:
+        tagAdd: (tag) =>
+          return if !@sidebar
+          return if !@sidebar.tagWidget
+          @sidebar.tagWidget.add(tag)
+        tagRemove: (tag) =>
+          return if !@sidebar
+          return if !@sidebar.tagWidget
+          @sidebar.tagWidget.remove(tag)
+    )
 
     # set defaults
     if !@permissionCheck('ticket.customer')
@@ -739,6 +732,41 @@ class App.TicketZoom extends App.Controller
         return
 
       ticket.article = article
+
+    if !ticket.article
+      @submitPost(e, ticket)
+      return
+
+    # verify if time accounting is enabled
+    if @Config.get('time_accounting') isnt true
+      @submitPost(e, ticket)
+      return
+
+
+    # verify if time accounting is active for ticket
+    if false
+      @submitPost(e, ticket)
+      return
+
+    # time tracking
+    if @permissionCheck('ticket.customer')
+      @submitPost(e, ticket)
+      return
+
+    new App.TicketZoomTimeAccounting(
+      container: @el.closest('.content')
+      ticket: ticket
+      cancelCallback: =>
+        @formEnable(e)
+      submitCallback: (params) =>
+        if params.time_unit
+          ticket.article.time_unit = params.time_unit
+        @submitPost(e, ticket)
+    )
+
+  submitPost: (e, ticket) =>
+
+    taskAction = @$('.js-secondaryActionButtonLabel').data('type')
 
     # submit changes
     @ajax(

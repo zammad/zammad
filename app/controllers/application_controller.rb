@@ -2,6 +2,8 @@
 require 'exceptions'
 
 class ApplicationController < ActionController::Base
+  include ErrorHandling
+
   #  http_basic_authenticate_with :name => "test", :password => "ttt"
 
   helper_method :current_user,
@@ -17,15 +19,6 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   before_action :transaction_begin, :set_user, :session_update, :user_device_check, :cors_preflight_check
   after_action  :transaction_end, :http_log, :set_access_control_headers
-
-  rescue_from StandardError, with: :server_error
-  rescue_from ExecJS::RuntimeError, with: :server_error
-  rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  rescue_from ActiveRecord::StatementInvalid, with: :unprocessable_entity
-  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
-  rescue_from ArgumentError, with: :unprocessable_entity
-  rescue_from Exceptions::UnprocessableEntity, with: :unprocessable_entity
-  rescue_from Exceptions::NotAuthorized, with: :unauthorized
 
   # For all responses in this controller, return the CORS access control headers.
   def set_access_control_headers
@@ -176,6 +169,7 @@ class ApplicationController < ActionController::Base
 
   def user_device_log(user, type)
     switched_from_user_id = ENV['SWITCHED_FROM_USER_ID'] || session[:switched_from_user_id]
+    return true if params[:controller] == 'init' # do no device logging on static inital page
     return true if switched_from_user_id
     return true if !user
     return true if !user.permissions?('user_preferences.device')
@@ -397,7 +391,10 @@ class ApplicationController < ActionController::Base
       params[:sender_id] = Ticket::Article::Sender.lookup(name: sender).id
     end
 
-    clean_params = Ticket::Article.param_association_lookup(params)
+    # remember time accounting
+    time_unit = params[:time_unit]
+
+    clean_params = Ticket::Article.association_name_to_id_convert(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
 
     # overwrite params
@@ -445,6 +442,15 @@ class ApplicationController < ActionController::Base
       )
     end
     article.save!
+
+    # account time
+    if time_unit.present?
+      Ticket::TimeAccounting.create!(
+        ticket_id: article.ticket_id,
+        ticket_article_id: article.id,
+        time_unit: time_unit
+      )
+    end
 
     # remove attachments from upload cache
     return article if !form_id
@@ -508,7 +514,7 @@ class ApplicationController < ActionController::Base
   # model helper
   def model_create_render(object, params)
 
-    clean_params = object.param_association_lookup(params)
+    clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
 
     # create object
@@ -518,10 +524,10 @@ class ApplicationController < ActionController::Base
     generic_object.save!
 
     # set relations
-    generic_object.param_set_associations(params)
+    generic_object.associations_from_param(params)
 
     if params[:expand]
-      render json: generic_object.attributes_with_relation_names, status: :created
+      render json: generic_object.attributes_with_association_names, status: :created
       return
     end
 
@@ -529,7 +535,7 @@ class ApplicationController < ActionController::Base
   end
 
   def model_create_render_item(generic_object)
-    render json: generic_object.attributes_with_associations, status: :created
+    render json: generic_object.attributes_with_association_ids, status: :created
   end
 
   def model_update_render(object, params)
@@ -537,7 +543,7 @@ class ApplicationController < ActionController::Base
     # find object
     generic_object = object.find(params[:id])
 
-    clean_params = object.param_association_lookup(params)
+    clean_params = object.association_name_to_id_convert(params)
     clean_params = object.param_cleanup(clean_params, true)
 
     generic_object.with_lock do
@@ -546,11 +552,11 @@ class ApplicationController < ActionController::Base
       generic_object.update_attributes!(clean_params)
 
       # set relations
-      generic_object.param_set_associations(params)
+      generic_object.associations_from_param(params)
     end
 
     if params[:expand]
-      render json: generic_object.attributes_with_relation_names, status: :ok
+      render json: generic_object.attributes_with_association_names, status: :ok
       return
     end
 
@@ -558,7 +564,7 @@ class ApplicationController < ActionController::Base
   end
 
   def model_update_render_item(generic_object)
-    render json: generic_object.attributes_with_associations, status: :ok
+    render json: generic_object.attributes_with_association_ids, status: :ok
   end
 
   def model_destroy_render(object, params)
@@ -575,7 +581,7 @@ class ApplicationController < ActionController::Base
 
     if params[:expand]
       generic_object = object.find(params[:id])
-      render json: generic_object.attributes_with_relation_names, status: :ok
+      render json: generic_object.attributes_with_association_names, status: :ok
       return
     end
 
@@ -590,7 +596,7 @@ class ApplicationController < ActionController::Base
   end
 
   def model_show_render_item(generic_object)
-    render json: generic_object.attributes_with_associations, status: :ok
+    render json: generic_object.attributes_with_association_ids, status: :ok
   end
 
   def model_index_render(object, params)
@@ -614,7 +620,7 @@ class ApplicationController < ActionController::Base
     if params[:expand]
       list = []
       generic_objects.each { |generic_object|
-        list.push generic_object.attributes_with_relation_names
+        list.push generic_object.attributes_with_association_names
       }
       render json: list, status: :ok
       return
@@ -636,37 +642,13 @@ class ApplicationController < ActionController::Base
 
     generic_objects_with_associations = []
     generic_objects.each { |item|
-      generic_objects_with_associations.push item.attributes_with_associations
+      generic_objects_with_associations.push item.attributes_with_association_ids
     }
     model_index_render_result(generic_objects_with_associations)
   end
 
   def model_index_render_result(generic_objects)
     render json: generic_objects, status: :ok
-  end
-
-  def model_match_error(error)
-    data = {
-      error: error
-    }
-    if error =~ /Validation failed: (.+?)(,|$)/i
-      data[:error_human] = $1
-    end
-    if error =~ /(already exists|duplicate key|duplicate entry)/i
-      data[:error_human] = 'Object already exists!'
-    end
-    if error =~ /null value in column "(.+?)" violates not-null constraint/i
-      data[:error_human] = "Attribute '#{$1}' required!"
-    end
-    if error =~ /Field '(.+?)' doesn't have a default value/i
-      data[:error_human] = "Attribute '#{$1}' required!"
-    end
-
-    if Rails.env.production? && !data[:error_human].empty?
-      data[:error] = data[:error_human]
-      data.delete('error_human')
-    end
-    data
   end
 
   def model_references_check(object, params)
@@ -676,68 +658,6 @@ class ApplicationController < ActionController::Base
     raise Exceptions::UnprocessableEntity, 'Can\'t delete, object has references.'
   rescue => e
     raise Exceptions::UnprocessableEntity, e
-  end
-
-  def not_found(e)
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    respond_to do |format|
-      format.json { render json: model_match_error(e.message), status: :not_found }
-      format.any {
-        @exception = e
-        @traceback = !Rails.env.production?
-        file = File.open(Rails.root.join('public', '404.html'), 'r')
-        render inline: file.read, status: :not_found
-      }
-    end
-  end
-
-  def unprocessable_entity(e)
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    respond_to do |format|
-      format.json { render json: model_match_error(e.message), status: :unprocessable_entity }
-      format.any {
-        @exception = e
-        @traceback = !Rails.env.production?
-        file = File.open(Rails.root.join('public', '422.html'), 'r')
-        render inline: file.read, status: :unprocessable_entity
-      }
-    end
-  end
-
-  def server_error(e)
-    logger.error e.message
-    logger.error e.backtrace.inspect
-    respond_to do |format|
-      format.json { render json: model_match_error(e.message), status: 500 }
-      format.any {
-        @exception = e
-        @traceback = !Rails.env.production?
-        file = File.open(Rails.root.join('public', '500.html'), 'r')
-        render inline: file.read, status: 500
-      }
-    end
-  end
-
-  def unauthorized(e)
-    message = e.message
-    if message == 'Exceptions::NotAuthorized'
-      message = 'Not authorized'
-    end
-    error = model_match_error(message)
-    if error && error[:error]
-      response.headers['X-Failure'] = error[:error_human] || error[:error]
-    end
-    respond_to do |format|
-      format.json { render json: error, status: :unauthorized }
-      format.any {
-        @exception = e
-        @traceback = !Rails.env.production?
-        file = File.open(Rails.root.join('public', '401.html'), 'r')
-        render inline: file.read, status: :unauthorized
-      }
-    end
   end
 
   # check maintenance mode

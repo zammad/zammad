@@ -19,6 +19,10 @@ class App.KeyboardShortcutModal extends App.ControllerModal
     return true if @el.parents('html').length > 0
     false
 
+  onClosed: ->
+    return if window.location.hash isnt '#keyboard_shortcuts'
+    window.history.back()
+
 class App.KeyboardShortcutWidget extends Spine.Module
   @include App.LogInclude
 
@@ -143,6 +147,9 @@ App.Config.set(
               description: 'List of shortcuts'
               globalEvent: 'list-of-shortcuts'
               callback: =>
+                if window.location.hash is '#keyboard_shortcuts'
+                  App.Event.trigger('keyboard_shortcuts_close')
+                  return
                 if @dialog && @dialog.exists()
                   @dialog.close()
                   @dialog = false
@@ -260,7 +267,7 @@ App.Config.set(
             {
               key: '.'
               hotkeys: true
-              description: 'Copy current object number (e. g. Ticket#) into clipboard'
+              description: 'Copy current object number (e. g. Ticket#) to clipboard'
               callback: (shortcut, lastKey, modifier) ->
                 App.Event.trigger('keyboard_shortcuts_close')
                 text = $('.active.content .js-objectNumber').first().data('number') || ''
@@ -292,7 +299,7 @@ App.Config.set(
               keyPrefix: '3x'
               key: '.'
               hotkeys: true
-              description: '...add object link url'
+              description: '...add object link URL'
             }
           ]
         }

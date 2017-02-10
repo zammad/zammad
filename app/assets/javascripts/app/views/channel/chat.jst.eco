@@ -8,7 +8,7 @@
   </div>
 </div>
 <div class="page-content">
-  <p><%- @T('You can create chat widgets for your webpages to allow visitors to chat with you.') %></p>
+  <p><%- @T('You can create chat widgets for your web pages to allow visitors to chat with you.') %></p>
 
   <h2><%- @T('Topics') %></h2>
   <p><%- @T('You can create multiple chat topics.') %></p>
@@ -133,13 +133,13 @@
 
   <h2><%- @T('Usage') %></h2>
 
-  <p><%- marked(@T('Insert the widget-code into the source code of every page the chat should be visible on. It should be placed at the end of the page source code before the §</body>§ closing tag.')) %></p>
+  <p><%- marked(@T('Insert the widget code into the source code of every page the chat shall be visible on. It should be placed at the end of the page\'s source code before the §</body>§ closing tag.')) %></p>
 
   <h3><%- @T('Requirements') %></h3>
   <p><%- @T("Zammad Chat requires jQuery. If you don't already use it on your website include it like this:") %></p>
   <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-2.1.4.min.js"&gt;&lt;/script&gt;</code></pre>
 
-  <h3><%- @T('Auto-show chat') %> (<%- @T('default') %>)</h3>
+  <h3><%- @T('Automatically show chat') %> (<%- @T('default') %>)</h3>
   <p><%- @T('The chat will show up once the connection to the server got established and if there is someone online to chat with.') %></p>
 
   <pre><code class="language-html js-paramsBlock">&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
@@ -159,7 +159,7 @@ $(function() {
 &lt;script&gt;
 $(function() {
   new ZammadChat({
-<span class="js-modal-params"></span>
+<span class="js-modal-params"></span>,
     show: false
   });
 });

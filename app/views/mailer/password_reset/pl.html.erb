@@ -1,0 +1,15 @@
+Odzyskiwanie hasła #{config.product_name}
+
+<div>Witaj #{user.firstname},</div>
+<br>
+<div>Otrzymaliśmy zgłoszenie odnosnie zmiany twojego hasła #{config.product_name} do konta <b>#{user.login}</b>.</div>
+<br>
+<div>Jeżeli chcesz zresetować swoje hasło kliknij link ponizej (lub skopiuj link poniżej i wklej go w miejscu paska adresu swojej przeglądarki):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Link przeniesie Cię na witryne na której możliwa jest zmiana hasła.</div>
+<br>
+<div>Jeżeli nie chcesz zmieniać swego hasła, zignoruj tego maila. Twoje hasło nie zostanie zmienione.</div>
+<br>
+<div>Zespół #{config.product_name}</div>

@@ -1,13 +1,536 @@
 class App.TicketOverview extends App.Controller
   className: 'overviews'
   activeFocus: 'nav'
+  mouse:
+    x: null
+    y: null
+  batchAnimationPaused: false
+
+  elements:
+    '.js-batch-overlay':            'batchOverlay'
+    '.js-batch-overlay-backdrop':   'batchOverlayBackdrop'
+    '.js-batch-cancel':             'batchCancel'
+    '.js-batch-macro-circle':       'batchMacroCircle'
+    '.js-batch-assign-circle':      'batchAssignCircle'
+    '.js-batch-assign':             'batchAssign'
+    '.js-batch-assign-inner':       'batchAssignInner'
+    '.js-batch-assign-group':       'batchAssignGroup'
+    '.js-batch-assign-group-name':  'batchAssignGroupName'
+    '.js-batch-assign-group-inner': 'batchAssignGroupInner'
+    '.js-batch-macro':              'batchMacro'
+    '.main':                        'mainContent'
+
+  events:
+    'mousedown .item': 'startDragItem'
+    'mouseenter .js-hover-target': 'highlightBatchEntry'
+    'mouseleave .js-hover-target': 'unhighlightBatchEntry'
 
   constructor: ->
     super
+    @batchSupport = @permissionCheck('ticket.agent')
     @render()
 
+  startDragItem: (event) =>
+    return if !@batchSupport
+    @grabbedItem = $(event.currentTarget)
+    offset = @grabbedItem.offset()
+    @batchDragger = $(App.view('ticket_overview/batch_dragger')())
+    @grabbedItemClone = @grabbedItem.clone()
+    @grabbedItemClone.data('offset', @grabbedItem.offset())
+    @grabbedItemClone.addClass('batch-dragger-item js-main-item')
+    @batchDragger.append @grabbedItemClone
+
+    @batchDragger.data
+      startX: event.pageX
+      startY: event.pageY
+      dx: Math.min(event.pageX - offset.left, 180)
+      dy: event.pageY - offset.top
+      moved: false
+
+    $(document).on 'mousemove.item', @dragItem
+    $(document).one 'mouseup.item', @endDragItem
+    # TODO: fire @cancelDrag on ESC
+
+  dragItem: (event) =>
+    return if !@batchSupport
+    pos = @batchDragger.data()
+    threshold = 3
+    x = event.pageX - pos.dx
+    y = event.pageY - pos.dy
+    dir = if event.pageY > pos.startY then 1 else -1
+
+    if !pos.moved
+      # trigger when moved a little up or down
+      # but don't trigge when moved left or right
+      # because the user might just want to select text
+      if Math.abs(event.pageY - pos.startY) - Math.abs(event.pageX - pos.startX) > threshold
+        @batchDragger.data 'moved', true
+        @el.addClass('u-no-userselect')
+        # check grabbed items batch checkbox to make sure its checked
+        # (could be grabbed without checking the checkbox it)
+        @grabbedItemWasntChecked = !@grabbedItem.find('[name="bulk"]').prop('checked')
+        @grabbedItem.find('[name="bulk"]').prop('checked', true)
+        @grabbedItemClone.find('[name="bulk"]').prop('checked', true)
+
+        additionalItems = @el.find('[name="bulk"]:checked').parents('.item').not(@grabbedItem)
+        additionalItemsClones = additionalItems.clone()
+        @draggedItems = @grabbedItemClone.add(additionalItemsClones)
+        # store offsets for later use
+        additionalItemsClones.each (i, item) -> $(@).data('offset', additionalItems.eq(i).offset())
+        @batchDragger.prepend additionalItemsClones.addClass('batch-dragger-item').get().reverse()
+        if(additionalItemsClones.length)
+          @batchDragger.find('.js-batch-dragger-count').text(@draggedItems.length)
+
+        @renderOptions()
+
+        $('#app').append @batchDragger
+
+        @draggedItems.each (i, item) ->
+          dx = $(item).data('offset').left - $(item).offset().left - x
+          dy = $(item).data('offset').top - $(item).offset().top - y
+          $.Velocity.hook item, 'translateX', "#{dx}px"
+          $.Velocity.hook item, 'translateY', "#{dy}px"
+
+        @alignDraggedItems(-dir)
+
+        @mouseY = event.pageY
+        @showBatchOverlay()
+      else
+        return
+
+    event.preventDefault()
+
+    $.Velocity.hook @batchDragger, 'translateX', "#{x}px"
+    $.Velocity.hook @batchDragger, 'translateY', "#{y}px"
+
+  endDragItem: (event) =>
+    return if !@batchSupport
+    @mainContent.removeClass('u-unclickable')
+    $(document).off 'mousemove.item'
+    $(document).off 'mouseup.item'
+    pos = @batchDragger.data()
+
+    if !@hoveredBatchEntry
+      @cleanUpDrag()
+      return
+
+    $.Velocity.hook @batchDragger, 'transformOriginX', "#{pos.dx}px"
+    $.Velocity.hook @batchDragger, 'transformOriginY', "#{pos.dy}px"
+    @hoveredBatchEntry.velocity
+      properties:
+        scale: 1.1
+      options:
+        duration: 200
+        complete: =>
+          @hoveredBatchEntry.velocity 'reverse',
+            duration: 200
+            complete: =>
+              # clean scale
+              action = @hoveredBatchEntry.attr('data-action')
+              id = @hoveredBatchEntry.attr('data-id')
+              items = @el.find('[name="bulk"]:checked')
+              @hoveredBatchEntry.removeAttr('style')
+              @cleanUpDrag(true)
+
+              @performBatchAction items, action, id
+    @batchDragger.velocity
+      properties:
+        scale: 0
+      options:
+        duration: 200
+
+  cancelDrag: ->
+    $(document).off 'mousemove.item'
+    $(document).off 'mouseup.item'
+    @cleanUpDrag()
+
+  cleanUpDrag: (success) ->
+    @hideBatchOverlay()
+    @el.removeClass('u-no-userselect')
+    $('.batch-dragger').remove()
+    @hoveredBatchEntry = null
+
+    if @grabbedItemWasntChecked
+      @grabbedItem.find('[name="bulk"]').prop('checked', false)
+
+    if success
+      # uncheck all checked items
+      @el.find('[name="bulk"]:checked').prop('checked', false)
+      @el.find('[name="bulk_all"]').prop('checked', false)
+
+  alignDraggedItems: (dir) ->
+    @draggedItems.velocity
+      properties:
+        translateX: 0
+        translateY: (i) => dir * i * @batchDragger.height()/2
+      options:
+        easing: 'ease-in-out'
+        duration: 300
+
+    @batchDragger.find('.js-batch-dragger-count').velocity
+      properties:
+        translateY: if dir < 0 then 0 else -@batchDragger.height()+8
+      options:
+        easing: 'ease-in-out'
+        duration: 300
+
+  performBatchAction: (items, action, id) ->
+    console.log "perform action #{action} with id #{id} on #{items.length} checked items"
+
+    if action is 'macro'
+      @batchCount = items.length
+      @batchCountIndex = 0
+      macro = App.Macro.find(id)
+      for item in items
+        #console.log "perform action #{action} with id #{id} on ", $(item).val()
+        ticket = App.Ticket.find($(item).val())
+        App.Ticket.macro(
+          macro: macro.perform
+          ticket: ticket
+        )
+        ticket.save(
+          done: (r) =>
+            @batchCountIndex++
+
+            # refresh view after all tickets are proceeded
+            if @batchCountIndex == @batchCount
+              App.Event.trigger('overview:fetch')
+        )
+      return
+
+    if action is 'user_assign'
+      @batchCount = items.length
+      @batchCountIndex = 0
+      for item in items
+        #console.log "perform action #{action} with id #{id} on ", $(item).val()
+        ticket = App.Ticket.find($(item).val())
+        ticket.owner_id = id
+        ticket.save(
+          done: (r) =>
+            @batchCountIndex++
+
+            # refresh view after all tickets are proceeded
+            if @batchCountIndex == @batchCount
+              App.Event.trigger('overview:fetch')
+        )
+        return
+
+    if action is 'group_assign'
+      @batchCount = items.length
+      @batchCountIndex = 0
+      for item in items
+        #console.log "perform action #{action} with id #{id} on ", $(item).val()
+        ticket = App.Ticket.find($(item).val())
+        ticket.group_id = id
+        ticket.save(
+          done: (r) =>
+            @batchCountIndex++
+
+            # refresh view after all tickets are proceeded
+            if @batchCountIndex == @batchCount
+              App.Event.trigger('overview:fetch')
+        )
+      return
+
+  showBatchOverlay: ->
+    @mainContent.addClass('u-unclickable')
+    @batchOverlay.show()
+    $('html').css('overflow', 'hidden')
+    @batchOverlayBackdrop.velocity { opacity: [1, 0] }, { duration: 500 }
+    @batchMacroOffset = @batchMacro.offset().top + @batchMacro.outerHeight()
+    @batchAssignOffset = @batchAssign.offset().top
+    @batchOverlayShown = true
+    $(document).on 'mousemove.batchoverlay', @controlBatchOverlay
+
+  hideBatchOverlay: ->
+    @mainContent.removeClass('u-unclickable')
+    $(document).off 'mousemove.batchoverlay'
+    @batchOverlayShown = false
+    @batchOverlayBackdrop.velocity { opacity: [0, 1] }, { duration: 300, queue: false }
+    @hideBatchCircles =>
+      @batchOverlay.hide()
+
+    $('html').css('overflow', '')
+
+    if @batchAssignShown
+      @hideBatchAssign()
+
+    if @batchMacroShown
+      @hideBatchMacro()
+
+    if @batchAssignGroupShown
+      @hideBatchAssignGroup()
+
+  controlBatchOverlay: (event) =>
+    return if @batchAnimationPaused
+    # store to detect if the mouse is hovering a drag-action entry
+    # after an animation ended -> @highlightBatchEntryAtMousePosition
+    @mouse.x = event.pageX
+    @mouse.y = event.pageY
+
+    if @batchAssignGroupShown && @batchAssignGroupOffset != undefined
+      if @mouse.y < @batchAssignGroupOffset
+        @hideBatchAssignGroup()
+        @batchAnimationPaused = true
+      return
+
+    if @mouse.y <= @batchMacroOffset
+      mouseInArea = 'top'
+    else if @mouse.y > @batchMacroOffset && @mouse.y <= @batchAssignOffset
+      mouseInArea = 'middle'
+    else
+      mouseInArea = 'bottom'
+
+    switch mouseInArea
+      when 'top'
+        if !@batchMacroShown
+          @hideBatchCircles()
+          @showBatchMacro()
+          @alignDraggedItems(1)
+
+      when 'middle'
+        if @batchAssignShown
+          @hideBatchAssign()
+
+        if @batchMacroShown
+          @hideBatchMacro()
+
+        if !@batchCirclesShown
+          @showBatchCircles()
+
+      when 'bottom'
+        if !@batchAssignShown
+          @hideBatchCircles()
+          @showBatchAssign()
+          @alignDraggedItems(-1)
+
+  showBatchCircles: ->
+    @batchCirclesShown = true
+
+    @batchMacroCircle.velocity
+      properties:
+        translateY: [0, '-150%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+        delay: 200
+
+    @batchAssignCircle.velocity
+      properties:
+        translateY: [0, '150%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+        delay: 200
+
+  hideBatchCircles: (callback) ->
+    @batchMacroCircle.velocity
+      properties:
+        translateY: ['-150%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+
+    @batchAssignCircle.velocity
+      properties:
+        translateY: ['150%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        complete: callback
+        visibility: 'hidden'
+        queue: false
+
+    @batchCirclesShown = false
+
+  showBatchAssign: ->
+    return if !@batchOverlayShown # user might have dropped the item already
+    @batchAssignShown = true
+
+    @batchAssign.velocity
+      properties:
+        translateY: [0, '100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+        complete: @highlightBatchEntryAtMousePosition
+
+    @batchCancel.css
+      top: 0
+      bottom: 'auto'
+
+    @batchCancel.velocity
+      properties:
+        translateY: [0, '100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+
+  hideBatchAssign: ->
+    @batchAssign.velocity
+      properties:
+        translateY: ['100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+        complete: =>
+          $.Velocity.hook @batchAssign, 'translateY', '0%'
+
+    @batchCancel.velocity
+      properties:
+        translateY: ['100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+
+    @batchAssignShown = false
+
+  showBatchAssignGroup: =>
+    return if !@batchOverlayShown # user might have dropped the item already
+    @batchAssignGroupShown = true
+
+    groupId = @hoveredBatchEntry.attr('data-id')
+    group = App.Group.find(groupId)
+    users = []
+
+    for user_id in group.user_ids
+      if App.User.exists(user_id)
+        user = App.User.find(user_id)
+        if user.active is true
+          users.push user
+
+    @batchAssignGroupName.text group.displayName()
+    @batchAssignGroupInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
+      users: users
+      groups: []
+    ))
+
+    # then adjust the size of the group that it almost overlaps the batch-assign box
+    @batchAssignGroupInner.height(@batchAssignInner.height())
+
+    @batchAssignGroup.velocity
+      properties:
+        translateY: [0, '100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 700
+        visibility: 'visible'
+        complete: =>
+          @highlightBatchEntryAtMousePosition()
+          @batchAssignGroupOffset = @batchAssignGroup.offset().top
+
+  hideBatchAssignGroup: ->
+    @batchAssignGroup.velocity
+      properties:
+        translateY: ['100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+        complete: =>
+          @batchAssignGroupShown = false
+          @batchAssignGroupHovered = false
+          setTimeout (=> @batchAnimationPaused = false), 1000
+
+    @batchAssignGroupOffset = undefined
+
+  showBatchMacro: ->
+    return if !@batchOverlayShown # user might have dropped the item already
+    @batchMacroShown = true
+
+    @batchMacro.velocity
+      properties:
+        translateY: [0, '-100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+        complete: @highlightBatchEntryAtMousePosition
+
+    @batchCancel.css
+      top: 'auto'
+      bottom: 0
+    @batchCancel.velocity
+      properties:
+        translateY: [0, '-100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 500
+        visibility: 'visible'
+
+  hideBatchMacro: ->
+    @batchMacro.velocity
+      properties:
+        translateY: ['-100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+        complete: =>
+          $.Velocity.hook @batchMacro, 'translateY', '0%'
+
+    @batchCancel.velocity
+      properties:
+        translateY: ['-100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+
+    @batchMacroShown = false
+
+  highlightBatchEntryAtMousePosition: =>
+    entryAtPoint = $(document.elementFromPoint(@mouse.x, @mouse.y)).closest('.js-batch-overlay-entry .avatar')
+    if(entryAtPoint.length)
+      @hoveredBatchEntry = entryAtPoint.closest('.js-batch-overlay-entry').addClass('is-hovered')
+
+  highlightBatchEntry: (event) ->
+    @hoveredBatchEntry = $(event.currentTarget).closest('.js-batch-overlay-entry').addClass('is-hovered')
+
+    if @hoveredBatchEntry.attr('data-action') is 'group_assign'
+      @batchAssignGroupHintTimeout = setTimeout @blinkBatchEntry, 800
+      @batchAssignGroupTimeout = setTimeout @showBatchAssignGroup, 900
+
+  unhighlightBatchEntry: (event) ->
+    return if !@hoveredBatchEntry
+    if @hoveredBatchEntry.attr('data-action') is 'group_assign'
+      if @batchAssignGroupTimeout
+        clearTimeout @batchAssignGroupTimeout
+      if @batchAssignGroupHintTimeout
+        clearTimeout @batchAssignGroupHintTimeout
+
+    @hoveredBatchEntry.removeClass('is-hovered')
+    @hoveredBatchEntry = null
+
+  blinkBatchEntry: =>
+    @hoveredBatchEntry
+      .velocity({ opacity: [0.5, 1] }, { duration: 120 })
+      .velocity({ opacity: [1, 0.5] }, { duration: 60, delay: 40 })
+      .velocity({ opacity: [0.5, 1] }, { duration: 120 })
+      .velocity({ opacity: [1, 0.5] }, { duration: 60, delay: 40 })
+
   render: ->
-    elLocal = $(App.view('ticket_overview')())
+    elLocal = $(App.view('ticket_overview/index')())
 
     @navBarControllerVertical = new Navbar
       el:       elLocal.find('.overview-header')
@@ -38,6 +561,94 @@ class App.TicketOverview extends App.Controller
       update = =>
         App.OverviewListCollection.fetch(@view)
       @delay(update, 2800, 'overview:fetch')
+
+  renderOptions: =>
+    macros = App.Macro.findAllByAttribute('active', true)
+    groups = App.Group.findAllByAttribute('active', true)
+    users = []
+    items = @el.find('[name="bulk"]:checked')
+
+    # find all possible owners for selected tickets
+    possibleUsers = {}
+    possibleUserGroups = {}
+    for item in items
+      #console.log "selected items with id ", $(item).val()
+      ticket = App.Ticket.find($(item).val())
+      if !possibleUserGroups[ticket.group_id.toString()]
+        group = App.Group.find(ticket.group_id)
+        for user_id in group.user_ids
+          if !possibleUserGroups[ticket.group_id.toString()]
+            possibleUsers[user_id.toString()] = true
+          else
+            hit = false
+            for user_id, exists of possibleUsers
+              if possibleUsers[user_id.toString()]
+                hit = true
+            if !hit
+              delete possibleUsers[user_id.toString()]
+        possibleUserGroups[ticket.group_id.toString()] = true
+    for user_id, _exists of possibleUsers
+      if App.User.exists(user_id)
+        user = App.User.find(user_id)
+        if user.active is true
+          users.push user
+    for group in groups
+      valid_user_ids = []
+      for user_id in group.user_ids
+        if App.User.exists(user_id)
+          if App.User.find(user_id).active is true
+            valid_user_ids.push user_id
+      group.valid_user_ids = valid_user_ids
+
+    ###
+    users = [
+      App.User.find(2),
+      App.User.find(2),
+      App.User.find(2),
+    ]
+    macros = [
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close &amp; Tag as Spam'
+      },
+      {
+        name: 'Close &amp; Reply we\'re on Holidays'
+      },
+      {
+        name: 'Escalate to 2nd level'
+      },
+      {
+        name: '1st Close'
+      },
+    ]
+    ###
+    @batchAssignInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
+      users: users
+      groups: groups
+    ))
+    @batchMacro.html $(App.view('ticket_overview/batch_overlay_macro')(
+      macros: macros
+    ))
 
   active: (state) =>
     return @shown if state is undefined
@@ -396,11 +1007,11 @@ class Table extends App.Controller
         checkbox: checkbox
       )
       table = $(table)
-      table.delegate('[name="bulk_all"]', 'click', (e) ->
-        if $(e.target).attr('checked')
-          $(e.target).closest('table').find('[name="bulk"]').attr('checked', true)
+      table.delegate('[name="bulk_all"]', 'change', (e) ->
+        if $(e.currentTarget).prop('checked')
+          $(e.currentTarget).closest('table').find('[name="bulk"]').prop('checked', true)
         else
-          $(e.target).closest('table').find('[name="bulk"]').attr('checked', false)
+          $(e.currentTarget).closest('table').find('[name="bulk"]').prop('checked', false)
       )
       @$('.table-overview').append(table)
     else
@@ -440,6 +1051,25 @@ class Table extends App.Controller
           @bulkForm.hide()
         else
           @bulkForm.show()
+
+        if @lastChecked && e.shiftKey
+          # check items in a row
+          currentItem = $(e.currentTarget).parents('.item')
+          lastCheckedItem = @lastChecked.parents('.item')
+          items = currentItem.parent().children()
+
+          if currentItem.index() > lastCheckedItem.index()
+            # current item is below last checked item
+            startId = lastCheckedItem.index()
+            endId = currentItem.index()
+          else
+            # current item is above last checked item
+            startId = currentItem.index()
+            endId = lastCheckedItem.index()
+
+          items.slice(startId+1, endId).find('[name="bulk"]').prop('checked', (-> !@checked))
+
+        @lastChecked = $(e.currentTarget)
       callbackIconHeader = (headers) ->
         attribute =
           name:        'icon'
@@ -513,7 +1143,7 @@ class Table extends App.Controller
       @bulkForm.show()
 
     # show/hide bulk action
-    @$('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'click', (e) =>
+    @$('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'change', (e) =>
       if @$('.table-overview').find('input[name="bulk"]:checked').length == 0
         @bulkForm.hide()
         @bulkForm.reset()
@@ -522,9 +1152,21 @@ class Table extends App.Controller
     )
 
     # deselect bulk_all if one item is uncheck observ
-    @$('.table-overview').delegate('[name="bulk"]', 'click', (e) ->
-      if !$(e.target).attr('checked')
-        $(e.target).parents().find('[name="bulk_all"]').attr('checked', false)
+    @$('.table-overview').delegate('[name="bulk"]', 'change', (e) =>
+      bulkAll = @$('.table-overview').find('[name="bulk_all"]')
+      checkedCount = @$('.table-overview').find('input[name="bulk"]:checked').length
+      checkboxCount = @$('.table-overview').find('input[name="bulk"]').length
+
+      if checkedCount is 0
+        bulkAll.prop('indeterminate', false)
+        bulkAll.prop('checked', false)
+      else
+        if checkedCount is checkboxCount
+          bulkAll.prop('indeterminate', false)
+          bulkAll.prop('checked', true)
+        else
+          bulkAll.prop('checked', false)
+          bulkAll.prop('indeterminate', true)
     )
 
   getSelected: ->
@@ -540,7 +1182,7 @@ class Table extends App.Controller
       ticketId = $(element).val()
       for ticketIdSelected in ticketIDs
         if ticketIdSelected is ticketId
-          $(element).attr('checked', true)
+          $(element).prop('checked', true)
     )
 
   viewmode: (e) =>
@@ -740,7 +1382,7 @@ class BulkForm extends App.Controller
     @holder.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
     App.Event.trigger 'notify', {
       type: 'success'
-      msg: App.i18n.translateContent('Bulk-Action executed!')
+      msg: App.i18n.translateContent('Bulk action executed!')
     }
 
 class App.OverviewSettings extends App.ControllerModal

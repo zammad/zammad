@@ -1,0 +1,21 @@
+<% if !@rows.length: %>
+  <table class="settings-list settings-list--stretch settings-list--placeholder">
+    <thead><tr><th><%- @T('No Entries') %>
+  </table>
+<% else: %>
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th><%- @T('Organization') %>
+    <th><%- @T('Time Units') %>
+  </thead>
+  <tbody>
+  <% for row in @rows: %>
+  <tr>
+    <td><a href="#organization/profile/<%- row.organization.id %>"><%= row.organization.name %></a>
+    <td><%= row.time_unit %>
+  <% end %>
+  </tbody>
+</table>
+</div>
+<% end %>

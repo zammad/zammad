@@ -32,15 +32,10 @@ class App.WidgetTag extends App.Controller
 
   fetch: =>
     @pendingRefresh = false
-    @ajax(
-      id:    @key
-      type:  'GET'
-      url:   "#{@apiPath}/tags"
-      data:
-        object: @object_type
-        o_id:   @object.id
-      processData: true
-      success: (data, status, xhr) =>
+    App[@object_type].tagGet(
+      @object.id,
+      @key,
+      (data) =>
         @localTags = data.tags
         @render()
     )
@@ -104,16 +99,7 @@ class App.WidgetTag extends App.Controller
     return if App.Config.get('tag_new') is false && !@possibleTags[item]
     @localTags.push item
     @render()
-
-    @ajax(
-      type:  'GET'
-      url:   "#{@apiPath}/tags/add"
-      data:
-        object: @object_type
-        o_id:   @object.id
-        item:   item
-      processData: true,
-    )
+    App[@object_type].tagAdd(@object.id, item)
 
   onRemoveTag: (e) =>
     e.preventDefault()
@@ -124,16 +110,7 @@ class App.WidgetTag extends App.Controller
   remove: (item) =>
     @localTags = _.filter(@localTags, (tagItem) -> return tagItem if tagItem isnt item)
     @render()
-
-    @ajax(
-      type:  'GET'
-      url:   "#{@apiPath}/tags/remove"
-      data:
-        object: @object_type
-        o_id:   @object.id
-        item:   item
-      processData: true
-    )
+    App[@object_type].tagRemove(@object.id, item)
 
   searchTag: (e) ->
     e.preventDefault()

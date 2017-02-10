@@ -15,11 +15,8 @@ class OtrsImportBrowserTest < TestCase
     location(url: browser_url)
 
     click(css: 'a[href="#import"]')
-
     click(css: 'a[href="#import/otrs"]')
-
     click(css: '.js-download')
-
     click(css: '.js-otrs-link')
 
     invalid_key_url = "#{ENV['IMPORT_BT_OTRS_ENDPOINT']};Key=31337"
@@ -28,7 +25,6 @@ class OtrsImportBrowserTest < TestCase
       css:   '#otrs-link',
       value: invalid_key_url
     )
-
     sleep 5
 
     watch_for(
@@ -41,14 +37,18 @@ class OtrsImportBrowserTest < TestCase
       css:   '#otrs-link',
       value: import_url
     )
-
     sleep 5
 
     watch_for_disappear(
       css: '.otrs-link-error',
       value: 'Invalid API key.',
     )
+    click(css: '.js-migration-check')
 
+    watch_for(
+      css: '.wizard-slide:not(.hide)',
+      value: 'Notice',
+    )
     click(css: '.js-migration-start')
 
     watch_for(

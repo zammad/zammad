@@ -16,7 +16,7 @@
     </select>
     <%- @Icon('arrow-down') %>
   </div>
-  <span class="text-small text-muted">(<%- @T('iCalendar links from Google, will get fetched once a day') %>)</span>
+  <span class="text-small text-muted">(<%- @T('iCalendar links from Google will get fetched once a day') %>)</span>
 </div>
 
 <div class="settings-row">

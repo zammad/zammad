@@ -114,22 +114,33 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # validate url
     messages = {}
+    settings = {}
     if !Setting.get('system_online_service')
       if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
         messages[:url] = 'A URL looks like http://zammad.example.com'
+      end
+
+      # split url in http_type and fqdn
+      if params[:url]
+        if params[:url] =~ %r{^(http|https)://(.+?)(:.+?|/.+?|)$}
+          settings[:http_type] = $1
+          settings[:fqdn] = $2
+        else
+          messages[:url] = 'A URL looks like http://zammad.example.com'
+        end
       end
     end
 
     # validate organization
     if !params[:organization] || params[:organization].empty?
       messages[:organization] = 'Invalid!'
+    else
+      settings[:organization] = params[:organization]
     end
 
     # validate image
     if params[:logo] && params[:logo] =~ /^data:image/i
-
       file = StaticAssets.data_url_attributes(params[:logo])
-
       if !file[:content] || !file[:mime_type]
         messages[:logo] = 'Unable to process image upload.'
       end
@@ -142,21 +153,6 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       }
       return
     end
-
-    # split url in http_type and fqdn
-    settings = {}
-    if !Setting.get('system_online_service')
-      if params[:url] =~ %r{/^(http|https)://(.+?)(:.+?|/.+?|)$}
-        Setting.set('http_type', $1)
-        settings[:http_type] = $1
-        Setting.set('fqdn', $2)
-        settings[:fqdn] = $2
-      end
-    end
-
-    # save organization
-    Setting.set('organization', params[:organization])
-    settings[:organization] = params[:organization]
 
     # save image
     if params[:logo] && params[:logo] =~ /^data:image/i

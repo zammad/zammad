@@ -2,28 +2,28 @@
   <h2>Profile</h2>
 
   <ul class="nav nav-pills nav-stacked">
-    <li><a href="#profile/language">Language</a></li>  
-    <li><a href="#profile/avatar">Avatar</a></li>  
-    <li><a href="#profile/password">Password</a></li>  
-    <li><a href="#profile/notifications">Notifications</a></li>
-    <li class="active"><a href="#profile/calendar">Calendar</a></li>  
-    <li><a href="#profile/linked">Linked Accounts</a></li>
+    <li><a href="#profile/language"><%- @t('Language') %></a></li>
+    <li><a href="#profile/avatar"><%- @t('Avatar') %></a></li>
+    <li><a href="#profile/password"><%- @t('Password') %></a></li>
+    <li><a href="#profile/notifications"><%- @t('Notifications') %></a></li>
+    <li class="active"><a href="#profile/calendar"><%- @t('Calendar') %></a></li>
+    <li><a href="#profile/linked"><%- @t('Linked Accounts') %></a></li>
   </ul>
 </div>
 
 <div class="main flex">
   <div class="page-header">
     <div class="page-header-title">
-      <h1>Calendar</h1>
+      <h1><%- @t('Calendar') %></h1>
     </div>
   </div>
-  <h2>Ticket Subscriptions</h2>
+  <h2><%- @t('Ticket Subscriptions') %></h2>
 
-  <p>See your tickets from within your favorite calendar by adding the following <b>url</b> to your calendar app.</p>
+  <p><%- @t('See your tickets from within your favorite calendar by adding the following URL to your calendar app.') %></p>
 
-  <h3>Url</h3>
+  <h3><%- @t('URL') %></h3>
   <div class="output-input">
-    <output class="js-output">Subscription to all my tickets:</output>
+    <output class="js-output"><%- @t('Subscription to all my tickets:') %></output>
     <input class="form-control js-select" readonly value="https://company.zammad.com/ical/tickets">
   </div>
 
@@ -31,29 +31,29 @@
   <table class="settings-list">
     <thead>
       <tr>
-        <th style="white-space: nowrap;">Status Type
-        <th colspan="2">Options
-        <th width="100%">Direct URL
+        <th style="white-space: nowrap;"><%- @t('Status Type') %></th>
+        <th colspan="2"><%- @t('Options') %></th>
+        <th width="100%"><%- @t('Direct URL') %>/th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>new/open
-        <td><label class="inline-label"><input type="checkbox" name="new_open/own" checked> Own</label>
-        <td><label class="inline-label"><input type="checkbox" name="new_open/not_assigned"> Not Assigned</label>
-        <td><input class="form-control form-control--borderless js-select" readonly value="https://company.zammad.com/ical/tickets/new_open">
+        <td><%- @t('new/open') %></td>
+        <td><label class="inline-label"><input type="checkbox" name="new_open/own" checked> <%- @t('Own') %></label></td>
+        <td><label class="inline-label"><input type="checkbox" name="new_open/not_assigned"> <%- @t('Not Assigned') %></label>/td>
+        <td><input class="form-control form-control--borderless js-select" readonly value="https://company.zammad.com/ical/tickets/new_open"></td>
       </tr>
       <tr>
-        <td>pending
-        <td><label class="inline-label"><input type="checkbox" name="pending/own" checked> Own</label>
-        <td><label class="inline-label"><input type="checkbox" name="pending/not_assigned"> Not Assigned</label>
-        <td><input class="form-control form-control--borderless js-select" readonly value="https://company.zammad.com/ical/tickets/pending">
+        <td><%- @t('pending') %></td>
+        <td><label class="inline-label"><input type="checkbox" name="pending/own" checked> <%- @t('Own') %></label></td>
+        <td><label class="inline-label"><input type="checkbox" name="pending/not_assigned"> <%- @t('Not Assigned') %></label></td>
+        <td><input class="form-control form-control--borderless js-select" readonly value="https://company.zammad.com/ical/tickets/pending"></td>
       </tr>
       <tr>
-        <td>escalating
-        <td><label class="inline-label"><input type="checkbox" name="escalating/own" checked> Own</label>
-        <td><label class="inline-label"><input type="checkbox" name="escalating/not_assigned"> Not Assigned</label>
-        <td><input class="form-control form-control--borderless js-select" readonly value="https://company.zammad.com/ical/tickets/escalating">
+        <td><%- @t('escalating') %></td>
+        <td><label class="inline-label"><input type="checkbox" name="escalating/own" checked> <%- @t('Own') %></label></td>
+        <td><label class="inline-label"><input type="checkbox" name="escalating/not_assigned"> <%- @t('Not Assigned') %></label></td>
+        <td><input class="form-control form-control--borderless js-select" readonly value="https://company.zammad.com/ical/tickets/escalating"></td>
       </tr>
     </tbody>
   </table>

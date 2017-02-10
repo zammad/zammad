@@ -426,7 +426,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       navheader = false
       if prio is 80
         divider   = true
-        navheader = 'Recent Viewed'
+        navheader = 'Recently viewed'
 
       prio++
       NavBarRight['RecendViewed::' + item.o_id + item.object + '-' + prio ] = {

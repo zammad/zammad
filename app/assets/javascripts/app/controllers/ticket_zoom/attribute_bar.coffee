@@ -49,12 +49,20 @@ class App.TicketZoomAttributeBar extends App.Controller
     @setSecondaryAction(@secondaryAction, localeEl)
 
     if @permissionCheck('ticket.agent')
-      new App.TaskbarWatcher(
+      @taskbarWatcher = new App.TaskbarWatcher(
         task_key: @task_key
         el:       localeEl.filter('.js-avatars')
       )
 
     @html localeEl
+
+  start: =>
+    return if !@taskbarWatcher
+    @taskbarWatcher.start()
+
+  stop: =>
+    return if !@taskbarWatcher
+    @taskbarWatcher.stop()
 
   checkMacroChanges: =>
     macroLastUpdated = App.Macro.lastUpdatedAt()

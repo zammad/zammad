@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="29px" height="22px" viewBox="0 0 29 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
+<svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
     <title>facebook-button</title>
     <desc>Created with Sketch.</desc>
-    <defs>
-        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
-            <stop stop-color="#FFFFFF" offset="0%"></stop>
-            <stop stop-color="#E6EAF1" offset="100%"></stop>
-        </linearGradient>
-    </defs>
+    <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="facebook-button">
-            <polygon id="bar" fill="#778EBA" points="0 17 29 17 29 22 0 22"></polygon>
-            <path d="M17.9191655,22 L17.9191655,11.9437767 L15,11.9437767 L15,7.97364464 L17.9773243,7.97364464 L17.9773243,3.93510204 C17.9773243,1.85079647 19.5752523,0 22.028952,0 L27,0 L27,3.80793996 L23.1369773,3.80793996 C22.0660533,3.80793996 21.9436541,3.84603385 21.9436541,4.84117843 L21.9356322,7.97364464 L25.4873949,7.97364464 L25.1013409,11.9437767 L21.8759692,11.9437767 L21.9768096,22 L17.9191655,22 Z" id="f" fill="url(#linearGradient-1)"></path>
+            <polygon id="bar" fill="#778EBA" points="0 18 29 18 29 23 0 23"></polygon>
+            <path d="M18,23 L18,13 L15,13 L15,9 L18,9 L18,4.90979004 C18,2.82548447 19.5463004,1 22,1 L27,1 L27,4.80793996 L23.1369773,4.80793996 C22.0660533,4.80793996 22,4.83291939 22,5.82806396 L22,9 L25.5,9 L25,13 L22,13 L22,23 L18,23 Z" id="f" fill="#FFFFFF"></path>
         </g>
     </g>
 </svg>

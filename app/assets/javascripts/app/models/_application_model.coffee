@@ -737,3 +737,38 @@ class App.Model extends Spine.Model
 
   @findNative: (id) ->
     @irecords[id] or notFound?(id)
+
+  @tagGet: (id, key, callback) ->
+    App.Ajax.request(
+      id:    key
+      type:  'GET'
+      url:   "#{@apiPath}/tags"
+      data:
+        object: @.className
+        o_id:   id
+      processData: true
+      success: (data, status, xhr) ->
+        callback(data)
+    )
+
+  @tagAdd: (id, item) ->
+    App.Ajax.request(
+      type:  'GET'
+      url:   "#{@apiPath}/tags/add"
+      data:
+        object: @.className
+        o_id:   id
+        item:   item
+      processData: true
+    )
+
+  @tagRemove: (id, item) ->
+    App.Ajax.request(
+      type:  'GET'
+      url:   "#{@apiPath}/tags/remove"
+      data:
+        object: @.className
+        o_id:   id
+        item:   item
+      processData: true
+    )

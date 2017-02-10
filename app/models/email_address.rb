@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class EmailAddress < ApplicationModel
+  include LatestChangeObserved
+
   has_many        :groups,   after_add: :cache_update, after_remove: :cache_update
   belongs_to      :channel
   validates       :realname, presence: true
@@ -11,8 +13,6 @@ class EmailAddress < ApplicationModel
   after_create    :update_email_address_id
   after_update    :update_email_address_id
   after_destroy   :delete_group_reference
-
-  latest_change_support
 
 =begin
 

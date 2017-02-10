@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Job < ApplicationModel
+  include NotifiesClients
+
   load 'job/assets.rb'
   include Job::Assets
 
@@ -11,8 +13,6 @@ class Job < ApplicationModel
 
   before_create :updated_matching, :update_next_run_at
   before_update :updated_matching, :update_next_run_at
-
-  notify_clients_support
 
   def self.run
     jobs = Job.where(active: true, running: false)

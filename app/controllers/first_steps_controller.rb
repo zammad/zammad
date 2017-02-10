@@ -61,13 +61,13 @@ class FirstStepsController < ApplicationController
               location: '#channels/email',
             },
             {
-              name: 'Invite Agents/Colleges to help working on Tickets',
+              name: 'Invite agents/colleagues to help working on tickets',
               checked: invite_agents,
               location: '#',
               class: 'js-inviteAgent',
             },
             {
-              name: 'Invite Customers to create issues in Zammad',
+              name: 'Invite customers to create issues in Zammad',
               checked: invite_customers,
               location: '#',
               class: 'js-inviteCustomer',
@@ -89,7 +89,7 @@ class FirstStepsController < ApplicationController
               class: 'js-testTicket',
             },
             {
-              name: 'Create Text Modues',
+              name: 'Create Text Modules',
               checked: text_module_active,
               location: '#manage/text_modules',
             },
@@ -106,7 +106,7 @@ class FirstStepsController < ApplicationController
           ],
         },
         {
-          name: 'Additionals Channels',
+          name: 'Additional Channels',
           items: [
             {
               name: 'Twitter',
@@ -154,7 +154,7 @@ class FirstStepsController < ApplicationController
             class: 'js-testTicket',
           },
           {
-            name: 'Invite Customers to create issues in Zammad',
+            name: 'Invite customers to create issues in Zammad',
             checked: invite_customers,
             location: '#',
             class: 'js-inviteCustomer',

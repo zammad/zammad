@@ -50,9 +50,9 @@ class ArticleViewItem extends App.ObserverController
     '.textBubble-overflowContainer': 'textBubbleOverflowContainer'
 
   events:
-    'click .textBubble':   'toggleMetaWithDelay'
-    'click .textBubble a': 'stopPropagation'
-    'click .js-unfold':    'unfold'
+    'click .textBubble':    'toggleMetaWithDelay'
+    'click .textBubble a':  'stopPropagation'
+    'click .js-toggleFold': 'toggleFold'
 
   constructor: ->
     super
@@ -185,17 +185,16 @@ class ArticleViewItem extends App.ObserverController
     maxHeight               = 560
     minHeight               = 90
     bubbleContent           = @textBubbleContent
-    bubbleOvervlowContainer = @textBubbleOverflowContainer
+    bubbleOverflowContainer = @textBubbleOverflowContainer
 
     # expand if see more is already clicked
     if @seeMore
       bubbleContent.css('height', 'auto')
-      bubbleOvervlowContainer.addClass('hide')
       return
 
     # reset bubble heigth and "see more" opacity
     bubbleContent.css('height', '')
-    bubbleOvervlowContainer.css('opacity', '')
+    bubbleOverflowContainer.css('opacity', '')
 
     # remember offset of "see more"
     signatureMarker = bubbleContent.find('.js-signatureMarker')
@@ -209,8 +208,8 @@ class ArticleViewItem extends App.ObserverController
     if offsetTop && offsetTop.top is 0
       offsetTop = signatureMarker.next('div, p, br').position()
 
-    # remember bubble heigth
-    heigth = bubbleContent.height()
+    # remember bubble content heigth
+    bubbleContentHeigth = bubbleContent.height()
 
     # get marker heigth
     if offsetTop
@@ -218,20 +217,23 @@ class ArticleViewItem extends App.ObserverController
 
     # if signature marker exists and heigth is within maxHeight
     if markerHeight && markerHeight < maxHeight
-      newHeigth = offsetTop.top + 30
+      newHeigth = markerHeight + 30
       if newHeigth < minHeight
         newHeigth = minHeight
-      bubbleContent.attr('data-height', heigth)
+
+      bubbleContent.attr('data-height', bubbleContentHeigth + 30)
+      bubbleContent.attr('data-height-origin', newHeigth)
       bubbleContent.css('height', "#{newHeigth}px")
-      bubbleOvervlowContainer.removeClass('hide')
+      bubbleOverflowContainer.removeClass('hide')
 
     # if heigth is higher then maxHeight
-    else if heigth > maxHeight
-      bubbleContent.attr('data-height', heigth)
+    else if bubbleContentHeigth > maxHeight
+      bubbleContent.attr('data-height', bubbleContentHeigth + 30)
+      bubbleContent.attr('data-height-origin', maxHeight)
       bubbleContent.css('height', "#{maxHeight}px")
-      bubbleOvervlowContainer.removeClass('hide')
+      bubbleOverflowContainer.removeClass('hide')
     else
-      bubbleOvervlowContainer.addClass('hide')
+      bubbleOverflowContainer.addClass('hide')
 
   stopPropagation: (e) ->
     e.stopPropagation()
@@ -323,27 +325,29 @@ class ArticleViewItem extends App.ObserverController
       metaTopClip.velocity({ height: metaTop.outerHeight() }, animSpeed, 'easeOutQuad')
       metaBottomClip.velocity({ height: metaBottom.outerHeight() }, animSpeed, 'easeOutQuad')
 
-  unfold: (e) ->
+  toggleFold: (e) ->
     e.preventDefault()
     e.stopPropagation()
 
-    @seeMore = true
-
     bubbleContent           = @textBubbleContent
-    bubbleOvervlowContainer = @textBubbleOverflowContainer
+    bubbleOverflowContainer = @textBubbleOverflowContainer
 
-    bubbleOvervlowContainer.velocity
-      properties:
-        opacity: 0
-      options:
-        duration: 300
+    if @seeMoreOpen
+      label = App.i18n.translateContent('See more')
+      height = bubbleContent.attr('data-height-origin')
+      @seeMoreOpen = false
+    else
+      label = App.i18n.translateContent('See less')
+      height = bubbleContent.attr('data-height')
+      @seeMoreOpen = true
+
+    bubbleOverflowContainer.toggleClass('is-open', @seeMoreOpen).find('.js-toggleFold').text(label)
 
     bubbleContent.velocity
       properties:
-        height: bubbleContent.attr('data-height')
+        height: height
       options:
         duration: 300
-        complete: -> bubbleOvervlowContainer.addClass('hide')
 
   isOrContains: (node, container) ->
     while node
