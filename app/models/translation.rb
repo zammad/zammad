@@ -225,9 +225,10 @@ all:
 =end
 
   def self.load_from_file(dedicated_locale = nil)
+    version = Version.get
     directory = Rails.root.join('config/translations')
     locals_to_sync(dedicated_locale).each { |locale|
-      file = Rails.root.join("#{directory}/#{locale}.yml")
+      file = Rails.root.join("#{directory}/#{locale}-#{version}.yml")
       return false if !File.exist?(file)
       data = YAML.load_file(file)
       to_database(locale, data)
@@ -250,6 +251,7 @@ all:
 =end
 
   def self.fetch(dedicated_locale = nil)
+    version = Version.get
     locals_to_sync(dedicated_locale).each { |locale|
       url = "https://i18n.zammad.com/api/v1/translations/#{locale}"
       if !UserInfo.current_user_id
@@ -258,7 +260,7 @@ all:
       result = UserAgent.get(
         url,
         {
-          version: Version.get,
+          version: version,
         },
         {
           json: true,
@@ -272,7 +274,7 @@ all:
       if !File.directory?(directory)
         Dir.mkdir(directory, 0o755)
       end
-      file = Rails.root.join("#{directory}/#{locale}.yml")
+      file = Rails.root.join("#{directory}/#{locale}-#{version}.yml")
       File.open(file, 'w') do |out|
         YAML.dump(result.data, out)
       end
