@@ -3,6 +3,7 @@ do($ = window.jQuery, window) ->
   scripts = document.getElementsByTagName('script')
   myScript = scripts[scripts.length - 1]
   scriptHost = myScript.src.match('.*://([^:/]*).*')[1]
+  scriptProtocol = myScript.src.match('(.*)://[^:/]*.*')[1]
 
   # Define the plugin class
   class Base
@@ -908,7 +909,7 @@ do($ = window.jQuery, window) ->
 
     detectHost: ->
       protocol = 'ws://'
-      if window.location.protocol is 'https:'
+      if scriptProtocol is 'https'
         protocol = 'wss://'
       @options.host = "#{ protocol }#{ scriptHost }/ws"
 
