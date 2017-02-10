@@ -18,6 +18,7 @@ class App.TicketOverview extends App.Controller
     '.js-batch-assign-group-name':  'batchAssignGroupName'
     '.js-batch-assign-group-inner': 'batchAssignGroupInner'
     '.js-batch-macro':              'batchMacro'
+    '.main':                        'mainContent'
 
   events:
     'mousedown .item': 'startDragItem'
@@ -48,6 +49,8 @@ class App.TicketOverview extends App.Controller
 
     $(document).on 'mousemove.item', @dragItem
     $(document).one 'mouseup.item', @endDragItem
+
+    @mainContent.addClass('u-unclickable')
     # TODO: fire @cancelDrag on ESC
 
   dragItem: (event) =>
@@ -104,6 +107,7 @@ class App.TicketOverview extends App.Controller
 
   endDragItem: (event) =>
     return if !@batchSupport
+    @mainContent.removeClass('u-unclickable')
     $(document).off 'mousemove.item'
     $(document).off 'mouseup.item'
     pos = @batchDragger.data()
@@ -403,7 +407,9 @@ class App.TicketOverview extends App.Controller
     group = App.Group.find(groupId)
     users = []
 
-    users.push App.User.find(i) for i in group.user_ids
+    for user_id in group.user_ids
+      if App.User.exists(user_id)
+        users.push App.User.find(user_id)
 
     @batchAssignGroupName.text group.displayName()
     @batchAssignGroupInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
