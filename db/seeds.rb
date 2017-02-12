@@ -3181,16 +3181,53 @@ Ticket::StateType.create_if_not_exists(id: 5, name: 'closed')
 Ticket::StateType.create_if_not_exists(id: 6, name: 'merged')
 Ticket::StateType.create_if_not_exists(id: 7, name: 'removed')
 
-Ticket::State.create_if_not_exists(id: 1, name: 'new', state_type_id: Ticket::StateType.find_by(name: 'new').id)
-Ticket::State.create_if_not_exists(id: 2, name: 'open', state_type_id: Ticket::StateType.find_by(name: 'open').id)
-Ticket::State.create_if_not_exists(id: 3, name: 'pending reminder', state_type_id: Ticket::StateType.find_by(name: 'pending reminder').id, ignore_escalation: true)
-Ticket::State.create_if_not_exists(id: 4, name: 'closed', state_type_id: Ticket::StateType.find_by(name: 'closed').id, ignore_escalation: true)
-Ticket::State.create_if_not_exists(id: 5, name: 'merged', state_type_id: Ticket::StateType.find_by(name: 'merged').id, ignore_escalation: true)
-Ticket::State.create_if_not_exists(id: 6, name: 'removed', state_type_id: Ticket::StateType.find_by(name: 'removed').id, active: false, ignore_escalation: true)
-Ticket::State.create_if_not_exists(id: 7, name: 'pending close', state_type_id: Ticket::StateType.find_by(name: 'pending action').id, next_state_id: 4, ignore_escalation: true)
+Ticket::State.create_if_not_exists(
+  id: 1,
+  name: 'new',
+  state_type_id: Ticket::StateType.find_by(name: 'new').id,
+  default_create: true,
+)
+Ticket::State.create_if_not_exists(
+  id: 2,
+  name: 'open',
+  state_type_id: Ticket::StateType.find_by(name: 'open').id,
+  default_follow_up: true,
+)
+Ticket::State.create_if_not_exists(
+  id: 3,
+  name: 'pending reminder',
+  state_type_id: Ticket::StateType.find_by(name: 'pending reminder').id,
+  ignore_escalation: true,
+)
+Ticket::State.create_if_not_exists(
+  id: 4,
+  name: 'closed',
+  state_type_id: Ticket::StateType.find_by(name: 'closed').id,
+  ignore_escalation: true,
+)
+Ticket::State.create_if_not_exists(
+  id: 5,
+  name: 'merged',
+  state_type_id: Ticket::StateType.find_by(name: 'merged').id,
+  ignore_escalation: true,
+)
+Ticket::State.create_if_not_exists(
+  id: 6,
+  name: 'removed',
+  state_type_id: Ticket::StateType.find_by(name: 'removed').id,
+  active: false,
+  ignore_escalation: true,
+)
+Ticket::State.create_if_not_exists(
+  id: 7,
+  name: 'pending close',
+  state_type_id: Ticket::StateType.find_by(name: 'pending action').id,
+  next_state_id: Ticket::State.find_by(name: 'closed').id,
+  ignore_escalation: true,
+)
 
 Ticket::Priority.create_if_not_exists(id: 1, name: '1 low')
-Ticket::Priority.create_if_not_exists(id: 2, name: '2 normal')
+Ticket::Priority.create_if_not_exists(id: 2, name: '2 normal', default_create: true)
 Ticket::Priority.create_if_not_exists(id: 3, name: '3 high')
 
 Ticket::Article::Type.create_if_not_exists(id: 1, name: 'email', communication: true)
@@ -3232,7 +3269,6 @@ UserInfo.current_user_id = user_community.id
 ticket = Ticket.create(
   group_id: Group.find_by(name: 'Users').id,
   customer_id: User.find_by(login: 'nicole.braun@zammad.org').id,
-  owner_id: User.find_by(login: '-').id,
   title: 'Welcome to Zammad!',
   state_id: Ticket::State.find_by(name: 'new').id,
   priority_id: Ticket::Priority.find_by(name: '2 normal').id,

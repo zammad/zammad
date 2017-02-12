@@ -19,10 +19,10 @@ class Observer::Ticket::ResetNewState < ActiveRecord::Observer
 
     # if current ticket state is still new
     ticket = Ticket.lookup(id: record.ticket_id)
-    return true if ticket.state.state_type.name != 'new'
+    new_state = Ticket::State.find_by(default_create: true)
+    return true if ticket.state_id != new_state.id
 
-    # TODO: add config option to state managment in UI
-    state = Ticket::State.lookup(name: 'open')
+    state = Ticket::State.find_by(default_follow_up: true)
     return if !state
 
     # set ticket to open

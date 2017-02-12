@@ -188,10 +188,7 @@ class FirstStepsController < ApplicationController
     ticket = Ticket.create(
       group_id: Group.find_by(active: true, name: 'Users').id,
       customer_id: customer.id,
-      owner_id: User.find_by(login: '-').id,
       title: result[:subject],
-      state_id: Ticket::State.find_by(name: 'new').id,
-      priority_id: Ticket::Priority.find_by(name: '2 normal').id,
     )
     article = Ticket::Article.create(
       ticket_id: ticket.id,

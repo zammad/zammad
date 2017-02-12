@@ -481,10 +481,11 @@ returns
 
         end
 
-        # set ticket to open again
+        # set ticket to open again or keep create state
         if !mail['x-zammad-ticket-followup-state'.to_sym] && !mail['x-zammad-ticket-followup-state_id'.to_sym]
-          if state_type.name != 'new' && !mail['x-zammad-out-of-office'.to_sym]
-            ticket.state = Ticket::State.find_by(name: 'open')
+          new_state = Ticket::State.find_by(default_create: true)
+          if ticket.state_id != new_state.id && !mail['x-zammad-out-of-office'.to_sym]
+            ticket.state = Ticket::State.find_by(default_follow_up: true)
             ticket.save!
           end
         end
@@ -514,8 +515,6 @@ returns
         ticket = Ticket.new(
           group_id: group.id,
           title: mail[:subject] || '',
-          state_id: Ticket::State.find_by(name: 'new').id,
-          priority_id: Ticket::Priority.find_by(name: '2 normal').id,
           preferences: preferences,
         )
         set_attributes_by_x_headers(ticket, 'ticket', mail)
