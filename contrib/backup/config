@@ -5,6 +5,7 @@
 
 ZAMMAD_DIR="/opt/zammad"
 DATABASE_CONFIG="config/database.yml"
-BACKUP_DIR="/var/tmp/zammad_backup"
+BACKUP_DIR="/home/zammad/backups"
 HOLD_DAYS="10"
 DEBUG="no"
+TEMP_DIR="/var/tmp"
