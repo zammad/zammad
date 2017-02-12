@@ -48,3 +48,11 @@ function backup_db () {
     fi
 }
 
+function check_database_config_exists () {
+    if [ -f ${ZAMMAD_DIR}/${DATABASE_CONFIG} ]; then
+	get_db_credentials
+    else
+	echo "${ZAMMAD_DIR}/${DATABASE_CONFIG} is missing. is zammad configured yet?"
+	exit 1
+    fi
+}
