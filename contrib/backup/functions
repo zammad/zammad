@@ -141,14 +141,9 @@ function stop_zammad () {
   ${INIT_CMD} stop zammad
 }
 
-function delete_current_files () {
-  echo "# Deleting Zammad dir ${ZAMMAD_DIR}"
-  test -d ${ZAMMAD_DIR} && rm -rf ${ZAMMAD_DIR}
-}
-
 function restore_zammad () {
   echo "# Restoring Files"
-  tar -C / -xzf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
+  tar -C / --overwrite -xzf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
 
   if [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "# Restoring PostgrSQL DB"

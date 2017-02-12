@@ -26,8 +26,6 @@ detect_initcmd
 
 stop_zammad
 
-delete_current_files
-
 restore_zammad
 
 start_zammad
