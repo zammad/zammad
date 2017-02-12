@@ -97,8 +97,9 @@ RSpec.describe Translation do
   context 'file based import' do
 
     it 'check download of locales' do
+      version = Version.get
       directory = Rails.root.join('config')
-      file = Rails.root.join("#{directory}/locales.yml")
+      file = Rails.root.join("#{directory}/locales-#{version}.yml")
       if File.exist?(file)
         File.delete(file)
       end
@@ -108,12 +109,13 @@ RSpec.describe Translation do
     end
 
     it 'check download of translations' do
+      version = Version.get
       locale = 'de-de'
       directory = Rails.root.join('config/translations')
       if File.directory?(directory)
         FileUtils.rm_rf(directory)
       end
-      file = Rails.root.join("#{directory}/#{locale}.yml")
+      file = Rails.root.join("#{directory}/#{locale}-#{version}.yml")
       expect(File.exist?(file)).to be false
       Translation.fetch(locale)
       expect(File.exist?(file)).to be true

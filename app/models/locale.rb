@@ -70,7 +70,8 @@ all:
 =end
 
   def self.load_from_file
-    file = Rails.root.join('config/locales.yml')
+    version = Version.get
+    file = Rails.root.join("config/locales-#{version}.yml")
     return false if !File.exist?(file)
     data = YAML.load_file(file)
     to_database(data)
@@ -88,12 +89,13 @@ all:
 =end
 
   def self.fetch
+    version = Version.get
     url = 'https://i18n.zammad.com/api/v1/locales'
 
     result = UserAgent.get(
       url,
       {
-        version: Version.get,
+        version: version,
       },
       {
         json: true,
@@ -103,7 +105,7 @@ all:
     raise "Can't load locales from #{url}" if !result
     raise "Can't load locales from #{url}: #{result.error}" if !result.success?
 
-    file = Rails.root.join('config/locales.yml')
+    file = Rails.root.join("config/locales-#{version}.yml")
     File.open(file, 'w') do |out|
       YAML.dump(result.data, out)
     end

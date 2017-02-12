@@ -30,6 +30,10 @@ class App.TicketOverview extends App.Controller
     @batchSupport = @permissionCheck('ticket.agent')
     @render()
 
+    # rerender view, e. g. on language change
+    @bind 'ui:rerender', =>
+      @renderBatchOverlay()
+
   startDragItem: (event) =>
     return if !@batchSupport
     @grabbedItem = $(event.currentTarget)
@@ -547,6 +551,8 @@ class App.TicketOverview extends App.Controller
       keyboardOn:  @keyboardOn
       keyboardOff: @keyboardOff
 
+    @renderBatchOverlay(elLocal.filter('.js-batch-overlay'))
+
     @html elLocal
 
     @el.find('.main').on('click', =>
@@ -561,6 +567,13 @@ class App.TicketOverview extends App.Controller
       update = =>
         App.OverviewListCollection.fetch(@view)
       @delay(update, 2800, 'overview:fetch')
+
+  renderBatchOverlay: (elLocal) =>
+    if elLocal
+      elLocal.html( App.view('ticket_overview/batch_overlay')() )
+      return
+    @batchOverlay.html( App.view('ticket_overview/batch_overlay')() )
+    @refreshElements()
 
   renderOptions: =>
     macros = App.Macro.findAllByAttribute('active', true)
