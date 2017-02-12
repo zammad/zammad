@@ -42,7 +42,7 @@ function backup_db () {
   if [ "${DB_ADAPTER}" == "mysql2" ]; then
     mysqldump --opt --single-transaction -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
-    su -c "pg_dump ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz" postgres
+    su -c "pg_dump -c ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz" postgres
   else
     echo "DB ADAPTER not found. if its sqlite backup is already saved in filebackup"
   fi
@@ -147,10 +147,10 @@ function restore_zammad () {
 
   if [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "# Restoring PostgrSQL DB"
-    gunzip < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | pg_restore -c ${DB_NAME}
+    gunzip -ck < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | su -c "psql -d ${DB_NAME}" postgres
   elif [ "${DB_ADAPTER}" == "mysql2" ]; then
     echo "# Restoring MySQL DB"
-    gunzip < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
+    gunzip -ck < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
   fi
 }
 

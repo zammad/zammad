@@ -16,8 +16,6 @@ restore_warning "${1}"
 
 check_database_config_exists
 
-get_db_credentials
-
 get_restore_dates
 
 choose_restore_date "${1}"
