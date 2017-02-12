@@ -155,6 +155,5 @@ function restore_zammad () {
 }
 
 function restore_message () {
-    #rm ${BACKUP_DIR}/zammad_restore.sh
     echo "# Zammad restored!"
 }
