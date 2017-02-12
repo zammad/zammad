@@ -132,7 +132,7 @@ function detect_initcmd () {
 }
 
 function start_zammad () {
-  echo "# Starting Zammad"20170212144654
+  echo "# Starting Zammad"
   ${INIT_CMD} start zammad
 }
 
