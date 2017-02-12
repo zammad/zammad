@@ -11,6 +11,7 @@ PATH=/opt/zammad/bin:/opt/zammad/vendor/bundle/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # import functions
 . /opt/zammad/contrib/packager.io/functions
 
+# exec postinstall
 debug
 
 detect_os
@@ -27,24 +28,7 @@ create_initscripts
 
 stop_zammad
 
-# check if database.yml exists
-if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
-    update_database
-else
-    create_database_password
-
-    if [ "${ADAPTER}" == "postgresql" ]; then
-	echo "# Installing zammad on postgresql"
-	create_postgresql_db
-    elif [ "${ADAPTER}" == "mysql2" ]; then
-	echo "# Installing zammad on mysql"
-	create_mysql_db
-    fi
-
-    update_database_yml
-
-    initialise_database
-fi
+update_or_install
 
 start_zammad
 

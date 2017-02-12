@@ -12,9 +12,9 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin:
 . functions
 
 # exec backup
-delete_old_backups
-
 check_database_config_exists
+
+delete_old_backups
 
 get_backup_date
 
