@@ -6,13 +6,13 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:
 
 # import config
-. config
+. /opt/zammad/contrib/backup/config
 
 # import functions
-. functions
+. /opt/zammad/contrib/backup/functions
 
 # exec restore
-restore_warning
+restore_warning "${1}"
 
 check_database_config_exists
 
@@ -20,7 +20,7 @@ get_db_credentials
 
 get_restore_dates
 
-choose_restore_date
+choose_restore_date "${1}"
 
 detect_initcmd
 

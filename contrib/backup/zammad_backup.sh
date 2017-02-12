@@ -6,10 +6,10 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:
 
 # import config
-. config
+. /opt/zammad/contrib/backup/config
 
 # import functions
-. functions
+. /opt/zammad/contrib/backup/functions
 
 # exec backup
 check_database_config_exists

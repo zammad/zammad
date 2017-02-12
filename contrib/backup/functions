@@ -44,7 +44,7 @@ function backup_db () {
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
     su -c "pg_dump ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz" postgres
   else
-    echo "ADAPTER not found. if its sqlite backup is already saved in filebackup"
+    echo "DB ADAPTER not found. if its sqlite backup is already saved in filebackup"
   fi
 }
 
@@ -52,15 +52,19 @@ function check_database_config_exists () {
   if [ -f ${ZAMMAD_DIR}/${DATABASE_CONFIG} ]; then
     get_db_credentials
   else
-    echo "${ZAMMAD_DIR}/${DATABASE_CONFIG} is missing. is zammad configured yet?"
+    echo -e "${ZAMMAD_DIR}/${DATABASE_CONFIG} is missing. is zammad configured yet? \nAborting restore..."
     exit 1
   fi
 }
 
 function restore_warning () {
-  echo -e "The restore will delete your current config and database! \nBe sure to have a backup available! \n"
-  echo -e "Enter 'yes' if you want to proceed!"
-  read -p 'Restore?: ' CHOOSE_RESTORE
+  if [ -n "${1}" ]; then
+    CHOOSE_RESTORE="yes"
+  else
+    echo -e "The restore will delete your current config and database! \nBe sure to have a backup available! \n"
+    echo -e "Enter 'yes' if you want to proceed!"
+    read -p 'Restore?: ' CHOOSE_RESTORE
+  fi
 
   if [ "${CHOOSE_RESTORE}" != "yes" ]; then
     echo "Restore aborted!"
@@ -69,29 +73,39 @@ function restore_warning () {
 }
 
 function get_restore_dates () {
-  RESTORE_FILE_DATES="$(find ${BACKUP_DIR} -type f -iname '*_zammad_files.tar.gz' | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_files.tar.gz##g")"
+  RESTORE_FILE_DATES="$(find ${BACKUP_DIR} -type f -iname '*_zammad_files.tar.gz' | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_files.tar.gz##g" | sort)"
 
-  if [ "${ADAPTER}" == "postgresql" ]; then
+  if [ "${DB_ADAPTER}" == "postgresql" ]; then
     DB_FILE_EXT="psql"
-  elif [ "${ADAPTER}" == "mysql2" ]; then
+  elif [ "${DB_ADAPTER}" == "mysql2" ]; then
     DB_FILE_EXT="mysql"
   fi
 
-  RESTORE_DB_DATES="$(find ${BACKUP_DIR} -type f -iname "*_zammad_db.${DB_FILE_EXT}.gz" | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_db.${DB_FILE_EXT}.gz##g")"
+  RESTORE_DB_DATES="$(find ${BACKUP_DIR} -type f -iname "*_zammad_db.${DB_FILE_EXT}.gz" | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_db.${DB_FILE_EXT}.gz##g" | sort)"
 }
 
 function choose_restore_date () {
-  echo "Enter file date to restore: ${RESTORE_FILE_DATES}"
-  read -p 'File date: ' RESTORE_FILE_DATE
+  if [ -n "${1}" ]; then
+    RESTORE_FILE_DATE="${1}"
+  else
+    echo -e "Enter file date to restore: \n${RESTORE_FILE_DATES}"
+    read -p 'File date: ' RESTORE_FILE_DATE
+  fi
+
   if [ ! -f "${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz" ];then
-    echo "File ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz does not exist!\nRestore aborted!"
+    echo -e "File ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz does not exist! \nRestore aborted!"
     exit 1
   fi
 
-  echo "Enter db date to restore: ${RESTORE_DB_DATES}"
-  read -p 'DB date: 'RESTORE_DB_DATE
+  if [ -n "${1}" ]; then
+    RESTORE_DB_DATE="${1}"
+  else
+    echo -e "Enter db date to restore: \n${RESTORE_DB_DATES}"
+    read -p 'DB date: ' RESTORE_DB_DATE
+  fi
+
   if [ ! -f "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz" ];then
-    echo "File ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_files.tar.gz does not exist!\nRestore aborted!"
+    echo -e "File ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz does not exist! \nRestore aborted!"
     exit 1
   fi
 }
@@ -118,7 +132,7 @@ function detect_initcmd () {
 }
 
 function start_zammad () {
-  echo "# Starting Zammad"
+  echo "# Starting Zammad"20170212144654
   ${INIT_CMD} start zammad
 }
 
@@ -128,19 +142,24 @@ function stop_zammad () {
 }
 
 function delete_current_files () {
+  echo "# Deleting Zammad dir ${ZAMMAD_DIR}"
   test -d ${ZAMMAD_DIR} && rm -rf ${ZAMMAD_DIR}
 }
 
 function restore_zammad () {
+  echo "# Restoring Files"
   tar -C / -xzf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
 
-  if [ "${ADAPTER}" == "postgresql" ]; then
-    gunzip ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | pg_restore -c ${DB_NAME}
-  elif [ "${ADAPTER}" == "mysql2" ]; then
-    gunzip ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
+  if [ "${DB_ADAPTER}" == "postgresql" ]; then
+    echo "# Restoring PostgrSQL DB"
+    gunzip < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | pg_restore -c ${DB_NAME}
+  elif [ "${DB_ADAPTER}" == "mysql2" ]; then
+    echo "# Restoring MySQL DB"
+    gunzip < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
   fi
 }
 
 function restore_message () {
-    echo "Zammad restored!"
+    #rm ${BACKUP_DIR}/zammad_restore.sh
+    echo "# Zammad restored!"
 }
