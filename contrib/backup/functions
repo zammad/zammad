@@ -40,7 +40,7 @@ function backup_files () {
 
 function backup_db () {
     if [ "${DB_ADAPTER}" == "mysql2" ]; then
-	mysqldump --opt --single-transaction ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
+	mysqldump --opt --single-transaction -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
     elif [ "${DB_ADAPTER}" == "postgresql" ]; then
 	su -c "pg_dump ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz" postgres
     else
