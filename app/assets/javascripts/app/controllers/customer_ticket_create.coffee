@@ -102,12 +102,12 @@ class Index extends App.ControllerContent
 
     # set prio
     if !params.priority_id
-      priority = App.TicketPriority.findByAttribute( 'name', '2 normal' )
+      priority = App.TicketPriority.findByAttribute( 'default_create', true )
       params.priority_id = priority.id
 
     # set state
     if !params.state_id
-      state = App.TicketState.findByAttribute( 'name', 'new' )
+      state = App.TicketState.findByAttribute( 'default_create', true )
       params.state_id = state.id
 
     # fillup params

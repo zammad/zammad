@@ -98,8 +98,6 @@ class FormController < ApplicationController
       group_id: 1,
       customer_id: customer.id,
       title: params[:title],
-      state_id: Ticket::State.find_by(name: 'new').id,
-      priority_id: Ticket::Priority.find_by(name: '2 normal').id,
     )
     article = Ticket::Article.create(
       ticket_id: ticket.id,

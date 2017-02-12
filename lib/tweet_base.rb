@@ -337,10 +337,10 @@ class TweetBase
       return ticket.state
     end
 
-    state = Ticket::State.find_by(name: 'new')
+    state = Ticket::State.find_by(default_create: true)
     return state if !ticket
-    return ticket.state if ticket.state.name == 'new'
-    Ticket::State.find_by(name: 'open')
+    return ticket.state if ticket.state_id == state.id
+    Ticket::State.find_by(default_follow_up: true)
   end
 
   def tweet_limit_reached(tweet)
