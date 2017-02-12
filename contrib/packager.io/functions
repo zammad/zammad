@@ -155,7 +155,7 @@ function create_mysql_db () {
     MYSQL_CREDENTIALS="--defaults-file=${MY_CNF}"
   else
     echo -n "Please enter your MySQL root password:"
-    read -s MYSQL_ROOT_PASS
+    read -p 'Password: ' MYSQL_ROOT_PASS
     MYSQL_CREDENTIALS="-u root -p${MYSQL_ROOT_PASS}"
   fi
 

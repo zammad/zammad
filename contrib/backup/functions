@@ -58,9 +58,9 @@ function check_database_config_exists () {
 }
 
 function restore_warning () {
-  echo -e "The restore will delete your current config and database!\nBe sure to have a backup available!\n"
+  echo -e "The restore will delete your current config and database! \nBe sure to have a backup available! \n"
   echo -e "Enter 'yes' if you want to proceed!"
-  read -s CHOOSE_RESTORE
+  read -p 'Restore?: ' CHOOSE_RESTORE
 
   if [ "${CHOOSE_RESTORE}" != "yes" ]; then
     echo "Restore aborted!"
@@ -82,14 +82,14 @@ function get_restore_dates () {
 
 function choose_restore_date () {
   echo "Enter file date to restore: ${RESTORE_FILE_DATES}"
-  read -s RESTORE_FILE_DATE
+  read -p 'File date: ' RESTORE_FILE_DATE
   if [ ! -f "${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz" ];then
     echo "File ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz does not exist!\nRestore aborted!"
     exit 1
   fi
 
   echo "Enter db date to restore: ${RESTORE_DB_DATES}"
-  read -s RESTORE_DB_DATE
+  read -p 'DB date: 'RESTORE_DB_DATE
   if [ ! -f "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz" ];then
     echo "File ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_files.tar.gz does not exist!\nRestore aborted!"
     exit 1
