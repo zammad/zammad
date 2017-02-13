@@ -718,6 +718,11 @@ class BulkForm extends App.Controller
           return
 
       ticket.load(ticket_update)
+
+      # if title is empty - ticket can't processed, set ?
+      if _.isEmpty(ticket.title)
+        ticket.title = '-'
+
       ticket.save(
         done: (r) =>
           @bulk_count_index++
