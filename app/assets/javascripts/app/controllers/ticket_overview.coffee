@@ -126,11 +126,12 @@ class App.TicketOverview extends App.Controller
               # clean scale
               action = @hoveredBatchEntry.attr('data-action')
               id = @hoveredBatchEntry.attr('data-id')
+              groupId = @hoveredBatchEntry.attr('data-group-id')
               items = @el.find('[name="bulk"]:checked')
               @hoveredBatchEntry.removeAttr('style')
               @cleanUpDrag(true)
 
-              @performBatchAction items, action, id
+              @performBatchAction items, action, id, groupId
     @batchDragger.velocity
       properties:
         scale: 0
@@ -172,7 +173,7 @@ class App.TicketOverview extends App.Controller
         easing: 'ease-in-out'
         duration: 300
 
-  performBatchAction: (items, action, id) ->
+  performBatchAction: (items, action, id, groupId) ->
     if action is 'macro'
       @batchCount = items.length
       @batchCountIndex = 0
@@ -201,6 +202,8 @@ class App.TicketOverview extends App.Controller
         #console.log "perform action #{action} with id #{id} on ", $(item).val()
         ticket = App.Ticket.find($(item).val())
         ticket.owner_id = id
+        if !_.isEmpty(groupId)
+          ticket.group_id = groupId
         ticket.save(
           done: (r) =>
             @batchCountIndex++
@@ -411,6 +414,7 @@ class App.TicketOverview extends App.Controller
     @batchAssignGroupInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
       users: users
       groups: []
+      groupId: groupId
     ))
 
     # then adjust the size of the group that it almost overlaps the batch-assign box
