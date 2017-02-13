@@ -1163,7 +1163,6 @@ class Table extends App.Controller
       bulkAll = @$('.table-overview').find('[name="bulk_all"]')
       checkedCount = @$('.table-overview').find('input[name="bulk"]:checked').length
       checkboxCount = @$('.table-overview').find('input[name="bulk"]').length
-
       if checkedCount is 0
         bulkAll.prop('indeterminate', false)
         bulkAll.prop('checked', false)
@@ -1367,6 +1366,11 @@ class BulkForm extends App.Controller
           return
 
       ticket.load(ticket_update)
+
+      # if title is empty - ticket can't processed, set ?
+      if _.isEmpty(ticket.title)
+        ticket.title = '-'
+
       ticket.save(
         done: (r) =>
           @bulk_count_index++
