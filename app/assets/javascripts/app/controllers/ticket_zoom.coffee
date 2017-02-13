@@ -703,11 +703,9 @@ class App.TicketZoom extends App.Controller
       if !ticket['owner_id']
         ticket['owner_id'] = 1
 
-    # check if title exists
-    if !ticket['title']
-      alert( App.i18n.translateContent('Title needed') )
-      @formEnable(e)
-      return
+    # if title is empty - ticket can't processed, set ?
+    if _.isEmpty(ticket.title)
+      ticket.title = '-'
 
     # stop autosave
     @autosaveStop()
