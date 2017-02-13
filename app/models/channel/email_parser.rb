@@ -512,9 +512,13 @@ returns
         if !group
           group = Group.first
         end
+        title = mail[:subject]
+        if title.blank?
+          title = '-'
+        end
         ticket = Ticket.new(
           group_id: group.id,
-          title: mail[:subject] || '',
+          title: title,
           preferences: preferences,
         )
         set_attributes_by_x_headers(ticket, 'ticket', mail)

@@ -72,6 +72,51 @@ Some Textäöü",
       {
         data: "From: me@example.com
 To: customer@example.com
+Subject:
+
+Some Textäöü without subject#1",
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: '-',
+          },
+          1 => {
+            body: 'Some Textäöü without subject#1',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+      },
+      {
+        data: "From: me@example.com
+To: customer@example.com
+
+Some Textäöü without subject#2",
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: '-',
+          },
+          1 => {
+            body: 'Some Textäöü without subject#2',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+      },
+      {
+        data: "From: me@example.com
+To: customer@example.com
 Subject: äöü some subject
 
 Some Textäöü".encode('ISO-8859-1'),
@@ -79,7 +124,7 @@ Some Textäöü".encode('ISO-8859-1'),
         result: {
           0 => {
             priority: '2 normal',
-            title: '', # should be äöü some subject, but can not be parsed from mime tools
+            title: '-', # should be äöü some subject, but can not be parsed from mime tools
           },
           1 => {
             body: 'Some Textäöü',
@@ -206,7 +251,7 @@ Some Text",
         result: {
           0 => {
             priority: '2 normal',
-            title: '',
+            title: '-',
           },
           1 => {
             from: 'marketingmanager@nthcpghana.com',
