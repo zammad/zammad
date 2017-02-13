@@ -22,8 +22,8 @@ class App.TicketOverview extends App.Controller
 
   events:
     'mousedown .item': 'startDragItem'
-    'mouseenter .js-hover-target': 'highlightBatchEntry'
-    'mouseleave .js-hover-target': 'unhighlightBatchEntry'
+    'mouseenter .js-batch-hover-target': 'highlightBatchEntry'
+    'mouseleave .js-batch-hover-target': 'unhighlightBatchEntry'
 
   constructor: ->
     super
@@ -56,7 +56,6 @@ class App.TicketOverview extends App.Controller
     # TODO: fire @cancelDrag on ESC
 
   dragItem: (event) =>
-    return if !@batchSupport
     pos = @batchDragger.data()
     threshold = 3
     x = event.pageX - pos.dx
@@ -64,10 +63,7 @@ class App.TicketOverview extends App.Controller
     dir = if event.pageY > pos.startY then 1 else -1
 
     if !pos.moved
-      # trigger when moved a little up or down
-      # but don't trigge when moved left or right
-      # because the user might just want to select text
-      if Math.abs(event.pageY - pos.startY) - Math.abs(event.pageX - pos.startX) > threshold
+      if Math.abs(event.pageY - pos.startY) > threshold || Math.abs(event.pageX - pos.startX) > threshold
         @batchDragger.data 'moved', true
         @el.addClass('u-no-userselect')
         # check grabbed items batch checkbox to make sure its checked
@@ -108,8 +104,6 @@ class App.TicketOverview extends App.Controller
     $.Velocity.hook @batchDragger, 'translateY', "#{y}px"
 
   endDragItem: (event) =>
-    return if !@batchSupport
-    @mainContent.removeClass('u-unclickable')
     $(document).off 'mousemove.item'
     $(document).off 'mouseup.item'
     pos = @batchDragger.data()
@@ -179,8 +173,6 @@ class App.TicketOverview extends App.Controller
         duration: 300
 
   performBatchAction: (items, action, id) ->
-    console.log "perform action #{action} with id #{id} on #{items.length} checked items"
-
     if action is 'macro'
       @batchCount = items.length
       @batchCountIndex = 0
@@ -237,8 +229,7 @@ class App.TicketOverview extends App.Controller
       return
 
   showBatchOverlay: ->
-    @mainContent.addClass('u-unclickable')
-    @batchOverlay.show()
+    @batchOverlay.addClass('is-visible')
     $('html').css('overflow', 'hidden')
     @batchOverlayBackdrop.velocity { opacity: [1, 0] }, { duration: 500 }
     @batchMacroOffset = @batchMacro.offset().top + @batchMacro.outerHeight()
@@ -247,12 +238,11 @@ class App.TicketOverview extends App.Controller
     $(document).on 'mousemove.batchoverlay', @controlBatchOverlay
 
   hideBatchOverlay: ->
-    @mainContent.removeClass('u-unclickable')
     $(document).off 'mousemove.batchoverlay'
     @batchOverlayShown = false
     @batchOverlayBackdrop.velocity { opacity: [0, 1] }, { duration: 300, queue: false }
     @hideBatchCircles =>
-      @batchOverlay.hide()
+      @batchOverlay.removeClass('is-visible')
 
     $('html').css('overflow', '')
 
@@ -1068,7 +1058,7 @@ class Table extends App.Controller
         if @lastChecked && e.shiftKey
           # check items in a row
           currentItem = $(e.currentTarget).parents('.item')
-          lastCheckedItem = @lastChecked.parents('.item')
+          lastCheckedItem = $(@lastChecked).parents('.item')
           items = currentItem.parent().children()
 
           if currentItem.index() > lastCheckedItem.index()
@@ -1082,7 +1072,7 @@ class Table extends App.Controller
 
           items.slice(startId+1, endId).find('[name="bulk"]').prop('checked', (-> !@checked))
 
-        @lastChecked = $(e.currentTarget)
+        @lastChecked = e.currentTarget
       callbackIconHeader = (headers) ->
         attribute =
           name:        'icon'

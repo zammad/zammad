@@ -1,12 +1,12 @@
 <% for user in @users: %>
 <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="user_assign" data-id="<%= user.id %>">
-  <div class="js-hover-target"><%- user.avatar(80) %></div>
+  <div class="js-batch-hover-target"><%- user.avatar(80) %></div>
   <div class="batch-overlay-assign-entry-name"><%- user.displayName() %></div>
 </div>
 <% end %>
 <% for group in @groups: %>
 <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="group_assign" data-id="<%= group.id %>">
-  <span class="avatar avatar--organization size-80 js-hover-target">
+  <span class="avatar avatar--organization size-80 js-batch-hover-target">
     <%- @Icon('organization') %>
   </span>
   <div class="batch-overlay-assign-entry-name"><%- group.displayName() %></div>

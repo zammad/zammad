@@ -2751,6 +2751,10 @@ footer {
       display: none;
     }
   }
+
+  .table > tbody > tr > td {
+    user-select: none;
+  }
 }
 
 .overview-header {
@@ -8395,7 +8399,7 @@ output {
 
 .batch-overlay {
   @extend .fit;
-  z-index: 1;
+  z-index: 100;
   color: white;
   text-transform: uppercase;
   text-align: center;
@@ -8407,6 +8411,10 @@ output {
   cursor: grabbing;
   overflow: hidden;
   user-select: none;
+  
+  &.is-visible {
+    display: block;
+  }
   
   &-backdrop {
     @extend .fit;
