@@ -42,7 +42,8 @@ function backup_db () {
   if [ "${DB_ADAPTER}" == "mysql2" ]; then
     mysqldump --opt --single-transaction -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
-    su -c "pg_dump -c ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz" postgres
+    su -c "pg_dump -c ${DB_NAME} | gzip > /tmp/${TIMESTAMP}_zammad_db.psql.gz" postgres
+    mv /tmp/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}
   else
     echo "DB ADAPTER not found. if its sqlite backup is already saved in filebackup"
   fi
