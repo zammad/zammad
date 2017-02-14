@@ -9,7 +9,13 @@ module Import
         settings.each do |setting|
           next if direct_copy?(setting)
           next if number_generator?(setting)
+          next if postmaster_default?(setting)
         end
+      end
+
+      def postmaster_default_lookup(key)
+        @postmaster_defaults ||= {}
+        @postmaster_defaults[key]
       end
 
       private
@@ -44,6 +50,22 @@ module Import
           Setting.set('ticket_number_date', { checksum: false })
         end
 
+        true
+      end
+
+      def postmaster_default?(setting)
+
+        relevant_configs = %w(PostmasterDefaultPriority PostmasterDefaultState PostmasterFollowUpState)
+        return false if !relevant_configs.include?(setting['Key'])
+
+        map = {
+          'PostmasterDefaultPriority' => :priority_default_create,
+          'PostmasterDefaultState'    => :state_default_create,
+          'PostmasterFollowUpState'   => :state_default_follow_up,
+        }
+
+        @postmaster_defaults ||= {}
+        @postmaster_defaults[ map[setting['Key']] ] = setting['Value']
         true
       end
     end
