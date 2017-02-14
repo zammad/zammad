@@ -20,6 +20,48 @@ module Import
 
       def import_loop(records, *_args, &import_block)
         super
+        update_attribute_settings
+      end
+
+      def update_attribute_settings
+        return if Import::OTRS.diff?
+
+        update_attribute
+        update_ticket_attributes
+      end
+
+      def update_attribute
+        update_default_create
+        update_default_follow_up
+      end
+
+      def update_default_create
+        state = ::Ticket::State.find_by(
+          name:   Import::OTRS::SysConfigFactory.postmaster_default_lookup(:state_default_create),
+          active: true
+        )
+        return if !state
+
+        state.default_create = true
+        state.callback_loop  = true
+
+        state.save
+      end
+
+      def update_default_follow_up
+        state = ::Ticket::State.find_by(
+          name:   Import::OTRS::SysConfigFactory.postmaster_default_lookup(:state_default_follow_up),
+          active: true
+        )
+        return if !state
+
+        state.default_follow_up = true
+        state.callback_loop     = true
+
+        state.save
+      end
+
+      def update_ticket_attributes
         update_ticket_state
         update_ticket_pending_time
       end
