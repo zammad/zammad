@@ -223,8 +223,9 @@ returns
     auth = Authorization.find_by(uid: message_user[:id], provider: 'telegram')
 
     # create or update user
+    login = message_user[:username] || message_user[:id]
     user_data = {
-      login: message_user[:username],
+      login: login,
       firstname: message_user[:first_name],
       lastname: message_user[:last_name],
     }
@@ -232,7 +233,9 @@ returns
       user = User.find(auth.user_id)
       user.update_attributes(user_data)
     else
-      user_data[:note]     = "Telegram @#{message_user[:username]}"
+      if message_user[:username]
+        user_data[:note] = "Telegram @#{message_user[:username]}"
+      end
       user_data[:active]   = true
       user_data[:role_ids] = Role.signup_role_ids
       user                 = User.create(user_data)
@@ -241,7 +244,7 @@ returns
     # create or update authorization
     auth_data = {
       uid:      message_user[:id],
-      username: message_user[:username],
+      username: login,
       user_id:  user.id,
       provider: 'telegram'
     }
