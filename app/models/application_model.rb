@@ -201,6 +201,9 @@ returns
       next if !respond_to?(real_ids)
       attributes[real_ids] = send(real_ids)
     }
+
+    filter_attributes(attributes)
+
     Cache.write(key, attributes)
     attributes
   end
@@ -260,12 +263,16 @@ returns
       attributes[destination] = user.login
     }
 
+    filter_attributes(attributes)
+
+    attributes
+  end
+
+  def filter_attributes(attributes)
     # remove forbitten attributes
     %w(password token tokens token_ids).each { |item|
       attributes.delete(item)
     }
-
-    attributes
   end
 
 =begin
