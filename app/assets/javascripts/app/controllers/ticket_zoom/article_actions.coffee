@@ -328,7 +328,8 @@ class App.TicketZoomArticleActions extends App.Controller
           articleNew.to = ticket.customer.email
 
       else
-        if article.sender.name is 'Agent'
+        user = App.User.find(article.created_by_id)
+        if article.sender.name is 'Agent' && !article.from.match(user.email)
           articleNew.to = article.to
         else
           articleNew.to = article.from
