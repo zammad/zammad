@@ -1,5 +1,22 @@
 # Change Log
 
+## [1.2.1](https://github.com/zammad/zammad/tree/1.2.1) (2017-01-16)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.2.0...1.2.1)
+
+**Fixed bugs:**
+
+- Ticket without Subject is blocked - can't do anything with it \("Title needed"\) [\#719](https://github.com/zammad/zammad/issues/719) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Unable to process emails with email addresses longer then 140 signs. [\#650](https://github.com/zammad/zammad/issues/650) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to process emails if "Additional follow-up detection" was checked and unchecked again [\#740](https://github.com/zammad/zammad/issues/740) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Time accounting works only with dot [\#705](https://github.com/zammad/zammad/issues/705) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- "Close Tab" & "Next in Overview" don't work [\#730](https://github.com/zammad/zammad/issues/730) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Prevent attachment preview in browser attachment download [\#617](https://github.com/zammad/zammad/issues/617) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Feedback form not working in Safari [\#685](https://github.com/zammad/zammad/issues/685) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Follow up detection not working if ticket\_hook\_position "none" is used. [\#686](https://github.com/zammad/zammad/issues/686) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Customer get forced to save time for time accounting in customer interface - only allow it for agents. [\#636](https://github.com/zammad/zammad/issues/636) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to activate time accounting in admin interface. [\#633](https://github.com/zammad/zammad/issues/633) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Prevent attachment preview in browser attachment download [\#617](https://github.com/zammad/zammad/issues/617) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
 ## [1.2.0](https://github.com/zammad/zammad/tree/1.2.0) (2017-01-16)
 [Full Changelog](https://github.com/zammad/zammad/compare/1.1.0...1.2.0)
 
