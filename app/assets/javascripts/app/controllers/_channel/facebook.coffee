@@ -20,7 +20,7 @@ class Index extends App.ControllerSubContent
     @ajax(
       id:   'facebook_index'
       type: 'GET'
-      url:  "#{@apiPath}/channels/facebook_index"
+      url:  "#{@apiPath}/channels_facebook"
       processData: true
       success: (data, status, xhr) =>
         @stopLoading()
@@ -62,9 +62,6 @@ class Index extends App.ControllerSubContent
     @html App.view('facebook/list')(
       channels: channels
     )
-      # accounts: accounts
-      # showDescription: showDescription
-      # description:     description
 
     if @channel_id
       @edit(undefined, @channel_id)
@@ -103,41 +100,45 @@ class Index extends App.ControllerSubContent
   delete: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    new App.ControllerGenericDestroyConfirm(
-      item:      item
+    new App.ControllerConfirm(
+      message: 'Sure?'
+      callback: =>
+        @ajax(
+          id:   'facebook_delete'
+          type: 'DELETE'
+          url:  "#{@apiPath}/channels_facebook"
+          data: JSON.stringify(id: id)
+          processData: true
+          success: =>
+            @load()
+        )
       container: @el.closest('.content')
-      callback:  @load
     )
 
   disable: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    item.active = false
-    item.save(
-      done: =>
-        @load()
-      fail: =>
+    @ajax(
+      id:   'facebook_disable'
+      type: 'POST'
+      url:  "#{@apiPath}/channels_facebook_disable"
+      data: JSON.stringify(id: id)
+      processData: true
+      success: =>
         @load()
     )
 
   enable: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    item.active = true
-    item.save(
-      done: =>
+    @ajax(
+      id:   'facebook_enable'
+      type: 'POST'
+      url:  "#{@apiPath}/channels_facebook_enable"
+      data: JSON.stringify(id: id)
+      processData: true
+      success: =>
         @load()
-      fail: =>
-        @load()
-    )
-
-  description: (e) =>
-    new App.ControllerGenericDescription(
-      description: App.Twitter.description
-      container:   @el.closest('.content')
     )
 
 class AppConfig extends App.ControllerModal
@@ -182,7 +183,7 @@ class AppConfig extends App.ControllerModal
             done: =>
               @isChanged = true
               @close()
-            fail: ->
+            fail: =>
               @el.find('.alert').removeClass('hidden').text('Unable to create entry.')
           )
           return
@@ -241,14 +242,16 @@ class AccountEdit extends App.ControllerModal
     @ajax(
       id:   'channel_facebook_update'
       type: 'POST'
-      url:  "#{@apiPath}/channels/facebook_verify/#{@channel.id}"
+      url:  "#{@apiPath}/channels_facebook/#{@channel.id}"
       data: JSON.stringify(@channel.attributes())
       processData: true
       success: (data, status, xhr) =>
         @isChanged = true
         @close()
-      fail: =>
+      error: (xhr) =>
+        data = JSON.parse(xhr.responseText)
         @formEnable(e)
+        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
     )
 
 App.Config.set('Facebook', { prio: 5100, name: 'Facebook', parent: '#channels', target: '#channels/facebook', controller: Index, permission: ['admin.channel_facebook'] }, 'NavBarAdmin')

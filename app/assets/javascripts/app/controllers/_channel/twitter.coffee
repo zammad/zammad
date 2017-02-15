@@ -19,7 +19,7 @@ class Index extends App.ControllerSubContent
     @ajax(
       id:   'twitter_index'
       type: 'GET'
-      url:  "#{@apiPath}/channels/twitter_index"
+      url:  "#{@apiPath}/channels_twitter"
       processData: true
       success: (data, status, xhr) =>
         @stopLoading()
@@ -61,9 +61,6 @@ class Index extends App.ControllerSubContent
     @html App.view('twitter/list')(
       channels: channels
     )
-      # accounts: accounts
-      # showDescription: showDescription
-      # description:     description
 
     if @channel_id
       @edit(undefined, @channel_id)
@@ -102,41 +99,45 @@ class Index extends App.ControllerSubContent
   delete: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    new App.ControllerGenericDestroyConfirm(
-      item:      item
+    new App.ControllerConfirm(
+      message: 'Sure?'
+      callback: =>
+        @ajax(
+          id:   'twitter_delete'
+          type: 'DELETE'
+          url:  "#{@apiPath}/channels_twitter"
+          data: JSON.stringify(id: id)
+          processData: true
+          success: =>
+            @load()
+        )
       container: @el.closest('.content')
-      callback:  @load
     )
 
   disable: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    item.active = false
-    item.save(
-      done: =>
-        @load()
-      fail: =>
+    @ajax(
+      id:   'twitter_disable'
+      type: 'POST'
+      url:  "#{@apiPath}/channels_twitter_disable"
+      data: JSON.stringify(id: id)
+      processData: true
+      success: =>
         @load()
     )
 
   enable: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    item.active = true
-    item.save(
-      done: =>
+    @ajax(
+      id:   'twitter_enable'
+      type: 'POST'
+      url:  "#{@apiPath}/channels_twitter_enable"
+      data: JSON.stringify(id: id)
+      processData: true
+      success: =>
         @load()
-      fail: =>
-        @load()
-    )
-
-  description: (e) =>
-    new App.ControllerGenericDescription(
-      description: App.Twitter.description
-      container:   @el.closest('.content')
     )
 
 class AppConfig extends App.ControllerModal
@@ -277,14 +278,16 @@ class AccountEdit extends App.ControllerModal
     @ajax(
       id:   'channel_twitter_update'
       type: 'POST'
-      url:  "#{@apiPath}/channels/twitter_verify/#{@channel.id}"
+      url:  "#{@apiPath}/channels_twitter/#{@channel.id}"
       data: JSON.stringify(@channel.attributes())
       processData: true
       success: (data, status, xhr) =>
         @isChanged = true
         @close()
-      fail: =>
+      error: (xhr) =>
+        data = JSON.parse(xhr.responseText)
         @formEnable(e)
+        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
     )
 
 App.Config.set('Twitter', { prio: 5000, name: 'Twitter', parent: '#channels', target: '#channels/twitter', controller: Index, permission: ['admin.channel_twitter'] }, 'NavBarAdmin')

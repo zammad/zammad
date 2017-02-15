@@ -1,0 +1,21 @@
+{
+  "update_id":20002,
+  "message":{
+    "date":1441645536,
+    "chat":{
+       "last_name":"Test Lastname",
+       "id":1111111,
+       "type": "private",
+       "first_name":"Test Firstname",
+       "username":"Testusername"
+    },
+    "message_id":2366,
+    "from":{
+       "last_name":"Test Lastname",
+       "id":1111111,
+       "first_name":"Test Firstname",
+       "username":"Testusername"
+    },
+    "text":"Yes of course! <b>lalal</b>"
+  }
+}
