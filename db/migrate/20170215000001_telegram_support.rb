@@ -13,7 +13,6 @@ class TelegramSupport < ActiveRecord::Migration
     )
 
     Ticket::Article::Type.create_if_not_exists(
-      id: 12,
       name: 'telegram personal-message',
       communication: true,
       updated_by_id: 1,
