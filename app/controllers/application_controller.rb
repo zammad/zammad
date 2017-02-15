@@ -4,8 +4,6 @@ require 'exceptions'
 class ApplicationController < ActionController::Base
   include ErrorHandling
 
-  #  http_basic_authenticate_with :name => "test", :password => "ttt"
-
   helper_method :current_user,
                 :authentication_check,
                 :config_frontend,
@@ -17,34 +15,51 @@ class ApplicationController < ActionController::Base
                 :model_index_render
 
   skip_before_action :verify_authenticity_token
-  before_action :transaction_begin, :set_user, :session_update, :user_device_check, :cors_preflight_check
-  after_action  :transaction_end, :http_log, :set_access_control_headers
+  before_action :verify_csrf_token, :transaction_begin, :set_user, :session_update, :user_device_check, :cors_preflight_check
+  after_action  :transaction_end, :http_log, :set_access_control_headers, :set_csrf_token_headers
 
   # For all responses in this controller, return the CORS access control headers.
   def set_access_control_headers
+    return if @_auth_type != 'token_auth' && @_auth_type != 'basic_auth'
+    set_access_control_headers_execute
+  end
+
+  def set_access_control_headers_execute
     headers['Access-Control-Allow-Origin']      = '*'
-    headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, PATCH, OPTIONS'
     headers['Access-Control-Max-Age']           = '1728000'
     headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language'
-    headers['Access-Control-Allow-Credentials'] = 'true'
   end
 
   # If this is a preflight OPTIONS request, then short-circuit the
   # request, return only the necessary headers and return an empty
   # text/plain.
-
   def cors_preflight_check
+    return true if @_auth_type != 'token_auth' && @_auth_type != 'basic_auth'
+    cors_preflight_check_execute
+  end
 
-    return if request.method != 'OPTIONS'
-
+  def cors_preflight_check_execute
+    return true if request.method != 'OPTIONS'
     headers['Access-Control-Allow-Origin']      = '*'
-    headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Methods']     = 'POST, GET, PUT, DELETE, PATCH, OPTIONS'
     headers['Access-Control-Allow-Headers']     = 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Accept-Language'
     headers['Access-Control-Max-Age']           = '1728000'
-    headers['Access-Control-Allow-Credentials'] = 'true'
     render text: '', content_type: 'text/plain'
-
     false
+  end
+
+  def set_csrf_token_headers
+    return true if @_auth_type.present? && @_auth_type != 'session'
+    headers['CSRF-TOKEN'] = form_authenticity_token
+  end
+
+  def verify_csrf_token
+    return true if request.method != 'POST' && request.method != 'PUT' && request.method != 'DELETE' && request.method != 'PATCH'
+    return true if @_auth_type == 'token_auth' || @_auth_type == 'basic_auth'
+    return true if valid_authenticity_token?(session, params[:authenticity_token] || request.headers['X-CSRF-Token'])
+    logger.info 'CSRF token verification failed'
+    raise Exceptions::NotAuthorized, 'CSRF token verification failed!'
   end
 
   def http_log_config(config)
@@ -74,8 +89,9 @@ class ApplicationController < ActionController::Base
     @_current_user = User.lookup(id: session[:user_id])
   end
 
-  def current_user_set(user)
+  def current_user_set(user, auth_type = 'session')
     session[:user_id] = user.id
+    @_auth_type = auth_type
     @_current_user = user
     set_user
   end
@@ -224,7 +240,7 @@ class ApplicationController < ActionController::Base
     )
   end
 
-  def authentication_check_only(auth_param)
+  def authentication_check_only(auth_param = {})
     #logger.debug 'authentication_check'
     #logger.debug params.inspect
     #logger.debug session.inspect
@@ -336,7 +352,7 @@ class ApplicationController < ActionController::Base
       raise Exceptions::NotAuthorized, 'Not authorized (user)!'
     end
 
-    current_user_set(user)
+    current_user_set(user, auth_type)
     user_device_log(user, auth_type)
     logger.debug "#{auth_type} for '#{user.login}'"
     true

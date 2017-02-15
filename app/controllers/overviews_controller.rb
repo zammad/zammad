@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class OverviewsController < ApplicationController
-  before_action { authentication_check(permission: 'admin.overview') }
+  prepend_before_action { authentication_check(permission: 'admin.overview') }
 
 =begin
 

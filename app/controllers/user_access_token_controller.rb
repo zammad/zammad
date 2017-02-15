@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class UserAccessTokenController < ApplicationController
-  before_action { authentication_check(permission: 'user_preferences.access_token') }
+  prepend_before_action { authentication_check(permission: 'user_preferences.access_token') }
 
   def index
     tokens = Token.where(action: 'api', persistent: true, user_id: current_user.id).order('updated_at DESC, label ASC')

@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class FormController < ApplicationController
+  skip_before_action :verify_csrf_token
+  before_action :cors_preflight_check_execute
+  after_action :set_access_control_headers_execute
 
   def config
     return if !enabled?

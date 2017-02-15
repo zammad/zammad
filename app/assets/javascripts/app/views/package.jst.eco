@@ -1,16 +1,17 @@
 <div class="page-header-title">
-  <h1><%- @T( 'Package' ) %> <small><%- @T( 'Management' ) %></small></h1>
+  <h1><%- @T( 'Package' ) %> <small><%- @T('Management') %></small></h1>
 </div>
 
 <div class="page-content">
   <!--
   <ul class="nav nav-tabs nav-stacked">
-    <li class=""><a data-type="" ><%- @T( 'Installed' ) %></a></li>
-    <li class=""><a data-type="" ><%- @T( 'Store' ) %></a></li>
+    <li class=""><a data-type="" ><%- @T('Installed') %></a></li>
+    <li class=""><a data-type="" ><%- @T('Store') %></a></li>
   </ul>
   -->
   <p>
     <form action="<%= App.Config.get('api_path') %>/packages" method="post" enctype="multipart/form-data" class="horizontal center">
+      <input type="hidden" name="authenticity_token" value="<%= App.Ajax.token() %>"/>
       <input type="file" name="file_upload"/>
       <button class="align-right btn btn--primary" type="submit"><%- @T('Install Package') %></button>
     </form>

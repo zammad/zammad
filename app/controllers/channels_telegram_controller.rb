@@ -1,7 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ChannelsTelegramController < ApplicationController
-  before_action -> { authentication_check(permission: 'admin.channel_telegram') }, except: [:webhook]
+  prepend_before_action -> { authentication_check(permission: 'admin.channel_telegram') }, except: [:webhook]
+  skip_before_action :verify_csrf_token, only: [:webhook]
 
   def index
     assets = {}

@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class SearchController < ApplicationController
-  before_action :authentication_check
+  prepend_before_action :authentication_check
 
   # GET|POST /api/v1/search
   # GET|POST /api/v1/search/:objects

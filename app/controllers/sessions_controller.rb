@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class SessionsController < ApplicationController
+  prepend_before_action :authentication_check, only: [:switch_to_user, :list, :delete]
+  skip_before_action :verify_csrf_token, only: [:create, :show, :destroy, :create_omniauth, :create_sso]
 
   # "Create" a login, aka "log the user in"
   def create
@@ -18,12 +20,11 @@ class SessionsController < ApplicationController
     raise Exceptions::NotAuthorized, 'Wrong Username and Password combination.' if !user
 
     # remember me - set session cookie to expire later
-    request.env['rack.session.options'][:expire_after] = if params[:remember_me]
-                                                           1.year
-                                                         end
-    # both not needed to set :expire_after works fine
-    #  request.env['rack.session.options'][:renew] = true
-    #  reset_session
+    expire_after = nil
+    if params[:remember_me]
+      expire_after = 1.year
+    end
+    env['rack.session.options'][:expire_after] = expire_after
 
     # set session user
     current_user_set(user)
@@ -114,11 +115,11 @@ class SessionsController < ApplicationController
   def destroy
 
     # Remove the user id from the session
-    @_current_user = session[:user_id] = nil
+    @_current_user = nil
 
-    # reset session cookie (reset :expire_after in case remember_me is active)
-    request.env['rack.session.options'][:expire_after] = -1.years
-    request.env['rack.session.options'][:renew] = true
+    # reset session
+    request.env['rack.session.options'][:expire_after] = nil
+    session.clear
 
     render json: {}
   end
@@ -195,7 +196,6 @@ class SessionsController < ApplicationController
 
   # "switch" to user
   def switch_to_user
-    authentication_check
     permission_check('admin.session')
 
     # check user
@@ -278,7 +278,6 @@ class SessionsController < ApplicationController
   end
 
   def list
-    authentication_check
     permission_check('admin.session')
     assets = {}
     sessions_clean = []
@@ -297,7 +296,6 @@ class SessionsController < ApplicationController
   end
 
   def delete
-    authentication_check
     permission_check('admin.session')
     SessionHelper.destroy(params[:id])
     render json: {}

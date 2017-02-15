@@ -155,9 +155,7 @@
         uploadCancel: function () {
           var manager = this;
           //manager.uploadsQueue.shift()
-          console.log(99999, manager._xhrs)
           _.each( manager._xhrs, function(xhr){
-            console.log(888, xhr)
             xhr.abort()
           })
           manager._xhrs = []
@@ -197,6 +195,11 @@
             fileName = file.name;
 
             xhr.open('POST', manager.uploadUrl);
+
+            // add csrf token
+            if (App.Ajax && App.Ajax.token) {
+              xhr.setRequestHeader('X-CSRF-Token', App.Ajax.token());
+            }
 
             // Triggered when upload starts:
             xhr.upload.onloadstart = function () {

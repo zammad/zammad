@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ChannelsFacebookController < ApplicationController
-  before_action { authentication_check(permission: 'admin.channel_facebook') }
+  prepend_before_action { authentication_check(permission: 'admin.channel_facebook') }
 
   def index
     assets = {}

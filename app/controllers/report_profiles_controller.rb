@@ -1,5 +1,5 @@
 class ReportProfilesController < ApplicationController
-  before_action { authentication_check(permission: 'admin.report_profile') }
+  prepend_before_action { authentication_check(permission: 'admin.report_profile') }
 
 =begin
 

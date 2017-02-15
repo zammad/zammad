@@ -1,10 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ChannelsEmailController < ApplicationController
-  before_action :authentication_check
+  prepend_before_action { authentication_check(permission: 'admin.channel_email') }
 
   def index
-    permission_check('admin.channel_email')
     system_online_service = Setting.get('system_online_service')
     account_channel_ids = []
     notification_channel_ids = []
@@ -54,9 +53,6 @@ class ChannelsEmailController < ApplicationController
 
   def probe
 
-    # check admin permissions
-    permission_check('admin.channel_email')
-
     # probe settings based on email and password
     result = EmailHelper::Probe.full(
       email: params[:email],
@@ -74,9 +70,6 @@ class ChannelsEmailController < ApplicationController
 
   def outbound
 
-    # check admin permissions
-    permission_check('admin.channel_email')
-
     # verify access
     return if params[:channel_id] && !check_access(params[:channel_id])
 
@@ -85,9 +78,6 @@ class ChannelsEmailController < ApplicationController
   end
 
   def inbound
-
-    # check admin permissions
-    permission_check('admin.channel_email')
 
     # verify access
     return if params[:channel_id] && !check_access(params[:channel_id])
@@ -102,9 +92,6 @@ class ChannelsEmailController < ApplicationController
   end
 
   def verify
-
-    # check admin permissions
-    permission_check('admin.channel_email')
 
     email = params[:email] || params[:meta][:email]
     email = email.downcase
@@ -195,7 +182,6 @@ class ChannelsEmailController < ApplicationController
   end
 
   def enable
-    permission_check('admin.channel_email')
     channel = Channel.find_by(id: params[:id], area: 'Email::Account')
     channel.active = true
     channel.save!
@@ -203,7 +189,6 @@ class ChannelsEmailController < ApplicationController
   end
 
   def disable
-    permission_check('admin.channel_email')
     channel = Channel.find_by(id: params[:id], area: 'Email::Account')
     channel.active = false
     channel.save!
@@ -211,7 +196,6 @@ class ChannelsEmailController < ApplicationController
   end
 
   def destroy
-    permission_check('admin.channel_email')
     channel = Channel.find_by(id: params[:id], area: 'Email::Account')
     channel.destroy
     render json: {}
@@ -228,9 +212,6 @@ class ChannelsEmailController < ApplicationController
   def notification
 
     check_online_service
-
-    # check admin permissions
-    permission_check('admin.channel_email')
 
     adapter = params[:adapter].downcase
 

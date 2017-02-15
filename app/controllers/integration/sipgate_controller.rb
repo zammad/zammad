@@ -3,7 +3,7 @@
 require 'builder'
 
 class Integration::SipgateController < ApplicationController
-
+  skip_before_action :verify_csrf_token
   before_action :check_configured
 
   # notify about inbound call / block inbound call

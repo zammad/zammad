@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class TaskbarController < ApplicationController
-  before_action :authentication_check
+  prepend_before_action :authentication_check
 
   def index
     current_user_tasks = Taskbar.where(user_id: current_user.id)

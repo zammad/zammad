@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ChannelsTwitterController < ApplicationController
-  before_action { authentication_check(permission: 'admin.channel_twitter') }
+  prepend_before_action { authentication_check(permission: 'admin.channel_twitter') }
 
   def index
     assets = {}
