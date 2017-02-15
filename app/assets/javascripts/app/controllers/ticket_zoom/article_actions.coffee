@@ -1,13 +1,14 @@
 class App.TicketZoomArticleActions extends App.Controller
   events:
-    'click [data-type=public]':                    'publicInternal'
-    'click [data-type=internal]':                  'publicInternal'
-    'click [data-type=emailReply]':                'emailReply'
-    'click [data-type=emailReplyAll]':             'emailReplyAll'
-    'click [data-type=twitterStatusReply]':        'twitterStatusReply'
-    'click [data-type=twitterDirectMessageReply]': 'twitterDirectMessageReply'
-    'click [data-type=facebookFeedReply]':         'facebookFeedReply'
-    'click [data-type=delete]':                    'delete'
+    'click [data-type=public]':                       'publicInternal'
+    'click [data-type=internal]':                     'publicInternal'
+    'click [data-type=emailReply]':                   'emailReply'
+    'click [data-type=emailReplyAll]':                'emailReplyAll'
+    'click [data-type=twitterStatusReply]':           'twitterStatusReply'
+    'click [data-type=twitterDirectMessageReply]':    'twitterDirectMessageReply'
+    'click [data-type=facebookFeedReply]':            'facebookFeedReply'
+    'click [data-type=telegramPersonalMessageReply]': 'telegramPersonalMessageReply'
+    'click [data-type=delete]':                       'delete'
 
   constructor: ->
     super
@@ -148,6 +149,13 @@ class App.TicketZoomArticleActions extends App.Controller
       actions.push {
         name: 'reply'
         type: 'facebookFeedReply'
+        icon: 'reply'
+        href: '#'
+      }
+    if article.sender.name is 'Customer' && article.type.name is 'telegram personal-message'
+      actions.push {
+        name: 'reply'
+        type: 'telegramPersonalMessageReply'
         icon: 'reply'
         href: '#'
       }
@@ -399,6 +407,34 @@ class App.TicketZoomArticleActions extends App.Controller
     type = App.TicketArticleType.findByAttribute(name:'email')
 
     App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
+
+  telegramPersonalMessageReply: (e) =>
+    e.preventDefault()
+
+    # get reference article
+    article_id = $(e.target).parents('[data-id]').data('id')
+    article    = App.TicketArticle.fullLocal(article_id)
+    sender     = App.TicketArticleSender.find(article.sender_id)
+    type       = App.TicketArticleType.find(article.type_id)
+    customer   = App.User.find(article.created_by_id)
+
+    @scrollToCompose()
+
+    # empty form
+    articleNew = {
+      to:          ''
+      cc:          ''
+      body:        ''
+      in_reply_to: ''
+    }
+
+    if article.message_id
+      articleNew.in_reply_to = article.message_id
+
+    # get current body
+    articleNew.body = @el.closest('.ticketZoom').find('.article-add [data-name="body"]').html().trim() || ''
+
+    App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew, position: 'end' } )
 
   delete: (e) =>
     e.preventDefault()

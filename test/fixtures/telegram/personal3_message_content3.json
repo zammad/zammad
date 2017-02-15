@@ -1,0 +1,33 @@
+{
+  "update_id": 30003,
+  "message": {
+    "message_id": 3367,
+    "from": {
+      "last_name":"Test Lastname2",
+      "id":1111112,
+      "type": "private",
+      "first_name":"Test Firstname2",
+      "username":"Testusername2"
+    },
+    "chat": {
+      "last_name":"Test Lastname2",
+      "id":1111112,
+      "first_name":"Test Firstname2",
+      "username":"Testusername2",
+      "type": "private"
+    },
+    "date": 1486036832,
+    "document": {
+      "file_name": "blockposter-162412.pdf",
+      "mime_type": "application/pdf",
+      "thumb": {
+        "file_id": "AAQCABO0I4INAATATQAB5HWPq4XgxQACAg",
+        "file_size": 8752,
+        "width": 200,
+        "height": 200
+      },
+      "file_id": "BQADAgADDgAD7x6ZSC_-1LMkOEmoAg",
+      "file_size": 3622849
+    }
+  }
+}

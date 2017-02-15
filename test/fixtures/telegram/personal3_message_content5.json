@@ -1,0 +1,26 @@
+{
+  "update_id":30005,
+  "message":{
+    "message_id":3368,
+    "from":{
+      "last_name":"Test Lastname2",
+      "id":1111112,
+      "first_name":"Test Firstname2",
+      "username":"Testusername2"
+    },
+    "chat":{
+      "last_name":"Test Lastname2",
+      "id":1111112,
+      "type": "private",
+      "first_name":"Test Firstname2",
+      "username":"Testusername2"
+    },
+    "date":1487119496,
+    "voice":{
+      "duration":1,
+      "mime_type":"audio/ogg",
+      "file_id":"AwADAgADVQADCEIYSZwyOmSZK9iZAg",
+      "file_size":6030
+    }
+  }
+}

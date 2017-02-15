@@ -2895,6 +2895,13 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name: 'admin.channel_telegram',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Channel - Telegram']
+  },
+)
+Permission.create_if_not_exists(
   name: 'admin.channel_chat',
   note: 'Manage %s',
   preferences: {
@@ -3241,6 +3248,7 @@ Ticket::Article::Type.create_if_not_exists(id: 8, name: 'facebook feed post', co
 Ticket::Article::Type.create_if_not_exists(id: 9, name: 'facebook feed comment', communication: true)
 Ticket::Article::Type.create_if_not_exists(id: 10, name: 'note', communication: false)
 Ticket::Article::Type.create_if_not_exists(id: 11, name: 'web', communication: true)
+Ticket::Article::Type.create_if_not_exists(id: 12, name: 'telegram personal-message', communication: true)
 
 Ticket::Article::Sender.create_if_not_exists(id: 1, name: 'Agent')
 Ticket::Article::Sender.create_if_not_exists(id: 2, name: 'Customer')
