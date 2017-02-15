@@ -35,7 +35,7 @@ returns
 =end
 
   def self.set_webhook(token, callback_url)
-    if callback_url =~ /^http:\/\//i
+    if callback_url =~ %r{^http://}i
       raise 'webhook url need to start with https://, you use http://'
     end
     api = TelegramAPI.new(token)
@@ -72,9 +72,8 @@ returns
 
     if params[:group_id].blank?
       raise 'Group needed!'
-    else
-      group = Group.find_by(id: params[:group_id])
     end
+    group = Group.find_by(id: params[:group_id])
     if !group
       raise 'Group invalid!'
     end
@@ -355,11 +354,10 @@ returns
           last_width = file['width'].to_i
           last_height = file['height'].to_i
         end
-        if file['width'].to_i < max_width && last_width < file['width'].to_i
-          photo = file
-          last_width = file['width'].to_i
-          last_height = file['height'].to_i
-        end
+        next unless file['width'].to_i < max_width && last_width < file['width'].to_i
+        photo = file
+        last_width = file['width'].to_i
+        last_height = file['height'].to_i
       }
       if last_width > 650
         last_width = (last_width / 2).to_i
@@ -470,12 +468,12 @@ returns
 
     # send welcome message and don't create ticket
     text = params[:message][:text]
-    if text.present? && text =~ /^\/start/
+    if text.present? && text =~ %r{^/start}
       message(params[:message][:chat][:id], channel.options[:welcome] || 'You are welcome! Just ask me something!')
       return
 
     # find ticket and close it
-    elsif text.present? && text =~ /^\/end/
+    elsif text.present? && text =~ %r{^/end}
       user = to_user(params)
       ticket = Ticket.where(customer_id: user.id).order(:updated_at).first
       ticket.state = Ticket::State.find_by(name: 'closed')
@@ -542,8 +540,8 @@ returns
       url,
       {},
       {
-      open_timeout: 20,
-      read_timeout: 40,
+        open_timeout: 20,
+        read_timeout: 40,
       },
     )
   end
