@@ -672,42 +672,28 @@ class App.TicketZoom extends App.Controller
     for key, value of ticketParams
       ticket[key] = value
 
-    # apply macro
-    for key, content of macro
-      attributes = key.split('.')
-      if attributes[0] is 'ticket'
-
-        # apply tag changes
-        if attributes[1] is 'tags'
-          if @sidebar && @sidebar.tagWidget
-            tags = content.value.split(',')
-            for tag in tags
-              if content.operator is 'remove'
-                @sidebar.tagWidget.remove(tag)
-              else
-                @sidebar.tagWidget.add(tag)
-
-        # apply user changes
-        else if attributes[1] is 'owner_id'
-          if content.pre_condition is 'current_user.id'
-            ticket[attributes[1]] = App.Session.get('id')
-          else
-            ticket[attributes[1]] = content.value
-
-        # apply direct value changes
-        else
-          ticket[attributes[1]] = content.value
+    App.Ticket.macro(
+      macro: macro
+      ticket: ticket
+      callback:
+        tagAdd: (tag) =>
+          return if !@sidebar
+          return if !@sidebar.tagWidget
+          @sidebar.tagWidget.add(tag)
+        tagRemove: (tag) =>
+          return if !@sidebar
+          return if !@sidebar.tagWidget
+          @sidebar.tagWidget.remove(tag)
+    )
 
     # set defaults
     if !@permissionCheck('ticket.customer')
       if !ticket['owner_id']
         ticket['owner_id'] = 1
 
-    # check if title exists
-    if !ticket['title']
-      alert( App.i18n.translateContent('Title needed') )
-      @formEnable(e)
-      return
+    # if title is empty - ticket can't processed, set ?
+    if _.isEmpty(ticket.title)
+      ticket.title = '-'
 
     # stop autosave
     @autosaveStop()

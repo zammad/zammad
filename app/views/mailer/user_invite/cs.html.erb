@@ -1,0 +1,13 @@
+Pozvánka na web #{config.product_name}
+
+<div>Dobrý den,</div>
+<br>
+<div>já, (#{current_user.firstname} #{current_user.lastname}) Vás zvu k registraci do našeho systému zákaznické podpory (Ticket systému #{config.product_name}).</div>
+<br>
+<div>Kliknutím na <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">TENTO</a> odkaz nastavíte své heslo.</div>
+<br>
+<div>S pozdravem,</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>člen týmu #{config.product_name}</div>

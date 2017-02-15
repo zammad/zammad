@@ -2,9 +2,15 @@
 class Ticket::State < ApplicationModel
   include LatestChangeObserved
 
+  after_create  :ensure_defaults
+  after_update  :ensure_defaults
+  after_destroy :ensure_defaults
+
   belongs_to    :state_type, class_name: 'Ticket::StateType'
   belongs_to    :next_state, class_name: 'Ticket::State'
   validates     :name, presence: true
+
+  attr_accessor :callback_loop
 
 =begin
 
@@ -69,4 +75,31 @@ returns:
     return true if ignore_escalation
     false
   end
+
+  def ensure_defaults
+    return if callback_loop
+
+    %w(default_create default_follow_up).each do |default_field|
+      states_with_default = Ticket::State.where(default_field => true)
+      next if states_with_default.count == 1
+
+      if states_with_default.count.zero?
+        state = Ticket::State.where(active: true).order(id: :asc).first
+        state[default_field] = true
+        state.callback_loop = true
+        state.save!
+        next
+      end
+
+      Ticket::State.all.each { |local_state|
+        next if local_state.id == id
+        next if local_state[default_field] == false
+        local_state[default_field] = false
+        local_state.callback_loop = true
+        local_state.save!
+        next
+      }
+    end
+  end
+
 end

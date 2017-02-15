@@ -34,6 +34,8 @@ class App.UiElement.textarea
                         '<div class="btn btn-default qq-upload-icon2 qq-upload-button pull-right" style="">{uploadButtonText}</div>' +
                         '<ul class="qq-upload-list span5" style="margin-top: 10px;"></ul>' +
                       '</div>',
+            customHeaders:
+              'X-CSRF-Token': App.Ajax.token()
             classes:
               success: ''
               fail:    ''

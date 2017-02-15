@@ -4,26 +4,38 @@ class App.TicketOverview extends App.Controller
   mouse:
     x: null
     y: null
+  batchAnimationPaused: false
 
   elements:
-    '.js-batch-overlay':          'batchOverlay'
-    '.js-batch-overlay-backdrop': 'batchOverlayBackdrop'
-    '.js-batch-cancel':           'batchCancel'
-    '.js-batch-macro-circle':     'batchMacroCircle'
-    '.js-batch-assign-circle':    'batchAssignCircle'
-    '.js-batch-assign':           'batchAssign'
-    '.js-batch-macro':            'batchMacro'
+    '.js-batch-overlay':            'batchOverlay'
+    '.js-batch-overlay-backdrop':   'batchOverlayBackdrop'
+    '.js-batch-cancel':             'batchCancel'
+    '.js-batch-macro-circle':       'batchMacroCircle'
+    '.js-batch-assign-circle':      'batchAssignCircle'
+    '.js-batch-assign':             'batchAssign'
+    '.js-batch-assign-inner':       'batchAssignInner'
+    '.js-batch-assign-group':       'batchAssignGroup'
+    '.js-batch-assign-group-name':  'batchAssignGroupName'
+    '.js-batch-assign-group-inner': 'batchAssignGroupInner'
+    '.js-batch-macro':              'batchMacro'
+    '.main':                        'mainContent'
 
-  #events:
-  #  'mousedown .item':  'startDragItem'
-  #  'mouseenter .js-batch-overlay-entry': 'highlightBatchEntry'
-  #  'mouseleave .js-batch-overlay-entry': 'unhighlightBatchEntry'
+  events:
+    'mousedown .item': 'startDragItem'
+    'mouseenter .js-batch-hover-target': 'highlightBatchEntry'
+    'mouseleave .js-batch-hover-target': 'unhighlightBatchEntry'
 
   constructor: ->
     super
+    @batchSupport = @permissionCheck('ticket.agent')
     @render()
 
-  startDragItem: (event) ->
+    # rerender view, e. g. on language change
+    @bind 'ui:rerender', =>
+      @renderBatchOverlay()
+
+  startDragItem: (event) =>
+    return if !@batchSupport
     @grabbedItem = $(event.currentTarget)
     offset = @grabbedItem.offset()
     @batchDragger = $(App.view('ticket_overview/batch_dragger')())
@@ -51,10 +63,7 @@ class App.TicketOverview extends App.Controller
     dir = if event.pageY > pos.startY then 1 else -1
 
     if !pos.moved
-      # trigger when moved a little up or down
-      # but don't trigge when moved left or right
-      # because the user might just want to select text
-      if Math.abs(event.pageY - pos.startY) - Math.abs(event.pageX - pos.startX) > threshold
+      if Math.abs(event.pageY - pos.startY) > threshold || Math.abs(event.pageX - pos.startX) > threshold
         @batchDragger.data 'moved', true
         @el.addClass('u-no-userselect')
         # check grabbed items batch checkbox to make sure its checked
@@ -72,6 +81,8 @@ class App.TicketOverview extends App.Controller
         if(additionalItemsClones.length)
           @batchDragger.find('.js-batch-dragger-count').text(@draggedItems.length)
 
+        @renderOptions()
+
         $('#app').append @batchDragger
 
         @draggedItems.each (i, item) ->
@@ -80,7 +91,7 @@ class App.TicketOverview extends App.Controller
           $.Velocity.hook item, 'translateX', "#{dx}px"
           $.Velocity.hook item, 'translateY', "#{dy}px"
 
-        @moveDraggedItems(-dir)
+        @alignDraggedItems(-dir)
 
         @mouseY = event.pageY
         @showBatchOverlay()
@@ -114,11 +125,13 @@ class App.TicketOverview extends App.Controller
             complete: =>
               # clean scale
               action = @hoveredBatchEntry.attr('data-action')
+              id = @hoveredBatchEntry.attr('data-id')
+              groupId = @hoveredBatchEntry.attr('data-group-id')
               items = @el.find('[name="bulk"]:checked')
               @hoveredBatchEntry.removeAttr('style')
               @cleanUpDrag(true)
 
-              @performBatchAction items, action
+              @performBatchAction items, action, id, groupId
     @batchDragger.velocity
       properties:
         scale: 0
@@ -144,7 +157,7 @@ class App.TicketOverview extends App.Controller
       @el.find('[name="bulk"]:checked').prop('checked', false)
       @el.find('[name="bulk_all"]').prop('checked', false)
 
-  moveDraggedItems: (dir) ->
+  alignDraggedItems: (dir) ->
     @draggedItems.velocity
       properties:
         translateX: 0
@@ -160,12 +173,70 @@ class App.TicketOverview extends App.Controller
         easing: 'ease-in-out'
         duration: 300
 
-  performBatchAction: (items, action) ->
-    console.log "perform action #{action} on #{items.length} checked items"
+  performBatchAction: (items, action, id, groupId) ->
+    if action is 'macro'
+      @batchCount = items.length
+      @batchCountIndex = 0
+      macro = App.Macro.find(id)
+      for item in items
+        #console.log "perform action #{action} with id #{id} on ", $(item).val()
+        ticket = App.Ticket.find($(item).val())
+        App.Ticket.macro(
+          macro: macro.perform
+          ticket: ticket
+        )
+        ticket.save(
+          done: (r) =>
+            @batchCountIndex++
+
+            # refresh view after all tickets are proceeded
+            if @batchCountIndex == @batchCount
+              App.Event.trigger('overview:fetch')
+        )
+      return
+
+    if action is 'user_assign'
+      @batchCount = items.length
+      @batchCountIndex = 0
+      for item in items
+        #console.log "perform action #{action} with id #{id} on ", $(item).val()
+        ticket = App.Ticket.find($(item).val())
+        ticket.owner_id = id
+        if !_.isEmpty(groupId)
+          ticket.group_id = groupId
+        ticket.save(
+          done: (r) =>
+            @batchCountIndex++
+
+            # refresh view after all tickets are proceeded
+            if @batchCountIndex == @batchCount
+              App.Event.trigger('overview:fetch')
+        )
+        return
+
+    if action is 'group_assign'
+      @batchCount = items.length
+      @batchCountIndex = 0
+      for item in items
+        #console.log "perform action #{action} with id #{id} on ", $(item).val()
+        ticket = App.Ticket.find($(item).val())
+        ticket.group_id = id
+        ticket.save(
+          done: (r) =>
+            @batchCountIndex++
+
+            # refresh view after all tickets are proceeded
+            if @batchCountIndex == @batchCount
+              App.Event.trigger('overview:fetch')
+        )
+      return
 
   showBatchOverlay: ->
-    @batchOverlay.show()
+    @batchOverlay.addClass('is-visible')
+    $('html').css('overflow', 'hidden')
     @batchOverlayBackdrop.velocity { opacity: [1, 0] }, { duration: 500 }
+    @batchMacroOffset = @batchMacro.offset().top + @batchMacro.outerHeight()
+    @batchAssignOffset = @batchAssign.offset().top
     @batchOverlayShown = true
     $(document).on 'mousemove.batchoverlay', @controlBatchOverlay
 
@@ -174,7 +245,9 @@ class App.TicketOverview extends App.Controller
     @batchOverlayShown = false
     @batchOverlayBackdrop.velocity { opacity: [0, 1] }, { duration: 300, queue: false }
     @hideBatchCircles =>
-      @batchOverlay.hide()
+      @batchOverlay.removeClass('is-visible')
+
+    $('html').css('overflow', '')
 
     if @batchAssignShown
       @hideBatchAssign()
@@ -182,15 +255,25 @@ class App.TicketOverview extends App.Controller
     if @batchMacroShown
       @hideBatchMacro()
 
+    if @batchAssignGroupShown
+      @hideBatchAssignGroup()
+
   controlBatchOverlay: (event) =>
+    return if @batchAnimationPaused
     # store to detect if the mouse is hovering a drag-action entry
     # after an animation ended -> @highlightBatchEntryAtMousePosition
     @mouse.x = event.pageX
     @mouse.y = event.pageY
 
-    if event.pageY <= window.innerHeight/5*2
+    if @batchAssignGroupShown && @batchAssignGroupOffset != undefined
+      if @mouse.y < @batchAssignGroupOffset
+        @hideBatchAssignGroup()
+        @batchAnimationPaused = true
+      return
+
+    if @mouse.y <= @batchMacroOffset
       mouseInArea = 'top'
-    else if event.pageY > window.innerHeight/5*2 && event.pageY <= window.innerHeight/5*3
+    else if @mouse.y > @batchMacroOffset && @mouse.y <= @batchAssignOffset
       mouseInArea = 'middle'
     else
       mouseInArea = 'bottom'
@@ -200,7 +283,7 @@ class App.TicketOverview extends App.Controller
         if !@batchMacroShown
           @hideBatchCircles()
           @showBatchMacro()
-          @moveDraggedItems(1)
+          @alignDraggedItems(1)
 
       when 'middle'
         if @batchAssignShown
@@ -216,7 +299,7 @@ class App.TicketOverview extends App.Controller
         if !@batchAssignShown
           @hideBatchCircles()
           @showBatchAssign()
-          @moveDraggedItems(-1)
+          @alignDraggedItems(-1)
 
   showBatchCircles: ->
     @batchCirclesShown = true
@@ -276,7 +359,6 @@ class App.TicketOverview extends App.Controller
         duration: 500
         visibility: 'visible'
         complete: @highlightBatchEntryAtMousePosition
-        delay: if @batchCirclesShown then 0 else 200
 
     @batchCancel.css
       top: 0
@@ -290,7 +372,6 @@ class App.TicketOverview extends App.Controller
         easing: [1,-.55,.2,1.37]
         duration: 500
         visibility: 'visible'
-        delay: if @batchCirclesShown then 0 else 200
 
   hideBatchAssign: ->
     @batchAssign.velocity
@@ -301,6 +382,8 @@ class App.TicketOverview extends App.Controller
         duration: 300
         visibility: 'hidden'
         queue: false
+        complete: =>
+          $.Velocity.hook @batchAssign, 'translateY', '0%'
 
     @batchCancel.velocity
       properties:
@@ -312,6 +395,58 @@ class App.TicketOverview extends App.Controller
         queue: false
 
     @batchAssignShown = false
+
+  showBatchAssignGroup: =>
+    return if !@batchOverlayShown # user might have dropped the item already
+    @batchAssignGroupShown = true
+
+    groupId = @hoveredBatchEntry.attr('data-id')
+    group = App.Group.find(groupId)
+    users = []
+
+    for user_id in group.user_ids
+      if App.User.exists(user_id)
+        user = App.User.find(user_id)
+        if user.active is true
+          users.push user
+
+    @batchAssignGroupName.text group.displayName()
+    @batchAssignGroupInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
+      users: users
+      groups: []
+      groupId: groupId
+    ))
+
+    # then adjust the size of the group that it almost overlaps the batch-assign box
+    @batchAssignGroupInner.height(@batchAssignInner.height())
+
+    @batchAssignGroup.velocity
+      properties:
+        translateY: [0, '100%']
+        opacity: [1, 0]
+      options:
+        easing: [1,-.55,.2,1.37]
+        duration: 700
+        visibility: 'visible'
+        complete: =>
+          @highlightBatchEntryAtMousePosition()
+          @batchAssignGroupOffset = @batchAssignGroup.offset().top
+
+  hideBatchAssignGroup: ->
+    @batchAssignGroup.velocity
+      properties:
+        translateY: ['100%', 0]
+        opacity: [0, 1]
+      options:
+        duration: 300
+        visibility: 'hidden'
+        queue: false
+        complete: =>
+          @batchAssignGroupShown = false
+          @batchAssignGroupHovered = false
+          setTimeout (=> @batchAnimationPaused = false), 1000
+
+    @batchAssignGroupOffset = undefined
 
   showBatchMacro: ->
     return if !@batchOverlayShown # user might have dropped the item already
@@ -326,7 +461,6 @@ class App.TicketOverview extends App.Controller
         duration: 500
         visibility: 'visible'
         complete: @highlightBatchEntryAtMousePosition
-        delay: if @batchCirclesShown then 0 else 200
 
     @batchCancel.css
       top: 'auto'
@@ -339,7 +473,6 @@ class App.TicketOverview extends App.Controller
         easing: [1,-.55,.2,1.37]
         duration: 500
         visibility: 'visible'
-        delay: if @batchCirclesShown then 0 else 200
 
   hideBatchMacro: ->
     @batchMacro.velocity
@@ -350,6 +483,8 @@ class App.TicketOverview extends App.Controller
         duration: 300
         visibility: 'hidden'
         queue: false
+        complete: =>
+          $.Velocity.hook @batchMacro, 'translateY', '0%'
 
     @batchCancel.velocity
       properties:
@@ -363,16 +498,34 @@ class App.TicketOverview extends App.Controller
     @batchMacroShown = false
 
   highlightBatchEntryAtMousePosition: =>
-    entryAtPoint = $(document.elementFromPoint(@mouse.x, @mouse.y)).closest('.js-batch-overlay-entry')
+    entryAtPoint = $(document.elementFromPoint(@mouse.x, @mouse.y)).closest('.js-batch-overlay-entry .avatar')
     if(entryAtPoint.length)
-      @hoveredBatchEntry = entryAtPoint.addClass('is-hovered')
+      @hoveredBatchEntry = entryAtPoint.closest('.js-batch-overlay-entry').addClass('is-hovered')
 
   highlightBatchEntry: (event) ->
-    @hoveredBatchEntry = $(event.currentTarget).addClass('is-hovered')
+    @hoveredBatchEntry = $(event.currentTarget).closest('.js-batch-overlay-entry').addClass('is-hovered')
+
+    if @hoveredBatchEntry.attr('data-action') is 'group_assign'
+      @batchAssignGroupHintTimeout = setTimeout @blinkBatchEntry, 800
+      @batchAssignGroupTimeout = setTimeout @showBatchAssignGroup, 900
 
   unhighlightBatchEntry: (event) ->
+    return if !@hoveredBatchEntry
+    if @hoveredBatchEntry.attr('data-action') is 'group_assign'
+      if @batchAssignGroupTimeout
+        clearTimeout @batchAssignGroupTimeout
+      if @batchAssignGroupHintTimeout
+        clearTimeout @batchAssignGroupHintTimeout
+
+    @hoveredBatchEntry.removeClass('is-hovered')
     @hoveredBatchEntry = null
-    $(event.currentTarget).removeClass('is-hovered')
+
+  blinkBatchEntry: =>
+    @hoveredBatchEntry
+      .velocity({ opacity: [0.5, 1] }, { duration: 120 })
+      .velocity({ opacity: [1, 0.5] }, { duration: 60, delay: 40 })
+      .velocity({ opacity: [0.5, 1] }, { duration: 120 })
+      .velocity({ opacity: [1, 0.5] }, { duration: 60, delay: 40 })
 
   render: ->
     elLocal = $(App.view('ticket_overview/index')())
@@ -392,6 +545,8 @@ class App.TicketOverview extends App.Controller
       keyboardOn:  @keyboardOn
       keyboardOff: @keyboardOff
 
+    @renderBatchOverlay(elLocal.filter('.js-batch-overlay'))
+
     @html elLocal
 
     @el.find('.main').on('click', =>
@@ -406,6 +561,101 @@ class App.TicketOverview extends App.Controller
       update = =>
         App.OverviewListCollection.fetch(@view)
       @delay(update, 2800, 'overview:fetch')
+
+  renderBatchOverlay: (elLocal) =>
+    if elLocal
+      elLocal.html( App.view('ticket_overview/batch_overlay')() )
+      return
+    @batchOverlay.html( App.view('ticket_overview/batch_overlay')() )
+    @refreshElements()
+
+  renderOptions: =>
+    macros = App.Macro.findAllByAttribute('active', true)
+    groups = App.Group.findAllByAttribute('active', true)
+    users = []
+    items = @el.find('[name="bulk"]:checked')
+
+    # find all possible owners for selected tickets
+    possibleUsers = {}
+    possibleUserGroups = {}
+    for item in items
+      #console.log "selected items with id ", $(item).val()
+      ticket = App.Ticket.find($(item).val())
+      if !possibleUserGroups[ticket.group_id.toString()]
+        group = App.Group.find(ticket.group_id)
+        for user_id in group.user_ids
+          if !possibleUserGroups[ticket.group_id.toString()]
+            possibleUsers[user_id.toString()] = true
+          else
+            hit = false
+            for user_id, exists of possibleUsers
+              if possibleUsers[user_id.toString()]
+                hit = true
+            if !hit
+              delete possibleUsers[user_id.toString()]
+        possibleUserGroups[ticket.group_id.toString()] = true
+    for user_id, _exists of possibleUsers
+      if App.User.exists(user_id)
+        user = App.User.find(user_id)
+        if user.active is true
+          users.push user
+    for group in groups
+      valid_user_ids = []
+      for user_id in group.user_ids
+        if App.User.exists(user_id)
+          if App.User.find(user_id).active is true
+            valid_user_ids.push user_id
+      group.valid_user_ids = valid_user_ids
+
+    ###
+    users = [
+      App.User.find(2),
+      App.User.find(2),
+      App.User.find(2),
+    ]
+    macros = [
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close Beispiel für eine besonders'
+      },
+      {
+        name: 'Close &amp; Tag as Spam'
+      },
+      {
+        name: 'Close &amp; Reply we\'re on Holidays'
+      },
+      {
+        name: 'Escalate to 2nd level'
+      },
+      {
+        name: '1st Close'
+      },
+    ]
+    ###
+    @batchAssignInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
+      users: users
+      groups: groups
+    ))
+    @batchMacro.html $(App.view('ticket_overview/batch_overlay_macro')(
+      macros: macros
+    ))
 
   active: (state) =>
     return @shown if state is undefined
@@ -812,7 +1062,7 @@ class Table extends App.Controller
         if @lastChecked && e.shiftKey
           # check items in a row
           currentItem = $(e.currentTarget).parents('.item')
-          lastCheckedItem = @lastChecked.parents('.item')
+          lastCheckedItem = $(@lastChecked).parents('.item')
           items = currentItem.parent().children()
 
           if currentItem.index() > lastCheckedItem.index()
@@ -826,7 +1076,7 @@ class Table extends App.Controller
 
           items.slice(startId+1, endId).find('[name="bulk"]').prop('checked', (-> !@checked))
 
-        @lastChecked = $(e.currentTarget)
+        @lastChecked = e.currentTarget
       callbackIconHeader = (headers) ->
         attribute =
           name:        'icon'
@@ -913,7 +1163,6 @@ class Table extends App.Controller
       bulkAll = @$('.table-overview').find('[name="bulk_all"]')
       checkedCount = @$('.table-overview').find('input[name="bulk"]:checked').length
       checkboxCount = @$('.table-overview').find('input[name="bulk"]').length
-
       if checkedCount is 0
         bulkAll.prop('indeterminate', false)
         bulkAll.prop('checked', false)
@@ -1117,6 +1366,11 @@ class BulkForm extends App.Controller
           return
 
       ticket.load(ticket_update)
+
+      # if title is empty - ticket can't processed, set ?
+      if _.isEmpty(ticket.title)
+        ticket.title = '-'
+
       ticket.save(
         done: (r) =>
           @bulk_count_index++

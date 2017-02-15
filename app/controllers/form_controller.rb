@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2014 Zammad Foundation, http://zammad-foundation.org/
 
 class FormController < ApplicationController
+  skip_before_action :verify_csrf_token
+  before_action :cors_preflight_check_execute
+  after_action :set_access_control_headers_execute
 
   def config
     return if !enabled?
@@ -98,8 +101,6 @@ class FormController < ApplicationController
       group_id: 1,
       customer_id: customer.id,
       title: params[:title],
-      state_id: Ticket::State.find_by(name: 'new').id,
-      priority_id: Ticket::Priority.find_by(name: '2 normal').id,
     )
     article = Ticket::Article.create(
       ticket_id: ticket.id,

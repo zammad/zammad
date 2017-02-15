@@ -3,7 +3,7 @@
 require 'tempfile'
 
 class ReportsController < ApplicationController
-  before_action { authentication_check(permission: 'report') }
+  prepend_before_action { authentication_check(permission: 'report') }
 
   # GET /api/reports/config
   def reporting_config

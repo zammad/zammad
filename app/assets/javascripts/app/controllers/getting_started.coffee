@@ -474,7 +474,7 @@ class EmailNotification extends App.WizardFullScreen
     @ajax(
       id:   'email_notification'
       type: 'POST'
-      url:  "#{@apiPath}/channels/email_notification"
+      url:  "#{@apiPath}/channels_email_notification"
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
@@ -751,7 +751,7 @@ class ChannelEmail extends App.WizardFullScreen
     @ajax(
       id:   'email_probe'
       type: 'POST'
-      url:  "#{@apiPath}/channels/email_probe"
+      url:  "#{@apiPath}/channels_email_probe"
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
@@ -800,7 +800,7 @@ class ChannelEmail extends App.WizardFullScreen
     @ajax(
       id:   'email_inbound'
       type: 'POST'
-      url:  "#{@apiPath}/channels/email_inbound"
+      url:  "#{@apiPath}/channels_email_inbound"
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
@@ -853,7 +853,7 @@ class ChannelEmail extends App.WizardFullScreen
     @ajax(
       id:   'email_outbound'
       type: 'POST'
-      url:  "#{@apiPath}/channels/email_outbound"
+      url:  "#{@apiPath}/channels_email_outbound"
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
@@ -881,7 +881,7 @@ class ChannelEmail extends App.WizardFullScreen
     @ajax(
       id:   'email_verify'
       type: 'POST'
-      url:  "#{@apiPath}/channels/email_verify"
+      url:  "#{@apiPath}/channels_email_verify"
       data: JSON.stringify(account)
       processData: true
       success: (data, status, xhr) =>

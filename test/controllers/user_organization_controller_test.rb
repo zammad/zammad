@@ -75,10 +75,24 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
   test 'user create tests - no user' do
 
+    post '/api/v1/signshow', {}, @headers
+
     # create user with disabled feature
     Setting.set('user_create_account', false)
-    params = { email: 'some_new_customer@example.com' }
+    token = @response.headers['CSRF-TOKEN']
+
+    # token based on form
+    params = { email: 'some_new_customer@example.com', authenticity_token: token }
     post '/api/v1/users', params.to_json, @headers
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert(result['error'])
+    assert_equal('Feature not enabled!', result['error'])
+
+    # token based on headers
+    headers = @headers.merge('X-CSRF-Token' => token)
+    params = { email: 'some_new_customer@example.com' }
+    post '/api/v1/users', params.to_json, headers
     assert_response(422)
     result = JSON.parse(@response.body)
     assert(result['error'])
@@ -88,7 +102,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # no signup param with enabled feature
     params = { email: 'some_new_customer@example.com' }
-    post '/api/v1/users', params.to_json, @headers
+    post '/api/v1/users', params.to_json, headers
     assert_response(422)
     result = JSON.parse(@response.body)
     assert(result['error'])
@@ -96,7 +110,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # already existing user with enabled feature
     params = { email: 'rest-customer1@example.com', signup: true }
-    post '/api/v1/users', params.to_json, @headers
+    post '/api/v1/users', params.to_json, headers
     assert_response(422)
     result = JSON.parse(@response.body)
     assert(result['error'])
@@ -104,7 +118,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create user with enabled feature (take customer role)
     params = { firstname: 'Me First', lastname: 'Me Last', email: 'new_here@example.com', signup: true }
-    post '/api/v1/users', params.to_json, @headers
+    post '/api/v1/users', params.to_json, headers
     assert_response(201)
     result = JSON.parse(@response.body)
     assert(result)
@@ -121,7 +135,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     # create user with admin role (not allowed for signup, take customer role)
     role = Role.lookup(name: 'Admin')
     params = { firstname: 'Admin First', lastname: 'Admin Last', email: 'new_admin@example.com', role_ids: [ role.id ], signup: true }
-    post '/api/v1/users', params.to_json, @headers
+    post '/api/v1/users', params.to_json, headers
     assert_response(201)
     result = JSON.parse(@response.body)
     assert(result)
@@ -133,7 +147,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     # create user with agent role (not allowed for signup, take customer role)
     role = Role.lookup(name: 'Agent')
     params = { firstname: 'Agent First', lastname: 'Agent Last', email: 'new_agent@example.com', role_ids: [ role.id ], signup: true }
-    post '/api/v1/users', params.to_json, @headers
+    post '/api/v1/users', params.to_json, headers
     assert_response(201)
     result = JSON.parse(@response.body)
     assert(result)
@@ -143,13 +157,13 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert(user.role?('Customer'))
 
     # no user (because of no session)
-    get '/api/v1/users', {}, @headers
+    get '/api/v1/users', {}, headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('authentication failed', result['error'])
 
     # me
-    get '/api/v1/users/me', {}, @headers
+    get '/api/v1/users/me', {}, headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('authentication failed', result['error'])

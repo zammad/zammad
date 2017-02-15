@@ -40,16 +40,22 @@ class App.Ajax
       _instance ?= new _ajaxSingleton
     _instance.current()
 
+  @token: ->
+    if _instance == undefined
+      _instance ?= new _ajaxSingleton
+    _instance.token()
+
 # The actual Singleton class
 class _ajaxSingleton
   defaults:
     contentType: 'application/json'
     dataType: 'json'
     processData: false
-    headers: {'X-Requested-With': 'XMLHttpRequest'}
+    headers:
+      'X-Requested-With': 'XMLHttpRequest'
     cache: false
     async: true
-
+  currentToken: null
   currentRequest: {}
   queueList: []
   queueRunning: false
@@ -63,8 +69,15 @@ class _ajaxSingleton
     # bindings
     $(document).bind('ajaxSend', =>
       @_show_spinner()
-    ).bind('ajaxComplete', =>
+    ).bind('ajaxComplete', (request, xhr, settings) =>
       @_hide_spinner()
+
+      # remeber XSRF-TOKEN for later
+      CSRFToken = xhr.getResponseHeader('CSRF-TOKEN')
+      return if !CSRFToken
+      @currentToken = CSRFToken
+      @defaults.headers['X-CSRF-Token'] = CSRFToken
+      Spine.Ajax.defaults.headers['X-CSRF-Token'] = CSRFToken
     )
 
     # show error messages
@@ -169,6 +182,9 @@ class _ajaxSingleton
 
   current: =>
     @currentRequest
+
+  token: =>
+    @currentToken
 
   _show_spinner: =>
     @count++

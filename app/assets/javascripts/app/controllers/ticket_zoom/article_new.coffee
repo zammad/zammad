@@ -42,6 +42,8 @@ class App.TicketZoomArticleNew extends App.Controller
         possibleArticleType['email'] = true
       else if articleTypeCreate is 'facebook feed post'
         possibleArticleType['facebook feed comment'] = true
+      else if articleTypeCreate is 'telegram personal-message'
+        possibleArticleType['telegram personal-message'] = true
     if @ticket && @ticket.customer_id
       customer = App.User.find(@ticket.customer_id)
       if customer.email
@@ -104,6 +106,16 @@ class App.TicketZoomArticleNew extends App.Controller
         attributes: []
         internal:   false,
         features:   ['attachment']
+      }
+    if possibleArticleType['telegram personal-message']
+      @articleTypes.push {
+        name:              'telegram personal-message'
+        icon:              'telegram'
+        attributes:        []
+        internal:          false,
+        features:          ['attachment']
+        maxTextLength:     10000
+        warningTextLength: 5000
       }
 
     if @permissionCheck('ticket.customer')
@@ -335,6 +347,11 @@ class App.TicketZoomArticleNew extends App.Controller
       params.content_type = 'text/plain'
       params.body = App.Utils.html2text(params.body, true)
 
+    if params.type is 'telegram personal-message'
+      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
+      params.content_type = 'text/plain'
+      params.body = App.Utils.html2text(params.body, true)
+
     params
 
   validate: =>
@@ -499,7 +516,7 @@ class App.TicketZoomArticleNew extends App.Controller
       @$('[data-name=body] [data-signature=true]').remove()
 
     # remove richtext
-    if @type is 'twitter status' || @type is 'twitter direct-message'
+    if @type is 'twitter status' || @type is 'twitter direct-message' || @type is 'telegram personal-message'
       rawHTML = @$('[data-name=body]').html()
       cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
       if cleanHTML && cleanHTML.html() != rawHTML

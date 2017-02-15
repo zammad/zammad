@@ -42,6 +42,7 @@ gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-twitter'
 
 gem 'twitter'
+gem 'telegramAPI'
 gem 'koala'
 gem 'mail'
 gem 'email_verifier'

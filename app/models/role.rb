@@ -93,7 +93,7 @@ get all roles with permission "admin.session" or "ticket.agent"
 
 returns
 
-  [user1, user2, ...]
+  [role1, role2, ...]
 
 =end
 

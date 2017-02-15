@@ -71,7 +71,7 @@
     <div class="stat-graphic">
       <%- @Icon('reopening', "reopening-icon #{@StatsTicketReopen.state}-color") %>
     </div>
-    <div class="stat-label"><%- @T('%s% are being reopened', @StatsTicketReopen.percent) %></div>
+    <div class="stat-label"><%- @T('%s% have been reopened', @StatsTicketReopen.percent) %></div>
     <div class="stat-detail"><%- @T('Average: %s%', @StatsTicketReopen.average_per_agent) %></div>
   </div>
 </div>

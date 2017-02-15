@@ -18,13 +18,11 @@ class Ticket < ApplicationModel
   extend Ticket::Search
 
   store          :preferences
-  before_create  :check_generate, :check_defaults, :check_title, :check_escalation_update
+  before_create  :check_generate, :check_defaults, :check_title, :check_escalation_update, :set_default_state, :set_default_priority
   before_update  :check_defaults, :check_title, :reset_pending_time, :check_escalation_update
   before_destroy :destroy_dependencies
 
   validates :group_id, presence: true
-  validates :priority_id, presence: true
-  validates :state_id, presence: true
 
   activity_stream_permission 'ticket.agent'
 
@@ -924,5 +922,23 @@ result
 
     # destroy online notifications
     OnlineNotification.remove(self.class.to_s, id)
+  end
+
+  def set_default_state
+    return if state_id
+
+    default_ticket_state = Ticket::State.find_by(default_create: true)
+    return if !default_ticket_state
+
+    self.state_id = default_ticket_state.id
+  end
+
+  def set_default_priority
+    return if priority_id
+
+    default_ticket_priority = Ticket::Priority.find_by(default_create: true)
+    return if !default_ticket_priority
+
+    self.priority_id = default_ticket_priority.id
   end
 end

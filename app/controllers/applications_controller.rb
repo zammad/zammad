@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ApplicationsController < ApplicationController
-  before_action { authentication_check(permission: 'admin.api') }
+  prepend_before_action { authentication_check(permission: 'admin.api') }
 
   def index
     all = Doorkeeper::Application.all

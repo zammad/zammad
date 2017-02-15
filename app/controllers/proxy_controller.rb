@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ProxyController < ApplicationController
-  before_action { authentication_check(permission: 'admin.system') }
+  prepend_before_action { authentication_check(permission: 'admin.system') }
 
   # POST /api/v1/proxy
   def test

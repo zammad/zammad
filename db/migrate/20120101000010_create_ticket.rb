@@ -14,6 +14,8 @@ class CreateTicket < ActiveRecord::Migration
       t.column :name,                 :string, limit: 250,  null: false
       t.column :next_state_id,        :integer,             null: true
       t.column :ignore_escalation,    :boolean,             null: false, default: false
+      t.column :default_create,       :boolean,             null: false, default: false
+      t.column :default_follow_up,    :boolean,             null: false, default: false
       t.column :note,                 :string, limit: 250,  null: true
       t.column :active,               :boolean,             null: false, default: true
       t.column :updated_by_id,        :integer,             null: false
@@ -21,9 +23,12 @@ class CreateTicket < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :ticket_states, [:name], unique: true
+    add_index :ticket_states, [:default_create]
+    add_index :ticket_states, [:default_follow_up]
 
     create_table :ticket_priorities do |t|
       t.column :name,                 :string, limit: 250, null: false
+      t.column :default_create,       :boolean,            null: false, default: false
       t.column :note,                 :string, limit: 250, null: true
       t.column :active,               :boolean,            null: false, default: true
       t.column :updated_by_id,        :integer,            null: false
@@ -31,6 +36,7 @@ class CreateTicket < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :ticket_priorities, [:name], unique: true
+    add_index :ticket_priorities, [:default_create]
 
     create_table :tickets do |t|
       t.references :group,                                                null: false

@@ -92,3 +92,35 @@ class App.Ticket extends App.Model
     else if item.type is 'escalation_warning'
       return App.i18n.translateContent('Ticket |%s| will escalate soon!', item.title)
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
+
+  # apply macro
+  @macro: (params) ->
+    for key, content of params.macro
+      attributes = key.split('.')
+      if attributes[0] is 'ticket'
+
+        # apply tag changes
+        if attributes[1] is 'tags'
+          tags = content.value.split(',')
+          for tag in tags
+            if content.operator is 'remove'
+              if params.callback && params.callback.tagRemove
+                params.callback.tagRemove(tag)
+              else
+                @tagRemove(params.ticket.id, tag)
+            else
+              if params.callback && params.callback.tagAdd
+                params.callback.tagAdd(tag)
+              else
+                @tagAdd(params.ticket.id, tag)
+
+        # apply user changes
+        else if attributes[1] is 'owner_id'
+          if content.pre_condition is 'current_user.id'
+            params.ticket[attributes[1]] = App.Session.get('id')
+          else
+            params.ticket[attributes[1]] = content.value
+
+        # apply direct value changes
+        else
+          params.ticket[attributes[1]] = content.value

@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class SlasController < ApplicationController
-  before_action { authentication_check(permission: 'admin.sla') }
+  prepend_before_action { authentication_check(permission: 'admin.sla') }
 
 =begin
 

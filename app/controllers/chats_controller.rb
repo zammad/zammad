@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ChatsController < ApplicationController
-  before_action { authentication_check(permission: 'admin.chat') }
+  prepend_before_action { authentication_check(permission: 'admin.chat') }
 
   def index
     chat_ids = []

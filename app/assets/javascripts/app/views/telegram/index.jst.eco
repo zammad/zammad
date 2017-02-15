@@ -1,0 +1,48 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Telegram') %> <small><%- @T('Bots') %></small></h1>
+  </div>
+
+  <div class="page-header-meta">
+    <a class="btn btn--success js-new"><%- @T('Add Bot') %></a>
+  </div>
+</div>
+
+<div class="page-content">
+
+<% if _.isEmpty(@channels): %>
+  <div class="page-description">
+    <p><%- @T('You have no configured %s right now.', 'Telegram Bot') %></p>
+  </div>
+<% else: %>
+
+<% for channel in @channels: %>
+  <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%= channel.id %>">
+    <div class="action-block action-row">
+      <h2><%- @Icon('status', 'supergood-color inline') %> <%= channel.options.bot.first_name %> <span class="text-muted">@<%= channel.options.bot.username %></span></h2>
+    </div>
+    <div class="action-flow action-flow--row">
+      <div class="action-block">
+        <h3><%- @T('Messages') %></h3>
+        @<%= channel.options.bot.username %>
+      </div>
+      <%- @Icon('arrow-right', 'action-flow-icon') %>
+      <div class="action-block">
+        <h3><%- @T('Group') %></h3>
+        <% if channel.options: %>
+          <%= channel.options.groupName %>
+        <% end %>
+      </div>
+    </div>
+    <div class="action-controls">
+      <div class="btn btn--danger btn--secondary js-delete"><%- @T('Delete') %></div>
+      <% if channel.active is true: %>
+        <div class="btn btn--secondary js-disable"><%- @T('Disable') %></div>
+      <% else: %>
+        <div class="btn btn--secondary js-enable"><%- @T('Enable') %></div>
+      <% end %>
+      <div class="btn js-edit"><%- @T('Edit') %></div>
+    </div>
+  </div>
+<% end %>
+</div>

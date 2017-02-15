@@ -77,9 +77,11 @@ class AuthTest < TestCase
     logout()
 
     # verify session cookie
+    sleep 2
     cookie(
       name: '^_zammad.+?',
-      should_not_exist: true,
+      value: '.+?',
+      expires: '',
     )
   end
 

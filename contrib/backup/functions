@@ -4,47 +4,157 @@
 #
 
 function get_backup_date () {
-    TIMESTAMP="$(date +'%Y%m%d%H%M%S')"
+  TIMESTAMP="$(date +'%Y%m%d%H%M%S')"
 
-    if [ "${DEBUG}" == "yes" ]; then
-	echo "timestamp is ${TIMESTAMP}"
-    fi
+  if [ "${DEBUG}" == "yes" ]; then
+    echo "timestamp is ${TIMESTAMP}"
+  fi
 }
 
 function delete_old_backups () {
-    find ${BACKUP_DIR}/*_zammad_*.gz -type f -mtime +${HOLD_DAYS} -exec rm -r \;
+  test -d ${BACKUP_DIR} && find ${BACKUP_DIR}/*_zammad_*.gz -type f -mtime +${HOLD_DAYS} -exec rm -r \;
 }
 
 function get_db_credentials () {
-    DB_ADAPTER="$(grep 'adapter:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*adapter:\(\| \)//g')"
-    DB_NAME="$(grep 'database:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*database:\(\| \) //g')"
-    DB_USER="$(grep 'username:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*username:\(\| \)//g')"
-    DB_PASS="$(grep 'password:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*password:\(\| \)//g')"
+  DB_ADAPTER="$(grep 'adapter:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*adapter:\(\| \)//g')"
+  DB_NAME="$(grep 'database:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*database:\(\| \) //g')"
+  DB_USER="$(grep 'username:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*username:\(\| \)//g')"
+  DB_PASS="$(grep 'password:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*password:\(\| \)//g')"
 
-    if [ "${DEBUG}" == "yes" ]; then
-	echo "adapter=${DB_ADAPTER} dbname=${DB_NAME} dbuser=${DB_USER} dbpass=${DB_PASS}"
-    fi
+  if [ "${DEBUG}" == "yes" ]; then
+    echo "adapter=${DB_ADAPTER} dbname=${DB_NAME} dbuser=${DB_USER} dbpass=${DB_PASS}"
+  fi
 }
 
 function backup_dir_create () {
-    test -d ${BACKUP_DIR} || mkdir -p ${BACKUP_DIR}
+  test -d ${BACKUP_DIR} || mkdir -p ${BACKUP_DIR}
 
-    if [ "${DEBUG}" == "yes" ]; then
-	echo "backup dir is ${BACKUP_DIR}"
-    fi
+  if [ "${DEBUG}" == "yes" ]; then
+    echo "backup dir is ${BACKUP_DIR}"
+  fi
 }
 
 function backup_files () {
-    tar -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_DIR}
+  tar -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_DIR}
 }
 
 function backup_db () {
-    if [ "${DB_ADAPTER}" == "mysql2" ]; then
-	mysqldump --opt --single-transaction ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
-    elif [ "${DB_ADAPTER}" == "postgresql" ]; then
-	su -c "pg_dump ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz" postgres
-    else
-	echo "ADAPTER not found. if its sqlite backup is already saved in filebackup"
-    fi
+  if [ "${DB_ADAPTER}" == "mysql2" ]; then
+    mysqldump --opt --single-transaction -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
+  elif [ "${DB_ADAPTER}" == "postgresql" ]; then
+    su -c "pg_dump -c ${DB_NAME} | gzip > /tmp/${TIMESTAMP}_zammad_db.psql.gz" postgres
+    mv /tmp/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}
+  else
+    echo "DB ADAPTER not found. if its sqlite backup is already saved in filebackup"
+  fi
 }
 
+function check_database_config_exists () {
+  if [ -f ${ZAMMAD_DIR}/${DATABASE_CONFIG} ]; then
+    get_db_credentials
+  else
+    echo -e "${ZAMMAD_DIR}/${DATABASE_CONFIG} is missing. is zammad configured yet? \nAborting restore..."
+    exit 1
+  fi
+}
+
+function restore_warning () {
+  if [ -n "${1}" ]; then
+    CHOOSE_RESTORE="yes"
+  else
+    echo -e "The restore will delete your current config and database! \nBe sure to have a backup available! \n"
+    echo -e "Enter 'yes' if you want to proceed!"
+    read -p 'Restore?: ' CHOOSE_RESTORE
+  fi
+
+  if [ "${CHOOSE_RESTORE}" != "yes" ]; then
+    echo "Restore aborted!"
+    exit 1
+  fi
+}
+
+function get_restore_dates () {
+  RESTORE_FILE_DATES="$(find ${BACKUP_DIR} -type f -iname '*_zammad_files.tar.gz' | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_files.tar.gz##g" | sort)"
+
+  if [ "${DB_ADAPTER}" == "postgresql" ]; then
+    DB_FILE_EXT="psql"
+  elif [ "${DB_ADAPTER}" == "mysql2" ]; then
+    DB_FILE_EXT="mysql"
+  fi
+
+  RESTORE_DB_DATES="$(find ${BACKUP_DIR} -type f -iname "*_zammad_db.${DB_FILE_EXT}.gz" | sed -e "s#${BACKUP_DIR}/##g" -e "s#_zammad_db.${DB_FILE_EXT}.gz##g" | sort)"
+}
+
+function choose_restore_date () {
+  if [ -n "${1}" ]; then
+    RESTORE_FILE_DATE="${1}"
+  else
+    echo -e "Enter file date to restore: \n${RESTORE_FILE_DATES}"
+    read -p 'File date: ' RESTORE_FILE_DATE
+  fi
+
+  if [ ! -f "${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz" ];then
+    echo -e "File ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz does not exist! \nRestore aborted!"
+    exit 1
+  fi
+
+  if [ -n "${1}" ]; then
+    RESTORE_DB_DATE="${1}"
+  else
+    echo -e "Enter db date to restore: \n${RESTORE_DB_DATES}"
+    read -p 'DB date: ' RESTORE_DB_DATE
+  fi
+
+  if [ ! -f "${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz" ];then
+    echo -e "File ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz does not exist! \nRestore aborted!"
+    exit 1
+  fi
+}
+
+function detect_initcmd () {
+  if [ -n "$(which systemctl 2> /dev/null)" ]; then
+    INIT_CMD="systemctl"
+  elif [ -n "$(which initctl 2> /dev/null)" ]; then
+    INIT_CMD="initctl"
+  else
+    function sysvinit () {
+      service $2 $1
+    }
+    INIT_CMD="sysvinit"
+  fi
+
+  if [ "${DOCKER}" == "yes" ]; then
+    INIT_CMD="initctl"
+  fi
+
+  if [ "${DEBUG}" == "yes" ]; then
+    echo "INIT CMD = ${INIT_CMD}"
+  fi
+}
+
+function start_zammad () {
+  echo "# Starting Zammad"
+  ${INIT_CMD} start zammad
+}
+
+function stop_zammad () {
+  echo "# Stopping Zammad"
+  ${INIT_CMD} stop zammad
+}
+
+function restore_zammad () {
+  echo "# Restoring Files"
+  tar -C / --overwrite -xzf ${BACKUP_DIR}/${RESTORE_FILE_DATE}_zammad_files.tar.gz
+
+  if [ "${DB_ADAPTER}" == "postgresql" ]; then
+    echo "# Restoring PostgrSQL DB"
+    gunzip -ck < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | su -c "psql -d ${DB_NAME}" postgres
+  elif [ "${DB_ADAPTER}" == "mysql2" ]; then
+    echo "# Restoring MySQL DB"
+    gunzip -ck < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
+  fi
+}
+
+function restore_message () {
+    echo "# Zammad restored!"
+}

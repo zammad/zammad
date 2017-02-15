@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class SettingsController < ApplicationController
-  before_action { authentication_check(permission: 'admin.*') }
+  prepend_before_action { authentication_check(permission: 'admin.*') }
 
   # GET /settings
   def index

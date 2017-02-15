@@ -15,7 +15,29 @@ $navigationWidth: 260px;
 
 $highlight-color: hsl(205,90%,60%);
 
-$largeScreenBreakpoint: 1260px;
+@mixin desktop {
+  @media screen and (min-width: 1260px) {
+    @content;
+  }
+}
+
+@mixin small-desktop {
+  @media screen and (max-width: 1260px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
 
 html {
   height: 100%;
@@ -2725,9 +2747,13 @@ footer {
 
 .overviews {
   .sidebar {
-    @media only screen and (max-width: $largeScreenBreakpoint) {
+    @include small-desktop {
       display: none;
     }
+  }
+
+  .table > tbody > tr > td {
+    user-select: none;
   }
 }
 
@@ -2758,7 +2784,7 @@ footer {
     width: 336px;
   }
 
-  @media only screen and (max-width: $largeScreenBreakpoint) {
+  @include small-desktop {
     display: flex;
   }
 }
@@ -2780,7 +2806,7 @@ footer {
     0 -2px rgba(0,0,0,.03),
     0 -3px rgba(0,0,0,.01);
 
-  @media only screen and (max-width: $largeScreenBreakpoint) {
+  @include small-desktop {
     left: $navigationWidth;
     min-width: $minWidth - $sidebarWidth;
   }
@@ -3633,6 +3659,12 @@ footer {
   background: white;
   border-right: 1px solid #e6e6e6;
   overflow: auto;
+  
+  @include small-desktop {
+    &.optional {
+      display: none;
+    }
+  }
 
   h2 {
     margin-top: 0;
@@ -8367,7 +8399,7 @@ output {
 
 .batch-overlay {
   @extend .fit;
-  z-index: 1;
+  z-index: 100;
   color: white;
   text-transform: uppercase;
   text-align: center;
@@ -8379,6 +8411,10 @@ output {
   cursor: grabbing;
   overflow: hidden;
   user-select: none;
+  
+  &.is-visible {
+    display: block;
+  }
   
   &-backdrop {
     @extend .fit;
@@ -8441,21 +8477,56 @@ output {
 
   &-box {
     background: hsl(232,9%,17%);
-    display: flex;
-    flex-wrap: wrap;
     width: 100%;
-    padding: 37px 25px;
     position: absolute;
     visibility: hidden;
     will-change: opacity, transition;
+    
+    &-inner {
+      margin: 37px 25px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      overflow: hidden;
+    }
   }
 
   &-assign {
-    padding-bottom: 87px; // 37px + 50px
+    padding-bottom: 50px;
     bottom: -50px; // extra space for bounce animation
+    
+    .batch-overlay-box-inner {
+      max-height: 310px;
+    
+      @media screen and (min-height: 1000px) {
+        max-height: 465px;
+      }
+    }
+
+    &-group {
+      box-shadow: 0 0 35px hsla(0,0%,0%,.5);
+      
+      .batch-overlay-box-inner {
+        margin-top: 42px;
+        margin-bottom: 10px;
+      }
+
+      &-name {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding: 11px 13px 8px;
+        line-height: 1;
+        position: absolute;
+        background: hsl(233,10%,15%);
+      }
+    }
 
     &-entry {
       padding: 13px;
+      width: 116px;
+      height: 155px;
        
       &.is-hovered {
         .avatar {
@@ -8469,6 +8540,21 @@ output {
         margin-bottom: 10px;
         box-sizing: content-box;
         transition: transform 120ms;
+        cursor: inherit;
+        
+        &--organization {
+          background: hsl(191,68%,47%);
+        }
+      }
+
+      &-name {
+        max-height: 34px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        word-break: break-word;
       }
 
       &-detail {
@@ -8478,8 +8564,17 @@ output {
   }
 
   &-macro {
-    padding-top: 87px; // 37px + 50px
+    padding-top: 50px;
     top: -50px; // extra space for bounce animation
+
+    .batch-overlay-box-inner {
+      max-height: 146px;
+      margin: 24px 12px;
+    
+      @media screen and (min-height: 800px) {
+        max-height: 292px;
+      }
+    }
     
     &-entry {
       margin: 13px;
@@ -8566,21 +8661,6 @@ output {
     }
   }
 }
-
-/*
-
-  ----------------
-   normal screens
-  ----------------
-
-*/
-
-@media only screen and (max-width: $largeScreenBreakpoint) {
-  .sidebar.optional {
-    display: none;
-  }
-}
-
 
 
 /*

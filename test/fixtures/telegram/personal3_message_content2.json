@@ -1,0 +1,42 @@
+{
+  "update_id": 30002,
+  "message": {
+    "message_id": 3366,
+    "from": {
+      "last_name":"Test Lastname2",
+      "id":1111112,
+      "type": "private",
+      "first_name":"Test Firstname2",
+      "username":"Testusername2"
+    },
+    "chat": {
+      "last_name":"Test Lastname2",
+      "id":1111112,
+      "first_name":"Test Firstname2",
+      "username":"Testusername2",
+      "type": "private"
+    },
+    "date": 1486036832,
+    "photo": [
+      {
+        "file_id": "ABC-123VabcOcv123w0ABBL_aoY-F849YYABC",
+        "file_size": 1016,
+        "width": 90,
+        "height": 82
+      },
+      {
+        "file_id": "ABC-123VabcOcv123w0ABPlhIiVSfO9TYoABC",
+        "file_size": 7378,
+        "width": 320,
+        "height": 291
+      },
+      {
+        "file_id": "ABC-123VabcOcv123w0ABHywrcPqfrbAYIABC",
+        "file_size": 16433,
+        "width": 720,
+        "height": 654
+      }
+    ],
+    "caption": "caption 123<b>abc</b>"
+  }
+}

@@ -1,7 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class UsersController < ApplicationController
-  before_action :authentication_check, except: [:create, :password_reset_send, :password_reset_verify, :image]
+  prepend_before_action :authentication_check, except: [:create, :password_reset_send, :password_reset_verify, :image]
+  prepend_before_action :authentication_check_only, only: [:create]
 
   # @path       [GET] /users
   #
@@ -105,10 +106,6 @@ class UsersController < ApplicationController
   # @response_message 200 [User] Created User record.
   # @response_message 401        Invalid session.
   def create
-
-    # in case of authentication, set current_user to access later
-    authentication_check_only({})
-
     clean_params = User.association_name_to_id_convert(params)
     clean_params = User.param_cleanup(clean_params, true)
     user = User.new(clean_params)

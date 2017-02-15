@@ -6,20 +6,15 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:
 
 # import config
-. config
+. /opt/zammad/contrib/backup/config
 
 # import functions
-. functions
+. /opt/zammad/contrib/backup/functions
+
+# exec backup
+check_database_config_exists
 
 delete_old_backups
-
-# check if database.yml exists
-if [ -f ${ZAMMAD_DIR}/${DATABASE_CONFIG} ]; then
-    get_db_credentials
-else
-    echo "${ZAMMAD_DIR}/${DATABASE_CONFIG} is missing. is zammad configured yet?"
-    exit 1
-fi
 
 get_backup_date
 

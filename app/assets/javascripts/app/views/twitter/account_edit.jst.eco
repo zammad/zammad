@@ -24,11 +24,11 @@
   </table>
 
   <h3><%- @T('Mentions Group') %></h3>
-  <p class="description"><%- @T('Choose which group mentions will get added to.') %></p>
+  <p class="description"><%- @T('Choose which group %s will get added to.', 'mentions') %></p>
   <div class="js-mentionsGroup"></div>
 
   <h3><%- @T('Direct Messages Group') %></h3>
-  <p class="description"><%- @T('Choose which group direct messages will get added to.') %></p>
+  <p class="description"><%- @T('Choose which group %s will get added to.', 'direct messages') %></p>
   <div class="js-directMessagesGroup"></div>
 
   <h3><%- @T('Retweets') %></h3>

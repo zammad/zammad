@@ -1,7 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class MonitoringController < ApplicationController
-  before_action -> { authentication_check(permission: 'admin.monitoring') }, except: [:health_check, :status]
+  prepend_before_action -> { authentication_check(permission: 'admin.monitoring') }, except: [:health_check, :status]
+  skip_before_action :verify_csrf_token
 
 =begin
 

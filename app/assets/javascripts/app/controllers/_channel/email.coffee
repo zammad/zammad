@@ -243,7 +243,7 @@ class App.ChannelEmailAccountOverview extends App.Controller
     @ajax(
       id:   'email_index'
       type: 'GET'
-      url:  @apiPath + '/channels/email_index'
+      url:  "#{@apiPath}/channels_email"
       processData: true
       success: (data, status, xhr) =>
         @stopLoading()
@@ -324,34 +324,44 @@ class App.ChannelEmailAccountOverview extends App.Controller
   delete: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    new App.ControllerGenericDestroyConfirm(
-      item:      item
+    new App.ControllerConfirm(
+      message: 'Sure?'
+      callback: =>
+        @ajax(
+          id:   'email_delete'
+          type: 'DELETE'
+          url:  "#{@apiPath}/channels_email"
+          data: JSON.stringify(id: id)
+          processData: true
+          success: =>
+            @load()
+        )
       container: @el.closest('.content')
-      callback:  @load
     )
 
   disable: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    item.active = false
-    item.save(
-      done: =>
-        @load()
-      fail: =>
+    @ajax(
+      id:   'email_disable'
+      type: 'POST'
+      url:  "#{@apiPath}/channels_email_disable"
+      data: JSON.stringify(id: id)
+      processData: true
+      success: =>
         @load()
     )
 
   enable: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    item.active = true
-    item.save(
-      done: =>
-        @load()
-      fail: =>
+    @ajax(
+      id:   'email_enable'
+      type: 'POST'
+      url:  "#{@apiPath}/channels_email_enable"
+      data: JSON.stringify(id: id)
+      processData: true
+      success: =>
         @load()
     )
 
@@ -441,7 +451,7 @@ class App.ChannelEmailEdit extends App.ControllerModal
     # show errors in form
     if errors
       @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       return false
 
     # disable form
@@ -449,16 +459,18 @@ class App.ChannelEmailEdit extends App.ControllerModal
 
     # update
     @ajax(
-      id:   'channel_group_update'
+      id:   'channel_email_group'
       type: 'POST'
-      url:  "#{@apiPath}/channels/group/#{@item.id}"
-      data: JSON.stringify( params )
+      url:  "#{@apiPath}/channels_email_group/#{@item.id}"
+      data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         @callback()
         @close()
-      fail: =>
+      error: (xhr) =>
+        data = JSON.parse(xhr.responseText)
         @formEnable(e)
+        @el.find('.alert').removeClass('hidden').text(data.error || 'Unable to save changes.')
     )
 
 class App.ChannelEmailAccountWizard extends App.WizardModal
@@ -651,7 +663,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     @ajax(
       id:   'email_probe'
       type: 'POST'
-      url:  @apiPath + '/channels/email_probe'
+      url:  "#{@apiPath}/channels_email_probe"
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
@@ -683,7 +695,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
           @$('.js-inbound [name="options::password"]').val(@account['meta']['password'])
 
         @enable(e)
-      fail: =>
+      error: =>
         @enable(e)
         @showSlide('js-intro')
     )
@@ -705,7 +717,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     @ajax(
       id:   'email_inbound'
       type: 'POST'
-      url:  @apiPath + '/channels/email_inbound'
+      url:  "#{@apiPath}/channels_email_inbound"
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
@@ -738,9 +750,10 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
           @showAlert('js-inbound', data.message_human || data.message)
           @showInvalidField('js-inbound', data.invalid_field)
         @enable(e)
-      fail: =>
+      error: (xhr) =>
+        data = JSON.parse(xhr.responseText)
         @showSlide('js-inbound')
-        @showAlert('js-inbound', data.message_human || data.message)
+        @showAlert('js-inbound', data.message_human || data.message || data.error)
         @showInvalidField('js-inbound', data.invalid_field)
         @enable(e)
     )
@@ -768,8 +781,8 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     @ajax(
       id:   'email_outbound'
       type: 'POST'
-      url:  @apiPath + '/channels/email_outbound'
-      data: JSON.stringify( params )
+      url:  "#{@apiPath}/channels_email_outbound"
+      data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
         if data.result is 'ok'
@@ -783,9 +796,10 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
           @showAlert('js-outbound', data.message_human || data.message)
           @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
-      fail: =>
+      error: (xhr) =>
+        data = JSON.parse(xhr.responseText)
         @showSlide('js-outbound')
-        @showAlert('js-outbound', data.message_human || data.message)
+        @showAlert('js-outbound', data.message_human || data.message || data.error)
         @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )
@@ -810,7 +824,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     @ajax(
       id:   'email_verify'
       type: 'POST'
-      url:  @apiPath + '/channels/email_verify'
+      url:  "#{@apiPath}/channels_email_verify"
       data: JSON.stringify(account)
       processData: true
       success: (data, status, xhr) =>
@@ -835,7 +849,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
               if data.subject && @account
                 @account.subject = data.subject
               @verify(@account, count + 1)
-      fail: =>
+      error: =>
         @showSlide('js-intro')
         @showAlert('js-intro', 'Unable to verify sending and receiving. Please check your settings.')
     )
@@ -946,7 +960,7 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
     @ajax(
       id:   'email_outbound'
       type: 'POST'
-      url:  "#{@apiPath}/channels/email_notification"
+      url:  "#{@apiPath}/channels_email_notification"
       data: JSON.stringify(params)
       processData: true
       success: (data, status, xhr) =>
@@ -957,9 +971,10 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
           @showAlert('js-outbound', data.message_human || data.message)
           @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
-      fail: =>
+      error: (xhr) =>
+        data = JSON.parse(xhr.responseText)
         @showSlide('js-outbound')
-        @showAlert('js-outbound', data.message_human || data.message)
+        @showAlert('js-outbound', data.message_human || data.message || data.error)
         @showInvalidField('js-outbound', data.invalid_field)
         @enable(e)
     )

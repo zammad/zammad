@@ -1,0 +1,20 @@
+<div class="batch-overlay-backdrop js-batch-overlay-backdrop"></div>
+<div class="batch-overlay-cancel js-batch-cancel">
+  <%- @T('drag here to cancel') %>
+</div>
+<div class="batch-overlay-circle batch-overlay-circle--top js-batch-macro-circle">
+  <div class="batch-overlay-circle-label"><%- @T('run macro') %></div>
+  <%- @Icon('arrow-up') %>
+</div>
+<div class="batch-overlay-circle batch-overlay-circle--bottom js-batch-assign-circle">
+  <%- @Icon('arrow-down') %>
+  <div class="batch-overlay-circle-label"><%- @T('assign tickets') %></div>
+</div>
+<div class="batch-overlay-assign batch-overlay-box js-batch-assign">
+  <div class="batch-overlay-box-inner js-batch-assign-inner"></div>
+</div>
+<div class="batch-overlay-macro batch-overlay-box js-batch-macro"></div>
+<div class="batch-overlay-assign batch-overlay-assign-group batch-overlay-box js-batch-assign-group">
+  <div class="batch-overlay-assign-group-name js-batch-assign-group-name"></div>
+  <div class="batch-overlay-box-inner js-batch-assign-group-inner"></div>
+</div>

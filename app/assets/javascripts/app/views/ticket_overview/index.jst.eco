@@ -3,48 +3,4 @@
   <div class="overview-header"></div>
   <div class="overview-table"></div>
 </div>
-<div class="batch-overlay js-batch-overlay">
-  <div class="batch-overlay-backdrop js-batch-overlay-backdrop"></div>
-  <div class="batch-overlay-cancel js-batch-cancel">
-    <%- @T('drag here to cancel') %>
-  </div>
-  <div class="batch-overlay-circle batch-overlay-circle--top js-batch-macro-circle">
-    <div class="batch-overlay-circle-label"><%- @T('run macro') %></div>
-    <%- @Icon('arrow-up') %>
-  </div>
-  <div class="batch-overlay-circle batch-overlay-circle--bottom js-batch-assign-circle">
-    <%- @Icon('arrow-down') %>
-    <div class="batch-overlay-circle-label"><%- @T('assign tickets') %></div>
-  </div>
-  <div class="batch-overlay-assign batch-overlay-box js-batch-assign">
-    <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
-      <span class="avatar size-80 avatar--unique" style="background-position: -100px -150px;">HH</span>
-      <div class="batch-overlay-assign-entry-name">Hans Huber</div>
-    </div>
-    <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
-      <span class="avatar avatar--organization size-80 avatar--unique" style="background-position: -200px -60px;">
-        <%- @Icon('organization') %>
-      </span>
-      <div class="batch-overlay-assign-entry-name">Zammad</div>
-      <div class="batch-overlay-assign-entry-detail">3 Personen</div>
-    </div>
-    <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="assign">
-      <span class="avatar size-80 avatar--unique" style="background-position: -30px -10px;">FD</span>
-      <div class="batch-overlay-assign-entry-name">Felicity Dickens</div>
-    </div>
-  </div>
-  <div class="batch-overlay-macro batch-overlay-box js-batch-macro">
-    <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
-      <div class="batch-overlay-macro-entry-name">Close</div>
-    </div>
-    <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
-      <div class="batch-overlay-macro-entry-name">Close &amp; Tag as Spam</div>
-    </div>
-    <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
-      <div class="batch-overlay-macro-entry-name">Close &amp; Reply we're on Holidays</div>
-    </div>
-    <div class="batch-overlay-macro-entry js-batch-overlay-entry" data-action="macro">
-      <div class="batch-overlay-macro-entry-name">Escalate to 2nd level</div>
-    </div>
-  </div>
-</div>
+<div class="batch-overlay js-batch-overlay"></div>

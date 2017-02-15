@@ -1,100 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
-class ChannelsController < ApplicationController
-  before_action :authentication_check
+class ChannelsEmailController < ApplicationController
+  prepend_before_action { authentication_check(permission: 'admin.channel_email') }
 
-=begin
-
-Resource:
-POST /api/v1/channels/group/{id}.json
-
-Response:
-{}
-
-Test:
-curl http://localhost/api/v1/group/channels.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST '{group_id:123}'
-
-=end
-
-  def group_update
-    permission_check('admin')
-    check_access
-
-    channel = Channel.find(params[:id])
-    channel.group_id = params[:group_id]
-    channel.save
-    render json: {}
-  end
-
-=begin
-
-Resource:
-DELETE /api/v1/channels/{id}.json
-
-Response:
-{}
-
-Test:
-curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
-
-=end
-
-  def destroy
-    permission_check('admin')
-    check_access
-    model_destroy_render(Channel, params)
-  end
-
-  def twitter_index
-    permission_check('admin.channel_twitter')
-    assets = {}
-    ExternalCredential.where(name: 'twitter').each { |external_credential|
-      assets = external_credential.assets(assets)
-    }
-    channel_ids = []
-    Channel.order(:id).each { |channel|
-      next if channel.area != 'Twitter::Account'
-      assets = channel.assets(assets)
-      channel_ids.push channel.id
-    }
-    render json: {
-      assets: assets,
-      channel_ids: channel_ids,
-      callback_url: ExternalCredential.callback_url('twitter'),
-    }
-  end
-
-  def twitter_verify
-    permission_check('admin.channel_twitter')
-    model_update_render(Channel, params)
-  end
-
-  def facebook_index
-    permission_check('admin.channel_facebook')
-    assets = {}
-    ExternalCredential.where(name: 'facebook').each { |external_credential|
-      assets = external_credential.assets(assets)
-    }
-    channel_ids = []
-    Channel.order(:id).each { |channel|
-      next if channel.area != 'Facebook::Account'
-      assets = channel.assets(assets)
-      channel_ids.push channel.id
-    }
-    render json: {
-      assets: assets,
-      channel_ids: channel_ids,
-      callback_url: ExternalCredential.callback_url('facebook'),
-    }
-  end
-
-  def facebook_verify
-    permission_check('admin.channel_facebook')
-    model_update_render(Channel, params)
-  end
-
-  def email_index
-    permission_check('admin.channel_email')
+  def index
     system_online_service = Setting.get('system_online_service')
     account_channel_ids = []
     notification_channel_ids = []
@@ -142,10 +51,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     }
   end
 
-  def email_probe
-
-    # check admin permissions
-    permission_check('admin.channel_email')
+  def probe
 
     # probe settings based on email and password
     result = EmailHelper::Probe.full(
@@ -156,16 +62,13 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
     # verify if user+host already exists
     if result[:result] == 'ok'
-      return if email_account_duplicate?(result)
+      return if account_duplicate?(result)
     end
 
     render json: result
   end
 
-  def email_outbound
-
-    # check admin permissions
-    permission_check('admin.channel_email')
+  def outbound
 
     # verify access
     return if params[:channel_id] && !check_access(params[:channel_id])
@@ -174,10 +77,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     render json: EmailHelper::Probe.outbound(params, params[:email])
   end
 
-  def email_inbound
-
-    # check admin permissions
-    permission_check('admin.channel_email')
+  def inbound
 
     # verify access
     return if params[:channel_id] && !check_access(params[:channel_id])
@@ -186,15 +86,12 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     result = EmailHelper::Probe.inbound(params)
 
     # check account duplicate
-    return if email_account_duplicate?({ setting: { inbound: params } }, params[:channel_id])
+    return if account_duplicate?({ setting: { inbound: params } }, params[:channel_id])
 
     render json: result
   end
 
-  def email_verify
-
-    # check admin permissions
-    permission_check('admin.channel_email')
+  def verify
 
     email = params[:email] || params[:meta][:email]
     email = email.downcase
@@ -204,7 +101,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     return if channel_id && !check_access(channel_id)
 
     # check account duplicate
-    return if email_account_duplicate?({ setting: { inbound: params[:inbound] } }, channel_id)
+    return if account_duplicate?({ setting: { inbound: params[:inbound] } }, channel_id)
 
     # check delivery for 30 sek.
     result = EmailHelper::Verify.email(
@@ -284,12 +181,37 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     render json: result
   end
 
-  def email_notification
+  def enable
+    channel = Channel.find_by(id: params[:id], area: 'Email::Account')
+    channel.active = true
+    channel.save!
+    render json: {}
+  end
+
+  def disable
+    channel = Channel.find_by(id: params[:id], area: 'Email::Account')
+    channel.active = false
+    channel.save!
+    render json: {}
+  end
+
+  def destroy
+    channel = Channel.find_by(id: params[:id], area: 'Email::Account')
+    channel.destroy
+    render json: {}
+  end
+
+  def group
+    check_access
+    channel = Channel.find_by(id: params[:id], area: 'Email::Account')
+    channel.group_id = params[:group_id]
+    channel.save!
+    render json: {}
+  end
+
+  def notification
 
     check_online_service
-
-    # check admin permissions
-    permission_check('admin.channel_email')
 
     adapter = params[:adapter].downcase
 
@@ -323,7 +245,7 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
 
   private
 
-  def email_account_duplicate?(result, channel_id = nil)
+  def account_duplicate?(result, channel_id = nil)
     Channel.where(area: 'Email::Account').each { |channel|
       next if !channel.options
       next if !channel.options[:inbound]

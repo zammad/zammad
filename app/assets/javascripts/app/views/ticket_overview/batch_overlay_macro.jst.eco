@@ -1,0 +1,7 @@
+<div class="batch-overlay-box-inner">
+<% for macro in @macros: %>
+  <div class="batch-overlay-macro-entry js-batch-overlay-entry js-batch-hover-target" data-action="macro" data-id="<%= macro.id %>">
+    <div class="batch-overlay-macro-entry-name"><%= macro.name %></div>
+  </div>
+<% end %>
+</div>
