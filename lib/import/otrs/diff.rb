@@ -9,6 +9,11 @@ module Import
         diff
       end
 
+      def diff?
+        return true if @diff
+        false
+      end
+
       private
 
       def diff_import_possible?
@@ -19,6 +24,8 @@ module Import
 
       def diff
         log 'Start diff...'
+
+        @diff = true
 
         check_import_mode
 
