@@ -1,45 +1,38 @@
 # Change Log
 
-## [1.0.1](https://github.com/zammad/zammad/tree/1.0.1) (2016-11-14)
-[Full Changelog](https://github.com/zammad/zammad/compare/1.0.0...1.0.1)
+## [1.3.0](https://github.com/zammad/zammad/tree/1.3.0) (2017-02-15)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.2.0...1.3.0)
 
 **Implemented enhancements:**
 
-- Missing translation/edit abilities \(Notification mails, contact form\) [\#388](https://github.com/zammad/zammad/issues/388) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
-- Automatically join users to organizations based on the email address [\#356](https://github.com/zammad/zammad/issues/356) [[feature](https://github.com/zammad/zammad/labels/feature)]
-- Create emails via fetchmail / procmail [\#326](https://github.com/zammad/zammad/issues/326) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
-- Display origin url from tweet/facebook post [\#317](https://github.com/zammad/zammad/issues/317) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
-- Vagrant version [\#253](https://github.com/zammad/zammad/issues/253) [[feature](https://github.com/zammad/zammad/labels/feature)]
-- Page posts from facebook and tweets from twitter as tickets [\#251](https://github.com/zammad/zammad/issues/251) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Ticket without Subject is blocked - can't do anything with it \("Title needed"\) [\#719](https://github.com/zammad/zammad/issues/719) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Chat not working, web socket error in http/https mixed setup. Use protocol from script location of chat.js. [\#708](https://github.com/zammad/zammad/issues/708) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- user.preferences\['locale'\] not initialized at user creation [\#429](https://github.com/zammad/zammad/issues/429) [[bug](https://github.com/zammad/zammad/labels/bug)] [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Auto Focus on "Time Accounting" Popupbox [\#670](https://github.com/zammad/zammad/issues/670) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Do not import own notification emails in Zammad [\#731](https://github.com/zammad/zammad/issues/731) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Do not log last\_login in user history [\#722](https://github.com/zammad/zammad/issues/722) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Change font and font size in emails \(templates\) [\#718](https://github.com/zammad/zammad/issues/718) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Improve feature "show more" with "show less" option [\#570](https://github.com/zammad/zammad/issues/570) [[feature](https://github.com/zammad/zammad/labels/feature)]
+- where to find version of zammad [\#264](https://github.com/zammad/zammad/issues/264) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- change default ticket\_priorities [\#728](https://github.com/zammad/zammad/issues/728) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
 
 **Fixed bugs:**
 
-- Some windows in the config area too wide in firefox [\#392](https://github.com/zammad/zammad/issues/392) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- \[Critical\] Short display of "Setup a new system" on public site while restarting Zammad! [\#389](https://github.com/zammad/zammad/issues/389) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Mailresponse to customer not working at all after editing a "Trigger" event text [\#385](https://github.com/zammad/zammad/issues/385) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Click on "Reports" leads to Error 500 [\#384](https://github.com/zammad/zammad/issues/384) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- TicketSelector in Overview or SLA not working with filter for ticket customer or owner [\#383](https://github.com/zammad/zammad/issues/383) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Changelog generator breaks packager.io builds [\#379](https://github.com/zammad/zammad/issues/379) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- script/scheduler.rb crashes after recreation of Zammad database [\#374](https://github.com/zammad/zammad/issues/374) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- ticket search cache issue [\#349](https://github.com/zammad/zammad/issues/349) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- IMAP mail fetching stops because of broken spam email \(invalid Content-Transfer-Encoding header\) [\#348](https://github.com/zammad/zammad/issues/348) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- IMAP mail fetching stops working on spam mail and invalid email format [\#345](https://github.com/zammad/zammad/issues/345) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Unable to create tickets [\#323](https://github.com/zammad/zammad/issues/323) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Admin -\> Channels -\> Email -\> Filters not shown / no name shown [\#313](https://github.com/zammad/zammad/issues/313) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- In object manager, blank line in object deleted all values for selections [\#312](https://github.com/zammad/zammad/issues/312) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- triggers do not work? [\#306](https://github.com/zammad/zammad/issues/306) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Answers from google mail shows complete quote [\#286](https://github.com/zammad/zammad/issues/286) [[minor bug](https://github.com/zammad/zammad/labels/minor%20bug)]
-- Avatar in Chat not showing - wrong url [\#275](https://github.com/zammad/zammad/issues/275) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- chat not working / http 404 [\#274](https://github.com/zammad/zammad/issues/274) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Zammad Docker container for rpi/ARM [\#271](https://github.com/zammad/zammad/issues/271) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Zendesk: unknown article type fails import. [\#270](https://github.com/zammad/zammad/issues/270) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- No space at comment on ticket bulk action  [\#268](https://github.com/zammad/zammad/issues/268) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- After adding a new attribute - zammad won't start [\#248](https://github.com/zammad/zammad/issues/248) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Images/Avatars blank [\#217](https://github.com/zammad/zammad/issues/217) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Docker/Ubuntu Not starting postgresql-9.6 service [\#213](https://github.com/zammad/zammad/issues/213) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- Can´t choose Organization for Customer [\#211](https://github.com/zammad/zammad/issues/211) [[bug](https://github.com/zammad/zammad/labels/bug)]
-- CentOS 7 HTTPS Error 404 - Not Found [\#210](https://github.com/zammad/zammad/issues/210) [[bug](https://github.com/zammad/zammad/labels/bug)]
-
-
+- OTRS import breaks a lot of assumptions in Zammad [\#689](https://github.com/zammad/zammad/issues/689) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to process emails if "Additional follow-up detection" was checked and unchecked again [\#740](https://github.com/zammad/zammad/issues/740) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Time accounting works only with dot [\#705](https://github.com/zammad/zammad/issues/705) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- "Close Tab" & "Next in Overview" don't work [\#730](https://github.com/zammad/zammad/issues/730) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Missing comma in 'manual button' causes syntax error [\#664](https://github.com/zammad/zammad/issues/664) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
+- Prevent attachment preview in browser attachment download [\#617](https://github.com/zammad/zammad/issues/617) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Group follow up check for closed tickets does not work. [\#643](https://github.com/zammad/zammad/issues/643) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Feedback form not working in Safari [\#685](https://github.com/zammad/zammad/issues/685) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Changing Sound problem [\#219](https://github.com/zammad/zammad/issues/219) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to process emails with email addresses longer then 140 signs. [\#650](https://github.com/zammad/zammad/issues/650) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Sending emails via SMTPS \(Port 465 and SSL\) not possible. [\#648](https://github.com/zammad/zammad/issues/648) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Error 500 opening a ticket view [\#639](https://github.com/zammad/zammad/issues/639) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Error 500 after upgrading to 1.2.0 \(existing Taskbar entries in DB\) [\#638](https://github.com/zammad/zammad/issues/638) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Customer get forced to save time for time accounting in customer interface - only allow it for agents. [\#636](https://github.com/zammad/zammad/issues/636) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to activate time accounting in admin interface. [\#633](https://github.com/zammad/zammad/issues/633) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Follow up detection not working if ticket\_hook\_position "none" is used. [\#686](https://github.com/zammad/zammad/issues/686) [[bug](https://github.com/zammad/zammad/labels/bug)]
 
 \* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
