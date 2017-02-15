@@ -16,6 +16,8 @@ class TelegramSupport < ActiveRecord::Migration
       id: 12,
       name: 'telegram personal-message',
       communication: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
 
   end
