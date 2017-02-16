@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 40.2 (33826) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
     <title>email</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="email" fill="#50E3C2">
-            <path d="M0.511719955,3 L16.4855552,3 L8.48895668,9.79842908 L0.511719955,3 Z M17,4.13985214 L17,14 L-7.21644966e-16,14 L-7.21644966e-16,4.14055952 L8.10798135,11.0504129 L8.49704462,11.3819837 L8.88620571,11.0505277 L17,4.13985214 Z" id="mail"></path>
+            <path d="M17,3.3390693 L8.48895668,8.79842908 L8.32667268e-16,3.34049192 L7.77156117e-16,3 L17,3 L17,3.3390693 Z M17,4.78312965 L17,14 L7.77156117e-16,14 L7.77156117e-16,4.78362999 L8.49704462,10.3819837 L17,4.78312965 Z" id="mail"></path>
         </g>
     </g>
 </svg>
