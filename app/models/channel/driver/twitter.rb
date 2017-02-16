@@ -213,6 +213,7 @@ returns
         next
       end
 
+      next if !track_retweets? && tweet.retweet?
       next if @stream_client.tweet_limit_reached(tweet)
 
       # check if it's mention
