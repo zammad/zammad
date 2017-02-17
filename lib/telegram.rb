@@ -279,9 +279,15 @@ returns
 
     # prepare title
     title = params[:message][:text]
-    if title.length > 60
-      title = "#{title[0, 60]}..."
+    # if first message is a picture
+    if title == nil
+      title = 'No title'
+    else
+       if title.length > 60
+         title = "#{title[0, 60]}..."
+       end
     end
+
 
     ticket = Ticket.new(
       group_id: group_id,
