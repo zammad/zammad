@@ -1098,20 +1098,22 @@ th.align-right {
       box-shadow: 0 0 0 2px hsl(201,62%,90%);
       color: hsl(200,71%,59%);
     }
-
-    &:indeterminate {
-      ~ .icon-checked,
-      ~ .icon-unchecked {
-        display: none;
-      }
-      ~ .icon-indeterminate {
-        display: block;
-      }
-    }
   }
 
   + .label-text {
     margin-left: 0;
+  }
+}
+
+.checkbox-replacement {
+  &:indeterminate {
+    ~ .icon-checked,
+    ~ .icon-unchecked {
+      display: none;
+    }
+    ~ .icon-indeterminate {
+      display: block;
+    }
   }
 }
 
