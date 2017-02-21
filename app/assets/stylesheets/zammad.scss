@@ -8586,10 +8586,7 @@ output {
         box-sizing: content-box;
         transition: transform 120ms;
         cursor: inherit;
-        
-        &--organization {
-          background: hsl(191,68%,47%);
-        }
+        z-index: 1;
       }
 
       &-name {
