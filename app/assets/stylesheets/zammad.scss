@@ -8511,13 +8511,16 @@ output {
     border: 2px dashed hsla(0,0%,100%,.3);
     border-radius: 8px;
     padding: 28px;
-    margin: 50px 200px;
+    margin: auto 200px;
     position: absolute;
-    top: 0;
     left: 0;
     right: 0;
+    max-height: 100px;
     visibility: hidden;
     will-change: opacity;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &-box {
