@@ -3648,6 +3648,50 @@ footer {
     }
   }
 
+  &--group {
+    overflow: hidden;
+    
+    .icon {
+      fill: white;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 44px;
+      bottom: -8px;
+    }
+
+    &.size-30 .icon {
+      width: 33px;
+      height: 33px;
+      bottom: -6px;
+    }
+
+    &.size-50 .icon {
+      width: 55px;
+      height: 55px;
+      bottom: -10px;
+    }
+
+    &.size-80 .icon {
+      width: 88px;
+      height: 88px;
+      bottom: -15px;
+    }
+
+    &-color-0 {
+      background: hsl(192,100%,38%);
+    }
+
+    &-color-1 {
+      background: hsl(148,100%,38%);
+    }
+
+    &-color-2 {
+      background: hsl(57,100%,37%);
+    }
+  }
+
   .icon-logo {
     width: 100%;
     height: 100%;
