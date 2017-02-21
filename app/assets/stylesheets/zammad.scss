@@ -4725,17 +4725,15 @@ footer {
   .article-action {
     padding-top: 5px;
     margin-top: 5px;
-    color: black;
+    color: hsl(198,4%,56%);
     font-size: 12px;
     text-align: center;
-    opacity: 0.5;
     @extend .u-clickable;
   }
 
     .article-action:hover {
       color: black;
       text-decoration: none;
-      opacity: 1;
     }
 
     .article-action-icon {
@@ -4743,6 +4741,7 @@ footer {
       vertical-align: top;
       width: 17px;
       height: 17px;
+      fill: currentColor;
     }
 
 .article-add {
