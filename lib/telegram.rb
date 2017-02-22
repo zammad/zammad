@@ -176,6 +176,14 @@ returns
       message_id = params[key][:message_id]
       break
     }
+    if message_id
+      [:message, :edited_message].each { |key|
+        next if !params[key]
+        next if !params[key][:chat]
+        next if !params[key][:chat][:id]
+        message_id = "#{message_id}.#{params[key][:chat][:id]}"
+      }
+    end
     if !message_id
       message_id = params[:update_id]
     end
@@ -265,29 +273,54 @@ returns
     Rails.logger.debug user.inspect
     Rails.logger.debug group_id.inspect
 
+    # prepare title
+    title = '-'
+    [:text, :caption].each { |area|
+      next if !params[:message]
+      next if !params[:message][area]
+      title = params[:message][area]
+      break
+    }
+    if title == '-'
+      [:sticker, :photo, :document, :voice].each { |area|
+        begin
+          next if !params[:message]
+          next if !params[:message][area]
+          next if !params[:message][area][:emoji]
+          title = params[:message][area][:emoji]
+          break
+        rescue
+          # just go ahead
+          title
+        end
+      }
+    end
+    if title.length > 60
+      title = "#{title[0, 60]}..."
+    end
+
     # find ticket or create one
     state_ids = Ticket::State.where(name: %w(closed merged removed)).pluck(:id)
     ticket = Ticket.where(customer_id: user.id).where.not(state_id: state_ids).order(:updated_at).first
     if ticket
-      new_state = Ticket::State.find_by(name: 'new')
+
+      # check if title need to be updated
+      if ticket.title == '-'
+        ticket.title = title
+      end
+      new_state = Ticket::State.find_by(default_create: true)
       if ticket.state_id != new_state.id
-        ticket.state = Ticket::State.find_by(name: 'open')
+        ticket.state = Ticket::State.find_by(default_follow_up: true)
       end
       ticket.save!
       return ticket
     end
 
-    # prepare title
-    title = params[:message][:text]
-    if title.length > 60
-      title = "#{title[0, 60]}..."
-    end
-
     ticket = Ticket.new(
       group_id: group_id,
       title: title,
-      state_id: Ticket::State.find_by(name: 'new').id,
-      priority_id: Ticket::Priority.find_by(name: '2 normal').id,
+      state_id: Ticket::State.find_by(default_create: true).id,
+      priority_id: Ticket::Priority.find_by(default_create: true).id,
       customer_id: user.id,
       preferences: {
         channel_id: channel.id,
@@ -384,12 +417,12 @@ returns
 
     # add document
     if params[:message][:document]
-      thump = params[:message][:document][:thumb]
+      thumb = params[:message][:document][:thumb]
       body = '&nbsp;'
-      if thump
-        width = thump[:width]
-        height = thump[:height]
-        result = download_file(thump['file_id'])
+      if thumb
+        width = thumb[:width]
+        height = thumb[:height]
+        result = download_file(thumb['file_id'])
         if !result.success? || !result.body
           raise "Unable for download image from telegram: #{result.code}"
         end
@@ -438,6 +471,45 @@ returns
           'Mime-Type' => params[:message][:voice][:mime_type],
         },
       )
+      return article
+    end
+
+    if params[:message][:sticker]
+      emoji = params[:message][:sticker][:emoji]
+      thumb = params[:message][:sticker][:thumb]
+      body = '&nbsp;'
+      if thumb
+        width = thumb[:width]
+        height = thumb[:height]
+        result = download_file(thumb['file_id'])
+        if !result.success? || !result.body
+          raise "Unable for download image from telegram: #{result.code}"
+        end
+        body = "<img style=\"width:#{width}px;height:#{height}px;\" src=\"data:image/png;base64,#{Base64.strict_encode64(result.body)}\">"
+        article.content_type = 'text/html'
+      elsif emoji
+        article.content_type = 'text/plain'
+        body = emoji
+      end
+      article.body = body
+      article.save!
+
+      if params[:message][:sticker][:file_id]
+        document_result = download_file(params[:message][:sticker][:file_id])
+        Store.remove(
+          object: 'Ticket::Article',
+          o_id: article.id,
+        )
+        Store.add(
+          object: 'Ticket::Article',
+          o_id: article.id,
+          data: document_result.body,
+          filename: params[:message][:sticker][:file_name] || 'sticker',
+          preferences: {
+            'Mime-Type' => params[:message][:sticker][:mime_type],
+          },
+        )
+      end
       return article
     end
 
@@ -520,10 +592,10 @@ returns
       return ticket.state
     end
 
-    state = Ticket::State.find_by(name: 'new')
+    state = Ticket::State.find_by(default_create: true)
     return state if !ticket
-    return ticket.state if ticket.state.name == 'new'
-    Ticket::State.find_by(name: 'open')
+    return ticket.state if ticket.state.id == state.id
+    Ticket::State.find_by(default_follow_up: true)
   end
 
   def download_file(file_id)

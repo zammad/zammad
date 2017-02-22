@@ -14,29 +14,26 @@ class TwitterTest < ActiveSupport::TestCase
     created_by_id: 1
   )
 
+  {
+    'TWITTER_CONSUMER_KEY'          => '1234',
+    'TWITTER_CONSUMER_SECRET'       => '1234',
+    'TWITTER_SYSTEM_LOGIN'          => '@system',
+    'TWITTER_SYSTEM_ID'             => '1405469528',
+    'TWITTER_SYSTEM_TOKEN'          => '1234',
+    'TWITTER_SYSTEM_TOKEN_SECRET'   => '1234',
+    'TWITTER_CUSTOMER_LOGIN'        => '@customer',
+    'TWITTER_CUSTOMER_TOKEN'        => '1234',
+    'TWITTER_CUSTOMER_TOKEN_SECRET' => '1234',
+  }.each do |key, example_value|
+    next if ENV[key]
+    raise "ERROR: Need ENV #{key} - hint: export #{key}='#{example_value}'"
+  end
+
   # app config
-  if !ENV['TWITTER_CONSUMER_KEY']
-    raise "ERROR: Need TWITTER_CONSUMER_KEY - hint TWITTER_CONSUMER_KEY='1234'"
-  end
-  if !ENV['TWITTER_CONSUMER_SECRET']
-    raise "ERROR: Need TWITTER_CONSUMER_SECRET - hint TWITTER_CONSUMER_SECRET='1234'"
-  end
   consumer_key    = ENV['TWITTER_CONSUMER_KEY']
   consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
 
   # armin_theo (is system and is following marion_bauer)
-  if !ENV['TWITTER_SYSTEM_LOGIN']
-    raise "ERROR: Need TWITTER_SYSTEM_LOGIN - hint TWITTER_SYSTEM_LOGIN='@system'"
-  end
-  if !ENV['TWITTER_SYSTEM_ID']
-    raise "ERROR: Need TWITTER_SYSTEM_ID - hint TWITTER_SYSTEM_ID='1405469528'"
-  end
-  if !ENV['TWITTER_SYSTEM_TOKEN']
-    raise "ERROR: Need TWITTER_SYSTEM_TOKEN - hint TWITTER_SYSTEM_TOKEN='1234'"
-  end
-  if !ENV['TWITTER_SYSTEM_TOKEN_SECRET']
-    raise "ERROR: Need TWITTER_SYSTEM_TOKEN_SECRET - hint TWITTER_SYSTEM_TOKEN_SECRET='1234'"
-  end
   system_login            = ENV['TWITTER_SYSTEM_LOGIN']
   system_id               = ENV['TWITTER_SYSTEM_ID']
   system_login_without_at = system_login[1, system_login.length]
@@ -46,23 +43,14 @@ class TwitterTest < ActiveSupport::TestCase
   hash_tag2               = "#citheo#{rand(999)}"
 
   # me_bauer (is customer and is following armin_theo)
-  if !ENV['TWITTER_CUSTOMER_LOGIN']
-    raise "ERROR: Need CUSTOMER_LOGIN - hint TWITTER_CUSTOMER_LOGIN='@customer'"
-  end
-  if !ENV['TWITTER_CUSTOMER_TOKEN']
-    raise "ERROR: Need CUSTOMER_TOKEN - hint TWITTER_CUSTOMER_TOKEN='1234'"
-  end
-  if !ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
-    raise "ERROR: Need CUSTOMER_TOKEN_SECRET - hint TWITTER_CUSTOMER_TOKEN_SECRET='1234'"
-  end
   customer_login            = ENV['TWITTER_CUSTOMER_LOGIN']
   customer_login_without_at = customer_login[1, customer_login.length]
   customer_token            = ENV['TWITTER_CUSTOMER_TOKEN']
   customer_token_secret     = ENV['TWITTER_CUSTOMER_TOKEN_SECRET']
 
-  # add channel
-  current = Channel.where(area: 'Twitter::Account')
-  current.each(&:destroy)
+  # ensure channel configuration
+  Channel.where(area: 'Twitter::Account').each(&:destroy)
+
   channel = Channel.create!(
     area: 'Twitter::Account',
     options: {
@@ -439,6 +427,10 @@ class TwitterTest < ActiveSupport::TestCase
 
   test 'd track_retweets enabled' do
 
+    # enable track_retweets
+    channel[:options]['sync']['track_retweets'] = true
+    channel.save!
+
     client = Twitter::REST::Client.new do |config|
       config.consumer_key        = consumer_key
       config.consumer_secret     = consumer_secret
@@ -462,7 +454,7 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    1.times {
+    2.times {
       Channel.fetch
 
       # check if ticket and article has been created
@@ -503,7 +495,7 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    1.times {
+    2.times {
       Channel.fetch
 
       # check if ticket and article has been created
@@ -536,12 +528,14 @@ class TwitterTest < ActiveSupport::TestCase
     )
     sleep 10
     article = nil
-    1.times {
+    2.times {
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
+      ActiveRecord::Base.clear_all_connections!
+      ActiveRecord::Base.connection.query_cache.clear
       sleep 15
     }
-    assert(article)
+    assert(article, "article from customer with text '#{text}' message_id '#{tweet.id}' created")
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_equal(nil, article.to, 'ticket article to')
 
@@ -557,15 +551,16 @@ class TwitterTest < ActiveSupport::TestCase
     tweet = client.update(
       text,
     )
-    ActiveRecord::Base.connection.reconnect!
     sleep 10
     article = nil
-    1.times {
+    2.times {
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
-      sleep 15
+      ActiveRecord::Base.clear_all_connections!
+      ActiveRecord::Base.connection.query_cache.clear
+      sleep 10
     }
-    assert(article)
+    assert(article, "article from customer with text '#{text}' message_id '#{tweet.id}' created")
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_equal(nil, article.to, 'ticket article to')
 
@@ -621,17 +616,120 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     assert(dm, "dm with ##{hash} created")
-    #ActiveRecord::Base.connection.reconnect!
     sleep 10
     article = nil
-    1.times {
+    2.times {
       article = Ticket::Article.find_by(message_id: dm.id)
+      break if article
+      ActiveRecord::Base.clear_all_connections!
+      ActiveRecord::Base.connection.query_cache.clear
+      sleep 10
+    }
+    assert(article, "inbound article '#{text}' message_id '#{dm.id}' created")
+    assert_equal(customer_login, article.from, 'ticket article from')
+    assert_equal(system_login, article.to, 'ticket article to')
+    thread.exit
+    thread.join
+  end
+
+  test 'g streaming test retweet enabled' do
+    thread = Thread.new {
+      # enable track_retweets in current thread
+      # since Threads are not spawned in the same scope
+      # as the current test is running in .....
+      channel_thread = Channel.find(channel.id)
+      channel_thread[:options]['sync']['track_retweets'] = true
+      channel_thread.save!
+
+      Channel.stream
+    }
+    sleep 10
+
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = system_token
+      config.access_token_secret = system_token_secret
+    end
+
+    hash  = "#{hash_tag1} ##{hash_gen}"
+    text  = "Retweet me - I'm #{system_login} - #{rand_word}... #{hash}"
+    tweet = client.update(text)
+
+    client = Twitter::REST::Client.new(
+      consumer_key:        consumer_key,
+      consumer_secret:     consumer_secret,
+      access_token:        customer_token,
+      access_token_secret: customer_token_secret
+    )
+
+    retweet = client.retweet(tweet).first
+
+    # fetch check system account
+    sleep 15
+    article = nil
+    2.times {
+      Channel.fetch
+
+      # check if ticket and article has been created
+      article = Ticket::Article.find_by(message_id: retweet.id)
+      break if article
+      ActiveRecord::Base.clear_all_connections!
+      ActiveRecord::Base.connection.query_cache.clear
+      sleep 10
+    }
+
+    assert(article, "retweet article '#{text}' created")
+
+    thread.exit
+    thread.join
+  end
+
+  test 'h streaming test retweet disabled' do
+    thread = Thread.new {
+      # disable track_retweets in current thread
+      # since Threads are not spawned in the same scope
+      # as the current test is running in .....
+      channel_thread = Channel.find(channel.id)
+      channel_thread[:options]['sync']['track_retweets'] = false
+      channel_thread.save!
+
+      Channel.stream
+    }
+    sleep 10
+
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = system_token
+      config.access_token_secret = system_token_secret
+    end
+
+    hash  = "#{hash_tag1} ##{hash_gen}"
+    text  = "Retweet me - I'm #{system_login} - #{rand_word}... #{hash}"
+    tweet = client.update(text)
+
+    client = Twitter::REST::Client.new(
+      consumer_key:        consumer_key,
+      consumer_secret:     consumer_secret,
+      access_token:        customer_token,
+      access_token_secret: customer_token_secret
+    )
+
+    retweet = client.retweet(tweet).first
+
+    # fetch check system account
+    sleep 15
+    article = nil
+    2.times {
+      # check if ticket and article has been created
+      article = Ticket::Article.find_by(message_id: retweet.id)
       break if article
       sleep 10
     }
-    assert(article, "inbound article '#{text}' created")
-    assert_equal(customer_login, article.from, 'ticket article from')
-    assert_equal(system_login, article.to, 'ticket article to')
+
+    assert_equal(nil, article, "retweet article '#{text}' not created")
+
     thread.exit
     thread.join
   end

@@ -350,6 +350,10 @@ class App.TicketOverview extends App.Controller
     return if !@batchOverlayShown # user might have dropped the item already
     @batchAssignShown = true
 
+    @batchCancel.css
+      top: 0
+      bottom: @batchAssign.height()
+
     @batchAssign.velocity
       properties:
         translateY: [0, '100%']
@@ -359,10 +363,6 @@ class App.TicketOverview extends App.Controller
         duration: 500
         visibility: 'visible'
         complete: @highlightBatchEntryAtMousePosition
-
-    @batchCancel.css
-      top: 0
-      bottom: 'auto'
 
     @batchCancel.velocity
       properties:
@@ -452,6 +452,10 @@ class App.TicketOverview extends App.Controller
     return if !@batchOverlayShown # user might have dropped the item already
     @batchMacroShown = true
 
+    @batchCancel.css
+      bottom: 0
+      top: @batchMacro.height()
+
     @batchMacro.velocity
       properties:
         translateY: [0, '-100%']
@@ -462,9 +466,6 @@ class App.TicketOverview extends App.Controller
         visibility: 'visible'
         complete: @highlightBatchEntryAtMousePosition
 
-    @batchCancel.css
-      top: 'auto'
-      bottom: 0
     @batchCancel.velocity
       properties:
         translateY: [0, '-100%']

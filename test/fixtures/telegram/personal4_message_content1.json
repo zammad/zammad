@@ -1,0 +1,31 @@
+{
+  "update_id":40000,
+  "message":{
+    "message_id":273,
+    "from":{
+      "id":3310000,
+      "first_name":"Roberto",
+      "last_name":"Blanco"
+    },
+    "chat":{
+      "id":3310000,
+      "first_name":"Roberto",
+      "last_name":"Blanco",
+      "type":"private"
+    },
+    "date":1487161566,
+    "sticker":{
+      "width":512,
+      "height":512,
+      "emoji":"💻",
+      "thumb":{
+        "file_id":"AAQDABO3-e4qAASs6ZOjJUT7tQ4lAAIC",
+        "file_size":4584,
+        "width":128,
+        "height":128
+      },
+      "file_id":"BQADAwAD0QIAAqbJWAAB8OkQqgtDQe0C",
+      "file_size":25974
+    }
+  }
+}
