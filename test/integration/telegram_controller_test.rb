@@ -14,6 +14,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     Setting.set('http_type', 'https')
     Setting.set('fqdn', 'me.zammad.com')
     Channel.where(area: 'Telegram::Bot').destroy_all
+    UserInfo.current_user_id = 1
     @channel = Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!' })
 
     groups = Group.where(name: 'Users')
@@ -27,9 +28,8 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
       active: true,
       roles: roles,
       groups: groups,
-      updated_by_id: 1,
-      created_by_id: 1,
     )
+    UserInfo.current_user_id = nil
 
   end
 
@@ -184,9 +184,43 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Can you help me with my feature?', ticket.title)
     assert_equal('new', ticket.state.name)
     assert_equal(4, ticket.articles.count)
-    #assert_match(/ /i, ticket.articles.last.body)
     assert_equal('text/html', ticket.articles.last.content_type)
     assert_equal(1, ticket.articles.last.attachments.count)
+
+    # start communication #4 - with sticker
+    post callback_url, read_messaage('personal4_message_content1'), @headers
+    assert_response(200)
+    assert_equal(4, Ticket.count)
+    ticket = Ticket.last
+    assert_equal('💻', ticket.title)
+    assert_equal('new', ticket.state.name)
+    assert_equal(1, ticket.articles.count)
+    assert_match(/<img style="/i, ticket.articles.last.body)
+    assert_equal('text/html', ticket.articles.last.content_type)
+    assert_equal(1, ticket.articles.last.attachments.count)
+
+    # start communication #5 - with photo
+    post callback_url, read_messaage('personal5_message_content1'), @headers
+    assert_response(200)
+    assert_equal(5, Ticket.count)
+    ticket = Ticket.last
+    assert_equal('-', ticket.title)
+    assert_equal('new', ticket.state.name)
+    assert_equal(1, ticket.articles.count)
+    assert_match(/<img style="/i, ticket.articles.last.body)
+    assert_equal('text/html', ticket.articles.last.content_type)
+    assert_equal(0, ticket.articles.last.attachments.count)
+
+    post callback_url, read_messaage('personal5_message_content2'), @headers
+    assert_response(200)
+    assert_equal(5, Ticket.count)
+    ticket = Ticket.last
+    assert_equal('Hello, I need your Help', ticket.title)
+    assert_equal('new', ticket.state.name)
+    assert_equal(2, ticket.articles.count)
+    assert_match(/Hello, I need your Help/i, ticket.articles.last.body)
+    assert_equal('text/plain', ticket.articles.last.content_type)
+    assert_equal(0, ticket.articles.last.attachments.count)
 
   end
 
