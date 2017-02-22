@@ -34,4 +34,4 @@ class App.Group extends App.Model
     cssClass.push("avatar--group-color-#{@id % 3}")
 
     return App.view('avatar_group')
-      cssClass: cssClass.join(" ")
+      cssClass: cssClass.join(' ')
