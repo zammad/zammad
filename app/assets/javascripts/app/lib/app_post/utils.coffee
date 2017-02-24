@@ -99,6 +99,9 @@ class App.Utils
         else
           '>'
 
+  @escapeRegExp: (str) ->
+    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+
   # htmlEscaped = App.Utils.htmlEscape(rawText)
   @htmlEscape: (ascii) ->
     return ascii if !ascii

@@ -124,3 +124,103 @@ class App.Ticket extends App.Model
         # apply direct value changes
         else
           params.ticket[attributes[1]] = content.value
+
+  # check if selector is matching
+  @selector: (ticket, selector) ->
+    return true if _.isEmpty(selector)
+
+    for objectAttribute, condition of selector
+      [objectName, attributeName] = objectAttribute.split('.')
+
+      # there is no article.subject so we take the title instead
+      if objectAttribute == 'article.subject' && !ticket['article']['subject']
+        objectName    = 'ticket'
+        attributeName = 'title'
+
+      # for new articles there is no created_by_id so we set the current user
+      # if no id is given
+      if objectAttribute == 'article.created_by_id' && !ticket['article']['created_by_id']
+        ticket['article']['created_by_id'] = App.Session.get('id')
+
+      if objectName == 'ticket'
+        object = ticket
+      else
+        object = ticket[objectName] || {}
+
+      return false if !@_selectorMatch(object, objectName, attributeName, condition)
+
+    return true
+
+  @_selectorConditionDate: (condition, operator) ->
+    return if operator != '+' && operator != '-'
+
+    conditionValue = new Date()
+    if condition['range'] == 'minute'
+      conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 1000 ) )
+    else if condition['range'] == 'hour'
+      conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 1000 ) )
+    else if condition['range'] == 'day'
+      conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 24 * 1000 ) )
+    else if condition['range'] == 'month'
+      conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 30 * 1000 ) )
+    else if condition['range'] == 'year'
+      conditionValue.setTime( eval( conditionValue.getTime() + operator + 60 * 60 * 365 * 1000 ) )
+
+    conditionValue
+
+  @_selectorMatch: (object, objectName, attributeName, condition) ->
+    conditionValue = condition.value
+    conditionValue = '' if conditionValue == undefined
+    objectValue    = object[attributeName]
+    objectValue    = '' if objectValue == undefined
+
+    # take care about pre conditions
+    if condition['pre_condition']
+      [conditionType, conditionKey] = condition['pre_condition'].split('.')
+
+      if conditionType == 'current_user'
+        conditionValue = App.Session.get(conditionKey)
+      else if condition['pre_condition'] == 'not_set'
+        conditionValue = ''
+
+    # prepare regex for contains conditions
+    contains_regex = new RegExp(App.Utils.escapeRegExp(conditionValue.toString()), 'i')
+
+    # move value to array if it is not already
+    if !_.isArray(objectValue)
+      objectValue = [objectValue]
+    # move value to array if it is not already
+    if !_.isArray(conditionValue)
+      conditionValue = [conditionValue]
+
+    result = false
+    for loopObjectKey, loopObjectValue of objectValue
+      for loopConditionKey, loopConditionValue of conditionValue
+        if condition.operator == 'contains'
+          result = true if objectValue.toString().match(contains_regex)
+        else if condition.operator == 'contains not'
+          result = true if !objectValue.toString().match(contains_regex)
+        else if condition.operator == 'is'
+          result = true if objectValue.toString().trim().toLowerCase() is loopConditionValue.toString().trim().toLowerCase()
+        else if condition.operator == 'is not'
+          result = true if objectValue.toString().trim().toLowerCase() isnt loopConditionValue.toString().trim().toLowerCase()
+        else if condition.operator == 'after (absolute)'
+          result = true if new Date(objectValue.toString()) > new Date(loopConditionValue.toString())
+        else if condition.operator == 'before (absolute)'
+          result = true if new Date(objectValue.toString()) < new Date(loopConditionValue.toString())
+        else if condition.operator == 'before (relative)'
+          loopConditionValue = @_selectorConditionDate(condition, '-')
+          result = true if new Date(objectValue.toString()) < new Date(loopConditionValue.toString())
+        else if condition.operator == 'within last (relative)'
+          loopConditionValue = @_selectorConditionDate(condition, '-')
+          result = true if new Date(objectValue.toString()) < new Date() && new Date(objectValue.toString()) > new Date(loopConditionValue.toString())
+        else if condition.operator == 'after (relative)'
+          loopConditionValue = @_selectorConditionDate(condition, '+')
+          result = true if new Date(objectValue.toString()) > new Date(loopConditionValue.toString())
+        else if condition.operator == 'within next (relative)'
+          loopConditionValue = @_selectorConditionDate(condition, '+')
+          result = true if new Date(objectValue.toString()) > new Date() && new Date(objectValue.toString()) < new Date(loopConditionValue.toString())
+        else
+          throw "Unknown operator: #{condition.operator}"
+
+    result

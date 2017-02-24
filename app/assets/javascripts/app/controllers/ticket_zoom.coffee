@@ -663,7 +663,10 @@ class App.TicketZoom extends App.Controller
     ticketParams = @formParam(@$('.edit'))
 
     # validate ticket
-    ticket = App.Ticket.find(@ticket_id)
+    # we need to use the full ticket because
+    # the time accouting needs all attributes
+    # for condition check
+    ticket = App.Ticket.fullLocal(@ticket_id)
 
     # reset article - should not be resubmited on next ticket update
     ticket.article = undefined
@@ -740,9 +743,9 @@ class App.TicketZoom extends App.Controller
       @submitPost(e, ticket)
       return
 
-
     # verify if time accounting is active for ticket
-    if false
+    time_accounting_selector = @Config.get('time_accounting_selector')
+    if !App.Ticket.selector(ticket, time_accounting_selector['condition'])
       @submitPost(e, ticket)
       return
 

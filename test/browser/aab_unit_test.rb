@@ -34,6 +34,13 @@ class AAbUnitTest < TestCase
       css: '.result .failed',
       value: '0',
     )
+
+    location(url: browser_url + '/tests_ticket_selector')
+    sleep 8
+    match(
+      css: '.result .failed',
+      value: '0',
+    )
   end
 
   def test_form
