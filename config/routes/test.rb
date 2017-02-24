@@ -14,6 +14,7 @@ Zammad::Application.routes.draw do
   match '/tests_form_searchable_select',  to: 'tests#form_searchable_select',     via: :get
   match '/tests_table',                   to: 'tests#table',                      via: :get
   match '/tests_html_utils',              to: 'tests#html_utils',                 via: :get
+  match '/tests_ticket_selector',         to: 'tests#ticket_selector',            via: :get
   match '/tests_taskbar',                 to: 'tests#taskbar',                    via: :get
   match '/tests/wait/:sec',               to: 'tests#wait',                       via: :get
   match '/tests/unprocessable_entity',    to: 'tests#error_unprocessable_entity', via: :get
