@@ -227,7 +227,7 @@ returns
     # check failed logins
     max_login_failed = Setting.get('password_max_login_failed').to_i || 10
     if user && user.login_failed > max_login_failed
-      logger.info "Max login faild reached for user #{user.login}."
+      logger.info "Max login failed reached for user #{user.login}."
       return false
     end
 

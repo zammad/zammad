@@ -324,7 +324,7 @@ class TicketsController < ApplicationController
     ticket_master = Ticket.find_by(number: params[:master_ticket_number])
     if !ticket_master
       render json: {
-        result: 'faild',
+        result: 'failed',
         message: 'No such master ticket number!',
       }
       return
@@ -337,7 +337,7 @@ class TicketsController < ApplicationController
     ticket_slave = Ticket.find_by(id: params[:slave_ticket_id])
     if !ticket_slave
       render json: {
-        result: 'faild',
+        result: 'failed',
         message: 'No such slave ticket!',
       }
       return
@@ -349,7 +349,7 @@ class TicketsController < ApplicationController
     # check diffetent ticket ids
     if ticket_slave.id == ticket_master.id
       render json: {
-        result: 'faild',
+        result: 'failed',
         message: 'Can\'t merge ticket with it self!',
       }
       return
