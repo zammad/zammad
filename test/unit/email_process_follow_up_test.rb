@@ -442,6 +442,34 @@ Some Text"
     assert_not_equal(ticket1.id, ticket4.id)
     assert_equal(subject, ticket4.title)
 
+    # usecase with same subject but no Ticket# (reference headers check because of same subject)
+    subject = 'Embedded Linux 20.03 - 23.03.17'
+
+    email_raw_string = "From: iw@example.com
+To: customer@example.com
+Subject: #{subject}
+Message-ID: <b1a84d36-4475-28e8-acde-5c18ebe94182@example.com>
+
+Some Text"
+
+    ticket_p5, article_5, user_5, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket5 = Ticket.find(ticket_p5.id)
+    assert_not_equal(ticket1.id, ticket5.id)
+    assert_equal(subject, ticket5.title)
+
+    email_raw_string = "From: customer@example.com
+To: iw@example.com
+Subject: Re:  #{subject}
+Message-ID: <b1a84d36-4475-28e8-acde-5c18ebe94183@customer.example.com>
+In-Reply-To: <b1a84d36-4475-28e8-acde-5c18ebe94182@example.com>
+
+Some other Text"
+
+    ticket_p6, article_6, user_6, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket6 = Ticket.find(ticket_p6.id)
+    assert_equal(ticket5.id, ticket6.id)
+    assert_equal(subject, ticket6.title)
+
     Setting.set('postmaster_follow_up_search_in', setting_orig)
   end
 
