@@ -33,7 +33,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
       updated_by_id: 1,
       created_by_id: 1
     )
-    role_api.permission_grand('admin.api')
+    role_api.permission_grant('admin.api')
     @admin_api = User.create_or_update(
       login: 'setting-admin-api',
       firstname: 'Setting',

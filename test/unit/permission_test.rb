@@ -35,7 +35,7 @@ class PermissionTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     role_permission1.permission_revoke('admin')
-    role_permission1.permission_grand('admin.permission1')
+    role_permission1.permission_grant('admin.permission1')
     user_with_permission1 = User.create_or_update(
       login: 'setting-permission1',
       firstname: 'Setting',
@@ -63,7 +63,7 @@ class PermissionTest < ActiveSupport::TestCase
     assert_equal(false, user_with_permission1.permissions?('admin.permission2'))
     assert_equal(false, user_with_permission1.permissions?('admin'))
 
-    role_permission1.permission_grand('admin')
+    role_permission1.permission_grant('admin')
 
     assert_equal(false, user_with_permission1.permissions?('admin.permission1'))
     assert_equal(true, user_with_permission1.permissions?('admin.*'))
@@ -94,7 +94,7 @@ class PermissionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    role_permission3.permission_grand('admin.permission3')
+    role_permission3.permission_grant('admin.permission3')
     user_with_permission3 = User.create_or_update(
       login: 'setting-permission3',
       firstname: 'Setting',
@@ -147,7 +147,7 @@ class PermissionTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    role_permission1.permission_grand('admin')
+    role_permission1.permission_grant('admin')
     user_with_permission1 = User.create_or_update(
       login: 'setting-permission-child1',
       firstname: 'Setting',

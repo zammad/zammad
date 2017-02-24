@@ -19,13 +19,13 @@ class Role < ApplicationModel
 
 =begin
 
-grand permission to role
+grant permission to role
 
-  role.permission_grand('permission.key')
+  role.permission_grant('permission.key')
 
 =end
 
-  def permission_grand(key)
+  def permission_grant(key)
     permission = Permission.lookup(name: key)
     raise "Invalid permission #{key}" if !permission
     return true if permission_ids.include?(permission.id)
