@@ -711,7 +711,7 @@ curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{p
       end
 
     else
-      user = User.password_reset_check(params[:token])
+      user = User.by_reset_token(params[:token])
     end
     if user
       render json: { message: 'ok', user_login: user.login }, status: :ok
