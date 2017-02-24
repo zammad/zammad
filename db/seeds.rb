@@ -3115,22 +3115,22 @@ Permission.create_if_not_exists(
 )
 
 admin = Role.find_by(name: 'Admin')
-admin.permission_grand('user_preferences')
-admin.permission_grand('admin')
-admin.permission_grand('report')
+admin.permission_grant('user_preferences')
+admin.permission_grant('admin')
+admin.permission_grant('report')
 
 agent = Role.find_by(name: 'Agent')
-agent.permission_grand('user_preferences')
-agent.permission_grand('ticket.agent')
-agent.permission_grand('chat.agent')
-agent.permission_grand('cti.agent')
+agent.permission_grant('user_preferences')
+agent.permission_grant('ticket.agent')
+agent.permission_grant('chat.agent')
+agent.permission_grant('cti.agent')
 
 customer = Role.find_by(name: 'Customer')
-customer.permission_grand('user_preferences.password')
-customer.permission_grand('user_preferences.language')
-customer.permission_grand('user_preferences.linked_accounts')
-customer.permission_grand('user_preferences.avatar')
-customer.permission_grand('ticket.customer')
+customer.permission_grant('user_preferences.password')
+customer.permission_grant('user_preferences.language')
+customer.permission_grant('user_preferences.linked_accounts')
+customer.permission_grant('user_preferences.avatar')
+customer.permission_grant('ticket.customer')
 
 Group.create_if_not_exists(
   id: 1,

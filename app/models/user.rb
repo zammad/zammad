@@ -39,7 +39,7 @@ class User < ApplicationModel
 
   before_validation :check_name, :check_email, :check_login, :ensure_password
   before_create   :check_preferences_default, :validate_roles, :domain_based_assignment, :set_locale
-  before_update   :check_preferences_default, :validate_roles
+  before_update   :check_preferences_default, :validate_roles, :reset_login_failed
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy
@@ -227,7 +227,7 @@ returns
     # check failed logins
     max_login_failed = Setting.get('password_max_login_failed').to_i || 10
     if user && user.login_failed > max_login_failed
-      logger.info "Max login faild reached for user #{user.login}."
+      logger.info "Max login failed reached for user #{user.login}."
       return false
     end
 
@@ -490,9 +490,9 @@ returns
 
 =begin
 
-check reset password token
+returns the User instance for a given password token if found
 
-  result = User.password_reset_check(token)
+  result = User.by_reset_token(token)
 
 returns
 
@@ -500,15 +500,8 @@ returns
 
 =end
 
-  def self.password_reset_check(token)
-    user = Token.check(action: 'PasswordReset', name: token)
-
-    # reset login failed if token is valid
-    if user
-      user.login_failed = 0
-      user.save
-    end
-    user
+  def self.by_reset_token(token)
+    Token.check(action: 'PasswordReset', name: token)
   end
 
 =begin
@@ -526,7 +519,7 @@ returns
   def self.password_reset_via_token(token, password)
 
     # check token
-    user = Token.check(action: 'PasswordReset', name: token)
+    user = by_reset_token(token)
     return if !user
 
     # reset password
@@ -937,5 +930,12 @@ returns
 
     self.password = password_was
     true
+  end
+
+  # reset login_failed if password is changed
+  def reset_login_failed
+    return if !changes
+    return if !changes['password']
+    self.login_failed = 0
   end
 end
