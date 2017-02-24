@@ -5,6 +5,8 @@ class Index extends App.ControllerSubContent
     'change .js-timeAccountingSetting input': 'setTimeAccounting'
     'click .js-timePickerYear': 'setYear'
     'click .js-timePickerMonth': 'setMonth'
+    'click .js-timeAccountingFilter': 'setFilter'
+    'click .js-timeAccountingFilterReset': 'resetFilter'
 
   elements:
     '.js-timeAccountingSetting input': 'timeAccountingSetting'
@@ -103,10 +105,12 @@ class Index extends App.ControllerSubContent
       { name: 'condition',  display: 'Conditions for effected objects', tag: 'ticket_selector', null: false, preview: false, action: false, hasChanged: false },
     ]
 
-    new App.ControllerForm(
+    filter_params = App.Setting.get('time_accounting_selector')
+    @filter = new App.ControllerForm(
       el: @$('.js-selector')
       model:
         configure_attributes: configure_attributes,
+      params: filter_params
       autofocus: true
     )
 
@@ -127,6 +131,21 @@ class Index extends App.ControllerSubContent
       year: @year
       month: @month
     )
+
+  setFilter: (e) =>
+    e.preventDefault()
+
+    # get form data
+    params = @formParam(@filter.form)
+
+    # save filter settings
+    App.Setting.set('time_accounting_selector', params, notify: true)
+
+  resetFilter: (e) ->
+    e.preventDefault()
+
+    # save filter settings
+    App.Setting.set('time_accounting_selector', {}, notify: true)
 
   setTimeAccounting: (e) =>
     value = @timeAccountingSetting.prop('checked')
