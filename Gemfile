@@ -122,6 +122,9 @@ group :development, :test do
 
   # Use Factory Girl for generating random test data
   gem 'factory_girl_rails'
+
+  # mock http calls
+  gem 'webmock'
 end
 
 gem 'puma', group: :puma
