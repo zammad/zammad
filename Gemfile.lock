@@ -277,7 +277,7 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     ruby_dep (1.4.0)
-    rubyzip (1.2.0)
+    rubyzip (1.2.1)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
