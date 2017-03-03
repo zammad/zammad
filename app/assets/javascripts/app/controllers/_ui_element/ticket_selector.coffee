@@ -18,8 +18,9 @@ class App.UiElement.ticket_selector
         model: 'Organization'
 
     operators_type =
-      '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)']
-      '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)']
+      '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
+      '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
+      '^date$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
       'boolean$': ['is', 'is not']
       '^radio$': ['is', 'is not']
       '^select$': ['is', 'is not']
@@ -28,8 +29,9 @@ class App.UiElement.ticket_selector
 
     if attribute.hasChanged
       operators_type =
-        '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)', 'has changed']
-        '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'within next (relative)', 'within last (relative)', 'after (relative)', 'has changed']
+        '^datetime$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'has changed']
+        '^timestamp$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'has changed']
+        '^date$': ['before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)', 'has changed']
         'boolean$': ['is', 'is not', 'has changed']
         '^radio$': ['is', 'is not', 'has changed']
         '^select$': ['is', 'is not', 'has changed']
