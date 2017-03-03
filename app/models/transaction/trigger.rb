@@ -29,7 +29,11 @@ class Transaction::Trigger
 
     return if @item[:object] != 'Ticket'
 
-    triggers = Trigger.where(active: true).order('LOWER(name)')
+    triggers = if Rails.configuration.db_case_sensitive
+                 Trigger.where(active: true).order('LOWER(name)')
+               else
+                 Trigger.where(active: true).order(:name)
+               end
     return if triggers.empty?
 
     ticket = Ticket.lookup(id: @item[:object_id])
@@ -44,49 +48,8 @@ class Transaction::Trigger
       triggers.each { |trigger|
         condition = trigger.condition
 
-        # check action
-        if condition['ticket.action']
-          next if condition['ticket.action']['operator'] == 'is' && condition['ticket.action']['value'] != @item[:type]
-          next if condition['ticket.action']['operator'] != 'is' && condition['ticket.action']['value'] == @item[:type]
-          condition.delete('ticket.action')
-        end
-
-        # check action
-        if condition['article.action']
-          next if !article
-          condition.delete('article.action')
-        end
-
-        # check "has changed" options
-        has_changed_condition_exists = false
-        has_changed = false
-        condition.each do |key, value|
-          next if !value
-          next if !value['operator']
-          next if !value['operator']['has changed']
-          has_changed_condition_exists = true
-
-          # next if has changed? && !@item[:changes][attribute]
-          (object_name, attribute) = key.split('.', 2)
-
-          # remove condition item, because it has changed
-          if @item[:changes][attribute]
-            has_changed = true
-            condition.delete(key)
-            next
-          end
-          break
-        end
-
-        next if has_changed_condition_exists && !has_changed
-
-        # check if selector is matching
-        condition['ticket.id'] = {
-          operator: 'is',
-          value: ticket.id,
-        }
-
-        # check if min one article attribute is used
+        # check if one article attribute is used
+        one_has_changed_done = false
         article_selector = false
         trigger.condition.each do |key, _value|
           (object_name, attribute) = key.split('.', 2)
@@ -94,8 +57,70 @@ class Transaction::Trigger
           next if attribute == 'id'
           article_selector = true
         end
+        if article && article_selector
+          one_has_changed_done = true
+        end
+        if article && @item[:type] == 'update'
+          one_has_changed_done = true
+        end
 
+        # check ticket "has changed" options
+        has_changed_done = true
+        condition.each do |key, value|
+          next if !value
+          next if !value['operator']
+          next if !value['operator']['has changed']
+
+          # remove condition item, because it has changed
+          (object_name, attribute) = key.split('.', 2)
+          next if object_name != 'ticket'
+          next if !@item[:changes]
+          next if !@item[:changes].key?(attribute)
+          condition.delete(key)
+          one_has_changed_done = true
+        end
+
+        # check if we have not matching "has changed" attributes
+        condition.each do |_key, value|
+          next if !value
+          next if !value['operator']
+          next if !value['operator']['has changed']
+          has_changed_done = false
+          break
+        end
+
+        # check ticket action
+        if condition['ticket.action']
+          next if condition['ticket.action']['operator'] == 'is' && condition['ticket.action']['value'] != @item[:type]
+          next if condition['ticket.action']['operator'] != 'is' && condition['ticket.action']['value'] == @item[:type]
+          condition.delete('ticket.action')
+        end
+        next if !has_changed_done
+
+        # check in min one attribute of condition has changed on update
+        one_has_changed_condition = false
+        if @item[:type] == 'update'
+
+          # verify if ticket condition exists
+          condition.each do |key, _value|
+            (object_name, attribute) = key.split('.', 2)
+            next if object_name != 'ticket'
+            one_has_changed_condition = true
+            next if !@item[:changes] || !@item[:changes].key?(attribute)
+            one_has_changed_done = true
+            break
+          end
+          next if one_has_changed_condition && !one_has_changed_done
+        end
+
+        # check if ticket selector is matching
+        condition['ticket.id'] = {
+          operator: 'is',
+          value: ticket.id,
+        }
         next if article_selector && !article
+
+        # check if article selector is matching
         if article_selector
           condition['article.id'] = {
             operator: 'is',
@@ -103,28 +128,15 @@ class Transaction::Trigger
           }
         end
 
+        # verify is condition is matching
         ticket_count, tickets = Ticket.selectors(condition, 1)
         next if ticket_count.zero?
         next if tickets.first.id != ticket.id
-
-        # check in min one attribute has changed
-        if @item[:type] == 'update' && !article_selector
-          match = false
-          if has_changed_condition_exists && has_changed
-            match = true
-          else
-            trigger.condition.each do |key, _value|
-              (object_name, attribute) = key.split('.', 2)
-              next if object_name != 'ticket'
-              next if !@item[:changes][attribute]
-              match = true
-              break
-            end
-          end
-          next if !match
+        user_id = ticket.updated_by_id
+        if article
+          user_id = article.updated_by_id
         end
-
-        ticket.perform_changes(trigger.perform, 'trigger', @item)
+        ticket.perform_changes(trigger.perform, 'trigger', @item, user_id)
       }
     end
     UserInfo.current_user_id = original_user_id

@@ -652,11 +652,11 @@ condition example
 
 perform changes on ticket
 
-  ticket.perform_changes({}, 'trigger', item)
+  ticket.perform_changes({}, 'trigger', item, current_user_id)
 
 =end
 
-  def perform_changes(perform, perform_origin, item = nil)
+  def perform_changes(perform, perform_origin, item = nil, current_user_id = nil)
     logger.debug "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})"
     changed = false
     perform.each do |key, value|
@@ -783,6 +783,16 @@ perform changes on ticket
           logger.error "Unknown #{attribute} operator #{value['operator']}"
         end
         next
+      end
+
+      # lookup pre_condition
+      if value['pre_condition']
+        if value['pre_condition'] =~ /^not_set/
+          value['value'] = 1
+        elsif value['pre_condition'] =~ /^current_user\./
+          raise 'Unable to use current_user, got no current_user_id for ticket.perform_changes' if !current_user_id
+          value['value'] = current_user_id
+        end
       end
 
       # update ticket
