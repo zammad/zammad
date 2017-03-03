@@ -113,14 +113,15 @@ class ApplicationController < ActionController::Base
     session[:ping] = Time.zone.now.iso8601
 
     # check if remote ip need to be updated
-    if !session[:remote_ip] || session[:remote_ip] != request.remote_ip
-      session[:remote_ip]  = request.remote_ip
-      session[:geo]        = Service::GeoIp.location(request.remote_ip)
+    if session[:user_id]
+      if !session[:remote_ip] || session[:remote_ip] != request.remote_ip
+        session[:remote_ip] = request.remote_ip
+        session[:geo]       = Service::GeoIp.location(request.remote_ip)
+      end
     end
 
     # fill user agent
     return if session[:user_agent]
-
     session[:user_agent] = request.env['HTTP_USER_AGENT']
   end
 

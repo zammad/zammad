@@ -79,7 +79,11 @@ returns
     end
 
     # generate randam callback token
-    callback_token = SecureRandom.urlsafe_base64(10)
+    callback_token = if Rails.env.test?
+                       'callback_token'
+                     else
+                       SecureRandom.urlsafe_base64(10)
+                     end
 
     # set webhook / callback url for this bot @ telegram
     callback_url = "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/api/v1/channels_telegram_webhook/#{callback_token}?bid=#{bot['id']}"
@@ -599,16 +603,6 @@ returns
   end
 
   def download_file(file_id)
-    if Rails.env.test?
-      result = Result.new(
-        success: true,
-        body: 'ok',
-        data: 'ok',
-        code: 200,
-        content_type: 'application/stream',
-      )
-      return result
-    end
     document = @api.getFile(file_id)
     url = "https://api.telegram.org/file/bot#{@token}/#{document['file_path']}"
     UserAgent.get(
@@ -621,26 +615,4 @@ returns
     )
   end
 
-  class Result
-
-    attr_reader :error
-    attr_reader :body
-    attr_reader :data
-    attr_reader :code
-    attr_reader :content_type
-
-    def initialize(options)
-      @success      = options[:success]
-      @body         = options[:body]
-      @data         = options[:data]
-      @code         = options[:code]
-      @content_type = options[:content_type]
-      @error        = options[:error]
-    end
-
-    def success?
-      return true if @success
-      false
-    end
-  end
 end

@@ -255,6 +255,18 @@ test:integration:sipgate:
     - ruby -I test test/integration/sipgate_controller_test.rb
     - rake db:drop
 
+test:integration:telegram:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - rake db:seed
+    - ruby -I test test/integration/telegram_controller_test.rb
+    - rake db:drop
+
 test:integration:es_mysql:
   stage: test
   tags:

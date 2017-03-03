@@ -66,14 +66,14 @@ class AuthTest < ActiveSupport::TestCase
       user = User.authenticate(test[:username], test[:password])
       if test[:result] == true
         if !user
-          assert(false, 'auth faild')
+          assert(false, 'auth failed')
         else
           test[:verify].each { |key, value|
             assert_equal(user[key], value, 'verify')
           }
         end
       else
-        assert_equal(test[:result], user, 'faild or not existing')
+        assert_equal(test[:result], user, 'failed or not existing')
       end
     }
   end

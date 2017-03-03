@@ -44,6 +44,7 @@ class ActiveSupport::TestCase
 
     # remove background jobs
     Delayed::Job.destroy_all
+    Trigger.destroy_all
     ActivityStream.destroy_all
     PostmasterFilter.destroy_all
     Ticket.destroy_all

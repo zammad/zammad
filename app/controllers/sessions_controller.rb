@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
     check_maintenance(user)
 
     # auth failed
-    raise Exceptions::NotAuthorized, 'Wrong Username and Password combination.' if !user
+    raise Exceptions::NotAuthorized, 'Wrong Username or Password combination.' if !user
 
     # remember me - set session cookie to expire later
     expire_after = nil
