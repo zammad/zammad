@@ -95,7 +95,7 @@ class Index extends App.ControllerContent
 
     @notify
       type:      'error'
-      msg:       App.i18n.translateContent(details.error || 'Wrong Username and Password combination.')
+      msg:       App.i18n.translateContent(details.error || 'Wrong Username or Password combination.')
       removeAll: true
 
 App.Config.set('signup', Index, 'Routes')

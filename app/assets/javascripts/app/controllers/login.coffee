@@ -142,7 +142,7 @@ class Index extends App.ControllerContent
     # add notify
     @notify
       type:      'error'
-      msg:       App.i18n.translateContent(details.error || 'Wrong Username and Password combination.')
+      msg:       App.i18n.translateContent(details.error || 'Wrong Username or Password combination.')
       removeAll: true
 
     # rerender login page

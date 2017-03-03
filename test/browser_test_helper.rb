@@ -3493,7 +3493,7 @@ wait untill text in selector disabppears
         }
       end
     rescue
-      # faild to get logs
+      # failed to get logs
     end
     return if !@@debug
     return if params[:mute_log]
