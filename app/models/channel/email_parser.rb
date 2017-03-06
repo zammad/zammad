@@ -30,9 +30,9 @@ class Channel::EmailParser
         data:        'binary of attachment',
         filename:    'file_name_of_attachment.txt',
         preferences: {
-          content-alternative: true,
-          Mime-Type:           'text/plain',
-          Charset:             'iso-8859-1',
+          'content-alternative' => true,
+          'Mime-Type'           => 'text/plain',
+          'Charset:             => 'iso-8859-1',
         },
       },
     ],
