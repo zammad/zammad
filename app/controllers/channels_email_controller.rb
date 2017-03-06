@@ -253,6 +253,7 @@ class ChannelsEmailController < ApplicationController
       next if channel.options[:inbound][:adapter] != result[:setting][:inbound][:adapter]
       next if channel.options[:inbound][:options][:host] != result[:setting][:inbound][:options][:host]
       next if channel.options[:inbound][:options][:user] != result[:setting][:inbound][:options][:user]
+      next if channel.options[:inbound][:options][:folder] != result[:setting][:inbound][:options][:folder]
       next if channel.id.to_s == channel_id.to_s
       render json: {
         result: 'duplicate',
