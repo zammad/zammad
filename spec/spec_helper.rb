@@ -22,6 +22,11 @@ RSpec.configure do |config|
   # Zammad specific helpers
   config.include ZammadHelper
 
+  config.before(:suite) do
+    # make sure that all migrations of linked packages are executed
+    Package::Migration.linked
+  end
+
   # skip Zammad helper functions in the stacktrace to lower noise
   config.backtrace_exclusion_patterns << %r{/spec/spec_helper/}
 

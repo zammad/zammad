@@ -480,10 +480,21 @@ execute all pending package migrations at once
   end
 
   class Migration < ApplicationModel
-    @@root = Rails.root.to_s # rubocop:disable Style/ClassVars
+
+    def self.linked
+      szpm_files = []
+      Dir.chdir(root) do
+        szpm_files = Dir['*.szpm']
+      end
+
+      szpm_files.each do |szpm_file|
+        package = szpm_file.sub('.szpm', '')
+        migrate(package)
+      end
+    end
 
     def self.migrate(package, direction = 'normal')
-      location = "#{@@root}/db/addon/#{package.underscore}"
+      location = "#{root}/db/addon/#{package.underscore}"
 
       return true if !File.exist?(location)
       migrations_done = Package::Migration.where(name: package.underscore)
@@ -523,7 +534,7 @@ execute all pending package migrations at once
           logger.info "NOTICE: down package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
-          Kernel.const_get(classname).down
+          classname.constantize.down
           record = Package::Migration.find_by(name: package.underscore, version: version)
           if record
             record.destroy
@@ -536,10 +547,14 @@ execute all pending package migrations at once
           logger.info "NOTICE: up package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
-          Kernel.const_get(classname).up
+          classname.constantize.up
           Package::Migration.create(name: package.underscore, version: version)
         end
       }
+    end
+
+    def self.root
+      Rails.root
     end
   end
 end
