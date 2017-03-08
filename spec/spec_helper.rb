@@ -17,6 +17,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'spec_helper/zammad_helper'
+require 'webmock/rspec'
 
 RSpec.configure do |config|
   # Zammad specific helpers
@@ -25,6 +26,9 @@ RSpec.configure do |config|
   config.before(:suite) do
     # make sure that all migrations of linked packages are executed
     Package::Migration.linked
+
+    # allow requests to Zammad webservices
+    WebMock.disable_net_connect!(allow: /zammad\.com/)
   end
 
   # skip Zammad helper functions in the stacktrace to lower noise
