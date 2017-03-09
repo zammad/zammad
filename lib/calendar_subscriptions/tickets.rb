@@ -79,18 +79,27 @@ class CalendarSubscriptions::Tickets
     user_locale       = @user.preferences['locale'] || 'en'
     translated_ticket = Translation.translate(user_locale, 'ticket')
 
-    events_data = []
-    tickets.each do |ticket|
+ event_data = {}
 
-      event_data = {}
+event_start = "#{ticket.plandatrozp}"
+event_end = "#{ticket.plandatzak}"
 
       translated_state = Translation.translate(user_locale, ticket.state.name)
+    if event_start == nil or event_start == ''
+        event_data[:dtstart]     = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @tzid)
+    else
+      event_data[:dtstart]     = Icalendar::Values::DateTime.new(DateTime.strptime(event_start, '%Y-%m-%d %H:%M:%S %Z').strftime("%Y%m%dT%H%M%S"), 'tzid' => @tzid)
+    end
 
-      event_data[:dtstart]     = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @tzid)
-      event_data[:dtend]       = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @tzid)
+     if event_end == nil or event_end == ''
+      event_data[:dtend]     = Icalendar::Values::Date.new(Time.zone.today, 'tzid' => @tzid)
+     else
+      event_data[:dtend]       = Icalendar::Values::DateTime.new(DateTime.strptime(event_end, '%Y-%m-%d %H:%M:%S %Z').strftime("%Y%m%dT%H%M%S"), 'tzid' => @tzid)
+     end
+
       event_data[:summary]     = "#{translated_state} #{translated_ticket}: '#{ticket.title}'"
-      event_data[:description] = "T##{ticket.number}"
-
+      event_data[:description] = "#{ticket.plandatrozp}""#{ticket.plandatzak}"
+      event_data[:url]         = "#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}"
       events_data.push event_data
     end
 
