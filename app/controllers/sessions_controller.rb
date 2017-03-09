@@ -301,4 +301,29 @@ class SessionsController < ApplicationController
     render json: {}
   end
 
+  private
+
+  def config_frontend
+
+    # config
+    config = {}
+    Setting.select('name, preferences').where(frontend: true).each { |setting|
+      next if setting.preferences[:authentication] == true && !current_user
+      value = Setting.get(setting.name)
+      next if !current_user && (value == false || value.nil?)
+      config[setting.name] = value
+    }
+
+    # remember if we can to swich back to user
+    if session[:switched_from_user_id]
+      config['switch_back_to_possible'] = true
+    end
+
+    # remember session_id for websocket logon
+    if current_user
+      config['session_id'] = session.id
+    end
+
+    config
+  end
 end

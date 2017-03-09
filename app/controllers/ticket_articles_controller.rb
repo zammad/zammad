@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class TicketArticlesController < ApplicationController
+  include AccessesTickets
+  include CreatesTicketArticles
+
   prepend_before_action :authentication_check
 
   # GET /articles
@@ -271,6 +274,12 @@ class TicketArticlesController < ApplicationController
   end
 
   private
+
+  def article_permission(article)
+    ticket = Ticket.lookup(id: article.ticket_id)
+    return true if ticket.permission(current_user: current_user)
+    raise Exceptions::NotAuthorized
+  end
 
   def sanitized_disposition
     disposition = params.fetch(:disposition, 'inline')
