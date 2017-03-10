@@ -287,29 +287,67 @@ class String
 
 =end
 
-  def html2html_strict(force = false)
-    string = html2text(true, true)
-    string.signature_identify(force)
-    string = string.text2html
-    string.gsub!(%r{######LINKEXT:(.+?)/TEXT:(.+?)######}, '<a href="\1" target="_blank">\2</a>')
-    string.gsub!(/######LINKRAW:(.+?)######/, '<a href="\1" target="_blank">\1</a>')
+  def html2html_strict
+    string = "#{self}" # rubocop:disable Style/UnneededInterpolation
+    string = HtmlSanitizer.cleanup(string).strip
+    string = HtmlSanitizer.strict(string, true).strip
+
+    # as fallback, use html2text and text2html
+    if string.blank?
+      string = html2text.text2html
+      string.signature_identify('text')
+      marker_template = '<span class="js-signatureMarker"></span>'
+      string.sub!(/######SIGNATURE_MARKER######/, marker_template)
+      string.gsub!(/######SIGNATURE_MARKER######/, '')
+      return string.chomp
+    end
+
+    #string.gsub!(/<p>[[:space:]]+<\/p><p>[[:space:]]+<\/p>/m, '<p> </p>')
+    string.gsub!(%r{<p>[[:space:]]+</p>\n<p>[[:space:]]+</p>}im, '<p> </p>')
+    string.gsub!(%r{<div>[[:space:]]+</div>\n<div>[[:space:]]+</div>}im, '<div> </div>')
+    string.gsub!(/<br>[[:space:]]?<br>[[:space:]]?<br>/im, '<br><br>')
+    string.gsub!(/<br>[[:space:]]?<br>[[:space:]]?<br>/im, '<br><br>')
+    string.gsub!(/<br>[[:space:]]?<br>[[:space:]]?<br>/im, '<br><br>')
+    string.gsub!(%r{<br/>[[:space:]]?<br/>[[:space:]]?<br/>}im, '<br/><br/>')
+    string.gsub!(%r{<br/>[[:space:]]?<br/>[[:space:]]?<br/>}im, '<br/><br/>')
+    string.gsub!(%r{<br/>[[:space:]]?<br/>[[:space:]]?<br/>}im, '<br/><br/>')
+    string.gsub!(%r{<p>[[:space:]]+</p>}im, '<p>&nbsp;</p>')
+
+    string.signature_identify('html')
+
     marker_template = '<span class="js-signatureMarker"></span>'
     string.sub!(/######SIGNATURE_MARKER######/, marker_template)
     string.gsub!(/######SIGNATURE_MARKER######/, '')
-    string.gsub!(/######(.+?)######/, '<\1>')
     string.chomp
   end
 
-  def signature_identify(force = false)
+  def signature_identify(type = 'text', force = false)
     string = self
+
+    marker = '######SIGNATURE_MARKER######'
+
+    if type == 'html'
+      map = [
+        '<br(|\/)>[[:space:]]*(--|__)',
+        '<\/div>[[:space:]]*(--|__)',
+        '<p>[[:space:]]*(--|__)',
+        '(<br(|\/)>|<p>|<div>)[[:space:]]*<b>(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]*</b>',
+        '<br>[[:space:]]*<br>[[:space:]]*(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]+',
+        '<blockquote(|.+?)>[[:space:]]*<div>[[:space:]]*(On|Am)',
+      ]
+      map.each { |regexp|
+        string.sub!(/#{regexp}/m) { |placeholder|
+          placeholder = "#{marker}#{placeholder}"
+        }
+      }
+      return string
+    end
 
     # if we do have less then 10 lines and less then 300 chars ignore this
     if !force
       lines = string.split("\n")
       return if lines.count < 10 && string.length < 300
     end
-
-    marker = '######SIGNATURE_MARKER######'
 
     # search for signature separator "--\n"
     string.sub!(/^\s{0,2}--\s{0,2}$/) { |placeholder|
@@ -360,7 +398,7 @@ class String
     # rubocop:enable Style/AsciiComments
 
     # en/de/fr | sometimes ms adds a space to "xx : value"
-    map['ms-en-de-fr_from'] = '^(From|Von|De)( ?):[[:space:]].+?'
+    map['ms-en-de-fr_from'] = '^(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ)( ?):[[:space:]].+?'
     map['ms-en-de-fr_from_html'] = "\n######b######(From|Von|De)([[:space:]]?):([[:space:]]?)(######\/b######)[[:space:]].+?"
 
     # word 14
@@ -369,9 +407,14 @@ class String
     #map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
 
     map.each { |_key, regexp|
-      string.sub!(/#{regexp}/) { |placeholder|
-        placeholder = "#{marker}#{placeholder}"
-      }
+      begin
+        string.sub!(/#{regexp}/) { |placeholder|
+          placeholder = "#{marker}#{placeholder}"
+        }
+      rescue
+        # regexp was not possible because of some string encoding issue, use next
+        Rails.logger.debug "Invalid string/charset combination with regexp #{regexp} in string"
+      end
     }
 
     string
