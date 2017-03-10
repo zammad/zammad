@@ -6,15 +6,17 @@ RSpec.describe Import::ModelResource do
     module Import
       module Test
         class Group < Import::ModelResource
+          def source
+            'RSpec-Test'
+          end
         end
       end
     end
   end
 
+  let(:group_data) { attributes_for(:group).merge(id: 1337) }
+
   it 'creates model Objects by class name' do
-
-    group_data = attributes_for(:group)
-
     expect {
       Import::Test::Group.new(group_data)
     }.to change { Group.count }.by(1)
@@ -22,14 +24,21 @@ RSpec.describe Import::ModelResource do
 
   it 'updates model Objects by class name' do
 
-    group = create(:group)
+    expect do
+      Import::Test::Group.new(group_data)
+    end
+      .to change {
+            Group.count
+          }.by(1)
 
-    update_attributes        = group.serializable_hash
-    update_attributes[:note] = 'Updated'
-
-    expect {
-      Import::Test::Group.new(update_attributes)
-      group.reload
-    }.to change { group.note }
+    expect do
+      Import::Test::Group.new(group_data.merge(note: 'Updated'))
+    end
+      .to change {
+            Group.count
+          }.by(0)
+      .and change {
+             Group.last.note
+           }
   end
 end

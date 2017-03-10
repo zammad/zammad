@@ -10,6 +10,14 @@ module Import
       raise "#{self.class.name} has no implmentation of the needed 'import_class' method"
     end
 
+    def source
+      raise "#{self.class.name} has no implmentation of the needed 'source' method"
+    end
+
+    def remote_id(resource)
+      @remote_id ||= resource.delete(:id)
+    end
+
     private
 
     def import(resource)
@@ -33,12 +41,27 @@ module Import
     end
 
     def lookup_existing(resource)
-      import_class.find_by(name: resource[:name])
+
+      instance = ExternalSync.find_by(
+        source:    source,
+        source_id: remote_id(resource),
+        object:    import_class.name,
+      )
+      return if !instance
+      import_class.find_by(id: instance.o_id)
     end
 
     def create(resource)
       @resource = import_class.new(resource)
       @resource.save
+
+      ExternalSync.create(
+        source:    source,
+        source_id: remote_id(resource),
+        object:    import_class.name,
+        o_id:      @resource.id
+      )
+
       post_create(
         instance:   @resource,
         attributes: resource
@@ -55,7 +78,7 @@ module Import
     def map(resource)
       mapped     = from_mapping(resource)
       attributes = defaults(resource).merge(mapped)
-      attributes.deep_symbolize_keys
+      attributes.symbolize_keys
     end
 
     def from_mapping(resource)
