@@ -2,8 +2,8 @@ module Import
   class BaseResource
     include Import::Helper
 
-    def initialize(resource)
-      import(resource)
+    def initialize(resource, *args)
+      import(resource, *args)
     end
 
     def import_class
@@ -14,23 +14,23 @@ module Import
       raise "#{self.class.name} has no implmentation of the needed 'source' method"
     end
 
-    def remote_id(resource)
+    def remote_id(resource, *_args)
       @remote_id ||= resource.delete(:id)
     end
 
     private
 
-    def import(resource)
-      create_or_update(map(resource))
+    def import(resource, *args)
+      create_or_update(map(resource, *args), *args)
     end
 
-    def create_or_update(resource)
-      return if updated?(resource)
-      create(resource)
+    def create_or_update(resource, *args)
+      return if updated?(resource, *args)
+      create(resource, *args)
     end
 
-    def updated?(resource)
-      @resource = lookup_existing(resource)
+    def updated?(resource, *args)
+      @resource = lookup_existing(resource, *args)
       return false if !@resource
       @resource.update_attributes(resource)
       post_update(
@@ -40,7 +40,7 @@ module Import
       true
     end
 
-    def lookup_existing(resource)
+    def lookup_existing(resource, *_args)
 
       instance = ExternalSync.find_by(
         source:    source,
@@ -51,7 +51,7 @@ module Import
       import_class.find_by(id: instance.o_id)
     end
 
-    def create(resource)
+    def create(resource, *_args)
       @resource = import_class.new(resource)
       @resource.save
 
@@ -68,21 +68,21 @@ module Import
       )
     end
 
-    def defaults(_resource)
+    def defaults(_resource, *_args)
       {
         created_by_id: 1,
         updated_by_id: 1,
       }
     end
 
-    def map(resource)
-      mapped     = from_mapping(resource)
-      attributes = defaults(resource).merge(mapped)
+    def map(resource, *args)
+      mapped     = from_mapping(resource, *args)
+      attributes = defaults(resource, *args).merge(mapped)
       attributes.symbolize_keys
     end
 
-    def from_mapping(resource)
-      return resource if !mapping
+    def from_mapping(resource, *args)
+      return resource if !mapping(*args)
 
       ExternalSync.map(
         mapping: mapping,
@@ -90,11 +90,11 @@ module Import
       )
     end
 
-    def mapping
-      Setting.get(mapping_config)
+    def mapping(*args)
+      Setting.get(mapping_config(*args))
     end
 
-    def mapping_config
+    def mapping_config(*_args)
       self.class.name.to_s.sub('Import::', '').gsub('::', '_').underscore + '_mapping'
     end
 
