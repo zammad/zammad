@@ -14,14 +14,11 @@ class TicketArticlesController < ApplicationController
 
   # GET /articles/1
   def show
-
-    # permission check
     article = Ticket::Article.find(params[:id])
     article_permission(article)
 
     if params[:expand]
       result = article.attributes_with_association_names
-      result[:attachments] = article.attachments
       render json: result, status: :ok
       return
     end
@@ -37,8 +34,6 @@ class TicketArticlesController < ApplicationController
 
   # GET /ticket_articles/by_ticket/1
   def index_by_ticket
-
-    # permission check
     ticket = Ticket.find(params[:id])
     ticket_permission(ticket)
 
@@ -50,9 +45,6 @@ class TicketArticlesController < ApplicationController
         # ignore internal article if customer is requesting
         next if article.internal == true && current_user.permissions?('ticket.customer')
         result = article.attributes_with_association_names
-
-        # add attachments
-        result[:attachments] = article.attachments
         articles.push result
       }
 
@@ -95,7 +87,6 @@ class TicketArticlesController < ApplicationController
 
     if params[:expand]
       result = article.attributes_with_association_names
-      result[:attachments] = article.attachments
       render json: result, status: :created
       return
     end
@@ -111,8 +102,6 @@ class TicketArticlesController < ApplicationController
 
   # PUT /articles/1
   def update
-
-    # permission check
     article = Ticket::Article.find(params[:id])
     article_permission(article)
 
@@ -127,7 +116,6 @@ class TicketArticlesController < ApplicationController
 
     if params[:expand]
       result = article.attributes_with_association_names
-      result[:attachments] = article.attachments
       render json: result, status: :ok
       return
     end
@@ -220,8 +208,6 @@ class TicketArticlesController < ApplicationController
 
   # GET /ticket_attachment/:ticket_id/:article_id/:id
   def attachment
-
-    # permission check
     ticket = Ticket.lookup(id: params[:ticket_id])
     if !ticket_permission(ticket)
       raise Exceptions::NotAuthorized, 'No such ticket.'
@@ -255,8 +241,6 @@ class TicketArticlesController < ApplicationController
 
   # GET /ticket_article_plain/1
   def article_plain
-
-    # permission check
     article = Ticket::Article.find(params[:id])
     article_permission(article)
 
@@ -276,6 +260,9 @@ class TicketArticlesController < ApplicationController
   private
 
   def article_permission(article)
+    if current_user.permissions?('ticket.customer')
+      raise Exceptions::NotAuthorized if article.internal == true
+    end
     ticket = Ticket.lookup(id: article.ticket_id)
     return true if ticket.permission(current_user: current_user)
     raise Exceptions::NotAuthorized

@@ -263,6 +263,231 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(@agent.id, result['created_by_id'])
   end
 
+  test '01.10 ticket create with agent - minimal article with missing body - with customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #10',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        subject: 'some test 123',
+      },
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Need at least article: { body: "some text" }', result['error'])
+  end
+
+  test '01.11 ticket create with agent - minimal article and attachment with customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #11',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        subject: 'some test 123',
+        body: 'some test 123',
+        attachments: [
+          'filename' => 'some_file.txt',
+          'data' => 'dGVzdCAxMjM=',
+          'mime-type' => 'text/plain',
+        ],
+      },
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #11', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    ticket = Ticket.find(result['id'])
+    assert_equal(1, ticket.articles.count)
+    assert_equal(1, ticket.articles.first.attachments.count)
+    file = ticket.articles.first.attachments.first
+    assert_equal('test 123', file.content)
+    assert_equal('some_file.txt', file.filename)
+    assert_equal('text/plain', file.preferences['Mime-Type'])
+    assert_not(file.preferences['Content-ID'])
+  end
+
+  test '01.12 ticket create with agent - minimal article and attachment with customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #12',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        subject: 'some test 123',
+        body: 'some test 123',
+        attachments: [
+          {
+            'filename' => 'some_file1.txt',
+            'data' => 'dGVzdCAxMjM=',
+            'mime-type' => 'text/plain',
+          },
+          {
+            'filename' => 'some_file2.txt',
+            'data' => 'w6TDtsO8w58=',
+            'mime-type' => 'text/plain',
+          },
+        ],
+      },
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #12', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    ticket = Ticket.find(result['id'])
+    assert_equal(1, ticket.articles.count)
+    assert_equal(2, ticket.articles.first.attachments.count)
+    file = ticket.articles.first.attachments.first
+    assert_equal('test 123', file.content)
+    assert_equal('some_file1.txt', file.filename)
+    assert_equal('text/plain', file.preferences['Mime-Type'])
+    assert_not(file.preferences['Content-ID'])
+  end
+
+  test '01.13 ticket create with agent - minimal article and attachment missing mine-type with customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #13',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        subject: 'some test 123',
+        body: 'some test 123',
+        attachments: [
+          'filename' => 'some_file.txt',
+          'data' => 'ABC_INVALID_BASE64',
+          'mime-type' => 'text/plain',
+        ],
+      },
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Invalid base64 for attachment with index \'0\'', result['error'])
+  end
+
+  test '01.14 ticket create with agent - minimal article and attachment invalid base64 with customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #14',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        subject: 'some test 123',
+        body: 'some test 123',
+        attachments: [
+          'filename' => 'some_file.txt',
+          'data' => 'dGVzdCAxMjM=',
+        ],
+      },
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Attachment needs \'mime-type\' param for attachment with index \'0\'', result['error'])
+  end
+
+  test '01.15 ticket create with agent - minimal article and inline attachments with customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #15',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        content_type: 'text/html',
+        subject: 'some test 123',
+        body: 'some test 123 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
+AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
+9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" /> <img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAJAAD/4QMtaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzYgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzJCOTE2NzlGQUEwMTFFNjg0M0NGQjU0OUU4MTFEOEIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzJCOTE2N0FGQUEwMTFFNjg0M0NGQjU0OUU4MTFEOEIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDMkI5MTY3N0ZBQTAxMUU2ODQzQ0ZCNTQ5RTgxMUQ4QiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDMkI5MTY3OEZBQTAxMUU2ODQzQ0ZCNTQ5RTgxMUQ4QiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEABQRERoTGioZGSo1KCEoNTEpKCgpMUE4ODg4OEFEREREREREREREREREREREREREREREREREREREREREREREREQBFhoaIh0iKRoaKTkpIik5RDktLTlEREREOERERERERERERERERERERERERERERERERERERERERERERERERERERP/AABEIABAADAMBIgACEQEDEQH/xABbAAEBAAAAAAAAAAAAAAAAAAAEBQEBAQAAAAAAAAAAAAAAAAAABAUQAAEEAgMAAAAAAAAAAAAAAAABAhIDESIxBAURAAICAwAAAAAAAAAAAAAAAAESABNRoQP/2gAMAwEAAhEDEQA/AJDq1rfF3Imeg/1+lFy2oR564DKWWWbweV+Buf/Z">',
+      },
+    }
+
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #15', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    ticket = Ticket.find(result['id'])
+    assert_equal(1, ticket.articles.count)
+    assert_equal(2, ticket.articles.first.attachments.count)
+    file = ticket.articles.first.attachments[0]
+    assert_equal('d3c1e09bdefb92b6a06b791a24ca9599', Digest::MD5.hexdigest(file.content))
+    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.filename)
+    assert_equal('image/png', file.preferences['Mime-Type'])
+    assert(file.preferences['Content-ID'])
+    file = ticket.articles.first.attachments[1]
+    assert_equal('006a2ca3793b550c8fe444acdeb39252', Digest::MD5.hexdigest(file.content))
+    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.filename)
+    assert_equal('image/jpeg', file.preferences['Mime-Type'])
+    assert(file.preferences['Content-ID'])
+  end
+
+  test '01.16 ticket create with agent - minimal article and inline attachments with customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #16',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        content_type: 'text/html',
+        subject: 'some test 123',
+        body: 'some test 123 <img src="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAJAAD/4QMtaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjMtYzAxMSA2Ni4xNDU2NjEsIDIwMTIvMDIvMDYtMTQ6NTY6MjcgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzYgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QzJCOTE2NzlGQUEwMTFFNjg0M0NGQjU0OUU4MTFEOEIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QzJCOTE2N0FGQUEwMTFFNjg0M0NGQjU0OUU4MTFEOEIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDMkI5MTY3N0ZBQTAxMUU2ODQzQ0ZCNTQ5RTgxMUQ4QiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDMkI5MTY3OEZBQTAxMUU2ODQzQ0ZCNTQ5RTgxMUQ4QiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEABQRERoTGioZGSo1KCEoNTEpKCgpMUE4ODg4OEFEREREREREREREREREREREREREREREREREREREREREREREREQBFhoaIh0iKRoaKTkpIik5RDktLTlEREREOERERERERERERERERERERERERERERERERERERERERERERERERERERP/AABEIABAADAMBIgACEQEDEQH/xABbAAEBAAAAAAAAAAAAAAAAAAAEBQEBAQAAAAAAAAAAAAAAAAAABAUQAAEEAgMAAAAAAAAAAAAAAAABAhIDESIxBAURAAICAwAAAAAAAAAAAAAAAAESABNRoQP/2gAMAwEAAhEDEQA/AJDq1rfF3Imeg/1+lFy2oR564DKWWWbweV+Buf/Z"
+>',
+        attachments: [
+          'filename' => 'some_file.txt',
+          'data' => 'dGVzdCAxMjM=',
+          'mime-type' => 'text/plain',
+        ],
+      },
+    }
+
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #16', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    ticket = Ticket.find(result['id'])
+    assert_equal(1, ticket.articles.count)
+    assert_equal(2, ticket.articles.first.attachments.count)
+    file = ticket.articles.first.attachments[0]
+    assert_equal('006a2ca3793b550c8fe444acdeb39252', Digest::MD5.hexdigest(file.content))
+    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.filename)
+    assert_equal('image/jpeg', file.preferences['Mime-Type'])
+    assert(file.preferences['Content-ID'])
+    file = ticket.articles.first.attachments[1]
+    assert_equal('39d0d586a701e199389d954f2d592720', Digest::MD5.hexdigest(file.content))
+    assert_equal('some_file.txt', file.filename)
+    assert_equal('text/plain', file.preferences['Mime-Type'])
+    assert_not(file.preferences['Content-ID'])
+  end
+
   test '02.02 ticket create with agent' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {

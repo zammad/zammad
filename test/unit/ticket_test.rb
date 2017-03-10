@@ -307,7 +307,7 @@ class TicketTest < ActiveSupport::TestCase
 
   end
 
-  test 'article attachment helper' do
+  test 'article attachment helper 1' do
 
     ticket1 = Ticket.create(
       title: 'some article helper test1',
@@ -376,10 +376,7 @@ class TicketTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    article_attributes = Ticket::Article.insert_urls(
-      article1.attributes,
-      article1.attachments,
-    )
+    article_attributes = Ticket::Article.insert_urls(article1.attributes_with_association_ids)
 
     assert_no_match('15.274327094.140938@zammad.example.com', article_attributes['body'])
     assert_no_match('15.274327094.140939@zammad.example.com', article_attributes['body'])
@@ -394,6 +391,92 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(store1.id, attachments.first.id)
 
     ticket1.destroy
-
   end
+
+  test 'article attachment helper 2' do
+
+    ticket1 = Ticket.create(
+      title: 'some article helper test2',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket1, 'ticket created')
+
+    # create inbound article #1
+    article1 = Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message article helper test2 <div><img src="cid:15.274327094.140938@zammad.example.com">asdasd<img border="0" width="60" height="19" src="cid:15.274327094.140939@zammad.example.com" alt="Beschreibung: Beschreibung: efqmLogo"><br>',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    store1 = Store.add(
+      object: 'Ticket::Article',
+      o_id: article1.id,
+      data: 'content_file1_normally_should_be_an_image',
+      filename: 'some_file1.jpg',
+      preferences: {
+        'Content-Type'        => 'image/jpeg',
+        'Mime-Type'           => 'image/jpeg',
+        'Content-ID'          => '15.274327094.140938@zammad.example.com',
+        'Content-Disposition' => 'inline'
+      },
+      created_by_id: 1,
+    )
+    store2 = Store.add(
+      object: 'Ticket::Article',
+      o_id: article1.id,
+      data: 'content_file2_normally_should_be_an_image',
+      filename: 'some_file2.jpg',
+      preferences: {
+        'Content-Type'        => 'image/jpeg',
+        'Mime-Type'           => 'image/jpeg',
+        'Content-ID'          => '15.274327094.140939@zammad.example.com',
+        'Content-Disposition' => 'inline'
+      },
+      created_by_id: 1,
+    )
+    store3 = Store.add(
+      object: 'Ticket::Article',
+      o_id: article1.id,
+      data: 'content_file3',
+      filename: 'some_file3.txt',
+      preferences: {
+        'Content-Type'        => 'text/stream',
+        'Mime-Type'           => 'text/stream',
+        'Content-ID'          => '15.274327094.99999@zammad.example.com',
+        'Content-Disposition' => 'inline'
+      },
+      created_by_id: 1,
+    )
+
+    article_attributes = Ticket::Article.insert_urls(article1.attributes_with_association_ids)
+
+    assert_no_match('15.274327094.140938@zammad.example.com', article_attributes['body'])
+    assert_no_match('15.274327094.140939@zammad.example.com', article_attributes['body'])
+    assert_no_match('15.274327094.99999@zammad.example.com', article_attributes['body'])
+    assert_match("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store1.id}", article_attributes['body'])
+    assert_match("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store2.id}", article_attributes['body'])
+    assert_no_match("api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store3.id}", article_attributes['body'])
+
+    article1 = Ticket::Article.find(article1.id)
+    attachments = article1.attachments_inline
+    assert_equal(2, attachments.length)
+    assert_equal(store1.id, attachments.first.id)
+
+    ticket1.destroy
+  end
+
 end

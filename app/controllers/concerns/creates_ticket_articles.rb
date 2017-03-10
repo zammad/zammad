@@ -46,23 +46,22 @@ module CreatesTicketArticles
     article.ticket_id = ticket.id
 
     # store dataurl images to store
-    if form_id && article.body && article.content_type =~ %r{text/html}i
-      article.body.gsub!( %r{(<img\s.+?src=")(data:image/(jpeg|png);base64,.+?)">}i ) { |_item|
+    attachments_inline = []
+    if article.body && article.content_type =~ %r{text/html}i
+      article.body.gsub!( %r{(<img\s.?src=")(data:image/(jpeg|png);base64,.+?)"(|.+?)>}im ) { |_item|
         file_attributes = StaticAssets.data_url_attributes($2)
-        cid = "#{ticket.id}.#{form_id}.#{rand(999_999)}@#{Setting.get('fqdn')}"
-        headers_store = {
-          'Content-Type' => file_attributes[:mime_type],
-          'Mime-Type' => file_attributes[:mime_type],
-          'Content-ID' => cid,
-          'Content-Disposition' => 'inline',
-        }
-        store = Store.add(
-          object: 'UploadCache',
-          o_id: form_id,
+        cid = "#{ticket.id}.#{rand(999_999_999)}@#{Setting.get('fqdn')}"
+        attachment = {
           data: file_attributes[:content],
           filename: cid,
-          preferences: headers_store
-        )
+          preferences: {
+            'Content-Type' => file_attributes[:mime_type],
+            'Mime-Type' => file_attributes[:mime_type],
+            'Content-ID' => cid,
+            'Content-Disposition' => 'inline',
+          },
+        }
+        attachments_inline.push attachment
         "#{$1}cid:#{cid}\">"
       }
     end
@@ -76,6 +75,48 @@ module CreatesTicketArticles
     end
     article.save!
 
+    # store inline attachments
+    attachments_inline.each { |attachment|
+      Store.add(
+        object: 'Ticket::Article',
+        o_id: article.id,
+        data: attachment[:data],
+        filename: attachment[:filename],
+        preferences: attachment[:preferences],
+      )
+    }
+
+    # add attachments as param
+    if params[:attachments]
+      params[:attachments].each_with_index { |attachment, index|
+
+        # validation
+        ['mime-type', 'filename', 'data'].each { |key|
+          next if attachment[key]
+          raise Exceptions::UnprocessableEntity, "Attachment needs '#{key}' param for attachment with index '#{index}'"
+        }
+
+        preferences = {}
+        ['charset', 'mime-type'].each { |key|
+          next if !attachment[key]
+          store_key = key.tr('-', '_').camelize.gsub(/(.+)([A-Z])/, '\1_\2').tr('_', '-')
+          preferences[store_key] = attachment[key]
+        }
+
+        if attachment[:data] !~ %r{^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$}
+          raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"
+        end
+
+        Store.add(
+          object: 'Ticket::Article',
+          o_id: article.id,
+          data: Base64.decode64(attachment[:data]),
+          filename: attachment[:filename],
+          preferences: preferences,
+        )
+      }
+    end
+
     # account time
     if time_unit.present?
       Ticket::TimeAccounting.create!(
@@ -85,9 +126,9 @@ module CreatesTicketArticles
       )
     end
 
-    # remove attachments from upload cache
     return article if !form_id
 
+    # remove attachments from upload cache
     Store.remove(
       object: 'UploadCache',
       o_id: form_id,
@@ -95,4 +136,5 @@ module CreatesTicketArticles
 
     article
   end
+
 end
