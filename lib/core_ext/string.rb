@@ -301,17 +301,18 @@ class String
       string.gsub!(/######SIGNATURE_MARKER######/, '')
       return string.chomp
     end
-
-    #string.gsub!(/<p>[[:space:]]+<\/p><p>[[:space:]]+<\/p>/m, '<p> </p>')
-    string.gsub!(%r{<p>[[:space:]]+</p>\n<p>[[:space:]]+</p>}im, '<p> </p>')
-    string.gsub!(%r{<div>[[:space:]]+</div>\n<div>[[:space:]]+</div>}im, '<div> </div>')
-    string.gsub!(/<br>[[:space:]]?<br>[[:space:]]?<br>/im, '<br><br>')
-    string.gsub!(/<br>[[:space:]]?<br>[[:space:]]?<br>/im, '<br><br>')
-    string.gsub!(/<br>[[:space:]]?<br>[[:space:]]?<br>/im, '<br><br>')
-    string.gsub!(%r{<br/>[[:space:]]?<br/>[[:space:]]?<br/>}im, '<br/><br/>')
-    string.gsub!(%r{<br/>[[:space:]]?<br/>[[:space:]]?<br/>}im, '<br/><br/>')
-    string.gsub!(%r{<br/>[[:space:]]?<br/>[[:space:]]?<br/>}im, '<br/><br/>')
+    string.gsub!(%r{(<p>[[:space:]]*</p>([[:space:]]*)){2,}}im, '<p> </p>\2')
+    string.gsub!(%r\<div>[[:space:]]*(<br(|/)>([[:space:]]*)){2,}\im, '<div><br>\3')
+    string.gsub!(%r\[[:space:]]*(<br>[[:space:]]*){3,}[[:space:]]*</div>\im, '<br><br></div>')
+    string.gsub!(%r\<div>[[:space:]]*(<br>[[:space:]]*){1,}[[:space:]]*</div>\im, '<div> </div>')
+    string.gsub!(%r\<p>[[:space:]]*</p>(<br(|/)>[[:space:]]*){2,}[[:space:]]*\im, '<p> </p><br>')
+    string.gsub!(%r{<p>[[:space:]]*</p>(<br(|/)>[[:space:]]*)+<p>[[:space:]]*</p>}im, '<p> </p><p> </p>')
+    string.gsub!(%r\(<div>[[:space:]]*</div>[[:space:]]*){2,}\im, '<div> </div>')
+    string.gsub!(/(<br>[[:space:]]*){3,}/im, '<br><br>')
+    string.gsub!(%r\(<br(|/)>[[:space:]]*){3,}\im, '<br/><br/>')
     string.gsub!(%r{<p>[[:space:]]+</p>}im, '<p>&nbsp;</p>')
+    string.gsub!(%r{\A(<br(|\/)>[[:space:]]*)*}i, '')
+    string.gsub!(%r{[[:space:]]*(<br(|\/)>[[:space:]]*)*\Z}i, '')
 
     string.signature_identify('html')
 
@@ -332,7 +333,7 @@ class String
         '<\/div>[[:space:]]*(--|__)',
         '<p>[[:space:]]*(--|__)',
         '(<br(|\/)>|<p>|<div>)[[:space:]]*<b>(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]*</b>',
-        '<br>[[:space:]]*<br>[[:space:]]*(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]+',
+        '(<br>|<div>)[[:space:]]*<br>[[:space:]]*(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]+',
         '<blockquote(|.+?)>[[:space:]]*<div>[[:space:]]*(On|Am)',
       ]
       map.each { |regexp|

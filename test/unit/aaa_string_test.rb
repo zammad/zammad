@@ -467,11 +467,41 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = "<div><p> </p><p> </p></div>"
-    result = "<div>\n<p>&nbsp;</p>\n</div>"
+    result = "<div>
+<p>&nbsp;</p>
+</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<div><div> </div><div> </div></div>"
-    result = "<div>\n<div> </div>\n</div>"
+    result = "<div>\n<div> </div></div>"
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<div><div> </div><div> </div><div> </div></div>"
+    result = "<div>\n<div> </div></div>"
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<div>
+<br> <br> </div>"
+    result = "<div> </div>"
+    assert_equal(result, html.html2html_strict)
+
+    html = '<div>
+<br> <p><b>Description</b></p>
+<br> <br> </div>'
+    result = '<div>
+<br> <p><b>Description</b></p>
+<br> <br> </div>'
+    assert_equal(result, html.html2html_strict)
+
+    html = '<div>
+<br> <p><b>Description</b></p>
+<br> <br> <br> </div>'
+    result = '<div>
+<br> <p><b>Description</b></p><br><br></div>'
+    assert_equal(result, html.html2html_strict)
+
+    html = '<p>&nbsp;</p><br><br><p>&nbsp;</p>'
+    result = '<p>&nbsp;</p><p>&nbsp;</p>'
     assert_equal(result, html.html2html_strict)
 
     html   = "<pre>a\nb\nc</pre>"
@@ -517,8 +547,15 @@ Men-----------------------'
     result = '<a href="http://web.de" rel="nofollow" target="_blank">web.de</a>'
     assert_equal(result, html.html2html_strict)
 
-    html   = '<br>https://www.facebook.com/test<br>'
-    result = '<br><a href="https://www.facebook.com/test" rel="nofollow" target="_blank">https://www.facebook.com/test</a><br>'
+    html   = '<div>https://www.facebook.com/test</div>'
+    result = '<div><a href="https://www.facebook.com/test" rel="nofollow" target="_blank">https://www.facebook.com/test</a>
+</div>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<div><br>https://www.facebook.com/test<br></div>'
+    result = '<div>
+<br><a href="https://www.facebook.com/test" rel="nofollow" target="_blank">https://www.facebook.com/test</a><br>
+</div>'
     assert_equal(result, html.html2html_strict)
 
     html   = 'some text http://example.com some other text'
@@ -630,16 +667,15 @@ abc<p><b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donne
 <td colspan=2 bgcolor=white><font size=2 face="sans-serif">christian.schaefer@example.com</font></table>
 <br>
 <table>'
-    result = "<br><b>Franz Schäfer</b><br><br><br><br>Telefon\n+49 000 000 8565<br>\nchristian.schaefer@example.com<br><br><br>"
-    result = '<br>
-<b>Franz Schäfer</b>
+    result = "<b>Franz Schäfer</b><br><br><br><br>Telefon\n+49 000 000 8565<br>\nchristian.schaefer@example.com<br><br><br>"
+    result = '<b>Franz Schäfer</b>
 <br>
 Manager Information Systems <br>
 <br>
 Telefon 
 +49 000 000 8565
 <br>
-christian.schaefer@example.com <br>'
+christian.schaefer@example.com'
     assert_equal(result, html.html2html_strict)
 
     html   = "<b id=123 classs=\"\nsome_class\">test</b>"
@@ -668,6 +704,37 @@ christian.schaefer@example.com <br>'
 
     html   = '<span></span>'
     result = ''
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<br><br><div>abc</div>'
+    result = '<div>abc</div>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<div>abc</div><br> <br>'
+    result = '<div>abc</div>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<div style="max-width: 600px;"><br><br><br></div>'
+    result = '<div> </div>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<div style="max-width: 600px;"><br>abc<br><br></div>'
+    result = '<div>
+<br>abc<br><br>
+</div>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<p> </p><p> </p><p> </p>'
+    result = '<p>&nbsp;</p>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<div><p> </p>
+<p> </p>
+<p> </p>
+</div>'
+    result = '<div>
+<p>&nbsp;</p>
+</div>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<p lang="DE"><b><span></span></b></p>'
@@ -901,25 +968,26 @@ christian.schaefer@example.com <br>'
 </div>'
     assert_equal(result, html.html2html_strict)
 
-    html   = '<br>
+    html   = '<div><br>
 <br>
 <br><font size=1 color=#5f5f5f face="sans-serif">Von: &nbsp; &nbsp; &nbsp;
 &nbsp;</font><font size=1 face="sans-serif">Hotel &lt;info@example.de&gt;</font>
 <br><font size=1 color=#5f5f5f face="sans-serif">An: &nbsp; &nbsp; &nbsp;
-&nbsp;</font>'
-    result = '<span class="js-signatureMarker"></span><br><br>Von: Hotel &lt;info@example.de&gt;
-<br>An:'
+&nbsp;</font></div>'
+    result = '<span class="js-signatureMarker"></span><div><br>Von: Hotel &lt;info@example.de&gt;
+<br>An: 
+</div>'
     assert_equal(result, html.html2html_strict)
 
     html = '<br class=""><div><blockquote type="cite" class=""><div class="">On 04 Mar 2017, at 14:47, Oliver Ruhm &lt;<a href="mailto:oliver@example.com" class="">oliver@example.com</a>&gt; wrote:</div><br class="Apple-interchange-newline">'
-    result = '<br><div><span class="js-signatureMarker"></span><blockquote type="cite">
+    result = '<div><span class="js-signatureMarker"></span><blockquote type="cite">
 <div>On 04 Mar 2017, at 14:47, Oliver Ruhm &lt;oliver@example.com&gt; wrote:</div>
 <br>
 </blockquote></div>'
     assert_equal(result, html.html2html_strict)
 
     html = '<br class=""><div><blockquote type="cite" class=""><div class="">some note</div><br class="Apple-interchange-newline">'
-    result = '<br><div><blockquote type="cite">
+    result = '<div><blockquote type="cite">
 <div>some note</div>
 <br>
 </blockquote></div>'

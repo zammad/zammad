@@ -73,8 +73,8 @@ tt  p://6 6.000146.0x7.147/">XSS</A>', true), 'http://66.000146.0x7.147/ (<a hre
     assert_equal(HtmlSanitizer.strict('<a href="[a]java[b]script[c]:alert(1)">XXX</a>'), '<a>XXX</a>')
     assert_equal(HtmlSanitizer.strict('<a href="[a]java[b]script[c]:alert(1)">XXX</a>', true), ' (<a href="xxx">XXX</a>)')
     assert_equal(HtmlSanitizer.strict('<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>'), 'alert(1)')
-    assert_equal(HtmlSanitizer.strict('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>'), '<a style="width: 260px;height:100vh;" href="http://example.com" rel="nofollow" target="_blank"></a>')
-    assert_equal(HtmlSanitizer.strict('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>', true), 'http://example.com (<a style="width: 260px;height:100vh;" href="" rel="nofollow" target="_blank"></a>)')
+    assert_equal(HtmlSanitizer.strict('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>'), '<a href="http://example.com" rel="nofollow" target="_blank"></a>')
+    assert_equal(HtmlSanitizer.strict('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>', true), 'http://example.com (<a href="" rel="nofollow" target="_blank"></a>)')
 
   end
 

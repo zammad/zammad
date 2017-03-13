@@ -4561,7 +4561,6 @@ footer {
     padding: 0 55px;
   }
 
-
   .article-content-meta {
     position: absolute;
     width: 100%;
@@ -4663,7 +4662,7 @@ footer {
     left: 0;
     right: 0;
     background: white;
-    
+
     &.is-open {
       &:before {
         opacity: 0;
@@ -4699,6 +4698,10 @@ footer {
     background: #e5f0f5;
     border-color: hsl(199,38%,92%);
     box-shadow: none;
+  }
+
+  .customer .richtext-content blockquote {
+    border-left: 5px solid #dfdfdf;
   }
 
     .customer.ticket-article-item.state--folde-out .textBubble {
