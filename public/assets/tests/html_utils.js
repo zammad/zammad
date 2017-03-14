@@ -197,6 +197,20 @@ test("html2text", function() {
 
 });
 
+// phoneify
+test("phoneify", function() {
+
+  var source = "+1 123 123 123-123"
+  var should = 'tel://%2B1123123123-123'
+  var result = App.Utils.phoneify(source)
+  equal(result, should, source)
+
+  source = "+1 123 123 A 123-123<>"
+  should = 'tel://%2B1123123A123-123%3C%3E'
+  result = App.Utils.phoneify(source)
+  equal(result, should, source)
+})
+
 // linkify
 test("linkify", function() {
 

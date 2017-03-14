@@ -111,12 +111,13 @@ class App extends Spine.Controller
 
     # transform input tel|url to make it clickable
     if attribute_config.tag is 'input'
-      isHtmlEscape = true
-      result       = App.Utils.htmlEscape(result)
       if attribute_config.type is 'tel'
-        result = "<a href=\"tel://#{result}\">#{result}</a>"
-      if attribute_config.type is 'url'
+        result = "<a href=\"#{App.Utils.phoneify(result)}\">#{App.Utils.htmlEscape(result)}</a>"
+      else if attribute_config.type is 'url'
         result = App.Utils.linkify(result)
+      else
+        result = App.Utils.htmlEscape(result)
+      isHtmlEscape = true
 
     # use pretty time for datetime
     else if attribute_config.tag is 'datetime'
