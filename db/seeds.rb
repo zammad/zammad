@@ -3845,9 +3845,15 @@ ObjectManager::Attribute.add(
     nulloption: true,
     multiple: false,
     null: false,
-    default: 2,
+    default: Ticket::State.find_by(name: 'open').id,
     translate: true,
-    filter: [1, 2, 3, 4, 7],
+    filter: [
+      Ticket::State.find_by(name: 'new').id,
+      Ticket::State.find_by(name: 'open').id,
+      Ticket::State.find_by(name: 'pending reminder').id,
+      Ticket::State.find_by(name: 'closed').id,
+      Ticket::State.find_by(name: 'pending close').id,
+    ],
   },
   editable: false,
   active: true,
@@ -3861,21 +3867,32 @@ ObjectManager::Attribute.add(
         item_class: 'column',
         nulloption: false,
         null: true,
-        filter: [1, 4],
-        default: 1,
+        filter: [
+          Ticket::State.find_by(name: 'new').id,
+          Ticket::State.find_by(name: 'closed').id
+        ],
+        default: Ticket::State.find_by(name: 'new').id,
       },
     },
     edit: {
       Agent: {
         nulloption: false,
         null: false,
-        filter: [2, 3, 4, 7],
+        filter: [
+          Ticket::State.find_by(name: 'open').id,
+          Ticket::State.find_by(name: 'pending reminder').id,
+          Ticket::State.find_by(name: 'closed').id,
+          Ticket::State.find_by(name: 'pending close').id,
+        ],
       },
       Customer: {
         nulloption: false,
         null: true,
-        filter: [2, 4],
-        default: 2,
+        filter: [
+          Ticket::State.find_by(name: 'open').id,
+          Ticket::State.find_by(name: 'closed').id
+        ],
+        default: Ticket::State.find_by(name: 'open').id,
       },
     },
   },
@@ -3897,10 +3914,16 @@ ObjectManager::Attribute.add(
     null: true,
     translate: true,
     required_if: {
-      state_id: [3, 7]
+      state_id: [
+        Ticket::State.find_by(name: 'pending reminder').id,
+        Ticket::State.find_by(name: 'pending close').id,
+      ]
     },
     shown_if: {
-      state_id: [3, 7]
+      state_id: [
+        Ticket::State.find_by(name: 'pending reminder').id,
+        Ticket::State.find_by(name: 'pending close').id,
+      ]
     },
   },
   editable: false,
@@ -3934,7 +3957,7 @@ ObjectManager::Attribute.add(
     nulloption: false,
     multiple: false,
     null: false,
-    default: 2,
+    default: Ticket::Priority.find_by(name: '2 normal').id,
     translate: true,
   },
   editable: false,
@@ -3996,7 +4019,7 @@ ObjectManager::Attribute.add(
     nulloption: false,
     multiple: false,
     null: false,
-    default: 9,
+    default: Ticket::Article::Type.lookup(name: 'note').id,
     translate: true,
   },
   editable: false,

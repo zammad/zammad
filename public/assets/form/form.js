@@ -162,6 +162,11 @@ $(function() {
       _this.loadCss(_this.css_location)
     }
 
+    $.each(_this.options.attributes, function(index, item) {
+      if (item.name == 'file[]') {
+        _this.options.attributes.splice(index, 1);
+      }
+    })
     if (_this.options.attachmentSupport === true || _this.options.attachmentSupport === 'true') {
       var attachment = {
         display: 'Attachments',
