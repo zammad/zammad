@@ -1,4 +1,4 @@
-class FixedTranslation < ActiveRecord::Migration
+class FixedTranslation2 < ActiveRecord::Migration
   def up
 
     # return if it's a new setup
