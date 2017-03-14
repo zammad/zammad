@@ -145,7 +145,10 @@ satinize html string based on whiltelist
 
       # check if href is different to text
       if external && node.name == 'a' && !url_same?(node['href'], node.text)
-        if node.children.empty? || node.children.first.class == Nokogiri::XML::Text
+        if node['href'].blank?
+          node.replace strict(node.children.to_s)
+          Loofah::Scrubber::STOP
+        elsif node.children.empty? || node.children.first.class == Nokogiri::XML::Text
           text = Nokogiri::XML::Text.new("#{node['href']} (", node.document)
           node.add_previous_sibling(text)
           node['href'] = cleanup_target(node.text)
@@ -257,7 +260,10 @@ cleanup html string:
 
       # check if href is different to text
       if node.name == 'a' && !url_same?(node['href'], node.text)
-        if node.children.empty? || node.children.first.class == Nokogiri::XML::Text
+        if node['href'].blank?
+          node.replace cleanup_structure(node.children.to_s)
+          Loofah::Scrubber::STOP
+        elsif node.children.empty? || node.children.first.class == Nokogiri::XML::Text
           text = Nokogiri::XML::Text.new("#{node.text} (", node.document)
           node.add_previous_sibling(text)
           node.content = cleanup_target(node['href'])
