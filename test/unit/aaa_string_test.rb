@@ -706,6 +706,10 @@ christian.schaefer@example.com'
     result = ''
     assert_equal(result, html.html2html_strict)
 
+    html   = '<div><s>abc</s></div>'
+    result = '<div><s>abc</s></div>'
+    assert_equal(result, html.html2html_strict)
+
     html   = '<br><br><div>abc</div>'
     result = '<div>abc</div>'
     assert_equal(result, html.html2html_strict)
