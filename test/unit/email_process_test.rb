@@ -1865,6 +1865,57 @@ AElFTkSuQmCC
       {
         data: 'From: Some Body <somebody@example.com>
 To: Bob <bod@example.com>
+Cc: any+1@example.com
+Subject: some subject 2
+Keywords:
+In-Reply-To: <20170307172822.1233.623846@example.zammad.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-originating-ip: [1.1.2.2]
+
+Some Text',
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            group: 'Users',
+            priority: '2 normal',
+            title: 'some subject 2',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Some',
+              lastname: 'Body',
+              email: 'somebody@example.com',
+            },
+            {
+              firstname: 'Bob',
+              lastname: '',
+              fullname: 'Bob',
+              email: 'bod@example.com',
+            },
+            {
+              firstname: '',
+              lastname: '',
+              email: 'any+1@example.com',
+              fullname: 'any+1@example.com',
+            },
+          ],
+        }
+      },
+      {
+        data: 'From: Some Body <somebody@example.com>
+To: Bob <bod@example.com>
 Cc: any@example.com
 Subject: some subject
 

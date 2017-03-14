@@ -75,8 +75,13 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.select(&:name).each { |field|
+
       # full line, encode, ready for storage
-      data[field.name.to_s.downcase.to_sym] = Encode.conv('utf8', field.to_s)
+      begin
+        data[field.name.to_s.downcase.to_sym] = Encode.conv('utf8', field.to_s)
+      rescue => e
+        data[field.name.to_s.downcase.to_sym] = e.message
+      end
 
       # if we need to access the lines by objects later again
       data["raw-#{field.name.downcase}".to_sym] = field
