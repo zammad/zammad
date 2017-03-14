@@ -356,6 +356,11 @@ class Channel::EmailParser
     headers_store.delete('Content-Transfer-Encoding')
     headers_store.delete('Content-Disposition')
 
+    # cleanup content id, <> will be added automatically later
+    if headers_store['Content-ID']
+      headers_store['Content-ID'].gsub!(/^</, '').gsub!(/>$/, '')
+    end
+
     attach = {
       data: file.body.to_s,
       filename: filename,

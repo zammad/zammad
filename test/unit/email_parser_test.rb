@@ -302,6 +302,7 @@ Registergericht / Commercial Register of the Local Court: HRB 0000 AG Hof',
           {
             md5: 'ddbdf67aa2f5c60c294008a54d57082b',
             filename: 'super-seven.jpg',
+            cid: '485376C9-2486-4351-B932-E2010998F579@home',
           },
         ],
         params: {
@@ -328,6 +329,7 @@ Registergericht / Commercial Register of the Local Court: HRB 0000 AG Hof',
           {
             md5: 'a618d671348735744d4c9a4005b56799',
             filename: 'image001.jpg',
+            cid: 'image001.jpg@01CDB132.D8A510F0',
           },
         ],
         params: {
@@ -862,6 +864,7 @@ end
           {
             md5: 'de909e05b3dd8b8ea50e8db422d0971e',
             filename: 'HKT_Super_Seven_GTS.jpeg',
+            cid: '2ECB31C9-0E1D-4EBF-BD02-8D8B24208A3E@openvpn',
           },
           {
             md5: '72c2f9aecd24606b6490ff06ea9361ec',
@@ -1038,6 +1041,9 @@ end
             if attachment[:md5] == file_md5
               found = true
               assert_equal(attachment[:filename], attachment_parser[:filename])
+              if attachment[:cid]
+                assert_equal(attachment[:cid], attachment_parser[:preferences]['Content-ID'])
+              end
             end
           }
           if !found
