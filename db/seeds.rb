@@ -3853,7 +3853,6 @@ ObjectManager::Attribute.add(
       Ticket::State.find_by(name: 'pending reminder').id,
       Ticket::State.find_by(name: 'closed').id,
       Ticket::State.find_by(name: 'pending close').id,
-      Ticket::State.find_by(name: 'customer feedback').id,
     ],
   },
   editable: false,
@@ -3884,7 +3883,6 @@ ObjectManager::Attribute.add(
           Ticket::State.find_by(name: 'pending reminder').id,
           Ticket::State.find_by(name: 'closed').id,
           Ticket::State.find_by(name: 'pending close').id,
-          Ticket::State.find_by(name: 'customer feedback').id,
         ],
       },
       Customer: {
