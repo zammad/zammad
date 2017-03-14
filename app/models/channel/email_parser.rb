@@ -30,9 +30,9 @@ class Channel::EmailParser
         data:        'binary of attachment',
         filename:    'file_name_of_attachment.txt',
         preferences: {
-          content-alternative: true,
-          Mime-Type:           'text/plain',
-          Charset:             'iso-8859-1',
+          'content-alternative' => true,
+          'Mime-Type'           => 'text/plain',
+          'Charset:             => 'iso-8859-1',
         },
       },
     ],
@@ -75,8 +75,13 @@ class Channel::EmailParser
 
     # set all headers
     mail.header.fields.select(&:name).each { |field|
+
       # full line, encode, ready for storage
-      data[field.name.to_s.downcase.to_sym] = Encode.conv('utf8', field.to_s)
+      begin
+        data[field.name.to_s.downcase.to_sym] = Encode.conv('utf8', field.to_s)
+      rescue => e
+        data[field.name.to_s.downcase.to_sym] = e.message
+      end
 
       # if we need to access the lines by objects later again
       data["raw-#{field.name.downcase}".to_sym] = field
@@ -355,6 +360,11 @@ class Channel::EmailParser
     # remove not needed header
     headers_store.delete('Content-Transfer-Encoding')
     headers_store.delete('Content-Disposition')
+
+    # cleanup content id, <> will be added automatically later
+    if headers_store['Content-ID']
+      headers_store['Content-ID'].gsub!(/^</, '').gsub!(/>$/, '')
+    end
 
     attach = {
       data: file.body.to_s,

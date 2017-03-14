@@ -59,7 +59,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     data = parser.parse(mail.to_s)
 
     # check body
-    should = '&gt; Welcome!<br>&gt;<br>&gt; Thank you for installing Zammad. äöüß<br>&gt;'
+    should = '<div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad. äöüß</div><div>&gt;</div>'
     assert_equal(should, data[:body])
     assert_equal('text/html', data[:content_type])
 

@@ -75,7 +75,7 @@ example
       end
     end
 
-    Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
+    Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},folder=#{options[:folder]})"
 
     # on check, reduce open_timeout to have faster probing
     timeout = 45
@@ -173,20 +173,14 @@ example
       message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'FLAGS', 'INTERNALDATE'])[0]
 
       # ignore to big messages
-      max_message_size = Setting.get('postmaster_max_size').to_f
-      real_message_size = message_meta.attr['RFC822.SIZE'].to_f / 1024 / 1024
-      if real_message_size > max_message_size
-        info = "  - ignore message #{count}/#{count_all} - because message is too big (is:#{real_message_size} MB/max:#{max_message_size} MB)"
-        Rails.logger.info info
+      info = too_big?(message_meta, count, count_all)
+      if info
         notice += "#{info}\n"
         next
       end
 
       # ignore deleted messages
-      if message_meta.attr['FLAGS'].include?(:Deleted)
-        Rails.logger.info "  - ignore message #{count}/#{count_all} - because message has already delete flag"
-        next
-      end
+      next if deleted?(message_meta, count, count_all)
 
       # delete email from server after article was created
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
@@ -212,4 +206,24 @@ example
     return if !@imap
     @imap.disconnect()
   end
+
+  private
+
+  def deleted?(message_meta, count, count_all)
+    return false if !message_meta.attr['FLAGS'].include?(:Deleted)
+    Rails.logger.info "  - ignore message #{count}/#{count_all} - because message has already delete flag"
+    true
+  end
+
+  def too_big?(message_meta, count, count_all)
+    max_message_size = Setting.get('postmaster_max_size').to_f
+    real_message_size = message_meta.attr['RFC822.SIZE'].to_f / 1024 / 1024
+    if real_message_size > max_message_size
+      info = "  - ignore message #{count}/#{count_all} - because message is too big (is:#{real_message_size} MB/max:#{max_message_size} MB)"
+      Rails.logger.info info
+      return info
+    end
+    false
+  end
+
 end

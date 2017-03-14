@@ -39,24 +39,7 @@ returns
       data[ app_model_article ] = {}
     end
     if !data[ app_model_article ][ id ]
-      data[ app_model_article ][ id ] = attributes
-
-      # add attachment list to article
-      data[ app_model_article ][ id ]['attachments'] = attachments
-
-      if !data[ app_model_article ][ id ]['attachments'].empty?
-        if data[ app_model_article ][ id ]['content_type'] =~ %r{text/html}i
-          if data[ app_model_article ][ id ]['body'] =~ /<img/i
-
-            # insert inline images with urls
-            attributes = Ticket::Article.insert_urls(
-              data[ app_model_article ][ id ],
-              data[ app_model_article ][ id ]['attachments']
-            )
-            data[ app_model_article ][ id ] = attributes
-          end
-        end
-      end
+      data[ app_model_article ][ id ] = attributes_with_association_ids
     end
 
     %w(created_by_id updated_by_id).each { |local_user_id|

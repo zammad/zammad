@@ -106,9 +106,13 @@ move files from db backend to fs
 
   Store::File.move('DB', 'File')
 
+nice move to keep system responsive
+
+  Store::File.move('DB', 'File', delay_in_sec) # e. g. 1
+
 =end
 
-    def self.move(source, target)
+    def self.move(source, target, delay = nil)
       adapter_source = load_adapter("Store::Provider::#{source}")
       adapter_target = load_adapter("Store::Provider::#{target}")
 
@@ -126,6 +130,8 @@ move files from db backend to fs
         adapter_source.delete(item.sha)
 
         logger.info "Moved file #{item.sha} from #{source} to #{target}"
+
+        sleep delay if delay
       }
       true
     end

@@ -245,7 +245,7 @@ Setting.create_if_not_exists(
   title: 'HTTP type',
   name: 'http_type',
   area: 'System::Base',
-  description: 'Defines the type of protocol used by the web server to serve the application. If https protocol will be used instead of plain http, it must be specified in here. Since this has no effect on the web server\'s settings or behavior, it will not change the method of access to the application and, if it is wrong, it will not prevent you from logging into the application. This setting is used as a variable, #{setting.http_type} which is found in all forms of messaging used by the application, to build links to the tickets within your system.',
+  description: 'Define the http protocol of your instance.',
   options: {
     form: [
       {

@@ -4,6 +4,11 @@ Rails.application.config.html_sanitizer_tags_remove_content = %w(
   style
 )
 
+# content of this tags will will be inserted html quoted
+Rails.application.config.html_sanitizer_tags_quote_content = %w(
+  script
+)
+
 # only this tags are allowed
 Rails.application.config.html_sanitizer_tags_whitelist = %w(
   a abbr acronym address area article aside audio
@@ -19,16 +24,16 @@ Rails.application.config.html_sanitizer_tags_whitelist = %w(
 
 # attributes allowed for tags
 Rails.application.config.html_sanitizer_attributes_whitelist = {
-  :all         => %w(class dir lang style title translate data-signature data-signature-id),
+  :all         => %w(class dir lang title translate data-signature data-signature-id),
   'a'          => %w(href hreflang name rel),
   'abbr'       => %w(title),
-  'blockquote' => %w(cite),
+  'blockquote' => %w(type cite),
   'col'        => %w(span width),
   'colgroup'   => %w(span width),
   'data'       => %w(value),
   'del'        => %w(cite datetime),
   'dfn'        => %w(title),
-  'img'        => %w(align alt border height src srcset width),
+  'img'        => %w(align alt border height src srcset width style),
   'ins'        => %w(cite datetime),
   'li'         => %w(value),
   'ol'         => %w(reversed start type),

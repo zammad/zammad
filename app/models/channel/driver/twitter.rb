@@ -202,6 +202,9 @@ returns
 
     @stream_client.client.user(filter) do |tweet|
       next if tweet.class != Twitter::Tweet && tweet.class != Twitter::DirectMessage
+
+      # wait until own posts are stored in local database to prevent importing own tweets
+      sleep 4
       next if Ticket::Article.find_by(message_id: tweet.id)
 
       # check direct message

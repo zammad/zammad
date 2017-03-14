@@ -7,14 +7,41 @@ class EmailParserTest < ActiveSupport::TestCase
     files = [
       {
         data: IO.binread('test/fixtures/mail1.box'),
-        body_md5: '91abe9128a5dcba13f44c01015e229c4',
+        body_md5: '198ebda4c6f6c1ef71c1cb36ae7803bb',
         params: {
           from: 'John.Smith@example.com',
           from_email: 'John.Smith@example.com',
           from_display_name: '',
           subject: 'CI Daten für PublicView ',
           content_type: 'text/html',
-          body: "Hallo Martin,<br><br>wie besprochen hier noch die Daten für die Intranetseite:<br><br>Schriftart/-größe: Verdana 11 Pt wenn von Browser nicht unterstützt oder nicht vorhanden wird Arial 11 Pt genommen<br>Schriftfarbe: Schwarz<br>Farbe für die Balken in der Grafik: D7DDE9 (Blau)<br><br>Wenn noch was fehlt oder du was brauchst sag mir Bescheid.<br><br>Mit freundlichem Gruß<br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.<br>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472<br>john.smith@example.com<br><a href=\"http://www.example.com\" target=\"_blank\">www.example.com</a><br><br>OHG mit Sitz in Someware<br>AG: Someware - HRA 4158<br>Geschäftsführung: Tilman Test, Klaus Jürgen Test,<br>Bernhard Test, Ulrich Test<br>USt-IdNr. DE 1010101010<br><br>Persönlich haftende geschäftsführende Gesellschafterin:<br>Marie Test Example Stiftung, Someware<br>Vorstand: Rolf Test<br><br>Persönlich haftende Gesellschafterin:<br>Example Service AG, Someware<br>AG: Someware - HRB xxx<br>Vorstand: Marie Test",
+          body: '<div>
+<div>Hallo Martin,</div>
+<div> </div>
+<div>wie besprochen hier noch die Daten für die Intranetseite:</div>
+<div> </div>
+<div>Schriftart/-größe: Verdana 11 Pt wenn von Browser nicht unterstützt oder nicht vorhanden wird Arial 11 Pt genommen</div>
+<div>Schriftfarbe: Schwarz</div>
+<div>Farbe für die Balken in der Grafik: D7DDE9 (Blau)</div>
+<div> </div>
+<div>Wenn noch was fehlt oder du was brauchst sag mir Bescheid.</div>
+<div> </div>
+<div>Mit freundlichem Gruß<br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.</div>
+<div>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br>
+</div>
+<div>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472 </div>
+<div>
+john.smith@example.com
+</div>
+<div>
+<a href="http://www.example.com" rel="nofollow" target="_blank">www.example.com</a>
+</div>
+<div>
+<br>OHG mit Sitz in Someware<br>AG: Someware - HRA 4158<br>Geschäftsführung: Tilman Test, Klaus Jürgen Test, </div>
+<div>Bernhard Test, Ulrich Test<br>USt-IdNr. DE 1010101010<br><br>Persönlich haftende geschäftsführende Gesellschafterin: </div>
+<div>Marie Test Example Stiftung, Someware<br>Vorstand: Rolf Test<br><br>Persönlich haftende Gesellschafterin: </div>
+<div>Example Service AG, Someware<br>AG: Someware - HRB xxx<br>Vorstand: Marie Test </div>
+<div> </div>
+</div>',
         },
       },
       {
@@ -38,14 +65,79 @@ Old programmers never die. They just branch to a new address.
       },
       {
         data: IO.binread('test/fixtures/mail3.box'),
-        body_md5: 'aedee83503c0e276fa22cd87d910ad9a',
+        body_md5: '56d5b0bc7444bd2ab38b28d3b07b48a7',
         params: {
           from: '"Günther John | Example GmbH" <k.guenther@example.com>',
           from_email: 'k.guenther@example.com',
           from_display_name: 'Günther John | Example GmbH',
           subject: 'Ticket Templates',
           content_type: 'text/html',
-          body: "Hallo Martin,<br><br>ich möchte mich gern für den Beta-Test für die Ticket Templates unter XXXX 2.4 anmelden.<br><br>Mit freundlichen Grüßen<br>John Günther<br><br>example.com (<a href=\"http://www.GeoFachDatenServer.de\" target=\"_blank\">http://www.GeoFachDatenServer.de</a>) – profitieren Sie vom umfangreichen Daten-Netzwerk<br><br>_ __ ___ ____________________________ ___ __ _<br><br>Example GmbH<br>Some What<br><br>Sitz: Someware-Straße 9, XXXXX Someware<br><br>M: +49 (0)  XXX XX XX 70<br>T: +49 (0) XXX XX XX 22<br>F: +49 (0) XXX XX XX 11<br>W: <a href=\"http://www.brain-scc.de\" target=\"_blank\">http://www.brain-scc.de</a><br><br>Geschäftsführer: John Smith<br>HRB XXXXXX AG Someware<br>St.-Nr.: 112/107/05858<br><br>ISO 9001:2008 Zertifiziert -Qualitätsstandard mit Zukunft<br>_ __ ___ ____________________________ ___ __ _<br><br>Diese Information ist ausschließlich für den Adressaten bestimmt und kann vertrauliche oder gesetzlich geschützte Informationen enthalten. Wenn Sie nicht der bestimmungsgemäße Adressat sind, unterrichten Sie bitte den Absender und vernichten Sie diese Mail. Anderen als dem bestimmungsgemäßen Adressaten ist es untersagt, diese E-Mail zu lesen, zu speichern, weiterzuleiten oder ihren Inhalt auf welche Weise auch immer zu verwenden.<br><span class=\"js-signatureMarker\"></span><br><b>Von:</b> Fritz Bauer [mailto:me@example.com]<br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI&#39;s<br><br>Hallo,<br><br>ich versuche an den Punkten anzuknüpfen.<br><br><b>a) LDAP Muster Konfigdatei</b><br><br><a href=\"https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap\" target=\"_blank\">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a><br><br>PS: Es gibt noch eine Reihe weiterer Möglichkeiten, vor allem im Bezug auf Agenten-Rechte/LDAP Gruppen Synchronisation. Wenn Ihr hier weitere Informationen benötigt, einfach im Wiki die Aufgabenbeschreibung rein machen und ich kann eine Beispiel-Config dazu legen.<br><br><b>b) Ticket Templates</b><br><br>Wir haben das Paket vom alten Maintainer übernommen, es läuft nun auf XXXX 2.4, XXXX 3.0 und XXXX 3.1. Wir haben das Paket um weitere Funktionen ergänzt und würden es gerne hier in diesen Kreis zum Beta-Test bereit stellen.<br><br>Vorgehen:<br><br>Wer Interesse hat, bitte eine Email an mich und ich versende Zugänge zu den Beta-Test-Systemen. Nach ca. 2 Wochen werden wir die Erweiterungen in der Version 1.0 veröffentlichen.<br><br><b>c) XXXX Entwickler Schulung</b><br><br>Weil es immer wieder Thema war, falls jemand Interesse hat, das XXXX bietet nun auch OTRS Entwickler Schulungen an (<a href=\"http://www.example.com/kurs/xxxx_entwickler/\" target=\"_blank\">http://www.example.com/kurs/xxxx_entwickler/</a>).<br><br><b>d) Genelle Fragen?</b><br><br>Haben sich beim ein oder anderen generell noch Fragen aufgetan?<br><br>Viele Grüße!<br><br>-Fritz<br><br>On May 2, 2012, at 14:25 , John Smith wrote:<br><br>Moin Moin,<br><br>die Antwort ist zwar etwas spät, aber nach der Schulung war ich krank und danach<br>hatte ich viel zu tun auf der Arbeit, sodass ich keine Zeit für XXXX hatte.<br>Ich denke das ist allgemein das Problem, wenn sowas nebenbei gemacht werden muss.<br><br>Wie auch immer, danke für die mail mit dem ITSM Zusatz auch wenn das zur Zeit bei der Example nicht relevant ist.<br><br>Ich habe im XXXX Wiki den Punkt um die Vorlagen angefügt.<br>Ticket Template von John Bäcker<br>Bei uns habe ich das Ticket Template von John Bäcker in der Version 0.1.96 unter XXXX 3.0.10 implementiert.<br><br>Fritz wollte sich auch um das andere Ticket Template Modul kümmern und uns zur Verfügung stellen, welches unter XXXX 3.0 nicht lauffähig sein sollte.<br><br>Im Wiki kann ich die LDAP Muster Konfigdatei nicht finden.<br>Hat die jemand von euch zufälligerweise ?<br><br>Danke und Gruß<br>John Smith<br><br>Am 4. April 2012 08:24 schrieb Smith, John Marian &lt;john.hinz@example.com&gt;:<br>Hallo zusammen,<br><br>ich hoffe Ihr seid noch gut nach Hause gekommen am Mittwoch. Der XXX Kurs Donnerstag und Freitag war noch ganz gut, wobei ich mir den letzten halben Tag eigentlich hätte schenken können.<br><br>Soweit ich weiß arbeitet Ihr nicht mit XXX? Falls doch habe ich hier eine tolle (eigentlich) kostenpflichtige Erweiterung für Euch.<br><br>Es handelt sich um eine programmiertes Paket von der XXXX AG. Die Weitergabe ist legal.<br><br>Mit dem Paket kann man Anhänge an CI’s (Configuration Items) verknüpfen. Das ist sehr praktisch wenn man zum Beispiel Rechnungen an Server, Computern und und und anhängen möchte.<br><br>Der Dank geht an Frank Linden, der uns das Paket kostenlos zur Verfügung gestellt hat.<br><br>Viele Grüße aus Someware<br><br>John<br><br>_________________________<br>SysAdmin<br>John Marian Smith<br>IT-Management<br><br>Example GmbH &amp; Co. KG<br>Der Provider für<br>Mehrwertdienste &amp; YYY<br><br>Someware 23<br>XXXXX Someware<br><br>Tel. (01802) XX XX XX - 42<br>Fax (01802) XX XX XX - 99<br>nur 6 Cent je Anruf aus dem dt. Festnetz,<br>max. 42 Cent pro Min. aus dem Mobilfunknetz<br><br>E-Mail john.smith@Example.de<br>Web <a href=\"http://www.Example.de\" target=\"_blank\">www.Example.de</a><br>Amtsgericht Hannover HRA xxxxxxxx<br>Komplementärin: Example Verwaltungs- GmbH<br>Vertreten durch: Somebody, Somebody<br>Amtsgericht Someware HRB XXX XXX<br><br>_________________________<br>Highlights der Example Contact Center-Suite:<br>Virtual XXX&amp;Power-XXX, Self-Services&amp;XXX-Portale,<br>XXX-/Web-Kundenbefragungen, CRM, PEP, YYY",
+          body: '<div>
+<p>Hallo Martin,</p>
+<p>&nbsp;</p>
+<p>ich möchte mich gern für den Beta-Test für die Ticket Templates unter XXXX 2.4 anmelden.</p>
+<p>&nbsp;</p>
+<div>
+<p>&nbsp;</p>
+<p>Mit freundlichen Grüßen</p>
+<p>John Günther</p>
+<p>&nbsp;</p>
+<p>example.com (<a href="http://www.geofachdatenserver.de" rel="nofollow" target="_blank">http://www.geofachdatenserver.de</a>) – profitieren Sie vom umfangreichen Daten-Netzwerk </p>
+<p>&nbsp;</p>
+<p>_ __ ___ ____________________________ ___ __ _</p>
+<p>&nbsp;</p>
+<p>Example GmbH</p>
+<p>Some What</p>
+<p>&nbsp;</p>
+<p>Sitz: Someware-Straße 9, XXXXX Someware</p>
+<p>&nbsp;</p>
+<p>M: +49 (0) XXX XX XX 70</p>
+<p>T: +49 (0) XXX XX XX 22</p>
+<p>F: +49 (0) XXX XX XX 11</p>
+<p>W: <a href="http://www.example.de" rel="nofollow" target="_blank">http://www.example.de</a></p>
+<p>&nbsp;</p>
+<p>Geschäftsführer: John Smith</p>
+<p>HRB XXXXXX AG Someware</p>
+<p>St.-Nr.: 112/107/05858</p>
+<p>&nbsp;</p>
+<p>ISO 9001:2008 Zertifiziert -Qualitätsstandard mit Zukunft</p>
+<p>_ __ ___ ____________________________ ___ __ _</p>
+<p>&nbsp;</p>
+<p>Diese Information ist ausschließlich für den Adressaten bestimmt und kann vertrauliche oder gesetzlich geschützte Informationen enthalten. Wenn Sie nicht der bestimmungsgemäße Adressat sind, unterrichten Sie bitte den Absender und vernichten Sie diese Mail. Anderen als dem bestimmungsgemäßen Adressaten ist es untersagt, diese E-Mail zu lesen, zu speichern, weiterzuleiten oder ihren Inhalt auf welche Weise auch immer zu verwenden.</p>
+</div>
+<p>&nbsp;</p>
+<span class="js-signatureMarker"></span><p><b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI\'s</p>
+<p>&nbsp;</p>
+<p>Hallo,</p>
+<p>&nbsp;</p>
+<p>ich versuche an den Punkten anzuknüpfen.</p>
+<p>&nbsp;</p>
+<p><b>a) LDAP Muster Konfigdatei</b></p>
+<p>&nbsp;</p>
+<p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap" rel="nofollow" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a></p>
+<p>&nbsp;</p>
+<p>PS: Es gibt noch eine Reihe weiterer Möglichkeiten, vor allem im Bezug auf Agenten-Rechte/LDAP Gruppen Synchronisation. Wenn Ihr hier weitere Informationen benötigt, einfach im Wiki die Aufgabenbeschreibung rein machen und ich kann eine Beispiel-Config dazu legen.</p>
+<p>&nbsp;</p>
+<p><b>b) Ticket Templates</b></p>
+<p>Wir haben das Paket vom alten Maintainer übernommen, es läuft nun auf XXXX 2.4, XXXX 3.0 und XXXX 3.1. Wir haben das Paket um weitere Funktionen ergänzt und würden es gerne hier in diesen Kreis zum Beta-Test bereit stellen.</p>
+<p>&nbsp;</p>
+<p>Vorgehen:</p>
+<p>Wer Interesse hat, bitte eine Email an mich und ich versende Zugänge zu den Beta-Test-Systemen. Nach ca. 2 Wochen werden wir die Erweiterungen in der Version 1.0 veröffentlichen.</p>
+<p>&nbsp;</p>
+<p><b>c) XXXX Entwickler Schulung</b></p>
+<p>Weil es immer wieder Thema war, falls jemand Interesse hat, das XXXX bietet nun auch OTRS Entwickler Schulungen an (<a href="http://www.example.com/kurs/xxxx_entwickler/" rel="nofollow" target="_blank">http://www.example.com/kurs/xxxx_entwickler/</a>).</p>
+<p>&nbsp;</p>
+<p><b>d) Genelle Fragen?</b></p>
+<p>Haben sich beim ein oder anderen generell noch Fragen aufgetan?</p>
+<p>&nbsp;</p>
+<p>Viele Grüße!</p>
+<p>&nbsp;</p>
+<div>
+<p>-Fritz</p>
+<p>On May 2, 2012, at 14:25 , John Smith wrote:<br><br></p>
+<p>Moin Moin,<br><br>die Antwort ist zwar etwas spät, aber nach der Schulung war ich krank und danach<br>hatte ich viel zu tun auf der Arbeit, sodass ich keine Zeit für XXXX hatte.<br>Ich denke das ist allgemein das Problem, wenn sowas nebenbei gemacht werden muss.<br><br>Wie auch immer, danke für die mail mit dem ITSM Zusatz auch wenn das zur Zeit bei der Example nicht relevant ist.<br><br>Ich habe im XXXX Wiki den Punkt um die Vorlagen angefügt.<br>Ticket Template von John Bäcker<br>Bei uns habe ich das Ticket Template von John Bäcker in der Version 0.1.96 unter XXXX 3.0.10 implementiert. <br><br>Fritz wollte sich auch um das andere Ticket Template Modul kümmern und uns zur Verfügung stellen, welches unter XXXX 3.0 nicht lauffähig sein sollte.<br><br>Im Wiki kann ich die LDAP Muster Konfigdatei nicht finden.<br>Hat die jemand von euch zufälligerweise ?<br><br>Danke und Gruß<br>John Smith<br><br>Am 4. April 2012 08:24 schrieb Smith, John Marian &lt;john.smith@example.com&gt;:<br>Hallo zusammen,<br><br>ich hoffe Ihr seid noch gut nach Hause gekommen am Mittwoch. Der XXX Kurs Donnerstag und Freitag war noch ganz gut, wobei ich mir den letzten halben Tag eigentlich hätte schenken können.<br><br>Soweit ich weiß arbeitet Ihr nicht mit XXX? Falls doch habe ich hier eine tolle (eigentlich) kostenpflichtige Erweiterung für Euch.<br><br>Es handelt sich um eine programmiertes Paket von der XXXX AG. Die Weitergabe ist legal.<br><br>Mit dem Paket kann man Anhänge an CI’s (Configuration Items) verknüpfen. Das ist sehr praktisch wenn man zum Beispiel Rechnungen an Server, Computern und und und anhängen möchte.<br><br>Der Dank geht an Frank Linden, der uns das Paket kostenlos zur Verfügung gestellt hat.<br><br>Viele Grüße aus Someware<br><br>John<br><br>_________________________<br>SysAdmin<br>John Marian Smith<br>IT-Management<br><br>Example GmbH &amp; Co. KG<br>Der Provider für<br>Mehrwertdienste &amp; YYY<br><br>Someware 23<br>XXXXX Someware<br><br>Tel. (01802) XX XX XX - 42<br>Fax (01802) XX XX XX - 99<br>nur 6 Cent je Anruf aus dem dt. Festnetz,<br>max. 42 Cent pro Min. aus dem Mobilfunknetz<br><br>E-Mail john.smith@example.de<br>Web <a href="http://www.example.de" rel="nofollow" target="_blank">www.Example.de</a><br>Amtsgericht Hannover HRA xxxxxxxx<br>Komplementärin: Example Verwaltungs- GmbH<br>Vertreten durch: Somebody, Somebody<br>Amtsgericht Someware HRB XXX XXX<br><br>_________________________ <br>Highlights der Example Contact Center-Suite:<br>Virtual XXX&amp;Power-XXX, Self-Services&amp;XXX-Portale,<br>XXX-/Web-Kundenbefragungen, CRM, PEP, YYY</p>
+</div>
+</div>',
         },
       },
       {
@@ -93,31 +185,66 @@ Liebe Grüße!
       },
       {
         data: IO.binread('test/fixtures/mail6.box'),
-        body_md5: 'a9416d1457835b10b03abcddbbb7a662',
+        body_md5: '0d34402258cb5de631159b0e2bc5346c',
         params: {
           from: '"Hans BÄKOSchönland" <me@bogen.net>',
           from_email: 'me@bogen.net',
           from_display_name: 'Hans BÄKOSchönland',
           subject: 'utf8: 使って / ISO-8859-1: Priorität"  / cp-1251: Сергей Углицких',
           content_type: 'text/html',
-          body: "this is a test<br><br><hr> Compare Cable, DSL or Satellite plans: As low as $2.95. (<a href=\"http://localhost/8HMZENUS/2737??PS=\" target=\"_blank\">http://localhost/8HMZENUS/2737??PS=</a>)<br><br>Test1:–<br>Test2:&amp;<br>Test3:∋<br>Test4:&amp;<br>Test5:="
+          body: '<p>this is a test</p><br><hr> Compare Cable, DSL or Satellite plans: As low as $2.95.  (<a href="http://localhost/8hmzenus/2737??ps=" rel="nofollow" target="_blank">http://localhost/8hmzenus/2737??ps=</a>) <br> <br> Test1:– <br> Test2:&amp; <br> Test3:∋ <br> Test4:&amp; <br> Test5:=',
         },
       },
       {
         data: IO.binread('test/fixtures/mail7.box'),
-        body_md5: 'c4ae9fbf716eb22e5b0b06cac8b64d7c',
+        body_md5: '74cccd6144737f4cc895788d8cd0870e',
         params: {
           from: 'Eike.Ehringer@example.com',
           from_email: 'Eike.Ehringer@example.com',
           from_display_name: '',
           subject: 'AW:Installation [Ticket#11392]',
           content_type: 'text/html',
-          body: "Hallo.<br>Jetzt muss ich dir noch kurzfristig absagen für morgen.<br>Lass uns evtl morgen Tel.<br><br>Mfg eike<br><br>Martin Edenhofer via Znuny Team --- Installation [Ticket#11392] ---<br><br><span class=\"js-signatureMarker\"></span>Von: &quot;Martin Edenhofer via Znuny Team&quot; &lt;support@example.com&gt;<br>An eike.xx@xx-corpxx.com<br>Datum: Mi., 13.06.2012 14:30<br>Betreff Installation [Ticket#11392] <hr><br><br>Hi Eike,<br>anbei wie gestern telefonisch besprochen Informationen zur Vorbereitung.<br>a) Installation von <a href=\"http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm\" target=\"_blank\">http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm</a> (dieses RPM ist RHEL kompatible) und dessen Abhängigkeiten.<br>b) Installation von &quot;mysqld&quot; und &quot;perl-DBD-MySQL&quot;.<br>Das wäre es zur Vorbereitung!<br>Bei Fragen nur zu!<br>-Martin<br>--<br>Martin Edenhofer<br>Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany<br>P: +49 (0) 30 60 98 54 18-0<br>F: +49 (0) 30 60 98 54 18-8<br>W: <a href=\"http://example.com\" target=\"_blank\">http://example.com</a><br>Location: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg<br>Managing Director: Martin Edenhofer",
+          body: 'Hallo.<br>Jetzt muss ich dir noch kurzfristig absagen für morgen.<br>Lass uns evtl morgen Tel.<br><br>Mfg eike <br><br><div>
+<div>Martin Edenhofer via Znuny Team --- Installation [Ticket#11392] --- </div>
+<span class="js-signatureMarker"></span><div><br>
+Von: "Martin Edenhofer via Znuny Team" &lt;support@example.com&gt; <br>
+An eike.xx@xx-corpxx.com <br>
+Datum: Mi., 13.06.2012 14:30 <br>
+Betreff Installation [Ticket#11392] <br> <hr>
+<br><pre>Hi Eike,
+
+anbei wie gestern telefonisch besprochen Informationen zur Vorbereitung.
+
+a) Installation von <a href="http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm" rel="nofollow" target="_blank">http://ftp.gwdg.de/pub/misc/zammad/RPMS/fedora/4/zammad-3.0.13-01.noarch.rpm</a> (dieses RPM ist RHEL kompatible) und dessen Abhängigkeiten.
+
+b) Installation von "mysqld" und "perl-DBD-MySQL".
+
+Das wäre es zur Vorbereitung!
+
+Bei Fragen nur zu!
+
+ -Martin
+
+--
+Martin Edenhofer
+
+Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany
+
+P: +49 (0) 30 60 98 54 18-0
+F: +49 (0) 30 60 98 54 18-8
+W: <a href="http://example.com" rel="nofollow" target="_blank">http://example.com</a> 
+
+Location: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg
+Managing Director: Martin Edenhofer
+
+</pre>
+</div>
+</div>',
         },
       },
       {
         data: IO.binread('test/fixtures/mail8.box'),
-        body_md5: '28b76ef044d8db3b3ef196011314101b',
+        body_md5: '630aa1cc84fcaee8a0f232908c454c5f',
         attachments: [
           {
             md5: 'c3ca4aab222eed8a148a716371b70129',
@@ -130,12 +257,43 @@ Liebe Grüße!
           from_display_name: '',
           subject: 'could not rename: ZZZAAuto',
           content_type: 'text/html',
-          body: 'Gravierend?<br><br>Mit freundlichen Grüßen<br><br><b>Franz Schäfer</b><br>Manager Information Systems<br><br>Telefon  +49 000 000 8565<br>christian.schaefer@example.com<br><br><b>Example Stoff GmbH</b><br>Fakultaet<br>Düsseldorfer Landstraße395<br>D-00000 Hof<br><u>www.example.com</u><br><br><hr><br>Geschäftsführung/Management Board: Jan Bauer (Vorsitzender/Chairman), Oliver Bauer, Heiko Bauer,Boudewijn Bauer<br>Sitz der Gesellschaft / Registered Office: Hof<br>Registergericht/ Commercial Register of the Local Court: HRB 0000 AG Hof',
+          body: '<img src="cid:_1_08FC9B5808FC7D5C004AD64FC1257A28">
+<br>
+<br>Gravierend?<br>
+
+<br>
+Mit freundlichen Grüßen <br>
+<br>
+<b>Franz Schäfer</b>
+<br>
+Manager Information Systems <br>
+<br>
+Telefon 
++49 000 000 8565
+<br>
+christian.schaefer@example.com <br>
+<br>
+<b>Example Stoff GmbH</b>
+<br>
+Fakultaet
+<br>
+Düsseldorfer Landstraße 395
+<br>
+D-00000 Hof
+<br>
+<a href="www.example.com"><u><a href="http://www.example.com" rel="nofollow" target="_blank">http://www.example.com</a></u></a> <br>
+<br> <hr>
+<br>
+Geschäftsführung/Management Board: Jan Bauer (Vorsitzender/Chairman), Oliver Bauer, Heiko Bauer, Boudewijn Bauer
+<br>
+Sitz der Gesellschaft / Registered Office: Hof
+<br>
+Registergericht / Commercial Register of the Local Court: HRB 0000 AG Hof',
         },
       },
       {
         data: IO.binread('test/fixtures/mail9.box'),
-        body_md5: '652ed115a40e4abb8232cf1817e89486',
+        body_md5: '8a028710b157c68ace0a5b2264c44da7',
         attachments: [
           {
             md5: '9964263c167ab47f8ec59c48e57cb905',
@@ -144,6 +302,7 @@ Liebe Grüße!
           {
             md5: 'ddbdf67aa2f5c60c294008a54d57082b',
             filename: 'super-seven.jpg',
+            cid: '485376C9-2486-4351-B932-E2010998F579@home',
           },
         ],
         params: {
@@ -152,12 +311,16 @@ Liebe Grüße!
           from_display_name: 'Martin Edenhofer',
           subject: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
           content_type: 'text/html',
-          body: 'Enjoy!<br><br>-Martin<br><br>--<br>Old programmers never die. They just branch to a new address.'
+          body: 'Enjoy!<div>
+<br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old programmers never die. They just branch to a new address.<br>
+</div>
+<br><div><img src="cid:485376C9-2486-4351-B932-E2010998F579@home" style="width:640px;height:425px;"></div>
+</div>'
         },
       },
       {
         data: IO.binread('test/fixtures/mail10.box'),
-        body_md5: '68469244f1a9f3c3fddd46c19efcef7b',
+        body_md5: '3774c850f4e4064b86f66163a3453e47',
         attachments: [
           {
             md5: '52d946fdf1a9304d0799cceb2fcf0e36',
@@ -166,6 +329,7 @@ Liebe Grüße!
           {
             md5: 'a618d671348735744d4c9a4005b56799',
             filename: 'image001.jpg',
+            cid: 'image001.jpg@01CDB132.D8A510F0',
           },
         ],
         params: {
@@ -174,12 +338,23 @@ Liebe Grüße!
           from_display_name: 'Smith Sepp',
           subject: 'Gruß aus Oberalteich',
           content_type: 'text/html',
-          body: "Herzliche Grüße aus Oberalteich sendet Herrn Smith<br><br>Sepp Smith  - Dipl.Ing. agr. (FH)<br>Geschäftsführer der example Straubing-Bogen<br>Klosterhof 1 | 94327 Bogen-Oberalteich<br>Tel: 09422-505601 | Fax: 09422-505620<br>Internet: <a href=\"http://example-straubing-bogen.de/\" target=\"_blank\">http://example-straubing-bogen.de</a><br>Facebook: <a href=\"http://facebook.de/examplesrbog\" target=\"_blank\">http://facebook.de/examplesrbog</a><br><b></b><b>  -  European Foundation für Quality Management</b>",
+          body: '<div>
+<p>Herzliche Grüße aus Oberalteich sendet Herrn Smith</p>
+<p>&nbsp;</p>
+<p>Sepp Smith - Dipl.Ing. agr. (FH)</p>
+<p>Geschäftsführer der example Straubing-Bogen</p>
+<p>Klosterhof 1 | 94327 Bogen-Oberalteich</p>
+<p>Tel: 09422-505601 | Fax: 09422-505620</p>
+<p>Internet:<a href="http://example-straubing-bogen.de/" rel="nofollow" target="_blank">http://example-straubing-bogen.de</a></p>
+<p>Facebook:<a href="http://facebook.de/examplesrbog" rel="nofollow" target="_blank">http://facebook.de/examplesrbog</a></p>
+<p><b><img border="0" src="cid:image001.jpg@01CDB132.D8A510F0" alt="Beschreibung: Beschreibung: efqmLogo" style="width:60px;height:19px;"></b><b> - European Foundation für Quality Management</b></p>
+<p>&nbsp;</p>
+</div>',
         },
       },
       {
         data: IO.binread('test/fixtures/mail11.box'),
-        body_md5: '2b6c76ff8e6f6e4d2b77800a64321013',
+        body_md5: '6a90db640ae9dd677ab6e4b441c58d68',
         attachments: [
           {
             md5: '08660cd33ce8c64b95bcf0207ff6c4d6',
@@ -193,12 +368,18 @@ Liebe Grüße!
           subject: 'Eine schöne Adventszeit für ZNUNY GMBH - ENTERPRISE SERVICES FÜR OTRS',
           to: 'enjoy_us@znuny.com',
           content_type: 'text/html',
-          body: "<a href=\"http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-2/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b\" target=\"_blank\">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-2/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b</a><br>Lieber CYLEX Eintragsinhaber,<br>das Jahr neigt sich dem Ende und die besinnliche Zeit beginnt laut Kalender mit dem<br>1. Advent. Und wie immer wird es in der vorweihnachtlichen Zeit meist beruflich und privat<br>so richtig schön hektisch.<br>Um Ihre Weihnachtsstimmung in Schwung zu bringen kommen wir nun mit unserem Adventskalender ins Spiel. Denn 24 Tage werden Sie unsere netten Geschichten, Rezepte und Gewinnspiele sowie ausgesuchte Geschenktipps und Einkaufsgutscheine online begleiten. Damit lässt sich Ihre Freude auf das Fest garantiert mit jedem Tag steigern.<br><br>Einen gemütlichen Start in die Adventszeit wünscht Ihnen <a href=\"http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-1/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b\" target=\"_blank\">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-1/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b</a><br>Ihr CYLEX Team<br><br>P.S. Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den Link des Adventkalenders (<a href=\"http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-3/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b\" target=\"_blank\">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-3/http%3a%2f%2fweb2.cylex.de%2fadvent2012%3fb2b</a>) in<br>       Ihrer Lesezeichen-Symbolleiste zu ergänzen.<br><br>Impressum<br>S.C. CYLEX INTERNATIONAL S.N.C.<br>Sat. Palota 119/A RO 417516 Palota Romania<br>Tel.: +49 208/62957-0 |<br>Geschäftsführer: Francisc Osvald<br>Handelsregister: J05/1591/2009<br>USt.IdNr.: RO26332771<br><br>E-Mail Kontakt<br>Homepage (<a href=\"http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-98/http%3a%2f%2fweb2.cylex.de%2fHomepage%2fHome.asp\" target=\"_blank\">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-98/http%3a%2f%2fweb2.cylex.de%2fHomepage%2fHome.asp</a>)<br>Newsletter abbestellen (<a href=\"http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-99/http%3a%2f%2fnewsletters.cylex.de%2funsubscribe.aspx%3fuid%3d4134001%26d%3dwww.cylex.de%26e%3denjoy%40znuny.com%26sc%3d3009%26l%3dd\" target=\"_blank\">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-99/http%3a%2f%2fnewsletters.cylex.de%2funsubscribe.aspx%3fuid%3d4134001%26d%3dwww.cylex.de%26e%3denjoy%40znuny.com%26sc%3d3009%26l%3dd</a>)",
+          body: '<a href="http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-2/http://web2.cylex.de/advent2012?b2b" rel="nofollow" target="_blank">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-2/http://web2.cylex.de/advent2012?b2b</a>
+<p>Lieber CYLEX Eintragsinhaber,</p><p>das Jahr neigt sich dem Ende und die besinnliche Zeit beginnt laut Kalender mit dem<br> 1. Advent. Und wie immer wird es in der vorweihnachtlichen Zeit meist beruflich und privat<br> so richtig schön hektisch.</p><p>Um Ihre Weihnachtsstimmung in Schwung zu bringen kommen wir nun mit unserem Adventskalender ins Spiel. Denn 24 Tage werden Sie unsere netten Geschichten, Rezepte und Gewinnspiele sowie ausgesuchte Geschenktipps und Einkaufsgutscheine online begleiten. Damit lässt sich Ihre Freude auf das Fest garantiert mit jedem Tag steigern.</p><br> Einen gemütlichen Start in die Adventszeit wünscht Ihnen <a href="http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-1/http://web2.cylex.de/advent2012?b2b" rel="nofollow" target="_blank">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-1/http://web2.cylex.de/advent2012?b2b</a> <br> <p>Ihr CYLEX Team<br>
+<br>
+<strong>P.S.</strong> Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den Link des Adventkalenders (<a href="http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-3/http://web2.cylex.de/advent2012?b2b" rel="nofollow" target="_blank">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-3/http://web2.cylex.de/advent2012?b2b</a>) in<br> Ihrer Lesezeichen-Symbolleiste zu ergänzen.</p><p>&nbsp;</p><br> Impressum <br> S.C. CYLEX INTERNATIONAL S.N.C.<br> Sat. Palota 119/A RO 417516 Palota Romania <br> Tel.: +49 208/62957-0 | <br> Geschäftsführer: Francisc Osvald<br> Handelsregister: J05/1591/2009<br> USt.IdNr.: RO26332771 <br>
+serviceteam@cylex.de<br>
+Homepage (<a href="http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-98/http://web2.cylex.de/homepage/home.asp" rel="nofollow" target="_blank">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-98/http://web2.cylex.de/homepage/home.asp</a>)<br>
+Newsletter abbestellen (<a href="http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-99/http://newsletters.cylex.de/unsubscribe.aspx?uid=4134001&amp;d=www.cylex.de&amp;e=enjoy@znuny.com&amp;sc=3009&amp;l=d" rel="nofollow" target="_blank">http://newsletters.cylex.de/ref/www.cylex.de/sid-105/uid-4134001/lid-99/http://newsletters.cylex.de/unsubscribe.aspx?uid=4134001&amp;d=www.cylex.de&amp;e=enjoy@znuny.com&amp;sc=3009&amp;l=d</a>)',
         },
       },
       {
         data: IO.binread('test/fixtures/mail12.box'),
-        body_md5: 'b1036b57033f4f3781f4bc695f8023cd',
+        body_md5: 'eacbca29d25cd10aa0f7e2ca558d38f2',
         attachments: [
           {
             md5: '46cf0f95ea0c8211cbb704e1959b9173',
@@ -216,12 +397,64 @@ Liebe Grüße!
           subject: 'AW: Agenda [Ticket#11995]',
           to: 'example@znuny.com',
           content_type: 'text/html',
-          body: "Hallo Herr Edenhofer,<br><br>möglicherweise haben wir für unsere morgige Veranstaltung ein Problem mit unserer Develop-Umgebung.<br>Der Kollege Smith wollte uns noch die Möglichkeit geben, direkt auf die Datenbank zugreifen zu können, hierzu hat er Freitag noch einige Einstellungen vorgenommen und uns die Zugangsdaten mitgeteilt. Eine der Änderungen hatte aber offenbar zur Folge, dass ein Starten der Develop-Anwendung nicht mehr möglich ist (s. Fehlermeldung)<br><br>Herr Smith ist im Urlaub, er wurde von seinen Datenbank-Kollegen kontaktiert aber offenbar lässt sich nicht mehr 100%ig rekonstruieren, was am Freitag noch verändert wurde.<br>Meinen Sie, dass Sie uns bei der Behebung der o. a. Störung morgen helfen können? Die Datenbank-Kollegen werden uns nach besten Möglichkeiten unterstützen, Zugriff erhalten wir auch.<br><br>Mit freundlichen Grüßen<br><br>Alex Smith<br><br>Abteilung IT-Strategie, Steuerung &amp; Support<br>im Bereich Informationstechnologie<br><br>Example – Example GmbH<br>(Deutsche Example)<br>Longstreet 5<br>11111 Frankfurt am Main<br><br>Telefon: (069) 11 1111 – 11 30<br>Telefon ServiceDesk: (069) 11 1111 – 12 22<br>Telefax: (069) 11 1111 – 14 85<br>Internet: <a href=\"http://www.example.com/\" target=\"_blank\">www.example.com</a><br><br>-----Ursprüngliche Nachricht-----<br><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Znuny Sales [mailto:example@znuny.com]<br>Gesendet: Freitag, 30. November 2012 13:50<br>An: Smith, Alex<br>Betreff: Agenda [Ticket#11995]<br><br>Sehr geehrte Frau Smith,<br><br>ich habe (wie telefonisch avisiert) versucht eine Agenda für nächste Woche zusammen zu stellen.<br><br>Leider ist es mir dies Inhaltlich nur unzureichend gelungen (es gibt zu wenig konkrete Anforderungen im Vorfeld :) ).<br><br>Dadurch würde ich gerne am Dienstag als erste Amtshandlung (mit Herrn Molitor im Boot) die Anforderungen und Ziele der zwei Tage, Mittelfristig und Langfristig definieren. Aufgrund dessen können wir die Agenda der zwei Tage fixieren.Inhaltlich können wir (ich) alles abdecken, von daher gibt es hier keine Probleme. ;)<br><br>Ist dies für Sie so in Ordnung?<br><br>Für Fragen stehe ich gerne zur Verfügung!<br><br>Ich freue mich auf Dienstag,<br><br>  Martin Edenhofer<br><br>--<br>Enterprise Services for OTRS<br><br>Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany<br><br>P: +49 (0) 30 60 98 54 18-0<br>F: +49 (0) 30 60 98 54 18-8<br>W: <a href=\"http://znuny.com\" target=\"_blank\">http://znuny.com</a><br><br>Location: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg Managing Director: Martin Edenhofer<br><br>-------------------------------------------------------------------------------------------------<br>Rechtsform: GmbH<br>Geschaeftsfuehrer: Dr. Carl Heinz Smith, Dr. Carsten Smith<br>Sitz der Gesellschaft und Registergericht: Frankfurt/Main, HRB 11111<br>Alleiniger Gesellschafter: Bundesrepublik Deutschland,<br>vertreten durch das XXX der Finanzen.",
+          body: '<div>
+<p>Hallo Herr Edenhofer,</p>
+<p>&nbsp;</p>
+<p>möglicherweise haben wir für unsere morgige Veranstaltung ein Problem mit unserer Develop-Umgebung.<br> Der Kollege Smith wollte uns noch die Möglichkeit geben, direkt auf die Datenbank zugreifen zu können, hierzu hat er Freitag noch einige Einstellungen vorgenommen und uns die Zugangsdaten mitgeteilt. Eine der Änderungen hatte aber offenbar zur Folge, dass ein Starten der Develop-Anwendung nicht mehr möglich ist (s. Fehlermeldung)<br>
+<img src="cid:image002.png@01CDD14F.29D467A0" style="width:577px;height:345px;"></p>
+<p>&nbsp;</p>
+<p>Herr Smith ist im Urlaub, er wurde von seinen Datenbank-Kollegen kontaktiert aber offenbar lässt sich nicht mehr 100%ig rekonstruieren, was am Freitag noch verändert wurde.<br> Meinen Sie, dass Sie uns bei der Behebung der o. a. Störung morgen helfen können? Die Datenbank-Kollegen werden uns nach besten Möglichkeiten unterstützen, Zugriff erhalten wir auch.</p>
+<p>&nbsp;</p>
+<p>Mit freundlichen Grüßen</p>
+<p>&nbsp;</p>
+<p>Alex Smith<br>
+<br> Abteilung IT-Strategie, Steuerung &amp; Support<br> im Bereich Informationstechnologie<br>
+<br> Example – Example GmbH<br> (Deutsche Example)<br> Longstreet 5<br> 11111 Frankfurt am Main<br>
+<br> Telefon: (069) 11 1111 – 11 30</p>
+<p>Telefon ServiceDesk: (069) 11 1111 – 12 22<br> Telefax: (069) 11 1111 – 14 85<br> Internet: <a href="http://www.example.com/" title="http://www.example.com/" rel="nofollow" target="_blank">www.example.com</a></p>
+<p>&nbsp;</p>
+<span class="js-signatureMarker"></span><p>-----Ursprüngliche Nachricht-----<br> Von: Martin Edenhofer via Znuny Sales [mailto:example@znuny.com] <br> Gesendet: Freitag, 30. November 2012 13:50<br> An: Smith, Alex<br> Betreff: Agenda [Ticket#11995]</p>
+<p>&nbsp;</p>
+<p>Sehr geehrte Frau Smith,</p>
+<p>&nbsp;</p>
+<p>ich habe (wie telefonisch avisiert) versucht eine Agenda für nächste Woche zusammen zu stellen.</p>
+<p>&nbsp;</p>
+<p>Leider ist es mir dies Inhaltlich nur unzureichend gelungen (es gibt zu wenig konkrete Anforderungen im Vorfeld :) ).</p>
+<p>&nbsp;</p>
+<p>Dadurch würde ich gerne am Dienstag als erste Amtshandlung (mit Herrn Molitor im Boot) die Anforderungen und Ziele der zwei Tage, Mittelfristig und Langfristig definieren. Aufgrund dessen können wir die Agenda der zwei Tage fixieren. Inhaltlich können wir (ich) alles abdecken, von daher gibt es hier keine Probleme. ;)</p>
+<p>&nbsp;</p>
+<p>Ist dies für Sie so in Ordnung?</p>
+<p>&nbsp;</p>
+<p>Für Fragen stehe ich gerne zur Verfügung!</p>
+<p>&nbsp;</p>
+<p>Ich freue mich auf Dienstag,</p>
+<p>&nbsp;</p>
+<p>Martin Edenhofer</p>
+<p>&nbsp;</p>
+<p>--</p>
+<p>Enterprise Services for OTRS</p>
+<p>&nbsp;</p>
+<p>Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany</p>
+<p>&nbsp;</p>
+<p>P: +49 (0) 30 60 98 54 18-0</p>
+<p>F: +49 (0) 30 60 98 54 18-8</p>
+<p>W:<a href="http://znuny.com" rel="nofollow" target="_blank">http://znuny.com</a>
+</p>
+<p>&nbsp;</p>
+<p>Location: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg Managing Director: Martin Edenhofer</p>
+</div><div>
+<p>-------------------------------------------------------------------------------------------------</p>
+<p>Rechtsform: GmbH</p>
+<p>Geschaeftsfuehrer: Dr. Carl Heinz Smith, Dr. Carsten Smith</p>
+<p>Sitz der Gesellschaft und Registergericht: Frankfurt/Main, HRB 11111</p>
+<p>Alleiniger Gesellschafter: Bundesrepublik Deutschland,</p>
+<p>vertreten durch das XXX der Finanzen.</p>
+</div>',
         },
       },
       {
         data: IO.binread('test/fixtures/mail13.box'),
-        body_md5: '58806e006b14b04a535784a5462d09b0',
+        body_md5: 'c3b62f742eb702910d0074e438b34c72',
         attachments: [
           {
             md5: '29cc1679f8a44c72be6be7c1da4278ac',
@@ -235,7 +468,7 @@ Liebe Grüße!
           subject: 'Antwort: Probleme ADB / Anlegen von Tickets [Ticket#111079]',
           to: 'q1@znuny.com',
           content_type: 'text/html',
-          body: 'JA',
+          body: '<p>JA</p>',
         },
       },
       {
@@ -285,7 +518,7 @@ Liebe Grüße!
       # spam email
       {
         data: IO.binread('test/fixtures/mail16.box'),
-        body_md5: '1ba72c0e2bccdd967a4041083b5fb2b3',
+        body_md5: 'c5c69b6d388114f4f8d24ea264793a6f',
         params: {
           from: nil,
           from_email: 'vipyimin@126.com',
@@ -297,7 +530,7 @@ Liebe Grüße!
       # spam email
       {
         data: IO.binread('test/fixtures/mail17.box'),
-        body_md5: 'b2c2af190e7174577e964fad442d90e4',
+        body_md5: 'd78731371e3ec120896c51be3d0d3f8e',
         params: {
           from: '"都琹" <ghgbwum@185.com.cn>',
           from_email: 'ghgbwum@185.com.cn',
@@ -319,7 +552,7 @@ Liebe Grüße!
       },
       {
         data: IO.binread('test/fixtures/mail19.box'),
-        body_md5: 'b9c5addcdc9ded331eb0c66df13b466b',
+        body_md5: '790a98dd429733c7fd8afc6fdd82e2a2',
         params: {
           from: '"我" <>',
           from_email: '"=?GB2312?B?ztI=?=" <>',
@@ -330,19 +563,21 @@ Liebe Grüße!
       },
       {
         data: IO.binread('test/fixtures/mail20.box'),
-        body_md5: '0b982a2aaceee0b9af47882e681ad098',
+        body_md5: '93a960ddf917923817c6f509454dcc8c',
         params: {
           from: 'Health and Care-Mall <drugs-cheapest8@sicor.com>',
           from_email: 'drugs-cheapest8@sicor.com',
           from_display_name: 'Health and Care-Mall',
           subject: 'The Highest Grade Drugs And EXTRA LOW Price .',
           to: 'info2@znuny.com',
-          body: "________________________________________________________________________Yeah but even when they. Beth liî ed her neck as well<br><br>óû5aHw5³½IΨµÁxG⌊o8KHCmς9-Ö½23QgñV6UAD¿ùAX←t¨Lf7⊕®Ir²r½TLA5pYJhjV gPnãM36V®E89RUDΤÅ©ÈI9æsàCΘYEϒAfg∗bT¡1∫rIoiš¦O5oUIN±IsæSØ¹Pp Ÿÿq1FΧ⇑eGOz⌈F³R98y§ 74”lTr8r§HÐæuØEÛPËq VmkfB∫SKNElst4S∃Á8üTðG°í lY9åPu×8&gt;RÒ¬⊕ΜIÙzÙCC4³ÌQEΡºSè!XgŒs.<br>çγ⇓BcwspC L I C K  H E R Eëe3¸ ! (<a href=\"http://pxmzcgy.storeprescription.ru?zz=fkxffti\" target=\"_blank\">http://pxmzcgy.storeprescription.ru?zz=fkxffti</a>)Calm dylan for school today.<br>Closing the nursery with you down. Here and made the mess. Maybe the oï from under his mother. Song of course beth touched his pants.<br>When someone who gave up from here. Feel of god knows what.<br>TBϖ∃M5T5ΕEf2û–N¶ÁvΖ&#39;®⇓∝5SÐçË5 Χ0jΔHbAgþE—2i6A2lD⇑LGjÓnTOy»¦Hëτ9’:Their mother and tugged it seemed like<br>d3RsV¶HÓΘi¯B∂gax1bîgdHä3rýJÿ1aIKÇ² n1jfaTk³Vs395ß C˜lBl‘mxGo0√úXwT8Ya õ8ksa∫f·ℵs”6ÑQ ÍAd7$p32d1e∏æe.0”×61aîΚ63αSMû Nf5ÉCdL∪1i↔xcaa5êR3l6Lc3iãz16só9èU zDE²aEÈ¨gs25ËÞ hE§cl⊃¢¢ÂoÒÂµBw²zF© qÏkõaXUius1r0⊆ d•∈ø$¢Z2F12­8l.07d56PÚl25JAO6<br>45loVóiv1i2ãΥ⌊að⊃d2gÃΥ3™rÎÍu¸aWjO8 n40–Soyè2u¡∅Î3p¢JΜNeÌé×jráÒrΚ 1ÌÓ9AúrAkc8nuEtl22ai‡OB8vSbéσeιõq1+65cw Òs8Uaò4PrsE1y8 〈fMElhϒ⋅Jo8pmzwjˆN¥ wv39aW¡WtsvuU3 1aœ³$éΝnR2OÏ⌉B.∀þc→5Ê9χw5pÃ⁄N fHGFVfE³ãiσjGpa5¶kgg¡ìcWrUq5æakx2h 0Fè4P¸ÕLñrn22ÏoþÝÐHfoRb2eUαw6sñN‾ws¶§3ΒiòX¶¸ofgtHnR⊥3âase9álF¿H5 à6BÁa⊃2iϒsô¡ói ÅkMylÚJ¾ÄoQ–0ℑwvmùþ Ëˆμ&quot;aQ7jVse6Ðf «hÜp$Lâr£3i1tÚ.323h5qP8g0♥÷R÷<br>·iƒPV1Β∋øiF¤RÃa4v3âgL9¢wr¨7ø×aÏû0η þ1àßStuÞ³u7á¡lpÑocEe·SLlrVàXj ⊥Uµ¢F¬48ðov7¨Arm×4ÍcùVwÞe1§⊇N ÂÛ4äaLþZ2ski×5 c€pBlûù6∂olÃfÚwKß3Ñ 4iíla4C³êsREÕ1 ãeIó$âz8t442fG.¸1≤¸2F’Ã152in⊄ Tl©ëC2v7Ci7·X8a×ú5NlþU〉ιicO∑«s·iKN UuϒjSÃj5Ýu÷Jü§pn5°§e¥Û3℘rÆW‡ò J‹S7A1j0sc&amp;ºpkt·qqøiZ56½vn8¨∗eîØQ3+7Î3Š ∑RkLaKXËasÐsÌ2 ïÇ­¶lDäz8oã78wwU–ÀC T6Uûaϒ938sÌ0Gÿ Oxó∈$98‘R2ÂHï5.ÒL6b9θrδÜ92f9j<br>Please matt on his neck. Okay matt huï ed into your mind Since her head to check dylan. Where dylan matt got up there<br>1È±ΑAYQªdN¬ÚϒXT00ÀvI∨ío8-½b®8AΕºV4LgÕ↑7LKtgcEiw­yR5YýæGRA1°I¿0CïCàTiü/þwc0Ax211SÜÂùŒTÁ2êòHpNâùM6È¾0A5Tb»:Simmons and now you really is what. Matt picked up this moment later that.<br>25¯yV9ÙßYeg·↑DnJ3l4tÝæb1os∏jll÷iSÐiwBÎ4n0ú1Ö ªf÷Ña§1løsuÚ8ê 2LCblgvN½o¼oP3wn♠90 FZora&amp;M™xsΚbbÂ ç5Ãξ$Âô·×2iGæ∇1⊇Ξ¬3.0P0κ53VÁö03ÝYz øX¢BAZ4KwdduÜvvuB↑ΒaÄ’THi0—93rZεj0 §rΜÅa2­·§s7¸Ιf 8⇓þolW„6Ýo6yH¥wKZ∧6 21hÒaKJ“ℜs48IÌ ÔÀ¬­$ZΣ¹ü2ñÙ6B42YMZ.Ô¹V¼9f·0å54⌈R8<br>÷w&quot;9N2gBÀaðSê¢s≅gGÔo0Dn4n↵γ7⊗eS7eýxf3Jd q÷CMaÍä³isNMZp zz0˜lΚLw8oë29ww¤§Qu ¥D⌈íaýË¢ésJ8Á¬ 3oùÙ$¦1Nℜ1&gt;Rét7WPM¨.¶8¹D92k5D9∗8≈R l©3ªSj·Ψ8pΣïKùi6rrÔrbÛu¬i2V∗∏v5ª10a27BÁ Ú♦Ξsa9j3χsa¯iΟ Oi℘ml6óféowbz∀wA6ù→ ñ×bàai´wbs♦βGs Ù81i$iÀˆ12⊃2wC82n8o.µ3NJ9S1©Θ0P1Sd<br>What made no one in each time. Mommy was thinking of course beth. Everything you need the same thing<br>PïEVGÿ9srEx⇐9oN3U®yEÎi2OR5kÇÿAΤηνULP¿∧q R5¿FHt7J6E»¯C∅Aå∃aVLu∗¢tT〈2ÃšHq9Né:<br>⊥ÞÞ¨T¦ªBrrC7³2adš6lmzb¨6ai07tdBo×KopíΡÄlj4Hy ÝaÓ1aÖí∉Ós1aá’ 4D­kleowËo3–1ÍwjR≤Π £RhÈafà7≅sù6u2 8NLV$∪⇓»↓1Y¶2µ.vßÈ23ÖS7û0Ün¬Ä m5VKZy3KÎiñë¹DtÚ2HrhGaMvr5ïR«oÂ1namΜwÐãanFu8x7⌈sU E4cva£Âε™s7ΑGO dA35ldñÌèoAξI1wXKïn f¼x¾a∏7ffs†ìÖð 5msC$7Ët¦0z„n÷.it¡T7O8vt5¼8å·<br>Jï1ÏPkáO¶rnùrAo8s5∅z—4Rha1®t˜cq5YΧ ΤQÍraÑ⌋4¹sÜ5²§ ûVBιluwóioL3ëBw£±1¶ 5∈àáa1IÊ2sšÛÛÂ G´7ρ$kJM80∼∠ℵl.J1Km32µÚ⊃5ãé¼§ p°ÿ­A¹NU0c¥xçfo〈Øácm14QGpHEj7lnDPVieV2¶aΠ2H7 ²j26azBSesë1c9 ´2Ù¬l0nò¤oõâRVw¦X´Ï αVõ­a≅σ¼Zs§jJå 3pFN$¾Kf821YΟ7.3ÍY95JΑqŸ0v9ÄQ<br>ñ↑yjPΤ1u6rFwhNeCOϖúd5Γêcne¼a0iTF¹5sxUS0o88ℵªlaÅT℘oOBÀ¹në·­1e∧Kpf υ98ξabp†3sj8â&amp; 9©BolÎAWSo7wNgwø¦mM tteQat0ϖ2s4≡NÇ ÕÆ¦Θ$ùRÓq0·Ã7ª.mt¾³1—uwF57H♣f æ∪HYSjψ3Byš²g¤ndXÀ5tµ¯ò6hZ⇒yÿr8ÿmdowyðdiψ8YΗd0ršŠ N0Ý9aÃ3I¦sQaýê Õ0Y7lZ¯18o∫50Çwµ&quot;©Ζ n6Ü≥a∇lßnsF›J9 ºDΟK$Á4ÉL0S7zÖ.Ta2X3²R995391¡<br>Turning to mess up with. Well that to give her face Another for what she found it then. Since the best to hear<br>GX°♦Ca2isA¾8¡bNÉî8ÂAöÜzΘD∇tNXIfWi–Ap2WYNYF®b ≠7yφDpj6©R04EÂU´ñn7GÆoÌjSÂ³Á∋TC⊥πËO1∗÷©RtS2wE66è­ νÑêéASi21DP“8λV∧W⋅OAÖg6qNtNp1T269XA7¥À²GGI6SEwU2íS3Χ1â!Okay let matt climbed in front door. Well then dropped the best she kissed<br>¤ÊüC&gt;ΦÉí© flQkWMŠtvoÐdV¯rT´ZtlN6R9dZ¾ïLwuD¢9i3B5FdcÆlÝeSwJd KªtDDfoX±evrýwlK7P÷i§e³3vÎzèCe¬Μ♣ΝrGhsáy°72Y!gZpá R6O4O»£ð∋r9ÊZÀdB6iÀeîσ∼ÓrCZ1s ²ú÷I3ÁeÒ¤+⌉CêU »k6wG´c‚¾o60AJoR7Ösd3i¿Ásððpt Øè77añ∀f5np¤nþduE8⇒ È¹SHGJVAtew∇LëtςëDæ 6kÌ8FgQQ⊂R8ÇL2EI2∉iEHÍÉ3 Hÿr5Af1qximςρ‡r6©2jmWv9ÛaWð¸giACÜ¢lM⌋¿k ÊVÚ¸SÓùθçhµ5BΙi∗ttEp8¢EPpSzWJi32UÎn5ìIhgx8n⌉!j∏e5<br>x¯qJ&gt;mC7f 5ºñy1GA4Ý0lCQe09s9u%uksã ψìX5A4g3nu←Τyst7ÍpMhšgÀÖe〉pÚ£n¼YƒŠtÉÚLGizqQ↓c3tÙI œïbXMKÛRSertj×d&quot;OtÊss58®!oo2i FÂWáEWøDDx7hIÕpΦSôBiÒdrUr⇔J&lt;Õa1Αzwt0°p×ià8RÌoHÛ1Än¥7ÿr ¯¥õàDYvO7aká»htì04Πe∂λÇ1 1ÈdUoο°X3fc63¶ e&amp;∪GOxT3CvXcO·e3KËνr3¸y2 26Ëz3Ã∞I± Pì∃zYt6F4e6è⇓va5÷þ9rkΘ3äsKP5R!ιµmz<br>3í1ë&gt;ð2′L 2óB⊥S∩OQMeý∉ÑΦcöè9Tuãa∫drâ5ûMeLk9Ô £æ1OOø9oKnÿψÀWl7HÏ∅i9ρÈÊniâ•ÛeXPxí ´Í5¡SUqtBh7æa5otSZ9pØËÛDpf®ÝÊiÛωbjn¯½Ÿ2gsçh− båÌswxðoSiq8hvtèé6Òh⌈b²S ×6þSVBEFCiøUàds9Ñ¤ΕaÆ§ξÜ,1„wv jw7AMKÈ↔laæG9¦së3«etuB2keDãæìr°¨IeC¾EaÄao÷″∧r&gt;6e¸d9DùÇ,mtSö I∗44A¹RˆêM98zME≅QŸÐX¹4j6 î0n3a1&#39;Êânxpl6d83þJ 06Ð9Eïãýã-28Ú9c4ßrØh7è¥med½♠kcñ3sPk¶2•r!〉QCa<br>ŠeÏÀ&gt;Ãσ½å bpøNERN8eaD6Åns7Abhy±Æü∩ D7sVR8&#39;ºEeÿáDVfc˜3ëu7ÏÆqncË3qdÊ∼4∇sρmi5 6æ¾Êaä°∝TnQb9sdÀMùℑ ∑gMÿ2bNð¶4cä½⊆/4X1κ7¥f1z ϖ1úECzf•1uMbycs1•9¾ts0Tào3hêDmSs3Áe7BíÉrô⋅ãÔ φ8Ä″SSXð¤uúI¸5p58uHp2cß±o∂T©Rrd6sMt∪µµξ!é4Xb<br>Both hands through the fear in front.<br>Wade to give it seemed like this. Yeah but one for any longer. Everything you going inside the kids.",
+          body: "________________________________________________________________________Yeah but even when they. Beth liî ed her neck as well <br>
+<div>
+<br> óû5aHw5³½IΨµÁxG⌊o8KHCmς9-Ö½23QgñV6UAD¿ùAX←t¨Lf7⊕®Ir²r½TLA5pYJhjV gPnãM36V®E89RUDΤÅ©ÈI9æsàCΘYEϒAfg∗bT¡1∫rIoiš¦O5oUIN±IsæSØ¹Pp Ÿÿq1FΧ⇑eGOz⌈F³R98y§ 74”lTr8r§HÐæuØEÛPËq VmkfB∫SKNElst4S∃Á8üTðG°í lY9åPu×8&gt;RÒ¬⊕ΜIÙzÙCC4³ÌQEΡºSè!XgŒs. <br> çγ⇓B<a href=\"http://pxmzcgy.storeprescription.ru?zz=fkxffti\" rel=\"nofollow\" target=\"_blank\">http://pxmzcgy.storeprescription.ru?zz=fkxffti</a>Calm dylan for school today.<br>Closing the nursery with you down. Here and made the mess. Maybe the oï from under his mother. Song of course beth touched his pants.<br>When someone who gave up from here. Feel of god knows what. <br> TBϖ∃M5T5ΕEf2û–N¶ÁvΖ'®⇓∝5SÐçË5 Χ0jΔHbAgþE—2i6A2lD⇑LGjÓnTOy»¦Hëτ9’:Their mother and tugged it seemed like <br> d3RsV¶HÓΘi¯B∂gax1bîgdHä3rýJÿ1aIKÇ² n1jfaTk³Vs395ß C˜lBl‘mxGo0√úXwT8Ya õ8ksa∫f·ℵs”6ÑQ ÍAd7$p32d1e∏æe.0”×61aîΚ63αSMû CdL∪1i↔xcaa5êR3l6Lc3iãz16só9èU zDE²aEÈ¨gs25ËÞ hE§cl⊃¢¢ÂoÒÂµBw²zF© qÏkõaXUius1r0⊆ d•∈ø$¢Z2F12­8l.07d56PÚl25JAO6 <br> 45loVóiv1i2ãΥ⌊að⊃d2gÃΥ3™rÎÍu¸aWjO8 n40–Soyè2u¡∅Î3p¢JΜNeÌé×jráÒrΚ 1ÌÓ9AúrAkc8nuEtl22ai‡OB8vSbéσeιõq1+65cw Òs8Uaò4PrsE1y8 〈fMElhϒ⋅Jo8pmzwjˆN¥ wv39aW¡WtsvuU3 1aœ³$éΝnR2OÏ⌉B.∀þc→5Ê9χw5pÃ⁄N VfE³ãiσjGpa5¶kgg¡ìcWrUq5æakx2h 0Fè4P¸ÕLñrn22ÏoþÝÐHfoRb2eUαw6sñN‾ws¶§3ΒiòX¶¸ofgtHnR⊥3âase9álF¿H5 à6BÁa⊃2iϒsô¡ói ÅkMylÚJ¾ÄoQ–0ℑwvmùþ Ëˆμ\"aQ7jVse6Ðf «hÜp$Lâr£3i1tÚ.323h5qP8g0♥÷R÷ <br> ·iƒPV1Β∋øiF¤RÃa4v3âgL9¢wr¨7ø×aÏû0η þ1àßStuÞ³u7á¡lpÑocEe·SLlrVàXj ⊥Uµ¢F¬48ðov7¨Arm×4ÍcùVwÞe1§⊇N ÂÛ4äaLþZ2ski×5 c€pBlûù6∂olÃfÚwKß3Ñ 4iíla4C³êsREÕ1 ãeIó$âz8t442fG.¸1≤¸2F’Ã152in⊄ C2v7Ci7·X8a×ú5NlþU〉ιicO∑«s·iKN UuϒjSÃj5Ýu÷Jü§pn5°§e¥Û3℘rÆW‡ò J‹S7A1j0sc&amp;ºpkt·qqøiZ56½vn8¨∗eîØQ3+7Î3Š ∑RkLaKXËasÐsÌ2 ïÇ­¶lDäz8oã78wwU–ÀC T6Uûaϒ938sÌ0Gÿ Oxó∈$98‘R2ÂHï5.ÒL6b9θrδÜ92f9j <br> Please matt on his neck. Okay matt huï ed into your mind <br> 1È±ΑAYQªdN¬ÚϒXT00ÀvI∨ío8-½b®8AΕºV4LgÕ↑7LKtgcEiw­yR5YýæGRA1°I¿0CïCàTiü/þwc0Ax211SÜÂùŒTÁ2êòHpNâùM6È¾0A5Tb»:Simmons and now you really is what. Matt picked up this moment later that. <br> 25¯yV9ÙßYeg·↑DnJ3l4tÝæb1os∏jll÷iSÐiwBÎ4n0ú1Ö ªf÷Ña§1løsuÚ8ê 2LCblgvN½o¼oP3wn♠90 FZora&amp;M™xsΚbbÂ ç5Ãξ$Âô·×2iGæ∇1⊇Ξ¬3.0P0κ53VÁö03ÝYz AZ4KwdduÜvvuB↑ΒaÄ’THi0—93rZεj0 §rΜÅa2­·§s7¸Ιf 8⇓þolW„6Ýo6yH¥wKZ∧6 21hÒaKJ“ℜs48IÌ ÔÀ¬­$ZΣ¹ü2ñÙ6B42YMZ.Ô¹V¼9f·0å54⌈R8 <br> ÷w\"9N2gBÀaðSê¢s≅gGÔo0Dn4n↵γ7⊗eS7eýxf3Jd q÷CMaÍä³isNMZp zz0˜lΚLw8oë29ww¤§Qu ¥D⌈íaýË¢ésJ8Á¬ 3oùÙ$¦1Nℜ1&gt;Rét7WPM¨.¶8¹D92k5D9∗8≈R Sj·Ψ8pΣïKùi6rrÔrbÛu¬i2V∗∏v5ª10a27BÁ Ú♦Ξsa9j3χsa¯iΟ Oi℘ml6óféowbz∀wA6ù→ ñ×bàai´wbs♦βGs Ù81i$iÀˆ12⊃2wC82n8o.µ3NJ9S1©Θ0P1Sd <br> What made no one in each time. <br> PïEVGÿ9srEx⇐9oN3U®yEÎi2OR5kÇÿAΤηνULP¿∧q R5¿FHt7J6E»¯C∅Aå∃aVLu∗¢tT〈2ÃšHq9Né: <br> ⊥ÞÞ¨T¦ªBrrC7³2adš6lmzb¨6ai07tdBo×KopíΡÄlj4Hy ÝaÓ1aÖí∉Ós1aá’ 4D­kleowËo3–1ÍwjR≤Π £RhÈafà7≅sù6u2 8NLV$∪⇓»↓1Y¶2µ.vßÈ23ÖS7û0Ün¬Ä Zy3KÎiñë¹DtÚ2HrhGaMvr5ïR«oÂ1namΜwÐãanFu8x7⌈sU E4cva£Âε™s7ΑGO dA35ldñÌèoAξI1wXKïn f¼x¾a∏7ffs†ìÖð 5msC$7Ët¦0z„n÷.it¡T7O8vt5¼8å· <br> Jï1ÏPkáO¶rnùrAo8s5∅z—4Rha1®t˜cq5YΧ ΤQÍraÑ⌋4¹sÜ5²§ ûVBιluwóioL3ëBw£±1¶ 5∈àáa1IÊ2sšÛÛÂ G´7ρ$kJM80∼∠ℵl.J1Km32µÚ⊃5ãé¼§ A¹NU0c¥xçfo〈Øácm14QGpHEj7lnDPVieV2¶aΠ2H7 ²j26azBSesë1c9 ´2Ù¬l0nò¤oõâRVw¦X´Ï αVõ­a≅σ¼Zs§jJå 3pFN$¾Kf821YΟ7.3ÍY95JΑqŸ0v9ÄQ <br> ñ↑yjPΤ1u6rFwhNeCOϖúd5Γêcne¼a0iTF¹5sxUS0o88ℵªlaÅT℘oOBÀ¹në·­1e∧Kpf υ98ξabp†3sj8â&amp; 9©BolÎAWSo7wNgwø¦mM tteQat0ϖ2s4≡NÇ ÕÆ¦Θ$ùRÓq0·Ã7ª.mt¾³1—uwF57H♣f Sjψ3Byš²g¤ndXÀ5tµ¯ò6hZ⇒yÿr8ÿmdowyðdiψ8YΗd0ršŠ N0Ý9aÃ3I¦sQaýê Õ0Y7lZ¯18o∫50Çwµ\"©Ζ n6Ü≥a∇lßnsF›J9 ºDΟK$Á4ÉL0S7zÖ.Ta2X3²R995391¡ <br> Turning to mess up with. Well that to give her face <br> GX°♦Ca2isA¾8¡bNÉî8ÂAöÜzΘD∇tNXIfWi–Ap2WYNYF®b ≠7yφDpj6©R04EÂU´ñn7GÆoÌjSÂ³Á∋TC⊥πËO1∗÷©RtS2wE66è­ νÑêéASi21DP“8λV∧W⋅OAÖg6qNtNp1T269XA7¥À²GGI6SEwU2íS3Χ1â!Okay let matt climbed in front door. Well then dropped the best she kissed <br> ¤ÊüC&gt;ΦÉí© flQkWMŠtvoÐdV¯rT´ZtlN6R9dZ¾ïLwuD¢9i3B5FdcÆlÝeSwJd KªtDDfoX±evrýwlK7P÷i§e³3vÎzèCe¬Μ♣ΝrGhsáy°72Y!gZpá R6O4O»£ð∋r9ÊZÀdB6iÀeîσ∼ÓrCZ1s ²ú÷I3ÁeÒ¤+⌉CêU »k6wG´c‚¾o60AJoR7Ösd3i¿Ásððpt Øè77añ∀f5np¤nþduE8⇒ È¹SHGJVAtew∇LëtςëDæ 6kÌ8FgQQ⊂R8ÇL2EI2∉iEHÍÉ3 Hÿr5Af1qximςρ‡r6©2jmWv9ÛaWð¸giACÜ¢lM⌋¿k ÊVÚ¸SÓùθçhµ5BΙi∗ttEp8¢EPpSzWJi32UÎn5ìIhgx8n⌉!j∏e5 <br> x¯qJ&gt;mC7f 5ºñy1GA4Ý0lCQe09s9u%uksã ψìX5A4g3nu←Τyst7ÍpMhšgÀÖe〉pÚ£n¼YƒŠtÉÚLGizqQ↓c3tÙI œïbXMKÛRSertj×d\"OtÊss58®!oo2i FÂWáEWøDDx7hIÕpΦSôBiÒdrUr⇔J&lt;Õa1Αzwt0°p×ià8RÌoHÛ1Än¥7ÿr ¯¥õàDYvO7aká»htì04Πe∂λÇ1 1ÈdUoο°X3fc63¶ e&amp;∪GOxT3CvXcO·e3KËνr3¸y2 26Ëz3Ã∞I± Pì∃zYt6F4e6è⇓va5÷þ9rkΘ3äsKP5R!ιµmz <br> 3í1ë&gt;ð2′L 2óB⊥S∩OQMeý∉ÑΦcöè9Tuãa∫drâ5ûMeLk9Ô £æ1OOø9oKnÿψÀWl7HÏ∅i9ρÈÊniâ•ÛeXPxí ´Í5¡SUqtBh7æa5otSZ9pØËÛDpf®ÝÊiÛωbjn¯½Ÿ2gsçh− båÌswxðoSiq8hvtèé6Òh⌈b²S ×6þSVBEFCiøUàds9Ñ¤ΕaÆ§ξÜ,1„wv jw7AMKÈ↔laæG9¦së3«etuB2keDãæìr°¨IeC¾EaÄao÷″∧r&gt;6e¸d9DùÇ,mtSö I∗44A¹RˆêM98zME≅QŸÐX¹4j6 î0n3a1'Êânxpl6d83þJ 06Ð9Eïãýã-28Ú9c4ßrØh7è¥med½♠kcñ3sPk¶2•r!〉QCa <br> ŠeÏÀ&gt;Ãσ½å bpøNERN8eaD6Åns7Abhy±Æü∩ D7sVR8'ºEeÿáDVfc˜3ëu7ÏÆqncË3qdÊ∼4∇sρmi5 6æ¾Êaä°∝TnQb9sdÀMùℑ ∑gMÿ2bNð¶4cä½⊆/4X1κ7¥f1z ϖ1úECzf•1uMbycs1•9¾ts0Tào3hêDmSs3Áe7BíÉrô⋅ãÔ φ8Ä″SSXð¤uúI¸5p58uHp2cß±o∂T©Rrd6sMt∪µµξ!é4Xb <br> <br> </div>Both hands through the fear in front.<br>Wade to give it seemed like this. Yeah but one for any longer. Everything you going inside the kids."
         },
       },
       {
         data: IO.binread('test/fixtures/mail21.box'),
-        body_md5: 'f7de1c4d9f266a85897b6e8b9403d62d',
+        body_md5: 'fe54627416ff0eeae1d507bc2fef2536',
         params: {
           from: 'Viagra Super Force Online <pharmacy_affordable1@ertelecom.ru>',
           from_email: 'pharmacy_affordable1@ertelecom.ru',
@@ -353,16 +588,15 @@ Liebe Grüße!
       },
       {
         data: IO.binread('test/fixtures/mail22.box'),
-        body_md5: 'f17142bd7a519bb2b8791dba2539b2f7',
+        body_md5: '56223b1ea04a63269020cb64be7a70b0',
         params: {
           from: 'Gilbertina Suthar <ireoniqla@lipetsk.ru>',
           from_email: 'ireoniqla@lipetsk.ru',
           from_display_name: 'Gilbertina Suthar',
           subject: 'P..E..N-I..S__-E N L A R-G E-M..E..N T-___P..I-L-L..S...Info.',
           to: 'Info <info@znuny.nix>',
-          body: "Puzzled by judith bronte dave. Melvin will want her way through with.<br>Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.<br>Freemont and they talked with beppe.<br>Thinking of bed and whenever adam.<br>Mike was too tired man to hear.<br>I10PQSHEJl2Nwf&amp;tilde;2113S173 &amp;Icirc;1mEbb5N371L&amp;piv;C7AlFnR1&amp;diams;HG64B242&amp;brvbar;M2242zk&amp;Iota;N&amp;rceil;7&amp;rceil;TBN&amp;ETH; T2xPI&amp;ograve;gI2&amp;Atilde;lL2&amp;Otilde;ML&amp;perp;22Sa&amp;Psi;RBreathed adam gave the master bedroom door.<br>Better get charlie took the wall.<br>Charlotte clark smile he saw charlie.<br>Dave and leaned her tears adam.<br>Maybe we want any help me that.<br>Next morning charlie gazed at their father.<br>Well as though adam took out here. Melvin will be more money. Called him into this one last night.<br>Men joined the pickup truck pulled away. Chuck could make sure that.&amp;dagger;p1C?L&amp;thinsp;I?C&amp;ensp;K?88&amp;ensp;5 E R?EEOD ! (<a href=\"11115441111411?jmlfwnwe&amp;ucwkiyyc\" target=\"_blank\">11115441111411?jmlfwnwe&amp;ucwkiyyc</a>)Chuckled adam leaned forward and le? charlie.<br>Just then returned to believe it here.<br>Freemont and pulling out several minutes.",
+          body: 'Puzzled by judith bronte dave. Melvin will want her way through with.<br>Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.<br>Freemont and they talked with beppe.<br>Thinking of bed and whenever adam.<br>Mike was too tired man to hear.<br>I10PQSHEJl2Nwf&amp;tilde;2113S173 &amp;Icirc;1mEbb5N371L&amp;piv;C7AlFnR1&amp;diams;HG64B242&amp;brvbar;M2242zk&amp;Iota;N&amp;rceil;7&amp;rceil;TBN&amp;ETH; T2xPI&amp;ograve;gI2&amp;Atilde;lL2&amp;Otilde;ML&amp;perp;22Sa&amp;Psi;RBreathed adam gave the master bedroom door.<br>Better get charlie took the wall.<br>Charlotte clark smile he saw charlie.<br>Dave and leaned her tears adam.<br>Maybe we want any help me that.<br>Next morning charlie gazed at their father.<br>Well as though adam took out here. Melvin will be more money. Called him into this one last night.<br>Men joined the pickup truck pulled away. Chuck could make sure that.[1] &amp;dagger;p1C?L&amp;thinsp;I?C&amp;ensp;K?88&amp;ensp;5 E R?EEOD !Chuckled adam leaned forward and le? charlie.<br>Just then returned to believe it here.<br>Freemont and pulling out several minutes.<br><br>[1] &amp;#104;&amp;#116;&amp;#116;&amp;#112;&amp;#58;&amp;#47;&amp;#47;&amp;#1072;&amp;#1086;&amp;#1089;&amp;#1082;&amp;#46;&amp;#1088;&amp;#1092;?jmlfwnwe&amp;ucwkiyyc'
         },
-
       },
       {
         data: IO.binread('test/fixtures/mail23.box'),
@@ -423,7 +657,7 @@ end
           from_display_name: 'gate',
           subject: 'Ihre Rechnung als PDF-Dokument',
           to: 'Martin Edenhofer <billing@znuny.inc>',
-          body: 'Ihre Rechnung als PDF-Dokument',
+          body: "Ihre Rechnung als PDF-Dokument",
         },
         attachments: [
           {
@@ -478,26 +712,29 @@ end
       },
       {
         data: IO.binread('test/fixtures/mail29.box'),
-        body_md5: 'f44654bdf989aac0b9f9b26a895cb51e',
+        body_md5: 'd52e493b8c1132da8cc321d5e47f4fa7',
         params: {
           from: 'Example Sales <sales@example.com>',
           from_email: 'sales@example.com',
           from_display_name: 'Example Sales',
           subject: 'Example licensing information: No channel available',
           to: 'info@znuny.inc',
-          body: "Dear Mr. Edenhofer,<br>We want to keep you updated on TeamViewer licensing shortages on a regular basis.<br>We would like to inform you that since the last message on 25-Nov-2014 there have been temporary session channel exceedances which make it impossible to establish more sessions. Since the last e-mail this has occurred in a total of 1 cases.<br>Additional session channels can be added at any time. Please visit our TeamViewer Online Shop (<a href=\"https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E\" target=\"_blank\">https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E</a>) for pricing information.<br>Thank you - and again all the best with TeamViewer!<br>Best regards,<br><i>Your TeamViewer Team</i><br>P.S.: You receive this e-mail because you are listed in our database as person who ordered a TeamViewer license. Please click here (<a href=\"http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=E37682EAC65E8CA6FF36074907D8BC14\" target=\"_blank\">http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=E37682EAC65E8CA6FF36074907D8BC14</a>) to unsubscribe from further e-mails.<br>-----------------------------<br><a href=\"http://www.teamviewer.com\" target=\"_blank\">www.teamviewer.com</a><br><br>TeamViewer GmbH * Jahnstr. 30 * 73037 Göppingen * Germany<br>Tel. 07161 60692 50 * Fax 07161 60692 79<br><br>Registration AG Ulm HRB 534075 * General Manager Holger Felgner",
+          body: 'Dear Mr. Edenhofer, <p>We want to keep you updated on TeamViewer licensing shortages on a regular basis.</p><p><strong>We would like to inform you that since the last message on 25-Nov-2014 there have been temporary session channel exceedances which make it impossible to establish more sessions. Since the last e-mail this has occurred in a total of 1 cases.</strong></p><p>Additional session channels can be added at any time. Please visit ourTeamViewer Online Shop (<a href="https://www.teamviewer.com/en/licensing/update.aspx?channel=d842cs9bf85-p1009645n-348785e76e" rel="nofollow" target="_blank">https://www.teamviewer.com/en/licensing/update.aspx?channel=d842cs9bf85-p1009645n-348785e76e</a>) for pricing information.</p><p>Thank you - and again all the best with TeamViewer!</p><p>Best regards,</p><p><i>Your TeamViewer Team</i></p><p>P.S.: You receive this e-mail because you are listed in our database as person who ordered a TeamViewer license. Please clickhere (<a href="http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=e37682eac65e8ca6ff36074907d8bc14" rel="nofollow" target="_blank">http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=e37682eac65e8ca6ff36074907d8bc14</a>) to unsubscribe from further e-mails.</p>-----------------------------<br>
+<a href="http://www.teamviewer.com" rel="nofollow" target="_blank">www.teamviewer.com</a><br>
+<br> TeamViewer GmbH * Jahnstr. 30 * 73037 Göppingen * Germany<br> Tel. 07161 60692 50 * Fax 07161 60692 79<br> <br> Registration AG Ulm HRB 534075 * General Manager Holger Felgner'
         },
       },
       {
         data: IO.binread('test/fixtures/mail30.box'),
-        body_md5: 'dea322b2ba8dce5a54f6b11071faa02f',
+        body_md5: 'a22872c1bf5b246f18986bab23b5fcfa',
         params: {
           from: 'Manfred Haert <Manfred.Haert@example.com>',
           from_email: 'Manfred.Haert@example.com',
           from_display_name: 'Manfred Haert',
           subject: 'Antragswesen in TesT abbilden',
           to: 'info@znuny.inc',
-          body: "Sehr geehrte Damen und Herren,<br><br>wir hatten bereits letztes Jahr einen TesT-Workshop mit Ihrem Herrn XXX durchgeführt und würden nun gerne erneut Ihre Dienste in Anspruch nehmen.<br><br>Mittlerweile setzen wir TesT produktiv ein und würden nun gerne an einem Anwendungsfall (Change-Management) die Machbarkeit des Abbildens eines derzeit &quot;per Papier&quot; durchgeführten Antragswesens in TesT prüfen wollen.<br><br>Wir bitten gerne um ein entsprechendes Angebot.<br><br>Für Rückfragen stehe ich gerne zur Verfügung. Vielen Dank!<br><span class=\"js-signatureMarker\"></span><br>--<br> Freundliche Grüße<br>i.A. Manfred Härt<br><br>Test Somewhere GmbH<br>Ferdinand-Straße 99<br>99073 Korlben<br><b>Bitte beachten Sie die neuen Rufnummern!</b><br>Telefon: 011261 00000-2460<br>Fax: 011261 0000-7460<br>mailto:manfred.haertel@example.com<br><a href=\"http://www.example.com\" target=\"_blank\">http://www.example.com</a><br>JETZT AUCH BEI FACEBOOK !<br><a href=\"https://www.facebook.com/test\" target=\"_blank\">https://www.facebook.com/test</a><br>___________________________________<br>Test Somewhere GmbH<br><br>Diese e-Mail ist ausschließlich für den beabsichtigten Empfänger bestimmt. Sollten Sie irrtümlich diese e-Mail erhalten haben, unterrichten Sie uns bitte umgehend unter kontakt@example.com und vernichten Sie diese Mitteilung einschließlich der ggf. beigefügten Dateien.<br>Weil wir die Echtheit oder Vollständigkeit der in dieser Nachricht enthaltenen Informationen nicht garantieren können, bitten wir um Verständnis, dass wir zu Ihrem und unserem Schutz die rechtliche Verbindlichkeit der vorstehenden Erklärungen ausschließen, soweit wir mit Ihnen keine anders lautenden Vereinbarungen getroffen haben.",
+          body: 'Sehr geehrte Damen und Herren,<br> <br> wir hatten bereits letztes Jahr einen TesT-Workshop mit Ihrem Herrn XXX durchgeführt und würden nun gerne erneut Ihre Dienste in Anspruch nehmen.<br> <br> Mittlerweile setzen wir TesT produktiv ein und würden nun gerne an einem Anwendungsfall (Change-Management) die Machbarkeit des Abbildens eines derzeit "per Papier" durchgeführten Antragswesens in TesT prüfen wollen.<br> <br> Wir bitten gerne um ein entsprechendes Angebot.<br> <br> Für Rückfragen stehe ich gerne zur Verfügung. Vielen Dank!<br> <br>  <div>--<br>    Freundliche Grüße<br> i.A. Manfred Härt<br> <br> <small>Test Somewhere GmbH<br> Ferdinand-Straße 99<br> 99073 Korlben<br> <b>Bitte beachten Sie die neuen Rufnummern!</b><br> Telefon: 011261 00000-2460<br> Fax: 011261 0000-7460<br> manfred.haertel@example.com<br> <a href="http://www.example.com" rel="nofollow" target="_blank">http://www.example.com</a><br> JETZT AUCH BEI FACEBOOK !<br> <a href="https://www.facebook.com/test" rel="nofollow" target="_blank">https://www.facebook.com/test</a><span class="js-signatureMarker"></span><br> ___________________________________<br> Test Somewhere GmbH<br> </small>  <p><small>Diese e-Mail ist ausschließlich für den beabsichtigten Empfänger bestimmt. Sollten Sie irrtümlich diese e-Mail erhalten haben, unterrichten Sie uns bitte umgehend unter kontakt@example.com und vernichten Sie diese Mitteilung einschließlich der ggf. beigefügten Dateien.<br> Weil wir die Echtheit oder Vollständigkeit der in dieser Nachricht enthaltenen Informationen nicht garantieren können, bitten wir um Verständnis, dass wir zu Ihrem und unserem Schutz die rechtliche Verbindlichkeit der vorstehenden Erklärungen ausschließen, soweit wir mit Ihnen keine anders lautenden Vereinbarungen getroffen haben.</small>  </p>
+</div>'
         },
       },
       {
@@ -536,14 +773,42 @@ end
       },
       {
         data: IO.binread('test/fixtures/mail36.box'),
-        body_md5: '0f1adf1118d97e7abed03e3829a51a0b',
+        body_md5: '0c03749418faa758ee385a1fc9f01fbc',
         params: {
           from: 'Martin Smith <m.Smith@example.com>',
           from_email: 'm.Smith@example.com',
           from_display_name: 'Martin Smith',
           subject: 'Fw: Zugangsdaten',
           to: 'Martin Edenhofer <me@example.com>',
-          body: "<span class=\"js-signatureMarker\"></span>--<br>don&#39;t cry - work! (Rainald Goetz)<br><br><b>Gesendet:</b> Mittwoch, 03. Februar 2016 um 12:43 Uhr<br><b>Von:</b> &quot;Martin Smith&quot; &lt;m.Smith@example.com&gt;<br><b>An:</b> linuxhotel@zammad.com<br><b>Betreff:</b> Fw: Zugangsdaten<br><br>--<br>don&#39;t cry - work! (Rainald Goetz)<br><br><b>Gesendet:</b> Freitag, 22. Januar 2016 um 11:52 Uhr<br><b>Von:</b> &quot;Martin Edenhofer&quot; &lt;me@example.com&gt;<br><b>An:</b> m.Smith@example.com<br><b>Betreff:</b> Zugangsdaten<br>Um noch vertrauter zu werden, kannst Du mit einen externen E-Mail Account (z. B. <a href=\"http://web.de\" target=\"_blank\">web.de</a>) mal ein wenig selber “spielen”. :)",
+          body: "<div>
+<div> </div>
+<div>--<br> don't cry - work! (Rainald Goetz)</div>
+<div> <div> <div>
+<div>
+<b>Gesendet:</b> Mittwoch, 03. Februar 2016 um 12:43 Uhr<span class=\"js-signatureMarker\"></span><br>
+<b>Von:</b> \"Martin Smith\" &lt;m.Smith@example.com&gt;<br>
+<b>An:</b> linuxhotel@example.com<br>
+<b>Betreff:</b> Fw: Zugangsdaten</div>
+<div>
+<div>
+<div> </div>
+<div>--<br> don't cry - work! (Rainald Goetz)</div>
+<div> <div> <div>
+<div>
+<b>Gesendet:</b> Freitag, 22. Januar 2016 um 11:52 Uhr<br>
+<b>Von:</b> \"Martin Edenhofer\" &lt;me@example.com&gt;<br>
+<b>An:</b> m.Smith@example.com<br>
+<b>Betreff:</b> Zugangsdaten</div>
+<div>Um noch vertrauter zu werden, kannst Du mit einen externen E-Mail Account (z. B.<a href=\"http://web.de\" rel=\"nofollow\" target=\"_blank\">web.de</a>) mal ein wenig selber “spielen”. :)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>"
         },
       },
       {
@@ -580,7 +845,7 @@ end
       },
       {
         data: IO.binread('test/fixtures/mail39.box'),
-        body_md5: 'b583c4705270fa73a28796b978e1e9ab',
+        body_md5: '92553234f01a918314f40973dfc2a303',
         params: {
           from: 'Martin Edenhofer <me@example.com>',
           from_email: 'me@example.com',
@@ -588,7 +853,8 @@ end
           subject: 'test 1234 äöü sig test with attachment ',
           to: 'Martin Edenhofer <me@example.net>',
           cc: nil,
-          body: 'test 1234 äöü sig test with attachment',
+          body: "test 1234 äöü sig test with attachment<div><img src=\"cid:2ECB31C9-0E1D-4EBF-BD02-8D8B24208A3E@openvpn\" style=\"width:320px;height:213px;\"></div>",
+
         },
         attachments: [
           {
@@ -598,6 +864,7 @@ end
           {
             md5: 'de909e05b3dd8b8ea50e8db422d0971e',
             filename: 'HKT_Super_Seven_GTS.jpeg',
+            cid: '2ECB31C9-0E1D-4EBF-BD02-8D8B24208A3E@openvpn',
           },
           {
             md5: '72c2f9aecd24606b6490ff06ea9361ec',
@@ -664,7 +931,7 @@ end
       },
       {
         data: IO.binread('test/fixtures/mail43.box'),
-        body_md5: '8780f8c73265cba2714acb2a38ad83fb',
+        body_md5: 'df230afc9ce79d364c52969c3b05cd27',
         params: {
           from: 'Paula <databases.en@example.com>',
           from_email: 'databases.en@example.com',
@@ -672,7 +939,41 @@ end
           subject: 'Kontakte',
           to: 'info@example.ch',
           cc: nil,
-          body: "<a href=\"http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY%3D\" target=\"_blank\">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY%3D</a><br><br><i>Geben Sie diese Information an den Direktor oder den für Marketing und Umsatzsteigerung verantwortlichen Mitarbeiter Ihrer Firma weiter!</i><br><br>Hallo,<br><ul><li>Sie suchen nach Möglichkeiten, den Umsatz Ihre Firma zu steigern?</li><li>Sie brauchen neue Geschäftskontakte?</li><li>Sie sind es leid, Kontaktdaten manuell zu erfassen?</li><li>Ihr Kontaktdatenanbieter ist zu teuer oder Sie sind mit seinen Dienstleistungen unzufrieden?</li><li>Sie möchten Ihre Kontaktinformationen gern effizienter auf dem neuesten Stand halten?</li>                  </ul><br><br>Bei uns können Sie mit nur wenigen Clicks <b>Geschäftskontakte</b> verschiedener Länder erwerben.<br>Dies ist eine <b>schnelle und bequeme</b> Methode, um Daten zu einem vernünftigen Preis zu erhalten.<br>Alle Daten werden <b>ständig aktualisiert</b>m so dass Sie sich keine Sorgen machen müssen.<br><br><a href=\"http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0LnNzdXJobGZzZWVsdGEtLm10cmVzb2YvY2VtL2xpZ25pYWlnaV9hbC9zOG1lOXgyOTdzZW1hL2VlL2xwZWxheHB4Q18ubXhzfEhsODh8Y2M%3D\" target=\"_blank\">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0LnNzdXJobGZzZWVsdGEtLm10cmVzb2YvY2VtL2xpZ25pYWlnaV9hbC9zOG1lOXgyOTdzZW1hL2VlL2xwZWxheHB4Q18ubXhzfEhsODh8Y2M%3D</a>     <a href=\"http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY%3D\" target=\"_blank\">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY%3D</a><br><br>XLS-Muster herunterladen (<a href=\"http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0LnNzdXJobGZzZWVsdGEtLm10cmVzb2YvY2VtL2xpZ25pYWlnaV9hbC9zOG1lOXgyOTdzZW1hL2VlL2xwZWxheHB4Q18ubXhzfEhsODh8Y2M%3D\" target=\"_blank\">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0LnNzdXJobGZzZWVsdGEtLm10cmVzb2YvY2VtL2xpZ25pYWlnaV9hbC9zOG1lOXgyOTdzZW1hL2VlL2xwZWxheHB4Q18ubXhzfEhsODh8Y2M%3D</a>)<br><br>Datenbank bestellen (<a href=\"http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY%3D\" target=\"_blank\">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY%3D</a>)<br><br><b>Die Anmeldung ist absolut kostenlos und unverbindlich.</b> Sie können die Kataloge gemäß Ihren eigenen Kriterien filtern und ein kostenloses Datenmuster bestellen, sobald Sie sich angemeldet haben.<br></b><br><br> <b>Wir haben Datenbanken der folgenden Länder:</b><br><br><ul><li>Österreich</li><li>Belgien</li><li>Belarus</li><li>Schweiz</li><li>Tschechische Republik</li><li>Deutschland</li><li>Estland</li><li>Frankreich</li><li>Vereinigtes Königreich</li><li>Ungarn</li><li>Irland</li>                        </ul> <ul><li>Italien</li><li>Liechtenstein</li><li>Litauen<li>Luxemburg</li><li>Lettland</li><li>Niederlande</li><li>Polen</li><li>Russland</li><li>Slowenien</li><li>Slowakei</li><li>Ukraine</li>                        </ul><br><br>Anwendungsmöglichkeiten für Geschäftskontakte<br><br><ul><li><i>Newsletter senden</i> - Senden von Werbung per E-Mail (besonders effizient).</li><li><i>Telemarketing</i> - Telefonwerbung.</li><li><i>SMS-Marketing</i> - Senden von Kurznachrichten.</li><li><i>Gezielte Werbung</i> - Briefpostwerbung.</li><li><i>Marktforschung</i> - Telefonumfragen zur Erforschung Ihrer Produkte oder Dienstleistungen.</li>                  </ul><br><br>Sie können <b>Abschnitte wählen (filtern)</b> Empfänger gemäß Tätigkeitsbereichen und Standort der Firmen, um die Effizienz Ihrer Werbemaßnahmen zu erhöhen.<br><br>Für jeden Kauf von <b>2016-11-05 23:59:59</b><br>wir gewähren <b>30%</b> Rabatt<br><b>RABATTCODE: WZ2124DD</b><br><br><b>Bestellen Sie online bei:</b><br><br>company-catalogs.com<br><br><b>Für weitere Informationen:</b><br><br>E-Mail: <b>databases.en@example.com</b><br>Telefon: +370-52-071554 (languages: EN, PL, RU, LT)<br><br>Unsubscribe from newsletter: Click here (<a href=\"http://business-catalogs.example.com/c2JudXVlcmNic2I4MWk7MTgxOTMyNS1jMmMtNzA%3D\" target=\"_blank\">http://business-catalogs.example.com/c2JudXVlcmNic2I4MWk7MTgxOTMyNS1jMmMtNzA%3D</a>)",
+          body: '<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxnawvplguzzhx4bnxlzwy=" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxnawvplguzzhx4bnxlzwy=</a> <br><br><p><i>Geben Sie diese Information an den Direktor oder den für Marketing und Umsatzsteigerung verantwortlichen Mitarbeiter Ihrer Firma weiter!</i></p><br><br><p>Hallo,</p><ul> <li>Sie suchen nach Möglichkeiten, den Umsatz Ihre Firma zu steigern?</li>
+<li>Sie brauchen neue Geschäftskontakte?</li>
+<li>Sie sind es leid, Kontaktdaten manuell zu erfassen?</li>
+<li>Ihr Kontaktdatenanbieter ist zu teuer oder Sie sind mit seinen Dienstleistungen unzufrieden?</li>
+<li>Sie möchten Ihre Kontaktinformationen gern effizienter auf dem neuesten Stand halten?</li> </ul> <p><br>Bei uns können Sie mit nur wenigen Clicks <b>Geschäftskontakte</b> verschiedener Länder erwerben.</p><p>Dies ist eine<b>schnelle und bequeme</b> Methode, um Daten zu einem vernünftigen Preis zu erhalten.</p><p>Alle Daten werden<b>ständig aktualisiert</b>m so dass Sie sich keine Sorgen machen müssen.</p><p>&nbsp;</p><br><a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0lnnzdxjobgzzzwvsdgetlm10cmvzb2yvy2vtl2xpz25pywlnav9hbc9zog1loxgyotdzzw1hl2vll2xwzwxhehb4q18ubxhzfehsodh8y2m=" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0lnnzdxjobgzzzwvsdgetlm10cmvzb2yvy2vtl2xpz25pywlnav9hbc9zog1loxgyotdzzw1hl2vll2xwzwxhehb4q18ubxhzfehsodh8y2m=</a>  <a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxnawvplguzzhx4bnxlzwy=" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxnawvplguzzhx4bnxlzwy=</a> <br><br><p>XLS-Muster herunterladen
+                                                 (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0lnnzdxjobgzzzwvsdgetlm10cmvzb2yvy2vtl2xpz25pywlnav9hbc9zog1loxgyotdzzw1hl2vll2xwzwxhehb4q18ubxhzfehsodh8y2m=" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0lnnzdxjobgzzzwvsdgetlm10cmvzb2yvy2vtl2xpz25pywlnav9hbc9zog1loxgyotdzzw1hl2vll2xwzwxhehb4q18ubxhzfehsodh8y2m=</a>)</p><p>Datenbank bestellen
+                                                 (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxnawvplguzzhx4bnxlzwy=" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxnawvplguzzhx4bnxlzwy=</a>)</p><br> <br> <p><b>Die Anmeldung ist absolut kostenlos und unverbindlich.</b> Sie können die Kataloge gemäß Ihren eigenen Kriterien filtern und ein kostenloses Datenmuster bestellen, sobald Sie sich angemeldet haben.<br> </p><br><br><p> <b>Wir haben Datenbanken der folgenden Länder:</b> </p><br> <li>Österreich (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nuqwvpmjz8fgex" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nuqwvpmjz8fgex</a>)</li>
+<li>Belgien (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nfqmvpyzr8fgnh" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nfqmvpyzr8fgnh</a>)</li>
+<li>Belarus (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nzqmvpmgj8fdaw" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nzqmvpmgj8fdaw</a>)</li> <li>Schweiz (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3niq2vpyjf8fgy4" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3niq2vpyjf8fgy4</a>)</li>
+<li>Tschechische Republik (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3naq2vpmtz8fdc1" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3naq2vpmtz8fdc1</a>)</li>
+<li>Deutschland (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nfrgvpmdl8fdm1" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nfrgvpmdl8fdm1</a>)</li>
+<li>Estland (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nfrwvpytd8fgnm" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nfrwvpytd8fgnm</a>)</li>
+<li>Frankreich (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nsrmvpngn8fdbl" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nsrmvpngn8fdbl</a>)</li>
+<li>Vereinigtes Königreich (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3ncr2vpnjh8fda4" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3ncr2vpnjh8fda4</a>)</li>
+<li>Ungarn (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nvsgvpndb8fgqx" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nvsgvpndb8fgqx</a>)</li>
+<li>Irland (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nfswvpndd8fgni" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nfswvpndd8fgni</a>)</li> <li>Italien (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nuswvpotj8fdu3" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nuswvpotj8fdu3</a>)</li>
+<li>Liechtenstein (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3njtgvpntf8fdlk" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3njtgvpntf8fdlk</a>)</li>
+<li>Litauen (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nutgvpn2r8fdgw" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nutgvpn2r8fdgw</a>)</li>
+<li>Luxemburg (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nvtgvpnwz8fgzh" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nvtgvpnwz8fgzh</a>)</li>
+<li>Lettland (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nwtgvpzwz8fde2" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nwtgvpzwz8fde2</a>)</li>
+<li>Niederlande (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nmtmvpotv8fdqw" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nmtmvpotv8fdqw</a>)</li>
+<li>Polen (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nmugvpngv8fdbm" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nmugvpngv8fdbm</a>)</li>
+<li>Russland (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nvumvpztv8fgvk" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nvumvpztv8fgvk</a>)</li>
+<li>Slowenien (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nju2vpn2r8fgyz" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nju2vpn2r8fgyz</a>)</li>
+<li>Slowakei (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nlu2vpnjz8fdq5" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nlu2vpnjz8fdq5</a>)</li>
+<li>Ukraine (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nbvwvpytd8fdnh" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxny25plgusdxj0b3nbvwvpytd8fdnh</a>)</li> <br><br><p>Anwendungsmöglichkeiten für Geschäftskontakte<br> <br> </p><ul> <li>
+<i>Newsletter senden</i> - Senden von Werbung per E-Mail (besonders effizient).</li>
+<li>
+<i>Telemarketing</i> - Telefonwerbung.</li>
+<li>
+<i>SMS-Marketing</i> - Senden von Kurznachrichten.</li>
+<li>
+<i>Gezielte Werbung</i> - Briefpostwerbung.</li>
+<li>
+<i>Marktforschung</i> - Telefonumfragen zur Erforschung Ihrer Produkte oder Dienstleistungen.</li> </ul> <p>&nbsp;</p><p>Sie können<b>Abschnitte wählen (filtern)</b> Empfänger gemäß Tätigkeitsbereichen und Standort der Firmen, um die Effizienz Ihrer Werbemaßnahmen zu erhöhen.</p><p>&nbsp;</p><br><p>Für jeden Kauf von<b>2016-11-05 23:59:59</b> </p><p>wir gewähren<b>30%</b> Rabatt</p><p><b>RABATTCODE: WZ2124DD</b></p><br><br><p><b>Bestellen Sie online bei:</b><br> </p><p>company-catalogs.com (<a href="http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxnawvplguzzhx4bnxlzwy=" rel="nofollow" target="_blank">http://business-catalogs.example.com/odtpbgs5mwizbjuyyzexlta4yy06mmg7n3avl3r0bmfvy3b0lxlhbw9sc2nhb3nnyy5ll3rpbxjlzi9lbs9ycnjuawfpzxmsdgxnawvplguzzhx4bnxlzwy=</a>)<br> </p><p><b>Für weitere Informationen:</b><br> </p><p>E-Mail:databases.en@example.com<br> Telefon: +370-52-071554 (languages: EN, PL, RU, LT)</p><br><br>Unsubscribe from newsletter: Click here (<a href="http://business-catalogs.example.com/c2judxvlcmnic2i4mwk7mtgxotmyns1jmmmtnza=" rel="nofollow" target="_blank">http://business-catalogs.example.com/c2judxvlcmnic2i4mwk7mtgxotmyns1jmmmtnza=</a>)'
         },
       },
       {
@@ -740,6 +1041,9 @@ end
             if attachment[:md5] == file_md5
               found = true
               assert_equal(attachment[:filename], attachment_parser[:filename])
+              if attachment[:cid]
+                assert_equal(attachment[:cid], attachment_parser[:preferences]['Content-ID'])
+              end
             end
           }
           if !found

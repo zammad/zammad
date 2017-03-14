@@ -65,7 +65,7 @@ class TicketXssTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     assert_equal("please tell me this doesn't work: <table>ada<tr></tr>
-</table><div class=\"adasd\"></div><div>
+</table><div></div><div>
 <a>LINK</a><a href=\"http://lalal.de\" rel=\"nofollow\" target=\"_blank\">aa</a>ABC</div>", article3.body, 'article3.body verify - inbound')
 
     article4 = Ticket::Article.create(

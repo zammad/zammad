@@ -219,7 +219,7 @@ class TweetBase
       sender_id:   Ticket::Article::Sender.find_by(name: 'Customer').id,
       internal:    false,
       preferences: {
-        twitter: preferences,
+        twitter: preferences_cleanup(preferences),
         links: [
           {
             url: "https://twitter.com/statuses/#{tweet.id}",
@@ -371,6 +371,19 @@ class TweetBase
       return true
     end
     false
+  end
+
+  def preferences_cleanup(preferences)
+
+    # replace Twitter::NullObject with nill to prevent elasticsearch index issue
+    preferences.each { |_key, value|
+      next if value.class != ActiveSupport::HashWithIndifferentAccess
+      value.each { |sub_key, sub_level|
+        next if sub_level.class != Twitter::NullObject
+        value[sub_key] = nil
+      }
+    }
+    preferences
   end
 
 end
