@@ -124,7 +124,7 @@ Some Textäöü".encode('ISO-8859-1'),
         result: {
           0 => {
             priority: '2 normal',
-            title: '-', # should be äöü some subject, but can not be parsed from mime tools
+            title: 'äöü some subject',
           },
           1 => {
             body: 'Some Textäöü',
@@ -2171,7 +2171,32 @@ Some Text',
               email: 'abuse@domain.com',
             },
           ],
-        }
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail46.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: '×ª·¢£ºÕûÌåÌáÉýÆóÒµ·þÎñË®Æ½',
+          },
+          1 => {
+            from: '"ÎäÀ¼³É" <Glopelf7121@example.com>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'ÎäÀ¼³É',
+              lastname: '',
+              fullname: 'ÎäÀ¼³É',
+              email: 'glopelf7121@example.com',
+            },
+          ],
+        },
       },
     ]
     assert_process(files)

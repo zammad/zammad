@@ -555,7 +555,7 @@ Newsletter abbestellen (<a href="http://newsletters.cylex.de/ref/www.cylex.de/si
         body_md5: '790a98dd429733c7fd8afc6fdd82e2a2',
         params: {
           from: '"我" <>',
-          from_email: '"=?GB2312?B?ztI=?=" <>',
+          from_email: '"我" <>',
           from_display_name: '',
           subject: '《欧美简讯》',
           to: '377861373 <377861373@qq.com>',

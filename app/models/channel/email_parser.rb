@@ -74,31 +74,42 @@ class Channel::EmailParser
     mail = Mail.new(msg)
 
     # set all headers
-    mail.header.fields.select(&:name).each { |field|
+    mail.header.fields.each { |field|
 
       # full line, encode, ready for storage
       begin
-        data[field.name.to_s.downcase.to_sym] = Encode.conv('utf8', field.to_s)
+        value = Encode.conv('utf8', field.to_s)
+        if value.blank?
+          value = field.raw_value
+        end
+        data[field.name.to_s.downcase.to_sym] = value
       rescue => e
-        data[field.name.to_s.downcase.to_sym] = e.message
+        data[field.name.to_s.downcase.to_sym] = field.raw_value
       end
 
       # if we need to access the lines by objects later again
       data["raw-#{field.name.downcase}".to_sym] = field
     }
 
+    # verify content, ignore recipients with non email address
+    ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |field|
+      next if data[field.to_sym].blank?
+      next if data[field.to_sym] =~ /@/
+      data[field.to_sym] = ''
+    }
+
     # get sender
     from = nil
     ['from', 'reply-to', 'return-path'].each { |item|
-      next if !mail[item.to_sym]
-      from = mail[item.to_sym].value
+      next if data[item.to_sym].blank?
+      from = data[item.to_sym]
       break if from
     }
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
     ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |item|
-      next if !mail[item.to_sym]
+      next if data[item.to_sym].blank?
       if data['x-any-recipient'.to_sym] != ''
         data['x-any-recipient'.to_sym] += ', '
       end
@@ -689,6 +700,14 @@ returns
 end
 
 module Mail
+
+  # workaround to get content of no parseable headers - in most cases with non 7 bit ascii signs
+  class Field
+    def raw_value
+      value = Encode.conv('utf8', @raw_value)
+      value.sub(/^.+?:(\s|)/, '')
+    end
+  end
 
   # workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/fixtures/mail9.box)
   module Encodings
