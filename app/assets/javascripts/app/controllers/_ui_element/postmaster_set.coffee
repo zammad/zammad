@@ -2,64 +2,94 @@
 class App.UiElement.postmaster_set
   @defaults: ->
     groups =
-      general:
+      ticket:
         name: 'Ticket'
         options: [
           {
-            value:    'x-zammad-ticket-priority_id'
+            value:    'priority_id'
             name:     'Priority'
             relation: 'TicketPriority'
-          },
+          }
           {
-            value:    'x-zammad-ticket-state_id'
+            value:    'state_id'
             name:     'State'
             relation: 'TicketState'
-          },
+          }
           {
-            value:    'x-zammad-ticket-customer_id'
+            value:    'customer_id'
             name:     'Customer'
             relation: 'User'
             tag:      'user_autocompletion'
-            disableCreateUser: true,
-          },
+            disableCreateUser: true
+          }
           {
-
-            value:    'x-zammad-ticket-group_id'
+            value:    'group_id'
             name:     'Group'
             relation: 'Group'
-          },
+          }
           {
-            value:    'x-zammad-ticket-owner_id'
+            value:    'owner_id'
             name:     'Owner'
             relation: 'User'
             tag:      'user_autocompletion'
-            disableCreateUser: true,
-          },
-          {
-            value:    'x-zammad-ignore'
-            name:     'Ignore Message'
-            options:  { true: 'yes', false: 'no'}
-          },
+            disableCreateUser: true
+          }
         ]
-      expert:
+      article:
         name: 'Article'
         options: [
           {
             value:    'x-zammad-article-internal'
             name:     'Internal'
             options:  { true: 'yes', false: 'no'}
-          },
+          }
           {
             value:    'x-zammad-article-type_id'
             name:     'Type'
             relation: 'TicketArticleType'
-          },
+          }
           {
             value:    'x-zammad-article-sender_id'
             name:     'Sender'
             relation: 'TicketArticleSender'
-          },
+          }
         ]
+      expert:
+        name: 'Expert'
+        options: [
+          {
+            value:    'x-zammad-ignore'
+            name:     'Ignore Message'
+            options:  { true: 'yes', false: 'no'}
+          }
+        ]
+
+    # add additional ticket attributes
+    for row in App.Ticket.configure_attributes
+      exists = false
+      for item in groups.ticket.options
+        if item.value is row.name
+          exists = true
+
+        # do not support this types
+        else if row.tag is 'datetime' || row.tag is 'date' || row.tag is 'tag'
+          exists = true
+
+      # ignore passwords and relations
+      if !exists && row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids'
+
+        # ignore readonly attributes
+        if !row.readonly
+          item =
+            value:    row.name
+            name:     row.display
+            relation: row.relation
+            tag:      row.tag
+            options:  row.options
+          groups.ticket.options.push item
+
+    for item in groups.ticket.options
+      item.value = "x-zammad-ticket-#{item.value}"
 
     groups
 
@@ -91,7 +121,6 @@ class App.UiElement.postmaster_set
     item.find('.js-attributeSelector select').bind('change', (e) =>
       key = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
-
       @rebuildAttributeSelectors(item, elementRow, key, attribute)
       @buildValue(item, elementRow, key, groups, undefined, undefined, attribute)
     )
@@ -130,7 +159,7 @@ class App.UiElement.postmaster_set
     for groupName, meta of groups
       for entry in meta.options
         if entry.value is key
-          config = entry
+          config = clone(entry)
     if !config.tag
       if config.relation || config.options
         config['tag'] = 'select'
