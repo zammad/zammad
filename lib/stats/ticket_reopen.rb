@@ -25,7 +25,7 @@ class Stats::TicketReopen
 
     reopen_in_precent = 0
     if total.nonzero?
-      reopen_in_precent = ( count.to_f / (total.to_f / 100) ).round(3)
+      reopen_in_precent = ( count.to_f / (total.to_f / 100) ).round(1)
     end
     {
       used_for_average: reopen_in_precent,
