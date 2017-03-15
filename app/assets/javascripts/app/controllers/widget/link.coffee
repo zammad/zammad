@@ -185,4 +185,14 @@ class App.LinkAdd extends App.ControllerModal
       success: (data, status, xhr) =>
         @close()
         @parent.fetch()
+      error: (xhr, statusText, error) =>
+        detailsRaw = xhr.responseText
+        details = {}
+        if !_.isEmpty(detailsRaw)
+          details = JSON.parse(detailsRaw)
+        @notify(
+          type:      'error'
+          msg:       App.i18n.translateContent(details.error)
+          removeAll: true
+        )
     )
