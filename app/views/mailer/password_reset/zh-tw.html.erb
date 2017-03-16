@@ -1,0 +1,15 @@
+重設你在 #{config.product_name} 上的密碼
+
+<div>你好, #{user.firstname}:</div>
+<br>
+<div>#{config.product_name} 系統接收到賬號 <b>#{user.login}</b> 重設密碼的要求.</div>
+<br>
+<div>如果確認是你需要重設密碼, 請點入如下的連結(或復制該網址并粘貼到瀏覽器的網址列):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>這個網址會指引重設你的密碼.</div>
+<br>
+<div>如果你不需要(或不是你发出的要求)重設你的密碼, 你無需理會這封電郵, 繼續使用原來的密碼.</div>
+<br>
+<div>你的 #{config.product_name} 團隊</div>

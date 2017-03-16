@@ -1,0 +1,13 @@
+邀请您来 #{config.fqdn} 使用 #{config.product_name}
+
+<div>您好, #{user.firstname}:</div>
+<br>
+<div>我 (#{current_user.lastname} #{current_user.firstname}) 真诚地邀请您使用 #{config.product_name} - 我们的客户支持系统 / 工单管理平台.</div>
+<br>
+<div>点击 <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">这里</a> 来设置您的密码.</div>
+<br>
+<div>祝您使用愉快,</div>
+<br>
+<div>#{current_user.lastname} #{current_user.firstname}</div>
+<br>
+<div>您的 #{config.product_name} 团队</div>

@@ -1,0 +1,9 @@
+验证您在 #{config.product_name} 注册的邮件地址
+
+<div>您好, #{user.firstname}:</div>
+<br>
+<div>验证您在注册 #{config.product_name} 时所使用的电子邮件地址, 您只需要点击下面的连接即可.</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</a></div>
+<br>
+<div>您的 #{config.product_name} 团队</div>

@@ -1,0 +1,19 @@
+偵測到在新的國家或地區登入了 #{config.product_name}
+
+<div>你好, #{user.firstname}:</div>
+<br>
+<div>你是否在 "#{user_device.created_at}" 使用<b>已知的裝置在新的國家或地區</b>登入過系統:</div>
+<br>
+<div>
+裝置名稱: #{user_device.name}<br>
+大概位址: #{user_device.location}<br>
+IP 位址: #{user_device.ip}<br>
+</div>
+<br>
+<div>你可以登入下面的網址查看有那些裝置被添加到已知的清單里:</div>
+<br>
+<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
+<br>
+<div>如果發現不是你熟悉的裝置, 請刪除這個裝置, 然后更改賬號密碼, 并立即向系統管理員報告, 有可能是別人未經許可登入了你的賬號.</div>
+<br>
+<div>你的 #{config.product_name} 團隊</div>
