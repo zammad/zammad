@@ -539,6 +539,10 @@ Men-----------------------'
     result = '<a href="http://example.com?a=1;" rel="nofollow" target="_blank">http://example.com?a=1;</a>'
     assert_equal(result, html.html2html_strict)
 
+    html   = '<A href="http://example.com/withSoMeUpper/And/downCase">http://example.com/withSoMeUpper/And/downCase</A>'
+    result = '<a href="http://example.com/withSoMeUpper/And/downCase" rel="nofollow" target="_blank">http://example.com/withSoMeUpper/And/downCase</a>'
+    assert_equal(result, html.html2html_strict)
+
     html   = '<a href="http://web.de">web.de</a>'
     result = '<a href="http://web.de" rel="nofollow" target="_blank">web.de</a>'
     assert_equal(result, html.html2html_strict)
@@ -796,7 +800,7 @@ christian.schaefer@example.com'
 <p>T: +49 (0) 12345/1234560-0</p>
 <p>F: +49 (0) 12345/1234560-2</p>
 <p>annad@example.com</p>
-<p><a href="http://www.example.com/" rel="nofollow" target="_blank">www.example.com</a> <a href="http://www.abc.com/" rel="nofollow" target="_blank">www.ABC.com</a></p>
+<p><a href="http://www.example.com/" rel="nofollow" target="_blank">www.example.com</a> <a href="http://www.ABC.com/" rel="nofollow" target="_blank">www.ABC.com</a></p>
 <p>Geschäftsführer Vor Nach, VorUndZu Nach - Amtsgericht Dort HRB 12345 - Ein Unternehmer der ABC Gruppe</p>
 </div>
 </div>'

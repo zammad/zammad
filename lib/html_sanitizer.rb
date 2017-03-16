@@ -50,7 +50,7 @@ satinize html string based on whiltelist
       # prepare src attribute
       if node['src']
         src = cleanup_target(node['src'])
-        if src =~ /(javascript|livescript|vbscript):/i || src.start_with?('http', 'ftp', '//')
+        if src =~ /(javascript|livescript|vbscript):/i || src.downcase.start_with?('http', 'ftp', '//')
           node.remove
           Loofah::Scrubber::STOP
         end
@@ -137,7 +137,7 @@ satinize html string based on whiltelist
       # prepare links
       if node['href']
         href = cleanup_target(node['href'])
-        next if !href.start_with?('http', 'ftp', '//')
+        next if !href.downcase.start_with?('http', 'ftp', '//')
         node.set_attribute('href', href)
         node.set_attribute('rel', 'nofollow')
         node.set_attribute('target', '_blank')
@@ -338,7 +338,7 @@ cleanup html string:
   end
 
   def self.cleanup_target(string)
-    URI.unescape(string).downcase.gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '')
+    URI.unescape(string).gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '')
   end
 
   def self.url_same?(url_new, url_old)
