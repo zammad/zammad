@@ -50,6 +50,7 @@
 /public/assets/app
 /public/assets/custom
 /public/assets/chat/node_modules
+/public/assets/doorkeeper
 /tmp/*
 /tmp/pids/*
 /storage/fs
@@ -63,3 +64,8 @@
 # see: https://github.com/laserlemon/figaro
 # Ignore application configuration
 /config/application.yml
+
+# Ignore locale config file
+/config/locales.yml
+config/translations/*.*
+
