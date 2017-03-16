@@ -1,6 +1,14 @@
 # Change Log
 
-## [1.1.3](https://github.com/zammad/zammad/tree/1.1.3) (2017-01-16)
+## [1.1.4](https://github.com/zammad/zammad/tree/1.1.4) (2017-03-16)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.1.3...1.1.4)
+
+**Fixed bugs:**
+
+- Disabled macros are still shown in ticket screen [\#838](https://github.com/zammad/zammad/issues/838) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
+
+## [1.1.3](https://github.com/zammad/zammad/tree/1.1.3) (2017-02-15)
 [Full Changelog](https://github.com/zammad/zammad/compare/1.1.2...1.1.3)
 
 **Fixed bugs:**
