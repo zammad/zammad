@@ -1,5 +1,18 @@
 # Change Log
 
+## [1.3.1](https://github.com/zammad/zammad/tree/1.3.1) (2017-03-16)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.3.0...1.3.1)
+
+**Fixed bugs:**
+
+- multiplication of the attachment-field in \#channels/form [\#833](https://github.com/zammad/zammad/issues/833) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Disabled macros are still shown in ticket screen [\#838](https://github.com/zammad/zammad/issues/838) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Can't select object with type date as filter for overviews [\#821](https://github.com/zammad/zammad/issues/821) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Simple triggers resulting in error condition [\#779](https://github.com/zammad/zammad/issues/779) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- User password reset doesn't work - user not able to login [\#791](https://github.com/zammad/zammad/issues/791) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- admin interface -\> time accounting setting will not be saved [\#677](https://github.com/zammad/zammad/issues/677) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
+
+
 ## [1.3.0](https://github.com/zammad/zammad/tree/1.3.0) (2017-02-15)
 [Full Changelog](https://github.com/zammad/zammad/compare/1.2.0...1.3.0)
 
