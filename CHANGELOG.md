@@ -11,6 +11,7 @@
 - Simple triggers resulting in error condition [\#779](https://github.com/zammad/zammad/issues/779) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - User password reset doesn't work - user not able to login [\#791](https://github.com/zammad/zammad/issues/791) [[bug](https://github.com/zammad/zammad/labels/bug)]
 - admin interface -\> time accounting setting will not be saved [\#677](https://github.com/zammad/zammad/issues/677) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX/UI)]
+- Telegram: Open communication with only a picture [\#774](https://github.com/zammad/zammad/issues/774) [[bug](https://github.com/zammad/zammad/labels/bug)]
 
 
 ## [1.3.0](https://github.com/zammad/zammad/tree/1.3.0) (2017-02-15)
