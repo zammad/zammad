@@ -129,8 +129,7 @@ class Channel::EmailParser
         data[:from_email]        = "#{$2}@#{$3}"
         data[:from_local]        = $2
         data[:from_domain]       = $3
-        data[:from_display_name] = $1.strip
-        data[:from_display_name].delete!('"')
+        data[:from_display_name] = $1
       else
         data[:from_email]  = from
         data[:from_local]  = from
@@ -140,6 +139,10 @@ class Channel::EmailParser
 
     # do extra decoding because we needed to use field.value
     data[:from_display_name] = Mail::Field.new('X-From', data[:from_display_name]).to_s
+    data[:from_display_name].delete!('"')
+    data[:from_display_name].strip!
+    data[:from_display_name].gsub!(/^'/, '')
+    data[:from_display_name].gsub!(/'$/, '')
 
     # compat headers
     data[:message_id] = data['message-id'.to_sym]
