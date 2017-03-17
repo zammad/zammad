@@ -1,0 +1,5 @@
+web: bundle exec puma -p 3000
+worker: bundle exec script/scheduler.rb start -t
+websocket: bundle exec script/websocket-server.rb start
+guard: bundle exec guard -P livereload
+gulp: bundle exec gulp

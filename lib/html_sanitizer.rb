@@ -50,7 +50,7 @@ satinize html string based on whiltelist
       # prepare src attribute
       if node['src']
         src = cleanup_target(node['src'])
-        if src =~ /(javascript|livescript|vbscript):/i || src.start_with?('http', 'ftp', '//')
+        if src =~ /(javascript|livescript|vbscript):/i || src.downcase.start_with?('http', 'ftp', '//')
           node.remove
           Loofah::Scrubber::STOP
         end
@@ -137,7 +137,7 @@ satinize html string based on whiltelist
       # prepare links
       if node['href']
         href = cleanup_target(node['href'])
-        next if !href.start_with?('http', 'ftp', '//')
+        next if !href.downcase.start_with?('http', 'ftp', '//')
         node.set_attribute('href', href)
         node.set_attribute('rel', 'nofollow')
         node.set_attribute('target', '_blank')
@@ -338,7 +338,7 @@ cleanup html string:
   end
 
   def self.cleanup_target(string)
-    URI.unescape(string).downcase.gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '')
+    URI.unescape(string).gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '')
   end
 
   def self.url_same?(url_new, url_old)
@@ -350,6 +350,73 @@ cleanup html string:
     return true if "https://#{url_new}" == url_old
     return true if "https://#{url_old}" == url_new
     false
+  end
+
+=begin
+
+reolace inline images with cid images
+
+  string = HtmlSanitizer.replace_inline_images(article.body)
+
+=end
+
+  def self.replace_inline_images(string, prefix = rand(999_999_999))
+    attachments_inline = []
+    scrubber = Loofah::Scrubber.new do |node|
+      if node.name == 'img'
+        if node['src'] && node['src'] =~ %r{^(data:image/(jpeg|png);base64,.+?)$}i
+          file_attributes = StaticAssets.data_url_attributes($1)
+          cid = "#{prefix}.#{rand(999_999_999)}@#{Setting.get('fqdn')}"
+          attachment = {
+            data: file_attributes[:content],
+            filename: cid,
+            preferences: {
+              'Content-Type' => file_attributes[:mime_type],
+              'Mime-Type' => file_attributes[:mime_type],
+              'Content-ID' => cid,
+              'Content-Disposition' => 'inline',
+            },
+          }
+          attachments_inline.push attachment
+          node['src'] = "cid:#{cid}"
+        end
+        Loofah::Scrubber::STOP
+      end
+    end
+    [Loofah.fragment(string).scrub!(scrubber).to_s, attachments_inline]
+  end
+
+=begin
+
+satinize style of img tags
+
+  string = HtmlSanitizer.dynamic_image_size(article.body)
+
+=end
+
+  def self.dynamic_image_size(string)
+    scrubber = Loofah::Scrubber.new do |node|
+      if node.name == 'img'
+        if node['src']
+          style = 'max-width:100%;'
+          if node['style']
+            pears = node['style'].downcase.gsub(/\t|\n|\r/, '').split(';')
+            pears.each { |local_pear|
+              prop = local_pear.split(':')
+              next if !prop[0]
+              key = prop[0].strip
+              if key == 'height'
+                key = 'max-height'
+              end
+              style += "#{key}:#{prop[1]};"
+            }
+          end
+          node['style'] = style
+        end
+        Loofah::Scrubber::STOP
+      end
+    end
+    Loofah.fragment(string).scrub!(scrubber).to_s
   end
 
   private_class_method :cleanup_target

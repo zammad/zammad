@@ -7,7 +7,9 @@
           <%- @Icon('diagonal-cross') %>
         </div>
   <% end %>
+  <% if @head: %>
         <h1 class="modal-title"><% if @headPrefix: %><%- @T(@headPrefix) %>: <% end %><%- @T(@head) %></h1>
+  <% end %>
       </div>
       <div class="modal-body">
       <%- @content %>

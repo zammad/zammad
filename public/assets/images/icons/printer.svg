@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>printer</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="printer" fill="#50E3C2">
+            <path d="M19,18 L19,16 L5,16 L5,18 L2.99180311,18 C2.44404538,18 2,17.5536886 2,17.0024554 L2,9.99754465 C2,9.44661595 2.45530558,9 2.99180311,9 L21.0081969,9 C21.5559546,9 22,9.4463114 22,9.99754465 L22,17.0024554 C22,17.553384 21.5446944,18 21.0081969,18 L19,18 Z M5,9 L5,11 L19,11 L19,9 L5,9 Z" id="Combined-Shape"></path>
+            <path d="M5,2.99180311 C5,2.44404538 5.389052,2 5.8757627,2 L15,2 L19,6 L19,21.0081969 C19,21.5559546 18.610948,22 18.1242373,22 L5.8757627,22 C5.39209232,22 5,21.5446944 5,21.0081969 L5,2.99180311 Z M6,21.0081969 C6,21.0032436 17.9998718,21 17.9998718,21 C18.0001603,21 17.9998718,7 17.9998718,7 C17.9998718,7.00117314 14,3 14,3 L6.00074717,3 C6.00045867,3 6,21.0081969 6,21.0081969 Z" id="Rectangle-4" fill-rule="nonzero"></path>
+            <path d="M15,6 C15,5.99504675 18,6 18,6 C18.0003366,6 15,3 15,3 C14.9996634,3 15,6 15,6 Z M14,2 L19,7 L15.0008717,7 C14.4481055,7 14,6.54469442 14,6.00819689 L14,2 Z" id="Rectangle-4-Copy" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

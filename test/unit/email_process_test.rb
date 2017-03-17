@@ -124,7 +124,7 @@ Some Textäöü".encode('ISO-8859-1'),
         result: {
           0 => {
             priority: '2 normal',
-            title: '-', # should be äöü some subject, but can not be parsed from mime tools
+            title: 'äöü some subject',
           },
           1 => {
             body: 'Some Textäöü',
@@ -1863,6 +1863,74 @@ AElFTkSuQmCC
         },
       },
       {
+        data: 'From: =?UTF-8?Q?=22Frieda_H=C3=B6flich1=22?= <frieda.hoeflich1@example.com>
+To: =?UTF-8?Q?=22Bob1=22?= <bod+frieda.hoeflich1@example.com>
+Subject: some subject frieda hoeflich1
+
+Some Text',
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'some subject frieda hoeflich1',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Frieda',
+              lastname: 'Höflich1',
+              fullname: 'Frieda Höflich1',
+              email: 'frieda.hoeflich1@example.com',
+            },
+            {
+              firstname: 'Bob1',
+              lastname: '',
+              fullname: 'Bob1',
+              email: 'bod+frieda.hoeflich1@example.com',
+            },
+          ],
+        }
+      },
+      {
+        data: 'From: =?utf-8?Q?=27Frieda_H=C3=B6flich2=27?= <frieda.hoeflich2@example.com>
+To: =?utf-8?Q?=27Bob2=27?= <bod+frieda.hoeflich2@example.com>
+Subject: some subject frieda hoeflich2
+
+Some Text',
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'some subject frieda hoeflich2',
+          },
+          1 => {
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Frieda',
+              lastname: 'Höflich2',
+              fullname: 'Frieda Höflich2',
+              email: 'frieda.hoeflich2@example.com',
+            },
+            {
+              firstname: 'Bob2',
+              lastname: '',
+              fullname: 'Bob2',
+              email: 'bod+frieda.hoeflich2@example.com',
+            },
+          ],
+        }
+      },
+      {
         data: 'From: Some Body <somebody@example.com>
 To: Bob <bod@example.com>
 Cc: any+1@example.com
@@ -2171,7 +2239,32 @@ Some Text',
               email: 'abuse@domain.com',
             },
           ],
-        }
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail46.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: '×ª·¢£ºÕûÌåÌáÉýÆóÒµ·þÎñË®Æ½',
+          },
+          1 => {
+            from: '"ÎäÀ¼³É" <Glopelf7121@example.com>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'ÎäÀ¼³É',
+              lastname: '',
+              fullname: 'ÎäÀ¼³É',
+              email: 'glopelf7121@example.com',
+            },
+          ],
+        },
       },
     ]
     assert_process(files)

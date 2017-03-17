@@ -50,9 +50,10 @@ class ArticleViewItem extends App.ObserverController
     '.textBubble-overflowContainer': 'textBubbleOverflowContainer'
 
   events:
-    'click .textBubble':    'toggleMetaWithDelay'
-    'click .textBubble a':  'stopPropagation'
-    'click .js-toggleFold': 'toggleFold'
+    'click .textBubble':           'toggleMetaWithDelay'
+    'click .textBubble a':         'stopPropagation'
+    'click .js-toggleFold':        'toggleFold'
+    'click .richtext-content img': 'imageView'
 
   constructor: ->
     super
@@ -367,3 +368,8 @@ class ArticleViewItem extends App.ObserverController
 
   remove: =>
     @el.remove()
+
+  imageView: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML)

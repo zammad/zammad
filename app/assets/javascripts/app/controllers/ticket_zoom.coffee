@@ -486,14 +486,10 @@ class App.TicketZoom extends App.Controller
       )
 
     if @sidebar
-
-      # update tags
-      if @sidebar.tagWidget
-        @sidebar.tagWidget.reload(@tags)
-
-      # update links
-      if @sidebar.linkWidget
-        @sidebar.linkWidget.reload(@links)
+      @sidebar.reload(
+        tags: @tags
+        links: @links
+      )
 
     if !@initDone
       if @article_id
@@ -681,12 +677,12 @@ class App.TicketZoom extends App.Controller
       callback:
         tagAdd: (tag) =>
           return if !@sidebar
-          return if !@sidebar.tagWidget
-          @sidebar.tagWidget.add(tag)
+          return if !@sidebar.reload
+          @sidebar.reload(tagAdd: tag)
         tagRemove: (tag) =>
           return if !@sidebar
-          return if !@sidebar.tagWidget
-          @sidebar.tagWidget.remove(tag)
+          return if !@sidebar.reload
+          @sidebar.reload(tagRemove: tag)
     )
 
     # set defaults

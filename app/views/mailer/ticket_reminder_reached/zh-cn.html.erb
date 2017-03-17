@@ -1,0 +1,18 @@
+有关 (#{ticket.title}) 的工单提醒
+
+<div>您好, #{recipient.firstname}:</div>
+<br>
+<div>客户 "<b>#{ticket.customer.longname}</b>" 的工单 (#{ticket.title}) 到达提醒时间, 需要您留意了.</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  #{t('Information')}:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+</div>

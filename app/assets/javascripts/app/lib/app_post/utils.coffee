@@ -46,8 +46,13 @@ class App.Utils
       .replace(/\n{3,20}/g, "\n\n")   # remove multiple empty lines
 
   # htmlEscapedAndLinkified = App.Utils.linkify(rawText)
-  @linkify: (ascii) ->
-    window.linkify(ascii)
+  @linkify: (string) ->
+    window.linkify(string)
+
+  # htmlEscapedAndLinkified = App.Utils.linkify(rawText)
+  @phoneify: (string) ->
+    string = string.replace(/\s+/g, '')
+    "tel://#{encodeURIComponent(string)}"
 
   # wrappedText = App.Utils.wrap(rawText, maxLineLength)
   @wrap: (ascii, max = 82) ->

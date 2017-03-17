@@ -56,9 +56,9 @@ class HtmlSanitizerTest < ActiveSupport::TestCase
     assert_equal(HtmlSanitizer.strict('<A HREF="h
 tt  p://6 6.000146.0x7.147/">XSS</A>'), '<a href="http://66.000146.0x7.147/" rel="nofollow" target="_blank">XSS</a>')
     assert_equal(HtmlSanitizer.strict('<A HREF="h
-tt  p://6 6.000146.0x7.147/">XSS</A>', true), 'http://66.000146.0x7.147/ (<a href="xss" rel="nofollow" target="_blank">XSS</a>)')
+tt  p://6 6.000146.0x7.147/">XSS</A>', true), 'http://66.000146.0x7.147/ (<a href="XSS" rel="nofollow" target="_blank">XSS</a>)')
     assert_equal(HtmlSanitizer.strict('<A HREF="//www.google.com/">XSS</A>'), '<a href="//www.google.com/" rel="nofollow" target="_blank">XSS</a>')
-    assert_equal(HtmlSanitizer.strict('<A HREF="//www.google.com/">XSS</A>', true), '//www.google.com/ (<a href="xss" rel="nofollow" target="_blank">XSS</a>)')
+    assert_equal(HtmlSanitizer.strict('<A HREF="//www.google.com/">XSS</A>', true), '//www.google.com/ (<a href="XSS" rel="nofollow" target="_blank">XSS</a>)')
     assert_equal(HtmlSanitizer.strict('<form id="test"></form><button form="test" formaction="javascript:alert(1)">X</button>'), 'X')
     assert_equal(HtmlSanitizer.strict('<maction actiontype="statusline#http://google.com" xlink:href="javascript:alert(2)">CLICKME</maction>'), 'CLICKME')
     assert_equal(HtmlSanitizer.strict('<a xlink:href="javascript:alert(2)">CLICKME</a>'), '<a>CLICKME</a>')

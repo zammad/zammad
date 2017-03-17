@@ -15,7 +15,7 @@ class LinksController < ApplicationController
     links.each { |item|
       link_list.push item
       if item['link_object'] == 'Ticket'
-        ticket = Ticket.lookup( id: item['link_object_value'] )
+        ticket = Ticket.lookup(id: item['link_object_value'])
         assets = ticket.assets(assets)
       end
     }
@@ -30,14 +30,18 @@ class LinksController < ApplicationController
   # POST /api/v1/links/add
   def add
 
-    # lookup object id
-    object_id = Ticket.where( number: params[:link_object_source_number] ).first.id
+    object = Ticket.find_by(number: params[:link_object_source_number])
+    if !object
+      render json: { error: 'No such object!' }, status: :unprocessable_entity
+      return
+    end
+
     link = Link.add(
       link_type: params[:link_type],
       link_object_target: params[:link_object_target],
       link_object_target_value: params[:link_object_target_value],
       link_object_source: params[:link_object_source],
-      link_object_source_value: object_id
+      link_object_source_value: object.id,
     )
 
     if link

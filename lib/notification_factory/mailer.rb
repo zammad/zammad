@@ -156,6 +156,11 @@ returns
       result[:subject] = data[:main_object].subject_build(result[:subject])
     end
 
+    # prepare scaling of images
+    if result[:body]
+      result[:body] = HtmlSanitizer.dynamic_image_size(result[:body])
+    end
+
     NotificationFactory::Mailer.send(
       recipient: data[:user],
       subject: result[:subject],

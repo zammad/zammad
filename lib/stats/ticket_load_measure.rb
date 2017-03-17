@@ -21,7 +21,7 @@ class Stats::TicketLoadMeasure
     end
 
     if total.nonzero?
-      load_measure_precent = ( count.to_f / (total.to_f / 100) ).round(3)
+      load_measure_precent = ( count.to_f / (total.to_f / 100) ).round(1)
     end
     {
       used_for_average: load_measure_precent,
