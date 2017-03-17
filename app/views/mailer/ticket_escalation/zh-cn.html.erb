@@ -1,0 +1,18 @@
+工单 (#{ticket.title}) 已被升级
+
+<div>您好, #{recipient.firstname}:</div>
+<br>
+<div>来自客户 "<b>#{ticket.customer.longname}</b>" 主题为 (#{ticket.title}) 的工单从 "#{ticket.escalation_at}" 起已经被升级, 请尽快处理!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  #{t('Information')}:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+</div>
