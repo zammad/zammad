@@ -270,6 +270,9 @@ returns
       }
       attributes['attachments'].push item
     }
+    if articles['body'] && articles['content_type'] =~ %r{text/html}i
+      articles['body'] = HtmlSanitizer.dynamic_image_size(articles['body'])
+    end
     Ticket::Article.insert_urls(attributes)
   end
 

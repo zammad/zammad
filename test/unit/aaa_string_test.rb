@@ -215,12 +215,12 @@ you<br/>
     should = 'line 1
 you
 -----&'
-    assert_equal( should, html.html2text)
+    assert_equal(should, html.html2text)
 
     html = ' <ul><li>#1</li><li>#2</li></ul>'
     should = '* #1
 * #2'
-    assert_equal( should, html.html2text)
+    assert_equal(should, html.html2text)
 
     html = '<!DOCTYPE html>
 <html>
@@ -235,7 +235,7 @@ you
 >
 > Thank you for installing Zammad.
 >'
-    assert_equal( should, html.html2text)
+    assert_equal(should, html.html2text)
 
     html = '      <style type="text/css">
     body {
@@ -270,7 +270,7 @@ ont-size: 12px;;
 
     </style><p>some other content</p>'
     should = 'some other content'
-    assert_equal( should, html.html2text)
+    assert_equal(should, html.html2text)
 
     html = '        IT-Infrastruktur</span><br>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -337,7 +337,7 @@ div.wordsection1
 <o:idmap v:ext="edit" data="1" />
 </o:shapelayout></xml><![endif]-->'
     should = 'IT-Infrastruktur'
-    assert_equal( should, html.html2text)
+    assert_equal(should, html.html2text)
 
     html = "<h1>some head</h1>
     some content
@@ -848,6 +848,18 @@ christian.schaefer@example.com'
     result = 'john.smith2@example.com'
     assert_equal(result, html.html2html_strict)
 
+    html   = '<img src="/some.png" style="color: blue; width: 30px; height: 50px">'
+    result = '<img src="/some.png" style=" width: 30px; height: 50px;">'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<img src="/some.png" width="30px" height="50px">'
+    result = '<img src="/some.png" style="width:30px;height:50px;">'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">'
+    result = '<img style="width: 181px; height: 125px;" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">'
+    assert_equal(result, html.html2html_strict)
+
     html   = '<p class="MsoNormal"><a href="http://www.example.de/"><span style="color:blue;text-decoration:none"><img border="0" width="30" height="30" id="_x0000_i1030" src="cid:image001.png@01D172FC.F323CDB0"></span></a><o:p></o:p></p>'
     #result = '<p>http://www.example.de/ <a href="http://www.example.de/" rel="nofollow" target="_blank"><img border="0" src="cid:image001.png@01D172FC.F323CDB0" style="width:30px;height:30px;"></a></p>'
     result = '<p><a href="http://www.example.de/" rel="nofollow" target="_blank">http://www.example.de/</a></p>'
@@ -862,6 +874,51 @@ christian.schaefer@example.com'
     #result = '<p>http://www.example.com/?wm=mail <a href="http://www.example.com/?wm=mail" rel="nofollow" target="_blank"><img border="0" src="cid:example_new.png@8B201D8C.000B" style="width:101px;height:30px;"></a></p>'
     result = '<p><a href="http://www.example.com/?wm=mail" rel="nofollow" target="_blank">http://www.example.com/?wm=mail</a></p>'
     assert_equal(result, html.html2html_strict)
+  end
+
+  test 'inline attachment replace' do
+    html   = '<img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">'
+    (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
+    assert_match(/<img style="width: 181px; height: 125px" src="cid:.+?">/, body)
+    assert(1, attachments_inline.count)
+
+    html   = '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc">'
+    (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
+    assert_match(/<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">/, body)
+    assert(1, attachments_inline.count)
+
+    html   = '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc"><invalid what ever'
+    (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
+    assert_match(/<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">/, body)
+    assert(1, attachments_inline.count)
+
+    html   = '<img src="/some_one.png" style="width: 181px; height: 125px" alt="abc">'
+    (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
+    assert_match(/<img src="\/some_one.png" style="width: 181px; height: 125px" alt="abc">/, body)
+    assert(0, attachments_inline.count)
+
+    html   = '<div><img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."><p>123</p><img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."></div>'
+    (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
+    assert_match(/<div>\s+<img style="width: 181px; height: 125px" src="cid:.+?"><p>123<\/p>\s+<img style="width: 181px; height: 125px" src="cid:.+?">\s+<\/div>/, body)
+    assert(2, attachments_inline.count)
+  end
+
+  test 'set dynamic image size' do
+    html   = '<img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">'
+    body = HtmlSanitizer.dynamic_image_size(html)
+    assert_match(/<img style="max-width:100%;width: 181px;max-height: 125px;" src="data:image.+?">/, body)
+
+    html   = '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc">'
+    body = HtmlSanitizer.dynamic_image_size(html)
+    assert_match(/<img src="data:image.+?" style="max-width:100%;width: 181px;max-height: 125px;" alt="abc">/, body)
+
+    html   = '<img src="/some_one.png" style="width: 181px; height: 125px" alt="abc">'
+    body = HtmlSanitizer.dynamic_image_size(html)
+    assert_match(/<img src="\/some_one.png" style="max-width:100%;width: 181px;max-height: 125px;" alt="abc">/, body)
+
+    html   = '<img src="/some_one.png" alt="abc">'
+    body = HtmlSanitizer.dynamic_image_size(html)
+    assert_match(/<img src="\/some_one.png" alt="abc" style="max-width:100%;">/, body)
   end
 
   test 'signature_identify function' do

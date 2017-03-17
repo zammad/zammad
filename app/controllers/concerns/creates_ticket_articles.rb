@@ -48,22 +48,7 @@ module CreatesTicketArticles
     # store dataurl images to store
     attachments_inline = []
     if article.body && article.content_type =~ %r{text/html}i
-      article.body.gsub!( %r{(<img\s.?src=")(data:image/(jpeg|png);base64,.+?)"(|.+?)>}im ) { |_item|
-        file_attributes = StaticAssets.data_url_attributes($2)
-        cid = "#{ticket.id}.#{rand(999_999_999)}@#{Setting.get('fqdn')}"
-        attachment = {
-          data: file_attributes[:content],
-          filename: cid,
-          preferences: {
-            'Content-Type' => file_attributes[:mime_type],
-            'Mime-Type' => file_attributes[:mime_type],
-            'Content-ID' => cid,
-            'Content-Disposition' => 'inline',
-          },
-        }
-        attachments_inline.push attachment
-        "#{$1}cid:#{cid}\">"
-      }
+      (article.body, attachments_inline) = HtmlSanitizer.replace_inline_images(article.body, ticket.id)
     end
 
     # find attachments in upload cache

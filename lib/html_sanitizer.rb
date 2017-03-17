@@ -352,6 +352,73 @@ cleanup html string:
     false
   end
 
+=begin
+
+reolace inline images with cid images
+
+  string = HtmlSanitizer.replace_inline_images(article.body)
+
+=end
+
+  def self.replace_inline_images(string, prefix = rand(999_999_999))
+    attachments_inline = []
+    scrubber = Loofah::Scrubber.new do |node|
+      if node.name == 'img'
+        if node['src'] && node['src'] =~ %r{^(data:image/(jpeg|png);base64,.+?)$}i
+          file_attributes = StaticAssets.data_url_attributes($1)
+          cid = "#{prefix}.#{rand(999_999_999)}@#{Setting.get('fqdn')}"
+          attachment = {
+            data: file_attributes[:content],
+            filename: cid,
+            preferences: {
+              'Content-Type' => file_attributes[:mime_type],
+              'Mime-Type' => file_attributes[:mime_type],
+              'Content-ID' => cid,
+              'Content-Disposition' => 'inline',
+            },
+          }
+          attachments_inline.push attachment
+          node['src'] = "cid:#{cid}"
+        end
+        Loofah::Scrubber::STOP
+      end
+    end
+    [Loofah.fragment(string).scrub!(scrubber).to_s, attachments_inline]
+  end
+
+=begin
+
+satinize style of img tags
+
+  string = HtmlSanitizer.dynamic_image_size(article.body)
+
+=end
+
+  def self.dynamic_image_size(string)
+    scrubber = Loofah::Scrubber.new do |node|
+      if node.name == 'img'
+        if node['src']
+          style = 'max-width:100%;'
+          if node['style']
+            pears = node['style'].downcase.gsub(/\t|\n|\r/, '').split(';')
+            pears.each { |local_pear|
+              prop = local_pear.split(':')
+              next if !prop[0]
+              key = prop[0].strip
+              if key == 'height'
+                key = 'max-height'
+              end
+              style += "#{key}:#{prop[1]};"
+            }
+          end
+          node['style'] = style
+        end
+        Loofah::Scrubber::STOP
+      end
+    end
+    Loofah.fragment(string).scrub!(scrubber).to_s
+  end
+
   private_class_method :cleanup_target
   private_class_method :add_link
   private_class_method :url_same?
