@@ -163,7 +163,7 @@
           <td><span>Niklas</span></td>
 
           <td class="actionCell no-padding">
-            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> View from user's perspective</div>
           </td>
         </tr>
 
@@ -175,7 +175,7 @@
           <td><span>Hubermeyerschmidt</span></td>
 
           <td class="actionCell no-padding">
-            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> View from user's perspective</div>
           </td>
         </tr>
 
@@ -187,7 +187,7 @@
           <td><span>Braun</span></td>
 
           <td class="actionCell no-padding">
-            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> View from user's perspective</div>
           </td>
         </tr>
 
@@ -199,7 +199,7 @@
           <td><span>Blanko</span></td>
 
           <td class="actionCell no-padding">
-            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> Aus Benutzeransicht anzeigen</div>
+            <div class="btn btn--primary btn--table switchView"><%- @Icon('switchView') %> View from user's perspective</div>
           </td>
         </tr>
       </tbody>

@@ -9,58 +9,57 @@
 #= require_tree ./lib/app_post
 
 class App extends Spine.Controller
-  @viewPrint: (object, attribute_name, attributes) ->
+  @viewPrint: (object, attributeName, attributes) ->
     if !attributes
       attributes = {}
       if object.constructor.attributesGet
         attributes = object.constructor.attributesGet()
-    attribute_config = attributes[attribute_name]
-    value            = object[attribute_name]
-    valueRef         = undefined
+    attributeConfig = attributes[attributeName]
+    value           = object[attributeName]
+    valueRef        = undefined
 
     # check if relation is requested
-    if !attribute_config
-      attribute_name_new = "#{attribute_name}_id"
-      attribute_config   = attributes[attribute_name_new]
-      if attribute_config
-        attribute_name = attribute_name_new
-        if object[attribute_name]
+    if !attributeConfig
+      attributeNameNew = "#{attributeName}_id"
+      attributeConfig   = attributes[attributeNameNew]
+      if attributeConfig
+        attributeName = attributeNameNew
+        if object[attributeName]
           valueRef = value
-          value    = object[attribute_name]
+          value    = object[attributeName]
 
     # in case of :: key, get the sub value
     if !value
-      parts = attribute_name.split('::')
+      parts = attributeName.split('::')
       if parts[0] && parts[1] && object[ parts[0] ]
         value = object[ parts[0] ][ parts[1] ]
 
     # if we have no config, get output this way
-    if !attribute_config
+    if !attributeConfig
       return @viewPrintItem(value)
 
     # check if valueRef already exists, no lookup needed later
     if !valueRef
-      attribute_name_without_ref = attribute_name.substr(attribute_name.length-3, attribute_name.length)
-      if attribute_name_without_ref is '_id'
-        attribute_name_without_ref = attribute_name.substr(0, attribute_name.length-3)
-        if object[attribute_name_without_ref]
-          valueRef = object[attribute_name_without_ref]
+      if attributeName.substr(attributeName.length-3, attributeName.length) is '_id'
+        attributeNameWithoutRef = attributeName.substr(0, attributeName.length-3)
+        if object[attributeNameWithoutRef]
+          valueRef = object[attributeNameWithoutRef]
 
-    @viewPrintItem(value, attribute_config, valueRef)
+    @viewPrintItem(value, attributeConfig, valueRef)
 
   # define print name helper
-  @viewPrintItem: (item, attribute_config = {}, valueRef) ->
+  @viewPrintItem: (item, attributeConfig = {}, valueRef) ->
     return '-' if item is undefined
     return '-' if item is ''
     return item if item is null
     result = item
 
     # lookup relation
-    if attribute_config.relation || valueRef
+    if attributeConfig.relation || valueRef
       if valueRef
         item = valueRef
       else
-        item = App[attribute_config.relation].find(item)
+        item = App[attributeConfig.relation].find(item)
 
     # if date is a object, get name of the object
     isObject = false
@@ -74,57 +73,57 @@ class App extends Spine.Controller
         result = item.name
 
     # execute callback on content
-    if attribute_config.callback
-      result = attribute_config.callback(result, attribute_config)
+    if attributeConfig.callback
+      result = attributeConfig.callback(result, attributeConfig)
 
     # text2html in textarea view
     isHtmlEscape = false
-    if attribute_config.tag is 'textarea'
+    if attributeConfig.tag is 'textarea'
       isHtmlEscape = true
       result       = App.Utils.text2html(result)
 
     # remember, html snippets are already escaped
-    else if attribute_config.tag is 'richtext'
+    else if attributeConfig.tag is 'richtext'
       isHtmlEscape = true
 
     # fillup options
-    if !_.isEmpty(attribute_config.options)
-      if attribute_config.options[result]
-        result = attribute_config.options[result]
+    if !_.isEmpty(attributeConfig.options)
+      if attributeConfig.options[result]
+        result = attributeConfig.options[result]
 
     # transform boolean
-    if attribute_config.tag is 'boolean'
+    if attributeConfig.tag is 'boolean'
       if result is true
         result = 'yes'
       else if result is false
         result = 'no'
 
     # translate content
-    if attribute_config.translate || (isObject && item.translate && item.translate())
+    if attributeConfig.translate || (isObject && item.translate && item.translate())
       isHtmlEscape = true
       result       = App.i18n.translateContent(result)
 
     # transform date
-    if attribute_config.tag is 'date'
+    if attributeConfig.tag is 'date'
       isHtmlEscape = true
       result       = App.i18n.translateDate(result)
 
     # transform input tel|url to make it clickable
-    if attribute_config.tag is 'input'
-      if attribute_config.type is 'tel'
+    if attributeConfig.tag is 'input'
+      if attributeConfig.type is 'tel'
         result = "<a href=\"#{App.Utils.phoneify(result)}\">#{App.Utils.htmlEscape(result)}</a>"
-      else if attribute_config.type is 'url'
+      else if attributeConfig.type is 'url'
         result = App.Utils.linkify(result)
       else
         result = App.Utils.htmlEscape(result)
       isHtmlEscape = true
 
     # use pretty time for datetime
-    else if attribute_config.tag is 'datetime'
+    else if attributeConfig.tag is 'datetime'
       isHtmlEscape = true
       timestamp = App.i18n.translateTimestamp(result)
       escalation = false
-      cssClass = attribute_config.class || ''
+      cssClass = attributeConfig.class || ''
       if cssClass.match 'escalation'
         escalation = true
       humanTime = App.PrettyDate.humanTime(result, escalation)
@@ -139,8 +138,8 @@ class App extends Spine.Controller
     template = (params = {}) ->
 
       # define print name helper
-      params.P = (object, attribute_name, attributes) ->
-        App.viewPrint(object, attribute_name, attributes)
+      params.P = (object, attributeName, attributes) ->
+        App.viewPrint(object, attributeName, attributes)
 
       # define date format helper
       params.date = (time) ->

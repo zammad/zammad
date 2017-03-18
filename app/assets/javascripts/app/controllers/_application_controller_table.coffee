@@ -88,8 +88,8 @@ class App.ControllerTable extends App.Controller
       console.log('new header is', headers)
       headers
 
-    callbackAttributes = (value, object, attribute, header, refObject) ->
-      console.log('data of item col', value, object, attribute, header, refObject)
+    callbackAttributes = (value, object, attribute, header) ->
+      console.log('data of item col', value, object, attribute, header)
       value = 'New Data To Show'
       value
 
@@ -288,19 +288,44 @@ class App.ControllerTable extends App.Controller
     if @tableId
       @calculateHeaderWidths()
 
-    # get content
+    # generate content
+    position = 0
+    columnsLength = @headers.length
+    if @checkbox || @radio
+      columnsLength++
+    groupLast = ''
+    tableBody = ''
+    for object in @objects
+      if @groupBy
+        groupByName = App.viewPrint(object, @groupBy, attributes)
+        if groupLast isnt groupByName
+          groupLast = groupByName
+          tableBody += App.view('generic/table_row_group_by')(
+            position:      position
+            groupByName:   groupByName
+            columnsLength: columnsLength
+          )
+      position++
+      tableBody += App.view('generic/table_row')(
+        headers:    @headers
+        attributes: attributes
+        checkbox:   @checkbox
+        radio:      @radio
+        callbacks:  @callbackAttributes
+        sortable:   @dndCallback
+        position:   position
+        object:     object
+      )
+
+    # generate full table
     table = App.view('generic/table')(
       tableId:    @tableId
-      header:     @headers
-      attributes: attributes
-      objects:    @objects
+      headers:    @headers
       checkbox:   @checkbox
       radio:      @radio
-      groupBy:    @groupBy
       class:      @class
-      destroy:    destroy
-      callbacks:  @callbackAttributes
       sortable:   @dndCallback
+      tableBody:  tableBody
     )
 
     # convert to jquery object

@@ -17,103 +17,24 @@
     <% if @radio: %>
       <th style="width: 40px" class="table-radio"></th>
     <% end %>
-    <% for item, i in @header: %>
-      <th class="js-tableHead<%= " #{ item.className }" if item.className %><%= " align-#{ item.align }" if item.align %>" style="<% if item.displayWidth: %>width:<%= item.displayWidth %>px<% end %>" data-column-key="<%= item.name %>">
+    <% for header, i in @headers: %>
+      <th class="js-tableHead<%= " #{ header.className }" if header.className %><%= " align-#{ header.align }" if header.align %>" style="<% if header.displayWidth: %>width:<%= header.displayWidth %>px<% end %>" data-column-key="<%= header.name %>">
         <div class="table-column-head<%= ' js-sort' if @tableId %>">
           <div class="table-column-title">
-          <%- @T(item.display) %>
+          <%- @T(header.display) %>
           </div>
           <div class="table-column-sortIcon">
-          <% if item.sortOrderIcon: %>
-            <%- @Icon(item.sortOrderIcon[0], item.sortOrderIcon[1]) %>
+          <% if header.sortOrderIcon: %>
+            <%- @Icon(header.sortOrderIcon[0], header.sortOrderIcon[1]) %>
           <% end %>
           </div>
         </div>
-        <% if @tableId && !item.unresizable && i < @header.length - 1: %>
+        <% if @tableId && !header.unresizable && i < @headers.length - 1: %>
           <div class="table-col-resize js-col-resize"></div>
         <% end %>
       </th>
     <% end %>
     </tr>
   </thead>
-  <tbody>
-<% position = 0 %>
-<% length = @header.length %>
-<% if @checkbox || @radio: %>
-<%   length++ %>
-<% end %>
-<% groupLast = '' %>
-<% for object in @objects: %>
-  <% if @groupBy: %>
-  <%   groupByName = @P(object, @groupBy, @attributes) %>
-  <%   if groupLast isnt groupByName: %>
-  <tr class=""><td colspan="<%= length %>"><b><%= groupByName %></b></td></tr>
-  <%     groupLast = groupByName %>
-  <%   end %>
-  <% end %>
-  <% position++ %>
-  <tr class="item<%= ' is-inactive' if object.active is false %>" data-id="<%= object.id %>" data-position="<%= position %>" >
-    <% if @sortable: %>
-      <td class="table-draggable"><%- @Icon('draggable') %></td>
-    <% end %>
-    <% if @checkbox: %>
-      <td class="table-checkbox js-checkbox-field">
-        <label class="checkbox-replacement">
-          <input type="checkbox" value="<%= object.id %>" name="bulk">
-          <%- @Icon('checkbox', 'icon-unchecked') %>
-          <%- @Icon('checkbox-checked', 'icon-checked') %>
-        </label>
-      </td>
-    <% end %>
-    <% if @radio: %>
-      <td class="table-radio">
-        <label class="radio-replacement">
-          <input type="radio" value="<%= object.id %>" name="radio">
-          <%- @Icon('radio', 'icon-unchecked') %>
-          <%- @Icon('radio-checked', 'icon-checked') %>
-        </label>
-      </td>
-    <% end %>
-    <% for item in @header: %>
-      <% value = @P(object, item.name, @attributes) %>
-      <% if @callbacks: %>
-      <%   if item.name.substr(item.name.length-3, item.name.length) is '_id' && object[ item.name.substr(0, item.name.length-3) ]: %>
-      <%     refObject = object[ item.name.substr(0, item.name.length-3) ] %>
-      <%   end %>
-      <%   for attribute, callbacksAll of @callbacks: %>
-      <%     if attribute is item.name: %>
-      <%       for callback in callbacksAll: %>
-      <%         value = callback(value, object, item, @header, refObject) %>
-      <%       end %>
-      <%     end %>
-      <%   end %>
-      <% end %>
-
-      <td<%- " class='#{ item.parentClass }'" if item.parentClass %><%- " title='#{ item.title }'" if item.title %><%- " style='text-align:#{ item.align }'" if item.align %>>
-        <% if item.name is 'icon': %>
-          <%- @Icon('task-state', item.class) %>
-        <% else if item.icon: %>
-          <%- @Icon(item.icon) %>
-        <% else: %>
-          <% if item.link: %>
-            <a href="<%- item.link %>" <% if item.target: %>target="<%= item.target %>"<% end %>>
-          <% end %>
-          <% if item.raw: %>
-            <%- item.raw %>
-          <% else: %>
-            <% if item.class || item.data: %>
-            <span <% if item.class: %>class="<%= item.class %>"<% end %> <% if item.data: %><% for data_key, data_item of item.data: %>data-<%- data_key %>="<%= data_item %>" <% end %><% end %>>
-            <% end %>
-            <%- value %>
-            <% if item.class || item.data: %>
-            </span>
-            <% end %>
-          <% end %>
-          <% if item.link: %></a><% end %>
-        <% end %>
-      </td>
-    <% end %>
-  </tr>
-<% end %>
-  </tbody>
+  <tbody><%- @tableBody %></tbody>
 </table>

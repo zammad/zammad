@@ -24,18 +24,18 @@
 <div class="horizontal two-columns">
   <div class="column">
     <label>#</label>
-    <div class="u-textTruncate"><%- @P( @ticket, 'number' ) %></div>
+    <div class="u-textTruncate"><%- @P(@ticket, 'number') %></div>
   </div>
   <div class="column">
-    <label><%- @T( 'Priority' ) %></label>
-    <div class="u-textTruncate"><%- @P( @ticket, 'priority' ) %></div>
+    <label><%- @T('Priority') %></label>
+    <div class="u-textTruncate"><%- @P(@ticket, 'priority') %></div>
   </div>
   <div class="column">
-    <label><%- @T( 'Created' ) %></label>
-    <div class="u-textTruncate"><%- @P( @ticket, 'created_at' ) %></div>
+    <label><%- @T('Created') %></label>
+    <div class="u-textTruncate"><%- @P(@ticket, 'created_at') %></div>
   </div>
   <div class="column">
-    <label><%- @T( 'Group' ) %></label>
-    <div class="u-textTruncate"><%- @P( @ticket, 'group' ) %></div>
+    <label><%- @T('Group') %></label>
+    <div class="u-textTruncate"><%- @P(@ticket, 'group') %></div>
   </div>
 </div>

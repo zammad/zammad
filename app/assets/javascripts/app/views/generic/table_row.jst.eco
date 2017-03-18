@@ -1,0 +1,56 @@
+<tr class="item<%= ' is-inactive' if @object.active is false %>" data-id="<%= @object.id %>" data-position="<%= @position %>">
+<% if @sortable: %>
+  <td class="table-draggable"><%- @Icon('draggable') %></td>
+<% end %>
+<% if @checkbox: %>
+  <td class="table-checkbox js-checkbox-field">
+    <label class="checkbox-replacement">
+      <input type="checkbox" value="<%= @object.id %>" name="bulk">
+      <%- @Icon('checkbox', 'icon-unchecked') %>
+      <%- @Icon('checkbox-checked', 'icon-checked') %>
+    </label>
+  </td>
+<% end %>
+<% if @radio: %>
+  <td class="table-radio">
+    <label class="radio-replacement">
+      <input type="radio" value="<%= @object.id %>" name="radio">
+      <%- @Icon('radio', 'icon-unchecked') %>
+      <%- @Icon('radio-checked', 'icon-checked') %>
+    </label>
+  </td>
+<% end %>
+<% for header in @headers: %>
+  <% value = @P(@object, header.name, @attributes) %>
+  <% if @callbacks: %>
+  <%   for attribute, callbacksAll of @callbacks: %>
+  <%     if attribute is header.name: %>
+  <%       for callback in callbacksAll: %>
+  <%         value = callback(value, @object, header, @headers) %>
+  <%       end %>
+  <%     end %>
+  <%   end %>
+  <% end %>
+  <td<%- " class='#{ header.parentClass }'" if header.parentClass %><%- " title='#{ header.title }'" if header.title %><%- " style='text-align:#{ header.align }'" if header.align %>>
+    <% if header.name is 'icon': %>
+      <%- @Icon('task-state', header.class) %>
+    <% else if header.icon: %>
+      <%- @Icon(header.icon) %>
+    <% else: %>
+      <% if header.link: %>
+        <a href="<%- header.link %>" <% if header.target: %>target="<%= header.target %>"<% end %>>
+      <% end %>
+      <% if header.raw: %>
+        <%- header.raw %>
+      <% else: %>
+        <% if header.class || header.data: %>
+        <span <% if header.class: %>class="<%= header.class %>"<% end %> <% if header.data: %><% for data_key, data_header of header.data: %>data-<%- data_key %>="<%= data_header %>" <% end %><% end %>>
+        <% end %>
+        <%- value %>
+        <% if header.class || header.data: %></span><% end %>
+      <% end %>
+      <% if header.link: %></a><% end %>
+    <% end %>
+  </td>
+<% end %>
+</tr>
