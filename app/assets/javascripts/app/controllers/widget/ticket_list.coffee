@@ -9,23 +9,30 @@ class App.TicketList extends App.Controller
     openTicket = (id,e) =>
       ticket = App.Ticket.findNative(id)
       @navigate ticket.uiUrl()
-    callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) ->
+    callbackTicketTitleAdd = (value, object, attribute, attributes) ->
       attribute.title = object.title
       value
-    callbackLinkToTicket = (value, object, attribute, attributes, refObject) ->
+    callbackLinkToTicket = (value, object, attribute, attributes) ->
       attribute.link = object.uiUrl()
       value
-    callbackUserPopover = (value, object, attribute, attributes, refObject) ->
-      return value if !refObject
+    callbackUserPopover = (value, object, attribute, attributes) ->
+      return value if !object
+      refObjectId = undefined
+      if attribute.name is 'customer_id'
+        refObjectId = object.customer_id
+      if attribute.name is 'owner_id'
+        refObjectId = object.owner_id
+      return value if !refObjectId
       attribute.class = 'user-popover'
       attribute.data =
-        id: refObject.id
+        id: refObjectId
       value
-    callbackOrganizationPopover = (value, object, attribute, attributes, refObject) ->
-      return value if !refObject
+    callbackOrganizationPopover = (value, object, attribute, attributes) ->
+      return value if !object
+      return value if !object.organization_id
       attribute.class = 'organization-popover'
       attribute.data =
-        id: refObject.id
+        id: object.organization_id
       value
 
     callbackIconHeader = (headers) ->
@@ -39,7 +46,8 @@ class App.TicketList extends App.Controller
       headers.unshift(0)
       headers[0] = attribute
       headers
-    callbackIcon = (value, object, attribute, header, refObject) ->
+
+    callbackIcon = (value, object, attribute, header) ->
       value = ' '
       attribute.class  = object.iconClass()
       attribute.link   = ''
