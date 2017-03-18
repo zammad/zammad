@@ -4,7 +4,7 @@ class App.ObjectManagerAttribute extends App.Model
   @url: @apiPath + '/object_manager_attributes'
   @configure_attributes = [
     { name: 'name',       display: 'Name',     tag: 'input',     type: 'text', limit: 100, null: false },
-    { name: 'display',    display: 'Anzeige',  tag: 'input',     type: 'text', limit: 100, null: false },
+    { name: 'display',    display: 'Display',  tag: 'input',     type: 'text', limit: 100, null: false },
     { name: 'object',     display: 'Object',   tag: 'input',     readonly: 1 },
     { name: 'position',   display: 'Position', tag: 'input',     readonly: 1 },
     { name: 'active',     display: 'Active',   tag: 'active',    default: true },
