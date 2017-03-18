@@ -334,7 +334,8 @@ class String
         '<p>[[:space:]]*(--|__)',
         '(<br(|\/)>|<p>|<div>)[[:space:]]*<b>(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]*</b>',
         '(<br>|<div>)[[:space:]]*<br>[[:space:]]*(Von|From|De|от|Z|Od|Ze|Fra|Van|Mistä|Από|Dal|から|Из|од|iz|Från|จาก|з|Từ):[[:space:]]+',
-        '<blockquote(|.+?)>[[:space:]]*<div>[[:space:]]*(On|Am)',
+        '<blockquote(|.+?)>[[:space:]]*<div>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]]',
+        '<div(|.+?)>[[:space:]]*<br>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]].+?<blockquote',
       ]
       map.each { |regexp|
         string.sub!(/#{regexp}/m) { |placeholder|

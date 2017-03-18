@@ -1062,6 +1062,32 @@ christian.schaefer@example.com'
 </blockquote></div>'
     assert_equal(result, html.html2html_strict)
 
+    html = '<div>
+<br> Am 17.03.2017 um 17:03 schrieb Martin Edenhofer via Zammad Helpdesk &lt;support@example.com&gt;:<br>
+<br>
+</div>'
+    result = '<div>
+<br> Am 17.03.2017 um 17:03 schrieb Martin Edenhofer via Zammad Helpdesk &lt;support@example.com&gt;:<br>
+<br>
+</div>'
+    assert_equal(result, html.html2html_strict)
+
+    html = '<div>
+<br> Am 17.03.2017 um 17:03 schrieb Martin Edenhofer via Zammad Helpdesk &lt;support@example.com&gt;:<br>
+<br>
+</div>
+
+<blockquote type="cite">
+<div>Dear Mr. Smith,<br></div>
+</blockquote>'
+    result = '<span class="js-signatureMarker"></span><div>
+<br> Am 17.03.2017 um 17:03 schrieb Martin Edenhofer via Zammad Helpdesk &lt;support@example.com&gt;:<br>
+<br>
+</div><blockquote type="cite">
+<div>Dear Mr. Smith,<br>
+</div>
+</blockquote>'
+    assert_equal(result, html.html2html_strict)
   end
 
 end
