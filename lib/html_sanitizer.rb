@@ -237,15 +237,30 @@ cleanup html string:
     remove_empty_nodes = %w(p div span small)
     remove_empty_last_nodes = %w(b i u small)
 
-    scrubber = Loofah::Scrubber.new do |node|
+    # remove last empty nodes and empty -not needed- parrent nodes
+    scrubber_structure = Loofah::Scrubber.new do |node|
       if remove_empty_last_nodes.include?(node.name) && node.children.size.zero?
         node.remove
         Loofah::Scrubber::STOP
       end
-
-      if remove_empty_nodes.include?(node.name) && node.children.size == 1 && remove_empty_nodes.include?(node.children.first.name) # && node.children.first.text.blank?
-        node.replace cleanup_structure(node.children.to_s)
+      if remove_empty_nodes.include?(node.name) && node.children.size == 1 && remove_empty_nodes.include?(node.children.first.name)
+        node.replace node.children.to_s
+        Loofah::Scrubber::STOP
       end
+    end
+    string = Loofah.fragment(string).scrub!(scrubber_structure).to_s
+
+    new_string = ''
+    done = true
+    while done
+      new_string = Loofah.fragment(string).scrub!(scrubber_structure).to_s
+      if string == new_string
+        done = false
+      end
+      string = new_string
+    end
+
+    scrubber_cleanup = Loofah::Scrubber.new do |node|
 
       # remove mailto links
       if node['href']
@@ -298,7 +313,7 @@ cleanup html string:
         end
       end
     end
-    Loofah.fragment(string).scrub!(scrubber).to_s
+    Loofah.fragment(string).scrub!(scrubber_cleanup).to_s
   end
 
   def self.add_link(content, urls, node)

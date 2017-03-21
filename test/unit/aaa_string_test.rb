@@ -1062,6 +1062,62 @@ christian.schaefer@example.com'
 </blockquote></div>'
     assert_equal(result, html.html2html_strict)
 
+    html = '<div>
+<br> Am 17.03.2017 um 17:03 schrieb Martin Edenhofer via Zammad Helpdesk &lt;support@example.com&gt;:<br>
+<br>
+</div>'
+    result = '<div>
+<br> Am 17.03.2017 um 17:03 schrieb Martin Edenhofer via Zammad Helpdesk &lt;support@example.com&gt;:<br>
+<br>
+</div>'
+    assert_equal(result, html.html2html_strict)
+
+    html = '<div>
+<br> Am 17.03.2017 um 17:03 schrieb Martin Edenhofer via Zammad Helpdesk &lt;support@example.com&gt;:<br>
+<br>
+</div>
+
+<blockquote type="cite">
+<div>Dear Mr. Smith,<br></div>
+</blockquote>'
+    result = '<span class="js-signatureMarker"></span><div>
+<br> Am 17.03.2017 um 17:03 schrieb Martin Edenhofer via Zammad Helpdesk &lt;support@example.com&gt;:<br>
+<br>
+</div><blockquote type="cite">
+<div>Dear Mr. Smith,<br>
+</div>
+</blockquote>'
+    assert_equal(result, html.html2html_strict)
+
+    html = "<div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div style=\"line-height:1.7;color:#000000;font-size:14px;font-family:Arial\"><div>Dear Bob<span style=\"line-height: 23.8px;\">:</span><span style=\"color: rgb(255, 255, 255); line-height: 1.7;\">Mr/Mrs</span></div><div><br></div><div><span style=\"line-height: 1.7;\">We&nbsp;are&nbsp;one&nbsp;of&nbsp;the&nbsp;leading&nbsp;manufacturer&nbsp;and&nbsp;supplier&nbsp;of&nbsp;</span>conduits and cars since 3000.</div><div><br></div><div>Could you inform me the specification you need?</div><div><br></div><div>May I sent you our products catalogues for your reference?</div><div><br></div><div><img src=\"cid:5cb2783c$1$15ae9b384c8$Coremail$zhanabcdzhao$example.com\" orgwidth=\"1101\" orgheight=\"637\" data-image=\"1\" style=\"width: 722.7px; height: 418px; border: none;\"></div><div>Best regards!</div><div><br></div><div><b style=\"line-height: 1.7;\"><i><u><span lang=\"EL\" style=\"font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#17365D;\nmso-ansi-language:EL\">Welcome to our booth B11/1 Hall 13 during SOMEWHERE\n9999.</span></u></i></b></div><div style=\"position:relative;zoom:1\"><div>Bob Smith</div><div><div>Exp. &amp; Imp.</div><div>Town Example Electric Co., Ltd.</div><div>Tel: 0000-11-12345678 (Ext-220) &nbsp;Fax: 0000-11-12345678&nbsp;</div><div>Room1234, NO. 638, Smith Road, Town, 200000, Somewhere</div><div>Web: www.example.com</div></div><div style=\"clear:both\"></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>"
+    result = '<div>
+<div>Dear Bob:Mr/Mrs</div>
+<div> </div>
+<div>We are one of the leading manufacturer and supplier of conduits and cars since 3000.</div>
+<div> </div>
+<div>Could you inform me the specification you need?</div>
+<div> </div>
+<div>May I sent you our products catalogues for your reference?</div>
+<div> </div>
+<div><img src="cid:5cb2783c%241%2415ae9b384c8%24Coremail%24zhanabcdzhao%24example.com" style="width: 722.7px; height: 418px;"></div>
+<div>Best regards!</div>
+<div> </div>
+<div><b><i><u>Welcome to our booth B11/1 Hall 13 during SOMEWHERE 9999.</u></i></b></div>
+<div>
+<div>Bob Smith</div>
+<div>
+<div>Exp. &amp; Imp.</div>
+<div>Town Example Electric Co., Ltd.</div>
+<div>Tel: 0000-11-12345678 (Ext-220) Fax: 0000-11-12345678</div>
+<div>Room1234, NO. 638, Smith Road, Town, 200000, Somewhere</div>
+<div>Web: <a href="http://www.example.com" rel="nofollow" target="_blank">http://www.example.com</a>
+</div>
+</div>
+<div></div>
+</div>
+</div>'
+    assert_equal(result, html.html2html_strict)
+
   end
 
 end
