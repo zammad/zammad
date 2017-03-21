@@ -320,7 +320,7 @@ Registergericht / Commercial Register of the Local Court: HRB 0000 AG Hof',
       },
       {
         data: IO.binread('test/fixtures/mail10.box'),
-        body_md5: '3774c850f4e4064b86f66163a3453e47',
+        body_md5: 'f0faf588a83fabf38a87b91614f55113',
         attachments: [
           {
             md5: '52d946fdf1a9304d0799cceb2fcf0e36',
@@ -345,8 +345,8 @@ Registergericht / Commercial Register of the Local Court: HRB 0000 AG Hof',
 <p>Geschäftsführer der example Straubing-Bogen</p>
 <p>Klosterhof 1 | 94327 Bogen-Oberalteich</p>
 <p>Tel: 09422-505601 | Fax: 09422-505620</p>
-<p>Internet:<a href="http://example-straubing-bogen.de/" rel="nofollow" target="_blank">http://example-straubing-bogen.de</a></p>
-<p>Facebook:<a href="http://facebook.de/examplesrbog" rel="nofollow" target="_blank">http://facebook.de/examplesrbog</a></p>
+<p>Internet: <a href="http://example-straubing-bogen.de/" rel="nofollow" target="_blank">http://example-straubing-bogen.de</a></p>
+<p>Facebook: <a href="http://facebook.de/examplesrbog" rel="nofollow" target="_blank">http://facebook.de/examplesrbog</a></p>
 <p><b><img border="0" src="cid:image001.jpg@01CDB132.D8A510F0" alt="Beschreibung: Beschreibung: efqmLogo" style="width:60px;height:19px;"></b><b> - European Foundation für Quality Management</b></p>
 <p>&nbsp;</p>
 </div>',
@@ -379,7 +379,7 @@ Newsletter abbestellen (<a href="http://newsletters.cylex.de/ref/www.cylex.de/si
       },
       {
         data: IO.binread('test/fixtures/mail12.box'),
-        body_md5: 'eacbca29d25cd10aa0f7e2ca558d38f2',
+        body_md5: '3e4b8cffd13a96fd88cbc45378d6eb00',
         attachments: [
           {
             md5: '46cf0f95ea0c8211cbb704e1959b9173',
@@ -438,7 +438,7 @@ Newsletter abbestellen (<a href="http://newsletters.cylex.de/ref/www.cylex.de/si
 <p>&nbsp;</p>
 <p>P: +49 (0) 30 60 98 54 18-0</p>
 <p>F: +49 (0) 30 60 98 54 18-8</p>
-<p>W:<a href="http://znuny.com" rel="nofollow" target="_blank">http://znuny.com</a>
+<p>W: <a href="http://znuny.com" rel="nofollow" target="_blank">http://znuny.com</a>
 </p>
 <p>&nbsp;</p>
 <p>Location: Berlin - HRB 139852 B Amtsgericht Berlin-Charlottenburg Managing Director: Martin Edenhofer</p>
@@ -552,7 +552,7 @@ Newsletter abbestellen (<a href="http://newsletters.cylex.de/ref/www.cylex.de/si
       },
       {
         data: IO.binread('test/fixtures/mail19.box'),
-        body_md5: '790a98dd429733c7fd8afc6fdd82e2a2',
+        body_md5: '4355c52fdfd2adea0cda6814adb78ae3',
         params: {
           from: '"我" <>',
           from_email: '"我" <>',
@@ -712,14 +712,14 @@ end
       },
       {
         data: IO.binread('test/fixtures/mail29.box'),
-        body_md5: '2c0e700d4fdb1fe0e9a411234f39aa6f',
+        body_md5: '01036d03b8da2d32a603bc2124dfc671',
         params: {
           from: 'Example Sales <sales@example.com>',
           from_email: 'sales@example.com',
           from_display_name: 'Example Sales',
           subject: 'Example licensing information: No channel available',
           to: 'info@znuny.inc',
-          body: 'Dear Mr. Edenhofer, <p>We want to keep you updated on TeamViewer licensing shortages on a regular basis.</p><p><strong>We would like to inform you that since the last message on 25-Nov-2014 there have been temporary session channel exceedances which make it impossible to establish more sessions. Since the last e-mail this has occurred in a total of 1 cases.</strong></p><p>Additional session channels can be added at any time. Please visit ourTeamViewer Online Shop (<a href="https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E" rel="nofollow" target="_blank">https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E</a>) for pricing information.</p><p>Thank you - and again all the best with TeamViewer!</p><p>Best regards,</p><p><i>Your TeamViewer Team</i></p><p>P.S.: You receive this e-mail because you are listed in our database as person who ordered a TeamViewer license. Please clickhere (<a href="http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=E37682EAC65E8CA6FF36074907D8BC14" rel="nofollow" target="_blank">http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=E37682EAC65E8CA6FF36074907D8BC14</a>) to unsubscribe from further e-mails.</p>-----------------------------<br>
+          body: 'Dear Mr. Edenhofer, <p>We want to keep you updated on TeamViewer licensing shortages on a regular basis.</p><p><strong>We would like to inform you that since the last message on 25-Nov-2014 there have been temporary session channel exceedances which make it impossible to establish more sessions. Since the last e-mail this has occurred in a total of 1 cases.</strong></p><p>Additional session channels can be added at any time. Please visit our TeamViewer Online Shop (<a href="https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E" rel="nofollow" target="_blank">https://www.teamviewer.com/en/licensing/update.aspx?channel=D842CS9BF85-P1009645N-348785E76E</a>) for pricing information.</p><p>Thank you - and again all the best with TeamViewer!</p><p>Best regards,</p><p><i>Your TeamViewer Team</i></p><p>P.S.: You receive this e-mail because you are listed in our database as person who ordered a TeamViewer license. Please click here (<a href="http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=E37682EAC65E8CA6FF36074907D8BC14" rel="nofollow" target="_blank">http://www.teamviewer.com/en/company/unsubscribe.aspx?id=1009645&amp;ident=E37682EAC65E8CA6FF36074907D8BC14</a>) to unsubscribe from further e-mails.</p>-----------------------------<br>
 <a href="http://www.teamviewer.com" rel="nofollow" target="_blank">www.teamviewer.com</a><br>
 <br> TeamViewer GmbH * Jahnstr. 30 * 73037 Göppingen * Germany<br> Tel. 07161 60692 50 * Fax 07161 60692 79<br> <br> Registration AG Ulm HRB 534075 * General Manager Holger Felgner'
         },
@@ -773,7 +773,7 @@ end
       },
       {
         data: IO.binread('test/fixtures/mail36.box'),
-        body_md5: '0c03749418faa758ee385a1fc9f01fbc',
+        body_md5: '8647b92d2495fe5f1c588163abc44b6b',
         params: {
           from: 'Martin Smith <m.Smith@example.com>',
           from_email: 'm.Smith@example.com',
@@ -799,7 +799,7 @@ end
 <b>Von:</b> \"Martin Edenhofer\" &lt;me@example.com&gt;<br>
 <b>An:</b> m.Smith@example.com<br>
 <b>Betreff:</b> Zugangsdaten</div>
-<div>Um noch vertrauter zu werden, kannst Du mit einen externen E-Mail Account (z. B.<a href=\"http://web.de\" rel=\"nofollow\" target=\"_blank\">web.de</a>) mal ein wenig selber “spielen”. :)</div>
+<div>Um noch vertrauter zu werden, kannst Du mit einen externen E-Mail Account (z. B. <a href=\"http://web.de\" rel=\"nofollow\" target=\"_blank\">web.de</a>) mal ein wenig selber “spielen”. :)</div>
 </div>
 </div>
 </div>
@@ -931,7 +931,7 @@ end
       },
       {
         data: IO.binread('test/fixtures/mail43.box'),
-        body_md5: '9de73d8cf7fdda5ca82bc3db8409ce5c',
+        body_md5: '11d3e78656f8f2105af431dd543c99f6',
         params: {
           from: 'Paula <databases.en@example.com>',
           from_email: 'databases.en@example.com',
@@ -943,7 +943,7 @@ end
 <li>Sie brauchen neue Geschäftskontakte?</li>
 <li>Sie sind es leid, Kontaktdaten manuell zu erfassen?</li>
 <li>Ihr Kontaktdatenanbieter ist zu teuer oder Sie sind mit seinen Dienstleistungen unzufrieden?</li>
-<li>Sie möchten Ihre Kontaktinformationen gern effizienter auf dem neuesten Stand halten?</li> </ul> <p><br>Bei uns können Sie mit nur wenigen Clicks <b>Geschäftskontakte</b> verschiedener Länder erwerben.</p><p>Dies ist eine<b>schnelle und bequeme</b> Methode, um Daten zu einem vernünftigen Preis zu erhalten.</p><p>Alle Daten werden<b>ständig aktualisiert</b>m so dass Sie sich keine Sorgen machen müssen.</p><p>&nbsp;</p><br><a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0LnNzdXJobGZzZWVsdGEtLm10cmVzb2YvY2VtL2xpZ25pYWlnaV9hbC9zOG1lOXgyOTdzZW1hL2VlL2xwZWxheHB4Q18ubXhzfEhsODh8Y2M=" rel="nofollow" target="_blank">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0LnNzdXJobGZzZWVsdGEtLm10cmVzb2YvY2VtL2xpZ25pYWlnaV9hbC9zOG1lOXgyOTdzZW1hL2VlL2xwZWxheHB4Q18ubXhzfEhsODh8Y2M=</a>  <a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY=" rel="nofollow" target="_blank">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY=</a> <br><br><p>XLS-Muster herunterladen
+<li>Sie möchten Ihre Kontaktinformationen gern effizienter auf dem neuesten Stand halten?</li> </ul> <p><br>Bei uns können Sie mit nur wenigen Clicks <b>Geschäftskontakte</b> verschiedener Länder erwerben.</p><p>Dies ist eine <b>schnelle und bequeme</b> Methode, um Daten zu einem vernünftigen Preis zu erhalten.</p><p>Alle Daten werden <b>ständig aktualisiert</b>m so dass Sie sich keine Sorgen machen müssen.</p><p>&nbsp;</p><br><a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0LnNzdXJobGZzZWVsdGEtLm10cmVzb2YvY2VtL2xpZ25pYWlnaV9hbC9zOG1lOXgyOTdzZW1hL2VlL2xwZWxheHB4Q18ubXhzfEhsODh8Y2M=" rel="nofollow" target="_blank">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0LnNzdXJobGZzZWVsdGEtLm10cmVzb2YvY2VtL2xpZ25pYWlnaV9hbC9zOG1lOXgyOTdzZW1hL2VlL2xwZWxheHB4Q18ubXhzfEhsODh8Y2M=</a>  <a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY=" rel="nofollow" target="_blank">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY=</a> <br><br><p>XLS-Muster herunterladen
                                                  (<a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0LnNzdXJobGZzZWVsdGEtLm10cmVzb2YvY2VtL2xpZ25pYWlnaV9hbC9zOG1lOXgyOTdzZW1hL2VlL2xwZWxheHB4Q18ubXhzfEhsODh8Y2M=" rel="nofollow" target="_blank">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0LnNzdXJobGZzZWVsdGEtLm10cmVzb2YvY2VtL2xpZ25pYWlnaV9hbC9zOG1lOXgyOTdzZW1hL2VlL2xwZWxheHB4Q18ubXhzfEhsODh8Y2M=</a>)</p><p>Datenbank bestellen
                                                  (<a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY=" rel="nofollow" target="_blank">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY=</a>)</p><br> <br> <p><b>Die Anmeldung ist absolut kostenlos und unverbindlich.</b> Sie können die Kataloge gemäß Ihren eigenen Kriterien filtern und ein kostenloses Datenmuster bestellen, sobald Sie sich angemeldet haben.<br> </p><br><br><p> <b>Wir haben Datenbanken der folgenden Länder:</b> </p><br> <li>Österreich (<a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnY25pLGUsdXJ0b3NUQWVpMjZ8fGEx" rel="nofollow" target="_blank">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnY25pLGUsdXJ0b3NUQWVpMjZ8fGEx</a>)</li>
 <li>Belgien (<a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnY25pLGUsdXJ0b3NFQmVpYzR8fGNh" rel="nofollow" target="_blank">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnY25pLGUsdXJ0b3NFQmVpYzR8fGNh</a>)</li>
@@ -973,7 +973,7 @@ end
 <li>
 <i>Gezielte Werbung</i> - Briefpostwerbung.</li>
 <li>
-<i>Marktforschung</i> - Telefonumfragen zur Erforschung Ihrer Produkte oder Dienstleistungen.</li> </ul> <p>&nbsp;</p><p>Sie können<b>Abschnitte wählen (filtern)</b> Empfänger gemäß Tätigkeitsbereichen und Standort der Firmen, um die Effizienz Ihrer Werbemaßnahmen zu erhöhen.</p><p>&nbsp;</p><br><p>Für jeden Kauf von<b>2016-11-05 23:59:59</b> </p><p>wir gewähren<b>30%</b> Rabatt</p><p><b>RABATTCODE: WZ2124DD</b></p><br><br><p><b>Bestellen Sie online bei:</b><br> </p><p>company-catalogs.com (<a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY=" rel="nofollow" target="_blank">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY=</a>)<br> </p><p><b>Für weitere Informationen:</b><br> </p><p>E-Mail:databases.en@example.com<br> Telefon: +370-52-071554 (languages: EN, PL, RU, LT)</p><br><br>Unsubscribe from newsletter: Click here (<a href="http://business-catalogs.example.com/c2JudXVlcmNic2I4MWk7MTgxOTMyNS1jMmMtNzA=" rel="nofollow" target="_blank">http://business-catalogs.example.com/c2JudXVlcmNic2I4MWk7MTgxOTMyNS1jMmMtNzA=</a>)'
+<i>Marktforschung</i> - Telefonumfragen zur Erforschung Ihrer Produkte oder Dienstleistungen.</li> </ul> <p>&nbsp;</p><p>Sie können <b>Abschnitte wählen (filtern)</b> Empfänger gemäß Tätigkeitsbereichen und Standort der Firmen, um die Effizienz Ihrer Werbemaßnahmen zu erhöhen.</p><p>&nbsp;</p><br><p>Für jeden Kauf von <b>2016-11-05 23:59:59</b> </p><p>wir gewähren <b>30%</b> Rabatt</p><p><b>RABATTCODE: WZ2124DD</b></p><br><br><p><b>Bestellen Sie online bei:</b><br> </p><p>company-catalogs.com (<a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY=" rel="nofollow" target="_blank">http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnaWVpLGUzZHx4bnxlZWY=</a>)<br> </p><p><b>Für weitere Informationen:</b><br> </p><p>E-Mail: databases.en@example.com<br> Telefon: +370-52-071554 (languages: EN, PL, RU, LT)</p><br><br>Unsubscribe from newsletter: Click here (<a href="http://business-catalogs.example.com/c2JudXVlcmNic2I4MWk7MTgxOTMyNS1jMmMtNzA=" rel="nofollow" target="_blank">http://business-catalogs.example.com/c2JudXVlcmNic2I4MWk7MTgxOTMyNS1jMmMtNzA=</a>)'
         },
       },
       {
