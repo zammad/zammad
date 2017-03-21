@@ -622,9 +622,9 @@ class App.ActionRow extends App.Controller
       do (item) =>
         @$('[data-type="' + item.name + '"]').on(
           'click'
-          (e) =>
+          (e) ->
             e.preventDefault()
-            item.callback(@el)
+            item.callback()
         )
 
 class App.Sidebar extends App.Controller
@@ -1085,6 +1085,9 @@ class App.CollectionController extends App.Controller
       if itemCount > position
         position += 1
       element = @el.find(".js-item:nth-child(#{position})")
+      if !element.get(0)
+        @el.append(html)
+        return
       if @insertPosition is 'before'
         element.before(html)
       else
