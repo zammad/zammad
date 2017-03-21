@@ -874,6 +874,19 @@ christian.schaefer@example.com'
     #result = '<p>http://www.example.com/?wm=mail <a href="http://www.example.com/?wm=mail" rel="nofollow" target="_blank"><img border="0" src="cid:example_new.png@8B201D8C.000B" style="width:101px;height:30px;"></a></p>'
     result = '<p><a href="http://www.example.com/?wm=mail" rel="nofollow" target="_blank">http://www.example.com/?wm=mail</a></p>'
     assert_equal(result, html.html2html_strict)
+
+    html = '<div class="">Wir brauchen also die Instanz <a href="http://example.zammad.com" class="">example.zammad.com</a>, kann die aber nicht mehr nutzen.</div><div class=""><br class=""></div><div class="">Bitte um Freischaltung.</div><div class=""><br class=""></div><div class=""><br class=""><div class="">'
+    result = '<div>Wir brauchen also die Instanz <a href="http://example.zammad.com" rel="nofollow" target="_blank">example.zammad.com</a>, kann die aber nicht mehr nutzen.</div><div> </div><div>Bitte um Freischaltung.</div><div> </div><div>
+<br><div></div>
+</div>'
+    assert_equal(result, html.html2html_strict)
+
+    html = '<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#1F497D;mso-fareast-language:EN-US">oh jeee … Zauberwort vergessen ;-) Können Sie mir
+<b>bitte</b> noch meine Testphase verlängern?<o:p></o:p></span></p>
+<p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#1F497D;mso-fareast-language:EN-US"><o:p>&nbsp;</o:p></span></p>'
+    result = '<p>oh jeee … Zauberwort vergessen ;-) Können Sie mir <b>bitte</b> noch meine Testphase verlängern?</p><p>&nbsp;</p>'
+    assert_equal(result, html.html2html_strict)
+
   end
 
   test 'inline attachment replace' do

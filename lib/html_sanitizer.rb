@@ -303,7 +303,7 @@ cleanup html string:
               if node.previous.name == 'div' || node.previous.name == 'p'
                 content.strip!
               end
-            elsif node.parent && !node.previous
+            elsif node.parent && !node.previous && (!node.next || node.next.name == 'div' || node.next.name == 'p' || node.next.name == 'br')
               if (node.parent.name == 'div' || node.parent.name == 'p') && content != ' ' && content != "\n"
                 content.strip!
               end
