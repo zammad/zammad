@@ -29,12 +29,7 @@ satinize html string based on whiltelist
 
       # remove tag, insert quoted content
       if tags_quote_content.include?(node.name)
-        string = node.content
-        string.gsub!('&amp;', '&')
-        string.gsub!('&lt;', '<')
-        string.gsub!('&gt;', '>')
-        string.gsub!('&quot;', '"')
-        string.gsub!('&nbsp;', ' ')
+        string = html_decode(node.content)
         text = Nokogiri::XML::Text.new(string, node.document)
         node.add_next_sibling(text)
         node.remove
@@ -155,8 +150,7 @@ satinize html string based on whiltelist
           text = Nokogiri::XML::Text.new(')', node.document)
           node.add_next_sibling(text)
         else
-          text = Nokogiri::XML::Text.new(cleanup_target(node['href']), node.document)
-          node.content = text
+          node.content = cleanup_target(node['href'])
         end
       end
 
@@ -286,8 +280,7 @@ cleanup html string:
           text = Nokogiri::XML::Text.new(')', node.document)
           node.add_next_sibling(text)
         else
-          text = Nokogiri::XML::Text.new(cleanup_target(node['href']), node.document)
-          node.content = text
+          node.content = cleanup_target(node['href'])
         end
       end
 
@@ -352,13 +345,20 @@ cleanup html string:
     end
   end
 
+  def self.html_decode(string)
+    string.gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>').gsub('&quot;', '"').gsub('&nbsp;', ' ')
+  end
+
   def self.cleanup_target(string)
-    URI.unescape(string).gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '')
+    string = URI.unescape(string).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+    string.gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '')
   end
 
   def self.url_same?(url_new, url_old)
-    url_new = URI.unescape(url_new.to_s).downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
-    url_old = URI.unescape(url_old.to_s).downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
+    url_new = URI.unescape(url_new.to_s).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?').downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
+    url_old = URI.unescape(url_old.to_s).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?').downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
+    url_new = html_decode(url_new).sub('/?', '?')
+    url_old = html_decode(url_old).sub('/?', '?')
     return true if url_new == url_old
     return true if "http://#{url_new}" == url_old
     return true if "http://#{url_old}" == url_new
@@ -437,5 +437,6 @@ satinize style of img tags
   private_class_method :cleanup_target
   private_class_method :add_link
   private_class_method :url_same?
+  private_class_method :html_decode
 
 end

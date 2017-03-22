@@ -595,6 +595,26 @@ Men-----------------------'
     result = '<a href="http://example.com/" rel="nofollow" target="_blank">http://example.com</a>'
     assert_equal(result, html.html2html_strict)
 
+    html   = "<a href=\"http://example.com/?abc=123&123=abc\" class=\"abc\n\"\n>http://example.com?abc=123&amp;123=abc</a>"
+    result = '<a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow" target="_blank">http://example.com?abc=123&amp;123=abc</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<a href=\"http://example.com/?abc=123&123=abc\" class=\"abc\n\"\n>http://example.com?abc=123&amp;123=abc</a>"
+    result = '<a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow" target="_blank">http://example.com?abc=123&amp;123=abc</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<a href=\"http://example.com/?abc=123&123=abc\" class=\"abc\n\"\n><img src=\"cid:123\"></a>"
+    result = '<a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow" target="_blank">http://example.com/?abc=123&amp;123=abc</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a></p>'
+    result = '<p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap" rel="nofollow" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a></p>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<p>https://wiki.lab.example.com/doku.php?id=xxxx:start&a=1;#ldap</p>'
+    result = '<p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;a=1;#ldap" rel="nofollow" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;a=1;#ldap</a></p>'
+    assert_equal(result, html.html2html_strict)
+
     html   = "<div>http://example.com</div>"
     result = "<div><a href=\"http://example.com\" rel=\"nofollow\" target=\"_blank\">http://example.com</a>\n</div>"
     assert_equal(result, html.html2html_strict)
@@ -616,7 +636,6 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = "<a href=\"http://facebook.de/examplesrbog\"><span lang=\"EN-US\" style='color:blue'>http://facebook.de/examplesrbog</span></a>"
-    #result = "<a href=\"http://facebook.de/examplesrbog\" rel=\"nofollow\" target=\"_blank\"><span lang=\"EN-US\">http://facebook.de/examplesrbog</span></a>"
     result = "<a href=\"http://facebook.de/examplesrbog\" rel=\"nofollow\" target=\"_blank\">http://facebook.de/examplesrbog</a>"
     assert_equal(result, html.html2html_strict)
 
@@ -641,8 +660,8 @@ abc<p><b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donne
     result = "<div>abc<span class=\"js-signatureMarker\"></span><p> <b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's </p>\n</div>"
     assert_equal(result, html.html2html_strict)
 
-    html = "<div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \">Mit freundlichem Gruß<span class=\"Apple-converted-space\">&nbsp;</span><br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.<o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \">Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br></span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \">Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><a href=\"mailto:john.smith@example.com\" style=color: blue; text-decoration: underline; \">john.smith@example.com</a></span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><a href=http://www.example.com\" style=\"color: blue; text-decoration: underline; \">www.example.com</a></span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div>"
-    result = "<div>Mit freundlichem Gruß<br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.</div><div>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br>\n</div><div>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</div><div>john.smith@example.com</div><div><a href=\"http://www.example.com\" rel=\"nofollow\" target=\"_blank\">http://www.example.com</a> (<a href=\"http://www.example.com%22\" rel=\"nofollow\" target=\"_blank\">http://www.example.com\"</a>)</div>"
+    html = "<div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \">Mit freundlichem Gruß<span class=\"Apple-converted-space\">&nbsp;</span><br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.<o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \">Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br></span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \">Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><a href=\"mailto:john.smith@example.com\" style=color: blue; text-decoration: underline; \">john.smith@example.com</a></span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><a href=\"http://www.example.com\" style=\"color: blue; text-decoration: underline; \">www.example.com</a></span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div>"
+    result = "<div>Mit freundlichem Gruß<br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.</div><div>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br>\n</div><div>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</div><div>john.smith@example.com</div><div><a href=\"http://www.example.com\" rel=\"nofollow\" target=\"_blank\">www.example.com</a></div>"
     assert_equal(result, html.html2html_strict)
 
     html   = '<b >test</b>'
