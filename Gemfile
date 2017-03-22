@@ -109,6 +109,9 @@ group :development, :test do
   gem 'rack-livereload'
   gem 'rb-fsevent',        require: false
 
+  # auto symlinking
+  gem 'guard-symlink', require: false
+
   # code QA
   gem 'pre-commit'
   gem 'rubocop'
