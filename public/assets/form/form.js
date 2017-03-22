@@ -148,6 +148,7 @@ $(function() {
     }
 
     this._config = {}
+    this._token = ''
 
     this.init()
   }
@@ -263,6 +264,9 @@ $(function() {
         $.each(data.errors, function( key, value ) {
           _this.$form.find('[name=' + key + ']').closest('.form-group').addClass('has-error')
         })
+        if (data.errors.token) {
+          alert(data.errors.token)
+        }
         _this.$form.find('button').prop('disabled', false)
         return
       }
@@ -294,6 +298,7 @@ $(function() {
     if (this.options.test) {
       formData.append('test', true)
     }
+    formData.append('token', this._config.token)
     _this.log('debug', 'formData', formData)
     return formData
   }
