@@ -2266,6 +2266,31 @@ Some Text',
           ],
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail47.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: '-90%! Nur 3,90 statt 39,90 EUR: In-Ear-Stereo-Headset mit Bluetooth 4.1 und Magnetverschluss für Bob Max Example',
+          },
+          1 => {
+            from: 'EXAMPLE HotPriceMail <anja.weber@example.de>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'EXAMPLE',
+              lastname: 'HotPriceMail',
+              fullname: 'EXAMPLE HotPriceMail',
+              email: 'anja.weber@example.de',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end
