@@ -153,6 +153,8 @@ GEM
       guard (~> 2.8)
       guard-compat (~> 1.0)
       multi_json (~> 1.8)
+    guard-symlink (0.1.0)
+      guard-compat (~> 1.1)
     hashdiff (0.3.2)
     hashie (3.4.4)
     htmlentities (4.3.4)
@@ -443,6 +445,7 @@ DEPENDENCIES
   github_changelog_generator
   guard
   guard-livereload
+  guard-symlink
   htmlentities
   icalendar
   json
