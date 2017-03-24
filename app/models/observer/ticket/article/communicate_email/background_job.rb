@@ -22,13 +22,29 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     record.preferences['delivery_retry'] += 1
 
     # send email
-    if !ticket.group.email_address_id
-      log_error(record, "No email address defined for group id '#{ticket.group.id}'!")
-    elsif !ticket.group.email_address.channel_id
-      log_error(record, "No channel defined for email_address id '#{ticket.group.email_address_id}'!")
+    email_address = nil
+    if record.preferences['email_address_id'].present?
+      email_address = EmailAddress.find_by(id: record.preferences['email_address_id'])
     end
 
-    channel = ticket.group.email_address.channel
+    # fallback for articles without email_address_id
+    if !email_address
+      if !ticket.group.email_address_id
+        log_error(record, "No email address defined for group id '#{ticket.group.id}'!")
+      elsif !ticket.group.email_address.channel_id
+        log_error(record, "No channel defined for email_address id '#{ticket.group.email_address_id}'!")
+      end
+      email_address = ticket.group.email_address
+    end
+
+    # log if ref objects are missing
+    if !email_address
+      log_error(record, "No email address defined for group id '#{ticket.group_id}'!")
+    end
+    if !email_address.channel_id
+      log_error(record, "No channel defined for email_address id '#{email_address.id}'!")
+    end
+    channel = email_address.channel
 
     notification = false
     sender = Ticket::Article::Sender.lookup(id: record.sender_id)
@@ -54,15 +70,16 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
         notification
       )
     rescue => e
-      log_error(record, e.message)
+      log_error(record, e.message, channel)
       return
     end
     if !message
-      log_error(record, 'Unable to get sent email')
+      log_error(record, 'Unable to get sent email', channel)
       return
     end
 
     # set delivery status
+    record.preferences['delivery_channel_id'] = channel.id
     record.preferences['delivery_status_message'] = nil
     record.preferences['delivery_status'] = 'success'
     record.preferences['delivery_status_date'] = Time.zone.now
@@ -100,7 +117,10 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     )
   end
 
-  def log_error(local_record, message)
+  def log_error(local_record, message, channel = nil)
+    if channel
+      record.preferences['delivery_channel_id'] = channel.id
+    end
     local_record.preferences['delivery_status'] = 'fail'
     local_record.preferences['delivery_status_message'] = message
     local_record.preferences['delivery_status_date'] = Time.zone.now
