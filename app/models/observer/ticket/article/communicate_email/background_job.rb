@@ -119,7 +119,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
 
   def log_error(local_record, message, channel = nil)
     if channel
-      record.preferences['delivery_channel_id'] = channel.id
+      local_record.preferences['delivery_channel_id'] = channel.id
     end
     local_record.preferences['delivery_status'] = 'fail'
     local_record.preferences['delivery_status_message'] = message
