@@ -67,7 +67,7 @@ class TicketCustomerOrganizationUpdateTest < ActiveSupport::TestCase
 
     # verify ticket
     ticket = Ticket.find(ticket.id)
-    assert_equal(nil, ticket.organization_id)
+    assert_nil(ticket.organization_id)
 
     # update customer organization
     customer1.organization_id = organization1.id

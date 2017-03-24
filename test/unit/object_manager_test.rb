@@ -655,10 +655,10 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal('some attribute test2', ticket2.title)
     assert_equal('Users', ticket2.group.name)
     assert_equal('new', ticket2.state.name)
-    assert_equal(nil, ticket2[:attribute1])
-    assert_equal(nil, ticket2[:attribute2])
-    assert_equal(nil, ticket2[:attribute3])
-    assert_equal(nil, ticket2[:attribute4])
+    assert_nil(ticket2[:attribute1])
+    assert_nil(ticket2[:attribute2])
+    assert_nil(ticket2[:attribute3])
+    assert_nil(ticket2[:attribute4])
 
   end
 

@@ -194,7 +194,7 @@ Mob: +49 333 1112222",
     assert_equal(1, caller_ids.length)
     assert_equal('maybe', caller_ids[0].level)
     assert_equal(2, caller_ids[0].user_id)
-    assert_equal(nil, caller_ids[0].comment)
+    assert_nil(caller_ids[0].comment)
 
     Cti::CallerId.maybe_add(
       caller_id: '4912345678901',
@@ -208,7 +208,7 @@ Mob: +49 333 1112222",
     assert_equal(1, caller_ids.length)
     assert_equal('maybe', caller_ids[0].level)
     assert_equal(2, caller_ids[0].user_id)
-    assert_equal(nil, caller_ids[0].comment)
+    assert_nil(caller_ids[0].comment)
 
     Cti::CallerId.maybe_add(
       caller_id: '4912345678901',
@@ -222,10 +222,10 @@ Mob: +49 333 1112222",
     assert_equal(2, caller_ids.length)
     assert_equal('maybe', caller_ids[0].level)
     assert_equal(3, caller_ids[0].user_id)
-    assert_equal(nil, caller_ids[0].comment)
+    assert_nil(caller_ids[0].comment)
     assert_equal('maybe', caller_ids[1].level)
     assert_equal(2, caller_ids[1].user_id)
-    assert_equal(nil, caller_ids[1].comment)
+    assert_nil(caller_ids[1].comment)
 
     Cti::CallerId.maybe_add(
       caller_id: '4912345678901',
@@ -239,7 +239,7 @@ Mob: +49 333 1112222",
     assert_equal(1, caller_ids.length)
     assert_equal('known', caller_ids[0].level)
     assert_equal(3, caller_ids[0].user_id)
-    assert_equal(nil, caller_ids[0].comment)
+    assert_nil(caller_ids[0].comment)
 
   end
 end
