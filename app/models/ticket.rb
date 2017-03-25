@@ -715,8 +715,15 @@ perform changes on ticket
         group = self.group
         next if !group
         email_address = group.email_address
-        next if !email_address
-        next if !email_address.channel_id
+        if !email_address
+          logger.info "Unable to send trigger based notification to #{recipient_string} because no email address is set for group '#{group.name}'"
+          next
+        end
+
+        if !email_address.channel_id
+          logger.info "Unable to send trigger based notification to #{recipient_string} because no channel is set for email address '#{email_address.email}' (id: #{email_address.id})"
+          next
+        end
 
         objects = {
           ticket: self,

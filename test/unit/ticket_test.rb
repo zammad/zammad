@@ -38,9 +38,9 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket.article_count, 1, 'ticket.article_count verify - inbound')
     assert_equal(ticket.last_contact_at.to_s, article_inbound1.created_at.to_s, 'ticket.last_contact verify - inbound')
     assert_equal(ticket.last_contact_customer_at.to_s, article_inbound1.created_at.to_s, 'ticket.last_contact_customer_at verify - inbound')
-    assert_equal(ticket.last_contact_agent_at, nil, 'ticket.last_contact_agent_at verify - inbound')
-    assert_equal(ticket.first_response_at, nil, 'ticket.first_response_at verify - inbound')
-    assert_equal(ticket.close_at, nil, 'ticket.close_at verify - inbound')
+    assert_nil(ticket.last_contact_agent_at, 'ticket.last_contact_agent_at verify - inbound')
+    assert_nil(ticket.first_response_at, 'ticket.first_response_at verify - inbound')
+    assert_nil(ticket.close_at, 'ticket.close_at verify - inbound')
 
     # create inbound article #2
     travel 2.seconds
@@ -63,9 +63,9 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket.article_count, 2, 'ticket.article_count verify - inbound')
     assert_equal(ticket.last_contact_at.to_s, article_inbound1.created_at.to_s, 'ticket.last_contact verify - inbound')
     assert_equal(ticket.last_contact_customer_at.to_s, article_inbound1.created_at.to_s, 'ticket.last_contact_customer_at verify - inbound')
-    assert_equal(ticket.last_contact_agent_at, nil, 'ticket.last_contact_agent_at verify - inbound')
-    assert_equal(ticket.first_response_at, nil, 'ticket.first_response_at verify - inbound')
-    assert_equal(ticket.close_at, nil, 'ticket.close_at verify - inbound')
+    assert_nil(ticket.last_contact_agent_at, 'ticket.last_contact_agent_at verify - inbound')
+    assert_nil(ticket.first_response_at, 'ticket.first_response_at verify - inbound')
+    assert_nil(ticket.close_at, 'ticket.close_at verify - inbound')
 
     # create note article
     article_note = Ticket::Article.create(
@@ -86,9 +86,9 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket.article_count, 3, 'ticket.article_count verify - note')
     assert_equal(ticket.last_contact_at.to_s, article_inbound1.created_at.to_s, 'ticket.last_contact verify - note')
     assert_equal(ticket.last_contact_customer_at.to_s, article_inbound1.created_at.to_s, 'ticket.last_contact_customer_at verify - note')
-    assert_equal(ticket.last_contact_agent_at, nil, 'ticket.last_contact_agent_at verify - note')
-    assert_equal(ticket.first_response_at, nil, 'ticket.first_response_at verify - note')
-    assert_equal(ticket.close_at, nil, 'ticket.close_at verify - note')
+    assert_nil(ticket.last_contact_agent_at, 'ticket.last_contact_agent_at verify - note')
+    assert_nil(ticket.first_response_at, 'ticket.first_response_at verify - note')
+    assert_nil(ticket.close_at, 'ticket.close_at verify - note')
 
     # create outbound article
     travel 2.seconds
@@ -112,7 +112,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket.last_contact_customer_at.to_s, article_inbound1.created_at.to_s, 'ticket.last_contact_customer_at verify - outbound')
     assert_equal(ticket.last_contact_agent_at.to_s, article_outbound.created_at.to_s, 'ticket.last_contact_agent_at verify - outbound')
     assert_equal(ticket.first_response_at.to_s, article_outbound.created_at.to_s, 'ticket.first_response_at verify - outbound')
-    assert_equal(ticket.close_at, nil, 'ticket.close_at verify - outbound')
+    assert_nil(ticket.close_at, 'ticket.close_at verify - outbound')
 
     # create inbound article #3
     article_inbound3 = Ticket::Article.create(
@@ -136,7 +136,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket.last_contact_customer_at.to_s, article_inbound3.created_at.to_s, 'ticket.last_contact_customer_at verify - inbound')
     assert_equal(ticket.last_contact_agent_at.to_s, article_outbound.created_at.to_s, 'ticket.last_contact_agent_at verify - outbound')
     assert_equal(ticket.first_response_at.to_s, article_outbound.created_at.to_s, 'ticket.first_response_at verify - outbound')
-    assert_equal(ticket.close_at, nil, 'ticket.close_at verify - outbound')
+    assert_nil(ticket.close_at, 'ticket.close_at verify - outbound')
 
     # create inbound article #4
     travel 2.seconds
@@ -161,7 +161,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket.last_contact_customer_at.to_s, article_inbound3.created_at.to_s, 'ticket.last_contact_customer_at verify - inbound')
     assert_equal(ticket.last_contact_agent_at.to_s, article_outbound.created_at.to_s, 'ticket.last_contact_agent_at verify - outbound')
     assert_equal(ticket.first_response_at.to_s, article_outbound.created_at.to_s, 'ticket.first_response_at verify - outbound')
-    assert_equal(ticket.close_at, nil, 'ticket.close_at verify - outbound')
+    assert_nil(ticket.close_at, 'ticket.close_at verify - outbound')
 
     ticket.state_id = Ticket::State.where(name: 'closed').first.id
     ticket.save
@@ -189,7 +189,7 @@ class TicketTest < ActiveSupport::TestCase
 
     ticket = Ticket.find(ticket.id)
     assert_equal(ticket.state.name, 'closed', 'state verify')
-    assert_equal(ticket.pending_time, nil)
+    assert_nil(ticket.pending_time)
 
     # delete article
     article_note = Ticket::Article.create(

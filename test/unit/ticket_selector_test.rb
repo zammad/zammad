@@ -115,7 +115,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     )
     assert(ticket2, 'ticket created')
     assert_equal(ticket2.customer.id, customer2.id)
-    assert_equal(ticket2.organization_id, nil)
+    assert_nil(ticket2.organization_id)
     travel 1.second
 
     ticket3 = Ticket.create!(
@@ -132,7 +132,7 @@ class TicketSelectorTest < ActiveSupport::TestCase
     ticket3.update_columns(escalation_at: '2015-02-06 10:00:00')
     assert(ticket3, 'ticket created')
     assert_equal(ticket3.customer.id, customer2.id)
-    assert_equal(ticket3.organization_id, nil)
+    assert_nil(ticket3.organization_id)
     travel 1.second
 
     # search not matching
@@ -166,19 +166,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
     }
 
     ticket_count, tickets = Ticket.selectors(condition, 10)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     # search matching with empty value []
     condition = {
@@ -193,19 +193,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
     }
 
     ticket_count, tickets = Ticket.selectors(condition, 10)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     # search matching with empty value ''
     condition = {
@@ -220,19 +220,19 @@ class TicketSelectorTest < ActiveSupport::TestCase
     }
 
     ticket_count, tickets = Ticket.selectors(condition, 10)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     # search matching
     condition = {
@@ -785,16 +785,16 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
     }
     ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, agent2)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer1)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     ticket_count, tickets = Ticket.selectors(condition, 10, customer2)
-    assert_equal(ticket_count, nil)
+    assert_nil(ticket_count)
 
     condition = {
       'ticket.group_id' => {

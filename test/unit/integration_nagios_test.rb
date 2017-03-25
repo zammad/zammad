@@ -208,7 +208,7 @@ Comment: [] =
     assert_equal('nagios', ticket_3.preferences['integration'])
     assert(ticket_3.preferences['nagios'])
     assert_equal('apn4711.dc.example.com', ticket_3.preferences['nagios']['host'])
-    assert_equal(nil, ticket_3.preferences['nagios']['service'])
+    assert_nil(ticket_3.preferences['nagios']['service'])
     assert_equal('DOWN', ticket_3.preferences['nagios']['state'])
     assert_not_equal(ticket_3.id, ticket_1.id)
 
@@ -244,7 +244,7 @@ Comment: [] =
     assert_equal('nagios', ticket_3_1.preferences['integration'])
     assert(ticket_3_1.preferences['nagios'])
     assert_equal('apn4711.dc.example.com', ticket_3.preferences['nagios']['host'])
-    assert_equal(nil, ticket_3_1.preferences['nagios']['service'])
+    assert_nil(ticket_3_1.preferences['nagios']['service'])
     assert_equal('DOWN', ticket_3_1.preferences['nagios']['state'])
 
     #Setting.set('nagios_integration', false)

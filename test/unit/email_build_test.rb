@@ -70,13 +70,13 @@ class EmailBuildTest < ActiveSupport::TestCase
     if data[:attachments]
       data[:attachments].each { |attachment|
         if attachment[:filename] == 'message.html'
-          assert_equal(nil, attachment[:preferences]['Content-ID'])
+          assert_nil(attachment[:preferences]['Content-ID'])
           assert_equal(true, attachment[:preferences]['content-alternative'])
           assert_equal('text/html', attachment[:preferences]['Mime-Type'])
           assert_equal('UTF-8', attachment[:preferences]['Charset'])
         elsif attachment[:filename] == 'somename.png'
-          assert_equal(nil, attachment[:preferences]['Content-ID'])
-          assert_equal(nil, attachment[:preferences]['content-alternative'])
+          assert_nil(attachment[:preferences]['Content-ID'])
+          assert_nil(attachment[:preferences]['content-alternative'])
           assert_equal('image/png', attachment[:preferences]['Mime-Type'])
           assert_equal('UTF-8', attachment[:preferences]['Charset'])
         else
@@ -109,7 +109,7 @@ class EmailBuildTest < ActiveSupport::TestCase
 > Thank you for installing Zammad. äöüß
 >'
     assert_equal(should, mail.text_part.body.to_s)
-    assert_equal(nil, mail.html_part)
+    assert_nil(mail.html_part)
 
     parser = Channel::EmailParser.new
     data = parser.parse(mail.to_s)
@@ -124,8 +124,8 @@ class EmailBuildTest < ActiveSupport::TestCase
     if data[:attachments]
       data[:attachments].each { |attachment|
         if attachment[:filename] == 'somename.png'
-          assert_equal(nil, attachment[:preferences]['Content-ID'])
-          assert_equal(nil, attachment[:preferences]['content-alternative'])
+          assert_nil(attachment[:preferences]['Content-ID'])
+          assert_nil(attachment[:preferences]['content-alternative'])
           assert_equal('image/png', attachment[:preferences]['Mime-Type'])
           assert_equal('UTF-8', attachment[:preferences]['Charset'])
         else
@@ -151,7 +151,7 @@ class EmailBuildTest < ActiveSupport::TestCase
 > Thank you for installing Zammad. äöüß
 >'
     assert_equal(should, mail.body.to_s)
-    assert_equal(nil, mail.html_part)
+    assert_nil(mail.html_part)
 
     parser = Channel::EmailParser.new
     data = parser.parse(mail.to_s)

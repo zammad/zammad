@@ -118,7 +118,7 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
     assert(user1.role_ids.include?(agent_role.id))
     assert_not(user1.role_ids.include?(customer_role.id))
 
-    assert_equal(nil, user2.organization_id)
+    assert_nil(user2.organization_id)
     assert_not(user2.group_ids.include?(users_group.id))
     assert_not(user2.role_ids.include?(admin_role.id))
     assert_not(user2.role_ids.include?(agent_role.id))

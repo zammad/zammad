@@ -127,7 +127,7 @@ class TicketRefObjectTouchTest < ActiveSupport::TestCase
     )
     assert(ticket, 'ticket created')
     assert_equal(ticket.customer.id, customer2.id)
-    assert_equal(ticket.organization, nil)
+    assert_nil(ticket.organization)
 
     # check if customer and organization has been touched
     customer2 = User.find(customer2.id)

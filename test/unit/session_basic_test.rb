@@ -41,7 +41,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(true, result, 'check 2')
 
     result = Sessions::CacheIn.get('last_run_test')
-    assert_equal(nil, result, 'check 2')
+    assert_nil(result, 'check 2')
 
     # check delete cache
     Sessions::CacheIn.set('last_run_delete', true, { expires_in: 5.seconds })
@@ -49,7 +49,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_equal(true, result, 'check 1')
     Sessions::CacheIn.delete('last_run_delete')
     result = Sessions::CacheIn.get('last_run_delete')
-    assert_equal(nil, nil, 'check delete')
+    assert_nil(result, 'check delete')
     travel_back
   end
 
@@ -84,7 +84,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     data = Sessions.get(client_id1)
     assert(data[:meta], 'check if meta exists')
     assert(data[:user], 'check if user exists')
-    assert_equal(data[:user]['id'], nil, 'check if user id is correct')
+    assert_nil(data[:user]['id'], 'check if user id is correct')
 
     # recreate session
     Sessions.create(client_id1, agent1.attributes, { type: 'websocket' })

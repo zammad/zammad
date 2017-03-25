@@ -222,7 +222,7 @@ Comment: [] =
     assert_equal('icinga', ticket_3.preferences['integration'])
     assert(ticket_3.preferences['icinga'])
     assert_equal('apn4711.dc.example.com', ticket_3.preferences['icinga']['host'])
-    assert_equal(nil, ticket_3.preferences['icinga']['service'])
+    assert_nil(ticket_3.preferences['icinga']['service'])
     assert_equal('DOWN', ticket_3.preferences['icinga']['state'])
     assert_not_equal(ticket_3.id, ticket_1.id)
 
@@ -258,7 +258,7 @@ Comment: [] =
     assert_equal('icinga', ticket_3_1.preferences['integration'])
     assert(ticket_3_1.preferences['icinga'])
     assert_equal('apn4711.dc.example.com', ticket_3.preferences['icinga']['host'])
-    assert_equal(nil, ticket_3_1.preferences['icinga']['service'])
+    assert_nil(ticket_3_1.preferences['icinga']['service'])
     assert_equal('DOWN', ticket_3_1.preferences['icinga']['state'])
 
     #Setting.set('icinga_integration', false)
