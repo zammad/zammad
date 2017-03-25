@@ -44,7 +44,7 @@ class Transaction::Trigger
 
     original_user_id = UserInfo.current_user_id
 
-    Transaction.execute(reset_user_id: true, disable: ['Transaction::Trigger']) do
+    Transaction.execute(reset_user_id: true, disable: ['Transaction::Trigger', 'Transaction::Notification']) do
       triggers.each { |trigger|
         condition = trigger.condition
 
