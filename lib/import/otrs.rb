@@ -57,6 +57,7 @@ module Import
 
     def checks
       check_import_mode
+      check_system_init_done
       connection_test
     end
 
