@@ -3311,7 +3311,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: [ 1, 2, 3, 7 ],
+      value: Ticket::State.by_category('open').pluck(:id),
     },
     'ticket.owner_id' => {
       operator: 'is',
@@ -3338,7 +3338,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: [1, 2, 3],
+      value: Ticket::State.by_category('work_on_all').pluck(:id),
     },
     'ticket.owner_id' => {
       operator: 'is',
@@ -3365,7 +3365,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: 3,
+      value: Ticket::State.by_category('pending_reminder').pluck(:id),
     },
     'ticket.owner_id' => {
       operator: 'is',
@@ -3397,7 +3397,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: [1, 2, 3],
+      value: Ticket::State.by_category('work_on_all').pluck(:id),
     },
   },
   order: {
@@ -3420,7 +3420,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: [3],
+      value: Ticket::State.by_category('pending_reminder').pluck(:id),
     },
     'ticket.pending_time' => {
       operator: 'within next (relative)',
@@ -3473,7 +3473,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: [ 1, 2, 3, 4, 6, 7 ],
+      value: Ticket::State.by_category('viewable').pluck(:id),
     },
     'ticket.customer_id' => {
       operator: 'is',
@@ -3500,7 +3500,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: [ 1, 2, 3, 4, 6, 7 ],
+      value: Ticket::State.by_category('viewable').pluck(:id),
     },
     'ticket.organization_id' => {
       operator: 'is',
