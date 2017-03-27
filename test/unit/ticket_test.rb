@@ -307,7 +307,42 @@ class TicketTest < ActiveSupport::TestCase
 
   end
 
-  test 'article attachment helper' do
+  test 'ticket followup number check' do
+
+    origin_backend = Setting.get('ticket_number')
+    Setting.set('ticket_number', 'Ticket::Number::Increment')
+
+    ticket1 = Ticket.create(
+      title: 'subject test 1234-1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal('subject test 1234-1', ticket1.title)
+    assert_equal("ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('ABC subject test 1'))
+    assert_equal(ticket1.id, Ticket::Number.check("Re: Help [Ticket##{ticket1.number}]").id)
+
+    Setting.set('ticket_number', 'Ticket::Number::Date')
+    ticket1 = Ticket.create(
+      title: 'subject test 1234-2',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal('subject test 1234-2', ticket1.title)
+    assert_equal("ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('ABC subject test 1'))
+    assert_equal(ticket1.id, Ticket::Number.check("Re: Help [Ticket##{ticket1.number}]").id)
+
+    Setting.set('ticket_number', origin_backend)
+  end
+
+  test 'article attachment helper 1' do
 
     ticket1 = Ticket.create(
       title: 'some article helper test1',
