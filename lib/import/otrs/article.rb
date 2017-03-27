@@ -70,6 +70,8 @@ module Import
       def map(article)
         mapped = map_default(article)
         map_content_type(mapped)
+        mapped[:body] ||= ''
+        mapped
       end
 
       def map_default(article)
