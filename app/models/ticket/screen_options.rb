@@ -126,8 +126,8 @@ returns
   def self.list_by_customer(data)
 
     # get closed/open states
-    state_list_open   = Ticket::State.by_category( 'open' )
-    state_list_closed = Ticket::State.by_category( 'closed' )
+    state_list_open   = Ticket::State.by_category(:open)
+    state_list_closed = Ticket::State.by_category(:closed)
 
     # get tickets
     tickets_open = Ticket.where(

@@ -5,26 +5,26 @@ class Stats::TicketInProcess
   def self.generate(user)
 
     # get own tickets which are "workable"
-    open_state_ids = Ticket::State.by_category('work_on').map(&:id)
-    pending_state_ids = Ticket::State.by_category('pending_reminder').map(&:id)
+    open_state_ids = Ticket::State.by_category(:work_on).pluck(:id)
+    pending_state_ids = Ticket::State.by_category(:pending_reminder).pluck(:id)
     own_ticket_ids = Ticket.select('id').where(
       'owner_id = ? AND (state_id IN (?) OR (state_id IN (?) AND pending_time < ?))',
       user.id, open_state_ids, pending_state_ids, Time.zone.now
-    ).limit(1000).map(&:id)
+    ).limit(1000).pluck(:id)
 
     # get all tickets where I worked on today (owner & closed today)
-    closed_state_ids = Ticket::State.by_category('closed').map(&:id)
+    closed_state_ids = Ticket::State.by_category(:closed).pluck(:id)
     closed_ticket_ids = Ticket.select('id').where(
       'owner_id = ? AND state_id IN (?) AND close_at > ?',
       user.id, closed_state_ids, Time.zone.now - 1.day
-    ).limit(100).map(&:id)
+    ).limit(100).pluck(:id)
 
     # get all tickets which I changed to pending action
-    pending_action_state_ids = Ticket::State.by_category('pending_action').map(&:id)
+    pending_action_state_ids = Ticket::State.by_category(:pending_action).pluck(:id)
     pending_action_ticket_ids = Ticket.select('id').where(
       'owner_id = ? AND state_id IN (?) AND updated_at > ?',
       user.id, pending_action_state_ids, Time.zone.now - 1.day
-    ).limit(100).map(&:id)
+    ).limit(100).pluck(:id)
 
     all_ticket_ids = own_ticket_ids.concat(closed_ticket_ids).concat(pending_action_ticket_ids).uniq
 
