@@ -82,12 +82,12 @@ module Ticket::Number::Date
     ticket              = nil
 
     # probe format
-    string.scan(/#{Regexp.quote(ticket_hook)}#{Regexp.quote(ticket_hook_divider)}(#{system_id}\d{2,48})/i) {
+    string.scan(/#{Regexp.quote(ticket_hook)}#{Regexp.quote(ticket_hook_divider)}(\d{4,10}#{system_id}\d{2,40})/i) {
       ticket = Ticket.find_by(number: $1)
       break if ticket
     }
     if !ticket
-      string.scan(/#{Regexp.quote(ticket_hook)}\s{0,2}(#{system_id}\d{2,48})/i) {
+      string.scan(/#{Regexp.quote(ticket_hook)}\s{0,2}(\d{4,10}#{system_id}\d{2,40})/i) {
         ticket = Ticket.find_by(number: $1)
         break if ticket
       }
