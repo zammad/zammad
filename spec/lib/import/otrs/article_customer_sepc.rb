@@ -36,8 +36,15 @@ RSpec.describe Import::OTRS::ArticleCustomer do
     expect(User.last.login).to eq('user.hernandez@example.com')
   end
 
-  it 'creates customers with special from email sytax' do
+  it 'creates customers with special from email syntax' do
     expect { described_class.new(load_article_json('from_bracket_email_syntax')) }.to change { User.count }.by(1)
+    expect(User.last.login).to eq('user@example.com')
+  end
+
+  it 'converts emails to downcase' do
+    Setting.set('import_mode', true)
+    expect { described_class.new(load_article_json('from_capital_case')) }.to change { User.count }.by(1)
+    expect(User.last.email).to eq('user@example.com')
     expect(User.last.login).to eq('user@example.com')
   end
 end
