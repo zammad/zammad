@@ -15,6 +15,7 @@
 
 # Ignore Rubymine config
 /.idea
+*.iml
 
 # Ignore .project files
 /.project

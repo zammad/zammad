@@ -565,31 +565,47 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
       { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
       { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', },
-      { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
+      { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
       { name: 'options::ssl',       display: 'SSL',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
       { name: 'options::port',      display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
       { name: 'options::folder',    display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false },
     ]
 
-    showHideFolder = (params, attribute, attributes, classname, form, ui) ->
+    showHideOptions = (params, attribute, attributes, classname, form, ui) ->
       return if !params
-      if params.adapter is 'imap'
-        ui.show('options::folder')
-        return
-      ui.hide('options::folder')
+      if params.adapter is 'smtp'
+        ui.hide('options::password')
+        ui.hide('options::folder')
+        ui.hide('options::ssl')
+      else
+        ui.show('options::password')
+        ui.show('options::ssl')
+        if params.adapter is 'imap'
+          ui.show('options::folder')
+        else
+          ui.hide('options::folder')
 
     handlePort = (params, attribute, attributes, classname, form, ui) ->
       return if !params
       return if !params.options
+      return if !params.adapter
       currentPort = @$('[name="options::port"]').val()
-      if params.options.ssl is true
-        if !currentPort || currentPort is '143'
+      if params.adapter is 'smtp'
+        if !currentPort || currentPort is '143' || currentPort is '993'
+          @$('[name="options::port"]').val('2525')
+      else
+        if !params.options.ssl?
           @$('[name="options::port"]').val('993')
-        return
-      if params.options.ssl is false
-        if !currentPort || currentPort is '993'
-          @$('[name="options::port"]').val('143')
-        return
+          @$('[name="options::ssl"]').val('true')
+          return
+        if params.options.ssl is true
+          if !currentPort || currentPort is '143' || currentPort is '2525'
+            @$('[name="options::port"]').val('993')
+          return
+        if params.options.ssl is false
+          if !currentPort || currentPort is '993' || currentPort is '2525'
+            @$('[name="options::port"]').val('143')
+          return
 
     new App.ControllerForm(
       el:    @$('.base-inbound-settings'),
@@ -598,7 +614,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
         className: ''
       params: @account.inbound
       handlers: [
-        showHideFolder,
+        showHideOptions,
         handlePort,
       ]
     )
@@ -740,10 +756,12 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
             if @account['inbound']['options']
               @$('.js-outbound [name="options::host"]').val(@account['inbound']['options']['host'])
               @$('.js-outbound [name="options::user"]').val(@account['inbound']['options']['user'])
-              @$('.js-outbound [name="options::password"]').val(@account['inbound']['options']['password'])
+              if @$('.js-outbound [name="options::password"]').length
+                @$('.js-outbound [name="options::password"]').val(@account['inbound']['options']['password'])
             else
               @$('.js-outbound [name="options::user"]').val(@account['meta']['email'])
-              @$('.js-outbound [name="options::password"]').val(@account['meta']['password'])
+              if @$('.js-outbound [name="options::password"]').length
+                @$('.js-outbound [name="options::password"]').val(@account['meta']['password'])
 
         else
           @showSlide('js-inbound')

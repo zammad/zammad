@@ -224,9 +224,18 @@ returns on fail
 
         require "channel/driver/#{adapter.to_filename}"
 
+        Rails.logger.debug "probing inbound driver #{adapter.to_classname}"
         driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
         driver_instance = driver_class.new
-        result_inbound  = driver_instance.fetch(params[:options], nil, 'check')
+        result_inbound  =
+        if driver_instance.fetchable?(nil)
+          driver_instance.fetch(params[:options], nil, 'check')
+        else
+          {
+            result: 'ok',
+            notice: ''
+          }
+        end
 
       rescue => e
         return {

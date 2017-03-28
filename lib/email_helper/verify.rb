@@ -86,9 +86,19 @@ or
         begin
           require "channel/driver/#{adapter.to_filename}"
 
+          Rails.logger.debug "verifying inbound driver #{adapter.to_classname}"
           driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
           driver_instance = driver_class.new
-          fetch_result    = driver_instance.fetch(params[:inbound][:options], self, 'verify', subject)
+          fetch_result    =
+          if driver_instance.fetchable?(nil)
+            driver_instance.fetch(params[:inbound][:options], self, 'verify', subject)
+          else
+            {
+              result: 'ok',
+              source: 'inbound',
+              subject: subject,
+            }
+          end
         rescue => e
           result = {
             result: 'invalid',

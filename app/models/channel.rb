@@ -15,6 +15,7 @@ class Channel < ApplicationModel
 
   # rubocop:disable Style/ClassVars
   @@channel_stream = {}
+  @@channel_listen = {}
 # rubocop:enable Style/ClassVars
 
 =begin
@@ -198,6 +199,76 @@ stream all accounts
       sleep 30
     end
 
+  end
+
+  def self.listen
+    Thread.abort_on_exception = true
+
+    last_channels = []
+
+    loop do
+      current_channels = []
+
+      Channel.where(area: 'Email::Account', active: true).each do |channel|
+        next if !channel.options[:inbound] || channel.options[:inbound][:adapter] != 'smtp'
+
+        current_channels.push channel.id
+
+        if @@channel_listen[channel.id] && @@channel_listen[channel.id][:updated_at] != channel.updated_at
+          logger.debug "channel (#{channel.id}) previous last update #{@@channel_listen[channel.id][:updated_at]}"
+          logger.debug "channel (#{channel.id}) last update #{channel.updated_at}"
+          logger.debug "channel (#{channel.id}) has changed, restart"
+          @@channel_listen[channel.id][:driver_instance].shutdown
+          @@channel_listen[channel.id] = false
+        end
+
+        next if @@channel_listen[channel.id]
+
+        @@channel_listen[channel.id] = {
+          updated_at: channel.updated_at
+        }
+
+        begin
+          logger.info "Start listening channel with id #{channel.id}"
+
+          adapter = channel.options[:inbound][:adapter]
+          # we need to require each channel backend individually otherwise we get a
+          # 'warning: toplevel constant Twitter referenced by Channel::Driver::Twitter' error e.g.
+          # so we have to convert the channel name to the filename via Rails String.underscore
+          # http://stem.ps/rails/2015/01/25/ruby-gotcha-toplevel-constant-referenced-by.html
+          require "channel/driver/#{adapter.to_filename}"
+
+          driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
+          driver_instance = driver_class.new
+
+          @@channel_listen[channel.id][:driver_instance] = driver_instance
+          @@channel_listen[channel.id][:driver_instance].listen(channel)
+          logger.debug 'Set channel status to ok'
+          channel.status_in = 'ok'
+          channel.last_log_in = ''
+          channel.save
+        rescue => e
+          error = "Failed to start listening on channel with id #{channel.id}: #{e.inspect}"
+          logger.error error
+          logger.error e.backtrace
+          channel.status_in = 'error'
+          channel.last_log_in = error
+          channel.save
+          @@channel_listen[channel.id] = false
+        end
+      end
+
+      last_channels.each do |channel_id|
+        next if !@@channel_listen[channel_id]
+        next if current_channels.include?(channel_id)
+        logger.debug "Channel with id #{channel_id} no longer active, stop listening"
+        @@channel_listen[channel_id][:driver_instance].shutdown
+        @@channel_listen[channel_id] = false
+      end
+      last_channels = current_channels
+
+      sleep 30
+    end
   end
 
 =begin
