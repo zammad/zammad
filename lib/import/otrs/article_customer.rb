@@ -13,6 +13,7 @@ module Import
 
         def find(article)
           email = local_email(article['From'])
+          return if !email
           user   = ::User.find_by(email: email)
           user ||= ::User.find_by(login: email)
           user
@@ -20,7 +21,9 @@ module Import
 
         def local_email(from)
           # TODO: should get unified with User#check_email
-          extract_email(from).downcase
+          email = extract_email(from)
+          return if !email
+          email.downcase
         end
 
         private

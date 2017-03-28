@@ -47,4 +47,23 @@ RSpec.describe Import::OTRS::ArticleCustomer do
     expect(User.last.email).to eq('user@example.com')
     expect(User.last.login).to eq('user@example.com')
   end
+
+  context '.find' do
+
+    it 'returns nil if no email could be found' do
+      expect(described_class.find({})).to be nil
+    end
+  end
+
+  context '.local_email' do
+
+    it 'returns nil if no email could be found' do
+      expect(described_class.local_email(nil)).to be nil
+    end
+
+    it 'returns the parameter if no email could be found' do
+      not_an_email = 'thisisnotanemail'
+      expect(described_class.local_email(not_an_email)).to eq(not_an_email)
+    end
+  end
 end
