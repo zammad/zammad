@@ -1,10 +1,15 @@
 module Import
   module OTRS
+
+    # @!attribute [rw] retry_sleep
+    #   @return [Number] the sleep time between the request retries
     module Requester
       extend Import::Helper
 
       # rubocop:disable Style/ModuleFunction
       extend self
+
+      attr_accessor :retry_sleep
 
       # Loads entries of the given object.
       #
@@ -68,8 +73,17 @@ module Import
       private
 
       def request_result(params)
+        tries ||= 1
         response = request_json(params)
         response['Result']
+      rescue
+        # stop after 3 tries
+        raise if tries == 3
+
+        # try again
+        tries += 1
+        sleep tries * (retry_sleep || 15)
+        retry
       end
 
       def request_json(params)
