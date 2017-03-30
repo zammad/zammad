@@ -1,6 +1,6 @@
 class Index extends App.ControllerSubContent
   requiredPermission: 'admin.text_module'
-  header: 'TextModules'
+  header: 'Text modules'
   constructor: ->
     super
 
@@ -11,7 +11,7 @@ class Index extends App.ControllerSubContent
       pageData:
         home: 'text_modules'
         object: 'TextModule'
-        objects: 'TextModules'
+        objects: 'Text modules'
         navupdate: '#text_modules'
         notes: [
           'Text modules are ...'
@@ -22,4 +22,4 @@ class Index extends App.ControllerSubContent
       container: @el.closest('.content')
     )
 
-App.Config.set('TextModule', { prio: 2300, name: 'TextModules', parent: '#manage', target: '#manage/text_modules', controller: Index, permission: ['admin.text_module'] }, 'NavBarAdmin')
+App.Config.set('TextModule', { prio: 2300, name: 'Text modules', parent: '#manage', target: '#manage/text_modules', controller: Index, permission: ['admin.text_module'] }, 'NavBarAdmin')
