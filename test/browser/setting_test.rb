@@ -140,4 +140,36 @@ class SettingTest < TestCase
       value: 'facebook',
     )
   end
+
+  def test_product_name
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    verify_title(value: 'Zammad Test System')
+
+    click(css: 'a[href="#manage"]')
+    click(css: '.content.active a[href="#settings/branding"]')
+    set(
+      css: '.content.active [name="product_name"]',
+      value: 'ABC App',
+    )
+    click(css: '.content.active #product_name button[type=submit]')
+
+    sleep 2
+    verify_title(value: 'ABC App')
+    set(
+      css: '.content.active [name="product_name"]',
+      value: 'Zammad Test System',
+    )
+    click(css: '.content.active #product_name button[type=submit]')
+
+    sleep 2
+    verify_title(value: 'Zammad Test System')
+  end
+
 end
