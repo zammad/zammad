@@ -115,7 +115,6 @@ Setting.create_if_not_exists(
   },
   preferences: {
     render: true,
-    session_check: true,
     prio: 1,
     placeholder: true,
     permission: ['admin.branding'],

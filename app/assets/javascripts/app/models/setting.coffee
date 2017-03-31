@@ -5,10 +5,12 @@ class App.Setting extends App.Model
 
   @get: (name) ->
     setting = App.Setting.findByAttribute('name', name)
+    throw "No such setting '#{name}' found!" if !setting
     setting.state_current.value
 
   @set: (name, value, options = {}) ->
     setting = App.Setting.findByAttribute('name', name)
+    throw "No such setting '#{name}' found!" if !setting
     setting.state_current.value = value
     if !options.done
       options.done = ->
@@ -27,22 +29,25 @@ class App.Setting extends App.Model
           msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
           timeout: 2000
         }
-    App.Config.set(name, value)
+    if setting.frontend
+      App.Config.set(name, value)
     setting.save(options)
 
   @preferencesPost: (setting) ->
     return if !setting.preferences
     if setting.preferences.render
-      App.Event.trigger('ui:rerender')
+      setting.preferences.trigger ||= []
+      setting.preferences.trigger.push 'ui:rerender'
 
-    if setting.preferences.trigger
-      events = setting.preferences.trigger
-      if !_.isArray(setting.preferences.trigger)
-        events = [setting.preferences.trigger]
-      delay = ->
-        for event in events
+    return if _.isEmpty(setting.preferences.trigger)
+    events = setting.preferences.trigger
+    if !_.isArray(setting.preferences.trigger)
+      events = [setting.preferences.trigger]
+
+    count = 0
+    for event in events
+      count += 1
+      do (event, count) ->
+        delay = ->
           App.Event.trigger(event)
-      App.Delay.set(delay, 20)
-
-    if setting.preferences.session_check
-      App.Auth.loginCheck()
+        App.Delay.set(delay, 300 * count)
