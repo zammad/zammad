@@ -4,7 +4,7 @@ class Stats::TicketEscalation
 
   def self.generate(user)
 
-    open_state_ids = Ticket::State.by_category('open').map(&:id)
+    open_state_ids = Ticket::State.by_category(:open).pluck(:id)
 
     # get users groups
     group_ids = user.groups.map(&:id)

@@ -4,7 +4,7 @@ class Stats::TicketLoadMeasure
 
   def self.generate(user)
 
-    open_state_ids = Ticket::State.by_category('open').map(&:id)
+    open_state_ids = Ticket::State.by_category(:open).pluck(:id)
 
     # owned tickets
     count = Ticket.where(owner_id: user.id, state_id: open_state_ids).count

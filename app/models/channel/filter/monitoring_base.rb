@@ -46,7 +46,7 @@ class Channel::Filter::MonitoringBase
     customer = User.lookup(id: session_user_id)
 
     # follow up detection by meta data
-    open_states = Ticket::State.by_category('open')
+    open_states = Ticket::State.by_category(:open)
     Ticket.where(state: open_states).each { |ticket|
       next if !ticket.preferences
       next if !ticket.preferences['integration']

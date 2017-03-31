@@ -274,7 +274,7 @@ class TicketsController < ApplicationController
     ticket_lists = Ticket
                    .where(
                      customer_id: ticket.customer_id,
-                     state_id: Ticket::State.by_category('open')
+                     state_id: Ticket::State.by_category(:open)
                    )
                    .where(access_condition)
                    .where('id != ?', [ ticket.id ])
@@ -287,7 +287,7 @@ class TicketsController < ApplicationController
                      .where(
                        customer_id: ticket.customer_id,
                      ).where.not(
-                       state_id: Ticket::State.by_category('merged')
+                       state_id: Ticket::State.by_category(:merged)
                      )
                      .where(access_condition)
                      .where('id != ?', [ ticket.id ])
@@ -503,7 +503,7 @@ class TicketsController < ApplicationController
       condition = {
         'ticket.state_id' => {
           operator: 'is',
-          value: Ticket::State.by_category('open').map(&:id),
+          value: Ticket::State.by_category(:open).pluck(:id),
         },
         'ticket.customer_id' => {
           operator: 'is',
@@ -521,7 +521,7 @@ class TicketsController < ApplicationController
       condition = {
         'ticket.state_id' => {
           operator: 'is',
-          value: Ticket::State.by_category('closed').map(&:id),
+          value: Ticket::State.by_category(:closed).pluck(:id),
         },
         'ticket.customer_id' => {
           operator: 'is',
@@ -577,7 +577,7 @@ class TicketsController < ApplicationController
       condition = {
         'ticket.state_id' => {
           operator: 'is',
-          value: Ticket::State.by_category('open').map(&:id),
+          value: Ticket::State.by_category(:open).pluck(:id),
         },
         'ticket.organization_id' => {
           operator: 'is',
@@ -595,7 +595,7 @@ class TicketsController < ApplicationController
       condition = {
         'ticket.state_id' => {
           operator: 'is',
-          value: Ticket::State.by_category('closed').map(&:id),
+          value: Ticket::State.by_category(:closed).pluck(:id),
         },
         'ticket.organization_id' => {
           operator: 'is',

@@ -115,7 +115,6 @@ Setting.create_if_not_exists(
   },
   preferences: {
     render: true,
-    session_check: true,
     prio: 1,
     placeholder: true,
     permission: ['admin.branding'],
@@ -3311,7 +3310,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: Ticket::State.by_category('open').pluck(:id),
+      value: Ticket::State.by_category(:open).pluck(:id),
     },
     'ticket.owner_id' => {
       operator: 'is',
@@ -3338,7 +3337,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: Ticket::State.by_category('work_on_all').pluck(:id),
+      value: Ticket::State.by_category(:work_on_all).pluck(:id),
     },
     'ticket.owner_id' => {
       operator: 'is',
@@ -3365,7 +3364,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: Ticket::State.by_category('pending_reminder').pluck(:id),
+      value: Ticket::State.by_category(:pending_reminder).pluck(:id),
     },
     'ticket.owner_id' => {
       operator: 'is',
@@ -3397,7 +3396,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: Ticket::State.by_category('work_on_all').pluck(:id),
+      value: Ticket::State.by_category(:work_on_all).pluck(:id),
     },
   },
   order: {
@@ -3420,7 +3419,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: Ticket::State.by_category('pending_reminder').pluck(:id),
+      value: Ticket::State.by_category(:pending_reminder).pluck(:id),
     },
     'ticket.pending_time' => {
       operator: 'within next (relative)',
@@ -3473,7 +3472,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: Ticket::State.by_category('viewable').pluck(:id),
+      value: Ticket::State.by_category(:viewable).pluck(:id),
     },
     'ticket.customer_id' => {
       operator: 'is',
@@ -3500,7 +3499,7 @@ Overview.create_if_not_exists(
   condition: {
     'ticket.state_id' => {
       operator: 'is',
-      value: Ticket::State.by_category('viewable').pluck(:id),
+      value: Ticket::State.by_category(:viewable).pluck(:id),
     },
     'ticket.organization_id' => {
       operator: 'is',
