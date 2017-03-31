@@ -16,7 +16,7 @@ class Ticket::State < ApplicationModel
 
 looks up states for a given category
 
-  states = Ticket::State.by_category(:open) # :open|:closed|:work_on|:work_on_all|:viewable|:pending_reminder|:pending_action|:merged
+  states = Ticket::State.by_category(:open) # :open|:closed|:work_on|:work_on_all|:viewable|:viewable_agent_new|:viewable_agent_edit|:viewable_customer_new|:viewable_customer_edit|:pending_reminder|:pending_action|:pending|:merged
 
 returns:
 
@@ -33,12 +33,22 @@ returns:
       state_types = ['pending reminder']
     when :pending_action
       state_types = ['pending action']
+    when :pending
+      state_types = ['pending reminder', 'pending action']
     when :work_on
       state_types = %w(new open)
     when :work_on_all
       state_types = ['new', 'open', 'pending reminder']
     when :viewable
       state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed']
+    when :viewable_agent_new
+      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed']
+    when :viewable_agent_edit
+      state_types = ['open', 'pending reminder', 'pending action', 'closed']
+    when :viewable_customer_new
+      state_types = %w(new closed)
+    when :viewable_customer_edit
+      state_types = %w(open closed)
     when :closed
       state_types = %w(closed)
     when :merged
