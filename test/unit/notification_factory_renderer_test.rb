@@ -9,7 +9,7 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
   end
 
   group        = Group.new(name: 'Users')
-  owner        = User.new(firstname: 'Notification<b>xxx</b>', lastname: 'Agent1<b>yyy</b>')
+  owner        = User.new(firstname: 'Owner<b>xxx</b>', lastname: 'Agent1<b>yyy</b>')
   current_user = User.new(firstname: 'CurrentUser<b>xxx</b>', lastname: 'Agent2<b>yyy</b>')
   recipient    = User.new(firstname: 'Recipient<b>xxx</b>', lastname: 'Customer1<b>yyy</b>')
   state        = Ticket::State.new(name: 'new')
@@ -19,6 +19,8 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     group: group,
     owner: owner,
     state: state,
+    created_by: current_user,
+    updated_by: current_user,
     created_at: Time.zone.parse('2016-11-12 12:00:00 UTC'),
     updated_at: Time.zone.parse('2016-11-12 14:00:00 UTC'),
   )
@@ -56,6 +58,16 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(ticket.created_at.to_s, result)
 
+    template = "\#{ticket.created_by.firstname}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal('CurrentUser&lt;b&gt;xxx&lt;/b&gt;', result)
+
     template = "\#{ticket.updated_at}"
     result = described_class.new(
       {
@@ -65,6 +77,26 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
       template,
     ).render
     assert_equal(ticket.updated_at.to_s, result)
+
+    template = "\#{ticket.updated_by.firstname}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal('CurrentUser&lt;b&gt;xxx&lt;/b&gt;', result)
+
+    template = "\#{ticket.owner.firstname}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal('Owner&lt;b&gt;xxx&lt;/b&gt;', result)
 
     template = "\#{ticket. title}"
     result = described_class.new(
