@@ -3846,13 +3846,7 @@ ObjectManager::Attribute.add(
     null: false,
     default: Ticket::State.find_by(name: 'open').id,
     translate: true,
-    filter: [
-      Ticket::State.find_by(name: 'new').id,
-      Ticket::State.find_by(name: 'open').id,
-      Ticket::State.find_by(name: 'pending reminder').id,
-      Ticket::State.find_by(name: 'closed').id,
-      Ticket::State.find_by(name: 'pending close').id,
-    ],
+    filter: Ticket::State.by_category(:viewable).pluck(:id),
   },
   editable: false,
   active: true,
@@ -3861,15 +3855,13 @@ ObjectManager::Attribute.add(
       Agent: {
         null: false,
         item_class: 'column',
+        filter: Ticket::State.by_category(:viewable_agent_new).pluck(:id),
       },
       Customer: {
         item_class: 'column',
         nulloption: false,
         null: true,
-        filter: [
-          Ticket::State.find_by(name: 'new').id,
-          Ticket::State.find_by(name: 'closed').id
-        ],
+        filter: Ticket::State.by_category(:viewable_customer_new).pluck(:id),
         default: Ticket::State.find_by(name: 'new').id,
       },
     },
@@ -3877,20 +3869,12 @@ ObjectManager::Attribute.add(
       Agent: {
         nulloption: false,
         null: false,
-        filter: [
-          Ticket::State.find_by(name: 'open').id,
-          Ticket::State.find_by(name: 'pending reminder').id,
-          Ticket::State.find_by(name: 'closed').id,
-          Ticket::State.find_by(name: 'pending close').id,
-        ],
+        filter: Ticket::State.by_category(:viewable_agent_edit).pluck(:id),
       },
       Customer: {
         nulloption: false,
         null: true,
-        filter: [
-          Ticket::State.find_by(name: 'open').id,
-          Ticket::State.find_by(name: 'closed').id
-        ],
+        filter: Ticket::State.by_category(:viewable_customer_edit).pluck(:id),
         default: Ticket::State.find_by(name: 'open').id,
       },
     },
@@ -3913,16 +3897,10 @@ ObjectManager::Attribute.add(
     null: true,
     translate: true,
     required_if: {
-      state_id: [
-        Ticket::State.find_by(name: 'pending reminder').id,
-        Ticket::State.find_by(name: 'pending close').id,
-      ]
+      state_id: Ticket::State.by_category(:pending).pluck(:id),
     },
     shown_if: {
-      state_id: [
-        Ticket::State.find_by(name: 'pending reminder').id,
-        Ticket::State.find_by(name: 'pending close').id,
-      ]
+      state_id: Ticket::State.by_category(:pending).pluck(:id),
     },
   },
   editable: false,
