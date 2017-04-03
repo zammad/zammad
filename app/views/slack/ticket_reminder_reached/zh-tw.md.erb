@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: 到達提醒時間!_
+請留意, "*#{ticket.customer.longname}*" 的工單 (#{ticket.title}) 到達提醒時間.
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

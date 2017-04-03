@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: 在 #{ticket.escalation_at} 開始升級_
+"#{ticket.customer.longname}" 的工單 (#{ticket.title}) 已經在 "#{ticket.escalation_at}" 開始升級!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
