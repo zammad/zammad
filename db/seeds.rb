@@ -3708,12 +3708,13 @@ ObjectManager::Attribute.add(
     placeholder: 'Enter Person or Organization/Company',
     minLengt: 2,
     translate: false,
+    permission: ['ticket.agent'],
   },
   editable: false,
   active: true,
   screens: {
     create_top: {
-      Agent: {
+      '-all-' => {
         null: false,
       },
     },
@@ -3752,7 +3753,7 @@ ObjectManager::Attribute.add(
       },
     },
     edit: {
-      Agent: {
+      'ticket.agent' => {
         null: false,
       },
     },
@@ -3777,6 +3778,7 @@ ObjectManager::Attribute.add(
     null: false,
     translate: false,
     only_shown_if_selectable: true,
+    permission: ['ticket.agent', 'ticket.customer'],
   },
   editable: false,
   active: true,
@@ -3788,7 +3790,7 @@ ObjectManager::Attribute.add(
       },
     },
     edit: {
-      Agent: {
+      'ticket.agent' => {
         null: false,
       },
     },
@@ -3812,18 +3814,19 @@ ObjectManager::Attribute.add(
     multiple: false,
     null: true,
     translate: false,
+    permission: ['ticket.agent'],
   },
   editable: false,
   active: true,
   screens: {
     create_middle: {
-      Agent: {
+      '-all-' => {
         null: true,
         item_class: 'column',
       },
     },
     edit: {
-      Agent: {
+      '-all-' => {
         null: true,
       },
     },
@@ -3852,12 +3855,12 @@ ObjectManager::Attribute.add(
   active: true,
   screens: {
     create_middle: {
-      Agent: {
+      'ticket.agent' => {
         null: false,
         item_class: 'column',
         filter: Ticket::State.by_category(:viewable_agent_new).pluck(:id),
       },
-      Customer: {
+      'ticket.customer' => {
         item_class: 'column',
         nulloption: false,
         null: true,
@@ -3866,12 +3869,12 @@ ObjectManager::Attribute.add(
       },
     },
     edit: {
-      Agent: {
+      'ticket.agent' => {
         nulloption: false,
         null: false,
         filter: Ticket::State.by_category(:viewable_agent_edit).pluck(:id),
       },
-      Customer: {
+      'ticket.customer' => {
         nulloption: false,
         null: true,
         filter: Ticket::State.by_category(:viewable_customer_edit).pluck(:id),
@@ -3913,7 +3916,7 @@ ObjectManager::Attribute.add(
       },
     },
     edit: {
-      Agent: {
+      '-all-' => {
         null: false,
       },
     },
@@ -3941,13 +3944,13 @@ ObjectManager::Attribute.add(
   active: true,
   screens: {
     create_middle: {
-      Agent: {
+      'ticket.agent' => {
         null: false,
         item_class: 'column',
       },
     },
     edit: {
-      Agent: {
+      'ticket.agent' => {
         null: false,
       },
     },
@@ -3973,7 +3976,7 @@ ObjectManager::Attribute.add(
   active: true,
   screens: {
     create_bottom: {
-      Agent: {
+      'ticket.agent' => {
         null: true,
       },
     },
@@ -4004,7 +4007,7 @@ ObjectManager::Attribute.add(
   screens: {
     create_middle: {},
     edit: {
-      Agent: {
+      'ticket.agent' => {
         null: false,
       },
     },
@@ -4034,7 +4037,7 @@ ObjectManager::Attribute.add(
   screens: {
     create_middle: {},
     edit: {
-      Agent: {
+      'ticket.agent' => {
         null: false,
       },
     },
@@ -4061,7 +4064,7 @@ ObjectManager::Attribute.add(
   screens: {
     create_middle: {},
     edit: {
-      Agent: {
+      'ticket.agent' => {
         null: true,
       },
     },
@@ -4088,7 +4091,7 @@ ObjectManager::Attribute.add(
     create_top: {},
     create_middle: {},
     edit: {
-      Agent: {
+      'ticket.agent' => {
         null: true,
       },
     },
@@ -4121,11 +4124,8 @@ ObjectManager::Attribute.add(
       },
     },
     edit: {
-      Agent: {
+      '-all-' => {
         null: true,
-      },
-      Customer: {
-        null: false,
       },
     },
   },
@@ -4686,7 +4686,7 @@ ObjectManager::Attribute.add(
     invite_agent: {},
     invite_customer: {},
     edit: {
-      Admin: {
+      'admin.user' => {
         null: true,
       },
     },
@@ -4713,15 +4713,13 @@ ObjectManager::Attribute.add(
       true: 'yes',
     },
     translate: true,
+    permission: ['admin.user', 'ticket.agent'],
   },
   editable: false,
   active: true,
   screens: {
     edit: {
-      Admin: {
-        null: true,
-      },
-      Agent: {
+      '-all-' => {
         null: true,
       },
     },
@@ -4785,6 +4783,7 @@ ObjectManager::Attribute.add(
   data_option: {
     null: false,
     item_class: 'checkbox',
+    permission: ['admin.user'],
   },
   editable: false,
   active: true,
@@ -4798,7 +4797,7 @@ ObjectManager::Attribute.add(
     },
     invite_customer: {},
     edit: {
-      Admin: {
+      '-all-' => {
         null: true,
       },
     },
@@ -4823,6 +4822,7 @@ ObjectManager::Attribute.add(
   data_option: {
     null: true,
     default: true,
+    permission: ['admin.user', 'ticket.agent'],
   },
   editable: false,
   active: true,
@@ -4831,7 +4831,7 @@ ObjectManager::Attribute.add(
     invite_agent: {},
     invite_customer: {},
     edit: {
-      Admin: {
+      '-all-' => {
         null: false,
       },
     },
@@ -4895,12 +4895,13 @@ ObjectManager::Attribute.add(
       false: 'no',
     },
     translate: true,
+    permission: ['admin.organization'],
   },
   editable: false,
   active: true,
   screens: {
     edit: {
-      Admin: {
+      '-all-' => {
         null: false,
       },
     },
@@ -4932,12 +4933,13 @@ ObjectManager::Attribute.add(
       false: 'no',
     },
     translate: true,
+    permission: ['admin.organization'],
   },
   editable: false,
   active: true,
   screens: {
     edit: {
-      Admin: {
+      '-all-' => {
         null: false,
       },
     },
@@ -5026,12 +5028,13 @@ ObjectManager::Attribute.add(
   data_option: {
     null: true,
     default: true,
+    permission: ['admin.organization'],
   },
   editable: false,
   active: true,
   screens: {
     edit: {
-      Admin: {
+      '-all-' => {
         null: false,
       },
     },
@@ -5302,6 +5305,7 @@ ObjectManager::Attribute.add(
   data_option: {
     null: true,
     default: true,
+    permission: ['admin.group'],
   },
   editable: false,
   active: true,
@@ -5312,7 +5316,7 @@ ObjectManager::Attribute.add(
       },
     },
     edit: {
-      Admin: {
+      '-all-': {
         null: false,
       },
     },
