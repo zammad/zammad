@@ -380,6 +380,10 @@ class Channel::EmailParser
       headers_store['Content-ID'].gsub!(/^</, '').gsub!(/>$/, '')
     end
 
+    # workaround for mail gem
+    # https://github.com/zammad/zammad/issues/928
+    filename = Mail::Encodings.value_decode(filename)
+
     attach = {
       data: file.body.to_s,
       filename: filename,
