@@ -214,7 +214,16 @@ class TicketArticlesController < ApplicationController
     end
     article = Ticket::Article.find(params[:article_id])
     if ticket.id != article.ticket_id
-      raise Exceptions::NotAuthorized, 'No access, article_id/ticket_id is not matching.'
+
+      # check if requested ticket got merged
+      if ticket.state.state_type.name != 'merged'
+        raise Exceptions::NotAuthorized, 'No access, article_id/ticket_id is not matching.'
+      end
+
+      ticket = article.ticket
+      if !ticket_permission(ticket)
+        raise Exceptions::NotAuthorized, "No access, for ticket_id '#{ticket.id}'."
+      end
     end
 
     list = article.attachments || []
