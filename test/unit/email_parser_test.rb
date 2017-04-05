@@ -1000,6 +1000,33 @@ end
           cc: nil,
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail48.box'),
+        body_md5: '8a028710b157c68ace0a5b2264c44da7',
+        attachments: [
+          {
+            md5: '9964263c167ab47f8ec59c48e57cb905',
+            filename: 'message.html',
+          },
+          {
+            md5: 'ddbdf67aa2f5c60c294008a54d57082b',
+            filename: 'CPG-Reklamationsmitteilung bezügl.01234567895 an Voda-28.03.2017.jpg',
+            cid: '485376C9-2486-4351-B932-E2010998F579@home',
+          },
+        ],
+        params: {
+          from: 'Martin Edenhofer <martin@example.de>',
+          from_email: 'martin@example.de',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
+          content_type: 'text/html',
+          body: 'Enjoy!<div>
+<br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old programmers never die. They just branch to a new address.<br>
+</div>
+<br><div><img src="cid:485376C9-2486-4351-B932-E2010998F579@home" style="width:640px;height:425px;"></div>
+</div>'
+        },
+      },
     ]
 
     count = 0

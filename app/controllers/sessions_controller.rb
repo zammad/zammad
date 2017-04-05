@@ -196,7 +196,7 @@ class SessionsController < ApplicationController
 
   # "switch" to user
   def switch_to_user
-    permission_check('admin.session')
+    permission_check(['admin.session', 'admin.user'])
 
     # check user
     if !params[:id]

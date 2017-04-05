@@ -615,13 +615,13 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
-    assert_equal(result['name'], nil)
+    assert_nil(result['name'])
 
     get "/api/v1/organizations/#{@organization2.id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
-    assert_equal(result['name'], nil)
+    assert_nil(result['name'])
 
     # search
     Scheduler.worker(true)
@@ -651,7 +651,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
-    assert_equal(result['name'], nil)
+    assert_nil(result['name'])
 
     # search
     Scheduler.worker(true)
