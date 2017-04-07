@@ -9,6 +9,7 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::Assets
 
   belongs_to    :ticket
+  has_one       :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', foreign_key: :ticket_article_id, dependent: :destroy
   belongs_to    :type,        class_name: 'Ticket::Article::Type'
   belongs_to    :sender,      class_name: 'Ticket::Article::Sender'
   belongs_to    :created_by,  class_name: 'User'
