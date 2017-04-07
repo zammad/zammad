@@ -270,8 +270,8 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('', customer6_lookup.lastname)
     assert_equal('', customer6_lookup.note)
     assert_equal('http://clearbit.com', customer6_lookup.web)
-    #assert_equal('3030 16th St, San Francisco, CA 94103, USA', customer6_lookup.address)
-    assert_equal('San Francisco, CA, USA', customer6_lookup.address)
+    assert_equal('3030 16th St, San Francisco, CA 94103, USA', customer6_lookup.address)
+    #assert_equal('San Francisco, CA, USA', customer6_lookup.address)
 
     organization6_lookup = Organization.find_by(name: 'Clearbit')
     assert(ExternalSync.find_by(source: 'clearbit', object: 'Organization', o_id: organization6_lookup.id))
