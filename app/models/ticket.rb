@@ -111,7 +111,7 @@ returns
                        .where('groups_users.user_id = ?', user.id)
                        .where('groups.active = ?', true)
                        .map(&:id)
-      access_condition = [ 'group_id IN (?)', group_ids ]
+      access_condition = [ '(group_id IN (?) OR tickets.customer_id = ?) ', group_ids, user.id ]
     else
       access_condition = if !user.organization || ( !user.organization.shared || user.organization.shared == false )
                            [ 'tickets.customer_id = ?', user.id ]

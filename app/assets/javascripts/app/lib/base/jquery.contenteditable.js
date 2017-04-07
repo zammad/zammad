@@ -124,7 +124,7 @@
       //  altKey + ctrlKey + k -> Toggles the text selection between an ordered list and a normal block
       //  altKey + ctrlKey + o -> Draws a line through the middle of the current selection
       //  altKey + ctrlKey + w -> Removes any hyperlink from the current selection
-      if ( e.altKey && e.ctrlKey && !e.metaKey && (_this.options.richTextFormatKey[ e.keyCode ]
+      if ( e.shiftKey && e.ctrlKey && !e.metaKey && (_this.options.richTextFormatKey[ e.keyCode ]
         || e.keyCode == 49
         || e.keyCode == 50
         || e.keyCode == 51

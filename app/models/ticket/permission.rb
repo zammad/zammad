@@ -32,8 +32,9 @@ returns
     end
 
     # check agent
-
+if data[:current_user].permissions?('ticket.agent')
     # access if requestor is owner
+    return true if customer_id == data[:current_user].id
     return true if owner_id == data[:current_user].id
 
     # access if requestor is in group
@@ -41,5 +42,6 @@ returns
       return true if self.group.id == group.id
     }
     false
+    end
   end
 end
