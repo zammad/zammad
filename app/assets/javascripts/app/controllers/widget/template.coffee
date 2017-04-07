@@ -83,11 +83,10 @@ class App.WidgetTemplate extends App.Controller
     e.preventDefault()
 
     # get params
-    form   = @formParam($('.ticket-create'))
+    form   = @formParam($(e.target).closest('.content').find('.ticket-create'))
     params = @formParam(e.target)
     name = params['template_name']
     return if !name
-#    delete params['template_name']
 
     template = App.Template.findByAttribute('name', name)
     if !template
