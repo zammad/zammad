@@ -3146,7 +3146,6 @@ user = User.create_if_not_exists(
   firstname: '-',
   lastname: '',
   email: '',
-  password: 'root',
   active: false,
   updated_by_id: 1,
   created_by_id: 1

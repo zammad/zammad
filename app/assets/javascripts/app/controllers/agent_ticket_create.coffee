@@ -24,11 +24,6 @@ class App.TicketCreate extends App.Controller
       @buildScreen(params)
     @bindId = App.TicketCreateCollection.one(load)
 
-    # lisen if view need to be rerendered
-    @bind 'ticket_create_rerender', (defaults) =>
-      @log 'notice', 'error', defaults
-      @render(defaults)
-
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
       return if !@authenticateCheck()
@@ -116,9 +111,11 @@ class App.TicketCreate extends App.Controller
   show: =>
     @navupdate "#ticket/create/id/#{@id}#{@split}", type: 'menu'
     @autosaveStart()
+    @bind('ticket_create_rerender', (template) => @render(template))
 
   hide: =>
     @autosaveStop()
+    @unbind('ticket_create_rerender', (template) => @render(template))
 
   changed: =>
     formCurrent = @formParam( @$('.ticket-create') )

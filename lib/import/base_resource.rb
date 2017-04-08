@@ -32,7 +32,7 @@ module Import
     def updated?(resource, *args)
       @resource = lookup_existing(resource, *args)
       return false if !@resource
-      @resource.update_attributes(resource)
+      @resource.update_attributes!(resource)
       post_update(
         instance:   @resource,
         attributes: resource
@@ -53,7 +53,7 @@ module Import
 
     def create(resource, *_args)
       @resource = import_class.new(resource)
-      @resource.save
+      @resource.save!
 
       ExternalSync.create(
         source:    source,
