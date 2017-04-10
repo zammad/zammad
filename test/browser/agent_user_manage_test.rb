@@ -29,7 +29,7 @@ class AgentUserManageTest < TestCase
     sleep 1
     sendkey( value: :arrow_down )
     sleep 0.5
-    click( css: '.active .newTicket .recipientList-entry.js-userNew' )
+    click( css: '.active .newTicket .recipientList-entry.js-objectNew' )
     sleep 1
 
     set(
@@ -93,7 +93,7 @@ class AgentUserManageTest < TestCase
     )
     sleep 3
 
-    click( css: '.active .newTicket .recipientList-entry.js-user.is-active' )
+    click( css: '.active .newTicket .recipientList-entry.js-object.is-active' )
     sleep 1
 
     # check is used to check selected
