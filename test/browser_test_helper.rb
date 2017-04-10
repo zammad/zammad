@@ -1564,7 +1564,7 @@ wait untill text in selector disabppears
     sleep 2.5
 
     element.send_keys(:enter)
-    #instance.find_elements(css: params[:css] + ' .recipientList-entry.js-user.is-active')[0].click
+    #instance.find_elements(css: params[:css] + ' .recipientList-entry.js-object.is-active')[0].click
     sleep 0.4
     assert(true, 'ticket_customer_select')
   end
@@ -1928,7 +1928,7 @@ wait untill text in selector disabppears
       # ff issue, sometimes enter event gets dropped
       # take user manually
       if instance.find_elements(css: '.content.active .newTicket .js-recipientDropdown.open')[0]
-        instance.find_elements(css: '.content.active .newTicket .recipientList-entry.js-user.is-active')[0].click
+        instance.find_elements(css: '.content.active .newTicket .recipientList-entry.js-object.is-active')[0].click
         sleep 0.4
       end
     end
@@ -2092,7 +2092,7 @@ wait untill text in selector disabppears
       sleep 2.5
 
       element.send_keys(:enter)
-      #instance.find_elements(css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active')[0].click
+      #instance.find_elements(css: '.modal .user_autocompletion .recipientList-entry.js-object.is-active')[0].click
       sleep 0.2
 
       click(browser: instance, css: '.modal .js-submit')
