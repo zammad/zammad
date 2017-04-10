@@ -12,9 +12,17 @@ class Widget extends App.Controller
     return if !@permissionCheck('admin.translation')
 
     # bind on key down
-    # if ctrl+alt+t is pressed, enable translation_inline and fire ui:rerender
+    # if hotkeys+t is pressed, enable translation_inline and fire ui:rerender
+    browserHotkeys = App.Browser.hotkeys()
     $(document).on('keydown.translation', (e) =>
-      if e.altKey && e.ctrlKey && e.keyCode is 84
+      hotkeys = false
+      if browserHotkeys is 'ctrl+shift'
+        if !e.altKey && e.ctrlKey && !e.metaKey && e.shiftKey
+          hotkeys = true
+      else
+        if e.altKey && e.ctrlKey && !e.metaKey
+          hotkeys = true
+      if hotkeys && e.keyCode is 84
         @toogle()
     )
 

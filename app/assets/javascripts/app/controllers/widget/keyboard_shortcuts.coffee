@@ -13,6 +13,8 @@ class App.KeyboardShortcutModal extends App.ControllerModal
   content: ->
     App.view('keyboard_shortcuts')(
       areas: App.Config.get('keyboard_shortcuts')
+      magicKey: App.Browser.magicKey()
+      hotkeys: App.Browser.hotkeys().split('+').reverse()
     )
 
   exists: =>
@@ -36,7 +38,8 @@ class App.KeyboardShortcutWidget extends Spine.Module
     )
 
   observerKeys: =>
-    navigationHotkeys = 'alt+ctrl'
+    navigationHotkeys = App.Browser.hotkeys()
+
     areas = App.Config.get('keyboard_shortcuts')
     for area in areas
       for item in area.content
@@ -401,25 +404,25 @@ App.Config.set(
           shortcuts: [
             {
               key: 'u'
-              hotkeys: true
+              magicKey: true
               description: 'Format as _underlined_'
               globalEvent: 'richtext-underline'
             }
             {
               key: 'b'
-              hotkeys: true
+              magicKey: true
               description: 'Format as |bold|'
               globalEvent: 'richtext-bold'
             }
             {
               key: 'i'
-              hotkeys: true
+              magicKey: true
               description: 'Format as ||italic||'
               globalEvent: 'richtext-italic'
             }
             {
-              key: 'v'
-              hotkeys: true
+              key: 's'
+              magicKey: true
               description: 'Format as //strikethrough//'
               globalEvent: 'richtext-strikethrough'
             }

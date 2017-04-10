@@ -82,6 +82,20 @@ class App.Browser
       localStorage.setItem('fingerprint', fingerprint)
     fingerprint
 
+  @magicKey: ->
+    browser = @detection()
+    magicKey = 'ctrl'
+    if browser && browser.os && browser.os.name.toString().match(/mac/i)
+      magicKey = 'cmd'
+    magicKey
+
+  @hotkeys: ->
+    browser = @detection()
+    hotkeys = 'ctrl+shift'
+    if browser && browser.os && browser.os.name.toString().match(/mac/i)
+      hotkeys = 'alt+ctrl'
+    hotkeys
+
 class Modal extends App.ControllerModal
   buttonClose: false
   buttonCancel: false
