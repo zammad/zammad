@@ -546,7 +546,7 @@ to send no browser reload event, pass false
       data_type = nil
       if attribute.data_type =~ /^input|select|richtext|textarea|checkbox$/
         data_type = :string
-      elsif attribute.data_type =~ /^integer$/
+      elsif attribute.data_type =~ /^integer|user_autocompletion$/
         data_type = :integer
       elsif attribute.data_type =~ /^boolean|active$/
         data_type = :boolean
@@ -566,7 +566,7 @@ to send no browser reload event, pass false
             limit: attribute.data_option[:maxlength],
             null: true
           )
-        elsif attribute.data_type =~ /^integer|datetime|date$/
+        elsif attribute.data_type =~ /^integer|user_autocompletion|datetime|date$/
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -603,7 +603,7 @@ to send no browser reload event, pass false
           limit: attribute.data_option[:maxlength],
           null: true
         )
-      elsif attribute.data_type =~ /^integer$/
+      elsif attribute.data_type =~ /^integer|user_autocompletion$/
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
