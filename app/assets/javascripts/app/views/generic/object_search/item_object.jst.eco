@@ -1,0 +1,11 @@
+<li class="recipientList-entry js-object" data-object-id="<%= @object.id %>">
+  <div class="recipientList-iconSpacer">
+    <%- @Icon(@icon, 'recipientList-icon') %>
+  </div>
+  <div class="recipientList-name">
+    <%= @object.displayName() %>
+    <% if @object.organization: %>
+      <span class="recipientList-detail">- <%= @object.organization.displayName() %></span>
+    <% end %>
+  </div>
+</li>
