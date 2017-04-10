@@ -419,7 +419,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result_user1['id'], result[0]['id'])
     assert_equal("Customer#{firstname}", result[0]['firstname'])
     assert_equal('Customer Last', result[0]['lastname'])
-    assert_not(result[0]['role_ids'])
+    assert(result[0]['role_ids'])
     assert_not(result[0]['roles'])
 
     get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&expand=true", {}, @headers.merge('Authorization' => credentials)
@@ -538,6 +538,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Array)
+    assert_equal(result[0]['member_ids'].class, Array)
     assert(result.length >= 3)
 
     get '/api/v1/organizations?limit=40&page=1&per_page=2', {}, @headers.merge('Authorization' => credentials)
@@ -546,7 +547,9 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Array, result.class)
     organizations = Organization.order(:id).limit(2)
     assert_equal(organizations[0].id, result[0]['id'])
+    assert_equal(organizations[0].member_ids, result[0]['member_ids'])
     assert_equal(organizations[1].id, result[1]['id'])
+    assert_equal(organizations[1].member_ids, result[1]['member_ids'])
     assert_equal(2, result.count)
 
     get '/api/v1/organizations?limit=40&page=2&per_page=2', {}, @headers.merge('Authorization' => credentials)
@@ -555,7 +558,10 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Array, result.class)
     organizations = Organization.order(:id).limit(4)
     assert_equal(organizations[2].id, result[0]['id'])
+    assert_equal(organizations[2].member_ids, result[0]['member_ids'])
     assert_equal(organizations[3].id, result[1]['id'])
+    assert_equal(organizations[3].member_ids, result[1]['member_ids'])
+
     assert_equal(2, result.count)
 
     # show/:id
@@ -563,12 +569,16 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
+    assert_equal(result['member_ids'].class, Array)
+    assert_not(result['members'])
     assert_equal(result['name'], 'Rest Org')
 
     get "/api/v1/organizations/#{@organization2.id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
+    assert_equal(result['member_ids'].class, Array)
+    assert_not(result['members'])
     assert_equal(result['name'], 'Rest Org #2')
 
     # search as agent
@@ -578,7 +588,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert_equal('Zammad Foundation', result[0]['name'])
-    assert_not(result[0]['member_ids'])
+    assert(result[0]['member_ids'])
     assert_not(result[0]['members'])
 
     get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&expand=true", {}, @headers.merge('Authorization' => credentials)

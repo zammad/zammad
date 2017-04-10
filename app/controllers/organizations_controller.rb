@@ -91,8 +91,11 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
       }, status: :ok
       return
     end
-
-    render json: organizations
+    list = []
+    organizations.each { |organization|
+      list.push organization.attributes_with_association_ids
+    }
+    render json: list
   end
 
 =begin
@@ -293,7 +296,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
     list = []
     organization_all.each { |organization|
-      list.push organization.attributes
+      list.push organization.attributes_with_association_ids
     }
     render json: list, status: :ok
   end

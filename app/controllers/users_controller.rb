@@ -428,7 +428,7 @@ class UsersController < ApplicationController
 
     list = []
     user_all.each { |user|
-      list.push user.attributes
+      list.push user.attributes_with_association_ids
     }
     render json: list, status: :ok
   end
