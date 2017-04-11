@@ -107,6 +107,18 @@ class TokenTest < ActiveSupport::TestCase
     user = Token.check(
       action: 'api',
       name: token.name,
+      permission: 'ticket.agent.sub',
+    )
+    assert(user)
+    user = Token.check(
+      action: 'api',
+      name: token.name,
+      permission: 'admin_not_extisting',
+    )
+    assert_not(user)
+    user = Token.check(
+      action: 'api',
+      name: token.name,
       permission: 'ticket.agent',
     )
     assert(user)
