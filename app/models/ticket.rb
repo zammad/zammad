@@ -18,8 +18,10 @@ class Ticket < ApplicationModel
   extend Ticket::Search
 
   store          :preferences
-  before_create  :check_generate, :check_defaults, :check_title, :check_escalation_update, :set_default_state, :set_default_priority
-  before_update  :check_defaults, :check_title, :reset_pending_time, :check_escalation_update
+  before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority
+  after_create   :check_escalation_update
+  before_update  :check_defaults, :check_title, :reset_pending_time
+  after_update   :check_escalation_update
   before_destroy :destroy_dependencies
 
   validates :group_id, presence: true
@@ -929,7 +931,7 @@ result
   end
 
   def check_escalation_update
-    escalation_calculation_int
+    escalation_calculation
     true
   end
 

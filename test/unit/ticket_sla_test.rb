@@ -6,8 +6,6 @@ class TicketSlaTest < ActiveSupport::TestCase
   test 'ticket sla' do
 
     # cleanup
-    delete = Sla.destroy_all
-    assert(delete, 'sla destroy_all')
     delete = Ticket.destroy_all
     assert(delete, 'ticket destroy_all')
 
@@ -499,12 +497,114 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.last_contact_agent_at.to_s, article_outbound.created_at.to_s, 'ticket.last_contact_agent_at verify - inbound')
     assert_equal(ticket.first_response_at.to_s, article_outbound.created_at.to_s, 'ticket.first_response_at verify - inbound')
     assert_nil(ticket.close_at, 'ticket.close_at verify - inbound')
+  end
 
-    delete = sla.destroy
-    assert(delete, 'sla destroy')
+  test 'ticket sla + selector' do
 
-    delete = sla.destroy
-    assert(delete, 'sla destroy')
+    # cleanup
+    delete = Ticket.destroy_all
+    assert(delete, 'ticket destroy_all')
+
+    calendar1 = Calendar.create_or_update(
+      name: 'EU 1',
+      timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: {
+          active: true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['09:00', '17:00'] ]
+        },
+        sat: {
+          active: false,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+        sun: {
+          active: false,
+          timeframes: [ ['08:00', '17:00'] ]
+        },
+      },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    sla = Sla.create_or_update(
+      name: 'test sla 1',
+      condition: {
+        'ticket.priority_id' => {
+          operator: 'is',
+          value: %w(2),
+        },
+      },
+      first_response_time: 60,
+      update_time: 180,
+      solution_time: 240,
+      calendar_id: calendar1.id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket = Ticket.create!(
+      title: 'some title äöüß',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_at: '2013-03-21 09:30:00 UTC',
+      updated_at: '2013-03-21 09:30:00 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket.reload
+
+    assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.escalation_at')
+    assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2013-03-21 10:30:00 UTC', 'ticket.first_response_escalation_at')
+    assert_nil(ticket.first_response_at, 'ticket.first_response_at')
+    assert_nil(ticket.first_response_in_min, 'ticket.first_response_in_min')
+    assert_nil(ticket.first_response_diff_in_min, 'ticket.first_response_diff_in_min')
+
+    assert_equal(ticket.update_escalation_at.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.update_escalation_at')
+    assert_nil(ticket.update_in_min, 'ticket.update_in_min')
+    assert_nil(ticket.update_diff_in_min, 'ticket.update_diff_in_min')
+
+    assert_equal(ticket.close_escalation_at.gmtime.to_s, '2013-03-21 13:30:00 UTC', 'ticket.close_escalation_at')
+    assert_nil(ticket.close_in_min, 'ticket.close_in_min')
+    assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min')
+
+    ticket.priority = Ticket::Priority.lookup(name: '1 low')
+    ticket.save!
+    ticket.reload
+
+    assert_nil(ticket.escalation_at, 'ticket.escalation_at')
+    assert_nil(ticket.first_response_escalation_at, 'ticket.first_response_escalation_at')
+    assert_nil(ticket.first_response_at, 'ticket.first_response_at')
+    assert_nil(ticket.first_response_in_min, 'ticket.first_response_in_min')
+    assert_nil(ticket.first_response_diff_in_min, 'ticket.first_response_diff_in_min')
+
+    assert_nil(ticket.update_escalation_at, 'ticket.update_escalation_at')
+    assert_nil(ticket.update_in_min, 'ticket.update_in_min')
+    assert_nil(ticket.update_diff_in_min, 'ticket.update_diff_in_min')
+
+    assert_nil(ticket.close_escalation_at, 'ticket.close_escalation_at')
+    assert_nil(ticket.close_in_min, 'ticket.close_in_min')
+    assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min')
+
   end
 
   test 'ticket sla + timezone + holiday' do
