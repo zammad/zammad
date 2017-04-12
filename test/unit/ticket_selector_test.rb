@@ -2,12 +2,13 @@
 require 'test_helper'
 
 class TicketSelectorTest < ActiveSupport::TestCase
-  agent1 = nil
-  agent2 = nil
-  group = nil
+  agent1        = nil
+  agent2        = nil
+  group         = nil
   organization1 = nil
-  customer1 = nil
-  customer2 = nil
+  customer1     = nil
+  customer2     = nil
+
   test 'aaa - setup' do
 
     # create base
@@ -996,6 +997,124 @@ class TicketSelectorTest < ActiveSupport::TestCase
     ticket_count, tickets = Ticket.selectors(condition, 10)
     assert_equal(ticket_count, 0)
     travel_back
+  end
+
+  test 'ticket tags filter' do
+    ticket_tags_1 = Ticket.create!(
+      title: 'some title1',
+      group: group,
+      customer_id: customer1.id,
+      owner_id: agent1.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket_tags_2 = Ticket.create!(
+      title: 'some title1',
+      group: group,
+      customer_id: customer1.id,
+      owner_id: agent1.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket_tags_3 = Ticket.create!(
+      title: 'some title1',
+      group: group,
+      customer_id: customer1.id,
+      owner_id: agent1.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Tag.tag_add(
+      object: 'Ticket',
+      o_id: ticket_tags_1.id,
+      item: 'contains_all_1',
+      created_by_id: 1,
+    )
+    Tag.tag_add(
+      object: 'Ticket',
+      o_id: ticket_tags_1.id,
+      item: 'contains_all_2',
+      created_by_id: 1,
+    )
+    Tag.tag_add(
+      object: 'Ticket',
+      o_id: ticket_tags_1.id,
+      item: 'contains_all_3',
+      created_by_id: 1,
+    )
+    Tag.tag_add(
+      object: 'Ticket',
+      o_id: ticket_tags_2.id,
+      item: 'contains_all_3',
+      created_by_id: 1,
+    )
+
+    # search all with contains all
+    condition = {
+      'ticket.tags' => {
+        operator: 'contains all',
+        value: 'contains_all_1, contains_all_2, contains_all_3',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal(1, ticket_count)
+
+    condition = {
+      'ticket.tags' => {
+        operator: 'contains all',
+        value: 'contains_all_1, contains_all_2, contains_all_3, xxx',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal(0, ticket_count)
+
+    # search all with contains one
+    condition = {
+      'ticket.tags' => {
+        operator: 'contains one',
+        value: 'contains_all_1, contains_all_2, contains_all_3',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal(2, ticket_count)
+
+    condition = {
+      'ticket.tags' => {
+        operator: 'contains one',
+        value: 'contains_all_1, contains_all_2'
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal(1, ticket_count)
+
+    # search all with contains one not
+    condition = {
+      'ticket.tags' => {
+        operator: 'contains one',
+        value: 'contains_all_1, contains_all_3'
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal(2, ticket_count)
+
+    condition = {
+      'ticket.tags' => {
+        operator: 'contains one',
+        value: 'contains_all_1, contains_all_2, contains_all_3'
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10, agent1)
+    assert_equal(2, ticket_count)
   end
 
 end

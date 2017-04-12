@@ -26,6 +26,7 @@ class App.UiElement.ticket_selector
       '^select$': ['is', 'is not']
       '^input$': ['contains', 'contains not']
       '^textarea$': ['contains', 'contains not']
+      '^tag$': ['contains all', 'contains one', 'contains all not', 'contains one not']
 
     if attribute.hasChanged
       operators_type =

@@ -399,6 +399,7 @@ get count of tickets and tickets which match on selector
     access_condition = Ticket.access_condition(current_user)
     ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
     tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
+
     [ticket_count, tickets]
   end
 
@@ -440,7 +441,11 @@ condition example
     'ticket.escalation_at' => {
       operator: 'is not', # not
       value: nil,
-    }
+    },
+    'ticket.tags' => {
+      operator: 'contains all', # contains all|contains one|contains all not|contains one not
+      value: 'tag1, tag2',
+    },
   }
 
 =end
@@ -506,6 +511,9 @@ condition example
       # get attributes
       attributes = attribute.split(/\./)
       attribute = "#{attributes[0]}s.#{attributes[1]}"
+      if attributes[0] == 'ticket' && attributes[1] == 'tags'
+        selector['value'] = selector['value'].split(/,/).collect(&:strip)
+      end
 
       if query != ''
         query += ' AND '
@@ -571,6 +579,70 @@ condition example
         query += "#{attribute} NOT #{like} (?)"
         value = "%#{selector['value']}%"
         bind_params.push value
+      elsif selector['operator'] == 'contains all' && attributes[0] == 'ticket' && attributes[1] == 'tags'
+        query += "#{selector['value'].count} = (
+                                              SELECT
+                                                COUNT(*)
+                                              FROM
+                                                tag_objects,
+                                                tag_items,
+                                                tags
+                                              WHERE
+                                                tickets.id = tags.o_id AND
+                                                tag_objects.id = tags.tag_object_id AND
+                                                tag_objects.name = 'Ticket' AND
+                                                tag_items.id = tags.tag_item_id AND
+                                                tag_items.name IN (?)
+                                            )"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'contains one' && attributes[0] == 'ticket' && attributes[1] == 'tags'
+        query += "1 <= (
+                          SELECT
+                            COUNT(*)
+                          FROM
+                            tag_objects,
+                            tag_items,
+                            tags
+                          WHERE
+                            tickets.id = tags.o_id AND
+                            tag_objects.id = tags.tag_object_id AND
+                            tag_objects.name = 'Ticket' AND
+                            tag_items.id = tags.tag_item_id AND
+                            tag_items.name IN (?)
+                        )"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'contains all not' && attributes[0] == 'ticket' && attributes[1] == 'tags'
+        query += "0 = (
+                        SELECT
+                          COUNT(*)
+                        FROM
+                          tag_objects,
+                          tag_items,
+                          tags
+                        WHERE
+                          tickets.id = tags.o_id AND
+                          tag_objects.id = tags.tag_object_id AND
+                          tag_objects.name = 'Ticket' AND
+                          tag_items.id = tags.tag_item_id AND
+                          tag_items.name IN (?)
+                      )"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'contains one not' && attributes[0] == 'ticket' && attributes[1] == 'tags'
+        query += "(
+                    SELECT
+                      COUNT(*)
+                    FROM
+                      tag_objects,
+                      tag_items,
+                      tags
+                    WHERE
+                      tickets.id = tags.o_id AND
+                      tag_objects.id = tags.tag_object_id AND
+                      tag_objects.name = 'Ticket' AND
+                      tag_items.id = tags.tag_item_id AND
+                      tag_items.name IN (?)
+                  ) BETWEEN ( #{selector['value'].count} - 1 ) AND #{selector['value'].count}"
+        bind_params.push selector['value']
       elsif selector['operator'] == 'before (absolute)'
         query += "#{attribute} <= ?"
         bind_params.push selector['value']
@@ -649,6 +721,7 @@ condition example
         raise "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
       end
     }
+
     [query, bind_params, tables]
   end
 
