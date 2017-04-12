@@ -323,19 +323,9 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5 + 10, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: 'Tag1',
-      created_by_id: agent1.id,
-    )
+    ticket1.tag_add('Tag1', agent1.id)
     #travel 5.seconds
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: 'Tag2',
-      created_by_id: agent1.id,
-    )
+    ticket1.tag_add('Tag2', agent1.id)
 
     # execute object transaction
     Observer::Transaction.commit
@@ -345,18 +335,8 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(5 + 10, Karma.score_by_user(agent2))
     assert_equal(0, Karma.score_by_user(customer1))
 
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: 'Tag3',
-      created_by_id: agent1.id,
-    )
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: 'Tag4',
-      created_by_id: agent2.id,
-    )
+    ticket1.tag_add('Tag3', agent1.id)
+    ticket1.tag_add('Tag4', agent2.id)
 
     # execute object transaction
     Observer::Transaction.commit

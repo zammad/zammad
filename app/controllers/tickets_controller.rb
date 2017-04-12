@@ -128,12 +128,7 @@ class TicketsController < ApplicationController
       if params[:tags] && !params[:tags].empty?
         tags = params[:tags].split(/,/)
         tags.each { |tag|
-          Tag.tag_add(
-            object: 'Ticket',
-            o_id: ticket.id,
-            item: tag,
-            created_by_id: current_user.id,
-          )
+          ticket.tag_add(tag)
         }
       end
 
@@ -615,10 +610,7 @@ class TicketsController < ApplicationController
     }
 
     # get tags
-    tags = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket.id,
-    )
+    tags = ticket.tag_list
 
     # return result
     {

@@ -5,6 +5,7 @@ class Ticket < ApplicationModel
   include NotifiesClients
   include LatestChangeObserved
   include Historisable
+  include Taggable
   include SearchIndexed
 
   include Ticket::Escalation
@@ -771,23 +772,15 @@ perform changes on ticket
 
       # update tags
       if key == 'ticket.tags'
-        next if value['value'].empty?
+        next if value['value'].blank?
         tags = value['value'].split(/,/)
         if value['operator'] == 'add'
           tags.each { |tag|
-            Tag.tag_add(
-              object: 'Ticket',
-              o_id: id,
-              item: tag,
-            )
+            tag_add(tag)
           }
         elsif value['operator'] == 'remove'
           tags.each { |tag|
-            Tag.tag_remove(
-              object: 'Ticket',
-              o_id: id,
-              item: tag,
-            )
+            tag_remove(tag)
           }
         else
           logger.error "Unknown #{attribute} operator #{value['operator']}"

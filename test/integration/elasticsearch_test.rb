@@ -241,12 +241,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       preferences: {},
       created_by_id: 1,
     )
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: 'someTagA',
-      created_by_id: 1,
-    )
+    ticket1.tag_add('someTagA', 1)
     sleep 1
 
     ticket2 = Ticket.create(
@@ -272,12 +267,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket2.id,
-      item: 'someTagB',
-      created_by_id: 1,
-    )
+    ticket2.tag_add('someTagB', 1)
     sleep 1
 
     ticket3 = Ticket.create(
