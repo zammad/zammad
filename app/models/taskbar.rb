@@ -59,7 +59,7 @@ class Taskbar < ApplicationModel
       self.preferences = {}
     end
     preferences[:tasks] = []
-    Taskbar.where(key: key).order(:created_at).each { |taskbar|
+    Taskbar.where(key: key).order(:created_at, :id).each { |taskbar|
       if taskbar.id == id
         local_changed = state_changed?
         local_last_contact = last_contact
@@ -86,7 +86,7 @@ class Taskbar < ApplicationModel
     end
 
     # update other taskbars
-    Taskbar.where(key: key).order(:created_at).each { |taskbar|
+    Taskbar.where(key: key).order(:created_at, :id).each { |taskbar|
       next if taskbar.id == id
       taskbar.preferences = preferences
       taskbar.local_update = true
