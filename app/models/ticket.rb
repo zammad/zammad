@@ -643,9 +643,9 @@ condition example
                       tag_items.id = tags.tag_item_id AND
                       tag_items.name IN (?)
                   ) BETWEEN ? AND ?"
+        bind_params.push selector['value']
         bind_params.push selector['value'].count - 1
         bind_params.push selector['value'].count
-        bind_params.push selector['value']
       elsif selector['operator'] == 'before (absolute)'
         query += "#{attribute} <= ?"
         bind_params.push selector['value']
