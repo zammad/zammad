@@ -580,7 +580,7 @@ condition example
         value = "%#{selector['value']}%"
         bind_params.push value
       elsif selector['operator'] == 'contains all' && attributes[0] == 'ticket' && attributes[1] == 'tags'
-        query += "#{selector['value'].count} = (
+        query += "? = (
                                               SELECT
                                                 COUNT(*)
                                               FROM
@@ -594,6 +594,7 @@ condition example
                                                 tag_items.id = tags.tag_item_id AND
                                                 tag_items.name IN (?)
                                             )"
+        bind_params.push selector['value'].count
         bind_params.push selector['value']
       elsif selector['operator'] == 'contains one' && attributes[0] == 'ticket' && attributes[1] == 'tags'
         query += "1 <= (
@@ -641,7 +642,9 @@ condition example
                       tag_objects.name = 'Ticket' AND
                       tag_items.id = tags.tag_item_id AND
                       tag_items.name IN (?)
-                  ) BETWEEN ( #{selector['value'].count} - 1 ) AND #{selector['value'].count}"
+                  ) BETWEEN ? AND ?"
+        bind_params.push selector['value'].count - 1
+        bind_params.push selector['value'].count
         bind_params.push selector['value']
       elsif selector['operator'] == 'before (absolute)'
         query += "#{attribute} <= ?"
