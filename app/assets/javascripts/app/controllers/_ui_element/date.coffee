@@ -124,6 +124,7 @@ class App.UiElement.date
 
     App.Log.debug 'UiElement.date.setNewTimeInitial', timestamp, timeObject
     item.find('.js-datepicker').datepicker('setUTCDate', timeObject)
+    item.find('.js-datepicker').datepicker('update')
 
   @validation: (item, attribute, runtime) ->
 
