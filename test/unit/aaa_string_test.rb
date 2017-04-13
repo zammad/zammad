@@ -570,6 +570,30 @@ Men-----------------------'
     result = 'some text <a href="http://www.example.com" rel="nofollow" target="_blank">http://www.example.com</a> some other text'
     assert_equal(result, html.html2html_strict)
 
+    html   = 'some textwwwsome other text'
+    result = 'some textwwwsome other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'some text wwwsome other text'
+    result = 'some text wwwsome other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'some text www.some.dom other text'
+    result = 'some text <a href="http://www.some.dom" rel="nofollow" target="_blank">http://www.some.dom</a> other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'www.some.dom other text'
+    result = '<a href="http://www.some.dom" rel="nofollow" target="_blank">http://www.some.dom</a> other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'www.some.dom'
+    result = '<a href="http://www.some.dom" rel="nofollow" target="_blank">http://www.some.dom</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'web:www.some.dom other text'
+    result = 'web:<a href="http://www.some.dom" rel="nofollow" target="_blank">http://www.some.dom</a> other text'
+    assert_equal(result, html.html2html_strict)
+
     html   = '<a href="http://example.com">http://what-different.example.com</a>'
     #result = 'http://example.com (<a href="http://what-different.example.com" rel="nofollow" target="_blank">http://what-different.example.com</a>)'
     result = '<a href="http://what-different.example.com" rel="nofollow" target="_blank">http://what-different.example.com</a> (<a href="http://example.com" rel="nofollow" target="_blank">http://example.com</a>)'
