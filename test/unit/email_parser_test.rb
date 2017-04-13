@@ -244,7 +244,7 @@ Managing Director: Martin Edenhofer
       },
       {
         data: IO.binread('test/fixtures/mail8.box'),
-        body_md5: '630aa1cc84fcaee8a0f232908c454c5f',
+        body_md5: 'ec01ac06deb1997b09b0afbbe49e316f',
         attachments: [
           {
             md5: 'c3ca4aab222eed8a148a716371b70129',
@@ -281,7 +281,7 @@ Düsseldorfer Landstraße 395
 <br>
 D-00000 Hof
 <br>
-<a href="www.example.com"><u><a href="http://www.example.com" rel="nofollow" target="_blank">http://www.example.com</a></u></a> <br>
+<a href="http://www.example.com" rel="nofollow" target="_blank"><u><a href="http://www.example.com" rel="nofollow" target="_blank">http://www.example.com</a></u></a> <br>
 <br> <hr>
 <br>
 Geschäftsführung/Management Board: Jan Bauer (Vorsitzender/Chairman), Oliver Bauer, Heiko Bauer, Boudewijn Bauer

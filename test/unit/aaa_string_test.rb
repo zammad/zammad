@@ -663,6 +663,15 @@ Men-----------------------'
     result = "<a href=\"http://facebook.de/examplesrbog\" rel=\"nofollow\" target=\"_blank\">http://facebook.de/examplesrbog</a>"
     assert_equal(result, html.html2html_strict)
 
+    html   = "<span style=\"font-size:10.0pt;font-family:&quot;Cambria&quot;,serif;color:#1F497D;mso-fareast-language:DE\">web&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href=\"http://www.example.de\"><span style=\"color:blue\">www.example.de</span></a><o:p></o:p></span>"
+    result = "web <a href=\"http://www.example.de\" rel=\"nofollow\" target=\"_blank\">www.example.de</a>"
+    assert_equal(result, html.html2html_strict)
+
+    html   = "web <a href=\"www.example.de\"><span style=\"color:blue\">www.example.de</span></a>"
+    result = "web <a href=\"http://www.example.de\" rel=\"nofollow\" target=\"_blank\">www.example.de</a>"
+    assert_equal(result, html.html2html_strict)
+
     html   = "Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den <a href=\"http://newsletters.cylex.de/\" class=\"\">Link des Adventkalenders</a> in<br class=\"\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ihrer Lesezeichen-Symbolleiste zu ergänzen.</p><div class=\"\">&nbsp;"
     result = "Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den Link des Adventkalenders (<a href=\"http://newsletters.cylex.de/\" rel=\"nofollow\" target=\"_blank\">http://newsletters.cylex.de/</a>) in<br> Ihrer Lesezeichen-Symbolleiste zu ergänzen.<div> </div>"
     assert_equal(result, html.html2html_strict)
