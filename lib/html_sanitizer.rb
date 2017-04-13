@@ -132,6 +132,10 @@ satinize html string based on whiltelist
       # prepare links
       if node['href']
         href = cleanup_target(node['href'])
+        if external && !href.downcase.start_with?('//') && href.downcase !~ %r{^.{1,6}://.+?}
+          node['href'] = "http://#{node['href']}"
+          href = node['href']
+        end
         next if !href.downcase.start_with?('http', 'ftp', '//')
         node.set_attribute('href', href)
         node.set_attribute('rel', 'nofollow')
