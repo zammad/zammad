@@ -138,7 +138,7 @@ satinize html string based on whiltelist
         end
         next if !href.downcase.start_with?('http', 'ftp', '//')
         node.set_attribute('href', href)
-        node.set_attribute('rel', 'nofollow')
+        node.set_attribute('rel', 'nofollow noreferrer noopener')
         node.set_attribute('target', '_blank')
       end
 
@@ -338,7 +338,7 @@ cleanup html string:
 
       a = Nokogiri::XML::Node.new 'a', node.document
       a['href'] = url
-      a['rel'] = 'nofollow'
+      a['rel'] = 'nofollow noreferrer noopener'
       a['target'] = '_blank'
       a.content = url
 
