@@ -179,7 +179,7 @@ class ReportsController < ApplicationController
     worksheet.set_column(3, 3, 10)
     worksheet.set_column(4, 8, 20)
 
-    #  Add and define a format
+    # Add and define a format
     format = workbook.add_format  # Add a format
     format.set_bold
     format.set_size(14)
