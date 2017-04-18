@@ -179,7 +179,7 @@
         || e.keyCode == 76
         || e.keyCode == 85
         || e.keyCode == 86
-        || e.keyCode == 87
+        || e.keyCode == 88
         || e.keyCode == 90
         || e.keyCode == 89)) {
         e.preventDefault()
@@ -219,7 +219,7 @@
         if (e.keyCode == 86) {
           document.execCommand('strikeThrough')
         }
-        if (e.keyCode == 87) {
+        if (e.keyCode == 88) {
           document.execCommand('unlink')
         }
         if (e.keyCode == 89) {
