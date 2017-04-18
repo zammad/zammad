@@ -1559,6 +1559,15 @@ fieldset > .form-group {
   flex-shrink: 0;
 }
 
+/* do not show safari auto fill icon - see issue #962 */
+input::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
 input[type="radio"],
 input[type="checkbox"] {
   margin: 0;
