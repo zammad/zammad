@@ -6,7 +6,7 @@ class Role < ApplicationModel
   include LatestChangeObserved
 
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
-  has_and_belongs_to_many :permissions, after_add: :cache_update, after_remove: :cache_update
+  has_and_belongs_to_many :permissions, after_add: :cache_update, after_remove: :cache_update, before_add: :validate_agent_limit
   validates               :name,  presence: true
   store                   :preferences
 
@@ -133,6 +133,17 @@ returns
         raise "Permission #{permission.name} conflicts with #{local_permission.name}" if permission_ids.include?(local_permission.id)
       }
     }
+  end
+
+  def validate_agent_limit(permission)
+    return if !Setting.get('system_agent_limit')
+    return if permission.name != 'ticket.agent'
+
+    ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent' }).pluck(:id)
+    ticket_agent_role_ids.push(id)
+    count = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).count
+
+    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
   end
 
 end
