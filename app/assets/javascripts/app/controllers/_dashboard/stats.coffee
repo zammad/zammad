@@ -12,8 +12,8 @@ class App.DashboardStats extends App.Controller
       @render()
 
   render: (data = {}) ->
-    if !data.TicketResponseTime
-      data.TicketResponseTime =
+    if !data.StatsTicketWaitingTime
+      data.StatsTicketWaitingTime =
         handling_time: 0
         average: 0
         average_per_agent: 0
@@ -60,10 +60,10 @@ class App.DashboardStats extends App.Controller
 
     @html App.view('dashboard/stats')(data)
 
-    if data.TicketResponseTime
-      @renderWidgetClockFace data.TicketResponseTime.handling_time
+    if data.StatsTicketWaitingTime
+      @renderWidgetClockFace data.StatsTicketWaitingTime.handling_time, data.StatsTicketWaitingTime.state, data.StatsTicketWaitingTime.percent
 
-  renderWidgetClockFace: (time, max_time = 60) =>
+  renderWidgetClockFace: (time, state, percent) =>
     canvas = @el.find 'canvas'
     ctx    = canvas.get(0).getContext '2d'
     radius = 26
@@ -73,17 +73,15 @@ class App.DashboardStats extends App.Controller
     canvas.attr 'width', 2 * radius
     canvas.attr 'height', 2 * radius
 
-    time = max_time if time > max_time
-
     handlingTimeColors = {}
-    handlingTimeColors[max_time/12] = '#38AE6A' # supergood
-    handlingTimeColors[max_time/6] = '#A9AC41' # good
-    handlingTimeColors[max_time/4] = '#FAAB00' # ok
-    handlingTimeColors[max_time/3] = '#F6820B' # bad
-    handlingTimeColors[max_time/2] = '#F35910' # superbad
+    handlingTimeColors['supergood'] = '#38AE6A' # supergood
+    handlingTimeColors['good'] = '#A9AC41' # good
+    handlingTimeColors['ok'] = '#FAAB00' # ok
+    handlingTimeColors['bad'] = '#F6820B' # bad
+    handlingTimeColors['superbad'] = '#F35910' # superbad
 
-    for handlingTime, timeColor of handlingTimeColors
-      if time <= handlingTime
+    for handlingState, timeColor of handlingTimeColors
+      if state == handlingState
         backgroundColor = timeColor
         break
 
@@ -101,7 +99,7 @@ class App.DashboardStats extends App.Controller
 
     ctx.beginPath()
     ctx.moveTo radius, radius
-    arcsector = Math.PI * 2 * time/max_time
+    arcsector = Math.PI * 2 * percent
     ctx.arc radius, radius, radius, -Math.PI/2, arcsector - Math.PI/2, false
     ctx.lineTo radius, radius
     ctx.closePath()

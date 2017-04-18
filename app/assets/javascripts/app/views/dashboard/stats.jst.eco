@@ -8,8 +8,8 @@
         <div class="stat-amount"></div>
       </div>
     </div>
-    <div class="stat-label"><%- @T('My handling time: %s minutes', @TicketResponseTime.handling_time) %></div>
-    <div class="stat-detail"><%- @T('Average: %s minutes', @TicketResponseTime.average_per_agent) %></div>
+    <div class="stat-label"><%- @T('My handling time: %s minutes', @StatsTicketWaitingTime.handling_time) %></div>
+    <div class="stat-detail"><%- @T('Average: %s minutes', @StatsTicketWaitingTime.average_per_agent) %></div>
   </div>
 </div>
 <div class="column">
