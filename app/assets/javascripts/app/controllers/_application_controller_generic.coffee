@@ -87,6 +87,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
         ui.close()
 
       fail: (settings, details) ->
+        App[ ui.genericObject ].fetch(id: @id)
         ui.log 'errors'
         ui.formEnable(e)
         ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')

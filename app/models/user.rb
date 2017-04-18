@@ -45,7 +45,7 @@ class User < ApplicationModel
   after_destroy   :avatar_destroy
 
   has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
-  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, class_name: 'Role'
+  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, before_remove: :last_admin_check, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
@@ -858,6 +858,27 @@ returns
         raise "Role #{role.name} conflicts with #{local_role.name}" if role_ids.include?(local_role.id)
       }
     }
+  end
+
+=begin
+
+checks if the current user is the last one
+with admin permissions.
+
+Raises
+
+raise 'Minimum one user need to have admin permissions'
+
+=end
+
+  def last_admin_check(role)
+    ticket_admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'] }).pluck(:id)
+    count                 = User.joins(:roles).where(roles: { id: ticket_admin_role_ids }, users: { active: true }).count
+    if ticket_admin_role_ids.include?(role.id)
+      count -= 1
+    end
+
+    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if count < 1
   end
 
   def validate_agent_limit(role)
