@@ -21,6 +21,8 @@ class App.Setting extends App.Model
             timeout: 2000
           }
         App.Setting.preferencesPost(@)
+        if options.doneLocal
+          options.doneLocal(@)
 
     if !options.fail
       options.fail = (settings, details) ->
@@ -29,6 +31,8 @@ class App.Setting extends App.Model
           msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
           timeout: 2000
         }
+        if options.failLocal
+          options.failLocal(@)
     if setting.frontend
       App.Config.set(name, value)
     setting.save(options)

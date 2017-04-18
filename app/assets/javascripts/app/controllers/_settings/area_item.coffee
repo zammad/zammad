@@ -52,5 +52,4 @@ class App.SettingsAreaItem extends App.Controller
       value = params
     else
       value = directData
-
-    App.Setting.set(@setting['name'], value)
+    App.Setting.set(@setting['name'], value, doneLocal: => @formEnable(e))
