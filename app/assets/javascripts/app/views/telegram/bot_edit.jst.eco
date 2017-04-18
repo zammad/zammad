@@ -6,7 +6,7 @@
       <label for="api_token"><%- @T('%s Api Token', 'Telegram') %> <span>*</span></label>
     </div>
     <div class="controls">
-      <input id="api_token" type="text" name="api_token" value="<%= @channel.options.api_token %>" class="form-control" required autocomplete="off">
+      <input id="api_token" type="text" name="api_token" value="<%= @channel.options.api_token %>" class="form-control" required autocomplete="new-password">
     </div>
   </div>
   <h2><%- @T('Settings') %></h2>
@@ -15,7 +15,7 @@
       <label for="welcome"><%- @T('welcome message') %> <span>*</span></label>
     </div>
     <div class="controls">
-      <input id="welcome" type="text" name="welcome" value="<%= @channel.options.welcome %>" placeholder="<%- @Ti('You are welcome! Just ask me something!') %>" class="form-control" required autocomplete="off">
+      <input id="welcome" type="text" name="welcome" value="<%= @channel.options.welcome %>" placeholder="<%- @Ti('You are welcome! Just ask me something!') %>" class="form-control" required autocomplete="new-password">
     </div>
   </div>
   <div class="input form-group">

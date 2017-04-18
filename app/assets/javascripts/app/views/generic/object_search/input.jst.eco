@@ -3,7 +3,7 @@
   <% if @attribute.multiple: %>
     <%- @tokens %>
   <% end %>
-  <input name="<%- @attribute.name %>_completion" class="user-select token-input js-objectSelect" autocapitalize="off" placeholder="<%- @attribute.placeholder %>" autocomplete="off" role="textbox" aria-autocomplete="list" value="<%= @name %>" aria-haspopup="true">
+  <input name="<%- @attribute.name %>_completion" class="user-select token-input js-objectSelect" autocapitalize="off" placeholder="<%- @attribute.placeholder %>" autocomplete="new-password" <%= @attribute.autofocus %> role="textbox" aria-autocomplete="list" value="<%= @name %>" aria-haspopup="true">
   <% if @attribute.disableCreateObject isnt true: %><%- @Icon('arrow-down', 'dropdown-arrow') %><% end %>
 </div>
 
