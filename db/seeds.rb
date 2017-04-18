@@ -4681,7 +4681,7 @@ ObjectManager::Attribute.add(
     type: 'password',
     maxlength: 100,
     null: true,
-    autocomplete: 'off',
+    autocomplete: 'new-password',
     item_class: 'formGroup--halfSize',
   },
   editable: false,
