@@ -23,6 +23,7 @@ class Widget extends App.Controller
         if e.altKey && e.ctrlKey && !e.metaKey
           hotkeys = true
       if hotkeys && e.keyCode is 84
+        e.preventDefault()
         @toogle()
     )
 
