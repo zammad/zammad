@@ -46,6 +46,8 @@ check api token with permissions
 
   user = Token.check(action: 'api', name: '123abc12qweads', permission: 'admin.session')
 
+  user = Token.check(action: 'api', name: '123abc12qweads', permission: ['admin.session', 'ticket.agent'])
+
 returns
 
   user for who this token was created
@@ -85,8 +87,13 @@ returns
       end
       match = false
       local_permissions.each { |local_permission|
-        next if !token.preferences[:permission].include?(local_permission)
-        match = true
+        local_permissions = Permission.with_parents(local_permission)
+        local_permissions.each { |local_permission_name|
+          next if !token.preferences[:permission].include?(local_permission_name)
+          match = true
+          break
+        }
+        next if !match
         break
       }
       return if !match

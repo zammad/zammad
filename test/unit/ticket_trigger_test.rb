@@ -179,7 +179,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     Observer::Transaction.commit
 
@@ -189,7 +189,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal(%w(aa kk abc), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal(%w(aa kk abc), ticket1.tag_list)
     article1 = ticket1.articles.last
     assert_match('Zammad <zammad@localhost>', article1.from)
     assert_match('nicole.braun@zammad.org', article1.to)
@@ -208,7 +208,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal(%w(aa kk abc), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal(%w(aa kk abc), ticket1.tag_list)
 
     ticket1.state = Ticket::State.lookup(name: 'open')
     ticket1.save!
@@ -221,7 +221,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('open', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal(%w(aa kk abc), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal(%w(aa kk abc), ticket1.tag_list)
 
     ticket1.state = Ticket::State.lookup(name: 'new')
     ticket1.save!
@@ -234,7 +234,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal(%w(aa abc), Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal(%w(aa abc), ticket1.tag_list)
 
     ticket2 = Ticket.create(
       title: "some title\n äöüß",
@@ -252,7 +252,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('open', ticket2.state.name, 'ticket2.state verify')
     assert_equal('2 normal', ticket2.priority.name, 'ticket2.priority verify')
     assert_equal(0, ticket2.articles.count, 'ticket2.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket2.id))
+    assert_equal([], ticket2.tag_list)
 
     Observer::Transaction.commit
 
@@ -262,7 +262,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('open', ticket2.state.name, 'ticket2.state verify')
     assert_equal('2 normal', ticket2.priority.name, 'ticket2.priority verify')
     assert_equal(0, ticket2.articles.count, 'ticket2.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket2.id))
+    assert_equal([], ticket2.tag_list)
 
     ticket3 = Ticket.create(
       title: "some <b>title</b>\n äöüß3",
@@ -293,7 +293,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket3.state.name, 'ticket3.state verify')
     assert_equal('2 normal', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(1, ticket3.articles.count, 'ticket3.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket3.id))
+    assert_equal([], ticket3.tag_list)
 
     Observer::Transaction.commit
 
@@ -303,7 +303,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket3.state.name, 'ticket3.state verify')
     assert_equal('3 high', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(3, ticket3.articles.count, 'ticket3.articles verify')
-    assert_equal(%w(aa kk abc article_create_trigger), Tag.tag_list(object: 'Ticket', o_id: ticket3.id))
+    assert_equal(%w(aa kk abc article_create_trigger), ticket3.tag_list)
     article3 = ticket3.articles[1]
     assert_match('Zammad <zammad@localhost>', article3.from)
     assert_match('nicole.braun@zammad.org', article3.to)
@@ -341,7 +341,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket3.state.name, 'ticket3.state verify')
     assert_equal('3 high', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(4, ticket3.articles.count, 'ticket3.articles verify')
-    assert_equal(%w(aa abc article_create_trigger), Tag.tag_list(object: 'Ticket', o_id: ticket3.id))
+    assert_equal(%w(aa abc article_create_trigger), ticket3.tag_list)
 
     Ticket::Article.create(
       ticket_id: ticket3.id,
@@ -366,7 +366,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket3.state.name, 'ticket3.state verify')
     assert_equal('3 high', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(5, ticket3.articles.count, 'ticket3.articles verify')
-    assert_equal(%w(aa abc article_create_trigger), Tag.tag_list(object: 'Ticket', o_id: ticket3.id))
+    assert_equal(%w(aa abc article_create_trigger), ticket3.tag_list)
 
     Ticket::Article.create(
       ticket_id: ticket3.id,
@@ -391,7 +391,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket3.state.name, 'ticket3.state verify')
     assert_equal('3 high', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(7, ticket3.articles.count, 'ticket3.articles verify')
-    assert_equal(%w(aa abc article_create_trigger), Tag.tag_list(object: 'Ticket', o_id: ticket3.id))
+    assert_equal(%w(aa abc article_create_trigger), ticket3.tag_list)
   end
 
   test '2 actions - create' do
@@ -1234,7 +1234,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     Observer::Transaction.commit
 
@@ -1371,7 +1371,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent.id
     Ticket::Article.create(
@@ -1396,7 +1396,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent.id
     ticket1.owner_id = 1
@@ -1410,7 +1410,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
   end
 
@@ -1498,7 +1498,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent1.id
     Ticket::Article.create(
@@ -1523,7 +1523,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent1.id
     ticket1.owner_id = 1
@@ -1537,7 +1537,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent1.id
     Ticket::Article.create(
@@ -1562,7 +1562,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(3, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent2.id
     ticket1.owner_id = agent2.id
@@ -1576,7 +1576,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(3, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent1.id
     Ticket::Article.create(
@@ -1601,7 +1601,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(4, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
   end
 
   test '8 owner auto assignment' do
@@ -1679,7 +1679,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent.id
     Ticket::Article.create(
@@ -1704,7 +1704,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent.id
     ticket1.priority = Ticket::Priority.find_by(name: '1 low')
@@ -1719,7 +1719,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('1 low', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent.id
     ticket1.owner_id = 1
@@ -1734,7 +1734,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('1 low', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent.id
     ticket1.owner_id = agent.id
@@ -1749,7 +1749,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('1 low', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
   end
 
   test '9 vip priority set' do
@@ -1826,7 +1826,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     Observer::Transaction.commit
 
@@ -1838,7 +1838,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     customer.vip = false
     customer.save!
@@ -1872,7 +1872,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket2.state.name, 'ticket2.state verify')
     assert_equal('2 normal', ticket2.priority.name, 'ticket2.priority verify')
     assert_equal(1, ticket2.articles.count, 'ticket2.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket2.id))
+    assert_equal([], ticket2.tag_list)
 
     Observer::Transaction.commit
 
@@ -1884,7 +1884,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket2.state.name, 'ticket2.state verify')
     assert_equal('2 normal', ticket2.priority.name, 'ticket2.priority verify')
     assert_equal(1, ticket2.articles.count, 'ticket2.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket2.id))
+    assert_equal([], ticket2.tag_list)
 
   end
 
@@ -1963,7 +1963,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent1.id
     ticket1.owner_id = agent1.id
@@ -1978,7 +1978,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent1.id
     ticket1.owner_id = agent1.id
@@ -1993,7 +1993,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent1.id
     ticket1.owner_id = agent2.id
@@ -2008,7 +2008,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(3, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
   end
 
@@ -2101,7 +2101,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     Ticket::Article.create(
       ticket_id: ticket1.id,
@@ -2126,7 +2126,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(3, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     Ticket::Article.create(
       ticket_id: ticket1.id,
@@ -2151,7 +2151,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(5, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     ticket1.priority = Ticket::Priority.find_by(name: '3 high')
     ticket1.save!
@@ -2178,7 +2178,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(6, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     article.internal = false
     article.save!
@@ -2192,7 +2192,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(6, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     Ticket::Article.create(
       ticket_id: ticket1.id,
@@ -2217,7 +2217,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(7, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
   end
 
   test '12 notify on owner change' do
@@ -2384,7 +2384,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent.id
     ticket1.owner_id = agent.id
@@ -2400,7 +2400,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(3, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     Ticket::Article.create(
       ticket_id: ticket1.id,
@@ -2426,7 +2426,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(5, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
     UserInfo.current_user_id = agent.id
     ticket1.owner_id = 1
@@ -2442,7 +2442,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(6, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal([], Tag.tag_list(object: 'Ticket', o_id: ticket1.id))
+    assert_equal([], ticket1.tag_list)
 
   end
 

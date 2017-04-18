@@ -2719,6 +2719,16 @@ Setting.create_if_not_exists(
   ],
   frontend: false
 )
+Setting.create_if_not_exists(
+  title: 'Set limit of agents',
+  name: 'system_agent_limit',
+  area: 'Core::Online',
+  description: 'Defines the limit of the agents.',
+  options: {},
+  state: false,
+  preferences: { online_service_disable: true },
+  frontend: false
+)
 
 signature = Signature.create_if_not_exists(
   id: 1,

@@ -602,10 +602,16 @@ class App.TicketZoom extends App.Controller
 
     # get diff of model
     modelDiff =
-      ticket:  App.Utils.formDiff(currentParams.ticket, currentStore.ticket)
-      article: App.Utils.formDiff(currentParams.article, currentStore.article)
-
+      ticket:  @forRemoveMeta(App.Utils.formDiff(currentParams.ticket, currentStore.ticket))
+      article: @forRemoveMeta(App.Utils.formDiff(currentParams.article, currentStore.article))
     modelDiff
+
+  forRemoveMeta: (params = {}) ->
+    paramsNew = {}
+    for key, value of params
+      if !key.match(/_completion$/)
+        paramsNew[key] = value
+    paramsNew
 
   markFormDiff: (diff = {}) =>
     ticketForm    = @$('.edit')
@@ -614,8 +620,8 @@ class App.TicketZoom extends App.Controller
     resetButton   = @$('.js-reset')
 
     params         = {}
-    params.ticket  = @formParam(ticketForm)
-    params.article = @formParam(articleForm)
+    params.ticket  = @forRemoveMeta(@formParam(ticketForm))
+    params.article = @forRemoveMeta(@formParam(articleForm))
 
     # clear all changes
     if _.isEmpty(diff.ticket) && _.isEmpty(diff.article)

@@ -163,10 +163,10 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
 
     # configure es
     if ENV['ES_URL']
-      #fail "ERROR: Need ES_URL - hint ES_URL='http://172.0.0.1:9200'"
+      #fail "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
       Setting.set('es_url', ENV['ES_URL'])
 
-      # Setting.set('es_url', 'http://172.0.0.1:9200')
+      # Setting.set('es_url', 'http://127.0.0.1:9200')
       # Setting.set('es_index', 'estest.local_zammad')
       # Setting.set('es_user', 'elasticsearch')
       # Setting.set('es_password', 'zammad')

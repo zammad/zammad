@@ -2,7 +2,7 @@
 require 'browser_test_helper'
 
 class AdminRoleTest < TestCase
-  def test_role
+  def test_role_device
     name = "some role #{rand(99_999_999)}"
 
     @browser = browser_instance
@@ -125,4 +125,106 @@ class AdminRoleTest < TestCase
     )
   end
 
+  def test_role_admin_user
+
+    @browser = browser_instance
+
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+
+    # check if admin exists
+    exists_not(css: '[href="#manage"]')
+    logout()
+
+    # add admin.user to agent role
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    role_edit(
+      data: {
+        name:   'Agent',
+        active: true,
+        permission: {
+          'admin.user' => true,
+          'chat.agent' => true,
+          'cti.agent' => true,
+          'ticket.agent' => true,
+          'user_preferences' => true,
+        },
+      }
+    )
+    logout()
+
+    # check if admin exists
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    # create user
+    random = rand(999_999_999)
+    user_email = "admin.user.#{rand}@example.com"
+    user_create(
+      data: {
+        #login:    "some login #{random}",
+        firstname: "Admin.User Firstname #{random}",
+        lastname:  "Admin.User Lastname #{random}",
+        email:     user_email,
+        password:  'some-pass',
+      },
+    )
+
+    # create ticket for user
+    ticket_create(
+      data: {
+        customer: user_email,
+        group: 'Users',
+        title: 'some changes',
+        body: 'some body 123äöü - admin.user',
+      },
+    )
+
+    # revoke admin.user
+    logout()
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    role_edit(
+      data: {
+        name:   'Agent',
+        active: true,
+        permission: {
+          'admin.user' => false,
+          'chat.agent' => true,
+          'cti.agent' => true,
+          'ticket.agent' => true,
+          'user_preferences' => true,
+        },
+      }
+    )
+    logout()
+
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+
+    # check if admin exists
+    exists_not(css: '[href="#manage"]')
+
+  end
 end

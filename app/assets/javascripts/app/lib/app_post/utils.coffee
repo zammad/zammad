@@ -635,7 +635,7 @@ class App.Utils
   # human readable file size
   @humanFileSize: (size) ->
     if size > ( 1024 * 1024 )
-      size = Math.round( size / ( 1024 * 1024 ) ) + ' MB'
+      size = (Math.round( size * 10 / ( 1024 * 1024 ) ) / 10 ) + ' MB'
     else if size > 1024
       size = Math.round( size / 1024 ) + ' KB'
     else

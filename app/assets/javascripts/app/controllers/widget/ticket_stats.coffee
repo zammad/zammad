@@ -71,63 +71,72 @@ class App.TicketStats extends App.Controller
     if !data
       data = @data
 
+    user_total = 0
+    if data.user.open_ids && data.user.closed_ids
+      user_total = data.user.open_ids.length + data.user.closed_ids.length
+    organization_total = 0
+    if data.organization.open_ids && data.organization.closed_ids
+      organization_total = data.organization.open_ids.length + data.organization.closed_ids.length
+
     @html App.view('widget/ticket_stats')(
-      user:         @user
-      user_total:   data.user_tickets_open_ids.length + data.user_tickets_closed_ids.length
-      organization: @organization
-      org_total:    data.org_tickets_open_ids.length + data.org_tickets_closed_ids.length
+      user:               @user
+      user_total:         user_total
+      organization:       @organization
+      organization_total: organization_total
     )
 
     limit = 5
-    iconClass = ''
-    if data.user_tickets_open_ids.length is 0 && data.user_tickets_closed_ids.length > 0
-      iconClass = 'mood icon supergood-color'
-    new TicketStatsList(
-      el:         @$('.js-user-open-tickets')
-      user:       @user
-      head:       'Open Tickets'
-      iconClass:  iconClass
-      ticket_ids: data.user_tickets_open_ids
-      limit:      limit
-    )
-    new TicketStatsList(
-      el:         @$('.js-user-closed-tickets')
-      user:       @user
-      head:       'Closed Tickets'
-      ticket_ids: data.user_tickets_closed_ids
-      limit:      limit
-    )
-    new TicketStatsFrequency(
-      el:                    @$('.js-user-frequency')
-      user:                  @user
-      ticket_volume_by_year: data.user_ticket_volume_by_year
-    )
+    if !_.isEmpty(data.user)
+      iconClass = ''
+      if data.user.open_ids.length is 0 && data.user.closed_ids.length > 0
+        iconClass = 'mood icon supergood-color'
+      new App.TicketStatsList(
+        el:         @$('.js-user-open-tickets')
+        user:       @user
+        head:       'Open Tickets'
+        iconClass:  iconClass
+        ticket_ids: data.user.open_ids
+        limit:      limit
+      )
+      new App.TicketStatsList(
+        el:         @$('.js-user-closed-tickets')
+        user:       @user
+        head:       'Closed Tickets'
+        ticket_ids: data.user.closed_ids
+        limit:      limit
+      )
+      new App.TicketStatsFrequency(
+        el:                    @$('.js-user-frequency')
+        user:                  @user
+        ticket_volume_by_year: data.user.volume_by_year
+      )
 
-    iconClass = ''
-    if data.org_tickets_open_ids.length is 0 && data.org_tickets_closed_ids.length > 0
-      iconClass = 'mood icon supergood-color'
-    new TicketStatsList(
-      el:         @$('.js-org-open-tickets')
-      user:       @user
-      head:       'Open Tickets'
-      iconClass:  iconClass
-      ticket_ids: data.org_tickets_open_ids
-      limit:      limit
-    )
-    new TicketStatsList(
-      el:         @$('.js-org-closed-tickets')
-      user:       @user
-      head:       'Closed Tickets'
-      ticket_ids: data.org_tickets_closed_ids
-      limit:      limit
-    )
-    new TicketStatsFrequency(
-      el:                    @$('.js-org-frequency')
-      user:                  @user
-      ticket_volume_by_year: data.org_ticket_volume_by_year
-    )
+    if !_.isEmpty(data.organization)
+      iconClass = ''
+      if data.organization.open_ids.length is 0 && data.organization.closed_ids.length > 0
+        iconClass = 'mood icon supergood-color'
+      new App.TicketStatsList(
+        el:         @$('.js-org-open-tickets')
+        user:       @user
+        head:       'Open Tickets'
+        iconClass:  iconClass
+        ticket_ids: data.organization.open_ids
+        limit:      limit
+      )
+      new App.TicketStatsList(
+        el:         @$('.js-org-closed-tickets')
+        user:       @user
+        head:       'Closed Tickets'
+        ticket_ids: data.organization.closed_ids
+        limit:      limit
+      )
+      new App.TicketStatsFrequency(
+        el:                    @$('.js-org-frequency')
+        user:                  @user
+        ticket_volume_by_year: data.organization.volume_by_year
+      )
 
-class TicketStatsList extends App.Controller
+class App.TicketStatsList extends App.Controller
   events:
     'click .js-showAll': 'showAll'
 
@@ -163,7 +172,7 @@ class TicketStatsList extends App.Controller
     @all = true
     @render()
 
-class TicketStatsFrequency extends App.Controller
+class App.TicketStatsFrequency extends App.Controller
   constructor: ->
     super
     @render()

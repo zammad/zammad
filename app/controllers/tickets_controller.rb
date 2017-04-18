@@ -3,6 +3,7 @@
 class TicketsController < ApplicationController
   include AccessesTickets
   include CreatesTicketArticles
+  include TicketStats
 
   prepend_before_action :authentication_check
 
@@ -127,12 +128,7 @@ class TicketsController < ApplicationController
       if params[:tags] && !params[:tags].empty?
         tags = params[:tags].split(/,/)
         tags.each { |tag|
-          Tag.tag_add(
-            object: 'Ticket',
-            o_id: ticket.id,
-            item: tag,
-            created_by_id: current_user.id,
-          )
+          ticket.tag_add(tag)
         }
       end
 
@@ -484,180 +480,100 @@ class TicketsController < ApplicationController
       raise 'Need user_id or organization_id as param'
     end
 
-    # permission check
-    #ticket_permission(ticket)
-
     # lookup open user tickets
-    limit                      = 100
-    assets                     = {}
-    access_condition           = Ticket.access_condition(current_user)
-    now                        = Time.zone.now
-    user_tickets_open_ids      = []
-    user_tickets_closed_ids    = []
-    user_ticket_volume_by_year = []
+    limit            = 100
+    assets           = {}
+    access_condition = Ticket.access_condition(current_user)
+
+    user_tickets = {}
     if params[:user_id]
       user = User.lookup(id: params[:user_id])
       if !user
         raise "No such user with id #{params[:user_id]}"
       end
-      condition = {
-        'ticket.state_id' => {
-          operator: 'is',
-          value: Ticket::State.by_category(:open).pluck(:id),
+      conditions = {
+        closed_ids: {
+          'ticket.state_id' => {
+            operator: 'is',
+            value: Ticket::State.by_category(:closed).pluck(:id),
+          },
+          'ticket.customer_id' => {
+            operator: 'is',
+            value: user.id,
+          },
         },
-        'ticket.customer_id' => {
-          operator: 'is',
-          value: user.id,
-        },
-      }
-      user_tickets_open = Ticket.search(
-        limit: limit,
-        condition: condition,
-        current_user: current_user,
-      )
-      user_tickets_open_ids = assets_of_tickets(user_tickets_open, assets)
-
-      # lookup closed user tickets
-      condition = {
-        'ticket.state_id' => {
-          operator: 'is',
-          value: Ticket::State.by_category(:closed).pluck(:id),
-        },
-        'ticket.customer_id' => {
-          operator: 'is',
-          value: user.id,
+        open_ids: {
+          'ticket.state_id' => {
+            operator: 'is',
+            value: Ticket::State.by_category(:open).pluck(:id),
+          },
+          'ticket.customer_id' => {
+            operator: 'is',
+            value: user.id,
+          },
         },
       }
-      user_tickets_closed = Ticket.search(
-        limit: limit,
-        condition: condition,
-        current_user: current_user,
-      )
-      user_tickets_closed_ids = assets_of_tickets(user_tickets_closed, assets)
+      conditions.each { |key, local_condition|
+        user_tickets[key] = ticket_ids_and_assets(local_condition, current_user, limit, assets)
+      }
 
       # generate stats by user
-      (0..11).each { |month_back|
-        date_to_check = now - month_back.month
-        date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
-        date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
-
-        condition = {
-          'tickets.customer_id' => user.id,
-        }
-
-        # created
-        created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end )
-                        .where(access_condition)
-                        .where(condition)
-                        .count
-
-        # closed
-        closed = Ticket.where('close_at > ? AND close_at < ?', date_start, date_end  )
-                       .where(access_condition)
-                       .where(condition)
-                       .count
-
-        data = {
-          month: date_to_check.month,
-          year: date_to_check.year,
-          text: Date::MONTHNAMES[date_to_check.month],
-          created: created,
-          closed: closed,
-        }
-        user_ticket_volume_by_year.push data
+      condition = {
+        'tickets.customer_id' => user.id,
       }
+      user_tickets[:volume_by_year] = ticket_stats_last_year(condition, access_condition)
+
     end
 
     # lookup open org tickets
-    org_tickets_open_ids      = []
-    org_tickets_closed_ids    = []
-    org_ticket_volume_by_year = []
+    org_tickets = {}
     if params[:organization_id] && !params[:organization_id].empty?
-
-      condition = {
-        'ticket.state_id' => {
-          operator: 'is',
-          value: Ticket::State.by_category(:open).pluck(:id),
+      organization = Organization.lookup(id: params[:organization_id])
+      if !organization
+        raise "No such organization with id #{params[:organization_id]}"
+      end
+      conditions = {
+        closed_ids: {
+          'ticket.state_id' => {
+            operator: 'is',
+            value: Ticket::State.by_category(:closed).pluck(:id),
+          },
+          'ticket.organization_id' => {
+            operator: 'is',
+            value: organization.id,
+          },
         },
-        'ticket.organization_id' => {
-          operator: 'is',
-          value: params[:organization_id],
-        },
-      }
-      org_tickets_open = Ticket.search(
-        limit: limit,
-        condition: condition,
-        current_user: current_user,
-      )
-      org_tickets_open_ids = assets_of_tickets(org_tickets_open, assets)
-
-      # lookup closed org tickets
-      condition = {
-        'ticket.state_id' => {
-          operator: 'is',
-          value: Ticket::State.by_category(:closed).pluck(:id),
-        },
-        'ticket.organization_id' => {
-          operator: 'is',
-          value: params[:organization_id],
+        open_ids: {
+          'ticket.state_id' => {
+            operator: 'is',
+            value: Ticket::State.by_category(:open).pluck(:id),
+          },
+          'ticket.organization_id' => {
+            operator: 'is',
+            value: organization.id,
+          },
         },
       }
-      org_tickets_closed = Ticket.search(
-        limit: limit,
-        condition: condition,
-        current_user: current_user,
-      )
-      org_tickets_closed_ids = assets_of_tickets(org_tickets_closed, assets)
+      conditions.each { |key, local_condition|
+        org_tickets[key] = ticket_ids_and_assets(local_condition, current_user, limit, assets)
+      }
 
       # generate stats by org
-      (0..11).each { |month_back|
-        date_to_check = now - month_back.month
-        date_start = "#{date_to_check.year}-#{date_to_check.month}-01 00:00:00"
-        date_end   = "#{date_to_check.year}-#{date_to_check.month}-#{date_to_check.end_of_month.day} 00:00:00"
-
-        condition = {
-          'tickets.organization_id' => params[:organization_id],
-        }
-
-        # created
-        created = Ticket.where('created_at > ? AND created_at < ?', date_start, date_end ).where(condition).count
-
-        # closed
-        closed = Ticket.where('close_at > ? AND close_at < ?', date_start, date_end  ).where(condition).count
-
-        data = {
-          month: date_to_check.month,
-          year: date_to_check.year,
-          text: Date::MONTHNAMES[date_to_check.month],
-          created: created,
-          closed: closed,
-        }
-        org_ticket_volume_by_year.push data
+      condition = {
+        'tickets.organization_id' => organization.id,
       }
+      org_tickets[:volume_by_year] = ticket_stats_last_year(condition, access_condition)
     end
 
     # return result
     render json: {
-      user_tickets_open_ids: user_tickets_open_ids,
-      user_tickets_closed_ids: user_tickets_closed_ids,
-      org_tickets_open_ids: org_tickets_open_ids,
-      org_tickets_closed_ids: org_tickets_closed_ids,
-      user_ticket_volume_by_year: user_ticket_volume_by_year,
-      org_ticket_volume_by_year: org_ticket_volume_by_year,
+      user: user_tickets,
+      organization: org_tickets,
       assets: assets,
     }
   end
 
   private
-
-  def assets_of_tickets(tickets, assets)
-    ticket_ids = []
-    tickets.each do |ticket|
-      ticket_ids.push ticket.id
-      assets = ticket.assets(assets)
-    end
-    ticket_ids
-  end
 
   def ticket_all(ticket)
 
@@ -694,10 +610,7 @@ class TicketsController < ApplicationController
     }
 
     # get tags
-    tags = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket.id,
-    )
+    tags = ticket.tag_list
 
     # return result
     {

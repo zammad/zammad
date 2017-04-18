@@ -202,6 +202,81 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Array, result.class)
     assert(result)
 
+    admin_token.preferences[:permission] = ['ticket.agent']
+    admin_token.save!
+
+    get '/api/v1/organizations', {}, @headers.merge('Authorization' => admin_credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert(result)
+
+    name = "some org name #{rand(999_999_999)}"
+    post '/api/v1/organizations', { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(name, result['name'])
+    assert(result)
+
+    name = "some org name #{rand(999_999_999)} - 2"
+    put "/api/v1/organizations/#{result['id']}", { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(name, result['name'])
+    assert(result)
+
+    admin_token.preferences[:permission] = ['admin.organization']
+    admin_token.save!
+
+    get '/api/v1/organizations', {}, @headers.merge('Authorization' => admin_credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert(result)
+
+    name = "some org name #{rand(999_999_999)}"
+    post '/api/v1/organizations', { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(name, result['name'])
+    assert(result)
+
+    name = "some org name #{rand(999_999_999)} - 2"
+    put "/api/v1/organizations/#{result['id']}", { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(name, result['name'])
+    assert(result)
+
+    admin_token.preferences[:permission] = ['admin']
+    admin_token.save!
+
+    get '/api/v1/organizations', {}, @headers.merge('Authorization' => admin_credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert(result)
+
+    name = "some org name #{rand(999_999_999)}"
+    post '/api/v1/organizations', { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(name, result['name'])
+    assert(result)
+
+    name = "some org name #{rand(999_999_999)} - 2"
+    put "/api/v1/organizations/#{result['id']}", { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(name, result['name'])
+    assert(result)
+
   end
 
   test 'token auth - agent' do
@@ -228,6 +303,17 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
+
+    get '/api/v1/organizations', {}, @headers.merge('Authorization' => agent_credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert(result)
+
+    name = "some org name #{rand(999_999_999)}"
+    post '/api/v1/organizations', { name: name }.to_json, @headers.merge('Authorization' => agent_credentials)
+    assert_response(401)
+
   end
 
   test 'token auth - customer' do
@@ -254,6 +340,16 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
+
+    get '/api/v1/organizations', {}, @headers.merge('Authorization' => customer_credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert(result)
+
+    name = "some org name #{rand(999_999_999)}"
+    post '/api/v1/organizations', { name: name }.to_json, @headers.merge('Authorization' => customer_credentials)
+    assert_response(401)
   end
 
   test 'token auth - invalid user - admin' do

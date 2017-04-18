@@ -532,115 +532,148 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = '<a href="http://example.com">http://example.com</a>'
-    result = '<a href="http://example.com" rel="nofollow" target="_blank">http://example.com</a>'
+    result = '<a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<A href="http://example.com?a=1;">http://example.com?a=1;</A>'
-    result = '<a href="http://example.com?a=1;" rel="nofollow" target="_blank">http://example.com?a=1;</a>'
+    result = '<a href="http://example.com?a=1;" rel="nofollow noreferrer noopener" target="_blank">http://example.com?a=1;</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<A href="http://example.com/withSoMeUpper/And/downCase">http://example.com/withSoMeUpper/And/downCase</A>'
-    result = '<a href="http://example.com/withSoMeUpper/And/downCase" rel="nofollow" target="_blank">http://example.com/withSoMeUpper/And/downCase</a>'
+    result = '<a href="http://example.com/withSoMeUpper/And/downCase" rel="nofollow noreferrer noopener" target="_blank">http://example.com/withSoMeUpper/And/downCase</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<a href="http://web.de">web.de</a>'
-    result = '<a href="http://web.de" rel="nofollow" target="_blank">web.de</a>'
+    result = '<a href="http://web.de" rel="nofollow noreferrer noopener" target="_blank">web.de</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<a id="123" href="http://web.de">web.de</a>'
-    result = '<a href="http://web.de" rel="nofollow" target="_blank">web.de</a>'
+    result = '<a href="http://web.de" rel="nofollow noreferrer noopener" target="_blank">web.de</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<div>https://www.facebook.com/test</div>'
-    result = '<div><a href="https://www.facebook.com/test" rel="nofollow" target="_blank">https://www.facebook.com/test</a>
+    result = '<div><a href="https://www.facebook.com/test" rel="nofollow noreferrer noopener" target="_blank">https://www.facebook.com/test</a>
 </div>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<div><br>https://www.facebook.com/test<br></div>'
     result = '<div>
-<br><a href="https://www.facebook.com/test" rel="nofollow" target="_blank">https://www.facebook.com/test</a><br>
+<br><a href="https://www.facebook.com/test" rel="nofollow noreferrer noopener" target="_blank">https://www.facebook.com/test</a><br>
 </div>'
     assert_equal(result, html.html2html_strict)
 
     html   = 'some text http://example.com some other text'
-    result = 'some text <a href="http://example.com" rel="nofollow" target="_blank">http://example.com</a> some other text'
+    result = 'some text <a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a> some other text'
     assert_equal(result, html.html2html_strict)
 
     html   = 'some text www.example.com some other text'
-    result = 'some text <a href="http://www.example.com" rel="nofollow" target="_blank">http://www.example.com</a> some other text'
+    result = 'some text <a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com</a> some other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'some textwwwsome other text'
+    result = 'some textwwwsome other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'some text wwwsome other text'
+    result = 'some text wwwsome other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'some text www.some.dom other text'
+    result = 'some text <a href="http://www.some.dom" rel="nofollow noreferrer noopener" target="_blank">http://www.some.dom</a> other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'www.some.dom other text'
+    result = '<a href="http://www.some.dom" rel="nofollow noreferrer noopener" target="_blank">http://www.some.dom</a> other text'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'www.some.dom'
+    result = '<a href="http://www.some.dom" rel="nofollow noreferrer noopener" target="_blank">http://www.some.dom</a>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = 'web:www.some.dom other text'
+    result = 'web:<a href="http://www.some.dom" rel="nofollow noreferrer noopener" target="_blank">http://www.some.dom</a> other text'
     assert_equal(result, html.html2html_strict)
 
     html   = '<a href="http://example.com">http://what-different.example.com</a>'
-    #result = 'http://example.com (<a href="http://what-different.example.com" rel="nofollow" target="_blank">http://what-different.example.com</a>)'
-    result = '<a href="http://what-different.example.com" rel="nofollow" target="_blank">http://what-different.example.com</a> (<a href="http://example.com" rel="nofollow" target="_blank">http://example.com</a>)'
+    #result = 'http://example.com (<a href="http://what-different.example.com" rel="nofollow noreferrer noopener" target="_blank">http://what-different.example.com</a>)'
+    result = '<a href="http://what-different.example.com" rel="nofollow noreferrer noopener" target="_blank">http://what-different.example.com</a> (<a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>)'
     assert_equal(result, html.html2html_strict)
 
     html   = '<a href="http://example.com">http://EXAMPLE.com</a>'
-    result = '<a href="http://example.com" rel="nofollow" target="_blank">http://EXAMPLE.com</a>'
+    result = '<a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://EXAMPLE.com</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<a href="http://example.com" class="abc">http://example.com</a>'
-    result = '<a href="http://example.com" rel="nofollow" target="_blank">http://example.com</a>'
+    result = '<a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<a href="http://example.com/" class="abc">http://example.com</a>'
-    result = '<a href="http://example.com/" rel="nofollow" target="_blank">http://example.com</a>'
+    result = '<a href="http://example.com/" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = "<a href=\"http://example.com/\n\" class=\"abc\">http://example.com</a>"
-    result = '<a href="http://example.com/" rel="nofollow" target="_blank">http://example.com</a>'
+    result = '<a href="http://example.com/" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = "<a href=\"http://example.com/\n \" class=\"abc\n\"\n>http://example.com</a>"
-    result = '<a href="http://example.com/" rel="nofollow" target="_blank">http://example.com</a>'
+    result = '<a href="http://example.com/" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = "<a href=\"http://example.com/?abc=123&123=abc\" class=\"abc\n\"\n>http://example.com?abc=123&amp;123=abc</a>"
-    result = '<a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow" target="_blank">http://example.com?abc=123&amp;123=abc</a>'
+    result = '<a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow noreferrer noopener" target="_blank">http://example.com?abc=123&amp;123=abc</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = "<a href=\"http://example.com/?abc=123&123=abc\" class=\"abc\n\"\n>http://example.com?abc=123&amp;123=abc</a>"
-    result = '<a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow" target="_blank">http://example.com?abc=123&amp;123=abc</a>'
+    result = '<a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow noreferrer noopener" target="_blank">http://example.com?abc=123&amp;123=abc</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = "<a href=\"http://example.com/?abc=123&123=abc\" class=\"abc\n\"\n><img src=\"cid:123\"></a>"
-    result = '<a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow" target="_blank">http://example.com/?abc=123&amp;123=abc</a>'
+    result = '<a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow noreferrer noopener" target="_blank">http://example.com/?abc=123&amp;123=abc</a>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a></p>'
-    result = '<p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap" rel="nofollow" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a></p>'
+    result = '<p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap" rel="nofollow noreferrer noopener" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a></p>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<p>https://wiki.lab.example.com/doku.php?id=xxxx:start&a=1;#ldap</p>'
-    result = '<p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;a=1;#ldap" rel="nofollow" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;a=1;#ldap</a></p>'
+    result = '<p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;a=1;#ldap" rel="nofollow noreferrer noopener" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;a=1;#ldap</a></p>'
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com</div>"
-    result = "<div><a href=\"http://example.com\" rel=\"nofollow\" target=\"_blank\">http://example.com</a>\n</div>"
+    result = "<div><a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>\n</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com.</div>"
-    result = "<div><a href=\"http://example.com\" rel=\"nofollow\" target=\"_blank\">http://example.com</a>.</div>"
+    result = "<div><a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>.</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>lala http://example.com.</div>"
-    result = '<div>lala <a href="http://example.com" rel="nofollow" target="_blank">http://example.com</a>.</div>'
+    result = '<div>lala <a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>.</div>'
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com, and so on</div>"
-    result = "<div><a href=\"http://example.com\" rel=\"nofollow\" target=\"_blank\">http://example.com</a>, and so on</div>"
+    result = "<div><a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>, and so on</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com?lala=me, and so on</div>"
-    result = "<div><a href=\"http://example.com?lala=me\" rel=\"nofollow\" target=\"_blank\">http://example.com?lala=me</a>, and so on</div>"
+    result = "<div><a href=\"http://example.com?lala=me\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com?lala=me</a>, and so on</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<a href=\"http://facebook.de/examplesrbog\"><span lang=\"EN-US\" style='color:blue'>http://facebook.de/examplesrbog</span></a>"
-    result = "<a href=\"http://facebook.de/examplesrbog\" rel=\"nofollow\" target=\"_blank\">http://facebook.de/examplesrbog</a>"
+    result = "<a href=\"http://facebook.de/examplesrbog\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://facebook.de/examplesrbog</a>"
+    assert_equal(result, html.html2html_strict)
+
+    html   = "<span style=\"font-size:10.0pt;font-family:&quot;Cambria&quot;,serif;color:#1F497D;mso-fareast-language:DE\">web&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href=\"http://www.example.de\"><span style=\"color:blue\">www.example.de</span></a><o:p></o:p></span>"
+    result = "web <a href=\"http://www.example.de\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">www.example.de</a>"
+    assert_equal(result, html.html2html_strict)
+
+    html   = "web <a href=\"www.example.de\"><span style=\"color:blue\">www.example.de</span></a>"
+    result = "web <a href=\"http://www.example.de\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">www.example.de</a>"
     assert_equal(result, html.html2html_strict)
 
     html   = "Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den <a href=\"http://newsletters.cylex.de/\" class=\"\">Link des Adventkalenders</a> in<br class=\"\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ihrer Lesezeichen-Symbolleiste zu ergänzen.</p><div class=\"\">&nbsp;"
-    result = "Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den Link des Adventkalenders (<a href=\"http://newsletters.cylex.de/\" rel=\"nofollow\" target=\"_blank\">http://newsletters.cylex.de/</a>) in<br> Ihrer Lesezeichen-Symbolleiste zu ergänzen.<div> </div>"
+    result = "Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den Link des Adventkalenders (<a href=\"http://newsletters.cylex.de/\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://newsletters.cylex.de/</a>) in<br> Ihrer Lesezeichen-Symbolleiste zu ergänzen.<div> </div>"
     assert_equal(result, html.html2html_strict)
 
     html   = '<a name="_MailEndCompose"><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;color:#44546A">Hello Mr Smith,<o:p></o:p></span></a>'
@@ -661,7 +694,7 @@ abc<p><b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donne
     assert_equal(result, html.html2html_strict)
 
     html = "<div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \">Mit freundlichem Gruß<span class=\"Apple-converted-space\">&nbsp;</span><br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.<o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \">Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br></span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \">Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><a href=\"mailto:john.smith@example.com\" style=color: blue; text-decoration: underline; \">john.smith@example.com</a></span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div><div style=\"margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; \"><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><a href=\"http://www.example.com\" style=\"color: blue; text-decoration: underline; \">www.example.com</a></span><span style=\"font-size: 10pt; font-family: Arial, sans-serif; \"><o:p></o:p></span></div>"
-    result = "<div>Mit freundlichem Gruß<br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.</div><div>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br>\n</div><div>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</div><div>john.smith@example.com</div><div><a href=\"http://www.example.com\" rel=\"nofollow\" target=\"_blank\">www.example.com</a></div>"
+    result = "<div>Mit freundlichem Gruß<br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.</div><div>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br>\n</div><div>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</div><div>john.smith@example.com</div><div><a href=\"http://www.example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">www.example.com</a></div>"
     assert_equal(result, html.html2html_strict)
 
     html   = '<b >test</b>'
@@ -819,7 +852,7 @@ christian.schaefer@example.com'
 <p>T: +49 (0) 12345/1234560-0</p>
 <p>F: +49 (0) 12345/1234560-2</p>
 <p>annad@example.com</p>
-<p><a href="http://www.example.com/" rel="nofollow" target="_blank">www.example.com</a> <a href="http://www.ABC.com/" rel="nofollow" target="_blank">www.ABC.com</a></p>
+<p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a> <a href="http://www.ABC.com/" rel="nofollow noreferrer noopener" target="_blank">www.ABC.com</a></p>
 <p>Geschäftsführer Vor Nach, VorUndZu Nach - Amtsgericht Dort HRB 12345 - Ein Unternehmer der ABC Gruppe</p>
 </div>
 </div>'
@@ -880,22 +913,22 @@ christian.schaefer@example.com'
     assert_equal(result, html.html2html_strict)
 
     html   = '<p class="MsoNormal"><a href="http://www.example.de/"><span style="color:blue;text-decoration:none"><img border="0" width="30" height="30" id="_x0000_i1030" src="cid:image001.png@01D172FC.F323CDB0"></span></a><o:p></o:p></p>'
-    #result = '<p>http://www.example.de/ <a href="http://www.example.de/" rel="nofollow" target="_blank"><img border="0" src="cid:image001.png@01D172FC.F323CDB0" style="width:30px;height:30px;"></a></p>'
-    result = '<p><a href="http://www.example.de/" rel="nofollow" target="_blank">http://www.example.de/</a></p>'
+    #result = '<p>http://www.example.de/ <a href="http://www.example.de/" rel="nofollow noreferrer noopener" target="_blank"><img border="0" src="cid:image001.png@01D172FC.F323CDB0" style="width:30px;height:30px;"></a></p>'
+    result = '<p><a href="http://www.example.de/" rel="nofollow noreferrer noopener" target="_blank">http://www.example.de/</a></p>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<p><a style="color: " href="http://www.example.com/?wm=mail"><img border="0" src="cid:example_new.png@8B201D8C.000B" width="101" height="30"></a></p>'
-    #result = '<p>http://www.example.com/?wm=mail <a href="http://www.example.com/?wm=mail" rel="nofollow" target="_blank"><img border="0" src="cid:example_new.png@8B201D8C.000B" style="width:101px;height:30px;"></a></p>'
-    result = '<p><a href="http://www.example.com/?wm=mail" rel="nofollow" target="_blank">http://www.example.com/?wm=mail</a></p>'
+    #result = '<p>http://www.example.com/?wm=mail <a href="http://www.example.com/?wm=mail" rel="nofollow noreferrer noopener" target="_blank"><img border="0" src="cid:example_new.png@8B201D8C.000B" style="width:101px;height:30px;"></a></p>'
+    result = '<p><a href="http://www.example.com/?wm=mail" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/?wm=mail</a></p>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<p><font size="2"><a style="color: " href="http://www.example.com/?wm=mail"><img border="0" src="cid:example_new.png@8B201D8C.000B" width="101" height="30"></a></font></p>'
-    #result = '<p>http://www.example.com/?wm=mail <a href="http://www.example.com/?wm=mail" rel="nofollow" target="_blank"><img border="0" src="cid:example_new.png@8B201D8C.000B" style="width:101px;height:30px;"></a></p>'
-    result = '<p><a href="http://www.example.com/?wm=mail" rel="nofollow" target="_blank">http://www.example.com/?wm=mail</a></p>'
+    #result = '<p>http://www.example.com/?wm=mail <a href="http://www.example.com/?wm=mail" rel="nofollow noreferrer noopener" target="_blank"><img border="0" src="cid:example_new.png@8B201D8C.000B" style="width:101px;height:30px;"></a></p>'
+    result = '<p><a href="http://www.example.com/?wm=mail" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/?wm=mail</a></p>'
     assert_equal(result, html.html2html_strict)
 
     html = '<div class="">Wir brauchen also die Instanz <a href="http://example.zammad.com" class="">example.zammad.com</a>, kann die aber nicht mehr nutzen.</div><div class=""><br class=""></div><div class="">Bitte um Freischaltung.</div><div class=""><br class=""></div><div class=""><br class=""><div class="">'
-    result = '<div>Wir brauchen also die Instanz <a href="http://example.zammad.com" rel="nofollow" target="_blank">example.zammad.com</a>, kann die aber nicht mehr nutzen.</div><div> </div><div>Bitte um Freischaltung.</div><div> </div><div>
+    result = '<div>Wir brauchen also die Instanz <a href="http://example.zammad.com" rel="nofollow noreferrer noopener" target="_blank">example.zammad.com</a>, kann die aber nicht mehr nutzen.</div><div> </div><div>Bitte um Freischaltung.</div><div> </div><div>
 <br><div></div>
 </div>'
     assert_equal(result, html.html2html_strict)
@@ -1142,7 +1175,7 @@ christian.schaefer@example.com'
 <div>Town Example Electric Co., Ltd.</div>
 <div>Tel: 0000-11-12345678 (Ext-220) Fax: 0000-11-12345678</div>
 <div>Room1234, NO. 638, Smith Road, Town, 200000, Somewhere</div>
-<div>Web: <a href="http://www.example.com" rel="nofollow" target="_blank">http://www.example.com</a>
+<div>Web: <a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com</a>
 </div>
 </div>
 <div></div>

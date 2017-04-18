@@ -1364,9 +1364,9 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     screenshot(browser: instance, comment: 'shortcut_before')
     instance.action.key_down(:control)
-            .key_down(:alt)
+            .key_down(:shift)
             .send_keys(params[:key])
-            .key_up(:alt)
+            .key_up(:shift)
             .key_up(:control)
             .perform
     screenshot(browser: instance, comment: 'shortcut_after')
@@ -1564,7 +1564,7 @@ wait untill text in selector disabppears
     sleep 2.5
 
     element.send_keys(:enter)
-    #instance.find_elements(css: params[:css] + ' .recipientList-entry.js-user.is-active')[0].click
+    #instance.find_elements(css: params[:css] + ' .recipientList-entry.js-object.is-active')[0].click
     sleep 0.4
     assert(true, 'ticket_customer_select')
   end
@@ -1928,7 +1928,7 @@ wait untill text in selector disabppears
       # ff issue, sometimes enter event gets dropped
       # take user manually
       if instance.find_elements(css: '.content.active .newTicket .js-recipientDropdown.open')[0]
-        instance.find_elements(css: '.content.active .newTicket .recipientList-entry.js-user.is-active')[0].click
+        instance.find_elements(css: '.content.active .newTicket .recipientList-entry.js-object.is-active')[0].click
         sleep 0.4
       end
     end
@@ -2092,7 +2092,7 @@ wait untill text in selector disabppears
       sleep 2.5
 
       element.send_keys(:enter)
-      #instance.find_elements(css: '.modal .user_autocompletion .recipientList-entry.js-user.is-active')[0].click
+      #instance.find_elements(css: '.modal .user_autocompletion .recipientList-entry.js-object.is-active')[0].click
       sleep 0.2
 
       click(browser: instance, css: '.modal .js-submit')
@@ -2944,10 +2944,10 @@ wait untill text in selector disabppears
     data: {
       name: 'some role' + random,
       default_at_signup: false,
-      permission: [
-        'admin.group',
-        'preferences.password',
-      ],
+      permission: {
+        'admin.group' => true,
+        'preferences.password' => true,
+      },
       member:    [
         'some_user_login',
       ],
@@ -2994,11 +2994,18 @@ wait untill text in selector disabppears
     end
 
     if data.key?(:permission)
-      data[:permission].each { |permission_name|
-        check(
-          browser: instance,
-          css:     ".modal [data-permission-name=\"#{permission_name}\"]",
-        )
+      data[:permission].each { |permission_name, permission_value|
+        if permission_value == false
+          uncheck(
+            browser: instance,
+            css:     ".modal [data-permission-name=\"#{permission_name}\"]",
+          )
+        else
+          check(
+            browser: instance,
+            css:     ".modal [data-permission-name=\"#{permission_name}\"]",
+          )
+        end
       }
     end
 
@@ -3046,10 +3053,10 @@ wait untill text in selector disabppears
     data: {
       name: 'some role' + random,
       default_at_signup: false,
-      permission: [
-        'admin.group',
-        'preferences.password',
-      ],
+      permission: {
+        'admin.group' => true,
+        'preferences.password' => true,
+      },
       member:    [
         'some_user_login',
       ],
@@ -3093,11 +3100,18 @@ wait untill text in selector disabppears
     end
 
     if data.key?(:permission)
-      data[:permission].each { |permission_name|
-        check(
-          browser: instance,
-          css:     ".modal [data-permission-name=\"#{permission_name}\"]",
-        )
+      data[:permission].each { |permission_name, permission_value|
+        if permission_value == false
+          uncheck(
+            browser: instance,
+            css:     ".modal [data-permission-name=\"#{permission_name}\"]",
+          )
+        else
+          check(
+            browser: instance,
+            css:     ".modal [data-permission-name=\"#{permission_name}\"]",
+          )
+        end
       }
     end
 

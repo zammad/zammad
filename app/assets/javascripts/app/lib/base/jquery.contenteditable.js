@@ -39,6 +39,7 @@
       66: true, // b
       73: true, // i
       85: true, // u
+      83: true, // s
     },
     //maxlength: 20,
   };
@@ -59,11 +60,9 @@
 
     this.preventInput = false
 
-    // detect firefox / handle contenteditable issues
-    this.browser = undefined
-    if ( navigator && navigator.userAgent && navigator.userAgent.search('Firefox') != -1) {
-      this.browser = 'ff'
-    }
+    // handle contenteditable issues
+    this.browserMagicKey = App.Browser.magicKey()
+    this.browserHotkeys = App.Browser.hotkeys()
 
     this.init();
   }
@@ -112,28 +111,76 @@
         }
       }
 
-      // on zammad altKey + ctrlKey + i/b/u
-      //  altKey + ctrlKey + u -> Toggles the current selection between underlined and not underlined
-      //  altKey + ctrlKey + b -> Toggles the current selection between bold and non-bold
-      //  altKey + ctrlKey + i -> Toggles the current selection between italic and non-italic
-      //  altKey + ctrlKey + v -> Toggles the current selection between strike and non-strike
-      //  altKey + ctrlKey + f -> Removes the formatting tags from the current selection
-      //  altKey + ctrlKey + y -> Removes the formatting from while textarea
-      //  altKey + ctrlKey + z -> Inserts a Horizontal Rule
-      //  altKey + ctrlKey + l -> Toggles the text selection between an unordered list and a normal block
-      //  altKey + ctrlKey + k -> Toggles the text selection between an ordered list and a normal block
-      //  altKey + ctrlKey + o -> Draws a line through the middle of the current selection
-      //  altKey + ctrlKey + w -> Removes any hyperlink from the current selection
-      if ( e.altKey && e.ctrlKey && !e.metaKey && (_this.options.richTextFormatKey[ e.keyCode ]
+      // on zammad magicKey + i/b/u/s
+      //  hotkeys + u -> Toggles the current selection between underlined and not underlined
+      //  hotkeys + b -> Toggles the current selection between bold and non-bold
+      //  hotkeys + i -> Toggles the current selection between italic and non-italic
+      //  hotkeys + v -> Toggles the current selection between strike and non-strike
+      //  hotkeys + f -> Removes the formatting tags from the current selection
+      //  hotkeys + y -> Removes the formatting from while textarea
+      //  hotkeys + z -> Inserts a Horizontal Rule
+      //  hotkeys + l -> Toggles the text selection between an unordered list and a normal block
+      //  hotkeys + k -> Toggles the text selection between an ordered list and a normal block
+      //  hotkeys + o -> Draws a line through the middle of the current selection
+      //  hotkeys + w -> Removes any hyperlink from the current selection
+      var richtTextControl = false
+      if (_this.browserMagicKey == 'cmd') {
+        if (!e.altKey && !e.ctrlKey && e.metaKey) {
+          richtTextControl = true
+        }
+      }
+      else {
+        if (!e.altKey && e.ctrlKey && !e.metaKey) {
+          richtTextControl = true
+        }
+      }
+      if (richtTextControl && _this.options.richTextFormatKey[ e.keyCode ]) {
+        e.preventDefault()
+        if (e.keyCode == 66) {
+          document.execCommand('bold')
+          return true
+        }
+        if (e.keyCode == 73) {
+          document.execCommand('italic')
+          return true
+        }
+        if (e.keyCode == 85) {
+          document.execCommand('underline')
+          return true
+        }
+        if (e.keyCode == 83) {
+          document.execCommand('strikeThrough')
+          return true
+        }
+      }
+
+      var hotkeys = false
+      if (_this.browserHotkeys == 'ctrl+shift') {
+        if (!e.altKey && e.ctrlKey && !e.metaKey && e.shiftKey) {
+          hotkeys = true
+        }
+      }
+      else {
+        if (e.altKey && e.ctrlKey && !e.metaKey) {
+          hotkeys = true
+        }
+      }
+
+      if (hotkeys && (_this.options.richTextFormatKey[ e.keyCode ]
         || e.keyCode == 49
         || e.keyCode == 50
         || e.keyCode == 51
+        || e.keyCode == 66
         || e.keyCode == 70
         || e.keyCode == 90
-        || e.keyCode == 76
+        || e.keyCode == 70
+        || e.keyCode == 73
         || e.keyCode == 75
+        || e.keyCode == 76
+        || e.keyCode == 85
         || e.keyCode == 86
         || e.keyCode == 87
+        || e.keyCode == 90
         || e.keyCode == 89)) {
         e.preventDefault()
 
@@ -142,37 +189,6 @@
           return
         }
 
-        if (e.keyCode == 66) {
-          document.execCommand('bold')
-        }
-        if (e.keyCode == 73) {
-          document.execCommand('italic')
-        }
-        if (e.keyCode == 85) {
-          document.execCommand('underline')
-        }
-        if (e.keyCode == 70) {
-          document.execCommand('removeFormat')
-        }
-        if (e.keyCode == 89) {
-          var cleanHtml = App.Utils.htmlRemoveRichtext(_this.$element.html())
-          _this.$element.html(cleanHtml)
-        }
-        if (e.keyCode == 90) {
-          document.execCommand('insertHorizontalRule')
-        }
-        if (e.keyCode == 76) {
-          document.execCommand('insertUnorderedList')
-        }
-        if (e.keyCode == 75) {
-          document.execCommand('insertOrderedList')
-        }
-        if (e.keyCode == 86) {
-          document.execCommand('strikeThrough')
-        }
-        if (e.keyCode == 87) {
-          document.execCommand('unlink')
-        }
         if (e.keyCode == 49) {
           _this.toggleBlock('h1')
         }
@@ -181,6 +197,37 @@
         }
         if (e.keyCode == 51) {
           _this.toggleBlock('h3')
+        }
+        if (e.keyCode == 66) {
+          document.execCommand('bold')
+        }
+        if (e.keyCode == 70) {
+          document.execCommand('removeFormat')
+        }
+        if (e.keyCode == 73) {
+          document.execCommand('italic')
+        }
+        if (e.keyCode == 75) {
+          document.execCommand('insertOrderedList')
+        }
+        if (e.keyCode == 76) {
+          document.execCommand('insertUnorderedList')
+        }
+        if (e.keyCode == 85) {
+          document.execCommand('underline')
+        }
+        if (e.keyCode == 86) {
+          document.execCommand('strikeThrough')
+        }
+        if (e.keyCode == 87) {
+          document.execCommand('unlink')
+        }
+        if (e.keyCode == 89) {
+          var cleanHtml = App.Utils.htmlRemoveRichtext(_this.$element.html())
+          _this.$element.html(cleanHtml)
+        }
+        if (e.keyCode == 90) {
+          document.execCommand('insertHorizontalRule')
         }
         _this.log('content editable richtext key', e.keyCode)
         return true
@@ -386,22 +433,6 @@
       return true
     }
     if ( ( e.ctrlKey || e.metaKey ) && this.options.extraAllowKey[ e.keyCode ] ) {
-      return true
-    }
-    return false
-  }
-
-  // check if rich text key is pressed
-  Plugin.prototype.richTextKey = function(e) {
-    // e.altKey
-    // e.ctrlKey
-    // e.metaKey
-    // on mac block e.metaKey + i/b/u
-    if ( !e.altKey && e.metaKey && this.options.richTextFormatKey[ e.keyCode ] ) {
-      return true
-    }
-    // on win block e.ctrlKey + i/b/u
-    if ( !e.altKey && e.ctrlKey && this.options.richTextFormatKey[ e.keyCode ] ) {
       return true
     }
     return false

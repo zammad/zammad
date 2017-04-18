@@ -20,7 +20,7 @@ returns
 
     # collect article data
     # add tags
-    tags = Tag.tag_list(object: 'Ticket', o_id: id)
+    tags = tag_list
     if tags.present?
       attributes[:tag] = tags
     end

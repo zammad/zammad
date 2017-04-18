@@ -4,7 +4,7 @@
   </div>
   <div class="recipientList-name">
     <%= @organization.displayName() %>
-    <span class="recipientList-detail">- <%= @organization.member_ids.length %> <%- @T('People') %></span>
+    <span class="recipientList-detail">- <%= @objectCount %> <%- @T(@objectSingels) %></span>
   </div>
   <%- @Icon('arrow-right', 'recipientList-arrow') %>
 </li>

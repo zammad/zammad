@@ -132,9 +132,13 @@ satinize html string based on whiltelist
       # prepare links
       if node['href']
         href = cleanup_target(node['href'])
+        if external && !href.downcase.start_with?('//') && href.downcase !~ %r{^.{1,6}://.+?}
+          node['href'] = "http://#{node['href']}"
+          href = node['href']
+        end
         next if !href.downcase.start_with?('http', 'ftp', '//')
         node.set_attribute('href', href)
-        node.set_attribute('rel', 'nofollow')
+        node.set_attribute('rel', 'nofollow noreferrer noopener')
         node.set_attribute('target', '_blank')
       end
 
@@ -158,8 +162,15 @@ satinize html string based on whiltelist
       if node && node.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
         if node.class == Nokogiri::XML::Text
           urls = []
-          node.content.scan(%r{((http|https|ftp|tel)://.+?|(www..+?))([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)}mxi).each { |match|
-            urls.push match[0]
+          node.content.scan(%r{((http|https|ftp|tel)://.+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)}mxi).each { |match|
+            if match[0]
+              urls.push match[0].to_s.strip
+            end
+          }
+          node.content.scan(/(^|:|;|\s)(www\..+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)/mxi).each { |match|
+            if match[1]
+              urls.push match[1].to_s.strip
+            end
           }
           next if urls.empty?
           add_link(node.content, urls, node)
@@ -327,7 +338,7 @@ cleanup html string:
 
       a = Nokogiri::XML::Node.new 'a', node.document
       a['href'] = url
-      a['rel'] = 'nofollow'
+      a['rel'] = 'nofollow noreferrer noopener'
       a['target'] = '_blank'
       a.content = url
 

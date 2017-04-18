@@ -59,6 +59,33 @@ curl http://localhost/api/v1/online_notifications.json -v -u #{login}:#{password
 =begin
 
 Resource:
+GET /api/v1/online_notifications/{id}
+
+Payload:
+{
+  "id": "123",
+}
+
+Response:
+{
+  "id": 1,
+  "name": "some_name",
+  ...
+}
+
+Test:
+curl http://localhost/api/v1/online_notifications/#{id} -v -u #{login}:#{password}
+
+=end
+
+  def show
+    return if !access?
+    model_show_render(OnlineNotification, params)
+  end
+
+=begin
+
+Resource:
 PUT /api/v1/online_notifications/{id}
 
 Payload:

@@ -15,7 +15,6 @@ class Organization < ApplicationModel
   load 'organization/search_index.rb'
   include Organization::SearchIndex
 
-  has_and_belongs_to_many :users
   has_many                :members,  class_name: 'User'
   validates               :name,     presence: true
 
@@ -34,11 +33,4 @@ class Organization < ApplicationModel
     domain.downcase!
   end
 
-  def cache_delete
-    super
-
-    # delete asset caches
-    key = "Organization::member_ids::#{id}"
-    Cache.delete(key)
-  end
 end

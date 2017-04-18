@@ -6,7 +6,7 @@
       <td><%- @T('Number') %></td>
       <td><%- @T('Title') %></td>
       <td><%- @T('State') %></td>
-      <td><%- @T('Queue') %></td>
+      <td><%- @T('Group') %></td>
       <td><%- @T('Created') %></td>
     </tr>
   </thead>

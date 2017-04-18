@@ -5711,6 +5711,11 @@ footer {
     opacity: .5;
   }
 
+/* allow/show autocomplete in modal dialog */
+.ui-autocomplete.ui-widget-content {
+  z-index: 1100;
+}
+
 .drox {
   color: hsl(60,1%,74%);
 }
