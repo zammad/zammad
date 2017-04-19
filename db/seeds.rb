@@ -2072,6 +2072,18 @@ Setting.create_if_not_exists(
   state: '',
   frontend: false
 )
+Setting.create_if_not_exists(
+  title:       'Import Backends',
+  name:        'import_backends',
+  area:        'Import',
+  description: 'A list of active import backends that get scheduled automatically.',
+  options:     {},
+  state:       ['Import::Ldap'],
+  preferences: {
+    permission: ['admin'],
+  },
+  frontend: false
+)
 
 Setting.create_if_not_exists(
   title: 'Time Accounting',

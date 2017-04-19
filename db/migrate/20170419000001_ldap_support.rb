@@ -4,18 +4,20 @@ class LdapSupport < ActiveRecord::Migration
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
 
-    create_table :import_jobs do |t|
-      t.string :name, limit: 250, null: false
+    if !ActiveRecord::Base.connection.table_exists? 'import_jobs'
+      create_table :import_jobs do |t|
+        t.string :name, limit: 250, null: false
 
-      t.boolean :dry_run, default: false
+        t.boolean :dry_run, default: false
 
-      t.text :payload, limit: 80_000
-      t.text :result, limit: 80_000
+        t.text :payload, limit: 80_000
+        t.text :result, limit: 80_000
 
-      t.datetime :started_at
-      t.datetime :finished_at
+        t.datetime :started_at
+        t.datetime :finished_at
 
-      t.timestamps null: false
+        t.timestamps null: false
+      end
     end
 
     Setting.create_or_update(
@@ -78,12 +80,25 @@ class LdapSupport < ActiveRecord::Migration
 
     Scheduler.create_or_update(
       name:          'Import Jobs',
-      method:        'ImportJob.start',
+      method:        'ImportJob.start_registered',
       period:        1.hour,
       prio:          1,
       active:        true,
       updated_by_id: 1,
       created_by_id: 1
+    )
+
+    Setting.create_if_not_exists(
+      title:       'Import Backends',
+      name:        'import_backends',
+      area:        'Import',
+      description: 'A list of active import backends that get scheduled automatically.',
+      options:     {},
+      state:       ['Import::Ldap'],
+      preferences: {
+        permission: ['admin'],
+      },
+      frontend: false
     )
 
   end
