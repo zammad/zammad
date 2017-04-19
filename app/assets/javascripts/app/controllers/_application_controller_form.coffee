@@ -226,7 +226,10 @@ class App.ControllerForm extends App.Controller
 
     # set autocomplete option
     if attribute.autocomplete is undefined
-      attribute.autocomplete = ''
+      if attribute.type is 'hidden'
+        attribute.autocomplete = ''
+      else
+        attribute.autocomplete = 'autocomplete="new-password"'
     else
       attribute.autocomplete = 'autocomplete="' + attribute.autocomplete + '"'
 

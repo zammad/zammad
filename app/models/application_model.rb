@@ -14,6 +14,7 @@ class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::HasAssociations
   include ApplicationModel::HasAttachments
   include ApplicationModel::HasLatestChangeTimestamp
+  include ApplicationModel::HasExternalSync
   include ApplicationModel::Importable
   include ApplicationModel::HistoryLoggable
   include ApplicationModel::TouchesReferences

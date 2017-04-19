@@ -182,7 +182,7 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( 'partner', ticket.customer.login )
     assert_equal( 'Partner der betreut', ticket.organization.name )
     assert_equal( Time.zone.parse('2014-11-20 22:33:41 +0000').gmtime.to_s, ticket.created_at.to_s )
-    assert_equal( nil, ticket.close_at )
+    assert_nil( ticket.close_at )
 
     # check history
     #  - create entry

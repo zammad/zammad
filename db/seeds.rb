@@ -2072,6 +2072,18 @@ Setting.create_if_not_exists(
   state: '',
   frontend: false
 )
+Setting.create_if_not_exists(
+  title:       'Import Backends',
+  name:        'import_backends',
+  area:        'Import',
+  description: 'A list of active import backends that get scheduled automatically.',
+  options:     {},
+  state:       ['Import::Ldap'],
+  preferences: {
+    permission: ['admin'],
+  },
+  frontend: false
+)
 
 Setting.create_if_not_exists(
   title: 'Time Accounting',
@@ -2484,6 +2496,46 @@ Setting.create_if_not_exists(
     permission: ['admin.integration'],
   },
   frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'LDAP integration',
+  name: 'ldap_integration',
+  area: 'Integration::Switch',
+  description: 'Defines if LDAP is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ldap_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 1,
+    authentication: true,
+    permission: ['admin.integration'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'LDAP config',
+  name: 'ldap_config',
+  area: 'Integration::LDAP',
+  description: 'Defines the LDAP config.',
+  options: {},
+  state: {},
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
+  frontend: false,
 )
 Setting.create_if_not_exists(
   title: 'Defines sync transaction backend.',
@@ -3315,7 +3367,7 @@ Overview.create_if_not_exists(
   name: 'My assigned Tickets',
   link: 'my_assigned',
   prio: 1000,
-  role_id: overview_role.id,
+  role_ids: [overview_role.id],
   condition: {
     'ticket.state_id' => {
       operator: 'is',
@@ -3342,7 +3394,7 @@ Overview.create_if_not_exists(
   name: 'Unassigned & Open',
   link: 'all_unassigned',
   prio: 1010,
-  role_id: overview_role.id,
+  role_ids: [overview_role.id],
   condition: {
     'ticket.state_id' => {
       operator: 'is',
@@ -3369,7 +3421,7 @@ Overview.create_if_not_exists(
   name: 'My pending reached Tickets',
   link: 'my_pending_reached',
   prio: 1020,
-  role_id: overview_role.id,
+  role_ids: [overview_role.id],
   condition: {
     'ticket.state_id' => {
       operator: 'is',
@@ -3401,7 +3453,7 @@ Overview.create_if_not_exists(
   name: 'Open',
   link: 'all_open',
   prio: 1030,
-  role_id: overview_role.id,
+  role_ids: [overview_role.id],
   condition: {
     'ticket.state_id' => {
       operator: 'is',
@@ -3424,7 +3476,7 @@ Overview.create_if_not_exists(
   name: 'Pending reached',
   link: 'all_pending_reached',
   prio: 1040,
-  role_id: overview_role.id,
+  role_ids: [overview_role.id],
   condition: {
     'ticket.state_id' => {
       operator: 'is',
@@ -3452,7 +3504,7 @@ Overview.create_if_not_exists(
   name: 'Escalated',
   link: 'all_escalated',
   prio: 1050,
-  role_id: overview_role.id,
+  role_ids: [overview_role.id],
   condition: {
     'ticket.escalation_at' => {
       operator: 'within next (relative)',
@@ -3477,7 +3529,7 @@ Overview.create_if_not_exists(
   name: 'My Tickets',
   link: 'my_tickets',
   prio: 1100,
-  role_id: overview_role.id,
+  role_ids: [overview_role.id],
   condition: {
     'ticket.state_id' => {
       operator: 'is',
@@ -3503,7 +3555,7 @@ Overview.create_if_not_exists(
   name: 'My Organization Tickets',
   link: 'my_organization_tickets',
   prio: 1200,
-  role_id: overview_role.id,
+  role_ids: [overview_role.id],
   organization_shared: true,
   condition: {
     'ticket.state_id' => {
@@ -4681,7 +4733,7 @@ ObjectManager::Attribute.add(
     type: 'password',
     maxlength: 100,
     null: true,
-    autocomplete: 'off',
+    autocomplete: 'new-password',
     item_class: 'formGroup--halfSize',
   },
   editable: false,
@@ -5344,21 +5396,21 @@ ObjectManager::Attribute.add(
 Scheduler.create_if_not_exists(
   name: 'Process pending tickets',
   method: 'Ticket.process_pending',
-  period: 60 * 15,
+  period: 15.minutes,
   prio: 1,
   active: true,
 )
 Scheduler.create_if_not_exists(
   name: 'Process escalation tickets',
   method: 'Ticket.process_escalation',
-  period: 60 * 5,
+  period: 5.minutes,
   prio: 1,
   active: true,
 )
 Scheduler.create_if_not_exists(
   name: 'Import OTRS diff load',
   method: 'Import::OTRS.diff_worker',
-  period: 60 * 3,
+  period: 3.minutes,
   prio: 1,
   active: true,
   updated_by_id: 1,
@@ -5367,7 +5419,7 @@ Scheduler.create_if_not_exists(
 Scheduler.create_if_not_exists(
   name: 'Check Channels',
   method: 'Channel.fetch',
-  period: 30,
+  period: 30.seconds,
   prio: 1,
   active: true,
   updated_by_id: 1,
@@ -5376,7 +5428,7 @@ Scheduler.create_if_not_exists(
 Scheduler.create_if_not_exists(
   name: 'Check streams for Channel',
   method: 'Channel.stream',
-  period: 60,
+  period: 60.seconds,
   prio: 1,
   active: true,
   updated_by_id: 1,
@@ -5385,7 +5437,7 @@ Scheduler.create_if_not_exists(
 Scheduler.create_if_not_exists(
   name: 'Generate Session data',
   method: 'Sessions.jobs',
-  period: 60,
+  period: 60.seconds,
   prio: 1,
   active: true,
   updated_by_id: 1,
@@ -5394,7 +5446,7 @@ Scheduler.create_if_not_exists(
 Scheduler.create_if_not_exists(
   name: 'Execute jobs',
   method: 'Job.run',
-  period: 5 * 60,
+  period: 5.minutes,
   prio: 2,
   active: true,
   updated_by_id: 1,
@@ -5448,7 +5500,7 @@ Scheduler.create_or_update(
 Scheduler.create_or_update(
   name: 'Closed chat sessions where participients are offline.',
   method: 'Chat.cleanup_close',
-  period: 60 * 15,
+  period: 15.minutes,
   prio: 2,
   active: true,
   updated_by_id: 1,
@@ -5493,11 +5545,20 @@ Scheduler.create_or_update(
 Scheduler.create_if_not_exists(
   name: 'Cleanup HttpLog',
   method: 'HttpLog.cleanup',
-  period: 24 * 60 * 60,
+  period: 1.day,
   prio: 2,
   active: true,
   updated_by_id: 1,
   created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name:          'Import Jobs',
+  method:        'ImportJob.start',
+  period:        1.hour,
+  prio:          1,
+  active:        true,
+  updated_by_id: 1,
+  created_by_id: 1
 )
 
 Trigger.create_or_update(

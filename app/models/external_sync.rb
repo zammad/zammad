@@ -68,7 +68,7 @@ class ExternalSync < ApplicationModel
         break if !value
 
         storable = value.class.ancestors.any? do |ancestor|
-          %w(String Integer Float Bool).include?(ancestor.to_s)
+          %w(String Integer Float Bool Array).include?(ancestor.to_s)
         end
 
         if storable

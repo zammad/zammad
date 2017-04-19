@@ -24,6 +24,7 @@ returns
       Stats::TicketLoadMeasure,
       Stats::TicketEscalation,
       Stats::TicketReopen,
+      Stats::TicketWaitingTime,
     ]
 
     # generate stats per agent

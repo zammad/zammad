@@ -1,0 +1,6 @@
+<tr class="js-entry">
+  <td style="max-width: 240px" class="settings-list-row-control">
+    <div class="u-textTruncate"><%= @key %></div>
+  <td class="settings-list-row-control">
+    <%= @value %>
+  <td class="settings-list-row-control">

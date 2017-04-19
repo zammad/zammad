@@ -1574,8 +1574,8 @@ wait untill text in selector disabppears
   overview_create(
     browser: browser1,
     data: {
-      name:     name,
-      role:     'Agent',
+      name: name,
+      roles: ['Agent'],
       selector: {
         'Priority': '1 low',
       },
@@ -1616,13 +1616,19 @@ wait untill text in selector disabppears
         mute_log: true,
       )
     end
-    if data[:role]
-      select(
-        browser:  instance,
-        css:      '.modal select[name="role_id"]',
-        value:    data[:role],
-        mute_log: true,
-      )
+
+    if data[:roles]
+      99.times do
+        begin
+          element = instance.find_elements(css: '.modal .js-selected[data-name=role_ids] .js-option:not(.is-hidden)')[0]
+          break if !element
+          element.click
+          sleep 0.1
+        end
+      end
+      data[:roles].each { |role|
+        instance.execute_script("$(\".modal [data-name=role_ids] .js-pool .js-option:not(.is-hidden):contains('#{role}')\").first().click()")
+      }
     end
 
     if data[:selector]
@@ -1677,8 +1683,8 @@ wait untill text in selector disabppears
   overview_update(
     browser: browser1,
     data: {
-      name:     name,
-      role:     'Agent',
+      name: name,
+      roles: ['Agent'],
       selector: {
         'Priority': '1 low',
       },
@@ -1717,13 +1723,18 @@ wait untill text in selector disabppears
         mute_log: true,
       )
     end
-    if data[:role]
-      select(
-        browser:  instance,
-        css:      '.modal select[name="role_id"]',
-        value:    data[:role],
-        mute_log: true,
-      )
+    if data[:roles]
+      99.times do
+        begin
+          element = instance.find_elements(css: '.modal .js-selected[data-name=role_ids] .js-option:not(.is-hidden)')[0]
+          break if !element
+          element.click
+          sleep 0.1
+        end
+      end
+      data[:roles].each { |role|
+        instance.execute_script("$(\".modal [data-name=role_ids] .js-pool .js-option:not(.is-hidden):contains('#{role}')\").first().click()")
+      }
     end
 
     if data[:selector]

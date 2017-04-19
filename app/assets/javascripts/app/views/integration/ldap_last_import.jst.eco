@@ -1,0 +1,45 @@
+<div class="box box--message">
+  <h2><%- @T('Last sync') %></h2>
+  <% if _.isEmpty(@job.started_at): %>
+    <% if @job.result && @job.result.error: %>
+        <div class="alert alert--danger" role="alert"><%- @T('An error occurred: %s', @job.result.error) %></div>
+    <% else: %>
+      <p><%- @T('Job is waiting to get started...') %></p>
+    <% end %>
+  <% else: %>
+    <% if @job.finished_at: %>
+      <p><%- @Ttimestamp(@job.started_at) %> - <%- @Ttimestamp(@job.finished_at) %></p>
+      <% if @job.result && @job.result.error: %>
+        <div class="alert alert--danger" role="alert"><%- @T('An error occurred: %s', @job.result.error) %></div>
+      <% end %>
+    <% else: %>
+      <% if @job.result && @job.result.error: %>
+        <p><%- @Ttimestamp(@job.started_at) %></p>
+        <div class="alert alert--danger" role="alert"><%- @T('An error occurred: %s', @job.result.error) %></div>
+      <% else if !@countDone: %>
+        <p><%- @Ttimestamp(@job.started_at) %> - <%- @T('Counting entries. This may take a while.') %></p>
+      <% else: %>
+        <p><%- @Ttimestamp(@job.started_at) %> - <%- @T('Running...') %></p>
+        <div class="flex">
+          <progress max="<%= @job.result.sum %>" value="<%= @countDone %>"></progress>
+        </div>
+      <% end %>
+    <% end %>
+    <% if !_.isEmpty(@job.result): %>
+      <ul>
+        <li><%- @T('%s user to %s user', 'LDAP', 'Zammad') %> (<%= @countDone %>/<%= @job.result.sum %>):
+          <ul>
+            <li><%- @T('Users') %>: <%= @job.result.created %> <%- @T('created') %>, <%= @job.result.updated %> <%- @T('updated') %>, <%= @job.result.unchanged %> <%- @T('untouched') %>, <%= @job.result.skipped %> <%- @T('skipped') %>, <%= @job.result.failed %> <%- @T('failed') %>
+          </ul>
+        <% if !_.isEmpty(@job.result.roles): %>
+          <li><%- @T('%s groups to %s roles assignments', 'LDAP', 'Zammad') %>:
+            <ul>
+              <% for role, result of @job.result.roles: %>
+                <li> <%- @T(role) %>: <%= result.created %> <%- @T('created') %>, <%= result.updated %> <%- @T('updated') %>, <%= result.unchanged %> <%- @T('untouched') %>, <%= result.failed %> <%- @T('failed') %>
+              <% end %>
+            </ul>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>

@@ -1,10 +1,6 @@
 <div class="modal-dialog wizard">
 
-  <form class="modal-content setup wizard js-user" autocomplete="off">
-    <!-- dummy to prevent chrome to ask for password save -->
-    <input style="display:none">
-    <input type="password" style="display:none">
-    <!-- /dummy to prevent chrome to ask for password save -->
+  <form class="modal-content setup wizard js-user">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>

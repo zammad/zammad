@@ -20,9 +20,6 @@ class App.TicketZoomTimeAccounting extends App.ControllerModal
   content: ->
     App.view('ticket_zoom/time_accounting')()
 
-  onShown: =>
-    @$('[name="time_unit"]').focus()
-
   skip: (e) =>
     return if !@submitCallback
     @submitCallback({})

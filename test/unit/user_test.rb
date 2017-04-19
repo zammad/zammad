@@ -544,4 +544,72 @@ class UserTest < ActiveSupport::TestCase
 
   end
 
+  test 'min admin permission check' do
+    User.with_permissions('admin').each(&:destroy)
+
+    # store current admin count
+    admin_count_inital = User.with_permissions('admin').count
+    assert_equal(0, admin_count_inital)
+
+    # create two admin users
+    random = rand(999_999_999)
+    admin1 = User.create_or_update(
+      login: "1admin-role#{random}@example.com",
+      firstname: 'Role',
+      lastname: "Admin#{random}",
+      email: "admin-role#{random}@example.com",
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    random = rand(999_999_999)
+    admin2 = User.create_or_update(
+      login: "2admin-role#{random}@example.com",
+      firstname: 'Role',
+      lastname: "Admin#{random}",
+      email: "admin-role#{random}@example.com",
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    random = rand(999_999_999)
+    admin3 = User.create_or_update(
+      login: "2admin-role#{random}@example.com",
+      firstname: 'Role',
+      lastname: "Admin#{random}",
+      email: "admin-role#{random}@example.com",
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    admin_count_inital = User.with_permissions('admin').count
+    assert_equal(3, admin_count_inital)
+
+    admin1.update_attribute(:roles, Role.where(name: %w(Agent)))
+
+    admin_count_inital = User.with_permissions('admin').count
+    assert_equal(2, admin_count_inital)
+
+    admin2.update_attribute(:roles, Role.where(name: %w(Agent)))
+
+    admin_count_inital = User.with_permissions('admin').count
+    assert_equal(1, admin_count_inital)
+
+    assert_raises(Exceptions::UnprocessableEntity) {
+      admin3.update_attribute(:roles, Role.where(name: %w(Agent)))
+    }
+
+    admin_count_inital = User.with_permissions('admin').count
+    assert_equal(1, admin_count_inital)
+  end
+
 end

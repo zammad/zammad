@@ -1,11 +1,7 @@
 <div class="main flex vertical centered darkBackground">
   <%- @Icon('full-logo', 'wizard-logo') %>
 
-  <form class="setup wizard js-intro" autocomplete="off">
-    <!-- dummy to prevent chrome to ask for password save -->
-    <input style="display:none">
-    <input type="password" style="display:none">
-    <!-- /dummy to prevent chrome to ask for password save -->
+  <form class="setup wizard js-intro">
     <div class="wizard-slide">
       <h2><%- @T('Email Account') %></h2>
       <div class="wizard-body vertical justified">
@@ -13,11 +9,11 @@
         <fieldset>
           <div class="form-group">
             <label><%- @T('Full Name') %></label>
-            <input type="text" class="form-control" value="" name="realname" placeholder="<%- @Ti('Organization Support') %>" required>
+            <input type="text" class="form-control" value="" name="realname" placeholder="<%- @Ti('Organization Support') %>" required autocomplete="new-password">
           </div>
           <div class="form-group">
             <label><%- @T('Email') %></label>
-            <input type="email" class="form-control" value="" name="email" placeholder="<%- @Ti('support@example.com') %>" required autocomplete="off">
+            <input type="email" class="form-control" value="" name="email" placeholder="<%- @Ti('support@example.com') %>" required autocomplete="new-password">
           </div>
           <div class="form-group">
             <label><%- @T('Password') %></label>
@@ -66,11 +62,7 @@
     </div>
   </form>
 
-  <form class="setup wizard hide js-inbound" autocomplete="off">
-    <!-- dummy to prevent chrome to ask for password save -->
-    <input style="display:none">
-    <input type="password" style="display:none">
-    <!-- /dummy to prevent chrome to ask for password save -->
+  <form class="setup wizard hide js-inbound">
     <div class="wizard-slide">
       <h2><%- @T('Email Inbound') %></h2>
       <div class="wizard-body vertical justified">
@@ -79,7 +71,7 @@
       </div>
       <div class="wizard-controls center">
         <a class="btn btn--text btn--secondary js-goToSlide" data-slide="js-intro"><%- @T('Go Back') %></a>
-        <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
+        <button class="btn btn--primary align-right"><%- @T('Continue') %></button>
       </div>
     </div>
   </form>
@@ -98,11 +90,7 @@
     </div>
   </form>
 
-  <form class="setup wizard hide js-outbound" autocomplete="off">
-    <!-- dummy to prevent chrome to ask for password save -->
-    <input style="display:none">
-    <input type="password" style="display:none">
-    <!-- /dummy to prevent chrome to ask for password save -->
+  <form class="setup wizard hide js-outbound">
     <div class="wizard-slide">
       <h2><%- @T('Email Outbound') %></h2>
       <div class="wizard-body vertical justified">
@@ -112,7 +100,7 @@
       </div>
       <div class="wizard-controls center">
         <a class="btn btn--text btn--secondary js-goToSlide" data-slide="js-inbound"><%- @T('Go Back') %></a>
-        <button class="btn btn--primary align-right"><%- @T( 'Continue' ) %></button>
+        <button class="btn btn--primary align-right"><%- @T('Continue') %></button>
       </div>
     </div>
   </form>

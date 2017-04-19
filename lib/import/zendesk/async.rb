@@ -31,8 +31,7 @@ module Import
         rescue => e
           status_update_thread.exit
           status_update_thread.join
-          Rails.logger.error e.message
-          Rails.logger.error e.backtrace.inspect
+          Rails.logger.error e
           result = {
             message: e.message,
             result: 'error',

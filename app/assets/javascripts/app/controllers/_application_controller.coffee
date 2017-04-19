@@ -793,8 +793,8 @@ class App.ControllerModal extends App.Controller
   onShow: ->
     # do nothing
 
-  onShown: ->
-    # do nothing
+  onShown: =>
+    @$('input:not([disabled]):not([type="hidden"]):not(".btn"), textarea').first().focus()
 
   onClose: ->
     # do nothing

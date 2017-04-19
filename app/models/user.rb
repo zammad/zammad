@@ -45,7 +45,7 @@ class User < ApplicationModel
   after_destroy   :avatar_destroy
 
   has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
-  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, class_name: 'Role'
+  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, before_remove: :last_admin_check, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
@@ -218,30 +218,61 @@ returns
     # do not authenticate with nothing
     return if username.blank? || password.blank?
 
+    user = User.identify(username)
+    return if !user
+
+    return if !Auth.can_login?(user)
+
+    return user if Auth.valid?(user, password)
+
+    sleep 1
+    user.login_failed += 1
+    user.save
+    nil
+  end
+
+=begin
+
+checks if a user has reached the maximum of failed login tries
+
+  user = User.find(123)
+  result = user.max_login_failed?
+
+returns
+
+  result = true | false
+
+=end
+
+  def max_login_failed?
+    max_login_failed = Setting.get('password_max_login_failed').to_i || 10
+    login_failed > max_login_failed
+  end
+
+=begin
+
+tries to find the matching instance by the given identifier. Currently email and login is supported.
+
+  user = User.indentify('User123')
+
+  # or
+
+  user = User.indentify('user-123@example.com')
+
+returns
+
+  # User instance
+  user.login # 'user123'
+
+=end
+
+  def self.identify(identifier)
     # try to find user based on login
-    user = User.find_by(login: username.downcase, active: true)
+    user = User.find_by(login: identifier.downcase)
+    return user if user
 
     # try second lookup with email
-    user ||= User.find_by(email: username.downcase, active: true)
-
-    # check failed logins
-    max_login_failed = Setting.get('password_max_login_failed').to_i || 10
-    if user && user.login_failed > max_login_failed
-      logger.info "Max login failed reached for user #{user.login}."
-      return false
-    end
-
-    user_auth = Auth.check(username, password, user)
-
-    # set login failed +1
-    if !user_auth && user
-      sleep 1
-      user.login_failed += 1
-      user.save
-    end
-
-    # auth ok
-    user_auth
+    User.find_by(email: identifier.downcase)
   end
 
 =begin
@@ -858,6 +889,27 @@ returns
         raise "Role #{role.name} conflicts with #{local_role.name}" if role_ids.include?(local_role.id)
       }
     }
+  end
+
+=begin
+
+checks if the current user is the last one
+with admin permissions.
+
+Raises
+
+raise 'Minimum one user need to have admin permissions'
+
+=end
+
+  def last_admin_check(role)
+    ticket_admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'] }).pluck(:id)
+    count                 = User.joins(:roles).where(roles: { id: ticket_admin_role_ids }, users: { active: true }).count
+    if ticket_admin_role_ids.include?(role.id)
+      count -= 1
+    end
+
+    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if count < 1
   end
 
   def validate_agent_limit(role)

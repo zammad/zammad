@@ -12,6 +12,7 @@ Hi there - thanks for filling an issue. Please ensure the following things befor
 ### Infos:
 
 * Used Zammad version: 
+* Used Zammad installation source: (source, package, ...)
 * Operating system: 
 * Browser + version: 
 

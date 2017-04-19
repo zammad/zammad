@@ -1,12 +1,12 @@
 <div class="main flex vertical centered darkBackground">
   <%- @Icon('full-logo', 'wizard-logo') %>
-  <form class="setup wizard js-agent" autocomplete="off">
+  <form class="setup wizard js-agent">
     <div class="wizard-slide">
       <h2><%- @T('Invite Colleagues') %></h2>
       <div class="wizard-body vertical justified js-agent-form"></div>
       <div class="wizard-controls center">
-        <a class="btn btn--primary align-left" href="#getting_started/finish"><%- @T( 'Continue' ) %></a>
-        <button class="btn btn--success align-right"><%- @T( 'Invite' ) %></button>
+        <a class="btn btn--primary align-left" href="#getting_started/finish"><%- @T('Continue') %></a>
+        <button class="btn btn--success align-right"><%- @T('Invite') %></button>
       </div>
     </div>
   </form>

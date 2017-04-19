@@ -196,7 +196,6 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_counters, [:generator], unique: true
 
     create_table :overviews do |t|
-      t.references :role,                                      null: false
       t.column :name,                 :string,  limit: 250,    null: false
       t.column :link,                 :string,  limit: 250,    null: false
       t.column :prio,                 :integer,                null: false
@@ -211,6 +210,13 @@ class CreateTicket < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :overviews, [:name]
+
+    create_table :overviews_roles, id: false do |t|
+      t.integer :overview_id
+      t.integer :role_id
+    end
+    add_index :overviews_roles, [:overview_id]
+    add_index :overviews_roles, [:role_id]
 
     create_table :overviews_users, id: false do |t|
       t.integer :overview_id

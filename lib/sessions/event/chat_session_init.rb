@@ -21,8 +21,7 @@ class Sessions::Event::ChatSessionInit < Sessions::Event::ChatBase
           dns_name = result.to_s
         end
       rescue => e
-        Rails.logger.error e.message
-        Rails.logger.error e.backtrace.inspect
+        Rails.logger.error e
       end
     end
 

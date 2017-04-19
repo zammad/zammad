@@ -1,6 +1,6 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h2><%- @T( @overview.name ) %></h2>
+    <h2><%- @T(@overview.name) %></h2>
   </div>
   <div class="page-header-meta">
     <% if @edit: %>

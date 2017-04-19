@@ -539,6 +539,20 @@ class CreateBase < ActiveRecord::Migration
     add_index :external_syncs, [:source, :source_id, :object, :o_id], name: 'index_external_syncs_on_source_and_source_id_and_object_o_id'
     add_index :external_syncs, [:object, :o_id]
 
+    create_table :import_jobs do |t|
+      t.string :name, limit: 250, null: false
+
+      t.boolean :dry_run, default: false
+
+      t.text :payload, limit: 80_000
+      t.text :result, limit: 80_000
+
+      t.datetime :started_at
+      t.datetime :finished_at
+
+      t.timestamps null: false
+    end
+
     create_table :cti_logs do |t|
       t.string  :direction,              limit: 20,   null: false
       t.string  :state,                  limit: 20,   null: false
