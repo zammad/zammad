@@ -5,8 +5,13 @@ module Import
 
       def self.import(config: nil, ldap: nil, **kargs)
 
-        config ||= Setting.get('ldap_config')
-        ldap   ||= ::Ldap.new(config)
+        # config might be an empty Hash due to the ImportJob payload
+        # store column which will be an empty hash if the content is NULL
+        if config.blank?
+          config = Setting.get('ldap_config')
+        end
+
+        ldap ||= ::Ldap.new(config)
 
         @config = config
         @ldap   = ldap
