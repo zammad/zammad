@@ -16,6 +16,7 @@ class App.DashboardStats extends App.Controller
       data.StatsTicketWaitingTime =
         handling_time: 0
         average: 0
+        state: 'supergood'
         average_per_agent: 0
     if !data.StatsTicketEscalation
       data.StatsTicketEscalation =
@@ -61,7 +62,7 @@ class App.DashboardStats extends App.Controller
     @html App.view('dashboard/stats')(data)
 
     if data.StatsTicketWaitingTime
-      @renderWidgetClockFace data.StatsTicketWaitingTime.handling_time, data.StatsTicketWaitingTime.state, data.StatsTicketWaitingTime.percent
+      @renderWidgetClockFace(data.StatsTicketWaitingTime.handling_time, data.StatsTicketWaitingTime.state, data.StatsTicketWaitingTime.percent)
 
   renderWidgetClockFace: (time, state, percent) =>
     canvas = @el.find 'canvas'
