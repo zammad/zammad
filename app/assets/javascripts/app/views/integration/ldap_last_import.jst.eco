@@ -29,7 +29,7 @@
             <li><%- @T('%s groups to %s roles assignments', 'LDAP', 'Zammad') %>:
               <ul>
                 <% for role, result of @job.result.roles: %>
-                  <li> <%= @T(role) %>: <%= result.created %> <%- @T('created') %>, <%= result.updated %> <%- @T('updated') %>, <%= result.unchanged %> <%- @T('untouched') %>, <%= result.failed %> <%- @T('failed') %>
+                  <li> <%- @T(role) %>: <%= result.created %> <%- @T('created') %>, <%= result.updated %> <%- @T('updated') %>, <%= result.unchanged %> <%- @T('untouched') %>, <%= result.failed %> <%- @T('failed') %>
                 <% end %>
               </ul>
           <% end %>
