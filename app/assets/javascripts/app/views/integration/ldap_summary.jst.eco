@@ -1,5 +1,9 @@
 <ul>
-  <li><%- @T('Users') %>: <%= @countDone %> (<%= @job.result.created %> <%- @T('created') %>, <%= @job.result.updated %> <%- @T('updated') %>, <%= @job.result.unchanged %> <%- @T('untouched') %>, <%= @job.result.skipped %> <%- @T('skipped') %>, <%= @job.result.failed %> <%- @T('failed') %>)
+  <li><%- @T('%s user to %s user', 'LDAP', 'Zammad') %> (<%= @countDone %>):
+    <ul>
+      <li><%- @T('Users') %>: <%= @job.result.created %> <%- @T('created') %>, <%= @job.result.updated %> <%- @T('updated') %>, <%= @job.result.unchanged %> <%- @T('untouched') %>, <%= @job.result.skipped %> <%- @T('skipped') %>, <%= @job.result.failed %> <%- @T('failed') %>
+    </ul>
+  </li>
   <% if !_.isEmpty(@job.result.roles): %>
     <li><%- @T('%s groups to %s roles assignments', 'LDAP', 'Zammad') %>:
       <ul>
@@ -7,5 +11,6 @@
           <li><%- @T(role) %>: <%= result.created %> <%- @T('created') %>, <%= result.updated %> <%- @T('updated') %>, <%= result.unchanged %> <%- @T('untouched') %>, <%= result.failed %> <%- @T('failed') %>
         <% end %>
       </ul>
+    </li>
   <% end %>
 </ul>
