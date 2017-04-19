@@ -75,6 +75,12 @@ module Import
 
       @resource.assign_attributes(resource)
 
+      # the return value here is kind of misleading
+      # and should not be trusted to indicate if a
+      # resource was actually updated.
+      # Use .action instead
+      return true if !attributes_changed?
+
       return true if @dry_run
       @resource.save
       true
