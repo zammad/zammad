@@ -59,6 +59,17 @@ class ImportJob < ApplicationModel
     end
   end
 
+  # Queues and starts all import backends as import jobs.
+  #
+  # @example
+  #  ImportJob.start_registered
+  #
+  # return [nil]
+  def self.start_registered
+    queue_registered
+    start
+  end
+
   # Starts all import jobs that have not started yet and are no dry runs.
   #
   # @example
@@ -67,5 +78,45 @@ class ImportJob < ApplicationModel
   # return [nil]
   def self.start
     where(started_at: nil, dry_run: false).each(&:start)
+  end
+
+  # Queues all configured import backends from Setting 'import_backends' as import jobs
+  # that are not yet queued.
+  #
+  # @example
+  #  ImportJob.queue_registered
+  #
+  # return [nil]
+  def self.queue_registered
+    import_backends = Setting.get('import_backends')
+    return if import_backends.blank?
+
+    import_backends.each do |backend|
+
+      if !backend_valid?(backend)
+        Rails.logger.error "Invalid import backend '#{backend}'"
+        next
+      end
+
+      # skip if no entry exists
+      # skip if a not finished entry exists
+      next if ImportJob.exists?(name: backend, finished_at: nil)
+
+      ImportJob.create(name: backend)
+    end
+  end
+
+  # Checks if the given import backend is valid.
+  #
+  # @example
+  #  ImportJob.backend_valid?('Import::Ldap')
+  #  # => true
+  #
+  # return [Boolean]
+  def self.backend_valid?(backend)
+    backend.constantize
+    true
+  rescue NameError
+    false
   end
 end
