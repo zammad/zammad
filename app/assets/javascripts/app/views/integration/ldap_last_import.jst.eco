@@ -26,7 +26,7 @@
         <ul>
           <li><%- @T('Users') %>: <%= @countDone %>/<%= @job.result.sum %> (<%= @job.result.created %> <%- @T('created') %>, <%= @job.result.updated %> <%- @T('updated') %>, <%= @job.result.unchanged %> <%- @T('untouched') %>, <%= @job.result.skipped %> <%- @T('skipped') %>, <%= @job.result.failed %> <%- @T('failed') %>)
           <% if !_.isEmpty(@job.result.roles): %>
-            <li><%- @T('LDAP groups to Zammad roles assignments') %>:
+            <li><%- @T('%s groups to %s roles assignments', 'LDAP', 'Zammad') %>:
               <ul>
                 <% for role, result of @job.result.roles: %>
                   <li> <%= @T(role) %>: <%= result.created %> <%- @T('created') %>, <%= result.updated %> <%- @T('updated') %>, <%= result.unchanged %> <%- @T('untouched') %>, <%= result.failed %> <%- @T('failed') %>
