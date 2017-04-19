@@ -18,6 +18,8 @@ class OverviewRoleIds < ActiveRecord::Migration
       overview.save!
     }
     remove_column :overviews, :role_id
+
+    Cache.clear
   end
 
 end
