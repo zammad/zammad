@@ -190,9 +190,8 @@ class App.ControllerTable extends App.Controller
                 attribute.displayWidth = value
             @headers.push attribute
           else
-            # e.g. column: owner_id
-            rowWithoutId = item + '_id'
-            if attributeName is rowWithoutId
+            # e.g. column: owner_id or owner_ids
+            if attributeName is "#{item}_id" || attributeName is "#{item}_ids"
               headerFound = true
               if @headerWidth[attribute.name]
                 attribute.displayWidth = @headerWidth[attribute.name] * @availableWidth
@@ -350,7 +349,7 @@ class App.ControllerTable extends App.Controller
           for headerName in @headers
             if !hit
               position += 1
-            if headerName.name is name || headerName.name is "#{name}_id"
+            if headerName.name is name || headerName.name is "#{name}_id" || headerName.name is "#{name}_ids"
               hit = true
 
           if hit

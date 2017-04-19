@@ -179,85 +179,94 @@ class App extends Spine.Controller
     return '-' if item is undefined
     return '-' if item is ''
     return item if item is null
-    result = item
+    result = ''
+    items = [item]
+    if _.isArray(item)
+      items = item
 
     # lookup relation
-    if attributeConfig.relation || valueRef
-      if valueRef
-        item = valueRef
-      else
-        item = App[attributeConfig.relation].find(item)
+    for item in items
+      resultLocal = item
+      if attributeConfig.relation || valueRef
+        if valueRef
+          item = valueRef
+        else
+          item = App[attributeConfig.relation].find(item)
 
-    # if date is a object, get name of the object
-    isObject = false
-    if typeof item is 'object'
-      isObject = true
-      if item.displayNameLong
-        result = item.displayNameLong()
-      else if item.displayName
-        result = item.displayName()
-      else
-        result = item.name
+      # if date is a object, get name of the object
+      isObject = false
+      if typeof item is 'object'
+        isObject = true
+        if item.displayNameLong
+          resultLocal = item.displayNameLong()
+        else if item.displayName
+          resultLocal = item.displayName()
+        else
+          resultLocal = item.name
 
-    # execute callback on content
-    if attributeConfig.callback
-      result = attributeConfig.callback(result, attributeConfig)
+      # execute callback on content
+      if attributeConfig.callback
+        resultLocal = attributeConfig.callback(resultLocal, attributeConfig)
 
-    # text2html in textarea view
-    isHtmlEscape = false
-    if attributeConfig.tag is 'textarea'
-      isHtmlEscape = true
-      result       = App.Utils.text2html(result)
+      # text2html in textarea view
+      isHtmlEscape = false
+      if attributeConfig.tag is 'textarea'
+        isHtmlEscape = true
+        resultLocal       = App.Utils.text2html(resultLocal)
 
-    # remember, html snippets are already escaped
-    else if attributeConfig.tag is 'richtext'
-      isHtmlEscape = true
+      # remember, html snippets are already escaped
+      else if attributeConfig.tag is 'richtext'
+        isHtmlEscape = true
 
-    # fillup options
-    if !_.isEmpty(attributeConfig.options)
-      if attributeConfig.options[result]
-        result = attributeConfig.options[result]
+      # fillup options
+      if !_.isEmpty(attributeConfig.options)
+        if attributeConfig.options[resultLocal]
+          resultLocal = attributeConfig.options[resultLocal]
 
-    # transform boolean
-    if attributeConfig.tag is 'boolean'
-      if result is true
-        result = 'yes'
-      else if result is false
-        result = 'no'
+      # transform boolean
+      if attributeConfig.tag is 'boolean'
+        if resultLocal is true
+          resultLocal = 'yes'
+        else if resultLocal is false
+          resultLocal = 'no'
 
-    # translate content
-    if attributeConfig.translate || (isObject && item.translate && item.translate())
-      isHtmlEscape = true
-      result       = App.i18n.translateContent(result)
+      # translate content
+      if attributeConfig.translate || (isObject && item.translate && item.translate())
+        isHtmlEscape = true
+        resultLocal       = App.i18n.translateContent(resultLocal)
 
-    # transform date
-    if attributeConfig.tag is 'date'
-      isHtmlEscape = true
-      result       = App.i18n.translateDate(result)
+      # transform date
+      if attributeConfig.tag is 'date'
+        isHtmlEscape = true
+        resultLocal       = App.i18n.translateDate(resultLocal)
 
-    # transform input tel|url to make it clickable
-    if attributeConfig.tag is 'input'
-      if attributeConfig.type is 'tel'
-        result = "<a href=\"#{App.Utils.phoneify(result)}\">#{App.Utils.htmlEscape(result)}</a>"
-      else if attributeConfig.type is 'url'
-        result = App.Utils.linkify(result)
-      else
-        result = App.Utils.htmlEscape(result)
-      isHtmlEscape = true
+      # transform input tel|url to make it clickable
+      if attributeConfig.tag is 'input'
+        if attributeConfig.type is 'tel'
+          resultLocal = "<a href=\"#{App.Utils.phoneify(resultLocal)}\">#{App.Utils.htmlEscape(resultLocal)}</a>"
+        else if attributeConfig.type is 'url'
+          resultLocal = App.Utils.linkify(resultLocal)
+        else
+          resultLocal = App.Utils.htmlEscape(resultLocal)
+        isHtmlEscape = true
 
-    # use pretty time for datetime
-    else if attributeConfig.tag is 'datetime'
-      isHtmlEscape = true
-      timestamp = App.i18n.translateTimestamp(result)
-      escalation = false
-      cssClass = attributeConfig.class || ''
-      if cssClass.match 'escalation'
-        escalation = true
-      humanTime = App.PrettyDate.humanTime(result, escalation)
-      result    = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{result}\" title=\"#{timestamp}\">#{humanTime}</time>"
+      # use pretty time for datetime
+      else if attributeConfig.tag is 'datetime'
+        isHtmlEscape = true
+        timestamp = App.i18n.translateTimestamp(resultLocal)
+        escalation = false
+        cssClass = attributeConfig.class || ''
+        if cssClass.match 'escalation'
+          escalation = true
+        humanTime = App.PrettyDate.humanTime(resultLocal, escalation)
+        resultLocal    = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{resultLocal}\" title=\"#{timestamp}\">#{humanTime}</time>"
 
-    if !isHtmlEscape && typeof result is 'string'
-      result = App.Utils.htmlEscape(result)
+      if !isHtmlEscape && typeof resultLocal is 'string'
+        resultLocal = App.Utils.htmlEscape(resultLocal)
+
+      if !_.isEmpty(result)
+        result += ', '
+      result += resultLocal
 
     result
 

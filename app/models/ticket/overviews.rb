@@ -19,11 +19,12 @@ returns
     current_user = data[:current_user]
 
     # get customer overviews
+    role_ids = User.joins(:roles).where(users: { id: current_user.id, active: true }, roles: { active: true }).pluck('roles.id')
     if current_user.permissions?('ticket.customer')
       overviews = if current_user.organization_id && current_user.organization.shared
-                    Overview.where(role_id: current_user.role_ids, active: true).order(:prio)
+                    Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: { active: true }).distinct('overview.id').order(:prio)
                   else
-                    Overview.where(role_id: current_user.role_ids, organization_shared: false, active: true).order(:prio)
+                    Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: { active: true, organization_shared: false }).distinct('overview.id').order(:prio)
                   end
       overviews_list = []
       overviews.each { |overview|
@@ -36,7 +37,7 @@ returns
 
     # get agent overviews
     return [] if !current_user.permissions?('ticket.agent')
-    overviews = Overview.where(role_id: current_user.role_ids, active: true).order(:prio)
+    overviews = Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: { active: true }).distinct('overview.id').order(:prio)
     overviews_list = []
     overviews.each { |overview|
       user_ids = overview.user_ids
