@@ -218,30 +218,61 @@ returns
     # do not authenticate with nothing
     return if username.blank? || password.blank?
 
+    user = User.identify(username)
+    return if !user
+
+    return if !Auth.can_login?(user)
+
+    return user if Auth.valid?(user, password)
+
+    sleep 1
+    user.login_failed += 1
+    user.save
+    nil
+  end
+
+=begin
+
+checks if a user has reached the maximum of failed login tries
+
+  user = User.find(123)
+  result = user.max_login_failed?
+
+returns
+
+  result = true | false
+
+=end
+
+  def max_login_failed?
+    max_login_failed = Setting.get('password_max_login_failed').to_i || 10
+    login_failed > max_login_failed
+  end
+
+=begin
+
+tries to find the matching instance by the given identifier. Currently email and login is supported.
+
+  user = User.indentify('User123')
+
+  # or
+
+  user = User.indentify('user-123@example.com')
+
+returns
+
+  # User instance
+  user.login # 'user123'
+
+=end
+
+  def self.identify(identifier)
     # try to find user based on login
-    user = User.find_by(login: username.downcase, active: true)
+    user = User.find_by(login: identifier.downcase)
+    return user if user
 
     # try second lookup with email
-    user ||= User.find_by(email: username.downcase, active: true)
-
-    # check failed logins
-    max_login_failed = Setting.get('password_max_login_failed').to_i || 10
-    if user && user.login_failed > max_login_failed
-      logger.info "Max login failed reached for user #{user.login}."
-      return false
-    end
-
-    user_auth = Auth.check(username, password, user)
-
-    # set login failed +1
-    if !user_auth && user
-      sleep 1
-      user.login_failed += 1
-      user.save
-    end
-
-    # auth ok
-    user_auth
+    User.find_by(email: identifier.downcase)
   end
 
 =begin

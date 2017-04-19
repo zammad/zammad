@@ -14,6 +14,10 @@ RSpec.describe Import::ModelResource do
     end
   end
 
+  after do
+    Import::Test.send(:remove_const, :Group)
+  end
+
   let(:group_data) { attributes_for(:group).merge(id: 1337) }
 
   it 'creates model Objects by class name' do

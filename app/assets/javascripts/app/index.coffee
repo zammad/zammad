@@ -9,6 +9,133 @@
 #= require_tree ./lib/app_post
 
 class App extends Spine.Controller
+  helper =
+
+    # define print name helper
+    P: (object, attributeName, attributes) ->
+      App.viewPrint(object, attributeName, attributes)
+
+    # define date format helper
+    date: (time) ->
+      return '' if !time
+
+      timeObject = new Date(time)
+      d = App.Utils.formatTime(timeObject.getDate(), 2)
+      m = App.Utils.formatTime(timeObject.getMonth() + 1, 2)
+      y = timeObject.getFullYear()
+      "#{y}-#{m}-#{d}"
+
+    # define datetime format helper
+    datetime: (time) ->
+      return '' if !time
+
+      timeObject = new Date(time)
+      d = App.Utils.formatTime(timeObject.getDate(), 2)
+      m = App.Utils.formatTime(timeObject.getMonth() + 1, 2)
+      y = timeObject.getFullYear()
+      S = App.Utils.formatTime(timeObject.getSeconds(), 2)
+      M = App.Utils.formatTime(timeObject.getMinutes(), 2)
+      H = App.Utils.formatTime(timeObject.getHours(), 2)
+      "#{y}-#{m}-#{d} #{H}:#{M}:#{S}"
+
+    # define decimal format helper
+    decimal: (data, positions = 2) ->
+      App.Utils.decimal(data, positions)
+
+    # define mask helper
+    M: (item, start = 1, end = 2) ->
+      return '' if !item
+      string = ''
+      end = item.length - end - 1
+      for n in [0..item.length-1]
+        if start <= n && end >= n
+          string += '*'
+        else
+          string += item[n]
+      string
+
+    # define translation helper
+    T: (item, args...) ->
+      App.i18n.translateContent(item, args...)
+
+    # define translation inline helper
+    Ti: (item, args...) ->
+      App.i18n.translateInline(item, args...)
+
+    # define translation for date helper
+    Tdate: (item, args...) ->
+      App.i18n.translateDate(item, args...)
+
+    # define translation for timestamp helper
+    Ttimestamp: (item, args...) ->
+      App.i18n.translateTimestamp(item, args...)
+
+    # define linkify helper
+    L: (item) ->
+      if item && typeof item is 'string'
+        return App.Utils.linkify(item)
+      item
+
+    # define config helper
+    C: (key) ->
+      App.Config.get(key)
+
+    # define session helper
+    S: (key) ->
+      App.Session.get(key)
+
+    # define address line helper
+    AddressLine: (line) ->
+      return '' if !line
+      items = emailAddresses.parseAddressList(line)
+
+      # line was not parsable
+      return App.Utils.htmlEscape(line) if !items
+
+      # set markup
+      result = ''
+      for item in items
+        if result
+          result = result + ', '
+        if item.name
+          item.name = item.name
+            .replace(',', '')
+            .replace(';', '')
+            .replace('"', '')
+            .replace('\'', '')
+          if item.name.match(/\@|,|;|\^|\+|#|§|\$|%|&|\/|\(|\)|=|\?|\*/)
+            item.name = "\"#{item.name}\""
+          result = "#{result}#{App.Utils.htmlEscape(item.name)} "
+        if item.address
+          result = result + " <span class=\"text-muted\">&lt;#{App.Utils.htmlEscape(item.address)}&gt</span>"
+      result
+
+    # define file size helper
+    humanFileSize: (size) ->
+      App.Utils.humanFileSize(size)
+
+    # define pretty/human time helper
+    humanTime: (time, escalation = false, cssClass = '') ->
+      timestamp = App.i18n.translateTimestamp(time)
+      if escalation
+        cssClass += ' escalation'
+      humanTime = App.PrettyDate.humanTime(time, escalation)
+      "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{time}\" title=\"#{timestamp}\">#{humanTime}</time>"
+
+    # define icon helper
+    Icon: (name, className = '') ->
+      App.Utils.icon(name, className)
+
+    # define richtext helper
+    RichText: (string) ->
+      return string if !string
+      if string.match(/@T\('/)
+        string = string.replace(/@T\('(.+?)'\)/g, (match, capture) ->
+          App.i18n.translateContent(capture)
+        )
+        return marked(string)
+      App.i18n.translateContent(string)
+
   @viewPrint: (object, attributeName, attributes) ->
     if !attributes
       attributes = {}
@@ -136,122 +263,7 @@ class App extends Spine.Controller
 
   @view: (name) ->
     template = (params = {}) ->
-
-      # define print name helper
-      params.P = (object, attributeName, attributes) ->
-        App.viewPrint(object, attributeName, attributes)
-
-      # define date format helper
-      params.date = (time) ->
-        return '' if !time
-
-        timeObject = new Date(time)
-        d = App.Utils.formatTime(timeObject.getDate(), 2)
-        m = App.Utils.formatTime(timeObject.getMonth() + 1, 2)
-        y = timeObject.getFullYear()
-        "#{y}-#{m}-#{d}"
-
-      # define datetime format helper
-      params.datetime = (time) ->
-        return '' if !time
-
-        timeObject = new Date(time)
-        d = App.Utils.formatTime(timeObject.getDate(), 2)
-        m = App.Utils.formatTime(timeObject.getMonth() + 1, 2)
-        y = timeObject.getFullYear()
-        S = App.Utils.formatTime(timeObject.getSeconds(), 2)
-        M = App.Utils.formatTime(timeObject.getMinutes(), 2)
-        H = App.Utils.formatTime(timeObject.getHours(), 2)
-        "#{y}-#{m}-#{d} #{H}:#{M}:#{S}"
-
-      # define decimal format helper
-      params.decimal = (data, positions = 2) ->
-        App.Utils.decimal(data, positions)
-
-      # define translation helper
-      params.T = (item, args...) ->
-        App.i18n.translateContent(item, args...)
-
-      # define translation inline helper
-      params.Ti = (item, args...) ->
-        App.i18n.translateInline(item, args...)
-
-      # define translation for date helper
-      params.Tdate = (item, args...) ->
-        App.i18n.translateDate(item, args...)
-
-      # define translation for timestamp helper
-      params.Ttimestamp = (item, args...) ->
-        App.i18n.translateTimestamp(item, args...)
-
-      # define linkify helper
-      params.L = (item) ->
-        if item && typeof item is 'string'
-          return App.Utils.linkify(item)
-        item
-
-      # define config helper
-      params.C = (key) ->
-        App.Config.get(key)
-
-      # define session helper
-      params.S = (key) ->
-        App.Session.get(key)
-
-      # define address line helper
-      params.AddressLine = (line) ->
-        return '' if !line
-        items = emailAddresses.parseAddressList(line)
-
-        # line was not parsable
-        return App.Utils.htmlEscape(line) if !items
-
-        # set markup
-        result = ''
-        for item in items
-          if result
-            result = result + ', '
-          if item.name
-            item.name = item.name
-              .replace(',', '')
-              .replace(';', '')
-              .replace('"', '')
-              .replace('\'', '')
-            if item.name.match(/\@|,|;|\^|\+|#|§|\$|%|&|\/|\(|\)|=|\?|\*/)
-              item.name = "\"#{item.name}\""
-            result = "#{result}#{App.Utils.htmlEscape(item.name)} "
-          if item.address
-            result = result + " <span class=\"text-muted\">&lt;#{App.Utils.htmlEscape(item.address)}&gt</span>"
-        result
-
-      # define file size helper
-      params.humanFileSize = (size) ->
-        App.Utils.humanFileSize(size)
-
-      # define pretty/human time helper
-      params.humanTime = (time, escalation = false, cssClass = '') ->
-        timestamp = App.i18n.translateTimestamp(time)
-        if escalation
-          cssClass += ' escalation'
-        humanTime = App.PrettyDate.humanTime(time, escalation)
-        "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{time}\" title=\"#{timestamp}\">#{humanTime}</time>"
-
-      # define icon helper
-      params.Icon = (name, className = '') ->
-        App.Utils.icon(name, className)
-
-      # define richtext helper
-      params.RichText = (string) ->
-        return string if !string
-        if string.match(/@T\('/)
-          string = string.replace(/@T\('(.+?)'\)/g, (match, capture) ->
-            App.i18n.translateContent(capture)
-          )
-          return marked(string)
-        App.i18n.translateContent(string)
-
-      # define template
-      JST["app/views/#{name}"](params)
+      JST["app/views/#{name}"](_.extend(params, helper))
     template
 
 class App.UiElement

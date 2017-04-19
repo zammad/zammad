@@ -13,17 +13,17 @@ module ApplicationController::HandlesErrors
   end
 
   def not_found(e)
-    log_error_exception(e)
+    logger.error e
     respond_to_exception(e, :not_found)
   end
 
   def unprocessable_entity(e)
-    log_error_exception(e)
+    logger.error e
     respond_to_exception(e, :unprocessable_entity)
   end
 
   def internal_server_error(e)
-    log_error_exception(e)
+    logger.error e
     respond_to_exception(e, :internal_server_error)
   end
 
@@ -34,11 +34,6 @@ module ApplicationController::HandlesErrors
   end
 
   private
-
-  def log_error_exception(e)
-    logger.error e.message
-    logger.error e.backtrace.inspect
-  end
 
   def respond_to_exception(e, status)
     status_code = Rack::Utils.status_code(status)

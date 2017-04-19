@@ -1,31 +1,33 @@
 require 'rails_helper'
+require 'lib/auth/backend_examples'
 
 RSpec.describe Auth::Internal do
 
-  it 'authenticates via password' do
-    user     = create(:user)
-    password = 'zammad'
-    result   = described_class.check(user.login, password, {}, user)
+  let(:user) { create(:user) }
+  let(:instance) { described_class.new({ adapter: described_class.name }) }
 
-    expect(result).to be_an_instance_of(User)
-  end
+  context '#valid?' do
+    it_behaves_like 'Auth backend'
 
-  it "doesn't authenticate via plain password" do
-    user   = create(:user)
-    result = described_class.check(user.login, user.password, {}, user)
+    it 'authenticates via password' do
+      result = instance.valid?(user, 'zammad')
+      expect(result).to be true
+    end
 
-    expect(result).to be_falsy
-  end
+    it "doesn't authenticate via plain password" do
+      result = instance.valid?(user, user.password)
+      expect(result).to be_falsy
+    end
 
-  it 'converts legacy sha2 passwords' do
-    user     = create(:user_legacy_password_sha2)
-    password = 'zammad'
+    it 'converts legacy sha2 passwords' do
+      user = create(:user_legacy_password_sha2)
 
-    expect(PasswordHash.crypted?(user.password)).to be_falsy
+      expect(PasswordHash.crypted?(user.password)).to be_falsy
 
-    result = described_class.check(user.login, password, {}, user)
+      result = instance.valid?(user, 'zammad')
+      expect(result).to be true
 
-    expect(result).to be_an_instance_of(User)
-    expect(PasswordHash.crypted?(user.password)).to be true
+      expect(PasswordHash.crypted?(user.password)).to be true
+    end
   end
 end

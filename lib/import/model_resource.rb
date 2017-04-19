@@ -11,8 +11,12 @@ module Import
 
     private
 
-    def post_create(_args)
-      reset_primary_key_sequence(model_name.underscore.pluralize)
+    def create(resource, *_args)
+      result = super
+      if !@dry_run
+        reset_primary_key_sequence(model_name.underscore.pluralize)
+      end
+      result
     end
   end
 end

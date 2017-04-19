@@ -7474,6 +7474,11 @@ output {
 
   .searchableSelect-main {
     position: relative;
+
+    &.form-control--small ~ .searchableSelect-autocomplete {
+      top: 7px;
+      left: 9px;
+    }
   }
 
   .searchableSelect-shadow {
