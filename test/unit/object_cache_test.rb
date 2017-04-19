@@ -37,6 +37,21 @@ class ObjectCacheTest < ActiveSupport::TestCase
   test 'user cache' do
     roles  = Role.where( name: %w(Agent Admin) )
     groups = Group.all
+
+    # be sure that minimum one admin is available
+    User.create_or_update(
+      login: 'last_admin_check@example.org',
+      firstname: 'last_admin_check',
+      lastname: 'last_admin_check',
+      email: 'last_admin_check@example.org',
+      password: 'some_pass',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+      roles: roles,
+      groups: groups,
+    )
+
     user1 = User.create_or_update(
       login: 'object_cache1@example.org',
       firstname: 'object_cache1',
