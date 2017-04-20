@@ -4,16 +4,14 @@ class Stats::TicketWaitingTime
 
   def self.generate(user)
 
-    open_state_ids = Ticket::State.by_category(:open).pluck(:id)
-
     # get users groups
     group_ids = user.groups.map(&:id)
 
     own_waiting = Ticket.where(
-      'owner_id = ? AND group_id IN (?) AND state_id IN (?) AND updated_at > ?', user.id, group_ids, open_state_ids, Time.zone.today
+      'owner_id = ? AND group_id IN (?) AND updated_at > ?', user.id, group_ids, Time.zone.today
     )
     all_waiting = Ticket.where(
-      'group_id IN (?) AND state_id IN (?) AND updated_at > ?', group_ids, open_state_ids, Time.zone.today
+      'group_id IN (?) AND updated_at > ?', group_ids, Time.zone.today
     )
 
     handling_time = calculate_average(own_waiting, Time.zone.today)
