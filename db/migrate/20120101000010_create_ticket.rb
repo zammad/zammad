@@ -434,7 +434,7 @@ class CreateTicket < ActiveRecord::Migration
 
     create_table :chat_messages do |t|
       t.integer :chat_session_id,                     null: false
-      t.string  :content,                limit: 5000, null: false
+      t.text    :content,    limit: 20.megabytes + 1, null: false
       t.integer :created_by_id,                       null: true
       t.timestamps limit: 3, null: false
     end

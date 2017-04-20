@@ -7,13 +7,17 @@ class Sessions::Event
     begin
       backend = load_adapter(adapter)
     rescue => e
-      return { error: "No such event #{params[:event]}" }
+      return { event: 'error', data: { error: "No such event #{params[:event]}", payload: params[:payload] } }
     end
 
-    instance = backend.new(params)
-    result = instance.run
-    instance.destroy
-    result
+    begin
+      instance = backend.new(params)
+      result = instance.run
+      instance.destroy
+      result
+    rescue => e
+      return { event: 'error', data: { error: e.message, payload: params[:payload] } }
+    end
   end
 
 end

@@ -474,9 +474,10 @@ class ChatWindow extends App.Controller
       event.data.callback()
 
     @$('.js-customerChatInput').ce({
-      mode:      'richtext'
-      multiline: true
-      maxlength: 40000
+      mode:       'richtext'
+      multiline:  true
+      maxlength:  40000
+      imageWidth: 'relative'
     })
 
   disconnect: =>
