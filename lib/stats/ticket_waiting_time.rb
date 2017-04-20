@@ -54,19 +54,25 @@ class Stats::TicketWaitingTime
   end
 
   def self.calculate_average(tickets, start_time)
-    average_time = 0
-    count_time   = 0
+    average_time   = 0
+    count_articles = 0
 
     tickets.each { |ticket|
+      count_time = 0
       ticket.articles.joins(:type).where('ticket_articles.created_at > ? AND ticket_articles.internal = ? AND ticket_article_types.communication = ?', start_time, false, true).each { |article|
         if article.sender.name == 'Customer'
           count_time = article.created_at.to_i
-        else
-          average_time += article.created_at.to_i - count_time
-          count_time    = 0
+        elsif count_time.positive?
+          average_time   += article.created_at.to_i - count_time
+          count_articles += 1
+          count_time      = 0
         end
       }
     }
+
+    if count_articles.positive?
+      average_time = average_time / count_articles
+    end
 
     average_time
   end
