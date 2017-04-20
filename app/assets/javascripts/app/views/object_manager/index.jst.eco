@@ -31,6 +31,7 @@
             <%- @T('Changed') %>: <%= item.object %>.<%= item.name %> (<%= item.data_type %>)
           <% end %>
       <% end %>
+      </ul>
     </p>
     <div class="box-controls">
       <div class="btn btn--text btn--secondary js-discard"><%- @T('Discard Changes') %></div>
