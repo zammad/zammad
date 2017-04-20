@@ -6,6 +6,7 @@
 # maxlength:     123
 # multiline:     true / disable enter + strip on paste
 # placeholder:   'some placeholder'
+# imageWidth:    absolute (<img style="width: XXpx; height: XXXpx" src="">) || relative (<img style="width: 100%; max-width: XXpx;" src="">)
 */
 
   var pluginName = 'ce',
@@ -13,6 +14,7 @@
     debug:     false,
     mode:      'richtext',
     multiline: true,
+    imageWidth: 'absolute',
     allowKey:  {
       8: true, // backspace
       9: true, // tab
@@ -284,7 +286,12 @@
               }
               _this.log('image inserted')
               result = dataUrl
-              img = "<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
+              if (_this.options.imageWidth == 'absolute') {
+                img = "<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
+              }
+              else {
+                img = "<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">"
+              }
               document.execCommand('insertHTML', false, img)
             }
 
@@ -399,7 +406,12 @@
             //console.log('dataUrl', dataUrl)
             _this.log('image inserted')
             result = dataUrl
-            img = $("<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">")
+            if (_this.options.imageWidth == 'absolute') {
+              img = $("<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">")
+            }
+            else {
+              img = $("<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">")
+            }
             img = img.get(0)
 
             if (document.caretPositionFromPoint) {
