@@ -100,7 +100,7 @@ class Form extends App.Controller
     if _.isEmpty(job)
       @lastImport.html('')
       return
-    countDone = job.result.created + job.result.updated + job.result.unchanged + job.result.skipped
+    countDone = job.result.created + job.result.updated + job.result.unchanged + job.result.skipped + job.result.failed
     if !job.result.roles
       job.result.roles = {}
     for role_id, statistic of job.result.role_ids
