@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.3.2](https://github.com/zammad/zammad/tree/1.3.2) (2017-04-21)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.3.1...1.3.2)
+
+**Fixed bugs:**
+- Fixed issue #912 - Long Twitter direct messages are shown as link after 140 chars. [\#912](https://github.com/zammad/zammad/issues/912) [[enhancement](https://github.com/zammad/zammad/labels/bug)]
+- Placeholder in triggers with created\_by & updated\_by / \> in article.body [\#883](https://github.com/zammad/zammad/issues/883) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Changing "Product Name" breaks "Admin" menu [\#859](https://github.com/zammad/zammad/issues/859) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Follow up detection is broken for Ticket::Number::Date ticket number generator. [\#899](https://github.com/zammad/zammad/issues/899) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
+
 ## [1.3.1](https://github.com/zammad/zammad/tree/1.3.1) (2017-03-16)
 [Full Changelog](https://github.com/zammad/zammad/compare/1.3.0...1.3.1)
 
