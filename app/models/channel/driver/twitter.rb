@@ -321,7 +321,7 @@ returns
     Rails.logger.debug ' - searching for direct_messages'
     older_import = 0
     older_import_max = 20
-    @rest_client.client.direct_messages.each { |tweet|
+    @rest_client.client.direct_messages(full_text: 'true').each { |tweet|
 
       # ignore older messages
       if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max

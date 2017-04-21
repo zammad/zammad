@@ -222,7 +222,7 @@ class TwitterTest < ActiveSupport::TestCase
     }
     assert(article, "Can't find tweet id #{tweet.id}/#{text}")
     assert_equal(customer_login, article.from, 'ticket article from')
-    assert_equal(nil, article.to, 'ticket article to')
+    assert_nil(article.to, 'ticket article to')
     ticket = article.ticket
     assert_equal('new', ticket.reload.state.name)
 
@@ -319,7 +319,7 @@ class TwitterTest < ActiveSupport::TestCase
       client.destroy_direct_message(dm.id)
     }
     hash  = "#citheo44 #{hash_gen}"
-    text  = "How about #{rand_word} the details? #{hash}"
+    text  = "How about #{rand_word} the details? #{hash} - #{'Long' * 50}"
     dm = client.create_direct_message(
       system_login_without_at,
       text,
@@ -340,7 +340,7 @@ class TwitterTest < ActiveSupport::TestCase
 
     assert(article, "inbound article '#{text}' created")
     assert_equal(customer_login, article.from, 'ticket article from')
-    assert_equal(system_login, article.to, 'ticket article to')
+    assert_equal(text, article.body, 'ticket article body')
     ticket = article.ticket
     assert(ticket, 'ticket of inbound article exists')
     assert(ticket.articles, 'ticket.articles exists')
@@ -512,7 +512,7 @@ class TwitterTest < ActiveSupport::TestCase
       sleep 10
     }
 
-    assert_equal(nil, article, "retweet article '#{text}' not created")
+    assert_nil(article, "retweet article '#{text}' not created")
   end
 
   test 'f streaming test' do
@@ -543,7 +543,7 @@ class TwitterTest < ActiveSupport::TestCase
     }
     assert(article)
     assert_equal(customer_login, article.from, 'ticket article from')
-    assert_equal(nil, article.to, 'ticket article to')
+    assert_nil(article.to, 'ticket article to')
 
     # new tweet II - by me_bauer
     client = Twitter::REST::Client.new do |config|
@@ -567,7 +567,7 @@ class TwitterTest < ActiveSupport::TestCase
     }
     assert(article)
     assert_equal(customer_login, article.from, 'ticket article from')
-    assert_equal(nil, article.to, 'ticket article to')
+    assert_nil(article.to, 'ticket article to')
 
     # send reply
     reply_text = "RE #{text}"
@@ -732,7 +732,7 @@ class TwitterTest < ActiveSupport::TestCase
       sleep 10
     }
 
-    assert_equal(nil, article, "retweet article '#{text}' not created")
+    assert_nil(article, "retweet article '#{text}' not created")
 
     thread.exit
     thread.join
