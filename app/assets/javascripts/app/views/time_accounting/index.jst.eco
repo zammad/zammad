@@ -35,13 +35,13 @@
         <% end %>
       </div>
     </div>
-    <h3><%- @T('Ticket') %></h3>
+    <h3><%- @T('Ticket') %> <a href="<%- @apiPath %>/time_accounting/log/by_ticket/<%= @year %>/<%= @month %>?download=true" class="js-downloadByTicket" data-type="attachment"><%- @Icon('download') %></a></h3>
     <div class="js-tableTicket"></div>
     <br>
-    <h3><%- @T('Customer') %></h3>
+    <h3><%- @T('Customer') %> <a href="<%- @apiPath %>/time_accounting/log/by_customer/<%= @year %>/<%= @month %>?download=true" class="js-downloadByCustomer" data-type="attachment"><%- @Icon('download') %></a></h3>
     <div class="js-tableCustomer"></div>
     <br>
-    <h3><%- @T('Organization') %></h3>
+    <h3><%- @T('Organization') %> <a href="<%- @apiPath %>/time_accounting/log/by_organization/<%= @year %>/<%= @month %>?download=true" class="js-downloadByOrganization" data-type="attachment"><%- @Icon('download') %></a></h3>
     <div class="js-tableOrganization"></div>
   </div>
 

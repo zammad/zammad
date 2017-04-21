@@ -1,7 +1,7 @@
 class App.PrettyDate
 
   # human readable time
-  @humanTime: ( time, escalation, long = true ) ->
+  @humanTime: (time, escalation, long = true, type = undefined) ->
     return '' if !time
     current = new Date()
     created = new Date(time)
@@ -28,6 +28,26 @@ class App.PrettyDate
 
     if diff < 60
       return App.i18n.translateInline('just now')
+
+    if type is undefined && window.App && window.App.Config
+      type = window.App.Config.get('pretty_date_format')
+    if type is 'absolute' && direction is 'past'
+      weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+      weekday = weekdays[created.getDay()]
+
+      months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      month = months[created.getMonth()]
+
+      # for less than 7 days
+      if diff < (60 * 60 * 24 * 7)
+        string = "#{App.i18n.translateInline(weekday)} #{created.getHours()}:#{@s(created.getMinutes(), 2)}"
+      else if diff < (60 * 60 * 24 * 7) * 365
+        string = "#{App.i18n.translateInline(weekday)} #{created.getDate()}. #{App.i18n.translateInline(month)} #{created.getHours()}:#{@s(created.getMinutes(), 2)}"
+      else
+        string = "#{App.i18n.translateInline(weekday)} #{App.i18n.translateTimestamp(time)}"
+      if escalation
+        string = "<span #{style}>#{string}</b>"
+      return string
 
     if direction is 'past' && !escalation && diff > ( 60 * 60 * 24 * 7 )
       return App.i18n.translateDate(time)
@@ -99,3 +119,8 @@ class App.PrettyDate
     if escalation
       string = "<span #{style}>#{string}</b>"
     return string
+
+  @s: (num, digits) ->
+    while num.toString().length < digits
+      num = '0' + num
+    num
