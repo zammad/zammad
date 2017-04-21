@@ -168,6 +168,33 @@ Setting.create_if_not_exists(
   },
   frontend: true
 )
+Setting.create_or_update(
+  title: 'Pretty Date',
+  name: 'pretty_date_format',
+  area: 'System::Branding',
+  description: 'Defines pretty date format.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'pretty_date_format',
+        tag: 'select',
+        options: {
+          'relative': 'relative - e. g. "2 hours ago" or "2 days and 15 minutes ago"',
+          'absolute': 'absolute - e. g. "Monday 09:30" or "Tuesday 23. Feb 14:20"',
+        },
+      },
+    ],
+  },
+  preferences: {
+    render: true,
+    prio: 10,
+    permission: ['admin.branding'],
+  },
+  state: 'relative',
+  frontend: true
+)
 options = {}
 (10..99).each { |item|
   options[item] = item
@@ -5553,7 +5580,7 @@ Scheduler.create_if_not_exists(
 )
 Scheduler.create_if_not_exists(
   name:          'Import Jobs',
-  method:        'ImportJob.start',
+  method:        'ImportJob.start_registered',
   period:        1.hour,
   prio:          1,
   active:        true,
