@@ -1,5 +1,25 @@
 # Change Log
 
+
+## [1.4.1](https://github.com/zammad/zammad/tree/1.4.1) (2017-04-21)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.4.0...1.4.1)
+
+**Fixed bugs:**
+- Fixed issue #912 - Long Twitter direct messages are shown as link after 140 chars. [\#912](https://github.com/zammad/zammad/issues/912) [[enhancement](https://github.com/zammad/zammad/labels/bug)]
+- External links in html emails will be open in local context [\#952](https://github.com/zammad/zammad/issues/952) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Schedules - Disable Notification not changable [\#897](https://github.com/zammad/zammad/issues/897) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Auto detection of www urls fails [\#951](https://github.com/zammad/zammad/issues/951) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Can't use PUT on Organizations REST API with token access [\#902](https://github.com/zammad/zammad/issues/902) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- After a while a 500er error message appears  [\#936](https://github.com/zammad/zammad/issues/936) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Template assigned to all new tickets tabs [\#931](https://github.com/zammad/zammad/issues/931) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Placeholder in triggers with created\_by & updated\_by / \> in article.body [\#883](https://github.com/zammad/zammad/issues/883) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Changing "Product Name" breaks "Admin" menu [\#859](https://github.com/zammad/zammad/issues/859) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Follow up detection is broken for Ticket::Number::Date ticket number generator. [\#899](https://github.com/zammad/zammad/issues/899) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Sending emails fails sometimes because of wrong used channel/sender email address [\#889](https://github.com/zammad/zammad/issues/889) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Some notifications are marked as read initially [\#887](https://github.com/zammad/zammad/issues/887) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- activity stream or online notifications are sometimes empty [\#858](https://github.com/zammad/zammad/issues/858) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
+
 ## [1.4.0](https://github.com/zammad/zammad/tree/1.4.0) (2017-03-16)
 [Full Changelog](https://github.com/zammad/zammad/compare/1.3.0...1.4.0)
 
