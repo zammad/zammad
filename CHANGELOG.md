@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.2.3](https://github.com/zammad/zammad/tree/1.2.3) (2017-03-16)
+[Full Changelog](https://github.com/zammad/zammad/compare/1.2.2...1.2.3)
+
+**Fixed bugs:**
+
+- Follow up detection is broken for Ticket::Number::Date ticket number generator. [\#899](https://github.com/zammad/zammad/issues/899) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
+
 ## [1.2.2](https://github.com/zammad/zammad/tree/1.2.2) (2017-03-16)
 [Full Changelog](https://github.com/zammad/zammad/compare/1.2.1...1.2.2)
 
