@@ -99,6 +99,7 @@ class Index extends App.ControllerSubContent
       timeRangeMonth: timeRangeMonth
       year: @year
       month: @month
+      apiPath: @apiPath
     )
 
     configure_attributes = [
