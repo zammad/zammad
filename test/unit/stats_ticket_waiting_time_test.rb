@@ -144,7 +144,12 @@ class StatsTicketWaitingTimeTest < ActiveSupport::TestCase
     )
 
     average_time = Stats::TicketWaitingTime.calculate_average([ticket1, ticket1], '2017-04-13 00:00:00')
-    assert_equal(60 * 60 * 6 * 2, average_time)
+
+    expected_average_time = 60 * 60 * 2 # for communication 2
+    expected_average_time += 60 * 60 * 4 # for communication 3
+    expected_average_time = expected_average_time / 2  # for average
+
+    assert_equal(expected_average_time, average_time)
   end
 
 end
