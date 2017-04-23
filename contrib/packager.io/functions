@@ -246,6 +246,9 @@ function final_message () {
     echo -e "	firewall-cmd --zone=public --add-service=http --permanent"
     echo -e "	firewall-cmd --zone=public --add-service=https --permanent"
     echo -e "	firewall-cmd --reload\n"
+  elif [ "${OS}" == "SUSE" ]; then
+    echo -e "\n Make sure that the firewall is not blocking port 80 & 443!\n"
+    echo -e "Use 'yast firewall' or 'SuSEfirewall2' commands to configure it"
   fi
   echo -e "####################################################################################"
 }
