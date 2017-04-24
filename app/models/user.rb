@@ -903,6 +903,8 @@ raise 'Minimum one user need to have admin permissions'
 =end
 
   def last_admin_check(role)
+    return if Setting.get('import_mode')
+
     ticket_admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'] }).pluck(:id)
     count                 = User.joins(:roles).where(roles: { id: ticket_admin_role_ids }, users: { active: true }).count
     if ticket_admin_role_ids.include?(role.id)
