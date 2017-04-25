@@ -57,7 +57,6 @@ class Ticket < ApplicationModel
   belongs_to    :group,                  class_name: 'Group'
   has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update
   has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy
-  has_many      :recent_views, class_name: 'RecentView', foreign_key: 'o_id', dependent: :destroy
   belongs_to    :organization,           class_name: 'Organization'
   belongs_to    :state,                  class_name: 'Ticket::State'
   belongs_to    :priority,               class_name: 'Ticket::Priority'
