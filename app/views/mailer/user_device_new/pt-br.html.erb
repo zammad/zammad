@@ -1,0 +1,19 @@
+#{config.product_name} login detectado em um novo dispositivo
+
+<div>Oi #{user.firstname},</div>
+<br>
+<div>Isto é como se você tivesse logado com sua conta <b>usando um novo dispositivo</b> em "#{user_device.created_at}":</div>
+<br>
+<div>
+Seu dispositivo: #{user_device.name}<br>
+Sua localização (relativa): #{user_device.location}<br>
+Seu IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Seu dispositivo foi adicionado na lista de dispositivos conhecidos, qual você pode ver aqui:</div>
+<br>
+<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
+<br>
+<div>Se não foi você, remova o dispositivo, altere sua senha e entre em contato com o Administrador. Alguém pode ter ganho acesso não autorizado à sua conta.</div>
+<br>
+<div>Time #{config.product_name}</div>
