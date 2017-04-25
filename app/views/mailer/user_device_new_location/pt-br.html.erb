@@ -1,0 +1,20 @@
+#{config.product_name} login detectado em um novo País
+
+<div>Oi #{user.firstname},</div>
+<br>
+<div>Isto é como se você tivesse usado sua conta com um <b>dispositivo conhecido, porém, de um outro país</b> em "#{user_device.created_at}":</div>
+<br>
+<div>
+Seu dispositivo: #{user_device.name}<br>
+Sua localização (relativa): #{user_device.location}<br>
+Seu IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>O País foi adicionado na sua lista de dispositivos conhecidos, que pode ser visto aqui:</div>
+<br>
+<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
+<br>
+<div>If this wasn't you, remove the device, changing your account password, and contacting your administrator. Somebody might have gained unauthorized access to your account.</div>
+<div>Se não foi você, remova o dispositivo, altere sua senha e entre em contato com o Administrador. Alguém pode ter ganho acesso não autorizado à sua conta.</div>
+<br>
+<div>Your #{config.product_name} Team</div>

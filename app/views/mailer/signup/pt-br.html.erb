@@ -1,0 +1,9 @@
+Confirme sua conta #{config.product_name}, #{user.firstname} #{user.lastname}
+
+<div>Oi #{user.firstname},</div>
+<br>
+<div>Confirme seu email para completar o cadastro de sua conta #{config.product_name}. Isto é fácil, basta clicar no link a seguir.</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#email_verify/#{token.name}</a></div>
+<br>
+<div>Time #{config.product_name}</div>
