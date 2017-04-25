@@ -157,7 +157,7 @@ class ArticleViewItem extends App.ObserverController
 
     new App.WidgetAvatar(
       el:        @$('.js-avatar')
-      object_id: article.created_by_id
+      object_id: article.origin_by_id || article.created_by_id
       size:      40
     )
 

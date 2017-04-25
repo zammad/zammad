@@ -27,6 +27,7 @@ module Zammad
       'observer::_ticket::_article_changes',
       'observer::_ticket::_article::_fillup_from_general',
       'observer::_ticket::_article::_fillup_from_email',
+      'observer::_ticket::_article::_fillup_from_origin_by_id',
       'observer::_ticket::_article::_communicate_email',
       'observer::_ticket::_article::_communicate_facebook',
       'observer::_ticket::_article::_communicate_twitter',
