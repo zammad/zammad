@@ -10,7 +10,7 @@ class App.TicketZoomArticleView extends App.Controller
 
   run: =>
     all = []
-    for ticket_article_id in @ticket_article_ids
+    for ticket_article_id, index in @ticket_article_ids
       controllerKey = ticket_article_id.toString()
       if !@articleController[controllerKey]
         el = $('<div></div>')
@@ -21,7 +21,8 @@ class App.TicketZoomArticleView extends App.Controller
           ui:         @ui
           highligher: @highligher
         )
-        all.push el
+        if !@ticketArticleInsertByIndex(index, el)
+          all.push el
     @el.append(all)
 
     # check elements to remove
@@ -33,6 +34,31 @@ class App.TicketZoomArticleView extends App.Controller
       if !exists
         controller.remove()
         delete @articleController[article_id.toString()]
+
+  ticketArticleInsertByIndex: (elIndex, el) =>
+    return false if !@$('.ticket-article-item').length
+
+    # in case of a merge it can happen that there are already
+    # articles rendered in the ticket, but the new article need
+    # to be inserted at the correct position in the the ticket
+    for index in [elIndex .. 0]
+      article_id = @ticket_article_ids[index]
+      continue if !article_id
+      article = @$(".ticket-article-item[data-id=#{article_id}]")
+      continue if !article.length
+      article.after(el)
+      return true
+
+    for index in [elIndex .. @ticket_article_ids.length - 1]
+      article_id = @ticket_article_ids[index]
+      continue if !article_id
+      article = @$(".ticket-article-item[data-id=#{article_id}]")
+      continue if !article.length
+      article.before(el)
+      return true
+
+    false
+
 
 class ArticleViewItem extends App.ObserverController
   model: 'TicketArticle'
