@@ -2,6 +2,7 @@
 
 class RecentView < ApplicationModel
   belongs_to :object_lookup, class_name: 'ObjectLookup'
+  belongs_to :ticket, class_name: 'Ticket', foreign_key: 'o_id'
 
   after_create  :notify_clients
   after_update  :notify_clients
@@ -37,12 +38,21 @@ class RecentView < ApplicationModel
 
   def self.list(user, limit = 10, type = nil)
     recent_views = if !type
-                     RecentView.where(created_by_id: user.id)
-                               .order('created_at DESC, id DESC')
+                     RecentView.select('o_id, recent_view_object_id, MAX(created_at) as created_at, MAX(id) as id')
+                               .group(:o_id, :recent_view_object_id)
+                               .where(created_by_id: user.id)
+                               .limit(limit)
+                   elsif type == 'Ticket'
+                     state_ids = Ticket::State.by_category(:viewable_agent_new).pluck(:id)
+                     RecentView.joins(:ticket)
+                               .select('recent_views.o_id as o_id, recent_views.recent_view_object_id as recent_view_object_id, MAX(recent_views.created_at) as created_at, MAX(recent_views.id) as id')
+                               .group(:o_id, :recent_view_object_id)
+                               .where('recent_views.created_by_id = ? AND recent_views.recent_view_object_id = ? AND tickets.state_id IN (?)', user.id, ObjectLookup.by_name('Ticket'), state_ids )
                                .limit(limit)
                    else
-                     RecentView.select('DISTINCT(o_id), recent_view_object_id, created_at, id').where(created_by_id: user.id, recent_view_object_id: ObjectLookup.by_name(type))
-                               .order('created_at DESC, id DESC')
+                     RecentView.select('o_id, recent_view_object_id, MAX(created_at) as created_at, MAX(id) as id')
+                               .group(:o_id, :recent_view_object_id)
+                               .where(created_by_id: user.id, recent_view_object_id: ObjectLookup.by_name(type))
                                .limit(limit)
                    end
 
