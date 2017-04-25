@@ -3278,45 +3278,45 @@ Ticket::StateType.create_if_not_exists(id: 7, name: 'removed')
 Ticket::State.create_if_not_exists(
   id: 1,
   name: 'new',
-  state_type_id: Ticket::StateType.find_by(name: 'new').pluck(:id),
+  state_type_id: Ticket::StateType.find_by(name: 'new').id,
   default_create: true,
 )
 Ticket::State.create_if_not_exists(
   id: 2,
   name: 'open',
-  state_type_id: Ticket::StateType.find_by(name: 'open').pluck(:id),
+  state_type_id: Ticket::StateType.find_by(name: 'open').id,
   default_follow_up: true,
 )
 Ticket::State.create_if_not_exists(
   id: 3,
   name: 'pending reminder',
-  state_type_id: Ticket::StateType.find_by(name: 'pending reminder').pluck(:id),
+  state_type_id: Ticket::StateType.find_by(name: 'pending reminder').id,
   ignore_escalation: true,
 )
 Ticket::State.create_if_not_exists(
   id: 4,
   name: 'closed',
-  state_type_id: Ticket::StateType.find_by(name: 'closed').pluck(:id),
+  state_type_id: Ticket::StateType.find_by(name: 'closed').id,
   ignore_escalation: true,
 )
 Ticket::State.create_if_not_exists(
   id: 5,
   name: 'merged',
-  state_type_id: Ticket::StateType.find_by(name: 'merged').pluck(:id),
+  state_type_id: Ticket::StateType.find_by(name: 'merged').id,
   ignore_escalation: true,
 )
 Ticket::State.create_if_not_exists(
   id: 6,
   name: 'removed',
-  state_type_id: Ticket::StateType.find_by(name: 'removed').pluck(:id),
+  state_type_id: Ticket::StateType.find_by(name: 'removed').id,
   active: false,
   ignore_escalation: true,
 )
 Ticket::State.create_if_not_exists(
   id: 7,
   name: 'pending close',
-  state_type_id: Ticket::StateType.find_by(name: 'pending action').pluck(:id),
-  next_state_id: Ticket::State.find_by(name: 'closed').pluck(:id),
+  state_type_id: Ticket::StateType.find_by(name: 'pending action').id,
+  next_state_id: Ticket::State.find_by(name: 'closed').id,
   ignore_escalation: true,
 )
 
@@ -3345,7 +3345,7 @@ Macro.create_if_not_exists(
   name: 'Close & Tag as Spam',
   perform: {
     'ticket.state_id' => {
-      value: Ticket::State.find_by(name: 'closed').pluck(:id),
+      value: Ticket::State.find_by(name: 'closed').id,
     },
     'ticket.tags' => {
       operator: 'add',
@@ -3362,16 +3362,16 @@ Macro.create_if_not_exists(
 
 UserInfo.current_user_id = user_community.id
 ticket = Ticket.create(
-  group_id: Group.find_by(name: 'Users').pluck(:id),
-  customer_id: User.find_by(login: 'nicole.braun@zammad.org').pluck(:id),
+  group_id: Group.find_by(name: 'Users').id,
+  customer_id: User.find_by(login: 'nicole.braun@zammad.org').id,
   title: 'Welcome to Zammad!',
-  state_id: Ticket::State.find_by(name: 'new').pluck(:id),
-  priority_id: Ticket::Priority.find_by(name: '2 normal').pluck(:id),
+  state_id: Ticket::State.find_by(name: 'new').id,
+  priority_id: Ticket::Priority.find_by(name: '2 normal').id,
 )
 Ticket::Article.create(
   ticket_id: ticket.id,
-  type_id: Ticket::Article::Type.find_by(name: 'phone').pluck(:id),
-  sender_id: Ticket::Article::Sender.find_by(name: 'Customer').pluck(:id),
+  type_id: Ticket::Article::Type.find_by(name: 'phone').id,
+  sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
   from: 'Zammad Feedback <feedback@zammad.org>',
   body: 'Welcome!
 
@@ -3687,8 +3687,8 @@ Network::Category.create_if_not_exists(
   id: 1,
   name: 'Announcements',
   network_id: network.id,
-  network_category_type_id: Network::Category::Type.find_by(name: 'Announcement').pluck(:id),
-  network_privacy_id: Network::Privacy.find_by(name: 'logged in and moderator').pluck(:id),
+  network_category_type_id: Network::Category::Type.find_by(name: 'Announcement').id,
+  network_privacy_id: Network::Privacy.find_by(name: 'logged in and moderator').id,
   allow_comments: true,
 )
 Network::Category.create_if_not_exists(
@@ -3696,29 +3696,29 @@ Network::Category.create_if_not_exists(
   name: 'Questions',
   network_id: network.id,
   allow_comments: true,
-  network_category_type_id: Network::Category::Type.find_by(name: 'Question').pluck(:id),
-  network_privacy_id: Network::Privacy.find_by(name: 'logged in').pluck(:id),
+  network_category_type_id: Network::Category::Type.find_by(name: 'Question').id,
+  network_privacy_id: Network::Privacy.find_by(name: 'logged in').id,
 )
 Network::Category.create_if_not_exists(
   id: 3,
   name: 'Ideas',
   network_id: network.id,
-  network_category_type_id: Network::Category::Type.find_by(name: 'Idea').pluck(:id),
-  network_privacy_id: Network::Privacy.find_by(name: 'logged in').pluck(:id),
+  network_category_type_id: Network::Category::Type.find_by(name: 'Idea').id,
+  network_privacy_id: Network::Privacy.find_by(name: 'logged in').id,
   allow_comments: true,
 )
 Network::Category.create_if_not_exists(
   id: 4,
   name: 'Bug Reports',
   network_id: network.id,
-  network_category_type_id: Network::Category::Type.find_by(name: 'Bug Report').pluck(:id),
-  network_privacy_id: Network::Privacy.find_by(name: 'logged in').pluck(:id),
+  network_category_type_id: Network::Category::Type.find_by(name: 'Bug Report').id,
+  network_privacy_id: Network::Privacy.find_by(name: 'logged in').id,
   allow_comments: true,
 )
 item = Network::Item.create(
   title: 'Example Announcement',
   body: 'Some announcement....',
-  network_category_id: Network::Category.find_by(name: 'Announcements').pluck(:id),
+  network_category_id: Network::Category.find_by(name: 'Announcements').id,
 )
 Network::Item::Comment.create(
   network_item_id: item.id,
@@ -3727,7 +3727,7 @@ Network::Item::Comment.create(
 item = Network::Item.create(
   title: 'Example Question?',
   body: 'Some questions....',
-  network_category_id: Network::Category.find_by(name: 'Questions').pluck(:id),
+  network_category_id: Network::Category.find_by(name: 'Questions').id,
 )
 Network::Item::Comment.create(
   network_item_id: item.id,
@@ -3736,7 +3736,7 @@ Network::Item::Comment.create(
 item = Network::Item.create(
   title: 'Example Idea',
   body: 'Some idea....',
-  network_category_id: Network::Category.find_by(name: 'Ideas').pluck(:id),
+  network_category_id: Network::Category.find_by(name: 'Ideas').id,
 )
 Network::Item::Comment.create(
   network_item_id: item.id,
@@ -3745,7 +3745,7 @@ Network::Item::Comment.create(
 item = Network::Item.create(
   title: 'Example Bug Report',
   body: 'Some bug....',
-  network_category_id: Network::Category.find_by(name: 'Bug Reports').pluck(:id),
+  network_category_id: Network::Category.find_by(name: 'Bug Reports').id,
 )
 Network::Item::Comment.create(
   network_item_id: item.id,
@@ -3935,7 +3935,7 @@ ObjectManager::Attribute.add(
     nulloption: true,
     multiple: false,
     null: false,
-    default: Ticket::State.find_by(name: 'open').pluck(:id),
+    default: Ticket::State.find_by(name: 'open').id,
     translate: true,
     filter: Ticket::State.by_category(:viewable).pluck(:id),
   },
@@ -3953,7 +3953,7 @@ ObjectManager::Attribute.add(
         nulloption: false,
         null: true,
         filter: Ticket::State.by_category(:viewable_customer_new).pluck(:id),
-        default: Ticket::State.find_by(name: 'new').pluck(:id),
+        default: Ticket::State.find_by(name: 'new').id,
       },
     },
     edit: {
@@ -3966,7 +3966,7 @@ ObjectManager::Attribute.add(
         nulloption: false,
         null: true,
         filter: Ticket::State.by_category(:viewable_customer_edit).pluck(:id),
-        default: Ticket::State.find_by(name: 'open').pluck(:id),
+        default: Ticket::State.find_by(name: 'open').id,
       },
     },
   },
@@ -4025,7 +4025,7 @@ ObjectManager::Attribute.add(
     nulloption: false,
     multiple: false,
     null: false,
-    default: Ticket::Priority.find_by(name: '2 normal').pluck(:id),
+    default: Ticket::Priority.find_by(name: '2 normal').id,
     translate: true,
   },
   editable: false,
@@ -4087,7 +4087,7 @@ ObjectManager::Attribute.add(
     nulloption: false,
     multiple: false,
     null: false,
-    default: Ticket::Article::Type.lookup(name: 'note').pluck(:id),
+    default: Ticket::Article::Type.lookup(name: 'note').id,
     translate: true,
   },
   editable: false,
@@ -4880,7 +4880,7 @@ ObjectManager::Attribute.add(
     invite_agent: {
       '-all-' => {
         null: false,
-        default: [Role.lookup(name: 'Agent').pluck(:id)],
+        default: [Role.lookup(name: 'Agent').id],
       },
     },
     invite_customer: {},
@@ -5597,19 +5597,19 @@ Trigger.create_or_update(
     },
     'ticket.state_id' => {
       'operator' => 'is not',
-      'value' => Ticket::State.lookup(name: 'closed').pluck(:id),
+      'value' => Ticket::State.lookup(name: 'closed').id,
     },
     'article.type_id' => {
       'operator' => 'is',
       'value' => [
-        Ticket::Article::Type.lookup(name: 'email').pluck(:id),
-        Ticket::Article::Type.lookup(name: 'phone').pluck(:id),
-        Ticket::Article::Type.lookup(name: 'web').pluck(:id),
+        Ticket::Article::Type.lookup(name: 'email').id,
+        Ticket::Article::Type.lookup(name: 'phone').id,
+        Ticket::Article::Type.lookup(name: 'web').id,
       ],
     },
     'article.sender_id' => {
       'operator' => 'is',
-      'value' => Ticket::Article::Sender.lookup(name: 'Customer').pluck(:id),
+      'value' => Ticket::Article::Sender.lookup(name: 'Customer').id,
     },
   },
   perform: {
@@ -5640,14 +5640,14 @@ Trigger.create_or_update(
     },
     'article.sender_id' => {
       'operator' => 'is',
-      'value' => Ticket::Article::Sender.lookup(name: 'Customer').pluck(:id),
+      'value' => Ticket::Article::Sender.lookup(name: 'Customer').id,
     },
     'article.type_id' => {
       'operator' => 'is',
       'value' => [
-        Ticket::Article::Type.lookup(name: 'email').pluck(:id),
-        Ticket::Article::Type.lookup(name: 'phone').pluck(:id),
-        Ticket::Article::Type.lookup(name: 'web').pluck(:id),
+        Ticket::Article::Type.lookup(name: 'email').id,
+        Ticket::Article::Type.lookup(name: 'phone').id,
+        Ticket::Article::Type.lookup(name: 'web').id,
       ],
     },
   },
