@@ -1,0 +1,18 @@
+Lembrete (#{ticket.title})
+
+<div>Oi #{recipient.firstname},</div>
+<br>
+<div>Um chamado precisa de atenção, um lembrete foi criado (#{ticket.title}) com o usuário "<b>#{ticket.customer.longname}</b>".</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  #{t('Information')}:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('Veja mais informações no Zammad')}</a>
+</div>
