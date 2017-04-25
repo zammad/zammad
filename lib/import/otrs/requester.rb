@@ -6,35 +6,63 @@ module Import
       # rubocop:disable Style/ModuleFunction
       extend self
 
-      def load(object, args = {})
+      # Loads entries of the given object.
+      #
+      # @param object [String] the name of OTRS object
+      # @param [Hash] opts the options to load entries.
+      # @option opts [String] :limit the maximum amount of entries that should get loaded
+      # @option opts [String] :offset the offset where the entry listing should start
+      # @option opts [Boolean] :diff request only changed/added entries since the last import
+      #
+      # @example
+      #   Import::OTRS::Requester.load('State', offset: '0', limit: '50')
+      #   #=> [{'Name':'pending reminder', ...}, ...]
+      #
+      # @return [Array<Hash{String => String, Number, nil, Hash, Array}>]
+      def load(object, opts = {})
 
         @cache ||= {}
-        if args.empty? && @cache[object]
+        if opts.empty? && @cache[object]
           return @cache[object]
         end
 
         result = request_result(
           Subaction: 'Export',
           Object:    object,
-          Limit:     args[:limit]  || '',
-          Offset:    args[:offset] || '',
-          Diff:      args[:diff] ? 1 : 0
+          Limit:     opts[:limit]  || '',
+          Offset:    opts[:offset] || '',
+          Diff:      opts[:diff] ? 1 : 0
         )
 
-        return result if !args.empty?
+        return result if !opts.empty?
         @cache[object] = result
         @cache[object]
       end
 
+      # Lists the OTRS objects and their amount of importable entries.
+      #
+      # @example
+      #   Import::OTRS::Requester.list #=> {'DynamicFields' => 5, ...}
+      #
+      # @return [Hash{String => Number}] key = OTRS object, value = amount
       def list
         request_result(Subaction: 'List')
       end
 
-      # TODO: refactor to something like .connected?
+      # Checks if the connection to the OTRS export endpoint works.
+      #
+      # @todo Refactor to something like .connected?
+      #
+      # @example
+      #   Import::OTRS::Requester.connection_test #=> true
+      #
+      # @raise [RuntimeError] if the API key is not valid
+      #
+      # @return [true] always returns true
       def connection_test
         result = request_json({})
-        return true if result['Success']
-        raise 'API key not valid!'
+        raise 'API key not valid!' if !result['Success']
+        true
       end
 
       private
@@ -47,10 +75,8 @@ module Import
       def request_json(params)
         response = post(params)
         result   = handle_response(response)
-
-        return result if result
-
-        raise 'Invalid response'
+        raise 'Invalid response' if !result
+        result
       end
 
       def handle_response(response)
