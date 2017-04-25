@@ -40,14 +40,9 @@ class RecentViewTest < ActiveSupport::TestCase
     assert(list[0]['o_id'], ticket1.id)
     assert(list[0]['object'], 'Ticket')
 
-    assert(list[1]['o_id'], ticket1.id)
+    assert(list[1]['o_id'], ticket2.id)
     assert(list[1]['object'], 'Ticket')
-
-    assert(list[2]['o_id'], ticket2.id)
-    assert(list[2]['object'], 'Ticket')
-
-    assert(list[3]['o_id'], ticket1.id)
-    assert(list[3]['object'], 'Ticket')
+    assert_equal(2, list.count)
 
     ticket1.destroy
     ticket2.destroy
