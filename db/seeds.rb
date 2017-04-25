@@ -3345,7 +3345,7 @@ Macro.create_if_not_exists(
   name: 'Close & Tag as Spam',
   perform: {
     'ticket.state_id' => {
-      value: Ticket::State.find_by(name: 'closed').id,
+      value: Ticket::State.by_category(:closed).first.id,
     },
     'ticket.tags' => {
       operator: 'add',
@@ -3365,8 +3365,6 @@ ticket = Ticket.create(
   group_id: Group.find_by(name: 'Users').id,
   customer_id: User.find_by(login: 'nicole.braun@zammad.org').id,
   title: 'Welcome to Zammad!',
-  state_id: Ticket::State.find_by(name: 'new').id,
-  priority_id: Ticket::Priority.find_by(name: '2 normal').id,
 )
 Ticket::Article.create(
   ticket_id: ticket.id,
@@ -3935,7 +3933,7 @@ ObjectManager::Attribute.add(
     nulloption: true,
     multiple: false,
     null: false,
-    default: Ticket::State.find_by(name: 'open').id,
+    default: Ticket::State.find_by(default_follow_up: true).id,
     translate: true,
     filter: Ticket::State.by_category(:viewable).pluck(:id),
   },
@@ -3953,7 +3951,7 @@ ObjectManager::Attribute.add(
         nulloption: false,
         null: true,
         filter: Ticket::State.by_category(:viewable_customer_new).pluck(:id),
-        default: Ticket::State.find_by(name: 'new').id,
+        default: Ticket::State.find_by(default_create: true).id,
       },
     },
     edit: {
@@ -3966,7 +3964,7 @@ ObjectManager::Attribute.add(
         nulloption: false,
         null: true,
         filter: Ticket::State.by_category(:viewable_customer_edit).pluck(:id),
-        default: Ticket::State.find_by(name: 'open').id,
+        default: Ticket::State.find_by(default_follow_up: true).id,
       },
     },
   },
@@ -4025,7 +4023,7 @@ ObjectManager::Attribute.add(
     nulloption: false,
     multiple: false,
     null: false,
-    default: Ticket::Priority.find_by(name: '2 normal').id,
+    default: Ticket::Priority.find_by(default_create: true).id,
     translate: true,
   },
   editable: false,
@@ -5597,7 +5595,7 @@ Trigger.create_or_update(
     },
     'ticket.state_id' => {
       'operator' => 'is not',
-      'value' => Ticket::State.lookup(name: 'closed').id,
+      'value' => Ticket::State.by_category(:closed).first.id,
     },
     'article.type_id' => {
       'operator' => 'is',
