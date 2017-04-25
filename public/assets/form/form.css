@@ -59,7 +59,8 @@
     background: white;
     border-radius: 5px;
     padding: 24px 24px 22px;
-    width: 26em;
+    width: 90%;
+    max-width: 26em;
     margin: 0 auto;
     box-sizing: border-box;
     position: relative;
