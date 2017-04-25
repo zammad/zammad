@@ -1,0 +1,15 @@
+Resetando sua senha #{config.product_name}
+
+<div>Oi #{user.firstname},</div>
+<br>
+<div>Nós recebemos uma requisição para resetar a senha da sua conta #{config.product_name}, <b>#{user.login}</b>.</div>
+<br>
+<div>Se você deseja alterar sua senha, clique no link a seguir (ou copie e cole esta URL no seu navegador):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Este link vai te levar até a página onde você poderá alterar sua senha.</div>
+<br>
+<div>Se você não desejar resetar sua senha, por favor ignore esta mensagem. Sua senha não vai ser resetada.</div>
+<br>
+<div>Time #{config.product_name}</div>
