@@ -280,4 +280,49 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
   end
 
+  test '03.01 create phone ticket for customer and expected origin_by_id' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+
+    params = {
+      title: 'a new ticket #1',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        body: 'some body',
+        sender: 'Customer',
+        type: 'phone',
+      }
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    article = Ticket::Article.find_by( ticket_id: result['id'] )
+    assert_equal(@customer_without_org.id, article.origin_by_id)
+    assert_equal('Tickets Customer1 <tickets-customer1@example.com>', article.from)
+  end
+
+  test '03.02 create phone ticket by customer and manipulate origin_by_id' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-customer1@example.com', 'customer1pw')
+
+    params = {
+      title: 'a new ticket #1',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        body: 'some body',
+        sender: 'Customer',
+        type: 'phone',
+        origin_by_id: 1,
+      }
+    }
+    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    article = Ticket::Article.find_by( ticket_id: result['id'] )
+    assert_nil(article.origin_by_id)
+  end
 end

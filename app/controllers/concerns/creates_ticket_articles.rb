@@ -34,6 +34,7 @@ module CreatesTicketArticles
     if !current_user.permissions?('ticket.agent')
       clean_params[:sender_id] = Ticket::Article::Sender.lookup(name: 'Customer').id
       clean_params.delete(:sender)
+      clean_params.delete(:origin_by_id)
       type = Ticket::Article::Type.lookup(id: clean_params[:type_id])
       if type.name !~ /^(note|web)$/
         clean_params[:type_id] = Ticket::Article::Type.lookup(name: 'note').id
