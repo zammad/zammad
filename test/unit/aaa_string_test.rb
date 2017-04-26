@@ -552,7 +552,8 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = '<div>https://www.facebook.com/test</div>'
-    result = '<div><a href="https://www.facebook.com/test" rel="nofollow noreferrer noopener" target="_blank">https://www.facebook.com/test</a>
+    result = '<div>
+<a href="https://www.facebook.com/test" rel="nofollow noreferrer noopener" target="_blank">https://www.facebook.com/test</a>
 </div>'
     assert_equal(result, html.html2html_strict)
 
@@ -640,11 +641,11 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com</div>"
-    result = "<div><a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>\n</div>"
+    result = "<div>\n<a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>\n</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com.</div>"
-    result = "<div><a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>.</div>"
+    result = "<div>\n<a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>.</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>lala http://example.com.</div>"
@@ -652,11 +653,11 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com, and so on</div>"
-    result = "<div><a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>, and so on</div>"
+    result = "<div>\n<a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>, and so on</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com?lala=me, and so on</div>"
-    result = "<div><a href=\"http://example.com?lala=me\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com?lala=me</a>, and so on</div>"
+    result = "<div>\n<a href=\"http://example.com?lala=me\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com?lala=me</a>, and so on</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<a href=\"http://facebook.de/examplesrbog\"><span lang=\"EN-US\" style='color:blue'>http://facebook.de/examplesrbog</span></a>"

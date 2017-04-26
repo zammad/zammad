@@ -38,7 +38,7 @@ satinize html string based on whiltelist
 
       # replace tags, keep subtree
       if !tags_whitelist.include?(node.name)
-        node.replace strict(node.children.to_s)
+        node.replace node.children.to_s
         Loofah::Scrubber::STOP
       end
 
@@ -132,7 +132,7 @@ satinize html string based on whiltelist
       # prepare links
       if node['href']
         href = cleanup_target(node['href'])
-        if external && !href.downcase.start_with?('//') && href.downcase !~ %r{^.{1,6}://.+?}
+        if external && href.present? && !href.downcase.start_with?('//') && href.downcase !~ %r{^.{1,6}://.+?}
           node['href'] = "http://#{node['href']}"
           href = node['href']
         end
@@ -145,9 +145,9 @@ satinize html string based on whiltelist
       # check if href is different to text
       if external && node.name == 'a' && !url_same?(node['href'], node.text)
         if node['href'].blank?
-          node.replace strict(node.children.to_s)
+          node.replace node.children.to_s
           Loofah::Scrubber::STOP
-        elsif node.children.empty? || node.children.first.class == Nokogiri::XML::Text
+        elsif (node.children.empty? || node.children.first.class == Nokogiri::XML::Text) && node.text.present?
           text = Nokogiri::XML::Text.new("#{node['href']} (", node.document)
           node.add_previous_sibling(text)
           node['href'] = cleanup_target(node.text)
@@ -178,7 +178,17 @@ satinize html string based on whiltelist
       end
 
     end
-    Loofah.fragment(string).scrub!(scrubber).to_s
+
+    new_string = ''
+    done = true
+    while done
+      new_string = Loofah.fragment(string).scrub!(scrubber).to_s
+      if string == new_string
+        done = false
+      end
+      string = new_string
+    end
+    string
   end
 
 =begin
@@ -253,7 +263,6 @@ cleanup html string:
         Loofah::Scrubber::STOP
       end
     end
-    string = Loofah.fragment(string).scrub!(scrubber_structure).to_s
 
     new_string = ''
     done = true
