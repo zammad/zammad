@@ -552,8 +552,7 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = '<div>https://www.facebook.com/test</div>'
-    result = '<div>
-<a href="https://www.facebook.com/test" rel="nofollow noreferrer noopener" target="_blank">https://www.facebook.com/test</a>
+    result = '<div><a href="https://www.facebook.com/test" rel="nofollow noreferrer noopener" target="_blank">https://www.facebook.com/test</a>
 </div>'
     assert_equal(result, html.html2html_strict)
 
@@ -641,11 +640,11 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com</div>"
-    result = "<div>\n<a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>\n</div>"
+    result = "<div><a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>\n</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com.</div>"
-    result = "<div>\n<a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>.</div>"
+    result = "<div><a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>.</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>lala http://example.com.</div>"
@@ -653,11 +652,11 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com, and so on</div>"
-    result = "<div>\n<a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>, and so on</div>"
+    result = "<div><a href=\"http://example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com</a>, and so on</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<div>http://example.com?lala=me, and so on</div>"
-    result = "<div>\n<a href=\"http://example.com?lala=me\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com?lala=me</a>, and so on</div>"
+    result = "<div><a href=\"http://example.com?lala=me\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://example.com?lala=me</a>, and so on</div>"
     assert_equal(result, html.html2html_strict)
 
     html   = "<a href=\"http://facebook.de/examplesrbog\"><span lang=\"EN-US\" style='color:blue'>http://facebook.de/examplesrbog</span></a>"
@@ -665,12 +664,12 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = "<span style=\"font-size:10.0pt;font-family:&quot;Cambria&quot;,serif;color:#1F497D;mso-fareast-language:DE\">web&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href=\"http://www.example.de\"><span style=\"color:blue\">www.example.de</span></a><o:p></o:p></span>"
-    result = "web <a href=\"http://www.example.de\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">www.example.de</a>"
+<a href=\"http://www.example.com\"><span style=\"color:blue\">www.example.com</span></a><o:p></o:p></span>"
+    result = "web <a href=\"http://www.example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">www.example.com</a>"
     assert_equal(result, html.html2html_strict)
 
-    html   = "web <a href=\"www.example.de\"><span style=\"color:blue\">www.example.de</span></a>"
-    result = "web <a href=\"http://www.example.de\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">www.example.de</a>"
+    html   = "web <a href=\"www.example.com\"><span style=\"color:blue\">www.example.com</span></a>"
+    result = "web <a href=\"http://www.example.com\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">www.example.com</a>"
     assert_equal(result, html.html2html_strict)
 
     html   = "Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den <a href=\"http://newsletters.cylex.de/\" class=\"\">Link des Adventkalenders</a> in<br class=\"\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ihrer Lesezeichen-Symbolleiste zu ergänzen.</p><div class=\"\">&nbsp;"
@@ -913,9 +912,9 @@ christian.schaefer@example.com'
     result = '<img style="width: 181px; height: 125px;" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">'
     assert_equal(result, html.html2html_strict)
 
-    html   = '<p class="MsoNormal"><a href="http://www.example.de/"><span style="color:blue;text-decoration:none"><img border="0" width="30" height="30" id="_x0000_i1030" src="cid:image001.png@01D172FC.F323CDB0"></span></a><o:p></o:p></p>'
-    #result = '<p>http://www.example.de/ <a href="http://www.example.de/" rel="nofollow noreferrer noopener" target="_blank"><img border="0" src="cid:image001.png@01D172FC.F323CDB0" style="width:30px;height:30px;"></a></p>'
-    result = '<p><a href="http://www.example.de/" rel="nofollow noreferrer noopener" target="_blank">http://www.example.de/</a></p>'
+    html   = '<p class="MsoNormal"><a href="http://www.example.com/"><span style="color:blue;text-decoration:none"><img border="0" width="30" height="30" id="_x0000_i1030" src="cid:image001.png@01D172FC.F323CDB0"></span></a><o:p></o:p></p>'
+    #result = '<p>http://www.example.com/ <a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank"><img border="0" src="cid:image001.png@01D172FC.F323CDB0" style="width:30px;height:30px;"></a></p>'
+    result = '<p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/</a></p>'
     assert_equal(result, html.html2html_strict)
 
     html   = '<p><a style="color: " href="http://www.example.com/?wm=mail"><img border="0" src="cid:example_new.png@8B201D8C.000B" width="101" height="30"></a></p>'
@@ -938,6 +937,10 @@ christian.schaefer@example.com'
 <b>bitte</b> noch meine Testphase verlängern?<o:p></o:p></span></p>
 <p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#1F497D;mso-fareast-language:EN-US"><o:p>&nbsp;</o:p></span></p>'
     result = '<p>oh jeee … Zauberwort vergessen ;-) Können Sie mir <b>bitte</b> noch meine Testphase verlängern?</p><p>&nbsp;</p>'
+    assert_equal(result, html.html2html_strict)
+
+    html   = '<div><a href="http://www.example.com/Community/Passwort-Vergessen/?module_fnc=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805" title="http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805" rel="nofollow" target="_blank">http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805</a></div>'
+    result = '<div><a href="http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805</a> (<a href="http://www.example.com/Community/Passwort-Vergessen/?module_fnc=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805" title="http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/Community/Passwort-Vergessen/?module_fnc=ChangeForgotPassword&amp;pwchangekey=66901c449dda98a098de4b57ccdf0805</a>)</div>'
     assert_equal(result, html.html2html_strict)
 
   end
@@ -1106,10 +1109,10 @@ christian.schaefer@example.com'
     html   = '<div><br>
 <br>
 <br><font size=1 color=#5f5f5f face="sans-serif">Von: &nbsp; &nbsp; &nbsp;
-&nbsp;</font><font size=1 face="sans-serif">Hotel &lt;info@example.de&gt;</font>
+&nbsp;</font><font size=1 face="sans-serif">Hotel &lt;info@example.com&gt;</font>
 <br><font size=1 color=#5f5f5f face="sans-serif">An: &nbsp; &nbsp; &nbsp;
 &nbsp;</font></div>'
-    result = '<span class="js-signatureMarker"></span><div><br>Von: Hotel &lt;info@example.de&gt;
+    result = '<span class="js-signatureMarker"></span><div><br>Von: Hotel &lt;info@example.com&gt;
 <br>An: 
 </div>'
     assert_equal(result, html.html2html_strict)
