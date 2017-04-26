@@ -3,112 +3,49 @@ require 'test_helper'
 
 class CacheTest < ActiveSupport::TestCase
   test 'cache' do
-    tests = [
 
-      # test 1
-      {
-        set: {
-          key: '123',
-          data: {
-            key: 'some value',
-          }
-        },
-        verify: {
-          key: '123',
-          data: {
-            key: 'some value',
-          }
-        },
-      },
+    # test 1
+    Cache.write('123', 'some value')
+    cache = Cache.get('123')
+    assert_equal(cache, 'some value')
 
-      # test 2
-      {
-        set: {
-          key: '123',
-          data: {
-            key: 'some valueöäüß',
-          }
-        },
-        verify: {
-          key: '123',
-          data: {
-            key: 'some valueöäüß',
-          }
-        },
-      },
+    Cache.write('123', { key: 'some value' })
+    cache = Cache.get('123')
+    assert_equal(cache, { key: 'some value' })
 
-      # test 3
-      {
-        delete: {
-          key: '123',
-        },
-        verify: {
-          key: '123',
-          data: nil
-        },
-      },
+    # test 2
+    Cache.write('123', { key: 'some valueöäüß' })
+    cache = Cache.get('123')
+    assert_equal(cache, { key: 'some valueöäüß' })
 
-      # test 4
-      {
-        set: {
-          key: '123',
-          data: {
-            key: 'some valueöäüß2',
-          }
-        },
-        verify: {
-          key: '123',
-          data: {
-            key: 'some valueöäüß2',
-          }
-        },
-      },
+    # test 3
+    Cache.delete('123')
+    cache = Cache.get('123')
+    assert_nil(cache)
 
-      # test 5
-      {
-        cleanup: true,
-        verify: {
-          key: '123',
-          data: nil
-        },
-      },
+    # test 4
+    Cache.write('123', { key: 'some valueöäüß2' })
+    cache = Cache.get('123')
+    assert_equal(cache, { key: 'some valueöäüß2' })
 
-      # test 6
-      {
-        set: {
-          key: '123',
-          data: {
-            key: 'some valueöäüß2',
-          },
-          param: {
-            expires_in: 3.seconds,
-          }
-        },
-        sleep: 5,
-        verify: {
-          key: '123',
-          data: nil
-        },
-      },
-    ]
-    tests.each { |test|
-      if test[:set]
-        Cache.write(test[:set], test[:set][:data])
-      end
-      if test[:delete]
-        Cache.delete(test[:delete][:key])
-      end
-      if test[:cleanup]
-        Cache.clear
-      end
-      if test[:sleep]
-        sleep test[:sleep]
-      end
-      if test[:verify]
-        cache = Cache.get(test[:verify])
-        assert_equal(cache, test[:verify][:data], 'verify')
-      end
-    }
+    Cache.delete('123')
+    cache = Cache.get('123')
+    assert_nil(cache)
+
+    # test 5
+    Cache.clear
+    cache = Cache.get('123')
+    assert_nil(cache)
+
+    Cache.delete('123')
+    cache = Cache.get('123')
+    assert_nil(cache)
+
+    # test 6
+    Cache.write('123', { key: 'some valueöäüß2' }, expires_in: 3.seconds)
+    sleep 5
+    cache = Cache.get('123')
+    assert_nil(cache)
   end
 
   # verify if second cache write overwrite first one

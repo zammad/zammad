@@ -19,7 +19,58 @@ satinize html string based on whiltelist
     classes_whitelist = ['js-signatureMarker']
     attributes_2_css = %w(width height)
 
-    scrubber = Loofah::Scrubber.new do |node|
+    scrubber_link = Loofah::Scrubber.new do |node|
+
+      # check if href is different to text
+      if external && node.name == 'a' && !url_same?(node['href'], node.text)
+        if node['href'].blank?
+          node.replace node.children.to_s
+          Loofah::Scrubber::STOP
+        elsif (node.children.empty? || node.children.first.class == Nokogiri::XML::Text) && node.text.present?
+          text = Nokogiri::XML::Text.new("#{node['href']} (", node.document)
+          node.add_previous_sibling(text)
+          node['href'] = cleanup_target(node.text)
+          text = Nokogiri::XML::Text.new(')', node.document)
+          node.add_next_sibling(text)
+        else
+          node.content = cleanup_target(node['href'])
+        end
+      end
+
+      # check if text has urls which need to be clickable
+      if node && node.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
+        if node.class == Nokogiri::XML::Text
+          urls = []
+          node.content.scan(%r{((http|https|ftp|tel)://.+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)}mxi).each { |match|
+            if match[0]
+              urls.push match[0].to_s.strip
+            end
+          }
+          node.content.scan(/(^|:|;|\s)(www\..+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)/mxi).each { |match|
+            if match[1]
+              urls.push match[1].to_s.strip
+            end
+          }
+          next if urls.empty?
+          add_link(node.content, urls, node)
+        end
+      end
+
+      # prepare links
+      if node['href']
+        href = cleanup_target(node['href'])
+        if external && href.present? && !href.downcase.start_with?('//') && href.downcase !~ %r{^.{1,6}://.+?}
+          node['href'] = "http://#{node['href']}"
+          href = node['href']
+        end
+        next if !href.downcase.start_with?('http', 'ftp', '//')
+        node.set_attribute('href', href)
+        node.set_attribute('rel', 'nofollow noreferrer noopener')
+        node.set_attribute('target', '_blank')
+      end
+    end
+
+    scrubber_wipe = Loofah::Scrubber.new do |node|
 
       # remove tags with subtree
       if tags_remove_content.include?(node.name)
@@ -128,67 +179,19 @@ satinize html string based on whiltelist
           Loofah::Scrubber::STOP
         end
       end
-
-      # prepare links
-      if node['href']
-        href = cleanup_target(node['href'])
-        if external && href.present? && !href.downcase.start_with?('//') && href.downcase !~ %r{^.{1,6}://.+?}
-          node['href'] = "http://#{node['href']}"
-          href = node['href']
-        end
-        next if !href.downcase.start_with?('http', 'ftp', '//')
-        node.set_attribute('href', href)
-        node.set_attribute('rel', 'nofollow noreferrer noopener')
-        node.set_attribute('target', '_blank')
-      end
-
-      # check if href is different to text
-      if external && node.name == 'a' && !url_same?(node['href'], node.text)
-        if node['href'].blank?
-          node.replace node.children.to_s
-          Loofah::Scrubber::STOP
-        elsif (node.children.empty? || node.children.first.class == Nokogiri::XML::Text) && node.text.present?
-          text = Nokogiri::XML::Text.new("#{node['href']} (", node.document)
-          node.add_previous_sibling(text)
-          node['href'] = cleanup_target(node.text)
-          text = Nokogiri::XML::Text.new(')', node.document)
-          node.add_next_sibling(text)
-        else
-          node.content = cleanup_target(node['href'])
-        end
-      end
-
-      # check if text has urls which need to be clickable
-      if node && node.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
-        if node.class == Nokogiri::XML::Text
-          urls = []
-          node.content.scan(%r{((http|https|ftp|tel)://.+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)}mxi).each { |match|
-            if match[0]
-              urls.push match[0].to_s.strip
-            end
-          }
-          node.content.scan(/(^|:|;|\s)(www\..+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)/mxi).each { |match|
-            if match[1]
-              urls.push match[1].to_s.strip
-            end
-          }
-          next if urls.empty?
-          add_link(node.content, urls, node)
-        end
-      end
-
     end
 
     new_string = ''
     done = true
     while done
-      new_string = Loofah.fragment(string).scrub!(scrubber).to_s
+      new_string = Loofah.fragment(string).scrub!(scrubber_wipe).to_s
       if string == new_string
         done = false
       end
       string = new_string
     end
-    string
+
+    Loofah.fragment(string).scrub!(scrubber_link).to_s
   end
 
 =begin
