@@ -8,8 +8,8 @@ WITH_DB=$5 || 0
 SERVER_PID='tmp/pids/server.pid'
 LOG_HOST='cilog@schneeberg.znuny.com'
 
-script/scheduler.rb stop
-script/websocket-server.rb stop
+bundle exec script/scheduler.rb stop
+bundle exec script/websocket-server.rb stop
 kill $(cat $SERVER_PID)
 sleep 5
 if [ -f $SERVER_PID ]; then
