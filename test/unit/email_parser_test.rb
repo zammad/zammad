@@ -1027,6 +1027,27 @@ end
 </div>'
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail51.box'),
+        body_md5: '8a028710b157c68ace0a5b2264c44da7',
+        attachments: [
+          {
+            md5: '9964263c167ab47f8ec59c48e57cb905',
+            filename: 'message.html',
+          },
+          {
+            md5: 'ddbdf67aa2f5c60c294008a54d57082b',
+            filename: 'super-seven.jpg',
+            cid: '485376C9-2486-4351-B932-E2010998F579@home',
+          },
+        ],
+        params: {
+          from: 'Martin Edenhofer <martin@example.de>',
+          from_email: 'martin@example.de',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
+        },
+      },
     ]
 
     count = 0
