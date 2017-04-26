@@ -377,7 +377,8 @@ class Channel::EmailParser
 
     # cleanup content id, <> will be added automatically later
     if headers_store['Content-ID']
-      headers_store['Content-ID'].gsub!(/^</, '').gsub!(/>$/, '')
+      headers_store['Content-ID'].gsub!(/^</, '')
+      headers_store['Content-ID'].gsub!(/>$/, '')
     end
 
     # workaround for mail gem
