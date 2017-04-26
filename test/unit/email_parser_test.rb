@@ -244,7 +244,7 @@ Managing Director: Martin Edenhofer
       },
       {
         data: IO.binread('test/fixtures/mail8.box'),
-        body_md5: '6b2b3701aaf6b5a1c351664e7d4bab03',
+        body_md5: '166c87ab43c07301686c1c8761e98d48',
         attachments: [
           {
             md5: 'c3ca4aab222eed8a148a716371b70129',
@@ -281,7 +281,7 @@ Düsseldorfer Landstraße 395
 <br>
 D-00000 Hof
 <br>
-<a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank"><u><a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com</a></u></a> <br>
+<a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank"><u>www.example.com</u></a> <br>
 <br> <hr>
 <br>
 Geschäftsführung/Management Board: Jan Bauer (Vorsitzender/Chairman), Oliver Bauer, Heiko Bauer, Boudewijn Bauer
@@ -552,7 +552,7 @@ Newsletter abbestellen (<a href="http://newsletters.cylex.de/ref/www.cylex.de/si
       },
       {
         data: IO.binread('test/fixtures/mail19.box'),
-        body_md5: '2e162549ffb5c7832c7be0d6538e8aa1',
+        body_md5: '29a8a50c2931346296f8b8fe782e115c',
         params: {
           from: '"我" <>',
           from_email: '"我" <>',
