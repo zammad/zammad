@@ -2291,6 +2291,31 @@ Some Text',
           ],
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail49.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'Kinderschwimmbrille ABC Little Twist: Schnell angelegt, keine verhedderten Haare (Pressemitteilung)',
+          },
+          1 => {
+            from: '"Marcus Smith (ABC)" <marcus.smith@example.com>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Marcus',
+              lastname: 'Smith',
+              fullname: 'Marcus Smith',
+              email: 'marcus.smith@example.com',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end
