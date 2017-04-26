@@ -552,7 +552,7 @@ Newsletter abbestellen (<a href="http://newsletters.cylex.de/ref/www.cylex.de/si
       },
       {
         data: IO.binread('test/fixtures/mail19.box'),
-        body_md5: '29a8a50c2931346296f8b8fe782e115c',
+        body_md5: '0a9da3fd3da7a5779fb711fe04818ccd',
         params: {
           from: '"我" <>',
           from_email: '"我" <>',

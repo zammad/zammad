@@ -48,7 +48,7 @@ class HtmlSanitizerTest < ActiveSupport::TestCase
     assert_equal(HtmlSanitizer.strict('<DIV STYLE="background-image: url(javascript:alert(\'XSS\'), \'\')">'), '<div></div>')
     assert_equal(HtmlSanitizer.strict('<a href="/some/path">test</a>'), '<a href="/some/path">test</a>')
     assert_equal(HtmlSanitizer.strict('<a href="https://some/path">test</a>'), '<a href="https://some/path" rel="nofollow noreferrer noopener" target="_blank">test</a>')
-    assert_equal(HtmlSanitizer.strict('<a href="https://some/path">test</a>', true), '<a href="https://some/path" rel="nofollow noreferrer noopener" target="_blank">https://some/path</a> (<a href="http://test" rel="nofollow noreferrer noopener" target="_blank">test</a>)')
+    assert_equal(HtmlSanitizer.strict('<a href="https://some/path">test</a>', true), 'https://some/path (<a href="http://test" rel="nofollow noreferrer noopener" target="_blank">test</a>)')
     assert_equal(HtmlSanitizer.strict('<XML ID="xss"><I><B><IMG SRC="javas<!-- -->cript:alert(\'XSS\')"></B></I></XML>'), '<i><b></b></i>')
     assert_equal(HtmlSanitizer.strict('<IMG SRC="javas<!-- -->cript:alert(\'XSS\')">'), '')
     assert_equal(HtmlSanitizer.strict(' <HEAD><META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-7"> </HEAD>+ADw-SCRIPT+AD4-alert(\'XSS\');+ADw-/SCRIPT+AD4-'), '  +ADw-SCRIPT+AD4-alert(\'XSS\');+ADw-/SCRIPT+AD4-')
@@ -56,7 +56,7 @@ class HtmlSanitizerTest < ActiveSupport::TestCase
     assert_equal(HtmlSanitizer.strict('<A HREF="h
 tt  p://6 6.000146.0x7.147/">XSS</A>'), '<a href="http://66.000146.0x7.147/" rel="nofollow noreferrer noopener" target="_blank">XSS</a>')
     assert_equal(HtmlSanitizer.strict('<A HREF="h
-tt  p://6 6.000146.0x7.147/">XSS</A>', true), '<a href="http://66.000146.0x7.147/" rel="nofollow noreferrer noopener" target="_blank">http://66.000146.0x7.147/</a> (<a href="http://XSS" rel="nofollow noreferrer noopener" target="_blank">XSS</a>)')
+tt  p://6 6.000146.0x7.147/">XSS</A>', true), 'h%0Att%20%20p://6%206.000146.0x7.147/ (<a href="http://XSS" rel="nofollow noreferrer noopener" target="_blank">XSS</a>)')
     assert_equal(HtmlSanitizer.strict('<A HREF="//www.google.com/">XSS</A>'), '<a href="//www.google.com/" rel="nofollow noreferrer noopener" target="_blank">XSS</a>')
     assert_equal(HtmlSanitizer.strict('<A HREF="//www.google.com/">XSS</A>', true), '//www.google.com/ (<a href="http://XSS" rel="nofollow noreferrer noopener" target="_blank">XSS</a>)')
     assert_equal(HtmlSanitizer.strict('<form id="test"></form><button form="test" formaction="javascript:alert(1)">X</button>'), 'X')
