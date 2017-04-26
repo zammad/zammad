@@ -82,29 +82,40 @@ class App.UiElement.ticket_selector
             elements["#{groupKey}.#{config.name}"] = config
     [defaults, groups, elements]
 
+  @rowContainer: (groups, elements, attribute) ->
+    row = $( App.view('generic/ticket_selector_row')(attribute: attribute) )
+    selector = @buildAttributeSelector(groups, elements)
+    row.find('.js-attributeSelector').prepend(selector)
+    row
+
   @render: (attribute, params = {}) ->
 
     [defaults, groups, elements] = @defaults(attribute)
 
-    selector = @buildAttributeSelector(groups, elements)
-
-    # return item
     item = $( App.view('generic/ticket_selector')(attribute: attribute) )
-    item.find('.js-attributeSelector').prepend(selector)
 
     # add filter
-    item.find('.js-add').bind('click', (e) =>
+    item.delegate('.js-add', 'click', (e) =>
       element = $(e.target).closest('.js-filterElement')
-      elementClone = element.clone(true)
-      element.after(elementClone)
-      elementClone.find('.js-attributeSelector select').trigger('change')
-      @updateAttributeSelectors(item)
+
+      # add first available attribute
+      field = undefined
+      for groupAndAttribute, _config of elements
+        if !item.find(".js-attributeSelector [value=\"#{groupAndAttribute}\"]:selected").get(0)
+          field = groupAndAttribute
+          break
+      return if !field
+      row = @rowContainer(groups, elements, attribute)
+      element.after(row)
+      row.find('.js-attributeSelector select').trigger('change')
+      @rebuildAttributeSelectors(item, row, field, elements, {}, attribute)
+
       if attribute.preview isnt false
         @preview(item)
     )
 
     # remove filter
-    item.find('.js-remove').bind('click', (e) =>
+    item.delegate('.js-remove', 'click', (e) =>
       return if $(e.currentTarget).hasClass('is-disabled')
       $(e.target).closest('.js-filterElement').remove()
       @updateAttributeSelectors(item)
@@ -118,45 +129,34 @@ class App.UiElement.ticket_selector
       for groupAndAttribute, meta of params[attribute.name]
         selectorExists = true
 
-        # get selector rows
-        elementFirst = item.find('.js-filterElement').first()
-        elementLast = item.find('.js-filterElement').last()
-
-        # clone, rebuild and append
-        elementClone = elementFirst.clone(true)
-        @rebuildAttributeSelectors(item, elementClone, groupAndAttribute, elements, meta, attribute)
-        elementLast.after(elementClone)
-
-      # remove first dummy row
-      if selectorExists
-        item.find('.js-filterElement').first().remove()
+        # build and append
+        row = @rowContainer(groups, elements, attribute)
+        @rebuildAttributeSelectors(item, row, groupAndAttribute, elements, meta, attribute)
+        item.filter('.js-filter').append(row)
 
     else
       for groupAndAttribute in defaults
 
-        # get selector rows
-        elementFirst = item.find('.js-filterElement').first()
-        elementLast = item.find('.js-filterElement').last()
-
-        # clone, rebuild and append
-        elementClone = elementFirst.clone(true)
-        @rebuildAttributeSelectors(item, elementClone, groupAndAttribute, elements, {}, attribute)
-        elementLast.after(elementClone)
-      item.find('.js-filterElement').first().remove()
+        # build and append
+        row = @rowContainer(groups, elements, attribute)
+        @rebuildAttributeSelectors(item, row, groupAndAttribute, elements, {}, attribute)
+        item.filter('.js-filter').append(row)
 
     # change attribute selector
-    item.find('.js-attributeSelector select').bind('change', (e) =>
+    item.delegate('.js-attributeSelector select', 'change', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
+      return if !groupAndAttribute
       @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, elements, {}, attribute)
       @updateAttributeSelectors(item)
     )
 
     # change operator selector
-    item.on('change', '.js-operator select', (e) =>
+    item.delegate('.js-operator select', 'change', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
-      @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute)
+      return if !groupAndAttribute
+      @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute, false)
     )
 
     # bind for preview
@@ -244,9 +244,9 @@ class App.UiElement.ticket_selector
     if groupAndAttribute
       elementRow.find('.js-attributeSelector select').val(groupAndAttribute)
 
-    @buildOperator(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+    @buildOperator(elementFull, elementRow, groupAndAttribute, elements, meta, attribute, true)
 
-  @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+  @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute, buildValue) ->
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
 
     name = "#{attribute.name}::#{groupAndAttribute}::operator"
@@ -284,9 +284,9 @@ class App.UiElement.ticket_selector
 
     elementRow.find('.js-operator select').replaceWith(selection)
 
-    @buildPreCondition(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+    @buildPreCondition(elementFull, elementRow, groupAndAttribute, elements, meta, attribute, buildValue)
 
-  @buildPreCondition: (elementFull, elementRow, groupAndAttribute, elements, meta, attributeConfig) ->
+  @buildPreCondition: (elementFull, elementRow, groupAndAttribute, elements, meta, attributeConfig, buildValue = true) ->
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
     currentPreCondition = elementRow.find('.js-preCondition option:selected').attr('value')
 
@@ -318,6 +318,7 @@ class App.UiElement.ticket_selector
     if !preCondition
       elementRow.find('.js-preCondition select').html('')
       elementRow.find('.js-preCondition').addClass('hide')
+      return if !buildValue
       toggleValue()
       @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
       return
@@ -350,6 +351,7 @@ class App.UiElement.ticket_selector
       toggleValue()
     )
 
+    return if !buildValue
     @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
     toggleValue()
 
