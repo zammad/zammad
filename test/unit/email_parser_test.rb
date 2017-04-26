@@ -362,6 +362,7 @@ Registergericht / Commercial Register of the Local Court: HRB 0000 AG Hof',
           },
         ],
         params: {
+          "reply-to": 'serviceteam@cylex.de',
           from: 'CYLEX Newsletter <carina.merkant@cylex.de>',
           from_email: 'carina.merkant@cylex.de',
           from_display_name: 'CYLEX Newsletter',

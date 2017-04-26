@@ -7,6 +7,12 @@
         <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.from) %></div>
       </div>
     <% end %>
+    <% if @article.reply_to: %>
+      <div class="horizontal article-meta-row">
+        <div class="article-meta-key u-textTruncate"><%- @T('Reply-To') %></div>
+        <div class="article-meta-value flex contain-text"><%- @AddressLine(@article.reply_to) %></div>
+      </div>
+    <% end %>
     <% if @article.to: %>
       <div class="horizontal article-meta-row">
         <div class="article-meta-key u-textTruncate"><%- @T('To') %></div>
