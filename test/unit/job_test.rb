@@ -330,7 +330,7 @@ class JobTest < ActiveSupport::TestCase
         },
       },
       condition: {
-        'ticket.state_id' => { 'operator' => 'is', 'value' => '' },
+        'ticket.state_id' => { 'operator' => 'is', 'value' => '9999' },
         'ticket.created_at' => { 'operator' => 'before (relative)', 'value' => '2', 'range' => 'day' },
       },
       perform: {
@@ -355,81 +355,6 @@ class JobTest < ActiveSupport::TestCase
     ticket2_later = Ticket.find(ticket2.id)
     assert_equal('new', ticket2_later.state.name)
     assert_equal(ticket2.updated_at.to_s, ticket2_later.updated_at.to_s)
-
-    job1 = Job.create_or_update(
-      name: 'Test Job1',
-      timeplan: {
-        days: {
-          Mon: true,
-          Tue: true,
-          Wed: true,
-          Thu: true,
-          Fri: true,
-          Sat: true,
-          Sun: true,
-        },
-        hours: {
-          0 => true,
-          1 => true,
-          2 => true,
-          3 => true,
-          4 => true,
-          5 => true,
-          6 => true,
-          7 => true,
-          8 => true,
-          9 => true,
-          10 => true,
-          11 => true,
-          12 => true,
-          13 => true,
-          14 => true,
-          15 => true,
-          16 => true,
-          17 => true,
-          18 => true,
-          19 => true,
-          20 => true,
-          21 => true,
-          22 => true,
-          23 => true,
-        },
-        minutes: {
-          0 => true,
-          10 => true,
-          20 => true,
-          30 => true,
-          40 => true,
-          50 => true,
-        },
-      },
-      condition: {
-        'ticket.state_id' => { 'operator' => 'is' },
-        'ticket.created_at' => { 'operator' => 'before (relative)', 'value' => '2', 'range' => 'day' },
-      },
-      perform: {
-        'ticket.state_id' => { 'value' => Ticket::State.lookup(name: 'closed').id.to_s }
-      },
-      disable_notification: true,
-      last_run_at: nil,
-      updated_at: Time.zone.now - 15.minutes,
-      active: true,
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-    assert(job1.executable?)
-    assert(job1.in_timeplan?)
-    Job.run
-
-    # verify changes on tickets
-    ticket1_later = Ticket.find(ticket1.id)
-    assert_equal('new', ticket1_later.state.name)
-    assert_equal(ticket1.updated_at.to_s, ticket1_later.updated_at.to_s)
-
-    ticket2_later = Ticket.find(ticket2.id)
-    assert_equal('new', ticket2_later.state.name)
-    assert_equal(ticket2.updated_at.to_s, ticket2_later.updated_at.to_s)
-
   end
 
   test 'case 3' do

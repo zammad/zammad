@@ -2,6 +2,7 @@
 
 class Sla < ApplicationModel
   include NotifiesClients
+  include ValidatesCondition
 
   load 'sla/assets.rb'
   include Sla::Assets
