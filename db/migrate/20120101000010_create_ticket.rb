@@ -155,7 +155,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :to,                   :string, limit: 3000,    null: true
       t.column :cc,                   :string, limit: 3000,    null: true
       t.column :subject,              :string, limit: 3000,    null: true
-      t.column :reply_to,             :string, limit: 3000,    null: true
+      t.column :reply_to,             :string, limit: 500,     null: true
       t.column :message_id,           :string, limit: 3000,    null: true
       t.column :message_id_md5,       :string, limit: 32,      null: true
       t.column :in_reply_to,          :string, limit: 3000,    null: true
