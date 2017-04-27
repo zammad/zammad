@@ -99,7 +99,12 @@ RSpec.describe Import::Ldap::User do
   context 'update' do
 
     before(:each) do
-      user = create(:user, login: uid)
+      user = create(:user,
+                    login:    uid,
+                    role_ids: [
+                      Role.find_by(name: 'Agent').id,
+                      Role.find_by(name: 'Admin').id
+                    ])
 
       ExternalSync.create(
         source:    'Ldap::User',
@@ -116,6 +121,14 @@ RSpec.describe Import::Ldap::User do
         User.count
       }.and not_change {
         ExternalSync.count
+      }
+    end
+
+    it "doesn't change roles if no role mapping is configured" do
+      expect do
+        described_class.new(user_entry, ldap_config, {}, signup_role_ids)
+      end.to not_change {
+        User.last.role_ids
       }
     end
 
