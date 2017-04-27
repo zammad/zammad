@@ -4526,8 +4526,11 @@ footer {
     padding: 0 7px;
     text-align: center;
     
-    .ticketZoom-header &:hover {
-      background: hsl(210,17%,93%);
+    .ticketZoom-header & {
+      &:hover,
+      &:focus {
+        background: hsl(210,17%,93%);
+      }
     }
   }
 
