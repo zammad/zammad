@@ -262,7 +262,7 @@ ol, ul {
 }
 [contenteditable]:hover,
 [contenteditable]:focus {
-  background: #f8f9fa;
+  background: hsl(210,17%,98%);
 }
 [contenteditable]:focus {
   text-overflow: clip !important;
@@ -4523,7 +4523,12 @@ footer {
     white-space: normal;
     margin-top: 15px;
     margin-bottom: 8px;
+    padding: 0 7px;
     text-align: center;
+    
+    .ticketZoom-header &:hover {
+      background: hsl(210,17%,93%);
+    }
   }
 
   .task-subline {
@@ -5061,15 +5066,13 @@ footer {
     cursor: text;
   }
 
-    .article-new .textBubble [contenteditable],
-    .article-new textarea,
     .articleNewEdit-body {
       width: 100%;
       position: relative;
       min-height: 20px;
       vertical-align: bottom;
       border: none;
-      background: none;
+      background: none !important; // overwrite [contenteditable]:hover
       outline: none;
       resize: none;
     }
