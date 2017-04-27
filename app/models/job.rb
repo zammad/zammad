@@ -2,6 +2,7 @@
 
 class Job < ApplicationModel
   include NotifiesClients
+  include ValidatesCondition
 
   load 'job/assets.rb'
   include Job::Assets
