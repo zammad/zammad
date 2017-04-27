@@ -14,6 +14,10 @@ require 'daemons'
 dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 Dir.chdir dir
 RAILS_ENV = ENV['RAILS_ENV'] || 'development'
+
+require 'rails/all'
+require 'bundler'
+Bundler.require(:default, Rails.env)
 require File.join(dir, 'config', 'environment')
 
 require 'sessions'
