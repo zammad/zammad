@@ -73,6 +73,7 @@ class ArticleViewItem extends App.ObserverController
 
   elements:
     '.textBubble-content':           'textBubbleContent'
+    '.textBubble-content img':       'textBubbleImages'
     '.textBubble-overflowContainer': 'textBubbleOverflowContainer'
 
   events:
@@ -209,6 +210,13 @@ class ArticleViewItem extends App.ObserverController
     return if @shown
     @shown = true
 
+    @textBubbleImages.each (i, el) =>
+      if !el.complete
+        $(el).one 'load', @measureSeeMore
+
+    @measureSeeMore()
+
+  measureSeeMore: =>
     maxHeight               = 560
     minHeight               = 90
     bubbleContent           = @textBubbleContent
