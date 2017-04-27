@@ -1912,7 +1912,7 @@ input.has-error {
 }
 
 .selected-clue {
-  @extend .zIndex-9;
+  @extend .zIndex-6;
   pointer-events: none;
 }
 
@@ -1920,7 +1920,7 @@ input.has-error {
   display: flex;
   align-items: center;
   justify-content: center;
-  @extend .zIndex-8;
+  @extend .zIndex-5;
 
   .modal-backdrop {
     bottom: 0;
@@ -3157,7 +3157,7 @@ footer {
       Safari font rendering bugfix while animating
       http://stackoverflow.com/questions/9733011/safari-changing-font-weights-when-unrelated-animations-are-running
     */
-    z-index: 899; // stay beneath #global-search-results
+    @extend .zIndex-5; // stay beneath .global-search-menu
     position: relative;
   }
 
@@ -3331,7 +3331,7 @@ footer {
 
   .search .logo {
     position: relative;
-    @extend .u-clickable, .zIndex-5;
+    @extend .u-clickable, .zIndex-3;
     margin: -4px 10px 0 12px;
     transition: 240ms;
   }
@@ -3362,13 +3362,13 @@ footer {
     }
 
   .global-search-menu {
+    @extend .zIndex-6;
     background: #26272e;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     top: 53px;
-    z-index: 900;
     display: none;
     overflow: auto;
 
@@ -3852,7 +3852,7 @@ footer {
   border: none;
   color: hsl(206,7%,28%);
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
-  z-index: 900;
+  @extend .zIndex-6;
 }
 
   .popover-body {
@@ -3955,7 +3955,7 @@ footer {
     min-width: 350px;
     position: absolute;
     flex-direction: column;
-    @extend .zIndex-5;
+    @extend .zIndex-2;
 
     &.is-visible {
       display: flex;
@@ -4858,7 +4858,7 @@ footer {
   .editControls-item {
     position: absolute;
     top: 43px;
-    @extend .u-clickable, .zIndex-7;
+    @extend .u-clickable, .zIndex-4;
 
     &.is-hidden {
       display: none;
@@ -5725,7 +5725,7 @@ footer {
 
 /* allow/show autocomplete in modal dialog */
 .ui-autocomplete.ui-widget-content {
-  z-index: 1100;
+  @extend .zIndex-9;
 }
 
 .drox {
@@ -5856,7 +5856,7 @@ footer {
 
 .modal {
   position: fixed;
-  z-index: 1000;
+  @extend .zIndex-9;
 }
 
 .modal-dialog {
@@ -6363,7 +6363,7 @@ footer {
 }
 
 .scrollPageHeader {
-  @extend .zIndex-8;
+  @extend .zIndex-5;
   display: flex;
   align-items: center;
   background: white;
@@ -8469,8 +8469,7 @@ output {
 }
 
 .batch-overlay {
-  @extend .fit;
-  z-index: 100;
+  @extend .fit, .zIndex-1;
   color: white;
   text-transform: uppercase;
   text-align: center;
