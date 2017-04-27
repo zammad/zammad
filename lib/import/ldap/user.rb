@@ -128,7 +128,7 @@ module Import
             remote: resource,
           )
 
-          store_associations_state(instance)
+          store_associations(:before, instance)
         end
 
         instance

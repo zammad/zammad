@@ -6,7 +6,10 @@ module Import
 
     def initialize(resource, *args)
       handle_args(resource, *args)
+      initialize_associations_states
       import(resource, *args)
+      return if @resource.blank?
+      store_associations(:after, @resource)
     end
 
     def import_class
@@ -30,8 +33,7 @@ module Import
     end
 
     def attributes_changed?
-      return true if changed_attributes.present?
-      @associations_init != associations_state(@resource)
+      changed_attributes.present? || changed_associations.present?
     end
 
     def changed_attributes
@@ -40,6 +42,15 @@ module Import
       return @resource.changes if @resource.changed?
       # live run
       @resource.previous_changes
+    end
+
+    def changed_associations
+      changes = {}
+      tracked_associations.each do |association|
+        next if @associations[:before][association] == @associations[:after][association]
+        changes[association] = [@associations[:before][association], @associations[:after][association]]
+      end
+      changes
     end
 
     def created?
@@ -51,6 +62,13 @@ module Import
     end
 
     private
+
+    def initialize_associations_states
+      @associations = {}
+      %i(before after).each do |state|
+        @associations[state] ||= {}
+      end
+    end
 
     def import(resource, *args)
       create_or_update(map(resource, *args), *args)
@@ -96,13 +114,13 @@ module Import
       return if !synced_instance
       instance = import_class.find_by(id: synced_instance.o_id)
 
-      store_associations_state(instance)
+      store_associations(:before, instance)
 
       instance
     end
 
-    def store_associations_state(instance)
-      @associations_init = associations_state(instance)
+    def store_associations(state, instance)
+      @associations[state] = associations_state(instance)
     end
 
     def associations_state(instance)
