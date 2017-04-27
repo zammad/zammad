@@ -3,8 +3,18 @@
 
 $LOAD_PATH << './lib'
 require 'rubygems'
-require 'daemons'
+
+# load rails env
 dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+Dir.chdir dir
+RAILS_ENV = ENV['RAILS_ENV'] || 'development'
+
+require 'rails/all'
+require 'bundler'
+Bundler.require(:default, Rails.env)
+require File.join(dir, 'config', 'environment')
+
+require 'daemons'
 
 daemon_options = {
   multiple: false,
@@ -22,12 +32,10 @@ Daemons.run_proc(name, daemon_options) do
   end
 
   Dir.chdir dir
-  RAILS_ENV = ARGV.first || ENV['RAILS_ENV'] || 'development'
 
   $stdout.reopen( dir + '/log/' + name + '_out.log', 'w')
   $stderr.reopen( dir + '/log/' + name + '_err.log', 'w')
-  require File.join(dir, 'config', 'environment')
-  require 'scheduler'
 
+  require 'scheduler'
   Scheduler.threads
 end
