@@ -415,7 +415,7 @@ class AgentTicketTagTest < TestCase
     )
     sleep 2
     sendkey(value: :tab)
-    sleep 3
+    sleep 1
     set(
       css: '.active .ticket-form-bottom .token-input',
       value: 'NOT EXISTING',
