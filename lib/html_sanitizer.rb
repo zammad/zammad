@@ -19,7 +19,71 @@ satinize html string based on whiltelist
     classes_whitelist = ['js-signatureMarker']
     attributes_2_css = %w(width height)
 
-    scrubber = Loofah::Scrubber.new do |node|
+    scrubber_link = Loofah::Scrubber.new do |node|
+
+      # check if href is different to text
+      if node.name == 'a' && !url_same?(node['href'], node.text)
+        if node['href'].blank?
+          node.replace node.children.to_s
+          Loofah::Scrubber::STOP
+        elsif ((node.children.empty? || node.children.first.class == Nokogiri::XML::Text) && node.text.present?) || (node.children.size == 1 && node.children.first.content == node.content && node.content.present?)
+          if node.text.downcase.start_with?('http', 'ftp', '//')
+            a = Nokogiri::XML::Node.new 'a', node.document
+            a['href'] = node['href']
+            a['rel'] = 'nofollow noreferrer noopener'
+            a['target'] = '_blank'
+            a.content = node['href']
+            node.add_previous_sibling(a)
+            text = Nokogiri::XML::Text.new(' (', node.document)
+            node.add_previous_sibling(text)
+            node['href'] = cleanup_target(node.text)
+          else
+            text = Nokogiri::XML::Text.new("#{node.text} (", node.document)
+            node.add_previous_sibling(text)
+            node.content = cleanup_target(node['href'])
+            node['href'] = cleanup_target(node['href'])
+          end
+          text = Nokogiri::XML::Text.new(')', node.document)
+          node.add_next_sibling(text)
+        else
+          node.content = cleanup_target(node['href'])
+        end
+      end
+
+      # check if text has urls which need to be clickable
+      if node && node.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
+        if node.class == Nokogiri::XML::Text
+          urls = []
+          node.content.scan(%r{((http|https|ftp|tel)://.+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)}mxi).each { |match|
+            if match[0]
+              urls.push match[0].to_s.strip
+            end
+          }
+          node.content.scan(/(^|:|;|\s)(www\..+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)/mxi).each { |match|
+            if match[1]
+              urls.push match[1].to_s.strip
+            end
+          }
+          next if urls.empty?
+          add_link(node.content, urls, node)
+        end
+      end
+
+      # prepare links
+      if node['href']
+        href = cleanup_target(node['href'])
+        if external && href.present? && !href.downcase.start_with?('//') && href.downcase !~ %r{^.{1,6}://.+?}
+          node['href'] = "http://#{node['href']}"
+          href = node['href']
+        end
+        next if !href.downcase.start_with?('http', 'ftp', '//')
+        node.set_attribute('href', href)
+        node.set_attribute('rel', 'nofollow noreferrer noopener')
+        node.set_attribute('target', '_blank')
+      end
+    end
+
+    scrubber_wipe = Loofah::Scrubber.new do |node|
 
       # remove tags with subtree
       if tags_remove_content.include?(node.name)
@@ -38,7 +102,7 @@ satinize html string based on whiltelist
 
       # replace tags, keep subtree
       if !tags_whitelist.include?(node.name)
-        node.replace strict(node.children.to_s)
+        node.replace node.children.to_s
         Loofah::Scrubber::STOP
       end
 
@@ -94,7 +158,8 @@ satinize html string based on whiltelist
           prop = local_pear.split(':')
           next if !prop[0]
           key = prop[0].strip
-          next if !css_properties_whitelist.include?(key)
+          next if !css_properties_whitelist.include?(node.name)
+          next if !css_properties_whitelist[node.name].include?(key)
           style += "#{local_pear};"
         }
         node['style'] = style
@@ -128,64 +193,26 @@ satinize html string based on whiltelist
           Loofah::Scrubber::STOP
         end
       end
-
-      # prepare links
-      if node['href']
-        href = cleanup_target(node['href'])
-        if external && !href.downcase.start_with?('//') && href.downcase !~ %r{^.{1,6}://.+?}
-          node['href'] = "http://#{node['href']}"
-          href = node['href']
-        end
-        next if !href.downcase.start_with?('http', 'ftp', '//')
-        node.set_attribute('href', href)
-        node.set_attribute('rel', 'nofollow noreferrer noopener')
-        node.set_attribute('target', '_blank')
-      end
-
-      # check if href is different to text
-      if external && node.name == 'a' && !url_same?(node['href'], node.text)
-        if node['href'].blank?
-          node.replace strict(node.children.to_s)
-          Loofah::Scrubber::STOP
-        elsif node.children.empty? || node.children.first.class == Nokogiri::XML::Text
-          text = Nokogiri::XML::Text.new("#{node['href']} (", node.document)
-          node.add_previous_sibling(text)
-          node['href'] = cleanup_target(node.text)
-          text = Nokogiri::XML::Text.new(')', node.document)
-          node.add_next_sibling(text)
-        else
-          node.content = cleanup_target(node['href'])
-        end
-      end
-
-      # check if text has urls which need to be clickable
-      if node && node.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
-        if node.class == Nokogiri::XML::Text
-          urls = []
-          node.content.scan(%r{((http|https|ftp|tel)://.+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)}mxi).each { |match|
-            if match[0]
-              urls.push match[0].to_s.strip
-            end
-          }
-          node.content.scan(/(^|:|;|\s)(www\..+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)/mxi).each { |match|
-            if match[1]
-              urls.push match[1].to_s.strip
-            end
-          }
-          next if urls.empty?
-          add_link(node.content, urls, node)
-        end
-      end
-
     end
-    Loofah.fragment(string).scrub!(scrubber).to_s
+
+    new_string = ''
+    done = true
+    while done
+      new_string = Loofah.fragment(string).scrub!(scrubber_wipe).to_s
+      if string == new_string
+        done = false
+      end
+      string = new_string
+    end
+
+    Loofah.fragment(string).scrub!(scrubber_link).to_s
   end
 
 =begin
 
 cleanup html string:
 
- * remove empty nodes (p, div, span)
+ * remove empty nodes (p, div, span, table)
  * remove nodes in general (keep content - span)
 
   string = HtmlSanitizer.cleanup(string)
@@ -203,44 +230,43 @@ cleanup html string:
     # remove double multiple empty lines
     string.gsub!(/\n\n\n+/, "\n\n")
 
+    string = cleanup_structure(string, 'pre')
     string = cleanup_replace_tags(string)
-    cleanup_structure(string)
+    string = cleanup_structure(string)
+    string
   end
 
   def self.cleanup_replace_tags(string)
-    string.gsub!(%r{(<table(.+?|)>.+?</table>)}mxi) { |table|
-      table.gsub!(/<table(.+?|)>/im, '<br>')
-      table.gsub!(%r{</table>}im, ' ')
-      table.gsub!(/<thead(.+?|)>/im, '')
-      table.gsub!(%r{</thead>}im, ' ')
-      table.gsub!(/<tbody(.+?|)>/im, '')
-      table.gsub!(%r{</tbody>}im, ' ')
-      table.gsub!(/<tr(.+?|)>/im, "<br>\n")
-      #table.gsub!(%r{</td>}im, '')
-      #table.gsub!(%r{</td>}im, "\n<br>\n")
-      table.gsub!(%r{</td>}im, ' ')
-      table.gsub!(/<td(.+?|)>/im, '')
-      #table.gsub!(%r{</tr>}im, '')
-      table.gsub!(%r{</tr>}im, "\n<br>")
-      table.gsub!(/<br>[[:space:]]?<br>/im, '<br>')
-      table.gsub!(/<br>[[:space:]]?<br>/im, '<br>')
-      table.gsub!(%r{<br/>[[:space:]]?<br/>}im, '<br/>')
-      table.gsub!(%r{<br/>[[:space:]]?<br/>}im, '<br/>')
-      table
-    }
-
-    tags_backlist = %w(span table thead tbody td tr center)
+    #return string
+    tags_backlist = %w(span center)
     scrubber = Loofah::Scrubber.new do |node|
       next if !tags_backlist.include?(node.name)
+      hit = false
+      local_node = nil
+      (1..5).each { |_count|
+        local_node = if local_node
+                       local_node.parent
+                     else
+                       node.parent
+                     end
+        break if !local_node
+        next if local_node.name != 'td'
+        hit = true
+      }
+      next if hit && node.keys.count.positive?
       node.replace cleanup_replace_tags(node.children.to_s)
       Loofah::Scrubber::STOP
     end
     Loofah.fragment(string).scrub!(scrubber).to_s
   end
 
-  def self.cleanup_structure(string)
-    remove_empty_nodes = %w(p div span small)
-    remove_empty_last_nodes = %w(b i u small)
+  def self.cleanup_structure(string, type = 'all')
+    remove_empty_nodes = if type == 'pre'
+                           %w(span)
+                         else
+                           %w(p div span small table)
+                         end
+    remove_empty_last_nodes = %w(b i u small table)
 
     # remove last empty nodes and empty -not needed- parrent nodes
     scrubber_structure = Loofah::Scrubber.new do |node|
@@ -248,12 +274,25 @@ cleanup html string:
         node.remove
         Loofah::Scrubber::STOP
       end
-      if remove_empty_nodes.include?(node.name) && node.children.size == 1 && remove_empty_nodes.include?(node.children.first.name)
+
+      # remove empty childs
+      if node.content.blank? && remove_empty_nodes.include?(node.name) && node.children.size == 1 && remove_empty_nodes.include?(node.children.first.name)
         node.replace node.children.to_s
         Loofah::Scrubber::STOP
       end
+
+      # remove empty childs
+      if remove_empty_nodes.include?(node.name) && node.children.size == 1 && remove_empty_nodes.include?(node.children.first.name) && node.children.first.content == node.content
+        node.replace node.children.to_s
+        Loofah::Scrubber::STOP
+      end
+
+      # remove node if empty and parent was already a remove node
+      if node.content.blank? && remove_empty_nodes.include?(node.name) && node.parent && node.children.size.zero? && remove_empty_nodes.include?(node.parent.name)
+        node.remove
+        Loofah::Scrubber::STOP
+      end
     end
-    string = Loofah.fragment(string).scrub!(scrubber_structure).to_s
 
     new_string = ''
     done = true
@@ -275,23 +314,6 @@ cleanup html string:
           node.add_next_sibling(text)
           node.remove
           Loofah::Scrubber::STOP
-        end
-      end
-
-      # check if href is different to text
-      if node.name == 'a' && !url_same?(node['href'], node.text)
-        if node['href'].blank?
-          node.replace cleanup_structure(node.children.to_s)
-          Loofah::Scrubber::STOP
-        elsif node.children.empty? || node.children.first.class == Nokogiri::XML::Text
-          text = Nokogiri::XML::Text.new("#{node.text} (", node.document)
-          node.add_previous_sibling(text)
-          node.content = cleanup_target(node['href'])
-          node['href'] = cleanup_target(node['href'])
-          text = Nokogiri::XML::Text.new(')', node.document)
-          node.add_next_sibling(text)
-        else
-          node.content = cleanup_target(node['href'])
         end
       end
 

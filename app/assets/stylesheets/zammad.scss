@@ -129,8 +129,8 @@ blockquote {
   font-size: inherit;
 }
 
-ul {
-  padding-left: 10px;
+ol, ul {
+  padding-left: 20px;
 }
 
 #app {
@@ -262,7 +262,7 @@ ul {
 }
 [contenteditable]:hover,
 [contenteditable]:focus {
-  background: #f8f9fa;
+  background: hsl(210,17%,98%);
 }
 [contenteditable]:focus {
   text-overflow: clip !important;
@@ -1912,7 +1912,7 @@ input.has-error {
 }
 
 .selected-clue {
-  @extend .zIndex-9;
+  @extend .zIndex-6;
   pointer-events: none;
 }
 
@@ -1920,7 +1920,7 @@ input.has-error {
   display: flex;
   align-items: center;
   justify-content: center;
-  @extend .zIndex-8;
+  @extend .zIndex-5;
 
   .modal-backdrop {
     bottom: 0;
@@ -3157,7 +3157,7 @@ footer {
       Safari font rendering bugfix while animating
       http://stackoverflow.com/questions/9733011/safari-changing-font-weights-when-unrelated-animations-are-running
     */
-    z-index: 899; // stay beneath #global-search-results
+    @extend .zIndex-5; // stay beneath .global-search-menu
     position: relative;
   }
 
@@ -3331,7 +3331,7 @@ footer {
 
   .search .logo {
     position: relative;
-    @extend .u-clickable, .zIndex-5;
+    @extend .u-clickable, .zIndex-3;
     margin: -4px 10px 0 12px;
     transition: 240ms;
   }
@@ -3362,13 +3362,13 @@ footer {
     }
 
   .global-search-menu {
+    @extend .zIndex-6;
     background: #26272e;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     top: 53px;
-    z-index: 900;
     display: none;
     overflow: auto;
 
@@ -3845,6 +3845,8 @@ footer {
 }
 
 .popover {
+  @extend .zIndex-6;
+  position: absolute;
   font-family: inherit;
   width: 372px;
   max-width: 9999px;
@@ -3852,7 +3854,6 @@ footer {
   border: none;
   color: hsl(206,7%,28%);
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
-  z-index: 900;
 }
 
   .popover-body {
@@ -3953,9 +3954,8 @@ footer {
     width: auto;
     max-width: 400px;
     min-width: 350px;
-    position: absolute;
     flex-direction: column;
-    @extend .zIndex-5;
+    @extend .zIndex-2;
 
     &.is-visible {
       display: flex;
@@ -4511,13 +4511,13 @@ footer {
 
 .ticket-article,
 .article-new {
-  max-width: 800px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 21px;
 }
 
   .ticket-title {
-    max-width: 800px;
+    max-width: 1080px;
     padding: 0 81px;
   }
 
@@ -4526,7 +4526,15 @@ footer {
     white-space: normal;
     margin-top: 15px;
     margin-bottom: 8px;
+    padding: 0 7px;
     text-align: center;
+    
+    .ticketZoom-header & {
+      &:hover,
+      &:focus {
+        background: hsl(210,17%,93%);
+      }
+    }
   }
 
   .task-subline {
@@ -4755,7 +4763,7 @@ footer {
   .attachments.attachments--list:not(:empty) {
     border-top: 1px solid rgba(0,0,0,.04);
     white-space: normal;
-    margin: 0 -20px;
+    margin: 10px -20px 0;
     padding: 26px 20px 7px 72px;
     position: relative;
   }
@@ -4853,7 +4861,7 @@ footer {
   .editControls-item {
     position: absolute;
     top: 43px;
-    @extend .u-clickable, .zIndex-7;
+    @extend .u-clickable, .zIndex-4;
 
     &.is-hidden {
       display: none;
@@ -5064,15 +5072,13 @@ footer {
     cursor: text;
   }
 
-    .article-new .textBubble [contenteditable],
-    .article-new textarea,
     .articleNewEdit-body {
       width: 100%;
       position: relative;
       min-height: 20px;
       vertical-align: bottom;
       border: none;
-      background: none;
+      background: none !important; // overwrite [contenteditable]:hover
       outline: none;
       resize: none;
     }
@@ -5722,7 +5728,7 @@ footer {
 
 /* allow/show autocomplete in modal dialog */
 .ui-autocomplete.ui-widget-content {
-  z-index: 1100;
+  @extend .zIndex-9;
 }
 
 .drox {
@@ -5853,7 +5859,7 @@ footer {
 
 .modal {
   position: fixed;
-  z-index: 1000;
+  @extend .zIndex-9;
 }
 
 .modal-dialog {
@@ -6360,7 +6366,7 @@ footer {
 }
 
 .scrollPageHeader {
-  @extend .zIndex-8;
+  @extend .zIndex-5;
   display: flex;
   align-items: center;
   background: white;
@@ -8405,26 +8411,11 @@ output {
   }
 
   table {
-    border: none;
     table-layout: auto;
     display: block;
     width: 100%;
     overflow: auto;
-    word-break: keep-all;
-
-    td, th {
-      padding: 7px 12px;
-      border: 1px solid hsl(0,0%,87%);
-    }
-
-    th {
-      font-weight: bold;
-      text-align: center;
-    }
-
-    tbody tr:nth-child(even) {
-      background: hsl(0,0%,97%);
-    }
+    word-break: break-all;
 
     col {
       width: auto;
@@ -8466,8 +8457,7 @@ output {
 }
 
 .batch-overlay {
-  @extend .fit;
-  z-index: 100;
+  @extend .fit, .zIndex-1;
   color: white;
   text-transform: uppercase;
   text-align: center;

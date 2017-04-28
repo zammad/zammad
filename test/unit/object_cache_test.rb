@@ -35,7 +35,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
   end
 
   test 'user cache' do
-    roles  = Role.where( name: %w(Agent Admin) )
+    roles  = Role.where(name: %w(Agent Admin))
     groups = Group.all
 
     # be sure that minimum one admin is available
@@ -103,13 +103,13 @@ class ObjectCacheTest < ActiveSupport::TestCase
 
   test 'group cache' do
 
-    name = 'object cache test ' + rand(9_999_999).to_s
-    group = Group.create(
+    name = "object cache test #{rand(9_999_999)}"
+    group = Group.create!(
       name: name,
       updated_by_id: 1,
       created_by_id: 1,
     )
-    group_new = Group.where( name: name).first
+    group_new = Group.where(name: name).first
     assert_equal(name, group_new[:name], 'verify by where')
 
     # lookup by name

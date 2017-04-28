@@ -377,7 +377,8 @@ class Channel::EmailParser
 
     # cleanup content id, <> will be added automatically later
     if headers_store['Content-ID']
-      headers_store['Content-ID'].gsub!(/^</, '').gsub!(/>$/, '')
+      headers_store['Content-ID'].gsub!(/^</, '')
+      headers_store['Content-ID'].gsub!(/>$/, '')
     end
 
     # workaround for mail gem
@@ -395,20 +396,20 @@ class Channel::EmailParser
 =begin
 
   parser = Channel::EmailParser.new
-  ticket, article, user = parser.process(channel, email_raw_string)
+  ticket, article, user, mail = parser.process(channel, email_raw_string)
 
 returns
 
-  [ticket, article, user]
+  [ticket, article, user, mail]
 
 do not raise an exception - e. g. if used by scheduler
 
   parser = Channel::EmailParser.new
-  ticket, article, user = parser.process(channel, email_raw_string, false)
+  ticket, article, user, mail = parser.process(channel, email_raw_string, false)
 
 returns
 
-  [ticket, article, user] || false
+  [ticket, article, user, mail] || false
 
 =end
 
@@ -563,6 +564,7 @@ returns
           content_type: mail[:content_type],
           body: mail[:body],
           from: mail[:from],
+          reply_to: mail[:"reply-to"],
           to: mail[:to],
           cc: mail[:cc],
           subject: mail[:subject],

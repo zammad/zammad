@@ -254,16 +254,21 @@ class UserTest < ActiveSupport::TestCase
 
       test[:create_verify].each { |key, value|
         next if key == :image_md5
-        if user.respond_to?( key )
-          assert_equal( value, user.send(key), "create check #{key} in (#{test[:name]})"  )
+        if user.respond_to?(key)
+          result = user.send(key)
+          if value.nil?
+            assert_nil(result, "create check #{key} in (#{test[:name]})")
+          else
+            assert_equal(value, result, "create check #{key} in (#{test[:name]})")
+          end
         else
-          assert_equal( value, user[key], "create check #{key} in (#{test[:name]})" )
+          assert_equal(value, user[key], "create check #{key} in (#{test[:name]})")
         end
       }
       if test[:create_verify][:image_md5]
         file = Avatar.get_by_hash( user.image )
         file_md5 = Digest::MD5.hexdigest( file.content )
-        assert_equal( test[:create_verify][:image_md5], file_md5, "create avatar md5 check in (#{test[:name]})"  )
+        assert_equal(test[:create_verify][:image_md5], file_md5, "create avatar md5 check in (#{test[:name]})")
       end
       if test[:update]
         user.update_attributes( test[:update] )
@@ -271,16 +276,16 @@ class UserTest < ActiveSupport::TestCase
         test[:update_verify].each { |key, value|
           next if key == :image_md5
           if user.respond_to?( key )
-            assert_equal( value, user.send(key), "update check #{key} in (#{test[:name]})"  )
+            assert_equal(value, user.send(key), "update check #{key} in (#{test[:name]})")
           else
-            assert_equal( value, user[key], "update check #{key} in (#{test[:name]})"  )
+            assert_equal(value, user[key], "update check #{key} in (#{test[:name]})")
           end
         }
 
         if test[:update_verify][:image_md5]
           file = Avatar.get_by_hash( user.image )
           file_md5 = Digest::MD5.hexdigest( file.content )
-          assert_equal( test[:update_verify][:image_md5], file_md5, "update avatar md5 check in (#{test[:name]})"  )
+          assert_equal( test[:update_verify][:image_md5], file_md5, "update avatar md5 check in (#{test[:name]})")
         end
       end
 

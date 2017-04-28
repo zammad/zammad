@@ -38,7 +38,7 @@ module Import
         return false if !@local_user
 
         # only update roles if different (reduce sql statements)
-        if @local_user.role_ids == user[:role_ids]
+        if user[:role_ids] && user[:role_ids].sort == @local_user.role_ids.sort
           user.delete(:role_ids)
         end
 

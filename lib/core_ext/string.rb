@@ -289,8 +289,9 @@ class String
 
   def html2html_strict
     string = "#{self}" # rubocop:disable Style/UnneededInterpolation
-    string = HtmlSanitizer.cleanup(string).strip
+    string = HtmlSanitizer.cleanup_replace_tags(string)
     string = HtmlSanitizer.strict(string, true).strip
+    string = HtmlSanitizer.cleanup(string).strip
 
     # as fallback, use html2text and text2html
     if string.blank?
@@ -313,6 +314,7 @@ class String
     string.gsub!(%r{<p>[[:space:]]+</p>}im, '<p>&nbsp;</p>')
     string.gsub!(%r{\A(<br(|\/)>[[:space:]]*)*}i, '')
     string.gsub!(%r{[[:space:]]*(<br(|\/)>[[:space:]]*)*\Z}i, '')
+    string.gsub!(%r{(<p></p>){1,10}\Z}i, '')
 
     string.signature_identify('html')
 

@@ -2446,4 +2446,29 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   end
 
+  test '1 empty condition should not create errors' do
+    assert_raises(Exception) {
+      trigger_empty = Trigger.create_or_update(
+        name: 'aaa loop check',
+        condition: {
+          'ticket.number' => {
+            'operator' => 'contains',
+            'value'    => '',
+          },
+        },
+        perform: {
+          'notification.email' => {
+            'body' => 'some lala',
+            'recipient' => 'ticket_customer',
+            'subject' => 'Thanks for your inquiry - loop check (#{ticket.title})!',
+          },
+        },
+        disable_notification: true,
+        active: true,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+    }
+  end
+
 end

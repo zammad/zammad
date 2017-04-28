@@ -104,7 +104,7 @@ RSpec.describe User do
     end
   end
 
-  context '.by_reset_token' do
+  context '#by_reset_token' do
 
     it 'returns a User instance for existing tokens' do
       token = create(:token_password_reset)
@@ -133,4 +133,20 @@ RSpec.describe User do
     end
   end
 
+  context 'import' do
+
+    it "doesn't change imported passwords" do
+
+      # mock settings calls
+      expect(Setting).to receive(:get).with('import_mode').and_return(true)
+      allow(Setting).to receive(:get)
+
+      user = build(:user, password: '{sha2}dd9c764fa7ea18cd992c8600006d3dc3ac983d1ba22e9ba2d71f6207456be0ba') # zammad
+      expect {
+        user.save
+      }.to_not change {
+        user.password
+      }
+    end
+  end
 end

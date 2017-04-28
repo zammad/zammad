@@ -3,6 +3,8 @@
 class Overview < ApplicationModel
   include NotifiesClients
   include LatestChangeObserved
+  include ValidatesCondition
+  include Seedable
 
   load 'overview/assets.rb'
   include Overview::Assets

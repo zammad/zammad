@@ -66,7 +66,7 @@ class TicketXssTest < ActiveSupport::TestCase
     )
     assert_equal("please tell me this doesn't work: <table>ada<tr></tr>
 </table><div></div><div>
-<a>LINK</a><a href=\"http://lalal.de\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">aa</a>ABC</div>", article3.body, 'article3.body verify - inbound')
+LINKaa (<a href=\"http://lalal.de\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://lalal.de</a>)ABC</div>", article3.body, 'article3.body verify - inbound')
 
     article4 = Ticket::Article.create(
       ticket_id: ticket.id,
@@ -150,7 +150,7 @@ class TicketXssTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal('some message article helper test1 <a href="#">abc</a> <a href="https://example.com" rel="nofollow noreferrer noopener" target="_blank">123</a>123', article8.body, 'article8.body verify - inbound')
+    assert_equal('some message article helper test1 abc (<a href="#">#</a>) 123 (<a href="https://example.com" rel="nofollow noreferrer noopener" target="_blank">https://example.com</a>)123', article8.body, 'article8.body verify - inbound')
 
   end
 

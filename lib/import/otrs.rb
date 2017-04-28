@@ -57,6 +57,7 @@ module Import
 
     def checks
       check_import_mode
+      check_system_init_done
       connection_test
     end
 
@@ -81,6 +82,11 @@ module Import
       (1..thread_count).each { |thread|
 
         threads[thread] = Thread.new {
+
+          # In some environments the Model.reset_column_information
+          # is not reflected to threads. So an import error message appears.
+          # Reset needed model column information for each thread.
+          reset_database_information
 
           Thread.current[:thread_no]  = thread
           Thread.current[:loop_count] = 0
@@ -161,6 +167,10 @@ module Import
 
     def customer_user
       limit_import('CustomerUser', limit: 50)
+    end
+
+    def reset_database_information
+      ::Ticket.reset_column_information
     end
   end
 end

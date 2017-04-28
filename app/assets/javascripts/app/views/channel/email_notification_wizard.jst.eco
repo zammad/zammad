@@ -35,6 +35,7 @@
   </form>
 
   <form class="modal-content setup wizard js-outbound">
+    <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
       </div>

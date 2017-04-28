@@ -37,17 +37,87 @@ Rails.application.config.html_sanitizer_attributes_whitelist = {
   'ins'        => %w(cite datetime),
   'li'         => %w(value),
   'ol'         => %w(reversed start type),
-  'table'      => %w(align bgcolor border cellpadding cellspacing frame rules sortable summary width),
-  'td'         => %w(abbr align axis colspan headers rowspan valign width),
-  'th'         => %w(abbr align axis colspan headers rowspan scope sorted valign width),
+  'table'      => %w(align bgcolor border cellpadding cellspacing frame rules sortable summary width style),
+  'td'         => %w(abbr align axis colspan headers rowspan valign width style),
+  'th'         => %w(abbr align axis colspan headers rowspan scope sorted valign width style),
   'ul'         => %w(type),
   'q'          => %w(cite),
+  'span'       => %w(style),
   'time'       => %w(datetime pubdate),
 }
 
 # only this css properties are allowed
-Rails.application.config.html_sanitizer_css_properties_whitelist = %w(
-  width height
-  max-width min-width
-  max-height min-height
-)
+Rails.application.config.html_sanitizer_css_properties_whitelist = {
+  'img' => %w(
+    width height
+    max-width min-width
+    max-height min-height
+  ),
+  'span' => %w(
+    color
+  ),
+  'table' => %w(
+    background-color color
+    padding margin
+    text-align
+    border border-collapse border-style
+
+    border-top-width
+    border-right-width
+    border-bottom-width
+    border-left-width
+
+    border-top-color
+    border-right-color
+    border-bottom-color
+    border-left-color
+  ),
+  'th' => %w(
+    background-color color
+    padding margin
+    text-align
+    border border-collapse border-style
+
+    border-top-width
+    border-right-width
+    border-bottom-width
+    border-left-width
+
+    border-top-color
+    border-right-color
+    border-bottom-color
+    border-left-color
+  ),
+  'tr' => %w(
+    background-color color
+    padding margin
+    text-align
+    border border-collapse border-style
+
+    border-top-width
+    border-right-width
+    border-bottom-width
+    border-left-width
+
+    border-top-color
+    border-right-color
+    border-bottom-color
+    border-left-color
+  ),
+  'td' => %w(
+    background-color color
+    padding margin
+    text-align
+    border border-collapse border-style
+
+    border-top-width
+    border-right-width
+    border-bottom-width
+    border-left-width
+
+    border-top-color
+    border-right-color
+    border-bottom-color
+    border-left-color
+  ),
+}

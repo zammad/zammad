@@ -25,5 +25,5 @@ class App.UiElement.tag
         true
       )
       $('#' + attribute.id ).parent().css('height', 'auto')
-    App.Delay.set(a, 120, undefined, 'tags')
+    App.Delay.set(a, 500, undefined, 'tags')
     item

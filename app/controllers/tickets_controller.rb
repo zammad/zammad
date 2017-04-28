@@ -299,7 +299,7 @@ class TicketsController < ApplicationController
     }
 
     ticket_ids_recent_viewed = []
-    recent_views = RecentView.list(current_user, 8, 'Ticket')
+    recent_views = RecentView.list(current_user, 8, 'Ticket').delete_if { |object| object['o_id'] == ticket.id }
     recent_views.each { |recent_view|
       next if recent_view['object'] != 'Ticket'
       ticket_ids_recent_viewed.push recent_view['o_id']

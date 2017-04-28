@@ -130,6 +130,7 @@ class Transaction::Trigger
 
         # verify is condition is matching
         ticket_count, tickets = Ticket.selectors(condition, 1)
+        next if ticket_count.blank?
         next if ticket_count.zero?
         next if tickets.first.id != ticket.id
         user_id = ticket.updated_by_id
