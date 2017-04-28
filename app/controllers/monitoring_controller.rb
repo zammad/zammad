@@ -32,8 +32,10 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     issues = []
 
     # channel check
+    last_run_tolerance = Time.zone.now - 1.hour
     Channel.where(active: true).each { |channel|
-      next if (channel.status_in.empty? || channel.status_in == 'ok') && (channel.status_out.empty? || channel.status_out == 'ok')
+
+      # inbound channel
       if channel.status_in == 'error'
         message = "Channel: #{channel.area} in "
         %w(host user uid).each { |key|
@@ -42,6 +44,11 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
         }
         issues.push "#{message} #{channel.last_log_in}"
       end
+      if channel.preferences && channel.preferences['last_fetch'] && channel.preferences['last_fetch'] < last_run_tolerance
+        issues.push "#{message} channel is active but not fetched for 1 hour"
+      end
+
+      # outbound channel
       next if channel.status_out != 'error'
       message = "Channel: #{channel.area} out "
       %w(host user uid).each { |key|
