@@ -31,7 +31,6 @@ module Import
 
       def create_or_update(resource, *args)
         return if skip?(resource)
-        resource[:role_ids] = role_ids(resource)
         result = super(resource, *args)
 
         ldap_log(
@@ -58,14 +57,49 @@ module Import
         return @signup_role_ids if !dn
         # check if roles are mapped for the found dn
         roles = @dn_roles[ dn.downcase ]
-        # use signup roles if no mapped roles were found
-        return @signup_role_ids if !roles
         # return found roles
-        roles
+        return roles if roles
+        # return signup roles if there is a role mapping in general
+        # this makes the LDAP the leading source of roles
+        return @signup_role_ids if @dn_roles.present?
+
+        # special case: there is no LDAP role mapping configured
+        #
+        # if there is no role mapping in general the signup roles
+        # should only get used for newly created users (see .create method)
+        # otherwise users might overwrite their local assigned
+        # roles with less privileged roles and lock theirselfs out
+        #
+        # see issue 350#issuecomment-295252402
+        #
+        # this method only gets called from the .updated? method
+        # so we won't return any roles which will keep the current
+        # role assignment for the User
+        # the signup roles will be taken in this case direcly in
+        # the .create method
+        nil
       end
 
       def updated?(resource, *_args)
-        super
+
+        # this is needed for the special case described in the role_ids method
+        #
+        # assign roles only if there are any found in the mapping
+        # otherwise keep those stored to the User
+        update_roles        = role_ids(resource)
+        resource[:role_ids] = update_roles if update_roles
+
+        user_found = super
+
+        # in case a User was found and we had no roles
+        # to set/update we have to note the currently
+        # assigned roles so that our action check won't
+        # falsly detect changes to the User
+        if user_found && update_roles.blank?
+          resource[:role_ids] = @resource.role_ids
+        end
+
+        user_found
       rescue => e
         ldap_log(
           action:   "update -> #{resource[:login]}",
@@ -94,7 +128,7 @@ module Import
             remote: resource,
           )
 
-          store_associations_state(instance)
+          store_associations(:before, instance)
         end
 
         instance
@@ -122,6 +156,11 @@ module Import
       end
 
       def create(resource, *_args)
+
+        # this is needed for the special case described in the role_ids method
+        #
+        # in case we have no role IDs yet we have to fall back to the signup roles
+        resource[:role_ids] ||= @signup_role_ids
         super
       rescue => e
         ldap_log(
