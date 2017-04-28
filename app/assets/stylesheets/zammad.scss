@@ -5729,6 +5729,7 @@ footer {
 /* allow/show autocomplete in modal dialog */
 .ui-autocomplete.ui-widget-content {
   @extend .zIndex-9;
+  position: absolute;
 }
 
 .drox {
