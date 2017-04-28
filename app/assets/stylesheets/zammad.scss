@@ -121,7 +121,7 @@ a.create {
 }
 
 small {
-  color: #c6c6c5;
+  color: hsl(198,4%,56%);
   font-size: 12px;
 }
 
@@ -129,8 +129,8 @@ blockquote {
   font-size: inherit;
 }
 
-ul {
-  padding-left: 10px;
+ol, ul {
+  padding-left: 20px;
 }
 
 #app {
@@ -262,7 +262,7 @@ ul {
 }
 [contenteditable]:hover,
 [contenteditable]:focus {
-  background: #f8f9fa;
+  background: hsl(210,17%,98%);
 }
 [contenteditable]:focus {
   text-overflow: clip !important;
@@ -889,7 +889,7 @@ table {
 }
 
 .table--light {
-  color: hsl(198,19%,72%);
+  color: hsl(198,4%,56%);
 }
 
 .table-fluid {
@@ -1098,20 +1098,22 @@ th.align-right {
       box-shadow: 0 0 0 2px hsl(201,62%,90%);
       color: hsl(200,71%,59%);
     }
-
-    &:indeterminate {
-      ~ .icon-checked,
-      ~ .icon-unchecked {
-        display: none;
-      }
-      ~ .icon-indeterminate {
-        display: block;
-      }
-    }
   }
 
   + .label-text {
     margin-left: 0;
+  }
+}
+
+.checkbox-replacement {
+  &:indeterminate {
+    ~ .icon-checked,
+    ~ .icon-unchecked {
+      display: none;
+    }
+    ~ .icon-indeterminate {
+      display: block;
+    }
   }
 }
 
@@ -1557,6 +1559,15 @@ fieldset > .form-group {
   flex-shrink: 0;
 }
 
+/* do not show safari auto fill icon - see issue #962 */
+input::-webkit-contacts-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
 input[type="radio"],
 input[type="checkbox"] {
   margin: 0;
@@ -1901,7 +1912,7 @@ input.has-error {
 }
 
 .selected-clue {
-  @extend .zIndex-9;
+  @extend .zIndex-6;
   pointer-events: none;
 }
 
@@ -1909,7 +1920,7 @@ input.has-error {
   display: flex;
   align-items: center;
   justify-content: center;
-  @extend .zIndex-8;
+  @extend .zIndex-5;
 
   .modal-backdrop {
     bottom: 0;
@@ -3146,7 +3157,7 @@ footer {
       Safari font rendering bugfix while animating
       http://stackoverflow.com/questions/9733011/safari-changing-font-weights-when-unrelated-animations-are-running
     */
-    z-index: 899; // stay beneath #global-search-results
+    @extend .zIndex-5; // stay beneath .global-search-menu
     position: relative;
   }
 
@@ -3320,7 +3331,7 @@ footer {
 
   .search .logo {
     position: relative;
-    @extend .u-clickable, .zIndex-5;
+    @extend .u-clickable, .zIndex-3;
     margin: -4px 10px 0 12px;
     transition: 240ms;
   }
@@ -3351,13 +3362,13 @@ footer {
     }
 
   .global-search-menu {
+    @extend .zIndex-6;
     background: #26272e;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     top: 53px;
-    z-index: 900;
     display: none;
     overflow: auto;
 
@@ -3646,6 +3657,50 @@ footer {
     }
   }
 
+  &--group {
+    overflow: hidden;
+    
+    .icon {
+      fill: white;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 44px;
+      bottom: -8px;
+    }
+
+    &.size-30 .icon {
+      width: 33px;
+      height: 33px;
+      bottom: -6px;
+    }
+
+    &.size-50 .icon {
+      width: 55px;
+      height: 55px;
+      bottom: -10px;
+    }
+
+    &.size-80 .icon {
+      width: 88px;
+      height: 88px;
+      bottom: -15px;
+    }
+
+    &-color-0 {
+      background: hsl(192,100%,38%);
+    }
+
+    &-color-1 {
+      background: hsl(148,100%,38%);
+    }
+
+    &-color-2 {
+      background: hsl(57,100%,37%);
+    }
+  }
+
   .icon-logo {
     width: 100%;
     height: 100%;
@@ -3790,6 +3845,8 @@ footer {
 }
 
 .popover {
+  @extend .zIndex-6;
+  position: absolute;
   font-family: inherit;
   width: 372px;
   max-width: 9999px;
@@ -3797,7 +3854,6 @@ footer {
   border: none;
   color: hsl(206,7%,28%);
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
-  z-index: 900;
 }
 
   .popover-body {
@@ -3898,9 +3954,8 @@ footer {
     width: auto;
     max-width: 400px;
     min-width: 350px;
-    position: absolute;
     flex-direction: column;
-    @extend .zIndex-5;
+    @extend .zIndex-2;
 
     &.is-visible {
       display: flex;
@@ -4456,13 +4511,13 @@ footer {
 
 .ticket-article,
 .article-new {
-  max-width: 800px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 21px;
 }
 
   .ticket-title {
-    max-width: 800px;
+    max-width: 1080px;
     padding: 0 81px;
   }
 
@@ -4471,7 +4526,15 @@ footer {
     white-space: normal;
     margin-top: 15px;
     margin-bottom: 8px;
+    padding: 0 7px;
     text-align: center;
+    
+    .ticketZoom-header & {
+      &:hover,
+      &:focus {
+        background: hsl(210,17%,93%);
+      }
+    }
   }
 
   .task-subline {
@@ -4514,7 +4577,6 @@ footer {
     z-index: 1;
     padding: 0 55px;
   }
-
 
   .article-content-meta {
     position: absolute;
@@ -4617,7 +4679,7 @@ footer {
     left: 0;
     right: 0;
     background: white;
-    
+
     &.is-open {
       &:before {
         opacity: 0;
@@ -4653,6 +4715,10 @@ footer {
     background: #e5f0f5;
     border-color: hsl(199,38%,92%);
     box-shadow: none;
+  }
+
+  .customer .richtext-content blockquote {
+    border-left: 5px solid #dfdfdf;
   }
 
     .customer.ticket-article-item.state--folde-out .textBubble {
@@ -4697,7 +4763,7 @@ footer {
   .attachments.attachments--list:not(:empty) {
     border-top: 1px solid rgba(0,0,0,.04);
     white-space: normal;
-    margin: 0 -20px;
+    margin: 10px -20px 0;
     padding: 26px 20px 7px 72px;
     position: relative;
   }
@@ -4723,17 +4789,15 @@ footer {
   .article-action {
     padding-top: 5px;
     margin-top: 5px;
-    color: black;
+    color: hsl(198,4%,56%);
     font-size: 12px;
     text-align: center;
-    opacity: 0.5;
     @extend .u-clickable;
   }
 
     .article-action:hover {
       color: black;
       text-decoration: none;
-      opacity: 1;
     }
 
     .article-action-icon {
@@ -4741,6 +4805,7 @@ footer {
       vertical-align: top;
       width: 17px;
       height: 17px;
+      fill: currentColor;
     }
 
 .article-add {
@@ -4796,7 +4861,7 @@ footer {
   .editControls-item {
     position: absolute;
     top: 43px;
-    @extend .u-clickable, .zIndex-7;
+    @extend .u-clickable, .zIndex-4;
 
     &.is-hidden {
       display: none;
@@ -5007,15 +5072,13 @@ footer {
     cursor: text;
   }
 
-    .article-new .textBubble [contenteditable],
-    .article-new textarea,
     .articleNewEdit-body {
       width: 100%;
       position: relative;
       min-height: 20px;
       vertical-align: bottom;
       border: none;
-      background: none;
+      background: none !important; // overwrite [contenteditable]:hover
       outline: none;
       resize: none;
     }
@@ -5663,6 +5726,12 @@ footer {
     opacity: .5;
   }
 
+/* allow/show autocomplete in modal dialog */
+.ui-autocomplete.ui-widget-content {
+  @extend .zIndex-9;
+  position: absolute;
+}
+
 .drox {
   color: hsl(60,1%,74%);
 }
@@ -5791,7 +5860,7 @@ footer {
 
 .modal {
   position: fixed;
-  z-index: 1000;
+  @extend .zIndex-9;
 }
 
 .modal-dialog {
@@ -6298,7 +6367,7 @@ footer {
 }
 
 .scrollPageHeader {
-  @extend .zIndex-8;
+  @extend .zIndex-5;
   display: flex;
   align-items: center;
   background: white;
@@ -7246,7 +7315,8 @@ output {
   }
 
   .btn--table {
-    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   th:not(:last-child),
@@ -7411,6 +7481,11 @@ output {
 
   .searchableSelect-main {
     position: relative;
+
+    &.form-control--small ~ .searchableSelect-autocomplete {
+      top: 7px;
+      left: 9px;
+    }
   }
 
   .searchableSelect-shadow {
@@ -8337,26 +8412,11 @@ output {
   }
 
   table {
-    border: none;
     table-layout: auto;
     display: block;
     width: 100%;
     overflow: auto;
-    word-break: keep-all;
-
-    td, th {
-      padding: 7px 12px;
-      border: 1px solid hsl(0,0%,87%);
-    }
-
-    th {
-      font-weight: bold;
-      text-align: center;
-    }
-
-    tbody tr:nth-child(even) {
-      background: hsl(0,0%,97%);
-    }
+    word-break: break-all;
 
     col {
       width: auto;
@@ -8398,8 +8458,7 @@ output {
 }
 
 .batch-overlay {
-  @extend .fit;
-  z-index: 100;
+  @extend .fit, .zIndex-1;
   color: white;
   text-transform: uppercase;
   text-align: center;
@@ -8466,13 +8525,16 @@ output {
     border: 2px dashed hsla(0,0%,100%,.3);
     border-radius: 8px;
     padding: 28px;
-    margin: 50px 200px;
+    margin: auto 200px;
     position: absolute;
-    top: 0;
     left: 0;
     right: 0;
+    max-height: 100px;
     visibility: hidden;
     will-change: opacity;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &-box {
@@ -8541,10 +8603,7 @@ output {
         box-sizing: content-box;
         transition: transform 120ms;
         cursor: inherit;
-        
-        &--organization {
-          background: hsl(191,68%,47%);
-        }
+        z-index: 1;
       }
 
       &-name {

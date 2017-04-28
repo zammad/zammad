@@ -109,6 +109,9 @@ group :development, :test do
   gem 'rack-livereload'
   gem 'rb-fsevent',        require: false
 
+  # auto symlinking
+  gem 'guard-symlink', require: false
+
   # code QA
   gem 'pre-commit'
   gem 'rubocop'
@@ -122,6 +125,9 @@ group :development, :test do
 
   # Use Factory Girl for generating random test data
   gem 'factory_girl_rails'
+
+  # mock http calls
+  gem 'webmock'
 end
 
 gem 'puma', group: :puma

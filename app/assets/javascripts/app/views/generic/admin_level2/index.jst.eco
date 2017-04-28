@@ -13,7 +13,7 @@
 
   <div class="page-header">
     <div class="page-header-title">
-      <h1><%- @T( @page.head ) %> <small><%- @T( @page.sub_head ) %></small></h1>
+      <h1><%- @T(@page.head) %> <small><%- @T(@page.sub_head) %></small></h1>
     </div>
   </div>
   <div class="page-content">

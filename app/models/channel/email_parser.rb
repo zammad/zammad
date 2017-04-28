@@ -30,9 +30,9 @@ class Channel::EmailParser
         data:        'binary of attachment',
         filename:    'file_name_of_attachment.txt',
         preferences: {
-          content-alternative: true,
-          Mime-Type:           'text/plain',
-          Charset:             'iso-8859-1',
+          'content-alternative' => true,
+          'Mime-Type'           => 'text/plain',
+          'Charset:             => 'iso-8859-1',
         },
       },
     ],
@@ -74,26 +74,42 @@ class Channel::EmailParser
     mail = Mail.new(msg)
 
     # set all headers
-    mail.header.fields.select(&:name).each { |field|
+    mail.header.fields.each { |field|
+
       # full line, encode, ready for storage
-      data[field.name.to_s.downcase.to_sym] = Encode.conv('utf8', field.to_s)
+      begin
+        value = Encode.conv('utf8', field.to_s)
+        if value.blank?
+          value = field.raw_value
+        end
+        data[field.name.to_s.downcase.to_sym] = value
+      rescue => e
+        data[field.name.to_s.downcase.to_sym] = field.raw_value
+      end
 
       # if we need to access the lines by objects later again
       data["raw-#{field.name.downcase}".to_sym] = field
     }
 
+    # verify content, ignore recipients with non email address
+    ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |field|
+      next if data[field.to_sym].blank?
+      next if data[field.to_sym] =~ /@/
+      data[field.to_sym] = ''
+    }
+
     # get sender
     from = nil
     ['from', 'reply-to', 'return-path'].each { |item|
-      next if !mail[item.to_sym]
-      from = mail[item.to_sym].value
+      next if data[item.to_sym].blank?
+      from = data[item.to_sym]
       break if from
     }
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
     ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |item|
-      next if !mail[item.to_sym]
+      next if data[item.to_sym].blank?
       if data['x-any-recipient'.to_sym] != ''
         data['x-any-recipient'.to_sym] += ', '
       end
@@ -113,8 +129,7 @@ class Channel::EmailParser
         data[:from_email]        = "#{$2}@#{$3}"
         data[:from_local]        = $2
         data[:from_domain]       = $3
-        data[:from_display_name] = $1.strip
-        data[:from_display_name].delete!('"')
+        data[:from_display_name] = $1
       else
         data[:from_email]  = from
         data[:from_local]  = from
@@ -124,6 +139,10 @@ class Channel::EmailParser
 
     # do extra decoding because we needed to use field.value
     data[:from_display_name] = Mail::Field.new('X-From', data[:from_display_name]).to_s
+    data[:from_display_name].delete!('"')
+    data[:from_display_name].strip!
+    data[:from_display_name].gsub!(/^'/, '')
+    data[:from_display_name].gsub!(/'$/, '')
 
     # compat headers
     data[:message_id] = data['message-id'.to_sym]
@@ -356,6 +375,16 @@ class Channel::EmailParser
     headers_store.delete('Content-Transfer-Encoding')
     headers_store.delete('Content-Disposition')
 
+    # cleanup content id, <> will be added automatically later
+    if headers_store['Content-ID']
+      headers_store['Content-ID'].gsub!(/^</, '')
+      headers_store['Content-ID'].gsub!(/>$/, '')
+    end
+
+    # workaround for mail gem
+    # https://github.com/zammad/zammad/issues/928
+    filename = Mail::Encodings.value_decode(filename)
+
     attach = {
       data: file.body.to_s,
       filename: filename,
@@ -367,20 +396,20 @@ class Channel::EmailParser
 =begin
 
   parser = Channel::EmailParser.new
-  ticket, article, user = parser.process(channel, email_raw_string)
+  ticket, article, user, mail = parser.process(channel, email_raw_string)
 
 returns
 
-  [ticket, article, user]
+  [ticket, article, user, mail]
 
 do not raise an exception - e. g. if used by scheduler
 
   parser = Channel::EmailParser.new
-  ticket, article, user = parser.process(channel, email_raw_string, false)
+  ticket, article, user, mail = parser.process(channel, email_raw_string, false)
 
 returns
 
-  [ticket, article, user] || false
+  [ticket, article, user, mail] || false
 
 =end
 
@@ -398,8 +427,7 @@ returns
     p message # rubocop:disable Rails/Output
     p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
     Rails.logger.error message
-    Rails.logger.error 'ERROR: ' + e.inspect
-    Rails.logger.error 'ERROR: ' + e.backtrace.inspect
+    Rails.logger.error e
     File.open(filename, 'wb') { |file|
       file.write msg
     }
@@ -536,6 +564,7 @@ returns
           content_type: mail[:content_type],
           body: mail[:body],
           from: mail[:from],
+          reply_to: mail[:"reply-to"],
           to: mail[:to],
           cc: mail[:cc],
           subject: mail[:subject],
@@ -679,6 +708,14 @@ returns
 end
 
 module Mail
+
+  # workaround to get content of no parseable headers - in most cases with non 7 bit ascii signs
+  class Field
+    def raw_value
+      value = Encode.conv('utf8', @raw_value)
+      value.sub(/^.+?:(\s|)/, '')
+    end
+  end
 
   # workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/fixtures/mail9.box)
   module Encodings

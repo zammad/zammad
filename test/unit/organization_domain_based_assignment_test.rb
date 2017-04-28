@@ -58,7 +58,7 @@ class OrganizationDomainBasedAssignmentTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(nil, customer3.organization_id)
+    assert_nil(customer3.organization_id)
 
     customer4 = User.create_or_update(
       login: 'organization-based_assignment-customer4',
@@ -71,7 +71,7 @@ class OrganizationDomainBasedAssignmentTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(nil, customer4.organization_id)
+    assert_nil(customer4.organization_id)
 
   end
 

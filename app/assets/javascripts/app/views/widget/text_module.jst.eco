@@ -4,7 +4,7 @@
   <%- @T( 'Search' ) %>
   <br>
 -->
-  <input type="text" name="" id="text-module-search" class="span2" value="<%= @search %>" autocomplete="off"/>
+  <input type="text" name="" id="text-module-search" class="span2" value="<%= @search %>" autocomplete="new-password"/>
   <a href="#" class="close">&times;</a>
   <br>
   <div id="form-text-module" class="max-size-scroll"></div>

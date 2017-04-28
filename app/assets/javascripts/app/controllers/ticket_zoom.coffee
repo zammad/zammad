@@ -486,14 +486,10 @@ class App.TicketZoom extends App.Controller
       )
 
     if @sidebar
-
-      # update tags
-      if @sidebar.tagWidget
-        @sidebar.tagWidget.reload(@tags)
-
-      # update links
-      if @sidebar.linkWidget
-        @sidebar.linkWidget.reload(@links)
+      @sidebar.reload(
+        tags: @tags
+        links: @links
+      )
 
     if !@initDone
       if @article_id
@@ -606,10 +602,16 @@ class App.TicketZoom extends App.Controller
 
     # get diff of model
     modelDiff =
-      ticket:  App.Utils.formDiff(currentParams.ticket, currentStore.ticket)
-      article: App.Utils.formDiff(currentParams.article, currentStore.article)
-
+      ticket:  @forRemoveMeta(App.Utils.formDiff(currentParams.ticket, currentStore.ticket))
+      article: @forRemoveMeta(App.Utils.formDiff(currentParams.article, currentStore.article))
     modelDiff
+
+  forRemoveMeta: (params = {}) ->
+    paramsNew = {}
+    for key, value of params
+      if !key.match(/_completion$/)
+        paramsNew[key] = value
+    paramsNew
 
   markFormDiff: (diff = {}) =>
     ticketForm    = @$('.edit')
@@ -618,8 +620,8 @@ class App.TicketZoom extends App.Controller
     resetButton   = @$('.js-reset')
 
     params         = {}
-    params.ticket  = @formParam(ticketForm)
-    params.article = @formParam(articleForm)
+    params.ticket  = @forRemoveMeta(@formParam(ticketForm))
+    params.article = @forRemoveMeta(@formParam(articleForm))
 
     # clear all changes
     if _.isEmpty(diff.ticket) && _.isEmpty(diff.article)
@@ -663,7 +665,10 @@ class App.TicketZoom extends App.Controller
     ticketParams = @formParam(@$('.edit'))
 
     # validate ticket
-    ticket = App.Ticket.find(@ticket_id)
+    # we need to use the full ticket because
+    # the time accouting needs all attributes
+    # for condition check
+    ticket = App.Ticket.fullLocal(@ticket_id)
 
     # reset article - should not be resubmited on next ticket update
     ticket.article = undefined
@@ -678,12 +683,12 @@ class App.TicketZoom extends App.Controller
       callback:
         tagAdd: (tag) =>
           return if !@sidebar
-          return if !@sidebar.tagWidget
-          @sidebar.tagWidget.add(tag)
+          return if !@sidebar.reload
+          @sidebar.reload(tagAdd: tag)
         tagRemove: (tag) =>
           return if !@sidebar
-          return if !@sidebar.tagWidget
-          @sidebar.tagWidget.remove(tag)
+          return if !@sidebar.reload
+          @sidebar.reload(tagRemove: tag)
     )
 
     # set defaults
@@ -740,9 +745,9 @@ class App.TicketZoom extends App.Controller
       @submitPost(e, ticket)
       return
 
-
     # verify if time accounting is active for ticket
-    if false
+    time_accounting_selector = @Config.get('time_accounting_selector')
+    if !App.Ticket.selector(ticket, time_accounting_selector['condition'])
       @submitPost(e, ticket)
       return
 

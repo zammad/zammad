@@ -46,18 +46,23 @@ class HtmlSanitizerTest < ActiveSupport::TestCase
     assert_equal(HtmlSanitizer.strict('<IFRAME SRC="javascript:alert(\'XSS\');"></IFRAME>'), '')
     assert_equal(HtmlSanitizer.strict('<TABLE><TD BACKGROUND="javascript:alert(\'XSS\')">'), '<table><td></td></table>')
     assert_equal(HtmlSanitizer.strict('<DIV STYLE="background-image: url(javascript:alert(\'XSS\'), \'\')">'), '<div></div>')
-    assert_equal(HtmlSanitizer.strict('<a href="/some/path">test</a>'), '<a href="/some/path">test</a>')
-    assert_equal(HtmlSanitizer.strict('<a href="https://some/path">test</a>'), '<a href="https://some/path" rel="nofollow" target="_blank">test</a>')
+    assert_equal(HtmlSanitizer.strict('<a href="/some/path">test</a>'), 'test (<a href="/some/path">/some/path</a>)')
+    assert_equal(HtmlSanitizer.strict('<a href="https://some/path">test</a>'), 'test (<a href="https://some/path" rel="nofollow noreferrer noopener" target="_blank">https://some/path</a>)')
+    assert_equal(HtmlSanitizer.strict('<a href="https://some/path">test</a>', true), 'test (<a href="https://some/path" rel="nofollow noreferrer noopener" target="_blank">https://some/path</a>)')
     assert_equal(HtmlSanitizer.strict('<XML ID="xss"><I><B><IMG SRC="javas<!-- -->cript:alert(\'XSS\')"></B></I></XML>'), '<i><b></b></i>')
     assert_equal(HtmlSanitizer.strict('<IMG SRC="javas<!-- -->cript:alert(\'XSS\')">'), '')
     assert_equal(HtmlSanitizer.strict(' <HEAD><META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-7"> </HEAD>+ADw-SCRIPT+AD4-alert(\'XSS\');+ADw-/SCRIPT+AD4-'), '  +ADw-SCRIPT+AD4-alert(\'XSS\');+ADw-/SCRIPT+AD4-')
     assert_equal(HtmlSanitizer.strict('<SCRIPT a=">" SRC="httx://xss.rocks/xss.js"></SCRIPT>'), '')
     assert_equal(HtmlSanitizer.strict('<A HREF="h
-tt  p://6 6.000146.0x7.147/">XSS</A>'), '<a href="h%0Att%20%20p://6%206.000146.0x7.147/" rel="nofollow" target="_blank">XSS</a>')
-    assert_equal(HtmlSanitizer.strict('<A HREF="//www.google.com/">XSS</A>'), '<a href="//www.google.com/" rel="nofollow" target="_blank">XSS</a>')
+tt  p://6 6.000146.0x7.147/">XSS</A>'), 'XSS (<a href="http://66.000146.0x7.147/" rel="nofollow noreferrer noopener" target="_blank">http://66.000146.0x7.147/</a>)')
+    assert_equal(HtmlSanitizer.strict('<A HREF="h
+tt  p://6 6.000146.0x7.147/">XSS</A>', true), 'XSS (<a href="http://66.000146.0x7.147/" rel="nofollow noreferrer noopener" target="_blank">http://66.000146.0x7.147/</a>)')
+    assert_equal(HtmlSanitizer.strict('<A HREF="//www.google.com/">XSS</A>'), 'XSS (<a href="//www.google.com/" rel="nofollow noreferrer noopener" target="_blank">//www.google.com/</a>)')
+    assert_equal(HtmlSanitizer.strict('<A HREF="//www.google.com/">XSS</A>', true), 'XSS (<a href="//www.google.com/" rel="nofollow noreferrer noopener" target="_blank">//www.google.com/</a>)')
     assert_equal(HtmlSanitizer.strict('<form id="test"></form><button form="test" formaction="javascript:alert(1)">X</button>'), 'X')
     assert_equal(HtmlSanitizer.strict('<maction actiontype="statusline#http://google.com" xlink:href="javascript:alert(2)">CLICKME</maction>'), 'CLICKME')
-    assert_equal(HtmlSanitizer.strict('<a xlink:href="javascript:alert(2)">CLICKME</a>'), '<a>CLICKME</a>')
+    assert_equal(HtmlSanitizer.strict('<a xlink:href="javascript:alert(2)">CLICKME</a>'), 'CLICKME')
+    assert_equal(HtmlSanitizer.strict('<a xlink:href="javascript:alert(2)">CLICKME</a>', true), 'CLICKME')
     assert_equal(HtmlSanitizer.strict('<!--<img src="--><img src=x onerror=alert(1)//">'), '<img src="x">')
     assert_equal(HtmlSanitizer.strict('<![><img src="]><img src=x onerror=alert(1)//">'), '<img src="%5D&gt;&lt;img%20src=x%20onerror=alert(1)//">')
     assert_equal(HtmlSanitizer.strict('<svg><![CDATA[><image xlink:href="]]><img src=xx:x onerror=alert(2)//"></svg>'), '')
@@ -65,10 +70,11 @@ tt  p://6 6.000146.0x7.147/">XSS</A>'), '<a href="h%0Att%20%20p://6%206.000146.0
     assert_equal(HtmlSanitizer.strict('<object data="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></object>'), '')
     assert_equal(HtmlSanitizer.strict('<embed src="data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=="></embed>'), '')
     assert_equal(HtmlSanitizer.strict('<img[a][b]src=x[d]onerror[c]=[e]"alert(1)">'), '<img>')
-    assert_equal(HtmlSanitizer.strict('<a href="[a]java[b]script[c]:alert(1)">XXX</a>'), '<a>XXX</a>')
+    assert_equal(HtmlSanitizer.strict('<a href="[a]java[b]script[c]:alert(1)">XXX</a>'), 'XXX')
+    assert_equal(HtmlSanitizer.strict('<a href="[a]java[b]script[c]:alert(1)">XXX</a>', true), 'XXX')
     assert_equal(HtmlSanitizer.strict('<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>'), 'alert(1)')
-    assert_equal(HtmlSanitizer.strict('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>'), '<a style="width: 260px;height:100vh;" href="http://example.com" rel="nofollow" target="_blank"></a>')
-
+    assert_equal(HtmlSanitizer.strict('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>'), '<a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>')
+    assert_equal(HtmlSanitizer.strict('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>', true), '<a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>')
   end
 
 end

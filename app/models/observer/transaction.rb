@@ -58,6 +58,7 @@ class Observer::Transaction < ActiveRecord::Observer
     rescue => e
       Rails.logger.error 'ERROR: ' + backend.inspect
       Rails.logger.error 'ERROR: ' + e.inspect
+      Rails.logger.error e.backtrace.inspect
     end
   end
 

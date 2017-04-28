@@ -12,17 +12,27 @@ module Import
       class << self
 
         def find(article)
-          email = extract_email(article['From'])
+          email = local_email(article['From'])
+          return if !email
           user   = ::User.find_by(email: email)
           user ||= ::User.find_by(login: email)
           user
         end
 
+        def local_email(from)
+          # TODO: should get unified with User#check_email
+          email = extract_email(from)
+          return if !email
+          email.downcase
+        end
+
+        private
+
         def extract_email(from)
           Mail::Address.new(from).address
         rescue
-          return from if from !~ /<\s*([^\s]+)/
-          $1
+          return from if from !~ /<\s*([^>]+)/
+          $1.strip
         end
       end
 
@@ -38,7 +48,7 @@ module Import
       end
 
       def create(article)
-        email = self.class.extract_email(article['From'])
+        email = self.class.local_email(article['From'])
         ::User.create(
           login:         email,
           firstname:     extract_display_name(article['From']),

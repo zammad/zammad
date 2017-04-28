@@ -1,8 +1,0 @@
-<li class="recipientList-entry recipientList--new js-userNew" data-user-id="new">
-  <div class="recipientList-iconSpacer">
-    <%- @Icon('plus', 'recipientList-icon') %>
-  </div>
-  <div class="recipientList-name">
-    <%- @T('Create new Customer') %>
-  </div>
-</li>

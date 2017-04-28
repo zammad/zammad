@@ -76,10 +76,10 @@ class EmailDeliverTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    assert_equal(nil, article1.preferences['delivery_retry'])
-    assert_equal(nil, article1.preferences['delivery_status'])
-    assert_equal(nil, article1.preferences['delivery_status_date'])
-    assert_equal(nil, article1.preferences['delivery_status_message'])
+    assert_nil(article1.preferences['delivery_retry'])
+    assert_nil(article1.preferences['delivery_status'])
+    assert_nil(article1.preferences['delivery_status_date'])
+    assert_nil(article1.preferences['delivery_status_message'])
 
     result = Observer::Ticket::Article::CommunicateEmail::BackgroundJob.new(article1.id)
     assert(result.perform)
@@ -88,7 +88,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert_equal(1, article1_lookup.preferences['delivery_retry'])
     assert_equal('success', article1_lookup.preferences['delivery_status'])
     assert(article1_lookup.preferences['delivery_status_date'])
-    assert_equal(nil, article1_lookup.preferences['delivery_status_message'])
+    assert_nil(article1_lookup.preferences['delivery_status_message'])
 
     # send with invalid smtp settings
     channel.update_attributes(

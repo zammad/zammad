@@ -1,0 +1,12 @@
+<div class="tokenfield form-control u-positionOrigin">
+  <input class="js-objectId" type="hidden" value="<%= @value %>" name="<%- @attribute.name %>" tabindex="-1">
+  <% if @attribute.multiple: %>
+    <%- @tokens %>
+  <% end %>
+  <input name="<%- @attribute.name %>_completion" class="user-select token-input js-objectSelect" autocapitalize="off" placeholder="<%- @attribute.placeholder %>" autocomplete="new-password" <%= @attribute.autofocus %> role="textbox" aria-autocomplete="list" value="<%= @name %>" aria-haspopup="true">
+  <% if @attribute.disableCreateObject isnt true: %><%- @Icon('arrow-down', 'dropdown-arrow') %><% end %>
+</div>
+
+<div class="dropdown-menu" aria-labelledby="customer_id">
+  <ul class="recipientList" role="menu"></ul>
+</div>

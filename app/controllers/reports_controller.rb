@@ -177,9 +177,9 @@ class ReportsController < ApplicationController
     worksheet.set_column(1, 1, 34)
     worksheet.set_column(2, 2, 10)
     worksheet.set_column(3, 3, 10)
-    worksheet.set_column(4, 7, 20)
+    worksheet.set_column(4, 8, 20)
 
-    #  Add and define a format
+    # Add and define a format
     format = workbook.add_format  # Add a format
     format.set_bold
     format.set_size(14)
@@ -193,27 +193,29 @@ class ReportsController < ApplicationController
     format_header.set_italic
     format_header.set_bg_color('gray')
     format_header.set_color('white')
-    worksheet.write(2, 0, '#', format_header )
-    worksheet.write(2, 1, 'Title', format_header )
-    worksheet.write(2, 2, 'State', format_header )
-    worksheet.write(2, 3, 'Priority', format_header )
-    worksheet.write(2, 4, 'Customer', format_header )
-    worksheet.write(2, 5, 'Created at', format_header )
-    worksheet.write(2, 6, 'Updated at', format_header )
-    worksheet.write(2, 7, 'Closed at', format_header )
+    worksheet.write(2, 0, '#', format_header)
+    worksheet.write(2, 1, 'Title', format_header)
+    worksheet.write(2, 2, 'State', format_header)
+    worksheet.write(2, 3, 'Priority', format_header)
+    worksheet.write(2, 4, 'Group', format_header)
+    worksheet.write(2, 5, 'Customer', format_header)
+    worksheet.write(2, 6, 'Created at', format_header)
+    worksheet.write(2, 7, 'Updated at', format_header)
+    worksheet.write(2, 8, 'Closed at', format_header)
 
     row = 2
     result[:ticket_ids].each { |ticket_id|
       ticket = Ticket.lookup(id: ticket_id)
       row += 1
-      worksheet.write(row, 0, ticket.number )
+      worksheet.write(row, 0, ticket.number)
       worksheet.write(row, 1, ticket.title)
       worksheet.write(row, 2, ticket.state.name)
       worksheet.write(row, 3, ticket.priority.name)
-      worksheet.write(row, 4, ticket.customer.fullname)
-      worksheet.write(row, 5, ticket.created_at)
-      worksheet.write(row, 6, ticket.updated_at)
-      worksheet.write(row, 7, ticket.close_at)
+      worksheet.write(row, 4, ticket.group.name)
+      worksheet.write(row, 5, ticket.customer.fullname)
+      worksheet.write(row, 6, ticket.created_at)
+      worksheet.write(row, 7, ticket.updated_at)
+      worksheet.write(row, 8, ticket.close_at)
     }
 
     workbook.close

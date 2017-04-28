@@ -1,7 +1,7 @@
 <% if @user && @user.organization: %>
   <div class="tabs tabs--big">
     <div class="tab js-userTab active"><%- @T('Tickets of User') %> <%- "(" + @user_total + ")" %></div>
-    <div class="tab js-orgTab"><%- @T('Tickets of Organization') %> <%- "(" + @org_total + ")" %></div>
+    <div class="tab js-orgTab"><%- @T('Tickets of Organization') %> <%- "(" + @organization_total + ")" %></div>
   </div>
 <% end %>
 

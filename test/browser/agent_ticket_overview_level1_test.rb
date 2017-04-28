@@ -29,7 +29,7 @@ class AgentTicketOverviewLevel1Test < TestCase
       browser: browser1,
       data: {
         name: name1,
-        role: 'Agent',
+        roles: ['Agent'],
         selector: {
           'Priority' => '1 low',
         },
@@ -40,7 +40,7 @@ class AgentTicketOverviewLevel1Test < TestCase
       browser: browser1,
       data: {
         name: name2,
-        role: 'Agent',
+        roles: ['Agent'],
         selector: {
           'Priority' => '3 high',
         },

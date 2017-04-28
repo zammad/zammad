@@ -5,6 +5,7 @@ class Ticket < ApplicationModel
   include NotifiesClients
   include LatestChangeObserved
   include Historisable
+  include Taggable
   include SearchIndexed
 
   include Ticket::Escalation
@@ -18,8 +19,10 @@ class Ticket < ApplicationModel
   extend Ticket::Search
 
   store          :preferences
-  before_create  :check_generate, :check_defaults, :check_title, :check_escalation_update, :set_default_state, :set_default_priority
-  before_update  :check_defaults, :check_title, :reset_pending_time, :check_escalation_update
+  before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority
+  after_create   :check_escalation_update
+  before_update  :check_defaults, :check_title, :reset_pending_time
+  after_update   :check_escalation_update
   before_destroy :destroy_dependencies
 
   validates :group_id, presence: true
@@ -51,17 +54,18 @@ class Ticket < ApplicationModel
                              :article_count,
                              :preferences
 
-  belongs_to    :group,                 class_name: 'Group'
-  has_many      :articles,              class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update
-  belongs_to    :organization,          class_name: 'Organization'
-  belongs_to    :state,                 class_name: 'Ticket::State'
-  belongs_to    :priority,              class_name: 'Ticket::Priority'
-  belongs_to    :owner,                 class_name: 'User'
-  belongs_to    :customer,              class_name: 'User'
-  belongs_to    :created_by,            class_name: 'User'
-  belongs_to    :updated_by,            class_name: 'User'
-  belongs_to    :create_article_type,   class_name: 'Ticket::Article::Type'
-  belongs_to    :create_article_sender, class_name: 'Ticket::Article::Sender'
+  belongs_to    :group,                  class_name: 'Group'
+  has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update
+  has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy
+  belongs_to    :organization,           class_name: 'Organization'
+  belongs_to    :state,                  class_name: 'Ticket::State'
+  belongs_to    :priority,               class_name: 'Ticket::Priority'
+  belongs_to    :owner,                  class_name: 'User'
+  belongs_to    :customer,               class_name: 'User'
+  belongs_to    :created_by,             class_name: 'User'
+  belongs_to    :updated_by,             class_name: 'User'
+  belongs_to    :create_article_type,    class_name: 'Ticket::Article::Type'
+  belongs_to    :create_article_sender,  class_name: 'Ticket::Article::Sender'
 
   self.inheritance_column = nil
 
@@ -307,7 +311,7 @@ returns
       self.state_id = Ticket::State.lookup(name: 'merged').id
 
       # rest owner
-      self.owner_id = User.find_by(login: '-').id
+      self.owner_id = 1
 
       # save ticket
       save!
@@ -395,6 +399,7 @@ get count of tickets and tickets which match on selector
     access_condition = Ticket.access_condition(current_user)
     ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
     tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
+
     [ticket_count, tickets]
   end
 
@@ -436,7 +441,11 @@ condition example
     'ticket.escalation_at' => {
       operator: 'is not', # not
       value: nil,
-    }
+    },
+    'ticket.tags' => {
+      operator: 'contains all', # contains all|contains one|contains all not|contains one not
+      value: 'tag1, tag2',
+    },
   }
 
 =end
@@ -502,6 +511,9 @@ condition example
       # get attributes
       attributes = attribute.split(/\./)
       attribute = "#{attributes[0]}s.#{attributes[1]}"
+      if attributes[0] == 'ticket' && attributes[1] == 'tags'
+        selector['value'] = selector['value'].split(/,/).collect(&:strip)
+      end
 
       if query != ''
         query += ' AND '
@@ -567,6 +579,73 @@ condition example
         query += "#{attribute} NOT #{like} (?)"
         value = "%#{selector['value']}%"
         bind_params.push value
+      elsif selector['operator'] == 'contains all' && attributes[0] == 'ticket' && attributes[1] == 'tags'
+        query += "? = (
+                                              SELECT
+                                                COUNT(*)
+                                              FROM
+                                                tag_objects,
+                                                tag_items,
+                                                tags
+                                              WHERE
+                                                tickets.id = tags.o_id AND
+                                                tag_objects.id = tags.tag_object_id AND
+                                                tag_objects.name = 'Ticket' AND
+                                                tag_items.id = tags.tag_item_id AND
+                                                tag_items.name IN (?)
+                                            )"
+        bind_params.push selector['value'].count
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'contains one' && attributes[0] == 'ticket' && attributes[1] == 'tags'
+        query += "1 <= (
+                          SELECT
+                            COUNT(*)
+                          FROM
+                            tag_objects,
+                            tag_items,
+                            tags
+                          WHERE
+                            tickets.id = tags.o_id AND
+                            tag_objects.id = tags.tag_object_id AND
+                            tag_objects.name = 'Ticket' AND
+                            tag_items.id = tags.tag_item_id AND
+                            tag_items.name IN (?)
+                        )"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'contains all not' && attributes[0] == 'ticket' && attributes[1] == 'tags'
+        query += "0 = (
+                        SELECT
+                          COUNT(*)
+                        FROM
+                          tag_objects,
+                          tag_items,
+                          tags
+                        WHERE
+                          tickets.id = tags.o_id AND
+                          tag_objects.id = tags.tag_object_id AND
+                          tag_objects.name = 'Ticket' AND
+                          tag_items.id = tags.tag_item_id AND
+                          tag_items.name IN (?)
+                      )"
+        bind_params.push selector['value']
+      elsif selector['operator'] == 'contains one not' && attributes[0] == 'ticket' && attributes[1] == 'tags'
+        query += "(
+                    SELECT
+                      COUNT(*)
+                    FROM
+                      tag_objects,
+                      tag_items,
+                      tags
+                    WHERE
+                      tickets.id = tags.o_id AND
+                      tag_objects.id = tags.tag_object_id AND
+                      tag_objects.name = 'Ticket' AND
+                      tag_items.id = tags.tag_item_id AND
+                      tag_items.name IN (?)
+                  ) BETWEEN ? AND ?"
+        bind_params.push selector['value']
+        bind_params.push selector['value'].count - 1
+        bind_params.push selector['value'].count
       elsif selector['operator'] == 'before (absolute)'
         query += "#{attribute} <= ?"
         bind_params.push selector['value']
@@ -645,6 +724,7 @@ condition example
         raise "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
       end
     }
+
     [query, bind_params, tables]
   end
 
@@ -652,11 +732,11 @@ condition example
 
 perform changes on ticket
 
-  ticket.perform_changes({}, 'trigger', item)
+  ticket.perform_changes({}, 'trigger', item, current_user_id)
 
 =end
 
-  def perform_changes(perform, perform_origin, item = nil)
+  def perform_changes(perform, perform_origin, item = nil, current_user_id = nil)
     logger.debug "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})"
     changed = false
     perform.each do |key, value|
@@ -715,8 +795,15 @@ perform changes on ticket
         group = self.group
         next if !group
         email_address = group.email_address
-        next if !email_address
-        next if !email_address.channel_id
+        if !email_address
+          logger.info "Unable to send trigger based notification to #{recipient_string} because no email address is set for group '#{group.name}'"
+          next
+        end
+
+        if !email_address.channel_id
+          logger.info "Unable to send trigger based notification to #{recipient_string} because no channel is set for email address '#{email_address.email}' (id: #{email_address.id})"
+          next
+        end
 
         objects = {
           ticket: self,
@@ -761,28 +848,30 @@ perform changes on ticket
 
       # update tags
       if key == 'ticket.tags'
-        next if value['value'].empty?
+        next if value['value'].blank?
         tags = value['value'].split(/,/)
         if value['operator'] == 'add'
           tags.each { |tag|
-            Tag.tag_add(
-              object: 'Ticket',
-              o_id: id,
-              item: tag,
-            )
+            tag_add(tag)
           }
         elsif value['operator'] == 'remove'
           tags.each { |tag|
-            Tag.tag_remove(
-              object: 'Ticket',
-              o_id: id,
-              item: tag,
-            )
+            tag_remove(tag)
           }
         else
           logger.error "Unknown #{attribute} operator #{value['operator']}"
         end
         next
+      end
+
+      # lookup pre_condition
+      if value['pre_condition']
+        if value['pre_condition'] =~ /^not_set/
+          value['value'] = 1
+        elsif value['pre_condition'] =~ /^current_user\./
+          raise 'Unable to use current_user, got no current_user_id for ticket.perform_changes' if !current_user_id
+          value['value'] = current_user_id
+        end
       end
 
       # update ticket
@@ -911,7 +1000,7 @@ result
   end
 
   def check_escalation_update
-    escalation_calculation_int
+    escalation_calculation
     true
   end
 

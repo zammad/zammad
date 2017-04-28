@@ -218,18 +218,19 @@ class App.OnlineNotificationContentWidget extends App.CollectionController
     for item in items
       if !@alreadyShown[item.id]
         @alreadyShown[item.id] = true
-        if @container.fetchedData
-          item = @prepareForObjectListItem(item)
-          if item.objectNative && item.objectNative.activityMessage
-            title = item.objectNative.activityMessage(item)
-          else
-            title = "Need objectNative in item #{item.object}.find(#{item.o_id})"
-          title = App.Utils.html2text(title.replace(/<.+?>/g, '"'))
-          @notifyDesktop(
-            url: item.link
-            title: title
-          )
-          App.OnlineNotification.play()
+        if !item.seen
+          if @container.fetchedData
+            item = @prepareForObjectListItem(item)
+            if item.objectNative && item.objectNative.activityMessage
+              title = item.objectNative.activityMessage(item)
+            else
+              title = "Need objectNative in item #{item.object}.find(#{item.o_id})"
+            title = App.Utils.html2text(title.replace(/<.+?>/g, '"'))
+            @notifyDesktop(
+              url: item.link
+              title: title
+            )
+            App.OnlineNotification.play()
 
   onClick: =>
     @container.hide()

@@ -32,7 +32,7 @@ class TokenTest < ActiveSupport::TestCase
       user_id: agent1.id,
     )
     assert(token)
-    assert_equal(nil, token.persistent)
+    assert_nil(token.persistent)
     user = Token.check(
       action: 'PasswordReset_NotExisting',
       name: token.name,
@@ -102,6 +102,18 @@ class TokenTest < ActiveSupport::TestCase
       action: 'api',
       name: token.name,
       permission: 'ticket',
+    )
+    assert_not(user)
+    user = Token.check(
+      action: 'api',
+      name: token.name,
+      permission: 'ticket.agent.sub',
+    )
+    assert(user)
+    user = Token.check(
+      action: 'api',
+      name: token.name,
+      permission: 'admin_not_extisting',
     )
     assert_not(user)
     user = Token.check(

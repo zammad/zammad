@@ -4,7 +4,7 @@ class Stats::TicketLoadMeasure
 
   def self.generate(user)
 
-    open_state_ids = Ticket::State.by_category('open').map(&:id)
+    open_state_ids = Ticket::State.by_category(:open).pluck(:id)
 
     # owned tickets
     count = Ticket.where(owner_id: user.id, state_id: open_state_ids).count
@@ -21,7 +21,7 @@ class Stats::TicketLoadMeasure
     end
 
     if total.nonzero?
-      load_measure_precent = ( count.to_f / (total.to_f / 100) ).round(3)
+      load_measure_precent = ( count.to_f / (total.to_f / 100) ).round(1)
     end
     {
       used_for_average: load_measure_precent,

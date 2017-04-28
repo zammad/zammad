@@ -56,7 +56,7 @@ class Index extends App.ControllerSubContent
       header.push attribute
       header
 
-    callbackAttributes = (value, object, attribute, header, refObject) ->
+    callbackAttributes = (value, object, attribute, header) ->
       text                  = App.i18n.translateInline('View from user\'s perspective')
       value                 = ' '
       attribute.raw         = ' <span class="btn btn--primary btn--table switchView" title="' + text + '">' + App.Utils.icon('switchView') + text + '</span>'

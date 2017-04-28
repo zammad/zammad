@@ -47,14 +47,14 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     object = params.object
     objects =
       Ticket:
-        Customer:
+        'ticket.customer':
           create_middle:
             shown: true
             required: false
           edit:
             shown: true
             required: false
-        Agent:
+        'ticket.agent':
           create_middle:
             shown: true
             required: false
@@ -62,7 +62,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
             shown: true
             required: false
       User:
-        Customer:
+        'ticket.customer':
           create:
             shown: true
             required: false
@@ -71,7 +71,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
           signup:
             shown: false
             required: false
-        Agent:
+        'ticket.agent':
           create:
             shown: true
             required: false
@@ -83,7 +83,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
           invite_customer:
             show: false
             required: false
-        Admin:
+        'admin.group':
           create:
             shown: true
             required: false
@@ -99,10 +99,10 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
             show: false
             required: false
       Organization:
-        Customer:
+        'ticket.customer':
           view:
             shown: true
-        Agent:
+        'ticket.agent':
           create:
             shown: true
             required: false
@@ -111,7 +111,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
             required: false
           view:
             shown: true
-        Admin:
+        'admin.group':
           create:
             shown: true
             required: false
@@ -121,7 +121,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
           view:
             shown: true
       Group:
-        Admin:
+        'admin.group':
           create:
             shown: true
             required: false

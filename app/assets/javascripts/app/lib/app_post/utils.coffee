@@ -46,8 +46,13 @@ class App.Utils
       .replace(/\n{3,20}/g, "\n\n")   # remove multiple empty lines
 
   # htmlEscapedAndLinkified = App.Utils.linkify(rawText)
-  @linkify: (ascii) ->
-    window.linkify(ascii)
+  @linkify: (string) ->
+    window.linkify(string)
+
+  # htmlEscapedAndLinkified = App.Utils.linkify(rawText)
+  @phoneify: (string) ->
+    string = string.replace(/\s+/g, '')
+    "tel://#{encodeURIComponent(string)}"
 
   # wrappedText = App.Utils.wrap(rawText, maxLineLength)
   @wrap: (ascii, max = 82) ->
@@ -98,6 +103,9 @@ class App.Utils
           '> ' + match
         else
           '>'
+
+  @escapeRegExp: (str) ->
+    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
   # htmlEscaped = App.Utils.htmlEscape(rawText)
   @htmlEscape: (ascii) ->
@@ -627,7 +635,7 @@ class App.Utils
   # human readable file size
   @humanFileSize: (size) ->
     if size > ( 1024 * 1024 )
-      size = Math.round( size / ( 1024 * 1024 ) ) + ' MB'
+      size = (Math.round( size * 10 / ( 1024 * 1024 ) ) / 10 ) + ' MB'
     else if size > 1024
       size = Math.round( size / 1024 ) + ' KB'
     else

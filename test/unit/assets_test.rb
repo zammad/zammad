@@ -351,8 +351,8 @@ class AssetsTest < ActiveSupport::TestCase
       name: 'my asset test',
       link: 'my_asset_test',
       prio: 1000,
-      role_id: overview_role.id,
-      user_ids: [ user4.id, user5.id ],
+      role_ids: [overview_role.id],
+      user_ids: [user4.id, user5.id],
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -389,8 +389,8 @@ class AssetsTest < ActiveSupport::TestCase
       name: 'my asset test',
       link: 'my_asset_test',
       prio: 1000,
-      role_id: overview_role.id,
-      user_ids: [ user4.id ],
+      role_ids: [overview_role.id],
+      user_ids: [user4.id],
       condition: {
         'ticket.state_id' => {
           operator: 'is',

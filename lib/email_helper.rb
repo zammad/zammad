@@ -611,8 +611,7 @@ returns
         }
       end
     rescue => e
-      Rails.logger.error e.message
-      Rails.logger.error e.backtrace.inspect
+      Rails.logger.error e
     end
     mxs
   end

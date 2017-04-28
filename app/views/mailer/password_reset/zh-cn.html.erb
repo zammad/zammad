@@ -1,0 +1,15 @@
+重置您在 #{config.product_name} 上的密码
+
+<div>您好, #{user.firstname}:</div>
+<br>
+<div>#{config.product_name} 系统接收到帐号 <b>#{user.login}</b> 重置密码的请求.</div>
+<br>
+<div>如果确实是您想要重置密码, 请点击下面的连接(或复制该网址并粘贴到浏览器的地址栏):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>该连接会引导修改您的密码.</div>
+<br>
+<div>如果您不想(或不是您发起的请求)重置您的密码, 请不必理会该邮件, 继续使用您的旧密码.</div>
+<br>
+<div>您的 #{config.product_name} 团队</div>

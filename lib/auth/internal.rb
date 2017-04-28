@@ -1,30 +1,25 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
-module Auth::Internal
+class Auth
+  class Internal < Auth::Base
 
-  # rubocop:disable Style/ModuleFunction
-  extend self
+    def valid?(user, password)
 
-  def check(username, password, _config, user)
+      return false if user.blank?
 
-    # return if no user exists
-    return false if !username
-    return false if !user
+      if PasswordHash.legacy?(user.password, password)
+        update_password(user, password)
+        return true
+      end
 
-    if PasswordHash.legacy?(user.password, password)
-      update_password(user, password)
-      return user
+      PasswordHash.verified?(user.password, password)
     end
 
-    return false if !PasswordHash.verified?(user.password, password)
+    private
 
-    user
-  end
-
-  private
-
-  def update_password(user, password)
-    user.password = PasswordHash.crypt(password)
-    user.save
+    def update_password(user, password)
+      user.password = PasswordHash.crypt(password)
+      user.save
+    end
   end
 end

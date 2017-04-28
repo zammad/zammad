@@ -9,6 +9,7 @@ class Ticket::Article < ApplicationModel
   include Ticket::Article::Assets
 
   belongs_to    :ticket
+  has_one       :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', foreign_key: :ticket_article_id, dependent: :destroy
   belongs_to    :type,        class_name: 'Ticket::Article::Type'
   belongs_to    :sender,      class_name: 'Ticket::Article::Sender'
   belongs_to    :created_by,  class_name: 'User'
@@ -44,10 +45,7 @@ class Ticket::Article < ApplicationModel
 
 insert inline image urls to body
 
-  article_attributes = Ticket::Article.insert_urls(
-    article_attributes,
-    attachments,
-  )
+  article_attributes = Ticket::Article.insert_urls(article_attributes)
 
 returns
 
@@ -55,23 +53,30 @@ returns
 
 =end
 
-  def self.insert_urls(article, attachments)
+  def self.insert_urls(article)
+    return article if article['attachments'].empty?
+    return article if article['content_type'] !~ %r{text/html}i
+    return article if article['body'] !~ /<img/i
+
     inline_attachments = {}
-    article['body'].gsub!( /(<img[[:space:]](.+?|)src=")cid:(.+?)(">)/i ) { |item|
+    article['body'].gsub!( /(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>/im ) { |item|
+      tag_start = $1
+      cid = $3
+      tag_end = $4
       replace = item
 
       # look for attachment
-      attachments.each { |file|
-        next if !file.preferences['Content-ID'] || file.preferences['Content-ID'] != $3
-        replace = "#{$1}/api/v1/ticket_attachment/#{article['ticket_id']}/#{article['id']}/#{file.id}#{$4}"
-        inline_attachments[file.id] = true
+      article['attachments'].each { |file|
+        next if !file[:preferences] || !file[:preferences]['Content-ID'] || (file[:preferences]['Content-ID'] != cid && file[:preferences]['Content-ID'] != "<#{cid}>" )
+        replace = "#{tag_start}/api/v1/ticket_attachment/#{article['ticket_id']}/#{article['id']}/#{file[:id]}\"#{tag_end}>"
+        inline_attachments[file[:id]] = true
         break
       }
       replace
     }
     new_attachments = []
-    attachments.each { |file|
-      next if inline_attachments[file.id]
+    article['attachments'].each { |file|
+      next if inline_attachments[file[:id]]
       new_attachments.push file
     }
     article['attachments'] = new_attachments
@@ -93,11 +98,12 @@ returns
 
   def attachments_inline
     inline_attachments = {}
-    body.gsub( /<img[[:space:]](.+?|)src="cid:(.+?)">/i ) { |_item|
+    body.gsub( /<img[[:space:]](|.+?)src="cid:(.+?)"(|.+?)>/im ) { |_item|
+      cid = $2
 
       # look for attachment
       attachments.each { |file|
-        next if !file.preferences['Content-ID'] || file.preferences['Content-ID'] != $2
+        next if !file.preferences['Content-ID'] || (file.preferences['Content-ID'] != cid && file.preferences['Content-ID'] != "<#{cid}>" )
         inline_attachments[file.id] = true
         break
       }
@@ -210,6 +216,65 @@ returns:
     return true if attribute != :body
     return false if content_type.blank?
     content_type =~ /html/i
+  end
+
+=begin
+
+get relation name of model based on params
+
+  model = Model.find(1)
+  attributes = model.attributes_with_association_names
+
+returns
+
+  hash with attributes, association ids, association names and relation name
+
+=end
+
+  def attributes_with_association_names
+    attributes = super
+    attributes['attachments'] = []
+    attachments.each { |attachment|
+      item = {
+        id: attachment['id'],
+        filename: attachment['filename'],
+        size: attachment['size'],
+        preferences: attachment['preferences'],
+      }
+      attributes['attachments'].push item
+    }
+    Ticket::Article.insert_urls(attributes)
+  end
+
+=begin
+
+get relations of model based on params
+
+  model = Model.find(1)
+  attributes = model.attributes_with_association_ids
+
+returns
+
+  hash with attributes and association ids
+
+=end
+
+  def attributes_with_association_ids
+    attributes = super
+    attributes['attachments'] = []
+    attachments.each { |attachment|
+      item = {
+        id: attachment['id'],
+        filename: attachment['filename'],
+        size: attachment['size'],
+        preferences: attachment['preferences'],
+      }
+      attributes['attachments'].push item
+    }
+    if attributes['body'] && attributes['content_type'] =~ %r{text/html}i
+      attributes['body'] = HtmlSanitizer.dynamic_image_size(attributes['body'])
+    end
+    Ticket::Article.insert_urls(attributes)
   end
 
   private

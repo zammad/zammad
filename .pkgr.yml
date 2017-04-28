@@ -7,6 +7,7 @@ targets:
     dependencies:
       - nginx
       - postgresql-server
+      - which
   debian-8:
     dependencies:
       - nginx|apache2
@@ -29,7 +30,9 @@ after:
   - contrib/packager.io/after.sh
 env:
   - RAILS_ENV=production
-  - PORT=3000
+  - ZAMMAD_BIND_IP=127.0.0.1
+  - ZAMMAD_RAILS_PORT=3000
+  - ZAMMAD_WEBSOCKET_PORT=6042
 services:
   - postgres
 after_install: contrib/packager.io/postinstall.sh

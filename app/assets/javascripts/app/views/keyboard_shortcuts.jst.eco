@@ -7,7 +7,7 @@
       <% if item.where: %><p><i><%- @T(item.where) %></i></p><% end %>
       <% for shortcut in item.shortcuts: %>
         <% if shortcut.hotkeys: %>
-          <kbd>ctrl</kbd> <kbd>alt</kbd>
+          <kbd><%- @hotkeys.join('</kbd> <kbd>') %></kbd>
         <% end %>
         <% if shortcut.keyPrefix: %>
           <%= shortcut.keyPrefix %>
@@ -33,7 +33,9 @@
       <% if item.where: %><p><i><%- @T(item.where) %></i></p><% end %>
       <% for shortcut in item.shortcuts: %>
         <% if shortcut.hotkeys: %>
-          <kbd>ctrl</kbd> <kbd>alt</kbd>
+          <kbd><%- @hotkeys.join('</kbd> <kbd>') %></kbd>
+        <% else if shortcut.magicKey: %>
+          <kbd><%= @magicKey %></kbd>
         <% end %>
         <% if shortcut.keyPrefix: %>
           <%= shortcut.keyPrefix %>

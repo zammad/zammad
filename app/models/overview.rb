@@ -3,10 +3,13 @@
 class Overview < ApplicationModel
   include NotifiesClients
   include LatestChangeObserved
+  include ValidatesCondition
+  include Seedable
 
   load 'overview/assets.rb'
   include Overview::Assets
 
+  has_and_belongs_to_many :roles, after_add: :cache_update, after_remove: :cache_update, class_name: 'Role'
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
   store     :condition
   store     :order

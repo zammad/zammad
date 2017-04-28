@@ -185,81 +185,32 @@ class TagTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     travel 2.seconds
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: 'some tag1',
-      created_by_id: 1,
-    )
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: 'some tag2 ',
-      created_by_id: 1,
-    )
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: ' some tag3',
-      created_by_id: 1,
-    )
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: 'some TAG4',
-      created_by_id: 1,
-    )
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: ' some tag4',
-      created_by_id: 1,
-    )
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket2.id,
-      item: 'some tag3',
-      created_by_id: 1,
-    )
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket2.id,
-      item: 'some TAG4',
-      created_by_id: 1,
-    )
-    Tag.tag_add(
-      object: 'Ticket',
-      o_id: ticket2.id,
-      item: 'some tag4 ',
-      created_by_id: 1,
-    )
 
-    Tag.tag_remove(
-      object: 'Ticket',
-      o_id: ticket1.id,
-      item: 'some tag1',
-      created_by_id: 1,
-    )
+    ticket1.tag_add('some tag1', 1)
+    ticket1.tag_add('some tag2 ', 1)
+    ticket1.tag_add(' some tag3', 1)
+    ticket1.tag_add('some TAG4', 1)
+    ticket1.tag_add(' some tag4', 1)
+
+    ticket2.tag_add('some tag3', 1)
+    ticket2.tag_add('some TAG4', 1)
+    ticket2.tag_add('some tag4 ', 1)
+
+    ticket1.tag_remove('some tag1', 1)
 
     ticket1_lookup1 = Ticket.lookup(id: ticket1.id)
     assert_not_equal(ticket1.updated_at.to_s, ticket1_lookup1.updated_at.to_s)
     ticket2_lookup1 = Ticket.lookup(id: ticket2.id)
     assert_not_equal(ticket2.updated_at.to_s, ticket2_lookup1.updated_at.to_s)
 
-    tags_ticket1 = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket1.id,
-    )
+    tags_ticket1 = ticket1.tag_list
     assert_equal(4, tags_ticket1.count)
     assert(tags_ticket1.include?('some tag2'))
     assert(tags_ticket1.include?('some tag3'))
     assert(tags_ticket1.include?('some TAG4'))
     assert(tags_ticket1.include?('some tag4'))
 
-    tags_ticket2 = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket2.id,
-    )
+    tags_ticket2 = ticket2.tag_list
     assert_equal(3, tags_ticket2.count)
     assert(tags_ticket2.include?('some tag3'))
     assert(tags_ticket2.include?('some TAG4'))
@@ -279,21 +230,14 @@ class TagTest < ActiveSupport::TestCase
     ticket2_lookup2 = Ticket.lookup(id: ticket2.id)
     assert_not_equal(ticket2_lookup2.updated_at.to_s, ticket2_lookup1.updated_at.to_s)
 
-    tags_ticket1 = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket1.id,
-    )
-
+    tags_ticket1 = ticket1.tag_list
     assert_equal(4, tags_ticket1.count)
     assert(tags_ticket1.include?('some tag2'))
     assert(tags_ticket1.include?('some tag33'))
     assert(tags_ticket1.include?('some TAG4'))
     assert(tags_ticket1.include?('some tag4'))
 
-    tags_ticket2 = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket2.id,
-    )
+    tags_ticket2 = ticket2.tag_list
     assert_equal(3, tags_ticket2.count)
     assert(tags_ticket2.include?('some tag33'))
     assert(tags_ticket2.include?('some TAG4'))
@@ -312,19 +256,13 @@ class TagTest < ActiveSupport::TestCase
     ticket2_lookup3 = Ticket.lookup(id: ticket2.id)
     assert_not_equal(ticket2_lookup3.updated_at.to_s, ticket2_lookup2.updated_at.to_s)
 
-    tags_ticket1 = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket1.id,
-    )
+    tags_ticket1 = ticket1.tag_list
     assert_equal(3, tags_ticket1.count)
     assert(tags_ticket1.include?('some tag2'))
     assert(tags_ticket1.include?('some TAG4'))
     assert(tags_ticket1.include?('some tag4'))
 
-    tags_ticket2 = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket2.id,
-    )
+    tags_ticket2 = ticket2.tag_list
     assert_equal(3, tags_ticket2.count)
     assert(tags_ticket2.include?('some tag2'))
     assert(tags_ticket2.include?('some TAG4'))
@@ -337,18 +275,12 @@ class TagTest < ActiveSupport::TestCase
     tag_item4 = Tag::Item.find_by(name: 'some TAG4')
     Tag::Item.remove(tag_item4.id)
 
-    tags_ticket1 = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket1.id,
-    )
+    tags_ticket1 = ticket1.tag_list
     assert_equal(2, tags_ticket1.count)
     assert(tags_ticket1.include?('some tag2'))
     assert(tags_ticket1.include?('some tag4'))
 
-    tags_ticket2 = Tag.tag_list(
-      object: 'Ticket',
-      o_id: ticket2.id,
-    )
+    tags_ticket2 = ticket2.tag_list
     assert_equal(2, tags_ticket2.count)
     assert(tags_ticket2.include?('some tag2'))
     assert(tags_ticket2.include?('some tag4'))

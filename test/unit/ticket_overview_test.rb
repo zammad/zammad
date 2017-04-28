@@ -105,7 +105,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       name: 'My assigned Tickets',
       link: 'my_assigned',
       prio: 1000,
-      role_id: overview_role.id,
+      role_ids: [overview_role.id],
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -132,7 +132,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       name: 'Unassigned & Open',
       link: 'all_unassigned',
       prio: 1010,
-      role_id: overview_role.id,
+      role_ids: [overview_role.id],
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -158,7 +158,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       name: 'My Tickets 2',
       link: 'my_tickets_2',
       prio: 1020,
-      role_id: overview_role.id,
+      role_ids: [overview_role.id],
       user_ids: [agent2.id],
       condition: {
         'ticket.state_id' => {
@@ -185,7 +185,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       name: 'My Tickets only with Note',
       link: 'my_tickets_onyl_with_note',
       prio: 1030,
-      role_id: overview_role.id,
+      role_ids: [overview_role.id],
       user_ids: [agent1.id],
       condition: {
         'article.type_id' => {
@@ -214,7 +214,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       name: 'My Tickets',
       link: 'my_tickets',
       prio: 1100,
-      role_id: overview_role.id,
+      role_ids: [overview_role.id],
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -240,7 +240,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       name: 'My Organization Tickets',
       link: 'my_organization_tickets',
       prio: 1200,
-      role_id: overview_role.id,
+      role_ids: [overview_role.id],
       organization_shared: true,
       condition: {
         'ticket.state_id' => {
@@ -267,7 +267,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       name: 'My Organization Tickets (open)',
       link: 'my_organization_tickets_open',
       prio: 1200,
-      role_id: overview_role.id,
+      role_ids: [overview_role.id],
       user_ids: [customer2.id],
       organization_shared: true,
       condition: {
@@ -297,7 +297,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
       name: 'Not Shown Admin',
       link: 'not_shown_admin',
       prio: 9900,
-      role_id: overview_role.id,
+      role_ids: [overview_role.id],
       condition: {
         'ticket.state_id' => {
           operator: 'is',

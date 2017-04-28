@@ -254,16 +254,21 @@ class UserTest < ActiveSupport::TestCase
 
       test[:create_verify].each { |key, value|
         next if key == :image_md5
-        if user.respond_to?( key )
-          assert_equal( value, user.send(key), "create check #{key} in (#{test[:name]})"  )
+        if user.respond_to?(key)
+          result = user.send(key)
+          if value.nil?
+            assert_nil(result, "create check #{key} in (#{test[:name]})")
+          else
+            assert_equal(value, result, "create check #{key} in (#{test[:name]})")
+          end
         else
-          assert_equal( value, user[key], "create check #{key} in (#{test[:name]})" )
+          assert_equal(value, user[key], "create check #{key} in (#{test[:name]})")
         end
       }
       if test[:create_verify][:image_md5]
         file = Avatar.get_by_hash( user.image )
         file_md5 = Digest::MD5.hexdigest( file.content )
-        assert_equal( test[:create_verify][:image_md5], file_md5, "create avatar md5 check in (#{test[:name]})"  )
+        assert_equal(test[:create_verify][:image_md5], file_md5, "create avatar md5 check in (#{test[:name]})")
       end
       if test[:update]
         user.update_attributes( test[:update] )
@@ -271,16 +276,16 @@ class UserTest < ActiveSupport::TestCase
         test[:update_verify].each { |key, value|
           next if key == :image_md5
           if user.respond_to?( key )
-            assert_equal( value, user.send(key), "update check #{key} in (#{test[:name]})"  )
+            assert_equal(value, user.send(key), "update check #{key} in (#{test[:name]})")
           else
-            assert_equal( value, user[key], "update check #{key} in (#{test[:name]})"  )
+            assert_equal(value, user[key], "update check #{key} in (#{test[:name]})")
           end
         }
 
         if test[:update_verify][:image_md5]
           file = Avatar.get_by_hash( user.image )
           file_md5 = Digest::MD5.hexdigest( file.content )
-          assert_equal( test[:update_verify][:image_md5], file_md5, "update avatar md5 check in (#{test[:name]})"  )
+          assert_equal( test[:update_verify][:image_md5], file_md5, "update avatar md5 check in (#{test[:name]})")
         end
       end
 
@@ -542,6 +547,74 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(customer_count + 1, users.count)
     assert_equal(customer.login, users.last.login)
 
+  end
+
+  test 'min admin permission check' do
+    User.with_permissions('admin').each(&:destroy)
+
+    # store current admin count
+    admin_count_inital = User.with_permissions('admin').count
+    assert_equal(0, admin_count_inital)
+
+    # create two admin users
+    random = rand(999_999_999)
+    admin1 = User.create_or_update(
+      login: "1admin-role#{random}@example.com",
+      firstname: 'Role',
+      lastname: "Admin#{random}",
+      email: "admin-role#{random}@example.com",
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    random = rand(999_999_999)
+    admin2 = User.create_or_update(
+      login: "2admin-role#{random}@example.com",
+      firstname: 'Role',
+      lastname: "Admin#{random}",
+      email: "admin-role#{random}@example.com",
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    random = rand(999_999_999)
+    admin3 = User.create_or_update(
+      login: "2admin-role#{random}@example.com",
+      firstname: 'Role',
+      lastname: "Admin#{random}",
+      email: "admin-role#{random}@example.com",
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    admin_count_inital = User.with_permissions('admin').count
+    assert_equal(3, admin_count_inital)
+
+    admin1.update_attribute(:roles, Role.where(name: %w(Agent)))
+
+    admin_count_inital = User.with_permissions('admin').count
+    assert_equal(2, admin_count_inital)
+
+    admin2.update_attribute(:roles, Role.where(name: %w(Agent)))
+
+    admin_count_inital = User.with_permissions('admin').count
+    assert_equal(1, admin_count_inital)
+
+    assert_raises(Exceptions::UnprocessableEntity) {
+      admin3.update_attribute(:roles, Role.where(name: %w(Agent)))
+    }
+
+    admin_count_inital = User.with_permissions('admin').count
+    assert_equal(1, admin_count_inital)
   end
 
 end

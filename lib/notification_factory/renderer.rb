@@ -139,7 +139,7 @@ examples how to use
   end
 
   def data_key_valid?(key)
-    return false if key =~ /`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find)/i && key !~ /(update|create)d_at/i
+    return false if key =~ /`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find|raise|dump|rollback|freeze)/i && key !~ /(update|create)d_(at|by)/i
     true
   end
 

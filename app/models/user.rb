@@ -39,13 +39,13 @@ class User < ApplicationModel
 
   before_validation :check_name, :check_email, :check_login, :ensure_password
   before_create   :check_preferences_default, :validate_roles, :domain_based_assignment, :set_locale
-  before_update   :check_preferences_default, :validate_roles
+  before_update   :check_preferences_default, :validate_roles, :reset_login_failed
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy
 
   has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
-  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, class_name: 'Role'
+  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, before_remove: :last_admin_check, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
@@ -218,30 +218,61 @@ returns
     # do not authenticate with nothing
     return if username.blank? || password.blank?
 
+    user = User.identify(username)
+    return if !user
+
+    return if !Auth.can_login?(user)
+
+    return user if Auth.valid?(user, password)
+
+    sleep 1
+    user.login_failed += 1
+    user.save
+    nil
+  end
+
+=begin
+
+checks if a user has reached the maximum of failed login tries
+
+  user = User.find(123)
+  result = user.max_login_failed?
+
+returns
+
+  result = true | false
+
+=end
+
+  def max_login_failed?
+    max_login_failed = Setting.get('password_max_login_failed').to_i || 10
+    login_failed > max_login_failed
+  end
+
+=begin
+
+tries to find the matching instance by the given identifier. Currently email and login is supported.
+
+  user = User.indentify('User123')
+
+  # or
+
+  user = User.indentify('user-123@example.com')
+
+returns
+
+  # User instance
+  user.login # 'user123'
+
+=end
+
+  def self.identify(identifier)
     # try to find user based on login
-    user = User.find_by(login: username.downcase, active: true)
+    user = User.find_by(login: identifier.downcase)
+    return user if user
 
     # try second lookup with email
-    user ||= User.find_by(email: username.downcase, active: true)
-
-    # check failed logins
-    max_login_failed = Setting.get('password_max_login_failed').to_i || 10
-    if user && user.login_failed > max_login_failed
-      logger.info "Max login faild reached for user #{user.login}."
-      return false
-    end
-
-    user_auth = Auth.check(username, password, user)
-
-    # set login failed +1
-    if !user_auth && user
-      sleep 1
-      user.login_failed += 1
-      user.save
-    end
-
-    # auth ok
-    user_auth
+    User.find_by(email: identifier.downcase)
   end
 
 =begin
@@ -490,9 +521,9 @@ returns
 
 =begin
 
-check reset password token
+returns the User instance for a given password token if found
 
-  result = User.password_reset_check(token)
+  result = User.by_reset_token(token)
 
 returns
 
@@ -500,15 +531,8 @@ returns
 
 =end
 
-  def self.password_reset_check(token)
-    user = Token.check(action: 'PasswordReset', name: token)
-
-    # reset login failed if token is valid
-    if user
-      user.login_failed = 0
-      user.save
-    end
-    user
+  def self.by_reset_token(token)
+    Token.check(action: 'PasswordReset', name: token)
   end
 
 =begin
@@ -526,7 +550,7 @@ returns
   def self.password_reset_via_token(token, password)
 
     # check token
-    user = Token.check(action: 'PasswordReset', name: token)
+    user = by_reset_token(token)
     return if !user
 
     # reset password
@@ -867,6 +891,41 @@ returns
     }
   end
 
+=begin
+
+checks if the current user is the last one
+with admin permissions.
+
+Raises
+
+raise 'Minimum one user need to have admin permissions'
+
+=end
+
+  def last_admin_check(role)
+    return if Setting.get('import_mode')
+
+    ticket_admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'] }).pluck(:id)
+    count                 = User.joins(:roles).where(roles: { id: ticket_admin_role_ids }, users: { active: true }).count
+    if ticket_admin_role_ids.include?(role.id)
+      count -= 1
+    end
+
+    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if count < 1
+  end
+
+  def validate_agent_limit(role)
+    return if !Setting.get('system_agent_limit')
+
+    ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent' }).pluck(:id)
+    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).count
+    if ticket_agent_role_ids.include?(role.id)
+      count += 1
+    end
+
+    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
+  end
+
   def domain_based_assignment
     return if !email
     return if organization_id
@@ -921,6 +980,7 @@ returns
 
   def ensure_password
     return if password_empty?
+    return if Setting.get('import_mode')
     return if PasswordHash.crypted?(password)
     self.password = PasswordHash.crypt(password)
   end
@@ -937,5 +997,12 @@ returns
 
     self.password = password_was
     true
+  end
+
+  # reset login_failed if password is changed
+  def reset_login_failed
+    return if !changes
+    return if !changes['password']
+    self.login_failed = 0
   end
 end

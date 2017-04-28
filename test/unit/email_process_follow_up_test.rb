@@ -34,6 +34,12 @@ Subject: #{ticket.subject_build('some new subject')}
 
 Some Text"
 
+    email_raw_string_other_subject = "From: me@example.com
+To: customer@example.com
+Subject: other subject #{Setting.get('ticket_hook')}#{ticket.number}
+
+Some Text"
+
     email_raw_string_body = "From: me@example.com
 To: customer@example.com
 Subject: no reference
@@ -89,6 +95,10 @@ no reference "
     assert_equal(ticket.id, ticket_p.id)
 
     travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_other_subject)
+    assert_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_body)
     assert_equal(ticket.id, ticket_p.id)
 
@@ -108,6 +118,10 @@ no reference "
 
     travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_subject)
+    assert_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_other_subject)
     assert_equal(ticket.id, ticket_p.id)
 
     travel 1.second
@@ -133,6 +147,10 @@ no reference "
     assert_equal(ticket.id, ticket_p.id)
 
     travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_other_subject)
+    assert_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_body)
     assert_not_equal(ticket.id, ticket_p.id)
 
@@ -155,6 +173,10 @@ no reference "
     assert_equal(ticket.id, ticket_p.id)
 
     travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_other_subject)
+    assert_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_body)
     assert_not_equal(ticket.id, ticket_p.id)
 
@@ -170,6 +192,60 @@ no reference "
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_references2)
     assert_not_equal(ticket.id, ticket_p.id)
     travel_back
+  end
+
+  test 'process with follow up check with different ticket hook' do
+
+    setting_orig = Setting.get('ticket_hook')
+    Setting.set('ticket_hook', 'VD-Ticket#')
+
+    ticket = Ticket.create(
+      title: 'follow up check ticket hook',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article = Ticket::Article.create(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'follow up check',
+      message_id: '<20150830145601.30.608882.123123@edenhofer.zammad.com>',
+      body: 'some message article',
+      internal: false,
+      sender: Ticket::Article::Sender.lookup(name: 'Agent'),
+      type: Ticket::Article::Type.lookup(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    email_raw_string_subject = "From: me@example.com
+To: customer@example.com
+Subject: #{ticket.subject_build('some new subject')}
+
+Some Text"
+
+    email_raw_string_other_subject = "From: me@example.com
+To: customer@example.com
+Subject: Aw: RE: other subject [#{Setting.get('ticket_hook')}#{ticket.number}]
+
+Some Text"
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_subject)
+    assert_equal(ticket.id, ticket_p.id)
+
+    travel 1.second
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_other_subject)
+    assert_equal(ticket.id, ticket_p.id)
+
+    travel_back
+
+    Setting.set('ticket_hook', setting_orig)
+
   end
 
   test 'process with follow up check with two external reference headers' do
@@ -365,6 +441,34 @@ Some Text"
     ticket4 = Ticket.find(ticket_p4.id)
     assert_not_equal(ticket1.id, ticket4.id)
     assert_equal(subject, ticket4.title)
+
+    # usecase with same subject but no Ticket# (reference headers check because of same subject)
+    subject = 'Embedded Linux 20.03 - 23.03.17'
+
+    email_raw_string = "From: iw@example.com
+To: customer@example.com
+Subject: #{subject}
+Message-ID: <b1a84d36-4475-28e8-acde-5c18ebe94182@example.com>
+
+Some Text"
+
+    ticket_p5, article_5, user_5, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket5 = Ticket.find(ticket_p5.id)
+    assert_not_equal(ticket1.id, ticket5.id)
+    assert_equal(subject, ticket5.title)
+
+    email_raw_string = "From: customer@example.com
+To: iw@example.com
+Subject: Re:  #{subject}
+Message-ID: <b1a84d36-4475-28e8-acde-5c18ebe94183@customer.example.com>
+In-Reply-To: <b1a84d36-4475-28e8-acde-5c18ebe94182@example.com>
+
+Some other Text"
+
+    ticket_p6, article_6, user_6, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket6 = Ticket.find(ticket_p6.id)
+    assert_equal(ticket5.id, ticket6.id)
+    assert_equal(subject, ticket6.title)
 
     Setting.set('postmaster_follow_up_search_in', setting_orig)
   end

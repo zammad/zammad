@@ -1,12 +1,12 @@
-<i><%- @T('%s records', @count) %></i>
-  <a href="<%- @download %>" target="_blank" data-type="attachment"><%- @Icon('download') %></a>
+<a class="btn btn--action" href="<%- @download %>" target="_blank" data-type="attachment"><%- @Icon('download') %><span><%- @T('Download %s record(s)', @count) %></span></a>
+<div class="spacer"></div>
 <table class="table table-striped table-hover">
   <thead>
     <tr>
       <td><%- @T('Number') %></td>
       <td><%- @T('Title') %></td>
       <td><%- @T('State') %></td>
-      <td><%- @T('Queue') %></td>
+      <td><%- @T('Group') %></td>
       <td><%- @T('Created') %></td>
     </tr>
   </thead>

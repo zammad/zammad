@@ -112,7 +112,7 @@ module Channel::Filter::IdentifySender
             address = $1
           end
           if recipient =~ /^(.+?)<(.+?)>/
-            display_name = ($1).strip
+            display_name = $1
           end
           next if address.empty?
           user_create(
@@ -126,8 +126,6 @@ module Channel::Filter::IdentifySender
   end
 
   def self.user_create(data)
-
-    # return existing
     user = User.find_by(email: data[:email].downcase)
     if !user
       user = User.find_by(login: data[:email].downcase)
@@ -135,8 +133,9 @@ module Channel::Filter::IdentifySender
 
     # check if firstname or lastname need to be updated
     if user
-      if user.firstname.empty? && user.lastname.empty?
-        if !data[:firstname].empty?
+      if user.firstname.blank? && user.lastname.blank?
+        if data[:firstname].present?
+          data[:firstname] = cleanup_name(data[:firstname])
           user.update_attributes(
             firstname: data[:firstname]
           )
@@ -153,6 +152,7 @@ module Channel::Filter::IdentifySender
       if data[item.to_sym].nil?
         data[item.to_sym] = ''
       end
+      data[item.to_sym] = cleanup_name(data[item.to_sym])
     }
     data[:password]      = ''
     data[:active]        = true
@@ -166,6 +166,15 @@ module Channel::Filter::IdentifySender
       created_by_id: user.id,
     )
     user
+  end
+
+  def self.cleanup_name(string)
+    string.strip!
+    string.delete!('"')
+    string.gsub!(/^'/, '')
+    string.gsub!(/'$/, '')
+    string.gsub!(/.+?\s\(.+?\)$/, '')
+    string
   end
 
 end

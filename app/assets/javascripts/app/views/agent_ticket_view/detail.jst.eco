@@ -13,37 +13,36 @@
     <td>
       <%- ticket.customer.avatar("50", "", "userInfo-avatar") %>
       <h2 style="margin-top: 0px;"><a href="<%- ticket.uiUrl() %>" data-type="edit"><%= ticket.title %></a></h2>
-
       <div class="horizontal">
         <div class="vertical flex">
           <table style="width: 100%;">
             <tr>
-              <td style="width: 25%;"><label><%- @T( 'Number' ) %></label></td><td> <%- @P( ticket, 'number' ) %></td>
+              <td style="width: 25%;"><label><%- @T('Number') %></label></td><td> <%- @P(ticket, 'number') %></td>
             </tr>
             <tr>
-              <td><label><%- @T( 'State' ) %></label></td><td> <%- @P( ticket, 'state' ) %></td>
+              <td><label><%- @T('State') %></label></td><td> <%- @P(ticket, 'state') %></td>
             </tr>
             <tr>
-              <td><label><%- @T( 'Group' ) %></label></td><td> <%- @P( ticket, 'group' ) %></td>
+              <td><label><%- @T('Group') %></label></td><td> <%- @P(ticket, 'group') %></td>
             </tr>
             <tr>
-              <td><label><%- @T( 'Customer' ) %></label></td><td> <%- @P( ticket, 'customer' ) %></td>
+              <td><label><%- @T('Customer') %></label></td><td> <%- @P(ticket, 'customer') %></td>
             </tr>
           </table>
         </div>
         <div class="vertical flex">
           <table style="width: 100%;">
             <tr>
-              <td style="width: 25%;"><label><%- @T( 'Erstellt' ) %></label></td><td> <%- @P( ticket, 'created_at' ) %></td>
+              <td style="width: 25%;"><label><%- @T('Erstellt') %></label></td><td> <%- @P(ticket, 'created_at') %></td>
             </tr>
             <tr>
-              <td><label><%- @T( 'Priority' ) %></label></td><td> <%- @P( ticket, 'priority' ) %></td>
+              <td><label><%- @T('Priority') %></label></td><td> <%- @P(ticket, 'priority') %></td>
             </tr>
             <tr>
-              <td><label><%- @T( 'Owner' ) %></label></td><td> <%- @P( ticket, 'owner' ) %></td>
+              <td><label><%- @T('Owner') %></label></td><td> <%- @P(ticket, 'owner') %></td>
             </tr>
             <tr>
-              <td><label><%- @T( 'Organization' ) %></label></td><td> <%- @P( ticket, 'organization' ) %></td>
+              <td><label><%- @T('Organization') %></label></td><td> <%- @P(ticket, 'organization') %></td>
             </tr>
           </table>
         </div>

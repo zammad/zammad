@@ -27,3 +27,11 @@ class App.Group extends App.Model
     else if item.type is 'update'
       return App.i18n.translateContent('%s updated Group |%s|', item.created_by.displayName(), item.title)
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
+
+  avatar: (size = 40, cssClass = []) ->
+    size = parseInt(size, 10)
+    cssClass.push("size-#{ size }")
+    cssClass.push("avatar--group-color-#{@id % 3}")
+
+    return App.view('avatar_group')
+      cssClass: cssClass.join(' ')

@@ -61,7 +61,7 @@ add a new attribute entry for an object
         },
       },
       edit: {
-        Agent : {
+        'ticket.agent' => {
           required: true,
         },
       },
@@ -384,14 +384,25 @@ returns:
         tag: item.data_type,
         #:null     => item.null,
       }
+      if item.data_option[:permission] && item.data_option[:permission].any?
+        next if !user
+        hint = false
+        item.data_option[:permission].each { |permission|
+          next if !user.permissions?(permission)
+          hint = true
+          break
+        }
+        next if !hint
+      end
+
       if item.screens
         data[:screen] = {}
-        item.screens.each { |screen, roles_options|
+        item.screens.each { |screen, permission_options|
           data[:screen][screen] = {}
-          roles_options.each { |role, options|
-            if role == '-all-'
+          permission_options.each { |permission, options|
+            if permission == '-all-'
               data[:screen][screen] = options
-            elsif user && user.role?(role)
+            elsif user && user.permissions?(permission)
               data[:screen][screen] = options
             end
           }
@@ -535,7 +546,7 @@ to send no browser reload event, pass false
       data_type = nil
       if attribute.data_type =~ /^input|select|richtext|textarea|checkbox$/
         data_type = :string
-      elsif attribute.data_type =~ /^integer$/
+      elsif attribute.data_type =~ /^integer|user_autocompletion$/
         data_type = :integer
       elsif attribute.data_type =~ /^boolean|active$/
         data_type = :boolean
@@ -555,7 +566,7 @@ to send no browser reload event, pass false
             limit: attribute.data_option[:maxlength],
             null: true
           )
-        elsif attribute.data_type =~ /^integer|datetime|date$/
+        elsif attribute.data_type =~ /^integer|user_autocompletion|datetime|date$/
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -592,7 +603,7 @@ to send no browser reload event, pass false
           limit: attribute.data_option[:maxlength],
           null: true
         )
-      elsif attribute.data_type =~ /^integer$/
+      elsif attribute.data_type =~ /^integer|user_autocompletion$/
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,

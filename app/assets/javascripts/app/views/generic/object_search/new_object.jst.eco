@@ -1,0 +1,8 @@
+<li class="recipientList-entry recipientList--new js-objectNew" data-object-id="new">
+  <div class="recipientList-iconSpacer">
+    <%- @Icon('plus', 'recipientList-icon') %>
+  </div>
+  <div class="recipientList-name">
+    <%- @T(@objectCreate) %>
+  </div>
+</li>

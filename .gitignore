@@ -25,6 +25,10 @@
 # Ignore database config
 /config/database.yml
 
+# Ignore translation cache files
+/config/locales*.yml
+/config/translations/*.yml
+
 # Ignore coverage stuff
 /coverage
 

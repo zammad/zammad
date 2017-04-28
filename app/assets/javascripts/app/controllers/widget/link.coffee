@@ -110,8 +110,8 @@ class App.LinkAdd extends App.ControllerModal
       processData: true
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
-        @ticket_ids_by_customer    = data.ticket_ids_by_customer
-        @ticket_ids_recent_viewed  = data.ticket_ids_recent_viewed
+        @ticketIdsByCustomer    = data.ticket_ids_by_customer
+        @ticketIdsRecentViewed  = data.ticket_ids_recent_viewed
         @render()
     )
 
@@ -122,30 +122,26 @@ class App.LinkAdd extends App.ControllerModal
       object:         @object
     ))
 
-    list = []
-    for ticket_id in @ticket_ids_by_customer
+    ticketIdsByCustomer = []
+    for ticket_id in @ticketIdsByCustomer
       if ticket_id isnt @ticket.id
-        ticketItem = App.Ticket.fullLocal(ticket_id)
-        list.push ticketItem
-    new App.ControllerTable(
-      el:       content.find('#ticket-merge-customer-tickets')
-      overview: ['number', 'title', 'state', 'group', 'created_at']
-      model:    App.Ticket
-      objects:  list
-      radio:    true
+        ticketIdsByCustomer.push ticket_id
+    new App.TicketList(
+      tableId:    'ticket-merge-customer-tickets'
+      el:         content.find('#ticket-merge-customer-tickets')
+      ticket_ids: ticketIdsByCustomer
+      radio:      true
     )
 
-    list = []
-    for ticket_id in @ticket_ids_recent_viewed
+    ticketIdsByRecentView = []
+    for ticket_id in @ticketIdsRecentViewed
       if ticket_id isnt @ticket.id
-        ticketItem = App.Ticket.fullLocal( ticket_id )
-        list.push ticketItem
-    new App.ControllerTable(
-      el:       content.find('#ticket-merge-recent-tickets')
-      overview: ['number', 'title', 'state', 'group', 'created_at']
-      model:    App.Ticket
-      objects:  list
-      radio:    true
+        ticketIdsByRecentView.push ticket_id
+    new App.TicketList(
+      tableId:    'ticket-merge-recent-tickets'
+      el:         content.find('#ticket-merge-recent-tickets')
+      ticket_ids: ticketIdsByRecentView
+      radio:      true
     )
 
     content.delegate('[name="ticket_number"]', 'focus', (e) ->
@@ -185,4 +181,14 @@ class App.LinkAdd extends App.ControllerModal
       success: (data, status, xhr) =>
         @close()
         @parent.fetch()
+      error: (xhr, statusText, error) =>
+        detailsRaw = xhr.responseText
+        details = {}
+        if !_.isEmpty(detailsRaw)
+          details = JSON.parse(detailsRaw)
+        @notify(
+          type:      'error'
+          msg:       App.i18n.translateContent(details.error)
+          removeAll: true
+        )
     )

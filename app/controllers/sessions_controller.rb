@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
     check_maintenance(user)
 
     # auth failed
-    raise Exceptions::NotAuthorized, 'Wrong Username and Password combination.' if !user
+    raise Exceptions::NotAuthorized, 'Wrong Username or Password combination.' if !user
 
     # remember me - set session cookie to expire later
     expire_after = nil
@@ -196,7 +196,7 @@ class SessionsController < ApplicationController
 
   # "switch" to user
   def switch_to_user
-    permission_check('admin.session')
+    permission_check(['admin.session', 'admin.user'])
 
     # check user
     if !params[:id]
@@ -301,4 +301,29 @@ class SessionsController < ApplicationController
     render json: {}
   end
 
+  private
+
+  def config_frontend
+
+    # config
+    config = {}
+    Setting.select('name, preferences').where(frontend: true).each { |setting|
+      next if setting.preferences[:authentication] == true && !current_user
+      value = Setting.get(setting.name)
+      next if !current_user && (value == false || value.nil?)
+      config[setting.name] = value
+    }
+
+    # remember if we can to swich back to user
+    if session[:switched_from_user_id]
+      config['switch_back_to_possible'] = true
+    end
+
+    # remember session_id for websocket logon
+    if current_user
+      config['session_id'] = session.id
+    end
+
+    config
+  end
 end

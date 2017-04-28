@@ -14,47 +14,52 @@ class Ticket::State < ApplicationModel
 
 =begin
 
-list tickets by customer
+looks up states for a given category
 
-  states = Ticket::State.by_category('open') # open|closed|work_on|work_on_all|pending_reminder|pending_action|merged
+  states = Ticket::State.by_category(:open) # :open|:closed|:work_on|:work_on_all|:viewable|:viewable_agent_new|:viewable_agent_edit|:viewable_customer_new|:viewable_customer_edit|:pending_reminder|:pending_action|:pending|:merged
 
 returns:
 
-  state objects
+  state object list
 
 =end
 
   def self.by_category(category)
-    if category == 'open'
-      return Ticket::State.where(
-        state_type_id: Ticket::StateType.where(name: ['new', 'open', 'pending reminder', 'pending action'])
-      )
-    elsif category == 'pending_reminder'
-      return Ticket::State.where(
-        state_type_id: Ticket::StateType.where(name: ['pending reminder'])
-      )
-    elsif category == 'pending_action'
-      return Ticket::State.where(
-        state_type_id: Ticket::StateType.where(name: ['pending action'])
-      )
-    elsif category == 'work_on'
-      return Ticket::State.where(
-        state_type_id: Ticket::StateType.where(name: %w(new open))
-      )
-    elsif category == 'work_on_all'
-      return Ticket::State.where(
-        state_type_id: Ticket::StateType.where(name: ['new', 'open', 'pending reminder'])
-      )
-    elsif category == 'closed'
-      return Ticket::State.where(
-        state_type_id: Ticket::StateType.where(name: %w(closed))
-      )
-    elsif category == 'merged'
-      return Ticket::State.where(
-        state_type_id: Ticket::StateType.where(name: %w(merged))
-      )
+
+    case category.to_sym
+    when :open
+      state_types = ['new', 'open', 'pending reminder', 'pending action']
+    when :pending_reminder
+      state_types = ['pending reminder']
+    when :pending_action
+      state_types = ['pending action']
+    when :pending
+      state_types = ['pending reminder', 'pending action']
+    when :work_on
+      state_types = %w(new open)
+    when :work_on_all
+      state_types = ['new', 'open', 'pending reminder']
+    when :viewable
+      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed', 'removed']
+    when :viewable_agent_new
+      state_types = ['new', 'open', 'pending reminder', 'pending action', 'closed']
+    when :viewable_agent_edit
+      state_types = ['open', 'pending reminder', 'pending action', 'closed']
+    when :viewable_customer_new
+      state_types = %w(new closed)
+    when :viewable_customer_edit
+      state_types = %w(open closed)
+    when :closed
+      state_types = %w(closed)
+    when :merged
+      state_types = %w(merged)
     end
-    raise "Unknown category '#{category}'"
+
+    raise "Unknown category '#{category}'" if state_types.blank?
+
+    Ticket::State.where(
+      state_type_id: Ticket::StateType.where(name: state_types)
+    )
   end
 
 =begin

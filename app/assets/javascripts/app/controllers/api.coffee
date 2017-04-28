@@ -46,11 +46,11 @@ class Index extends App.ControllerSubContent
         headers.splice(4, 0, attribute)
         headers
 
-      callbackViewAttributes = (value, object, attribute, header, refObject) ->
+      callbackViewAttributes = (value, object, attribute, header) ->
         value = 'X'
         value
 
-      callbackTokenAttributes = (value, object, attribute, header, refObject) ->
+      callbackTokenAttributes = (value, object, attribute, header) ->
         value = 'X'
         value
 

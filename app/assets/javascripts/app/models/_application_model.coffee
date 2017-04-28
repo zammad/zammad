@@ -17,13 +17,15 @@ class App.Model extends Spine.Model
     return @name if @name
     if @realname
       return "#{@realname} <#{@email}>"
-    if @firstname
+    if !_.isEmpty(@firstname)
       name = @firstname
-      if @lastname
-        if name
-          name = name + ' '
-        name = name + @lastname
-      return name
+    if !_.isEmpty(@lastname)
+      if _.isEmpty(name)
+        name = ''
+      else
+        name = name + ' '
+      name = name + @lastname
+    return name if !_.isEmpty(name)
     if @email
       return @email
     if @title
@@ -34,20 +36,23 @@ class App.Model extends Spine.Model
 
   displayNameLong: ->
     return @name if @name
-    if @firstname
+    if !_.isEmpty(@firstname)
       name = @firstname
-      if @lastname
-        if name
-          name = name + ' '
-        name = name + @lastname
-      if @organization
+    if !_.isEmpty(@lastname)
+      if _.isEmpty(name)
+        name = ''
+      else
+        name = name + ' '
+      name = name + @lastname
+    if !_.isEmpty(name)
+      if !_.isEmpty(@organization)
         if typeof @organization is 'object'
           name = "#{name} (#{@organization.name})"
         else
           name = "#{name} (#{@organization})"
-      else if @department
+      else if !_.isEmpty(@department)
         name = "#{name} (#{@department})"
-      return name
+    return name if !_.isEmpty(name)
     if @email
       return @email
     if @title
@@ -224,7 +229,7 @@ class App.Model extends Spine.Model
 
   # App.Model.fullLocal(id)
   @fullLocal: (id) ->
-    @_fillUp( App[ @className ].find( id ) )
+    @_fillUp( App[@className].find(id) )
 
   # App.Model.full(id, callback, force, bind)
   @full: (id, callback = false, force = false, bind = false) ->

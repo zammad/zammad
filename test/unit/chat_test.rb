@@ -242,7 +242,7 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal('message 3', customer_state[:session][2]['content'])
     assert_equal('message 4', customer_state[:session][3]['content'])
     assert_equal('Notification Agent1', customer_state[:agent][:name])
-    assert_equal(nil, customer_state[:agent][:avatar])
+    assert_nil(customer_state[:agent][:avatar])
 
     # check agent1 state
     agent_state = Chat.agent_state_with_sessions(agent1.id)

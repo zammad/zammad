@@ -95,6 +95,36 @@ or by ids
 
 =begin
 
+remove all tags of certain object
+
+  Tag.tag_destroy(
+    object: 'Ticket',
+    o_id: ticket.id,
+    created_by_id: current_user.id,
+  )
+
+=end
+
+  def self.tag_destroy(data)
+
+    # lookups
+    if data[:object]
+      data[:tag_object_id] = Tag::Object.lookup_by_name_and_create(data[:object]).id
+    else
+      data[:object] = Tag::Object.lookup(id: data[:tag_object_id]).name
+    end
+
+    # create history
+    result = Tag.where(
+      tag_object_id: data[:tag_object_id],
+      o_id: data[:o_id],
+    )
+    result.each(&:destroy)
+    true
+  end
+
+=begin
+
 tag list for certain object
 
   tags = Tag.tag_list(

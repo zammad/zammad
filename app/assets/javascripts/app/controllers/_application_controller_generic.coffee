@@ -87,6 +87,7 @@ class App.ControllerGenericEdit extends App.ControllerModal
         ui.close()
 
       fail: (settings, details) ->
+        App[ ui.genericObject ].fetch(id: @id)
         ui.log 'errors'
         ui.formEnable(e)
         ui.controller.showAlert(details.error_human || details.error || 'Unable to update object!')
@@ -95,8 +96,8 @@ class App.ControllerGenericEdit extends App.ControllerModal
 class App.ControllerGenericIndex extends App.Controller
   events:
     'click [data-type=edit]': 'edit'
-    'click [data-type=new]':  'new'
-    'click .js-description':  'description'
+    'click [data-type=new]': 'new'
+    'click .js-description': 'description'
 
   constructor: ->
     super
@@ -621,7 +622,7 @@ class App.ActionRow extends App.Controller
     for item in @items
       do (item) =>
         @$('[data-type="' + item.name + '"]').on(
-          'click',
+          'click'
           (e) ->
             e.preventDefault()
             item.callback()
@@ -657,23 +658,24 @@ class App.Sidebar extends App.Controller
     @toggleTabAction(name)
 
   render: =>
-    @html App.view('generic/sidebar_tabs')
+    localEl = $(App.view('generic/sidebar_tabs')(
       items: @items
       scrollbarWidth: App.Utils.getScrollBarWidth()
+    ))
 
     # init content callback
     for item in @items
+      area = localEl.filter('.sidebar[data-tab="' + item.name + '"]')
       if item.callback
-        item.callback( @$( '.sidebar[data-tab="' + item.name + '"] .sidebar-content' ) )
-
-    # add item acctions
-    for item in @items
+        item.callback( area.find('.sidebar-content') )
       if item.actions
         new App.ActionRow(
-          el:    @$('.sidebar[data-tab="' + item.name + '"] .js-actions')
+          el:    area.find('.js-actions')
           items: item.actions
           type:  'small'
         )
+
+    @html localEl
 
   toggleDropdown: (e) ->
     e.stopPropagation()
@@ -1084,6 +1086,9 @@ class App.CollectionController extends App.Controller
       if itemCount > position
         position += 1
       element = @el.find(".js-item:nth-child(#{position})")
+      if !element.get(0)
+        @el.append(html)
+        return
       if @insertPosition is 'before'
         element.before(html)
       else

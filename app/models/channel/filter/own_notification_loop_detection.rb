@@ -14,7 +14,7 @@ module Channel::Filter::OwnNotificationLoopDetection
     return if message_id !~ /@#{Regexp.quote(fqdn)}>/i
 
     mail[ 'x-zammad-ignore'.to_sym ] = true
-    Rails.logger.info "Detected onw sent notification mail and dropped it to prevent loops (message_id: #{message_id}, from: #{mail[:from]}, to: #{mail[:to]})"
+    Rails.logger.info "Detected own sent notification mail and dropped it to prevent loops (message_id: #{message_id}, from: #{mail[:from]}, to: #{mail[:to]})"
 
   end
 end

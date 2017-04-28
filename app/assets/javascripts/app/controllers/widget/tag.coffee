@@ -53,9 +53,8 @@ class App.WidgetTag extends App.Controller
     @html App.view('widget/tag')(
       tags: @localTags || [],
     )
-
     source = "#{App.Config.get('api_path')}/tag_search"
-    @el.find('.js-newTagInput').autocomplete(
+    @$('.js-newTagInput').autocomplete(
       source: source
       minLength: 2
       response: (e, ui) =>

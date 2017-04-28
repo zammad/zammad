@@ -1,0 +1,19 @@
+{
+  "update_id":50001,
+  "message":{
+    "message_id":16,
+    "from":{
+      "id":294302174,
+      "first_name":"Martin",
+      "username":"martini42"
+    },
+    "chat":{
+      "id":294302174,
+      "first_name":"Martin",
+      "username":"martini42",
+      "type":"private"
+    },
+    "date":1487295982,
+    "text":"Hello, I need your Help"
+  }
+}

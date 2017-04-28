@@ -8,7 +8,7 @@
 
   <p><%- @T('See your tickets from within your favorite calendar by adding the following URL to your calendar app.') %></p>
 
-  <h3><label for="calendar-subscription-url"><%- @T('URL') %></label></h3>
+  <label for="calendar-subscription-url"><%- @T('URL') %></label>
   <form class="form--flexibleWidth">
     <div class="form-group">
       <div class="controls">
@@ -23,14 +23,12 @@
       <label for="notification-sound"><%- @T('Alarm') %></label>
     </div>
     <div class="controls">
-      <p>
-        <label class="checkbox-replacement inline-label">
-          <input type="checkbox" name="alarm" value="true" <% if @preferences.alarm: %>checked<% end %>/>
-          <%- @Icon('checkbox', 'icon-unchecked') %>
-          <%- @Icon('checkbox-checked', 'icon-checked') %>
-        </label>
-        <%- @T('Add alarm to pending reminder and escalated tickets.') %>
-      </p>
+      <label class="checkbox-replacement inline-label">
+        <input type="checkbox" name="alarm" value="true" <% if @preferences.alarm: %>checked<% end %>/>
+        <%- @Icon('checkbox', 'icon-unchecked') %>
+        <%- @Icon('checkbox-checked', 'icon-checked') %>
+        <span class="label-text"><%- @T('Add alarm to pending reminder and escalated tickets.') %></span>
+      </label>
     </div>
   </div>
   <table class="settings-list">

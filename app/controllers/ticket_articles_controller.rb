@@ -1,6 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class TicketArticlesController < ApplicationController
+  include AccessesTickets
+  include CreatesTicketArticles
+
   prepend_before_action :authentication_check
 
   # GET /articles
@@ -11,14 +14,11 @@ class TicketArticlesController < ApplicationController
 
   # GET /articles/1
   def show
-
-    # permission check
     article = Ticket::Article.find(params[:id])
     article_permission(article)
 
     if params[:expand]
       result = article.attributes_with_association_names
-      result[:attachments] = article.attachments
       render json: result, status: :ok
       return
     end
@@ -34,8 +34,6 @@ class TicketArticlesController < ApplicationController
 
   # GET /ticket_articles/by_ticket/1
   def index_by_ticket
-
-    # permission check
     ticket = Ticket.find(params[:id])
     ticket_permission(ticket)
 
@@ -47,9 +45,6 @@ class TicketArticlesController < ApplicationController
         # ignore internal article if customer is requesting
         next if article.internal == true && current_user.permissions?('ticket.customer')
         result = article.attributes_with_association_names
-
-        # add attachments
-        result[:attachments] = article.attachments
         articles.push result
       }
 
@@ -92,7 +87,6 @@ class TicketArticlesController < ApplicationController
 
     if params[:expand]
       result = article.attributes_with_association_names
-      result[:attachments] = article.attachments
       render json: result, status: :created
       return
     end
@@ -108,8 +102,6 @@ class TicketArticlesController < ApplicationController
 
   # PUT /articles/1
   def update
-
-    # permission check
     article = Ticket::Article.find(params[:id])
     article_permission(article)
 
@@ -124,7 +116,6 @@ class TicketArticlesController < ApplicationController
 
     if params[:expand]
       result = article.attributes_with_association_names
-      result[:attachments] = article.attachments
       render json: result, status: :ok
       return
     end
@@ -217,15 +208,22 @@ class TicketArticlesController < ApplicationController
 
   # GET /ticket_attachment/:ticket_id/:article_id/:id
   def attachment
-
-    # permission check
     ticket = Ticket.lookup(id: params[:ticket_id])
     if !ticket_permission(ticket)
       raise Exceptions::NotAuthorized, 'No such ticket.'
     end
     article = Ticket::Article.find(params[:article_id])
     if ticket.id != article.ticket_id
-      raise Exceptions::NotAuthorized, 'No access, article_id/ticket_id is not matching.'
+
+      # check if requested ticket got merged
+      if ticket.state.state_type.name != 'merged'
+        raise Exceptions::NotAuthorized, 'No access, article_id/ticket_id is not matching.'
+      end
+
+      ticket = article.ticket
+      if !ticket_permission(ticket)
+        raise Exceptions::NotAuthorized, "No access, for ticket_id '#{ticket.id}'."
+      end
     end
 
     list = article.attachments || []
@@ -252,8 +250,6 @@ class TicketArticlesController < ApplicationController
 
   # GET /ticket_article_plain/1
   def article_plain
-
-    # permission check
     article = Ticket::Article.find(params[:id])
     article_permission(article)
 
@@ -271,6 +267,15 @@ class TicketArticlesController < ApplicationController
   end
 
   private
+
+  def article_permission(article)
+    if current_user.permissions?('ticket.customer')
+      raise Exceptions::NotAuthorized if article.internal == true
+    end
+    ticket = Ticket.lookup(id: article.ticket_id)
+    return true if ticket.permission(current_user: current_user)
+    raise Exceptions::NotAuthorized
+  end
 
   def sanitized_disposition
     disposition = params.fetch(:disposition, 'inline')

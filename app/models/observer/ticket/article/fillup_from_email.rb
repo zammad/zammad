@@ -46,6 +46,11 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     if !email_address
       raise "No email address found for group '#{ticket.group.name}'"
     end
+
+    # remember email address for background job
+    record.preferences['email_address_id'] = email_address.id
+
+    # fill from
     if record.created_by_id != 1 && Setting.get('ticket_define_email_from') == 'AgentNameSystemAddressName'
       separator   = Setting.get('ticket_define_email_from_separator')
       sender      = User.find(record.created_by_id)

@@ -19,7 +19,7 @@ You're going to love Zammad!
 - Docker multi container image: [![](https://images.microbadger.com/badges/image/zammad/zammad-docker-compose:zammad.svg)](https://microbadger.com/images/zammad/zammad-docker-compose:zammad) [![](https://img.shields.io/badge/version-stable-blue.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose)
 - Docker single container image: [![](https://images.microbadger.com/badges/image/zammad/zammad.svg)](https://microbadger.com/images/zammad/zammad) [![](https://images.microbadger.com/badges/version/zammad/zammad.svg)](https://hub.docker.com/r/zammad/zammad/)
 - Vagrant: [![](https://img.shields.io/badge/version-develop-blue.svg)](https://github.com/zammad/zammad-vagrant)
-- License: [![](https://img.shields.io/badge/License-AGPL 3.0-lightgrey.svg)](https://github.com/zammad/zammad/blob/develop/LICENSE)
+- License: [![](https://img.shields.io/badge/License-AGPL%203.0-lightgrey.svg)](https://github.com/zammad/zammad/blob/develop/LICENSE)
 
 ## Installing & Getting Started
 

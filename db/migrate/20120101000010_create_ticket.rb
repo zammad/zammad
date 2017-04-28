@@ -155,7 +155,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :to,                   :string, limit: 3000,    null: true
       t.column :cc,                   :string, limit: 3000,    null: true
       t.column :subject,              :string, limit: 3000,    null: true
-      # t.column :reply_to,             :string, :limit => 3000,    :null => true
+      t.column :reply_to,             :string, limit: 300,     null: true
       t.column :message_id,           :string, limit: 3000,    null: true
       t.column :message_id_md5,       :string, limit: 32,      null: true
       t.column :in_reply_to,          :string, limit: 3000,    null: true
@@ -166,6 +166,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :preferences,          :text,   limit: 500.kilobytes + 1, null: true
       t.column :updated_by_id,        :integer,                null: false
       t.column :created_by_id,        :integer,                null: false
+      t.column :origin_by_id,         :integer
       t.timestamps limit: 3, null: false
     end
     add_index :ticket_articles, [:ticket_id]
@@ -196,7 +197,6 @@ class CreateTicket < ActiveRecord::Migration
     add_index :ticket_counters, [:generator], unique: true
 
     create_table :overviews do |t|
-      t.references :role,                                      null: false
       t.column :name,                 :string,  limit: 250,    null: false
       t.column :link,                 :string,  limit: 250,    null: false
       t.column :prio,                 :integer,                null: false
@@ -211,6 +211,13 @@ class CreateTicket < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :overviews, [:name]
+
+    create_table :overviews_roles, id: false do |t|
+      t.integer :overview_id
+      t.integer :role_id
+    end
+    add_index :overviews_roles, [:overview_id]
+    add_index :overviews_roles, [:role_id]
 
     create_table :overviews_users, id: false do |t|
       t.integer :overview_id
@@ -428,7 +435,7 @@ class CreateTicket < ActiveRecord::Migration
 
     create_table :chat_messages do |t|
       t.integer :chat_session_id,                     null: false
-      t.string  :content,                limit: 5000, null: false
+      t.text    :content,    limit: 20.megabytes + 1, null: false
       t.integer :created_by_id,                       null: true
       t.timestamps limit: 3, null: false
     end

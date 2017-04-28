@@ -1,10 +1,6 @@
 <div class="modal-dialog wizard">
 
-  <form  autocomplete="off" class="modal-content setup wizard js-intro" autocomplete="off">
-    <!-- dummy to prevent chrome to ask for password save -->
-    <input style="display:none">
-    <input type="password" style="display:none">
-    <!-- /dummy to prevent chrome to ask for password save -->
+  <form class="modal-content setup wizard js-intro">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
@@ -27,7 +23,7 @@
     </div>
   </form>
 
-  <form  autocomplete="off" class="modal-content setup wizard hide js-probe">
+  <form class="modal-content setup wizard hide js-probe">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
@@ -44,7 +40,7 @@
     <div class="modal-footer"></div>
   </form>
 
-  <form  autocomplete="off" class="modal-content setup wizard hide js-test">
+  <form class="modal-content setup wizard hide js-test">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
@@ -61,7 +57,7 @@
     <div class="modal-footer"></div>
   </form>
 
-  <form  autocomplete="off" class="modal-content setup wizard hide js-verify">
+  <form class="modal-content setup wizard hide js-verify">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
@@ -79,11 +75,7 @@
     <div class="modal-footer"></div>
   </form>
 
-  <form  autocomplete="off" class="modal-content setup wizard hide js-inbound" autocomplete="off">
-    <!-- dummy to prevent chrome to ask for password save -->
-    <input style="display:none">
-    <input type="password" style="display:none">
-    <!-- /dummy to prevent chrome to ask for password save -->
+  <form class="modal-content setup wizard hide js-inbound">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
@@ -106,7 +98,7 @@
     </div>
   </form>
 
-  <form  autocomplete="off" class="modal-content setup wizard hide js-inbound-acknowledge">
+  <form class="modal-content setup wizard hide js-inbound-acknowledge">
     <div class="modal-header">
       <div class="modal-close js-close">
         <%- @Icon('diagonal-cross') %>
@@ -129,11 +121,7 @@
     </div>
   </form>
 
-  <form  autocomplete="off" class="modal-content setup wizard hide js-outbound" autocomplete="off">
-    <!-- dummy to prevent chrome to ask for password save -->
-    <input style="display:none">
-    <input type="password" style="display:none">
-    <!-- /dummy to prevent chrome to ask for password save -->
+  <form class="modal-content setup wizard hide js-outbound">
     <div class="modal-header">
         <div class="modal-close js-close">
           <%- @Icon('diagonal-cross') %>

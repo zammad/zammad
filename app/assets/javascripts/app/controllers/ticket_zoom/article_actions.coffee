@@ -340,7 +340,10 @@ class App.TicketZoomArticleActions extends App.Controller
         if article.sender.name is 'Agent' && !article.from.match(user.email)
           articleNew.to = article.to
         else
-          articleNew.to = article.from
+          if article.reply_to
+            articleNew.to = article.reply_to
+          else
+            articleNew.to = article.from
 
           # if sender is customer but in article.from is no email, try to get
           # customers email via customer user

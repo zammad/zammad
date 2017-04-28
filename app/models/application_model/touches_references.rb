@@ -23,8 +23,7 @@ touch references by params
       return if !object
       object.touch
     rescue => e
-      logger.error e.message
-      logger.error e.backtrace.inspect
+      logger.error e
     end
   end
 end

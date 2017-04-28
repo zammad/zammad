@@ -16,8 +16,8 @@ class AdminOverviewTest < TestCase
     # add new overview
     overview_create(
       data: {
-        name:     name,
-        role:     'Agent',
+        name: name,
+        roles: ['Agent'],
         selector: {
           'Priority' => '1 low',
         },
@@ -28,8 +28,8 @@ class AdminOverviewTest < TestCase
     # edit overview
     overview_update(
       data: {
-        name:     name,
-        role:     'Agent',
+        name: name,
+        roles: ['Agent'],
         selector: {
           'State' => 'new',
         },

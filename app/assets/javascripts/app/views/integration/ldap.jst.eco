@@ -1,0 +1,87 @@
+<div class="js-lastImport"></div>
+<div class="js-notConfigured">
+  <p><%- @T('No %s configured.', 'LDAP') %></p>
+  <button type="submit" class="btn btn--primary js-wizard"><%- @T('Configure') %></button>
+</div>
+<div class="js-summary hide">
+  <h2><%- @T('Settings') %></h2>
+  <table class="settings-list" style="width: 100%;">
+    <thead>
+      <tr>
+        <th width="30%"><%- @T('Name') %>
+        <th width="70%"><%- @T('Value') %>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('LDAP Host') %>
+        <td class="settings-list-row-control"><%= @config.host_url %>
+      <tbody>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('Base DN') %>
+          <td class="settings-list-row-control"><%= @config.base_dn %>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('Bind User') %>
+          <td class="settings-list-row-control"><%= @config.bind_user %>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('Bind Password') %>
+          <td class="settings-list-row-control"><%= @M(@config.bind_pw) %>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('UID') %>
+          <td class="settings-list-row-control"><%= @config.user_uid %>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('User Filter') %>
+          <td class="settings-list-row-control"><%= @config.user_filter %>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('GID') %>
+          <td class="settings-list-row-control"><%= @config.group_uid %>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('Group Filter') %>
+          <td class="settings-list-row-control"><%= @config.group_filter %>
+    </tbody>
+  </table>
+
+  <h2><%- @T('Mapping') %></h2>
+
+  <h3><%- @T('User') %></h3>
+  <% if _.isEmpty(@config.user_attributes): %>
+    <table class="settings-list settings-list--stretch settings-list--placeholder">
+      <thead><tr><th><%- @T('No Entries') %>
+    </table>
+  <% else: %>
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="40%"><%- @T('LDAP') %>
+          <th width="60%"><%- @T('Zammad') %>
+        <% for key, value of @config.user_attributes: %>
+          <tr>
+            <td class="settings-list-row-control"><%= key %>
+            <td class="settings-list-row-control"><%= value %>
+        <% end %>
+      </thead>
+      <tbody>
+    </table>
+  <% end %>
+
+  <h3><%- @T('Role') %></h3>
+  <% if _.isEmpty(@config.group_role_map): %>
+    <table class="settings-list settings-list--stretch settings-list--placeholder">
+      <thead><tr><th><%- @T('No Entries') %>
+    </table>
+  <% else: %>
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="40%"><%- @T('LDAP') %>
+          <th width="60%"><%- @T('Zammad') %>
+      <tbody>
+        <% for key, value of @config.group_role_map: %>
+          <tr>
+            <td class="settings-list-row-control"><%= key %>
+            <td class="settings-list-row-control"><%= App.Role.find(value).displayName() %>
+        <% end %>
+  <% end %>
+    </table>
+
+  <button type="submit" class="btn btn--primary js-wizard"><%- @T('Change') %></button>
+</div>

@@ -23,8 +23,11 @@ module Net
         @socket = new_internet_message_io(tlsconnect(s))
         # helo response may be different after STARTTLS
         do_helo helo_domain
-        # ADD auto detection of authtype - https://github.com/zammad/zammad/issues/240
-        # set detected authtype based on smtp server capabilities
+      end
+
+      # ADD auto detection of authtype - https://github.com/zammad/zammad/issues/240
+      # set detected authtype based on smtp server capabilities
+      if user or secret
         if !authtype
           if auth_capable?(DEFAULT_AUTH_TYPE)
             authtype = DEFAULT_AUTH_TYPE
@@ -36,8 +39,9 @@ module Net
             authtype = 'CRAM-MD5'
           end
         end
-        # /ADD auto detection of authtype - https://github.com/zammad/zammad/issues/240
       end
+      # /ADD auto detection of authtype - https://github.com/zammad/zammad/issues/240
+
       authenticate user, secret, (authtype || DEFAULT_AUTH_TYPE) if user
       @started = true
     ensure

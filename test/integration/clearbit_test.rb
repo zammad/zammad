@@ -110,7 +110,8 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('changed by my self', customer2_lookup.note)
     assert_equal('Norsk-Data-Straße 1, 61352 Bad Homburg vor der Höhe, Germany', customer2_lookup.address)
 
-    Transaction::ClearbitEnrichment.sync_user(customer2)
+    customer2_enrichment = Enrichment::Clearbit::User.new(customer2)
+    customer2_enrichment.synced?
     Scheduler.worker(true)
 
     customer2_lookup = User.lookup(id: customer2.id)
@@ -126,7 +127,8 @@ class ClearbitTest < ActiveSupport::TestCase
       note: 'changed by my self',
     )
 
-    Transaction::ClearbitEnrichment.sync_user(customer2)
+    customer2_enrichment = Enrichment::Clearbit::User.new(customer2)
+    customer2_enrichment.synced?
     Scheduler.worker(true)
 
     customer2_lookup = User.lookup(id: customer2.id)
@@ -141,7 +143,8 @@ class ClearbitTest < ActiveSupport::TestCase
       email: 'me2@example.com',
     )
 
-    Transaction::ClearbitEnrichment.sync_user(customer2)
+    customer2_enrichment = Enrichment::Clearbit::User.new(customer2)
+    customer2_enrichment.synced?
     Scheduler.worker(true)
 
     customer2_lookup = User.lookup(id: customer2.id)
@@ -271,6 +274,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('', customer6_lookup.note)
     assert_equal('http://clearbit.com', customer6_lookup.web)
     assert_equal('3030 16th St, San Francisco, CA 94103, USA', customer6_lookup.address)
+    #assert_equal('San Francisco, CA, USA', customer6_lookup.address)
 
     organization6_lookup = Organization.find_by(name: 'Clearbit')
     assert(ExternalSync.find_by(source: 'clearbit', object: 'Organization', o_id: organization6_lookup.id))

@@ -1,6 +1,8 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.tag
   @render: (attribute) ->
+    if !attribute.id
+      attribute.id = 'tag-' + new Date().getTime() + '-' + Math.floor(Math.random() * 999999)
     item = $( App.view('generic/input')(attribute: attribute) )
     source = "#{App.Config.get('api_path')}/tag_search"
     possibleTags = {}
@@ -23,5 +25,5 @@ class App.UiElement.tag
         true
       )
       $('#' + attribute.id ).parent().css('height', 'auto')
-    App.Delay.set(a, 120, undefined, 'tags')
+    App.Delay.set(a, 500, undefined, 'tags')
     item

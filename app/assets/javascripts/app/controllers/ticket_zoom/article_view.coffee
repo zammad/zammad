@@ -10,7 +10,7 @@ class App.TicketZoomArticleView extends App.Controller
 
   run: =>
     all = []
-    for ticket_article_id in @ticket_article_ids
+    for ticket_article_id, index in @ticket_article_ids
       controllerKey = ticket_article_id.toString()
       if !@articleController[controllerKey]
         el = $('<div></div>')
@@ -21,7 +21,8 @@ class App.TicketZoomArticleView extends App.Controller
           ui:         @ui
           highligher: @highligher
         )
-        all.push el
+        if !@ticketArticleInsertByIndex(index, el)
+          all.push el
     @el.append(all)
 
     # check elements to remove
@@ -33,6 +34,31 @@ class App.TicketZoomArticleView extends App.Controller
       if !exists
         controller.remove()
         delete @articleController[article_id.toString()]
+
+  ticketArticleInsertByIndex: (elIndex, el) =>
+    return false if !@$('.ticket-article-item').length
+
+    # in case of a merge it can happen that there are already
+    # articles rendered in the ticket, but the new article need
+    # to be inserted at the correct position in the the ticket
+    for index in [elIndex .. 0]
+      article_id = @ticket_article_ids[index]
+      continue if !article_id
+      article = @$(".ticket-article-item[data-id=#{article_id}]")
+      continue if !article.length
+      article.after(el)
+      return true
+
+    for index in [elIndex .. @ticket_article_ids.length - 1]
+      article_id = @ticket_article_ids[index]
+      continue if !article_id
+      article = @$(".ticket-article-item[data-id=#{article_id}]")
+      continue if !article.length
+      article.before(el)
+      return true
+
+    false
+
 
 class ArticleViewItem extends App.ObserverController
   model: 'TicketArticle'
@@ -47,12 +73,14 @@ class ArticleViewItem extends App.ObserverController
 
   elements:
     '.textBubble-content':           'textBubbleContent'
+    '.textBubble-content img':       'textBubbleImages'
     '.textBubble-overflowContainer': 'textBubbleOverflowContainer'
 
   events:
-    'click .textBubble':    'toggleMetaWithDelay'
-    'click .textBubble a':  'stopPropagation'
-    'click .js-toggleFold': 'toggleFold'
+    'click .textBubble':           'toggleMetaWithDelay'
+    'click .textBubble a':         'stopPropagation'
+    'click .js-toggleFold':        'toggleFold'
+    'click .richtext-content img': 'imageView'
 
   constructor: ->
     super
@@ -156,7 +184,7 @@ class ArticleViewItem extends App.ObserverController
 
     new App.WidgetAvatar(
       el:        @$('.js-avatar')
-      object_id: article.created_by_id
+      object_id: article.origin_by_id || article.created_by_id
       size:      40
     )
 
@@ -182,6 +210,13 @@ class ArticleViewItem extends App.ObserverController
     return if @shown
     @shown = true
 
+    @textBubbleImages.each (i, el) =>
+      if !el.complete
+        $(el).one 'load', @measureSeeMore
+
+    @measureSeeMore()
+
+  measureSeeMore: =>
     maxHeight               = 560
     minHeight               = 90
     bubbleContent           = @textBubbleContent
@@ -367,3 +402,8 @@ class ArticleViewItem extends App.ObserverController
 
   remove: =>
     @el.remove()
+
+  imageView: (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    new App.TicketZoomArticleImageView(image: $(e.target).get(0).outerHTML)

@@ -22,8 +22,7 @@ class CalendarSubscriptionsController < ApplicationController
       disposition: 'inline'
     )
   rescue => e
-    logger.error e.message
-    logger.error e.backtrace.inspect
+    logger.error e
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
@@ -45,8 +44,7 @@ class CalendarSubscriptionsController < ApplicationController
       disposition: 'inline'
     )
   rescue => e
-    logger.error e.message
-    logger.error e.backtrace.inspect
+    logger.error e
     render json: { error: e.message }, status: :unprocessable_entity
   end
 

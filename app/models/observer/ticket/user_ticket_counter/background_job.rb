@@ -7,14 +7,14 @@ class Observer::Ticket::UserTicketCounter::BackgroundJob
   def perform
 
     # open ticket count
-    state_open = Ticket::State.by_category('open')
+    state_open = Ticket::State.by_category(:open)
     tickets_open = Ticket.where(
       customer_id: @customer_id,
       state_id: state_open,
     ).count()
 
     # closed ticket count
-    state_closed = Ticket::State.by_category('closed')
+    state_closed = Ticket::State.by_category(:closed)
     tickets_closed = Ticket.where(
       customer_id: @customer_id,
       state_id: state_closed,

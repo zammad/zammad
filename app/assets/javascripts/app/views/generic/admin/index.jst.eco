@@ -1,6 +1,6 @@
 <div class="page-header">
   <div class="page-header-title">
-    <h1><%- @T( @head ) %> <small><%- @T( 'Management' ) %></small></h1>
+    <h1><%- @T(@head) %> <small><%- @T('Management') %></small></h1>
   </div>
   <div class="page-header-meta">
     <% if @showDescription: %>
@@ -8,7 +8,7 @@
     <% end %>
     <% if @buttons: %>
       <% for button in @buttons: %>
-        <a data-type="<%= button['data-type'] %>" class="btn <%= button['class'] %>"><%- @T( button.name ) %></a>
+        <a data-type="<%= button['data-type'] %>" class="btn <%= button.class %>" href="<%= button.href %>"><%- @T(button.name) %></a>
       <% end %>
     <% end %>
   </div>

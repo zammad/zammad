@@ -109,9 +109,9 @@ class TranslationTest < TestCase
     )
 
     @browser.action.key_down(:control)
-            .key_down(:alt)
+            .key_down(:shift)
             .send_keys('t')
-            .key_up(:alt)
+            .key_up(:shift)
             .key_up(:control)
             .perform
 
@@ -128,9 +128,9 @@ class TranslationTest < TestCase
     sleep 5
 
     @browser.action.key_down(:control)
-            .key_down(:alt)
+            .key_down(:shift)
             .send_keys('t')
-            .key_up(:alt)
+            .key_up(:shift)
             .key_up(:control)
             .perform
 
@@ -194,9 +194,9 @@ class TranslationTest < TestCase
     sleep 5
 
     @browser.action.key_down(:control)
-            .key_down(:alt)
+            .key_down(:shift)
             .send_keys('t')
-            .key_up(:alt)
+            .key_up(:shift)
             .key_up(:control)
             .perform
 
@@ -213,9 +213,9 @@ class TranslationTest < TestCase
     sleep 5
 
     @browser.action.key_down(:control)
-            .key_down(:alt)
+            .key_down(:shift)
             .send_keys('t')
-            .key_up(:alt)
+            .key_up(:shift)
             .key_up(:control)
             .perform
 

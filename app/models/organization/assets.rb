@@ -33,22 +33,14 @@ returns
         data[ app_model_user ] = {}
       end
       if !data[ app_model_organization ][ id ]
-        local_attributes = attributes
+        local_attributes = attributes_with_association_ids
 
         # set temp. current attributes to assets pool to prevent
         # loops, will be updated with lookup attributes later
         data[ app_model_organization ][ id ] = local_attributes
 
-        # get organizations
-        key = "Organization::member_ids::#{id}"
-        local_member_ids = Cache.get(key)
-        if !local_member_ids
-          local_member_ids = member_ids
-          Cache.write(key, local_member_ids)
-        end
-        local_attributes['member_ids'] = local_member_ids
-        if local_member_ids
-          local_member_ids.each { |local_user_id|
+        if local_attributes['member_ids']
+          local_attributes['member_ids'].each { |local_user_id|
             next if data[ app_model_user ][ local_user_id ]
             user = User.lookup(id: local_user_id)
             next if !user

@@ -14,7 +14,7 @@ returns
 =end
 
   def self.rebuild_all
-    state_list_open = Ticket::State.by_category('open')
+    state_list_open = Ticket::State.by_category(:open)
 
     ticket_ids = Ticket.where(state_id: state_list_open).pluck(:id)
     ticket_ids.each { |ticket_id|

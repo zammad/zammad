@@ -88,8 +88,8 @@ class App.ControllerTable extends App.Controller
       console.log('new header is', headers)
       headers
 
-    callbackAttributes = (value, object, attribute, header, refObject) ->
-      console.log('data of item col', value, object, attribute, header, refObject)
+    callbackAttributes = (value, object, attribute, header) ->
+      console.log('data of item col', value, object, attribute, header)
       value = 'New Data To Show'
       value
 
@@ -190,9 +190,8 @@ class App.ControllerTable extends App.Controller
                 attribute.displayWidth = value
             @headers.push attribute
           else
-            # e.g. column: owner_id
-            rowWithoutId = item + '_id'
-            if attributeName is rowWithoutId
+            # e.g. column: owner_id or owner_ids
+            if attributeName is "#{item}_id" || attributeName is "#{item}_ids"
               headerFound = true
               if @headerWidth[attribute.name]
                 attribute.displayWidth = @headerWidth[attribute.name] * @availableWidth
@@ -288,19 +287,44 @@ class App.ControllerTable extends App.Controller
     if @tableId
       @calculateHeaderWidths()
 
-    # get content
+    # generate content
+    position = 0
+    columnsLength = @headers.length
+    if @checkbox || @radio
+      columnsLength++
+    groupLast = ''
+    tableBody = ''
+    for object in @objects
+      if @groupBy
+        groupByName = App.viewPrint(object, @groupBy, attributes)
+        if groupLast isnt groupByName
+          groupLast = groupByName
+          tableBody += App.view('generic/table_row_group_by')(
+            position:      position
+            groupByName:   groupByName
+            columnsLength: columnsLength
+          )
+      position++
+      tableBody += App.view('generic/table_row')(
+        headers:    @headers
+        attributes: attributes
+        checkbox:   @checkbox
+        radio:      @radio
+        callbacks:  @callbackAttributes
+        sortable:   @dndCallback
+        position:   position
+        object:     object
+      )
+
+    # generate full table
     table = App.view('generic/table')(
       tableId:    @tableId
-      header:     @headers
-      attributes: attributes
-      objects:    @objects
+      headers:    @headers
       checkbox:   @checkbox
       radio:      @radio
-      groupBy:    @groupBy
       class:      @class
-      destroy:    destroy
-      callbacks:  @callbackAttributes
       sortable:   @dndCallback
+      tableBody:  tableBody
     )
 
     # convert to jquery object
@@ -325,7 +349,7 @@ class App.ControllerTable extends App.Controller
           for headerName in @headers
             if !hit
               position += 1
-            if headerName.name is name || headerName.name is "#{name}_id"
+            if headerName.name is name || headerName.name is "#{name}_id" || headerName.name is "#{name}_ids"
               hit = true
 
           if hit

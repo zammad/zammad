@@ -27,8 +27,8 @@ class App.TicketArticle extends App.Model
   displayName: ->
     if @subject
       return @subject
-    if App.Ticket.exists( @ticket_id )
-      ticket = App.Ticket.find( @ticket_id )
+    if App.Ticket.exists(@ticket_id)
+      ticket = App.Ticket.find(@ticket_id)
     if ticket
       return ticket.title
     '???'

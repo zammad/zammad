@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     end
 
     # only allow customer to fetch him self
-    users = if !current_user.permissions?('admin.user') && !current_user.permissions?('ticket.agent')
+    users = if !current_user.permissions?(['admin.user', 'ticket.agent'])
               User.where(id: current_user.id).order(id: 'ASC').offset(offset).limit(per_page)
             else
               User.all.order(id: 'ASC').offset(offset).limit(per_page)
@@ -352,7 +352,7 @@ class UsersController < ApplicationController
   # @response_message 401               Invalid session.
   def search
 
-    if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.user')
+    if !current_user.permissions?(['ticket.agent', 'admin.user'])
       response_access_deny
       return
     end
@@ -428,7 +428,7 @@ class UsersController < ApplicationController
 
     list = []
     user_all.each { |user|
-      list.push user.attributes
+      list.push user.attributes_with_association_ids
     }
     render json: list, status: :ok
   end
@@ -510,7 +510,7 @@ class UsersController < ApplicationController
   def history
 
     # permission check
-    if !current_user.permissions?('admin.user') && !current_user.permissions?('ticket.agent')
+    if !current_user.permissions?(['admin.user', 'ticket.agent'])
       response_access_deny
       return
     end
@@ -711,7 +711,7 @@ curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{p
       end
 
     else
-      user = User.password_reset_check(params[:token])
+      user = User.by_reset_token(params[:token])
     end
     if user
       render json: { message: 'ok', user_login: user.login }, status: :ok

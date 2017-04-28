@@ -202,6 +202,9 @@ returns
 
     @stream_client.client.user(filter) do |tweet|
       next if tweet.class != Twitter::Tweet && tweet.class != Twitter::DirectMessage
+
+      # wait until own posts are stored in local database to prevent importing own tweets
+      sleep 4
       next if Ticket::Article.find_by(message_id: tweet.id)
 
       # check direct message
@@ -321,7 +324,7 @@ returns
     Rails.logger.debug ' - searching for direct_messages'
     older_import = 0
     older_import_max = 20
-    @rest_client.client.direct_messages.each { |tweet|
+    @rest_client.client.direct_messages(full_text: 'true').each { |tweet|
 
       # ignore older messages
       if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max

@@ -47,37 +47,9 @@ class App.SettingsAreaItem extends App.Controller
     for item in @setting.options['form']
       directValue += 1
       directData  = params[item.name]
-
+    value = undefined
     if directValue > 1
-      state_current = {
-        value: params
-      }
-      #App.Config.set((@setting.name, params)
+      value = params
     else
-      state_current = {
-        value: directData
-      }
-      #App.Config.set(@setting.name, directData)
-
-    @setting['state_current'] = state_current
-    ui = @
-    @setting.save(
-      done: =>
-        ui.formEnable(e)
-        App.Event.trigger 'notify', {
-          type:    'success'
-          msg:     App.i18n.translateContent('Update successful!')
-          timeout: 2000
-        }
-
-        # rerender ui || get new collections and session data
-        App.Setting.preferencesPost(@setting)
-
-      fail: (settings, details) ->
-        ui.formEnable(e)
-        App.Event.trigger 'notify', {
-          type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update object!')
-          timeout: 2000
-        }
-    )
+      value = directData
+    App.Setting.set(@setting['name'], value, doneLocal: => @formEnable(e))

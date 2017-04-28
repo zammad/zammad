@@ -350,6 +350,10 @@ class App.TicketOverview extends App.Controller
     return if !@batchOverlayShown # user might have dropped the item already
     @batchAssignShown = true
 
+    @batchCancel.css
+      top: 0
+      bottom: @batchAssign.height()
+
     @batchAssign.velocity
       properties:
         translateY: [0, '100%']
@@ -359,10 +363,6 @@ class App.TicketOverview extends App.Controller
         duration: 500
         visibility: 'visible'
         complete: @highlightBatchEntryAtMousePosition
-
-    @batchCancel.css
-      top: 0
-      bottom: 'auto'
 
     @batchCancel.velocity
       properties:
@@ -452,6 +452,10 @@ class App.TicketOverview extends App.Controller
     return if !@batchOverlayShown # user might have dropped the item already
     @batchMacroShown = true
 
+    @batchCancel.css
+      bottom: 0
+      top: @batchMacro.height()
+
     @batchMacro.velocity
       properties:
         translateY: [0, '-100%']
@@ -462,9 +466,6 @@ class App.TicketOverview extends App.Controller
         visibility: 'visible'
         complete: @highlightBatchEntryAtMousePosition
 
-    @batchCancel.css
-      top: 'auto'
-      bottom: 0
     @batchCancel.velocity
       properties:
         translateY: [0, '-100%']
@@ -607,48 +608,6 @@ class App.TicketOverview extends App.Controller
             valid_user_ids.push user_id
       group.valid_user_ids = valid_user_ids
 
-    ###
-    users = [
-      App.User.find(2),
-      App.User.find(2),
-      App.User.find(2),
-    ]
-    macros = [
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close Beispiel für eine besonders'
-      },
-      {
-        name: 'Close &amp; Tag as Spam'
-      },
-      {
-        name: 'Close &amp; Reply we\'re on Holidays'
-      },
-      {
-        name: 'Escalate to 2nd level'
-      },
-      {
-        name: '1st Close'
-      },
-    ]
-    ###
     @batchAssignInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
       users: users
       groups: groups
@@ -1035,23 +994,30 @@ class Table extends App.Controller
           show:       true
         )
         @navigate ticket.uiUrl()
-      callbackTicketTitleAdd = (value, object, attribute, attributes, refObject) ->
+      callbackTicketTitleAdd = (value, object, attribute, attributes) ->
         attribute.title = object.title
         value
-      callbackLinkToTicket = (value, object, attribute, attributes, refObject) ->
+      callbackLinkToTicket = (value, object, attribute, attributes) ->
         attribute.link = object.uiUrl()
         value
-      callbackUserPopover = (value, object, attribute, attributes, refObject) ->
-        return value if !refObject
+      callbackUserPopover = (value, object, attribute, attributes) ->
+        return value if !object
+        refObjectId = undefined
+        if attribute.name is 'customer_id'
+          refObjectId = object.customer_id
+        if attribute.name is 'owner_id'
+          refObjectId = object.owner_id
+        return value if !refObjectId
         attribute.class = 'user-popover'
         attribute.data =
-          id: refObject.id
+          id: refObjectId
         value
-      callbackOrganizationPopover = (value, object, attribute, attributes, refObject) ->
-        return value if !refObject
+      callbackOrganizationPopover = (value, object, attribute, attributes) ->
+        return value if !object
+        return value if !object.organization_id
         attribute.class = 'organization-popover'
         attribute.data =
-          id: refObject.id
+          id: object.organization_id
         value
       callbackCheckbox = (id, checked, e) =>
         if @$('table').find('input[name="bulk"]:checked').length == 0
@@ -1088,7 +1054,7 @@ class Table extends App.Controller
         headers.unshift(0)
         headers[0] = attribute
         headers
-      callbackIcon = (value, object, attribute, header, refObject) ->
+      callbackIcon = (value, object, attribute, header) ->
         value = ' '
         attribute.class  = object.iconClass()
         attribute.link   = ''

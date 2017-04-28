@@ -91,7 +91,7 @@ $(function() {
       },
     ],
     translations: {
-      de: {
+      'de': {
         'Name': 'Name',
         'Your Name': 'Ihr Name',
         'Email': 'E-Mail',
@@ -100,7 +100,7 @@ $(function() {
         'Attachments': 'Anhänge',
         'Your Message...': 'Ihre Nachricht...',
       },
-      es: {
+      'es': {
         'Name': 'Nombre',
         'Your Name': 'tu Nombre',
         'Email': 'correo electrónico',
@@ -109,7 +109,7 @@ $(function() {
         'Attachments': 'archivos adjuntos',
         'Your Message...': 'tu Mensaje...',
       },
-      fr: {
+      'fr': {
         'Name': 'Prénom',
         'Your Name': 'Votre nom',
         'Email': 'Email',
@@ -117,6 +117,24 @@ $(function() {
         'Message': 'Message',
         'Attachments': 'Pièces jointes',
         'Your Message...': 'Votre message...',
+      },
+      'zh-cn': {
+        'Name': '联系人',
+        'Your Name': '您的尊姓大名',
+        'Email': '电子邮件',
+        'Your Email': '您的邮件地址',
+        'Message': '留言',
+        'Attachments': '附件',
+        'Your Message...': '您的留言...',
+      },
+      'zh-tw': {
+        'Name': '聯絡人',
+        'Your Name': '您的尊姓大名',
+        'Email': 'E-Mail',
+        'Your Email': '請留下您的電子郵件地址',
+        'Message': '留言',
+        'Attachments': '附檔',
+        'Your Message...': '請寫下您的留言...'
       },
     }
   };
@@ -148,6 +166,7 @@ $(function() {
     }
 
     this._config = {}
+    this._token = ''
 
     this.init()
   }
@@ -162,6 +181,11 @@ $(function() {
       _this.loadCss(_this.css_location)
     }
 
+    $.each(_this.options.attributes, function(index, item) {
+      if (item.name == 'file[]') {
+        _this.options.attributes.splice(index, 1);
+      }
+    })
     if (_this.options.attachmentSupport === true || _this.options.attachmentSupport === 'true') {
       var attachment = {
         display: 'Attachments',
@@ -258,6 +282,9 @@ $(function() {
         $.each(data.errors, function( key, value ) {
           _this.$form.find('[name=' + key + ']').closest('.form-group').addClass('has-error')
         })
+        if (data.errors.token) {
+          alert(data.errors.token)
+        }
         _this.$form.find('button').prop('disabled', false)
         return
       }
@@ -289,6 +316,7 @@ $(function() {
     if (this.options.test) {
       formData.append('test', true)
     }
+    formData.append('token', this._config.token)
     _this.log('debug', 'formData', formData)
     return formData
   }
