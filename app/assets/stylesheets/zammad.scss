@@ -3845,6 +3845,8 @@ footer {
 }
 
 .popover {
+  @extend .zIndex-6;
+  position: absolute;
   font-family: inherit;
   width: 372px;
   max-width: 9999px;
@@ -3852,7 +3854,6 @@ footer {
   border: none;
   color: hsl(206,7%,28%);
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
-  @extend .zIndex-6;
 }
 
   .popover-body {
@@ -3953,7 +3954,6 @@ footer {
     width: auto;
     max-width: 400px;
     min-width: 350px;
-    position: absolute;
     flex-direction: column;
     @extend .zIndex-2;
 
