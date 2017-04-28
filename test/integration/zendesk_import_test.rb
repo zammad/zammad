@@ -17,6 +17,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
   Setting.set('import_zendesk_endpoint_key', ENV['IMPORT_ZENDESK_ENDPOINT_KEY'])
   Setting.set('import_zendesk_endpoint_username', ENV['IMPORT_ZENDESK_ENDPOINT_USERNAME'])
   Setting.set('import_mode', true)
+  Setting.set('system_init_done', false)
   Import::Zendesk.start
 
   # check statistic count

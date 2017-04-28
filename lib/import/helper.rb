@@ -9,13 +9,16 @@ module Import
       raise 'System is not in import mode!'
     end
 
-    # log
+    def check_system_init_done
+      return true if !Setting.get('system_init_done')
+      raise 'System is already system_init_done!'
+    end
+
     def log(message)
       thread_no = Thread.current[:thread_no] || '-'
       Rails.logger.info "thread##{thread_no}: #{message}"
     end
 
-    # utf8 convert
     def utf8_encode(data)
       data.each { |key, value|
         next if !value

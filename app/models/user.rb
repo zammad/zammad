@@ -980,6 +980,7 @@ raise 'Minimum one user need to have admin permissions'
 
   def ensure_password
     return if password_empty?
+    return if Setting.get('import_mode')
     return if PasswordHash.crypted?(password)
     self.password = PasswordHash.crypt(password)
   end
