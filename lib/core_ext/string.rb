@@ -302,13 +302,15 @@ class String
       string.gsub!(/######SIGNATURE_MARKER######/, '')
       return string.chomp
     end
-    string.gsub!(%r{(<p>[[:space:]]*</p>([[:space:]]*)){2,}}im, '<p> </p>\2')
+    string.gsub!(%r{(<p>[[:space:]]*</p>([[:space:]]*)){2,}}im, '<p>&nbsp;</p>\2')
     string.gsub!(%r\<div>[[:space:]]*(<br(|/)>([[:space:]]*)){2,}\im, '<div><br>\3')
     string.gsub!(%r\[[:space:]]*(<br>[[:space:]]*){3,}[[:space:]]*</div>\im, '<br><br></div>')
-    string.gsub!(%r\<div>[[:space:]]*(<br>[[:space:]]*){1,}[[:space:]]*</div>\im, '<div> </div>')
+    string.gsub!(%r\<div>[[:space:]]*(<br>[[:space:]]*){1,}[[:space:]]*</div>\im, '<div>&nbsp;</div>')
+    string.gsub!(%r\<div>[[:space:]]*(<div>[[:space:]]*{1,}</div>[[:space:]]*){2,}</div>\im, '<div>&nbsp;</div>')
     string.gsub!(%r\<p>[[:space:]]*</p>(<br(|/)>[[:space:]]*){2,}[[:space:]]*\im, '<p> </p><br>')
     string.gsub!(%r{<p>[[:space:]]*</p>(<br(|/)>[[:space:]]*)+<p>[[:space:]]*</p>}im, '<p> </p><p> </p>')
     string.gsub!(%r\(<div>[[:space:]]*</div>[[:space:]]*){2,}\im, '<div> </div>')
+    string.gsub!(%r{<div>&nbsp;</div>[[:space:]]*(<div>&nbsp;</div>){1,}}im, '<div>&nbsp;</div>')
     string.gsub!(/(<br>[[:space:]]*){3,}/im, '<br><br>')
     string.gsub!(%r\(<br(|/)>[[:space:]]*){3,}\im, '<br/><br/>')
     string.gsub!(%r{<p>[[:space:]]+</p>}im, '<p>&nbsp;</p>')
