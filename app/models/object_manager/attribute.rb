@@ -227,6 +227,11 @@ possible types
 
       # if data_option has changed, store it for next migration
       if !force
+        [:name, :display, :data_type, :position, :active].each { |key|
+          next if record[key] == data[key]
+          data[:to_config] = true
+          break
+        }
         if record[:data_option] != data[:data_option]
 
           # do we need a database migration?
@@ -587,7 +592,9 @@ to send no browser reload event, pass false
         end
 
         # restart processes
+        attribute.to_create = false
         attribute.to_migrate = false
+        attribute.to_delete = false
         attribute.save!
         reset_database_info(model)
         execute_db_count += 1

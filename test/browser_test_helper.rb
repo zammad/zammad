@@ -3378,6 +3378,128 @@ wait untill text in selector disabppears
 
 =begin
 
+  object_manager_attribute_update(
+    browser: browser2,
+    data: {
+      name: 'field_name' + random,
+      display: 'Display Name of Field',
+      data_type: 'Select',
+      data_option: {
+        options: {
+          'aa' => 'AA',
+          'bb' => 'BB',
+        },
+
+        default: 'abc',
+      },
+    },
+    error: 'already exists'
+  )
+
+=end
+
+  def object_manager_attribute_update(params = {})
+    switch_window_focus(params)
+    log('object_manager_attribute_update', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  '.content.active a[href="#system/object_manager"]',
+      mute_log: true,
+    )
+    sleep 4
+
+    instance.execute_script("$(\".content.active td:contains('#{data[:name]}')\").first().click()")
+    modal_ready(browser: instance)
+    element = instance.find_elements(css: '.modal input[name=display]')[0]
+    element.clear
+    element.send_keys(data[:display])
+    select(
+      browser:  instance,
+      css:      '.modal select[name="data_type"]',
+      value:    data[:data_type],
+      mute_log: true,
+    )
+    if data[:data_option]
+      if data[:data_option][:options]
+        if data[:data_type] == 'Boolean'
+          element = instance.find_elements(css: '.modal .js-valueTrue').first
+          element.clear
+          element.send_keys(data[:data_option][:options][:true])
+          element = instance.find_elements(css: '.modal .js-valueFalse').first
+          element.clear
+          element.send_keys(data[:data_option][:options][:false])
+        else
+          data[:data_option][:options].each { |key, value|
+            element = instance.find_elements(css: '.modal .js-Table .js-key').last
+            element.clear
+            element.send_keys(key)
+            element = instance.find_elements(css: '.modal .js-Table .js-value').last
+            element.clear
+            element.send_keys(value)
+            element = instance.find_elements(css: '.modal .js-Table .js-add')[0]
+            element.click
+          }
+        end
+      end
+
+      [:default, :min, :max, :diff].each { |key|
+        next if !data[:data_option].key?(key)
+        element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
+        element.clear
+        element.send_keys(data[:data_option][key])
+      }
+
+      [:future, :past].each { |key|
+        next if !data[:data_option].key?(key)
+        select(
+          browser:  instance,
+          css:      ".modal select[name=\"data_option::#{key}\"]",
+          value:    data[:data_option][key],
+          mute_log: true,
+        )
+      }
+
+    end
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+    if params[:error]
+      sleep 4
+      watch_for(
+        css: '.modal',
+        value: params[:error],
+      )
+      click(
+        browser: instance,
+        css:  '.modal .js-close',
+      )
+      modal_disappear(browser: instance)
+      return
+    end
+
+    11.times {
+      element = instance.find_elements(css: 'body')[0]
+      text = element.text
+      if text =~ /#{Regexp.quote(data[:name])}/
+        assert(true, 'object manager attribute updated')
+        sleep 1
+        return true
+      end
+      sleep 1
+    }
+    screenshot(browser: instance, comment: 'object_manager_attribute_update_failed')
+    raise 'object manager attribute update failed'
+  end
+
+=begin
+
   object_manager_attribute_delete(
     browser: browser2,
     data: {
