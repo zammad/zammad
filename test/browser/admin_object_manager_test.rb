@@ -2,6 +2,7 @@
 require 'browser_test_helper'
 
 class AdminObjectManagerTest < TestCase
+
   def test_basic_a
 
     @browser = browser_instance
@@ -386,6 +387,115 @@ class AdminObjectManagerTest < TestCase
       css: '.content.active table',
       value: 'browser_test7',
     )
+  end
+
+  def test_basic_c
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    # valid name
+    object_manager_attribute_create(
+      data: {
+        name: 'browser_update_test1',
+        display: 'Browser Update Test 1',
+        data_type: 'Text',
+      },
+    )
+
+    watch_for(
+      css: '.content.active',
+      value: 'Database Update required',
+    )
+    click(css: '.content.active .tab-pane.active div.js-execute')
+    watch_for(
+      css: '.modal',
+      value: 'restart',
+    )
+    watch_for_disappear(
+      css:     '.modal',
+      timeout: 120,
+    )
+    sleep 5
+    watch_for(
+      css: '.content.active',
+    )
+    match_not(
+      css: '.content.active',
+      value: 'Database Update required',
+    )
+
+    # valid name
+    object_manager_attribute_update(
+      data: {
+        name: 'browser_update_test1',
+        display: 'Browser Update Test 2',
+        data_type: 'Text',
+      },
+    )
+
+    watch_for(
+      css: '.content.active',
+      value: 'Database Update required',
+    )
+    click(css: '.content.active .tab-pane.active div.js-execute')
+    watch_for(
+      css: '.modal',
+      value: 'configuration of Zammad has changed',
+    )
+    click(css: '.modal .js-submit')
+    watch_for_disappear(
+      css:     '.modal',
+      timeout: 120,
+    )
+    sleep 5
+    watch_for(
+      css: '.content.active',
+    )
+    match_not(
+      css: '.content.active',
+      value: 'Database Update required',
+    )
+
+    object_manager_attribute_delete(
+      data: {
+        name: 'browser_update_test1',
+      },
+    )
+    watch_for(
+      css: '.content.active',
+      value: 'Database Update required',
+    )
+    watch_for(
+      css: '.content.active table',
+      value: 'browser_update_test1',
+    )
+    click(css: '.content.active .tab-pane.active div.js-execute')
+    watch_for(
+      css: '.modal',
+      value: 'restart',
+    )
+    watch_for_disappear(
+      css:     '.modal',
+      timeout: 120,
+    )
+    sleep 5
+    watch_for(
+      css: '.content.active',
+    )
+    match_not(
+      css: '.content.active',
+      value: 'Database Update required',
+    )
+    match_not(
+      css: '.content.active table',
+      value: 'browser_update_test1',
+    )
+
   end
 
 end
