@@ -274,9 +274,9 @@ class TweetBase
             begin
               parent_tweet = @client.status(tweet.in_reply_to_status_id)
               ticket       = to_group(parent_tweet, group_id, channel)
-            rescue Twitter::Error::NotFound
+            rescue Twitter::Error::NotFound, Twitter::Error::Forbidden => e
               # just ignore if tweet has already gone
-              Rails.logger.info "Can't import tweet (#{tweet.in_reply_to_status_id}), tweet not found"
+              Rails.logger.info "Can't import tweet (#{tweet.in_reply_to_status_id}), #{e.message}"
             end
           end
         end
