@@ -175,7 +175,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
   test 'b assets' do
     # create users
     roles  = Role.where(name: %w(Agent Admin))
-    groups = Group.all
+    groups = Group.all.order(id: :asc)
 
     UserInfo.current_user_id = 2
     agent1 = User.create_or_update(
@@ -193,19 +193,19 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assets = {}
     client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push
-    assert(data[:collection][:Group][groups.first.id])
+    assert_equal(data[:collection][:Group][0]['id'], groups[0].id)
     assert(data[:assets][:Group][groups.first.id])
     travel 10.seconds
 
     client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push
-    assert(data[:collection][:Group][groups.first.id])
+    assert_equal(data[:collection][:Group][0]['id'], groups[0].id)
     assert(data[:assets][:Group][groups.first.id])
 
     travel 2.minutes
     client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push
-    assert(data[:collection][:Group][groups.first.id])
+    assert_equal(data[:collection][:Group][0]['id'], groups[0].id)
     assert_nil(data[:assets][:Group])
 
     travel 10.seconds

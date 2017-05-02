@@ -143,10 +143,9 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # check again after touch
     result1 = collection_client1.push
-    assert(!result1, 'check collections - after touch - recall')
+    assert_nil(result1, 'check collections - after touch - recall')
     result2 = collection_client2.push
-    assert(!result2, 'check collections - after touch - recall')
-    assert_equal(result1, result2, 'check collections')
+    assert_nil(result2, 'check collections - after touch - recall')
 
     # change collection
     group = Group.create(name: "SomeGroup::#{rand(999_999)}", active: true)
@@ -162,10 +161,9 @@ class SessionBasicTest < ActiveSupport::TestCase
     # check again after create
     travel 4.seconds
     result1 = collection_client1.push
-    assert(!result1, 'check collections - after create - recall')
+    assert_nil(result1, 'check collections - after create - recall')
     result2 = collection_client2.push
-    assert(!result2, 'check collections - after create - recall')
-    assert_equal(result1, result2, 'check collections')
+    assert_nil(result2, 'check collections - after create - recall')
 
     # change collection
     group.destroy
@@ -181,10 +179,9 @@ class SessionBasicTest < ActiveSupport::TestCase
     # check again after destroy
     travel 4.seconds
     result1 = collection_client1.push
-    assert(!result1, 'check collections - after destroy - recall')
+    assert_nil(result1, 'check collections - after destroy - recall')
     result2 = collection_client2.push
-    assert(!result2, 'check collections - after destroy - recall')
-    assert_equal(result1, result2, 'check collections')
+    assert_nil(result2, 'check collections - after destroy - recall')
     travel_back
   end
 

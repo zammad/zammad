@@ -72,6 +72,8 @@ class AuthTest < ActiveSupport::TestCase
             assert_equal(user[key], value, 'verify')
           }
         end
+      elsif test[:result].nil?
+        assert_nil(user, 'failed or not existing')
       else
         assert_equal(test[:result], user, 'failed or not existing')
       end

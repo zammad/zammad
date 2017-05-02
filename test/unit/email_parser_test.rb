@@ -1083,7 +1083,11 @@ end
           #puts '++' + file[:params][key.to_sym].to_s + '++'
           assert_equal(Digest::MD5.hexdigest(file[:params][key.to_sym].to_s), Digest::MD5.hexdigest(data[:body].to_s))
         else
-          assert_equal(file[:params][key.to_sym], data[key.to_sym], "check #{key}")
+          if file[:params][key.to_sym] == nil
+            assert_nil(data[key.to_sym], "check #{key}")
+          else
+            assert_equal(file[:params][key.to_sym], data[key.to_sym], "check #{key}")
+          end
         end
       }
 
