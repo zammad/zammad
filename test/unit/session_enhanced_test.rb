@@ -309,7 +309,11 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     }
     #puts "c: #{collections_result.inspect}"
     collections_orig.each { |key, _value|
-      assert_equal(collections_orig[key], collections_result[key], "collection message for #{key} #{type}-check (client_id #{client_id})")
+      if collections_orig[key].nil?
+        assert_nil(collections_result[key], "collection message for #{key} #{type}-check (client_id #{client_id})")
+      else
+        assert_equal(collections_orig[key], collections_result[key], "collection message for #{key} #{type}-check (client_id #{client_id})")
+      end
     }
   end
 end
