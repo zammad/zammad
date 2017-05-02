@@ -187,19 +187,19 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(agent1.save, 'create/update agent1')
 
     assets = {}
-    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 2)
+    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push
     assert(data[:collection][:Group][groups.first.id])
     assert(data[:assets][:Group][groups.first.id])
     travel 10.seconds
 
-    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 2)
+    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push
     assert(data[:collection][:Group][groups.first.id])
     assert(data[:assets][:Group][groups.first.id])
 
     travel 2.minutes
-    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 2)
+    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push
     assert(data[:collection][:Group][groups.first.id])
     assert_nil(data[:assets][:Group])
