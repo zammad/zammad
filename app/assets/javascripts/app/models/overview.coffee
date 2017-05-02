@@ -5,8 +5,8 @@ class App.Overview extends App.Model
   @configure_attributes = [
     { name: 'name',       display: 'Name',                tag: 'input',    type: 'text', limit: 100, 'null': false },
     { name: 'link',       display: 'Link',                readonly: 1 },
-    { name: 'role_ids',   display: 'Available for Role',  tag: 'column_select', multiple: true, nulloption: true, null: false, relation: 'Role', translate: true },
-    { name: 'user_ids',   display: 'Available for User',  tag: 'column_select', multiple: true, nulloption: false, null: true,  relation: 'User', sortBy: 'firstname' },
+    { name: 'role_ids',   display: 'Available for Role',  tag: 'column_select', multiple: true, null: false, relation: 'Role', translate: true },
+    { name: 'user_ids',   display: 'Available for User',  tag: 'column_select', multiple: true, null: true,  relation: 'User', sortBy: 'firstname' },
     { name: 'organization_shared', display: 'Only available for Users with shared Organization', tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true },
     { name: 'condition',  display: 'Conditions for shown Tickets', tag: 'ticket_selector', null: false },
     { name: 'prio',       display: 'Prio',                readonly: 1 },
