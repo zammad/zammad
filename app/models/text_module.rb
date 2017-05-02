@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class TextModule < ApplicationModel
-  include NotifiesClients
+  include ChecksClientNotification
 
   validates :name,    presence: true
   validates :content, presence: true

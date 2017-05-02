@@ -1,12 +1,12 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Ticket < ApplicationModel
-  include LogsActivityStream
-  include NotifiesClients
-  include LatestChangeObserved
-  include Historisable
-  include Taggable
-  include SearchIndexed
+  include HasActivityStreamLog
+  include ChecksClientNotification
+  include ChecksLatestChangeObserved
+  include HasHistory
+  include HasTags
+  include HasSearchIndexBackend
 
   include Ticket::Escalation
   include Ticket::Subject

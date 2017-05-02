@@ -1,5 +1,5 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-module LogsActivityStream
+module HasActivityStreamLog
   extend ActiveSupport::Concern
 
   included do
@@ -69,7 +69,7 @@ delete object activity stream, will be executed automatically
 serve methode to ignore model attributes in activity stream and/or limit activity stream permission
 
 class Model < ApplicationModel
-  include LogsActivityStream
+  include HasActivityStreamLog
   activity_stream_permission 'admin.user'
   activity_stream_attributes_ignored :create_article_type_id, :preferences
 end

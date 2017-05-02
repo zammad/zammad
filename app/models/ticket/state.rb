@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 class Ticket::State < ApplicationModel
-  include LatestChangeObserved
+  include ChecksLatestChangeObserved
 
   after_create  :ensure_defaults
   after_update  :ensure_defaults

@@ -1,5 +1,5 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-module ApplicationModel::HasAssociations
+module ApplicationModel::CanAssociations
   extend ActiveSupport::Concern
 
 =begin

@@ -1,5 +1,5 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-module ValidatesCondition
+module ChecksConditionValidation
   extend ActiveSupport::Concern
 
   included do

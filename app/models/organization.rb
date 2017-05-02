@@ -1,11 +1,11 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Organization < ApplicationModel
-  include LogsActivityStream
-  include NotifiesClients
-  include LatestChangeObserved
-  include Historisable
-  include SearchIndexed
+  include HasActivityStreamLog
+  include ChecksClientNotification
+  include ChecksLatestChangeObserved
+  include HasHistory
+  include HasSearchIndexBackend
 
   load 'organization/permission.rb'
   include Organization::Permission

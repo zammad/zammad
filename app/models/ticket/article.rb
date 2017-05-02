@@ -1,9 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 class Ticket::Article < ApplicationModel
-  include LogsActivityStream
-  include NotifiesClients
-  include Historisable
-  include HtmlSanitized
+  include HasActivityStreamLog
+  include ChecksClientNotification
+  include HasHistory
+  include ChecksHtmlSanitized
 
   load 'ticket/article/assets.rb'
   include Ticket::Article::Assets
@@ -305,12 +305,12 @@ returns
   end
 
   class Sender < ApplicationModel
-    include LatestChangeObserved
+    include ChecksLatestChangeObserved
     validates :name, presence: true
   end
 
   class Type < ApplicationModel
-    include LatestChangeObserved
+    include ChecksLatestChangeObserved
     validates :name, presence: true
   end
 end

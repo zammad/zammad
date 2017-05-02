@@ -1,5 +1,5 @@
 class ObjectManager::Attribute < ApplicationModel
-  include NotifiesClients
+  include ChecksClientNotification
 
   self.table_name = 'object_manager_attributes'
 

@@ -1,5 +1,5 @@
 class Chat::Message < ApplicationModel
-  include HtmlSanitized
+  include ChecksHtmlSanitized
 
   sanitized_html :content
 end
