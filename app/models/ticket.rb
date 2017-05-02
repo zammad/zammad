@@ -298,6 +298,16 @@ returns
 
       # add history to both
 
+      # reassign links to the new ticket
+      Link.where(
+        link_object_source_id: Link::Object.find_by(name: 'Ticket').id,
+        link_object_source_value: id,
+      ).update_all(link_object_source_value: data[:ticket_id])
+      Link.where(
+        link_object_target_id: Link::Object.find_by(name: 'Ticket').id,
+        link_object_target_value: id,
+      ).update_all(link_object_target_value: data[:ticket_id])
+
       # link tickets
       Link.add(
         link_type: 'parent',
