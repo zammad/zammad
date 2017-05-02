@@ -1,17 +1,18 @@
 class App.CTI extends App.Controller
+  elements:
+    '.js-callerLog': 'callerLog'
   events:
-    'click .js-check': 'done',
+    'click .js-check': 'done'
     'click .js-userNew': 'userNew'
+  list: []
+  backends: []
+  meta:
+    active: false
+    counter: 0
+    state: {}
 
   constructor: ->
     super
-
-    @list = []
-    @backends = []
-    @meta =
-      active: false
-      counter: 0
-      state: {}
 
     preferences = @Session.get('preferences') || {}
     @meta.active = preferences.cti || false
@@ -41,13 +42,16 @@ class App.CTI extends App.Controller
         @backends = data.backends
       if data.list
         @list = data.list
+        if @renderDone
+          @renderCallerLog()
+          return
         @render()
+
       'cti_list_push'
     )
     @bind('auth', (data) =>
       @meta.counter = 0
     )
-
     @bind('cti:reload', =>
       @load()
       'cti_reload'
@@ -80,6 +84,9 @@ class App.CTI extends App.Controller
           @backends = data.backends
         if data.list
           @list = data.list
+          if @renderDone
+            @renderCallerLog()
+            return
           @render()
     )
 
@@ -96,6 +103,7 @@ class App.CTI extends App.Controller
     false
 
   render: ->
+    @renderDone = true
     if !@permissionCheck('cti.agent')
       @renderScreenUnauthorized(objectName: 'CTI')
       return
@@ -113,6 +121,11 @@ class App.CTI extends App.Controller
       @updateNavMenu()
       return
 
+    @html App.view('cti/index')()
+    @renderCallerLog()
+    @updateNavMenu()
+
+  renderCallerLog: ->
     format = (time) ->
 
       # Hours, minutes and seconds
@@ -152,11 +165,8 @@ class App.CTI extends App.Controller
         item.duration = format((Date.parse(item.end) - Date.parse(item.start))/1000)
 
     @userPopupsDestroy()
-    @html App.view('cti/index')(
-      list: @list
-    )
+    @callerLog.html( App.view('cti/caller_log')(list: @list))
     @userPopups()
-    @updateNavMenu()
 
   done: (e) =>
     element = $(e.currentTarget)

@@ -8,12 +8,12 @@ class App.Session
   @get: ( key ) ->
     if _instance == undefined
       _instance ?= new _sessionSingleton
-    _instance.get( key )
+    _instance.get(key)
 
   @set: ( user ) ->
     if _instance == undefined
       _instance ?= new _sessionSingleton
-    _instance.set( user )
+    _instance.set(user)
 
 class _sessionSingleton extends Spine.Module
   @include App.LogInclude

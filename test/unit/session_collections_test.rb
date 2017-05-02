@@ -3,7 +3,7 @@ require 'test_helper'
 
 class SessionCollectionsTest < ActiveSupport::TestCase
 
-  test 'c collections' do
+  test 'a collections' do
 
     UserInfo.current_user_id = 1
 
@@ -166,6 +166,45 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       }
     }
     nil
+  end
+
+  test 'b assets' do
+    # create users
+    roles  = Role.where(name: %w(Agent Admin))
+    groups = Group.all
+
+    UserInfo.current_user_id = 2
+    agent1 = User.create_or_update(
+      login: 'sessions-assets-1',
+      firstname: 'Session',
+      lastname: "activity stream #{rand(99_999)}",
+      email: 'sessions-assets1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+    )
+    assert(agent1.save, 'create/update agent1')
+
+    assets = {}
+    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 2)
+    data = client1.push
+    assert(data[:collection][:Group][groups.first.id])
+    assert(data[:assets][:Group][groups.first.id])
+    travel 10.seconds
+
+    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 2)
+    data = client1.push
+    assert(data[:collection][:Group][groups.first.id])
+    assert(data[:assets][:Group][groups.first.id])
+
+    travel 2.minutes
+    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 2)
+    data = client1.push
+    assert(data[:collection][:Group][groups.first.id])
+    assert_nil(data[:assets][:Group])
+
+    travel_back
   end
 
 end
