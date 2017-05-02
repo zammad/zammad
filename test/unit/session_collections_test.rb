@@ -130,6 +130,10 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(result2.empty?, 'check collections - recall')
     result3 = collection_client3.push
     assert(result3.empty?, 'check collections - recall')
+
+    travel 10.seconds
+    Sessions.destroy_idle_sessions(3)
+
     travel_back
   end
 
@@ -175,9 +179,9 @@ class SessionCollectionsTest < ActiveSupport::TestCase
 
     UserInfo.current_user_id = 2
     agent1 = User.create_or_update(
-      login: 'sessions-assets-1',
+      login: "sessions-assets-1-#{rand(99_999)}",
       firstname: 'Session',
-      lastname: "activity stream #{rand(99_999)}",
+      lastname: "sessions assets #{rand(99_999)}",
       email: 'sessions-assets1@example.com',
       password: 'agentpw',
       active: true,
@@ -203,6 +207,9 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     data = client1.push
     assert(data[:collection][:Group][groups.first.id])
     assert_nil(data[:assets][:Group])
+
+    travel 10.seconds
+    Sessions.destroy_idle_sessions(3)
 
     travel_back
   end
