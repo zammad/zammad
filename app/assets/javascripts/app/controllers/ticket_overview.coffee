@@ -921,7 +921,7 @@ class Table extends App.Controller
     # get ticket list
     ticketListShow = []
     for ticket in tickets
-      ticketListShow.push App.Ticket.fullLocal(ticket.id)
+      ticketListShow.push App.Ticket.find(ticket.id)
 
     # if customer and no ticket exists, show the following message only
     if !ticketListShow[0] && @permissionCheck('ticket.customer')
