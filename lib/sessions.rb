@@ -457,11 +457,8 @@ remove all session and spool messages
 =end
 
   def self.cleanup
-    Dir.foreach(@path) do |entry|
-      next if entry == '.'
-      next if entry == '..'
-      FileUtils.rm_rf entry
-    end
+    return true if !File.exist?(@path)
+    FileUtils.rm_rf @path
     true
   end
 
