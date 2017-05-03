@@ -89,7 +89,10 @@ module Import
         update_roles        = role_ids(resource)
         resource[:role_ids] = update_roles if update_roles
 
-        user_found = super
+        user_found = false
+        import_class.without_callback(:update, :after, :avatar_for_email_check) do
+          user_found = super
+        end
 
         # in case a User was found and we had no roles
         # to set/update we have to note the currently
@@ -156,12 +159,14 @@ module Import
       end
 
       def create(resource, *_args)
-
         # this is needed for the special case described in the role_ids method
         #
         # in case we have no role IDs yet we have to fall back to the signup roles
         resource[:role_ids] ||= @signup_role_ids
-        super
+
+        import_class.without_callback(:create, :after, :avatar_for_email_check) do
+          super
+        end
       rescue => e
         ldap_log(
           action:   "create -> #{resource[:login]}",
