@@ -100,7 +100,7 @@ module Import
       return true if !attributes_changed?
 
       return true if @dry_run
-      @resource.save
+      @resource.save!
       true
     end
 
@@ -151,7 +151,7 @@ module Import
     def create(resource, *_args)
       @resource = import_class.new(resource)
       return if @dry_run
-      @resource.save
+      @resource.save!
       external_sync_create(
         local:  @resource,
         remote: resource,
