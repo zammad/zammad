@@ -48,6 +48,13 @@ RSpec.describe Import::Ldap::User do
       }.by(1)
     end
 
+    it "doesn't contact avatar webservice" do
+      # sadly we can't ensure that there are no
+      # outgoing HTTP calls with WebMock
+      expect(Avatar).not_to receive(:auto_detection)
+      described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)
+    end
+
     it 'creates an HTTP Log entry' do
       expect do
         described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)
@@ -122,6 +129,13 @@ RSpec.describe Import::Ldap::User do
       }.and not_change {
         ExternalSync.count
       }
+    end
+
+    it "doesn't contact avatar webservice" do
+      # sadly we can't ensure that there are no
+      # outgoing HTTP calls with WebMock
+      expect(Avatar).not_to receive(:auto_detection)
+      described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)
     end
 
     it "doesn't change roles if no role mapping is configured" do
