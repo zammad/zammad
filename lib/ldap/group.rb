@@ -58,7 +58,7 @@ class Ldap
       return {} if filter.blank?
 
       groups = {}
-      @ldap.search(filter, base: base_dn) { |entry|
+      @ldap.search(filter, base: base_dn, attributes: %w(dn)) { |entry|
         groups[entry.dn.downcase] = entry.dn.downcase
       }
       groups
@@ -80,7 +80,7 @@ class Ldap
       filter ||= filter()
 
       result = {}
-      @ldap.search(filter) do |entry|
+      @ldap.search(filter, attributes: %w(dn member)) do |entry|
 
         members = entry[:member]
         next if members.blank?

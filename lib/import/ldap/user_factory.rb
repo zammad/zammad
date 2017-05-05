@@ -24,7 +24,13 @@ module Import
 
         import_job       = kargs[:import_job]
         import_job_count = 0
-        @ldap.search(config[:user_filter]) do |entry|
+
+        # limit the fetched attributes for an entry to only
+        # those which are needed to improve the performance
+        relevant_attributes = config[:user_attributes].keys
+        relevant_attributes.push('dn')
+
+        @ldap.search(config[:user_filter], attributes: relevant_attributes) do |entry|
           backend_instance = create_instance(entry, config, user_roles, signup_role_ids, kargs)
           post_import_hook(entry, backend_instance, config, user_roles, signup_role_ids, kargs)
 
