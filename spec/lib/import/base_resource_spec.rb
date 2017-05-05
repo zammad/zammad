@@ -14,7 +14,7 @@ RSpec.describe Import::BaseResource do
 
     before do
       module Import
-        module Test
+        class Test < Import::Base
           class Group < Import::BaseResource
 
             def import_class

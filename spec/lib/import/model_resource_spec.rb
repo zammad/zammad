@@ -4,7 +4,7 @@ RSpec.describe Import::ModelResource do
 
   before do
     module Import
-      module Test
+      class Test < Import::Base
         class Group < Import::ModelResource
           def source
             'RSpec-Test'

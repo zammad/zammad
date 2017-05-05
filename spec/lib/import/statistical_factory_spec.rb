@@ -6,7 +6,7 @@ RSpec.describe Import::StatisticalFactory do
 
   before do
     module Import
-      module Test
+      class Test < Import::Base
 
         module GroupFactory
           extend Import::StatisticalFactory

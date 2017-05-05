@@ -18,7 +18,8 @@ class ImportJob < ApplicationModel
   def start
     self.started_at = Time.zone.now
     save
-    name.constantize.new(self)
+    instance = name.constantize.new(self)
+    instance.start
   rescue => e
     Rails.logger.error e
 
@@ -81,7 +82,7 @@ class ImportJob < ApplicationModel
   end
 
   # Queues all configured import backends from Setting 'import_backends' as import jobs
-  # that are not yet queued.
+  # that are not yet queued. Backends which are not #queueable? are skipped.
   #
   # @example
   #  ImportJob.queue_registered
@@ -97,6 +98,9 @@ class ImportJob < ApplicationModel
         Rails.logger.error "Invalid import backend '#{backend}'"
         next
       end
+
+      # skip backends that are not "ready" yet
+      next if !backend.constantize.queueable?
 
       # skip if no entry exists
       # skip if a not finished entry exists
