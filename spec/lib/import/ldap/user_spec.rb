@@ -96,7 +96,7 @@ RSpec.describe Import::Ldap::User do
     end
 
     it 'logs failures to HTTP Log' do
-      expect_any_instance_of(User).to receive(:save).and_raise('SOME ERROR')
+      expect_any_instance_of(User).to receive(:save!).and_raise('SOME ERROR')
       described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)
 
       expect(HttpLog.last.status).to eq('failed')
@@ -173,7 +173,7 @@ RSpec.describe Import::Ldap::User do
     end
 
     it 'logs failures to HTTP Log' do
-      expect_any_instance_of(User).to receive(:save).and_raise('SOME ERROR')
+      expect_any_instance_of(User).to receive(:save!).and_raise('SOME ERROR')
       described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)
 
       expect(HttpLog.last.status).to eq('failed')

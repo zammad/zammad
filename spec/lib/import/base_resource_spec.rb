@@ -113,6 +113,38 @@ RSpec.describe Import::BaseResource do
             ExternalSync.count
           }
       end
+
+      it "doesn't update associations of existing resources" do
+
+        # initial import
+        Import::Test::Group.new(attributes)
+        group = Group.last
+
+        old_signature = create(:signature)
+        old_users     = create_list(:user, 2)
+
+        group.update_attribute(:signature_id, old_signature.id)
+        group.update_attribute(:user_ids, old_users.collect(&:id))
+
+        # simulate next import run
+        travel 20.minutes
+
+        new_signature             = create(:signature)
+        new_users                 = create_list(:user, 2)
+        attributes[:signature_id] = new_signature.id
+        attributes[:user_ids]     = new_users.collect(&:id)
+
+        expect do
+          Import::Test::Group.new(attributes, dry_run: true)
+          group.reload
+        end
+          .to not_change {
+            group.signature_id
+          }
+          .and not_change {
+            group.user_ids
+          }
+      end
     end
   end
 
