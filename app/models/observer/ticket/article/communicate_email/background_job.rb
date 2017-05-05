@@ -62,6 +62,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
           from: record.from,
           to: record.to,
           cc: record.cc,
+          bcc: record.bcc,
           subject: subject,
           content_type: record.content_type,
           body: record.body,

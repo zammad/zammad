@@ -28,7 +28,7 @@ class App.TicketZoomArticleNew extends App.Controller
   constructor: ->
     super
 
-    # set possble article types
+    # set possible article types
     possibleArticleType =
       note: true
       phone: true
@@ -67,7 +67,7 @@ class App.TicketZoomArticleNew extends App.Controller
       @articleTypes.push {
         name:       'email'
         icon:       'email'
-        attributes: ['to', 'cc']
+        attributes: ['to', 'cc', 'bcc']
         internal:   false,
         features:   ['attachment']
       }
@@ -208,7 +208,6 @@ class App.TicketZoomArticleNew extends App.Controller
     $(window).on 'click.ticket-zoom-textarea'
 
   render: ->
-
     ticket = App.Ticket.fullLocal(@ticket_id)
 
     @html App.view('ticket_zoom/article_new')(

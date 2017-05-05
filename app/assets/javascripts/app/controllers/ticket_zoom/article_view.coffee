@@ -66,6 +66,7 @@ class ArticleViewItem extends App.ObserverController
     from: true
     to: true
     cc: true
+    bcc: true
     subject: true
     body: true
     internal: true

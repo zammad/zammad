@@ -24,7 +24,7 @@ class App.TicketCreate extends App.Controller
       @buildScreen(params)
     @bindId = App.TicketCreateCollection.one(load)
 
-    # rerender view, e. g. on langauge change
+    # rerender view, e. g. on language change
     @bind 'ui:rerender', =>
       return if !@authenticateCheck()
       @render()
@@ -85,11 +85,11 @@ class App.TicketCreate extends App.Controller
     # force changing signature
     @$('[name="group_id"]').trigger('change')
 
-    # show cc
+    # show cc/bcc
     if type is 'email-out'
-      @$('[name="cc"]').closest('.form-group').removeClass('hide')
+      @$('[name="cc"], [name="bcc"]').closest('.form-group').removeClass('hide')
     else
-      @$('[name="cc"]').closest('.form-group').addClass('hide')
+      @$('[name="cc"], [name="bcc"]').closest('.form-group').addClass('hide')
 
   meta: =>
     text = ''
@@ -250,23 +250,25 @@ class App.TicketCreate extends App.Controller
         else
           @$('[data-name="body"]').find('[data-signature=true]').remove()
 
-    App.Ticket.configure_attributes.push {
-      name: 'cc'
-      display: 'Cc'
-      tag: 'input'
-      type: 'text'
-      maxlength: 1000
-      null: true
-      screen: {
-        create_top: {
-          Agent: {
-            null: true
+    for own name, display of {cc: 'Cc', bcc: 'Bcc'}
+      App.Ticket.configure_attributes.push {
+        name: name
+        display: display
+        tag: 'input'
+        type: 'text'
+        maxlength: 1000
+        null: true
+        screen: {
+          create_top: {
+            Agent: {
+              null: true
+            }
           }
+          create_middle: {}
+          edit: {}
         }
-        create_middle: {}
-        edit: {}
       }
-    }
+
     new App.ControllerForm(
       el:       @$('.ticket-form-top')
       form_id:  @form_id
@@ -383,9 +385,10 @@ class App.TicketCreate extends App.Controller
         Ticket:
           child: [@ticket_id]
 
-    # allow cc only on email tickets
+    # allow cc/bcc only on email tickets
     if @currentChannel() isnt 'email-out'
       delete params.cc
+      delete params.bcc
 
     # create article
     if sender.name is 'Customer'
@@ -393,6 +396,7 @@ class App.TicketCreate extends App.Controller
         to:           (group && group.name) || ''
         from:         params.customer_id_completion
         cc:           params.cc
+        bcc:          params.bcc
         subject:      params.subject
         body:         params.body
         type_id:      type.id
@@ -405,6 +409,7 @@ class App.TicketCreate extends App.Controller
         from:         (group && group.name) || ''
         to:           params.customer_id_completion
         cc:           params.cc
+        bcc:          params.bcc
         subject:      params.subject
         body:         params.body
         type_id:      type.id

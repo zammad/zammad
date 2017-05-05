@@ -49,6 +49,12 @@
         </div>
         <div class="controls"><input id="" type="text" name="cc" value="<%= @article.cc %>" class="form-control js-mail-inputs"></div>
       </div>
+      <div class="input form-group">
+        <div class="formGroup-label">
+          <label for=""><%- @T('Bcc') %></label>
+        </div>
+        <div class="controls"><input id="" type="text" name="bcc" value="<%= @article.bcc %>" class="form-control js-mail-inputs"></div>
+      </div>
 
       <div class="textBubble js-writeArea">
         <div class="bubble-arrow"></div>

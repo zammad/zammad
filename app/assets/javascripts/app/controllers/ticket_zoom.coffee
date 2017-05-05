@@ -562,6 +562,7 @@ class App.TicketZoom extends App.Controller
       article:
         to:          ''
         cc:          ''
+        bcc:         ''
         type:        'note'
         body:        ''
         internal:    'true'
