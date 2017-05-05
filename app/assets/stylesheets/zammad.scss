@@ -5078,9 +5078,9 @@ footer {
       min-height: 20px;
       vertical-align: bottom;
       border: none;
-      background: none !important; // overwrite [contenteditable]:hover
       outline: none;
       resize: none;
+      white-space: pre;
     }
 
     .articleNewEdit-body {
@@ -8392,6 +8392,14 @@ output {
 }
 
 .richtext-content {
+  &[contenteditable] {
+    &,
+    &:hover,
+    &:focus {
+      background: none;
+    }
+  }
+
   table,
   pre,
   blockquote {
