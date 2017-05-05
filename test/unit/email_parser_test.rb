@@ -1040,6 +1040,14 @@ end
         },
       },
       {
+        data: IO.binread('test/fixtures/mail50.box'),
+        body_md5: '154c7d3ae7b94f99589df62882841b08',
+        attachments: [],
+        params: {
+          subject: 'ABC / 123 / Wetterau West / ABC',
+        },
+      },
+      {
         data: IO.binread('test/fixtures/mail51.box'),
         body_md5: '64675a479f80a674eb7c08e385c3622a',
         attachments: [

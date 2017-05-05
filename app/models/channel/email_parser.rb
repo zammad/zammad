@@ -144,6 +144,11 @@ class Channel::EmailParser
     data[:from_display_name].gsub!(/^'/, '')
     data[:from_display_name].gsub!(/'$/, '')
 
+    # do extra encoding (see issue#1045)
+    if data[:subject].present?
+      data[:subject].sub!(/^=\?us-ascii\?Q\?(.+)\?=$/, '\1')
+    end
+
     # compat headers
     data[:message_id] = data['message-id'.to_sym]
 
