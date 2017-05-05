@@ -1,12 +1,32 @@
+# Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+
 require 'ldap'
 require 'ldap/group'
 
 module Import
-  class Ldap
+  class Ldap < Import::Base
 
-    def initialize(import_job)
-      @import_job = import_job
+    # Checks if the integration is activated. Otherwise it won't get queued
+    # since it will display an error which is confusing and wrong.
+    #
+    # @example
+    #  Import::LDAP.queueable?
+    #  #=> true
+    #
+    # return [Boolean]
+    def self.queueable?
+      Setting.get('ldap_integration')
+    end
 
+    # Starts a live or dry run LDAP import.
+    #
+    # @example
+    #  instance = Import::LDAP.new(import_job)
+    #
+    # @raise [RuntimeError] Raised if an import should start but the ldap integration is disabled
+    #
+    # return [nil]
+    def start
       if !Setting.get('ldap_integration') && !@import_job.dry_run
         raise "LDAP integration deactivated, check Setting 'ldap_integration'."
       end

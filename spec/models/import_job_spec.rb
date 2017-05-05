@@ -1,0 +1,200 @@
+require 'rails_helper'
+
+RSpec.describe ImportJob do
+
+  before do
+    module Import
+      class Test < Import::Base
+        def start
+          @import_job.result = { state: 'Done' }
+        end
+      end
+    end
+  end
+
+  after do
+    Import.send(:remove_const, :Test)
+  end
+
+  let(:test_backend_name) { 'Import::Test' }
+  let(:test_backend_class) { test_backend_name.constantize }
+
+  describe '#dry_run' do
+
+    it 'starts delayed dry run import job' do
+      expect do
+        described_class.dry_run(
+          name:    test_backend_name,
+          payload: {}
+        )
+      end.to change {
+        Delayed::Job.count
+      }.by(1)
+    end
+
+    it 'starts dry run import job immediately' do
+      expect do
+        described_class.dry_run(
+          name:    test_backend_name,
+          payload: {},
+          delay:   false
+        )
+
+      end.not_to change {
+        Delayed::Job.count
+      }
+    end
+
+    it "doesn't start job if one exists" do
+
+      create(:import_job, dry_run: true)
+
+      expect do
+        described_class.dry_run(
+          name:    test_backend_name,
+          payload: {},
+        )
+
+      end.not_to change {
+        Delayed::Job.count
+      }
+    end
+
+  end
+
+  describe '#queue_registered' do
+
+    it 'queues registered import jobs' do
+      allow(Setting).to receive(:get)
+      expect(Setting).to receive(:get).with('import_backends').and_return([test_backend_name])
+
+      expect do
+        described_class.queue_registered
+      end.to change {
+        described_class.exists?(name: test_backend_name)
+      }
+    end
+
+    it "doesn't queue if backend isn't #queueable?" do
+      allow(Setting).to receive(:get)
+      expect(Setting).to receive(:get).with('import_backends').and_return([test_backend_name])
+      expect(test_backend_class).to receive(:queueable?).and_return(false)
+
+      expect do
+        described_class.queue_registered
+      end.not_to change {
+        described_class.exists?(name: test_backend_name)
+      }
+    end
+
+    it "doesn't queue if unfinished job entries exist" do
+
+      create(:import_job)
+
+      allow(Setting).to receive(:get)
+      expect(Setting).to receive(:get).with('import_backends').and_return([test_backend_name])
+
+      expect do
+        described_class.queue_registered
+      end.not_to change {
+        described_class.exists?(name: test_backend_name)
+      }
+    end
+
+    it 'logs errors for invalid registered backends' do
+      allow(Setting).to receive(:get)
+      expect(Setting).to receive(:get).with('import_backends').and_return(['InvalidBackend'])
+      expect(Rails.logger).to receive(:error)
+      described_class.queue_registered
+    end
+
+  end
+
+  describe '#start' do
+
+    it 'starts queued import jobs' do
+      create_list(:import_job, 2)
+
+      expect do
+        described_class.start
+      end.to change {
+        described_class.where(started_at: nil).count
+      }.by(-2)
+    end
+
+    it "doesn't start queued dry run import jobs" do
+      create_list(:import_job, 2)
+      create(:import_job, dry_run: true)
+
+      expect do
+        described_class.start
+      end.to change {
+        described_class.where(started_at: nil).count
+      }.by(-2)
+    end
+  end
+
+  describe '#start_registered' do
+    it 'queues and starts registered import backends' do
+      allow(Setting).to receive(:get)
+      expect(Setting).to receive(:get).with('import_backends').and_return([test_backend_name])
+
+      expect do
+        described_class.start_registered
+      end.to change {
+        described_class.where.not(started_at: nil, finished_at: nil).count
+      }.by(1)
+    end
+  end
+
+  describe '#backend_valid?' do
+
+    it 'detects existing backends' do
+      expect(described_class.backend_valid?(test_backend_name)).to be true
+    end
+
+    it 'detects not existing backends' do
+      expect(described_class.backend_valid?('InvalidBackend')).to be false
+    end
+  end
+
+  describe '.start' do
+
+    it 'runs import backend and updates started_at and finished_at' do
+
+      instance = create(:import_job)
+
+      expect do
+        instance.start
+      end.to change {
+        instance.started_at
+      }.and change {
+        instance.finished_at
+      }.and change {
+        instance.result
+      }
+    end
+
+    it 'handles exceptions as errors' do
+
+      instance = create(:import_job)
+
+      error_message = 'Some horrible error'
+      expect_any_instance_of(test_backend_class).to receive(:start).and_raise(error_message)
+
+      expect do
+        instance.start
+        instance.reload
+      end.to change {
+        instance.started_at
+      }.and change {
+        instance.finished_at
+      }.and change {
+        instance.result
+      }
+
+      expect(instance.result[:error]).to eq(error_message)
+    end
+  end
+
+end
