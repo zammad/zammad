@@ -225,64 +225,44 @@ class App.ControllerTable extends App.Controller
         events:
           click: @deleteRow
 
-    if @orderDirection && @orderBy
-      for header in @headers
-        if header.name is @orderBy
-          @objects = _.sortBy(
-            @objects
-            (item) ->
-              # if we need to sort translated col.
-              if header.translate
-                App.i18n.translateInline(item[header.name])
-              # if we need to sort a relation
-              if header.relation
-                if item[header.name]
-                  App[header.relation].findNative(item[header.name]).displayName()
-                else
-                  ''
-              else
-                item[header.name]
-          )
-          if @orderDirection is 'DESC'
-            header.sortOrderIcon = ['arrow-down', 'table-sort-arrow']
-            @objects = @objects.reverse()
-          else
-            header.sortOrderIcon = ['arrow-up', 'table-sort-arrow']
-        else
-          header.sortOrderIcon = undefined
+    if @orderDirection && @orderBy && !@groupBy
+      @objects = @sortList(@objects)
+
+    # group by
+    if @groupBy
+
+      # get groups
+      groupObjects = {}
+      for object in @objects
+        group = object[@groupBy]
+        if !group
+          withId = "#{@groupBy}_id"
+
+          if object[withId] && attributes[withId] && attributes[withId].relation
+            if App[attributes[withId].relation].exists(object[withId])
+              item = App[attributes[withId].relation].findNative(object[withId])
+              if item && item.displayName
+                group = item.displayName().toLowerCase()
+
+        groupObjects[group] ||= []
+        groupObjects[group].push object
+
+      groupsSorted = []
+      for key of groupObjects
+        groupsSorted.push key
+      groupsSorted = groupsSorted.sort()
+
+      # get new order
+      @objects = []
+      for group in groupsSorted
+        localObjects = @sortList(groupObjects[group])
+        @objects = @objects.concat localObjects
+        groupObjects[group] = [] # release old array
 
     # execute header callback
     if @callbackHeader
       for callback in @callbackHeader
         @headers = callback(@headers)
-
-    # group by
-    if @groupBy
-
-      # get new order
-      groupObjects = _.groupBy(
-        @objects
-        (item) =>
-          return '' if !item[@groupBy]
-          return item[@groupBy].displayName() if item[@groupBy].displayName
-          item[@groupBy]
-      )
-      groupOrder = []
-      for group, value of groupObjects
-        groupOrder.push group
-
-      # sort new groups
-      groupOrder = _.sortBy(
-        groupOrder
-        (item) ->
-          item
-      )
-
-      # create new data array
-      @objects = []
-      for group in groupOrder
-        @objects = @objects.concat groupObjects[group]
-        groupObjects[group] = [] # release old array
 
     if @tableId
       @calculateHeaderWidths()
@@ -435,6 +415,36 @@ class App.ControllerTable extends App.Controller
               callback(click..., e)
       )
     table
+
+  sortList: (objects) =>
+
+    for header in @headers
+      if header.name is @orderBy
+        objects = _.sortBy(
+          objects
+          (item) ->
+            # if we need to sort translated col.
+            if header.translate
+              return App.i18n.translateInline(item[header.name])
+
+            # if we need to sort by relation name
+            if header.relation
+              if item[header.name]
+                localItem = App[header.relation].findNative(item[header.name])
+                if localItem && localItem.displayName
+                  localItem = localItem.displayName().toLowerCase()
+                return localItem
+              return ''
+            item[header.name]
+        )
+        if @orderDirection is 'DESC'
+          header.sortOrderIcon = ['arrow-down', 'table-sort-arrow']
+          objects = objects.reverse()
+        else
+          header.sortOrderIcon = ['arrow-up', 'table-sort-arrow']
+      else
+        header.sortOrderIcon = undefined
+    objects
 
   # bind on delete dialog
   deleteRow: (id, e) =>
