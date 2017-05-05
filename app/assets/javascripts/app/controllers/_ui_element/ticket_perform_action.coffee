@@ -32,6 +32,16 @@ class App.UiElement.ticket_perform_action
                 config.operator = ['add', 'remove']
               elements["#{groupKey}.#{config.name}"] = config
 
+    # add ticket deletion action
+    elements['ticket.action'] =
+      name: 'action'
+      display: 'Action'
+      tag: 'select'
+      null: false
+      translate: true
+      options:
+        delete: 'delete'
+
     [defaults, groups, elements]
 
   @render: (attribute, params = {}) ->
