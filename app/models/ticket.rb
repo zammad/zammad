@@ -7,9 +7,6 @@ class Ticket < ApplicationModel
   include HasHistory
   include HasTags
   include HasSearchIndexBackend
-  include HasOnlineNotifications
-  include HasKarmaActivityLog
-  include HasLinks
 
   include Ticket::Escalation
   include Ticket::Subject
@@ -26,6 +23,7 @@ class Ticket < ApplicationModel
   after_create   :check_escalation_update
   before_update  :check_defaults, :check_title, :reset_pending_time
   after_update   :check_escalation_update
+  before_destroy :destroy_dependencies
 
   validates :group_id, presence: true
 
@@ -57,7 +55,7 @@ class Ticket < ApplicationModel
                              :preferences
 
   belongs_to    :group,                  class_name: 'Group'
-  has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
+  has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update
   has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy
   belongs_to    :organization,           class_name: 'Organization'
   belongs_to    :state,                  class_name: 'Ticket::State'
@@ -750,19 +748,6 @@ perform changes on ticket
 
   def perform_changes(perform, perform_origin, item = nil, current_user_id = nil)
     logger.debug "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})"
-
-    # if the configuration contains the deletion of the ticket then
-    # we skip all other ticket changes because they does not matter
-    if perform['ticket.action'].present? && perform['ticket.action']['value'] == 'delete'
-      perform.each do |key, _value|
-        (object_name, attribute) = key.split('.', 2)
-        next if object_name != 'ticket'
-        next if attribute == 'action'
-
-        perform.delete(key)
-      end
-    end
-
     changed = false
     perform.each do |key, value|
       (object_name, attribute) = key.split('.', 2)
@@ -921,16 +906,6 @@ perform changes on ticket
         next
       end
 
-      # delete ticket
-      if key == 'ticket.action'
-        next if value['value'].blank?
-        next if value['value'] != 'delete'
-
-        destroy
-
-        next
-      end
-
       # lookup pre_condition
       if value['pre_condition']
         if value['pre_condition'] =~ /^not_set/
@@ -1069,6 +1044,15 @@ result
   def check_escalation_update
     escalation_calculation
     true
+  end
+
+  def destroy_dependencies
+
+    # delete articles
+    articles.destroy_all
+
+    # destroy online notifications
+    OnlineNotification.remove(self.class.to_s, id)
   end
 
   def set_default_state
