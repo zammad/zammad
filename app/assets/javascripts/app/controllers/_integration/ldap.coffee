@@ -286,7 +286,7 @@ class ConnectionWizard extends App.WizardModal
 
   bindShow: (alreadyShown) =>
     @showSlide('js-bind') if !alreadyShown
-    @$('.js-bind .js-baseDn').html(@createSelection('base_dn', @wizardConfig.options, @wizardConfig.option))
+    @$('.js-bind .js-baseDn').html(@createSelection('base_dn', @wizardConfig.options, @wizardConfig.base_dn || @wizardConfig.option, true))
     @$('.js-bind input[name="bind_user"]').val(@wizardConfig.bind_user)
     @$('.js-bind input[name="bind_pw"]').val(@wizardConfig.bind_pw)
 
@@ -433,7 +433,7 @@ class ConnectionWizard extends App.WizardModal
     el.find('.js-roleList').html(@createSelection('dest', @wizardConfig.wizardData.roles, dest))
     el
 
-  createSelection: (name, options, selected) ->
+  createSelection: (name, options, selected, unknown) ->
     return App.UiElement.searchable_select.render(
       name: name
       multiple: false
@@ -442,6 +442,7 @@ class ConnectionWizard extends App.WizardModal
       nulloption: false
       options: options
       value: selected
+      unknown: unknown
       class: 'form-control--small'
     )
 
