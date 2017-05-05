@@ -1,10 +1,10 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Overview < ApplicationModel
-  include NotifiesClients
-  include LatestChangeObserved
-  include ValidatesCondition
-  include Seedable
+  include ChecksClientNotification
+  include ChecksLatestChangeObserved
+  include ChecksConditionValidation
+  include CanSeed
 
   load 'overview/assets.rb'
   include Overview::Assets

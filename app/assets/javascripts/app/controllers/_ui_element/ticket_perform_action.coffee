@@ -32,6 +32,16 @@ class App.UiElement.ticket_perform_action
                 config.operator = ['add', 'remove']
               elements["#{groupKey}.#{config.name}"] = config
 
+    # add ticket deletion action
+    elements['ticket.action'] =
+      name: 'action'
+      display: 'Action'
+      tag: 'select'
+      null: false
+      translate: true
+      options:
+        delete: 'delete'
+
     [defaults, groups, elements]
 
   @render: (attribute, params = {}) ->
@@ -304,18 +314,31 @@ class App.UiElement.ticket_perform_action
     return if elementRow.find('.js-setNotification .js-body').get(0)
 
     options =
+      'article_last_sender': 'Article Last Sender'
       'ticket_owner': 'Owner'
       'ticket_customer': 'Customer'
       'ticket_agents': 'All Agents'
 
     name = "#{attribute.name}::notification.email"
 
-    selection = $("<select class=\"form-control\" name=\"#{name}::recipient\" ></select>")
+    # meta.recipient was a string in the past (single-select) so we convert it to array if needed
+    if !_.isArray(meta.recipient)
+      meta.recipient = [meta.recipient]
+
+    column_select_options = []
     for key, value of options
-      selected = ''
-      if key is meta.recipient
-        selected = 'selected="selected"'
-      selection.append("<option value=\"#{key}\" #{selected}>#{App.i18n.translateInline(value)}</option>")
+      selected = undefined
+      for recipient in meta.recipient
+        if key is recipient
+          selected = true
+      column_select_options.push({ value: key, name: App.i18n.translateInline(value), selected: selected })
+
+    column_select = new App.ColumnSelect
+      attribute:
+        name:    "#{name}::recipient"
+        options: column_select_options
+
+    selection = column_select.element()
 
     notificationElement = $( App.view('generic/ticket_perform_action/notification_email')(
       attribute: attribute

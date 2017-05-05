@@ -1,9 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Role < ApplicationModel
-  include LogsActivityStream
-  include NotifiesClients
-  include LatestChangeObserved
+  include HasActivityStreamLog
+  include ChecksClientNotification
+  include ChecksLatestChangeObserved
 
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
   has_and_belongs_to_many :permissions, after_add: :cache_update, after_remove: :cache_update, before_add: :validate_agent_limit

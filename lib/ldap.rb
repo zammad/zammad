@@ -54,6 +54,7 @@ class Ldap
   # @param filter [String] The filter that should get applied to the search.
   # @param base [String] The base DN on which the search should get executed. Default is initialization parameter.
   # @param scope [Net::LDAP::SearchScope] The search scope as defined in Net::LDAP SearchScopes. Default is WholeSubtree.
+  # @param attributes [Array<String>] Limits the requested entry attributes to the given list of attributes which increses the performance.
   #
   # @example
   #  ldap.search('(objectClass=group)') do |entry|
@@ -62,7 +63,7 @@ class Ldap
   #  #=> <Net::LDAP::Entry...>
   #
   # @return [true] Returns always true
-  def search(filter, base: nil, scope: nil)
+  def search(filter, base: nil, scope: nil, attributes: nil)
 
     base  ||= base_dn()
     scope ||= Net::LDAP::SearchScope_WholeSubtree
@@ -71,6 +72,7 @@ class Ldap
       base:          base,
       filter:        filter,
       scope:         scope,
+      attributes:    attributes,
       return_result: false, # improves performance
     ) do |entry|
       # needed for the #entries? method -> returns nil on break

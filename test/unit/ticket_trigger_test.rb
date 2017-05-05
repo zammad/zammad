@@ -2471,4 +2471,378 @@ class TicketTriggerTest < ActiveSupport::TestCase
     }
   end
 
+  test 'article_last_sender trigger -> reply_to' do
+    trigger = Trigger.create_or_update(
+      name: 'auto reply',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+        }
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
+          'recipient' => 'article_last_sender',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    ticket1 = Ticket.create(
+      title: "some <b>title</b>\n äöüß",
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient+from@example.com',
+      reply_to: 'some_recipient+reply_to@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('new', ticket1.state.name, 'ticket1.state new')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    auto_response = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', auto_response.from)
+    assert_match('some_recipient+reply_to@example.com', auto_response.to)
+  end
+
+  test 'article_last_sender trigger -> from' do
+    trigger = Trigger.create_or_update(
+      name: 'auto reply',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+        }
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
+          'recipient' => 'article_last_sender',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    ticket1 = Ticket.create(
+      title: "some <b>title</b>\n äöüß",
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender+from@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('new', ticket1.state.name, 'ticket1.state new')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    auto_response = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', auto_response.from)
+    assert_match('some_sender+from@example.com', auto_response.to)
+  end
+
+  test 'article_last_sender trigger -> origin_by_id' do
+    trigger = Trigger.create_or_update(
+      name: 'auto reply',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+        }
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
+          'recipient' => 'article_last_sender',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    roles = Role.where(name: 'Customer')
+    customer1 = User.create_or_update(
+      login: 'customer+origin_by_id@example.com',
+      firstname: 'Trigger',
+      lastname: 'Customer1',
+      email: 'customer+origin_by_id@example.com',
+      password: 'customerpw',
+      active: true,
+      roles: roles,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket1 = Ticket.create(
+      title: "some <b>title</b>\n äöüß",
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      origin_by_id: customer1.id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('new', ticket1.state.name, 'ticket1.state new')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    auto_response = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', auto_response.from)
+    assert_match('customer+origin_by_id@example.com', auto_response.to)
+  end
+
+  test 'article_last_sender trigger -> created_by_id' do
+    trigger = Trigger.create_or_update(
+      name: 'auto reply',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+        }
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
+          'recipient' => 'article_last_sender',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    roles = Role.where(name: 'Customer')
+    customer1 = User.create_or_update(
+      login: 'customer+created_by_id@example.com',
+      firstname: 'Trigger',
+      lastname: 'Customer1',
+      email: 'customer+created_by_id@example.com',
+      password: 'customerpw',
+      active: true,
+      roles: roles,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket1 = Ticket.create(
+      title: "some <b>title</b>\n äöüß",
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: customer1.id,
+      created_by_id: customer1.id,
+    )
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('new', ticket1.state.name, 'ticket1.state new')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    auto_response = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', auto_response.from)
+    assert_match('customer+created_by_id@example.com', auto_response.to)
+  end
+
+  test 'multiple recipients owner_id, article_last_sender(reply_to) trigger' do
+    trigger = Trigger.create_or_update(
+      name: 'auto reply',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+        }
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
+          'recipient' => %w(ticket_owner article_last_sender),
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    admin = User.create_or_update(
+      login: 'admin+owner_recipient@example.com',
+      firstname: 'Role',
+      lastname: "Admin#{name}",
+      email: 'admin+owner_recipient@example.com',
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket1 = Ticket.create(
+      title: "some <b>title</b>\n äöüß",
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      owner_id: admin.id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient+from@example.com',
+      reply_to: 'some_recipient+reply_to@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('new', ticket1.state.name, 'ticket1.state new')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    auto_response = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', auto_response.from)
+    assert_match('some_recipient+reply_to@example.com', auto_response.to)
+    assert_match('admin+owner_recipient@example.com', auto_response.to)
+  end
+
+  test 'article_last_sender trigger -> invalid reply_to' do
+    trigger = Trigger.create_or_update(
+      name: 'auto reply',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+        }
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
+          'recipient' => 'article_last_sender',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    ticket1 = Ticket.create(
+      title: "some <b>title</b>\n äöüß",
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient+from@example.com',
+      reply_to: 'Blub blub blub some_recipient+reply_to@example',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('new', ticket1.state.name, 'ticket1.state new')
+    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+  end
+
 end

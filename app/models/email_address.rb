@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class EmailAddress < ApplicationModel
-  include LatestChangeObserved
+  include ChecksLatestChangeObserved
 
   has_many        :groups,   after_add: :cache_update, after_remove: :cache_update
   belongs_to      :channel
@@ -28,14 +28,14 @@ check and if channel not exists reset configured channels for email addresses
       # set to active if channel exists
       if email_address.channel_id && Channel.find_by(id: email_address.channel_id)
         if !email_address.active
-          email_address.save
+          email_address.save!
         end
         next
       end
 
       # set in inactive if channel not longer exists
       next if !email_address.active
-      email_address.save
+      email_address.save!
     }
   end
 
@@ -72,7 +72,7 @@ check and if channel not exists reset configured channels for email addresses
     group = Group.find_by(email_address_id: nil)
     group.email_address_id = id
     group.updated_by_id = updated_by_id
-    group.save
+    group.save!
   end
 
 end

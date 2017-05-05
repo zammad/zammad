@@ -57,11 +57,11 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     color
   ),
   'table' => %w(
-    background-color color font-size vertical-align
+    background background-color color font-size vertical-align
     margin margin-top margin-right margin-bottom margin-left
     padding padding-top padding-right padding-bottom padding-left
     text-align
-    border border-collapse border-style border-spacing
+    border border-top border-right border-bottom border-left border-collapse border-style border-spacing
 
     border-top-width
     border-right-width
@@ -74,11 +74,11 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     border-left-color
   ),
   'th' => %w(
-    background-color color font-size vertical-align
+    background background-color color font-size vertical-align
     margin margin-top margin-right margin-bottom margin-left
     padding padding-top padding-right padding-bottom padding-left
     text-align
-    border border-collapse border-style border-spacing
+    border border-top border-right border-bottom border-left border-collapse border-style border-spacing
 
     border-top-width
     border-right-width
@@ -91,11 +91,11 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     border-left-color
   ),
   'tr' => %w(
-    background-color color font-size vertical-align
+    background background-color color font-size vertical-align
     margin margin-top margin-right margin-bottom margin-left
     padding padding-top padding-right padding-bottom padding-left
     text-align
-    border border-collapse border-style border-spacing
+    border border-top border-right border-bottom border-left border-collapse border-style border-spacing
 
     border-top-width
     border-right-width
@@ -108,11 +108,11 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     border-left-color
   ),
   'td' => %w(
-    background-color color font-size vertical-align
+    background background-color color font-size vertical-align
     margin margin-top margin-right margin-bottom margin-left
     padding padding-top padding-right padding-bottom padding-left
     text-align
-    border border-collapse border-style border-spacing
+    border border-top border-right border-bottom border-left border-collapse border-style border-spacing
 
     border-top-width
     border-right-width

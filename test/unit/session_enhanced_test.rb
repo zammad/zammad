@@ -155,7 +155,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # check if session still exists after idle cleanup
     sleep 4
-    client_ids = Sessions.destroy_idle_sessions(3)
+    client_ids = Sessions.destroy_idle_sessions(2)
 
     # check client sessions
     assert(!Sessions.session_exists?(client_id1), 'check if session is removed')

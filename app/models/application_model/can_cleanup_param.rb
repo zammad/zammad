@@ -1,5 +1,5 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-module ApplicationModel::CleansParam
+module ApplicationModel::CanCleanupParam
   extend ActiveSupport::Concern
 
   # methods defined here are going to extend the class, not the instance of it

@@ -58,7 +58,8 @@ class _Singleton
         if data.assets
           App.Collection.loadAssets(data.assets)
           delete data.assets
-        @overview[data.index.overview.view] = data.index
+        if data.index && data.index.overview
+          @overview[data.index.overview.view] = data.index
         @callback(view, data.index)
       error: =>
         @fetchActive[view] = false

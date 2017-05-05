@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Job < ApplicationModel
-  include NotifiesClients
-  include ValidatesCondition
+  include ChecksClientNotification
+  include ChecksConditionValidation
 
   load 'job/assets.rb'
   include Job::Assets

@@ -144,6 +144,11 @@ class Channel::EmailParser
     data[:from_display_name].gsub!(/^'/, '')
     data[:from_display_name].gsub!(/'$/, '')
 
+    # do extra encoding (see issue#1045)
+    if data[:subject].present?
+      data[:subject].sub!(/^=\?us-ascii\?Q\?(.+)\?=$/, '\1')
+    end
+
     # compat headers
     data[:message_id] = data['message-id'.to_sym]
 
@@ -503,11 +508,6 @@ returns
 
         state      = Ticket::State.find(ticket.state_id)
         state_type = Ticket::StateType.find(state.state_type_id)
-
-        # if tickte is merged, find linked ticket
-        if state_type.name == 'merged'
-
-        end
 
         # set ticket to open again or keep create state
         if !mail['x-zammad-ticket-followup-state'.to_sym] && !mail['x-zammad-ticket-followup-state_id'.to_sym]

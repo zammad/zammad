@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Permission < ApplicationModel
-  include NotifiesClients
-  include LatestChangeObserved
+  include ChecksClientNotification
+  include ChecksLatestChangeObserved
 
   has_and_belongs_to_many :roles
   validates               :name, presence: true

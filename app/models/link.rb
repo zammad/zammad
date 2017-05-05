@@ -4,6 +4,8 @@ class Link < ApplicationModel
   belongs_to :link_type,    class_name: 'Link::Type'
   belongs_to :link_object,  class_name: 'Link::Object'
 
+  after_destroy :touch_link_references
+
   @map = {
     'normal' => 'normal',
     'parent' => 'child',
@@ -131,52 +133,65 @@ class Link < ApplicationModel
       linktype = link_type_get(name: data[:link_type])
       data[:link_type_id] = linktype.id
     end
-    links = Link.where(
+    Link.where(
       link_type_id: data[:link_type_id],
       link_object_source_id: data[:link_object_source_id],
       link_object_source_value: data[:link_object_source_value],
       link_object_target_id: data[:link_object_target_id],
       link_object_target_value: data[:link_object_target_value]
-    )
-
-    # touch references
-    links.each { |link|
-      link.destroy
-      touch_reference_by_params(
-        object: Link::Object.lookup(id: link.link_object_source_id).name,
-        o_id: link.link_object_source_value,
-      )
-      touch_reference_by_params(
-        object: Link::Object.lookup(id: link.link_object_target_id).name,
-        o_id: link.link_object_target_value,
-      )
-    }
+    ).destroy_all
 
     # from the other site
     if data.key?(:link_type)
       linktype = link_type_get(name: @map[ data[:link_type] ])
       data[:link_type_id] = linktype.id
     end
-    links = Link.where(
+
+    Link.where(
       link_type_id: data[:link_type_id],
       link_object_target_id: data[:link_object_source_id],
       link_object_target_value: data[:link_object_source_value],
       link_object_source_id: data[:link_object_target_id],
       link_object_source_value: data[:link_object_target_value]
-    )
+    ).destroy_all
+  end
 
-    # touch references
-    links.each { |link|
-      link.destroy
-      touch_reference_by_params(
-        object: Link::Object.lookup(id: link.link_object_source_id).name,
-        o_id: link.link_object_source_value,
-      )
-      touch_reference_by_params(
-        object: Link::Object.lookup(id: link.link_object_target_id).name,
-        o_id: link.link_object_target_value,
-      )
-    }
+=begin
+
+   Link.remove_all(
+    link_object: 'Ticket',
+    link_object_value: 6,
+  )
+
+=end
+
+  def self.remove_all(data)
+    if data.key?(:link_object)
+      linkobject = link_object_get(name: data[:link_object])
+      data[:link_object_id] = linkobject.id
+    end
+
+    Link.where(
+      link_object_target_id: data[:link_object_id],
+      link_object_target_value: data[:link_object_value],
+    ).destroy_all
+    Link.where(
+      link_object_source_id: data[:link_object_id],
+      link_object_source_value: data[:link_object_value],
+    ).destroy_all
+
+    true
+  end
+
+  def touch_link_references
+    Link.touch_reference_by_params(
+      object: Link::Object.lookup(id: link_object_source_id).name,
+      o_id: link_object_source_value,
+    )
+    Link.touch_reference_by_params(
+      object: Link::Object.lookup(id: link_object_target_id).name,
+      o_id: link_object_target_value,
+    )
   end
 
   def self.link_type_get(data)

@@ -5,11 +5,10 @@ module Import
     attr_reader :resource, :remote_id, :errors
 
     def initialize(resource, *args)
+      @action = :unknown
       handle_args(resource, *args)
       initialize_associations_states
       import(resource, *args)
-      return if @resource.blank?
-      store_associations(:after, @resource)
     end
 
     def import_class
@@ -26,10 +25,9 @@ module Import
 
     def action
       return :failed if errors.present?
-      return :skipped if !@resource
+      return :skipped if @resource.blank?
       return :unchanged if !attributes_changed?
-      return :created if created?
-      :updated
+      @action
     end
 
     def attributes_changed?
@@ -48,17 +46,10 @@ module Import
       changes = {}
       tracked_associations.each do |association|
         next if @associations[:before][association] == @associations[:after][association]
+        next if @associations[:before][association].blank? && @associations[:after][association].blank?
         changes[association] = [@associations[:before][association], @associations[:after][association]]
       end
       changes
-    end
-
-    def created?
-      return false if @resource.blank?
-      # dry run
-      return @resource.created_at.nil? if @resource.changed?
-      # live run
-      @resource.created_at == @resource.updated_at
     end
 
     private
@@ -91,7 +82,14 @@ module Import
       # the record is already created
       resource.delete(:created_by_id)
 
-      @resource.assign_attributes(resource)
+      # store the current state of the associations
+      # from the resource hash because if we assign
+      # them to the instance some (e.g. has_many)
+      # will get stored even in the dry run :/
+      store_associations(:after, resource)
+
+      associations = tracked_associations
+      @resource.assign_attributes(resource.except(*associations))
 
       # the return value here is kind of misleading
       # and should not be trusted to indicate if a
@@ -99,8 +97,11 @@ module Import
       # Use .action instead
       return true if !attributes_changed?
 
+      @action = :updated
+
       return true if @dry_run
-      @resource.save
+      @resource.assign_attributes(resource.slice(*associations))
+      @resource.save!
       true
     end
 
@@ -119,16 +120,24 @@ module Import
       instance
     end
 
-    def store_associations(state, instance)
-      @associations[state] = associations_state(instance)
+    def store_associations(state, source)
+      @associations[state] = associations_state(source)
     end
 
-    def associations_state(instance)
+    def associations_state(source)
       state = {}
       tracked_associations.each do |association|
-        state[association] = instance.send(association)
+        state[association] = association_value(source, association)
       end
       state
+    end
+
+    # we have to support instances and (resource) hashes
+    # here since in case of an update we only have the
+    # hash as a source but on create we have an instance
+    def association_value(source, association)
+      return source[association] if source.is_a?(Hash)
+      source.send(association)
     end
 
     def tracked_associations
@@ -150,8 +159,10 @@ module Import
 
     def create(resource, *_args)
       @resource = import_class.new(resource)
+      store_associations(:after, @resource)
+      @action = :created
       return if @dry_run
-      @resource.save
+      @resource.save!
       external_sync_create(
         local:  @resource,
         remote: resource,

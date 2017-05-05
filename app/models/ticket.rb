@@ -1,12 +1,15 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Ticket < ApplicationModel
-  include LogsActivityStream
-  include NotifiesClients
-  include LatestChangeObserved
-  include Historisable
-  include Taggable
-  include SearchIndexed
+  include HasActivityStreamLog
+  include ChecksClientNotification
+  include ChecksLatestChangeObserved
+  include HasHistory
+  include HasTags
+  include HasSearchIndexBackend
+  include HasOnlineNotifications
+  include HasKarmaActivityLog
+  include HasLinks
 
   include Ticket::Escalation
   include Ticket::Subject
@@ -23,7 +26,6 @@ class Ticket < ApplicationModel
   after_create   :check_escalation_update
   before_update  :check_defaults, :check_title, :reset_pending_time
   after_update   :check_escalation_update
-  before_destroy :destroy_dependencies
 
   validates :group_id, presence: true
 
@@ -55,7 +57,7 @@ class Ticket < ApplicationModel
                              :preferences
 
   belongs_to    :group,                  class_name: 'Group'
-  has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update
+  has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
   has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy
   belongs_to    :organization,           class_name: 'Organization'
   belongs_to    :state,                  class_name: 'Ticket::State'
@@ -297,6 +299,16 @@ returns
       )
 
       # add history to both
+
+      # reassign links to the new ticket
+      Link.where(
+        link_object_source_id: Link::Object.find_by(name: 'Ticket').id,
+        link_object_source_value: id,
+      ).update_all(link_object_source_value: data[:ticket_id])
+      Link.where(
+        link_object_target_id: Link::Object.find_by(name: 'Ticket').id,
+        link_object_target_value: id,
+      ).update_all(link_object_target_value: data[:ticket_id])
 
       # link tickets
       Link.add(
@@ -738,6 +750,19 @@ perform changes on ticket
 
   def perform_changes(perform, perform_origin, item = nil, current_user_id = nil)
     logger.debug "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})"
+
+    # if the configuration contains the deletion of the ticket then
+    # we skip all other ticket changes because they does not matter
+    if perform['ticket.action'].present? && perform['ticket.action']['value'] == 'delete'
+      perform.each do |key, _value|
+        (object_name, attribute) = key.split('.', 2)
+        next if object_name != 'ticket'
+        next if attribute == 'action'
+
+        perform.delete(key)
+      end
+    end
+
     changed = false
     perform.each do |key, value|
       (object_name, attribute) = key.split('.', 2)
@@ -745,53 +770,87 @@ perform changes on ticket
 
       # send notification
       if object_name == 'notification'
-        recipients = []
-        if value['recipient'] == 'ticket_customer'
-          recipients.push User.lookup(id: customer_id)
-        elsif value['recipient'] == 'ticket_owner'
-          recipients.push User.lookup(id: owner_id)
-        elsif value['recipient'] == 'ticket_agents'
-          recipients = recipients.concat(agent_of_group)
-        else
-          logger.error "Unknown email notification recipient '#{value['recipient']}'"
-          next
+
+        # value['recipient'] was a string in the past (single-select) so we convert it to array if needed
+        value_recipient = value['recipient']
+        if !value_recipient.is_a?(Array)
+          value_recipient = [value_recipient]
         end
-        recipient_string = ''
-        recipient_already = {}
-        recipients.each { |user|
+
+        recipients_raw = []
+        value_recipient.each { |recipient|
+          if recipient == 'article_last_sender'
+            if item && item[:article_id]
+              article = Ticket::Article.lookup(id: item[:article_id])
+              if article.reply_to.present?
+                recipients_raw.push(article.reply_to)
+              elsif article.from.present?
+                recipients_raw.push(article.from)
+              elsif article.origin_by_id
+                email = User.lookup(id: article.origin_by_id).email
+                recipients_raw.push(email)
+              elsif article.created_by_id
+                email = User.lookup(id: article.created_by_id).email
+                recipients_raw.push(email)
+              end
+            end
+          elsif recipient == 'ticket_customer'
+            email = User.lookup(id: customer_id).email
+            recipients_raw.push(email)
+          elsif recipient == 'ticket_owner'
+            email = User.lookup(id: owner_id).email
+            recipients_raw.push(email)
+          elsif recipient == 'ticket_agents'
+            agent_of_group.each { |user|
+              recipients_raw.push(user.email)
+            }
+          else
+            logger.error "Unknown email notification recipient '#{recipient}'"
+            next
+          end
+        }
+
+        recipients_checked = []
+        recipients_raw.each { |recipient_email|
 
           # send notifications only to email adresses
-          next if !user.email
-          next if user.email !~ /@/
+          next if !recipient_email
+          next if recipient_email !~ /@/
+
+          # check if address is valid
+          begin
+            recipient_email = Mail::Address.new(recipient_email).address
+          rescue
+            next # because unable to parse
+          end
 
           # do not sent notifications to this recipients
           send_no_auto_response_reg_exp = Setting.get('send_no_auto_response_reg_exp')
           begin
-            next if user.email =~ /#{send_no_auto_response_reg_exp}/i
+            next if recipient_email =~ /#{send_no_auto_response_reg_exp}/i
           rescue => e
             logger.error "ERROR: Invalid regex '#{send_no_auto_response_reg_exp}' in setting send_no_auto_response_reg_exp"
             logger.error 'ERROR: ' + e.inspect
-            next if user.email =~ /(mailer-daemon|postmaster|abuse|root)@.+?\..+?/i
+            next if recipient_email =~ /(mailer-daemon|postmaster|abuse|root)@.+?\..+?/i
           end
 
           # check if notification should be send because of customer emails
           if item && item[:article_id]
             article = Ticket::Article.lookup(id: item[:article_id])
-            if article && article.preferences['is-auto-response'] == true && article.from && article.from =~ /#{Regexp.quote(user.email)}/i
-              logger.info "Send not trigger based notification to #{user.email} because of auto response tagged incoming email"
+            if article && article.preferences['is-auto-response'] == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
+              logger.info "Send not trigger based notification to #{recipient_email} because of auto response tagged incoming email"
               next
             end
           end
 
-          email = user.email.downcase.strip
-          next if recipient_already[email]
-          recipient_already[email] = true
-          if recipient_string != ''
-            recipient_string += ', '
-          end
-          recipient_string += email
+          email = recipient_email.downcase.strip
+          next if recipients_checked.include?(email)
+          recipients_checked.push(email)
         }
-        next if recipient_string == ''
+
+        next if recipients_checked.blank?
+        recipient_string = recipients_checked.join(', ')
+
         group = self.group
         next if !group
         email_address = group.email_address
@@ -808,8 +867,6 @@ perform changes on ticket
         objects = {
           ticket: self,
           article: articles.last,
-          #recipient: user,
-          #changes: changes,
         }
 
         # get subject
@@ -861,6 +918,16 @@ perform changes on ticket
         else
           logger.error "Unknown #{attribute} operator #{value['operator']}"
         end
+        next
+      end
+
+      # delete ticket
+      if key == 'ticket.action'
+        next if value['value'].blank?
+        next if value['value'] != 'delete'
+
+        destroy
+
         next
       end
 
@@ -1002,15 +1069,6 @@ result
   def check_escalation_update
     escalation_calculation
     true
-  end
-
-  def destroy_dependencies
-
-    # delete articles
-    articles.destroy_all
-
-    # destroy online notifications
-    OnlineNotification.remove(self.class.to_s, id)
   end
 
   def set_default_state

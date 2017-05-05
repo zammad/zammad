@@ -70,8 +70,11 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     Sessions::Backend::TicketOverviewList.reset(user.id)
     result1 = client1.push
     assert(result1, 'check ticket_overview_index - recall 7')
-    travel_back
 
+    travel 10.seconds
+    Sessions.destroy_idle_sessions(3)
+
+    travel_back
   end
 
 end

@@ -1,5 +1,5 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-module SearchIndexed
+module HasSearchIndexBackend
   extend ActiveSupport::Concern
 
   included do
@@ -102,7 +102,7 @@ returns
 serve methode to ignore model attributes in search index
 
 class Model < ApplicationModel
-  include SearchIndexed
+  include HasSearchIndexBackend
   search_index_attributes_ignored :password, :image
 end
 

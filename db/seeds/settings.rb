@@ -2273,6 +2273,15 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title: 'Defines postmaster filter.',
+  name: '0110_postmaster_filter_follow_up_merged',
+  area: 'Postmaster::PreFilter',
+  description: 'Defines postmaster filter to identify follow-up ticket for merged tickets.',
+  options: {},
+  state: 'Channel::Filter::FollowUpMerged',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Defines postmaster filter.',
   name: '0200_postmaster_filter_follow_up_possible_check',
   area: 'Postmaster::PreFilter',
   description: 'Define postmaster filter to check if follow ups get created (based on admin settings).',

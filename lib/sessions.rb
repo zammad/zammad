@@ -448,11 +448,18 @@ returns
     end
   end
 
+=begin
+
+remove all session and spool messages
+
+  Sessions.cleanup
+
+=end
+
   def self.cleanup
-    path = "#{@path}/spool/"
-    FileUtils.rm_rf path
-    path = "#{@path}/tmp/"
-    FileUtils.rm_rf path
+    return true if !File.exist?(@path)
+    FileUtils.rm_rf @path
+    true
   end
 
   def self.spool_create(data)

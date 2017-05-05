@@ -42,6 +42,9 @@ class ActiveSupport::TestCase
     # clear cache
     Cache.clear
 
+    # remove all session messages
+    Sessions.cleanup
+
     # remove background jobs
     Delayed::Job.destroy_all
     Trigger.destroy_all
