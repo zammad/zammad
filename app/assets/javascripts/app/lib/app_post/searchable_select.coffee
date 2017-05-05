@@ -32,6 +32,8 @@ class App.SearchableSelect extends Spine.Controller
     if firstSelected
       @options.attribute.valueName = firstSelected.name
       @options.attribute.value = firstSelected.value
+    else if @options.attribute.unknown && @options.attribute.value
+      @options.attribute.valueName = @options.attribute.value
 
     @options.attribute.renderedOptions = App.view('generic/searchable_select_options')
       options: @options.attribute.options
@@ -142,9 +144,14 @@ class App.SearchableSelect extends Spine.Controller
 
     event.preventDefault()
 
-    @input.val @option_items.filter('.is-active').text().trim()
+    selected = @option_items.filter('.is-active')
+    if selected.length || !@options.attribute.unknown
+      valueName = selected.text().trim()
+      value     = selected.attr('data-value')
+      @input.val valueName
+      @shadowInput.val value
+
     @input.trigger('change')
-    @shadowInput.val @option_items.filter('.is-active').attr('data-value')
     @shadowInput.trigger('change')
     @toggle()
 
@@ -162,6 +169,9 @@ class App.SearchableSelect extends Spine.Controller
     @query = @input.val()
     @filterByQuery @query
 
+    if @options.attribute.unknown
+      @shadowInput.val @query
+
   filterByQuery: (query) ->
     query = escapeRegExp(query)
     regex = new RegExp(query.split(' ').join('.*'), 'i')
@@ -172,7 +182,11 @@ class App.SearchableSelect extends Spine.Controller
         @textContent.match(regex)
       .removeClass 'is-hidden'
 
-    @highlightFirst(true)
+    if @options.attribute.unknown && @option_items.length == @option_items.filter('.is-hidden').length
+      @option_items.removeClass 'is-hidden'
+      @option_items.removeClass 'is-active'
+    else
+      @highlightFirst(true)
 
   highlightFirst: (autocomplete) ->
     first = @option_items.removeClass('is-active').not('.is-hidden').first()
