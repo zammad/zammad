@@ -504,11 +504,6 @@ returns
         state      = Ticket::State.find(ticket.state_id)
         state_type = Ticket::StateType.find(state.state_type_id)
 
-        # if tickte is merged, find linked ticket
-        if state_type.name == 'merged'
-
-        end
-
         # set ticket to open again or keep create state
         if !mail['x-zammad-ticket-followup-state'.to_sym] && !mail['x-zammad-ticket-followup-state_id'.to_sym]
           new_state = Ticket::State.find_by(default_create: true)
