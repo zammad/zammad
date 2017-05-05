@@ -5,6 +5,14 @@ class Karma::ActivityLog < ApplicationModel
 
   self.table_name = 'karma_activity_logs'
 
+=begin
+
+add karma activity log of an object
+
+  Karma::ActivityLog.add('ticket create', User.find(1), 'Ticket', 123)
+
+=end
+
   def self.add(action, user, object, o_id, force = false)
     activity = Karma::Activity.lookup(name: action)
 
@@ -45,6 +53,22 @@ class Karma::ActivityLog < ApplicationModel
     Karma::User.sync(user)
 
     true
+  end
+
+=begin
+
+remove whole karma activity log of an object
+
+  Karma::ActivityLog.remove('Ticket', 123)
+
+=end
+
+  def self.remove(object_name, o_id)
+    object_id = ObjectLookup.by_name(object_name)
+    Karma::ActivityLog.where(
+      object_lookup_id: object_id,
+      o_id: o_id,
+    ).destroy_all
   end
 
   def self.latest(user, limit = 12)
