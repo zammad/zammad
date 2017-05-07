@@ -3,6 +3,10 @@
 # zammad backup script functions
 #
 
+function get_zammad_dir () {
+  ZAMMAD_DIR="$(echo ${BACKUP_SCRIPT_PATH} | sed -e 's#/contrib/backup.*##g')"
+}
+
 function get_backup_date () {
   TIMESTAMP="$(date +'%Y%m%d%H%M%S')"
 
@@ -16,10 +20,10 @@ function delete_old_backups () {
 }
 
 function get_db_credentials () {
-  DB_ADAPTER="$(grep 'adapter:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*adapter:\(\| \)//g')"
-  DB_NAME="$(grep 'database:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*database:\(\| \) //g')"
-  DB_USER="$(grep 'username:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*username:\(\| \)//g')"
-  DB_PASS="$(grep 'password:' < ${ZAMMAD_DIR}/${DATABASE_CONFIG} | sed -e 's/.*password:\(\| \)//g')"
+  DB_ADAPTER="$(grep 'adapter:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*adapter:\(\| \)//g')"
+  DB_NAME="$(grep 'database:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*database:\(\| \) //g')"
+  DB_USER="$(grep 'username:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*username:\(\| \)//g')"
+  DB_PASS="$(grep 'password:' < ${ZAMMAD_DIR}/config/database.yml | sed -e 's/.*password:\(\| \)//g')"
 
   if [ "${DEBUG}" == "yes" ]; then
     echo "adapter=${DB_ADAPTER} dbname=${DB_NAME} dbuser=${DB_USER} dbpass=${DB_PASS}"
@@ -35,25 +39,28 @@ function backup_dir_create () {
 }
 
 function backup_files () {
+  echo "creating file backup..."
   tar -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_DIR}
 }
 
 function backup_db () {
   if [ "${DB_ADAPTER}" == "mysql2" ]; then
+    echo "creating mysql backup..."
     mysqldump --opt --single-transaction -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
+    echo "creating postgresql backup..."
     su -c "pg_dump -c ${DB_NAME} | gzip > /tmp/${TIMESTAMP}_zammad_db.psql.gz" postgres
     mv /tmp/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}
   else
-    echo "DB ADAPTER not found. if its sqlite backup is already saved in filebackup"
+    echo "DB ADAPTER not found. if its sqlite backup is already saved in the filebackup"
   fi
 }
 
 function check_database_config_exists () {
-  if [ -f ${ZAMMAD_DIR}/${DATABASE_CONFIG} ]; then
+  if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     get_db_credentials
   else
-    echo -e "${ZAMMAD_DIR}/${DATABASE_CONFIG} is missing. is zammad configured yet? \nAborting restore..."
+    echo -e "${ZAMMAD_DIR}/config/database.yml is missing. is zammad configured yet? \nAborting..."
     exit 1
   fi
 }
@@ -155,6 +162,18 @@ function restore_zammad () {
   fi
 }
 
-function restore_message () {
-    echo "# Zammad restored!"
+function start_backup_message () {
+    echo -e "\n# Zammad backup started - $(date)!\n"
+}
+
+function start_restore_message () {
+    echo -e "\n# Zammad restored started - $(date)!\n"
+}
+
+function finished_backup_message () {
+    echo -e "\n# Zammad backuped successfully - $(date)!\n"
+}
+
+function finished_restore_message () {
+    echo -e "\n# Zammad restored successfully - $(date)!\n"
 }

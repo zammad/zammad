@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# zammad backup script config
+#
+
+BACKUP_DIR='/var/tmp/zammad_backup'
+HOLD_DAYS='10'
+DEBUG='no'
