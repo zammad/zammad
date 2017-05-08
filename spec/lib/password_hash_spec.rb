@@ -20,6 +20,18 @@ RSpec.describe PasswordHash do
     it 'responds to legacy?' do
       expect(described_class).to respond_to(:legacy?)
     end
+
+    it 'responds to sha2' do
+      expect(described_class).to respond_to(:sha2)
+    end
+
+    it 'responds to hashed_sha2?' do
+      expect(described_class).to respond_to(:hashed_sha2?)
+    end
+
+    it 'responds to hashed_argon2?' do
+      expect(described_class).to respond_to(:hashed_argon2?)
+    end
   end
 
   context 'encryption' do
@@ -56,5 +68,25 @@ RSpec.describe PasswordHash do
     it 'detects sha2 hashes' do
       expect(described_class.legacy?(zammad_sha2, pw_plain)).to be true
     end
+
+    it 'detects crypted passwords' do
+      expect(described_class.crypted?(zammad_sha2)).to be true
+    end
+
+    describe '::sha2' do
+
+      it 'creates sha2 hashes' do
+        hashed = described_class.sha2(pw_plain)
+        expect(hashed).to eq zammad_sha2
+      end
+    end
+
+    describe '::hashed_sha2?' do
+
+      it 'detects sha2 hashes' do
+        expect(described_class.hashed_sha2?(zammad_sha2)).to be true
+      end
+    end
   end
+
 end
