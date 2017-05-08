@@ -496,7 +496,7 @@ Managing Director: Martin Edenhofer
       },
       {
         data: IO.binread('test/fixtures/mail19.box'),
-        body_md5: '812cd2870e97d806eef0ca5a44823333',
+        body_md5: '6021dd92d8e7844e6bb9b5bb7a4adfb8',
         params: {
           from: '"我" <>',
           from_email: '"我" <>',

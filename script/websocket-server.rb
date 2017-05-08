@@ -3,12 +3,6 @@
 
 $LOAD_PATH << './lib'
 require 'rubygems'
-require 'eventmachine'
-require 'em-websocket'
-require 'json'
-require 'fileutils'
-require 'optparse'
-require 'daemons'
 
 # load rails env
 dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
@@ -17,10 +11,38 @@ RAILS_ENV = ENV['RAILS_ENV'] || 'development'
 
 require 'rails/all'
 require 'bundler'
-Bundler.require(:default, Rails.env)
 require File.join(dir, 'config', 'environment')
-
+require 'eventmachine'
+require 'em-websocket'
+require 'json'
+require 'fileutils'
+require 'optparse'
+require 'daemons'
 require 'sessions'
+
+def before_fork
+
+  # remember open file handles
+  @files_to_reopen = []
+  ObjectSpace.each_object(File) do |file|
+    @files_to_reopen << file unless file.closed?
+  end
+end
+
+def after_fork(dir)
+  Dir.chdir dir
+
+  # Re-open file handles
+  @files_to_reopen.each do |file|
+    file.reopen file.path, 'a+'
+    file.sync = true
+  end
+
+  $stdout.reopen( "#{dir}/log/websocket-server_out.log", 'w')
+  $stderr.reopen( "#{dir}/log/websocket-server_err.log", 'w')
+end
+
+before_fork
 
 # Look for -o with argument, and -I and -D boolean arguments
 @options = {
@@ -86,13 +108,10 @@ if ARGV[0] == 'start' && @options[:d]
 
   Daemons.daemonize
 
-  Dir.chdir dir
-  name = 'websocket-server'
-  $stdout.reopen( dir + '/log/' + name + '_out.log', 'w')
-  $stderr.reopen( dir + '/log/' + name + '_err.log', 'w')
+  after_fork(dir)
 
   # create pid file
-  daemon_pid = File.new( @options[:i].to_s, 'w' )
+  daemon_pid = File.new(@options[:i].to_s, 'w')
   daemon_pid.sync = true
   daemon_pid.puts(Process.pid.to_s)
   daemon_pid.close

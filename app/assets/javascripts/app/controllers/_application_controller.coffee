@@ -579,19 +579,19 @@ class App.Controller extends Spine.Controller
 
   renderScreenSuccess: (data) ->
     App.TaskManager.touch(@task_key) if @task_key
-    @html App.view('generic/error/success')(data)
+    (data.el || @).html App.view('generic/error/success')(data)
 
   renderScreenError: (data) ->
     App.TaskManager.touch(@task_key) if @task_key
-    @html App.view('generic/error/generic')(data)
+    (data.el || @).html App.view('generic/error/generic')(data)
 
   renderScreenNotFound: (data) ->
     App.TaskManager.touch(@task_key) if @task_key
-    @html App.view('generic/error/not_found')(data)
+    (data.el || @).html App.view('generic/error/not_found')(data)
 
   renderScreenUnauthorized: (data) ->
     App.TaskManager.touch(@task_key) if @task_key
-    @html App.view('generic/error/unauthorized')(data)
+    (data.el || @).html App.view('generic/error/unauthorized')(data)
 
   locationVerify: (e) =>
     newLocation = $(e.currentTarget).attr 'href'
