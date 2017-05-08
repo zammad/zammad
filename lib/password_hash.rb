@@ -17,24 +17,37 @@ module PasswordHash
   end
 
   def crypted?(pw_hash)
-    return if !pw_hash
-    # taken from: https://github.com/technion/ruby-argon2/blob/7e1f4a2634316e370ab84150e4f5fd91d9263713/lib/argon2.rb#L33
-    return if pw_hash !~ /^\$argon2i\$.{,112}/
-    true
+    return false if !pw_hash
+    return true if hashed_argon2?(pw_hash)
+    return true if hashed_sha2?(pw_hash)
+    false
   end
 
   def legacy?(pw_hash, password)
-    return if pw_hash.blank?
-    return if !password
-    legacy_sha2?(pw_hash, password)
+    return false if pw_hash.blank?
+    return false if !password
+    sha2?(pw_hash, password)
+  end
+
+  def hashed_sha2?(pw_hash)
+    pw_hash.start_with?('{sha2}')
+  end
+
+  def hashed_argon2?(pw_hash)
+    # taken from: https://github.com/technion/ruby-argon2/blob/7e1f4a2634316e370ab84150e4f5fd91d9263713/lib/argon2.rb#L33
+    pw_hash =~ /^\$argon2i\$.{,112}/
+  end
+
+  def sha2(password)
+    crypted = Digest::SHA2.hexdigest(password)
+    "{sha2}#{crypted}"
   end
 
   private
 
-  def legacy_sha2?(pw_hash, password)
-    return if !pw_hash.start_with?('{sha2}')
-    crypted = Digest::SHA2.hexdigest(password)
-    pw_hash == "{sha2}#{crypted}"
+  def sha2?(pw_hash, password)
+    return false if !hashed_sha2?(pw_hash)
+    pw_hash == sha2(password)
   end
 
   def argon2
