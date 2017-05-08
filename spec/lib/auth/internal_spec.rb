@@ -20,13 +20,18 @@ RSpec.describe Auth::Internal do
     end
 
     it 'converts legacy sha2 passwords' do
-      user = create(:user_legacy_password_sha2)
 
-      expect(PasswordHash.crypted?(user.password)).to be_falsy
+      pw_plain = 'zammad'
+      sha2_pw  = PasswordHash.sha2(pw_plain)
+      user     = create(:user, password: sha2_pw)
 
-      result = instance.valid?(user, 'zammad')
+      expect(PasswordHash.crypted?(user.password)).to be true
+      expect(PasswordHash.legacy?(user.password, pw_plain)).to be true
+
+      result = instance.valid?(user, pw_plain)
       expect(result).to be true
 
+      expect(PasswordHash.legacy?(user.password, pw_plain)).to be false
       expect(PasswordHash.crypted?(user.password)).to be true
     end
   end
