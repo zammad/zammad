@@ -16,8 +16,11 @@ module Import
         @config = config
         @ldap   = ldap
 
-        user_roles      = user_roles(ldap: @ldap, config: config)
-        signup_role_ids = Role.signup_role_ids.sort
+        user_roles = user_roles(ldap: @ldap, config: config)
+
+        if config[:unassigned_users].blank? || config[:unassigned_users] == 'sigup_roles'
+          signup_role_ids = Role.signup_role_ids.sort
+        end
 
         @dry_run = kargs[:dry_run]
         pre_import_hook([], config, user_roles, signup_role_ids, kargs)
