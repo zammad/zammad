@@ -51,18 +51,21 @@ module Import
 
       def self.pre_import_hook(_records, *_args)
         super
+        add_sum_to_statistics
+      end
 
-        #cache_key = "#{@ldap.host}::#{@ldap.port}::#{@ldap.ssl}::#{@ldap.base_dn}"
-        #if !@dry_run
-        #  sum = Cache.get(cache_key)
-        #end
+      def self.add_sum_to_statistics
+        cache_key = "#{@ldap.host}::#{@ldap.port}::#{@ldap.ssl}::#{@ldap.base_dn}::#{@config[:user_filter]}"
+        if !@dry_run
+          sum = Cache.get(cache_key)
+        end
 
         sum ||= @ldap.count(@config[:user_filter])
 
         @statistics[:sum] = sum
 
         return if !@dry_run
-        #Cache.write(cache_key, sum, { expires_in: 1.hour })
+        Cache.write(cache_key, sum, { expires_in: 1.hour })
       end
 
       def self.add_to_statistics(backend_instance)
