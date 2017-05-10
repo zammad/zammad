@@ -71,8 +71,11 @@ class Integration::LdapController < ApplicationController
   end
 
   def job_start_create
-    job = ImportJob.create(name: 'Import::Ldap', payload: Setting.get('ldap_config'))
-    job.delay.start
+    backend = 'Import::Ldap'
+    if !ImportJob.exists?(name: backend, finished_at: nil)
+      job = ImportJob.create(name: backend, payload: Setting.get('ldap_config'))
+      job.delay.start
+    end
     render json: {
       result: 'ok',
     }
