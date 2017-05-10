@@ -498,9 +498,9 @@ class ConnectionWizard extends App.WizardModal
         finished: true
       processData: true
       success: (job, status, xhr) =>
-        if job.result && job.result.error
+        if job.result && (job.result.error || job.result.info)
           @showSlide('js-error')
-          @showAlert('js-error', job.result.error)
+          @showAlert('js-error', (job.result.error || job.result.info))
           return
 
         if job.result && job.result.sum
