@@ -18,13 +18,13 @@ class GeoLocationTest < ActiveSupport::TestCase
 
     result = Service::GeoLocation.geocode('Martinsbruggstrasse 35, 9016 St. Gallen')
     assert(result)
-    assert_equal(47.4366664, result[0])
-    assert_equal(9.409814899999999, result[1])
+    assert_equal(47.4366557, result[0])
+    assert_equal(9.4098904, result[1])
 
     result = Service::GeoLocation.geocode('Martinsbruggstrasse 35 9016 St. Gallen')
     assert(result)
-    assert_equal(47.4366664, result[0])
-    assert_equal(9.409814899999999, result[1])
+    assert_equal(47.4366557, result[0])
+    assert_equal(9.4098904, result[1])
 
   end
 
@@ -80,8 +80,8 @@ class GeoLocationTest < ActiveSupport::TestCase
     assert(user3.preferences)
     assert(user3.preferences['lat'])
     assert(user3.preferences['lng'])
-    assert_equal(47.4366664, user3.preferences['lat'])
-    assert_equal(9.409814899999999, user3.preferences['lng'])
+    assert_equal(47.4366557, user3.preferences['lat'])
+    assert_equal(9.4098904, user3.preferences['lng'])
 
     user4 = User.create(
       login: 'some_geo_login4',
@@ -99,8 +99,8 @@ class GeoLocationTest < ActiveSupport::TestCase
     assert(user4.preferences)
     assert(user4.preferences['lat'])
     assert(user4.preferences['lng'])
-    assert_equal(47.4366664, user4.preferences['lat'])
-    assert_equal(9.409814899999999, user4.preferences['lng'])
+    assert_equal(47.4366557, user4.preferences['lat'])
+    assert_equal(9.4098904, user4.preferences['lng'])
 
   end
 end
