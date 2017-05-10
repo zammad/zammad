@@ -30,19 +30,25 @@ module Import
       end
 
       def create_or_update(resource, *args)
-        return if skip?(resource)
-
         result = nil
-        catch(:no_roles_assigned) do
-          determine_role_ids(resource)
-
-          result = super(resource, *args)
-
+        if skip?(resource)
           ldap_log(
-            action:  "#{action} -> #{@resource.login}",
+            action:  "skipped -> #{@remote_id}",
             status:  'success',
             request: resource,
           )
+        else
+          catch(:no_roles_assigned) do
+            determine_role_ids(resource)
+
+            result = super(resource, *args)
+
+            ldap_log(
+              action:  "#{action} -> #{@resource.login}",
+              status:  'success',
+              request: resource,
+            )
+          end
         end
 
         result
