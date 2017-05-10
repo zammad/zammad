@@ -28,10 +28,7 @@ module Import
     #
     # return [nil]
     def start
-      if !Setting.get('ldap_integration') && !@import_job.dry_run
-        raise "LDAP integration deactivated, check Setting 'ldap_integration'."
-      end
-
+      return if !requirements_completed?
       start_import
     end
 
@@ -47,6 +44,24 @@ module Import
       )
 
       @import_job.result = Import::Ldap::UserFactory.statistics
+    end
+
+    def requirements_completed?
+      return true if @import_job.dry_run
+
+      if !Setting.get('ldap_integration')
+        message = 'Sync cancelled. LDAP integration deactivated. Activate via the switch.'
+      elsif Setting.get('ldap_config').blank? && @import_job.payload.blank?
+        message = 'Sync cancelled. LDAP configration or ImportJob payload missing.'
+      end
+
+      return true if !message
+
+      @import_job.update_attribute(:result, {
+                                     info: message
+                                   })
+
+      false
     end
   end
 end

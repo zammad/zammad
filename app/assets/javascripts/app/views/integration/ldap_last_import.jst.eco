@@ -3,6 +3,8 @@
   <% if _.isEmpty(@job.started_at): %>
     <% if @job.result && @job.result.error: %>
         <div class="alert alert--danger" role="alert"><%- @T('An error occurred: %s', @job.result.error) %></div>
+    <% else if @job.result && @job.result.info: %>
+        <div class="alert alert--info" role="alert"><%- @T('Info: %s', @job.result.info) %></div>
     <% else: %>
       <p><%- @T('Job is waiting to get started...') %></p>
     <% end %>
@@ -11,6 +13,8 @@
       <p><%- @Ttimestamp(@job.started_at) %> - <%- @Ttimestamp(@job.finished_at) %></p>
       <% if @job.result && @job.result.error: %>
         <div class="alert alert--danger" role="alert"><%- @T('An error occurred: %s', @job.result.error) %></div>
+      <% else if @job.result && @job.result.info: %>
+        <div class="alert alert--info" role="alert"><%- @T('Info: %s', @job.result.info) %></div>
       <% end %>
     <% else: %>
       <% if @job.result && @job.result.error: %>
