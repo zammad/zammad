@@ -45,5 +45,8 @@
         <% end %>
       </ul>
     <% end %>
+    <% if @job.finished_at: %>
+      <button type="submit" class="btn btn--primary js-start-sync"><%- @T('Start new') %></button>
+    <% end %>
   <% end %>
 </div>
