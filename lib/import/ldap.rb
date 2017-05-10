@@ -6,8 +6,9 @@ require 'ldap/group'
 module Import
   class Ldap < Import::Base
 
-    # Checks if the integration is activated. Otherwise it won't get queued
-    # since it will display an error which is confusing and wrong.
+    # Checks if the integration is activated and configured.
+    # Otherwise it won't get queued since it will display
+    # an error which is confusing and wrong.
     #
     # @example
     #  Import::LDAP.queueable?
@@ -15,7 +16,7 @@ module Import
     #
     # return [Boolean]
     def self.queueable?
-      Setting.get('ldap_integration')
+      Setting.get('ldap_integration') && Setting.get('ldap_config').present?
     end
 
     # Starts a live or dry run LDAP import.
