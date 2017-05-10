@@ -158,6 +158,7 @@ class ConnectionWizard extends App.WizardModal
     '.modal-body': 'body'
     '.js-userMappingForm': 'userMappingForm'
     '.js-groupRoleForm': 'groupRoleForm'
+    '.js-expertForm': 'expertForm'
 
   constructor: ->
     super
@@ -368,6 +369,14 @@ class ConnectionWizard extends App.WizardModal
     @groupRoleForm.find('tbody tr.js-entry').remove()
     @groupRoleForm.find('tbody tr').before(@buildRowsGroupRole(@wizardConfig.group_role_map))
 
+    @$('.js-mapping input[name="user_filter"]').val(@wizardConfig.user_filter)
+
+    unassigned_users_choices =
+      sigup_roles: App.i18n.translatePlain('Assign signup roles')
+      skip_sync: App.i18n.translatePlain('Don\'t synchronize')
+
+    @$('.js-unassignedUsers').html(@createSelection('unassigned_users', unassigned_users_choices, @wizardConfig.unassigned_users || 'sigup_roles'))
+
   mappingChange: (e) =>
     e.preventDefault()
 
@@ -395,6 +404,11 @@ class ConnectionWizard extends App.WizardModal
       if group_role_map.source[count] && group_role_map.dest[count]
         group_role_map_local[group_role_map.source[count]] = group_role_map.dest[count]
     @wizardConfig.group_role_map = group_role_map_local
+
+    expertSettings = @formParam(@expertForm)
+
+    @wizardConfig.user_filter      = expertSettings.user_filter
+    @wizardConfig.unassigned_users = expertSettings.unassigned_users
 
     @tryShow()
 

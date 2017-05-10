@@ -12,7 +12,7 @@ module Import
         normalized_entry = normalize_entry(resource)
 
         # extract the uid attribute and store it as
-        # the remote ID so we can access later
+        # the remote ID so we can access it later
         # when working with ExternalSync
         @remote_id = normalized_entry[ @ldap_config[:user_uid].to_sym ]
 
@@ -31,13 +31,19 @@ module Import
 
       def create_or_update(resource, *args)
         return if skip?(resource)
-        result = super(resource, *args)
 
-        ldap_log(
-          action:  "#{action} -> #{@resource.login}",
-          status:  'success',
-          request: resource,
-        )
+        result = nil
+        catch(:no_roles_assigned) do
+          determine_role_ids(resource)
+
+          result = super(resource, *args)
+
+          ldap_log(
+            action:  "#{action} -> #{@resource.login}",
+            status:  'success',
+            request: resource,
+          )
+        end
 
         result
       end
@@ -50,56 +56,55 @@ module Import
         !resource.except(*ignored_attributes).values.any?(&:present?)
       end
 
-      def role_ids(resource)
-        # remove remporary added and get value
+      def determine_role_ids(resource)
+        # remove temporary added and get value
         dn = resource.delete(:dn)
-        # use signup roles if no dn is present
-        return @signup_role_ids if !dn
-        # check if roles are mapped for the found dn
-        roles = @dn_roles[ dn.downcase ]
-        # return found roles
-        return roles if roles
-        # return signup roles if there is a role mapping in general
-        # this makes the LDAP the leading source of roles
-        return @signup_role_ids if @dn_roles.present?
+        raise "Missing 'dn' attribute for remote id '#{@remote_id}'" if dn.blank?
 
-        # special case: there is no LDAP role mapping configured
-        #
-        # if there is no role mapping in general the signup roles
-        # should only get used for newly created users (see .create method)
-        # otherwise users might overwrite their local assigned
-        # roles with less privileged roles and lock theirselfs out
-        #
-        # see issue 350#issuecomment-295252402
-        #
-        # this method only gets called from the .updated? method
-        # so we won't return any roles which will keep the current
-        # role assignment for the User
-        # the signup roles will be taken in this case direcly in
-        # the .create method
-        nil
+        if @dn_roles.present?
+          # check if roles are mapped for the found dn
+          roles = @dn_roles[ dn.downcase ]
+
+          if roles.present?
+            # LDAP is the leading source if
+            # a mapping entry is present
+            @update_role_ids = roles
+            @create_role_ids = roles
+          elsif @ldap_config[:unassigned_users] == 'skip_sync'
+            throw :no_roles_assigned
+          else
+            use_signup_roles
+          end
+        else
+          use_signup_roles
+        end
+      end
+
+      def use_signup_roles
+        @update_role_ids = nil # use existing
+        @create_role_ids = @signup_role_ids
       end
 
       def updated?(resource, *_args)
 
-        # this is needed for the special case described in the role_ids method
-        #
-        # assign roles only if there are any found in the mapping
-        # otherwise keep those stored to the User
-        update_roles        = role_ids(resource)
-        resource[:role_ids] = update_roles if update_roles
+        resource[:role_ids] = @update_role_ids if @update_role_ids
 
         user_found = false
         import_class.without_callback(:update, :after, :avatar_for_email_check) do
           user_found = super
         end
 
-        # in case a User was found and we had no roles
-        # to set/update we have to note the currently
+        # in case an User was found and we had no roles
+        # to set/update we have to note the currently locally
         # assigned roles so that our action check won't
-        # falsly detect changes to the User
-        if user_found && update_roles.blank?
+        # falsly detect changes to the User (from nil to current)
+        if user_found && @update_role_ids.blank?
           resource[:role_ids] = @resource.role_ids
+
+          # we have to re-store/overwrite the stored
+          # associations since we've added the current
+          # state of the roles just yet
+          store_associations(:after, resource)
         end
 
         user_found
@@ -159,11 +164,7 @@ module Import
       end
 
       def create(resource, *_args)
-        # this is needed for the special case described in the role_ids method
-        #
-        # in case we have no role IDs yet we have to fall back to the signup roles
-        resource[:role_ids] ||= @signup_role_ids
-
+        resource[:role_ids] = @create_role_ids
         import_class.without_callback(:create, :after, :avatar_for_email_check) do
           super
         end
@@ -231,7 +232,6 @@ module Import
           updated_by_id: 1,
         )
       end
-
     end
   end
 end
