@@ -25,7 +25,7 @@
         </div>
       <% end %>
     <% end %>
-    <% if !_.isEmpty(@job.result): %>
+    <% if !_.isEmpty(@job.result) && @countDone: %>
       <ul>
         <li><%- @T('%s user to %s user', 'LDAP', 'Zammad') %> (<%= @countDone %>/<%= @job.result.sum %>):
           <ul>
