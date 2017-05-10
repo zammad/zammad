@@ -67,19 +67,6 @@ RSpec.describe Import::Ldap::User do
       expect(HttpLog.last.status).to eq('success')
     end
 
-    it 'skips User entries without attributes' do
-
-      skip_entry = build(:ldap_entry)
-
-      skip_entry['uid'] = [uid]
-
-      expect do
-        described_class.new(skip_entry, ldap_config, user_roles, signup_role_ids)
-      end.to not_change {
-        User.count
-      }
-    end
-
     it 'logs failures to HTTP Log' do
       expect_any_instance_of(User).to receive(:save!).and_raise('SOME ERROR')
       described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)
@@ -264,5 +251,43 @@ RSpec.describe Import::Ldap::User do
         expect(instance.action).to eq(:skipped)
       end
     end
+  end
+
+  context 'skipped' do
+
+    it 'skips entries without login' do
+      skip_entry = build(:ldap_entry)
+      instance   = nil
+
+      expect do
+        instance = described_class.new(skip_entry, ldap_config, user_roles, signup_role_ids)
+      end.to not_change {
+        User.count
+      }
+      expect(instance.action).to eq(:skipped)
+
+    end
+
+    it 'skips entries without attributes' do
+      skip_entry        = build(:ldap_entry)
+      skip_entry['uid'] = [uid]
+      instance          = nil
+
+      expect do
+        instance = described_class.new(skip_entry, ldap_config, user_roles, signup_role_ids)
+      end.to not_change {
+        User.count
+      }
+      expect(instance.action).to eq(:skipped)
+    end
+
+    it 'logs skips to HTTP Log' do
+      skip_entry = build(:ldap_entry)
+      described_class.new(skip_entry, ldap_config, user_roles, signup_role_ids)
+
+      expect(HttpLog.last.status).to eq('success')
+      expect(HttpLog.last.url).to start_with('skipped')
+    end
+
   end
 end
