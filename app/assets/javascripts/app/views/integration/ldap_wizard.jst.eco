@@ -20,9 +20,6 @@
             <tr>
               <td class="settings-list-row-control"><%- @T('Host') %>
               <td class="settings-list-control-cell"><input type="text" name="host_url" class="form-control form-control--small js-hostUrl" value="" placeholder="ldaps://ldap.example.com" autocomplete="new-password">
-            <tr>
-              <td class="settings-list-row-control"><%- @T('SSL verification') %>
-              <td class="settings-list-control-cell js-sslVerify">
           </tbody>
         </table>
       </div>

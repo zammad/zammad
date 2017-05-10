@@ -1,0 +1,3 @@
+<tr>
+  <td class="settings-list-row-control"><%- @T('SSL verification') %>
+  <td class="settings-list-control-cell js-sslVerify">

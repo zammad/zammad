@@ -152,7 +152,7 @@ class ConnectionWizard extends App.WizardModal
     'click .js-userMappingForm .js-add': 'addUserMapping'
     'click .js-groupRoleForm .js-add':   'addGroupRoleMapping'
     'click .js-goToSlide':               'goToSlide'
-    'input .js-hostUrl':                 'checkSslVerifyDisabled'
+    'input .js-hostUrl':                 'sslVerifyChange'
 
   elements:
     '.modal-body': 'body'
@@ -205,12 +205,26 @@ class ConnectionWizard extends App.WizardModal
 
   showHost: =>
     @$('.js-discover input[name="host_url"]').val(@wizardConfig.host_url)
-    @showSslVerify()
+    @checkSslVerifyVisibility(@wizardConfig.host_url)
 
-  showSslVerify: =>
+  sslVerifyChange: (e) =>
+    @checkSslVerifyVisibility($(e.currentTarget).val())
+
+  checkSslVerifyVisibility: (host_url) =>
+    el     = @$('.js-discover .js-sslVerify')
+    exists = el.length
+
     disabled = true
-    if @wizardConfig.host_url && @wizardConfig.host_url.startsWith('ldaps')
+    if host_url && host_url.startsWith('ldaps')
       disabled = false
+
+    if exists && disabled
+      el.parent().remove()
+    else if !exists && !disabled
+      @$('.js-discover tbody tr').last().after(@buildRowSslVerify())
+
+  buildRowSslVerify: =>
+    el = $(App.view('integration/ldap_ssl_verify_row')())
 
     ssl_verify = true
     if typeof @wizardConfig.ssl_verify != 'undefined'
@@ -221,15 +235,11 @@ class ConnectionWizard extends App.WizardModal
       null: false
       options: { true: 'yes', false: 'no' }
       default: ssl_verify
-      disabled: disabled
       translate: true
       class: 'form-control form-control--small'
     )
-    @$('.js-discover .js-sslVerify').html sslVerifyElement
-
-  checkSslVerifyDisabled: (e) =>
-    enabled = $(e.currentTarget).val().startsWith('ldaps')
-    @$('.js-discover .js-sslVerify select[name="ssl_verify"]').prop('disabled', !enabled)
+    el.find('.js-sslVerify').html sslVerifyElement
+    el
 
   discover: (e) =>
     e.preventDefault()
