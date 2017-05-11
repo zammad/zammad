@@ -195,7 +195,7 @@ class App extends Spine.Controller
 
       # if date is a object, get name of the object
       isObject = false
-      if typeof item is 'object'
+      if item && typeof item is 'object'
         isObject = true
         if item.displayNameLong
           resultLocal = item.displayNameLong()
