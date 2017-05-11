@@ -364,8 +364,8 @@ class App.ControllerTable extends App.Controller
           do (table, event, callback) ->
             table.delegate('input[name="bulk"]', event, (e) ->
               e.stopPropagation()
-              id      = $(e.target).parents('tr').data('id')
-              checked = $(e.target).prop('checked')
+              id      = $(e.currentTarget).parents('tr').data('id')
+              checked = $(e.currentTarget).prop('checked')
               callback(id, checked, e)
             )
 
@@ -382,27 +382,38 @@ class App.ControllerTable extends App.Controller
     if @checkbox
 
       # click first tr>td, catch click
-      table.delegate('tr > td:nth-child(1)', event, (e) ->
+      table.delegate('tr > td:nth-child(1)', 'click', (e) ->
         e.stopPropagation()
       )
 
       # bind on full bulk click
-      table.delegate('input[name="bulk_all"]', 'change', (e) ->
+      table.delegate('input[name="bulk_all"]', 'change', (e) =>
         e.stopPropagation()
-        if $(e.target).prop('checked')
-          $(e.target).parents('table').find('[name="bulk"]').each( ->
-            if !$(@).prop('checked')
-              #$(@).prop('checked', true)
-              $(@).trigger('click')
+        clicks = []
+        if $(e.currentTarget).prop('checked')
+          $(e.currentTarget).parents('table').find('[name="bulk"]').each( ->
+            $element = $(@)
+            return if $element.prop('checked')
+            $element.prop('checked', true)
+            id = $element.parents('tr').data('id')
+            clicks.push [id, true]
           )
         else
-          $(e.target).parents('table').find('[name="bulk"]').each( ->
-            if $(@).prop('checked')
-              #$(@).prop('checked', false)
-              $(@).trigger('click')
+          $(e.currentTarget).parents('table').find('[name="bulk"]').each( ->
+            $element = $(@)
+            return if !$element.prop('checked')
+            $element.prop('checked', false)
+            id = $element.parents('tr').data('id')
+            clicks.push [id, false]
           )
+        return if !@bindCheckbox
+        return if !@bindCheckbox.events
+        return if _.isEmpty(clicks)
+        for event, callback of @bindCheckbox.events
+          if event == 'click' || event == 'change'
+            for click in clicks
+              callback(click..., e)
       )
-
     table
 
   sortList: (objects) =>

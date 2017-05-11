@@ -152,12 +152,13 @@ class ConnectionWizard extends App.WizardModal
     'click .js-userMappingForm .js-add': 'addUserMapping'
     'click .js-groupRoleForm .js-add':   'addGroupRoleMapping'
     'click .js-goToSlide':               'goToSlide'
-    'input .js-hostUrl':                 'checkSslVerifyDisabled'
+    'input .js-hostUrl':                 'sslVerifyChange'
 
   elements:
     '.modal-body': 'body'
     '.js-userMappingForm': 'userMappingForm'
     '.js-groupRoleForm': 'groupRoleForm'
+    '.js-expertForm': 'expertForm'
 
   constructor: ->
     super
@@ -205,12 +206,26 @@ class ConnectionWizard extends App.WizardModal
 
   showHost: =>
     @$('.js-discover input[name="host_url"]').val(@wizardConfig.host_url)
-    @showSslVerify()
+    @checkSslVerifyVisibility(@wizardConfig.host_url)
 
-  showSslVerify: =>
+  sslVerifyChange: (e) =>
+    @checkSslVerifyVisibility($(e.currentTarget).val())
+
+  checkSslVerifyVisibility: (host_url) =>
+    el     = @$('.js-discover .js-sslVerify')
+    exists = el.length
+
     disabled = true
-    if @wizardConfig.host_url && @wizardConfig.host_url.startsWith('ldaps')
+    if host_url && host_url.startsWith('ldaps')
       disabled = false
+
+    if exists && disabled
+      el.parent().remove()
+    else if !exists && !disabled
+      @$('.js-discover tbody tr').last().after(@buildRowSslVerify())
+
+  buildRowSslVerify: =>
+    el = $(App.view('integration/ldap_ssl_verify_row')())
 
     ssl_verify = true
     if typeof @wizardConfig.ssl_verify != 'undefined'
@@ -221,15 +236,11 @@ class ConnectionWizard extends App.WizardModal
       null: false
       options: { true: 'yes', false: 'no' }
       default: ssl_verify
-      disabled: disabled
       translate: true
       class: 'form-control form-control--small'
     )
-    @$('.js-discover .js-sslVerify').html sslVerifyElement
-
-  checkSslVerifyDisabled: (e) =>
-    enabled = $(e.currentTarget).val().startsWith('ldaps')
-    @$('.js-discover .js-sslVerify select[name="ssl_verify"]').prop('disabled', !enabled)
+    el.find('.js-sslVerify').html sslVerifyElement
+    el
 
   discover: (e) =>
     e.preventDefault()
@@ -276,7 +287,7 @@ class ConnectionWizard extends App.WizardModal
 
   bindShow: (alreadyShown) =>
     @showSlide('js-bind') if !alreadyShown
-    @$('.js-bind .js-baseDn').html(@createSelection('base_dn', @wizardConfig.options, @wizardConfig.option))
+    @$('.js-bind .js-baseDn').html(@createSelection('base_dn', @wizardConfig.options, @wizardConfig.base_dn || @wizardConfig.option, true))
     @$('.js-bind input[name="bind_user"]').val(@wizardConfig.bind_user)
     @$('.js-bind input[name="bind_pw"]').val(@wizardConfig.bind_pw)
 
@@ -358,6 +369,14 @@ class ConnectionWizard extends App.WizardModal
     @groupRoleForm.find('tbody tr.js-entry').remove()
     @groupRoleForm.find('tbody tr').before(@buildRowsGroupRole(@wizardConfig.group_role_map))
 
+    @$('.js-mapping input[name="user_filter"]').val(@wizardConfig.user_filter)
+
+    unassigned_users_choices =
+      sigup_roles: App.i18n.translatePlain('Assign signup roles')
+      skip_sync: App.i18n.translatePlain('Don\'t synchronize')
+
+    @$('.js-unassignedUsers').html(@createSelection('unassigned_users', unassigned_users_choices, @wizardConfig.unassigned_users || 'sigup_roles'))
+
   mappingChange: (e) =>
     e.preventDefault()
 
@@ -385,6 +404,11 @@ class ConnectionWizard extends App.WizardModal
       if group_role_map.source[count] && group_role_map.dest[count]
         group_role_map_local[group_role_map.source[count]] = group_role_map.dest[count]
     @wizardConfig.group_role_map = group_role_map_local
+
+    expertSettings = @formParam(@expertForm)
+
+    @wizardConfig.user_filter      = expertSettings.user_filter
+    @wizardConfig.unassigned_users = expertSettings.unassigned_users
 
     @tryShow()
 
@@ -423,7 +447,7 @@ class ConnectionWizard extends App.WizardModal
     el.find('.js-roleList').html(@createSelection('dest', @wizardConfig.wizardData.roles, dest))
     el
 
-  createSelection: (name, options, selected) ->
+  createSelection: (name, options, selected, unknown) ->
     return App.UiElement.searchable_select.render(
       name: name
       multiple: false
@@ -432,6 +456,7 @@ class ConnectionWizard extends App.WizardModal
       nulloption: false
       options: options
       value: selected
+      unknown: unknown
       class: 'form-control--small'
     )
 

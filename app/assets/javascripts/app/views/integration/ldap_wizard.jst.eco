@@ -20,9 +20,6 @@
             <tr>
               <td class="settings-list-row-control"><%- @T('Host') %>
               <td class="settings-list-control-cell"><input type="text" name="host_url" class="form-control form-control--small js-hostUrl" value="" placeholder="ldaps://ldap.example.com" autocomplete="new-password">
-            <tr>
-              <td class="settings-list-row-control"><%- @T('SSL verification') %>
-              <td class="settings-list-control-cell js-sslVerify">
           </tbody>
         </table>
       </div>
@@ -172,7 +169,6 @@
         </form>
 
         <h2><%- @T('Roles') %></h2>
-        <p><%- @T('Note: All not mapped users will get the default signup roles.') %></p>
         <form class="js-groupRoleForm">
           <table class="settings-list js-groupRoleMap" style="width: 100%;">
             <colgroup>
@@ -192,6 +188,25 @@
                   <div class="btn btn--text btn--create js-add">
                     <%- @Icon('plus-small') %> <%- @T('Add') %>
                   </div>
+            </tbody>
+          </table>
+        </form>
+
+        <h2><%- @T('Expert') %></h2>
+        <form class="js-expertForm">
+          <table class="settings-list js-expert" style="width: 100%;">
+            <thead>
+              <tr>
+                <th width="30%"><%- @T('Name') %>
+                <th width="70%"><%- @T('Value') %>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="settings-list-row-control"><%- @T('User filter') %>
+                <td class="settings-list-control-cell"><input type="text" name="user_filter" class="form-control form-control--small" value="" placeholder="" autocomplete="new-password">
+              <tr>
+                <td class="settings-list-row-control"><%- @T('Users without assigned LDAP groups') %>
+                <td class="settings-list-control-cell js-unassignedUsers">
             </tbody>
           </table>
         </form>
