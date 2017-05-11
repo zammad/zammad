@@ -120,9 +120,18 @@ class App.TicketOverview extends App.Controller
       options:
         duration: 200
         complete: =>
+          if !@hoveredBatchEntry
+            @cleanUpDrag()
+            return
+
           @hoveredBatchEntry.velocity 'reverse',
             duration: 200
             complete: =>
+
+              if !@hoveredBatchEntry
+                @cleanUpDrag()
+                return
+
               # clean scale
               action = @hoveredBatchEntry.attr('data-action')
               id = @hoveredBatchEntry.attr('data-id')
