@@ -4,7 +4,7 @@ require 'lib/import/import_job_backend_examples'
 RSpec.describe Import::Ldap do
   it_behaves_like 'ImportJob backend'
 
-  describe '::queueable?' do
+  describe '.queueable?' do
 
     it 'is queueable if LDAP integration is activated and configured' do
       allow(Setting).to receive(:get).with('ldap_integration').and_return(true)
@@ -85,5 +85,31 @@ RSpec.describe Import::Ldap do
         expect(import_job.result.key?(:info)).to be true
       end
     end
+  end
+
+  describe '#reschedule?' do
+
+    it 'initiates always a rescheduling' do
+      import_job  = create(:import_job)
+      instance    = described_class.new(import_job)
+      delayed_job = double()
+
+      expect(instance.reschedule?(delayed_job)).to be true
+    end
+
+    it 'updates the result with an info text' do
+      import_job  = create(:import_job)
+      instance    = described_class.new(import_job)
+      delayed_job = double()
+
+      expect do
+        instance.reschedule?(delayed_job)
+      end.to change {
+        import_job.result
+      }
+
+      expect(import_job.result.key?(:info)).to be true
+    end
+
   end
 end

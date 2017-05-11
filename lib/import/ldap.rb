@@ -32,6 +32,24 @@ module Import
       start_import
     end
 
+    # Gets called when the Scheduler gets (re-)started and a LDAP ImportJob was still
+    # in the queue. The job will always get restarted to avoid the gap till the next
+    # run triggered by the Scheduler. The result will get updated to inform the user
+    # in the agent interface result view.
+    #
+    # @example
+    #  instance = Import::LDAP.new(import_job)
+    #  instance.reschedule?(delayed_job)
+    #  #=> true
+    #
+    # return [true]
+    def reschedule?(_delayed_job)
+      @import_job.update_attribute(:result, {
+                                     info: 'Restarting due to scheduler restart.'
+                                   })
+      true
+    end
+
     private
 
     def start_import

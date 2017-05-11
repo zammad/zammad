@@ -34,6 +34,25 @@ class ImportJob < ApplicationModel
     save
   end
 
+  # Gets called when the Scheduler gets (re-)started and this job was still
+  # in the queue. If `finished_at` is blank the call is piped through to
+  # the ImportJob backend which has to decide how to go from here. The delayed
+  # job will get destroyed if rescheduled? is not implemented
+  # as an ImportJob backend class method.
+  #
+  # @see Scheduler#cleanup_delayed
+  #
+  # @example
+  #  import.reschedule?(delayed_job)
+  #
+  # return [Boolean] whether the ImportJob should get rescheduled (true) or destroyed (false)
+  def reschedule?(delayed_job)
+    return false if finished_at.present?
+    instance = name.constantize.new(self)
+    return false if !instance.respond_to?(:reschedule?)
+    instance.reschedule?(delayed_job)
+  end
+
   # Convenience wrapper around the start method for starting (delayed) dry runs.
   # Logs the start and end time (if ended successfully) and logs
   # exceptions into result if they happen.
