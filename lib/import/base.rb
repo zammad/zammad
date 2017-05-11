@@ -3,7 +3,7 @@
 module Import
   class Base
 
-    # Checks if the able to get queued by the scheduler.
+    # Checks if the backend is able to get queued by the Scheduler.
     #
     # @example
     #  Import::ExampleBackend.queueable?
@@ -14,7 +14,20 @@ module Import
       true
     end
 
-    # Initializes a new instance with a stored reference to the import job.
+    # Checks if the backend is able to get rescheduled in case the Scheduler
+    # got (re-)started while this ImportJob was running. Defaults to false.
+    #
+    # @example
+    #  instance = Import::LDAP.new(import_job)
+    #  instance.reschedule?(delayed_job)
+    #  #=> false
+    #
+    # return [false]
+    def reschedule?(_delayed_job)
+      false
+    end
+
+    # Initializes a new instance with a stored reference to the ImportJob.
     #
     # @example
     #  instance = Import::ExampleBackend.new(import_job)
