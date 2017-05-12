@@ -220,24 +220,6 @@ RSpec.describe Import::Ldap::User do
         }
       end
 
-      it 'keeps local roles if signup roles are configured' do
-
-        ldap_config[:unassigned_users] = 'sigup_roles'
-        expect do
-          described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)
-        end.not_to change {
-          User.last.role_ids
-        }
-      end
-
-      it "doesn't detect false changes if signup roles are configured" do
-        # make sure that the nothing has changed
-        User.find_by(login: uid).update_attribute(:email, 'example@example.com')
-
-        instance = described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)
-        expect(instance.action).to eq(:unchanged)
-      end
-
       it 'skips user if configured' do
 
         ldap_config[:unassigned_users] = 'skip_sync'
@@ -249,6 +231,27 @@ RSpec.describe Import::Ldap::User do
           User.count
         }
         expect(instance.action).to eq(:skipped)
+      end
+
+      context 'signup roles configuration' do
+        it 'keeps local roles' do
+
+          ldap_config[:unassigned_users] = 'sigup_roles'
+          expect do
+            described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)
+          end.not_to change {
+            User.last.role_ids
+          }
+        end
+
+        it "doesn't detect false changes" do
+          # make sure that the nothing has changed
+          User.find_by(login: uid).update_attribute(:email, 'example@example.com')
+
+          expect_any_instance_of(User).not_to receive(:save!)
+          instance = described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)
+          expect(instance.action).to eq(:unchanged)
+        end
       end
     end
   end
@@ -265,7 +268,6 @@ RSpec.describe Import::Ldap::User do
         User.count
       }
       expect(instance.action).to eq(:skipped)
-
     end
 
     it 'skips entries without attributes' do
@@ -288,6 +290,5 @@ RSpec.describe Import::Ldap::User do
       expect(HttpLog.last.status).to eq('success')
       expect(HttpLog.last.url).to start_with('skipped')
     end
-
   end
 end

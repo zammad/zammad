@@ -45,8 +45,13 @@ module Import
     def changed_associations
       changes = {}
       tracked_associations.each do |association|
+        # skip if no new value will get assigned (no change is performed)
+        next if !@associations[:after].key?(association)
+        # skip if both values are equal
         next if @associations[:before][association] == @associations[:after][association]
+        # skip if both values are blank
         next if @associations[:before][association].blank? && @associations[:after][association].blank?
+        # store changes
         changes[association] = [@associations[:before][association], @associations[:after][association]]
       end
       changes
@@ -127,17 +132,20 @@ module Import
     def associations_state(source)
       state = {}
       tracked_associations.each do |association|
-        state[association] = association_value(source, association)
+        # we have to support instances and (resource) hashes
+        # here since in case of an update we only have the
+        # hash as a source but on create we have an instance
+        if source.is_a?(Hash)
+          # ignore if there is no key for the association
+          # of the Hash (update)
+          # otherwise wrong changes may get detected
+          next if !source.key?(association)
+          state[association] = source[association]
+        else
+          state[association] = source.send(association)
+        end
       end
       state
-    end
-
-    # we have to support instances and (resource) hashes
-    # here since in case of an update we only have the
-    # hash as a source but on create we have an instance
-    def association_value(source, association)
-      return source[association] if source.is_a?(Hash)
-      source.send(association)
     end
 
     def tracked_associations
