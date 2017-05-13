@@ -11,6 +11,13 @@ class Scheduler < ApplicationModel
 
     Thread.abort_on_exception = true
 
+    # reconnect in case db connection is lost
+    begin
+      ActiveRecord::Base.connection.reconnect!
+    rescue => e
+      logger.error "Can't reconnect to database #{e.inspect}"
+    end
+
     # cleanup old background jobs
     cleanup
 
