@@ -2,6 +2,7 @@
 
 class Trigger < ApplicationModel
   include ChecksConditionValidation
+  include CanSeed
 
   store     :condition
   store     :perform
