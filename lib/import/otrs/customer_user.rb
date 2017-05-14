@@ -67,6 +67,7 @@ module Import
         mapped = map_default(customer)
         mapped[:created_at] ||= DateTime.current
         mapped[:updated_at] ||= DateTime.current
+        mapped[:email].downcase!
         mapped
       end
 

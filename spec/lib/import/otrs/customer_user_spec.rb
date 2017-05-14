@@ -118,4 +118,41 @@ RSpec.describe Import::OTRS::CustomerUser do
       updates_with(zammad_structure)
     end
   end
+
+  context 'regular user' do
+
+    let(:object_structure) { load_customer_json('capital_email') }
+    let(:zammad_structure) {
+      {
+        created_by_id:   '1',
+        updated_by_id:   '1',
+        active:          true,
+        source:          'OTRS Import',
+        organization_id: 1337,
+        role_ids:        [3],
+        updated_at:      '2014-06-07 02:31:31',
+        created_at:      '2014-06-07 02:31:31',
+        note:            '',
+        email:           'qa100@t-online.de',
+        firstname:       'test669673',
+        lastname:        'test669673',
+        login:           'test669673',
+        password:        'f8be19af2f25837a31eff9131b0e47a5173290652c04a48b49b86474d48825ee',
+        phone:           nil,
+        fax:             nil,
+        mobile:          nil,
+        street:          nil,
+        zip:             nil,
+        city:            nil,
+        country:         nil
+      }}
+
+    it 'creates' do
+      creates_with(zammad_structure)
+    end
+
+    it 'updates' do
+      updates_with(zammad_structure)
+    end
+  end
 end
