@@ -23,4 +23,15 @@ RSpec.describe Import::Base do
       end.to raise_error(RuntimeError)
     end
   end
+
+  describe '#reschedule?' do
+
+    it 'returns false by default' do
+      import_job  = create(:import_job)
+      instance    = described_class.new(import_job)
+      delayed_job = double()
+
+      expect(instance.reschedule?(delayed_job)).to be false
+    end
+  end
 end

@@ -24,12 +24,26 @@ class Index extends App.ControllerIntegrationBase
       facility: 'ldap'
     )
 
+  switch: =>
+    super
+    active = @$('.js-switch input').prop('checked')
+    if active
+      @ajax(
+        id:   'jobs_config'
+        type: 'POST'
+        url:  "#{@apiPath}/integration/ldap/job_start"
+        processData: true
+        success: (data, status, xhr) =>
+          @render(true)
+      )
+
 class Form extends App.Controller
   elements:
     '.js-lastImport': 'lastImport'
     '.js-wizard': 'wizardButton'
   events:
     'click .js-wizard': 'startWizard'
+    'click .js-start-sync': 'startSync'
 
   constructor: ->
     super
@@ -42,14 +56,7 @@ class Form extends App.Controller
 
   setConfig: (value) =>
     App.Setting.set('ldap_config', value, {notify: true})
-    @ajax(
-      id:   'jobs_config'
-      type: 'POST'
-      url:  "#{@apiPath}/integration/ldap/job_start"
-      processData: true
-      success: (data, status, xhr) =>
-        @render(true)
-    )
+    @startSync()
 
   render: (top = false) =>
     @config = @currentConfig()
@@ -68,6 +75,16 @@ class Form extends App.Controller
       a = =>
         @scrollToIfNeeded($('.content.active .page-header'))
       @delay(a, 500)
+
+  startSync: =>
+    @ajax(
+      id:   'jobs_config'
+      type: 'POST'
+      url:  "#{@apiPath}/integration/ldap/job_start"
+      processData: true
+      success: (data, status, xhr) =>
+        @render(true)
+    )
 
   startWizard: (e) =>
     e.preventDefault()
@@ -498,9 +515,9 @@ class ConnectionWizard extends App.WizardModal
         finished: true
       processData: true
       success: (job, status, xhr) =>
-        if job.result && job.result.error
+        if job.result && (job.result.error || job.result.info)
           @showSlide('js-error')
-          @showAlert('js-error', job.result.error)
+          @showAlert('js-error', (job.result.error || job.result.info))
           return
 
         if job.result && job.result.sum

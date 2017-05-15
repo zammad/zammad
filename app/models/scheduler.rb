@@ -11,6 +11,18 @@ class Scheduler < ApplicationModel
 
     Thread.abort_on_exception = true
 
+    # reconnect in case db connection is lost
+    # See issue #1080
+    begin
+      ActiveRecord::Base.connection.reconnect!
+    rescue PG::UnableToSend => e # rubocop:disable Lint/HandleExceptions
+    rescue => e
+      logger.error "Can't reconnect to database #{e.inspect}"
+    end
+
+    # cleanup old background jobs
+    cleanup
+
     # start worker for background jobs
     worker
 
@@ -42,6 +54,80 @@ class Scheduler < ApplicationModel
       }
       sleep 60
     end
+  end
+
+  # Checks all delayed jobs that are locked and cleans them up.
+  # Should only get called when the Scheduler gets started.
+  #
+  # @see Scheduler#cleanup_delayed
+  #
+  # @param [Boolean] force forces the cleanup if not called in Scheduler starting context.
+  #
+  # @example
+  #   Scheduler.cleanup
+  #
+  # @raise [RuntimeError] If called without force and not when Scheduler gets started.
+  #
+  # return [nil]
+  def self.cleanup(force: false)
+
+    if !force && caller_locations.first.label != 'threads'
+      raise 'This method should only get called when Scheduler.threads are initialized. Use `force: true` to start anyway.'
+    end
+
+    Delayed::Job.all.each do |job|
+      cleanup_delayed(job)
+    end
+  end
+
+  # Checks if the given job can be rescheduled or destroys it. Logs the action as warn.
+  # Works only for locked jobs. Jobs that are not locked are ignored and
+  # should get destroyed directly.
+  # Checks the delayed job object for a method called .reschedule?. The memthod is called
+  # with the delayed job as a parameter. The result value is expected as a Boolean. If the
+  # result is true the lock gets removed and the delayed job gets rescheduled. If the return
+  # value is false it will get destroyed which is the default behaviour.
+  #
+  # @param [Delayed::Job] job the job that should get checked for destroying/rescheduling.
+  #
+  # @example
+  #   Scheduler.cleanup_delayed(job)
+  #
+  # return [nil]
+  def self.cleanup_delayed(job)
+    return if job.locked_at.blank?
+
+    job_name       = job.name
+    payload_object = job.payload_object
+    reschedule     = false
+    if payload_object.present?
+      if payload_object.respond_to?(:object)
+        object = payload_object.object
+
+        if object.respond_to?(:id)
+          job_name += " (id: #{object.id})"
+        end
+
+        if object.respond_to?(:reschedule?) && object.reschedule?(job)
+          reschedule = true
+        end
+      end
+
+      if payload_object.respond_to?(:args)
+        job_name += " - ARGS: #{payload_object.args.inspect}"
+      end
+    end
+
+    if reschedule
+      action = 'Rescheduling'
+      job.unlock
+      job.save
+    else
+      action = 'Destroyed'
+      job.destroy
+    end
+
+    Rails.logger.warn "#{action} locked delayed job: #{job_name}"
   end
 
   def self.start_job(job)
@@ -111,7 +197,7 @@ class Scheduler < ApplicationModel
     if try_run_max > try_count
       _start_job(job, try_count, try_run_time)
     else
-      raise "STOP thread for #{job.method} after #{try_count} tries"
+      raise "STOP thread for #{job.method} after #{try_count} tries (#{e.inspect})"
     end
   end
 

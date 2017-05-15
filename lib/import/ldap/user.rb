@@ -100,19 +100,6 @@ module Import
           user_found = super
         end
 
-        # in case an User was found and we had no roles
-        # to set/update we have to note the currently locally
-        # assigned roles so that our action check won't
-        # falsly detect changes to the User (from nil to current)
-        if user_found && @update_role_ids.blank?
-          resource[:role_ids] = @resource.role_ids
-
-          # we have to re-store/overwrite the stored
-          # associations since we've added the current
-          # state of the roles just yet
-          store_associations(:after, resource)
-        end
-
         user_found
       rescue => e
         ldap_log(

@@ -27,7 +27,7 @@ class App.Track
 
 class _trackSingleton
   constructor: ->
-    @trackId = 'track-' + new Date().getTime() + '-' + Math.floor( Math.random() * 99999 )
+    @trackId = "track-#{new Date().getTime()}-#{Math.floor(Math.random() * 99999)}"
     @browser = App.Browser.detection()
     @data    = []
 #    @url     = 'http://localhost:3005/api/v1/ui'
@@ -38,7 +38,6 @@ class _trackSingleton
     @forceSending = false
 
     @log('start', 'notice', {})
-
 
     # start initial submit 30 sec. later to avoid ie10 cookie issues
     delay = =>
@@ -153,6 +152,8 @@ class _trackSingleton
         log:     newDataNew
       )
       crossDomain: true
+      headers:
+        'X-Requested-With': 'XMLHttpRequest'
       error: =>
         for item in newDataNew
           @data.push item

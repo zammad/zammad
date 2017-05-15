@@ -8,9 +8,6 @@ Rails.application.config.html_email_body = <<HERE
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
       body {
-        width: 90% !important;
-        -webkit-text-size-adjust: 90%;
-        -ms-text-size-adjust: 90%;
         #{Rails.application.config.html_email_css_font};
       }
       img {
@@ -34,9 +31,6 @@ Rails.application.config.html_email_body = <<HERE
         width: 100%;
         overflow: auto;
         word-break: keep-all;
-      }
-      p, table, div, td {
-        max-width: 600px;
       }
       table,
       pre,
@@ -80,7 +74,7 @@ Rails.application.config.html_email_body = <<HERE
         overflow: auto;
       }
     </style>
-  <head>
+  </head>
   <body style="#{Rails.application.config.html_email_css_font}">###html###</body>
 </html>
 HERE

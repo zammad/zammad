@@ -10,10 +10,28 @@ RSpec.describe ImportJob do
         end
       end
     end
+
+    module Import
+      class NoRescheduleMethod
+
+        def initialize(import_job)
+          @import_job = import_job
+        end
+
+        def start
+          @import_job.result = { state: 'Done' }
+        end
+
+        def reschedule?(_delayed_job)
+          'invalid_but_checkable_result'
+        end
+      end
+    end
   end
 
   after do
     Import.send(:remove_const, :Test)
+    Import.send(:remove_const, :NoRescheduleMethod)
   end
 
   let(:test_backend_name) { 'Import::Test' }
@@ -197,4 +215,29 @@ RSpec.describe ImportJob do
     end
   end
 
+  describe '.reschedule?' do
+
+    it 'returns false for already finished jobs' do
+      instance    = create(:import_job)
+      delayed_job = double()
+
+      instance.update_attribute(:finished_at, Time.zone.now)
+
+      expect(instance.reschedule?(delayed_job)).to be false
+    end
+
+    it 'returns false for backends not responding to reschedule?' do
+      instance    = create(:import_job)
+      delayed_job = double()
+
+      expect(instance.reschedule?(delayed_job)).to be false
+    end
+
+    it 'returns the backend reschedule? value' do
+      instance    = create(:import_job, name: 'Import::NoRescheduleMethod')
+      delayed_job = double()
+
+      expect(instance.reschedule?(delayed_job)).to eq 'invalid_but_checkable_result'
+    end
+  end
 end
