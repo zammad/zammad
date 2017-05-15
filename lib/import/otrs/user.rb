@@ -66,6 +66,12 @@ module Import
       end
 
       def map(user)
+        mapped = map_default(user)
+        mapped[:email].downcase!
+        mapped
+      end
+
+      def map_default(user)
         {
           created_by_id: 1,
           updated_by_id: 1,
