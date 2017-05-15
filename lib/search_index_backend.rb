@@ -206,7 +206,8 @@ return search result
     # real search condition
     condition = {
       'query_string' => {
-        'query' => query
+        'query' => query,
+        'default_operator' => 'AND',
       }
     }
     data['query']['bool']['must'].push condition
