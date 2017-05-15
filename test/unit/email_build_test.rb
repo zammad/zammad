@@ -29,7 +29,7 @@ class EmailBuildTest < ActiveSupport::TestCase
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <head>
+  </head>
   <body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">
     <div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad. äöüß</div><div>&gt;</div>
   </body>
