@@ -33,7 +33,7 @@ Trigger.create_or_update(
 <div>Your #{config.product_name} Team</div>
 <br/>
 <div><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></div>',
-      'recipient' => 'ticket_customer',
+      'recipient' => 'article_last_sender',
       'subject' => 'Thanks for your inquiry (#{ticket.title})',
     },
   },
@@ -72,7 +72,7 @@ Trigger.create_or_update(
 <div>Your #{config.product_name} Team</div>
 <br/>
 <div><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></div>',
-      'recipient' => 'ticket_customer',
+      'recipient' => 'article_last_sender',
       'subject' => 'Thanks for your follow up (#{ticket.title})',
     },
   },
