@@ -4,6 +4,7 @@ class Index extends App.ControllerSubContent
   events:
     'click .js-resetToken': 'resetToken'
     'click .js-select': 'selectAll'
+    'click .js-restartDeadJobs': 'restartDeadJobs'
 
   constructor: ->
     super
@@ -29,7 +30,10 @@ class Index extends App.ControllerSubContent
     )
 
   render: =>
-    @html App.view('monitoring')(data: @data)
+    @html App.view('monitoring')(
+      data: @data
+      job_restart_count: @job_restart_count
+    )
 
   resetToken: (e) =>
     e.preventDefault()
@@ -40,6 +44,17 @@ class Index extends App.ControllerSubContent
       url:   "#{@apiPath}/monitoring/token"
       success: (data) =>
         @load()
+    )
+
+  restartDeadJobs: (e) =>
+    e.preventDefault()
+    @ajax(
+      id:    'restart_dead_jobs_request'
+      type:  'POST'
+      url:   "#{@apiPath}/monitoring/restart_dead_jobs"
+      success: (data) =>
+        @job_restart_count = data.job_restart_count
+        @render()
     )
 
 App.Config.set('Monitoring', { prio: 3600, name: 'Monitoring', parent: '#system', target: '#system/monitoring', controller: Index, permission: ['admin.monitoring'] }, 'NavBarAdmin')
