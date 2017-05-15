@@ -195,7 +195,7 @@ class Scheduler < ApplicationModel
     if try_run_max > try_count
       _start_job(job, try_count, try_run_time)
     else
-      raise "STOP thread for #{job.method} after #{try_count} tries"
+      raise "STOP thread for #{job.method} after #{try_count} tries (#{e.inspect})"
     end
   end
 

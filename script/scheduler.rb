@@ -32,8 +32,8 @@ def after_fork(dir)
     file.sync = true
   end
 
-  $stdout.reopen( "#{dir}/log/scheduler_out.log", 'w')
-  $stderr.reopen( "#{dir}/log/scheduler_err.log", 'w')
+  $stdout.reopen("#{dir}/log/scheduler_out.log", 'w')
+  $stderr.reopen("#{dir}/log/scheduler_err.log", 'w')
 end
 
 before_fork
