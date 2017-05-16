@@ -243,7 +243,8 @@ class App.ControllerTable extends App.Controller
               item = App[attributes[withId].relation].findNative(object[withId])
               if item && item.displayName
                 group = item.displayName().toLowerCase()
-
+        if _.isEmpty(group)
+          group = ''
         groupObjects[group] ||= []
         groupObjects[group].push object
 
