@@ -108,4 +108,74 @@ RSpec.describe Import::OTRS::StateFactory do
     expect(state.default_create).to be false
     expect(state.default_follow_up).to be false
   end
+
+  context 'changing Ticket::State IDs' do
+
+    let(:state_backend_param) {
+      states = %w(new open merged pending_reminder pending_auto_close_p pending_auto_close_n pending_auto_close_p closed_successful closed_unsuccessful closed_successful removed)
+
+      state_backend_param = []
+      states.each do |state|
+        state_backend_param.push(load_state_json(state))
+      end
+      state_backend_param
+    }
+
+    it 'updates Overviews' do
+      name     = 'My pending reached Tickets'
+      overview = Overview.find_by(name: name)
+      expect do
+        described_class.import(state_backend_param)
+        overview = Overview.find_by(name: name)
+      end.to change {
+        overview.id
+      }.and change {
+        overview.condition['ticket.state_id'][:value]
+      }
+    end
+
+    it 'updates Macros' do
+      name  = 'Close & Tag as Spam'
+      macro = Macro.find_by(name: name)
+      expect do
+        described_class.import(state_backend_param)
+        macro = Macro.find_by(name: name)
+      end.to change {
+        macro.id
+      }.and change {
+        macro.perform['ticket.state_id'][:value]
+      }
+    end
+
+    it 'updates Triggers' do
+      name    = 'auto reply (on new tickets)'
+      trigger = Trigger.find_by(name: name)
+      expect do
+        described_class.import(state_backend_param)
+        trigger = Trigger.find_by(name: name)
+      end.to change {
+        trigger.id
+      }.and change {
+        trigger.condition['ticket.state_id'][:value]
+      }
+    end
+
+    it 'updates ObjectManager::Attributes' do
+
+      attribute = ObjectManager::Attribute.get(
+        object: 'Ticket',
+        name:   'pending_time',
+      )
+      expect do
+        described_class.import(state_backend_param)
+
+        attribute = ObjectManager::Attribute.get(
+          object: 'Ticket',
+          name:   'pending_time',
+        )
+      end.to change {
+        attribute.data_option[:required_if][:state_id]
+      }
+    end
+  end
 end
