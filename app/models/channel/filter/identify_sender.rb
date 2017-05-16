@@ -93,6 +93,7 @@ module Channel::Filter::IdentifySender
         next if !mail[item.to_sym].addrs
         items = mail[item.to_sym].addrs
         items.each { |address_data|
+          next if address_data.address.blank?
           user_create(
             firstname: address_data.display_name,
             lastname: '',
@@ -114,7 +115,7 @@ module Channel::Filter::IdentifySender
           if recipient =~ /^(.+?)<(.+?)>/
             display_name = $1
           end
-          next if address.empty?
+          next if address.blank?
           user_create(
             firstname: display_name,
             lastname: '',
@@ -126,6 +127,9 @@ module Channel::Filter::IdentifySender
   end
 
   def self.user_create(data)
+    if data[:email] !~ /@/
+      data[:email] += '@local'
+    end
     user = User.find_by(email: data[:email].downcase)
     if !user
       user = User.find_by(login: data[:email].downcase)
