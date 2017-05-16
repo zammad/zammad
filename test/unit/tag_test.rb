@@ -293,4 +293,53 @@ class TagTest < ActiveSupport::TestCase
     assert_not_equal(ticket2_lookup4.updated_at.to_s, ticket2_lookup3.updated_at.to_s)
     travel_back
   end
+
+  test 'tags - rename tag with same name' do
+
+    ticket1 = Ticket.create(
+      title: 'rename tag1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket2 = Ticket.create(
+      title: 'rename tag2',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket1.tag_add('some rename tag1', 1)
+    ticket1.tag_add('some rename tag2 ', 1)
+
+    ticket2.tag_add('some rename tag2', 1)
+
+    tags_ticket1 = ticket1.tag_list
+    assert_equal(2, tags_ticket1.count)
+    assert(tags_ticket1.include?('some rename tag1'))
+    assert(tags_ticket1.include?('some rename tag2'))
+
+    tags_ticket2 = ticket2.tag_list
+    assert_equal(1, tags_ticket2.count)
+    assert(tags_ticket2.include?('some rename tag2'))
+
+    tag_item1 = Tag::Item.find_by(name: 'some rename tag1')
+    Tag::Item.rename(
+      id: tag_item1.id,
+      name: ' some rename tag1',
+      created_by_id: 1,
+    )
+
+    tags_ticket1 = ticket1.tag_list
+    assert_equal(2, tags_ticket1.count)
+    assert(tags_ticket1.include?('some rename tag1'))
+    assert(tags_ticket1.include?('some rename tag2'))
+
+    tags_ticket2 = ticket2.tag_list
+    assert_equal(1, tags_ticket2.count)
+    assert(tags_ticket2.include?('some rename tag2'))
+
+  end
 end

@@ -215,6 +215,9 @@ rename tag items
       old_tag_item = Tag::Item.find(data[:id])
       already_existing_tag = Tag::Item.lookup(name: new_tag_name)
 
+      # check if no remame is needed
+      return true if new_tag_name.downcase == old_tag_item.name.downcase
+
       # merge old with new tag if already existing
       if already_existing_tag
 
@@ -245,22 +248,21 @@ rename tag items
 
         # delete not longer used tag
         old_tag_item.destroy
+        return true
+      end
 
       # update new tag name
-      else
+      old_tag_item.name = new_tag_name
+      old_tag_item.save
 
-        old_tag_item.name = new_tag_name
-        old_tag_item.save
-
-        # touch reference objects
-        Tag.where(tag_item_id: old_tag_item.id).each { |tag|
-          tag_object = Tag::Object.lookup(id: tag.tag_object_id)
-          Tag.touch_reference_by_params(
-            object: tag_object.name,
-            o_id: tag.o_id,
-          )
-        }
-      end
+      # touch reference objects
+      Tag.where(tag_item_id: old_tag_item.id).each { |tag|
+        tag_object = Tag::Object.lookup(id: tag.tag_object_id)
+        Tag.touch_reference_by_params(
+          object: tag_object.name,
+          o_id: tag.o_id,
+        )
+      }
 
       true
     end
