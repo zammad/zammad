@@ -75,8 +75,6 @@ class Ldap
       attributes:    attributes,
       return_result: false, # improves performance
     ) do |entry|
-      # needed for the #entries? method -> returns nil on break
-      break if !block_given?
       yield entry
     end
   end
@@ -91,10 +89,12 @@ class Ldap
   #
   # @return [Boolean] Returns true if entries are present false if not.
   def entries?(*args)
-    # since #search returns nil if entries are found (due to the break in the yield block)
-    # and returns true otherwise we have to invert the result which matches the
-    # expected result of a ...? method and suites our needs since it checks one entry max.
-    !search(*args)
+    found = false
+    search(*args) do |_entry|
+      found = true
+      break
+    end
+    found
   end
 
   # Counts the entries for the given search criteria.
