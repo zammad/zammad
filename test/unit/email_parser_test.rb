@@ -1068,6 +1068,37 @@ end
           subject: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail52.box'),
+        body_md5: 'ad0c0727cd7d023ec9065daea03335f7',
+        params: {
+          from: 'MAILER-DAEMON@example.com (Mail Delivery System)',
+          from_email: 'MAILER-DAEMON@example.com',
+          from_display_name: 'Mail Delivery System',
+          subject: 'Undelivered Mail Returned to Sender',
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail53.box'),
+        body_md5: '104da300f70d5683f007951c9780c83d',
+        params: {
+          from: 'MAILER-DAEMON (Mail Delivery System)',
+          from_email: 'MAILER-DAEMON',
+          from_display_name: 'Mail Delivery System',
+          subject: 'Undelivered Mail Returned to Sender',
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail54.box'),
+        body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
+        params: {
+          from: '"Smith, Karoline, Example DE" <Karoline.Smith@example.com>',
+          from_email: 'Karoline.Smith@example.com',
+          from_display_name: 'Smith, Karoline, Example DE',
+          subject: 'AW: One Net Business',
+          body: 'no visible content'
+        },
+      },
     ]
 
     count = 0

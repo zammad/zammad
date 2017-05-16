@@ -2399,6 +2399,56 @@ Some Text',
           ],
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail52.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'Undelivered Mail Returned to Sender',
+          },
+          1 => {
+            from: 'MAILER-DAEMON@example.com (Mail Delivery System)',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Mail',
+              lastname: 'Delivery System',
+              fullname: 'Mail Delivery System',
+              email: 'mailer-daemon@example.com',
+            },
+          ],
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail53.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'Undelivered Mail Returned to Sender',
+          },
+          1 => {
+            from: 'MAILER-DAEMON (Mail Delivery System)',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Mail',
+              lastname: 'Delivery System',
+              fullname: 'Mail Delivery System',
+              email: 'mailer-daemon@local',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end

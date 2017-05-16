@@ -713,6 +713,7 @@ module Mail
   class Field
     def raw_value
       value = Encode.conv('utf8', @raw_value)
+      return value if value.blank?
       value.sub(/^.+?:(\s|)/, '')
     end
   end

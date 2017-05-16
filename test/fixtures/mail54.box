@@ -1,0 +1,77 @@
+From Karoline.Smith@example.com Wed Apr 19 20:56:33 2017
+Return-Path: <Karoline.Smith@example.com>
+Delivered-To: unknown
+Received: from betelgeuse.example.de (1.1.1.1:993) by zmd-clx with IMAP4-SSL; 19 Apr 2017 20:56:33 -0000
+Delivered-To: climax-hussein@example.com
+Received: (qmail 31952 invoked from network); 5 Apr 2017 07:45:31 -0000
+Received: from unknown (HELO mail1.bemta3.example.com) (2.1.1.1) by betelgeuse.example.de with SMTP; 5 Apr 2017 07:45:31 -0000
+Received: from [85.158.138.179] by server-17.bemta-3.example.com id D5/73-04270-A90A4E85; Wed, 05 Apr 2017 07:45:30 +0000
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIKsWRWlGSWpSXmKPExsWi75nTrTtrwZM
+Ig5drOCwmrVzP5sDoseXbDeYAxijWzLyk/IoE1owFz6ezFkxKrWjafpWpgfFOchcjF4eQwDZG
+iZbLL1ggnEOMEg3T97FCOIcZJX7/WsDcxcgJ5GxmlDg5wwvEZhPwkPhx6DUbiC0iYChxfOFUd
+hBbWEBWYsW5JYwQcTmJqY/OA9VwANluEivnqIGEWQRUJN69u8cCYvMKhEpsPziBCWLXUxaJk/
+Mvgc3hBJp/ueUn2BxGoJkbNpwHu4FZQFxi07PvrCC2hICAxJI9EHEJAVGJl4//sYLsYhbIk7j
+2Ww5ivqDEyZlPWCDO15bYuXs60wRGkVlIJs1C6JiFpAMirCmxfpc+RLWixJTuh+wQtoZE65y5
+7MjiCxjZVzFqFKcWlaUW6RoZ6SUVZaZnlOQmZuboGhoY6+WmFhcnpqfmJCYV6yXn525iBEZXP
+QMD4w7GqSf8DjFKcjApifIq+DyJEOJLyk+pzEgszogvKs1JLT7EKMPBoSTB6zQPKCdYlJqeWp
+GWmQOMc5i0BAePkghv53ygNG9xQWJucWY6ROoUoy7HsX1H3jAJseTl56VKifMqgBQJgBRllOb
+BjYClnEuMslLCvIwMDAxCPAWpRbmZJajyrxjFORiVhHmngEzhycwrgdv0CugIJqAjntx5CHJE
+SSJCSqqBscVE4ZBQvBPTgb3tc0qzH931fTz53yz2ffrMx++rrthVtq6zRfDx8k0LDeekF0+0v
+HJXc0o19w+JLmPmI3OeCl+rETt/8MmjAxarDBw3i7X///H873fr1JJEf0feTxoJO27vYNF065
+WL2aW/TrRKrlLj19r1H4uNT+mcsr7Fd77e0ynR7MPSdiWW4oxEQy3mouJEAFAagtA0AwAA
+X-Env-Sender: Karoline.Smith@example.com
+X-Msg-Ref: server-9.tower-169.example.com!1491378329!108245161!2
+X-Originating-IP: [3.1.1.1]
+X-StarScan-Received:
+X-StarScan-Version: 9.4.12; banners=-,-,-
+X-VirusChecked: Checked
+Received: (qmail 4383 invoked from network); 5 Apr 2017 07:45:30 -0000
+Received: from vgdpm13vr.example.com (HELO voxe03hw.internal.example.com) (4.1.1.1)
+by server-9.tower-169.example.com with SMTP; 5 Apr 2017 07:45:30 -0000
+Received: from VOEXH09W.internal.example.com (5.1.1.1) by
+edge1.example.com (195.232.244.48) with Microsoft SMTP Server (TLS) id
+15.0.1263.5; Wed, 5 Apr 2017 09:45:23 +0200
+Received: from VOEXC01W.internal.example.com (6.1.1.1) by
+VOEXH09W.internal.example.com (5.1.1.1) with Microsoft SMTP Server
+(TLS) id 15.0.1263.5; Wed, 5 Apr 2017 09:45:23 +0200
+Received: from AVOEXH03W.internal.example.com (7.1.1.1) by
+VOEXC01W.internal.example.com (6.1.1.1) with Microsoft SMTP Server
+(TLS) id 14.3.294.0; Wed, 5 Apr 2017 09:45:22 +0200
+Received: from VOEXM32W.internal.example.com ([8.1.1.1]) by
+AVOEXH03W.internal.example.com ([7.1.1.1]) with mapi id
+14.03.0294.000; Wed, 5 Apr 2017 09:45:20 +0200
+From: "Smith, Karoline, Example DE" <Karoline.Smith@example.com>
+To: Maruan Break <hussein@example.com>
+Subject: AW: One Net Business
+Thread-Topic: One Net Business
+Thread-Index: AQHSrJW/Plvrkd7dvEe1pr4cBZSIz6Gz0rpmgAAAyYaAASlrAIABavZw
+Date: Wed, 5 Apr 2017 07:45:19 +0000
+Message-ID: <D98C7360C87D6642B509616EFFD4ED2D421C542C@voexm32w.internal.example.com>
+References: <D98C7360C87D6642B509616EFFD4ED2D421C0403@voexm32w.internal.example.com>,<5C1F374E-737B-46BA-97F4-4829F1DF5E95@example.com>
+<A954ADC0-855B-4B71-8C2B-950CD6CBB428@example.com>,<45715EA78C7B5D4EAA1B775B56507F9B8C7715@VOEXM22W.internal.example.com>
+<071EAD34-9F10-4D76-9405-C1B3445A0C56@example.com>,<45715EA78C7B5D4EAA1B775B56507F9B8C78E3@VOEXM22W.internal.example.com>,<A28AE2B3-2393-419F-85AF-D0F6CBF8E6A1@example.com>,<58B6BD0C-6E26-43F9-815B-70E3233C0935@example.com>
+<1FDE0238-F38F-40D1-B7B7-F24ECFFBE5A1@example.com>
+<1D7115FC-2F22-486C-B4B5-820D8A64A4D2@example.com>
+In-Reply-To: <1D7115FC-2F22-486C-B4B5-820D8A64A4D2@example.com>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: multipart/alternative;
+boundary="_000_D98C7360C87D6642B509616EFFD4ED2D421C542Cvoexm32winterna_"
+MIME-Version: 1.0
+X-getmail-retrieved-from-mailbox: INBOX
+
+--_000_D98C7360C87D6642B509616EFFD4ED2D421C542Cvoexm32winterna_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+c29tZSB0ZXh0
+
+--_000_D98C7360C87D6642B509616EFFD4ED2D421C542Cvoexm32winterna_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+PGI+c29tZSB0ZXh0PC9iPg==
+
+--_000_D98C7360C87D6642B509616EFFD4ED2D421C542Cvoexm32winterna_--
