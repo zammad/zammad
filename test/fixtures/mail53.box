@@ -1,0 +1,110 @@
+Delivered-To: feedback_en@example.com
+Return-Path: <>
+Delivered-To: feedback_en@example.com
+Received: from director15.mail.dfw1a.example.net ([1.1.1.1])
+        by store512a.mail.iad3a.example.net (Dovecot) with LMTP id ZXf9G3t1tFhAbgAA7aV/mQ
+        for <feedback_en@example.com>; Mon, 27 Feb 2017 13:52:43 -0500
+Received: from smtp20.gate.dfw1a ([1.1.1.1])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        by director15.mail.dfw1a.example.net (Dovecot) with LMTP id wnMQKQhztFggHQAAREf9Rg
+        ; Mon, 27 Feb 2017 13:52:43 -0500
+Return-Path: <>
+X-Spam-Threshold: 95
+X-Spam-Score: 0
+X-Spam-Flag: NO
+X-Virus-Scanned: OK
+X-MessageSniffer-Scan-Result: 0
+X-MessageSniffer-Rules: 0-0-0-7364-c
+X-CMAE-Scan-Result: 0
+X-CNFS-Analysis: v=2.2 cv=IuBcS/3g c=1 sm=1 tr=0 a=scmLJpidNJD1CDJrwSPlCg==:117 a=KiCxJD0x+Pe5VASQKmYoJrcyuOo=:19 a=HpWyMqnf4hoA:10 a=HFcG5fkciocA:10 a=n2v9WMKugxEA:10 a=ZZnuYtJkoWoA:10 a=vX-N2HuyvEP-EhXdXtwA:9 a=GF4HiIEFAAAA:8 a=l1aLL7fvAAAA:8 a=m9wmmNRzG3RnX796Uw4A:9 a=CjuIK1q_8ugA:10 a=fSRcLqLQAAAA:8 a=n3WKkpLOXN7oL6whe2YA:9 a=oWI6YT3fg6wA:10 a=JGRhF4uQAAAA:8 a=YoI8Y-owAAAA:8 a=xW0offs3AAAA:8 a=cuXalqQTuEIKHF7dZIwA:9 a=hHE8zlonNCKEIyoE4Yab:22 a=NPV240f7YeaO3CCHy0GZ:22 a=6Ojsp-TqxlhusgkSIWu7:22 a=kcHpxALSlUaRulRdPvIa:22 a=-zJbGfyDzD99htaT2oAx:22 a=_3VCzNpgjGu_f5hyB7JW:22
+X-Orig-To: feedback@example.com
+X-Originating-Ip: [XX.example.example.example]
+Authentication-Results: smtp20.gate.dfw1a.example.net; iprev=pass policy.iprev="XX.example.example.example"; spf=neutral smtp.mailfrom="" smtp.helo="smtp136.dfw.example.com"; dkim=none (message not signed) header.d=none
+X-Classification-ID: ebb2f874-fd1d-11e6-968d-001ec95b9664-1-1
+Received: from [XX.example.example.example] ([XX.example.example.example:58318] helo=smtp136.dfw.example.com)
+        by smtp20.gate.dfw1a.example.net (envelope-from <>)
+        (ecelerity 4.2.1.56364 r(Core:4.2.1.14)) with ESMTPS (cipher=DHE-RSA-AES256-GCM-SHA384)
+        id 50/40-17519-B7574B85; Mon, 27 Feb 2017 13:52:43 -0500
+Received: by smtp30.relay.dfw1a.example.com (SMTP Server)
+        id 23593E043D; Mon, 27 Feb 2017 13:52:43 -0500 (EST)
+Date: Mon, 27 Feb 2017 13:52:43 -0500 (EST)
+From: MAILER-DAEMON (Mail Delivery System)
+Subject: Undelivered Mail Returned to Sender
+To: feedback@example.com
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status;
+        boundary="342ADE03AD.1488221563/smtp30.relay.dfw1a.example.com"
+Message-Id: <20170227185243.23593E043D@smtp30.relay.dfw1a.example.com>
+
+This is a MIME-encapsulated message.
+
+--342ADE03AD.1488221563/smtp30.relay.dfw1a.example.com
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host smtp30.relay.dfw1a.example.com.
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+For further assistance, please send mail to postmaster.
+
+If you do so, please include this problem report. You can
+delete your own text from the attached returned message.
+
+                   The mail system
+
+<john_example@example.com>: connect to example.com[XX.example.example.example]:25: Connection timed
+    out
+
+--342ADE03AD.1488221563/smtp30.relay.dfw1a.example.com
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; smtp30.relay.dfw1a.example.com
+X-SMTP-Server-Queue-ID: 342ADE03AD
+X-SMTP-Server-Sender: rfc822; feedback@example.com
+Arrival-Date: Mon, 27 Feb 2017 05:35:21 -0500 (EST)
+
+Final-Recipient: rfc822; john_example@example.com
+Original-Recipient: rfc822;john_example@example.com
+Action: failed
+Status: 4.4.1
+Diagnostic-Code: X-SMTP-Server; connect to example.com[XX.example.example.example]:25:
+    Connection timed out
+
+--342ADE03AD.1488221563/smtp30.relay.dfw1a.example.com
+Content-Description: Undelivered Message Headers
+Content-Type: text/rfc822-headers
+
+Return-Path: <feedback@example.com>
+Received: from smtp30.relay.dfw1a.example.com (localhost [127.0.0.1])
+        by smtp30.relay.dfw1a.example.com (SMTP Server) with ESMTP id 342ADE03AD
+        for <john_example@example.com>; Mon, 27 Feb 2017 05:35:21 -0500 (EST)
+X-Auth-ID: feedback_en@example.com
+Received: by smtp30.relay.dfw1a.example.com (Authenticated sender: feedback_en-AT-example.com) with ESMTPSA id BC4C5E016E
+        for <john_example@example.com>; Mon, 27 Feb 2017 05:35:20 -0500 (EST)
+X-Sender-Id: feedback_en@example.com
+Received: from help.example.com (example.node.dockerapp.io [example.example.example.example])
+        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
+        by 0.0.0.0:25 (trex/5.7.12);
+        Mon, 27 Feb 2017 05:35:21 -0500
+Date: Mon, 27 Feb 2017 10:35:19 +0000
+From: Oliver Grahl | Support <feedback@example.com>
+To: John Stewart <john_example@example.com>
+Message-ID: <20170227103514.188.920664@help.example.com>
+In-Reply-To: <92a8950479d35e18cb39263e9a35de3b@www.example.com>
+References: <92a8950479d35e18cb39263e9a35de3b@www.example.com>
+ <92a8950479d35e18cb39263e9a35de3b@www.example.com>
+Subject: RE: Feedback after Uninstallation [Ticket#62188]
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="--==_mimepart_58b400e72487d_32c43ffa32ed5c3010848";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Organization: example
+X-Powered-By: Zammad - Helpdesk/Support (https://zammad.org/)
+X-Mailer: Zammad Mail Service
+
+--342ADE03AD.1488221563/smtp30.relay.dfw1a.example.com--
