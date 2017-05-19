@@ -617,7 +617,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     assert(result[2][:tickets].empty?)
 
     overview2.order = {
-      by: 'created_at',
+      by: 'id',
       direction: 'DESC',
     }
     overview2.save!
