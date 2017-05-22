@@ -254,6 +254,9 @@
       if (e.clipboardData) { // ie
         clipboardData = e.clipboardData
       }
+      else if (window.clipboardData) { // ie
+        clipboardData = window.clipboardData
+      }
       else if (e.originalEvent.clipboardData) { // other browsers
         clipboardData = e.originalEvent.clipboardData
       }
@@ -307,15 +310,23 @@
       }
 
       // check existing + paste text for limit
-      var text = clipboardData.getData('text/html')
-      var docType = 'html'
-      if (!text || text.length === 0) {
-          docType = 'text'
-          text = clipboardData.getData('text/plain')
+      var text, docType
+      try {
+        text = clipboardData.getData('text/html')
+        docType = 'html'
+        if (!text || text.length === 0) {
+            docType = 'text'
+            text = clipboardData.getData('text/plain')
+        }
+        if (!text || text.length === 0) {
+            docType = 'text2'
+            text = clipboardData.getData('text')
+        }
       }
-      if (!text || text.length === 0) {
-          docType = 'text2'
-          text = clipboardData.getData('text')
+      catch (e) {
+        console.log('Sorry, can\'t insert markup because browser is not supporting it.')
+        docType = 'text3'
+        text = clipboardData.getData('text')
       }
       _this.log('paste', docType, text)
 
@@ -355,7 +366,14 @@
       // cleanup
       text = App.Utils.removeEmptyLines(text)
       _this.log('insert', text)
-      document.execCommand('insertHTML', false, text)
+
+      // as fallback, insert html via pasteHtmlAtCaret (for IE 11 and lower)
+      if (docType == 'text3') {
+        _this.pasteHtmlAtCaret(text)
+      }
+      else {
+        document.execCommand('insertHTML', false, text)
+      }
       return true
     })
 
@@ -513,6 +531,37 @@
       return text_plain
     }
     return this.$element.html().trim()
+  }
+
+  // taken from https://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div/6691294#6691294
+  Plugin.prototype.pasteHtmlAtCaret = function(html) {
+    var sel, range;
+    if (window.getSelection) {
+      sel = window.getSelection()
+      if (sel.getRangeAt && sel.rangeCount) {
+        range = sel.getRangeAt(0)
+        range.deleteContents()
+
+        var el = document.createElement('div')
+        el.innerHTML = html;
+        var frag = document.createDocumentFragment(), node, lastNode
+        while ( (node = el.firstChild) ) {
+          lastNode = frag.appendChild(node)
+        }
+        range.insertNode(frag)
+
+        if (lastNode) {
+          range = range.cloneRange()
+          range.setStartAfter(lastNode)
+          range.collapse(true)
+          sel.removeAllRanges()
+          sel.addRange(range)
+        }
+      }
+    }
+    else if (document.selection && document.selection.type != 'Control') {
+      document.selection.createRange().pasteHTML(html)
+    }
   }
 
   // log method
