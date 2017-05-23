@@ -125,6 +125,7 @@ class App.Utils
       child = el.firstChild
       break if !child
       break if child.nodeType isnt 1 || child.tagName isnt 'BR'
+      break if !child.remove
       child.remove()
 
     loop
@@ -133,6 +134,7 @@ class App.Utils
       child = el.lastChild
       break if !child
       break if child.nodeType isnt 1 || child.tagName isnt 'BR'
+      break if !child.remove
       child.remove()
 
   # true|false = App.Utils.htmlLastLineEmpty(element)
