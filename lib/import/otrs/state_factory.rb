@@ -64,6 +64,7 @@ module Import
       def update_ticket_attributes
         update_ticket_state
         update_ticket_pending_time
+        reseed_dependent_objects
       end
 
       def update_ticket_state
@@ -123,6 +124,17 @@ module Import
           screens:          attribute[:screens],
           force:            true # otherwise _id as a name is not permitted
         )
+      end
+
+      def reseed_dependent_objects
+        Overview.reseed
+        Trigger.reseed
+        Macro.reseed
+
+        # we don't have to re-seed the ObjectManager
+        # Attributes since they contain the already
+        # imported DynamicFields which will be lost
+        ObjectManager::Attribute.seed
       end
     end
   end

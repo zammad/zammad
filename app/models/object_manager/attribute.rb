@@ -1,5 +1,6 @@
 class ObjectManager::Attribute < ApplicationModel
   include ChecksClientNotification
+  include CanSeed
 
   self.table_name = 'object_manager_attributes'
 

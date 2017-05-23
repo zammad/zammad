@@ -3,6 +3,7 @@
 class Macro < ApplicationModel
   include ChecksClientNotification
   include ChecksLatestChangeObserved
+  include CanSeed
 
   store     :perform
   validates :name, presence: true
