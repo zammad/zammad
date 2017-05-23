@@ -409,6 +409,7 @@ browser:build:
     - rake assets:precompile
     - rake db:drop
   artifacts:
+    expire_in: 1 week
     paths:
     - public/assets/.sprockets-manifest*
     - public/assets/application-*
