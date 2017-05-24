@@ -838,10 +838,47 @@ perform changes on ticket
           if item && item[:article_id]
             article = Ticket::Article.lookup(id: item[:article_id])
             if article && article.preferences['is-auto-response'] == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
-              logger.info "Send not trigger based notification to #{recipient_email} because of auto response tagged incoming email"
+              logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
               next
             end
           end
+
+          # loop protection / check if maximal count of trigger mail has reached
+          map = {
+            30 => 15,
+            60 => 25,
+            180 => 50,
+          }
+          skip = false
+          map.each { |minutes, count|
+            already_sent = Ticket::Article.where(
+              ticket_id: id,
+              sender: Ticket::Article::Sender.find_by(name: 'System'),
+              type: Ticket::Article::Type.find_by(name: 'email'),
+            ).where("ticket_articles.created_at > ? AND ticket_articles.to LIKE '%#{recipient_email.strip}%'", Time.zone.now - minutes.minutes).count
+            next if already_sent < count
+            logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} for this ticket within last #{minutes} minutes (loop protection)"
+            skip = true
+            break
+          }
+          next if skip
+          map = {
+            1 => 150,
+            3 => 250,
+            6 => 450,
+          }
+          skip = false
+          map.each { |hours, count|
+            already_sent = Ticket::Article.where(
+              sender: Ticket::Article::Sender.find_by(name: 'System'),
+              type: Ticket::Article::Type.find_by(name: 'email'),
+            ).where("ticket_articles.created_at > ? AND ticket_articles.to LIKE '%#{recipient_email.strip}%'", Time.zone.now - hours.hours).count
+            next if already_sent < count
+            logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{hours} hour(s) (loop protection)"
+            skip = true
+            break
+          }
+          next if skip
 
           email = recipient_email.downcase.strip
           next if recipients_checked.include?(email)
