@@ -2446,4 +2446,389 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   end
 
+  test '2 loop check' do
+    trigger1 = Trigger.create_or_update(
+      name: 'aaa loop check',
+      condition: {
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.all.pluck(:id),
+        },
+        'article.sender_id' => {
+          'operator' => 'is',
+          'value' => Ticket::Article::Sender.lookup(name: 'Customer').id,
+        },
+        'article.type_id' => {
+          'operator' => 'is',
+          'value' => [
+            Ticket::Article::Type.lookup(name: 'email').id,
+            Ticket::Article::Type.lookup(name: 'phone').id,
+            Ticket::Article::Type.lookup(name: 'web').id,
+          ],
+        },
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some lala',
+          'recipient' => 'ticket_customer',
+          'subject' => 'Thanks for your inquiry - loop check (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    ticket1 = Ticket.create(
+      title: 'loop try 1',
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket1, 'ticket1 created')
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket1.reload
+    assert_equal(1, ticket1.articles.count)
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(2, ticket1.articles.count)
+
+    ticket1.priority = Ticket::Priority.lookup(name: '2 normal')
+    ticket1.save!
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(2, ticket1.articles.count)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(4, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[2].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[3].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(6, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[4].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[5].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(8, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[6].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[7].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(10, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[8].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[9].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(12, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[10].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[11].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(14, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[12].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[13].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(16, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[14].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[15].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(18, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[16].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[17].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(20, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[18].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[19].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(22, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[20].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[21].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(24, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[22].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[23].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(26, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[24].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[25].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(28, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[26].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[27].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(30, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[28].from)
+    assert_equal('nicole.braun@zammad.org', ticket1.articles[29].to)
+
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_loop_sender@example.com',
+      to: 'some_loop_recipient@example.com',
+      subject: 'some subject 1234',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message <b>note</b><br>new line',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Observer::Transaction.commit
+    ticket1.reload
+    assert_equal(31, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[30].from)
+
+  end
+
 end
