@@ -117,32 +117,7 @@ class Channel::EmailParser
     }
 
     # set extra headers
-    begin
-      data[:from_email]        = Mail::Address.new(from).address
-      data[:from_local]        = Mail::Address.new(from).local
-      data[:from_domain]       = Mail::Address.new(from).domain
-      data[:from_display_name] = Mail::Address.new(from).display_name ||
-                                 (Mail::Address.new(from).comments && Mail::Address.new(from).comments[0])
-    rescue
-      from.strip!
-      if from =~ /^(.+?)<(.+?)@(.+?)>$/
-        data[:from_email]        = "#{$2}@#{$3}"
-        data[:from_local]        = $2
-        data[:from_domain]       = $3
-        data[:from_display_name] = $1
-      else
-        data[:from_email]  = from
-        data[:from_local]  = from
-        data[:from_domain] = from
-      end
-    end
-
-    # do extra decoding because we needed to use field.value
-    data[:from_display_name] = Mail::Field.new('X-From', data[:from_display_name]).to_s
-    data[:from_display_name].delete!('"')
-    data[:from_display_name].strip!
-    data[:from_display_name].gsub!(/^'/, '')
-    data[:from_display_name].gsub!(/'$/, '')
+    data = data.merge(Channel::EmailParser.sender_properties(from))
 
     # do extra encoding (see issue#1045)
     if data[:subject].present?
@@ -636,6 +611,39 @@ returns
 
     return false if !class_instance.association_id_validation(attribute, value)
     true
+  end
+
+  def self.sender_properties(from)
+    data = {}
+
+    begin
+      data[:from_email]        = Mail::Address.new(from).address
+      data[:from_local]        = Mail::Address.new(from).local
+      data[:from_domain]       = Mail::Address.new(from).domain
+      data[:from_display_name] = Mail::Address.new(from).display_name ||
+                                 (Mail::Address.new(from).comments && Mail::Address.new(from).comments[0])
+    rescue
+      from.strip!
+      if from =~ /^(.+?)<(.+?)@(.+?)>$/
+        data[:from_email]        = "#{$2}@#{$3}"
+        data[:from_local]        = $2
+        data[:from_domain]       = $3
+        data[:from_display_name] = $1
+      else
+        data[:from_email]  = from
+        data[:from_local]  = from
+        data[:from_domain] = from
+      end
+    end
+
+    # do extra decoding because we needed to use field.value
+    data[:from_display_name] = Mail::Field.new('X-From', data[:from_display_name]).to_s
+    data[:from_display_name].delete!('"')
+    data[:from_display_name].strip!
+    data[:from_display_name].gsub!(/^'/, '')
+    data[:from_display_name].gsub!(/'$/, '')
+
+    data
   end
 
   def set_attributes_by_x_headers(item_object, header_name, mail, suffix = false)

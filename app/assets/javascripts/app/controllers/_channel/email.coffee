@@ -45,9 +45,7 @@ class App.ChannelEmailFilter extends App.Controller
 
     template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
-    description = '''
-With Filters you can e. g. dispatch new Tickets into certain groups or set a certain priority for Tickets of an VIP customer.
-'''
+    description = 'With filters you can e. g. dispatch new tickets into certain groups or set a certain priority for tickets of a VIP customer.'
 
     new App.ControllerTable(
       el:       template.find('.overview')

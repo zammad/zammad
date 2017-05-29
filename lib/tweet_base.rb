@@ -10,11 +10,11 @@ class TweetBase
   def user(tweet)
 
     if tweet.class == Twitter::DirectMessage
-      Rails.logger.error "Twitter sender for dm (#{tweet.id}): found"
+      Rails.logger.debug "Twitter sender for dm (#{tweet.id}): found"
       Rails.logger.debug tweet.sender.inspect
       return tweet.sender
     elsif tweet.class == Twitter::Tweet
-      Rails.logger.error "Twitter sender for tweet (#{tweet.id}): found"
+      Rails.logger.debug "Twitter sender for tweet (#{tweet.id}): found"
       Rails.logger.debug tweet.user.inspect
       return tweet.user
     else
@@ -377,7 +377,7 @@ class TweetBase
 
     # replace Twitter::NullObject with nill to prevent elasticsearch index issue
     preferences.each { |_key, value|
-      next if value.class != ActiveSupport::HashWithIndifferentAccess
+      next if value.class != ActiveSupport::HashWithIndifferentAccess && value.class != Hash
       value.each { |sub_key, sub_level|
         next if sub_level.class != Twitter::NullObject
         value[sub_key] = nil
