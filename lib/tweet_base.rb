@@ -379,6 +379,10 @@ class TweetBase
     preferences.each { |_key, value|
       next if value.class != ActiveSupport::HashWithIndifferentAccess && value.class != Hash
       value.each { |sub_key, sub_level|
+        if sub_level.class == Twitter::Place
+          value[sub_key] = sub_level.attrs
+          next
+        end
         next if sub_level.class != Twitter::NullObject
         value[sub_key] = nil
       }

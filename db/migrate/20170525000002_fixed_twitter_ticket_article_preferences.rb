@@ -12,6 +12,11 @@ class FixedTwitterTicketArticlePreferences < ActiveRecord::Migration
       article.preferences.each { |_key, value|
         next if value.class != ActiveSupport::HashWithIndifferentAccess
         value.each { |sub_key, sub_level|
+          if sub_level.class == Twitter::Place
+            value[sub_key] = sub_level.attrs
+            changed = true
+            next
+          end
           next if sub_level.class != Twitter::NullObject
           value[sub_key] = nil
           changed = true
