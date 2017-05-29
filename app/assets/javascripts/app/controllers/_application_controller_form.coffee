@@ -426,8 +426,11 @@ class App.ControllerForm extends App.Controller
         delete param[item.name]
         continue
 
-      # collect all params, push it to an array if already exists
-      value = item.value.trim()
+      # collect all params, push it to an array item.value already exists
+      value = item.value
+      if item.value
+        value = item.value.trim()
+
       if item.type is 'boolean'
         if value is ''
           value = undefined
