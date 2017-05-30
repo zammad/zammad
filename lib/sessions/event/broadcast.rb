@@ -12,7 +12,7 @@ class Sessions::Event::Broadcast < Sessions::Event::Base
 
       # broadcast to recipient list
       if @payload['recipient']
-        if @payload['recipient'].class != Hash && @payload['recipient'].class != ActiveSupport::HashWithIndifferentAccess
+        if @payload['recipient'].class != Hash && @payload['recipient'].class != ActiveSupport::HashWithIndifferentAccess && @payload['recipient'].class != ActionController::Parameters
           log 'error', "recipient attribute isn't a hash (#{@payload['recipient'].class}) '#{@payload['recipient'].inspect}'"
         elsif !@payload['recipient'].key?('user_id')
           log 'error', "need recipient.user_id attribute '#{@payload['recipient'].inspect}'"
