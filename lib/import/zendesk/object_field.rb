@@ -15,8 +15,7 @@ module Import
       private
 
       def local_name(object_field)
-        return @local_name if @local_name
-        @local_name = remote_name(object_field).gsub(/\s/, '_').downcase
+        @local_name ||= remote_name(object_field).gsub(%r{[\s\/]}, '_').underscore.gsub(/_{2,}/, '_')
       end
 
       def remote_name(object_field)
@@ -28,7 +27,7 @@ module Import
       end
 
       def backend_class(object_field)
-        "Import::Zendesk::ObjectAttribute::#{object_field.type  .capitalize}".constantize
+        "Import::Zendesk::ObjectAttribute::#{object_field.type.capitalize}".constantize
       end
 
       def object_name
