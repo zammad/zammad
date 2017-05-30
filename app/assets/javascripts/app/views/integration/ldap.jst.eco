@@ -64,7 +64,7 @@
   <% end %>
 
   <h3><%- @T('Role') %></h3>
-  <% if _.isEmpty(@config.group_role_map): %>
+  <% if _.isEmpty(@group_role_map): %>
     <table class="settings-list settings-list--stretch settings-list--placeholder">
       <thead><tr><th><%- @T('No Entries') %>
     </table>
@@ -75,10 +75,10 @@
           <th width="40%"><%- @T('LDAP') %>
           <th width="60%"><%- @T('Zammad') %>
       <tbody>
-        <% for key, value of @config.group_role_map: %>
+        <% for source, dests of @group_role_map: %>
           <tr>
-            <td class="settings-list-row-control"><%= key %>
-            <td class="settings-list-row-control"><%= App.Role.find(value).displayName() %>
+            <td class="settings-list-row-control"><%= source %>
+            <td class="settings-list-row-control"><%= dests %>
         <% end %>
   <% end %>
     </table>
