@@ -85,16 +85,19 @@ class Ldap
         members = entry[:member]
         next if members.blank?
 
-        role = mapping[entry.dn.downcase]
-        next if role.blank?
-        role = role.to_i
+        roles = mapping[entry.dn.downcase]
+        next if roles.blank?
 
         members.each do |user_dn|
           user_dn_key = user_dn.downcase
 
-          result[user_dn_key] ||= []
-          next if result[user_dn_key].include?(role)
-          result[user_dn_key].push(role)
+          roles.each do |role|
+            role = role.to_i
+
+            result[user_dn_key] ||= []
+            next if result[user_dn_key].include?(role)
+            result[user_dn_key].push(role)
+          end
         end
       end
 
