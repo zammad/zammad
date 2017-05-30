@@ -35,7 +35,7 @@ RSpec.describe Import::Ldap::UserFactory do
       # group user role mapping
       expect(mocked_ldap).to receive(:search)
       # user counting
-      expect(mocked_ldap).to receive(:count).and_return(1)
+      allow(mocked_ldap).to receive(:count).and_return(1)
       # user search
       expect(mocked_ldap).to receive(:search).and_yield(mocked_entry)
 
@@ -201,7 +201,7 @@ RSpec.describe Import::Ldap::UserFactory do
       config = {
         group_filter:   '(objectClass=group)',
         group_role_map: {
-          group_dn => '1',
+          group_dn => %w(1 2),
         }
       }
 
@@ -219,7 +219,7 @@ RSpec.describe Import::Ldap::UserFactory do
       )
 
       expected = {
-        user_dn => [1]
+        user_dn => [1, 2]
       }
 
       expect(user_roles).to be_a(Hash)

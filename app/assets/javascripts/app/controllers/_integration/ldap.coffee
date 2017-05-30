@@ -61,8 +61,15 @@ class Form extends App.Controller
   render: (top = false) =>
     @config = @currentConfig()
 
+    group_role_map = {}
+    for source, dests of @config.group_role_map
+      group_role_map[source] = dests.map((dest) ->
+        App.Role.find(dest).displayName()
+      ).join ', '
+
     @html App.view('integration/ldap')(
-      config: @config
+      config: @config,
+      group_role_map: group_role_map
     )
     if _.isEmpty(@config)
       @$('.js-notConfigured').removeClass('hide')
@@ -419,7 +426,9 @@ class ConnectionWizard extends App.WizardModal
     length = group_role_map.source.length-1
     for count in [0..length]
       if group_role_map.source[count] && group_role_map.dest[count]
-        group_role_map_local[group_role_map.source[count]] = group_role_map.dest[count]
+        if !_.isArray(group_role_map_local[group_role_map.source[count]])
+          group_role_map_local[group_role_map.source[count]] = []
+        group_role_map_local[group_role_map.source[count]].push group_role_map.dest[count]
     @wizardConfig.group_role_map = group_role_map_local
 
     expertSettings = @formParam(@expertForm)
@@ -454,8 +463,9 @@ class ConnectionWizard extends App.WizardModal
 
   buildRowsGroupRole: (group_role_map) =>
     el = []
-    for source, dest of group_role_map
-      el.push @buildRowGroupRole(source, dest)
+    for source, dests of group_role_map
+      for dest in dests
+        el.push @buildRowGroupRole(source, dest)
     el
 
   buildRowGroupRole: (source, dest) =>
