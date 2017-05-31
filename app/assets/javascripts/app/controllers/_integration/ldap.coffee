@@ -287,12 +287,13 @@ class ConnectionWizard extends App.WizardModal
 
         option = ''
         options = {}
-        for dn in data.attributes.namingcontexts
-          options[dn] = dn
-          if option is ''
-            option = dn
-          if option.length > dn.length
-            option = dn
+        if !_.isEmpty data.attributes
+          for dn in data.attributes.namingcontexts
+            options[dn] = dn
+            if option is ''
+              option = dn
+            if option.length > dn.length
+              option = dn
 
         @wizardConfig.options = options
         @wizardConfig.option = option
