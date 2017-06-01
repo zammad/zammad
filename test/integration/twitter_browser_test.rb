@@ -187,7 +187,7 @@ class TwitterBrowserTest < TestCase
     )
 
     # wait till new streaming of channel is active
-    sleep 60
+    sleep 80
 
     # start tweet from customer
     client = Twitter::REST::Client.new do |config|
@@ -211,7 +211,6 @@ class TwitterBrowserTest < TestCase
     )
 
     click(text: 'Unassigned & Open')
-    sleep 6 # till overview is rendered
 
     watch_for(
       css: '.content.active',
