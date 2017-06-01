@@ -132,45 +132,57 @@ stream all accounts
   def self.stream
     Thread.abort_on_exception = true
 
+    auto_reconnect_after = 25
     last_channels = []
 
     loop do
       logger.debug 'stream controll loop'
+
       current_channels = []
       channels = Channel.where('active = ? AND area LIKE ?', true, '%::Account')
       channels.each { |channel|
         next if channel.options[:adapter] != 'twitter'
+        channel_id = channel.id.to_s
+        current_channels.push channel_id
 
-        current_channels.push channel.id
-
-        # exit it channel has changed
-        if @@channel_stream[channel.id] && @@channel_stream[channel.id][:updated_at] != channel.updated_at
-          logger.debug "channel (#{channel.id}) has changed, restart thread"
-          @@channel_stream[channel.id][:thread].exit
-          @@channel_stream[channel.id][:thread].join
-          @@channel_stream[channel.id][:stream_instance].disconnect
-          @@channel_stream[channel.id] = false
+        # exit it channel has changed or connection is older then 25 min.
+        if @@channel_stream[channel_id]
+          if @@channel_stream[channel_id][:updated_at] != channel.updated_at
+            logger.info "channel (#{channel.id}) has changed, stop thread"
+            @@channel_stream[channel_id][:thread].exit
+            @@channel_stream[channel_id][:thread].join
+            @@channel_stream[channel_id][:stream_instance].disconnect
+            @@channel_stream[channel_id] = false
+          elsif @@channel_stream[channel_id][:started_at] && @@channel_stream[channel_id][:started_at] < Time.zone.now - auto_reconnect_after.minutes
+            logger.info "channel (#{channel.id}) reconnect - thread is older then #{auto_reconnect_after} minutes, restart thread"
+            @@channel_stream[channel_id][:thread].exit
+            @@channel_stream[channel_id][:thread].join
+            @@channel_stream[channel_id][:stream_instance].disconnect
+            @@channel_stream[channel_id] = false
+          end
         end
 
-        #logger.debug "thread for channel (#{channel.id}) already running" if @@channel_stream[channel.id]
-        next if @@channel_stream[channel.id]
+        #logger.debug "thread for channel (#{channel.id}) already running" if channel_stream
+        next if @@channel_stream[channel_id]
 
-        @@channel_stream[channel.id] = {
-          updated_at: channel.updated_at
+        @@channel_stream[channel_id] = {
+          updated_at: channel.updated_at,
+          started_at: Time.zone.now,
         }
 
         # start channels with delay
         sleep @@channel_stream.count
 
         # start threads for each channel
-        @@channel_stream[channel.id][:thread] = Thread.new {
+        @@channel_stream[channel_id][:thread] = Thread.new {
           begin
             logger.info "Started stream channel for '#{channel.id}' (#{channel.area})..."
-            @@channel_stream[channel.id][:stream_instance] = channel.stream_instance
-            @@channel_stream[channel.id][:stream_instance].stream
-            @@channel_stream[channel.id][:stream_instance].disconnect
-            @@channel_stream[channel.id] = false
-            logger.debug " ...stopped thread for '#{channel.id}'"
+            @@channel_stream[channel_id] ||= {}
+            @@channel_stream[channel_id][:stream_instance] = channel.stream_instance
+            @@channel_stream[channel_id][:stream_instance].stream
+            @@channel_stream[channel_id][:stream_instance].disconnect
+            @@channel_stream[channel_id] = false
+            logger.info " ...stopped thread for '#{channel.id}'"
           rescue => e
             error = "Can't use channel (#{channel.id}): #{e.inspect}"
             logger.error error
@@ -178,24 +190,24 @@ stream all accounts
             channel.status_in = 'error'
             channel.last_log_in = error
             channel.save
-            @@channel_stream[channel.id] = false
+            @@channel_stream[channel_id] = false
           end
         }
       }
 
       # cleanup deleted channels
       last_channels.each { |channel_id|
-        next if !@@channel_stream[channel_id]
+        next if !@@channel_stream[channel_id.to_s]
         next if current_channels.include?(channel_id)
-        logger.debug "channel (#{channel_id}) not longer active, stop thread"
-        @@channel_stream[channel_id][:thread].exit
-        @@channel_stream[channel_id][:thread].join
-        @@channel_stream[channel_id][:stream_instance].disconnect
-        @@channel_stream[channel_id] = false
+        logger.info "channel (#{channel_id}) not longer active, stop thread"
+        @@channel_stream[channel_id.to_s][:thread].exit
+        @@channel_stream[channel_id.to_s][:thread].join
+        @@channel_stream[channel_id.to_s][:stream_instance].disconnect
+        @@channel_stream[channel_id.to_s] = false
       }
       last_channels = current_channels
 
-      sleep 30
+      sleep 20
     end
 
   end
