@@ -136,7 +136,14 @@ class ZendeskImportTest < ActiveSupport::TestCase
     checks.each { |check|
       user = User.find(check[:id])
       check[:data].each { |key, value|
-        assert_equal(value, user[key], "user.#{key} for user_id #{check[:id]}")
+        user_value = user[key]
+        text       = "user.#{key} for user_id #{check[:id]}"
+
+        if value.nil?
+          assert_nil(user_value, text)
+        else
+          assert_equal(value, user_value, text)
+        end
       }
       assert_equal(check[:roles], user.roles.sort.to_a, "#{user.login} roles")
       assert_equal(check[:groups], user.groups.sort.to_a, "#{user.login} groups")
@@ -247,7 +254,14 @@ class ZendeskImportTest < ActiveSupport::TestCase
     checks.each { |check|
       organization = Organization.find(check[:id])
       check[:data].each { |key, value|
-        assert_equal(value, organization[key], "organization.#{key} for organization_id #{check[:id]}")
+        organization_value = organization[key]
+        text               = "organization.#{key} for organization_id #{check[:id]}"
+
+        if value.nil?
+          assert_nil(organization_value, text)
+        else
+          assert_equal(value, organization_value, text)
+        end
       }
     }
   end
@@ -282,7 +296,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         id: 2,
         data: {
           title:                    'test',
-          #note:                     'This is the first comment. Feel free to delete this sample ticket.',
+          #note:                    'This is the first comment. Feel free to delete this sample ticket.',
           note:                     'test email',
           create_article_type_id:   1,
           create_article_sender_id: 2,
@@ -293,11 +307,11 @@ class ZendeskImportTest < ActiveSupport::TestCase
           owner_id:                 1,
           customer_id:              6,
           organization_id:          2,
-          test_checkbox:         true,
-          custom_integer:         999,
-          custom_dropdown:     'key2',
-          custom_decimal:       '1.6',
-          not_existing:           nil,
+          test_checkbox:            true,
+          custom_integer:           999,
+          custom_drop_down:         'key2',
+          custom_decimal:           '1.6',
+          not_existing:             nil,
         },
       },
       {
@@ -315,12 +329,12 @@ If you\'re reading this message in your email, click the ticket number link that
           priority_id:              1,
           owner_id:                 1,
           customer_id:              7,
-          organization_id:        nil,
-          test_checkbox:        false,
-          custom_integer:         nil,
-          custom_dropdown:         '',
-          custom_decimal:         nil,
-          not_existing:           nil,
+          organization_id:          nil,
+          test_checkbox:            false,
+          custom_integer:           nil,
+          custom_drop_down:         '',
+          custom_decimal:           nil,
+          not_existing:             nil,
         },
       },
       {
@@ -376,7 +390,14 @@ If you\'re reading this message in your email, click the ticket number link that
     checks.each { |check|
       ticket = Ticket.find(check[:id])
       check[:data].each { |key, value|
-        assert_equal(value, ticket[key], "ticket.#{key} for ticket_id #{check[:id]}")
+        ticket_value = ticket[key]
+        text         = "ticket.#{key} for ticket_id #{check[:id]}"
+
+        if value.nil?
+          assert_nil(ticket_value, text)
+        else
+          assert_equal(value, ticket_value, text)
+        end
       }
     }
   end
@@ -471,7 +492,7 @@ If you\'re reading this message in your email, click the ticket number link that
       custom_date
       custom_integer
       custom_regex
-      custom_dropdown
+      custom_drop_down
     )
 
     assert_equal(copmare_fields, local_fields, 'ticket fields')

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Import::Zendesk::ObjectAttribute do
 
-  it 'throws an exception if no init_callback is implemented' do
+  it 'extends ObjectManager Attribute exception text' do
 
     attribute = double(
       title:              'Example attribute',
@@ -16,6 +16,19 @@ RSpec.describe Import::Zendesk::ObjectAttribute do
       type:               'input',
     )
 
-    expect { described_class.new('Ticket', 'example_field', attribute) }.to raise_error(RuntimeError)
+    error_text = 'some error'
+    expect(ObjectManager::Attribute).to receive(:add).and_raise(RuntimeError, error_text)
+
+    exception = nil
+    begin
+      described_class.new('Ticket', 'example_field', attribute)
+    rescue => e
+      exception = e
+    end
+
+    expect(exception).not_to be nil
+    expect(exception).to be_a(RuntimeError)
+    expect(exception.message).to include(error_text)
+    expect(exception.message).not_to eq(error_text)
   end
 end

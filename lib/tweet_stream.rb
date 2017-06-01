@@ -6,6 +6,7 @@ class TweetStream < TweetBase
 
   def initialize(auth)
     @connection_type = 'stream'
+    @auth = auth
     @client = Twitter::Streaming::ClientCustom.new do |config|
       config.consumer_key        = auth[:consumer_key]
       config.consumer_secret     = auth[:consumer_secret]

@@ -246,13 +246,27 @@ jQuery.fn.extend( {
       var val = $elem.val();
       var type = $elem.data('field-type');
 
-      return val == null ?
-        null :
-        jQuery.isArray( val ) ?
-          jQuery.map( val, function( val ) {
-            return { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type };
-          } ) :
-          { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type };
+      var result;
+      if ( val == null ) {
+
+        // be sure that also null values are transfered
+        // https://github.com/zammad/zammad/issues/944
+        if ( $elem.prop('multiple') ) {
+          result = { name: elem.name, value: null, type: type };
+        }
+        else {
+          result = null
+        }
+      }
+      else if ( jQuery.isArray( val ) ) {
+        result = jQuery.map( val, function( val ) {
+          return { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type };
+        } );
+      }
+      else {
+        result = { name: elem.name, value: val.replace( rCRLF, "\r\n" ), type: type };
+      }
+      return result;
     } ).get();
   }
 } );

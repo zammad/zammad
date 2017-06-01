@@ -85,16 +85,19 @@ class Ldap
         members = entry[:member]
         next if members.blank?
 
-        role = mapping[entry.dn.downcase]
-        next if role.blank?
-        role = role.to_i
+        roles = mapping[entry.dn.downcase]
+        next if roles.blank?
 
         members.each do |user_dn|
           user_dn_key = user_dn.downcase
 
-          result[user_dn_key] ||= []
-          next if result[user_dn_key].include?(role)
-          result[user_dn_key].push(role)
+          roles.each do |role|
+            role = role.to_i
+
+            result[user_dn_key] ||= []
+            next if result[user_dn_key].include?(role)
+            result[user_dn_key].push(role)
+          end
         end
       end
 
@@ -109,7 +112,7 @@ class Ldap
     #
     # @return [String, nil] The active or found filter or nil if none could be found.
     def filter
-      @filter ||= lookup_filter(['(objectClass=group)'])
+      @filter ||= lookup_filter(['(objectClass=group)', '(objectClass=posixgroup)'])
     end
 
     # The active uid attribute of the instance. If none give on initialization an automatic lookup is performed.

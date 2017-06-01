@@ -28,6 +28,7 @@ test( "column_select check", function(assert) {
 
   var params = App.ControllerForm.params(el)
   var test_params = {
+    column_select1: null,
     column_select2: ['aaa', 'bbb'],
     column_select3: ['1', '2'],
   }

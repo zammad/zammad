@@ -2327,11 +2327,20 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title: 'Defines postmaster filter.',
-  name: '0900_postmaster_filter_bounce_check',
+  name: '0900_postmaster_filter_bounce_follow_up_check',
   area: 'Postmaster::PreFilter',
   description: 'Defines postmaster filter to identify postmaster bounced - to handle it as follow-up of the original ticket.',
   options: {},
-  state: 'Channel::Filter::BounceCheck',
+  state: 'Channel::Filter::BounceFollowUpCheck',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Defines postmaster filter.',
+  name: '0950_postmaster_filter_bounce_delivery_permanent_failed',
+  area: 'Postmaster::PreFilter',
+  description: 'Defines postmaster filter to identify postmaster bounced - disable sending notification on permanent deleivery failed.',
+  options: {},
+  state: 'Channel::Filter::BounceDeliveryPermanentFailed',
   frontend: false
 )
 Setting.create_if_not_exists(

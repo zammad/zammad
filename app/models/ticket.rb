@@ -813,6 +813,19 @@ perform changes on ticket
         recipients_checked = []
         recipients_raw.each { |recipient_email|
 
+          skip_user = false
+          users = User.where(email: recipient_email)
+          users.each { |user|
+            next if user.preferences[:mail_delivery_failed] != true
+            next if !user.preferences[:mail_delivery_failed_data]
+            till_blocked = ((user.preferences[:mail_delivery_failed_data] - Time.zone.now - 60.days) / 60 / 60 / 24).round
+            next if till_blocked.positive?
+            logger.info "Send no trigger based notification to #{recipient_email} because email is marked as mail_delivery_failed for #{till_blocked} days"
+            skip_user = true
+            break
+          }
+          next if skip_user
+
           # send notifications only to email adresses
           next if !recipient_email
           next if recipient_email !~ /@/
