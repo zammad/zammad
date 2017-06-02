@@ -1079,6 +1079,28 @@ end
           body: 'no visible content'
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail56.box'),
+        body_md5: 'ee40e852b9fa18652ea66e2eda1ecbd3',
+        attachments: [
+          {
+            md5: 'cd82962457892d2e2f2d6914da3a88ed',
+            filename: 'message.html',
+          },
+          {
+            md5: 'ddbdf67aa2f5c60c294008a54d57082b',
+            filename: 'Hofjägeralle Wasserschaden.jpg',
+          },
+        ],
+        params: {
+          from: 'Martin Edenhofer <martin@example.de>',
+          from_email: 'martin@example.de',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
+          content_type: 'text/html',
+          body: 'Enjoy!',
+        },
+      },
     ]
 
     count = 0
@@ -1115,7 +1137,7 @@ end
           found = false
           data[:attachments].each { |attachment_parser|
             next if found
-            file_md5 = Digest::MD5.hexdigest( attachment_parser[:data] )
+            file_md5 = Digest::MD5.hexdigest(attachment_parser[:data])
             #puts 'Attachment:' + attachment_parser.inspect + '-' + file_md5
             if attachment[:md5] == file_md5
               found = true
