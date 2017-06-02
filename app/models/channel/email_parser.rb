@@ -314,9 +314,12 @@ class Channel::EmailParser
       filename = file.header[:content_disposition].filename
     rescue
       begin
-        result = file.header[:content_disposition].to_s.scan( /filename=("|)(.+?)("|);/i )
-        if result && result[0] && result[0][1]
-          filename = result[0][1]
+        if file.header[:content_disposition].to_s =~ /filename="(.+?)"/i
+          filename = $1
+        elsif file.header[:content_disposition].to_s =~ /filename='(.+?)'/i
+          filename = $1
+        elsif file.header[:content_disposition].to_s =~ /filename=(.+?);/i
+          filename = $1
         end
       rescue
         Rails.logger.debug 'Unable to get filename'
