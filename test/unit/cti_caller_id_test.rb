@@ -210,10 +210,12 @@ Mob: +49 333 1112222",
     assert_equal(2, caller_ids[0].user_id)
     assert_nil(caller_ids[0].comment)
 
+    user_id = User.find_by(login: 'ticket-caller_id-customer1@example.com').id
+
     Cti::CallerId.maybe_add(
       caller_id: '4912345678901',
       level: 'maybe',
-      user_id: 3,
+      user_id: user_id,
       object: 'Ticket',
       o_id: 2,
     )
@@ -221,7 +223,7 @@ Mob: +49 333 1112222",
     caller_ids = Cti::CallerId.lookup('4912345678901')
     assert_equal(2, caller_ids.length)
     assert_equal('maybe', caller_ids[0].level)
-    assert_equal(3, caller_ids[0].user_id)
+    assert_equal(user_id, caller_ids[0].user_id)
     assert_nil(caller_ids[0].comment)
     assert_equal('maybe', caller_ids[1].level)
     assert_equal(2, caller_ids[1].user_id)
@@ -230,7 +232,7 @@ Mob: +49 333 1112222",
     Cti::CallerId.maybe_add(
       caller_id: '4912345678901',
       level: 'known',
-      user_id: 3,
+      user_id: user_id,
       object: 'User',
       o_id: 2,
     )
@@ -238,7 +240,7 @@ Mob: +49 333 1112222",
     caller_ids = Cti::CallerId.lookup('4912345678901')
     assert_equal(1, caller_ids.length)
     assert_equal('known', caller_ids[0].level)
-    assert_equal(3, caller_ids[0].user_id)
+    assert_equal(user_id, caller_ids[0].user_id)
     assert_nil(caller_ids[0].comment)
 
   end

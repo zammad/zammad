@@ -132,9 +132,9 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user3.id]), 'check assets' )
     travel_back
 
-    user1.destroy
-    user2.destroy
     user3.destroy
+    user2.destroy
+    user1.destroy
     org1.destroy
     org2.destroy
 
@@ -270,9 +270,9 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user_new_2.id]), 'check assets' )
     travel_back
 
-    user1.destroy
-    user2.destroy
     user3.destroy
+    user2.destroy
+    user1.destroy
     org.destroy
     org_new.destroy
 

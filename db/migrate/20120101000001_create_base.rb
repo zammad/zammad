@@ -56,6 +56,8 @@ class CreateBase < ActiveRecord::Migration
     add_index :users, [:mobile]
     add_index :users, [:source]
     add_index :users, [:created_by_id]
+    add_foreign_key :users, :users, column: :created_by_id
+    add_foreign_key :users, :users, column: :updated_by_id
 
     create_table :signatures do |t|
       t.string :name,                 limit: 100,  null: false
@@ -67,6 +69,8 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :signatures, [:name], unique: true
+    add_foreign_key :signatures, :users, column: :created_by_id
+    add_foreign_key :signatures, :users, column: :updated_by_id
 
     create_table :email_addresses do |t|
       t.integer :channel_id,                        null: true
@@ -80,6 +84,8 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :email_addresses, [:email], unique: true
+    add_foreign_key :email_addresses, :users, column: :created_by_id
+    add_foreign_key :email_addresses, :users, column: :updated_by_id
 
     create_table :groups do |t|
       t.references :signature,                      null: true
@@ -95,6 +101,10 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :groups, [:name], unique: true
+    add_foreign_key :groups, :signatures
+    add_foreign_key :groups, :email_addresses
+    add_foreign_key :groups, :users, column: :created_by_id
+    add_foreign_key :groups, :users, column: :updated_by_id
 
     create_table :roles do |t|
       t.string :name,                   limit: 100, null: false
@@ -107,6 +117,8 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :roles, [:name], unique: true
+    add_foreign_key :roles, :users, column: :created_by_id
+    add_foreign_key :roles, :users, column: :updated_by_id
 
     create_table :permissions do |t|
       t.string :name,                   limit: 255, null: false
@@ -135,27 +147,36 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :organizations, [:name], unique: true
     add_index :organizations, [:domain]
+    add_foreign_key :users, :organizations
+    add_foreign_key :organizations, :users, column: :created_by_id
+    add_foreign_key :organizations, :users, column: :updated_by_id
 
     create_table :roles_users, id: false do |t|
-      t.integer :user_id
-      t.integer :role_id
+      t.references :user
+      t.references :role
     end
     add_index :roles_users, [:user_id]
     add_index :roles_users, [:role_id]
+    add_foreign_key :roles_users, :users
+    add_foreign_key :roles_users, :roles
 
     create_table :groups_users, id: false do |t|
-      t.integer :user_id
-      t.integer :group_id
+      t.references :user
+      t.references :group
     end
     add_index :groups_users, [:user_id]
     add_index :groups_users, [:group_id]
+    add_foreign_key :groups_users, :users
+    add_foreign_key :groups_users, :groups
 
     create_table :organizations_users, id: false do |t|
-      t.integer :user_id
-      t.integer :organization_id
+      t.references :user
+      t.references :organization
     end
     add_index :organizations_users, [:user_id]
     add_index :organizations_users, [:organization_id]
+    add_foreign_key :organizations_users, :users
+    add_foreign_key :organizations_users, :organizations
 
     create_table :authorizations do |t|
       t.string :provider,             limit: 250, null: false
@@ -169,6 +190,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :authorizations, [:uid, :provider]
     add_index :authorizations, [:user_id]
     add_index :authorizations, [:username]
+    add_foreign_key :authorizations, :users
 
     create_table :locales do |t|
       t.string  :locale,              limit: 20,  null: false
@@ -192,6 +214,8 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :translations, [:source], length: 255
     add_index :translations, [:locale]
+    add_foreign_key :translations, :users, column: :created_by_id
+    add_foreign_key :translations, :users, column: :updated_by_id
 
     create_table :object_lookups do |t|
       t.string :name,                 limit: 250, null: false
@@ -220,6 +244,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :tokens, [:name, :action], unique: true
     add_index :tokens, :created_at
     add_index :tokens, :persistent
+    add_foreign_key :tokens, :users
 
     create_table :packages do |t|
       t.string :name,                 limit: 250, null: false
@@ -230,6 +255,9 @@ class CreateBase < ActiveRecord::Migration
       t.integer :created_by_id,                   null: false
       t.timestamps limit: 3, null: false
     end
+    add_foreign_key :packages, :users, column: :created_by_id
+    add_foreign_key :packages, :users, column: :updated_by_id
+
     create_table :package_migrations do |t|
       t.string :name,                 limit: 250, null: false
       t.string :version,              limit: 250, null: false
@@ -237,7 +265,7 @@ class CreateBase < ActiveRecord::Migration
     end
 
     create_table :taskbars do |t|
-      t.integer :user_id,                           null: false
+      t.references :user,                           null: false
       t.datetime :last_contact,                     null: false
       t.string :client_id,                          null: false
       t.string :key,                   limit: 100,  null: false
@@ -253,16 +281,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :taskbars, [:user_id]
     add_index :taskbars, [:client_id]
     add_index :taskbars, [:key]
-
-    create_table :tags do |t|
-      t.references :tag_item,                       null: false
-      t.references :tag_object,                     null: false
-      t.integer :o_id,                              null: false
-      t.integer :created_by_id,                     null: false
-      t.timestamps limit: 3, null: false
-    end
-    add_index :tags, [:o_id]
-    add_index :tags, [:tag_object_id]
+    add_foreign_key :taskbars, :users
 
     create_table :tag_objects do |t|
       t.string :name,                   limit: 250, null: false
@@ -277,6 +296,19 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :tag_items, [:name_downcase]
 
+    create_table :tags do |t|
+      t.references :tag_item,                       null: false
+      t.references :tag_object,                     null: false
+      t.integer :o_id,                              null: false
+      t.integer :created_by_id,                     null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :tags, [:o_id]
+    add_index :tags, [:tag_object_id]
+    add_foreign_key :tags, :tag_items
+    add_foreign_key :tags, :tag_objects
+    add_foreign_key :tags, :users, column: :created_by_id
+
     create_table :recent_views do |t|
       t.references :recent_view_object,             null: false
       t.integer :o_id,                              null: false
@@ -287,6 +319,8 @@ class CreateBase < ActiveRecord::Migration
     add_index :recent_views, [:created_by_id]
     add_index :recent_views, [:created_at]
     add_index :recent_views, [:recent_view_object_id]
+    add_foreign_key :recent_views, :object_lookups, column: :recent_view_object_id
+    add_foreign_key :recent_views, :users, column: :created_by_id
 
     create_table :activity_streams do |t|
       t.references :activity_stream_type,           null: false
@@ -304,6 +338,30 @@ class CreateBase < ActiveRecord::Migration
     add_index :activity_streams, [:created_at]
     add_index :activity_streams, [:activity_stream_object_id]
     add_index :activity_streams, [:activity_stream_type_id]
+    add_foreign_key :activity_streams, :type_lookups, column: :activity_stream_type_id
+    add_foreign_key :activity_streams, :object_lookups, column: :activity_stream_object_id
+    add_foreign_key :activity_streams, :permissions
+    add_foreign_key :activity_streams, :groups
+    add_foreign_key :activity_streams, :users, column: :created_by_id
+
+    create_table :history_types do |t|
+      t.string :name,                   limit: 250, null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :history_types, [:name], unique: true
+
+    create_table :history_objects do |t|
+      t.string :name,                   limit: 250, null: false
+      t.string :note,                   limit: 250, null: true
+      t.timestamps limit: 3, null: false
+    end
+    add_index :history_objects, [:name], unique: true
+
+    create_table :history_attributes do |t|
+      t.string :name,                   limit: 250, null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :history_attributes, [:name], unique: true
 
     create_table :histories do |t|
       t.references :history_type,                   null: false
@@ -329,25 +387,10 @@ class CreateBase < ActiveRecord::Migration
     add_index :histories, [:id_from]
     add_index :histories, [:value_from], length: 255
     add_index :histories, [:value_to], length: 255
-
-    create_table :history_types do |t|
-      t.string :name,                   limit: 250, null: false
-      t.timestamps limit: 3, null: false
-    end
-    add_index :history_types, [:name], unique: true
-
-    create_table :history_objects do |t|
-      t.string :name,                   limit: 250, null: false
-      t.string :note,                   limit: 250, null: true
-      t.timestamps limit: 3, null: false
-    end
-    add_index :history_objects, [:name], unique: true
-
-    create_table :history_attributes do |t|
-      t.string :name,                   limit: 250, null: false
-      t.timestamps limit: 3, null: false
-    end
-    add_index :history_attributes, [:name], unique: true
+    add_foreign_key :histories, :history_types
+    add_foreign_key :histories, :history_objects
+    add_foreign_key :histories, :history_attributes
+    add_foreign_key :histories, :users, column: :created_by_id
 
     create_table :settings do |t|
       t.string :title,                  limit: 200,  null: false
@@ -365,18 +408,6 @@ class CreateBase < ActiveRecord::Migration
     add_index :settings, [:area]
     add_index :settings, [:frontend]
 
-    create_table :stores do |t|
-      t.references :store_object,               null: false
-      t.references :store_file,                 null: false
-      t.integer :o_id,              limit: 8,   null: false
-      t.string :preferences,        limit: 2500, null: true
-      t.string :size,               limit: 50,  null: true
-      t.string :filename,           limit: 250, null: false
-      t.integer :created_by_id,                 null: false
-      t.timestamps limit: 3, null: false
-    end
-    add_index :stores, [:store_object_id, :o_id]
-
     create_table :store_objects do |t|
       t.string :name,               limit: 250, null: false
       t.string :note,               limit: 250, null: true
@@ -391,6 +422,21 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :store_files, [:sha], unique: true
     add_index :store_files, [:provider]
+
+    create_table :stores do |t|
+      t.references :store_object,               null: false
+      t.references :store_file,                 null: false
+      t.integer :o_id,              limit: 8,   null: false
+      t.string :preferences,        limit: 2500, null: true
+      t.string :size,               limit: 50,  null: true
+      t.string :filename,           limit: 250, null: false
+      t.integer :created_by_id,                 null: false
+      t.timestamps limit: 3, null: false
+    end
+    add_index :stores, [:store_object_id, :o_id]
+    add_foreign_key :stores, :store_objects
+    add_foreign_key :stores, :store_files
+    add_foreign_key :stores, :users, column: :created_by_id
 
     create_table :store_provider_dbs do |t|
       t.string :sha,                limit: 128,            null: false
@@ -418,6 +464,8 @@ class CreateBase < ActiveRecord::Migration
     add_index :avatars, [:store_hash]
     add_index :avatars, [:source]
     add_index :avatars, [:default]
+    add_foreign_key :avatars, :users, column: :created_by_id
+    add_foreign_key :avatars, :users, column: :updated_by_id
 
     create_table :online_notifications do |t|
       t.integer :o_id,                          null: false
@@ -433,6 +481,8 @@ class CreateBase < ActiveRecord::Migration
     add_index :online_notifications, [:seen]
     add_index :online_notifications, [:created_at]
     add_index :online_notifications, [:updated_at]
+    add_foreign_key :online_notifications, :users, column: :created_by_id
+    add_foreign_key :online_notifications, :users, column: :updated_by_id
 
     create_table :schedulers do |t|
       t.string :name,                     limit: 250,   null: false
@@ -449,6 +499,8 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :schedulers, [:name], unique: true
+    add_foreign_key :schedulers, :users, column: :created_by_id
+    add_foreign_key :schedulers, :users, column: :updated_by_id
 
     create_table :calendars do |t|
       t.string  :name,                   limit: 250,  null: true
@@ -464,6 +516,8 @@ class CreateBase < ActiveRecord::Migration
       t.timestamps limit: 3, null: false
     end
     add_index :calendars, [:name], unique: true
+    add_foreign_key :calendars, :users, column: :created_by_id
+    add_foreign_key :calendars, :users, column: :updated_by_id
 
     create_table :user_devices do |t|
       t.references :user,             null: false
@@ -483,6 +537,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :user_devices, [:fingerprint]
     add_index :user_devices, [:updated_at]
     add_index :user_devices, [:created_at]
+    add_foreign_key :user_devices, :users
 
     create_table :external_credentials do |t|
       t.string :name
@@ -511,6 +566,9 @@ class CreateBase < ActiveRecord::Migration
     end
     add_index :object_manager_attributes, [:object_lookup_id, :name],   unique: true
     add_index :object_manager_attributes, [:object_lookup_id]
+    add_foreign_key :object_manager_attributes, :object_lookups
+    add_foreign_key :object_manager_attributes, :users, column: :created_by_id
+    add_foreign_key :object_manager_attributes, :users, column: :updated_by_id
 
     create_table :delayed_jobs, force: true do |t|
       t.integer  :priority, default: 0      # Allows some jobs to jump to the front of the queue
@@ -573,19 +631,20 @@ class CreateBase < ActiveRecord::Migration
     add_index :cti_logs, [:from]
 
     create_table :cti_caller_ids do |t|
-      t.string  :caller_id,              limit: 100, null: false
-      t.string  :comment,                limit: 500, null: true
-      t.string  :level,                  limit: 100, null: false
-      t.string  :object,                 limit: 100, null: false
-      t.integer :o_id,                               null: false
-      t.integer :user_id,                            null: true
-      t.text    :preferences,            limit: 500.kilobytes + 1, null: true
+      t.string     :caller_id,              limit: 100, null: false
+      t.string     :comment,                limit: 500, null: true
+      t.string     :level,                  limit: 100, null: false
+      t.string     :object,                 limit: 100, null: false
+      t.integer    :o_id,                               null: false
+      t.references :user,                            null: true
+      t.text       :preferences,            limit: 500.kilobytes + 1, null: true
       t.timestamps limit: 3, null: false
     end
     add_index :cti_caller_ids, [:caller_id]
     add_index :cti_caller_ids, [:caller_id, :level]
     add_index :cti_caller_ids, [:caller_id, :user_id]
     add_index :cti_caller_ids, [:object, :o_id]
+    add_foreign_key :cti_caller_ids, :users
 
     create_table :stats_stores do |t|
       t.references :stats_store_object,             null: false
@@ -602,6 +661,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :stats_stores, [:stats_store_object_id]
     add_index :stats_stores, [:created_by_id]
     add_index :stats_stores, [:created_at]
+    add_foreign_key :stats_stores, :users, column: :created_by_id
 
     create_table :http_logs do |t|
       t.column :direction,            :string, limit: 20,    null: false
@@ -619,6 +679,7 @@ class CreateBase < ActiveRecord::Migration
     add_index :http_logs, [:facility]
     add_index :http_logs, [:created_by_id]
     add_index :http_logs, [:created_at]
-
+    add_foreign_key :http_logs, :users, column: :created_by_id
+    add_foreign_key :http_logs, :users, column: :updated_by_id
   end
 end
