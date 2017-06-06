@@ -139,12 +139,53 @@ returns
     true
   end
 
+=begin
+
+get content of file
+
+  store = Store.find(store_id)
+  content_as_string = store.content
+
+returns
+
+  content_as_string
+
+=end
+
   def content
     file = Store::File.find_by(id: store_file_id)
     if !file
       raise "No such file #{store_file_id}!"
     end
     file.content
+  end
+
+=begin
+
+get content of file
+
+  store = Store.find(store_id)
+  location_of_file = store.save_to_file
+
+returns
+
+  location_of_file
+
+=end
+
+  def save_to_file(path = nil)
+    content
+    file = Store::File.find_by(id: store_file_id)
+    if !file
+      raise "No such file #{store_file_id}!"
+    end
+    if !path
+      path = "#{Rails.root}/tmp/#{filename}"
+    end
+    ::File.open(path, 'wb') { |handle|
+      handle.write file.content
+    }
+    path
   end
 
   def provider
