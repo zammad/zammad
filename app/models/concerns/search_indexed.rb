@@ -123,7 +123,9 @@ reload search index with full data
     def search_index_reload
       tolerance       = 5
       tolerance_count = 0
-      all.order('created_at DESC').each { |item|
+      ids = all.order('created_at DESC').pluck(:id)
+      ids.each { |item_id|
+        item = find(item_id)
         next if item.ignore_search_indexing?(:destroy)
         begin
           item.search_index_update_backend
