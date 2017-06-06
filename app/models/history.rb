@@ -5,17 +5,9 @@ class History < ApplicationModel
   include History::Assets
 
   self.table_name = 'histories'
-  belongs_to :history_type,             class_name: 'History::Type'
-  belongs_to :history_object,           class_name: 'History::Object'
-  belongs_to :history_attribute,        class_name: 'History::Attribute'
-  #  before_validation :check_type, :check_object
-  #  attr_writer :history_type, :history_object
-
-  # rubocop:disable Style/ClassVars
-  @@cache_type = {}
-  @@cache_object = {}
-  @@cache_attribute = {}
-# rubocop:enable Style/ClassVars
+  belongs_to :history_type,      class_name: 'History::Type'
+  belongs_to :history_object,    class_name: 'History::Object'
+  belongs_to :history_attribute, class_name: 'History::Attribute'
 
 =begin
 
@@ -216,96 +208,54 @@ returns
   end
 
   def self.type_lookup_id(id)
-
-    # use cache
-    return @@cache_type[ id ] if @@cache_type[ id ]
-
-    # lookup
-    history_type = History::Type.lookup(id: id)
-    @@cache_type[ id ] = history_type
-    history_type
+    History::Type.lookup(id: id)
   end
 
   def self.type_lookup(name)
-
-    # use cache
-    return @@cache_type[ name ] if @@cache_type[ name ]
-
     # lookup
     history_type = History::Type.lookup(name: name)
     if history_type
-      @@cache_type[ name ] = history_type
       return history_type
     end
 
     # create
-    history_type = History::Type.create(
+    History::Type.create(
       name: name
     )
-    @@cache_type[ name ] = history_type
-    history_type
   end
 
   def self.object_lookup_id(id)
-
-    # use cache
-    return @@cache_object[ id ] if @@cache_object[ id ]
-
-    # lookup
-    history_object = History::Object.lookup(id: id)
-    @@cache_object[ id ] = history_object
-    history_object
+    History::Object.lookup(id: id)
   end
 
   def self.object_lookup(name)
-
-    # use cache
-    return @@cache_object[ name ] if @@cache_object[ name ]
-
     # lookup
     history_object = History::Object.lookup(name: name)
     if history_object
-      @@cache_object[ name ] = history_object
       return history_object
     end
 
     # create
-    history_object = History::Object.create(
+    History::Object.create(
       name: name
     )
-    @@cache_object[ name ] = history_object
-    history_object
   end
 
   def self.attribute_lookup_id(id)
-
-    # use cache
-    return @@cache_attribute[ id ] if @@cache_attribute[ id ]
-
-    # lookup
-    history_attribute = History::Attribute.lookup(id: id)
-    @@cache_attribute[ id ] = history_attribute
-    history_attribute
+    History::Attribute.lookup(id: id)
   end
 
   def self.attribute_lookup(name)
-
-    # use cache
-    return @@cache_attribute[ name ] if @@cache_attribute[ name ]
-
     # lookup
     history_attribute = History::Attribute.lookup(name: name)
     if history_attribute
-      @@cache_attribute[ name ] = history_attribute
       return history_attribute
     end
 
     # create
-    history_attribute = History::Attribute.create(
+    History::Attribute.create(
       name: name
     )
-    @@cache_attribute[ name ] = history_attribute
-    history_attribute
   end
 
   class Object < ApplicationModel

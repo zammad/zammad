@@ -550,7 +550,15 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'min admin permission check' do
-    User.with_permissions('admin').each(&:destroy)
+    # workaround:
+    # - We need to get rid of all admin users but can't delete them
+    #   because we have foreign keys pointing at them since the tests are not isolated yet :(
+    # - We can't just remove the roles since then our check would take place
+    # So we need to merge them with the User Nr 1 and destroy them afterwards
+    User.with_permissions('admin').each do |user|
+      Models.merge('User', 1, user.id)
+      user.destroy
+    end
 
     # store current admin count
     admin_count_inital = User.with_permissions('admin').count
