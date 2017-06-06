@@ -503,7 +503,7 @@ Newsletter abbestellen (<a href="http://newsletters.cylex.de/ref/www.cylex.de/si
           # mutt c1abb5fb77a9d2ab2017749a7987c074
           {
             md5: '2ef81e47872d42efce7ef34bfa2de043',
-            filename: 'file-1',
+            filename: '¼¨Ð§¹ÜÀí,¾¿¾¹Ë­´íÁË.xls',
           },
         ],
         params: {
@@ -1099,6 +1099,42 @@ end
           subject: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
           content_type: 'text/html',
           body: 'Enjoy!',
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail57.box'),
+        body_md5: '3c5e4cf2d2a9bc572f10cd6222556027',
+        attachments: [
+          {
+            md5: 'ddbdf67aa2f5c60c294008a54d57082b',
+            filename: 'Hofjägeralle Wasserschaden.jpg',
+          },
+        ],
+        params: {
+          from: 'example@example.com',
+          from_email: 'example@example.com',
+          from_display_name: '',
+          subject: 'W.: Invoice',
+          content_type: 'text/plain',
+          body: ' 
+
+
+----- Original Nachricht ----
+Von:     example@example.com
+An:      bob@example.com
+Datum:   30.05.2017 16:17
+Betreff: Invoice
+
+Dear Mrs.Weber
+
+anbei mal wieder ein paar Invoice.
+
+Wünsche Ihnen noch einen schönen Arbeitstag.
+
+Mit freundlichen Grüßen
+
+Bob Smith
+',
         },
       },
     ]
