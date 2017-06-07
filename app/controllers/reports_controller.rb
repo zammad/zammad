@@ -180,7 +180,7 @@ class ReportsController < ApplicationController
     worksheet.set_column(4, 8, 20)
 
     # Add and define a format
-    format = workbook.add_format  # Add a format
+    format = workbook.add_format
     format.set_bold
     format.set_size(14)
     format.set_color('black')
@@ -189,22 +189,28 @@ class ReportsController < ApplicationController
     # Write a formatted and unformatted string, row and column notation.
     worksheet.write(0, 0, "Tickets: #{profile.name} (#{title})", format)
 
-    format_header = workbook.add_format  # Add a format
+    format_header = workbook.add_format
     format_header.set_italic
     format_header.set_bg_color('gray')
     format_header.set_color('white')
+
     worksheet.write(2, 0, '#', format_header)
     worksheet.write(2, 1, 'Title', format_header)
     worksheet.write(2, 2, 'State', format_header)
     worksheet.write(2, 3, 'Priority', format_header)
     worksheet.write(2, 4, 'Group', format_header)
-    worksheet.write(2, 5, 'Customer', format_header)
-    worksheet.write(2, 6, 'Created at', format_header)
-    worksheet.write(2, 7, 'Updated at', format_header)
-    worksheet.write(2, 8, 'Closed at', format_header)
+    worksheet.write(2, 5, 'Owner', format_header)
+    worksheet.write(2, 6, 'Customer', format_header)
+    worksheet.write(2, 7, 'Organization', format_header)
+    worksheet.write(2, 8, 'Create Channel', format_header)
+    worksheet.write(2, 9, 'Sender', format_header)
+    worksheet.write(2, 10, 'Tags', format_header)
+    worksheet.write(2, 11, 'Created at', format_header)
+    worksheet.write(2, 12, 'Updated at', format_header)
+    worksheet.write(2, 13, 'Closed at', format_header)
 
     row = 2
-    result[:ticket_ids].each { |ticket_id|
+    result[:ticket_ids].each do |ticket_id|
       ticket = Ticket.lookup(id: ticket_id)
       row += 1
       worksheet.write(row, 0, ticket.number)
@@ -212,11 +218,16 @@ class ReportsController < ApplicationController
       worksheet.write(row, 2, ticket.state.name)
       worksheet.write(row, 3, ticket.priority.name)
       worksheet.write(row, 4, ticket.group.name)
-      worksheet.write(row, 5, ticket.customer.fullname)
-      worksheet.write(row, 6, ticket.created_at)
-      worksheet.write(row, 7, ticket.updated_at)
-      worksheet.write(row, 8, ticket.close_at)
-    }
+      worksheet.write(row, 5, ticket.owner.fullname)
+      worksheet.write(row, 6, ticket.customer.fullname)
+      worksheet.write(row, 7, ticket.try(:organization).try(:name))
+      worksheet.write(row, 8, ticket.create_article_type.name)
+      worksheet.write(row, 9, ticket.create_article_sender.name)
+      worksheet.write(row, 10, ticket.tag_list.join(','))
+      worksheet.write(row, 11, ticket.created_at)
+      worksheet.write(row, 12, ticket.updated_at)
+      worksheet.write(row, 13, ticket.close_at)
+    end
 
     workbook.close
 
