@@ -191,7 +191,7 @@ class App.CTI extends App.Controller
       genericObject: 'User'
       item:
         phone: phone
-      container: @el.closest('.content')
+      container: @el.closest('#app')
       callback: @ticketNew
     )
 
