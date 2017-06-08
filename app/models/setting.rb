@@ -7,22 +7,21 @@ class Setting < ApplicationModel
   store         :preferences
   before_create :state_check, :set_initial, :check_broadcast
   before_update :state_check, :check_broadcast
-  after_create  :reset_cache
-  after_update  :reset_cache
-  after_destroy :reset_cache
+  after_create  :reset_change_id
+  after_update  :reset_change_id
 
   attr_accessor :state
 
-  @@current        = {} # rubocop:disable Style/ClassVars
-  @@change_id      = nil # rubocop:disable Style/ClassVars
-  @@lookup_at      = nil # rubocop:disable Style/ClassVars
-  @@lookup_timeout = if ENV['ZAMMAD_SETTING_TTL'] # rubocop:disable Style/ClassVars
-                       ENV['ZAMMAD_SETTING_TTL'].to_i.seconds
-                     elsif Rails.env.production?
-                       2.minutes
-                     else
-                       15.seconds
-                     end
+  @@current         = {} # rubocop:disable Style/ClassVars
+  @@raw             = {} # rubocop:disable Style/ClassVars
+  @@change_id       = nil # rubocop:disable Style/ClassVars
+  @@last_changed_at = nil # rubocop:disable Style/ClassVars
+  @@lookup_at       = nil # rubocop:disable Style/ClassVars
+  @@lookup_timeout  = if ENV['ZAMMAD_SETTING_TTL'] # rubocop:disable Style/ClassVars
+                        ENV['ZAMMAD_SETTING_TTL'].to_i.seconds
+                      else
+                        15.seconds
+                      end
 
 =begin
 
@@ -38,7 +37,7 @@ set config setting
       raise "Can't find config setting '#{name}'"
     end
     setting.state_current = { value: value }
-    setting.save
+    setting.save!
     logger.info "Setting.set(#{name}, #{value.inspect})"
   end
 
@@ -52,7 +51,7 @@ get config setting
 
   def self.get(name)
     load
-    @@current[:settings_config][name]
+    @@current[name]
   end
 
 =begin
@@ -69,10 +68,8 @@ reset config setting to default
       raise "Can't find config setting '#{name}'"
     end
     setting.state_current = setting.state_initial
-    setting.save
+    setting.save!
     logger.info "Setting.reset(#{name}, #{setting.state_current.inspect})"
-    load
-    @@current[:settings_config][name]
   end
 
 =begin
@@ -84,6 +81,7 @@ reload config settings
 =end
 
   def self.reload
+    @@last_changed_at = nil # rubocop:disable Style/ClassVars
     load(true)
   end
 
@@ -93,27 +91,36 @@ reload config settings
   def self.load(force = false)
 
     # check if config is already generated
-    if !force && @@current[:settings_config]
-      return false if cache_valid?
+    return false if !force && @@current.present? && cache_valid?
+
+    # read all or only changed since last read
+    latest = Setting.order(updated_at: :desc).limit(1).pluck(:updated_at)
+    settings = if @@last_changed_at && @@current.present?
+                 Setting.where('updated_at > ?', @@last_changed_at).order(:id).pluck(:name, :state_current)
+               else
+                 Setting.order(:id).pluck(:name, :state_current)
+               end
+    if latest
+      @@last_changed_at = latest[0] # rubocop:disable Style/ClassVars
     end
 
-    # read all config settings
-    config = {}
-    Setting.select('name, state_current').order(:id).each { |setting|
-      config[setting.name] = setting.state_current[:value]
-    }
-
-    # config lookups
-    config.each { |key, value|
-      next if value.class.to_s != 'String'
-
-      config[key].gsub!(/\#\{config\.(.+?)\}/) {
-        config[$1].to_s
+    if settings.present?
+      settings.each { |setting|
+        @@raw[setting[0]] = setting[1]['value']
       }
-    }
+      @@raw.each { |key, value|
+        if value.class != String
+          @@current[key] = value
+          next
+        end
+        @@current[key] = value.gsub(/\#\{config\.(.+?)\}/) {
+          @@raw[$1].to_s
+        }
+      }
+    end
 
-    # store for class requests
-    cache(config)
+    @@change_id = Cache.get('Setting::ChangeId') # rubocop:disable Style/ClassVars
+    @@lookup_at = Time.zone.now # rubocop:disable Style/ClassVars
     true
   end
   private_class_method :load
@@ -123,37 +130,27 @@ reload config settings
     self.state_initial = state_current
   end
 
-  # set new cache
-  def self.cache(config)
-    @@change_id = Cache.get('Setting::ChangeId') # rubocop:disable Style/ClassVars
-    @@current[:settings_config] = config
-    logger.debug "Setting.cache: set cache, #{@@change_id}"
-    @@lookup_at = Time.zone.now # rubocop:disable Style/ClassVars
-  end
-  private_class_method :cache
-
-  # reset cache
-  def reset_cache
-    @@change_id = rand(999_999_999).to_s # rubocop:disable Style/ClassVars
-    logger.debug "Setting.reset_cache: set new cache, #{@@change_id}"
-
-    Cache.write('Setting::ChangeId', @@change_id, { expires_in: 24.hours })
-    @@current[:settings_config] = nil
+  def reset_change_id
+    @@current[name] = state_current[:value]
+    change_id = rand(999_999_999).to_s
+    logger.debug "Setting.reset_change_id: set new cache, #{change_id}"
+    Cache.write('Setting::ChangeId', change_id, { expires_in: 24.hours })
+    @@lookup_at = nil # rubocop:disable Style/ClassVars
   end
 
   # check if cache is still valid
   def self.cache_valid?
     if @@lookup_at && @@lookup_at > Time.zone.now - @@lookup_timeout
-      #logger.debug 'Setting.cache_valid?: cache_id has beed set within last 2 minutes'
+      #logger.debug "Setting.cache_valid?: cache_id has been set within last #{@@lookup_timeout} seconds"
       return true
     end
     change_id = Cache.get('Setting::ChangeId')
     if change_id == @@change_id
       @@lookup_at = Time.zone.now # rubocop:disable Style/ClassVars
-      logger.debug "Setting.cache_valid?: cache still valid, #{@@change_id}/#{change_id}"
+      #logger.debug "Setting.cache_valid?: cache still valid, #{@@change_id}/#{change_id}"
       return true
     end
-    logger.debug "Setting.cache_valid?: cache has changed, #{@@change_id}/#{change_id}"
+    #logger.debug "Setting.cache_valid?: cache has changed, #{@@change_id}/#{change_id}"
     false
   end
   private_class_method :cache_valid?
