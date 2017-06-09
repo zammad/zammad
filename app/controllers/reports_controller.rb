@@ -143,7 +143,7 @@ class ReportsController < ApplicationController
       stop = "#{date}T23:59:59Z"
       range = 'hour'
     elsif params[:timeRange] == 'week'
-      start = Date.commercial(params[:year], params[:week]).iso8601
+      start = Date.commercial(params[:year].to_i, params[:week].to_i).iso8601
       stop = Date.parse(start).end_of_week.iso8601
       range = 'week'
     elsif params[:timeRange] == 'month'
