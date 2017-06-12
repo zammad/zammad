@@ -14,9 +14,6 @@ class Report::Base
 
     query, bind_params, tables = Ticket.selector2sql(params[:selector])
 
-    count = 0
-    ticket_ids = []
-
     # created
     if params[:type] == 'created'
       history_type = History::Type.lookup( name: 'created' )
@@ -31,72 +28,76 @@ class Report::Base
     if params[:type] == 'updated'
       history_type      = History::Type.lookup( name: 'updated' )
       history_attribute = History::Attribute.lookup( name: params[:attribute] )
+
+      result = nil
       if !history_attribute || !history_type
-        count = 0
+        result = 0
       elsif params[:id_not_from] && params[:id_to]
-        return History.select('histories.o_id').joins('INNER JOIN tickets ON tickets.id = histories.o_id')
-                      .where(query, *bind_params).joins(tables)
-                      .where(
-                        'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ? AND histories.history_attribute_id IN (?) AND histories.id_from NOT IN (?) AND histories.id_to IN (?)',
-                        params[:start],
-                        params[:end],
-                        history_object.id,
-                        history_type.id,
-                        history_attribute.id,
-                        params[:id_not_from],
-                        params[:id_to],
-                      ).count
+        result = History.select('histories.o_id').joins('INNER JOIN tickets ON tickets.id = histories.o_id')
+                        .where(query, *bind_params).joins(tables)
+                        .where(
+                          'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ? AND histories.history_attribute_id IN (?) AND histories.id_from NOT IN (?) AND histories.id_to IN (?)',
+                          params[:start],
+                          params[:end],
+                          history_object.id,
+                          history_type.id,
+                          history_attribute.id,
+                          params[:id_not_from],
+                          params[:id_to],
+                        ).count
       elsif params[:id_from] && params[:id_not_to]
-        return History.select('histories.o_id').joins('INNER JOIN tickets ON tickets.id = histories.o_id')
-                      .where(query, *bind_params).joins(tables)
-                      .where(
-                        'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ? AND histories.history_attribute_id IN (?) AND histories.id_from IN (?) AND histories.id_to NOT IN (?)',
-                        params[:start],
-                        params[:end],
-                        history_object.id,
-                        history_type.id,
-                        history_attribute.id,
-                        params[:id_from],
-                        params[:id_not_to],
-                      ).count
+        result = History.select('histories.o_id').joins('INNER JOIN tickets ON tickets.id = histories.o_id')
+                        .where(query, *bind_params).joins(tables)
+                        .where(
+                          'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ? AND histories.history_attribute_id IN (?) AND histories.id_from IN (?) AND histories.id_to NOT IN (?)',
+                          params[:start],
+                          params[:end],
+                          history_object.id,
+                          history_type.id,
+                          history_attribute.id,
+                          params[:id_from],
+                          params[:id_not_to],
+                        ).count
       elsif params[:value_from] && params[:value_not_to]
-        return History.joins('INNER JOIN tickets ON tickets.id = histories.o_id')
-                      .where(query, *bind_params).joins(tables)
-                      .where(
-                        'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ? AND histories.history_attribute_id IN (?) AND histories.value_from IN (?) AND histories.value_to NOT IN (?)',
-                        params[:start],
-                        params[:end],
-                        history_object.id,
-                        history_type.id,
-                        history_attribute.id,
-                        params[:value_from],
-                        params[:value_not_to],
-                      ).count
+        result = History.joins('INNER JOIN tickets ON tickets.id = histories.o_id')
+                        .where(query, *bind_params).joins(tables)
+                        .where(
+                          'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ? AND histories.history_attribute_id IN (?) AND histories.value_from IN (?) AND histories.value_to NOT IN (?)',
+                          params[:start],
+                          params[:end],
+                          history_object.id,
+                          history_type.id,
+                          history_attribute.id,
+                          params[:value_from],
+                          params[:value_not_to],
+                        ).count
       elsif params[:value_to]
-        return History.select('histories.o_id').joins('INNER JOIN tickets ON tickets.id = histories.o_id')
-                      .where(query, *bind_params).joins(tables)
-                      .where(
-                        'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ? AND histories.history_attribute_id IN (?) AND histories.value_to IN (?)',
-                        params[:start],
-                        params[:end],
-                        history_object.id,
-                        history_type.id,
-                        history_attribute.id,
-                        params[:value_to],
-                      ).count
+        result = History.select('histories.o_id').joins('INNER JOIN tickets ON tickets.id = histories.o_id')
+                        .where(query, *bind_params).joins(tables)
+                        .where(
+                          'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ? AND histories.history_attribute_id IN (?) AND histories.value_to IN (?)',
+                          params[:start],
+                          params[:end],
+                          history_object.id,
+                          history_type.id,
+                          history_attribute.id,
+                          params[:value_to],
+                        ).count
       elsif params[:id_to]
-        return History.select('histories.o_id').joins('INNER JOIN tickets ON tickets.id = histories.o_id')
-                      .where(query, *bind_params).joins(tables)
-                      .where(
-                        'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ? AND histories.history_attribute_id IN (?) AND histories.id_to IN (?)',
-                        params[:start],
-                        params[:end],
-                        history_object.id,
-                        history_type.id,
-                        history_attribute.id,
-                        params[:id_to],
-                      ).count
+        result = History.select('histories.o_id').joins('INNER JOIN tickets ON tickets.id = histories.o_id')
+                        .where(query, *bind_params).joins(tables)
+                        .where(
+                          'histories.created_at >= ? AND histories.created_at <= ? AND histories.history_object_id = ? AND histories.history_type_id = ? AND histories.history_attribute_id IN (?) AND histories.id_to IN (?)',
+                          params[:start],
+                          params[:end],
+                          history_object.id,
+                          history_type.id,
+                          history_attribute.id,
+                          params[:id_to],
+                        ).count
       end
+
+      return result if !result.nil?
 
       raise "UNKOWN params (#{params.inspect})!"
     end

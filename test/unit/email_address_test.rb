@@ -40,7 +40,7 @@ class EmailAddressTest < ActiveSupport::TestCase
     email_address1.destroy
 
     group1 = Group.find(group1.id)
-    assert(group1.email_address_id)
+    assert_nil(group1.email_address_id, 'References to groups are deleted')
   end
 
   test 'channel tests' do

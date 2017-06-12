@@ -25,16 +25,24 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
     organization_id_changed = record.changes['organization_id']
     if organization_id_changed && organization_id_changed[0] != organization_id_changed[1]
       if organization_id_changed[0]
-        organization = Organization.find(organization_id_changed[0])
-        organization.touch
-        member_ids = organization.member_ids
+
+        # featrue used for different propose, do not touch references
+        if User.where(organization_id: organization_id_changed[0]).count < 100
+          organization = Organization.find(organization_id_changed[0])
+          organization.touch
+          member_ids = organization.member_ids
+        end
       end
     end
 
     # touch new/current organization
     if record.organization
-      record.organization.touch
-      member_ids += record.organization.member_ids
+
+      # featrue used for different propose, do not touch references
+      if User.where(organization_id: record.organization_id).count < 100
+        record.organization.touch
+        member_ids += record.organization.member_ids
+      end
     end
 
     # touch old/current customer

@@ -140,11 +140,11 @@ function create_postgresql_db () {
   echo "# Restarting postgresql server"
   ${INIT_CMD} restart postgresql
 
-  echo "# Creating zammad postgresql db"
-  su - postgres -c "createdb -E UTF8 ${DB}"
-
   echo "# Creating zammad postgresql user"
   echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql
+
+  echo "# Creating zammad postgresql db"
+  su - postgres -c "createdb -E UTF8 ${DB} -O ${DB_USER}"
 
   echo "# Grant privileges to new postgresql user"
   echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql

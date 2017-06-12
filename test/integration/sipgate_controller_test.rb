@@ -7,65 +7,34 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     Cti::Log.destroy_all
 
-    Setting.create_or_update(
-      title: 'sipgate.io integration',
-      name: 'sipgate_integration',
-      area: 'Integration::Switch',
-      description: 'Define if sipgate.io (http://www.sipgate.io) is enabled or not.',
-      options: {
-        form: [
-          {
-            display: '',
-            null: true,
-            name: 'sipgate_integration',
-            tag: 'boolean',
-            options: {
-              true  => 'yes',
-              false => 'no',
-            },
-          },
-        ],
-      },
-      state: true,
-      preferences: { prio: 1 },
-      frontend: false
-    )
-    Setting.create_or_update(
-      title: 'sipgate.io config',
-      name: 'sipgate_config',
-      area: 'Integration::Sipgate',
-      description: 'Define the sipgate.io config.',
-      options: {},
-      state: {
-        outbound: {
-          routing_table: [
-            {
-              dest: '41*',
-              caller_id: '41715880339000',
-            },
-            {
-              dest: '491714000000',
-              caller_id: '41715880339000',
-            },
-          ],
-          default_caller_id: '4930777000000',
-        },
-        inbound: {
-          block_caller_ids: [
-            {
-              caller_id: '491715000000',
-              note: 'some note',
-            }
-          ],
-          notify_user_ids: {
-            2 => true,
-            4 => false,
-          },
-        }
-      },
-      frontend: false,
-      preferences: { prio: 2 },
-    )
+    Setting.set('sipgate_integration', true)
+    Setting.set('sipgate_config', {
+                  outbound: {
+                    routing_table: [
+                      {
+                        dest: '41*',
+                        caller_id: '41715880339000',
+                      },
+                      {
+                        dest: '491714000000',
+                        caller_id: '41715880339000',
+                      },
+                    ],
+                    default_caller_id: '4930777000000',
+                  },
+                  inbound: {
+                    block_caller_ids: [
+                      {
+                        caller_id: '491715000000',
+                        note: 'some note',
+                      }
+                    ],
+                    notify_user_ids: {
+                      2 => true,
+                      4 => false,
+                    },
+                  }
+                },)
 
     groups = Group.where(name: 'Users')
     roles  = Role.where(name: %w(Agent))
@@ -262,7 +231,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('out', log.direction)
     assert_equal('user 1', log.from_comment)
     assert_equal('CallerId Customer1', log.to_comment)
-    assert_equal(nil, log.comment)
+    assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
 
@@ -292,7 +261,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('out', log.direction)
     assert_equal('user 1', log.from_comment)
     assert_equal('CallerId Customer1', log.to_comment)
-    assert_equal(nil, log.comment)
+    assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
 
@@ -307,7 +276,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('out', log.direction)
     assert_equal('user 1', log.from_comment)
     assert_equal('CallerId Customer1', log.to_comment)
-    assert_equal(nil, log.comment)
+    assert_nil(log.comment)
     assert_equal('answer', log.state)
     assert_equal(true, log.done)
 
@@ -337,7 +306,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('in', log.direction)
     assert_equal('user 1', log.to_comment)
     assert_equal('CallerId Customer1', log.from_comment)
-    assert_equal(nil, log.comment)
+    assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
 
@@ -352,7 +321,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('in', log.direction)
     assert_equal('user 1', log.to_comment)
     assert_equal('CallerId Customer1', log.from_comment)
-    assert_equal(nil, log.comment)
+    assert_nil(log.comment)
     assert_equal('answer', log.state)
     assert_equal(true, log.done)
 
@@ -382,7 +351,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('in', log.direction)
     assert_equal('user 1,user 2', log.to_comment)
     assert_equal('CallerId Customer1', log.from_comment)
-    assert_equal(nil, log.comment)
+    assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
 
@@ -397,7 +366,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('in', log.direction)
     assert_equal('voicemail', log.to_comment)
     assert_equal('CallerId Customer1', log.from_comment)
-    assert_equal(nil, log.comment)
+    assert_nil(log.comment)
     assert_equal('answer', log.state)
     assert_equal(true, log.done)
 
@@ -427,7 +396,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('in', log.direction)
     assert_equal('user 1,user 2', log.to_comment)
     assert_equal('CallerId Customer1', log.from_comment)
-    assert_equal(nil, log.comment)
+    assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
 
@@ -459,7 +428,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('CallerId Customer3,CallerId Customer2', log.from_comment)
     assert_not(log.preferences['to'])
     assert(log.preferences['from'])
-    assert_equal(nil, log.comment)
+    assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
 

@@ -303,7 +303,17 @@ class Channel::EmailParser
     # get file preferences
     headers_store = {}
     file.header.fields.each { |field|
-      headers_store[field.name.to_s] = field.value.to_s
+
+      # full line, encode, ready for storage
+      begin
+        value = Encode.conv('utf8', field.to_s)
+        if value.blank?
+          value = field.raw_value
+        end
+        headers_store[field.name.to_s] = value
+      rescue => e
+        headers_store[field.name.to_s] = field.raw_value
+      end
     }
 
     # get filename from content-disposition
@@ -314,12 +324,26 @@ class Channel::EmailParser
       filename = file.header[:content_disposition].filename
     rescue
       begin
-        result = file.header[:content_disposition].to_s.scan( /filename=("|)(.+?)("|);/i )
-        if result && result[0] && result[0][1]
-          filename = result[0][1]
+        if file.header[:content_disposition].to_s =~ /filename="(.+?)"/i
+          filename = $1
+        elsif file.header[:content_disposition].to_s =~ /filename='(.+?)'/i
+          filename = $1
+        elsif file.header[:content_disposition].to_s =~ /filename=(.+?);/i
+          filename = $1
         end
       rescue
         Rails.logger.debug 'Unable to get filename'
+      end
+    end
+
+    # as fallback, use raw values
+    if filename.blank?
+      if headers_store['Content-Disposition'].to_s =~ /filename="(.+?)"/i
+        filename = $1
+      elsif headers_store['Content-Disposition'].to_s =~ /filename='(.+?)'/i
+        filename = $1
+      elsif headers_store['Content-Disposition'].to_s =~ /filename=(.+?);/i
+        filename = $1
       end
     end
 

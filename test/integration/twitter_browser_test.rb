@@ -140,7 +140,7 @@ class TwitterBrowserTest < TestCase
     set(css: '.content.active .modal [name="search::term"]', value: hash)
     select(css: '.content.active .modal [name="search::group_id"]', value: 'Users')
     click(css: '.content.active .modal .js-submit')
-    sleep 5
+    modal_disappear
 
     watch_for(
       css: '.content.active',
