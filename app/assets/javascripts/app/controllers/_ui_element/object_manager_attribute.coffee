@@ -83,7 +83,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
           invite_customer:
             show: false
             required: false
-        'admin.group':
+        'admin.user':
           create:
             shown: true
             required: false
@@ -111,7 +111,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
             required: false
           view:
             shown: true
-        'admin.group':
+        'admin.organization':
           create:
             shown: true
             required: false
