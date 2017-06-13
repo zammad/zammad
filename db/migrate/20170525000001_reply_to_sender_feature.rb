@@ -24,7 +24,7 @@ class ReplyToSenderFeature < ActiveRecord::Migration
           },
         ],
       },
-      state: [],
+      state: '',
       preferences: {
         permission: ['admin.channel_email'],
       },
