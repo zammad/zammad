@@ -60,13 +60,16 @@ reset config setting to default
 
   Setting.reset('some_config_name')
 
+  Setting.reset('some_config_name', force) # true|false - force it false per default
+
 =end
 
-  def self.reset(name)
+  def self.reset(name, force = false)
     setting = Setting.find_by(name: name)
     if !setting
       raise "Can't find config setting '#{name}'"
     end
+    return true if !force && setting.state_current == setting.state_initial
     setting.state_current = setting.state_initial
     setting.save!
     logger.info "Setting.reset(#{name}, #{setting.state_current.inspect})"

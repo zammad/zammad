@@ -16,12 +16,12 @@ user_community = User.create_or_update(
 
 UserInfo.current_user_id = user_community.id
 
-ticket = Ticket.create(
+ticket = Ticket.create!(
   group_id: Group.find_by(name: 'Users').id,
   customer_id: User.find_by(login: 'nicole.braun@zammad.org').id,
   title: 'Welcome to Zammad!',
 )
-Ticket::Article.create(
+Ticket::Article.create!(
   ticket_id: ticket.id,
   type_id: Ticket::Article::Type.find_by(name: 'phone').id,
   sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,

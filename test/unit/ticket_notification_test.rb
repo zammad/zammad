@@ -2,10 +2,7 @@
 require 'test_helper'
 
 class TicketNotificationTest < ActiveSupport::TestCase
-  agent1 = nil
-  agent2 = nil
-  customer = nil
-  test 'aaa - setup' do
+  setup do
     Trigger.create_or_update(
       name: 'auto reply - new ticket',
       condition: {
@@ -45,7 +42,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    # create agent1 & agent2
+    # create @agent1 & @agent2
     Group.create_or_update(
       name: 'TicketNotificationTest',
       updated_by_id: 1,
@@ -53,7 +50,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
     groups = Group.where(name: 'TicketNotificationTest')
     roles  = Role.where(name: 'Agent')
-    agent1 = User.create_or_update(
+    @agent1 = User.create_or_update(
       login: 'ticket-notification-agent1@example.com',
       firstname: 'Notification',
       lastname: 'Agent1',
@@ -68,7 +65,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    agent2 = User.create_or_update(
+    @agent2 = User.create_or_update(
       login: 'ticket-notification-agent2@example.com',
       firstname: 'Notification',
       lastname: 'Agent2',
@@ -90,9 +87,9 @@ class TicketNotificationTest < ActiveSupport::TestCase
       created_by_id: 1
     )
 
-    # create customer
+    # create @customer
     roles = Role.where(name: 'Customer')
-    customer = User.create_or_update(
+    @customer = User.create_or_update(
       login: 'ticket-notification-customer@example.com',
       firstname: 'Notification',
       lastname: 'Customer',
@@ -110,16 +107,16 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some notification test 1',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
+      customer: @customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -129,8 +126,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
     assert(ticket1)
 
@@ -138,22 +135,22 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, @agent2, 'email'), ticket1.id)
 
     # create ticket in group
     ApplicationHandleInfo.current = 'application_server'
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some notification test 2',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
+      customer: @customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -163,8 +160,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
     assert(ticket1)
 
@@ -172,25 +169,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, @agent2, 'email'), ticket1.id)
   end
 
   test 'ticket notification - simple' do
 
     # create ticket in group
     ApplicationHandleInfo.current = 'application_server'
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some notification test 3',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
+      customer: @customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -200,8 +197,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
     assert(ticket1, 'ticket created - ticket notification simple')
 
@@ -209,25 +206,25 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, @agent2, 'email'), ticket1.id)
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
-    ticket1.save
+    ticket1.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, @agent2, 'email'), ticket1.id)
 
     # add article to ticket
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some person',
       subject: 'some note',
@@ -235,23 +232,23 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: true,
       sender: Ticket::Article::Sender.where(name: 'Agent').first,
       type: Ticket::Article::Type.where(name: 'note').first,
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to not to agent1 but to agent2
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    # verify notifications to not to @agent1 but to @agent2
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
+    assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket1, @agent2, 'email'), ticket1.id)
 
     # update ticket by user
-    ticket1.owner_id      = agent1.id
-    ticket1.updated_by_id = agent1.id
-    ticket1.save
-    Ticket::Article.create(
+    ticket1.owner_id      = @agent1.id
+    ticket1.updated_by_id = @agent1.id
+    ticket1.save!
+    Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some person',
       subject: 'some note',
@@ -259,30 +256,30 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: true,
       sender: Ticket::Article::Sender.where(name: 'Agent').first,
       type: Ticket::Article::Type.where(name: 'note').first,
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to not to agent1 but to agent2
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    # verify notifications to not to @agent1 but to @agent2
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
+    assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket1, @agent2, 'email'), ticket1.id)
 
-    # create ticket with agent1 as owner
-    ticket2 = Ticket.create(
+    # create ticket with @agent1 as owner
+    ticket2 = Ticket.create!(
       title: 'some notification test 4',
       group: Group.lookup(name: 'TicketNotificationTest'),
       customer_id: 2,
-      owner_id: agent1.id,
+      owner_id: @agent1.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket2.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -292,8 +289,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Agent').first,
       type: Ticket::Article::Type.where(name: 'phone').first,
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
 
     # execute object transaction
@@ -302,49 +299,49 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert(ticket2, 'ticket created')
 
     # verify notifications to no one
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent2, 'email'), ticket2.id)
 
     # update ticket
     ticket2.title         = "#{ticket2.title} - #2"
-    ticket2.updated_by_id = agent1.id
+    ticket2.updated_by_id = @agent1.id
     ticket2.priority      = Ticket::Priority.lookup(name: '3 high')
-    ticket2.save
+    ticket2.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
     # verify notifications to none
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent2, 'email'), ticket2.id)
 
     # update ticket
     ticket2.title         = "#{ticket2.title} - #3"
-    ticket2.updated_by_id = agent2.id
+    ticket2.updated_by_id = @agent2.id
     ticket2.priority      = Ticket::Priority.lookup(name: '2 normal')
-    ticket2.save
+    ticket2.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 and not to agent2
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
+    # verify notifications to @agent1 and not to @agent2
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent2, 'email'), ticket2.id)
 
-    # create ticket with agent2 and agent1 as owner
-    ticket3 = Ticket.create(
+    # create ticket with @agent2 and @agent1 as owner
+    ticket3 = Ticket.create!(
       title: 'some notification test 5',
       group: Group.lookup(name: 'TicketNotificationTest'),
       customer_id: 2,
-      owner_id: agent1.id,
+      owner_id: @agent1.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: agent2.id,
-      created_by_id: agent2.id,
+      updated_by_id: @agent2.id,
+      created_by_id: @agent2.id,
     )
-    article_inbound = Ticket::Article.create(
+    article_inbound = Ticket::Article.create!(
       ticket_id: ticket3.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -354,8 +351,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Agent').first,
       type: Ticket::Article::Type.where(name: 'phone').first,
-      updated_by_id: agent2.id,
-      created_by_id: agent2.id,
+      updated_by_id: @agent2.id,
+      created_by_id: @agent2.id,
     )
 
     # execute object transaction
@@ -363,49 +360,49 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
     assert(ticket3, 'ticket created')
 
-    # verify notifications to agent1 and not to agent2
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    # verify notifications to @agent1 and not to @agent2
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, @agent2, 'email'), ticket3.id)
 
     # update ticket
     ticket3.title         = "#{ticket3.title} - #2"
-    ticket3.updated_by_id = agent1.id
+    ticket3.updated_by_id = @agent1.id
     ticket3.priority      = Ticket::Priority.lookup(name: '3 high')
-    ticket3.save
+    ticket3.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
     # verify notifications to no one
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, @agent2, 'email'), ticket3.id)
 
     # update ticket
     ticket3.title         = "#{ticket3.title} - #3"
-    ticket3.updated_by_id = agent2.id
+    ticket3.updated_by_id = @agent2.id
     ticket3.priority      = Ticket::Priority.lookup(name: '2 normal')
-    ticket3.save
+    ticket3.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 and not to agent2
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    # verify notifications to @agent1 and not to @agent2
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, @agent2, 'email'), ticket3.id)
 
     # update article / not notification should be sent
     article_inbound.internal = true
-    article_inbound.save
+    article_inbound.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications not to agent1 and not to agent2
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    # verify notifications not to @agent1 and not to @agent2
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, @agent2, 'email'), ticket3.id)
 
     delete = ticket1.destroy
     assert(delete, 'ticket1 destroy')
@@ -421,16 +418,16 @@ class TicketNotificationTest < ActiveSupport::TestCase
   test 'ticket notification - no notification' do
 
     # create ticket in group
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some notification test 1 - no notification',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
+      customer: @customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -440,8 +437,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
     assert(ticket1, 'ticket created - ticket no notification')
 
@@ -449,42 +446,42 @@ class TicketNotificationTest < ActiveSupport::TestCase
     Observer::Transaction.commit(disable_notification: true)
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent2, 'email'), ticket1.id)
 
   end
 
   test 'ticket notification - z preferences tests' do
 
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = false
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = false
-    agent1.save
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = false
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = false
+    @agent1.save!
 
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = false
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent2.save
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = false
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    @agent2.save!
 
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some notification test - z preferences tests 1',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
+      customer: @customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -494,43 +491,43 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, @agent2, 'email'), ticket1.id)
 
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
-    ticket1.save
+    ticket1.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, agent1, 'email'), ticket1.id)
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, agent2, 'email'), ticket1.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket1, @agent2, 'email'), ticket1.id)
 
     # create ticket in group
-    ticket2 = Ticket.create(
+    ticket2 = Ticket.create!(
       title: 'some notification test - z preferences tests 2',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
-      owner: agent1,
+      customer: @customer,
+      owner: @agent1,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket2.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -540,43 +537,43 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, @agent2, 'email'), ticket2.id)
 
     # update ticket attributes
     ticket2.title    = "#{ticket2.title} - #2"
     ticket2.priority = Ticket::Priority.lookup(name: '3 high')
-    ticket2.save
+    ticket2.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, agent1, 'email'), ticket2.id)
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, agent2, 'email'), ticket2.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, @agent2, 'email'), ticket2.id)
 
     # create ticket in group
-    ticket3 = Ticket.create(
+    ticket3 = Ticket.create!(
       title: 'some notification test - z preferences tests 3',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
-      owner: agent2,
+      customer: @customer,
+      owner: @agent2,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket3.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -586,61 +583,61 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, @agent2, 'email'), ticket3.id)
 
     # update ticket attributes
     ticket3.title    = "#{ticket3.title} - #2"
     ticket3.priority = Ticket::Priority.lookup(name: '3 high')
-    ticket3.save
+    ticket3.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, agent1, 'email'), ticket3.id)
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent2, 'email'), ticket3.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket3, @agent1, 'email'), ticket3.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, @agent2, 'email'), ticket3.id)
 
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent1.preferences['notification_config']['group_ids'] = [Group.lookup(name: 'TicketNotificationTest').id.to_s]
-    agent1.save
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    @agent1.preferences['notification_config']['group_ids'] = [Group.lookup(name: 'TicketNotificationTest').id.to_s]
+    @agent1.save!
 
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = false
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent1.preferences['notification_config']['group_ids'] = ['-']
-    agent2.save
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = false
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    @agent1.preferences['notification_config']['group_ids'] = ['-']
+    @agent2.save!
 
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
-    ticket4 = Ticket.create(
+    ticket4 = Ticket.create!(
       title: 'some notification test - z preferences tests 4',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
+      customer: @customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket4.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -650,61 +647,61 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket4, agent1, 'email'), ticket4.id)
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket4, agent2, 'email'), ticket4.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket4, @agent1, 'email'), ticket4.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket4, @agent2, 'email'), ticket4.id)
 
     # update ticket attributes
     ticket4.title    = "#{ticket4.title} - #2"
     ticket4.priority = Ticket::Priority.lookup(name: '3 high')
-    ticket4.save
+    ticket4.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket4, agent1, 'email'), ticket4.id)
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket4, agent2, 'email'), ticket4.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket4, @agent1, 'email'), ticket4.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket4, @agent2, 'email'), ticket4.id)
 
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent1.preferences['notification_config']['group_ids'] = [Group.lookup(name: 'TicketNotificationTest').id.to_s]
-    agent1.save
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    @agent1.preferences['notification_config']['group_ids'] = [Group.lookup(name: 'TicketNotificationTest').id.to_s]
+    @agent1.save!
 
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = false
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent2.preferences['notification_config']['group_ids'] = [99]
-    agent2.save
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = false
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = false
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    @agent2.preferences['notification_config']['group_ids'] = [99]
+    @agent2.save!
 
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
-    ticket5 = Ticket.create(
+    ticket5 = Ticket.create!(
       title: 'some notification test - z preferences tests 5',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
+      customer: @customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket5.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -714,62 +711,62 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket5, agent1, 'email'), ticket5.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket5, agent2, 'email'), ticket5.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket5, @agent1, 'email'), ticket5.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket5, @agent2, 'email'), ticket5.id)
 
     # update ticket attributes
     ticket5.title    = "#{ticket5.title} - #2"
     ticket5.priority = Ticket::Priority.lookup(name: '3 high')
-    ticket5.save
+    ticket5.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket5, agent1, 'email'), ticket5.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket5, agent2, 'email'), ticket5.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket5, @agent1, 'email'), ticket5.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket5, @agent2, 'email'), ticket5.id)
 
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent1.preferences['notification_config']['group_ids'] = [999]
-    agent1.save
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    @agent1.preferences['notification_config']['group_ids'] = [999]
+    @agent1.save!
 
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent2.preferences['notification_config']['group_ids'] = [999]
-    agent2.save
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    @agent2.preferences['notification_config']['group_ids'] = [999]
+    @agent2.save!
 
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
-    ticket6 = Ticket.create(
+    ticket6 = Ticket.create!(
       title: 'some notification test - z preferences tests 6',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
-      owner: agent1,
+      customer: @customer,
+      owner: @agent1,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket6.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -779,74 +776,74 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'email'), ticket6.id)
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'online'), ticket6.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'email'), ticket6.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'online'), ticket6.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket6, @agent1, 'email'), ticket6.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket6, @agent1, 'online'), ticket6.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, @agent2, 'email'), ticket6.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, @agent2, 'online'), ticket6.id)
 
     # update ticket attributes
     ticket6.title    = "#{ticket6.title} - #2"
     ticket6.priority = Ticket::Priority.lookup(name: '3 high')
-    ticket6.save
+    ticket6.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'email'), ticket6.id)
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket6, agent1, 'online'), ticket6.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'email'), ticket6.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, agent2, 'online'), ticket6.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket6, @agent1, 'email'), ticket6.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket6, @agent1, 'online'), ticket6.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, @agent2, 'email'), ticket6.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket6, @agent2, 'online'), ticket6.id)
 
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-    agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-    agent1.preferences['notification_config']['matrix']['create']['channel']['email'] = false
-    agent1.preferences['notification_config']['matrix']['create']['channel']['online'] = true
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-    agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent1.preferences['notification_config']['matrix']['update']['channel']['email'] = false
-    agent1.preferences['notification_config']['matrix']['update']['channel']['online'] = true
-    agent1.preferences['notification_config']['group_ids'] = [999]
-    agent1.save
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    @agent1.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    @agent1.preferences['notification_config']['matrix']['create']['channel']['email'] = false
+    @agent1.preferences['notification_config']['matrix']['create']['channel']['online'] = true
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    @agent1.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    @agent1.preferences['notification_config']['matrix']['update']['channel']['email'] = false
+    @agent1.preferences['notification_config']['matrix']['update']['channel']['online'] = true
+    @agent1.preferences['notification_config']['group_ids'] = [999]
+    @agent1.save!
 
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
-    agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
-    agent2.preferences['notification_config']['matrix']['create']['channel']['email'] = false
-    agent2.preferences['notification_config']['matrix']['create']['channel']['online'] = true
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
-    agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
-    agent2.preferences['notification_config']['matrix']['update']['channel']['email'] = false
-    agent2.preferences['notification_config']['matrix']['update']['channel']['online'] = true
-    agent2.preferences['notification_config']['group_ids'] = [999]
-    agent2.save
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_me'] = true
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['owned_by_nobody'] = false
+    @agent2.preferences['notification_config']['matrix']['create']['criteria']['no'] = true
+    @agent2.preferences['notification_config']['matrix']['create']['channel']['email'] = false
+    @agent2.preferences['notification_config']['matrix']['create']['channel']['online'] = true
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_me'] = true
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['owned_by_nobody'] = false
+    @agent2.preferences['notification_config']['matrix']['update']['criteria']['no'] = true
+    @agent2.preferences['notification_config']['matrix']['update']['channel']['email'] = false
+    @agent2.preferences['notification_config']['matrix']['update']['channel']['online'] = true
+    @agent2.preferences['notification_config']['group_ids'] = [999]
+    @agent2.save!
 
     # create ticket in group
     ApplicationHandleInfo.current = 'scheduler.postmaster'
-    ticket7 = Ticket.create(
+    ticket7 = Ticket.create!(
       title: 'some notification test - z preferences tests 7',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
-      owner: agent1,
+      customer: @customer,
+      owner: @agent1,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket7.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -856,50 +853,50 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'email'), ticket7.id)
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'online'), ticket7.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'email'), ticket7.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'online'), ticket7.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, @agent1, 'email'), ticket7.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket7, @agent1, 'online'), ticket7.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, @agent2, 'email'), ticket7.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, @agent2, 'online'), ticket7.id)
 
     # update ticket attributes
     ticket7.title    = "#{ticket7.title} - #2"
     ticket7.priority = Ticket::Priority.lookup(name: '3 high')
-    ticket7.save
+    ticket7.save!
 
     # execute object transaction
     Observer::Transaction.commit
     Scheduler.worker(true)
 
-    # verify notifications to agent1 + agent2
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'email'), ticket7.id)
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket7, agent1, 'online'), ticket7.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'email'), ticket7.id)
-    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, agent2, 'online'), ticket7.id)
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, @agent1, 'email'), ticket7.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket7, @agent1, 'online'), ticket7.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, @agent2, 'email'), ticket7.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket7, @agent2, 'online'), ticket7.id)
 
   end
 
   test 'ticket notification events' do
 
     # create ticket in group
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some notification event test 1',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
+      customer: @customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    Ticket::Article.create(
+    Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -909,8 +906,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
     assert(ticket1, 'ticket created')
 
@@ -920,7 +917,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #2"
     ticket1.priority = Ticket::Priority.lookup(name: '3 high')
-    ticket1.save
+    ticket1.save!
 
     list         = EventBuffer.list('transaction')
     list_objects = Observer::Transaction.get_uniq_changes(list)
@@ -934,7 +931,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     # update ticket attributes
     ticket1.title    = "#{ticket1.title} - #3"
     ticket1.priority = Ticket::Priority.lookup(name: '1 low')
-    ticket1.save
+    ticket1.save!
 
     list         = EventBuffer.list('transaction')
     list_objects = Observer::Transaction.get_uniq_changes(list)
@@ -950,16 +947,16 @@ class TicketNotificationTest < ActiveSupport::TestCase
   test 'ticket notification template' do
 
     # create ticket in group
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some notification template test 1 Bobs\'s resumé',
       group: Group.lookup(name: 'TicketNotificationTest'),
-      customer: customer,
+      customer: @customer,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -969,8 +966,8 @@ class TicketNotificationTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer.id,
-      created_by_id: customer.id,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
     )
     assert(ticket1, 'ticket created - ticket notification template')
 
@@ -986,7 +983,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     )
 
     # check changed attributes
-    human_changes = bg.human_changes(agent2, ticket1)
+    human_changes = bg.human_changes(@agent2, ticket1)
     assert(human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert(human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert_equal('1 low', human_changes['Priority'][0])
@@ -999,12 +996,12 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # en notification
     result = NotificationFactory::Mailer.template(
-      locale: agent2.preferences[:locale],
+      locale: @agent2.preferences[:locale],
       template: 'ticket_update',
       objects: {
         ticket: ticket1,
         article: article,
-        recipient: agent2,
+        recipient: @agent2,
         changes: human_changes,
       },
     )
@@ -1018,7 +1015,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_no_match(/pending_till/, result[:body])
     assert_no_match(/i18n/, result[:body])
 
-    human_changes = bg.human_changes(agent1, ticket1)
+    human_changes = bg.human_changes(@agent1, ticket1)
     assert(human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert(human_changes['Pending till'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert_equal('1 niedrig', human_changes['Priority'][0])
@@ -1031,12 +1028,12 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # de notification
     result = NotificationFactory::Mailer.template(
-      locale: agent1.preferences[:locale],
+      locale: @agent1.preferences[:locale],
       template: 'ticket_update',
       objects: {
         ticket: ticket1,
         article: article,
-        recipient: agent1,
+        recipient: @agent1,
         changes: human_changes,
       },
     )
@@ -1059,11 +1056,11 @@ class TicketNotificationTest < ActiveSupport::TestCase
         title: ['some notification template test old 1', 'some notification template test 1 #2'],
         priority_id: [2, 3],
       },
-      user_id: customer.id,
+      user_id: @customer.id,
     )
 
     # check changed attributes
-    human_changes = bg.human_changes(agent1, ticket1)
+    human_changes = bg.human_changes(@agent1, ticket1)
     assert(human_changes['Title'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert(human_changes['Priority'], 'Check if attributes translated based on ObjectManager::Attribute')
     assert_equal('2 normal', human_changes['Priority'][0])
@@ -1076,12 +1073,12 @@ class TicketNotificationTest < ActiveSupport::TestCase
 
     # de notification
     result = NotificationFactory::Mailer.template(
-      locale: agent1.preferences[:locale],
+      locale: @agent1.preferences[:locale],
       template: 'ticket_update',
       objects: {
         ticket: ticket1,
         article: article,
-        recipient: agent1,
+        recipient: @agent1,
         changes: human_changes,
       }
     )
@@ -1097,16 +1094,16 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_match(/2 normal/, result[:body])
     assert_match(/aktualisier/, result[:body])
 
-    human_changes = bg.human_changes(agent2, ticket1)
+    human_changes = bg.human_changes(@agent2, ticket1)
 
     # en notification
     result = NotificationFactory::Mailer.template(
-      locale: agent2.preferences[:locale],
+      locale: @agent2.preferences[:locale],
       template: 'ticket_update',
       objects: {
         ticket: ticket1,
         article: article,
-        recipient: agent2,
+        recipient: @agent2,
         changes: human_changes,
       }
     )
@@ -1124,10 +1121,6 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_no_match(/pending_till/, result[:body])
     assert_no_match(/i18n/, result[:body])
 
-  end
-
-  test 'zzz - cleanup' do
-    Trigger.destroy_all
   end
 
 end

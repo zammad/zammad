@@ -2,11 +2,11 @@
 require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
-  test 'aaa - setup' do
+  setup do
     user = User.lookup(id: 1)
     roles = Role.where(name: %w(Agent Admin))
     user.roles = roles
-    user.save
+    user.save!
   end
 
   test 'b cache' do

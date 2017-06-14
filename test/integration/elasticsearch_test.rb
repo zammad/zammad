@@ -1,111 +1,117 @@
 # encoding: utf-8
 require 'integration_test_helper'
+require 'rake'
 
 class ElasticsearchTest < ActiveSupport::TestCase
 
-  # set config
-  if !ENV['ES_URL']
-    raise "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
+  setup do
+
+    # set config
+    if ENV['ES_URL'].blank?
+      raise "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
+    end
+    Setting.set('es_url', ENV['ES_URL'])
+    if ENV['ES_INDEX_RAND'].present?
+      ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
+    end
+    if ENV['ES_INDEX'].blank?
+      raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+    end
+    Setting.set('es_index', ENV['ES_INDEX'])
+
+    # Setting.set('es_url', 'http://127.0.0.1:9200')
+    # Setting.set('es_index', 'estest.local_zammad')
+    # Setting.set('es_user', 'elasticsearch')
+    # Setting.set('es_password', 'zammad')
+
+    # set max attachment size in mb
+    Setting.set('es_attachment_max_size_in_mb', 1)
+
+    # drop/create indexes
+    Rake::Task.clear
+    Zammad::Application.load_tasks
+    #Rake::Task["searchindex:drop"].execute
+    #Rake::Task["searchindex:create"].execute
+    Rake::Task['searchindex:rebuild'].execute
+
+    groups = Group.where(name: 'Users')
+    roles  = Role.where(name: 'Agent')
+    @agent = User.create_or_update(
+      login: 'es-agent@example.com',
+      firstname: 'E',
+      lastname: 'S',
+      email: 'es-agent@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    group_without_access = Group.create_if_not_exists(
+      name: 'WithoutAccess',
+      note: 'Test for not access check.',
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    roles = Role.where(name: 'Customer')
+    @organization1 = Organization.create_if_not_exists(
+      name: 'Customer Organization Update',
+      note: 'some note',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    @customer1 = User.create_or_update(
+      login: 'es-customer1@example.com',
+      firstname: 'ES',
+      lastname: 'Customer1',
+      email: 'es-customer1@example.com',
+      password: 'customerpw',
+      active: true,
+      organization_id: @organization1.id,
+      roles: roles,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sleep 1
+    @customer2 = User.create_or_update(
+      login: 'es-customer2@example.com',
+      firstname: 'ES',
+      lastname: 'Customer2',
+      email: 'es-customer2@example.com',
+      password: 'customerpw',
+      active: true,
+      organization_id: @organization1.id,
+      roles: roles,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    sleep 1
+    @customer3 = User.create_or_update(
+      login: 'es-customer3@example.com',
+      firstname: 'ES',
+      lastname: 'Customer3',
+      email: 'es-customer3@example.com',
+      password: 'customerpw',
+      active: true,
+      roles: roles,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
   end
-  Setting.set('es_url', ENV['ES_URL'])
-  if !ENV['ES_INDEX'] && !ENV['ES_INDEX_RAND']
-    raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
-  end
-  if ENV['ES_INDEX_RAND']
-    ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
-  end
-  Setting.set('es_index', ENV['ES_INDEX'])
-
-  # Setting.set('es_url', 'http://127.0.0.1:9200')
-  # Setting.set('es_index', 'estest.local_zammad')
-  # Setting.set('es_user', 'elasticsearch')
-  # Setting.set('es_password', 'zammad')
-
-  # set max attachment size in mb
-  Setting.set('es_attachment_max_size_in_mb', 1)
-
-  # drop/create indexes
-  #Rake::Task["searchindex:drop"].execute
-  #Rake::Task["searchindex:create"].execute
-  system('rake searchindex:rebuild')
-
-  groups = Group.where(name: 'Users')
-  roles  = Role.where(name: 'Agent')
-  agent  = User.create_or_update(
-    login: 'es-agent@example.com',
-    firstname: 'E',
-    lastname: 'S',
-    email: 'es-agent@example.com',
-    password: 'agentpw',
-    active: true,
-    roles: roles,
-    groups: groups,
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  group_without_access = Group.create_if_not_exists(
-    name: 'WithoutAccess',
-    note: 'Test for not access check.',
-    updated_by_id: 1,
-    created_by_id: 1
-  )
-  roles = Role.where(name: 'Customer')
-  organization1 = Organization.create_if_not_exists(
-    name: 'Customer Organization Update',
-    note: 'some note',
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  customer1 = User.create_or_update(
-    login: 'es-customer1@example.com',
-    firstname: 'ES',
-    lastname: 'Customer1',
-    email: 'es-customer1@example.com',
-    password: 'customerpw',
-    active: true,
-    organization_id: organization1.id,
-    roles: roles,
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  sleep 1
-  customer2 = User.create_or_update(
-    login: 'es-customer2@example.com',
-    firstname: 'ES',
-    lastname: 'Customer2',
-    email: 'es-customer2@example.com',
-    password: 'customerpw',
-    active: true,
-    organization_id: organization1.id,
-    roles: roles,
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
-  sleep 1
-  customer3 = User.create_or_update(
-    login: 'es-customer3@example.com',
-    firstname: 'ES',
-    lastname: 'Customer3',
-    email: 'es-customer3@example.com',
-    password: 'customerpw',
-    active: true,
-    roles: roles,
-    updated_by_id: 1,
-    created_by_id: 1,
-  )
 
   # check search attributes
   test 'a - objects' do
 
     # user
-    attributes = agent.search_index_data
+    attributes = @agent.search_index_data
     assert_equal('E', attributes['firstname'])
     assert_equal('S', attributes['lastname'])
     assert_equal('es-agent@example.com', attributes['email'])
     assert_not(attributes['password'])
     assert_not(attributes['organization'])
 
-    attributes = agent.search_index_attribute_lookup
+    attributes = @agent.search_index_attribute_lookup
     assert_equal('E', attributes['firstname'])
     assert_equal('S', attributes['lastname'])
     assert_equal('es-agent@example.com', attributes['email'])
@@ -113,27 +119,27 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_not(attributes['organization'])
 
     # organization
-    attributes = organization1.search_index_data
+    attributes = @organization1.search_index_data
     assert_equal('Customer Organization Update', attributes['name'])
     assert_equal('some note', attributes['note'])
     assert_not(attributes['members'])
 
-    attributes = organization1.search_index_attribute_lookup
+    attributes = @organization1.search_index_attribute_lookup
     assert_equal('Customer Organization Update', attributes['name'])
     assert_equal('some note', attributes['note'])
     assert(attributes['members'])
 
     # ticket/article
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some title äöüß',
       group: Group.lookup(name: 'Users'),
-      customer_id: customer1.id,
+      customer_id: @customer1.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article1 = Ticket::Article.create(
+    article1 = Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -144,6 +150,14 @@ class ElasticsearchTest < ActiveSupport::TestCase
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Store.add(
+      object: 'Ticket::Article',
+      o_id: article1.id,
+      data: IO.binread("#{Rails.root}/test/fixtures/es-normal.txt"),
+      filename: 'es-normal.txt',
+      preferences: {},
       created_by_id: 1,
     )
 
@@ -163,28 +177,27 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_not(attributes['owner']['password'])
     assert_not(attributes['owner']['organization'])
 
+    assert(attributes['article'][0]['attachment'])
+    assert(attributes['article'][0]['attachment'][0])
+    assert_not(attributes['article'][0]['attachment'][1])
+    assert_equal('es-normal.txt', attributes['article'][0]['attachment'][0]['_name'])
+    assert_equal("c29tZSBub3JtYWwgdGV4dDY2Cg==\n", attributes['article'][0]['attachment'][0]['_content'])
+
     ticket1.destroy
 
     # execute background jobs
     Scheduler.worker(true)
 
-  end
-
-  # check tickets and search it
-  test 'b - tickets' do
-
-    system('rake searchindex:rebuild')
-
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: "some title\n äöüß",
       group: Group.lookup(name: 'Users'),
-      customer_id: customer1.id,
+      customer_id: @customer1.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article1 = Ticket::Article.create(
+    article1 = Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -199,7 +212,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
 
     # add attachments which should get index / .txt
-    # "some normal text"
+    # "some normal text66"
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
@@ -244,16 +257,16 @@ class ElasticsearchTest < ActiveSupport::TestCase
     ticket1.tag_add('someTagA', 1)
     sleep 1
 
-    ticket2 = Ticket.create(
+    ticket2 = Ticket.create!(
       title: 'something else',
       group: Group.lookup(name: 'Users'),
-      customer_id: customer2.id,
+      customer_id: @customer2.id,
       state: Ticket::State.lookup(name: 'open'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article2 = Ticket::Article.create(
+    article2 = Ticket::Article.create!(
       ticket_id: ticket2.id,
       from: 'some_sender@example.org',
       to: 'some_recipient@example.org',
@@ -270,16 +283,16 @@ class ElasticsearchTest < ActiveSupport::TestCase
     ticket2.tag_add('someTagB', 1)
     sleep 1
 
-    ticket3 = Ticket.create(
+    ticket3 = Ticket.create!(
       title: 'something else',
       group: Group.lookup(name: 'WithoutAccess'),
-      customer_id: customer3.id,
+      customer_id: @customer3.id,
       state: Ticket::State.lookup(name: 'open'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article3 = Ticket::Article.create(
+    article3 = Ticket::Article.create!(
       ticket_id: ticket3.id,
       from: 'some_sender@example.org',
       to: 'some_recipient@example.org',
@@ -295,14 +308,13 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     # execute background jobs
     Scheduler.worker(true)
-
     sleep 4
 
-    # search as agent
+    # search as @agent
 
     # search for article data
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'autobahn',
       limit: 15,
     )
@@ -314,7 +326,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     # search for html content
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'strong',
       limit: 15,
     )
@@ -326,7 +338,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     # search for indexed attachment
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: '"some normal text66"',
       limit: 15,
     )
@@ -334,7 +346,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal(result[0].id, ticket1.id)
 
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'test77',
       limit: 15,
     )
@@ -343,14 +355,14 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     # search for not indexed attachment
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'test88',
       limit: 15,
     )
     assert(!result[0], 'record 1')
 
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'test99',
       limit: 15,
     )
@@ -358,16 +370,16 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     # search for ticket with no permissions
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'kindergarden',
       limit: 15,
     )
     assert(result.empty?, 'result should be empty')
     assert(!result[0], 'record 1')
 
-    # search as customer1
+    # search as @customer1
     result = Ticket.search(
-      current_user: customer1,
+      current_user: @customer1,
       query: 'title OR else',
       limit: 15,
     )
@@ -379,9 +391,9 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal(result[0].id, ticket2.id)
     assert_equal(result[1].id, ticket1.id)
 
-    # search as customer2
+    # search as @customer2
     result = Ticket.search(
-      current_user: customer2,
+      current_user: @customer2,
       query: 'title OR else',
       limit: 15,
     )
@@ -393,9 +405,9 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal(result[0].id, ticket2.id)
     assert_equal(result[1].id, ticket1.id)
 
-    # search as customer3
+    # search as @customer3
     result = Ticket.search(
-      current_user: customer3,
+      current_user: @customer3,
       query: 'title OR else',
       limit: 15,
     )
@@ -407,7 +419,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     # search for tags
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'tag:someTagA',
       limit: 15,
     )
@@ -416,7 +428,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal(result[0].id, ticket1.id)
 
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'tag:someTagB',
       limit: 15,
     )
@@ -439,7 +451,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     # search for tags
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'tag:someTagA',
       limit: 15,
     )
@@ -447,7 +459,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert(!result[1], 'record 1')
 
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'tag:someTagB',
       limit: 15,
     )
@@ -456,7 +468,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal(result[0].id, ticket2.id)
 
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'tag:someTagC',
       limit: 15,
     )
@@ -465,7 +477,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal(result[0].id, ticket1.id)
 
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'state:open',
       limit: 15,
     )
@@ -474,7 +486,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal(result[0].id, ticket2.id)
 
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: '"some_sender@example.com"',
       limit: 15,
     )
@@ -483,7 +495,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal(result[0].id, ticket1.id)
 
     result = Ticket.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'article.from:"some_sender@example.com"',
       limit: 15,
     )
@@ -491,25 +503,21 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert(!result[1], 'record 2')
     assert_equal(result[0].id, ticket1.id)
 
-  end
-
-  # check users and search it
-  test 'c - users' do
-
-    # search as agent
+    # check users and search it
+    # search as @agent
     result = User.search(
-      current_user: agent,
+      current_user: @agent,
       query: 'customer1',
       limit: 15,
     )
     assert(!result.empty?, 'result should not be empty')
     assert(result[0], 'record 1')
     assert(!result[1], 'record 2')
-    assert_equal(result[0].id, customer1.id)
+    assert_equal(result[0].id, @customer1.id)
 
-    # search as customer1
+    # search as @customer1
     result = User.search(
-      current_user: customer1,
+      current_user: @customer1,
       query: 'customer1',
       limit: 15,
     )
@@ -517,7 +525,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert(!result[0], 'record 1')
 
     # cleanup
-    system('rake searchindex:drop')
+    Rake::Task['searchindex:drop'].execute
   end
 
 end

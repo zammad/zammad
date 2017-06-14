@@ -746,7 +746,7 @@ returns
     true
   end
 
-  def check_notifications(o)
+  def check_notifications(o, shouldSave = true)
     default = Rails.configuration.preferences_default_by_permission
     return if !default
     default.deep_stringify_keys!
@@ -762,7 +762,7 @@ returns
 
     return true if !has_changed
 
-    if id
+    if id && shouldSave
       save!
       return true
     end
@@ -772,8 +772,14 @@ returns
   end
 
   def check_preferences_default
+    if @preferences_default.blank?
+      if id
+        roles.each { |role|
+          check_notifications(role, false)
+        }
+      end
+    end
     return if @preferences_default.blank?
-
     preferences_tmp = @preferences_default.merge(preferences)
     self.preferences = preferences_tmp
     @preferences_default = nil
@@ -945,7 +951,7 @@ raise 'Minimum one user need to have admin permissions'
 
     # set the user's locale to the one of the "executing" user
     return if !UserInfo.current_user_id
-    user = User.find_by( id: UserInfo.current_user_id )
+    user = User.find_by(id: UserInfo.current_user_id)
     return if !user
     return if !user.preferences[:locale]
 

@@ -99,7 +99,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     # next check should be empty
     result1 = collection_client1.push
     assert(result1.empty?, 'check collections - recall')
-    sleep 0.4
+    travel 0.4.seconds
     result2 = collection_client2.push
     assert(result2.empty?, 'check collections - recall')
     result3 = collection_client3.push
@@ -108,13 +108,13 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     # change collection
     group = Group.first
     group.touch
-    travel 3.seconds
+    travel 4.seconds
 
     # get whole collections
     result1 = collection_client1.push
     assert(result1, 'check collections - after touch')
     assert(check_if_collection_exists(result1, :Group), 'check collections - after touch')
-    sleep 0.1
+    travel 0.1.seconds
     result2 = collection_client2.push
     assert(result2, 'check collections - after touch')
     assert(check_if_collection_exists(result2, :Group), 'check collections - after touch')
@@ -123,7 +123,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(check_if_collection_exists(result3, :Group), 'check collections - after touch')
 
     # next check should be empty
-    sleep 0.5
+    travel 0.5.seconds
     result1 = collection_client1.push
     assert(result1.empty?, 'check collections - recall')
     result2 = collection_client2.push

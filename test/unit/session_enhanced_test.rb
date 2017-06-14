@@ -47,9 +47,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     agent3.save
 
     # create sessions
-    client_id1 = '1234'
-    client_id2 = '123456'
-    client_id3 = 'abc'
+    client_id1 = 'a1234'
+    client_id2 = 'a123456'
+    client_id3 = 'aabc'
     Sessions.destroy(client_id1)
     Sessions.destroy(client_id2)
     Sessions.destroy(client_id3)
@@ -145,8 +145,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     jobs = Thread.new {
       Sessions.jobs
     }
-    sleep 3
-    #jobs.join
+    sleep 6
 
     # check client threads
     assert(Sessions.thread_client_exists?(client_id1), 'check if client is running')
@@ -154,8 +153,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert(Sessions.thread_client_exists?(client_id3), 'check if client is running')
 
     # check if session still exists after idle cleanup
-    sleep 4
+    travel 10.seconds
     client_ids = Sessions.destroy_idle_sessions(2)
+    travel 2.seconds
 
     # check client sessions
     assert(!Sessions.session_exists?(client_id1), 'check if session is removed')
@@ -171,7 +171,8 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # exit jobs
     jobs.exit
-
+    jobs.join
+    travel_back
   end
 
   test 'b check client and backends' do
@@ -196,7 +197,6 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent1.roles = roles
     agent1.save
     agent2 = User.create_or_update(
       login: 'session-agent-2',
@@ -209,16 +209,29 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent2.roles = roles
     agent2.save
+    agent3 = User.create_or_update(
+      login: 'session-agent-3',
+      firstname: 'Session',
+      lastname: 'Agent 3',
+      email: 'session-agent3@example.com',
+      password: 'agentpw',
+      active: true,
+      organization: organization,
+      roles: roles,
+      groups: groups,
+    )
+    agent3.save
 
     # create sessions
-    client_id1_0 = '1234-1'
-    client_id1_1 = '1234-2'
-    client_id2   = '123456'
+    client_id1_0 = 'b1234-1'
+    client_id1_1 = 'b1234-2'
+    client_id2   = 'b123456'
+    client_id3   = 'c123456'
     Sessions.destroy(client_id1_0)
     Sessions.destroy(client_id1_1)
     Sessions.destroy(client_id2)
+    Sessions.destroy(client_id3)
 
     # start jobs
     jobs = Thread.new {
@@ -230,11 +243,16 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     Sessions.create(client_id1_1, agent1.attributes, { type: 'websocket' })
     sleep 3.2
     Sessions.create(client_id2, agent2.attributes, { type: 'ajax' })
+    sleep 3.2
+    Sessions.create(client_id3, agent3.attributes, { type: 'websocket' })
 
     # check if session exists
     assert(Sessions.session_exists?(client_id1_0), 'check if session exists')
     assert(Sessions.session_exists?(client_id1_1), 'check if session exists')
     assert(Sessions.session_exists?(client_id2), 'check if session exists')
+    assert(Sessions.session_exists?(client_id3), 'check if session exists')
+
+    travel 8.seconds
     sleep 8
 
     # check collections
@@ -245,6 +263,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_if_collection_reset_message_exists(client_id1_0, collections, 'init')
     assert_if_collection_reset_message_exists(client_id1_1, collections, 'init')
     assert_if_collection_reset_message_exists(client_id2, collections, 'init')
+    assert_if_collection_reset_message_exists(client_id3, collections, 'init')
 
     collections = {
       'Group' => nil,
@@ -253,7 +272,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_if_collection_reset_message_exists(client_id1_0, collections, 'init2')
     assert_if_collection_reset_message_exists(client_id1_1, collections, 'init2')
     assert_if_collection_reset_message_exists(client_id2, collections, 'init2')
+    assert_if_collection_reset_message_exists(client_id3, collections, 'init2')
 
+    travel 8.seconds
     sleep 8
 
     collections = {
@@ -263,12 +284,14 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_if_collection_reset_message_exists(client_id1_0, collections, 'init3')
     assert_if_collection_reset_message_exists(client_id1_1, collections, 'init3')
     assert_if_collection_reset_message_exists(client_id2, collections, 'init3')
+    assert_if_collection_reset_message_exists(client_id3, collections, 'init3')
 
     # change collection
     group = Group.first
     group.touch
 
-    sleep 10
+    travel 12.seconds
+    sleep 12
 
     # check collections
     collections = {
@@ -278,16 +301,23 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_if_collection_reset_message_exists(client_id1_0, collections, 'update')
     assert_if_collection_reset_message_exists(client_id1_1, collections, 'update')
     assert_if_collection_reset_message_exists(client_id2, collections, 'update')
+    assert_if_collection_reset_message_exists(client_id3, collections, 'update')
 
     # check if session still exists after idle cleanup
-    sleep 4
-    client_ids = Sessions.destroy_idle_sessions(3)
+    travel 10.seconds
+    client_ids = Sessions.destroy_idle_sessions(2)
+    travel 2.seconds
 
     # check client sessions
     assert(!Sessions.session_exists?(client_id1_0), 'check if session is removed')
     assert(!Sessions.session_exists?(client_id1_1), 'check if session is removed')
     assert(!Sessions.session_exists?(client_id2), 'check if session is removed')
+    assert(!Sessions.session_exists?(client_id3), 'check if session is removed')
 
+    # exit jobs
+    jobs.exit
+    jobs.join
+    travel_back
   end
 
   def assert_if_collection_reset_message_exists(client_id, collections_orig, type)
