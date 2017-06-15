@@ -16,7 +16,7 @@ class EmailPostmasterTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
     PostmasterFilter.destroy_all
-    PostmasterFilter.create(
+    PostmasterFilter.create!(
       name: 'not used',
       match: {
         from: {
@@ -34,7 +34,8 @@ class EmailPostmasterTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
-    PostmasterFilter.create(
+
+    PostmasterFilter.create!(
       name: 'used',
       match: {
         from: {
@@ -55,7 +56,8 @@ class EmailPostmasterTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
-    PostmasterFilter.create(
+
+    PostmasterFilter.create!(
       name: 'used x-any-recipient',
       match: {
         'x-any-recipient' => {
@@ -76,6 +78,7 @@ class EmailPostmasterTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+
 
     data = 'From: me@example.com
 To: customer@example.com
@@ -111,9 +114,8 @@ Some Text'
     assert_equal('email', article.type.name)
     assert_equal(true, article.internal)
 
-
-    PostmasterFilter.create(
-      name: 'used x-any-recipient',
+    PostmasterFilter.create!(
+      name: 'used x-any-recipient 2',
       match: {
         'x-any-recipient' => {
           operator: 'contains not',
@@ -157,7 +159,7 @@ Some Text'
 
     PostmasterFilter.destroy_all
 
-    PostmasterFilter.create(
+    PostmasterFilter.create!(
       name: 'used - empty selector',
       match: {
         from: {
@@ -203,7 +205,7 @@ Some Text'
     PostmasterFilter.destroy_all
 
     # follow up with create post master filter test
-    PostmasterFilter.create(
+    PostmasterFilter.create!(
       name: 'used - empty selector',
       match: {
         from: {
@@ -270,7 +272,7 @@ Some Text"
 
     PostmasterFilter.destroy_all
 
-    PostmasterFilter.create(
+    PostmasterFilter.create!(
       name: 'used',
       match: {
         from: {
@@ -310,7 +312,7 @@ Some Text'
     assert_equal('me@example.com', ticket.customer.email)
 
     PostmasterFilter.destroy_all
-    PostmasterFilter.create(
+    PostmasterFilter.create!(
       name: 'used',
       match: {
         from: {
@@ -350,7 +352,7 @@ Some Text'
     assert_equal('me@example.com', ticket.customer.email)
 
     PostmasterFilter.destroy_all
-    PostmasterFilter.create(
+    PostmasterFilter.create!(
       name: 'used',
       match: {
         from: {
