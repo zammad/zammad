@@ -211,12 +211,12 @@ rename tag items
 
     def self.rename(data)
 
-      new_tag_name = data[:name].strip
-      old_tag_item = Tag::Item.find(data[:id])
+      new_tag_name         = data[:name].strip
+      old_tag_item         = Tag::Item.find(data[:id])
       already_existing_tag = Tag::Item.lookup(name: new_tag_name)
 
       # check if no remame is needed
-      return true if new_tag_name.downcase == old_tag_item.name.downcase
+      return true if new_tag_name == old_tag_item.name
 
       # merge old with new tag if already existing
       if already_existing_tag
