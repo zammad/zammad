@@ -244,7 +244,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert(!result1, 'check as agent1 - recall 2')
 
     agent1.update_attribute(:email, 'activity-stream-agent11@example.com')
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: '12323',
       group_id: 1,
       priority_id: 1,
@@ -297,12 +297,15 @@ class SessionBasicTest < ActiveSupport::TestCase
     result1 = ticket_create_client1.push
     assert(!result1, 'check ticket_create - recall 2')
 
-    Group.create(
+    Group.create!(
       name: "SomeTicketCreateGroup::#{rand(999_999)}",
       active: true,
       updated_by_id: 1,
       created_by_id: 1,
     )
+    groups = Group.all
+    agent1.groups = groups
+    agent1.save!
 
     travel 4.seconds
 
