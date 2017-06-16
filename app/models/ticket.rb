@@ -1045,42 +1045,42 @@ result
   private
 
   def check_generate
-    return if number
+    return true if number
     self.number = Ticket::Number.generate
+    true
   end
 
   def check_title
-    return if !title
+    return true if !title
     title.gsub!(/\s|\t|\r/, ' ')
+    true
   end
 
   def check_defaults
     if !owner_id
       self.owner_id = 1
     end
-
-    return if !customer_id
-
+    return true if !customer_id
     customer = User.find_by(id: customer_id)
-    return if !customer
-    return if organization_id == customer.organization_id
-
+    return true if !customer
+    return true if organization_id == customer.organization_id
     self.organization_id = customer.organization_id
+    true
   end
 
   def reset_pending_time
 
     # ignore if no state has changed
-    return if !changes['state_id']
+    return true if !changes['state_id']
 
     # check if new state isn't pending*
     current_state      = Ticket::State.lookup(id: state_id)
     current_state_type = Ticket::StateType.lookup(id: current_state.state_type_id)
 
     # in case, set pending_time to nil
-    return if current_state_type.name =~ /^pending/i
-
+    return true if current_state_type.name =~ /^pending/i
     self.pending_time = nil
+    true
   end
 
   def check_escalation_update
@@ -1089,20 +1089,18 @@ result
   end
 
   def set_default_state
-    return if state_id
-
+    return true if state_id
     default_ticket_state = Ticket::State.find_by(default_create: true)
-    return if !default_ticket_state
-
+    return true if !default_ticket_state
     self.state_id = default_ticket_state.id
+    true
   end
 
   def set_default_priority
-    return if priority_id
-
+    return true if priority_id
     default_ticket_priority = Ticket::Priority.find_by(default_create: true)
-    return if !default_ticket_priority
-
+    return true if !default_ticket_priority
     self.priority_id = default_ticket_priority.id
+    true
   end
 end

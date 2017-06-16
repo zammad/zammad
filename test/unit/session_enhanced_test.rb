@@ -19,8 +19,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent1.roles = roles
-    agent1.save
+    agent1.save!
     agent2 = User.create_or_update(
       login: 'session-agent-2',
       firstname: 'Session',
@@ -31,8 +30,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent2.roles = roles
-    agent2.save
+    agent2.save!
     agent3 = User.create_or_update(
       login: 'session-agent-3',
       firstname: 'Session',
@@ -43,8 +41,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent3.roles = roles
-    agent3.save
+    agent3.save!
 
     # create sessions
     client_id1 = 'a1234'
@@ -197,7 +194,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent1.save
+    agent1.save!
     agent2 = User.create_or_update(
       login: 'session-agent-2',
       firstname: 'Session',
@@ -209,7 +206,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent2.save
+    agent2.save!
     agent3 = User.create_or_update(
       login: 'session-agent-3',
       firstname: 'Session',
@@ -221,7 +218,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent3.save
+    agent3.save!
 
     # create sessions
     client_id1_0 = 'b1234-1'
@@ -288,6 +285,7 @@ class SessionEnhancedTest < ActiveSupport::TestCase
 
     # change collection
     group = Group.first
+    travel 4.seconds
     group.touch
 
     travel 12.seconds

@@ -85,8 +85,6 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       organization_id: @organization.id,
     )
 
-    Ticket.all.destroy_all
-
     @ticket1 = Ticket.create!(
       title: 'test 1234-1',
       group: Group.lookup(name: 'Users'),
@@ -105,7 +103,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
     )
-    sleep 1
+    travel 1.second
     @ticket2 = Ticket.create!(
       title: 'test 1234-2',
       group: Group.lookup(name: 'Users'),
@@ -124,7 +122,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
     )
-    sleep 1
+    travel 1.second
     @ticket3 = Ticket.create!(
       title: 'test 1234-2',
       group: Group.lookup(name: 'Users'),
@@ -161,6 +159,8 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
         #fail "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
         Setting.set('es_index', ENV['ES_INDEX'])
       end
+
+      travel 1.minute
 
       # drop/create indexes
       Rake::Task.clear

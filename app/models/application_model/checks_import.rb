@@ -15,5 +15,6 @@ module ApplicationModel::ChecksImport
     return if Setting.get('import_mode') && import_class_list.include?(self.class.to_s)
     return if !has_attribute?(:id)
     self[:id] = nil
+    true
   end
 end

@@ -292,6 +292,7 @@ remove tag item (destroy with reverences)
 
     def fill_namedowncase
       self.name_downcase = name.downcase
+      true
     end
 
   end

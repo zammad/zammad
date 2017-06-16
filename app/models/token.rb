@@ -119,10 +119,10 @@ cleanup old token
   private
 
   def generate_token
-
     loop do
       self.name = SecureRandom.urlsafe_base64(48)
       break if !Token.exists?(name: name)
     end
+    true
   end
 end

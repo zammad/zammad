@@ -125,7 +125,7 @@ returns
   private
 
   def validate_permissions
-    return if !self.permission_ids
+    return true if !self.permission_ids
     permission_ids.each { |permission_id|
       permission = Permission.lookup(id: permission_id)
       raise "Unable to find permission for id #{permission_id}" if !permission
@@ -137,17 +137,19 @@ returns
         raise "Permission #{permission.name} conflicts with #{local_permission.name}" if permission_ids.include?(local_permission.id)
       }
     }
+    true
   end
 
   def validate_agent_limit(permission)
-    return if !Setting.get('system_agent_limit')
-    return if permission.name != 'ticket.agent'
+    return true if !Setting.get('system_agent_limit')
+    return true if permission.name != 'ticket.agent'
 
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent' }).pluck(:id)
     ticket_agent_role_ids.push(id)
     count = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).count
 
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
+    true
   end
 
 end

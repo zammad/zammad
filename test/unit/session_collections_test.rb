@@ -22,8 +22,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent1.roles = roles
-    agent1.save
+    agent1.save!
 
     roles  = Role.where(name: ['Agent'])
     groups = Group.all
@@ -39,8 +38,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent2.roles = roles
-    agent2.save
+    agent2.save!
 
     roles = Role.where(name: ['Customer'])
     customer1 = User.create_or_update(
@@ -53,9 +51,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       active: true,
       roles: roles,
     )
-    customer1.roles = roles
-    customer1.save
-
+    customer1.save!
     collection_client1 = Sessions::Backend::Collections.new(agent1, {}, nil, 'aaa-1', 2)
     collection_client2 = Sessions::Backend::Collections.new(agent2, {}, nil, 'bbb-2', 2)
     collection_client3 = Sessions::Backend::Collections.new(customer1, {}, nil, 'ccc-2', 2)
@@ -107,11 +103,13 @@ class SessionCollectionsTest < ActiveSupport::TestCase
 
     # change collection
     group = Group.first
+    travel 6.seconds
     group.touch
-    travel 4.seconds
+    travel 6.seconds
 
     # get whole collections
     result1 = collection_client1.push
+
     assert(result1, 'check collections - after touch')
     assert(check_if_collection_exists(result1, :Group), 'check collections - after touch')
     travel 0.1.seconds
@@ -173,7 +171,6 @@ class SessionCollectionsTest < ActiveSupport::TestCase
   end
 
   test 'b assets' do
-    # create users
     roles  = Role.where(name: %w(Agent Admin))
     groups = Group.all.order(id: :asc)
 
@@ -188,7 +185,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    assert(agent1.save, 'create/update agent1')
+    assert(agent1.save!, 'create/update agent1')
 
     assets = {}
     client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)

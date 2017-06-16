@@ -34,5 +34,6 @@ check string/varchar size and cut them if needed
         self[attribute[0]] = self[ attribute[0] ].utf8_to_3bytesutf8
       end
     }
+    true
   end
 end

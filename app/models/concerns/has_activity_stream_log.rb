@@ -19,6 +19,7 @@ log object create activity stream, if configured - will be executed automaticall
 
   def activity_stream_create
     activity_stream_log('create', self['created_by_id'])
+    true
   end
 
 =begin
@@ -31,7 +32,7 @@ log object update activity stream, if configured - will be executed automaticall
 =end
 
   def activity_stream_update
-    return if !changed?
+    return true if !changed?
 
     ignored_attributes  = self.class.instance_variable_get(:@activity_stream_attributes_ignored) || []
     ignored_attributes += %i(created_at updated_at created_by_id updated_by_id)
@@ -42,10 +43,9 @@ log object update activity stream, if configured - will be executed automaticall
 
       log = true
     }
-
-    return if !log
-
+    return true if !log
     activity_stream_log('update', self['updated_by_id'])
+    true
   end
 
 =begin
@@ -59,6 +59,7 @@ delete object activity stream, will be executed automatically
 
   def activity_stream_destroy
     ActivityStream.remove(self.class.to_s, id)
+    true
   end
 
   # methods defined here are going to extend the class, not the instance of it

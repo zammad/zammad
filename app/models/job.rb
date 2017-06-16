@@ -203,10 +203,12 @@ class Job < ApplicationModel
 
   def updated_matching
     self.matching = matching_count
+    true
   end
 
   def update_next_run_at
     self.next_run_at = next_run_at_calculate
+    true
   end
 
   def match_minutes(minutes)
