@@ -19,7 +19,7 @@ curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-
 =end
 
   def index
-    recent_viewed = RecentView.list_full( current_user, 10 )
+    recent_viewed = RecentView.list_full(current_user, 10)
 
     # return result
     render json: recent_viewed
@@ -46,7 +46,7 @@ curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-
 
   def create
 
-    RecentView.log( params[:object], params[:o_id], current_user )
+    RecentView.log(params[:object], params[:o_id], current_user)
 
     # return result
     render json: { message: 'ok' }
