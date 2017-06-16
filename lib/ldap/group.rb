@@ -80,13 +80,13 @@ class Ldap
       filter ||= filter()
 
       result = {}
-      @ldap.search(filter, attributes: %w(dn member)) do |entry|
-
-        members = entry[:member]
-        next if members.blank?
+      @ldap.search(filter, attributes: %w(dn member memberuid)) do |entry|
 
         roles = mapping[entry.dn.downcase]
         next if roles.blank?
+
+        members = group_user_dns(entry)
+        next if members.blank?
 
         members.each do |user_dn|
           user_dn_key = user_dn.downcase
@@ -132,6 +132,19 @@ class Ldap
       return if config.blank?
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
+    end
+
+    def group_user_dns(entry)
+      return entry[:member] if entry[:member].present?
+      return if entry[:memberuid].blank?
+
+      entry[:memberuid].collect do |uid|
+        dn = nil
+        @ldap.search("(uid=#{uid})", attributes: %w(dn)) do |user|
+          dn = user.dn
+        end
+        dn
+      end.compact
     end
   end
 end
