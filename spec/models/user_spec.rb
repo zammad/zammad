@@ -1,6 +1,10 @@
 require 'rails_helper'
+require 'models/concerns/has_groups_examples'
+require 'models/concerns/has_roles_examples'
 
 RSpec.describe User do
+  include_examples 'HasGroups'
+  include_examples 'HasRoles'
 
   let(:new_password) { 'N3W54V3PW!' }
 

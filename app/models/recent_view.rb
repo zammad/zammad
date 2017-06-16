@@ -105,8 +105,8 @@ class RecentView < ApplicationModel
     end
 
     # check permission
-    return if !record.respond_to?(:permission)
-    record.permission(current_user: user)
+    return if !record.respond_to?(:access?)
+    record.access?(user, 'read')
   end
 
 =begin

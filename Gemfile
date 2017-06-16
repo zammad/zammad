@@ -52,6 +52,7 @@ gem 'mime-types'
 
 gem 'biz'
 
+gem 'composite_primary_keys'
 gem 'delayed_job_active_record'
 gem 'daemons'
 

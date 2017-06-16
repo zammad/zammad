@@ -28,9 +28,10 @@ class User < ApplicationModel
   include ChecksClientNotification
   include HasHistory
   include HasSearchIndexBackend
+  include HasGroups
+  include HasRoles
+  include User::ChecksAccess
 
-  load 'user/permission.rb'
-  include User::Permission
   load 'user/assets.rb'
   include User::Assets
   extend User::Search
@@ -44,7 +45,6 @@ class User < ApplicationModel
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy
 
-  has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
   has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, before_remove: :last_admin_check, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'

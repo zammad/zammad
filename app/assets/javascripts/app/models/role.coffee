@@ -1,5 +1,5 @@
 class App.Role extends App.Model
-  @configure 'Role', 'name', 'permission_ids', 'default_at_signup', 'note', 'active', 'updated_at'
+  @configure 'Role', 'name', 'permission_ids', 'group_ids', 'default_at_signup', 'note', 'active', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/roles'
   @configure_attributes = [

@@ -4,6 +4,10 @@ class Role < ApplicationModel
   include HasActivityStreamLog
   include ChecksClientNotification
   include ChecksLatestChangeObserved
+  include HasGroups
+
+  load 'role/assets.rb'
+  include Role::Assets
 
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
   has_and_belongs_to_many :permissions, after_add: :cache_update, after_remove: :cache_update, before_add: :validate_agent_limit
@@ -13,7 +17,7 @@ class Role < ApplicationModel
   before_create  :validate_permissions
   before_update  :validate_permissions
 
-  association_attributes_ignored :user_ids
+  association_attributes_ignored :users
 
   activity_stream_permission 'admin.role'
 

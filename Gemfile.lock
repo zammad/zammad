@@ -75,6 +75,8 @@ GEM
       coffee-script
       execjs
       json
+    composite_primary_keys (8.1.5)
+      activerecord (~> 4.2.0)
     concurrent-ruby (1.0.2)
     coveralls (0.8.16)
       json (>= 1.8, < 3)
@@ -430,6 +432,7 @@ DEPENDENCIES
   coffee-rails
   coffee-script-source
   coffeelint
+  composite_primary_keys
   coveralls
   daemons
   delayed_job_active_record

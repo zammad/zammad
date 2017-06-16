@@ -105,15 +105,9 @@ returns
       query_extention['bool']['must'] = []
 
       if current_user.permissions?('ticket.agent')
-        groups = Group.joins(:users)
-                      .where('groups_users.user_id = ?', current_user.id)
-                      .where('groups.active = ?', true)
-        group_condition = []
-        groups.each { |group|
-          group_condition.push group.id
-        }
+        group_ids = current_user.group_ids_access('read')
         access_condition = {
-          'query_string' => { 'default_field' => 'group_id', 'query' => "\"#{group_condition.join('" OR "')}\"" }
+          'query_string' => { 'default_field' => 'group_id', 'query' => "\"#{group_ids.join('" OR "')}\"" }
         }
       else
         access_condition = if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
@@ -151,7 +145,7 @@ returns
     end
 
     # fallback do sql query
-    access_condition = Ticket.access_condition(current_user)
+    access_condition = Ticket.access_condition(current_user, 'read')
 
     # do query
     # - stip out * we already search for *query* -

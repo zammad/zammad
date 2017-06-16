@@ -6,9 +6,8 @@ class Organization < ApplicationModel
   include ChecksLatestChangeObserved
   include HasHistory
   include HasSearchIndexBackend
+  include Organization::ChecksAccess
 
-  load 'organization/permission.rb'
-  include Organization::Permission
   load 'organization/assets.rb'
   include Organization::Assets
   extend Organization::Search

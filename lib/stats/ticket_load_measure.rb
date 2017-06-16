@@ -10,7 +10,7 @@ class Stats::TicketLoadMeasure
     count = Ticket.where(owner_id: user.id, state_id: open_state_ids).count
 
     # get total open
-    total = Ticket.where(group_id: user.groups.map(&:id), state_id: open_state_ids).count
+    total = Ticket.where(group_id: user.group_ids_access('full'), state_id: open_state_ids).count
 
     average = '-'
     state = 'good'

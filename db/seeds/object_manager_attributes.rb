@@ -106,7 +106,7 @@ ObjectManager::Attribute.add(
   data_option: {
     default: '',
     relation: 'Group',
-    relation_condition: { access: 'rw' },
+    relation_condition: { access: 'full' },
     nulloption: true,
     multiple: false,
     null: false,

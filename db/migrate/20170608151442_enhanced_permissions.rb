@@ -1,0 +1,23 @@
+class EnhancedPermissions < ActiveRecord::Migration
+  def up
+
+    # return if it's a new setup
+    return if !Setting.find_by(name: 'system_init_done')
+
+    change_column_null :groups_users, :user_id, false
+    change_column_null :groups_users, :group_id, false
+    add_column :groups_users, :access, :string, limit: 50, null: false, default: 'full'
+    add_index :groups_users, [:access]
+    UserGroup.connection.schema_cache.clear!
+    UserGroup.reset_column_information
+
+    create_table :roles_groups, id: false do |t|
+      t.references :role,                null: false
+      t.references :group,               null: false
+      t.string :access,       limit: 50, null: false, default: 'full'
+    end
+    add_index :roles_groups, [:role_id]
+    add_index :roles_groups, [:group_id]
+    add_index :roles_groups, [:access]
+  end
+end

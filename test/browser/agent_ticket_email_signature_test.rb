@@ -45,7 +45,10 @@ class AgentTicketEmailSignatureTest < TestCase
         name: group_name1,
         signature: signature_name1,
         member: [
-          'master@example.com'
+          {
+            login: 'master@example.com',
+            access: 'full',
+          },
         ],
       }
     )
@@ -54,7 +57,10 @@ class AgentTicketEmailSignatureTest < TestCase
         name: group_name2,
         signature: signature_name2,
         member: [
-          'master@example.com'
+          {
+            login: 'master@example.com',
+            access: 'full',
+          },
         ],
       }
     )
@@ -62,10 +68,14 @@ class AgentTicketEmailSignatureTest < TestCase
       data: {
         name: group_name3,
         member: [
-          'master@example.com'
+          {
+            login: 'master@example.com',
+            access: 'full',
+          },
         ],
       }
     )
+    sleep 6
 
     #
     # check signature in new ticket

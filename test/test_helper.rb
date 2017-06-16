@@ -77,6 +77,8 @@ class ActiveSupport::TestCase
     ApplicationHandleInfo.current = 'unknown'
 
     Rails.logger.info '++++NEW++++TEST++++'
+
+    travel_back
   end
 
   # Add more helper methods to be used by all tests here...

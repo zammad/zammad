@@ -4,7 +4,7 @@ class Sessions::Backend::TicketCreate < Sessions::Backend::Base
 
     # get attributes to update
     ticket_create_attributes = Ticket::ScreenOptions.attributes_to_change(
-      user: @user.id,
+      current_user: @user,
     )
 
     # no data exists
