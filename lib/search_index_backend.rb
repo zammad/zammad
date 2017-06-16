@@ -15,7 +15,7 @@ create/update/delete index
             :articles => {
               :type       => 'nested',
               :properties => {
-                'attachments' => { :type => 'attachment' }
+                'attachment' => { :type => 'attachment' }
               }
             }
           }
