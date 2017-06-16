@@ -116,7 +116,9 @@ nice move to keep system responsive
       adapter_source = load_adapter("Store::Provider::#{source}")
       adapter_target = load_adapter("Store::Provider::#{target}")
 
-      Store::File.all.each { |item|
+      file_ids = Store::File.all.pluck(:id)
+      file_ids.each { |item_id|
+        item = Store::File.find(item_id)
         next if item.provider == target
         content = item.content
 
