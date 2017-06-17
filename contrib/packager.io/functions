@@ -234,10 +234,10 @@ function update_or_install () {
 }
 
 function set_env_vars () {
-  zammad config:set RUBY_GC_MALLOC_LIMIT=1077216
-  zammad config:set RUBY_GC_MALLOC_LIMIT_MAX=2177216
-  zammad config:set RUBY_GC_OLDMALLOC_LIMIT=2177216
-  zammad config:set RUBY_GC_OLDMALLOC_LIMIT_MAX=3000100
+  zammad config:set RUBY_GC_MALLOC_LIMIT=${ZAMMAD_RUBY_GC_MALLOC_LIMIT:=1077216}
+  zammad config:set RUBY_GC_MALLOC_LIMIT_MAX=${ZAMMAD_RUBY_GC_MALLOC_LIMIT_MAX:=2177216}
+  zammad config:set RUBY_GC_OLDMALLOC_LIMIT=${ZAMMAD_RUBY_GC_OLDMALLOC_LIMIT:=2177216}
+  zammad config:set RUBY_GC_OLDMALLOC_LIMIT_MAX=${ZAMMAD_RUBY_GC_OLDMALLOC_LIMIT_MAX:=3000100}
 }
 
 function final_message () {
