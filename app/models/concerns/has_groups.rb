@@ -205,8 +205,6 @@ module HasGroups
           group_id: group_id,
           access:   access
         )
-
-        Rails.logger.error "TE DEBUG group_access_buffer = #{group_access_buffer.inspect}"
       end
     end
 
