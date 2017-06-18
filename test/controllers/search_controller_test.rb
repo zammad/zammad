@@ -152,13 +152,16 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       # Setting.set('es_user', 'elasticsearch')
       # Setting.set('es_password', 'zammad')
 
+      if ENV['ES_INDEX_RAND'].present?
+        ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
+      end
+      if ENV['ES_INDEX'].blank?
+        raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+      end
+      Setting.set('es_index', ENV['ES_INDEX'])
+
       # set max attachment size in mb
       Setting.set('es_attachment_max_size_in_mb', 1)
-
-      if ENV['ES_INDEX'].present?
-        #fail "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
-        Setting.set('es_index', ENV['ES_INDEX'])
-      end
 
       travel 1.minute
 
