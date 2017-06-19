@@ -1137,6 +1137,40 @@ Bob Smith
 ',
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail58.box'),
+        body_md5: '548917e0bff0806f9b27c09bbf23bb38',
+        params: {
+          from: 'Yangzhou ABC Lighting Equipment <bob@example.com>, LTD <ly@example.com>',
+          from_email: 'bob@example.com',
+          from_display_name: 'Yangzhou ABC Lighting Equipment',
+          subject: 'new design solar street lights',
+          content_type: 'text/plain',
+          body: "äöüß ad asd
+
+-Martin
+
+--
+Old programmers never die. They just branch to a new address."
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail59.box'),
+        body_md5: '548917e0bff0806f9b27c09bbf23bb38',
+        params: {
+          from: '"Yangzhou ABC Lighting Equipment " <>, "LTD" <ly@example.com>',
+          from_email: 'ly@example.com',
+          from_display_name: 'LTD',
+          subject: 'new design solar street lights',
+          content_type: 'text/plain',
+          body: "äöüß ad asd
+
+-Martin
+
+--
+Old programmers never die. They just branch to a new address."
+        },
+      },
     ]
 
     count = 0
