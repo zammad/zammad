@@ -19,5 +19,7 @@ class EnhancedPermissions < ActiveRecord::Migration
     add_index :roles_groups, [:role_id]
     add_index :roles_groups, [:group_id]
     add_index :roles_groups, [:access]
+
+    Cache.clear
   end
 end
