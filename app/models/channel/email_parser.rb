@@ -641,12 +641,22 @@ returns
     data = {}
 
     begin
-      data[:from_email]        = Mail::Address.new(from).address
-      data[:from_local]        = Mail::Address.new(from).local
-      data[:from_domain]       = Mail::Address.new(from).domain
-      data[:from_display_name] = Mail::Address.new(from).display_name ||
-                                 (Mail::Address.new(from).comments && Mail::Address.new(from).comments[0])
-    rescue
+      list = Mail::AddressList.new(from)
+      list.addresses.each { |address|
+        data[:from_email] = address.address
+        data[:from_local]        = address.local
+        data[:from_domain]       = address.domain
+        data[:from_display_name] = address.display_name ||
+                                   (address.comments && address.comments[0])
+        break if data[:from_email].present? && data[:from_email] =~ /@/
+      }
+    rescue => e
+      if from =~ /<>/ && from =~ /<.+?>/
+        data = sender_properties(from.gsub(/<>/, ''))
+      end
+    end
+
+    if data.empty? || data[:from_email].blank?
       from.strip!
       if from =~ /^(.+?)<(.+?)@(.+?)>$/
         data[:from_email]        = "#{$2}@#{$3}"
