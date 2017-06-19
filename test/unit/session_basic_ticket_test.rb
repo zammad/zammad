@@ -5,9 +5,6 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
 
   test 'b ticket_overview_List' do
     UserInfo.current_user_id = 1
-    Ticket.destroy_all
-
-    # create users
     roles  = Role.where(name: ['Agent'])
     groups = Group.all
 
@@ -21,9 +18,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-
-    agent1.roles = roles
-    assert(agent1.save, 'create/update agent1')
+    assert(agent1.save!, 'create/update agent1')
 
     Ticket.create(title: 'default overview test', group_id: 1, priority_id: 1, state_id: 1, customer_id: 1)
 

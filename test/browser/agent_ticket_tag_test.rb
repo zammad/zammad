@@ -264,7 +264,7 @@ class AgentTicketTagTest < TestCase
       browser: browser2,
       css: '.modal .js-submit',
     )
-    sleep 4
+    modal_disappear(browser: browser2)
     ticket_open_by_search(
       browser: browser2,
       number:  ticket3[:number],
@@ -313,7 +313,7 @@ class AgentTicketTagTest < TestCase
       browser: browser2,
       css: '.modal .js-submit',
     )
-    sleep 4
+    modal_disappear(browser: browser2)
     ticket_open_by_search(
       browser: browser2,
       number:  ticket3[:number],

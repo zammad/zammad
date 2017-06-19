@@ -112,7 +112,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       css: '.modal input[value="article_count"]',
     )
     click(css: '.modal .js-submit')
-    sleep 6
+    modal_disappear
 
     # check if number and article count is shown
     match(
@@ -160,7 +160,7 @@ class AgentTicketOverviewLevel0Test < TestCase
       css: '.modal input[value="article_count"]',
     )
     click(css: '.modal .js-submit')
-    sleep 6
+    modal_disappear
 
     # check if number and article count is gone
     match_not(

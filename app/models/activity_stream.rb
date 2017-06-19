@@ -97,7 +97,7 @@ return all activity entries of an user
     return [] if !user.permissions?('ticket.agent') && !user.permissions?('admin')
 
     permission_ids = user.permissions_with_child_ids
-    group_ids = user.group_ids
+    group_ids = user.group_ids_access('read')
 
     stream = if group_ids.empty?
                ActivityStream.where('(permission_id IN (?) AND group_id is NULL)', permission_ids)

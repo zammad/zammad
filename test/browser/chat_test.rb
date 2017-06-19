@@ -471,6 +471,7 @@ class ChatTest < TestCase
       browser: agent,
       css: '.modal .js-submit',
     )
+    modal_disappear(browser: agent)
 
     customer = browser_instance
     location(

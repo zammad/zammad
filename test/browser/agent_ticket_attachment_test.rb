@@ -233,6 +233,7 @@ class AgentTicketAttachmentTest < TestCase
     sleep 2
     set(browser: browser1, css: '.modal [name="address"]', value: 'some new address')
     click(browser: browser1, css: '.modal .js-submit')
+    modal_disappear(browser: browser1)
 
     # verify is customer has chnaged other browser too
     click(browser: browser2, css: '.content.active .tabsSidebar-tab[data-tab="customer"]')
@@ -255,6 +256,7 @@ class AgentTicketAttachmentTest < TestCase
     click(browser: browser1, css: '.modal .js-option')
 
     click(browser: browser1, css: '.modal .js-submit')
+    modal_disappear(browser: browser1)
 
     # check if org has changed in second browser
     sleep 3

@@ -6,22 +6,22 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
   def before_create(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
     # only do fill of email from if article got created via application_server (e. g. not
     # if article and sender type is set via *.postmaster)
-    return if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
+    return true if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
 
     # if sender is customer, do not change anything
-    return if !record.sender_id
+    return true if !record.sender_id
     sender = Ticket::Article::Sender.lookup(id: record.sender_id)
-    return if sender.nil?
-    return if sender['name'] == 'Customer'
+    return true if sender.nil?
+    return true if sender['name'] == 'Customer'
 
     # set email attributes
-    return if !record.type_id
+    return true if !record.type_id
     type = Ticket::Article::Type.lookup(id: record.type_id)
-    return if type['name'] != 'email'
+    return true if type['name'] != 'email'
 
     # set subject if empty
     ticket = Ticket.lookup(id: record.ticket_id)
@@ -59,5 +59,6 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     else
       record.from = Channel::EmailBuild.recipient_line(email_address.realname, email_address.email)
     end
+    true
   end
 end

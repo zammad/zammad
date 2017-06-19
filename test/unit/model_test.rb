@@ -64,8 +64,8 @@ class ModelTest < ActiveSupport::TestCase
   test 'references test' do
 
     # create base
-    groups = Group.where( name: 'Users' )
-    roles  = Role.where( name: %w(Agent Admin) )
+    groups = Group.where(name: 'Users')
+    roles  = Role.where(name: %w(Agent Admin))
     agent1 = User.create_or_update(
       login: 'model-agent1@example.com',
       firstname: 'Model',
@@ -104,7 +104,7 @@ class ModelTest < ActiveSupport::TestCase
       updated_by_id: agent1.id,
       created_by_id: 1,
     )
-    roles     = Role.where( name: 'Customer' )
+    roles     = Role.where(name: 'Customer')
     customer1 = User.create_or_update(
       login: 'model-customer1@example.com',
       firstname: 'Model',
@@ -153,10 +153,11 @@ class ModelTest < ActiveSupport::TestCase
     assert_equal(references1['User']['updated_by_id'], 3)
     assert_equal(references1['User']['created_by_id'], 1)
     assert_equal(references1['Organization']['updated_by_id'], 1)
+    assert_equal(references1['UserGroup']['user_id'], 1)
     assert(!references1['Group'])
 
     references_total1 = Models.references_total('User', agent1.id)
-    assert_equal(references_total1, 7)
+    assert_equal(references_total1, 8)
 
     # verify agent2
     references2 = Models.references('User', agent2.id)
@@ -164,10 +165,10 @@ class ModelTest < ActiveSupport::TestCase
     assert(!references2['User'])
     assert(!references2['Organization'])
     assert(!references2['Group'])
-    assert(references2.empty?)
+    assert_equal(references2['UserGroup']['user_id'], 1)
 
     references_total2 = Models.references_total('User', agent2.id)
-    assert_equal(references_total2, 0)
+    assert_equal(references_total2, 1)
 
     Models.merge('User', agent2.id, agent1.id)
 
@@ -177,6 +178,7 @@ class ModelTest < ActiveSupport::TestCase
     assert(!references1['User'])
     assert(!references1['Organization'])
     assert(!references1['Group'])
+    assert(!references1['UserGroup'])
     assert(references1.empty?)
 
     references_total1 = Models.references_total('User', agent1.id)
@@ -188,10 +190,11 @@ class ModelTest < ActiveSupport::TestCase
     assert_equal(references2['User']['updated_by_id'], 3)
     assert_equal(references2['User']['created_by_id'], 1)
     assert_equal(references2['Organization']['updated_by_id'], 1)
+    assert_equal(references2['UserGroup']['user_id'], 2)
     assert(!references2['Group'])
 
     references_total2 = Models.references_total('User', agent2.id)
-    assert_equal(references_total2, 7)
+    assert_equal(references_total2, 9)
 
     # org
 

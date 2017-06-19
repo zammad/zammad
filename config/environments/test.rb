@@ -46,4 +46,8 @@ Rails.application.configure do
   # format log
   config.log_formatter = Logger::Formatter.new
 
+  config.after_initialize do
+    ActiveRecord::Base.logger = Rails.logger.clone
+    ActiveRecord::Base.logger.level = Logger::INFO
+  end
 end

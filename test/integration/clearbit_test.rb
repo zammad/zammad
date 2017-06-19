@@ -276,7 +276,8 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('3030 16th St, San Francisco, CA 94103, USA', customer6_lookup.address)
     #assert_equal('San Francisco, CA, USA', customer6_lookup.address)
 
-    organization6_lookup = Organization.find_by(name: 'Clearbit')
+    organization6_lookup = Organization.find_by(name: 'APIHub, Inc')
+    assert(organization6_lookup, 'unable to find org of user')
     assert(ExternalSync.find_by(source: 'clearbit', object: 'Organization', o_id: organization6_lookup.id))
     assert_equal(false, organization6_lookup.shared)
     assert_equal('Clearbit provides powerful products and data APIs to help your business grow. Contact enrichment, lead generation, financial compliance, and more...', organization6_lookup.note)

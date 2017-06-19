@@ -240,13 +240,14 @@ returns
 
   # if changed calendar is default, set all others default to false
   def sync_default
-    return if !default
+    return true if !default
     Calendar.find_each { |calendar|
       next if calendar.id == id
       next if !calendar.default
       calendar.default = false
       calendar.save
     }
+    true
   end
 
   # check if min one is set to default true
@@ -270,11 +271,13 @@ returns
         sla.save!
       end
     }
+    true
   end
 
   # fetch ical feed
   def fetch_ical
     sync(true)
+    true
   end
 
   # validate format of public holidays
@@ -292,6 +295,6 @@ returns
                          false
                        end
     }
-
+    true
   end
 end

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.3.1'
 
-gem 'rails', '4.2.7.1'
+gem 'rails', '4.2.8'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
@@ -52,6 +52,7 @@ gem 'mime-types'
 
 gem 'biz'
 
+gem 'composite_primary_keys'
 gem 'delayed_job_active_record'
 gem 'daemons'
 

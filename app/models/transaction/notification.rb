@@ -46,36 +46,8 @@ class Transaction::Notification
     # find recipients
     recipients_and_channels = []
 
-=begin
-    # group of agents to work on
-    if data[:recipient] == 'group'
-      recipients = ticket.agent_of_group()
-
-    # owner
-    elsif data[:recipient] == 'owner'
-      if ticket.owner_id != 1
-        recipients.push ticket.owner
-      end
-
-    # customer
-    elsif data[:recipient] == 'customer'
-      if ticket.customer_id != 1
-        # temporarily disabled
-        #        recipients.push ticket.customer
-      end
-
-    # owner or group of agents to work on
-    elsif data[:recipient] == 'to_work_on'
-      if ticket.owner_id != 1
-        recipients.push ticket.owner
-      else
-        recipients = ticket.agent_of_group()
-      end
-    end
-=end
-
     # loop through all users
-    possible_recipients = ticket.agent_of_group
+    possible_recipients = User.group_access(ticket.group_id, 'full').order(:login)
     if ticket.owner_id == 1
       possible_recipients.push ticket.owner
     end

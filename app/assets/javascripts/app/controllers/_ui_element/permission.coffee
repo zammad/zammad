@@ -4,10 +4,25 @@ class App.UiElement.permission extends App.UiElement.ApplicationUiElement
 
     permissions = App.Permission.search(sortBy: 'name')
 
+    # get selectable groups and selected groups
+    groups = []
+    groupsSelected = {}
+    groupsRaw = App.Group.search(sortBy: 'name')
+    for group in groupsRaw
+      if group.active
+        groups.push group
+        if params.group_ids
+          for group_id in params.group_ids
+            if group_id.toString() is group.id.toString()
+              groupsSelected[group.id] = true
+
     item = $( App.view('generic/permission')(
       attribute: attribute
       params: params
       permissions: permissions
+      groups: groups
+      groupsSelected: groupsSelected
+      groupAccesses: App.Group.accesses()
     ) )
 
     # show/hide trees

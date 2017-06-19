@@ -6,24 +6,24 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
   def before_create(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
     # only do fill of from if article got created via application_server (e. g. not
     # if article and sender type is set via *.postmaster)
-    return if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
+    return true if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
 
     # set from on all article types excluding email|twitter status|twitter direct-message|facebook feed post|facebook feed comment
-    return if !record.type_id
+    return true if !record.type_id
     type = Ticket::Article::Type.lookup(id: record.type_id)
-    return if type['name'] == 'email'
+    return true if type['name'] == 'email'
 
     # from will be set by channel backend
-    return if type['name'] == 'twitter status'
-    return if type['name'] == 'twitter direct-message'
-    return if type['name'] == 'facebook feed post'
-    return if type['name'] == 'facebook feed comment'
+    return true if type['name'] == 'twitter status'
+    return true if type['name'] == 'twitter direct-message'
+    return true if type['name'] == 'facebook feed post'
+    return true if type['name'] == 'facebook feed comment'
 
-    return if !record.created_by_id
+    return true if !record.created_by_id
     user = User.find(record.created_by_id)
     if type.name == 'web'
       record.from = "#{user.firstname} #{user.lastname} <#{user.email}>"

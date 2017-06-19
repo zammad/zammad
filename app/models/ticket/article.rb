@@ -4,6 +4,7 @@ class Ticket::Article < ApplicationModel
   include ChecksClientNotification
   include HasHistory
   include ChecksHtmlSanitized
+  include Ticket::Article::ChecksAccess
 
   load 'ticket/article/assets.rb'
   include Ticket::Article::Assets
@@ -36,8 +37,7 @@ class Ticket::Article < ApplicationModel
 
   # fillup md5 of message id to search easier on very long message ids
   def check_message_id_md5
-    return if !message_id
-    return if message_id_md5
+    return true if message_id.blank?
     self.message_id_md5 = Digest::MD5.hexdigest(message_id.to_s)
   end
 
@@ -54,7 +54,7 @@ returns
 =end
 
   def self.insert_urls(article)
-    return article if article['attachments'].empty?
+    return article if article['attachments'].blank?
     return article if article['content_type'] !~ %r{text/html}i
     return article if article['body'] !~ /<img/i
 
@@ -182,9 +182,7 @@ returns:
       object: 'Ticket::Article::Mail',
       o_id: id,
     )
-    return if !list
-    return if list.empty?
-    return if !list[0]
+    return if list.blank?
     list[0]
   end
 
@@ -281,8 +279,9 @@ returns
 
   # strip not wanted chars
   def check_subject
-    return if !subject
+    return true if subject.blank?
     subject.gsub!(/\s|\t|\r/, ' ')
+    true
   end
 
   def history_log_attributes

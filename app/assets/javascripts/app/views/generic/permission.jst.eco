@@ -15,6 +15,36 @@
         <%- @Icon('checkbox-checked', 'icon-checked') %>
         <span class="label-text"><%= permission.displayName().replace(/^.+?\./, '') %> - <span class="help-text"><%- @T.apply(@, [permission.note].concat(permission.preferences.translations)) %></span></span>
       </label>
+  <%     if _.contains(permission.preferences.plugin, 'groups'): %>
+    <div style="padding-left: 18px; padding-top: 10px;" class="js-groupList <% if @hideGroups: %>js-groupListHide hidden<% end %>">
+      <table class="settings-list">
+        <thead>
+          <th><%- @T('Group') %>
+          <% for key, text of @groupAccesses: %>
+            <th><%- @T(text) %>
+          <% end %>
+        <tbody>
+      <% for group in @groups: %>
+      <%   accesses = [] %>
+      <%   if @params.group_ids && @params.group_ids[group.id]: %>
+      <%     accesses = @params.group_ids[group.id] %>
+      <%   end %>
+        <tr>
+          <td>
+            <%= group.displayName() %>
+          <% for key, text of @groupAccesses: %>
+            <td>
+            <label class="inline-label checkbox-replacement">
+              <input type="checkbox" value="<%= key %>" name="group_ids::<%= group.id %>" <% if _.contains(accesses, key): %>checked<% end %>/>
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </label>
+          <% end %>
+        </tr>
+      <% end %>
+      </table>
+    </div>
+  <%     end %>
     </div>
   <% end %>
 <% end %>

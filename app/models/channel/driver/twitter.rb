@@ -304,14 +304,13 @@ returns
         next if !track_retweets? && tweet.retweet?
 
         # ignore older messages
-        if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
+        if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
           older_import += 1
           Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
           next
         end
 
         next if @rest_client.locale_sender?(tweet) && own_tweet_already_imported?(tweet)
-
         next if Ticket::Article.find_by(message_id: tweet.id)
         break if @rest_client.tweet_limit_reached(tweet)
         @rest_client.to_group(tweet, search[:group_id], @channel)
@@ -329,7 +328,7 @@ returns
       next if !track_retweets? && tweet.retweet?
 
       # ignore older messages
-      if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
+      if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
         older_import += 1
         Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
         next
@@ -349,7 +348,7 @@ returns
     @rest_client.client.direct_messages(full_text: 'true').each { |tweet|
 
       # ignore older messages
-      if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
+      if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
         older_import += 1
         Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
         next

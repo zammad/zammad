@@ -60,13 +60,16 @@ reset config setting to default
 
   Setting.reset('some_config_name')
 
+  Setting.reset('some_config_name', force) # true|false - force it false per default
+
 =end
 
-  def self.reset(name)
+  def self.reset(name, force = false)
     setting = Setting.find_by(name: name)
     if !setting
       raise "Can't find config setting '#{name}'"
     end
+    return true if !force && setting.state_current == setting.state_initial
     setting.state_current = setting.state_initial
     setting.save!
     logger.info "Setting.reset(#{name}, #{setting.state_current.inspect})"
@@ -128,6 +131,7 @@ reload config settings
   # set initial value in state_initial
   def set_initial
     self.state_initial = state_current
+    true
   end
 
   def reset_change_id
@@ -136,6 +140,7 @@ reload config settings
     logger.debug "Setting.reset_change_id: set new cache, #{change_id}"
     Cache.write('Setting::ChangeId', change_id, { expires_in: 24.hours })
     @@lookup_at = nil # rubocop:disable Style/ClassVars
+    true
   end
 
   # check if cache is still valid
@@ -157,14 +162,15 @@ reload config settings
 
   # convert state into hash to be able to store it as store
   def state_check
-    return if !state
-    return if state && state.respond_to?('has_key?') && state.key?(:value)
+    return true if !state
+    return true if state && state.respond_to?('has_key?') && state.key?(:value)
     self.state_current = { value: state }
+    true
   end
 
   # notify clients about public config changes
   def check_broadcast
-    return if frontend != true
+    return true if frontend != true
     value = state_current
     if state_current.key?(:value)
       value = state_current[:value]
@@ -176,5 +182,6 @@ reload config settings
       },
       'public'
     )
+    true
   end
 end

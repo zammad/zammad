@@ -17,5 +17,6 @@ delete object recent viewed list, will be executed automatically
 
   def recent_view_destroy
     RecentView.log_destroy(self.class.to_s, id)
+    true
   end
 end

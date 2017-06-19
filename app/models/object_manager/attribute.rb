@@ -49,7 +49,7 @@ add a new attribute entry for an object
     data_type: 'select',
     data_option: {
       relation: 'Group',
-      relation_condition: { access: 'rw' },
+      relation_condition: { access: 'full' },
       multiple: false,
       null: true,
       translate: false,

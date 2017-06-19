@@ -24,17 +24,20 @@ class Overview < ApplicationModel
   def fill_prio
     return true if prio
     self.prio = 9999
+    true
   end
 
   def fill_link_on_create
     return true if !link.empty?
     self.link = link_name(name)
+    true
   end
 
   def fill_link_on_update
     return true if link.empty?
     return true if !changes['name']
     self.link = link_name(name)
+    true
   end
 
   def link_name(name)

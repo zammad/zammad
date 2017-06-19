@@ -12,6 +12,18 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
+
+    @backup_admin = User.create_or_update(
+      login: 'backup-admin',
+      firstname: 'Backup',
+      lastname: 'Agent',
+      email: 'backup-admin@example.com',
+      password: 'adminpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+    )
+
     @admin = User.create_or_update(
       login: 'rest-admin',
       firstname: 'Rest',
@@ -384,17 +396,29 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     role = Role.lookup(name: 'Admin')
     params = { firstname: "Admin#{firstname}", lastname: 'Admin Last', email: 'new_admin_by_agent@example.com', role_ids: [ role.id ] }
     post '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
-    assert_response(401)
-    result = JSON.parse(@response.body)
-    assert(result)
+    assert_response(201)
+    result_user1 = JSON.parse(@response.body)
+    assert(result_user1)
+    user = User.find(result_user1['id'])
+    assert_not(user.role?('Admin'))
+    assert_not(user.role?('Agent'))
+    assert(user.role?('Customer'))
+    assert_equal('new_admin_by_agent@example.com', result_user1['login'])
+    assert_equal('new_admin_by_agent@example.com', result_user1['email'])
 
     # create user with agent role
     role = Role.lookup(name: 'Agent')
     params = { firstname: "Agent#{firstname}", lastname: 'Agent Last', email: 'new_agent_by_agent@example.com', role_ids: [ role.id ] }
     post '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
-    assert_response(401)
-    result = JSON.parse(@response.body)
-    assert(result)
+    assert_response(201)
+    result_user1 = JSON.parse(@response.body)
+    assert(result_user1)
+    user = User.find(result_user1['id'])
+    assert_not(user.role?('Admin'))
+    assert_not(user.role?('Agent'))
+    assert(user.role?('Customer'))
+    assert_equal('new_agent_by_agent@example.com', result_user1['login'])
+    assert_equal('new_agent_by_agent@example.com', result_user1['email'])
 
     # create user with customer role
     role = Role.lookup(name: 'Customer')

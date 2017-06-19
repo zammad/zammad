@@ -12,6 +12,9 @@ Coveralls.wear!
 class ActiveSupport::TestCase
   self.test_order = :sorted
 
+  ActiveRecord::Base.logger = Rails.logger.clone
+  ActiveRecord::Base.logger.level = Logger::INFO
+
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
@@ -37,7 +40,14 @@ class ActiveSupport::TestCase
   # set system mode to done / to activate
   Setting.set('system_init_done', true)
 
-  def setup
+  setup do
+
+    # exit all threads
+    Thread.list.each do |thread|
+      next if thread == Thread.current
+      thread.exit
+      thread.join
+    end
 
     # clear cache
     Cache.clear
@@ -52,6 +62,14 @@ class ActiveSupport::TestCase
     PostmasterFilter.destroy_all
     Ticket.destroy_all
 
+    # reset settings
+    Setting.all.pluck(:name).each { |name|
+      next if name == 'models_searchable' # skip setting
+      Setting.reset(name, false)
+    }
+    Setting.set('system_init_done', true)
+    Setting.reload
+
     # set current user
     UserInfo.current_user_id = nil
 
@@ -59,6 +77,8 @@ class ActiveSupport::TestCase
     ApplicationHandleInfo.current = 'unknown'
 
     Rails.logger.info '++++NEW++++TEST++++'
+
+    travel_back
   end
 
   # Add more helper methods to be used by all tests here...

@@ -75,25 +75,22 @@ class UsersController < ApplicationController
   # @response_message 200 [User] User record matching the requested identifier.
   # @response_message 401        Invalid session.
   def show
-
-    # access deny
-    permission_check_local
+    user = User.find(params[:id])
+    access!(user, 'read')
 
     if params[:expand]
-      user = User.find(params[:id]).attributes_with_association_names
-      render json: user, status: :ok
-      return
+      result = user.attributes_with_association_names
+    elsif params[:full]
+      result = {
+        id:     params[:id],
+        assets: user.assets({}),
+      }
+    else
+      result = user.attributes_with_association_ids
+      result.delete('password')
     end
 
-    if params[:full]
-      full = User.full(params[:id])
-      render json: full
-      return
-    end
-
-    user = User.find(params[:id]).attributes_with_association_ids
-    user.delete('password')
-    render json: user
+    render json: result
   end
 
   # @path      [POST] /users
@@ -108,8 +105,6 @@ class UsersController < ApplicationController
   def create
     clean_params = User.association_name_to_id_convert(params)
     clean_params = User.param_cleanup(clean_params, true)
-    user = User.new(clean_params)
-    user.associations_from_param(params)
 
     # check if it's first user, the admin user
     # inital admin account
@@ -131,6 +126,8 @@ class UsersController < ApplicationController
       if admin_account_exists && !params[:signup]
         raise Exceptions::UnprocessableEntity, 'Only signup with not authenticate user possible!'
       end
+      user = User.new(clean_params)
+      user.associations_from_param(params)
       user.updated_by_id = 1
       user.created_by_id = 1
 
@@ -164,12 +161,8 @@ class UsersController < ApplicationController
       # permission check
       permission_check_by_permission(params)
 
-      if params[:role_ids]
-        user.role_ids = params[:role_ids]
-      end
-      if params[:group_ids]
-        user.group_ids = params[:group_ids]
-      end
+      user = User.new(clean_params)
+      user.associations_from_param(params)
     end
 
     # check if user already exists
@@ -245,28 +238,25 @@ class UsersController < ApplicationController
   # @response_message 200 [User] Updated User record.
   # @response_message 401        Invalid session.
   def update
-
-    # access deny
-    permission_check_local
+    permission_check_by_permission(params)
 
     user = User.find(params[:id])
-    clean_params = User.association_name_to_id_convert(params)
-    clean_params = User.param_cleanup(clean_params, true)
+    access!(user, 'change')
 
     # permission check
     permission_check_by_permission(params)
     user.with_lock do
+      clean_params = User.association_name_to_id_convert(params)
+      clean_params = User.param_cleanup(clean_params, true)
       user.update_attributes(clean_params)
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
-        user.role_ids = params[:role_ids]
         user.associations_from_param({ role_ids: params[:role_ids], roles: params[:roles] })
       end
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:group_ids] || params[:groups])
-        user.group_ids = params[:group_ids]
         user.associations_from_param({ group_ids: params[:group_ids], groups: params[:groups] })
       end
 
@@ -298,7 +288,9 @@ class UsersController < ApplicationController
   # @response_message 200 User successfully deleted.
   # @response_message 401 Invalid session.
   def destroy
-    permission_check('admin.user')
+    user = User.find(params[:id])
+    access!(user, 'delete')
+
     model_references_check(User, params)
     model_destroy_render(User, params)
   end
@@ -1006,30 +998,25 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   def permission_check_by_permission(params)
     return true if current_user.permissions?('admin.user')
 
-    if !current_user.permissions?('admin.user') && params[:role_ids]
-      if params[:role_ids].class != Array
-        params[:role_ids] = [params[:role_ids]]
-      end
-      params[:role_ids].each { |role_id|
-        role_local = Role.lookup(id: role_id)
-        if !role_local
-          logger.info "Invalid role_ids for current_user_id: #{current_user.id} role_ids #{role_id}"
-          raise Exceptions::NotAuthorized, 'Invalid role_ids!'
-        end
-        role_name = role_local.name
-        # TODO: check role permissions
-        next if role_name != 'Admin' && role_name != 'Agent'
-        logger.info "This role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{role_name}"
+    %i(role_ids roles).each do |key|
+      next if !params[key]
+      if current_user.permissions?('ticket.agent')
+        params.delete(key)
+      else
+        logger.info "Role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{params[key].inspect}"
         raise Exceptions::NotAuthorized, 'This role assignment is only allowed by admin!'
-      }
+      end
+    end
+    if current_user.permissions?('ticket.agent') && !params[:role_ids] && !params[:roles] && params[:id].blank?
+      params[:role_ids] = Role.signup_role_ids
     end
 
-    if !current_user.permissions?('admin.user') && params[:group_ids]
-      if params[:group_ids].class != Array
-        params[:group_ids] = [params[:group_ids]]
-      end
-      if !params[:group_ids].empty?
-        logger.info "Group relation is only allowed by admin! current_user_id: #{current_user.id} group_ids #{params[:group_ids].inspect}"
+    %i(group_ids groups).each do |key|
+      next if !params[key]
+      if current_user.permissions?('ticket.agent')
+        params.delete(key)
+      else
+        logger.info "Group relation assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{params[key].inspect}"
         raise Exceptions::NotAuthorized, 'Group relation is only allowed by admin!'
       end
     end
@@ -1039,16 +1026,4 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     response_access_deny
     false
   end
-
-  def permission_check_local
-    return true if current_user.permissions?('admin.user')
-    return true if current_user.permissions?('ticket.agent')
-
-    # allow to update any by him self
-    # TODO check certain attributes like roles_ids and group_ids
-    return true if params[:id].to_i == current_user.id
-
-    raise Exceptions::NotAuthorized
-  end
-
 end

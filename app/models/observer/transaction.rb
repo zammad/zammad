@@ -176,7 +176,7 @@ class Observer::Transaction < ActiveRecord::Observer
   def after_create(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
     e = {
       object: record.class.name,
@@ -187,12 +187,13 @@ class Observer::Transaction < ActiveRecord::Observer
       created_at: Time.zone.now,
     }
     EventBuffer.add('transaction', e)
+    true
   end
 
   def before_update(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
     # ignore certain attributes
     real_changes = {}
@@ -210,7 +211,7 @@ class Observer::Transaction < ActiveRecord::Observer
     }
 
     # do not send anything if nothing has changed
-    return if real_changes.empty?
+    return true if real_changes.empty?
 
     changed_by_id = nil
     changed_by_id = if record.respond_to?('updated_by_id')
@@ -229,6 +230,7 @@ class Observer::Transaction < ActiveRecord::Observer
       created_at: Time.zone.now,
     }
     EventBuffer.add('transaction', e)
+    true
   end
 
 end

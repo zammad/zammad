@@ -341,13 +341,15 @@ all:
   private
 
   def set_initial
-    return if target_initial
-    return if target_initial == ''
+    return true if target_initial
+    return true if target_initial == ''
     self.target_initial = target
+    true
   end
 
   def cache_clear
     Cache.delete('TranslationMapOnlyContent::' + locale.downcase)
+    true
   end
 
   def self.cache_set(locale, data)

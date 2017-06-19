@@ -12,6 +12,8 @@
     placeholder="<%= @placeholder %>"
     value="<%= @valueName %>"
     autocomplete="new-password"
+    name="select_<%= @name %>"
+    <%= @required %>
    >
   <div class="searchableSelect-autocomplete">
     <span class="searchableSelect-autocomplete-invisible js-autocomplete-invisible"></span>

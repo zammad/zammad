@@ -185,12 +185,12 @@ class FirstStepsController < ApplicationController
       raw: true,
     )
     UserInfo.current_user_id = customer.id
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       group_id: Group.find_by(active: true, name: 'Users').id,
       customer_id: customer.id,
       title: result[:subject],
     )
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       type_id: Ticket::Article::Type.find_by(name: 'phone').id,
       sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,

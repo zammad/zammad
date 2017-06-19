@@ -5,10 +5,12 @@ class Observer::User::Geo < ActiveRecord::Observer
 
   def before_create(record)
     check_geo(record)
+    true
   end
 
   def before_update(record)
     check_geo(record)
+    true
   end
 
   # check if geo need to be updated

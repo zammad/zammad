@@ -822,7 +822,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         created_by_id: 1,
       )
       tickets.push ticket
-      sleep 1
+      travel 2.seconds
     }
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')

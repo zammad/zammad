@@ -97,12 +97,12 @@ class FormController < ApplicationController
     # set current user
     UserInfo.current_user_id = customer.id
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       group_id: 1,
       customer_id: customer.id,
       title: params[:title],
     )
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       type_id: Ticket::Article::Type.find_by(name: 'web').id,
       sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,

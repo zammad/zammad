@@ -161,13 +161,26 @@ class CreateBase < ActiveRecord::Migration
     add_foreign_key :roles_users, :roles
 
     create_table :groups_users, id: false do |t|
-      t.references :user
-      t.references :group
+      t.references :user,                null: false
+      t.references :group,               null: false
+      t.string :access,       limit: 50, null: false, default: 'full'
     end
     add_index :groups_users, [:user_id]
     add_index :groups_users, [:group_id]
+    add_index :groups_users, [:access]
     add_foreign_key :groups_users, :users
     add_foreign_key :groups_users, :groups
+
+    create_table :roles_groups, id: false do |t|
+      t.references :role,                null: false
+      t.references :group,               null: false
+      t.string :access,       limit: 50, null: false, default: 'full'
+    end
+    add_index :roles_groups, [:role_id]
+    add_index :roles_groups, [:group_id]
+    add_index :roles_groups, [:access]
+    add_foreign_key :roles_groups, :roles
+    add_foreign_key :roles_groups, :groups
 
     create_table :organizations_users, id: false do |t|
       t.references :user

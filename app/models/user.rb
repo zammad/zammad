@@ -28,9 +28,10 @@ class User < ApplicationModel
   include ChecksClientNotification
   include HasHistory
   include HasSearchIndexBackend
+  include HasGroups
+  include HasRoles
+  include User::ChecksAccess
 
-  load 'user/permission.rb'
-  include User::Permission
   load 'user/assets.rb'
   include User::Assets
   extend User::Search
@@ -44,7 +45,6 @@ class User < ApplicationModel
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy
 
-  has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
   has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, before_remove: :last_admin_check, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
@@ -746,7 +746,7 @@ returns
     true
   end
 
-  def check_notifications(o)
+  def check_notifications(o, shouldSave = true)
     default = Rails.configuration.preferences_default_by_permission
     return if !default
     default.deep_stringify_keys!
@@ -762,7 +762,7 @@ returns
 
     return true if !has_changed
 
-    if id
+    if id && shouldSave
       save!
       return true
     end
@@ -772,8 +772,14 @@ returns
   end
 
   def check_preferences_default
+    if @preferences_default.blank?
+      if id
+        roles.each { |role|
+          check_notifications(role, false)
+        }
+      end
+    end
     return if @preferences_default.blank?
-
     preferences_tmp = @preferences_default.merge(preferences)
     self.preferences = preferences_tmp
     @preferences_default = nil
@@ -795,7 +801,7 @@ returns
   end
 
   def check_name
-    return if !firstname.empty? && !lastname.empty?
+    return true if !firstname.empty? && !lastname.empty?
 
     if !firstname.empty? && lastname.empty?
 
@@ -809,7 +815,7 @@ returns
         if !name[1].nil?
           self.firstname = name[1]
         end
-        return
+        return true
       end
 
       # "Firstname Lastname"
@@ -820,7 +826,7 @@ returns
       if !name[1].nil?
         self.lastname = name[1]
       end
-      return
+      return true
 
     # -no name- "firstname.lastname@example.com"
     elsif firstname.empty? && lastname.empty? && !email.empty?
@@ -834,21 +840,23 @@ returns
         end
       end
     end
+    true
   end
 
   def check_email
-    return if Setting.get('import_mode')
-    return if email.empty?
+    return true if Setting.get('import_mode')
+    return true if email.empty?
     self.email = email.downcase.strip
-    return if id == 1
+    return true if id == 1
     raise Exceptions::UnprocessableEntity, 'Invalid email' if email !~ /@/
     raise Exceptions::UnprocessableEntity, 'Invalid email' if email =~ /\s/
+    true
   end
 
   def check_login
 
     # use email as login if not given
-    if login.empty? && !email.empty?
+    if login.blank?
       self.login = email
     end
 
@@ -860,7 +868,7 @@ returns
     end
 
     # if no email, complain about missing login
-    if id != 1 && login.empty? && email.empty?
+    if id != 1 && login.blank?
       raise Exceptions::UnprocessableEntity, 'Attribute \'login\' required!'
     end
 
@@ -875,10 +883,11 @@ returns
         check = false
       end
     end
+    true
   end
 
   def validate_roles
-    return if !role_ids
+    return true if !role_ids
     role_ids.each { |role_id|
       role = Role.lookup(id: role_id)
       raise "Unable to find role for id #{role_id}" if !role
@@ -889,6 +898,7 @@ returns
         raise "Role #{role.name} conflicts with #{local_role.name}" if role_ids.include?(local_role.id)
       }
     }
+    true
   end
 
 =begin
@@ -903,7 +913,7 @@ raise 'Minimum one user need to have admin permissions'
 =end
 
   def last_admin_check(role)
-    return if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
     ticket_admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'] }).pluck(:id)
     count                 = User.joins(:roles).where(roles: { id: ticket_admin_role_ids }, users: { active: true }).count
@@ -912,10 +922,11 @@ raise 'Minimum one user need to have admin permissions'
     end
 
     raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if count < 1
+    true
   end
 
   def validate_agent_limit(role)
-    return if !Setting.get('system_agent_limit')
+    return true if !Setting.get('system_agent_limit')
 
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent' }).pluck(:id)
     count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).count
@@ -924,38 +935,41 @@ raise 'Minimum one user need to have admin permissions'
     end
 
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
+    true
   end
 
   def domain_based_assignment
-    return if !email
-    return if organization_id
+    return true if !email
+    return true if organization_id
     begin
       domain = Mail::Address.new(email).domain
-      return if !domain
+      return true if !domain
       organization = Organization.find_by(domain: domain.downcase, domain_assignment: true)
-      return if !organization
+      return true if !organization
       self.organization_id = organization.id
     rescue
-      return
+      return true
     end
+    true
   end
 
   # sets locale of the user
   def set_locale
 
     # set the user's locale to the one of the "executing" user
-    return if !UserInfo.current_user_id
-    user = User.find_by( id: UserInfo.current_user_id )
-    return if !user
-    return if !user.preferences[:locale]
+    return true if !UserInfo.current_user_id
+    user = User.find_by(id: UserInfo.current_user_id)
+    return true if !user
+    return true if !user.preferences[:locale]
 
     preferences[:locale] = user.preferences[:locale]
+    true
   end
 
   def avatar_for_email_check
-    return if email.blank?
-    return if email !~ /@/
-    return if !changes['email'] && updated_at > Time.zone.now - 10.days
+    return true if email.blank?
+    return true if email !~ /@/
+    return true if !changes['email'] && updated_at > Time.zone.now - 10.days
 
     # save/update avatar
     avatar = Avatar.auto_detection(
@@ -968,10 +982,11 @@ raise 'Minimum one user need to have admin permissions'
     )
 
     # update user link
-    return if !avatar
+    return true if !avatar
 
     update_column(:image, avatar.store_hash)
     cache_delete
+    true
   end
 
   def avatar_destroy
@@ -979,9 +994,10 @@ raise 'Minimum one user need to have admin permissions'
   end
 
   def ensure_password
-    return if password_empty?
-    return if PasswordHash.crypted?(password)
+    return true if password_empty?
+    return true if PasswordHash.crypted?(password)
     self.password = PasswordHash.crypt(password)
+    true
   end
 
   def password_empty?
@@ -1000,8 +1016,9 @@ raise 'Minimum one user need to have admin permissions'
 
   # reset login_failed if password is changed
   def reset_login_failed
-    return if !changes
-    return if !changes['password']
+    return true if !changes
+    return true if !changes['password']
     self.login_failed = 0
+    true
   end
 end

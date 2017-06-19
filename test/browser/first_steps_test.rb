@@ -36,7 +36,7 @@ class FirstStepsTest < TestCase
       css: '.modal [name="email"]',
       value: "#{agent}@example.com",
     )
-    check(css: '.modal [name="group_ids"]')
+    check(css: '.modal .js-groupListItem[value=full]')
     click(
       css: '.modal button.btn.btn--primary',
       fast: true,

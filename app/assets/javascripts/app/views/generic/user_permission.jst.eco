@@ -1,4 +1,18 @@
 <div class="checkbox <%= @attribute.class %> checkbox">
+<% showGroups = false %>
+<% for role in @roles: %>
+<%   if role.permissions: %>
+<%     for permission in role.permissions: %>
+<%       if _.contains(permission.preferences.plugin, 'groups'): %>
+<%         if showGroups is true: %>
+<%           showGroups = false %>
+<%           break %>
+<%         end %>
+<%         showGroups = true %>
+<%       end %>
+<%     end %>
+<%   end %>
+<% end %>
 <% for role in @roles: %>
   <label class="inline-label checkbox-replacement">
     <input type="checkbox" value="<%= role.id %>" name="role_ids" <% if @rolesSelected[role.id]: %>checked<% end %>/>
@@ -8,16 +22,34 @@
   </label>
   <% if role.permissions: %>
   <%   for permission in role.permissions: %>
-  <%     if _.contains(permission.preferences.plugin, 'groups'): %>
-    <div style="padding-left: 20px;" class="js-groupList <% if @hideGroups: %>js-groupListHide hidden<% end %>">
+  <%     if showGroups is true && _.contains(permission.preferences.plugin, 'groups'): %>
+    <div style="padding-left: 18px; padding-top: 10px;" class="js-groupList <% if @hideGroups: %>js-groupListHide hidden<% end %>">
+      <table class="settings-list">
+        <thead>
+          <th><%- @T('Group') %>
+          <% for key, text of @groupAccesses: %>
+            <th><%- @T(text) %>
+          <% end %>
+        <tbody>
       <% for group in @groups: %>
-        <label class="inline-label checkbox-replacement">
-          <input type="checkbox" value="<%= group.id %>" name="group_ids" <% if @groupsSelected[group.id]: %>checked<% end %>/>
-          <%- @Icon('checkbox', 'icon-unchecked') %>
-          <%- @Icon('checkbox-checked', 'icon-checked') %>
-          <span class="label-text"><%= group.displayName() %> <% if group.note: %>- <span class="help-text"><%- group.note %></span><% end %></span>
-        </label>
+      <%   permissions = [] %>
+      <%   if @params.group_ids && @params.group_ids[group.id]: %>
+      <%     permissions = @params.group_ids[group.id] %>
+      <%   end %>
+        <tr>
+          <td>
+            <%= group.displayName() %>
+          <% for key, text of @groupAccesses: %>
+            <td>
+            <label class="inline-label checkbox-replacement">
+              <input class="js-groupListItem" type="checkbox" value="<%= key %>" name="group_ids::<%= group.id %>" <% if _.contains(permissions, key): %>checked<% end %>/>
+              <%- @Icon('checkbox', 'icon-unchecked') %>
+              <%- @Icon('checkbox-checked', 'icon-checked') %>
+            </label>
+          <% end %>
+        </tr>
       <% end %>
+      </table>
     </div>
   <%       break %>
   <%     end %>

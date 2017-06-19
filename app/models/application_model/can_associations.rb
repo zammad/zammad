@@ -17,9 +17,21 @@ returns
 
   def associations_from_param(params)
 
+    # special handling for group access association
+    {
+      groups:    :group_names_access_map=,
+      group_ids: :group_ids_access_map=
+    }.each do |param, setter|
+      map = params[param]
+      next if map.blank?
+      next if !respond_to?(setter)
+      send(setter, map)
+    end
+
     # set relations by id/verify if ref exists
     self.class.reflect_on_all_associations.map { |assoc|
       assoc_name = assoc.name
+      next if association_attributes_ignored.include?(assoc_name)
       real_ids = assoc_name[0, assoc_name.length - 1] + '_ids'
       real_ids = real_ids.to_sym
       next if !params.key?(real_ids)
@@ -44,6 +56,7 @@ returns
     # set relations by name/lookup
     self.class.reflect_on_all_associations.map { |assoc|
       assoc_name = assoc.name
+      next if association_attributes_ignored.include?(assoc_name)
       real_ids = assoc_name[0, assoc_name.length - 1] + '_ids'
       next if !respond_to?(real_ids)
       real_values = assoc_name[0, assoc_name.length - 1] + 's'
@@ -95,16 +108,19 @@ returns
     cache = Cache.get(key)
     return cache if cache
 
-    ignored_attributes = self.class.instance_variable_get(:@association_attributes_ignored) || []
-
     # get relations
     attributes = self.attributes
     self.class.reflect_on_all_associations.map { |assoc|
+      next if association_attributes_ignored.include?(assoc.name)
       real_ids = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
-      next if ignored_attributes.include?(real_ids.to_sym)
       next if !respond_to?(real_ids)
       attributes[real_ids] = send(real_ids)
     }
+
+    # special handling for group access associations
+    if respond_to?(:group_ids_access_map)
+      attributes['group_ids'] = send(:group_ids_access_map)
+    end
 
     filter_attributes(attributes)
 
@@ -131,6 +147,7 @@ returns
     attributes = attributes_with_association_ids
     self.class.reflect_on_all_associations.map { |assoc|
       next if !respond_to?(assoc.name)
+      next if association_attributes_ignored.include?(assoc.name)
       ref = send(assoc.name)
       next if !ref
       if ref.respond_to?(:first)
@@ -155,6 +172,11 @@ returns
       next if !ref[:name]
       attributes[assoc.name.to_s] = ref[:name]
     }
+
+    # special handling for group access associations
+    if respond_to?(:group_names_access_map)
+      attributes['groups'] = send(:group_names_access_map)
+    end
 
     # fill created_by/updated_by
     {
@@ -214,6 +236,12 @@ returns
     true
   end
 
+  private
+
+  def association_attributes_ignored
+    @association_attributes_ignored ||= self.class.instance_variable_get(:@association_attributes_ignored) || []
+  end
+
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
 
@@ -223,13 +251,14 @@ serve methode to ignore model attribute associations
 
 class Model < ApplicationModel
   include AssociationConcern
-  association_attributes_ignored :user_ids
+  association_attributes_ignored :users
 end
 
 =end
 
     def association_attributes_ignored(*attributes)
-      @association_attributes_ignored = attributes
+      @association_attributes_ignored ||= []
+      @association_attributes_ignored |= attributes
     end
 
 =begin

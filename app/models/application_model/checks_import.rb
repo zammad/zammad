@@ -13,7 +13,8 @@ module ApplicationModel::ChecksImport
     # do noting, use id as it is
     return if !Setting.get('system_init_done')
     return if Setting.get('import_mode') && import_class_list.include?(self.class.to_s)
-
+    return if !has_attribute?(:id)
     self[:id] = nil
+    true
   end
 end

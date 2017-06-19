@@ -30,6 +30,8 @@ stop_zammad
 
 update_or_install
 
+set_env_vars
+
 start_zammad
 
 create_webserver_config

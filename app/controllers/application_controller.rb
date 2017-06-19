@@ -12,4 +12,5 @@ class ApplicationController < ActionController::Base
   include ApplicationController::HasUser
   include ApplicationController::PreventsCsrf
   include ApplicationController::LogsHttpAccess
+  include ApplicationController::ChecksAccess
 end

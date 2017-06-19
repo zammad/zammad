@@ -10,11 +10,10 @@ class Ticket < ApplicationModel
   include HasOnlineNotifications
   include HasKarmaActivityLog
   include HasLinks
+  include Ticket::ChecksAccess
 
   include Ticket::Escalation
   include Ticket::Subject
-  load 'ticket/permission.rb'
-  include Ticket::Permission
   load 'ticket/assets.rb'
   include Ticket::Assets
   load 'ticket/search_index.rb'
@@ -75,33 +74,9 @@ class Ticket < ApplicationModel
 
 =begin
 
-list of agents in group of ticket
-
-  ticket = Ticket.find(123)
-  result = ticket.agent_of_group
-
-returns
-
-  result = [user1, user2, ...]
-
-=end
-
-  def agent_of_group
-    roles = Role.with_permissions('ticket.agent')
-    role_ids = roles.map(&:id)
-    Group.find(group_id)
-         .users.where(active: true)
-         .joins(:roles)
-         .where('roles.id' => role_ids, 'roles.active' => true)
-         .order('users.login')
-         .uniq()
-  end
-
-=begin
-
 get user access conditions
 
-  conditions = Ticket.access_condition( User.find(1) )
+  conditions = Ticket.access_condition( User.find(1) , 'full')
 
 returns
 
@@ -109,22 +84,14 @@ returns
 
 =end
 
-  def self.access_condition(user)
-    access_condition = []
+  def self.access_condition(user, access)
     if user.permissions?('ticket.agent')
-      group_ids = Group.select('groups.id').joins(:users)
-                       .where('groups_users.user_id = ?', user.id)
-                       .where('groups.active = ?', true)
-                       .map(&:id)
-      access_condition = [ 'group_id IN (?)', group_ids ]
+      ['group_id IN (?)', user.group_ids_access(access)]
+    elsif !user.organization || ( !user.organization.shared || user.organization.shared == false )
+      ['tickets.customer_id = ?', user.id]
     else
-      access_condition = if !user.organization || ( !user.organization.shared || user.organization.shared == false )
-                           [ 'tickets.customer_id = ?', user.id ]
-                         else
-                           [ '(tickets.customer_id = ? OR tickets.organization_id = ?)', user.id, user.organization.id ]
-                         end
+      ['(tickets.customer_id = ? OR tickets.organization_id = ?)', user.id, user.organization.id]
     end
-    access_condition
   end
 
 =begin
@@ -393,11 +360,11 @@ returns
 
 get count of tickets and tickets which match on selector
 
-  ticket_count, tickets = Ticket.selectors(params[:condition], limit, current_user)
+  ticket_count, tickets = Ticket.selectors(params[:condition], limit, current_user, 'full')
 
 =end
 
-  def self.selectors(selectors, limit = 10, current_user = nil)
+  def self.selectors(selectors, limit = 10, current_user = nil, access = 'full')
     raise 'no selectors given' if !selectors
     query, bind_params, tables = selector2sql(selectors, current_user)
     return [] if !query
@@ -408,7 +375,7 @@ get count of tickets and tickets which match on selector
       return [ticket_count, tickets]
     end
 
-    access_condition = Ticket.access_condition(current_user)
+    access_condition = Ticket.access_condition(current_user, access)
     ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
     tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
 
@@ -801,9 +768,9 @@ perform changes on ticket
             email = User.lookup(id: owner_id).email
             recipients_raw.push(email)
           elsif recipient == 'ticket_agents'
-            agent_of_group.each { |user|
+            User.group_access(group_id, 'full').order(:login).each do |user|
               recipients_raw.push(user.email)
-            }
+            end
           else
             logger.error "Unknown email notification recipient '#{recipient}'"
             next
@@ -1078,42 +1045,42 @@ result
   private
 
   def check_generate
-    return if number
+    return true if number
     self.number = Ticket::Number.generate
+    true
   end
 
   def check_title
-    return if !title
+    return true if !title
     title.gsub!(/\s|\t|\r/, ' ')
+    true
   end
 
   def check_defaults
     if !owner_id
       self.owner_id = 1
     end
-
-    return if !customer_id
-
+    return true if !customer_id
     customer = User.find_by(id: customer_id)
-    return if !customer
-    return if organization_id == customer.organization_id
-
+    return true if !customer
+    return true if organization_id == customer.organization_id
     self.organization_id = customer.organization_id
+    true
   end
 
   def reset_pending_time
 
     # ignore if no state has changed
-    return if !changes['state_id']
+    return true if !changes['state_id']
 
     # check if new state isn't pending*
     current_state      = Ticket::State.lookup(id: state_id)
     current_state_type = Ticket::StateType.lookup(id: current_state.state_type_id)
 
     # in case, set pending_time to nil
-    return if current_state_type.name =~ /^pending/i
-
+    return true if current_state_type.name =~ /^pending/i
     self.pending_time = nil
+    true
   end
 
   def check_escalation_update
@@ -1122,20 +1089,18 @@ result
   end
 
   def set_default_state
-    return if state_id
-
+    return true if state_id
     default_ticket_state = Ticket::State.find_by(default_create: true)
-    return if !default_ticket_state
-
+    return true if !default_ticket_state
     self.state_id = default_ticket_state.id
+    true
   end
 
   def set_default_priority
-    return if priority_id
-
+    return true if priority_id
     default_ticket_priority = Ticket::Priority.find_by(default_create: true)
-    return if !default_ticket_priority
-
+    return true if !default_ticket_priority
     self.priority_id = default_ticket_priority.id
+    true
   end
 end
