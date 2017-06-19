@@ -61,6 +61,8 @@ module HasGroups
   #
   # @return [Boolean]
   def group_access?(group_id, access)
+    return false if !active?
+
     group_id = self.class.ensure_group_id_parameter(group_id)
     access   = self.class.ensure_group_access_list_parameter(access)
 
@@ -92,8 +94,9 @@ module HasGroups
   #
   # @return [Array<Integer>] Group IDs the instance has the given access(es) to.
   def group_ids_access(access)
-    access = self.class.ensure_group_access_list_parameter(access)
+    return [] if !active?
 
+    access      = self.class.ensure_group_access_list_parameter(access)
     foreign_key = group_through.foreign_key
     klass       = group_through.klass
 
@@ -124,6 +127,7 @@ module HasGroups
   #
   # @return [Array<Group>] Groups the instance has the given access(es) to.
   def groups_access(access)
+    return [] if !active?
     group_ids = group_ids_access(access)
     Group.where(id: group_ids)
   end
@@ -182,6 +186,7 @@ module HasGroups
   private
 
   def groups_access_map(key)
+    return {} if !active?
     {}.tap do |hash|
       groups.access.where(active: true).pluck(key, :access).each do |entry|
         hash[ entry[0] ] ||= []

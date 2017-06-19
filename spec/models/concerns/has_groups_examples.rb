@@ -111,6 +111,14 @@ RSpec.shared_examples 'HasGroups' do
 
         expect(instance.group_access?(group_inactive.id, 'read')).to be false
       end
+
+      it 'prevents inactive instances' do
+        instance_inactive.group_names_access_map = {
+          group_read.name => 'read',
+        }
+
+        expect(instance_inactive.group_access?(group_read.id, 'read')).to be false
+      end
     end
 
     context '#group_ids_access' do
@@ -133,6 +141,14 @@ RSpec.shared_examples 'HasGroups' do
 
         result = instance.group_ids_access('read')
         expect(result).not_to include(group_inactive.id)
+      end
+
+      it "doesn't list for inactive instances" do
+        instance_inactive.group_names_access_map = {
+          group_read.name => 'read',
+        }
+
+        expect(instance_inactive.group_ids_access('read')).to be_empty
       end
 
       context 'single access' do
@@ -258,6 +274,15 @@ RSpec.shared_examples 'HasGroups' do
 
         expect(instance.group_names_access_map).to eq(expected)
       end
+
+      it "doesn't map for inactive instances" do
+        instance_inactive.group_names_access_map = {
+          group_full.name => ['full'],
+          group_read.name => ['read'],
+        }
+
+        expect(instance_inactive.group_names_access_map).to be_empty
+      end
     end
 
     context '#group_ids_access_map=' do
@@ -335,6 +360,15 @@ RSpec.shared_examples 'HasGroups' do
         instance.group_ids_access_map = expected
 
         expect(instance.group_ids_access_map).to eq(expected)
+      end
+
+      it "doesn't map for inactive instances" do
+        instance_inactive.group_ids_access_map = {
+          group_full.id => ['full'],
+          group_read.id => ['read'],
+        }
+
+        expect(instance_inactive.group_ids_access_map).to be_empty
       end
     end
 
