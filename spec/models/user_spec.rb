@@ -1,10 +1,17 @@
 require 'rails_helper'
 require 'models/concerns/has_groups_examples'
 require 'models/concerns/has_roles_examples'
+require 'models/concerns/has_groups_permissions_examples'
 
 RSpec.describe User do
+
+  let(:group_access_instance) { create(:user, roles: [Role.find_by(name: 'Agent')]) }
+  let(:new_group_access_instance) { build(:user, roles: [Role.find_by(name: 'Agent')]) }
+  let(:group_access_no_permission_instance) { build(:user) }
+
   include_examples 'HasGroups'
   include_examples 'HasRoles'
+  include_examples 'HasGroups and Permissions'
 
   let(:new_password) { 'N3W54V3PW!' }
 
