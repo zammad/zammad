@@ -768,7 +768,7 @@ perform changes on ticket
             email = User.lookup(id: owner_id).email
             recipients_raw.push(email)
           elsif recipient == 'ticket_agents'
-            User.group_access(group_id, 'full').order(:login).each do |user|
+            User.group_access(group_id, 'full').sort_by(&:login).each do |user|
               recipients_raw.push(user.email)
             end
           else

@@ -1,10 +1,12 @@
+# Requires: let(:group_access_instance) { ... }
+# Requires: let(:new_group_access_instance) { ... }
 RSpec.shared_examples 'HasGroups' do
 
   context 'group' do
-
-    let(:factory_name) { described_class.name.downcase.to_sym }
-    let(:instance) { create(factory_name) }
-    let(:instance_inactive) { create(factory_name, active: false) }
+    let(:group_access_instance_inactive) {
+      group_access_instance.update_attribute(:active, false)
+      group_access_instance
+    }
     let(:group_full) { create(:group) }
     let(:group_read) { create(:group) }
     let(:group_inactive) { create(:group, active: false) }
@@ -20,7 +22,7 @@ RSpec.shared_examples 'HasGroups' do
       end
 
       it 'instance responds to group_through_identifier method' do
-        expect(instance).to respond_to(described_class.group_through_identifier)
+        expect(group_access_instance).to respond_to(described_class.group_through_identifier)
       end
     end
 
@@ -38,19 +40,19 @@ RSpec.shared_examples 'HasGroups' do
     context '#groups' do
 
       it 'responds to groups' do
-        expect(instance).to respond_to(:groups)
+        expect(group_access_instance).to respond_to(:groups)
       end
 
       context '#groups.access' do
 
         it 'responds to groups.access' do
-          expect(instance.groups).to respond_to(:access)
+          expect(group_access_instance.groups).to respond_to(:access)
         end
 
         context 'result' do
 
           before(:each) do
-            instance.group_names_access_map = {
+            group_access_instance.group_names_access_map = {
               group_full.name     => 'full',
               group_read.name     => 'read',
               group_inactive.name => 'write',
@@ -58,23 +60,23 @@ RSpec.shared_examples 'HasGroups' do
           end
 
           it 'returns all related Groups' do
-            expect(instance.groups.access.size).to eq(3)
+            expect(group_access_instance.groups.access.size).to eq(3)
           end
 
           it 'adds join table attribute(s like) access' do
-            expect(instance.groups.access.first).to respond_to(:access)
+            expect(group_access_instance.groups.access.first).to respond_to(:access)
           end
 
           it 'filters for given access parameter' do
-            expect(instance.groups.access('read')).to include(group_read)
+            expect(group_access_instance.groups.access('read')).to include(group_read)
           end
 
           it 'filters for given access list parameter' do
-            expect(instance.groups.access('read', 'write')).to include(group_read, group_inactive)
+            expect(group_access_instance.groups.access('read', 'write')).to include(group_read, group_inactive)
           end
 
           it 'always includes full access groups' do
-            expect(instance.groups.access('read')).to include(group_full)
+            expect(group_access_instance.groups.access('read')).to include(group_full)
           end
         end
       end
@@ -82,14 +84,14 @@ RSpec.shared_examples 'HasGroups' do
 
     context '#group_access?' do
 
-      before(:each) do
-        instance.group_names_access_map = {
-          group_read.name => 'read',
-        }
+      it 'responds to group_access?' do
+        expect(group_access_instance).to respond_to(:group_access?)
       end
 
-      it 'responds to group_access?' do
-        expect(instance).to respond_to(:group_access?)
+      before(:each) do
+        group_access_instance.group_names_access_map = {
+          group_read.name => 'read',
+        }
       end
 
       context 'Group ID parameter' do
@@ -105,45 +107,61 @@ RSpec.shared_examples 'HasGroups' do
       end
 
       it 'prevents inactive Group' do
-        instance.group_names_access_map = {
+        group_access_instance.group_names_access_map = {
           group_inactive.name => 'read',
         }
 
-        expect(instance.group_access?(group_inactive.id, 'read')).to be false
+        expect(group_access_instance.group_access?(group_inactive.id, 'read')).to be false
+      end
+
+      it 'prevents inactive instances' do
+        group_access_instance_inactive.group_names_access_map = {
+          group_read.name => 'read',
+        }
+
+        expect(group_access_instance_inactive.group_access?(group_read.id, 'read')).to be false
       end
     end
 
     context '#group_ids_access' do
 
+      it 'responds to group_ids_access' do
+        expect(group_access_instance).to respond_to(:group_ids_access)
+      end
+
       before(:each) do
-        instance.group_names_access_map = {
+        group_access_instance.group_names_access_map = {
           group_read.name => 'read',
         }
       end
 
-      it 'responds to group_ids_access' do
-        expect(instance).to respond_to(:group_ids_access)
-      end
-
       it 'lists only active Group IDs' do
-        instance.group_names_access_map = {
+        group_access_instance.group_names_access_map = {
           group_read.name     => 'read',
           group_inactive.name => 'read',
         }
 
-        result = instance.group_ids_access('read')
+        result = group_access_instance.group_ids_access('read')
         expect(result).not_to include(group_inactive.id)
+      end
+
+      it "doesn't list for inactive instances" do
+        group_access_instance_inactive.group_names_access_map = {
+          group_read.name => 'read',
+        }
+
+        expect(group_access_instance_inactive.group_ids_access('read')).to be_empty
       end
 
       context 'single access' do
 
         it 'lists access Group IDs' do
-          result = instance.group_ids_access('read')
+          result = group_access_instance.group_ids_access('read')
           expect(result).to include(group_read.id)
         end
 
         it "doesn't list for no access" do
-          result = instance.group_ids_access('write')
+          result = group_access_instance.group_ids_access('write')
           expect(result).not_to include(group_read.id)
         end
       end
@@ -151,12 +169,12 @@ RSpec.shared_examples 'HasGroups' do
       context 'access list' do
 
         it 'lists access Group IDs' do
-          result = instance.group_ids_access(%w(read write))
+          result = group_access_instance.group_ids_access(%w(read write))
           expect(result).to include(group_read.id)
         end
 
         it "doesn't list for no access" do
-          result = instance.group_ids_access(%w(write create))
+          result = group_access_instance.group_ids_access(%w(write create))
           expect(result).not_to include(group_read.id)
         end
       end
@@ -165,19 +183,19 @@ RSpec.shared_examples 'HasGroups' do
     context '#groups_access' do
 
       it 'responds to groups_access' do
-        expect(instance).to respond_to(:groups_access)
+        expect(group_access_instance).to respond_to(:groups_access)
       end
 
       it 'wraps #group_ids_access' do
-        expect(instance).to receive(:group_ids_access)
-        instance.groups_access('read')
+        expect(group_access_instance).to receive(:group_ids_access)
+        group_access_instance.groups_access('read')
       end
 
       it 'returns Groups' do
-        instance.group_names_access_map = {
+        group_access_instance.group_names_access_map = {
           group_read.name => 'read',
         }
-        result = instance.groups_access('read')
+        result = group_access_instance.groups_access('read')
         expect(result).to include(group_read)
       end
     end
@@ -185,14 +203,14 @@ RSpec.shared_examples 'HasGroups' do
     context '#group_names_access_map=' do
 
       it 'responds to group_names_access_map=' do
-        expect(instance).to respond_to(:group_names_access_map=)
+        expect(group_access_instance).to respond_to(:group_names_access_map=)
       end
 
-      context 'Group name => access relation storage' do
+      context 'existing instance' do
 
         it 'stores Hash with String values' do
           expect do
-            instance.group_names_access_map = {
+            group_access_instance.group_names_access_map = {
               group_full.name => 'full',
               group_read.name => 'read',
             }
@@ -201,9 +219,9 @@ RSpec.shared_examples 'HasGroups' do
           }.by(2)
         end
 
-        it 'stores Hash with String values' do
+        it 'stores Hash with Array<String> values' do
           expect do
-            instance.group_names_access_map = {
+            group_access_instance.group_names_access_map = {
               group_full.name => 'full',
               group_read.name => %w(read write),
             }
@@ -211,33 +229,32 @@ RSpec.shared_examples 'HasGroups' do
             described_class.group_through.klass.count
           }.by(3)
         end
+      end
 
-        context 'new instance' do
-          let(:new_instance) { build(factory_name) }
+      context 'new instance' do
 
-          it "doesn't store directly" do
-            expect do
-              new_instance.group_names_access_map = {
-                group_full.name => 'full',
-                group_read.name => 'read',
-              }
-            end.not_to change {
-              described_class.group_through.klass.count
+        it "doesn't store directly" do
+          expect do
+            new_group_access_instance.group_names_access_map = {
+              group_full.name => 'full',
+              group_read.name => 'read',
             }
-          end
+          end.not_to change {
+            described_class.group_through.klass.count
+          }
+        end
 
-          it 'stores after save' do
-            expect do
-              new_instance.group_names_access_map = {
-                group_full.name => 'full',
-                group_read.name => 'read',
-              }
+        it 'stores after save' do
+          expect do
+            new_group_access_instance.group_names_access_map = {
+              group_full.name => 'full',
+              group_read.name => 'read',
+            }
 
-              new_instance.save
-            end.to change {
-              described_class.group_through.klass.count
-            }.by(2)
-          end
+            new_group_access_instance.save
+          end.to change {
+            described_class.group_through.klass.count
+          }.by(2)
         end
       end
     end
@@ -245,7 +262,7 @@ RSpec.shared_examples 'HasGroups' do
     context '#group_names_access_map' do
 
       it 'responds to group_names_access_map' do
-        expect(instance).to respond_to(:group_names_access_map)
+        expect(group_access_instance).to respond_to(:group_names_access_map)
       end
 
       it 'returns instance Group name => access relations as Hash' do
@@ -254,23 +271,32 @@ RSpec.shared_examples 'HasGroups' do
           group_read.name => ['read'],
         }
 
-        instance.group_names_access_map = expected
+        group_access_instance.group_names_access_map = expected
 
-        expect(instance.group_names_access_map).to eq(expected)
+        expect(group_access_instance.group_names_access_map).to eq(expected)
+      end
+
+      it "doesn't map for inactive instances" do
+        group_access_instance_inactive.group_names_access_map = {
+          group_full.name => ['full'],
+          group_read.name => ['read'],
+        }
+
+        expect(group_access_instance_inactive.group_names_access_map).to be_empty
       end
     end
 
     context '#group_ids_access_map=' do
 
       it 'responds to group_ids_access_map=' do
-        expect(instance).to respond_to(:group_ids_access_map=)
+        expect(group_access_instance).to respond_to(:group_ids_access_map=)
       end
 
-      context 'Group ID => access relation storage' do
+      context 'existing instance' do
 
         it 'stores Hash with String values' do
           expect do
-            instance.group_ids_access_map = {
+            group_access_instance.group_ids_access_map = {
               group_full.id => 'full',
               group_read.id => 'read',
             }
@@ -281,7 +307,7 @@ RSpec.shared_examples 'HasGroups' do
 
         it 'stores Hash with String values' do
           expect do
-            instance.group_ids_access_map = {
+            group_access_instance.group_ids_access_map = {
               group_full.id => 'full',
               group_read.id => %w(read write),
             }
@@ -289,33 +315,32 @@ RSpec.shared_examples 'HasGroups' do
             described_class.group_through.klass.count
           }.by(3)
         end
+      end
 
-        context 'new instance' do
-          let(:new_instance) { build(factory_name) }
+      context 'new instance' do
 
-          it "doesn't store directly" do
-            expect do
-              new_instance.group_ids_access_map = {
-                group_full.id => 'full',
-                group_read.id => 'read',
-              }
-            end.not_to change {
-              described_class.group_through.klass.count
+        it "doesn't store directly" do
+          expect do
+            new_group_access_instance.group_ids_access_map = {
+              group_full.id => 'full',
+              group_read.id => 'read',
             }
-          end
+          end.not_to change {
+            described_class.group_through.klass.count
+          }
+        end
 
-          it 'stores after save' do
-            expect do
-              new_instance.group_ids_access_map = {
-                group_full.id => 'full',
-                group_read.id => 'read',
-              }
+        it 'stores after save' do
+          expect do
+            new_group_access_instance.group_ids_access_map = {
+              group_full.id => 'full',
+              group_read.id => 'read',
+            }
 
-              new_instance.save
-            end.to change {
-              described_class.group_through.klass.count
-            }.by(2)
-          end
+            new_group_access_instance.save
+          end.to change {
+            described_class.group_through.klass.count
+          }.by(2)
         end
       end
     end
@@ -323,7 +348,7 @@ RSpec.shared_examples 'HasGroups' do
     context '#group_ids_access_map' do
 
       it 'responds to group_ids_access_map' do
-        expect(instance).to respond_to(:group_ids_access_map)
+        expect(group_access_instance).to respond_to(:group_ids_access_map)
       end
 
       it 'returns instance Group ID => access relations as Hash' do
@@ -332,9 +357,18 @@ RSpec.shared_examples 'HasGroups' do
           group_read.id => ['read'],
         }
 
-        instance.group_ids_access_map = expected
+        group_access_instance.group_ids_access_map = expected
 
-        expect(instance.group_ids_access_map).to eq(expected)
+        expect(group_access_instance.group_ids_access_map).to eq(expected)
+      end
+
+      it "doesn't map for inactive instances" do
+        group_access_instance_inactive.group_ids_access_map = {
+          group_full.id => ['full'],
+          group_read.id => ['read'],
+        }
+
+        expect(group_access_instance_inactive.group_ids_access_map).to be_empty
       end
     end
 
@@ -346,8 +380,8 @@ RSpec.shared_examples 'HasGroups' do
           group_read.id => ['read'],
         }
 
-        instance.associations_from_param(group_ids: expected)
-        expect(instance.group_ids_access_map).to eq(expected)
+        group_access_instance.associations_from_param(group_ids: expected)
+        expect(group_access_instance.group_ids_access_map).to eq(expected)
       end
 
       it 'handles groups parameter as group_names_access_map' do
@@ -356,8 +390,8 @@ RSpec.shared_examples 'HasGroups' do
           group_read.name => ['read'],
         }
 
-        instance.associations_from_param(groups: expected)
-        expect(instance.group_names_access_map).to eq(expected)
+        group_access_instance.associations_from_param(groups: expected)
+        expect(group_access_instance.group_names_access_map).to eq(expected)
       end
     end
 
@@ -369,9 +403,9 @@ RSpec.shared_examples 'HasGroups' do
           group_read.id => ['read'],
         }
 
-        instance.group_ids_access_map = expected
+        group_access_instance.group_ids_access_map = expected
 
-        result = instance.attributes_with_association_ids
+        result = group_access_instance.attributes_with_association_ids
         expect(result['group_ids']).to eq(expected)
       end
     end
@@ -384,9 +418,9 @@ RSpec.shared_examples 'HasGroups' do
           group_read.id => ['read'],
         }
 
-        instance.group_ids_access_map = expected
+        group_access_instance.group_ids_access_map = expected
 
-        result = instance.attributes_with_association_names
+        result = group_access_instance.attributes_with_association_names
         expect(result['group_ids']).to eq(expected)
       end
 
@@ -396,44 +430,10 @@ RSpec.shared_examples 'HasGroups' do
           group_read.name => ['read'],
         }
 
-        instance.group_names_access_map = expected
+        group_access_instance.group_names_access_map = expected
 
-        result = instance.attributes_with_association_names
+        result = group_access_instance.attributes_with_association_names
         expect(result['groups']).to eq(expected)
-      end
-    end
-
-    context '.group_access_ids' do
-
-      before(:each) do
-        instance.group_names_access_map = {
-          group_read.name => 'read',
-        }
-      end
-
-      it 'responds to group_access_ids' do
-        expect(described_class).to respond_to(:group_access_ids)
-      end
-
-      it 'lists only active instance IDs' do
-        instance_inactive.group_names_access_map = {
-          group_read.name => 'read',
-        }
-
-        result = described_class.group_access_ids(group_read.id, 'read')
-        expect(result).not_to include(instance_inactive.id)
-      end
-
-      context 'Group ID parameter' do
-        include_examples '.group_access_ids call' do
-          let(:group_parameter) { group_read.id }
-        end
-      end
-
-      context 'Group parameter' do
-        include_examples '.group_access_ids call' do
-          let(:group_parameter) { group_read.id }
-        end
       end
     end
 
@@ -443,30 +443,64 @@ RSpec.shared_examples 'HasGroups' do
         expect(described_class).to respond_to(:group_access)
       end
 
-      it 'wraps .group_access_ids' do
-        expect(described_class).to receive(:group_access_ids)
-        described_class.group_access(group_read, 'read')
+      before(:each) do
+        group_access_instance.group_names_access_map = {
+          group_read.name => 'read',
+        }
       end
 
-      it 'returns class instances' do
-        instance.group_names_access_map = {
+      it 'lists only active instances' do
+        group_access_instance_inactive.group_names_access_map = {
           group_read.name => 'read',
         }
 
-        result = described_class.group_access(group_read, 'read')
-        expect(result).to include(instance)
+        result = described_class.group_access(group_read.id, 'read')
+        expect(result).not_to include(group_access_instance_inactive)
+      end
+
+      context 'Group ID parameter' do
+        include_examples '.group_access call' do
+          let(:group_parameter) { group_read.id }
+        end
+      end
+
+      context 'Group parameter' do
+        include_examples '.group_access call' do
+          let(:group_parameter) { group_read }
+        end
+      end
+    end
+
+    context '.group_access_ids' do
+
+      it 'responds to group_access_ids' do
+        expect(described_class).to respond_to(:group_access_ids)
+      end
+
+      it 'wraps .group_access' do
+        expect(described_class).to receive(:group_access).and_call_original
+        described_class.group_access_ids(group_read, 'read')
+      end
+
+      it 'returns class instances' do
+        group_access_instance.group_names_access_map = {
+          group_read.name => 'read',
+        }
+
+        result = described_class.group_access_ids(group_read, 'read')
+        expect(result).to include(group_access_instance.id)
       end
     end
 
     it 'destroys relations before instance gets destroyed' do
 
-      instance.group_names_access_map = {
+      group_access_instance.group_names_access_map = {
         group_full.name     => 'full',
         group_read.name     => 'read',
         group_inactive.name => 'write',
       }
       expect do
-        instance.destroy
+        group_access_instance.destroy
       end.to change {
         described_class.group_through.klass.count
       }.by(-3)
@@ -478,46 +512,46 @@ RSpec.shared_examples '#group_access? call' do
   context 'single access' do
 
     it 'checks positive' do
-      expect(instance.group_access?(group_parameter, 'read')).to be true
+      expect(group_access_instance.group_access?(group_parameter, 'read')).to be true
     end
 
     it 'checks negative' do
-      expect(instance.group_access?(group_parameter, 'write')).to be false
+      expect(group_access_instance.group_access?(group_parameter, 'write')).to be false
     end
   end
 
   context 'access list' do
 
     it 'checks positive' do
-      expect(instance.group_access?(group_parameter, %w(read write))).to be true
+      expect(group_access_instance.group_access?(group_parameter, %w(read write))).to be true
     end
 
     it 'checks negative' do
-      expect(instance.group_access?(group_parameter, %w(write create))).to be false
+      expect(group_access_instance.group_access?(group_parameter, %w(write create))).to be false
     end
   end
 end
 
-RSpec.shared_examples '.group_access_ids call' do
+RSpec.shared_examples '.group_access call' do
   context 'single access' do
 
     it 'lists access IDs' do
-      expect(described_class.group_access_ids(group_parameter, 'read')).to include(instance.id)
+      expect(described_class.group_access(group_parameter, 'read')).to include(group_access_instance)
     end
 
     it 'excludes non access IDs' do
-      expect(described_class.group_access_ids(group_parameter, 'write')).not_to include(instance.id)
+      expect(described_class.group_access(group_parameter, 'write')).not_to include(group_access_instance)
     end
   end
 
   context 'access list' do
 
     it 'lists access IDs' do
-      expect(described_class.group_access_ids(group_parameter, %w(read write))).to include(instance.id)
+      expect(described_class.group_access(group_parameter, %w(read write))).to include(group_access_instance)
     end
 
     it 'excludes non access IDs' do
-      expect(described_class.group_access_ids(group_parameter, %w(write create))).not_to include(instance.id)
+      expect(described_class.group_access(group_parameter, %w(write create))).not_to include(group_access_instance)
     end
   end
 end
