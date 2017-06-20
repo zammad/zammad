@@ -11,8 +11,7 @@
     class="searchableSelect-main form-control js-input<%= " #{ @class }" if @class %>"
     placeholder="<%= @placeholder %>"
     value="<%= @valueName %>"
-    autocomplete="new-password"
-    name="select_<%= @name %>"
+    autocomplete="off"
     <%= @required %>
    >
   <div class="searchableSelect-autocomplete">
