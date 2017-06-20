@@ -1396,6 +1396,7 @@ fieldset > .form-group {
   .merge-target,
   .merge-source {
     flex: 1;
+    width: 33%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -6130,6 +6131,48 @@ footer {
     height: 30px;
   }
 
+  .dropdown-menu--has-submenu {
+    overflow: hidden;
+    background: none;
+    
+    ul {
+      background: hsl(234,10%,19%);
+    }
+  }
+
+  .dropdown-submenu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .dropdown.dropdown--actions .dropdown-controls {
+    @extend .u-clickable;
+    display: flex;
+    
+    &:not(:hover):not(.is-active) {
+      background: hsl(206,7%,28%);
+    }
+
+    .icon {
+      fill: white;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+  }
+
+  .dropdown-title {
+    flex-shrink: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .dropdown-detail {
+    opacity: 0.5;
+  }
+
 .recipientList,
 .recipientList-organizationMembers {
   list-style: none;
@@ -7493,14 +7536,30 @@ output {
 
   .dropdown-menu {
     margin-top: -3px;
+    max-width: 100%;
   }
 
-  &.dropdown li:hover:not(.is-active) {
-    background: none;
+  &-option-text {
+    flex: 1 1 0%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    
+    & + .icon {
+      margin-left: 10px;
+    }
   }
 
-  &.dropdown li.is-hidden {
-    display: none;
+  &.dropdown li {
+    
+    &:hover:not(.is-active) {
+      background: none;
+    }
+
+    &.is-hidden {
+      display: none;
+    }
   }
 
   li:not(.is-active):hover + li {

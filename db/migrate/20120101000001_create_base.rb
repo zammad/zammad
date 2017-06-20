@@ -563,8 +563,8 @@ class CreateBase < ActiveRecord::Migration
       t.string :name,                         limit: 200,   null: false
       t.string :display,                      limit: 200,   null: false
       t.string :data_type,                    limit: 100,   null: false
-      t.string :data_option,                  limit: 8000,  null: true
-      t.string :data_option_new,              limit: 8000,  null: true
+      t.text :data_option,                    limit: 800.kilobytes + 1,  null: true
+      t.text :data_option_new,                limit: 800.kilobytes + 1,  null: true
       t.boolean :editable,                                  null: false, default: true
       t.boolean :active,                                    null: false, default: true
       t.string :screens,                      limit: 2000,  null: true

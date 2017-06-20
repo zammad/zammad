@@ -45,13 +45,13 @@ test( "searchable_select check", function() {
     autofocus: true
   })
 
-  var params = App.ControllerForm.params( el )
+  var params = App.ControllerForm.params(el)
   var test_params = {
     searchable_select1: '',
     searchable_select2: 'bbb',
     searchable_select3: '',
   }
-  deepEqual( params, test_params, 'form param check' )
+  deepEqual(params, test_params, 'form param check')
 
   // change selection
   $('[name="searchable_select1"].js-shadow + .js-input').focus().val('').trigger('input')
@@ -62,13 +62,13 @@ test( "searchable_select check", function() {
   var entries = $element.find('li:not(.is-hidden)').length
   equal(entries, 1, 'dropdown count')
   $element.find('li:not(.is-hidden)').first().click()
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     searchable_select1: 'ccc',
     searchable_select2: 'bbb',
     searchable_select3: '',
   }
-  deepEqual( params, test_params, 'form param check' )
+  deepEqual(params, test_params, 'form param check')
 
   $('[name="searchable_select2"].js-shadow + .js-input').focus().val('').trigger('input')
   var $element = $('[name="searchable_select2"]').closest('.searchableSelect').find('.js-optionsList')
@@ -79,13 +79,13 @@ test( "searchable_select check", function() {
   equal(entries, 1, 'dropdown count')
   $element.find('li:not(.is-hidden)').first().click()
 
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     searchable_select1: 'ccc',
     searchable_select2: 'ccc',
     searchable_select3: '',
   }
-  deepEqual( params, test_params, 'form param check' )
+  deepEqual(params, test_params, 'form param check')
 
   $('[name="searchable_select3"].js-shadow + .js-input').focus().val('').trigger('input')
   var $element = $('[name="searchable_select3"]').closest('.searchableSelect').find('.js-optionsList')
@@ -105,12 +105,12 @@ test( "searchable_select check", function() {
   e.keyCode = 13
   $('[name="searchable_select3"].js-shadow + .js-input').trigger(e)
 
-  params = App.ControllerForm.params( el )
+  params = App.ControllerForm.params(el)
   test_params = {
     searchable_select1: 'ccc',
     searchable_select2: 'ccc',
     searchable_select3: 'unknown value',
   }
-  deepEqual( params, test_params, 'form param check' )
+  deepEqual(params, test_params, 'form param check')
 
 });

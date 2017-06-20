@@ -1,0 +1,29 @@
+<div>
+  <table class="settings-list js-Table" style="width: 100%;">
+    <thead>
+      <tr>
+        <th><%- @T('Key') %>
+        <th style="width: 180px"><%- @T('Action') %>
+      </tr>
+    </thead>
+    <tbody class="js-treeTable"></tbody>
+  </table>
+  <table class="hidden">
+    <tbody>
+      <tr class="js-template">
+        <td class="settings-list-control-cell">
+          <input class="form-control form-control--small js-key" type="text" value="" data-level="" required/>
+        <td class="settings-list-row-control">
+          <div class="btn btn--text js-remove" style="margin-left: -10px;">
+            <%- @Icon('trash') %>
+          </div>
+          <div class="btn btn--text btn--create js-addChild" style="margin-left: -10px;">
+            <%- @Icon('plus-small') %> <%- @T('children') %>
+          </div>
+          <div class="btn btn--text btn--create js-addRow" style="margin-left: -10px;">
+            <%- @Icon('plus-small') %> <%- @T('row') %>
+          </div>
+      </tr>
+    </tbody>
+  </table>
+</div>
