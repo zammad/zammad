@@ -1,5 +1,80 @@
 # coffeelint: disable=no_unnecessary_double_quotes
 class App.Utils
+  @mapAttributes:
+    'TABLE': ['align', 'bgcolor', 'border', 'cellpadding', 'cellspacing', 'frame', 'rules', 'sortable', 'summary', 'width', 'style']
+    'TD': ['abbr', 'align', 'axis', 'colspan', 'headers', 'rowspan', 'valign', 'width', 'style']
+    'TH': ['abbr', 'align', 'axis', 'colspan', 'headers', 'rowspan', 'scope', 'sorted', 'valign', 'width', 'style']
+    'TR': ['width', 'style']
+
+  @mapCss:
+    'TABLE': [
+      'background', 'background-color', 'color', 'font-size', 'vertical-align',
+      'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
+      'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
+      'text-align',
+      'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
+
+      'border-top-width',
+      'border-right-width',
+      'border-bottom-width',
+      'border-left-width',
+
+      'border-top-color',
+      'border-right-color',
+      'border-bottom-color',
+      'border-left-color',
+    ]
+    'TH': [
+      'background', 'background-color', 'color', 'font-size', 'vertical-align',
+      'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
+      'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
+      'text-align',
+      'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
+
+      'border-top-width',
+      'border-right-width',
+      'border-bottom-width',
+      'border-left-width',
+
+      'border-top-color',
+      'border-right-color',
+      'border-bottom-color',
+      'border-left-color',
+    ]
+    'TR': [
+      'background', 'background-color', 'color', 'font-size', 'vertical-align',
+      'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
+      'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
+      'text-align',
+      'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
+
+      'border-top-width',
+      'border-right-width',
+      'border-bottom-width',
+      'border-left-width',
+
+      'border-top-color',
+      'border-right-color',
+      'border-bottom-color',
+      'border-left-color',
+    ]
+    'TD': [
+      'background', 'background-color', 'color', 'font-size', 'vertical-align',
+      'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
+      'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
+      'text-align',
+      'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
+
+      'border-top-width',
+      'border-right-width',
+      'border-bottom-width',
+      'border-left-width',
+
+      'border-top-color',
+      'border-right-color',
+      'border-bottom-color',
+      'border-left-color',
+    ]
 
   # textCleand = App.Utils.textCleanup(rawText)
   @textCleanup: (ascii) ->
@@ -252,26 +327,45 @@ class App.Utils
     catch err
       return $("<div>#{item}</div>")
 
+  @_removeAttribute: (element) ->
+    return if !element
+
+    if @mapAttributes[element.nodeName]
+      atts = element.attributes
+      for att in atts
+        if att && att.name && !_.contains(@mapAttributes[element.nodeName], att.name)
+          element.removeAttributeNode(att)
+    else
+      $element = $(element)
+      $element.removeAttr('style')
+      $element.removeAttr('class')
+      $element.removeAttr('title')
+      $element.removeAttr('lang')
+      $element.removeAttr('type')
+      $element.removeAttr('id')
+      $element.removeAttr('wrap')
+      $element.removeAttrs(/data-/)
+
+    if @mapCss[element.nodeName]
+      style = element.getAttributeNode('style')
+      if style && style.nodeValue && style.nodeValue.split
+        styleNew = ''
+        for local_pear in style.nodeValue.split(';')
+          prop = local_pear.split(':')
+          if prop[0] && prop[0].trim
+            key = prop[0].trim()
+            if _.contains(@mapCss[element.nodeName], key)
+              styleNew += "#{local_pear};"
+        if styleNew isnt ''
+          style.nodeValue = styleNew
+          element.setAttributeNode(style)
+        else
+          element.removeAttributeNode(style)
+
   @_removeAttributes: (html, parent = true) ->
     if parent
-      html.find('*')
-        .removeAttr('style')
-        .removeAttr('class')
-        .removeAttr('title')
-        .removeAttr('lang')
-        .removeAttr('type')
-        .removeAttr('id')
-        .removeAttr('wrap')
-        .removeAttrs(/data-/)
-    html
-      .removeAttr('style')
-      .removeAttr('class')
-      .removeAttr('title')
-      .removeAttr('lang')
-      .removeAttr('type')
-      .removeAttr('id')
-      .removeAttr('wrap')
-      .removeAttrs(/data-/)
+      html.each((index, element) => @_removeAttribute(element) )
+    html.find('*').each((index, element) => @_removeAttribute(element) )
     html
 
   @_removeComments: (html) ->

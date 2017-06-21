@@ -582,6 +582,35 @@ test("htmlCleanup", function() {
   result = App.Utils.htmlCleanup(source)
   equal(result.html(), should, source)
 
+  source = "<table bgcolor=\"green\" aaa=\"1\"><thead><tr><th colspan=\"2\" abc=\"a\">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>"
+  should = "<table bgcolor=\"green\"><thead><tr><th colspan=\"2\">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>"
+  result = App.Utils.htmlCleanup(source)
+  equal(result.get(0).outerHTML, should, source)
+
+  source = "<table bgcolor=\"green\" aaa=\"1\" style=\"color: red\"><thead><tr style=\"margin-top: 10px\"><th colspan=\"2\" abc=\"a\" style=\"margin-top: 12px\">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>"
+  should = "<table bgcolor=\"green\" style=\"color: red;\"><thead><tr style=\"margin-top: 10px;\"><th colspan=\"2\" style=\"margin-top: 12px;\">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>"
+  result = App.Utils.htmlCleanup(source)
+  //equal(result.get(0).outerHTML, should, source) / string order is different on browsers
+  equal(result.first().attr('bgcolor'), 'green')
+  equal(result.first().attr('style'), 'color: red;')
+  equal(result.first().attr('aaa'), undefined)
+  equal(result.find('tr').first().attr('style'), 'margin-top: 10px;')
+  equal(result.find('th').first().attr('colspan'), '2')
+  equal(result.find('th').first().attr('abc'), undefined)
+  equal(result.find('th').first().attr('style'), 'margin-top: 12px;')
+
+  source = "<table bgcolor=\"green\" aaa=\"1\" style=\"color:red; display: none;\"><thead><tr><th colspan=\"2\" abc=\"a\">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>"
+  should = "<table bgcolor=\"green\" style=\"color:red;\"><thead><tr><th colspan=\"2\">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>"
+  result = App.Utils.htmlCleanup(source)
+  //equal(result.get(0).outerHTML, should, source) / string order is different on browsers
+  equal(result.first().attr('bgcolor'), 'green')
+  equal(result.first().attr('style'), 'color:red;')
+  equal(result.first().attr('aaa'), undefined)
+  equal(result.find('tr').first().attr('style'), undefined)
+  equal(result.find('th').first().attr('colspan'), '2')
+  equal(result.find('th').first().attr('abc'), undefined)
+  equal(result.find('th').first().attr('style'), undefined)
+
 });
 
 // wrap
