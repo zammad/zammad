@@ -215,6 +215,7 @@ class App.SearchableSelect extends Spine.Controller
     @invisiblePart.text('')
 
   selectItem: (event) ->
+    return if !event.currentTarget.textContent
     @input.val event.currentTarget.textContent.trim()
     @input.trigger('change')
     @shadowInput.val event.currentTarget.getAttribute('data-value')
@@ -222,6 +223,7 @@ class App.SearchableSelect extends Spine.Controller
 
   navigateIn: (event) ->
     event.stopPropagation()
+    @selectItem(event)
     @navigateDepth(1)
 
   navigateOut: (event) ->
@@ -305,9 +307,7 @@ class App.SearchableSelect extends Spine.Controller
 
   onEnter: (event) ->
     if @currentItem
-      if @currentItem.hasClass('js-enter')
-        return @navigateIn(event)
-      else if @currentItem.hasClass('js-back')
+      if @currentItem.hasClass('js-back')
         return @navigateOut(event)
 
     @clearAutocomplete()
@@ -326,10 +326,16 @@ class App.SearchableSelect extends Spine.Controller
       @input.val valueName
       @shadowInput.val value
 
-    @currentItem = null
-
     @input.trigger('change')
     @shadowInput.trigger('change')
+
+    if @currentItem
+      if @currentItem.hasClass('js-enter')
+        @navigateIn(event)
+        @currentItem = null
+        return
+    @currentItem = null
+
     @toggle()
 
   onBlur: ->
