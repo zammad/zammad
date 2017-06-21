@@ -229,7 +229,7 @@ class App.ControllerForm extends App.Controller
       if attribute.type is 'hidden'
         attribute.autocomplete = ''
       else
-        attribute.autocomplete = 'autocomplete="new-password"'
+        attribute.autocomplete = 'autocomplete="off"'
     else
       attribute.autocomplete = 'autocomplete="' + attribute.autocomplete + '"'
 

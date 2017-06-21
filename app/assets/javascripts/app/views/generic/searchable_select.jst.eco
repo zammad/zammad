@@ -1,27 +1,29 @@
 <div class="dropdown-toggle" data-toggle="dropdown">
   <input
     class="searchableSelect-shadow form-control js-shadow"
-    id="<%= @id %>"
-    name="<%= @name %>"
-    <%= @required %>
-    <%= @autofocus %>
-    value="<%= @value %>"
+    id="<%= @attribute.id %>"
+    name="<%= @attribute.name %>"
+    <%= @attribute.required %>
+    <%= @attribute.autofocus %>
+    value="<%= @attribute.value %>"
   >
   <input
-    class="searchableSelect-main form-control js-input<%= " #{ @class }" if @class %>"
-    placeholder="<%= @placeholder %>"
-    value="<%= @valueName %>"
-    autocomplete="new-password"
-    name="select_<%= @name %>"
-    <%= @required %>
+    class="searchableSelect-main form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
+    placeholder="<%= @attribute.placeholder %>"
+    value="<%= @attribute.valueName %>"
+    autocomplete="off"
+    <%= @attribute.required %>
    >
   <div class="searchableSelect-autocomplete">
     <span class="searchableSelect-autocomplete-invisible js-autocomplete-invisible"></span>
     <span class="searchableSelect-autocomplete-visible js-autocomplete-visible"></span>
   </div>
-  <% if !@ajax: %><%- @Icon('arrow-down', 'dropdown-arrow') %><% end %>
+  <% if !@attribute.ajax: %><%- @Icon('arrow-down', 'dropdown-arrow') %><% end %>
   <div class="small loading icon"></div>
 </div>
-<ul class="dropdown-menu dropdown-menu-left js-optionsList" role="menu">
-  <%- @renderedOptions %>
-</ul>
+<div class="dropdown-menu dropdown-menu-left dropdown-menu--has-submenu js-dropdown">
+  <ul class="js-optionsList" role="menu">
+    <%- @options %>
+  </ul>
+  <%- @submenus %>
+</div>

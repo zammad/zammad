@@ -1,5 +1,13 @@
 # coffeelint: disable=camel_case_classes
-class App.UiElement.searchable_select extends App.UiElement.ApplicationUiElement
+class App.UiElement.tree_select extends App.UiElement.ApplicationUiElement
+  @optionsSelect: (children, value) ->
+    return if !children
+    for child in children
+      if child.value is value
+        child.selected = true
+      if child.children
+        @optionsSelect(child.children, value)
+
   @render: (attribute, params) ->
 
     # set multiple option
@@ -21,7 +29,8 @@ class App.UiElement.searchable_select extends App.UiElement.ApplicationUiElement
     @sortOptions(attribute, params)
 
     # finde selected/checked item of list
-    @selectedOptions(attribute, params)
+    if attribute.options
+      @optionsSelect(attribute.options, attribute.value)
 
     # disable item of list
     @disabledOptions(attribute, params)

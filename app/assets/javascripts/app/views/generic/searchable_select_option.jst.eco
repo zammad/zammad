@@ -1,0 +1,8 @@
+<li role="presentation" class="<%= @class %>" data-value="<%= @option.value %>" title="<%= @option.name %><% if @detail: %><%= @detail %><% end %>">
+  <span class="searchableSelect-option-text">
+    <%= @option.name %><% if @detail: %><span class="dropdown-detail"><%= @detail %></span><% end %>
+  </span>
+  <% if @option.children: %>
+    <%- @Icon('arrow-right', 'recipientList-arrow') %>
+  <% end %>
+</li>

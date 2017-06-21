@@ -1,5 +1,0 @@
-<% if @options: %>
-  <% for option in @options: %>
-    <li role="presentation" class="js-option" data-value="<%= option.value %>"><%= option.name %>
-  <% end %>
-<% end %>

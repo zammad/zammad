@@ -47,10 +47,11 @@ class Transaction::Notification
     recipients_and_channels = []
 
     # loop through all users
-    possible_recipients = User.group_access(ticket.group_id, 'full').order(:login)
+    possible_recipients = User.group_access(ticket.group_id, 'full').sort_by(&:login)
     if ticket.owner_id == 1
       possible_recipients.push ticket.owner
     end
+
     already_checked_recipient_ids = {}
     possible_recipients.each { |user|
       result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])

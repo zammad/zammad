@@ -1,4 +1,46 @@
 # coffeelint: disable=duplicate_key
+treeParams = (e, params) ->
+  tree = []
+  lastLevel = 0
+  lastLevels = []
+  valueLevels = []
+
+  $(e.target).closest('.modal').find('.js-treeTable .js-key').each( ->
+    $element = $(@)
+    level = parseInt($element.attr('level'))
+    name = $element.val()
+    item =
+      name: name
+
+    if level is 0
+      tree.push item
+    else if lastLevels[level-1]
+      lastLevels[level-1].children ||= []
+      lastLevels[level-1].children.push item
+    else
+      console.log('ERROR', item)
+    if level is 0
+      valueLevels = []
+    else if lastLevel is level
+      valueLevels.pop()
+    else if lastLevel > level
+      down = lastLevel - level
+      for count in [1..down]
+        valueLevels.pop()
+    if lastLevel <= level
+      valueLevels.push name
+
+    item.value = valueLevels.join('::')
+    lastLevels[level] = item
+    lastLevel = level
+
+  )
+  if tree[0]
+    if !params.data_option
+      params.data_option = {}
+    params.data_option.options = tree
+  params
+
 class Index extends App.ControllerTabs
   requiredPermission: 'admin.object'
   constructor: ->
@@ -135,6 +177,7 @@ class New extends App.ControllerGenericNew
 
   onSubmit: (e) =>
     params = @formParam(e.target)
+    params = treeParams(e, params)
 
     # show attributes for create_middle in two column style
     if params.screens && params.screens.create_middle
@@ -184,6 +227,8 @@ class Edit extends App.ControllerGenericEdit
       #if attribute.name is 'data_type'
       #  attribute.disabled = true
 
+    console.log('configure_attributes', configure_attributes)
+
     @controller = new App.ControllerForm(
       model:
         configure_attributes: configure_attributes
@@ -195,6 +240,7 @@ class Edit extends App.ControllerGenericEdit
 
   onSubmit: (e) =>
     params = @formParam(e.target)
+    params = treeParams(e, params)
 
     # show attributes for create_middle in two column style
     if params.screens && params.screens.create_middle

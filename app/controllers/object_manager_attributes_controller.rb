@@ -108,7 +108,7 @@ class ObjectManagerAttributesController < ApplicationController
       end
     end
     if params[:data_option] && !params[:data_option].key?(:default)
-      params[:data_option][:default] = if params[:data_type] =~ /^(input|select)$/
+      params[:data_option][:default] = if params[:data_type] =~ /^(input|select|tree_select)$/
                                          ''
                                        end
     end

@@ -1,0 +1,11 @@
+<ul class="dropdown-submenu js-optionsSubmenu" role="menu" data-parent-value="<%- @parentValue %>" hidden>
+  <% if @title: %>
+  <li class="dropdown-controls js-back">
+    <%- @Icon('arrow-left') %>
+    <div class="dropdown-title">
+      <%- @title %>
+    </div>
+  </li>
+  <% end %>
+  <%- @options %>
+</ul>

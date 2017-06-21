@@ -7,8 +7,8 @@ module HasGroups
 
     attr_accessor :group_access_buffer
 
-    after_create  :check_group_access_buffer
-    after_update  :check_group_access_buffer
+    after_create :check_group_access_buffer
+    after_update :check_group_access_buffer
 
     association_attributes_ignored :groups
 
@@ -61,6 +61,9 @@ module HasGroups
   #
   # @return [Boolean]
   def group_access?(group_id, access)
+    return false if !active?
+    return false if !groups_access_permission?
+
     group_id = self.class.ensure_group_id_parameter(group_id)
     access   = self.class.ensure_group_access_list_parameter(access)
 
@@ -92,8 +95,10 @@ module HasGroups
   #
   # @return [Array<Integer>] Group IDs the instance has the given access(es) to.
   def group_ids_access(access)
-    access = self.class.ensure_group_access_list_parameter(access)
+    return [] if !active?
+    return [] if !groups_access_permission?
 
+    access      = self.class.ensure_group_access_list_parameter(access)
     foreign_key = group_through.foreign_key
     klass       = group_through.klass
 
@@ -124,6 +129,8 @@ module HasGroups
   #
   # @return [Array<Group>] Groups the instance has the given access(es) to.
   def groups_access(access)
+    return [] if !active?
+    return [] if !groups_access_permission?
     group_ids = group_ids_access(access)
     Group.where(id: group_ids)
   end
@@ -179,9 +186,24 @@ module HasGroups
     @group_through ||= self.class.group_through
   end
 
+  # Checks if the instance has general permission to Group access.
+  #
+  # @example
+  #   customer_user.groups_access_permission?
+  #   #=> false
+  #
+  # @return [Boolean]
+  def groups_access_permission?
+    return true if !respond_to?(:permissions?)
+    permissions?('ticket.agent')
+  end
+
   private
 
   def groups_access_map(key)
+    return {} if !active?
+    return {} if !groups_access_permission?
+
     {}.tap do |hash|
       groups.access.where(active: true).pluck(key, :access).each do |entry|
         hash[ entry[0] ] ||= []
@@ -257,20 +279,7 @@ module HasGroups
     #
     # @return [Array<Integer>]
     def group_access_ids(group_id, access)
-      group_id = ensure_group_id_parameter(group_id)
-      access   = ensure_group_access_list_parameter(access)
-
-      # check direct access
-      ids   = group_through.klass.includes(name.downcase).where(group_id: group_id, access: access, table_name => { active: true }).pluck(group_through.foreign_key)
-      ids ||= []
-
-      # check indirect access through roles if possible
-      return ids if !respond_to?(:role_access_ids)
-      role_instance_ids = role_access_ids(group_id, access)
-
-      # combines and removes duplicates
-      # and returns them in one statement
-      ids | role_instance_ids
+      group_access(group_id, access).collect(&:id)
     end
 
     # Lists instances having the given access(es) to the given Group.
@@ -289,8 +298,22 @@ module HasGroups
     #
     # @return [Array<Class>]
     def group_access(group_id, access)
-      instance_ids = group_access_ids(group_id, access)
-      where(id: instance_ids)
+      group_id = ensure_group_id_parameter(group_id)
+      access   = ensure_group_access_list_parameter(access)
+
+      # check direct access
+      ids   = group_through.klass.includes(name.downcase).where(group_id: group_id, access: access, table_name => { active: true }).pluck(group_through.foreign_key)
+      ids ||= []
+
+      # get instances and check for required permission
+      instances = where(id: ids).select(&:groups_access_permission?)
+
+      # check indirect access through roles if possible
+      return instances if !respond_to?(:role_access)
+
+      # combines and removes duplicates
+      # and returns them in one statement
+      instances | role_access(group_id, access)
     end
 
     # The reflection instance containing the association data
