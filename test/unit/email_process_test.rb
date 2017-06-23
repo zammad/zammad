@@ -2449,6 +2449,32 @@ Some Text',
           ],
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail60.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'abc',
+          },
+          1 => {
+            from: 'Martin Edenhofer <martin@example.com>',
+            sender: 'Customer',
+            type: 'email',
+            body: 'Here it goes - ?????? - ?????????Here it goes - ??? - hi ?',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Martin',
+              lastname: 'Edenhofer',
+              fullname: 'Martin Edenhofer',
+              email: 'martin@example.com',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end
