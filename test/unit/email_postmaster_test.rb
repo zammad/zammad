@@ -396,6 +396,101 @@ Some Text'
     assert_equal('2 normal', ticket.priority.name)
 
     PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'Autoresponder',
+      match: {
+        'auto-submitted' => {
+          'operator' => 'contains not',
+          'value' => 'auto-generated',
+        },
+        'from' => {
+          'operator' => 'contains',
+          'value' => '@example.com',
+        }
+      },
+      perform: {
+        'x-zammad-article-internal' => {
+          'value' => 'true',
+        },
+        'x-zammad-article-type_id' => {
+          'value' => Ticket::Article::Type.find_by(name: 'note').id.to_s,
+        },
+        'x-zammad-ignore' => {
+          'value' => 'false',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: ME Bob <me@example.com>
+To: customer@example.com
+Subject: some subject
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+    assert_equal('Users', ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('some subject', ticket.title)
+    assert_equal('me@example.com', ticket.customer.email)
+    assert_equal('2 normal', ticket.priority.name)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('note', article.type.name)
+    assert_equal(true, article.internal)
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'Autoresponder',
+      match: {
+        'auto-submitted' => {
+          'operator' => 'contains',
+          'value' => 'auto-generated',
+        },
+        'from' => {
+          'operator' => 'contains',
+          'value' => '@example.com',
+        }
+      },
+      perform: {
+        'x-zammad-article-internal' => {
+          'value' => 'true',
+        },
+        'x-zammad-article-type_id' => {
+          'value' => Ticket::Article::Type.find_by(name: 'note').id.to_s,
+        },
+        'x-zammad-ignore' => {
+          'value' => 'false',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: ME Bob <me@example.com>
+To: customer@example.com
+Subject: some subject
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+    assert_equal('Users', ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('some subject', ticket.title)
+    assert_equal('me@example.com', ticket.customer.email)
+    assert_equal('2 normal', ticket.priority.name)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(false, article.internal)
+
   end
 
 end
