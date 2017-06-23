@@ -1,6 +1,6 @@
 # coffeelint: disable=no_unnecessary_double_quotes
 class App.Utils
-  @mapAttributes:
+  @mapTagAttributes:
     'TABLE': ['align', 'bgcolor', 'border', 'cellpadding', 'cellspacing', 'frame', 'rules', 'sortable', 'summary', 'width', 'style']
     'TD': ['abbr', 'align', 'axis', 'colspan', 'headers', 'rowspan', 'valign', 'width', 'style']
     'TH': ['abbr', 'align', 'axis', 'colspan', 'headers', 'rowspan', 'scope', 'sorted', 'valign', 'width', 'style']
@@ -232,12 +232,12 @@ class App.Utils
     @_removeWordMarkup(html)
 
     # remove tags, keep content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, th, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, br, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head').remove()
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, table, thead, tbody, tr, th, td, h1, h2, h3, h4, h5, h6, br, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head').remove()
 
     html
 
@@ -249,20 +249,19 @@ class App.Utils
     # remove comments
     @_removeComments(html)
 
-    # remove style and class
-    if parent
-      @_removeAttributes(html)
-
     # remove work markup
     @_removeWordMarkup(html)
 
     # remove tags, keep content
-    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, th, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head').remove()
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, th, td, h1, h2, h3, h4, h5, h6, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head').remove()
+
+    # remove style and class
+    @_removeAttributes(html, parent)
 
     html
 
@@ -273,9 +272,6 @@ class App.Utils
 
     # remove comments
     @_removeComments(html)
-
-    # remove style and class
-    @_removeAttributes(html)
 
     # remove work markup
     @_removeWordMarkup(html)
@@ -307,6 +303,9 @@ class App.Utils
     # remove tags & content
     html.find('font, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
 
+    # remove style and class
+    @_cleanAttributes(html)
+
     html
 
   @_checkTypeOf: (item) ->
@@ -327,40 +326,59 @@ class App.Utils
     catch err
       return $("<div>#{item}</div>")
 
-  @_removeAttribute: (element) ->
+  @_cleanAttribute: (element) ->
     return if !element
 
-    if @mapAttributes[element.nodeName]
+    if @mapTagAttributes[element.nodeName]
       atts = element.attributes
       for att in atts
-        if att && att.name && !_.contains(@mapAttributes[element.nodeName], att.name)
-          element.removeAttributeNode(att)
+        if att && att.name && !_.contains(@mapTagAttributes[element.nodeName], att.name)
+          element.removeAttribute(att.name)
     else
-      $element = $(element)
-      $element.removeAttr('style')
-      $element.removeAttr('class')
-      $element.removeAttr('title')
-      $element.removeAttr('lang')
-      $element.removeAttr('type')
-      $element.removeAttr('id')
-      $element.removeAttr('wrap')
-      $element.removeAttrs(/data-/)
+      @_removeAttribute(element)
 
     if @mapCss[element.nodeName]
-      style = element.getAttributeNode('style')
-      if style && style.nodeValue && style.nodeValue.split
+      elementStyle = element.style
+      styleOld = ''
+      for prop in elementStyle
+        styleOld += "#{prop}:#{elementStyle[prop]};"
+
+      if styleOld && styleOld.split
         styleNew = ''
-        for local_pear in style.nodeValue.split(';')
+        for local_pear in styleOld.split(';')
           prop = local_pear.split(':')
           if prop[0] && prop[0].trim
             key = prop[0].trim()
             if _.contains(@mapCss[element.nodeName], key)
               styleNew += "#{local_pear};"
         if styleNew isnt ''
-          style.nodeValue = styleNew
-          element.setAttributeNode(style)
+          element.setAttribute('style', styleNew)
         else
-          element.removeAttributeNode(style)
+          element.removeAttribute('style')
+
+  @_cleanAttributes: (html, parent = true) ->
+    if parent
+      html.each((index, element) => @_cleanAttribute(element) )
+    html.find('*').each((index, element) => @_cleanAttribute(element) )
+    html
+
+  @_removeAttribute: (element) ->
+    return if !element
+    $element = $(element)
+    for att in element.attributes
+      if att && att.name
+        element.removeAttribute(att.name)
+        #$element.removeAttr(att.name)
+
+    $element.removeAttr('style')
+      .removeAttr('class')
+      .removeAttr('lang')
+      .removeAttr('type')
+      .removeAttr('align')
+      .removeAttr('id')
+      .removeAttr('wrap')
+      .removeAttr('title')
+      .removeAttrs(/data-/)
 
   @_removeAttributes: (html, parent = true) ->
     if parent
@@ -877,3 +895,10 @@ class App.Utils
     result = newOrderMethod(a, b, applyOrder)
     return false if !result
     applyOrder
+
+  @textLengthWithUrl: (text, url_max_length = 23) ->
+    length = 0
+    return length if !text
+    placeholder = Array(url_max_length + 1).join('X')
+    text = text.replace(/http(s|):\/\/[-A-Za-z0-9+&@#\/%?=~_\|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]/img, placeholder)
+    text.length

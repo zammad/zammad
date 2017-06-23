@@ -257,11 +257,13 @@ class TweetBase
             begin
 
               # in case of streaming mode, get parent tweet via REST client
-              if !@client && @auth
-                @client = TweetRest.new(@auth)
+              if @connection_type == 'stream'
+                client = TweetRest.new(@auth)
+                parent_tweet = client.status(tweet.in_reply_to_status_id)
+              else
+                parent_tweet = @client.status(tweet.in_reply_to_status_id)
               end
-              parent_tweet = @client.status(tweet.in_reply_to_status_id)
-              ticket       = to_group(parent_tweet, group_id, channel)
+              ticket = to_group(parent_tweet, group_id, channel)
             rescue Twitter::Error::NotFound, Twitter::Error::Forbidden => e
               # just ignore if tweet has already gone
               Rails.logger.info "Can't import tweet (#{tweet.in_reply_to_status_id}), #{e.message}"
