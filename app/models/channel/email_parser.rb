@@ -146,6 +146,7 @@ class Channel::EmailParser
       if data[:body].empty? && mail.text_part
         data[:body] = mail.text_part.body.decoded
         data[:body] = Encode.conv(mail.text_part.charset, data[:body])
+        data[:body] = data[:body].to_s.force_encoding('utf-8')
 
         if !data[:body].valid_encoding?
           data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
