@@ -79,7 +79,7 @@ function detect_webserver () {
     WEBSERVER="nginx"
     WEBSERVER_CMD="nginx"
     if [ "${OS}" == "DEBIAN" ]; then
-      WEBSERVER_CONF="/etc/nginx/sites-enabled/zammad.conf"
+      WEBSERVER_CONF="/etc/nginx/sites-available/zammad.conf"
     elif [ "${OS}" == "REDHAT" ]; then
       WEBSERVER_CONF="/etc/nginx/conf.d/zammad.conf"
     elif [ "${OS}" == "SUSE" ]; then
@@ -89,7 +89,7 @@ function detect_webserver () {
     WEBSERVER="apache2"
     WEBSERVER_CMD="apache2"
     if [ "${OS}" == "DEBIAN" ]; then
-      WEBSERVER_CONF="/etc/apache2/sites-enabled/zammad.conf"
+      WEBSERVER_CONF="/etc/apache2/sites-available/zammad.conf"
     fi
   elif [ -n "$(which httpd 2> /dev/null)" ]; then
     WEBSERVER="apache2"
@@ -195,8 +195,10 @@ function update_database () {
 
 function create_webserver_config () {
   if [ "${OS}" == "DEBIAN" ]; then
-    test -f /etc/${WEBSERVER}/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf /etc/${WEBSERVER}/sites-available/zammad.conf
-    test -h ${WEBSERVER_CONF} || ln -s /etc/${WEBSERVER}/sites-available/zammad.conf ${WEBSERVER_CONF}
+    if [ ! -f "${WEBSERVER_CONF}" ]; then
+      cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf ${WEBSERVER_CONF}
+      ln -s ${WEBSERVER_CONF} /etc/${WEBSERVER}/sites-enabled/zammad.conf
+    fi
     if [ "${WEBSERVER}" == "apache2" ]; then
       a2enmod proxy
       a2enmod proxy_http
