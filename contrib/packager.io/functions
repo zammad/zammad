@@ -196,7 +196,11 @@ function update_database () {
 function create_webserver_config () {
   if [ "${OS}" == "DEBIAN" ]; then
     if [ ! -f "${WEBSERVER_CONF}" ]; then
-      cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf ${WEBSERVER_CONF}
+      if [ -f "/etc/${WEBSERVER}/sites-enabled/zammad.conf" ]; then
+        mv /etc/${WEBSERVER}/sites-enabled/zammad.conf ${WEBSERVER_CONF}
+      else
+        cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf ${WEBSERVER_CONF}
+      fi  
       ln -s ${WEBSERVER_CONF} /etc/${WEBSERVER}/sites-enabled/zammad.conf
     fi
     if [ "${WEBSERVER}" == "apache2" ]; then
