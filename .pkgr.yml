@@ -5,19 +5,23 @@ notifications: false
 targets:
   centos-7:
     dependencies:
+      - elasticsearch
       - nginx
       - postgresql-server
       - which
   debian-8:
     dependencies:
+      - elasticsearch
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
   ubuntu-16.04:
     dependencies:
+      - elasticsearch
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
   sles-12:
     dependencies:
+      - elasticsearch
       - nginx
       - postgresql-server
 before:
