@@ -1,4 +1,5 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+require 'csv'
 
 class Translation < ApplicationModel
   before_create :set_initial
@@ -212,7 +213,7 @@ translate strings in ruby context, e. g. for notifications
 
 =begin
 
-load locales from local
+load translations from local
 
 all:
 
@@ -279,6 +280,65 @@ all:
         YAML.dump(result.data, out)
       end
     }
+    true
+  end
+
+=begin
+
+load translations from csv file
+
+all:
+
+  Translation.load_from_csv
+
+  or
+
+  Translation.load_from_csv(locale, file_location, file_charset) # e. g. 'en-us' or 'de-de' and /path/to/translation_list.csv
+
+  e. g.
+
+  Translation.load_from_csv('he-il', '/Users/me/Downloads/Hebrew_translation_list-1.csv', 'Windows-1255')
+
+Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation_list
+
+=end
+
+  def self.load_from_csv(locale_name, location, charset = 'UTF8')
+    locale = Locale.find_by(locale: locale_name)
+    if !locale
+      raise "No such locale: #{locale_name}"
+    end
+
+    if !::File.exist?(location)
+      raise "No such file: #{location}"
+    end
+
+    content = ::File.open(location, "r:#{charset}").read
+    params = {
+      col_sep: ',',
+    }
+    rows = ::CSV.parse(content, params)
+    header = rows.shift
+
+    translation_raw = []
+    rows.each { |row|
+      raise "Can't import translation, source is missing" if row[0].blank?
+      if row[1].blank?
+        warn "Skipped #{row[0]}, because translation is blank"
+        next
+      end
+      raise "Can't import translation, format is missing" if row[2].blank?
+      raise "Can't import translation, format is invalid (#{row[2]})" if row[2] !~ /^(time|string)$/
+      item = {
+        'locale'         => locale.locale,
+        'source'         => row[0],
+        'target'         => row[1],
+        'target_initial' => '',
+        'format'         => row[2],
+      }
+      translation_raw.push item
+    }
+    to_database(locale.name, translation_raw)
     true
   end
 

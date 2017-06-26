@@ -96,12 +96,15 @@ class _i18nSingleton extends Spine.Module
 
     # prepare locale
     localeToSet = localeToSet.toLowerCase()
+    dirToSet = 'ltr'
 
     # check if locale exists
     localeFound = false
     locales     = App.Locale.all()
     for locale in locales
       if locale.locale is localeToSet
+        localeToSet = locale.locale
+        dirToSet = locale.dir
         localeFound = true
 
     # try aliases
@@ -109,6 +112,8 @@ class _i18nSingleton extends Spine.Module
       for locale in locales
         if locale.alias is localeToSet
           localeToSet = locale.locale
+          dirToSet = locale.dir
+          localeFound = true
 
     # if no locale and no alias was found, try to find correct one
     if !localeFound
@@ -118,14 +123,8 @@ class _i18nSingleton extends Spine.Module
       for locale in locales
         if locale.alias is localeToSet
           localeToSet = locale.locale
+          dirToSet = locale.dir
           localeFound = true
-
-      # try to find by locale
-      if !localeFound
-        for locale in locales
-          if locale.locale is localeToSet
-            localeToSet = locale.locale
-            localeFound = true
 
     # check if locale need to be changed
     return if localeToSet is @locale
@@ -136,8 +135,9 @@ class _i18nSingleton extends Spine.Module
     # set if not translated should be logged
     @_notTranslatedLog = @notTranslatedFeatureEnabled(@locale)
 
-    # set lang attribute of html tag
-    $('html').prop('lang', @locale.substr(0, 2) )
+    # set lang and dir attribute of html tag
+    $('html').prop('lang', localeToSet.substr(0, 2))
+    $('html').prop('dir', dirToSet)
 
     @mapString = {}
     App.Ajax.request(
