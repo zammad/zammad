@@ -33,7 +33,8 @@ module Import
         relevant_attributes = config[:user_attributes].keys
         relevant_attributes.push('dn')
 
-        @found_remote_ids = []
+        @found_lost_remote_ids = []
+        @found_remote_ids      = []
         @ldap.search(config[:user_filter], attributes: relevant_attributes) do |entry|
           backend_instance = create_instance(entry, config, user_roles, signup_role_ids, kargs)
           post_import_hook(entry, backend_instance, config, user_roles, signup_role_ids, kargs)
@@ -122,23 +123,32 @@ module Import
       end
 
       def self.track_found_remote_ids(backend_instance)
+        remote_id = backend_instance.remote_id(nil)
         @deactivation_actions ||= %i(skipped failed)
-        return if @deactivation_actions.include?(backend_instance.action)
-
-        @found_remote_ids.push(backend_instance.remote_id(nil))
+        if @deactivation_actions.include?(backend_instance.action)
+          @found_lost_remote_ids.push(remote_id)
+        else
+          @found_remote_ids.push(remote_id)
+        end
       end
 
       def self.handle_lost
         backend_class = backend_class(nil)
-        lost_ids      = backend_class.lost_ids(@found_remote_ids)
+        lost_map      = backend_class.lost_map(@found_remote_ids)
 
-        # track disabled count and substract it from
-        # skipped where they are logged till now
-        @statistics[:deactivated] = lost_ids.size
-        @statistics[:skipped]    -= lost_ids.size
+        # disabled count is tracked as a separate number
+        # since they don't have to be in the sum (e.g. deleted in LDAP)
+        @statistics[:deactivated] = lost_map.size
+
+        # skipped deactivated are those who
+        # were found, skipped and will get deactivated
+        skipped_deactivated    = @found_lost_remote_ids & lost_map.keys
+        @statistics[:skipped] -= skipped_deactivated.size
 
         # loop over every lost user ID and add the
         # deactivated count to the statistics
+        lost_ids = lost_map.values
+
         lost_ids.each do |user_id|
           role_ids = ::User.joins(:roles)
                            .where(id: user_id)

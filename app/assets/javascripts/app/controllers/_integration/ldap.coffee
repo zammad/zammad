@@ -124,7 +124,7 @@ class Form extends App.Controller
     if _.isEmpty(job)
       @lastImport.html('')
       return
-    countDone = job.result.created + job.result.updated + job.result.unchanged + job.result.skipped + job.result.failed + job.result.deactivated
+    countDone = job.result.created + job.result.updated + job.result.unchanged + job.result.skipped + job.result.failed
     if !job.result.roles
       job.result.roles = {}
     for role_id, statistic of job.result.role_ids
@@ -545,8 +545,6 @@ class ConnectionWizard extends App.WizardModal
             total += job.result.unchanged
           if job.result.updated
             total += job.result.updated
-          if job.result.deactivated
-            total += job.result.deactivated
           @$('.js-progress progress').attr('value', total)
           @$('.js-progress progress').attr('max', job.result.sum)
         if job.finished_at
@@ -568,7 +566,7 @@ class ConnectionWizard extends App.WizardModal
     for role_id, statistic of job.result.role_ids
       role = App.Role.find(role_id)
       job.result.roles[role.displayName()] = statistic
-    countDone = job.result.created + job.result.updated + job.result.unchanged + job.result.skipped + job.result.deactivated
+    countDone = job.result.created + job.result.updated + job.result.unchanged + job.result.skipped
     @showSlide('js-try')
     el = $(App.view('integration/ldap_summary')(job: job, countDone: countDone))
     @el.find('.js-summary').html(el)
