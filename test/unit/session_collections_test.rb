@@ -22,8 +22,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent1.roles = roles
-    agent1.save
+    agent1.save!
 
     roles  = Role.where(name: ['Agent'])
     groups = Group.all
@@ -39,8 +38,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       roles: roles,
       groups: groups,
     )
-    agent2.roles = roles
-    agent2.save
+    agent2.save!
 
     roles = Role.where(name: ['Customer'])
     customer1 = User.create_or_update(
@@ -53,9 +51,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       active: true,
       roles: roles,
     )
-    customer1.roles = roles
-    customer1.save
-
+    customer1.save!
     collection_client1 = Sessions::Backend::Collections.new(agent1, {}, nil, 'aaa-1', 2)
     collection_client2 = Sessions::Backend::Collections.new(agent2, {}, nil, 'bbb-2', 2)
     collection_client3 = Sessions::Backend::Collections.new(customer1, {}, nil, 'ccc-2', 2)
@@ -99,7 +95,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     # next check should be empty
     result1 = collection_client1.push
     assert(result1.empty?, 'check collections - recall')
-    sleep 0.4
+    travel 0.4.seconds
     result2 = collection_client2.push
     assert(result2.empty?, 'check collections - recall')
     result3 = collection_client3.push
@@ -107,14 +103,16 @@ class SessionCollectionsTest < ActiveSupport::TestCase
 
     # change collection
     group = Group.first
+    travel 6.seconds
     group.touch
-    travel 3.seconds
+    travel 6.seconds
 
     # get whole collections
     result1 = collection_client1.push
+
     assert(result1, 'check collections - after touch')
     assert(check_if_collection_exists(result1, :Group), 'check collections - after touch')
-    sleep 0.1
+    travel 0.1.seconds
     result2 = collection_client2.push
     assert(result2, 'check collections - after touch')
     assert(check_if_collection_exists(result2, :Group), 'check collections - after touch')
@@ -123,13 +121,17 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(check_if_collection_exists(result3, :Group), 'check collections - after touch')
 
     # next check should be empty
-    sleep 0.5
+    travel 0.5.seconds
     result1 = collection_client1.push
     assert(result1.empty?, 'check collections - recall')
     result2 = collection_client2.push
     assert(result2.empty?, 'check collections - recall')
     result3 = collection_client3.push
     assert(result3.empty?, 'check collections - recall')
+
+    travel 10.seconds
+    Sessions.destroy_idle_sessions(3)
+
     travel_back
   end
 
@@ -169,40 +171,42 @@ class SessionCollectionsTest < ActiveSupport::TestCase
   end
 
   test 'b assets' do
-    # create users
     roles  = Role.where(name: %w(Agent Admin))
-    groups = Group.all
+    groups = Group.all.order(id: :asc)
 
     UserInfo.current_user_id = 2
     agent1 = User.create_or_update(
-      login: 'sessions-assets-1',
+      login: "sessions-assets-1-#{rand(99_999)}",
       firstname: 'Session',
-      lastname: "activity stream #{rand(99_999)}",
+      lastname: "sessions assets #{rand(99_999)}",
       email: 'sessions-assets1@example.com',
       password: 'agentpw',
       active: true,
       roles: roles,
       groups: groups,
     )
-    assert(agent1.save, 'create/update agent1')
+    assert(agent1.save!, 'create/update agent1')
 
     assets = {}
-    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 2)
+    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push
-    assert(data[:collection][:Group][groups.first.id])
+    assert_equal(data[:collection][:Group][0]['id'], groups[0].id)
     assert(data[:assets][:Group][groups.first.id])
     travel 10.seconds
 
-    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 2)
+    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push
-    assert(data[:collection][:Group][groups.first.id])
+    assert_equal(data[:collection][:Group][0]['id'], groups[0].id)
     assert(data[:assets][:Group][groups.first.id])
 
     travel 2.minutes
-    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 2)
+    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push
-    assert(data[:collection][:Group][groups.first.id])
+    assert_equal(data[:collection][:Group][0]['id'], groups[0].id)
     assert_nil(data[:assets][:Group])
+
+    travel 10.seconds
+    Sessions.destroy_idle_sessions(3)
 
     travel_back
   end
