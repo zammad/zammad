@@ -6,7 +6,7 @@ module Import
         @remote_id
       end
 
-      def self.lost_ids(found_remote_ids)
+      def self.lost_map(found_remote_ids)
         ExternalSync.joins('INNER JOIN users ON (users.id = external_syncs.o_id)')
                     .where(
                       source: source,
@@ -18,7 +18,6 @@ module Import
                     .pluck(:source_id, :o_id)
                     .to_h
                     .except(*found_remote_ids)
-                    .values
       end
 
       def self.deactivate_lost(lost_ids)
