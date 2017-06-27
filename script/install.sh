@@ -79,7 +79,7 @@ sudo -u "${USER}" -H bash -l -c 'rvm alias create default 2.1.2'
 
 
 sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && gem install rails --no-ri --no-rdoc'
-sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && bundle install'
+sudo -u "${USER}" -H bash -l -c 'cd ~/zammad && bundle install --jobs 8'
 
 DBPASS=$(apg -x8|head -1)
 echo Password $DBPASS 
