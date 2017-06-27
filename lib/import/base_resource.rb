@@ -16,7 +16,7 @@ module Import
     end
 
     def source
-      import_class_namespace
+      self.class.source
     end
 
     def remote_id(resource, *_args)
@@ -55,6 +55,14 @@ module Import
         changes[association] = [@associations[:before][association], @associations[:after][association]]
       end
       changes
+    end
+
+    def self.source
+      import_class_namespace
+    end
+
+    def self.import_class_namespace
+      @import_class_namespace ||= name.to_s.sub('Import::', '')
     end
 
     private
@@ -214,11 +222,7 @@ module Import
     end
 
     def mapping_config(*_args)
-      import_class_namespace.gsub('::', '_').underscore + '_mapping'
-    end
-
-    def import_class_namespace
-      self.class.name.to_s.sub('Import::', '')
+      self.class.import_class_namespace.gsub('::', '_').underscore + '_mapping'
     end
 
     def handle_args(_resource, *args)

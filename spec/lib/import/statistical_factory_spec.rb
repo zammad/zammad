@@ -45,11 +45,12 @@ RSpec.describe Import::StatisticalFactory do
         Import::Test::GroupFactory.import([attributes])
 
         statistics = {
-          created:   1,
-          updated:   0,
-          unchanged: 0,
-          skipped:   0,
-          failed:    0,
+          created:     1,
+          updated:     0,
+          unchanged:   0,
+          skipped:     0,
+          failed:      0,
+          deactivated: 0,
         }
         expect(Import::Test::GroupFactory.statistics).to eq(statistics)
       end
@@ -67,11 +68,12 @@ RSpec.describe Import::StatisticalFactory do
           Import::Test::GroupFactory.import([attributes])
 
           statistics = {
-            created:   0,
-            updated:   1,
-            unchanged: 0,
-            skipped:   0,
-            failed:    0,
+            created:     0,
+            updated:     1,
+            unchanged:   0,
+            skipped:     0,
+            failed:      0,
+            deactivated: 0,
           }
           expect(Import::Test::GroupFactory.statistics).to eq(statistics)
         end
@@ -90,11 +92,12 @@ RSpec.describe Import::StatisticalFactory do
           Import::Test::GroupFactory.import([attributes])
 
           statistics = {
-            created:   0,
-            updated:   1,
-            unchanged: 0,
-            skipped:   0,
-            failed:    0,
+            created:     0,
+            updated:     1,
+            unchanged:   0,
+            skipped:     0,
+            failed:      0,
+            deactivated: 0,
           }
           expect(Import::Test::GroupFactory.statistics).to eq(statistics)
         end
@@ -113,11 +116,12 @@ RSpec.describe Import::StatisticalFactory do
           Import::Test::GroupFactory.import([attributes])
 
           statistics = {
-            created:   0,
-            updated:   1,
-            unchanged: 0,
-            skipped:   0,
-            failed:    0,
+            created:     0,
+            updated:     1,
+            unchanged:   0,
+            skipped:     0,
+            failed:      0,
+            deactivated: 0,
           }
           expect(Import::Test::GroupFactory.statistics).to eq(statistics)
         end
@@ -134,11 +138,12 @@ RSpec.describe Import::StatisticalFactory do
         Import::Test::GroupFactory.import([attributes])
 
         statistics = {
-          created:   0,
-          updated:   0,
-          unchanged: 1,
-          skipped:   0,
-          failed:    0,
+          created:     0,
+          updated:     0,
+          unchanged:   1,
+          skipped:     0,
+          failed:      0,
+          deactivated: 0,
         }
         expect(Import::Test::GroupFactory.statistics).to eq(statistics)
       end
@@ -151,11 +156,12 @@ RSpec.describe Import::StatisticalFactory do
         Import::Test::GroupFactory.import([attributes], dry_run: true)
 
         statistics = {
-          created:   1,
-          updated:   0,
-          unchanged: 0,
-          skipped:   0,
-          failed:    0,
+          created:     1,
+          updated:     0,
+          unchanged:   0,
+          skipped:     0,
+          failed:      0,
+          deactivated: 0,
         }
         expect(Import::Test::GroupFactory.statistics).to eq(statistics)
       end
@@ -181,11 +187,12 @@ RSpec.describe Import::StatisticalFactory do
           Import::Test::GroupFactory.import([update_attributes], dry_run: true)
 
           statistics = {
-            created:   0,
-            updated:   1,
-            unchanged: 0,
-            skipped:   0,
-            failed:    0,
+            created:     0,
+            updated:     1,
+            unchanged:   0,
+            skipped:     0,
+            failed:      0,
+            deactivated: 0,
           }
           expect(Import::Test::GroupFactory.statistics).to eq(statistics)
         end
@@ -199,11 +206,12 @@ RSpec.describe Import::StatisticalFactory do
           Import::Test::GroupFactory.import([update_attributes], dry_run: true)
 
           statistics = {
-            created:   0,
-            updated:   1,
-            unchanged: 0,
-            skipped:   0,
-            failed:    0,
+            created:     0,
+            updated:     1,
+            unchanged:   0,
+            skipped:     0,
+            failed:      0,
+            deactivated: 0,
           }
           expect(Import::Test::GroupFactory.statistics).to eq(statistics)
         end
@@ -217,11 +225,12 @@ RSpec.describe Import::StatisticalFactory do
           Import::Test::GroupFactory.import([update_attributes], dry_run: true)
 
           statistics = {
-            created:   0,
-            updated:   1,
-            unchanged: 0,
-            skipped:   0,
-            failed:    0,
+            created:     0,
+            updated:     1,
+            unchanged:   0,
+            skipped:     0,
+            failed:      0,
+            deactivated: 0,
           }
           expect(Import::Test::GroupFactory.statistics).to eq(statistics)
         end
@@ -241,11 +250,12 @@ RSpec.describe Import::StatisticalFactory do
         Import::Test::GroupFactory.import([local_group.attributes], dry_run: true)
 
         statistics = {
-          created:   0,
-          updated:   0,
-          unchanged: 1,
-          skipped:   0,
-          failed:    0,
+          created:     0,
+          updated:     0,
+          unchanged:   1,
+          skipped:     0,
+          failed:      0,
+          deactivated: 0,
         }
         expect(Import::Test::GroupFactory.statistics).to eq(statistics)
       end
