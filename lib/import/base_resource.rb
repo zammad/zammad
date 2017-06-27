@@ -91,31 +91,35 @@ module Import
       @resource = lookup_existing(resource, *args)
       return false if !@resource
 
-      # delete since we have an update and
-      # the record is already created
-      resource.delete(:created_by_id)
+      # lock the current resource for write access
+      @resource.with_lock do
 
-      # store the current state of the associations
-      # from the resource hash because if we assign
-      # them to the instance some (e.g. has_many)
-      # will get stored even in the dry run :/
-      store_associations(:after, resource)
+        # delete since we have an update and
+        # the record is already created
+        resource.delete(:created_by_id)
 
-      associations = tracked_associations
-      @resource.assign_attributes(resource.except(*associations))
+        # store the current state of the associations
+        # from the resource hash because if we assign
+        # them to the instance some (e.g. has_many)
+        # will get stored even in the dry run :/
+        store_associations(:after, resource)
 
-      # the return value here is kind of misleading
-      # and should not be trusted to indicate if a
-      # resource was actually updated.
-      # Use .action instead
-      return true if !attributes_changed?
+        associations = tracked_associations
+        @resource.assign_attributes(resource.except(*associations))
 
-      @action = :updated
+        # the return value here is kind of misleading
+        # and should not be trusted to indicate if a
+        # resource was actually updated.
+        # Use .action instead
+        return true if !attributes_changed?
 
-      return true if @dry_run
-      @resource.assign_attributes(resource.slice(*associations))
-      @resource.save!
-      true
+        @action = :updated
+
+        return true if @dry_run
+        @resource.assign_attributes(resource.slice(*associations))
+        @resource.save!
+        true
+      end
     end
 
     def lookup_existing(resource, *_args)
