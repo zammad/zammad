@@ -85,23 +85,6 @@ class FormTest < TestCase
     set(
       browser: agent,
       css: 'body div.zammad-form-modal [name="email"]',
-      value: 'notexistinginanydomainspacealsonothere@znuny.com',
-    )
-    click(
-      browser: agent,
-      css: 'body div.zammad-form-modal button[type="submit"]',
-    )
-    watch_for(
-      browser: agent,
-      css: 'body div.zammad-form-modal .has-error [name="email"]',
-    )
-    watch_for_disappear(
-      browser: agent,
-      css: 'body div.zammad-form-modal button[type="submit"][disabled]',
-    )
-    set(
-      browser: agent,
-      css: 'body div.zammad-form-modal [name="email"]',
       value: 'discard@znuny.com',
     )
     click(
@@ -302,23 +285,6 @@ class FormTest < TestCase
       browser: customer,
       css: 'body div.zammad-form-modal [name="email"]',
       value: 'somebody@notexistinginanydomainspacealsonothere.nowhere',
-    )
-    click(
-      browser: customer,
-      css: 'body div.zammad-form-modal button[type="submit"]',
-    )
-    watch_for(
-      browser: customer,
-      css: 'body div.zammad-form-modal .has-error [name="email"]',
-    )
-    watch_for_disappear(
-      browser: customer,
-      css: 'body div.zammad-form-modal button[type="submit"][disabled]',
-    )
-    set(
-      browser: customer,
-      css: 'body div.zammad-form-modal [name="email"]',
-      value: 'notexistinginanydomainspacealsonothere@znuny.com',
     )
     click(
       browser: customer,

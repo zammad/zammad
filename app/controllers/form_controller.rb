@@ -7,6 +7,8 @@ class FormController < ApplicationController
 
   def config
     return if !enabled?
+    return if !fingerprint_exists?
+    return if limit_reached?
 
     api_path  = Rails.configuration.api_path
     http_type = Setting.get('http_type')
@@ -17,6 +19,7 @@ class FormController < ApplicationController
     config = {
       enabled:  Setting.get('form_ticket_create'),
       endpoint: endpoint,
+      token:    token_gen(params[:fingerprint])
     }
 
     if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
@@ -28,35 +31,35 @@ class FormController < ApplicationController
 
   def submit
     return if !enabled?
+    return if !fingerprint_exists?
+    return if !token_valid?(params[:token], params[:fingerprint])
+    return if limit_reached?
 
     # validate input
     errors = {}
-    if !params[:name] || params[:name].empty?
+    if params[:name].blank?
       errors['name'] = 'required'
     end
-    if !params[:email] || params[:email].empty?
+    if params[:email].blank?
       errors['email'] = 'required'
-    end
-    if params[:email] !~ /@/
+    elsif params[:email] !~ /@/
+      errors['email'] = 'invalid'
+    elsif params[:email] =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s|\.\.)/
       errors['email'] = 'invalid'
     end
-    if params[:email] =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s)/
-      errors['email'] = 'invalid'
-    end
-    if !params[:title] || params[:title].empty?
+    if params[:title].blank?
       errors['title'] = 'required'
     end
-    if !params[:body] || params[:body].empty?
+    if params[:body].blank?
       errors['body'] = 'required'
     end
 
     # realtime verify
-    if !errors['email']
+    if errors['email'].blank?
       begin
-        checker = EmailVerifier::Checker.new(params[:email])
-        checker.connect
-        if !checker.verify
-          errors['email'] = "Unable to send to '#{params[:email]}'"
+        address = ValidEmail2::Address.new(params[:email])
+        if !address || !address.valid? || !address.valid_mx?
+          errors['email'] = 'invalid'
         end
       rescue => e
         message = e.to_s
@@ -69,7 +72,7 @@ class FormController < ApplicationController
       end
     end
 
-    if errors && !errors.empty?
+    if errors.present?
       render json: {
         errors: errors
       }, status: :ok
@@ -86,7 +89,6 @@ class FormController < ApplicationController
         firstname: name,
         lastname: '',
         email: email,
-        password: '',
         active: true,
         role_ids: role_ids,
         updated_by_id: 1,
@@ -97,10 +99,20 @@ class FormController < ApplicationController
     # set current user
     UserInfo.current_user_id = customer.id
 
+    group = Group.where(active: true).first
+    if !group
+      group = Group.first
+    end
     ticket = Ticket.create!(
-      group_id: 1,
+      group_id: group.id,
       customer_id: customer.id,
       title: params[:title],
+      preferences: {
+        form: {
+          remote_ip: request.remote_ip,
+          fingerprint_md5: Digest::MD5.hexdigest(params[:fingerprint]),
+        }
+      }
     )
     article = Ticket::Article.create!(
       ticket_id: ticket.id,
@@ -137,6 +149,91 @@ class FormController < ApplicationController
   end
 
   private
+
+  def token_gen(fingerprint)
+    crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret'))
+    fingerprint = "#{Base64.strict_encode64(Setting.get('fqdn'))}:#{Time.zone.now.to_i}:#{Base64.strict_encode64(fingerprint)}"
+    Base64.strict_encode64(crypt.encrypt_and_sign(fingerprint))
+  end
+
+  def token_valid?(token, fingerprint)
+    if token.blank?
+      Rails.logger.info 'No token for form!'
+      response_access_deny
+      return false
+    end
+    begin
+      crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret'))
+      result = crypt.decrypt_and_verify(Base64.decode64(token))
+    rescue
+      Rails.logger.info 'Invalid token for form!'
+      response_access_deny
+      return false
+    end
+    if result.blank?
+      Rails.logger.info 'Invalid token for form!'
+      response_access_deny
+      return false
+    end
+    parts = result.split(/:/)
+    if parts.count != 3
+      Rails.logger.info "Invalid token for form (need to have 3 parts, only #{parts.count} found)!"
+      response_access_deny
+      return false
+    end
+    fqdn_local = Base64.decode64(parts[0])
+    if fqdn_local != Setting.get('fqdn')
+      Rails.logger.info "Invalid token for form (invalid fqdn found #{fqdn_local} != #{Setting.get('fqdn')})!"
+      response_access_deny
+      return false
+    end
+    fingerprint_local = Base64.decode64(parts[2])
+    if fingerprint_local != fingerprint
+      Rails.logger.info "Invalid token for form (invalid fingerprint found #{fingerprint_local} != #{fingerprint})!"
+      response_access_deny
+      return false
+    end
+    if parts[1].to_i < (Time.zone.now.to_i - 60 * 60 * 24)
+      Rails.logger.info 'Invalid token for form (token expired})!'
+      response_access_deny
+      return false
+    end
+    true
+  end
+
+  def limit_reached?
+    return false if !SearchIndexBackend.enabled?
+
+    form_limit_by_ip_per_hour = Setting.get('form_ticket_create_by_ip_per_hour') || 20
+    result = SearchIndexBackend.search("preferences.form.remote_ip:'#{request.remote_ip}' AND created_at:>now-1h", form_limit_by_ip_per_hour, 'Ticket')
+    if result.count >= form_limit_by_ip_per_hour.to_i
+      response_access_deny
+      return true
+    end
+
+    form_limit_by_ip_per_day = Setting.get('form_ticket_create_by_ip_per_day') || 240
+    result = SearchIndexBackend.search("preferences.form.remote_ip:'#{request.remote_ip}' AND created_at:>now-1d", form_limit_by_ip_per_day, 'Ticket')
+    if result.count >= form_limit_by_ip_per_day.to_i
+      response_access_deny
+      return true
+    end
+
+    form_limit_per_day = Setting.get('form_ticket_create_per_day') || 5000
+    result = SearchIndexBackend.search('preferences.form.remote_ip:* AND created_at:>now-1d', form_limit_per_day, 'Ticket')
+    if result.count >= form_limit_per_day.to_i
+      response_access_deny
+      return true
+    end
+
+    false
+  end
+
+  def fingerprint_exists?
+    return true if params[:fingerprint].present? && params[:fingerprint].length > 30
+    Rails.logger.info 'No fingerprint given!'
+    response_access_deny
+    false
+  end
 
   def enabled?
     return true if params[:test] && current_user && current_user.permissions?('admin.channel_formular')

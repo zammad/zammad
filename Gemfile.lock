@@ -93,7 +93,6 @@ GEM
       delayed_job (>= 3.0, < 5)
     diff-lcs (1.2.5)
     diffy (3.1.0)
-    dnsruby (1.59.3)
     docile (1.1.5)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
@@ -107,8 +106,6 @@ GEM
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
-    email_verifier (0.1.0)
-      dnsruby (>= 1.5)
     equalizer (0.0.10)
     erubis (2.7.0)
     eventmachine (1.2.3)
@@ -403,6 +400,9 @@ GEM
     unicorn (5.2.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
+    valid_email2 (1.2.17)
+      activemodel (>= 3.2)
+      mail (~> 2.5)
     webmock (2.3.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -439,7 +439,6 @@ DEPENDENCIES
   doorkeeper
   eco
   em-websocket
-  email_verifier
   eventmachine
   execjs
   factory_girl_rails
@@ -491,6 +490,7 @@ DEPENDENCIES
   twitter
   uglifier
   unicorn
+  valid_email2
   webmock
   writeexcel
   zendesk_api

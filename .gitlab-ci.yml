@@ -281,6 +281,7 @@ test:integration:es_mysql:
     - ruby -I test/ test/integration/elasticsearch_test.rb
     - ruby -I test/ test/controllers/search_controller_test.rb
     - ruby -I test/ test/integration/report_test.rb
+    - ruby -I test/ test/controllers/form_controller_test.rb
     - rake db:drop
 
 test:integration:es_postgresql:
@@ -297,6 +298,7 @@ test:integration:es_postgresql:
     - ruby -I test/ test/integration/elasticsearch_test.rb
     - ruby -I test/ test/controllers/search_controller_test.rb
     - ruby -I test/ test/integration/report_test.rb
+    - ruby -I test/ test/controllers/form_controller_test.rb
     - rake db:drop
 
 test:integration:zendesk_mysql:
