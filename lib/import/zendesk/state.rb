@@ -5,6 +5,7 @@ module Import
       MAPPING = {
         'pending' => 'pending reminder',
         'solved'  => 'closed',
+        'deleted' => 'removed',
       }.freeze
 
       class << self
