@@ -99,9 +99,12 @@ class FormController < ApplicationController
     # set current user
     UserInfo.current_user_id = customer.id
 
-    group = Group.where(active: true).first
+    group = Group.find_by(id: Setting.get('form_ticket_create_group_id'))
     if !group
-      group = Group.first
+      group = Group.where(active: true).first
+      if !group
+        group = Group.first
+      end
     end
     ticket = Ticket.create!(
       group_id: group.id,
