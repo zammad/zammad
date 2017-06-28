@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Ticket do
 
-  describe '.merge_to' do
+  describe '#merge_to' do
 
     it 'reassigns all links to the target ticket after merge' do
       source_ticket     = create(:ticket)
@@ -63,7 +63,7 @@ RSpec.describe Ticket do
 
   end
 
-  describe '.destroy' do
+  describe '#destroy' do
 
     it 'deletes all related objects before destroy' do
       ApplicationHandleInfo.current = 'application_server'
@@ -173,7 +173,7 @@ RSpec.describe Ticket do
 
   end
 
-  describe '.perform_changes' do
+  describe '#perform_changes' do
 
     it 'performes a ticket state change on a ticket' do
       source_ticket = create(:ticket)
