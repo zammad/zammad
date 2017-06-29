@@ -86,6 +86,8 @@ gem 'em-websocket'
 
 gem 'diffy'
 
+gem 'midi-smtp-server'
+
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do

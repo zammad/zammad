@@ -12,6 +12,7 @@ returns
     inbound: {
       imap: 'IMAP',
       pop3: 'POP3',
+      smtp: 'SMTP - configure SMTP server which listens for incoming emails',
     },
     outbound: {
       smtp: 'SMTP - configure your own outgoing SMTP settings',
@@ -27,6 +28,7 @@ returns
         inbound: {
           imap: 'IMAP',
           pop3: 'POP3',
+          smtp: 'SMTP - relay mails to Zammad via SMTP',
         },
         outbound: {
           smtp: 'SMTP - configure your own outgoing SMTP settings',
@@ -37,6 +39,7 @@ returns
       inbound: {
         imap: 'IMAP',
         pop3: 'POP3',
+        smtp: 'SMTP - relay mails to Zammad via SMTP',
       },
       outbound: {
         smtp: 'SMTP - configure your own outgoing SMTP settings',

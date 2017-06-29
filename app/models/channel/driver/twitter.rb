@@ -80,6 +80,7 @@ returns
     return true if Rails.env.test?
 
     # only fetch once in 30 minutes
+    return true if channel.nil?
     return true if !channel.preferences
     return true if !channel.preferences[:last_fetch]
     return false if channel.preferences[:last_fetch] > Time.zone.now - 20.minutes

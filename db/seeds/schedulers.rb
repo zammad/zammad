@@ -40,6 +40,15 @@ Scheduler.create_if_not_exists(
   created_by_id: 1,
 )
 Scheduler.create_if_not_exists(
+  name: 'Check listeners for Channel',
+  method: 'Channel.listen',
+  period: 60,
+  prio: 1,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
   name: 'Generate Session data',
   method: 'Sessions.jobs',
   period: 60.seconds,

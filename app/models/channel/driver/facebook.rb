@@ -54,6 +54,7 @@ class Channel::Driver::Facebook
 
     # because of new page rate limit - https://developers.facebook.com/blog/post/2016/06/16/page-level-rate-limits/
     # only fetch once in 5 minutes
+    return true if channel.nil?
     return true if !channel.preferences
     return true if !channel.preferences[:last_fetch]
     return false if channel.preferences[:last_fetch] > Time.zone.now - 5.minutes
