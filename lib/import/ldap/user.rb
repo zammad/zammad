@@ -6,6 +6,34 @@ module Import
         @remote_id
       end
 
+      def self.lost_map(found_remote_ids)
+        ExternalSync.joins('INNER JOIN users ON (users.id = external_syncs.o_id)')
+                    .where(
+                      source: source,
+                      object: import_class.name,
+                      users:  {
+                        active: true
+                      }
+                    )
+                    .pluck(:source_id, :o_id)
+                    .to_h
+                    .except(*found_remote_ids)
+      end
+
+      def self.deactivate_lost(lost_ids)
+        # we need to update in slices since some DBs
+        # have a limit for IN length
+        lost_ids.each_slice(5000) do |slice|
+
+          # we need to instanciate every entry and set
+          # the active state this way to send notifications
+          # to the client
+          ::User.where(id: slice).each do |user|
+            user.update_attribute(:active, false)
+          end
+        end
+      end
+
       private
 
       def import(resource, *args)
@@ -58,7 +86,7 @@ module Import
         return true if resource[:login].blank?
 
         # skip resource if only ignored attributes are set
-        ignored_attributes = %i(login dn created_by_id updated_by_id)
+        ignored_attributes = %i(login dn created_by_id updated_by_id active)
         !resource.except(*ignored_attributes).values.any?(&:present?)
       end
 
@@ -180,6 +208,11 @@ module Import
           next if mapped[attribute].blank?
           mapped[attribute] = mapped[attribute].downcase
         end
+
+        # we have to add the active state manually
+        # because otherwise disabled instances won't get
+        # re-activated if they should get synced again
+        mapped[:active] = true
 
         mapped
       end

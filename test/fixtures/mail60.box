@@ -1,0 +1,16 @@
+From: Martin Edenhofer <martin@example.com>
+Content-Type: multipart/alternative; boundary="Apple-Mail=_EB2F27C4-F4CD-40C9-82F1-D115D4FFA394"
+Subject: abc
+Date: Fri, 4 May 2012 14:01:03 +0200
+Message-Id: <BC182994-03FA-4DC5-8202-98CBFACA0887@example.com>
+To: metest@znuny.com
+Mime-Version: 1.0 (Apple Message framework v1257)
+
+--Apple-Mail=_EB2F27C4-F4CD-40C9-82F1-D115D4FFA394
+Content-Transfer-Encoding: base64
+Content-Type: text/plain;
+  charset=iso-gb2312
+
+SGVyZSBpdCBnb2VzIC0gw6TDtsO8IC0g5beu5Ye65Lq6SGVyZSBpdCBnb2VzIC0g5Pb8IC0gaGkgrQ==
+
+--Apple-Mail=_EB2F27C4-F4CD-40C9-82F1-D115D4FFA394--

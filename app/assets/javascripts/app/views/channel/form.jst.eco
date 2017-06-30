@@ -10,8 +10,20 @@
 <div class="page-content">
   <p><%- @T('With form you can add a form to your web page which directly generates a ticket for you.') %></p>
 
+  <h2><%- @T('Settings') %></h2>
+  <form class="js-paramsSetting">
+    <fieldset>
+      <div class="input form-group formGroup--halfSize">
+        <div class="formGroup-label">
+          <label for="form-group"><%- @T('Group selection for Ticket creation') %></label>
+        </div>
+        <div class="controls js-groupSelector" id="from-group"></div>
+      </div>
+    </fieldset>
+  </form>
+
   <h2><%- @T('Designer') %></h2>
-  <form class="js-params">
+  <form class="js-paramsDesigner">
 
     <fieldset>
       <div class="input form-group formGroup--halfSize">

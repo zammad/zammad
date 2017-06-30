@@ -209,6 +209,7 @@ class CreateBase < ActiveRecord::Migration
       t.string  :locale,              limit: 20,  null: false
       t.string  :alias,               limit: 20,  null: true
       t.string  :name,                limit: 255, null: false
+      t.string  :dir,                 limit: 9,   null: false, default: 'ltr'
       t.boolean :active,                          null: false, default: true
       t.timestamps limit: 3, null: false
     end

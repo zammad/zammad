@@ -6,25 +6,25 @@ class App.ClipBoard
       _instance ?= new _Singleton
     _instance.bind(el)
 
-  @getSelected: ->
+  @getSelected: (type) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.getSelected()
+    _instance.getSelected(type)
 
-  @getSelectedLast: ->
+  @getSelectedLast: (type) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.getSelectedLast()
+    _instance.getSelectedLast(type)
 
   @getPosition: (el) ->
     if _instance == undefined
       _instance ?= new _Singleton
     _instance.getPosition(el)
 
-  @setPosition: ( el, pos ) ->
+  @setPosition: (el, pos) ->
     if _instance == undefined
       _instance ?= new _Singleton
-    _instance.setPosition( el, pos )
+    _instance.setPosition(el, pos)
 
   @keycode: (code) ->
     if _instance == undefined
@@ -33,54 +33,68 @@ class App.ClipBoard
 
 class _Singleton
   constructor: ->
-    @selection     = ''
-    @selectionLast = ''
+    @selection =
+      html: ''
+      text: ''
+    @selectionLast =
+      html: ''
+      text: ''
 
   # bind to fill selected text into
   bind: (el) ->
-    $(el).bind('mouseup', =>
 
-      # check selection on mouse up
-      @selection = @_getSelected()
-      if @selection
-        @selectionLast = @selection
+    # check selection on mouse up
+    $(el).bind('mouseup', =>
+      @_updateSelection()
     )
     $(el).bind('keyup', (e) =>
 
       # check selection on sonder key
       if e.keyCode == 91
-        @selection = @_getSelected()
-        if @selection
-          @selectionLast = @selection
+        @_updateSelection()
 
       # check selection of arrow keys
       if e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40
-        @selection = @_getSelected()
-        if @selection
-          @selectionLast = @selection
+        @_updateSelection()
     )
 
+  _updateSelection: =>
+    for key in ['html', 'text']
+      @selection[key] = @_getSelected(key)
+      if @selection[key]
+        @selectionLast[key] = @selection[key]
+
   # get cross browser selected string
-  _getSelected: ->
+  _getSelected: (type) ->
     text = ''
+    html = ''
     if window.getSelection
-      text = window.getSelection()
+      sel = window.getSelection()
+      text = sel.toString()
     else if document.getSelection
-      text = document.getSelection()
+      sel = document.getSelection()
+      text = sel.toString()
     else if document.selection
-      text = document.selection.createRange().text
-    if text
-#      text = text.toString().trim()
-      text = $.trim( text.toString() )
-    text
+      sel = document.selection.createRange()
+      text = sel.text
+    if type is 'text'
+      return $.trim(text.toString()) if text
+      return ''
+
+    if sel && sel.rangeCount
+      container = document.createElement('div')
+      for i in [1..sel.rangeCount]
+        container.appendChild(sel.getRangeAt(i-1).cloneContents())
+      html = container.innerHTML
+    html
 
   # get current selection
-  getSelected: ->
-    @selection
+  getSelected: (type) ->
+    @selection[type]
 
   # get latest selection
-  getSelectedLast: ->
-    @selectionLast
+  getSelectedLast: (type) ->
+    @selectionLast[type]
 
   getPosition: (el) ->
     pos = 0
@@ -104,13 +118,13 @@ class _Singleton
     # IE Support
     if el.setSelectionRange
       el.focus()
-      el.setSelectionRange( pos, pos )
+      el.setSelectionRange(pos, pos)
 
     # Firefox support
     else if el.createTextRange
       range = el.createTextRange()
       range.collapse(true)
-      range.moveEnd( 'character', pos )
+      range.moveEnd('character', pos)
       range.moveStart('character', pos)
       range.select()
 

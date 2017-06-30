@@ -16,7 +16,7 @@ module Import
     end
 
     def source
-      import_class_namespace
+      self.class.source
     end
 
     def remote_id(resource, *_args)
@@ -57,6 +57,14 @@ module Import
       changes
     end
 
+    def self.source
+      import_class_namespace
+    end
+
+    def self.import_class_namespace
+      @import_class_namespace ||= name.to_s.sub('Import::', '')
+    end
+
     private
 
     def initialize_associations_states
@@ -83,31 +91,35 @@ module Import
       @resource = lookup_existing(resource, *args)
       return false if !@resource
 
-      # delete since we have an update and
-      # the record is already created
-      resource.delete(:created_by_id)
+      # lock the current resource for write access
+      @resource.with_lock do
 
-      # store the current state of the associations
-      # from the resource hash because if we assign
-      # them to the instance some (e.g. has_many)
-      # will get stored even in the dry run :/
-      store_associations(:after, resource)
+        # delete since we have an update and
+        # the record is already created
+        resource.delete(:created_by_id)
 
-      associations = tracked_associations
-      @resource.assign_attributes(resource.except(*associations))
+        # store the current state of the associations
+        # from the resource hash because if we assign
+        # them to the instance some (e.g. has_many)
+        # will get stored even in the dry run :/
+        store_associations(:after, resource)
 
-      # the return value here is kind of misleading
-      # and should not be trusted to indicate if a
-      # resource was actually updated.
-      # Use .action instead
-      return true if !attributes_changed?
+        associations = tracked_associations
+        @resource.assign_attributes(resource.except(*associations))
 
-      @action = :updated
+        # the return value here is kind of misleading
+        # and should not be trusted to indicate if a
+        # resource was actually updated.
+        # Use .action instead
+        return true if !attributes_changed?
 
-      return true if @dry_run
-      @resource.assign_attributes(resource.slice(*associations))
-      @resource.save!
-      true
+        @action = :updated
+
+        return true if @dry_run
+        @resource.assign_attributes(resource.slice(*associations))
+        @resource.save!
+        true
+      end
     end
 
     def lookup_existing(resource, *_args)
@@ -214,11 +226,7 @@ module Import
     end
 
     def mapping_config(*_args)
-      import_class_namespace.gsub('::', '_').underscore + '_mapping'
-    end
-
-    def import_class_namespace
-      self.class.name.to_s.sub('Import::', '')
+      self.class.import_class_namespace.gsub('::', '_').underscore + '_mapping'
     end
 
     def handle_args(_resource, *args)

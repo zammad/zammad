@@ -15,7 +15,7 @@ export RAILS_SERVE_STATIC_FILES=true
 export ZAMMAD_SETTING_TTL=15
 export Z_LOCALES=en-us:de-de
 
-bundle install
+bundle install --jobs 8
 
 rm -rf tmp/screenshot*
 rm -rf tmp/cache*

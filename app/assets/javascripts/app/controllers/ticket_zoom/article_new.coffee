@@ -85,7 +85,7 @@ class App.TicketZoomArticleNew extends App.Controller
         icon:              'twitter'
         attributes:        []
         internal:          false,
-        features:          ['body:limit']
+        features:          ['body:limit', 'body:initials']
         maxTextLength:     140
         warningTextLength: 30
       }
@@ -95,7 +95,7 @@ class App.TicketZoomArticleNew extends App.Controller
         icon:              'twitter'
         attributes:        ['to']
         internal:          false,
-        features:          ['body:limit']
+        features:          ['body:limit', 'body:initials']
         maxTextLength:     10000
         warningTextLength: 500
       }
@@ -229,7 +229,7 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
     configure_attributes = [
-      { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateUser: false },
+      { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateObject: false },
     ]
 
     controller = new App.ControllerForm(
@@ -335,12 +335,12 @@ class App.TicketZoomArticleNew extends App.Controller
     if params.type is 'twitter status'
       App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
       params.content_type = 'text/plain'
-      params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
+      params.body = App.Utils.html2text(params.body, true)
 
     if params.type is 'twitter direct-message'
       App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
       params.content_type = 'text/plain'
-      params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
+      params.body = App.Utils.html2text(params.body, true)
 
     if params.type is 'facebook feed comment'
       App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
@@ -351,6 +351,16 @@ class App.TicketZoomArticleNew extends App.Controller
       App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
       params.content_type = 'text/plain'
       params.body = App.Utils.html2text(params.body, true)
+
+    # add initals?
+    for articleType in @articleTypes
+      if articleType.name is @type
+        if _.contains(articleType.features, 'body:initials')
+          if params.content_type is 'text/html'
+            params.body = "#{params.body}</br>#{@signature.text()}"
+          else
+            params.body = "#{params.body}\n#{@signature.text()}"
+          break
 
     params
 
@@ -411,11 +421,11 @@ class App.TicketZoomArticleNew extends App.Controller
           return false
 
     if params.type is 'twitter status'
-      textLength = @maxTextLength - params.body.length
+      textLength = @maxTextLength - App.Utils.textLengthWithUrl(params.body)
       return false if textLength < 0
 
     if params.type is 'twitter direct-message'
-      textLength = @maxTextLength - params.body.length
+      textLength = @maxTextLength - App.Utils.textLengthWithUrl(params.body)
       return false if textLength < 0
 
     true
@@ -534,11 +544,12 @@ class App.TicketZoomArticleNew extends App.Controller
         for name in articleType.features
           if name is 'attachment'
             @$('.article-attachment, .attachments').removeClass('hide')
+          if name is 'body:initials'
+            @updateInitials()
           if name is 'body:limit'
             @maxTextLength = articleType.maxTextLength
             @warningTextLength = articleType.warningTextLength
             @delay(@updateLetterCount, 600)
-            @updateInitials()
             @$('.js-textSizeLimit').removeClass('hide')
 
     @scrollToBottom() if wasScrolledToBottom
@@ -557,7 +568,8 @@ class App.TicketZoomArticleNew extends App.Controller
     return if !@maxTextLength
     return if !@warningTextLength
     params = @params()
-    textLength = @maxTextLength - params.body.length
+    textLength = App.Utils.textLengthWithUrl(params.body)
+    textLength = @maxTextLength - textLength
     className = switch
       when textLength < 0 then 'label-danger'
       when textLength < @warningTextLength then 'label-warning'

@@ -49,22 +49,25 @@ RSpec.describe Import::Ldap::UserFactory do
       }.by(1)
     end
 
-    it 'supports dry run' do
+    it 'deactivates lost users' do
 
       config = {
         user_filter:     '(objectClass=user)',
         group_filter:    '(objectClass=group)',
         user_uid:        'uid',
         user_attributes: {
-          'uid'   => 'login',
+          'uid' => 'login',
           'email' => 'email',
         }
       }
 
-      mocked_entry = build(:ldap_entry)
+      persistent_entry          = build(:ldap_entry)
+      persistent_entry['uid']   = ['exampleuid']
+      persistent_entry['email'] = ['example@example.com']
 
-      mocked_entry['uid']   = ['exampleuid']
-      mocked_entry['email'] = ['example@example.com']
+      lost_entry          = build(:ldap_entry)
+      lost_entry['uid']   = ['exampleuid_lost']
+      lost_entry['email'] = ['lost@example.com']
 
       mocked_ldap = double(
         host:    'ldap.example.com',
@@ -76,19 +79,263 @@ RSpec.describe Import::Ldap::UserFactory do
       # group user role mapping
       expect(mocked_ldap).to receive(:search)
       # user counting
+      expect(mocked_ldap).to receive(:count).and_return(2)
+      # user search
+      expect(mocked_ldap).to receive(:search).and_yield(persistent_entry).and_yield(lost_entry)
+
+      described_class.import(
+        config: config,
+        ldap:   mocked_ldap,
+      )
+
+      # group user role mapping
+      expect(mocked_ldap).to receive(:search)
+      # user counting
       expect(mocked_ldap).to receive(:count).and_return(1)
       # user search
-      expect(mocked_ldap).to receive(:search).and_yield(mocked_entry)
+      expect(mocked_ldap).to receive(:search).and_yield(persistent_entry)
 
       expect do
+        described_class.import(
+          config: config,
+          ldap:   mocked_ldap,
+        )
+      end.to change {
+        User.find_by(email: 'lost@example.com').active
+      }
+    end
+
+    it 're-activates previously lost users' do
+
+      config = {
+        user_filter:     '(objectClass=user)',
+        group_filter:    '(objectClass=group)',
+        user_uid:        'uid',
+        user_attributes: {
+          'uid' => 'login',
+          'email' => 'email',
+        }
+      }
+
+      persistent_entry          = build(:ldap_entry)
+      persistent_entry['uid']   = ['exampleuid']
+      persistent_entry['email'] = ['example@example.com']
+
+      lost_entry          = build(:ldap_entry)
+      lost_entry['uid']   = ['exampleuid_lost']
+      lost_entry['email'] = ['lost@example.com']
+
+      mocked_ldap = double(
+        host:    'ldap.example.com',
+        port:    636,
+        ssl:     true,
+        base_dn: 'dc=example,dc=com'
+      )
+
+      # group user role mapping
+      expect(mocked_ldap).to receive(:search)
+      # user counting
+      expect(mocked_ldap).to receive(:count).and_return(2)
+      # user search
+      expect(mocked_ldap).to receive(:search).and_yield(persistent_entry).and_yield(lost_entry)
+
+      described_class.import(
+        config: config,
+        ldap:   mocked_ldap,
+      )
+
+      # group user role mapping
+      expect(mocked_ldap).to receive(:search)
+      # user counting
+      expect(mocked_ldap).to receive(:count).and_return(1)
+      # user search
+      expect(mocked_ldap).to receive(:search).and_yield(persistent_entry)
+
+      described_class.import(
+        config: config,
+        ldap:   mocked_ldap,
+      )
+
+      # group user role mapping
+      expect(mocked_ldap).to receive(:search)
+      # user counting
+      expect(mocked_ldap).to receive(:count).and_return(2)
+      # user search
+      expect(mocked_ldap).to receive(:search).and_yield(persistent_entry).and_yield(lost_entry)
+
+      expect do
+        described_class.import(
+          config: config,
+          ldap:   mocked_ldap,
+        )
+      end.to change {
+        User.find_by(email: 'lost@example.com').active
+      }
+    end
+
+    it 'deactivates skipped users' do
+
+      config = {
+        user_filter:     '(objectClass=user)',
+        group_filter:    '(objectClass=group)',
+        user_uid:        'uid',
+        user_attributes: {
+          'uid' => 'login',
+          'email' => 'email',
+        },
+      }
+
+      lost_entry          = build(:ldap_entry)
+      lost_entry['uid']   = ['exampleuid']
+      lost_entry['email'] = ['example@example.com']
+
+      mocked_ldap = double(
+        host:    'ldap.example.com',
+        port:    636,
+        ssl:     true,
+        base_dn: 'dc=example,dc=com'
+      )
+
+      # group user role mapping
+      expect(mocked_ldap).to receive(:search)
+      # user counting
+      expect(mocked_ldap).to receive(:count).and_return(2)
+      # user search
+      expect(mocked_ldap).to receive(:search).and_yield(lost_entry)
+
+      described_class.import(
+        config: config,
+        ldap:   mocked_ldap,
+      )
+
+      # activate skipping
+      config[:unassigned_users] = 'skip_sync'
+      config[:group_role_map]   = {
+        'dummy' => %w(1 2),
+      }
+
+      # group user role mapping
+      mocked_entry           = build(:ldap_entry)
+      mocked_entry['dn']     = 'dummy'
+      mocked_entry['member'] = ['dummy']
+      expect(mocked_ldap).to receive(:search).and_yield(mocked_entry)
+
+      # user counting
+      expect(mocked_ldap).to receive(:count).and_return(1)
+      # user search
+      expect(mocked_ldap).to receive(:search).and_yield(lost_entry)
+
+      expect do
+        described_class.import(
+          config: config,
+          ldap:   mocked_ldap,
+        )
+      end.to change {
+        User.find_by(email: 'example@example.com').active
+      }
+    end
+
+    context 'dry run' do
+
+      it "doesn't sync users" do
+
+        config = {
+          user_filter:     '(objectClass=user)',
+          group_filter:    '(objectClass=group)',
+          user_uid:        'uid',
+          user_attributes: {
+            'uid'   => 'login',
+            'email' => 'email',
+          }
+        }
+
+        mocked_entry = build(:ldap_entry)
+
+        mocked_entry['uid']   = ['exampleuid']
+        mocked_entry['email'] = ['example@example.com']
+
+        mocked_ldap = double(
+          host:    'ldap.example.com',
+          port:    636,
+          ssl:     true,
+          base_dn: 'dc=example,dc=com'
+        )
+
+        # group user role mapping
+        expect(mocked_ldap).to receive(:search)
+        # user counting
+        expect(mocked_ldap).to receive(:count).and_return(1)
+        # user search
+        expect(mocked_ldap).to receive(:search).and_yield(mocked_entry)
+
+        expect do
+          described_class.import(
+            config:  config,
+            ldap:    mocked_ldap,
+            dry_run: true
+          )
+        end.not_to change {
+          User.count
+        }
+      end
+
+      it "doesn't deactivates lost users" do
+
+        config = {
+          user_filter:     '(objectClass=user)',
+          group_filter:    '(objectClass=group)',
+          user_uid:        'uid',
+          user_attributes: {
+            'uid' => 'login',
+            'email' => 'email',
+          }
+        }
+
+        persistent_entry          = build(:ldap_entry)
+        persistent_entry['uid']   = ['exampleuid']
+        persistent_entry['email'] = ['example@example.com']
+
+        lost_entry          = build(:ldap_entry)
+        lost_entry['uid']   = ['exampleuid']
+        lost_entry['email'] = ['example@example.com']
+
+        mocked_ldap = double(
+          host:    'ldap.example.com',
+          port:    636,
+          ssl:     true,
+          base_dn: 'dc=example,dc=com'
+        )
+
+        # group user role mapping
+        expect(mocked_ldap).to receive(:search)
+        # user counting
+        expect(mocked_ldap).to receive(:count).and_return(2)
+        # user search
+        expect(mocked_ldap).to receive(:search).and_yield(persistent_entry).and_yield(lost_entry)
+
         described_class.import(
           config:  config,
           ldap:    mocked_ldap,
           dry_run: true
         )
-      end.not_to change {
-        User.count
-      }
+
+        # group user role mapping
+        expect(mocked_ldap).to receive(:search)
+        # user counting
+        expect(mocked_ldap).to receive(:count).and_return(1)
+        # user search
+        expect(mocked_ldap).to receive(:search).and_yield(persistent_entry)
+
+        expect do
+          described_class.import(
+            config:  config,
+            ldap:    mocked_ldap,
+            dry_run: true
+          )
+        end.not_to change {
+          User.count
+        }
+      end
     end
   end
 
@@ -115,23 +362,91 @@ RSpec.describe Import::Ldap::UserFactory do
       expected = {
         role_ids: {
           1 => {
-            created:   1,
-            updated:   0,
-            unchanged: 0,
-            failed:    0
+            created:     1,
+            updated:     0,
+            unchanged:   0,
+            failed:      0,
+            deactivated: 0,
           },
           2 => {
-            created:   1,
-            updated:   0,
-            unchanged: 0,
-            failed:    0
+            created:     1,
+            updated:     0,
+            unchanged:   0,
+            failed:      0,
+            deactivated: 0,
           },
         },
-        skipped:   0,
-        created:   1,
-        updated:   0,
-        unchanged: 0,
-        failed:    0,
+        skipped:     0,
+        created:     1,
+        updated:     0,
+        unchanged:   0,
+        failed:      0,
+        deactivated: 0,
+      }
+
+      expect(described_class.statistics).to include(expected)
+    end
+
+    it 'adds deactivated users' do
+      config = {
+        user_filter:     '(objectClass=user)',
+        group_filter:    '(objectClass=group)',
+        user_uid:        'uid',
+        user_attributes: {
+          'uid' => 'login',
+          'email' => 'email',
+        }
+      }
+
+      persistent_entry          = build(:ldap_entry)
+      persistent_entry['uid']   = ['exampleuid']
+      persistent_entry['email'] = ['example@example.com']
+
+      lost_entry          = build(:ldap_entry)
+      lost_entry['uid']   = ['exampleuid_lost']
+      lost_entry['email'] = ['lost@example.com']
+
+      mocked_ldap = double(
+        host:    'ldap.example.com',
+        port:    636,
+        ssl:     true,
+        base_dn: 'dc=example,dc=com'
+      )
+
+      # group user role mapping
+      expect(mocked_ldap).to receive(:search)
+      # user counting
+      allow(mocked_ldap).to receive(:count).and_return(2)
+      # user search
+      expect(mocked_ldap).to receive(:search).and_yield(persistent_entry).and_yield(lost_entry)
+
+      described_class.import(
+        config: config,
+        ldap:   mocked_ldap,
+      )
+
+      # simulate new import
+      described_class.reset_statistics
+
+      # group user role mapping
+      expect(mocked_ldap).to receive(:search)
+      # user counting
+      allow(mocked_ldap).to receive(:count).and_return(1)
+      # user search
+      expect(mocked_ldap).to receive(:search).and_yield(persistent_entry)
+
+      described_class.import(
+        config: config,
+        ldap:   mocked_ldap,
+      )
+
+      expected = {
+        skipped:     0,
+        created:     0,
+        updated:     0,
+        unchanged:   1,
+        failed:      0,
+        deactivated: 1,
       }
 
       expect(described_class.statistics).to include(expected)
@@ -150,11 +465,12 @@ RSpec.describe Import::Ldap::UserFactory do
       described_class.add_to_statistics(mocked_backend_instance)
 
       expected = {
-        skipped:   1,
-        created:   0,
-        updated:   0,
-        unchanged: 0,
-        failed:    0,
+        skipped:     1,
+        created:     0,
+        updated:     0,
+        unchanged:   0,
+        failed:      0,
+        deactivated: 0,
       }
 
       expect(described_class.statistics).to include(expected)
@@ -175,11 +491,12 @@ RSpec.describe Import::Ldap::UserFactory do
       described_class.add_to_statistics(mocked_backend_instance)
 
       expected = {
-        skipped:   1,
-        created:   0,
-        updated:   0,
-        unchanged: 0,
-        failed:    0,
+        skipped:     1,
+        created:     0,
+        updated:     0,
+        unchanged:   0,
+        failed:      0,
+        deactivated: 0,
       }
 
       expect(described_class.statistics).to include(expected)

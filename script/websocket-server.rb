@@ -237,11 +237,10 @@ EventMachine.run {
       next if client[:disconnect]
       log 'debug', 'checking for data...', client_id
       begin
-        queue = Sessions.queue( client_id )
-        if queue && queue[0]
-          log 'notice', 'send data to client', client_id
-          websocket_send(client_id, queue)
-        end
+        queue = Sessions.queue(client_id)
+        next if queue.blank?
+        log 'notice', 'send data to client', client_id
+        websocket_send(client_id, queue)
       rescue => e
 
         log 'error', 'problem:' + e.inspect, client_id

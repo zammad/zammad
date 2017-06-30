@@ -427,8 +427,7 @@ return true if backend is configured
 =end
 
   def self.enabled?
-    return if !Setting.get('es_url')
-    return if Setting.get('es_url').empty?
+    return false if Setting.get('es_url').blank?
     true
   end
 

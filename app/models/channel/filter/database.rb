@@ -13,13 +13,13 @@ module Channel::Filter::Database
       min_one_rule_exists = false
       filter[:match].each { |key, meta|
         begin
-          next if !meta || !meta['value'] || meta['value'].empty?
+          next if meta.blank? || meta['value'].blank?
           min_one_rule_exists = true
-          scan = []
-          if mail
-            scan = mail[ key.downcase.to_sym ].scan(/#{meta['value']}/i)
+          has_matched = false
+          if mail[ key.downcase.to_sym ].present? && mail[ key.downcase.to_sym ] =~ /#{meta['value']}/i
+            has_matched = true
           end
-          if scan[0]
+          if has_matched
             if meta[:operator] == 'contains not'
               all_matches_ok = false
             end
