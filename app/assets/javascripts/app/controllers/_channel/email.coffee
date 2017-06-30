@@ -531,8 +531,8 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
 
     # base
     configureAttributesBase = [
-      { name: 'realname', display: 'Organization & Department Name', tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'new-password' },
-      { name: 'email',    display: 'Email',    tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'new-password' },
+      { name: 'realname', display: 'Organization & Department Name', tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'off' },
+      { name: 'email',    display: 'Email',    tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off' },
       { name: 'password', display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
       { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
     ]
@@ -562,7 +562,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     configureAttributesInbound = [
       { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
       { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', },
+      { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
       { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
       { name: 'options::ssl',       display: 'SSL',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
       { name: 'options::port',      display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
@@ -616,7 +616,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     if adapter is 'smtp'
       configureAttributesOutbound = [
         { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
-        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
         { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
         { name: 'options::port',     display: 'Port',     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
       ]
@@ -930,7 +930,7 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
     if adapter is 'smtp'
       configureAttributesOutbound = [
         { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
-        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password' },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
         { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
         { name: 'options::port',     display: 'Port',     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
       ]
