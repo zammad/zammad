@@ -309,6 +309,7 @@ class App.TicketZoomArticleActions extends App.Controller
     articleNew = {
       to:          ''
       cc:          ''
+      bcc:         ''
       body:        ''
       in_reply_to: ''
     }
