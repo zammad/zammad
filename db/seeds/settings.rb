@@ -546,18 +546,17 @@ Setting.create_if_not_exists(
   },
   frontend: true
 )
-
 Setting.create_if_not_exists(
-  title: 'Define default visibility of new a new article',
-  name: 'ui_ticket_zoom_article_new_internal',
+  title: 'Note - default visibility',
+  name: 'ui_ticket_zoom_article_note_new_internal',
   area: 'UI::TicketZoom',
-  description: 'Set default visibility of new a new article.',
+  description: 'Default visibility for new note.',
   options: {
     form: [
       {
         display: '',
         null: true,
-        name: 'ui_ticket_zoom_article_new_internal',
+        name: 'ui_ticket_zoom_article_note_new_internal',
         tag: 'boolean',
         translate: true,
         options: {
@@ -569,7 +568,61 @@ Setting.create_if_not_exists(
   },
   state: true,
   preferences: {
-    prio: 1,
+    prio: 100,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Email - subject field',
+  name: 'ui_ticket_zoom_article_email_subject',
+  area: 'UI::TicketZoom',
+  description: 'Use subject field for emails. If disabled, the ticket title will be used as subject.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_article_email_subject',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 200,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Twitter - tweet initials',
+  name: 'ui_ticket_zoom_article_twitter_initials',
+  area: 'UI::TicketZoom',
+  description: 'Add sender initials to end of a tweet.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_article_twitter_initials',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: true,
+  preferences: {
+    prio: 300,
     permission: ['admin.ui'],
   },
   frontend: true
