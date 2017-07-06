@@ -13,6 +13,8 @@
     <th><%- @T('Agent') %>
     <th><%- @T('Time Units') %>
     <th><%- @T('Time Units Total') %>
+    <th><%- @T('Created at') %>
+    <th><%- @T('Closed at') %>
   </thead>
   <tbody>
   <% for row in @rows: %>
@@ -24,6 +26,8 @@
     <td><%= row.agent %>
     <td><%= row.time_unit %>
     <td><%= row.ticket.time_unit %>
+    <td><%- @humanTime(row.ticket.created_at) %>
+    <td><%- @humanTime(row.ticket.close_at) %>
   <% end %>
   </tbody>
 </table>
