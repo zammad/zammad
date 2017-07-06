@@ -164,9 +164,9 @@ class TimeAccountingsController < ApplicationController
       ]
       result = []
       results.each { |row|
-        row[:ticket].keys.each{|field|
+        row[:ticket].keys.each { |field|
           next if row[:ticket][field].blank?
-          next if !row[:ticket][field].kind_of?(ActiveSupport::TimeWithZone)
+          next if !row[:ticket][field].is_a?(ActiveSupport::TimeWithZone)
 
           row[:ticket][field] = row[:ticket][field].iso8601
         }
