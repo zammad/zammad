@@ -43,19 +43,21 @@ module Import
         end
 
         def role_admin
-          return @role_admin if @role_admin
-          @role_admin = ::Role.lookup(name: 'Admin')
+          @role_admin ||= lookup('Admin')
         end
 
         def role_agent
-          return @role_agent if @role_agent
-          @role_agent = ::Role.lookup(name: 'Agent')
+          @role_agent ||= lookup('Agent')
         end
 
         def role_customer
-          return @role_customer if @role_customer
-          @role_customer = ::Role.lookup(name: 'Customer')
+          @role_customer ||= lookup('Customer')
         end
+
+        def lookup(role_name)
+          ::Role.lookup(name: role_name)
+        end
+
       end
     end
   end
