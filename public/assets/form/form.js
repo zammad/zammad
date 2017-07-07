@@ -73,6 +73,7 @@ $(function() {
         name: 'name',
         tag: 'input',
         type: 'text',
+        value: '',
         placeholder: 'Your Name',
       },
       {
@@ -80,6 +81,7 @@ $(function() {
         name: 'email',
         tag: 'input',
         type: 'email',
+        value: '',
         placeholder: 'Your Email',
       },
       {
@@ -87,6 +89,7 @@ $(function() {
         name: 'body',
         tag: 'textarea',
         placeholder: 'Your Message...',
+		value: '',
         rows: 7,
       },
     ],
@@ -361,12 +364,13 @@ $(function() {
     }
     $.each(this.options.attributes, function(index, value) {
       var item = $('<div class="form-group"><label>' + _this.T(value.display) + '</label></div>')
+      var _defaultValue = (typeof value.value === 'function') ? value.value() : value.value;
       for (var i=0; i < (value.repeat ? value.repeat : 1); i++) {
         if (value.tag == 'input') {
-          item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '">')
+          item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (_defaultValue || '') + '">')
         }
         else if (value.tag == 'textarea') {
-          item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '"></textarea>')
+          item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '">' + (_defaultValue || '') + '</textarea>')
         }
       }
       $form.append(item)
