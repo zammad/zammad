@@ -536,7 +536,7 @@ do($ = window.jQuery, window) ->
       @maybeAddTimestamp()
 
       # add message before message typing loader
-      if @el.find('.zammad-chat-message--typing').size()
+      if @el.find('.zammad-chat-message--typing').get(0)
         @lastAddedType = 'typing-placeholder'
         @el.find('.zammad-chat-message--typing').before messageElement
       else
@@ -725,7 +725,7 @@ do($ = window.jQuery, window) ->
       @stopTypingId = setTimeout(@onAgentTypingEnd, 3000)
 
       # never display two typing indicators
-      return if @el.find('.zammad-chat-message--typing').size()
+      return if @el.find('.zammad-chat-message--typing').get(0)
 
       @maybeAddTimestamp()
 

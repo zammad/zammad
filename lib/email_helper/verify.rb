@@ -56,7 +56,7 @@ or
     def self.email(params)
 
       # send verify email
-      subject = if !params[:subject] || params[:subject].empty?
+      subject = if params[:subject].blank?
                   '#' + rand(99_999_999_999).to_s
                 else
                   params[:subject]

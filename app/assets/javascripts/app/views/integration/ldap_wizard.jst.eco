@@ -19,7 +19,7 @@
           <tbody>
             <tr>
               <td class="settings-list-row-control"><%- @T('Host') %>
-              <td class="settings-list-control-cell"><input type="text" name="host_url" class="form-control form-control--small js-hostUrl" value="" placeholder="ldaps://ldap.example.com" autocomplete="new-password">
+              <td class="settings-list-control-cell"><input type="text" name="host_url" class="form-control form-control--small js-hostUrl" value="" placeholder="ldaps://ldap.example.com" autocomplete="off">
           </tbody>
         </table>
       </div>
@@ -70,7 +70,7 @@
               <td class="settings-list-control-cell js-baseDn">
             <tr>
               <td class="settings-list-row-control"><%- @T('Bind User') %>
-              <td class="settings-list-control-cell"><input type="text" name="bind_user" class="form-control form-control--small" value="" placeholder="" autocomplete="new-password">
+              <td class="settings-list-control-cell"><input type="text" name="bind_user" class="form-control form-control--small" value="" placeholder="" autocomplete="off">
             <tr>
               <td class="settings-list-row-control"><%- @T('Bind Password') %>
               <td class="settings-list-control-cell"><input type="password" name="bind_pw" class="form-control form-control--small" value=""  autocomplete="new-password">
@@ -203,7 +203,7 @@
             <tbody>
               <tr>
                 <td class="settings-list-row-control"><%- @T('User filter') %>
-                <td class="settings-list-control-cell"><input type="text" name="user_filter" class="form-control form-control--small" value="" placeholder="" autocomplete="new-password">
+                <td class="settings-list-control-cell"><input type="text" name="user_filter" class="form-control form-control--small" value="" placeholder="" autocomplete="off">
               <tr>
                 <td class="settings-list-row-control"><%- @T('Users without assigned LDAP groups') %>
                 <td class="settings-list-control-cell js-unassignedUsers">

@@ -180,7 +180,7 @@
   Plugin.prototype.renderBase = function() {
     this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="max-height: 200px;"></ul></div>')
     this.$widget = this.$element.next()
-    this.$widget.on('click', 'li', $.proxy(this.onEntryClick, this))
+    this.$widget.on('mousedown', 'li', $.proxy(this.onEntryClick, this))
     this.$widget.on('mouseenter', 'li', $.proxy(this.onMouseEnter, this))
   }
 
@@ -313,6 +313,7 @@
   }
 
   Plugin.prototype.onEntryClick = function(event) {
+    event.preventDefault()
     var id = $(event.target).data('id')
     this.take(id)
   }

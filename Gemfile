@@ -45,7 +45,7 @@ gem 'twitter'
 gem 'telegramAPI'
 gem 'koala'
 gem 'mail'
-gem 'email_verifier'
+gem 'valid_email2'
 gem 'htmlentities'
 
 gem 'mime-types'

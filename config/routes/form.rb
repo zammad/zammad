@@ -3,6 +3,6 @@ Zammad::Application.routes.draw do
 
   # forms
   match api_path + '/form_submit',      to: 'form#submit',    via: :post
-  match api_path + '/form_config',      to: 'form#config',    via: :get
+  match api_path + '/form_config',      to: 'form#config',    via: :post
 
 end

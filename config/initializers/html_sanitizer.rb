@@ -40,6 +40,7 @@ Rails.application.config.html_sanitizer_attributes_whitelist = {
   'table'      => %w(align bgcolor border cellpadding cellspacing frame rules sortable summary width style),
   'td'         => %w(abbr align axis colspan headers rowspan valign width style),
   'th'         => %w(abbr align axis colspan headers rowspan scope sorted valign width style),
+  'tr'         => %w(width style),
   'ul'         => %w(type),
   'q'          => %w(cite),
   'span'       => %w(style),

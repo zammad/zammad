@@ -43,9 +43,7 @@ module Import
         return if !state
 
         state.default_create = true
-        state.callback_loop  = true
-
-        state.save
+        state.save!
       end
 
       def update_default_follow_up
@@ -56,9 +54,7 @@ module Import
         return if !state
 
         state.default_follow_up = true
-        state.callback_loop     = true
-
-        state.save
+        state.save!
       end
 
       def update_ticket_attributes

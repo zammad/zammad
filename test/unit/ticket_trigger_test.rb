@@ -1414,6 +1414,228 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   end
 
+  test '6.1 owner auto assignment based on organization' do
+    trigger1 = Trigger.create_or_update(
+      name: 'aaa auto assignment',
+      condition: {
+        'ticket.organization_id' => {
+          'operator' => 'is not',
+          'pre_condition' => 'not_set',
+          'value' => '',
+          'value_completion' => '',
+        },
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'update',
+        },
+      },
+      perform: {
+        'ticket.owner_id' => {
+          'pre_condition' => 'current_user.id',
+          'value' => '',
+          'value_completion' => '',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    roles = Role.where(name: 'Agent')
+    agent = User.create_or_update(
+      login: 'agent@example.com',
+      firstname: 'Trigger',
+      lastname: 'Agent1',
+      email: 'agent@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    roles = Role.where(name: 'Customer')
+    customer = User.create_or_update(
+      login: 'customer@example.com',
+      firstname: 'Trigger',
+      lastname: 'Customer1',
+      email: 'customer@example.com',
+      password: 'customerpw',
+      vip: true,
+      active: true,
+      roles: roles,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket1 = Ticket.create(
+      title: 'test 123',
+      group: Group.lookup(name: 'Users'),
+      customer: customer,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Observer::Transaction.commit
+
+    assert_equal('test 123', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal(1, ticket1.owner_id, 'ticket1.owner_id verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal([], ticket1.tag_list)
+
+    ticket1.update_attribute(:customer, User.lookup(email: 'nicole.braun@zammad.org') )
+
+    UserInfo.current_user_id = agent.id
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'update',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'update',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+    )
+    Observer::Transaction.commit
+    UserInfo.current_user_id = nil
+
+    ticket1.reload
+    assert_equal('test 123', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal(agent.id, ticket1.owner_id, 'ticket1.owner_id verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal([], ticket1.tag_list)
+  end
+
+  test '6.2 owner auto assignment based on organization' do
+    trigger1 = Trigger.create_or_update(
+      name: 'aaa auto assignment',
+      condition: {
+        'ticket.organization_id' => {
+          'operator' => 'is',
+          'pre_condition' => 'not_set',
+          'value' => '',
+          'value_completion' => '',
+        },
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'update',
+        },
+      },
+      perform: {
+        'ticket.owner_id' => {
+          'pre_condition' => 'current_user.id',
+          'value' => '',
+          'value_completion' => '',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    roles = Role.where(name: 'Agent')
+    agent = User.create_or_update(
+      login: 'agent@example.com',
+      firstname: 'Trigger',
+      lastname: 'Agent1',
+      email: 'agent@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    roles = Role.where(name: 'Customer')
+    customer = User.create_or_update(
+      login: 'customer@example.com',
+      firstname: 'Trigger',
+      lastname: 'Customer1',
+      email: 'customer@example.com',
+      password: 'customerpw',
+      vip: true,
+      active: true,
+      roles: roles,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket1 = Ticket.create(
+      title: 'test 123',
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Observer::Transaction.commit
+
+    assert_equal('test 123', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal(1, ticket1.owner_id, 'ticket1.owner_id verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal([], ticket1.tag_list)
+
+    ticket1.update_attribute(:customer, customer )
+
+    UserInfo.current_user_id = agent.id
+    Ticket::Article.create(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'update',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'update',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+    )
+    Observer::Transaction.commit
+    UserInfo.current_user_id = nil
+
+    ticket1.reload
+    assert_equal('test 123', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal(agent.id, ticket1.owner_id, 'ticket1.owner_id verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal([], ticket1.tag_list)
+  end
+
   test '7 owner auto assignment' do
     trigger1 = Trigger.create_or_update(
       name: 'aaa auto assignment',
@@ -3120,9 +3342,8 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     Observer::Transaction.commit
     ticket1.reload
-    assert_equal(22, ticket1.articles.count)
+    assert_equal(21, ticket1.articles.count)
     assert_equal('some_loop_sender@example.com', ticket1.articles[20].from)
-    assert_equal('nicole.braun@zammad.org', ticket1.articles[21].to)
 
     Ticket::Article.create(
       ticket_id: ticket1.id,
@@ -3141,92 +3362,8 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     Observer::Transaction.commit
     ticket1.reload
-    assert_equal(24, ticket1.articles.count)
-    assert_equal('some_loop_sender@example.com', ticket1.articles[22].from)
-    assert_equal('nicole.braun@zammad.org', ticket1.articles[23].to)
-
-    Ticket::Article.create(
-      ticket_id: ticket1.id,
-      from: 'some_loop_sender@example.com',
-      to: 'some_loop_recipient@example.com',
-      subject: 'some subject 1234',
-      message_id: 'some@id',
-      content_type: 'text/html',
-      body: 'some message <b>note</b><br>new line',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
-    Observer::Transaction.commit
-    ticket1.reload
-    assert_equal(26, ticket1.articles.count)
-    assert_equal('some_loop_sender@example.com', ticket1.articles[24].from)
-    assert_equal('nicole.braun@zammad.org', ticket1.articles[25].to)
-
-    Ticket::Article.create(
-      ticket_id: ticket1.id,
-      from: 'some_loop_sender@example.com',
-      to: 'some_loop_recipient@example.com',
-      subject: 'some subject 1234',
-      message_id: 'some@id',
-      content_type: 'text/html',
-      body: 'some message <b>note</b><br>new line',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
-    Observer::Transaction.commit
-    ticket1.reload
-    assert_equal(28, ticket1.articles.count)
-    assert_equal('some_loop_sender@example.com', ticket1.articles[26].from)
-    assert_equal('nicole.braun@zammad.org', ticket1.articles[27].to)
-
-    Ticket::Article.create(
-      ticket_id: ticket1.id,
-      from: 'some_loop_sender@example.com',
-      to: 'some_loop_recipient@example.com',
-      subject: 'some subject 1234',
-      message_id: 'some@id',
-      content_type: 'text/html',
-      body: 'some message <b>note</b><br>new line',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
-    Observer::Transaction.commit
-    ticket1.reload
-    assert_equal(30, ticket1.articles.count)
-    assert_equal('some_loop_sender@example.com', ticket1.articles[28].from)
-    assert_equal('nicole.braun@zammad.org', ticket1.articles[29].to)
-
-    Ticket::Article.create(
-      ticket_id: ticket1.id,
-      from: 'some_loop_sender@example.com',
-      to: 'some_loop_recipient@example.com',
-      subject: 'some subject 1234',
-      message_id: 'some@id',
-      content_type: 'text/html',
-      body: 'some message <b>note</b><br>new line',
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
-    Observer::Transaction.commit
-    ticket1.reload
-    assert_equal(31, ticket1.articles.count)
-    assert_equal('some_loop_sender@example.com', ticket1.articles[30].from)
+    assert_equal(22, ticket1.articles.count)
+    assert_equal('some_loop_sender@example.com', ticket1.articles[21].from)
 
   end
 

@@ -546,18 +546,17 @@ Setting.create_if_not_exists(
   },
   frontend: true
 )
-
 Setting.create_if_not_exists(
-  title: 'Define default visibility of new a new article',
-  name: 'ui_ticket_zoom_article_new_internal',
+  title: 'Note - default visibility',
+  name: 'ui_ticket_zoom_article_note_new_internal',
   area: 'UI::TicketZoom',
-  description: 'Set default visibility of new a new article.',
+  description: 'Default visibility for new note.',
   options: {
     form: [
       {
         display: '',
         null: true,
-        name: 'ui_ticket_zoom_article_new_internal',
+        name: 'ui_ticket_zoom_article_note_new_internal',
         tag: 'boolean',
         translate: true,
         options: {
@@ -569,7 +568,61 @@ Setting.create_if_not_exists(
   },
   state: true,
   preferences: {
-    prio: 1,
+    prio: 100,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Email - subject field',
+  name: 'ui_ticket_zoom_article_email_subject',
+  area: 'UI::TicketZoom',
+  description: 'Use subject field for emails. If disabled, the ticket title will be used as subject.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_article_email_subject',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 200,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Twitter - tweet initials',
+  name: 'ui_ticket_zoom_article_twitter_initials',
+  area: 'UI::TicketZoom',
+  description: 'Add sender initials to end of a tweet.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_article_twitter_initials',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: true,
+  preferences: {
+    prio: 300,
     permission: ['admin.ui'],
   },
   frontend: true
@@ -1483,6 +1536,101 @@ Setting.create_if_not_exists(
     ],
   },
   state: false,
+  preferences: {
+    permission: ['admin.channel_formular'],
+  },
+  frontend: false,
+)
+
+group = Group.where(active: true).first
+if !group
+  group = Group.first
+end
+group_id = 1
+if group
+  group_id = group.id
+end
+Setting.create_if_not_exists(
+  title: 'Group selection for Ticket creation',
+  name: 'form_ticket_create_group_id',
+  area: 'Form::Base',
+  description: 'Defines if group of created tickets via web form.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'form_ticket_create_group_id',
+        tag: 'select',
+        relation: 'Group',
+      },
+    ],
+  },
+  state: group_id,
+  preferences: {
+    permission: ['admin.channel_formular'],
+  },
+  frontend: false,
+)
+
+Setting.create_if_not_exists(
+  title: 'Limit tickets by ip per hour',
+  name: 'form_ticket_create_by_ip_per_hour',
+  area: 'Form::Base',
+  description: 'Defines limit of tickets by ip per hour via web form.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'form_ticket_create_by_ip_per_hour',
+        tag: 'input',
+      },
+    ],
+  },
+  state: 20,
+  preferences: {
+    permission: ['admin.channel_formular'],
+  },
+  frontend: false,
+)
+Setting.create_if_not_exists(
+  title: 'Limit tickets by ip per day',
+  name: 'form_ticket_create_by_ip_per_day',
+  area: 'Form::Base',
+  description: 'Defines limit of tickets by ip per day via web form.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'form_ticket_create_by_ip_per_day',
+        tag: 'input',
+      },
+    ],
+  },
+  state: 240,
+  preferences: {
+    permission: ['admin.channel_formular'],
+  },
+  frontend: false,
+)
+Setting.create_if_not_exists(
+  title: 'Limit tickets per day',
+  name: 'form_ticket_create_per_day',
+  area: 'Form::Base',
+  description: 'Defines limit of tickets per day via web form.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'form_ticket_create_per_day',
+        tag: 'input',
+      },
+    ],
+  },
+  state: 5000,
   preferences: {
     permission: ['admin.channel_formular'],
   },

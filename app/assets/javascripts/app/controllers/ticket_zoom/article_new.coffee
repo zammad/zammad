@@ -28,107 +28,9 @@ class App.TicketZoomArticleNew extends App.Controller
   constructor: ->
     super
 
-    # set possble article types
-    possibleArticleType =
-      note: true
-      phone: true
-    if @ticket && @ticket.create_article_type_id
-      articleTypeCreate = App.TicketArticleType.find(@ticket.create_article_type_id).name
-      if articleTypeCreate is 'twitter status'
-        possibleArticleType['twitter status'] = true
-      else if articleTypeCreate is 'twitter direct-message'
-        possibleArticleType['twitter direct-message'] = true
-      else if articleTypeCreate is 'email'
-        possibleArticleType['email'] = true
-      else if articleTypeCreate is 'facebook feed post'
-        possibleArticleType['facebook feed comment'] = true
-      else if articleTypeCreate is 'telegram personal-message'
-        possibleArticleType['telegram personal-message'] = true
-    if @ticket && @ticket.customer_id
-      customer = App.User.find(@ticket.customer_id)
-      if customer.email
-        possibleArticleType['email'] = true
-
-    # gets referenced in @setArticleType
     @internalSelector = true
     @type = @defaults['type'] || 'note'
-    @articleTypes = []
-    if possibleArticleType.note
-      internal = @Config.get('ui_ticket_zoom_article_new_internal')
-
-      @articleTypes.push {
-        name:       'note'
-        icon:       'note'
-        attributes: []
-        internal:   internal,
-        features:   ['attachment']
-      }
-    if possibleArticleType.email
-      @articleTypes.push {
-        name:       'email'
-        icon:       'email'
-        attributes: ['to', 'cc']
-        internal:   false,
-        features:   ['attachment']
-      }
-    if possibleArticleType['facebook feed comment']
-      @articleTypes.push {
-        name:       'facebook feed comment'
-        icon:       'facebook'
-        attributes: []
-        internal:   false,
-        features:   []
-      }
-    if possibleArticleType['twitter status']
-      @articleTypes.push {
-        name:              'twitter status'
-        icon:              'twitter'
-        attributes:        []
-        internal:          false,
-        features:          ['body:limit', 'body:initials']
-        maxTextLength:     140
-        warningTextLength: 30
-      }
-    if possibleArticleType['twitter direct-message']
-      @articleTypes.push {
-        name:              'twitter direct-message'
-        icon:              'twitter'
-        attributes:        ['to']
-        internal:          false,
-        features:          ['body:limit', 'body:initials']
-        maxTextLength:     10000
-        warningTextLength: 500
-      }
-    if possibleArticleType.phone
-      @articleTypes.push {
-        name:       'phone'
-        icon:       'phone'
-        attributes: []
-        internal:   false,
-        features:   ['attachment']
-      }
-    if possibleArticleType['telegram personal-message']
-      @articleTypes.push {
-        name:              'telegram personal-message'
-        icon:              'telegram'
-        attributes:        []
-        internal:          false,
-        features:          ['attachment']
-        maxTextLength:     10000
-        warningTextLength: 5000
-      }
-
-    if @permissionCheck('ticket.customer')
-      @type = 'note'
-      @articleTypes = [
-        {
-          name:       'note'
-          icon:       'note'
-          attributes: []
-          internal:   false,
-          features:   ['attachment']
-        },
-      ]
+    @setPossibleArticleTypes()
 
     if @permissionCheck('ticket.customer')
       @internalSelector = false
@@ -180,6 +82,114 @@ class App.TicketZoomArticleNew extends App.Controller
     @bind('ui:rerender', =>
       @render()
     )
+
+  setPossibleArticleTypes: =>
+    possibleArticleType =
+      note: true
+      phone: true
+    if @ticket && @ticket.create_article_type_id
+      articleTypeCreate = App.TicketArticleType.find(@ticket.create_article_type_id).name
+      if articleTypeCreate is 'twitter status'
+        possibleArticleType['twitter status'] = true
+      else if articleTypeCreate is 'twitter direct-message'
+        possibleArticleType['twitter direct-message'] = true
+      else if articleTypeCreate is 'email'
+        possibleArticleType['email'] = true
+      else if articleTypeCreate is 'facebook feed post'
+        possibleArticleType['facebook feed comment'] = true
+      else if articleTypeCreate is 'telegram personal-message'
+        possibleArticleType['telegram personal-message'] = true
+    if @ticket && @ticket.customer_id
+      customer = App.User.find(@ticket.customer_id)
+      if customer.email
+        possibleArticleType['email'] = true
+
+    # gets referenced in @setArticleType
+    @articleTypes = []
+    if possibleArticleType.note
+      internal = @Config.get('ui_ticket_zoom_article_note_new_internal')
+      @articleTypes.push {
+        name:       'note'
+        icon:       'note'
+        attributes: []
+        internal:   internal,
+        features:   ['attachment']
+      }
+    if possibleArticleType.email
+      attributes = ['to', 'cc', 'subject']
+      if !@Config.get('ui_ticket_zoom_article_email_subject')
+        attributes = ['to', 'cc']
+      @articleTypes.push {
+        name:       'email'
+        icon:       'email'
+        attributes: attributes
+        internal:   false,
+        features:   ['attachment']
+      }
+    if possibleArticleType['facebook feed comment']
+      @articleTypes.push {
+        name:       'facebook feed comment'
+        icon:       'facebook'
+        attributes: []
+        internal:   false,
+        features:   []
+      }
+    if possibleArticleType['twitter status']
+      attributes = ['body:limit', 'body:initials']
+      if !@Config.get('ui_ticket_zoom_article_twitter_initials')
+        attributes = ['body:limit']
+      @articleTypes.push {
+        name:              'twitter status'
+        icon:              'twitter'
+        attributes:        []
+        internal:          false,
+        features:          ['body:limit', 'body:initials']
+        maxTextLength:     140
+        warningTextLength: 30
+      }
+    if possibleArticleType['twitter direct-message']
+      attributes = ['body:limit', 'body:initials']
+      if !@Config.get('ui_ticket_zoom_article_twitter_initials')
+        attributes = ['body:limit']
+      @articleTypes.push {
+        name:              'twitter direct-message'
+        icon:              'twitter'
+        attributes:        ['to']
+        internal:          false,
+        features:          ['body:limit', 'body:initials']
+        maxTextLength:     10000
+        warningTextLength: 500
+      }
+    if possibleArticleType.phone
+      @articleTypes.push {
+        name:       'phone'
+        icon:       'phone'
+        attributes: []
+        internal:   false,
+        features:   ['attachment']
+      }
+    if possibleArticleType['telegram personal-message']
+      @articleTypes.push {
+        name:              'telegram personal-message'
+        icon:              'telegram'
+        attributes:        []
+        internal:          false,
+        features:          ['attachment']
+        maxTextLength:     10000
+        warningTextLength: 5000
+      }
+
+    if @permissionCheck('ticket.customer')
+      @type = 'note'
+      @articleTypes = [
+        {
+          name:       'note'
+          icon:       'note'
+          attributes: []
+          internal:   false,
+          features:   ['attachment']
+        },
+      ]
 
   placeCaretAtEnd: (el) ->
     el.focus()
@@ -318,9 +328,6 @@ class App.TicketZoomArticleNew extends App.Controller
       params.form_id      = @form_id
       params.content_type = 'text/html'
 
-      if !params['internal']
-        params['internal'] = false
-
       if @permissionCheck('ticket.customer')
         sender           = App.TicketArticleSender.findByAttribute('name', 'Customer')
         type             = App.TicketArticleType.findByAttribute('name', 'web')
@@ -331,6 +338,11 @@ class App.TicketZoomArticleNew extends App.Controller
         type             = App.TicketArticleType.findByAttribute('name', params['type'])
         params.sender_id = sender.id
         params.type_id   = type.id
+
+    if params.internal
+      params.internal = true
+    else
+      params.internal = false
 
     if params.type is 'twitter status'
       App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
@@ -477,6 +489,8 @@ class App.TicketZoomArticleNew extends App.Controller
     @$('[name=type]').val(type).trigger('change')
     @articleNewEdit.attr('data-type', type)
     @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{type}']").removeClass('hide')
+
+    @setPossibleArticleTypes()
 
     # get config
     config = {}

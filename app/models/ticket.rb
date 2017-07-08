@@ -504,7 +504,7 @@ condition example
             query += "#{attribute} IN (?)"
             bind_params.push 1
           else
-            query += "#{attribute} IS NOT NULL"
+            query += "#{attribute} IS NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
@@ -518,7 +518,7 @@ condition example
         else
           # rubocop:disable Style/IfInsideElse
           if selector['value'].nil?
-            query += "#{attribute} IS NOT NULL"
+            query += "#{attribute} IS NULL"
           else
             query += "#{attribute} IN (?)"
             bind_params.push selector['value']
@@ -531,7 +531,7 @@ condition example
             query += "#{attribute} NOT IN (?)"
             bind_params.push 1
           else
-            query += "#{attribute} IS NULL"
+            query += "#{attribute} IS NOT NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
           query += "#{attribute} NOT IN (?)"
@@ -825,9 +825,11 @@ perform changes on ticket
 
           # loop protection / check if maximal count of trigger mail has reached
           map = {
+            10 => 10,
             30 => 15,
             60 => 25,
             180 => 50,
+            600 => 100,
           }
           skip = false
           map.each { |minutes, count|
@@ -843,18 +845,20 @@ perform changes on ticket
           }
           next if skip
           map = {
-            1 => 150,
-            3 => 250,
-            6 => 450,
+            10 => 30,
+            30 => 60,
+            60 => 120,
+            180 => 240,
+            600 => 360,
           }
           skip = false
-          map.each { |hours, count|
+          map.each { |minutes, count|
             already_sent = Ticket::Article.where(
               sender: Ticket::Article::Sender.find_by(name: 'System'),
               type: Ticket::Article::Type.find_by(name: 'email'),
-            ).where("ticket_articles.created_at > ? AND ticket_articles.to LIKE '%#{recipient_email.strip}%'", Time.zone.now - hours.hours).count
+            ).where("ticket_articles.created_at > ? AND ticket_articles.to LIKE '%#{recipient_email.strip}%'", Time.zone.now - minutes.minutes).count
             next if already_sent < count
-            logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{hours} hour(s) (loop protection)"
+            logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{minutes} minutes (loop protection)"
             skip = true
             break
           }

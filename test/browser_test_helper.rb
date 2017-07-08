@@ -2261,7 +2261,7 @@ wait untill text in selector disabppears
     9.times {
       begin
         text = instance.find_elements(css: '.content.active .js-reset')[0].text
-        if !text || text.empty?
+        if text.blank?
           screenshot(browser: instance, comment: 'ticket_update_ok')
           sleep 1
           return true
