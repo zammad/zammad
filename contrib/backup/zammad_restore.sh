@@ -4,14 +4,25 @@
 #
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:
+BACKUP_SCRIPT_PATH="$(dirname $(realpath $0))"
 
-# import config
-. /opt/zammad/contrib/backup/config
+if [ -f "${BACKUP_SCRIPT_PATH}/config" ]; then
+  # import config
+  . ${BACKUP_SCRIPT_PATH}/config
+else
+  echo -e "\n The 'config' file is missing!"
+  echo -e " Please copy ${BACKUP_SCRIPT_PATH}/config.dist to  ${BACKUP_SCRIPT_PATH}/config before running $0!\n"
+  exit 1
+fi
 
 # import functions
-. /opt/zammad/contrib/backup/functions
+. ${BACKUP_SCRIPT_PATH}/functions
 
 # exec restore
+start_restore_message
+
+get_zammad_dir
+
 restore_warning "${1}"
 
 check_database_config_exists
@@ -28,4 +39,4 @@ restore_zammad
 
 start_zammad
 
-restore_message
+finished_restore_message
