@@ -32,7 +32,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       authorize_url: '/oauth/authorize',
       token_url: '/oauth/token'
     },
-    scope: 'read_user',
   }
 
   # oauth2 database connect
