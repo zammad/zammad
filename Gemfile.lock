@@ -151,7 +151,8 @@ GEM
       guard (~> 2.8)
       guard-compat (~> 1.0)
       multi_json (~> 1.8)
-    guard-symlink (0.1.0)
+    guard-symlink (0.1.1)
+      guard
       guard-compat (~> 1.1)
     hashdiff (0.3.2)
     hashie (3.4.4)
@@ -499,4 +500,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.7
+   1.15.1
