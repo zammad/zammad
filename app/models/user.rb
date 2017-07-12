@@ -38,7 +38,7 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
-  before_validation :check_name, :check_email, :check_login, :ensure_password
+  before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles
   before_create   :check_preferences_default, :validate_roles, :domain_based_assignment, :set_locale
   before_update   :check_preferences_default, :validate_roles, :reset_login_failed
   after_create    :avatar_for_email_check
@@ -884,6 +884,11 @@ returns
       end
     end
     true
+  end
+
+  def ensure_roles
+    return true if role_ids.present?
+    self.role_ids = Role.signup_role_ids
   end
 
   def validate_roles
