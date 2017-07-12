@@ -504,7 +504,7 @@ condition example
             query += "#{attribute} IN (?)"
             bind_params.push 1
           else
-            query += "#{attribute} IS NOT NULL"
+            query += "#{attribute} IS NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
@@ -518,7 +518,7 @@ condition example
         else
           # rubocop:disable Style/IfInsideElse
           if selector['value'].nil?
-            query += "#{attribute} IS NOT NULL"
+            query += "#{attribute} IS NULL"
           else
             query += "#{attribute} IN (?)"
             bind_params.push selector['value']
@@ -531,7 +531,7 @@ condition example
             query += "#{attribute} NOT IN (?)"
             bind_params.push 1
           else
-            query += "#{attribute} IS NULL"
+            query += "#{attribute} IS NOT NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
           query += "#{attribute} NOT IN (?)"
