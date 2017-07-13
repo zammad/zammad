@@ -245,9 +245,9 @@ class UserTest < ActiveSupport::TestCase
     tests.each { |test|
 
       # check if user exists
-      user = User.where( login: test[:create][:login] ).first
+      user = User.where(login: test[:create][:login]).first
       if user
-        user.destroy
+        user.destroy!
       end
 
       user = User.create( test[:create] )
@@ -266,8 +266,8 @@ class UserTest < ActiveSupport::TestCase
         end
       }
       if test[:create_verify][:image_md5]
-        file = Avatar.get_by_hash( user.image )
-        file_md5 = Digest::MD5.hexdigest( file.content )
+        file = Avatar.get_by_hash(user.image)
+        file_md5 = Digest::MD5.hexdigest(file.content)
         assert_equal(test[:create_verify][:image_md5], file_md5, "create avatar md5 check in (#{test[:name]})")
       end
       if test[:update]
@@ -275,7 +275,7 @@ class UserTest < ActiveSupport::TestCase
 
         test[:update_verify].each { |key, value|
           next if key == :image_md5
-          if user.respond_to?( key )
+          if user.respond_to?(key)
             assert_equal(value, user.send(key), "update check #{key} in (#{test[:name]})")
           else
             assert_equal(value, user[key], "update check #{key} in (#{test[:name]})")
@@ -289,8 +289,81 @@ class UserTest < ActiveSupport::TestCase
         end
       end
 
-      user.destroy
+      user.destroy!
     }
+  end
+
+  test 'ensure roles' do
+    name = rand(999_999_999)
+
+    admin = User.create_or_update(
+      login: "admin-role#{name}@example.com",
+      firstname: 'Role',
+      lastname: "Admin#{name}",
+      email: "admin-role#{name}@example.com",
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    customer1 = User.create_or_update(
+      login: "user-ensure-role1-#{name}@example.com",
+      firstname: 'Role',
+      lastname: "Customer#{name}",
+      email: "user-ensure-role1-#{name}@example.com",
+      password: 'customerpw',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(customer1.role_ids.sort, Role.signup_role_ids)
+
+    roles = Role.where(name: 'Agent')
+    customer1.roles = roles
+    customer1.save!
+
+    assert_equal(customer1.role_ids.count, 1)
+    assert_equal(customer1.role_ids.first, roles.first.id)
+    assert_equal(customer1.roles.first.id, roles.first.id)
+
+    customer1.roles = []
+    customer1.save!
+
+    assert_equal(customer1.role_ids.sort, Role.signup_role_ids)
+    customer1.destroy!
+
+    customer2 = User.create_or_update(
+      login: "user-ensure-role2-#{name}@example.com",
+      firstname: 'Role',
+      lastname: "Customer#{name}",
+      email: "user-ensure-role2-#{name}@example.com",
+      password: 'customerpw',
+      roles: roles,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(customer2.role_ids.count, 1)
+    assert_equal(customer2.role_ids.first, roles.first.id)
+    assert_equal(customer2.roles.first.id, roles.first.id)
+
+    roles = Role.where(name: 'Admin')
+    customer2.role_ids = [roles.first.id]
+    customer2.save!
+
+    assert_equal(customer2.role_ids.count, 1)
+    assert_equal(customer2.role_ids.first, roles.first.id)
+    assert_equal(customer2.roles.first.id, roles.first.id)
+
+    customer2.roles = []
+    customer2.save!
+
+    assert_equal(customer2.role_ids.sort, Role.signup_role_ids)
+    customer2.destroy!
+
+    admin.destroy!
   end
 
   test 'user default preferences' do
@@ -352,7 +425,6 @@ class UserTest < ActiveSupport::TestCase
     assert(customer1.preferences['notification_config'])
     assert(customer1.preferences['notification_config']['matrix']['create'])
     assert(customer1.preferences['notification_config']['matrix']['update'])
-
   end
 
   test 'permission' do
@@ -557,7 +629,7 @@ class UserTest < ActiveSupport::TestCase
     # So we need to merge them with the User Nr 1 and destroy them afterwards
     User.with_permissions('admin').each do |user|
       Models.merge('User', 1, user.id)
-      user.destroy
+      user.destroy!
     end
 
     # store current admin count

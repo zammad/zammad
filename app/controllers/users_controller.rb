@@ -252,17 +252,17 @@ class UsersController < ApplicationController
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
-        user.associations_from_param({ role_ids: params[:role_ids], roles: params[:roles] })
+        user.associations_from_param(role_ids: params[:role_ids], roles: params[:roles])
       end
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:group_ids] || params[:groups])
-        user.associations_from_param({ group_ids: params[:group_ids], groups: params[:groups] })
+        user.associations_from_param(group_ids: params[:group_ids], groups: params[:groups])
       end
 
       # only allow Admin's and Agent's
       if current_user.permissions?(['admin.user', 'ticket.agent']) && (params[:organization_ids] || params[:organizations])
-        user.associations_from_param({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
+        user.associations_from_param(organization_ids: params[:organization_ids], organizations: params[:organizations])
       end
 
       if params[:expand]
