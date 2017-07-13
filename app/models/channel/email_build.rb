@@ -156,7 +156,9 @@ Check if string is a complete html document. If not, add head and css styles.
 
     return html if html =~ /<html>/i
 
-    Rails.configuration.html_email_body.sub('###html###', html)
+    # use block form because variable html could contain backslashes and e. g. '\1' that
+    # must not be handled as back-references for regular expressions
+    Rails.configuration.html_email_body.sub('###html###') {html}
   end
 
 =begin
