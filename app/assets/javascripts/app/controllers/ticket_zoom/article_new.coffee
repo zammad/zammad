@@ -59,7 +59,7 @@ class App.TicketZoomArticleNew extends App.Controller
           @$('[name="' + key + '"]').val(value).trigger('change')
 
       # preselect article type
-      @setArticleType(data.type.name)
+      @setArticleType(data.type.name, data.signaturePosition)
 
       # set focus at end of field
       if data.position is 'end'
@@ -483,7 +483,7 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @$('[name=internal]').val('')
 
-  setArticleType: (type) =>
+  setArticleType: (type, signaturePosition = 'bottom') =>
     wasScrolledToBottom = @isScrolledToBottom()
     @type = type
     @$('[name=type]').val(type).trigger('change')
@@ -532,7 +532,10 @@ class App.TicketZoomArticleNew extends App.Controller
           body.append('<br><br>')
         signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
         App.Utils.htmlStrip(signature)
-        body.append(signature)
+        if signaturePosition is 'top'
+          body.prepend(signature)
+        else
+          body.append(signature)
         @$('[data-name=body]').replaceWith(body)
 
     # remove old signature
@@ -565,6 +568,20 @@ class App.TicketZoomArticleNew extends App.Controller
             @warningTextLength = articleType.warningTextLength
             @delay(@updateLetterCount, 600)
             @$('.js-textSizeLimit').removeClass('hide')
+
+    # convert remote src images to data uri
+    @$('[data-name=body] img').each( (i,image) ->
+      $image = $(image)
+      src = $image.attr('src')
+      if !_.isEmpty(src) && !src.match(/^data:image/i)
+        canvas = document.createElement('canvas')
+        canvas.width = image.width
+        canvas.height = image.height
+        ctx = canvas.getContext('2d')
+        ctx.drawImage(image, 0, 0)
+        dataURL = canvas.toDataURL()
+        $image.attr('src', dataURL)
+    )
 
     @scrollToBottom() if wasScrolledToBottom
 

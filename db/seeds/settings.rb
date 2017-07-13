@@ -601,6 +601,33 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
+  title: 'Email - full quote',
+  name: 'ui_ticket_zoom_article_email_full_quote',
+  area: 'UI::TicketZoom',
+  description: 'Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available).',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_article_email_full_quote',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 220,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
   title: 'Twitter - tweet initials',
   name: 'ui_ticket_zoom_article_twitter_initials',
   area: 'UI::TicketZoom',
