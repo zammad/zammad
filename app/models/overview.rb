@@ -28,24 +28,37 @@ class Overview < ApplicationModel
   end
 
   def fill_link_on_create
-    return true if !link.empty?
+    return true if link.present?
     self.link = link_name(name)
     true
   end
 
   def fill_link_on_update
-    return true if link.empty?
     return true if !changes['name']
+    return true if changes['link']
     self.link = link_name(name)
     true
   end
 
   def link_name(name)
-    link = name.downcase
-    link.gsub!(/\s/, '_')
-    link.gsub!(/[^0-9a-z]/i, '_')
-    link.gsub!(/_+/, '_')
-    link
+    local_link = name.downcase
+    local_link = local_link.parameterize('_')
+    local_link.gsub!(/\s/, '_')
+    local_link.gsub!(/_+/, '_')
+    local_link = URI.escape(local_link)
+    if local_link.blank?
+      local_link = id || rand(999)
+    end
+    check = true
+    while check
+      exists = Overview.find_by(link: local_link)
+      if exists && exists.id != id
+        local_link = "#{local_link}_#{rand(999)}"
+      else
+        check = false
+      end
+    end
+    local_link
   end
 
 end
