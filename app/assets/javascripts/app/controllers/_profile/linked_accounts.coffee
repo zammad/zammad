@@ -84,7 +84,7 @@ App.Config.set('auth_provider_all', {
     url:    '/auth/microsoft_office365'
     name:   'Office 365'
     config: 'auth_microsoft_office365'
-    class:  'microsoft_office365'
+    class:  'office365'
   google_oauth2:
     url:    '/auth/google_oauth2'
     name:   'Google'
