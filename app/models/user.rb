@@ -38,7 +38,7 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
-  before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles, :ensure_identifier
+  before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_create   :check_preferences_default, :validate_roles, :domain_based_assignment, :set_locale
   before_update   :check_preferences_default, :validate_roles, :reset_login_failed
   after_create    :avatar_for_email_check
@@ -845,7 +845,7 @@ returns
 
   def check_email
     return true if Setting.get('import_mode')
-    return true if email.empty?
+    return true if email.blank?
     self.email = email.downcase.strip
     return true if id == 1
     raise Exceptions::UnprocessableEntity, 'Invalid email' if email !~ /@/
@@ -895,6 +895,16 @@ returns
     return true if email.present? || firstname.present? || lastname.present? || phone.present?
     return true if login.present? && !login.start_with?('auto-')
     raise Exceptions::UnprocessableEntity, 'Minimum one identifier (login, firstname, lastname, phone or email) for user is required.'
+  end
+
+  def ensure_uniq_email
+    return true if Setting.get('user_email_multiple_use')
+    return true if Setting.get('import_mode')
+    return true if email.blank?
+    return true if !changes
+    return true if !changes['email']
+    return true if !User.find_by(email: email.downcase.strip)
+    raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.'
   end
 
   def validate_roles

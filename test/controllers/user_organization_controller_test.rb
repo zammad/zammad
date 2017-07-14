@@ -126,7 +126,15 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(422)
     result = JSON.parse(@response.body)
     assert(result['error'])
-    assert_equal('User already exists!', result['error'])
+    assert_equal('Email address is already used for other user.', result['error'])
+
+    # email missing with enabled feature
+    params = { firstname: 'some firstname', signup: true }
+    post '/api/v1/users', params.to_json, headers
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert(result['error'])
+    assert_equal('Attribute \'email\' required!', result['error'])
 
     # email missing with enabled feature
     params = { firstname: 'some firstname', signup: true }
@@ -330,7 +338,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(422)
     result = JSON.parse(@response.body)
     assert(result)
-    assert_equal('User already exists!', result['error'])
+    assert_equal('Email address is already used for other user.', result['error'])
 
     # missing required attributes
     params = { note: 'some note' }
