@@ -9,43 +9,7 @@ class Index extends App.ControllerSubContent
     @render()
 
   render: =>
-    auth_provider_all = {
-      facebook: {
-        url:    '/auth/facebook'
-        name:   'Facebook'
-        config: 'auth_facebook'
-      },
-      twitter: {
-        url:    '/auth/twitter'
-        name:   'Twitter'
-        config: 'auth_twitter'
-      },
-      linkedin: {
-        url:    '/auth/linkedin'
-        name:   'LinkedIn'
-        config: 'auth_linkedin'
-      },
-      github: {
-        url:    '/auth/github'
-        name:   'GitHub'
-        config: 'auth_github'
-      },
-      gitlab: {
-        url:    '/auth/gitlab'
-        name:   'GitLab'
-        config: 'auth_gitlab'
-      },
-      google_oauth2: {
-        url:    '/auth/google_oauth2'
-        name:   'Google'
-        config: 'auth_google_oauth2'
-      },
-      oauth2: {
-        url:    '/auth/oauth2'
-        name:   'OAuth2'
-        config: 'auth_oauth2'
-      },
-    }
+    auth_provider_all = App.Config.get('auth_provider_all')
     auth_providers = {}
     for key, provider of auth_provider_all
       if @Config.get(provider.config) is true || @Config.get(provider.config) is 'true'
@@ -90,3 +54,45 @@ class Index extends App.ControllerSubContent
     )
 
 App.Config.set('LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index, permission: ['user_preferences.linked_accounts'] }, 'NavBarProfile')
+App.Config.set('auth_provider_all', {
+  facebook:
+    url:    '/auth/facebook'
+    name:   'Facebook'
+    config: 'auth_facebook'
+    class:  'facebook'
+  twitter:
+    url:    '/auth/twitter'
+    name:   'Twitter'
+    config: 'auth_twitter'
+    class:  'twitter'
+  linkedin:
+    url:    '/auth/linkedin'
+    name:   'LinkedIn'
+    config: 'auth_linkedin'
+    class:  'linkedin'
+  github:
+    url:    '/auth/github'
+    name:   'GitHub'
+    config: 'auth_github'
+    class:  'github'
+  gitlab:
+    url:    '/auth/gitlab'
+    name:   'GitLab'
+    config: 'auth_gitlab'
+    class:  'gitlab'
+  microsoft_office365:
+    url:    '/auth/microsoft_office365'
+    name:   'Office 365'
+    config: 'auth_microsoft_office365'
+    class:  'office365'
+  google_oauth2:
+    url:    '/auth/google_oauth2'
+    name:   'Google'
+    config: 'auth_google_oauth2'
+    class:  'google'
+  oauth2:
+    url:    '/auth/oauth2'
+    name:   'OAuth2'
+    config: 'auth_oauth2'
+    class:  'oauth2'
+})

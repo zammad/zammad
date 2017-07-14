@@ -293,6 +293,81 @@ class UserTest < ActiveSupport::TestCase
     }
   end
 
+  test 'without email - but login eq email' do
+    name = rand(999_999_999)
+
+    login = "admin-role_without_email#{name}@example.com"
+    email = "admin-role_without_email#{name}@example.com"
+    admin = User.create_or_update(
+      login: login,
+      firstname: 'Role',
+      lastname: "Admin#{name}",
+      #email: "",
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert(admin.id)
+    assert_equal(admin.login, login)
+    assert_equal(admin.email, '')
+
+    admin.email = email
+    admin.save!
+
+    assert_equal(admin.login, login)
+    assert_equal(admin.email, email)
+
+    admin.email = ''
+    admin.save!
+
+    assert(admin.id)
+    assert(admin.login)
+    assert_not_equal(admin.login, login)
+    assert_equal(admin.email, '')
+
+    admin.destroy!
+  end
+
+  test 'without email - but login ne email' do
+    name = rand(999_999_999)
+
+    login = "admin-role_without_email#{name}"
+    email = "admin-role_without_email#{name}@example.com"
+    admin = User.create_or_update(
+      login: login,
+      firstname: 'Role',
+      lastname: "Admin#{name}",
+      #email: "",
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert(admin.id)
+    assert_equal(admin.login, login)
+    assert_equal(admin.email, '')
+
+    admin.email = email
+    admin.save!
+
+    assert_equal(admin.login, login)
+    assert_equal(admin.email, email)
+
+    admin.email = ''
+    admin.save!
+
+    assert(admin.id)
+    assert_equal(admin.login, login)
+    assert_equal(admin.email, '')
+
+    admin.destroy!
+  end
+
   test 'ensure roles' do
     name = rand(999_999_999)
 

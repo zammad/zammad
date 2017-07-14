@@ -236,6 +236,9 @@ GEM
     omniauth-linkedin-oauth2 (0.1.5)
       omniauth (~> 1.0)
       omniauth-oauth2
+    omniauth-microsoft-office365 (0.0.7)
+      omniauth
+      omniauth-oauth2
     omniauth-oauth (1.1.0)
       oauth
       omniauth (~> 1.0)
@@ -464,6 +467,7 @@ DEPENDENCIES
   omniauth-gitlab
   omniauth-google-oauth2
   omniauth-linkedin-oauth2
+  omniauth-microsoft-office365
   omniauth-oauth2
   omniauth-twitter
   pg
