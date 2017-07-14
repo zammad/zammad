@@ -156,7 +156,7 @@ class OverviewTest < ActiveSupport::TestCase
         view_mode_default: 's',
       },
     )
-    assert_match(/^\d\d\d$/, overview.link)
+    assert_match(/^\d{1,3}$/, overview.link)
     overview.destroy!
 
     overview = Overview.create!(
