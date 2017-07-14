@@ -2550,6 +2550,10 @@ ol.tabs li {
     background: hsl(0,0%,15%);
   }
 
+  &.auth-provider--office365 {
+    background: hsl(15,100%,47%);
+  }
+
   .provider-name {
     flex: 1;
   }
@@ -2558,7 +2562,6 @@ ol.tabs li {
     width: 29px;
     height: 24px;
     margin-right: 10px;
-    margin-top: 1px;
   }
 }
 
