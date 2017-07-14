@@ -21,7 +21,7 @@
   </div>
   <div class="zammad-chat-body"></div>
   <form class="zammad-chat-controls">
-    <textarea class="zammad-chat-input" rows="1" placeholder="<%- @T('Compose your message...') %>"></textarea>
+    <div class="zammad-chat-input" rows="1" placeholder="<%- @T('Compose your message...') %>" contenteditable="true"></div>
     <button type="submit" class="zammad-chat-button zammad-chat-send"<%= " style='background: #{ @background }'" if @background %>><%- @T('Send') %></button>
   </form>
 </div>

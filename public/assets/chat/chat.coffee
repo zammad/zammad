@@ -471,7 +471,7 @@ do($ = window.jQuery, window) ->
             from: if message.created_by_id then 'agent' else 'customer'
 
         if unfinishedMessage
-          @input.val unfinishedMessage
+          @input.html(unfinishedMessage)
 
       # show wait list
       if data.position
@@ -489,7 +489,7 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-message--unread')
         .removeClass 'zammad-chat-message--unread'
 
-      sessionStorage.setItem 'unfinished_message', @input.val()
+      sessionStorage.setItem 'unfinished_message', @input.html()
 
       @onTyping()
 
@@ -520,7 +520,7 @@ do($ = window.jQuery, window) ->
       @sendMessage()
 
     sendMessage: ->
-      message = @input.val()
+      message = @input.html()
       return if !message
 
       @inactiveTimeout.start()
@@ -543,7 +543,7 @@ do($ = window.jQuery, window) ->
         @lastAddedType = 'message--customer'
         @el.find('.zammad-chat-body').append messageElement
 
-      @input.val('')
+      @input.html('')
       @scrollToBottom()
 
       # send message event
