@@ -126,6 +126,12 @@ class UsersController < ApplicationController
       if admin_account_exists && !params[:signup]
         raise Exceptions::UnprocessableEntity, 'Only signup with not authenticate user possible!'
       end
+
+      # check if user already exists
+      if clean_params[:email].blank?
+        raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
+      end
+
       user = User.new(clean_params)
       user.associations_from_param(params)
       user.updated_by_id = 1
@@ -166,7 +172,7 @@ class UsersController < ApplicationController
     end
 
     # check if user already exists
-    if !user.email.empty?
+    if user.email.present?
       exists = User.where(email: user.email.downcase).first
       raise Exceptions::UnprocessableEntity, 'User already exists!' if exists
     end
@@ -177,7 +183,7 @@ class UsersController < ApplicationController
       Setting.set('system_init_done', true)
 
       # fetch org logo
-      if !user.email.empty?
+      if user.email.present?
         Service::Image.organization_suggest(user.email)
       end
 
@@ -363,7 +369,7 @@ class UsersController < ApplicationController
       limit: params[:limit],
       current_user: current_user,
     }
-    if params[:role_ids] && !params[:role_ids].empty?
+    if params[:role_ids].present?
       query_params[:role_ids] = params[:role_ids]
     end
 
@@ -449,10 +455,10 @@ class UsersController < ApplicationController
     end
 
     # do query
-    user_all = if params[:role_ids] && !params[:role_ids].empty?
-                 User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where('users.id != 1').order('users.created_at DESC').limit( params[:limit] || 20 )
+    user_all = if params[:role_ids].present?
+                 User.joins(:roles).where('roles.id' => params[:role_ids]).where('users.id != 1').order('users.created_at DESC').limit(params[:limit] || 20)
                else
-                 User.where('id != 1').order('created_at DESC').limit( params[:limit] || 20 )
+                 User.where('id != 1').order('created_at DESC').limit(params[:limit] || 20)
                end
 
     # build result list

@@ -38,7 +38,7 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
-  before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles
+  before_validation :check_name, :check_email, :check_login, :ensure_password, :ensure_roles, :ensure_identifier
   before_create   :check_preferences_default, :validate_roles, :domain_based_assignment, :set_locale
   before_update   :check_preferences_default, :validate_roles, :reset_login_failed
   after_create    :avatar_for_email_check
@@ -867,9 +867,9 @@ returns
       end
     end
 
-    # if no email, complain about missing login
-    if id != 1 && login.blank?
-      raise Exceptions::UnprocessableEntity, 'Attribute \'login\' required!'
+    # generate auto login
+    if login.blank?
+      self.login = "auto-#{Time.zone.now.to_i}-#{rand(999_999)}"
     end
 
     # check if login already exists
@@ -878,7 +878,7 @@ returns
     while check
       exists = User.find_by(login: login)
       if exists && exists.id != id
-        self.login = login + rand(999).to_s
+        self.login = "#{login}#{rand(999)}"
       else
         check = false
       end
@@ -889,6 +889,12 @@ returns
   def ensure_roles
     return true if role_ids.present?
     self.role_ids = Role.signup_role_ids
+  end
+
+  def ensure_identifier
+    return true if email.present? || firstname.present? || lastname.present? || phone.present?
+    return true if login.present? && !login.start_with?('auto-')
+    raise Exceptions::UnprocessableEntity, 'Minimum one identifier (login, firstname, lastname, phone or email) for user is required.'
   end
 
   def validate_roles
