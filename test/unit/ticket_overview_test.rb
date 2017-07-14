@@ -317,7 +317,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
     )
   end
 
-  test 'bbb overiview index' do
+  test 'bbb overview index' do
 
     result = Ticket::Overviews.all(
       current_user: agent1,
@@ -358,7 +358,7 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
   end
 
-  test 'ccc overiview content' do
+  test 'ccc overview content' do
 
     Ticket.destroy_all
 
