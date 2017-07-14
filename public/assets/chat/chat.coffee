@@ -585,11 +585,6 @@ do($ = window.jQuery, window) ->
 
       @el.addClass('zammad-chat-is-open')
 
-      if !@inputInitialized
-        @inputInitialized = true
-        @input.autoGrow
-          extraLine: false
-
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
 
       @el.css 'bottom', -remainerHeight

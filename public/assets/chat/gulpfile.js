@@ -29,9 +29,7 @@ gulp.task('js', function(){
     .pipe(plumber())
     .pipe(coffee({bare: true}).on('error', gutil.log));
 
-  var autoGrow = gulp.src('jquery.autoGrow.js');
-
-  return merge(templates, js, autoGrow)
+  return merge(templates, js)
     .pipe(concat('chat.js'))
     .pipe(gulp.dest('./'))
     .pipe(uglify())
