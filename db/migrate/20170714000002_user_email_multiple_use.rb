@@ -1,0 +1,34 @@
+class UserEmailMultipleUse < ActiveRecord::Migration
+  def up
+
+    # return if it's a new setup
+    return if !Setting.find_by(name: 'system_init_done')
+
+    Setting.create_if_not_exists(
+      title: 'User email for muliple users',
+      name: 'user_email_multiple_use',
+      area: 'Model::User',
+      description: 'Allow to use email address for muliple users.',
+      options: {
+        form: [
+          {
+            display: '',
+            null: true,
+            name: 'user_email_multiple_use',
+            tag: 'boolean',
+            options: {
+              true  => 'yes',
+              false => 'no',
+            },
+          },
+        ],
+      },
+      state: false,
+      preferences: {
+        permission: ['admin'],
+      },
+      frontend: false
+    )
+  end
+
+end

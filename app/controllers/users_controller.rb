@@ -132,6 +132,10 @@ class UsersController < ApplicationController
         raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
       end
 
+      # check if user already exists
+      exists = User.find_by(email: clean_params[:email].downcase.strip)
+      raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.' if exists
+
       user = User.new(clean_params)
       user.associations_from_param(params)
       user.updated_by_id = 1
@@ -171,11 +175,6 @@ class UsersController < ApplicationController
       user.associations_from_param(params)
     end
 
-    # check if user already exists
-    if user.email.present?
-      exists = User.where(email: user.email.downcase).first
-      raise Exceptions::UnprocessableEntity, 'User already exists!' if exists
-    end
     user.save!
 
     # if first user was added, set system init done

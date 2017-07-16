@@ -368,6 +368,100 @@ class UserTest < ActiveSupport::TestCase
     admin.destroy!
   end
 
+  test 'uniq email' do
+    name = rand(999_999_999)
+
+    email1 = "admin1-role_without_email#{name}@example.com"
+    admin1 = User.create!(
+      login: email1,
+      firstname: 'Role',
+      lastname: "Admin1#{name}",
+      email: email1,
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert(admin1.id)
+    assert_equal(admin1.email, email1)
+
+    assert_raises(Exceptions::UnprocessableEntity) {
+      User.create!(
+        login: "#{email1}-1",
+        firstname: 'Role',
+        lastname: "Admin1#{name}",
+        email: email1,
+        password: 'adminpw',
+        active: true,
+        roles: Role.where(name: %w(Admin Agent)),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    }
+
+    email2 = "admin2-role_without_email#{name}@example.com"
+    admin2 = User.create!(
+      firstname: 'Role',
+      lastname: "Admin2#{name}",
+      email: email2,
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert_raises(Exceptions::UnprocessableEntity) {
+      admin2.email = email1
+      admin2.save!
+    }
+
+    admin1.email = admin1.email
+    admin1.save!
+
+    admin2.destroy!
+    admin1.destroy!
+  end
+
+  test 'uniq email - multiple use' do
+    Setting.set('user_email_multiple_use', true)
+    name = rand(999_999_999)
+
+    email1 = "admin1-role_without_email#{name}@example.com"
+    admin1 = User.create!(
+      login: email1,
+      firstname: 'Role',
+      lastname: "Admin1#{name}",
+      email: email1,
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert(admin1.id)
+    assert_equal(admin1.email, email1)
+
+    admin2 = User.create!(
+      login: "#{email1}-1",
+      firstname: 'Role',
+      lastname: "Admin1#{name}",
+      email: email1,
+      password: 'adminpw',
+      active: true,
+      roles: Role.where(name: %w(Admin Agent)),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(admin2.email, email1)
+    admin2.destroy!
+    admin1.destroy!
+    Setting.set('user_email_multiple_use', false)
+  end
+
   test 'ensure roles' do
     name = rand(999_999_999)
 

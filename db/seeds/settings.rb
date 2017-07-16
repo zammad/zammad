@@ -706,6 +706,31 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
+  title: 'User email for muliple users',
+  name: 'user_email_multiple_use',
+  area: 'Model::User',
+  description: 'Allow to use email address for muliple users.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'user_email_multiple_use',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    permission: ['admin'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
   title: 'Authentication via %s',
   name: 'auth_ldap',
   area: 'Security::Authentication',
