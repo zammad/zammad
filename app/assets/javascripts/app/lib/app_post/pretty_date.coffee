@@ -38,11 +38,16 @@ class App.PrettyDate
       months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       month = months[created.getMonth()]
 
-      # for less than 7 days
-      if diff < (60 * 60 * 24 * 7)
+      # for less than 6 days
+      # weekday HH::MM
+      if diff < (60 * 60 * 24 * 6)
         string = "#{App.i18n.translateInline(weekday)} #{created.getHours()}:#{@s(created.getMinutes(), 2)}"
-      else if diff < (60 * 60 * 24 * 7) * 365
+      # if it was this year
+      # weekday DD. MM HH::MM
+      else if created.getYear() is current.getYear()
         string = "#{App.i18n.translateInline(weekday)} #{created.getDate()}. #{App.i18n.translateInline(month)} #{created.getHours()}:#{@s(created.getMinutes(), 2)}"
+      # if it was the year before
+      # weekday YYYY-MM-DD HH::MM
       else
         string = "#{App.i18n.translateInline(weekday)} #{App.i18n.translateTimestamp(time)}"
       if escalation
