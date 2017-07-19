@@ -66,6 +66,7 @@ class Stats::TicketReopen
   def self.log(object, o_id, changes, updated_by_id)
     return if object != 'Ticket'
     ticket = Ticket.lookup(id: o_id)
+    return if !ticket
 
     # check if close_at is already set / if not, ticket is not reopend
     return if !ticket.close_at
