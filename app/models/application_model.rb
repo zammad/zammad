@@ -5,7 +5,7 @@ class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::Cacheable
   include ApplicationModel::CanLookup
   include ApplicationModel::CanLookupSearchIndexAttributes
-  include ApplicationModel::ChecksAttributeLength
+  include ApplicationModel::ChecksAttributeValuesAndLength
   include ApplicationModel::CleansParam
   include ApplicationModel::CleansRecentView
   include ApplicationModel::FillsByUserColumns
