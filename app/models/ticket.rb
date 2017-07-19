@@ -275,6 +275,11 @@ returns
 
   def merge_to(data)
 
+    # prevent cross merging tickets
+    target_ticket = Ticket.find(data[:ticket_id])
+    raise 'no target ticket given' if !target_ticket
+    raise 'invalid state for target ticket' if target_ticket.state.name == 'merged'
+
     # update articles
     Transaction.execute do
 
@@ -317,7 +322,7 @@ returns
       save!
 
       # touch new ticket (to broadcast change)
-      Ticket.find(data[:ticket_id]).touch
+      target_ticket.touch
     end
     true
   end
