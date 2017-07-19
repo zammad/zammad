@@ -1225,7 +1225,7 @@ Setting.create_if_not_exists(
         null: true,
         name: 'site',
         tag: 'input',
-        placeholder: 'https://gitlab.YOURDOMAIN.com',
+        placeholder: 'https://oauth.YOURDOMAIN.com',
       },
       {
         display: 'authorize_url',
