@@ -2,6 +2,7 @@
 if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
   Rails.application.config.db_case_sensitive = true
   Rails.application.config.db_like = 'ILIKE'
+  Rails.application.config.db_null_byte = false
 
   # postgresql version check
   #  example output: "9.5.0"

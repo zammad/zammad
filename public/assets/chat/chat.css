@@ -320,9 +320,9 @@
 .zammad-chat-controls {
   overflow: hidden;
   display: none;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
   border-top: 1px solid #ededed;
   padding: 0;
   margin: 0;
@@ -340,25 +340,23 @@
   margin: 0;
   padding: 1em 2em;
   float: left;
-  width: auto;
-  height: auto;
   max-height: 6em;
-  min-height: 1.4em !important;
+  min-height: 1.4em;
   font-family: inherit;
   line-height: 1.4em;
   font-size: inherit;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  border: none !important;
+  border: none;
   background: none;
-  box-shadow: none !important;
+  box-shadow: none;
   box-sizing: content-box;
   outline: none;
-  resize: none;
   -webkit-flex: 1;
   -ms-flex: 1;
-  flex: 1; }
+  flex: 1;
+  overflow: auto; }
 
 .zammad-chat-input::-webkit-input-placeholder {
   color: #d9d9d9; }
@@ -373,7 +371,7 @@
   background: #379ad7;
   color: white;
   padding: 0.5em 1.2em;
-  margin: 0.5em 1em 0.5em;
+  margin: 0.63em 1em;
   cursor: pointer;
   border: none;
   border-radius: 1.5em;
