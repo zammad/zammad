@@ -560,21 +560,24 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
 
     # inbound
     configureAttributesInbound = [
-      { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
-      { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off', },
-      { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
-      { name: 'options::ssl',       display: 'SSL',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
-      { name: 'options::port',      display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
-      { name: 'options::folder',    display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false },
+      { name: 'adapter',                  display: 'Type',     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
+      { name: 'options::host',            display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
+      { name: 'options::user',            display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off' },
+      { name: 'options::password',        display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
+      { name: 'options::ssl',             display: 'SSL',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
+      { name: 'options::port',            display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
+      { name: 'options::folder',          display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
+      { name: 'options::keep_on_server',  display: 'Keep messages on server', tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
     ]
 
     showHideFolder = (params, attribute, attributes, classname, form, ui) ->
       return if !params
       if params.adapter is 'imap'
         ui.show('options::folder')
+        ui.show('options::keep_on_server')
         return
       ui.hide('options::folder')
+      ui.hide('options::keep_on_server')
 
     handlePort = (params, attribute, attributes, classname, form, ui) ->
       return if !params
@@ -606,9 +609,10 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     # fill user / password based on intro info
     channel_used = { options: {} }
     if @account['meta']
-      channel_used['options']['user']     = @account['meta']['email']
-      channel_used['options']['password'] = @account['meta']['password']
-      channel_used['options']['folder']   = @account['meta']['folder']
+      channel_used['options']['user']           = @account['meta']['email']
+      channel_used['options']['password']       = @account['meta']['password']
+      channel_used['options']['folder']         = @account['meta']['folder']
+      channel_used['options']['keep_on_server'] = @account['meta']['keep_on_server']
 
     # show used backend
     @$('.base-outbound-settings').html('')
@@ -670,7 +674,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
             for key, value of data.setting
               @account[key] = value
 
-          if data.content_messages && data.content_messages > 0
+          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
             message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
@@ -724,7 +728,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
           # remember account settings
           @account.inbound = params
 
-          if data.content_messages && data.content_messages > 0
+          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
             message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')

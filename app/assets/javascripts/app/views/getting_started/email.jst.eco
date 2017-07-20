@@ -63,7 +63,7 @@
   </form>
 
   <form class="setup wizard hide js-inbound">
-    <div class="wizard-slide">
+    <div class="wizard-slide wizard-slide--large">
       <h2><%- @T('Email Inbound') %></h2>
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>

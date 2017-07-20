@@ -127,6 +127,17 @@ test:integration:email_deliver:
     - ruby -I test/ test/integration/email_deliver_test.rb
     - rake db:drop
 
+test:integration:email_keep_on_server:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/email_keep_on_server_test.rb
+    - rake db:drop
+
 test:integration:twitter:
   stage: test
   tags:
