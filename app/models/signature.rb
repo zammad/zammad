@@ -2,7 +2,11 @@
 
 class Signature < ApplicationModel
   include LatestChangeObserved
+  include HtmlSanitized
 
   has_many  :groups,  after_add: :cache_update, after_remove: :cache_update
   validates :name,    presence: true
+
+  sanitized_html :body
+
 end
