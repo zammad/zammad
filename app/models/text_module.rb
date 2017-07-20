@@ -2,9 +2,12 @@
 
 class TextModule < ApplicationModel
   include ChecksClientNotification
+  include ChecksHtmlSanitized
 
   validates :name,    presence: true
   validates :content, presence: true
+
+  sanitized_html :content
 
 =begin
 
