@@ -295,7 +295,7 @@
               else {
                 img = "<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">"
               }
-              document.execCommand('insertHTML', false, img)
+              _this.paste(img)
             }
 
             // resize if to big
@@ -367,13 +367,7 @@
       text = App.Utils.removeEmptyLines(text)
       _this.log('insert', text)
 
-      // as fallback, insert html via pasteHtmlAtCaret (for IE 11 and lower)
-      if (docType == 'text3') {
-        _this.pasteHtmlAtCaret(text)
-      }
-      else {
-        document.execCommand('insertHTML', false, text)
-      }
+      _this.paste(text)
       return true
     })
 
@@ -533,37 +527,6 @@
     return this.$element.html().trim()
   }
 
-  // taken from https://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div/6691294#6691294
-  Plugin.prototype.pasteHtmlAtCaret = function(html) {
-    var sel, range;
-    if (window.getSelection) {
-      sel = window.getSelection()
-      if (sel.getRangeAt && sel.rangeCount) {
-        range = sel.getRangeAt(0)
-        range.deleteContents()
-
-        var el = document.createElement('div')
-        el.innerHTML = html;
-        var frag = document.createDocumentFragment(), node, lastNode
-        while ( (node = el.firstChild) ) {
-          lastNode = frag.appendChild(node)
-        }
-        range.insertNode(frag)
-
-        if (lastNode) {
-          range = range.cloneRange()
-          range.setStartAfter(lastNode)
-          range.collapse(true)
-          sel.removeAllRanges()
-          sel.addRange(range)
-        }
-      }
-    }
-    else if (document.selection && document.selection.type != 'Control') {
-      document.selection.createRange().pasteHTML(html)
-    }
-  }
-
   // log method
   Plugin.prototype.log = function() {
     if (App && App.Log) {
@@ -574,7 +537,30 @@
     }
   }
 
-  $.fn[pluginName] = function ( options ) {
+  // paste some content
+  Plugin.prototype.paste = function(string) {
+    var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+
+    // IE <= 10
+    if (document.selection && document.selection.createRange) {
+      var range = document.selection.createRange()
+      if (range.pasteHTML) {
+        range.pasteHTML(string)
+      }
+    }
+    // IE == 11
+    else if (isIE11 && document.getSelection) {
+      var range = document.getSelection().getRangeAt(0)
+      var nnode = document.createElement('div')
+          range.surroundContents(nnode)
+          nnode.innerHTML = string
+    }
+    else {
+      document.execCommand('insertHTML', false, string)
+    }
+  }
+
+  $.fn[pluginName] = function (options) {
     return this.each(function () {
       if (!$.data(this, 'plugin_' + pluginName)) {
         $.data(this, 'plugin_' + pluginName,
