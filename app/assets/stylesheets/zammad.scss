@@ -3972,7 +3972,6 @@ footer {
     max-width: 400px;
     min-width: 350px;
     flex-direction: column;
-    @extend .zIndex-2;
 
     &.is-visible {
       display: flex;
@@ -5985,7 +5984,7 @@ footer {
 }
 
 .dropdown-menu {
-  @extend .zIndex-9; // has to be behind modal windows
+  @extend .zIndex-5; // has to be behind modal windows and beneath notifications (popover)
   position: absolute;
   margin: 0;
   padding: 0;
