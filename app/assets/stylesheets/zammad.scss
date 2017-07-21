@@ -6444,6 +6444,9 @@ footer {
     @extend .u-textTruncate;
   }
 
+.wizard {
+  margin: auto; // makes sure that the wizard is scrollable
+}
 
 .wizard-logo {
   fill: white;
