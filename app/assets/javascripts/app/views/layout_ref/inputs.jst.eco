@@ -52,6 +52,10 @@
       <input id="id1" class="form-control" type="text" placeholder="Text Input">
     </div>
     <div class="input form-group">
+      <label for="id1">Name (readonly)</label>
+      <input id="id1" class="form-control" type="text" placeholder="Text Input" readonly value="Sandor Clegane">
+    </div>
+    <div class="input form-group">
       <label for="id2">Password</label>
       <input id="id2" class="form-control" type="password" value="Password Input">
     </div>
