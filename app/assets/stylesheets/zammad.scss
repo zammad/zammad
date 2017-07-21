@@ -1860,6 +1860,7 @@ input.has-error {
     appearance: textfield;
     border-radius: 19px;
     padding: 0 17px 0 42px;
+    will-change: transform;
 
     &.is-empty + .empty-search {
       visibility: hidden;
