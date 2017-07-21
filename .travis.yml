@@ -7,7 +7,6 @@ notifications:
 env:
   - DB=mysql
   - DB=postgresql
-  - BUNDLE_JOBS=8
 addons:
   postgresql: "9.4"
   apt:

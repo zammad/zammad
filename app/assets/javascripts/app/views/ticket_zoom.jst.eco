@@ -9,6 +9,7 @@
     <div class="ticketZoom">
       <div class="ticketZoom-controls">
         <div class="js-settingContainer"></div>
+        <div class="spacer"></div>
         <div class="js-highlighterContainer highlighter"></div>
         <div class="js-overviewNavigatorContainer overview-navigator"></div>
       </div>
