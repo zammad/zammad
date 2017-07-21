@@ -5968,6 +5968,8 @@ footer {
 }
 
 .dropdown-menu {
+  @extend .zIndex-9; // has to be behind modal windows
+  position: absolute;
   margin: 0;
   padding: 0;
   min-width: 100%;
