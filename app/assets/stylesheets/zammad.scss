@@ -398,7 +398,8 @@ pre code.hljs {
   }
 
   &.is-disabled,
-  &[disabled] {
+  &[disabled],
+  &:disabled {
     pointer-events: none;
     cursor: not-allowed;
     opacity: .33;
@@ -415,7 +416,7 @@ pre code.hljs {
     font-size: 12px;
     letter-spacing: 0.05em;
     height: 31px;
-    padding: 2px 11px 0 !important;
+    padding: 0 11px !important;
     display: inline-flex;
     align-items: center;
 
@@ -1623,6 +1624,24 @@ textarea,
     border-color: hsl(200,71%,59%);
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
+
+  &.is-disabled, // .is-disabled should not be used - legacy support
+  &[disabled],
+  &[readonly] {
+    background: hsl(210,17%,93%);
+    border-color: hsl(210,10%,85%);
+    
+    &:focus,
+    &.focus {
+      border-color: hsl(200,71%,59%);
+    }
+  }
+
+  &.is-disabled, // .is-disabled should not be used
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 1;
+  }
 }
 
 input[type=url] {
@@ -1698,13 +1717,6 @@ select.form-control:not([multiple]) {
 
 .form-control.is-hidden {
   display: none;
-}
-
-.form-control[disabled], .form-control.is-disabled {
-  cursor: not-allowed;
-  background-color: #fff;
-  color: #d5d5d5;
-  opacity: 1;
 }
 
 .form-control.form-control--borderless {
@@ -1860,6 +1872,7 @@ input.has-error {
     appearance: textfield;
     border-radius: 19px;
     padding: 0 17px 0 42px;
+    will-change: transform;
 
     &.is-empty + .empty-search {
       visibility: hidden;
@@ -2550,6 +2563,10 @@ ol.tabs li {
     background: hsl(0,0%,15%);
   }
 
+  &.auth-provider--office365 {
+    background: hsl(15,100%,47%);
+  }
+
   .provider-name {
     flex: 1;
   }
@@ -2558,7 +2575,6 @@ ol.tabs li {
     width: 29px;
     height: 24px;
     margin-right: 10px;
-    margin-top: 1px;
   }
 }
 
@@ -3956,7 +3972,6 @@ footer {
     max-width: 400px;
     min-width: 350px;
     flex-direction: column;
-    @extend .zIndex-2;
 
     &.is-visible {
       display: flex;
@@ -5483,8 +5498,13 @@ footer {
   .newTicket .sidebar {
     width: 290px;
   }
-  .newTicket .form-control:not(:focus):not(.focus) {
+  .newTicket .form-control {
     border-color: hsl(0,0%,90%);
+    
+    &:focus,
+    &.focus {
+      border-color: hsl(200,71%,59%);
+    }
   }
   .newTicket .article-form-top {
     margin-top: 15px;
@@ -5964,6 +5984,8 @@ footer {
 }
 
 .dropdown-menu {
+  @extend .zIndex-5; // has to be behind modal windows and beneath notifications (popover)
+  position: absolute;
   margin: 0;
   padding: 0;
   min-width: 100%;
@@ -6303,15 +6325,18 @@ footer {
   cursor: default;
 }
 
-.checkbox.form-group .controls label {
-  padding: 2px 0;
-  font: inherit;
-  font-size: 13px;
-  margin-bottom: 0;
-  color: inherit;
-  text-transform: inherit;
-  letter-spacing: 0;
-  @extend .u-clickable;
+.checkbox,
+.radio {
+  &.form-group .controls label {
+    padding: 2px 0;
+    font: inherit;
+    font-size: 13px;
+    margin-bottom: 0;
+    color: inherit;
+    text-transform: inherit;
+    letter-spacing: 0;
+    @extend .u-clickable;
+  }
 }
 
 .userSearch-label {
@@ -6440,6 +6465,9 @@ footer {
     @extend .u-textTruncate;
   }
 
+.wizard {
+  margin: auto; // makes sure that the wizard is scrollable
+}
 
 .wizard-logo {
   fill: white;
@@ -6454,6 +6482,10 @@ footer {
   width: 400px;
   padding-bottom: 18px;
   margin-bottom: 20px;
+
+  &.wizard-slide--large {
+    width: 460px;
+  }
 }
 
 .wizard h2 {
@@ -7177,6 +7209,12 @@ output {
 
 .zammad-switch input {
   display: none;
+
+  &[disabled] + label {
+    cursor: not-allowed;
+    background: hsl(210,17%,93%);
+    border-color: hsl(210,10%,85%);
+  }
 
   &:focus + label {
     transition: none;

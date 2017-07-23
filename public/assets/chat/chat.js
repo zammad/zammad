@@ -1,3 +1,64 @@
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["agent"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      if (this.agent.avatar) {
+        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
+        __out.push(__sanitize(this.agent.avatar));
+        __out.push('">\n');
+      }
+    
+      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
+    
+      __out.push(__sanitize(this.agent.name));
+    
+      __out.push('</span>\n</span>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   slice = [].slice,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -60,7 +121,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     Log.prototype.log = function(level, items) {
-      var i, item, len, logString;
+      var item, j, len, logString;
       items.unshift('||');
       items.unshift(level);
       items.unshift(this.options.logPrefix);
@@ -69,8 +130,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         return;
       }
       logString = '';
-      for (i = 0, len = items.length; i < len; i++) {
-        item = items[i];
+      for (j = 0, len = items.length; j < len; j++) {
+        item = items[j];
         logString += ' ';
         if (typeof item === 'object') {
           logString += JSON.stringify(item);
@@ -173,11 +234,11 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       })(this);
       this.ws.onmessage = (function(_this) {
         return function(e) {
-          var i, len, pipe, pipes;
+          var j, len, pipe, pipes;
           pipes = JSON.parse(e.data);
           _this.log.debug('onMessage', e.data);
-          for (i = 0, len = pipes.length; i < len; i++) {
-            pipe = pipes[i];
+          for (j = 0, len = pipes.length; j < len; j++) {
+            pipe = pipes[j];
             if (pipe.event === 'pong') {
               _this.ping();
             }
@@ -386,8 +447,15 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.scrollSnapTolerance = 10;
 
+    ZammadChat.prototype.richTextFormatKey = {
+      66: true,
+      73: true,
+      85: true,
+      83: true
+    };
+
     ZammadChat.prototype.T = function() {
-      var i, item, items, len, string, translations;
+      var item, items, j, len, string, translations;
       string = arguments[0], items = 2 <= arguments.length ? slice.call(arguments, 1) : [];
       if (this.options.lang && this.options.lang !== 'en') {
         if (!this.translations[this.options.lang]) {
@@ -401,8 +469,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         }
       }
       if (items) {
-        for (i = 0, len = items.length; i < len; i++) {
-          item = items[i];
+        for (j = 0, len = items.length; j < len; j++) {
+          item = items[j];
           string = string.replace(/%s/, item);
         }
       }
@@ -425,6 +493,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     function ZammadChat(options) {
+      this.removeAttributes = bind(this.removeAttributes, this);
       this.startTimeoutObservers = bind(this.startTimeoutObservers, this);
       this.onCssLoaded = bind(this.onCssLoaded, this);
       this.setAgentOnlineState = bind(this.setAgentOnlineState, this);
@@ -552,6 +621,203 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         keydown: this.checkForEnter,
         input: this.onInput
       });
+      this.input.on('keydown', (function(_this) {
+        return function(e) {
+          var richtTextControl;
+          richtTextControl = false;
+          if (!e.altKey && !e.ctrlKey && e.metaKey) {
+            richtTextControl = true;
+          } else if (!e.altKey && e.ctrlKey && !e.metaKey) {
+            richtTextControl = true;
+          }
+          if (richtTextControl && _this.richTextFormatKey[e.keyCode]) {
+            e.preventDefault();
+            if (e.keyCode === 66) {
+              document.execCommand('bold');
+              return true;
+            }
+            if (e.keyCode === 73) {
+              document.execCommand('italic');
+              return true;
+            }
+            if (e.keyCode === 85) {
+              document.execCommand('underline');
+              return true;
+            }
+            if (e.keyCode === 83) {
+              document.execCommand('strikeThrough');
+              return true;
+            }
+          }
+        };
+      })(this));
+      this.input.on('paste', (function(_this) {
+        return function(e) {
+          var clipboardData, docType, error, html, htmlTmp, imageFile, imageInserted, item, match, reader, regex, replacementTag, text;
+          e.stopPropagation();
+          e.preventDefault();
+          clipboardData;
+          if (e.clipboardData) {
+            clipboardData = e.clipboardData;
+          } else if (window.clipboardData) {
+            clipboardData = window.clipboardData;
+          } else if (e.originalEvent.clipboardData) {
+            clipboardData = e.originalEvent.clipboardData;
+          } else {
+            throw 'No clipboardData support';
+          }
+          imageInserted = false;
+          if (clipboardData && clipboardData.items && clipboardData.items[0]) {
+            item = clipboardData.items[0];
+            if (item.kind === 'file' && (item.type === 'image/png' || item.type === 'image/jpeg')) {
+              imageFile = item.getAsFile();
+              reader = new FileReader();
+              reader.onload = function(e) {
+                var img, insert, result;
+                result = e.target.result;
+                img = document.createElement('img');
+                img.src = result;
+                insert = function(dataUrl, width, height, isRetina) {
+                  if (_this.isRetina()) {
+                    width = width / 2;
+                    height = height / 2;
+                  }
+                  result = dataUrl;
+                  img = "<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">";
+                  return document.execCommand('insertHTML', false, img);
+                };
+                return _this.resizeImage(img.src, 460, 'auto', 2, 'image/jpeg', 'auto', insert);
+              };
+              reader.readAsDataURL(imageFile);
+              imageInserted = true;
+            }
+          }
+          if (imageInserted) {
+            return;
+          }
+          text = void 0;
+          docType = void 0;
+          try {
+            text = clipboardData.getData('text/html');
+            docType = 'html';
+            if (!text || text.length === 0) {
+              docType = 'text';
+              text = clipboardData.getData('text/plain');
+            }
+            if (!text || text.length === 0) {
+              docType = 'text2';
+              text = clipboardData.getData('text');
+            }
+          } catch (error) {
+            e = error;
+            console.log('Sorry, can\'t insert markup because browser is not supporting it.');
+            docType = 'text3';
+            text = clipboardData.getData('text');
+          }
+          if (docType === 'text' || docType === 'text2' || docType === 'text3') {
+            text = '<div>' + text.replace(/\n/g, '</div><div>') + '</div>';
+            text = text.replace(/<div><\/div>/g, '<div><br></div>');
+          }
+          console.log('p', docType, text);
+          if (docType === 'html') {
+            html = $("<div>" + text + "</div>");
+            match = false;
+            htmlTmp = text;
+            regex = new RegExp('<(/w|w)\:[A-Za-z]');
+            if (htmlTmp.match(regex)) {
+              match = true;
+              htmlTmp = htmlTmp.replace(regex, '');
+            }
+            regex = new RegExp('<(/o|o)\:[A-Za-z]');
+            if (htmlTmp.match(regex)) {
+              match = true;
+              htmlTmp = htmlTmp.replace(regex, '');
+            }
+            if (match) {
+              html = _this.wordFilter(html);
+            }
+            html = $(html);
+            html.contents().each(function() {
+              if (this.nodeType === 8) {
+                return $(this).remove();
+              }
+            });
+            html.find('a, font, small, time, form, label').replaceWith(function() {
+              return $(this).contents();
+            });
+            replacementTag = 'div';
+            html.find('textarea').each(function() {
+              var newTag, outer;
+              outer = this.outerHTML;
+              regex = new RegExp('<' + this.tagName, 'i');
+              newTag = outer.replace(regex, '<' + replacementTag);
+              regex = new RegExp('</' + this.tagName, 'i');
+              newTag = newTag.replace(regex, '</' + replacementTag);
+              return $(this).replaceWith(newTag);
+            });
+            html.find('font, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove();
+            _this.removeAttributes(html);
+            text = html.html();
+          }
+          if (docType === 'text3') {
+            _this.pasteHtmlAtCaret(text);
+          } else {
+            document.execCommand('insertHTML', false, text);
+          }
+          return true;
+        };
+      })(this));
+      this.input.on('drop', (function(_this) {
+        return function(e) {
+          var dataTransfer, file, reader, x, y;
+          e.stopPropagation();
+          e.preventDefault();
+          dataTransfer;
+          if (window.dataTransfer) {
+            dataTransfer = window.dataTransfer;
+          } else if (e.originalEvent.dataTransfer) {
+            dataTransfer = e.originalEvent.dataTransfer;
+          } else {
+            throw 'No clipboardData support';
+          }
+          x = e.clientX;
+          y = e.clientY;
+          file = dataTransfer.files[0];
+          if (file.type.match('image.*')) {
+            reader = new FileReader();
+            reader.onload = function(e) {
+              var img, insert, result;
+              result = e.target.result;
+              img = document.createElement('img');
+              img.src = result;
+              insert = function(dataUrl, width, height, isRetina) {
+                var pos, range;
+                if (_this.isRetina()) {
+                  width = width / 2;
+                  height = height / 2;
+                }
+                result = dataUrl;
+                img = $("<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">");
+                img = img.get(0);
+                if (document.caretPositionFromPoint) {
+                  pos = document.caretPositionFromPoint(x, y);
+                  range = document.createRange();
+                  range.setStart(pos.offsetNode, pos.offset);
+                  range.collapse();
+                  return range.insertNode(img);
+                } else if (document.caretRangeFromPoint) {
+                  range = document.caretRangeFromPoint(x, y);
+                  return range.insertNode(img);
+                } else {
+                  return console.log('could not find carat');
+                }
+              };
+              return _this.resizeImage(img.src, 460, 'auto', 2, 'image/jpeg', 'auto', insert);
+            };
+            return reader.readAsDataURL(file);
+          }
+        };
+      })(this));
       $(window).on('beforeunload', (function(_this) {
         return function() {
           return _this.onLeaveTemporary();
@@ -595,9 +861,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.onWebSocketMessage = function(pipes) {
-      var i, len, pipe;
-      for (i = 0, len = pipes.length; i < len; i++) {
-        pipe = pipes[i];
+      var j, len, pipe;
+      for (j = 0, len = pipes.length; j < len; j++) {
+        pipe = pipes[j];
         this.log.debug('ws:onmessage', pipe);
         switch (pipe.event) {
           case 'chat_error':
@@ -683,15 +949,15 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.onReopenSession = function(data) {
-      var i, len, message, ref, unfinishedMessage;
+      var j, len, message, ref, unfinishedMessage;
       this.log.debug('old messages', data.session);
       this.inactiveTimeout.start();
       unfinishedMessage = sessionStorage.getItem('unfinished_message');
       if (data.agent) {
         this.onConnectionEstablished(data);
         ref = data.session;
-        for (i = 0, len = ref.length; i < len; i++) {
-          message = ref[i];
+        for (j = 0, len = ref.length; j < len; j++) {
+          message = ref[j];
           this.renderMessage({
             message: message.content,
             id: message.id,
@@ -699,7 +965,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
           });
         }
         if (unfinishedMessage) {
-          this.input.val(unfinishedMessage);
+          this.input.html(unfinishedMessage);
         }
       }
       if (data.position) {
@@ -715,7 +981,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.onInput = function() {
       this.el.find('.zammad-chat-message--unread').removeClass('zammad-chat-message--unread');
-      sessionStorage.setItem('unfinished_message', this.input.val());
+      sessionStorage.setItem('unfinished_message', this.input.html());
       return this.onTyping();
     };
 
@@ -749,7 +1015,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.sendMessage = function() {
       var message, messageElement;
-      message = this.input.val();
+      message = this.input.html();
       if (!message) {
         return;
       }
@@ -769,7 +1035,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         this.lastAddedType = 'message--customer';
         this.el.find('.zammad-chat-body').append(messageElement);
       }
-      this.input.val('');
+      this.input.html('');
       this.scrollToBottom();
       return this.send('chat_session_message', {
         content: message,
@@ -810,12 +1076,6 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         this.showLoader();
       }
       this.el.addClass('zammad-chat-is-open');
-      if (!this.inputInitialized) {
-        this.inputInitialized = true;
-        this.input.autoGrow({
-          extraLine: false
-        });
-      }
       remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
       this.el.css('bottom', -remainerHeight);
       if (!this.sessionId) {
@@ -1328,165 +1588,223 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       }
     };
 
+    ZammadChat.prototype.isRetina = function() {
+      var mq;
+      if (window.matchMedia) {
+        mq = window.matchMedia('only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen  and (min-device-pixel-ratio: 1.3), only screen and (min-resolution: 1.3dppx)');
+        return mq && mq.matches || (window.devicePixelRatio > 1);
+      }
+      return false;
+    };
+
+    ZammadChat.prototype.resizeImage = function(dataURL, x, y, sizeFactor, type, quallity, callback, force) {
+      var imageObject;
+      if (x == null) {
+        x = 'auto';
+      }
+      if (y == null) {
+        y = 'auto';
+      }
+      if (sizeFactor == null) {
+        sizeFactor = 1;
+      }
+      if (force == null) {
+        force = true;
+      }
+      imageObject = new Image();
+      imageObject.onload = function() {
+        var canvas, context, factor, imageHeight, imageWidth, newDataUrl, resize;
+        imageWidth = imageObject.width;
+        imageHeight = imageObject.height;
+        console.log('ImageService', 'current size', imageWidth, imageHeight);
+        if (y === 'auto' && x === 'auto') {
+          x = imageWidth;
+          y = imageHeight;
+        }
+        if (y === 'auto') {
+          factor = imageWidth / x;
+          y = imageHeight / factor;
+        }
+        if (x === 'auto') {
+          factor = imageWidth / y;
+          x = imageHeight / factor;
+        }
+        resize = false;
+        if (x < imageWidth || y < imageHeight) {
+          resize = true;
+          x = x * sizeFactor;
+          y = y * sizeFactor;
+        } else {
+          x = imageWidth;
+          y = imageHeight;
+        }
+        canvas = document.createElement('canvas');
+        canvas.width = x;
+        canvas.height = y;
+        context = canvas.getContext('2d');
+        context.drawImage(imageObject, 0, 0, x, y);
+        if (quallity === 'auto') {
+          if (x < 200 && y < 200) {
+            quallity = 1;
+          } else if (x < 400 && y < 400) {
+            quallity = 0.9;
+          } else if (x < 600 && y < 600) {
+            quallity = 0.8;
+          } else if (x < 900 && y < 900) {
+            quallity = 0.7;
+          } else {
+            quallity = 0.6;
+          }
+        }
+        newDataUrl = canvas.toDataURL(type, quallity);
+        if (resize) {
+          console.log('ImageService', 'resize', x / sizeFactor, y / sizeFactor, quallity, (newDataUrl.length * 0.75) / 1024 / 1024, 'in mb');
+          callback(newDataUrl, x / sizeFactor, y / sizeFactor, true);
+          return;
+        }
+        console.log('ImageService', 'no resize', x, y, quallity, (newDataUrl.length * 0.75) / 1024 / 1024, 'in mb');
+        return callback(newDataUrl, x, y, false);
+      };
+      return imageObject.src = dataURL;
+    };
+
+    ZammadChat.prototype.pasteHtmlAtCaret = function(html) {
+      var el, frag, lastNode, node, range, sel;
+      sel = void 0;
+      range = void 0;
+      if (window.getSelection) {
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+          range = sel.getRangeAt(0);
+          range.deleteContents();
+          el = document.createElement('div');
+          el.innerHTML = html;
+          frag = document.createDocumentFragment(node, lastNode);
+          while (node = el.firstChild) {
+            lastNode = frag.appendChild(node);
+          }
+          range.insertNode(frag);
+          if (lastNode) {
+            range = range.cloneRange();
+            range.setStartAfter(lastNode);
+            range.collapse(true);
+            sel.removeAllRanges();
+            return sel.addRange(range);
+          }
+        }
+      } else if (document.selection && document.selection.type !== 'Control') {
+        return document.selection.createRange().pasteHTML(html);
+      }
+    };
+
+    ZammadChat.prototype.wordFilter = function(editor) {
+      var content, last_level, pnt;
+      content = editor.html();
+      content = content.replace(/<!--[\s\S]+?-->/gi, '');
+      content = content.replace(/<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|img|meta|link|style|\w:\w+)(?=[\s\/>]))[^>]*>/gi, '');
+      content = content.replace(/<(\/?)s>/gi, '<$1strike>');
+      content = content.replace(/&nbsp;/gi, ' ');
+      editor.html(content);
+      $('p', editor).each(function() {
+        var matches, str;
+        str = $(this).attr('style');
+        matches = /mso-list:\w+ \w+([0-9]+)/.exec(str);
+        if (matches) {
+          return $(this).data('_listLevel', parseInt(matches[1], 10));
+        }
+      });
+      last_level = 0;
+      pnt = null;
+      $('p', editor).each(function() {
+        var cur_level, i, j, list_tag, matches, ref, ref1, ref2, start, txt;
+        cur_level = $(this).data('_listLevel');
+        if (cur_level !== void 0) {
+          txt = $(this).text();
+          list_tag = '<ul></ul>';
+          if (/^\s*\w+\./.test(txt)) {
+            matches = /([0-9])\./.exec(txt);
+            if (matches) {
+              start = parseInt(matches[1], 10);
+              list_tag = (ref = start > 1) != null ? ref : '<ol start="' + start + {
+                '"></ol>': '<ol></ol>'
+              };
+            } else {
+              list_tag = '<ol></ol>';
+            }
+          }
+          if (cur_level > last_level) {
+            if (last_level === 0) {
+              $(this).before(list_tag);
+              pnt = $(this).prev();
+            } else {
+              pnt = $(list_tag).appendTo(pnt);
+            }
+          }
+          if (cur_level < last_level) {
+            for (i = j = ref1 = i, ref2 = last_level - cur_level; ref1 <= ref2 ? j <= ref2 : j >= ref2; i = ref1 <= ref2 ? ++j : --j) {
+              pnt = pnt.parent();
+            }
+          }
+          $('span:first', this).remove();
+          pnt.append('<li>' + $(this).html() + '</li>');
+          $(this).remove();
+          return last_level = cur_level;
+        } else {
+          return last_level = 0;
+        }
+      });
+      $('[style]', editor).removeAttr('style');
+      $('[align]', editor).removeAttr('align');
+      $('span', editor).replaceWith(function() {
+        return $(this).contents();
+      });
+      $('span:empty', editor).remove();
+      $("[class^='Mso']", editor).removeAttr('class');
+      $('p:empty', editor).remove();
+      return editor;
+    };
+
+    ZammadChat.prototype.removeAttribute = function(element) {
+      var $element, att, j, len, ref;
+      if (!element) {
+        return;
+      }
+      $element = $(element);
+      ref = element.attributes;
+      for (j = 0, len = ref.length; j < len; j++) {
+        att = ref[j];
+        if (att && att.name) {
+          element.removeAttribute(att.name);
+        }
+      }
+      return $element.removeAttr('style').removeAttr('class').removeAttr('lang').removeAttr('type').removeAttr('align').removeAttr('id').removeAttr('wrap').removeAttr('title');
+    };
+
+    ZammadChat.prototype.removeAttributes = function(html, parent) {
+      if (parent == null) {
+        parent = true;
+      }
+      if (parent) {
+        html.each((function(_this) {
+          return function(index, element) {
+            return _this.removeAttribute(element);
+          };
+        })(this));
+      }
+      html.find('*').each((function(_this) {
+        return function(index, element) {
+          return _this.removeAttribute(element);
+        };
+      })(this));
+      return html;
+    };
+
     return ZammadChat;
 
   })(Base);
   return window.ZammadChat = ZammadChat;
 })(window.jQuery, window);
 
-if (!window.zammadChatTemplates) {
-  window.zammadChatTemplates = {};
-}
-window.zammadChatTemplates["agent"] = function (__obj) {
-  if (!__obj) __obj = {};
-  var __out = [], __capture = function(callback) {
-    var out = __out, result;
-    __out = [];
-    callback.call(this);
-    result = __out.join('');
-    __out = out;
-    return __safe(result);
-  }, __sanitize = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else if (typeof value !== 'undefined' && value != null) {
-      return __escape(value);
-    } else {
-      return '';
-    }
-  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-  __safe = __obj.safe = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else {
-      if (!(typeof value !== 'undefined' && value != null)) value = '';
-      var result = new String(value);
-      result.ecoSafe = true;
-      return result;
-    }
-  };
-  if (!__escape) {
-    __escape = __obj.escape = function(value) {
-      return ('' + value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    };
-  }
-  (function() {
-    (function() {
-      if (this.agent.avatar) {
-        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
-        __out.push(__sanitize(this.agent.avatar));
-        __out.push('">\n');
-      }
-    
-      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
-    
-      __out.push(__sanitize(this.agent.name));
-    
-      __out.push('</span>\n</span>');
-    
-    }).call(this);
-    
-  }).call(__obj);
-  __obj.safe = __objSafe, __obj.escape = __escape;
-  return __out.join('');
-};
-
-/*!
- * ----------------------------------------------------------------------------
- * "THE BEER-WARE LICENSE" (Revision 42):
- * <jevin9@gmail.com> wrote this file. As long as you retain this notice you
- * can do whatever you want with this stuff. If we meet some day, and you think
- * this stuff is worth it, you can buy me a beer in return. Jevin O. Sewaruth
- * ----------------------------------------------------------------------------
- *
- * Autogrow Textarea Plugin Version v3.0
- * http://www.technoreply.com/autogrow-textarea-plugin-3-0
- * 
- * THIS PLUGIN IS DELIVERD ON A PAY WHAT YOU WHANT BASIS. IF THE PLUGIN WAS USEFUL TO YOU, PLEASE CONSIDER BUYING THE PLUGIN HERE :
- * https://sites.fastspring.com/technoreply/instant/autogrowtextareaplugin
- *
- * Date: October 15, 2012
- *
- * Zammad modification: 
- *   - remove overflow:hidden when maximum height is reached
- *   - mirror box-sizing
- *
- */
-
-jQuery.fn.autoGrow = function(options) {
-  return this.each(function() {
-    var settings = jQuery.extend({
-      extraLine: true,
-    }, options);
-
-    var createMirror = function(textarea) {
-      jQuery(textarea).after('<div class="autogrow-textarea-mirror"></div>');
-      return jQuery(textarea).next('.autogrow-textarea-mirror')[0];
-    }
-
-    var sendContentToMirror = function (textarea) {
-      mirror.innerHTML = String(textarea.value)
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/ /g, '&nbsp;')
-        .replace(/\n/g, '<br />') +
-        (settings.extraLine? '.<br/>.' : '')
-      ;
-
-      if (jQuery(textarea).height() != jQuery(mirror).height()) {
-        jQuery(textarea).height(jQuery(mirror).height());
-
-        var overflow = jQuery(mirror).height() > maxHeight ? '' : 'hidden';
-        jQuery(textarea).css('overflow', overflow);
-      }
-    }
-
-    var growTextarea = function () {
-      sendContentToMirror(this);
-    }
-
-    // Create a mirror
-    var mirror = createMirror(this);
-
-    // Store max-height
-    var maxHeight = parseInt(jQuery(this).css('max-height'), 10);
-    
-    // Style the mirror
-    mirror.style.display = 'none';
-    mirror.style.wordWrap = 'break-word';
-    mirror.style.whiteSpace = 'normal';
-    mirror.style.padding = jQuery(this).css('paddingTop') + ' ' + 
-      jQuery(this).css('paddingRight') + ' ' + 
-      jQuery(this).css('paddingBottom') + ' ' + 
-      jQuery(this).css('paddingLeft');
-      
-    mirror.style.width = jQuery(this).css('width');
-    mirror.style.fontFamily = jQuery(this).css('font-family');
-    mirror.style.fontSize = jQuery(this).css('font-size');
-    mirror.style.lineHeight = jQuery(this).css('line-height');
-    mirror.style.letterSpacing = jQuery(this).css('letter-spacing');
-    mirror.style.boxSizing = jQuery(this).css('boxSizing');
-
-    // Style the textarea
-    this.style.overflow = "hidden";
-    this.style.minHeight = this.rows+"em";
-
-    // Bind the textarea's event
-    this.onkeyup = growTextarea;
-    this.onfocus = growTextarea;
-
-    // Fire the event for text already present
-    sendContentToMirror(this);
-
-  });
-};
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
@@ -1555,11 +1873,11 @@ window.zammadChatTemplates["chat"] = function (__obj) {
     
       __out.push(this.T(this.scrollHint));
     
-      __out.push('\n  </div>\n  <div class="zammad-chat-body"></div>\n  <form class="zammad-chat-controls">\n    <textarea class="zammad-chat-input" rows="1" placeholder="');
+      __out.push('\n  </div>\n  <div class="zammad-chat-body"></div>\n  <form class="zammad-chat-controls">\n    <div class="zammad-chat-input" rows="1" placeholder="');
     
       __out.push(this.T('Compose your message...'));
     
-      __out.push('"></textarea>\n    <button type="submit" class="zammad-chat-button zammad-chat-send"');
+      __out.push('" contenteditable="true"></div>\n    <button type="submit" class="zammad-chat-button zammad-chat-send"');
     
       if (this.background) {
         __out.push(__sanitize(" style='background: " + this.background + "'"));

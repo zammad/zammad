@@ -604,7 +604,7 @@ ObjectManager::Attribute.add(
   data_option: {
     type: 'email',
     maxlength: 150,
-    null: false,
+    null: true,
     item_class: 'formGroup--halfSize',
   },
   editable: false,
@@ -627,7 +627,7 @@ ObjectManager::Attribute.add(
     },
     edit: {
       '-all-' => {
-        null: false,
+        null: true,
       },
     },
     view: {

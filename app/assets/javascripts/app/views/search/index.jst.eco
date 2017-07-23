@@ -3,8 +3,8 @@
   <div class="detail-search">
     <div class="detail-search-header">
       <div class="searchfield">
-        <%- @Icon('magnifier') %>
         <input class="js-search form-control<%= if !@query then ' is-empty' %>" name="query" placeholder="<%- @Ti('Find what you search. E. g. "search phrase"') %>" value="<%= @query %>" type="search" autocomplete="off">
+        <%- @Icon('magnifier') %>
         <div class="empty-search js-emptySearch">
           <%- @Icon('diagonal-cross') %>
         </div>

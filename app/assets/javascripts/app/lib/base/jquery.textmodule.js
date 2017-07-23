@@ -250,9 +250,21 @@
 
   // paste some content
   Plugin.prototype.paste = function(string) {
-    if (document.selection) { // IE
+    var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+
+    // IE <= 10
+    if (document.selection && document.selection.createRange) {
       var range = document.selection.createRange()
-      range.pasteHTML(string)
+      if (range.pasteHTML) {
+        range.pasteHTML(string)
+      }
+    }
+    // IE == 11
+    else if (isIE11 && document.getSelection) {
+      var range = document.getSelection().getRangeAt(0)
+      var nnode = document.createElement('div')
+          range.surroundContents(nnode)
+          nnode.innerHTML = string
     }
     else {
       document.execCommand('insertHTML', false, string)
@@ -295,14 +307,7 @@
     // for chrome, insert space again
     if (start) {
       if (spacerChar === ' ') {
-        string = "&nbsp;"
-        if (document.selection) { // IE
-          var range = document.selection.createRange()
-          range.pasteHTML(string)
-        }
-        else {
-          document.execCommand('insertHTML', false, string)
-        }
+        this.paste('&nbsp;')
       }
     }
   }

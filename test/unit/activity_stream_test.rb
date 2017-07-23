@@ -10,7 +10,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       login: 'admin',
       firstname: 'Bob',
       lastname: 'Smith',
-      email: 'bob@example.com',
+      email: 'bob+active_stream@example.com',
       password: 'some_pass',
       active: true,
       roles: roles,
@@ -23,7 +23,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
   end
 
   test 'ticket+user' do
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       group_id: Group.lookup(name: 'Users').id,
       customer_id: @current_user.id,
       owner_id: User.lookup(login: '-').id,
@@ -35,7 +35,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     )
     travel 2.seconds
 
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       updated_by_id: @current_user.id,
       created_by_id: @current_user.id,
@@ -86,12 +86,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
     assert(stream.empty?)
 
     # cleanup
-    ticket.destroy
+    ticket.destroy!
     travel_back
   end
 
   test 'organization' do
-    organization = Organization.create(
+    organization = Organization.create!(
       name: 'some name',
       updated_by_id: @current_user.id,
       created_by_id: @current_user.id,
@@ -125,12 +125,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
     assert(stream.empty?)
 
     # cleanup
-    organization.destroy
+    organization.destroy!
     travel_back
   end
 
   test 'user with update check false' do
-    user = User.create(
+    user = User.create!(
       login: 'someemail@example.com',
       email: 'someemail@example.com',
       firstname: 'Bob Smith II',
@@ -157,12 +157,12 @@ class ActivityStreamTest < ActiveSupport::TestCase
     assert(stream.empty?)
 
     # cleanup
-    user.destroy
+    user.destroy!
     travel_back
   end
 
   test 'user with update check true' do
-    user = User.create(
+    user = User.create!(
       login: 'someemail@example.com',
       email: 'someemail@example.com',
       firstname: 'Bob Smith II',
@@ -204,7 +204,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     assert(stream.empty?)
 
     # cleanup
-    user.destroy
+    user.destroy!
     travel_back
   end
 

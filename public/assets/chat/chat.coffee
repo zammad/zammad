@@ -197,6 +197,23 @@ do($ = window.jQuery, window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation mit <strong>%s</strong> geschlossen.'
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Da Sie in den letzten %s Minuten nichts geschrieben haben wurde Ihre Konversation geschlossen.'
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Es tut uns leid, es dauert länger als erwartet, um einen freien Platz zu erhalten. Bitte versuchen Sie es zu einem späteren Zeitpunkt noch einmal oder schicken Sie uns eine E-Mail. Vielen Dank!'
+      'es'
+        '<strong>Chat</strong> with us!': '<strong>Chatee</strong> con nosotros!'
+        'Scroll down to see new messages': 'Haga scroll hacia abajo para ver nuevos mensajes'
+        'Online': 'En linea'
+        'Online': 'En linea'
+        'Offline': 'Desconectado'
+        'Connecting': 'Conectando'
+        'Connection re-established': 'Conexión restablecida'
+        'Today': 'Hoy'
+        'Send': 'Enviar'
+        'Compose your message...': 'Escriba su mensaje...'
+        'All colleagues are busy.': 'Todos los agentes están ocupados.'
+        'You are on waiting list position <strong>%s</strong>.': 'Usted está en la posición <strong>%s</strong> de la lista de espera.'
+        'Start new conversation': 'Iniciar nueva conversación'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': 'Puesto que usted no respondió en los últimos %s minutos su conversación con <strong>%s</strong> se ha cerrado.'
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Puesto que usted no respondió en los últimos %s minutos su conversación se ha cerrado.'
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'Lo sentimos, se tarda más tiempo de lo esperado para ser atendido por un agente. Inténtelo de nuevo más tarde o envíenos un correo electrónico. ¡Gracias!'
       'fr':
         '<strong>Chat</strong> with us!': '<strong>Chattez</strong> avec nous!'
         'Scroll down to see new messages': 'Faites défiler pour lire les nouveaux messages'
@@ -251,6 +268,11 @@ do($ = window.jQuery, window) ->
     sessionId: undefined
     scrolledToBottom: true
     scrollSnapTolerance: 10
+    richTextFormatKey:
+      66: true # b
+      73: true # i
+      85: true # u
+      83: true # s
 
     T: (string, items...) =>
       if @options.lang && @options.lang isnt 'en'
@@ -367,9 +389,211 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
       @el.find('.zammad-chat-body').on 'scroll', @detectScrolledtoBottom
       @el.find('.zammad-scroll-hint').click @onScrollHintClick
-      @input.on
+      @input.on(
         keydown: @checkForEnter
         input: @onInput
+      )
+      @input.on('keydown', (e) =>
+        richtTextControl = false
+        if !e.altKey && !e.ctrlKey && e.metaKey
+          richtTextControl = true
+        else if !e.altKey && e.ctrlKey && !e.metaKey
+          richtTextControl = true
+
+        if richtTextControl && @richTextFormatKey[ e.keyCode ]
+          e.preventDefault()
+          if e.keyCode is 66
+            document.execCommand('bold')
+            return true
+          if e.keyCode is 73
+            document.execCommand('italic')
+            return true
+          if e.keyCode is 85
+            document.execCommand('underline')
+            return true
+          if e.keyCode is 83
+            document.execCommand('strikeThrough')
+            return true
+      )
+      @input.on('paste', (e) =>
+        e.stopPropagation()
+        e.preventDefault()
+
+        clipboardData
+        if e.clipboardData
+          clipboardData = e.clipboardData
+        else if window.clipboardData
+          clipboardData = window.clipboardData
+        else if e.originalEvent.clipboardData
+          clipboardData = e.originalEvent.clipboardData
+        else
+          throw 'No clipboardData support'
+
+        imageInserted = false
+        if clipboardData && clipboardData.items && clipboardData.items[0]
+          item = clipboardData.items[0]
+          if item.kind == 'file' && (item.type == 'image/png' || item.type == 'image/jpeg')
+            imageFile = item.getAsFile()
+            reader = new FileReader()
+
+            reader.onload = (e) =>
+              result = e.target.result
+              img = document.createElement('img')
+              img.src = result
+
+              insert = (dataUrl, width, height, isRetina) =>
+
+                # adapt image if we are on retina devices
+                if @isRetina()
+                  width = width / 2
+                  height = height / 2
+                result = dataUrl
+                img = "<img style=\"width: 100%; max-width: #{width}px;\" src=\"#{result}\">"
+                document.execCommand('insertHTML', false, img)
+
+              # resize if to big
+              @resizeImage(img.src, 460, 'auto', 2, 'image/jpeg', 'auto', insert)
+
+            reader.readAsDataURL(imageFile)
+            imageInserted = true
+
+        return if imageInserted
+
+        # check existing + paste text for limit
+        text = undefined
+        docType = undefined
+        try
+          text = clipboardData.getData('text/html')
+          docType = 'html'
+          if !text || text.length is 0
+            docType = 'text'
+            text = clipboardData.getData('text/plain')
+          if !text || text.length is 0
+            docType = 'text2'
+            text = clipboardData.getData('text')
+        catch e
+          console.log('Sorry, can\'t insert markup because browser is not supporting it.')
+          docType = 'text3'
+          text = clipboardData.getData('text')
+
+        if docType is 'text' || docType is 'text2' || docType is 'text3'
+          text = '<div>' + text.replace(/\n/g, '</div><div>') + '</div>'
+          text = text.replace(/<div><\/div>/g, '<div><br></div>')
+        console.log('p', docType, text)
+        if docType is 'html'
+          html = $("<div>#{text}</div>")
+          match = false
+          htmlTmp = text
+          regex = new RegExp('<(/w|w)\:[A-Za-z]')
+          if htmlTmp.match(regex)
+            match = true
+            htmlTmp = htmlTmp.replace(regex, '')
+          regex = new RegExp('<(/o|o)\:[A-Za-z]')
+          if htmlTmp.match(regex)
+            match = true
+            htmlTmp = htmlTmp.replace(regex, '')
+          if match
+            html = @wordFilter(html)
+          #html
+
+          html = $(html)
+
+          html.contents().each( ->
+            if @nodeType == 8
+              $(@).remove()
+          )
+
+          # remove tags, keep content
+          html.find('a, font, small, time, form, label').replaceWith( ->
+            $(@).contents()
+          )
+
+          # replace tags with generic div
+          # New type of the tag
+          replacementTag = 'div';
+
+          # Replace all x tags with the type of replacementTag
+          html.find('textarea').each( ->
+            outer = @outerHTML
+
+            # Replace opening tag
+            regex = new RegExp('<' + @tagName, 'i')
+            newTag = outer.replace(regex, '<' + replacementTag)
+
+            # Replace closing tag
+            regex = new RegExp('</' + @tagName, 'i')
+            newTag = newTag.replace(regex, '</' + replacementTag)
+
+            $(@).replaceWith(newTag)
+          )
+
+          # remove tags & content
+          html.find('font, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
+
+          @removeAttributes(html)
+
+          text = html.html()
+
+        # as fallback, insert html via pasteHtmlAtCaret (for IE 11 and lower)
+        if docType is 'text3'
+          @pasteHtmlAtCaret(text)
+        else
+          document.execCommand('insertHTML', false, text)
+        true
+      )
+      @input.on('drop', (e) =>
+        e.stopPropagation()
+        e.preventDefault()
+
+        dataTransfer
+        if window.dataTransfer # ie
+          dataTransfer = window.dataTransfer
+        else if e.originalEvent.dataTransfer # other browsers
+          dataTransfer = e.originalEvent.dataTransfer
+        else
+          throw 'No clipboardData support'
+
+        x = e.clientX
+        y = e.clientY
+        file = dataTransfer.files[0]
+
+        # look for images
+        if file.type.match('image.*')
+          reader = new FileReader()
+          reader.onload = (e) =>
+            result = e.target.result
+            img = document.createElement('img')
+            img.src = result
+
+            # Insert the image at the carat
+            insert = (dataUrl, width, height, isRetina) =>
+
+              # adapt image if we are on retina devices
+              if @isRetina()
+                width = width / 2
+                height = height / 2
+
+              result = dataUrl
+              img = $("<img style=\"width: 100%; max-width: #{width}px;\" src=\"#{result}\">")
+              img = img.get(0)
+
+              if document.caretPositionFromPoint
+                pos = document.caretPositionFromPoint(x, y)
+                range = document.createRange()
+                range.setStart(pos.offsetNode, pos.offset)
+                range.collapse()
+                range.insertNode(img)
+              else if document.caretRangeFromPoint
+                range = document.caretRangeFromPoint(x, y)
+                range.insertNode(img)
+              else
+                console.log('could not find carat')
+
+            # resize if to big
+            @resizeImage(img.src, 460, 'auto', 2, 'image/jpeg', 'auto', insert)
+          reader.readAsDataURL(file)
+      )
+
       $(window).on('beforeunload', =>
         @onLeaveTemporary()
       )
@@ -471,7 +695,7 @@ do($ = window.jQuery, window) ->
             from: if message.created_by_id then 'agent' else 'customer'
 
         if unfinishedMessage
-          @input.val unfinishedMessage
+          @input.html(unfinishedMessage)
 
       # show wait list
       if data.position
@@ -489,7 +713,7 @@ do($ = window.jQuery, window) ->
       @el.find('.zammad-chat-message--unread')
         .removeClass 'zammad-chat-message--unread'
 
-      sessionStorage.setItem 'unfinished_message', @input.val()
+      sessionStorage.setItem 'unfinished_message', @input.html()
 
       @onTyping()
 
@@ -520,7 +744,7 @@ do($ = window.jQuery, window) ->
       @sendMessage()
 
     sendMessage: ->
-      message = @input.val()
+      message = @input.html()
       return if !message
 
       @inactiveTimeout.start()
@@ -543,7 +767,7 @@ do($ = window.jQuery, window) ->
         @lastAddedType = 'message--customer'
         @el.find('.zammad-chat-body').append messageElement
 
-      @input.val('')
+      @input.html('')
       @scrollToBottom()
 
       # send message event
@@ -584,11 +808,6 @@ do($ = window.jQuery, window) ->
         @showLoader()
 
       @el.addClass('zammad-chat-is-open')
-
-      if !@inputInitialized
-        @inputInitialized = true
-        @input.autoGrow
-          extraLine: false
 
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
 
@@ -1031,5 +1250,205 @@ do($ = window.jQuery, window) ->
           return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop))
         else if direction is 'horizontal'
           return !!clientSize && ((compareRight <= viewRight) && (compareLeft >= viewLeft))
+
+    isRetina: ->
+      if window.matchMedia
+        mq = window.matchMedia('only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-min-device-pixel-ratio: 2.6/2), only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen  and (min-device-pixel-ratio: 1.3), only screen and (min-resolution: 1.3dppx)')
+        return (mq && mq.matches || (window.devicePixelRatio > 1))
+      false
+
+    resizeImage: (dataURL, x = 'auto', y = 'auto', sizeFactor = 1, type, quallity, callback, force = true) ->
+
+      # load image from data url
+      imageObject = new Image()
+      imageObject.onload = ->
+        imageWidth  = imageObject.width
+        imageHeight = imageObject.height
+        console.log('ImageService', 'current size', imageWidth, imageHeight)
+        if y is 'auto' && x is 'auto'
+          x = imageWidth
+          y = imageHeight
+
+        # get auto dimensions
+        if y is 'auto'
+          factor = imageWidth / x
+          y = imageHeight / factor
+
+        if x is 'auto'
+          factor = imageWidth / y
+          x = imageHeight / factor
+
+        # check if resize is needed
+        resize = false
+        if x < imageWidth || y < imageHeight
+          resize = true
+          x = x * sizeFactor
+          y = y * sizeFactor
+        else
+          x = imageWidth
+          y = imageHeight
+
+        # create canvas and set dimensions
+        canvas        = document.createElement('canvas')
+        canvas.width  = x
+        canvas.height = y
+
+        # draw image on canvas and set image dimensions
+        context = canvas.getContext('2d')
+        context.drawImage(imageObject, 0, 0, x, y)
+
+        # set quallity based on image size
+        if quallity == 'auto'
+          if x < 200 && y < 200
+            quallity = 1
+          else if x < 400 && y < 400
+            quallity = 0.9
+          else if x < 600 && y < 600
+            quallity = 0.8
+          else if x < 900 && y < 900
+            quallity = 0.7
+          else
+            quallity = 0.6
+
+        # execute callback with resized image
+        newDataUrl = canvas.toDataURL(type, quallity)
+        if resize
+          console.log('ImageService', 'resize', x/sizeFactor, y/sizeFactor, quallity, (newDataUrl.length * 0.75)/1024/1024, 'in mb')
+          callback(newDataUrl, x/sizeFactor, y/sizeFactor, true)
+          return
+        console.log('ImageService', 'no resize', x, y, quallity, (newDataUrl.length * 0.75)/1024/1024, 'in mb')
+        callback(newDataUrl, x, y, false)
+
+      # load image from data url
+      imageObject.src = dataURL
+
+    # taken from https://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div/6691294#6691294
+    pasteHtmlAtCaret: (html) ->
+      sel = undefined
+      range = undefined
+      if window.getSelection
+        sel = window.getSelection()
+        if sel.getRangeAt && sel.rangeCount
+          range = sel.getRangeAt(0)
+          range.deleteContents()
+
+          el = document.createElement('div')
+          el.innerHTML = html
+          frag = document.createDocumentFragment(node, lastNode)
+          while node = el.firstChild
+            lastNode = frag.appendChild(node)
+          range.insertNode(frag)
+
+          if lastNode
+            range = range.cloneRange()
+            range.setStartAfter(lastNode)
+            range.collapse(true)
+            sel.removeAllRanges()
+            sel.addRange(range)
+      else if document.selection && document.selection.type != 'Control'
+        document.selection.createRange().pasteHTML(html)
+
+    # (C) sbrin - https://github.com/sbrin
+    # https://gist.github.com/sbrin/6801034
+    wordFilter: (editor) ->
+      content = editor.html()
+
+      # Word comments like conditional comments etc
+      content = content.replace(/<!--[\s\S]+?-->/gi, '')
+
+      # Remove comments, scripts (e.g., msoShowComment), XML tag, VML content,
+      # MS Office namespaced tags, and a few other tags
+      content = content.replace(/<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|img|meta|link|style|\w:\w+)(?=[\s\/>]))[^>]*>/gi, '')
+
+      # Convert <s> into <strike> for line-though
+      content = content.replace(/<(\/?)s>/gi, '<$1strike>')
+
+      # Replace nbsp entites to char since it's easier to handle
+      # content = content.replace(/&nbsp;/gi, "\u00a0")
+      content = content.replace(/&nbsp;/gi, ' ')
+
+      # Convert <span style="mso-spacerun:yes">___</span> to string of alternating
+      # breaking/non-breaking spaces of same length
+      #content = content.replace(/<span\s+style\s*=\s*"\s*mso-spacerun\s*:\s*yes\s*;?\s*"\s*>([\s\u00a0]*)<\/span>/gi, (str, spaces) ->
+      #  return (spaces.length > 0) ? spaces.replace(/./, " ").slice(Math.floor(spaces.length/2)).split("").join("\u00a0") : ''
+      #)
+
+      editor.html(content)
+
+      # Parse out list indent level for lists
+      $('p', editor).each( ->
+        str = $(@).attr('style')
+        matches = /mso-list:\w+ \w+([0-9]+)/.exec(str)
+        if matches
+          $(@).data('_listLevel',  parseInt(matches[1], 10))
+      )
+
+      # Parse Lists
+      last_level = 0
+      pnt = null
+      $('p', editor).each(->
+        cur_level = $(@).data('_listLevel')
+        if cur_level != undefined
+          txt = $(@).text()
+          list_tag = '<ul></ul>'
+          if (/^\s*\w+\./.test(txt))
+            matches = /([0-9])\./.exec(txt)
+            if matches
+              start = parseInt(matches[1], 10)
+              list_tag = start>1 ? '<ol start="' + start + '"></ol>' : '<ol></ol>'
+            else
+              list_tag = '<ol></ol>'
+
+          if cur_level > last_level
+            if last_level == 0
+              $(@).before(list_tag)
+              pnt = $(@).prev()
+            else
+              pnt = $(list_tag).appendTo(pnt)
+
+          if cur_level < last_level
+            for i in [i..last_level-cur_level]
+              pnt = pnt.parent()
+
+          $('span:first', @).remove()
+          pnt.append('<li>' + $(@).html() + '</li>')
+          $(@).remove()
+          last_level = cur_level
+        else
+          last_level = 0
+      )
+
+      $('[style]', editor).removeAttr('style')
+      $('[align]', editor).removeAttr('align')
+      $('span', editor).replaceWith(->
+        $(@).contents()
+      )
+      $('span:empty', editor).remove()
+      $("[class^='Mso']", editor).removeAttr('class')
+      $('p:empty', editor).remove()
+      editor
+
+    removeAttribute: (element) ->
+      return if !element
+      $element = $(element)
+      for att in element.attributes
+        if att && att.name
+          element.removeAttribute(att.name)
+          #$element.removeAttr(att.name)
+
+      $element.removeAttr('style')
+        .removeAttr('class')
+        .removeAttr('lang')
+        .removeAttr('type')
+        .removeAttr('align')
+        .removeAttr('id')
+        .removeAttr('wrap')
+        .removeAttr('title')
+
+    removeAttributes: (html, parent = true) =>
+      if parent
+        html.each((index, element) => @removeAttribute(element) )
+      html.find('*').each((index, element) => @removeAttribute(element) )
+      html
 
   window.ZammadChat = ZammadChat

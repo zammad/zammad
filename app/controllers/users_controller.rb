@@ -126,6 +126,16 @@ class UsersController < ApplicationController
       if admin_account_exists && !params[:signup]
         raise Exceptions::UnprocessableEntity, 'Only signup with not authenticate user possible!'
       end
+
+      # check if user already exists
+      if clean_params[:email].blank?
+        raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
+      end
+
+      # check if user already exists
+      exists = User.find_by(email: clean_params[:email].downcase.strip)
+      raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.' if exists
+
       user = User.new(clean_params)
       user.associations_from_param(params)
       user.updated_by_id = 1
@@ -165,11 +175,6 @@ class UsersController < ApplicationController
       user.associations_from_param(params)
     end
 
-    # check if user already exists
-    if !user.email.empty?
-      exists = User.where(email: user.email.downcase).first
-      raise Exceptions::UnprocessableEntity, 'User already exists!' if exists
-    end
     user.save!
 
     # if first user was added, set system init done
@@ -177,7 +182,7 @@ class UsersController < ApplicationController
       Setting.set('system_init_done', true)
 
       # fetch org logo
-      if !user.email.empty?
+      if user.email.present?
         Service::Image.organization_suggest(user.email)
       end
 
@@ -252,17 +257,17 @@ class UsersController < ApplicationController
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
-        user.associations_from_param({ role_ids: params[:role_ids], roles: params[:roles] })
+        user.associations_from_param(role_ids: params[:role_ids], roles: params[:roles])
       end
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:group_ids] || params[:groups])
-        user.associations_from_param({ group_ids: params[:group_ids], groups: params[:groups] })
+        user.associations_from_param(group_ids: params[:group_ids], groups: params[:groups])
       end
 
       # only allow Admin's and Agent's
       if current_user.permissions?(['admin.user', 'ticket.agent']) && (params[:organization_ids] || params[:organizations])
-        user.associations_from_param({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
+        user.associations_from_param(organization_ids: params[:organization_ids], organizations: params[:organizations])
       end
 
       if params[:expand]
@@ -363,7 +368,7 @@ class UsersController < ApplicationController
       limit: params[:limit],
       current_user: current_user,
     }
-    if params[:role_ids] && !params[:role_ids].empty?
+    if params[:role_ids].present?
       query_params[:role_ids] = params[:role_ids]
     end
 
@@ -449,10 +454,10 @@ class UsersController < ApplicationController
     end
 
     # do query
-    user_all = if params[:role_ids] && !params[:role_ids].empty?
-                 User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where('users.id != 1').order('users.created_at DESC').limit( params[:limit] || 20 )
+    user_all = if params[:role_ids].present?
+                 User.joins(:roles).where('roles.id' => params[:role_ids]).where('users.id != 1').order('users.created_at DESC').limit(params[:limit] || 20)
                else
-                 User.where('id != 1').order('created_at DESC').limit( params[:limit] || 20 )
+                 User.where('id != 1').order('created_at DESC').limit(params[:limit] || 20)
                end
 
     # build result list

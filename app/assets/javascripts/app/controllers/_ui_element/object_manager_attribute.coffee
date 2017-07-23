@@ -82,7 +82,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
           view:
             shown: true
           invite_customer:
-            show: false
+            shown: false
             required: false
         'admin.user':
           create:
@@ -94,10 +94,10 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
           view:
             shown: true
           invite_agent:
-            show: false
+            shown: false
             required: false
           invite_customer:
-            show: false
+            shown: false
             required: false
       Organization:
         'ticket.customer':

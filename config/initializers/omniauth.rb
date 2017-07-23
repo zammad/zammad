@@ -32,8 +32,10 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       authorize_url: '/oauth/authorize',
       token_url: '/oauth/token'
     },
-    scope: 'read_user',
   }
+
+  # microsoft_office365 database connect
+  provider :microsoft_office365_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database'
 
   # oauth2 database connect
   provider :oauth2_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database', {

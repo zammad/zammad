@@ -587,7 +587,7 @@ class ChatWindow extends App.Controller
       @sounds.message.play()
       @notifyDesktop(
         title: @name
-        body: message
+        body: App.Utils.html2text(message)
         url: '#customer_chat'
         callback: =>
           App.Event.trigger('chat_focus', { session_id: @session.session_id })

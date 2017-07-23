@@ -601,6 +601,33 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
+  title: 'Email - full quote',
+  name: 'ui_ticket_zoom_article_email_full_quote',
+  area: 'UI::TicketZoom',
+  description: 'Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available).',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_article_email_full_quote',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 220,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
   title: 'Twitter - tweet initials',
   name: 'ui_ticket_zoom_article_twitter_initials',
   area: 'UI::TicketZoom',
@@ -677,6 +704,31 @@ Setting.create_if_not_exists(
     permission: ['admin.security'],
   },
   frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'User email for muliple users',
+  name: 'user_email_multiple_use',
+  area: 'Model::User',
+  description: 'Allow to use email address for muliple users.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'user_email_multiple_use',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    permission: ['admin'],
+  },
+  frontend: false
 )
 Setting.create_if_not_exists(
   title: 'Authentication via %s',
@@ -1059,6 +1111,63 @@ Setting.create_if_not_exists(
 
 Setting.create_if_not_exists(
   title: 'Authentication via %s',
+  name: 'auth_microsoft_office365',
+  area: 'Security::ThirdPartyAuthentication',
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'auth_microsoft_office365',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_microsoft_office365_credentials'],
+    title_i18n: ['Office 365'],
+    description_i18n: ['Office 365', 'Microsoft Application Registration Portal', 'https://apps.dev.microsoft.com'],
+    permission: ['admin.security'],
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Office 365 App Credentials',
+  name: 'auth_microsoft_office365_credentials',
+  area: 'Security::ThirdPartyAuthentication::Office365',
+  description: 'Enables user authentication via Office 365.',
+  options: {
+    form: [
+      {
+        display: 'App ID',
+        null: true,
+        name: 'app_id',
+        tag: 'input',
+      },
+      {
+        display: 'App Secret',
+        null: true,
+        name: 'app_secret',
+        tag: 'input',
+      },
+    ],
+  },
+  state: {},
+  preferences: {
+    permission: ['admin.security'],
+  },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Authentication via %s',
   name: 'auth_oauth2',
   area: 'Security::ThirdPartyAuthentication',
   description: 'Enables user authentication via generic OAuth2. Register your app first.',
@@ -1116,7 +1225,7 @@ Setting.create_if_not_exists(
         null: true,
         name: 'site',
         tag: 'input',
-        placeholder: 'https://gitlab.YOURDOMAIN.com',
+        placeholder: 'https://oauth.YOURDOMAIN.com',
       },
       {
         display: 'authorize_url',

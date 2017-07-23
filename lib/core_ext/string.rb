@@ -81,7 +81,7 @@ class String
   def html2text(string_only = false, strict = false)
     string = "#{self}" # rubocop:disable Style/UnneededInterpolation
 
-    # in case of invalid encodeing, strip invalid chars
+    # in case of invalid encoding, strip invalid chars
     # see also test/fixtures/mail21.box
     # note: string.encode!('UTF-8', 'UTF-8', :invalid => :replace, :replace => '?') was not detecting invalid chars
     if !string.valid_encoding?
