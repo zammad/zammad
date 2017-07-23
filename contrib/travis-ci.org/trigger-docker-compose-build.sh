@@ -4,5 +4,5 @@
 #
 
 if [ ${TRAVIS_BRANCH} == 'stable' ]; then
-  curl -X POST -H "Content-Type: application/json" -H "Travis-API-Version: 3" -H "Accept: application/json" -H "Authorization: ${TRAVIS_API_TOKEN}" -d '{"request": {"branch": "master"}}' 'https://api.travis-ci.org/repo/monotek%2Fzammad-docker-compose/requests'
+  curl -X POST -H "Content-Type: application/json" -H "Travis-API-Version: 3" -H "Accept: application/json" -H "Authorization: token ${TRAVIS_API_TOKEN}" -d '{"request": {"branch": "master"}}' 'https://api.travis-ci.org/repo/monotek%2Fzammad-docker-compose/requests'
 fi
