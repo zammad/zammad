@@ -8,7 +8,7 @@ class App.WidgetTextModule extends App.Controller
     # remember instances
     @bindElements = []
     if @selector
-      @bindElements = @$( @selector ).textmodule()
+      @bindElements = @$(@selector).textmodule()
     else
       if @el.attr('contenteditable')
         @bindElements = @el.textmodule()

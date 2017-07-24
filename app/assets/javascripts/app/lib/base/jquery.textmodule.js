@@ -54,6 +54,7 @@
         // enter
         if (e.keyCode === 13) {
           e.preventDefault()
+          e.stopPropagation()
           var id = _this.$widget.find('.dropdown-menu li.is-active').data('id')
 
           // as fallback use hovered element
@@ -92,6 +93,9 @@
 
           var menu = _this.$widget.find('.dropdown-menu')
 
+          if (!active.get(0)) {
+            return
+          }
           if (active.position().top < 0) {
             // scroll up
             menu.scrollTop( menu.scrollTop() + active.position().top )
@@ -187,7 +191,7 @@
   // set height of widget
   Plugin.prototype.movePosition = function() {
     if (!this._position) return
-    var height       = this.$element.height() + 2
+    var height       = this.$element.outerHeight() + 2
     var widgetHeight = this.$widget.find('ul').height() //+ 60 // + height
     var top          = -( widgetHeight + height ) + this._position.top
     var left = this._position.left - 6

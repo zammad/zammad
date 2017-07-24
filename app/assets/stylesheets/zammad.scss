@@ -8199,8 +8199,13 @@ output {
 
 .chat-input {
   margin-right: 10px;
-  max-height: 50vh;
-  overflow: auto;
+  flex-grow: 1;
+  position: relative;
+  
+  .form-control {
+    overflow: auto;
+    max-height: 50vh;
+  }
 }
 
 .browser {
