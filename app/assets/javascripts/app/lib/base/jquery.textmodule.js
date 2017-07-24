@@ -43,13 +43,16 @@
 
     this.$element.on('keydown', function (e) {
 
-      // esc
-      if (e.keyCode === 27) {
-        _this.close()
-      }
-
       // navigate through item
       if (_this.isActive()) {
+
+        // esc
+        if (e.keyCode === 27) {
+          e.preventDefault()
+          e.stopPropagation()
+          _this.close()
+          return
+        }
 
         // enter
         if (e.keyCode === 13) {
@@ -102,7 +105,11 @@
             menu.scrollTop( menu.scrollTop() + invisibleHeight )
           }
         }
+      }
 
+      // esc
+      if (e.keyCode === 27) {
+        _this.close()
       }
     })
 
