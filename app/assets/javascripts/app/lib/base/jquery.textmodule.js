@@ -76,12 +76,14 @@
         // arrow keys left/right
         if (e.keyCode === 37 || e.keyCode === 39) {
           e.preventDefault()
+          e.stopPropagation()
           return
         }
 
         // up or down
         if (e.keyCode === 38 || e.keyCode === 40) {
           e.preventDefault()
+          e.stopPropagation()
           var active = _this.$widget.find('.dropdown-menu li.is-active')
           active.removeClass('is-active')
 
@@ -342,7 +344,7 @@
     }
     for (var i = 0; i < this.collection.length; i++) {
       var item = this.collection[i]
-      if ( item.id == id ) {
+      if (item.id == id) {
         var content = item.content
         this.cutInput()
         this.paste(content)
