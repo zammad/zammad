@@ -4,7 +4,7 @@ require 'integration_test_helper'
 class ReportTest < ActiveSupport::TestCase
 
   # set config
-  if !ENV['ES_URL']
+  if ENV['ES_URL'].blank?
     raise "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
   end
   Setting.set('es_url', ENV['ES_URL'])

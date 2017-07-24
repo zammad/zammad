@@ -42,7 +42,7 @@ class User < ApplicationModel
   before_update   :check_preferences_default, :validate_roles, :reset_login_failed
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
-  after_destroy   :avatar_destroy
+  after_destroy   :avatar_destroy, :user_device_destroy
 
   has_and_belongs_to_many :groups,          after_add: :cache_update, after_remove: :cache_update, class_name: 'Group'
   has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, before_remove: :last_admin_check, class_name: 'Role'
@@ -976,6 +976,10 @@ raise 'Minimum one user need to have admin permissions'
 
   def avatar_destroy
     Avatar.remove('User', id)
+  end
+
+  def user_device_destroy
+    UserDevice.remove(id)
   end
 
   def ensure_password

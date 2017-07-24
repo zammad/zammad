@@ -206,4 +206,15 @@ send user notification about new device or new location for device
     )
   end
 
+=begin
+
+delete device devices of user
+
+  user_devices = UserDevice.remove(user.id)
+
+=end
+
+  def self.remove(user_id)
+    UserDevice.where(user_id: user_id).destroy_all
+  end
 end

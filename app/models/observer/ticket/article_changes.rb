@@ -41,7 +41,7 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
       record.ticket.touch
       return
     end
-    record.ticket.save
+    record.ticket.save!
   end
 
   # get article count
