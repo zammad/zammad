@@ -581,6 +581,9 @@
   // get correct val if textbox
   $.fn.ceg = function() {
     var plugin = $.data(this[0], 'plugin_' + pluginName)
+    if (!plugin) {
+      return
+    }
     return plugin.value()
   }
 
