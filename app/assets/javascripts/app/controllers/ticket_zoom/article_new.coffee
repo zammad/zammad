@@ -300,6 +300,7 @@ class App.TicketZoomArticleNew extends App.Controller
         data:
           ticket: ticket
           user: App.Session.get()
+          config: App.Config.all()
       )
       callback = (ticket) ->
         textModule.reload(
