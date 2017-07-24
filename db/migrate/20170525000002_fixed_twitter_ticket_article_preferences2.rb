@@ -1,4 +1,4 @@
-class FixedTwitterTicketArticlePreferences < ActiveRecord::Migration
+class FixedTwitterTicketArticlePreferences2 < ActiveRecord::Migration
   def up
 
     # return if it's a new setup

@@ -282,12 +282,12 @@ class SessionsController < ApplicationController
     assets = {}
     sessions_clean = []
     SessionHelper.list.each { |session|
-      next if !session.data['user_id']
+      next if session.data['user_id'].blank?
       sessions_clean.push session
-      if session.data['user_id']
-        user = User.lookup(id: session.data['user_id'])
-        assets = user.assets(assets)
-      end
+      next if session.data['user_id']
+      user = User.lookup(id: session.data['user_id'])
+      next if !user
+      assets = user.assets(assets)
     }
     render json: {
       sessions: sessions_clean,

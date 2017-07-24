@@ -116,8 +116,8 @@
   </div>
 
   <div class="searchfield">
-    <%- @Icon('magnifier') %>
     <input class="js-search form-control" name="search" placeholder="Search for users" type="search">
+    <%- @Icon('magnifier') %>
   </div>
 
   <div class="userSearch horizontal">

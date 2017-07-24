@@ -462,6 +462,14 @@ class ChatWindow extends App.Controller
         )
     )
 
+    # show text module UI
+    new App.WidgetTextModule(
+      el: @input
+      data:
+        user: App.Session.get()
+        config: App.Config.all()
+    )
+
   focus: =>
     @input.focus()
 
@@ -473,7 +481,7 @@ class ChatWindow extends App.Controller
     if event.data and event.data.callback
       event.data.callback()
 
-    @$('.js-customerChatInput').ce({
+    @input.ce({
       mode:       'richtext'
       multiline:  true
       maxlength:  40000
@@ -522,7 +530,7 @@ class ChatWindow extends App.Controller
 
     switch event.keyCode
       when TABKEY
-        allChatInputs = $('.js-customerChatInput').not('[disabled="disabled"]')
+        allChatInputs = @input.not('[disabled="disabled"]')
         chatCount = allChatInputs.size()
         index = allChatInputs.index(@input)
 
@@ -542,7 +550,7 @@ class ChatWindow extends App.Controller
                 allChatInputs.eq(chatCount-1).focus()
 
       when ENTERKEY
-        if !event.shiftKey
+        if !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey
           event.preventDefault()
           @sendMessage()
 

@@ -88,7 +88,7 @@
     // handle enter
     this.$element.on('keydown', function (e) {
       _this.log('keydown', e.keyCode)
-      if ( _this.preventInput ) {
+      if (_this.preventInput) {
         this.log('preventInput', _this.preventInput)
         return
       }
@@ -97,7 +97,7 @@
       if (e.keyCode === 13) {
 
         // disbale multi line
-        if ( !_this.options.multiline ) {
+        if (!_this.options.multiline) {
           e.preventDefault()
           return
         }
@@ -109,6 +109,15 @@
           e.preventDefault()
           document.execCommand('Insertparagraph')
           document.execCommand('Outdent')
+          return
+        }
+
+        // behavior to enter new line on alt+enter
+        //  on alt + enter not realy newline is fired, to make
+        //  it compat. to other systems, do it here
+        if (!e.shiftKey && e.altKey && !e.ctrlKey && !e.metaKey) {
+          e.preventDefault()
+          _this.paste('<br><br>')
           return
         }
       }
@@ -572,6 +581,9 @@
   // get correct val if textbox
   $.fn.ceg = function() {
     var plugin = $.data(this[0], 'plugin_' + pluginName)
+    if (!plugin) {
+      return
+    }
     return plugin.value()
   }
 
