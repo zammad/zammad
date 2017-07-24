@@ -330,6 +330,9 @@ class App.TicketCreate extends App.Controller
     # show text module UI
     @textModule = new App.WidgetTextModule(
       el: @$('[data-name="body"]').parent()
+      data:
+        config: App.Config.all()
+        user: App.Session.get()
     )
 
     new Sidebar(

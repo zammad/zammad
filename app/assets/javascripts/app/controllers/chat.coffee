@@ -465,6 +465,9 @@ class ChatWindow extends App.Controller
     # show text module UI
     new App.WidgetTextModule(
       el: @input
+      data:
+        user: App.Session.get()
+        config: App.Config.all()
     )
 
   focus: =>

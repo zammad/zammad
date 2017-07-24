@@ -1100,6 +1100,16 @@ test("check replace tags", function() {
   verify = App.Utils.replaceTags(message, data)
   equal(verify, result)
 
+  message = "<div>#{user.firstname} #{<a href=\"/test\">user.lastname</a>}</div>"
+  result  = '<div>Bob Smith</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+      lastname: 'Smith',
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
 });
 
 // check attibute validation
