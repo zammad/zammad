@@ -345,15 +345,6 @@ class TicketsController < ApplicationController
     # permission check
     ticket_permission(ticket_slave)
 
-    # check diffetent ticket ids
-    if ticket_slave.id == ticket_master.id
-      render json: {
-        result: 'failed',
-        message: 'Can\'t merge ticket with it self!',
-      }
-      return
-    end
-
     # merge ticket
     ticket_slave.merge_to(
       ticket_id: ticket_master.id,
