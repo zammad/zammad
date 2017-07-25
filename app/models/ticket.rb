@@ -245,9 +245,12 @@ returns
   def merge_to(data)
 
     # prevent cross merging tickets
-    target_ticket = Ticket.find(data[:ticket_id])
+    target_ticket = Ticket.find_by(id: data[:ticket_id])
     raise 'no target ticket given' if !target_ticket
-    raise 'invalid state for target ticket' if target_ticket.state.name == 'merged'
+    raise Exceptions::UnprocessableEntity, 'ticket already merged, no merge into merged ticket possible' if target_ticket.state.state_type.name == 'merged'
+
+    # check different ticket ids
+    raise Exceptions::UnprocessableEntity, 'Can\'t merge ticket with it self!' if id == target_ticket.id
 
     # update articles
     Transaction.execute do

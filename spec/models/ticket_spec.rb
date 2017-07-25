@@ -47,7 +47,18 @@ RSpec.describe Ticket do
           ticket_id: source_ticket.id,
           user_id:   1,
         )
-      }.to raise_error('invalid state for target ticket')
+      }.to raise_error('ticket already merged, no merge into merged ticket possible')
+    end
+
+    it 'prevents merging ticket in it self' do
+      source_ticket = create(:ticket)
+
+      expect {
+        result = source_ticket.merge_to(
+          ticket_id: source_ticket.id,
+          user_id:   1,
+        )
+      }.to raise_error('Can\'t merge ticket with it self!')
     end
 
   end
