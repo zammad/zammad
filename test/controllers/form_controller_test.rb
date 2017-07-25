@@ -34,6 +34,12 @@ class FormControllerTest < ActionDispatch::IntegrationTest
     Rake::Task['searchindex:rebuild'].execute
   end
 
+  teardown do
+    if ENV['ES_URL'].present?
+      Rake::Task['searchindex:drop'].execute
+    end
+  end
+
   test '01 - get config call' do
     post '/api/v1/form_config', {}.to_json, @headers
     assert_response(401)

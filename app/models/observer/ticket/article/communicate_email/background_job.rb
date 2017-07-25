@@ -155,6 +155,10 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
         updated_by_id: 1,
         created_by_id: 1,
       )
+
+      ticket       = Ticket.find(local_record.ticket_id)
+      ticket.state = Ticket::State.find_by(default_follow_up: true)
+      ticket.save!
     end
 
     raise message
