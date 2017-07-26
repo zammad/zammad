@@ -280,8 +280,11 @@ returns
       if proxy_password.blank?
         proxy_password = nil
       end
-
-      http = Net::HTTP::Proxy(proxy_host, proxy_port, proxy_username, proxy_password).new(uri.host, uri.port)
+                if (!uri.host.include?("127.0.0.1") && !uri.host.include?("localhost"))
+                   http = Net::HTTP::Proxy(proxy_host, proxy_port, proxy_username, proxy_password).new(uri.host, uri.port)
+                 else
+                   http = Net::HTTP.new(uri.host, uri.port)
+                 end
     else
       http = Net::HTTP.new(uri.host, uri.port)
     end
