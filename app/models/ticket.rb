@@ -335,7 +335,7 @@ returns
     state      = Ticket::State.lookup(id: state_id)
     state_type = Ticket::StateType.lookup(id: state.state_type_id)
 
-    # always to set unseen for ticket owner
+    # always to set unseen for ticket owner and users which did not the update
     if state_type.name != 'merged'
       if user_id_check
         return false if user_id_check == owner_id && user_id_check != updated_by_id

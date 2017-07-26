@@ -16,7 +16,7 @@ class Observer::Ticket::OnlineNotificationSeen::BackgroundJob
         next if seen == notification.seen
         notification.seen = true
         notification.updated_by_id = @user_id
-        notification.save
+        notification.save!
       }
     end
   end
