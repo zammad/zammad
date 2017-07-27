@@ -2,7 +2,7 @@ class App.SettingsAreaProxy extends App.Controller
   events:
     'submit form': 'update'
     'click .js-submit': 'update'
-    'click .js-test': 'test2'
+    'click .js-test': 'testConnection'
 
   constructor: ->
     super
@@ -14,20 +14,21 @@ class App.SettingsAreaProxy extends App.Controller
       proxy: App.Setting.get('proxy')
       proxy_username: App.Setting.get('proxy_username')
       proxy_password: App.Setting.get('proxy_password')
+      proxy_no: App.Setting.get('proxy_no')
     )
 
   update: (e) =>
     e.preventDefault()
     @formDisable(e)
     params = @formParam(e)
-    console.log('params', params)
     App.Setting.set('proxy', params.proxy)
     App.Setting.set('proxy_username', params.proxy_username)
     App.Setting.set('proxy_password', params.proxy_password)
+    App.Setting.set('proxy_no', params.proxy_no)
     @formEnable(e)
     @render()
 
-  test2: (e) =>
+  testConnection: (e) =>
     e.preventDefault()
     params = @formParam(e)
     @ajax(

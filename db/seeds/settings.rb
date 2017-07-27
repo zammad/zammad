@@ -479,7 +479,7 @@ Setting.create_if_not_exists(
       {
         display: '',
         null: false,
-        name: 'proxy_passowrd',
+        name: 'proxy_password',
         tag: 'input',
       },
     ],
@@ -489,6 +489,30 @@ Setting.create_if_not_exists(
     disabled: true,
     online_service_disable: true,
     prio: 3,
+    permission: ['admin.system'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'No Proxy',
+  name: 'proxy_no',
+  area: 'System::Network',
+  description: 'No proxy for the following hosts.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'proxy_no',
+        tag: 'input',
+      },
+    ],
+  },
+  state: 'localhost,127.0.0.0,::1',
+  preferences: {
+    disabled: true,
+    online_service_disable: true,
+    prio: 4,
     permission: ['admin.system'],
   },
   frontend: false

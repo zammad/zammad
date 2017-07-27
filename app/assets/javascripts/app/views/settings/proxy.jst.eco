@@ -18,6 +18,12 @@
       <input type="text" name="proxy_password" value="<%= @proxy_password %>" class="form-control">
     </div>
   </div>
+  <p class="help-text"><%- @T('No proxy for the following hosts.') %></p>
+  <div class="horizontal end">
+    <div class="form-item flex">
+      <input type="text" name="proxy_no" value="<%= @proxy_no %>" placeholder="localhost,127.0.0.1" class="form-control">
+    </div>
+  </div>
   <div class="horizontal justify-end form-controls">
     <button class="btn btn js-test"><%- @T('Test Connection') %></button>
     <button class="btn btn--primary js-submit hide"><%- @T('Submit') %></button>
