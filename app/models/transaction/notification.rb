@@ -38,8 +38,10 @@ class Transaction::Notification
       # ignore notifications
       sender = Ticket::Article::Sender.lookup(id: article.sender_id)
       if sender && sender.name == 'System'
-        return if @item[:changes].empty?
-        article = nil
+        return if @item[:changes].blank? && article.preferences[:notification] != true
+        if article.preferences[:notification] != true
+          article = nil
+        end
       end
     end
 
@@ -78,7 +80,7 @@ class Transaction::Notification
 
       # ignore if no changes has been done
       changes = human_changes(user, ticket)
-      next if @item[:type] == 'update' && !article && (!changes || changes.empty?)
+      next if @item[:type] == 'update' && !article && changes.blank?
 
       # check if today already notified
       if @item[:type] == 'reminder_reached' || @item[:type] == 'escalation' || @item[:type] == 'escalation_warning'
@@ -117,7 +119,7 @@ class Transaction::Notification
           OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation_warning', user)
 
         # on updates without state changes create unseen messages
-        elsif @item[:type] != 'create' && (!@item[:changes] || @item[:changes].empty? || !@item[:changes]['state_id'])
+        elsif @item[:type] != 'create' && (@item[:changes].blank? || @item[:changes]['state_id'].blank?)
           seen = false
         else
           seen = ticket.online_notification_seen_state(user.id)

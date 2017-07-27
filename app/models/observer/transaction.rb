@@ -3,6 +3,10 @@
 class Observer::Transaction < ActiveRecord::Observer
   observe :ticket, 'ticket::_article', :user, :organization, :tag
 
+  def self.reset
+    EventBuffer.reset('transaction')
+  end
+
   def self.commit(params = {})
 
     # add attribute of interface handle (e. g. to send (no) notifications if a agent

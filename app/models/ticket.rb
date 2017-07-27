@@ -244,6 +244,14 @@ returns
 
   def merge_to(data)
 
+    # prevent cross merging tickets
+    target_ticket = Ticket.find_by(id: data[:ticket_id])
+    raise 'no target ticket given' if !target_ticket
+    raise Exceptions::UnprocessableEntity, 'ticket already merged, no merge into merged ticket possible' if target_ticket.state.state_type.name == 'merged'
+
+    # check different ticket ids
+    raise Exceptions::UnprocessableEntity, 'Can\'t merge ticket with it self!' if id == target_ticket.id
+
     # update articles
     Transaction.execute do
 
@@ -296,7 +304,7 @@ returns
       save!
 
       # touch new ticket (to broadcast change)
-      Ticket.find(data[:ticket_id]).touch
+      target_ticket.touch
     end
     true
   end
@@ -327,7 +335,7 @@ returns
     state      = Ticket::State.lookup(id: state_id)
     state_type = Ticket::StateType.lookup(id: state.state_type_id)
 
-    # always to set unseen for ticket owner
+    # always to set unseen for ticket owner and users which did not the update
     if state_type.name != 'merged'
       if user_id_check
         return false if user_id_check == owner_id && user_id_check != updated_by_id

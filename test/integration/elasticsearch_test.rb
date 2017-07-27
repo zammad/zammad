@@ -100,6 +100,12 @@ class ElasticsearchTest < ActiveSupport::TestCase
     )
   end
 
+  teardown do
+    if ENV['ES_URL'].present?
+      Rake::Task['searchindex:drop'].execute
+    end
+  end
+
   # check search attributes
   test 'a - objects' do
 

@@ -250,6 +250,12 @@ class ReportTest < ActiveSupport::TestCase
 
   end
 
+  teardown do
+    if ENV['ES_URL'].present?
+      Rake::Task['searchindex:drop'].execute
+    end
+  end
+
   test 'compare' do
 
     # first solution

@@ -16,12 +16,11 @@ class Observer::Ticket::OnlineNotificationSeen < ActiveRecord::Observer
   def _check(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return false if Setting.get('import_mode')
 
     # set seen only if state has changes
-    return if !record.changes
-    return if record.changes.empty?
-    return if !record.changes['state_id']
+    return false if record.changes.blank?
+    return false if record.changes['state_id'].blank?
 
     # check if existing online notifications for this ticket should be set to seen
     return true if !record.online_notification_seen_state
