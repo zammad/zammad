@@ -9,7 +9,7 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var merge = require('merge-stream');
 var plumber = require('gulp-plumber');
- 
+
 gulp.task('css', function(){
   return gulp.src('chat.scss')
     .pipe(sass.sync().on('error', gutil.log))
@@ -38,7 +38,7 @@ gulp.task('js', function(){
 });
 
 gulp.task('default', function(){
-  var cssWatcher = gulp.watch('chat.scss', ['css']);
+  var cssWatcher = gulp.watch(['chat.scss'], ['css']);
   cssWatcher.on('change', function(event) {
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
   });

@@ -29,7 +29,7 @@
 }
 .zammad-chat.zammad-chat-is-open {
   height: 30em;
-  
+
   @media only screen and (max-width: 768px) {
     height: 100%;
   }
@@ -208,12 +208,12 @@
   padding: 7px 10px 6px;
   color: hsl(0,0%,60%);
   cursor: pointer;
-  
+
   &.is-hidden {
     display: none;
   }
 }
-  
+
 .zammad-scroll-hint-icon {
   fill: hsl(210,5%,78%);
   margin-right: 8px;
