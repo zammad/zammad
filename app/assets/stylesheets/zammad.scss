@@ -1298,11 +1298,21 @@ label,
   margin: 0;
   text-transform: none;
   display: inline;
-  white-space: nowrap; /* for labels in tables that might get crushed view: calendar_subscriptions */
 }
+
+table {
+  .inline-label,
+  .label-success,
+  .label-warning,
+  .label-danger {
+    white-space: nowrap; /* for labels in tables that might get crushed view: calendar_subscriptions */
+  }
+}
+
 .inline-label {
   color: hsl(206,7%,28%);
 }
+
 .label-text {
   margin-left: 3px;
   user-select: none;
