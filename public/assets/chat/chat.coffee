@@ -159,7 +159,7 @@ do($ = window.jQuery, window) ->
       buttonClass: 'open-zammad-chat'
       inactiveClass: 'is-inactive'
       title: '<strong>Chat</strong> with us!'
-      scrollHint: 'Scrolle nach unten um neue Nachrichten zu sehen'
+      scrollHint: 'Scroll down to see new messages'
       idleTimeout: 6
       idleTimeoutIntervallCheck: 0.5
       inactiveTimeout: 8

@@ -1,156 +1,3 @@
-if (!window.zammadChatTemplates) {
-  window.zammadChatTemplates = {};
-}
-window.zammadChatTemplates["agent"] = function (__obj) {
-  if (!__obj) __obj = {};
-  var __out = [], __capture = function(callback) {
-    var out = __out, result;
-    __out = [];
-    callback.call(this);
-    result = __out.join('');
-    __out = out;
-    return __safe(result);
-  }, __sanitize = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else if (typeof value !== 'undefined' && value != null) {
-      return __escape(value);
-    } else {
-      return '';
-    }
-  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-  __safe = __obj.safe = function(value) {
-    if (value && value.ecoSafe) {
-      return value;
-    } else {
-      if (!(typeof value !== 'undefined' && value != null)) value = '';
-      var result = new String(value);
-      result.ecoSafe = true;
-      return result;
-    }
-  };
-  if (!__escape) {
-    __escape = __obj.escape = function(value) {
-      return ('' + value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    };
-  }
-  (function() {
-    (function() {
-      if (this.agent.avatar) {
-        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
-        __out.push(__sanitize(this.agent.avatar));
-        __out.push('">\n');
-      }
-    
-      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
-    
-      __out.push(__sanitize(this.agent.name));
-    
-      __out.push('</span>\n</span>');
-    
-    }).call(this);
-    
-  }).call(__obj);
-  __obj.safe = __objSafe, __obj.escape = __escape;
-  return __out.join('');
-};
-
-/*!
- * ----------------------------------------------------------------------------
- * "THE BEER-WARE LICENSE" (Revision 42):
- * <jevin9@gmail.com> wrote this file. As long as you retain this notice you
- * can do whatever you want with this stuff. If we meet some day, and you think
- * this stuff is worth it, you can buy me a beer in return. Jevin O. Sewaruth
- * ----------------------------------------------------------------------------
- *
- * Autogrow Textarea Plugin Version v3.0
- * http://www.technoreply.com/autogrow-textarea-plugin-3-0
- * 
- * THIS PLUGIN IS DELIVERD ON A PAY WHAT YOU WHANT BASIS. IF THE PLUGIN WAS USEFUL TO YOU, PLEASE CONSIDER BUYING THE PLUGIN HERE :
- * https://sites.fastspring.com/technoreply/instant/autogrowtextareaplugin
- *
- * Date: October 15, 2012
- *
- * Zammad modification: 
- *   - remove overflow:hidden when maximum height is reached
- *   - mirror box-sizing
- *
- */
-
-jQuery.fn.autoGrow = function(options) {
-  return this.each(function() {
-    var settings = jQuery.extend({
-      extraLine: true,
-    }, options);
-
-    var createMirror = function(textarea) {
-      jQuery(textarea).after('<div class="autogrow-textarea-mirror"></div>');
-      return jQuery(textarea).next('.autogrow-textarea-mirror')[0];
-    }
-
-    var sendContentToMirror = function (textarea) {
-      mirror.innerHTML = String(textarea.value)
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/ /g, '&nbsp;')
-        .replace(/\n/g, '<br />') +
-        (settings.extraLine? '.<br/>.' : '')
-      ;
-
-      if (jQuery(textarea).height() != jQuery(mirror).height()) {
-        jQuery(textarea).height(jQuery(mirror).height());
-
-        var overflow = jQuery(mirror).height() > maxHeight ? '' : 'hidden';
-        jQuery(textarea).css('overflow', overflow);
-      }
-    }
-
-    var growTextarea = function () {
-      sendContentToMirror(this);
-    }
-
-    // Create a mirror
-    var mirror = createMirror(this);
-
-    // Store max-height
-    var maxHeight = parseInt(jQuery(this).css('max-height'), 10);
-    
-    // Style the mirror
-    mirror.style.display = 'none';
-    mirror.style.wordWrap = 'break-word';
-    mirror.style.whiteSpace = 'normal';
-    mirror.style.padding = jQuery(this).css('paddingTop') + ' ' + 
-      jQuery(this).css('paddingRight') + ' ' + 
-      jQuery(this).css('paddingBottom') + ' ' + 
-      jQuery(this).css('paddingLeft');
-      
-    mirror.style.width = jQuery(this).css('width');
-    mirror.style.fontFamily = jQuery(this).css('font-family');
-    mirror.style.fontSize = jQuery(this).css('font-size');
-    mirror.style.lineHeight = jQuery(this).css('line-height');
-    mirror.style.letterSpacing = jQuery(this).css('letter-spacing');
-    mirror.style.boxSizing = jQuery(this).css('boxSizing');
-
-    // Style the textarea
-    this.style.overflow = "hidden";
-    this.style.minHeight = this.rows+"em";
-
-    // Bind the textarea's event
-    this.onkeyup = growTextarea;
-    this.onfocus = growTextarea;
-
-    // Fire the event for text already present
-    sendContentToMirror(this);
-
-  });
-};
 var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   slice = [].slice,
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -425,7 +272,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       buttonClass: 'open-zammad-chat',
       inactiveClass: 'is-inactive',
       title: '<strong>Chat</strong> with us!',
-      scrollHint: 'Scrolle nach unten um neue Nachrichten zu sehen',
+      scrollHint: 'Scroll down to see new messages',
       idleTimeout: 6,
       idleTimeoutIntervallCheck: 0.5,
       inactiveTimeout: 8,
@@ -1500,6 +1347,159 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   return window.ZammadChat = ZammadChat;
 })(window.jQuery, window);
 
+if (!window.zammadChatTemplates) {
+  window.zammadChatTemplates = {};
+}
+window.zammadChatTemplates["agent"] = function (__obj) {
+  if (!__obj) __obj = {};
+  var __out = [], __capture = function(callback) {
+    var out = __out, result;
+    __out = [];
+    callback.call(this);
+    result = __out.join('');
+    __out = out;
+    return __safe(result);
+  }, __sanitize = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else if (typeof value !== 'undefined' && value != null) {
+      return __escape(value);
+    } else {
+      return '';
+    }
+  }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+  __safe = __obj.safe = function(value) {
+    if (value && value.ecoSafe) {
+      return value;
+    } else {
+      if (!(typeof value !== 'undefined' && value != null)) value = '';
+      var result = new String(value);
+      result.ecoSafe = true;
+      return result;
+    }
+  };
+  if (!__escape) {
+    __escape = __obj.escape = function(value) {
+      return ('' + value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    };
+  }
+  (function() {
+    (function() {
+      if (this.agent.avatar) {
+        __out.push('\n<img class="zammad-chat-agent-avatar" src="');
+        __out.push(__sanitize(this.agent.avatar));
+        __out.push('">\n');
+      }
+    
+      __out.push('\n<span class="zammad-chat-agent-sentence">\n  <span class="zammad-chat-agent-name">');
+    
+      __out.push(__sanitize(this.agent.name));
+    
+      __out.push('</span>\n</span>');
+    
+    }).call(this);
+    
+  }).call(__obj);
+  __obj.safe = __objSafe, __obj.escape = __escape;
+  return __out.join('');
+};
+
+/*!
+ * ----------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * <jevin9@gmail.com> wrote this file. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return. Jevin O. Sewaruth
+ * ----------------------------------------------------------------------------
+ *
+ * Autogrow Textarea Plugin Version v3.0
+ * http://www.technoreply.com/autogrow-textarea-plugin-3-0
+ * 
+ * THIS PLUGIN IS DELIVERD ON A PAY WHAT YOU WHANT BASIS. IF THE PLUGIN WAS USEFUL TO YOU, PLEASE CONSIDER BUYING THE PLUGIN HERE :
+ * https://sites.fastspring.com/technoreply/instant/autogrowtextareaplugin
+ *
+ * Date: October 15, 2012
+ *
+ * Zammad modification: 
+ *   - remove overflow:hidden when maximum height is reached
+ *   - mirror box-sizing
+ *
+ */
+
+jQuery.fn.autoGrow = function(options) {
+  return this.each(function() {
+    var settings = jQuery.extend({
+      extraLine: true,
+    }, options);
+
+    var createMirror = function(textarea) {
+      jQuery(textarea).after('<div class="autogrow-textarea-mirror"></div>');
+      return jQuery(textarea).next('.autogrow-textarea-mirror')[0];
+    }
+
+    var sendContentToMirror = function (textarea) {
+      mirror.innerHTML = String(textarea.value)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/ /g, '&nbsp;')
+        .replace(/\n/g, '<br />') +
+        (settings.extraLine? '.<br/>.' : '')
+      ;
+
+      if (jQuery(textarea).height() != jQuery(mirror).height()) {
+        jQuery(textarea).height(jQuery(mirror).height());
+
+        var overflow = jQuery(mirror).height() > maxHeight ? '' : 'hidden';
+        jQuery(textarea).css('overflow', overflow);
+      }
+    }
+
+    var growTextarea = function () {
+      sendContentToMirror(this);
+    }
+
+    // Create a mirror
+    var mirror = createMirror(this);
+
+    // Store max-height
+    var maxHeight = parseInt(jQuery(this).css('max-height'), 10);
+    
+    // Style the mirror
+    mirror.style.display = 'none';
+    mirror.style.wordWrap = 'break-word';
+    mirror.style.whiteSpace = 'normal';
+    mirror.style.padding = jQuery(this).css('paddingTop') + ' ' + 
+      jQuery(this).css('paddingRight') + ' ' + 
+      jQuery(this).css('paddingBottom') + ' ' + 
+      jQuery(this).css('paddingLeft');
+      
+    mirror.style.width = jQuery(this).css('width');
+    mirror.style.fontFamily = jQuery(this).css('font-family');
+    mirror.style.fontSize = jQuery(this).css('font-size');
+    mirror.style.lineHeight = jQuery(this).css('line-height');
+    mirror.style.letterSpacing = jQuery(this).css('letter-spacing');
+    mirror.style.boxSizing = jQuery(this).css('boxSizing');
+
+    // Style the textarea
+    this.style.overflow = "hidden";
+    this.style.minHeight = this.rows+"em";
+
+    // Bind the textarea's event
+    this.onkeyup = growTextarea;
+    this.onfocus = growTextarea;
+
+    // Fire the event for text already present
+    sendContentToMirror(this);
+
+  });
+};
 if (!window.zammadChatTemplates) {
   window.zammadChatTemplates = {};
 }
