@@ -3941,6 +3941,7 @@ footer {
   border: none;
   color: hsl(206,7%,28%);
   box-shadow: 0 1px 14px rgba(0,8,14,.25);
+  @include rtl(text-align, right);
 }
 
   .popover-body {
@@ -6048,6 +6049,7 @@ footer {
     padding: 23px 23px 20px;
     border: none;
     display: flex;
+    @include rtl(text-align, left);
   }
 
   .modal-leftFooter,
@@ -6093,6 +6095,7 @@ footer {
   border: none;
   box-shadow: none;
   overflow: hidden;
+  @include rtl(text-align, right);
 }
 
   .dropdown-menu kbd {

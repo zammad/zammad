@@ -479,10 +479,10 @@ mark,
   background-color: #fcf8e3;
 }
 .text-left {
-  text-align: start;
+  text-align: left;
 }
 .text-right {
-  text-align: end;
+  text-align: right;
 }
 .text-center {
   text-align: center;
@@ -611,7 +611,7 @@ dd {
     width: 160px;
     overflow: hidden;
     clear: left;
-    text-align: end;
+    text-align: right;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -656,7 +656,7 @@ blockquote .small:before {
 blockquote.pull-right {
   padding-right: 15px;
   padding-left: 0;
-  text-align: end;
+  text-align: right;
   border-right: 5px solid #eee;
   border-left: 0;
 }
@@ -1368,10 +1368,10 @@ caption {
   padding-top: 8px;
   padding-bottom: 8px;
   color: #777;
-  text-align: start;
+  text-align: left;
 }
 th {
-  text-align: start;
+  text-align: left;
 }
 .table {
   width: 100%;
@@ -2020,7 +2020,7 @@ select[multiple].form-group-lg .form-control {
   .form-horizontal .control-label {
     padding-top: 7px;
     margin-bottom: 0;
-    text-align: end;
+    text-align: right;
   }
 }
 .form-horizontal .has-feedback .form-control-feedback {
@@ -2100,7 +2100,7 @@ tbody.collapse.in {
   padding: 5px 0;
   margin: 2px 0 0;
   font-size: 14px;
-  text-align: start;
+  text-align: left;
   list-style: none;
   background-color: #fff;
   -webkit-background-clip: padding-box;
@@ -4114,7 +4114,7 @@ button.close {
 }
 .modal-footer {
   padding: 15px;
-  text-align: end;
+  text-align: right;
   border-top: 1px solid #e5e5e5;
 }
 .modal-footer .btn + .btn {
@@ -4268,7 +4268,7 @@ button.close {
   font-size: 14px;
   font-weight: normal;
   line-height: 1.42857143;
-  text-align: start;
+  text-align: left;
   white-space: normal;
   background-color: #fff;
   -webkit-background-clip: padding-box;
