@@ -49,10 +49,11 @@ class App.Utils
   @linkify: (string) ->
     window.linkify(string)
 
-  # htmlEscapedAndLinkified = App.Utils.linkify(rawText)
+  # htmlEscapedAndPhoneified = App.Utils.phoneify(rawText)
   @phoneify: (string) ->
-    string = string.replace(/\s+/g, '')
-    "tel://#{encodeURIComponent(string)}"
+    string = string.replace(/[^0-9,\+,#,\*]+/g, '')
+      .replace(/(.)\+/, '$1')
+    "tel:#{string}"
 
   # wrappedText = App.Utils.wrap(rawText, maxLineLength)
   @wrap: (ascii, max = 82) ->
