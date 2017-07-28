@@ -401,6 +401,7 @@ class App.TicketZoom extends App.Controller
         nav:            @nav
         isCustomer:     @permissionCheck('ticket.customer')
         scrollbarWidth: App.Utils.getScrollBarWidth()
+        dir:            App.i18n.dir()
       )
 
       new App.TicketZoomOverviewNavigator(

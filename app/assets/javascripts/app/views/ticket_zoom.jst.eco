@@ -1,5 +1,5 @@
 <div class="tabsSidebar-holder">
-  <div class="scrollPageHeader tabsSidebar-sidebarSpacer" style="right: <%- @scrollbarWidth %>px">
+  <div class="scrollPageHeader tabsSidebar-sidebarSpacer" style="<%- if @dir is 'rtl' then 'left' else 'right' %>: <%- @scrollbarWidth %>px">
     <small><%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span></small>
     <div class="js-ticketTitleContainer ticket-title"></div>
     <div class="js-highlighterContainer highlighter"></div>

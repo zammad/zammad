@@ -39,6 +39,30 @@ $highlight-color: hsl(205,90%,60%);
   }
 }
 
+/* sets LTR and RTL within the same style call */
+@mixin bidi-style($prop, $value, $inverse-prop, $default-value) {
+  #{$prop}: $value;
+  
+  html[dir=rtl] & {
+    #{$inverse-prop}: $value;
+    #{$prop}: $default-value;
+  }
+}
+
+/* adds a property only in RTL */
+@mixin rtl($prop, $value) {
+  html[dir=rtl] & {
+    #{$prop}: $value;
+  }
+}
+
+/* adds a property only in LTR */
+@mixin ltr($prop, $value) {
+  html[dir=ltr] & {
+    #{$prop}: $value;
+  }
+}
+
 html {
   height: 100%;
 }
@@ -130,7 +154,7 @@ blockquote {
 }
 
 ol, ul {
-  padding-left: 20px;
+  padding-inline-start: 20px;
 }
 
 #app {
@@ -362,7 +386,7 @@ pre code.hljs {
   }
 
   &.btn--icon--last .icon {
-    margin-left: 5px; // so far only used in ticket_zoom secondaryAction dropup
+    @include bidi-style(margin-left, 5px, margin-right, 0); // so far only used in ticket_zoom secondaryAction dropup
   }
 
   &:focus {
@@ -393,7 +417,7 @@ pre code.hljs {
 
     .icon {
       vertical-align: middle;
-      margin-right: 5px;
+      @include bidi-style(margin-right, 5px, margin-left, 0);
     }
   }
 
@@ -527,7 +551,7 @@ pre code.hljs {
     border: none;
     background: none;
     vertical-align: baseline;
-    text-align: left;
+    text-align: start;
 
     .icon {
       fill: currentColor;
@@ -576,11 +600,11 @@ pre code.hljs {
     }
 
     &.space-left {
-      margin-left: 0;
+      @include bidi-style(margin-left, 0, margin-right, -10px);
     }
 
     &.space-right {
-      margin-right: 0;
+      @include bidi-style(margin-right, 0, margin-left, -10px);
     }
   }
 
@@ -598,16 +622,17 @@ pre code.hljs {
   }
 
   &.btn--split--first {
-    border-radius: 3px 0 0 3px;
+    @include bidi-style(border-radius, 3px 0 0 3px, border-radius, 0 3px 3px 0);
   }
   &.btn--split,
   &.btn--split--last {
     border-radius: 0;
-    border-left: none;
-    margin-left: 0 !important;
+    @include bidi-style(border-left-width, 0, border-right-width, 1px);
+    @include ltr(margin-left, 0 !important);
+    @include rtl(margin-right, 0 !important);
   }
   &.btn--split--last {
-    border-radius: 0 3px 3px 0;
+    @include bidi-style(border-radius, 0 3px 3px 0, border-radius, 3px 0 0 3px);
   }
 
   &.btn--dropdown {
@@ -628,32 +653,34 @@ pre code.hljs {
 .btn + .btn,
 .btn + .buttonDropdown,
 .buttonDropdown + .buttonDropdown {
-  margin-left: 10px;
+  @include bidi-style(margin-left, 10px, margin-right, 0);
 }
 
 .btn + .btn.align-right {
-  margin-left: auto;
+  @include bidi-style(margin-left, auto, margin-right, 0);
 }
 
 .btn.align-right ~ .btn {
-  margin-left: 15px;
+  @include bidi-style(margin-left, 15px, margin-right, 0);
 }
 
 .vertical > .btn:not(.hidden) + .btn {
-  margin-left: 0;
+  @include bidi-style(margin-left, 0, margin-right, 0);
   margin-top: 10px;
 }
 
 .btn--download .icon-download {
   margin-right: 6px;
+  @include rtl(margin-right, -10px);
   margin-top: 4px;
   margin-left: -10px;
+  @include rtl(margin-left, 6px);
   vertical-align: top;
   fill: white;
 }
 
 .btn-label {
-  margin-left: 7px;
+  @include bidi-style(margin-left, 7px, margin-right, 0);
 }
 
 .visibility-change {
@@ -706,7 +733,7 @@ pre code.hljs {
   }
 
   .btn + .btn {
-    margin-left: 0;
+    @include bidi-style(margin-left, 0, margin-right, 10px);
   }
 
   .btn--text, .btn--textLarge {
@@ -767,15 +794,17 @@ pre code.hljs {
   }
 
   &:not(:last-child):not(:only-child) {
-    border-right: none;
+    @include bidi-style(border-right-width, 0, border-left-width, 1px);
   }
 
   &:first-child {
     border-radius: 5px 0 0 5px;
+    @include rtl(border-radius, 0 5px 5px 0);
   }
 
   &:last-child {
     border-radius: 0 5px 5px 0;
+    @include rtl(border-radius, 5px 0 0 5px);
   }
 
   &:only-child {
@@ -783,7 +812,7 @@ pre code.hljs {
   }
 
   .badge {
-    margin: 0 5px 0 10px;
+    @include bidi-style(margin, 0 5px 0 10px, margin, 0 10px 0 5px);
     background: hsla(210,50%,10%,.24);
   }
 
@@ -841,7 +870,7 @@ pre code.hljs {
   vertical-align: top;
   border-radius: 9px;
   background: hsl(198,18%,86%);
-  margin-right: 3px;
+  @include bidi-style(margin-right, 3px, margin-left, 0);
   flex-shrink: 0;
 
   &:empty {
@@ -859,6 +888,7 @@ pre code.hljs {
     min-width: 0;
     padding: 0;
     margin-right: 0;
+    @include bidi-style(margin-right, 0, margin-left, 0);
     font-size: inherit;
     font-weight: inherit;
     text-align: inherit;
@@ -872,7 +902,7 @@ pre code.hljs {
 
 .key-value {
   td:first-child {
-    padding-right: 10px;
+    @include bidi-style(padding-right, 10px, padding-left, 0);
     color: #999;
   }
 }
@@ -935,15 +965,15 @@ table {
 }
 
 .table-column-sortIcon {
-  margin-left: auto;
+  @include bidi-style(margin-left, auto, margin-right, 0);
 }
 
 th.align-right {
   .table-column-title {
-    margin-left: auto;
+    @include bidi-style(margin-left, auto, margin-right, 0);
   }
   .table-column-sortIcon {
-    margin-left: 0;
+    @include bidi-style(margin-left, 0, margin-right, 0);
   }
 }
 
@@ -963,12 +993,12 @@ th.align-right {
 
 .table-col-resize {
   position: absolute;
-  right: 0;
+  @include bidi-style(right, 0, left, auto);
   top: 0;
   height: 100%;
   cursor: col-resize;
   padding: 10px;
-  margin-right: -10px;
+  @include bidi-style(margin-right, -10px, margin-left, 0);
   z-index: 1;
 
   &:after {
@@ -1019,7 +1049,7 @@ th.align-right {
   fill: hsl(206,7%,33%);
   width: 8px;
   height: 8px;
-  margin-left: 3px;
+  @include bidi-style(margin-left, 3px, margin-right, 0);
   margin-top: -2px;
   vertical-align: middle;
 }
@@ -1075,7 +1105,7 @@ th.align-right {
   &.checkbox-replacement--inline,
   &.radio-replacement--inline {
     display: inline-flex;
-    margin-right: 3px;
+    @include bidi-style(margin-right, 3px, margin-left, 0);
   }
 
   input {
@@ -1102,7 +1132,7 @@ th.align-right {
   }
 
   + .label-text {
-    margin-left: 0;
+    @include bidi-style(margin-left, 0, margin-right, 3px);
   }
 }
 
@@ -1205,7 +1235,7 @@ th.align-right {
 }
 
 #task [data-type="close"] {
-  margin-left: 5px;
+  @include bidi-style(margin-left, 5px, margin-right, 0);
   font-size: 13px;
   top: 1px;
 }
@@ -1214,7 +1244,7 @@ th.align-right {
 }
 
 #task .taskbar-new {
-  text-align: right;
+  text-align: end;
   padding-right: 12px;
 }
 
@@ -1280,7 +1310,7 @@ label,
   font-weight: normal;
   letter-spacing: 0.05em;
   margin-bottom: 4px;
-  text-align: left;
+  text-align: start;
   padding: 0;
   /* user-select: none; disabled because of chrome51 https://github.com/martini/zammad/issues/183 */
 }
@@ -1314,7 +1344,7 @@ table {
 }
 
 .label-text {
-  margin-left: 3px;
+  @include bidi-style(margin-left, 3px, margin-right, 0);
   user-select: none;
   cursor: pointer;
 }
@@ -1538,7 +1568,7 @@ fieldset > .form-group {
   opacity: 0.2;
   top: -2px;
   position: relative;
-  margin-left: auto;
+  @include bidi-style(margin-left, auto, margin-right, 0);
 
   .icon-help {
     display: block;
@@ -1721,7 +1751,7 @@ textarea.form-control {
 }
 
 select.form-control:not([multiple]) {
-  padding-right: 34px;
+  @include bidi-style(padding-right, 34px, padding-left, 12px);
   word-wrap: normal;
 }
 
@@ -1750,7 +1780,7 @@ select.form-control:not([multiple]) {
 .form-control + .icon-arrow-down,
 .dropdown-arrow {
   position: absolute;
-  right: 12px;
+  @include bidi-style(right, 12px, left, auto);
   top: 50%;
   margin-top: -3px;
   fill: black;
@@ -1817,9 +1847,9 @@ input.has-error {
   input,
   .form-control {
     flex: 1;
-    border-right: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    @include bidi-style(border-right-width, 0, border-left-width, 1px);
+    @include bidi-style(border-top-right-radius, 0, border-top-left-radius, 3px);
+    @include bidi-style(border-bottom-right-radius, 0, border-bottom-left-radius, 3px);
 
     &:focus + .controls-button {
       .controls-button-inner {
@@ -1835,11 +1865,13 @@ input.has-error {
         content: "";
         position: absolute;
         left: 0;
+        @include rtl(left, -3px);
         top: -3px;
         right: -3px;
+        @include rtl(right, 0);
         bottom: -3px;
         background: hsl(201,62%,90%);
-        border-radius: 0 7px 7px 0;
+        @include bidi-style(border-radius, 0 7px 7px 0, border-radius, 7px 0 0 7px);
       }
     }
   }
@@ -1862,7 +1894,7 @@ input.has-error {
   background: white;
   position: relative;
   border: 1px solid hsl(0, 0%, 90%);
-  border-radius: 0 3px 3px 0;
+  @include bidi-style(border-radius, 0 3px 3px 0, border-radius, 3px 0 0 3px);
 }
 
 .searchfield {
@@ -1870,7 +1902,7 @@ input.has-error {
   margin-bottom: 20px;
 
   .icon {
-    left: 15px;
+    @include bidi-style(left, 15px, right, auto);
     top: 12px;
     width: 17px;
     height: 17px;
@@ -1882,6 +1914,7 @@ input.has-error {
     appearance: textfield;
     border-radius: 19px;
     padding: 0 17px 0 42px;
+    @include rtl(padding, 0 42px 0 17px);
     will-change: transform;
 
     &.is-empty + .empty-search {
@@ -1927,7 +1960,7 @@ input.has-error {
 
   svg,
   .icon {
-    margin-right: 14px;
+    @include bidi-style(margin-right, 14px, margin-left, 0);
   }
 
   h2 {
@@ -2048,6 +2081,7 @@ kbd {
 
 .pagination {
   margin: 0 0 0 19px;
+  @includ rtl(margin, 0 19px 0 0);
   display: flex;
 }
 
@@ -2057,6 +2091,18 @@ kbd {
   width: 31px;
   height: 31px;
   border-color: #e5e5e5;
+  @include bidi-style(margin-left, -1px, margin-right, 0);
+}
+
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  @include bidi-style(border-top-left-radius, 4px, border-top-right-radius, 0);
+  @include bidi-style(border-bottom-left-radius, 4px, border-bottom-right-radius, 0);
+}
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  @include bidi-style(border-top-right-radius, 4px, border-top-left-radius, 0);
+  @include bidi-style(border-bottom-right-radius, 4px, border-bottom-left-radius, 0);
 }
 
 .pagination > .active > a,
@@ -2071,6 +2117,7 @@ kbd {
 
 .pagination-counter {
   margin: 0 0 0 19px;
+  @include rtl(margin, 0 19px 0 0);
   line-height: 33px;
   color: #9c9c9b;
 }
@@ -2096,7 +2143,7 @@ kbd {
   align-items: center;
 
   .zammad-switch {
-    margin-right: 9px;
+    @include bidi-style(margin-right, 9px, margin-left, 0);
   }
 
   h1,
@@ -2108,18 +2155,18 @@ kbd {
 
 .page-header-center {
   justify-self: center;
-  padding-left: 9px;
+  @include bidi-style(padding-left, 9px, padding-right, 0);
   margin: 0 auto;
 
   & + .page-header-meta {
-    margin-left: 0;
+    @include bidi-style(margin-left, 0, margin-right, auto);
     flex: none;
   }
 }
 
 .page-header-meta {
-  margin-left: auto;
-  padding-left: 20px;
+  @include bidi-style(margin-left, auto, margin-right, 0);
+  @include bidi-style(padding-left, 20px, padding-right, 0);
   display: flex;
   justify-content: flex-end;
   flex: 1;
@@ -2132,7 +2179,7 @@ kbd {
   }
 
   .btn + .btn {
-    margin-left: 9px;
+    @include bidi-style(margin-left, 9px, margin-right, 0);
   }
 }
 
@@ -2156,9 +2203,9 @@ kbd {
 }
 
 .page-aside {
-  padding-right: 20px;
+  @include bidi-style(padding-right, 20px, padding-left, 0);
   border-right: 1px solid hsl(0,0%,90%);
-  margin-right: 20px;
+  @include bidi-style(margin-right, 20px, margin-left, 0);
   width: 240px;
   flex-shrink: 0;
   flex-grow: 0;
@@ -2176,13 +2223,13 @@ kbd {
 }
 
 .page-loading-label {
-  margin-left: 10px;
+  @include bidi-style(margin-left, 10px, margin-right, 0);
   margin-top: 1px;
 }
 
 .dropdown-menu .count {
   padding-top: 1px;
-  margin-left: 10px;
+  @include bidi-style(margin-left, 10px, margin-right, 0);
 }
 
 .help-block {
@@ -2315,6 +2362,7 @@ kbd {
   justify-content: center;
   color: hsl(233,7%,26%);
   margin: auto 0 34px -16px;
+  @include rtl(margin, auto -16px 34px 0);
   cursor: default;
   position: absolute;
   bottom: 0;
@@ -2322,12 +2370,12 @@ kbd {
   right: 0;
 
   .icon-logo {
-    margin-right: 8px;
+    @include bidi-style(margin-right, 8px, margin-left, 0);
     margin-top: -11px;
   }
 
   .logotype {
-    margin-left: 7px;
+    @include bidi-style(margin-left, 7px, margin-left, 0);
     margin-top: -3px;
     fill: hsl(225,9%,27%);
   }
@@ -2352,7 +2400,7 @@ kbd {
 }
 
 .fullscreen-body {
-  text-align: left;
+  text-align: start;
   display: inline-block;
 }
 
@@ -2411,7 +2459,7 @@ ol.tabs li {
     justify-content: center;
 
     .arrow {
-      margin-left: 10px;
+      @include bidi-style(margin-left, 10px, margin-right, 0);
       opacity: 0.75;
     }
 
@@ -2431,20 +2479,23 @@ ol.tabs li {
 
   .tab:first-child {
     border-radius: 3px 0 0 3px;
+    @include rtl(border-radius, 0 3px 3px 0);
+    @include bidi-style(border-right-width, 1px, border-right-width, 0);
   }
 
   .tab:last-child:not(:only-child) {
     border-radius: 0 3px 3px 0;
-    border-right: none;
+    @include bidi-style(border-right-width, 0, border-right-width, 1px);
+    @include rtl(border-radius, 3px 0 0 3px);
   }
 
   .tab:only-child {
     border-radius: 3px;
-    border-right: none;
+    @include bidi-style(border-right-width, 0, border-right-width, 1px);
   }
 
   .tab-badge {
-    margin-left: 3px;
+    @include bidi-style(margin-left, 3px, margin-right, 0);
     font-size: 0.95em;
   }
 
@@ -2469,10 +2520,12 @@ ol.tabs li {
 
       &:first-child {
         border-radius: 8px 0 0 8px;
+        @include rtl(border-radius, 0 8px 8px 0);
       }
 
       &:last-child {
         border-radius: 0 8px 8px 0;
+        @include rtl(border-radius, 8px 0 0 8px);
       }
 
       &:only-child {
@@ -2483,6 +2536,8 @@ ol.tabs li {
     .tab-dropdown {
       padding-left: 18px;
       padding-right: 15px;
+      @include rtl(padding-left, 15px);
+      @include rtl(padding-right, 18px);
     }
   }
 
@@ -2584,7 +2639,7 @@ ol.tabs li {
   .provider-icon {
     width: 29px;
     height: 24px;
-    margin-right: 10px;
+    @include bidi-style(margin-right, 10px, margin-left, 0);
   }
 }
 
@@ -2657,7 +2712,7 @@ ol.tabs li {
 
 .color-swatch {
   padding: 2px;
-  margin: -2px 0;
+  margin: -2px 0 -4px;
   cursor: pointer;
 
   /* :after technique for bigger click area */
@@ -2733,7 +2788,7 @@ form {
   margin-top: 10px;
 
   .btn + .btn:not(.align-right) {
-    margin-left: 20px;
+    @include bidi-style(margin-left, 20px, margin-right, 10px);
   }
 }
 
@@ -2743,7 +2798,7 @@ form a.standalone {
 }
 
   form a.standalone.align-right {
-    margin-left: auto;
+    @include bidi-style(margin-left, auto, margin-right, 0);
   }
 
 footer {
@@ -2751,6 +2806,8 @@ footer {
   padding-top: 10px;
   padding-left: 10px;
   padding-right: 22px;
+  @include rtl(padding-left, 22px);
+  @include rtl(padding-right, 10px);
 }
 
 .can-move {
@@ -2778,7 +2835,7 @@ footer {
   right: 20px;
 }
 .customer_info textarea {
-  padding-left: 10px;
+  @include bidi-style(padding-left, 10px, padding-right, 0);
   width: 100%;
   border-color: #eee;
 }
@@ -2804,7 +2861,7 @@ footer {
 
   .tabsHolder {
     flex: 1;
-    margin-right: 20px;
+    @include bidi-style(margin-right, 20px, margin-left, 0);
     min-width: 0; /* Firefox bug fix */
   }
 
@@ -2865,12 +2922,12 @@ footer {
   }
 
   .bulkAction .btn--text {
-    margin-right: 0;
+    @include bidi-style(margin-right, 0, margin-left, 16px);
   }
 
   .bulkAction-controls {
     margin-top: 10px;
-    margin-left: auto;
+    @include bidi-style(margin-left, auto, margin-right, 0);
   }
 
 .panel {
@@ -2953,7 +3010,7 @@ footer {
   width: 60px;
 }
 .sub_attribute .controls {
-  margin-left: 80px;
+  @include bidi-style(margin-left, 80px, margin-right, 0);
 }
 
 .splash {
@@ -2970,7 +3027,7 @@ footer {
   color: hsl(0,0%,45%);
 
   .icon {
-    margin-right: 10px;
+    @include bidi-style(margin-right, 10px, margin-left, 0);
     filter: grayscale(90%);
   }
 }
@@ -2995,7 +3052,7 @@ footer {
   .menu .badge {
     background: $ok-color;
     color: hsl(233,10%,16%);
-    margin-right: 8px;
+    @include bidi-style(margin-right, 8px, margin-left, 0);
   }
 
   .menu .zammad-switch {
@@ -3056,7 +3113,7 @@ footer {
   }
 
   .menu-item-icon {
-    margin-right: 15px;
+    @include bidi-style(margin-right, 15px, margin-left, 0);
     width: 24px;
     height: 24px;
     fill: hsl(206,7%,37%);
@@ -3101,11 +3158,11 @@ footer {
     }
 
     .tasks--standalone .icon-task-state {
-      margin-right: 4px;
+      @include bidi-style(margin-right, 4px, margin-left, 0);
     }
 
   .nav-tab {
-    padding: 10px 15px 9px 0;
+    @include bidi-style(padding, 10px 15px 9px 0, padding, 10px 0 9px 15px);
     position: relative;
     color: #808080;
     display: flex;
@@ -3123,7 +3180,7 @@ footer {
     }
 
     .navigation .nav-tab-name {
-      text-align: left;
+      text-align: start;
     }
 
     .tasks-navigation .nav-tab-icon .error {
@@ -3190,10 +3247,10 @@ footer {
 
   .nav-tab-close {
     position: absolute;
-    right: 0;
+    @include bidi-style(right, 0, left, auto);
     top: 0;
     height: 100%;
-    padding: 0 16px 0 0;
+    @include bidi-style(padding-right, 16px, padding-left, 0);
     visibility: hidden;
     @extend .u-clickable;
     display: flex;
@@ -3230,8 +3287,8 @@ footer {
     }
 
 .icon-task-state {
-  vertical-align: middle;
-  margin-top: -2px;
+  margin-top: 1px;
+  display: block;
 }
 
 .nav-tab-icon .icon-task-state {
@@ -3342,13 +3399,14 @@ footer {
     position: absolute;
     top: 8px;
     left: 10px;
+    @include bidi-style(left, 10px, right, auto);
     z-index: 2;
     opacity: 0.5;
     fill: white;
   }
 
   .search.focused .search-holder {
-    margin-right: -46px;
+    @include bidi-style(margin-right, -46px, margin-left, 0);
   }
 
   .search.focused .logo {
@@ -3739,7 +3797,7 @@ footer {
   padding: 20px;
   color: hsl(60,1%,34%);
   background: white;
-  border-right: 1px solid #e6e6e6;
+  @include bidi-style(border-right, 1px solid #e6e6e6, border-left, none);
   overflow: auto;
   
   @include small-desktop {
@@ -3842,8 +3900,10 @@ footer {
 
   .nav-pills > li > a > .badge {
     margin-left: auto;
-    padding-left: 10px;
     margin-right: 5px;
+    @include bidi-style(padding-left, 10px, padding-right, 0);
+    @include rtl(margin-left, 5px);
+    @include rtl(margin-right, auto);
   }
 
   a.list-group-item.active > .badge,
@@ -3898,25 +3958,35 @@ footer {
     margin-bottom: 21px;
   }
 
-  .popover.right { margin-left: 4px; }
+  .popover.right { 
+    margin-left: 4px;
+  }
   .popover.right > .arrow {
     border-right: none;
     left: -9px;
   }
 
-  .popover.top { margin-bottom: 9px; }
+  .popover.top {
+    margin-bottom: 9px;
+  }
   .popover.top > .arrow {
     border-top: none;
     bottom: -9px;
   }
 
-  .popover.left { margin-right: 9px; }
+  .popover.left { 
+    margin-right: 9px;
+    margin-left: 0;
+  }
+
   .popover.left > .arrow {
     border-left: none;
     right: -9px;
   }
 
-  .popover.bottom { margin-top: 9px; }
+  .popover.bottom { 
+    margin-top: 9px;
+  }
   .popover.bottom > .arrow {
     border-bottom: none;
     top: -9px;
@@ -4038,7 +4108,7 @@ footer {
 
   .popover-notificationsCounter {
     color: #e25253;
-    padding-left: 3px;
+    @include bidi-style(padding-left, 3px, padding-right, 0);
   }
 
 .user-popover,
@@ -4079,7 +4149,7 @@ footer {
 .total-tickets {
   height: 83px;
   width: 48px;
-  margin-right: 4px;
+  @include bidi-style(margin-right, 4px, margin-left, 0);
   margin-bottom: -9px;
 }
 
@@ -4216,20 +4286,20 @@ footer {
 
   .stat-legend {
     margin-top: 30px;
-    margin-left: auto;
+    @include bidi-style(margin-left, auto, margin-right, 0);
     display: flex;
   }
 
   .stat-legendEntry {
     font-size: 11px;
     line-height: 1;
-    margin-left: 20px;
+    @include bidi-style(margin-left, 20px, margin-right, 0);
     background: none !important;
   }
 
   .stat-circle {
     margin-bottom: -1px;
-    margin-right: 3px;
+    @include bidi-style(margin-right, 3px, margin-left, 0);
     width: 10px;
     height: 10px;
     border-radius: 100%;
@@ -4265,6 +4335,8 @@ footer {
     margin-left: 19px;
     margin-bottom: 15px;
     margin-right: 26px;
+    @include rtl(margin-right, 19px);
+    @include rtl(margin-left, 26px);
   }
 
   .activity-entries {
@@ -4289,7 +4361,7 @@ footer {
     }
 
     &.activity-entry--removeable {
-      padding-right: 0;
+      @include bidi-style(padding-right, 0, margin-left, 17px);
     }
 
     &:not(:hover) .activity-remove {
@@ -4307,17 +4379,19 @@ footer {
 
     &.activity-entry--removeable:not(:last-child) .activity-body:after {
       right: 17px;
+      @include bidi-style(right, 17px, left, 0);
     }
   }
 
   .activity-avatar {
     padding: 16px 2px 0;
-    margin-right: 10px;
+    @include bidi-style(margin-right, 10px, margin-left, 0);
     flex-shrink: 0;
   }
 
   .activity-body {
     padding: 16px 0 16px 2px;
+    @include rtl(padding, 16px 2px 16px 0);
     position: relative;
     display: flex;
     flex: 1;
@@ -4347,6 +4421,8 @@ footer {
     cursor: pointer;
     padding-left: 10px;
     padding-right: 27px;
+    @include rtl(padding-left, 27px);
+    @include rtl(padding-right, 10px);
 
     .activity-remove-icon-holder {
       width: 19px;
@@ -4512,7 +4588,7 @@ footer {
   justify-content: flex-end;
   align-items: center;
   padding: 28px 0 0 0;
-  margin-right: -40px;
+  @include bidi-style(margin-right, -40px, margin-left, 0);
 }
 
 .icon-marker {
@@ -4532,7 +4608,7 @@ footer {
 
 .ticketZoom > .overview-navigator {
   margin-top: 32px;
-  padding-left: 20px;
+  @include bidi-style(padding-left, 20px, padding-right, 0);
 }
 
 .ticket-article,
@@ -4631,13 +4707,14 @@ footer {
     }
 
     .article-meta-value {
-      margin-left: 8px;
+      @include bidi-style(margin-left, 8px, margin-right, 0);
     }
 
     .article-meta-icon {
       fill: white;
       vertical-align: top;
       margin: 2px 3px 0 0;
+      @include rtl(margin, 2px 0 0 3px);
     }
 
     .article-meta .text-muted {
@@ -4827,7 +4904,7 @@ footer {
     }
 
     .article-action-icon {
-      margin-right: 5px;
+      @include bidi-style(margin-right, 5px, margin-left, 0);
       vertical-align: top;
       width: 17px;
       height: 17px;
@@ -4948,11 +5025,11 @@ footer {
   }
 
   .pop-selectable:first-child {
-    border-radius: 4px 0 0 4px;
+    @include bidi-style(border-radius, 4px 0 0 4px, border-radius, 0 4px 4px 0);
   }
 
   .pop-selectable:last-child {
-    border-radius: 0 4px 4px 0;
+    @include bidi-style(border-radius, 0 4px 4px 0, border-radius, 4px 0 0 4px);
   }
 
   .pop-selectable:only-child {
@@ -4991,7 +5068,7 @@ footer {
     }
 
     .recipient-count {
-      margin-left: 3px;
+      @include bidi-style(margin-left, 3px, margin-right, 0);
       margin-top: 1px;
       line-height: 1;
     }
@@ -5037,7 +5114,7 @@ footer {
     }
 
     .list-entry-name {
-      margin-left: 18px;
+      @include bidi-style(margin-left, 18px, margin-right, 0);
     }
 
     .list-entry-type {
@@ -5063,11 +5140,13 @@ footer {
 
     .list-entry-type div:first-child {
       border-radius: 3px 0 0 3px;
+      @include rtl(border-radius, 0 3px 3px 0);
     }
 
     .list-entry-type div:last-child {
       border-left: none;
       border-radius: 0 3px 3px 0;
+      @include rtl(border-radius, 3px 0 0 3px);
     }
 
     .recipient-list input {
@@ -5139,6 +5218,7 @@ footer {
     .attachment {
       font-size: 13px;
       padding: 1px 10px 1px 7px;
+      @include rtl(padding, 1px 7px 1px 10px);
       cursor: default;
       position: relative;
       display: flex;
@@ -5149,7 +5229,7 @@ footer {
     }
 
       .attachment-name {
-        margin-right: 5px;
+        @include bidi-style(margin-right, 5px, margin-left, 0);
         min-width: 0;
         @extend .u-highlight;
       }
@@ -5157,7 +5237,7 @@ footer {
       .attachment-size {
         white-space: nowrap;
         float: right;
-        margin-right: 10px;
+        @include bidi-style(margin-right, 10px, margin-left, 0);
       }
 
       .attachment-delete {
@@ -5165,7 +5245,7 @@ footer {
         text-decoration: underline;
         display: none;
         white-space: nowrap;
-        margin-left: auto;
+        @include bidi-style(margin-left, auto, margin-right, 0);
         cursor: pointer;
         user-select: none;
       }
@@ -5183,7 +5263,7 @@ footer {
           fill: hsl(198,18%,72%);
           width: 9px;
           height: 9px;
-          margin-right: 5px;
+          @include bidi-style(margin-right, 5px, margin-left, 0);
         }
 
     .attachmentPlaceholder-inputHolder {
@@ -5201,7 +5281,7 @@ footer {
 
     .attachmentUpload-cancel {
       @extend .u-clickable;
-      margin-left: auto;
+      @include bidi-style(margin-left, auto, margin-right, 0);
       text-decoration: underline;
     }
 
@@ -5209,7 +5289,7 @@ footer {
       fill: hsl(198,18%,72%);
       width: 9px;
       height: 9px;
-      margin-right: 5px;
+      @include bidi-style(margin-right, 5px, margin-left, 0);
     }
 
     .attachmentUpload-progressBar {
@@ -5221,16 +5301,18 @@ footer {
     }
 
 .tabsSidebar-tabsSpacer {
-  padding-right: 62px !important;
+  @include bidi-style(padding-right, 62px !important, padding-left, 0);
 }
 
 .tabsSidebar-sidebarSpacer {
-  margin-right: $sidebarWidth;
+  @include bidi-style(margin-right, $sidebarWidth, margin-left, 0);
   transition: margin-right 500ms;
+  @include rtl(transition, margin-left 500ms);
 }
 
 .tabsSidebar-sidebarSpacer.is-closed {
   margin-right: 0;
+  @include rtl(margin-left, 0);
 }
 
 .tabsSidebar-holder {
@@ -5263,16 +5345,17 @@ footer {
   }
 
   .sidebar-header-headline {
-    padding: 33px 0 17px 25px;
+    padding: 33px 8px 17px 25px;
+    @include rtl(padding, 33px 25px 17px 8px);
     margin: 0 0 0 -20px;
+    @include rtl(margin, 0 -20px 0 0);
     line-height: 1;
-    padding-right: 8px;
     @extend .u-clickable, .u-textTruncate;
   }
 
   .sidebar-header-actions {
     flex: 1;
-    margin-right: 5px;
+    @include bidi-style(margin-right, 5px, margin-left, 0);
     display: flex;
     align-items: center;
 
@@ -5314,7 +5397,7 @@ footer {
 
   .tabsSidebar {
     position: absolute;
-    right: 0;
+    @include bidi-style(right, 0, left, auto);
     top: 0;
     bottom: 0;
     transition: 500ms;
@@ -5326,6 +5409,7 @@ footer {
 
   .tabsSidebar.is-closed {
     transform: translateX($sidebarWidth);
+    @include rtl(transform, translateX(-$sidebarWidth));
   }
 
   .tabsSidebar-tabs {
@@ -5333,7 +5417,7 @@ footer {
     flex-direction: column;
     justify-content: center;
     position: absolute;
-    left: -55px;
+    @include bidi-style(left, -55px, right, auto);
     top: 0;
     bottom: 0;
     pointer-events: none;
@@ -5371,12 +5455,12 @@ footer {
   }
 
   .tabsSidebar-tab:first-child {
-    border-top-left-radius: 8px;
+    @include bidi-style(border-top-left-radius, 8px, border-top-right-radius, 0);
     border-top: none;
   }
 
   .tabsSidebar-tab:last-child {
-    border-bottom-left-radius: 8px;
+    @include bidi-style(border-bottom-left-radius, 8px, border-bottom-right-radius, 0);
   }
 
   .tabsSidebar-tab .icon {
@@ -5460,7 +5544,7 @@ footer {
 
   .list-item-delete {
     padding: 0 10px;
-    margin-right: -3px;
+    @include bidi-style(margin-right, -3px, margin-left, 0);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -5484,7 +5568,7 @@ footer {
   font-size: 11px;
   border-radius: 7px;
   padding: 0 5px;
-  margin-right: 2px;
+  @include bidi-style(margin-right, 2px, margin-left, 0);
 }
 
 .attributeBar {
@@ -5547,7 +5631,7 @@ footer {
     top: 34px;
     height: 100%;
     position: absolute;
-    margin-left: -34px;
+    @include bidi-style(margin-left, -34px, margin-right, 0);
     z-index: 1;
   }
 }
@@ -5637,7 +5721,7 @@ footer {
 
   .box-progress-body {
     flex: 1;
-    margin-left: 24px;
+    @include bidi-style(margin-left, 24px, margin-right, 0);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -5676,7 +5760,7 @@ footer {
   height: 16px;
   fill: #ccc;
   vertical-align: top;
-  margin-right: 9px;
+  @include bidi-style(margin-right, 9px, margin-left, 0);
   margin-top: 11px;
   transform: scale(1.2);
 }
@@ -5797,7 +5881,7 @@ footer {
   .template-attribute {
     height: 24px;
     line-height: 25px;
-    padding-left: 10px;
+    @include bidi-style(padding-left, 10px, padding-right, 0);
     margin-bottom: 2px;
     font-size: 13px;
     color: hsl(198,11%,59%);
@@ -5808,11 +5892,11 @@ footer {
 
     .template-attribute .key {
       text-transform: uppercase;
-      margin-right: 3px;
+      @include bidi-style(margin-right, 3px, margin-left, 0);
     }
 
     .template-attribute .value {
-      margin-left: 3px;
+      @include bidi-style(margin-left, 3px, margin-right, 0);
     }
 
     .template-attribute .delete {
@@ -5873,12 +5957,12 @@ footer {
   height: 18px;
 }
   .switchBackToUser-text {
-    margin-left: 10px;
+    @include bidi-style(margin-left, 10px, margin-right, 0);
   }
   .switchBackToUser-close {
     width: 40px;
     height: 40px;
-    margin-right: -10px;
+    @include bidi-style(margin-right, -10px, margin-left, 0);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -5933,6 +6017,8 @@ footer {
     padding: 23px;
     position: absolute;
     right: 0;
+    @include rtl(right, auto);
+    @include rtl(left, 0);
     top: 0;
     @extend .u-clickable;
   }
@@ -5974,7 +6060,7 @@ footer {
 
 .modal.modal--local {
   display: block;
-  padding-left: 40px;
+  @include bidi-style(padding-left, 40px, padding-right, 0);
 
   .modal-backdrop {
     background: hsla(210,17%,93%,.55);
@@ -6013,7 +6099,7 @@ footer {
     background: none;
     color: inherit;
     padding: 2px 5px;
-    margin-left: 7px;
+    @include bidi-style(margin-left, 7px, margin-right, 0);
     line-height: 1;
     vertical-align: baseline;
     opacity: 0.5;
@@ -6105,7 +6191,7 @@ footer {
   }
 
   .dropdown-menu .badge {
-    padding-left: 10px;
+    @include bidi-style(padding-left, 10px, padding-right, 0);
   }
 
   .dropdown.dropdown--actions {
@@ -6130,7 +6216,7 @@ footer {
 
     .dropdown-selectedSpacer {
       width: 34px;
-      margin-left: auto;
+      @include bidi-style(margin-left, auto, margin-right, 0);
       justify-content: flex-end;
       opacity: 0;
 
@@ -6189,7 +6275,7 @@ footer {
 
     .icon {
       fill: white;
-      margin-right: 10px;
+      @include bidi-style(margin-right, 10px, margin-left, 0);
       flex-shrink: 0;
     }
   }
@@ -6219,7 +6305,7 @@ footer {
 
   .recipientList-entry .recipientList-iconSpacer {
     width: 20px;
-    margin-left: -5px;
+    @include bidi-style(margin-left, -5px, margin-right, 0);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6243,7 +6329,7 @@ footer {
 
   .recipientList-name {
     color: white;
-    margin-left: 10px;
+    @include bidi-style(margin-left, 10px, margin-right, 0);
     flex: 1;
     @extend .u-textTruncate;
   }
@@ -6262,7 +6348,7 @@ footer {
   }
 
   .recipientList-icon.plus {
-    margin-left: 13px;
+    @include bidi-style(margin-left, 13px, margin-right, 0);
   }
 
   .recipientList--new {
@@ -6293,12 +6379,13 @@ footer {
 
 .userInfo-avatar {
   float: right;
+  @include rtl(float, left);
   position: relative;
 }
 
 .organizationInfo-avatar {
   @extend .userInfo-avatar;
-  padding: 18px 0 0 18px;
+  @include bidi-style(padding, 18px 0 0 18px, padding, 18px 18px 0 0);
 }
 
 .userList {
@@ -6317,7 +6404,7 @@ footer {
 
   .userList-name {
     @extend .u-textTruncate;
-    margin-left: 7px;
+    @include bidi-style(margin-left, 7px, margin-right, 0);
   }
 }
 
@@ -6350,7 +6437,8 @@ footer {
 }
 
 .userSearch-label {
-  margin: 11px 10px 0 0;
+  margin-top: 11px;
+  @include bidi-style(margin-right, 10px, margin-left, 0);
 }
 
 .userSearch .tab:not(.active) {
@@ -6379,6 +6467,7 @@ footer {
   display: flex;
   margin: 10px -20px 20px;
   padding: 0 20px 0 21px; /* margin-left: -1px */
+  @include rtl(padding, 0 21px 0 20px);
   position: relative;
 }
 
@@ -6392,10 +6481,12 @@ footer {
 
   &:first-child {
     border-radius: 7px 0 0 7px;
+    @include rtl(border-radius, 0 7px 7px 0);
   }
 
   &:last-child {
     border-radius: 0 7px 7px 0;
+    @include rtl(border-radius, 7px 0 0 7px);
   }
 
   &:only-child {
@@ -6440,7 +6531,7 @@ footer {
 }
 
 .form-item + .btn {
-  margin-left: 23px;
+  @include bidi-style(margin-left, 23px, margin-right, 0);
 }
 
 .scrollPageHeader {
@@ -6481,7 +6572,7 @@ footer {
 
 .wizard-logo {
   fill: white;
-  margin-left: -25px;
+  @include bidi-style(margin-left, -25px, margin-right, 0);
   margin-bottom: 5px;
 }
 
@@ -6541,7 +6632,7 @@ label + .wizard-buttonList {
 
 .wizard-loadingText .loading {
   vertical-align: middle;
-  margin-right: 10px;
+  @include bidi-style(margin-right, 10px, margin-left, 0);
 }
 
 .wizard-aside {
@@ -6619,7 +6710,7 @@ label + .wizard-buttonList {
 
 .input-feedback {
   position: absolute;
-  padding-left: 10px;
+  @include bidi-style(padding-left, 10px, padding-right, 0);
   right: 1px;
   top: 1px;
   bottom: 1px;
@@ -6654,7 +6745,7 @@ label + .wizard-buttonList {
 }
 
 .progressTable td:first-child {
-  text-align: right;
+  text-align: end;
 }
 
 .progressTable progress {
@@ -6664,7 +6755,7 @@ label + .wizard-buttonList {
 }
 
 .progressTable .icon-checkmark {
-  margin-left: 10px;
+  @include bidi-style(margin-left, 10px, margin-right, 0);
   opacity: 0;
 }
 
@@ -6905,11 +6996,11 @@ label + .wizard-buttonList {
 }
 
 .profile-action {
-  margin-right: -20px;
+  @include bidi-style(margin-right, -20px, margin-left, 0);
 
   .dropdown-toggle {
     margin-top: -20px;
-    margin-right: -30px;
+    @include bidi-style(margin-right, -30px, margin-left, 0);
     margin-bottom: 8px;
     padding: 26px 40px 2px;
   }
@@ -6927,7 +7018,7 @@ label + .wizard-buttonList {
 }
 
 .profile-details {
-  margin-left: -50px;
+  @include bidi-style(margin-left, -50px, margin-right, 0);
 }
 
 .profile-ticketsPlaceholder {
@@ -6942,7 +7033,7 @@ label + .wizard-buttonList {
 
 .profile-detailsEntry {
   margin: 8px 0;
-  padding-left: 50px;
+  @include bidi-style(padding-left, 50px, padding-right, 0);
   width: 50%;
 }
 
@@ -6958,7 +7049,7 @@ label + .wizard-buttonList {
   align-items: center;
 
   .avatar {
-    margin-right: 10px;
+    @include bidi-style(margin-right, 10px, margin-left, 0);
   }
 }
 
@@ -7047,11 +7138,12 @@ label + .wizard-buttonList {
 }
 
 .overview-navigator {
-  @extend .horizontal;
+  display: flex;
 }
 
 .overview-navigator .pagination {
   margin: 0 0 0 10px;
+  @include rtl(margin, 0 10px 0 0);
 }
 
 .empty-space {
@@ -7082,10 +7174,12 @@ label + .wizard-buttonList {
 
   &:first-child {
     border-radius: 4px 4px 0 0;
+    @include rtl(border-radius, 0 0 4px 4px);
   }
 
   &:last-child {
     border-radius: 0 0 4px 4px;
+    @include rtl(border-radius, 4px 4px 0 0);
   }
 
   &:only-child {
@@ -7104,12 +7198,14 @@ label + .wizard-buttonList {
 
   .controls,
   input {
-    margin-right: 5px;
+    @include bidi-style(margin-right, 5px, margin-left, 0);
   }
 
   .controls-label {
     margin-left: 0;
     margin-right: 5px;
+    @include rtl(margin-left, 5px);
+    @include rtl(margin-right, 0);
   }
 
   select,
@@ -7214,6 +7310,7 @@ output {
       0 0 0 1px rgba(0,0,0,.05),
       0 1px 3px rgba(0,0,0,.2);
     background: white;
+    @include rtl(transform, translateX(70%));
   }
 }
 
@@ -7238,6 +7335,7 @@ output {
 
   &:checked + label:after {
     transform: translateX(70%);
+    @include rtl(transform, none);
   }
 }
 
@@ -7246,7 +7344,7 @@ output {
 }
 
 .horizontal-filter-text {
-  margin-right: 5px;
+  @include bidi-style(margin-right, 5px, margin-left, 0);
 }
 
 .filter-controls {
@@ -7279,7 +7377,7 @@ output {
   }
 
   &:not(:last-child) {
-    margin-right: 7px;
+    @include bidi-style(margin-right, 7px, margin-left, 0);
   }
 
   .icon {
@@ -7390,7 +7488,7 @@ output {
   }
 
   .settings-list-separator {
-    border-left-width: 3px;
+    @include bidi-style(border-left-width, 3px, border-right-width, 1px);
   }
 
   .text-muted {
@@ -7411,7 +7509,7 @@ output {
 
   th:not(:last-child),
   td:not(:last-child) {
-    border-right: none;
+    @include bidi-style(border-right-width, 0, border-left-width, 1px);
   }
 
   tr:not(:last-child) td,
@@ -7425,21 +7523,21 @@ output {
   }
 
   & > thead > tr > th:first-child {
-    border-top-left-radius: 4px;
+    @include bidi-style(border-top-left-radius, 4px, border-top-right-radius, 0);
   }
 
   & > thead > tr > th:last-child {
-    border-top-right-radius: 4px;
+    @include bidi-style(border-top-right-radius, 4px, border-top-left-radius, 0);
   }
 
   & > tbody:last-child > tr:last-child > td:first-child,
   & > tfoot:last-child > tr:last-child > td:first-child {
-    border-bottom-left-radius: 4px;
+    @include bidi-style(border-bottom-left-radius, 4px, border-bottom-right-radius, 0);
   }
 
   & > tbody:last-child > tr:last-child > td:last-child,
   & > tfoot:last-child > tr:last-child > td:last-child {
-    border-bottom-right-radius: 4px;
+    @include bidi-style(border-bottom-right-radius, 4px, border-bottom-left-radius, 0);
   }
 
   p {
@@ -7554,11 +7652,11 @@ output {
   }
 
   &:first-child {
-    margin-left: 0;
+    @include bidi-style(margin-left, 0, margin-left, 14px);
   }
 
   &:last-child {
-    margin-right: 0;
+    @include bidi-style(margin-right, 0, margin-left, 14px);
   }
 }
 
@@ -7567,10 +7665,12 @@ output {
 
   .form-control {
     padding-right: 37px;
+    @include bidi-style(padding-right, 37px, padding-left, 12px);
   }
 
   .searchableSelect-main {
     position: relative;
+    line-height: 19px;
 
     &.form-control--small ~ .searchableSelect-autocomplete {
       top: 7px;
@@ -7595,7 +7695,7 @@ output {
     display: block;
     
     & + .icon {
-      margin-left: 10px;
+      @include bidi-style(margin-left, 10px, margin-right, 0);
     }
   }
 
@@ -7624,6 +7724,7 @@ output {
     display: flex;
     pointer-events: none;
     white-space: pre;
+    line-height: 19px;
   }
 
   .searchableSelect-autocomplete-invisible {
@@ -7729,14 +7830,12 @@ output {
   }
 
   .action-label {
-    margin-left: auto;
     background: hsl(197,20%,93%);
     border: 1px solid hsl(197,20%,88%);
     align-self: flex-start;
     padding: 5px 10px;
-    margin-right: -25px;
-    margin-top: -4px;
-    margin-bottom: -5px;
+    margin: -4px -25px -5px auto;
+    @include rtl(margin, -4px auto -5px -25px);
     color: hsl(197,16%,65%);
     cursor: default;
   }
@@ -7752,7 +7851,7 @@ output {
 
   .action-controls {
     display: flex;
-    margin-left: auto;
+    @include bidi-style(margin-left, auto, margin-right, 0);
     align-self: flex-end;
 
     .btn {
@@ -7901,7 +8000,7 @@ output {
     .icon {
       vertical-align: middle;
       margin-top: -3px;
-      margin-right: 5px;
+      @include bidi-style(margin-right, 5px, margin-left, 0);
     }
 
     a {
@@ -7954,7 +8053,7 @@ output {
   height: 133px;
 
   .loading-text {
-    margin-left: 10px;
+    @include bidi-style(margin-left, 10px, margin-right, 0);
   }
 }
 
@@ -8019,14 +8118,14 @@ output {
   white-space: nowrap;
 
   .status-badge {
-    margin-left: 2px;
+    @include bidi-style(margin-left, 2px, margin-right, 0);
     vertical-align: middle;
     height: 100%;
   }
 }
 
 .chat-status {
-  margin-left: 10px;
+  @include bidi-style(margin-left, 10px, margin-right, 0);
 
   &[data-status='online'] .icon {
     fill: $supergood-color;
@@ -8089,7 +8188,7 @@ output {
 
   .icon {
     fill: hsl(210,5%,78%);
-    margin-right: 8px;
+    @include bidi-style(margin-right, 8px, margin-left, 0);
   }
 }
 
@@ -8145,7 +8244,7 @@ output {
 }
 
 .chat-message--agent {
-  margin-left: auto;
+  @include bidi-style(margin-left, auto, margin-right, 0);
   background: hsl(199,44%,93%);
   align-self: flex-end;
 }
@@ -8164,13 +8263,13 @@ output {
 }
 
 .chat-loader {
-  margin-right: -4px;
+  @include bidi-style(margin-right, -4px, margin-left, 0);
 
   .icon {
     width: 12px;
     height: 12px;
     fill: hsl(0,0%,90%);
-    margin-left: -4px;
+    @include bidi-style(margin-left, -4px, margin-right, 0);
     vertical-align: middle;
     animation: ease-in-out load-fade 600ms infinite alternate;
   }
@@ -8208,7 +8307,7 @@ output {
 }
 
 .chat-input {
-  margin-right: 10px;
+  @include bidi-style(margin-right, 10px, margin-left, 0);
   flex-grow: 1;
   position: relative;
   
@@ -8257,11 +8356,11 @@ output {
   .browser-input {
     position: relative;
     flex: 1;
-    margin-right: 10px;
+    @include bidi-style(margin-right, 10px, margin-left, 0);
 
     input {
       min-width: 0;
-      padding-right: 40px;
+      @include bidi-style(padding-right, 40px, padding-left, 12px);
 
       &.is-loading + .loading.icon {
         display: block;
@@ -8270,7 +8369,7 @@ output {
 
     .loading.icon {
       position: absolute;
-      right: 11px;
+      @include bidi-style(right, 11px, left, auto);
       top: 10px;
       display: none;
     }
@@ -9009,19 +9108,19 @@ body.fit {
 }
 
 .align-left {
-  margin-right: auto;
+  @include bidi-style(margin-right, auto, margin-left, 0);
 }
 
 .align-right {
-  margin-left: auto;
+  @include bidi-style(margin-left, auto, margin-right, 0);
 }
 
 .space-left {
-  margin-left: 10px;
+  @include bidi-style(margin-left, 10px, margin-right, 0);
 }
 
 .space-right {
-  margin-right: 10px;
+  @include bidi-style(margin-right, 10px, margin-left, 0);
 }
 
 .align-center {

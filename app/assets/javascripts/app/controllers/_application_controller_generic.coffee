@@ -659,8 +659,9 @@ class App.Sidebar extends App.Controller
 
   render: =>
     localEl = $(App.view('generic/sidebar_tabs')(
-      items: @items
+      items:          @items
       scrollbarWidth: App.Utils.getScrollBarWidth()
+      dir:            App.i18n.dir()
     ))
 
     # init content callback
