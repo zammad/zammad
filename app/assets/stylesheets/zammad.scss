@@ -42,7 +42,7 @@ $highlight-color: hsl(205,90%,60%);
 /* sets LTR and RTL within the same style call */
 @mixin bidi-style($prop, $value, $inverse-prop, $default-value) {
   #{$prop}: $value;
-  
+
   html[dir=rtl] & {
     #{$inverse-prop}: $value;
     #{$prop}: $default-value;
@@ -1075,7 +1075,7 @@ th.align-right {
   align-items: center;
   justify-content: center;
   position: relative;
-  
+
   .icon-checked {
     color: black;
   }
@@ -1670,7 +1670,7 @@ textarea,
   &[readonly] {
     background: hsl(210,17%,93%);
     border-color: hsl(210,10%,85%);
-    
+
     &:focus,
     &.focus {
       border-color: hsl(200,71%,59%);
@@ -3339,12 +3339,13 @@ footer {
 
 .search {
   padding: 11px 5px 4px 10px;
+  @include rtl(padding, 11px 10px 4px 0px);
   border-bottom: 1px solid rgba(240,250,255,.05);
   flex-shrink: 0;
   display: flex;
   background-color: inherit;
 }
-  
+
   .search-holder {
     flex: 1;
     border-radius: 15px;
@@ -3472,12 +3473,12 @@ footer {
     padding: 9px 15px 8px 0;
     margin-bottom: 7px;
     height: auto !important;
-    
+
     .nav-tab-icon {
       width: 18px;
       margin-left: 10px;
       margin-right: 10px;
-      
+
       .icon {
         width: 18px;
         height: 14px;
@@ -3522,7 +3523,7 @@ footer {
       align-items: center;
       justify-content: center;
     }
-    
+
     .user-menu .list-button *:not(.dropdown-nose):not(.icon-crown) {
       position: relative;
     }
@@ -3638,12 +3639,12 @@ footer {
   vertical-align: bottom;
   position: relative;
   flex-shrink: 0;
-  
+
   &.size-30 {
     width: 30px;
     height: 30px;
   }
-  
+
   .icon-crown {
     position: absolute;
     width: 28px;
@@ -3729,7 +3730,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     .icon-organization {
       fill: currentColor;
     }
@@ -3744,7 +3745,7 @@ footer {
 
   &--group {
     overflow: hidden;
-    
+
     .icon {
       fill: white;
       position: absolute;
@@ -3799,7 +3800,7 @@ footer {
   background: white;
   @include bidi-style(border-right, 1px solid #e6e6e6, border-left, none);
   overflow: auto;
-  
+
   @include small-desktop {
     &.optional {
       display: none;
@@ -3958,7 +3959,7 @@ footer {
     margin-bottom: 21px;
   }
 
-  .popover.right { 
+  .popover.right {
     margin-left: 4px;
   }
   .popover.right > .arrow {
@@ -3974,7 +3975,7 @@ footer {
     bottom: -9px;
   }
 
-  .popover.left { 
+  .popover.left {
     margin-right: 9px;
     margin-left: 0;
   }
@@ -3984,7 +3985,7 @@ footer {
     right: -9px;
   }
 
-  .popover.bottom { 
+  .popover.bottom {
     margin-top: 9px;
   }
   .popover.bottom > .arrow {
@@ -4046,6 +4047,7 @@ footer {
   .popover--notifications {
     padding: 0;
     left: $navigationWidth;
+    @include rtl(right, $navigationWidth);
     margin: 8px 2px;
     max-height: calc(100% - 16px);
     width: auto;
@@ -4064,6 +4066,8 @@ footer {
     .arrow {
       top: 23px !important;
       left: -11px;
+      @include rtl(left, 408px);
+      @include rtl(transform, rotate(180deg));
     }
 
     .popover-content {
@@ -4630,7 +4634,7 @@ footer {
     margin-bottom: 8px;
     padding: 0 7px;
     text-align: center;
-    
+
     .ticketZoom-header & {
       &:hover,
       &:focus {
@@ -5594,7 +5598,7 @@ footer {
   }
   .newTicket .form-control {
     border-color: hsl(0,0%,90%);
-    
+
     &:focus,
     &.focus {
       border-color: hsl(200,71%,59%);
@@ -6252,7 +6256,7 @@ footer {
   .dropdown-menu--has-submenu {
     overflow: hidden;
     background: none;
-    
+
     ul {
       background: hsl(234,10%,19%);
     }
@@ -6268,7 +6272,7 @@ footer {
   .dropdown.dropdown--actions .dropdown-controls {
     @extend .u-clickable;
     display: flex;
-    
+
     &:not(:hover):not(.is-active) {
       background: hsl(206,7%,28%);
     }
@@ -7693,14 +7697,14 @@ output {
     overflow: hidden;
     white-space: nowrap;
     display: block;
-    
+
     & + .icon {
       @include bidi-style(margin-left, 10px, margin-right, 0);
     }
   }
 
   &.dropdown li {
-    
+
     &:hover:not(.is-active) {
       background: none;
     }
@@ -8310,7 +8314,7 @@ output {
   @include bidi-style(margin-right, 10px, margin-left, 0);
   flex-grow: 1;
   position: relative;
-  
+
   .form-control {
     overflow: auto;
     max-height: 50vh;
@@ -8688,18 +8692,18 @@ output {
   cursor: grabbing;
   overflow: hidden;
   user-select: none;
-  
+
   &.is-visible {
     display: block;
   }
-  
+
   &-backdrop {
     @extend .fit;
     background: hsla(231,20%,8%,.8);
     opacity: 0;
     will-change: opacity;
   }
-  
+
   &-circle {
     margin: 35px auto;
     background: hsl(207,7%,29%);
@@ -8717,11 +8721,11 @@ output {
     right: 0;
     will-change: transform, opacity;
     visibility: hidden;
-    
+
     &--top {
       top: 0;
     }
-    
+
     &--bottom {
       bottom: 0;
     }
@@ -8730,7 +8734,7 @@ output {
       fill: currentColor;
       opacity: 1;
     }
-    
+
     &-label {
       width: 50%;
       margin: 10px 0;
@@ -8761,7 +8765,7 @@ output {
     position: absolute;
     visibility: hidden;
     will-change: opacity, transition;
-    
+
     &-inner {
       margin: 37px 25px;
       display: flex;
@@ -8774,10 +8778,10 @@ output {
   &-assign {
     padding-bottom: 50px;
     bottom: -50px; // extra space for bounce animation
-    
+
     .batch-overlay-box-inner {
       max-height: 310px;
-    
+
       @media screen and (min-height: 1000px) {
         max-height: 465px;
       }
@@ -8785,7 +8789,7 @@ output {
 
     &-group {
       box-shadow: 0 0 35px hsla(0,0%,0%,.5);
-      
+
       .batch-overlay-box-inner {
         margin-top: 42px;
         margin-bottom: 10px;
@@ -8807,7 +8811,7 @@ output {
       padding: 13px;
       width: 116px;
       height: 155px;
-       
+
       &.is-hovered {
         .avatar {
           border-color: $highlight-color;
@@ -8847,12 +8851,12 @@ output {
     .batch-overlay-box-inner {
       max-height: 146px;
       margin: 24px 12px;
-    
+
       @media screen and (min-height: 800px) {
         max-height: 292px;
       }
     }
-    
+
     &-entry {
       margin: 13px;
       border: 4px solid hsl(231,5%,30%);
@@ -8865,7 +8869,7 @@ output {
       align-items: center;
       justify-content: center;
       font-size: 0.9em;
-      
+
       &.is-hovered {
         border-color: $highlight-color;
         transform: scale(1.05);
@@ -8882,7 +8886,7 @@ output {
   width: 250px;
   height: 40px;
   will-change: transform;
-  
+
   &-item {
     position: absolute;
     left: 0;
@@ -8894,11 +8898,11 @@ output {
     padding: 11px 0 9px 11px;
     box-shadow: 0 0 10px hsla(0,0%,0%,.28);
     will-change: transform;
-    
+
     a {
       color: inherit;
     }
-    
+
     td {
       display: block;
       padding: 0 12px;
@@ -8906,11 +8910,11 @@ output {
       text-overflow: ellipsis;
       overflow: hidden;
       flex-shrink: 0;
-      
+
       &:nth-child(3) {
         flex-shrink: 1;
       }
-      
+
       &:nth-child(n+4) {
         display: none;
       }
@@ -8932,7 +8936,7 @@ output {
     justify-content: center;
     box-shadow: 0 0 10px hsla(0,0%,0%,.28);
     will-change: transform;
-    
+
     &:empty {
       display: none;
     }
