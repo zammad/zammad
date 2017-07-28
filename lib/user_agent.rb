@@ -264,7 +264,10 @@ returns
   def self.get_http(uri, options)
 
     proxy = options['proxy'] || Setting.get('proxy')
-    if proxy.present?
+    proxy_no = options['proxy_no'] || Setting.get('proxy_no') || ''
+    proxy_no = proxy_no.split(',').map(&:strip) || []
+    proxy_no.push('localhost', '127.0.0.1', '::1')
+    if proxy.present? && !proxy_no.include?(uri.host.downcase)
       if proxy =~ /^(.+?):(.+?)$/
         proxy_host = $1
         proxy_port = $2
