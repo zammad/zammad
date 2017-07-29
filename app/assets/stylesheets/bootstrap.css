@@ -3078,7 +3078,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 .pagination {
   display: inline-block;
-  padding-left: 0;
+  padding: 0;
   margin: 20px 0;
   border-radius: 4px;
 }
