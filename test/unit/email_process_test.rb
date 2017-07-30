@@ -136,6 +136,63 @@ Some Textäöü".encode('ISO-8859-1'),
       },
       {
         data: "From: me@example.com
+To: Alexander Ha <service-d1@example.com>,
+ Alexander Re <re-mail@example.de>, Hauke Ko
+ <haukek@example.de>, Jens Ro <jrro@example.de>,
+ =?UTF-8?Q?B=c3=bc_Yi?= <bue-y@example.de>,
+ Ja Bl <bj15@example.com>,
+ \"lars.73@example.de\" <lars.73@example.de>,
+ Luk Hl <LM.Hl@example.de>,
+ =?UTF-8?Q?Ma_Gr=c3=b6ner_<Ma_G=c3=b6rner?= <Ma.g@example.com>,
+ Malte Bi <mbi@example.de>, =?UTF-8?Q?Ma_Bfu=c3=9f?=
+ <ma-b@example.de>, Marco Fe <marco.fe@example.de>,
+ heidt@example.de, matt.ga@example.com,
+ Nick Ku <nickKu@example.com>, Sergej I <I@example.net>,
+ Thomas Ga <SpediGa@example.de>,
+ Peter Wo <peter.Wo@example.com>,
+ =?UTF-8?B?SsO8cmdlbiB2b24gUsO2bm4=?= <juergen.vr@example.com>,
+ Frank-Ingo Br <online@example.de>
+Subject: test 1
+
+test 1",
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'test 1',
+          },
+          1 => {
+            body: 'test 1',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Alexander',
+              lastname: 'Ha',
+              fullname: 'Alexander Ha',
+              email: 'service-d1@example.com',
+            },
+            {
+              firstname: 'Alexander',
+              lastname: 'Re',
+              fullname: 'Alexander Re',
+              email: 're-mail@example.de',
+            },
+            {
+              firstname: 'Ma',
+              lastname: 'Gröner',
+              fullname: 'Ma Gröner',
+              email: 'ma.g@example.com',
+            },
+          ],
+        }
+      },
+      {
+        data: "From: me@example.com
 To: customer@example.com
 Subject: Subject: =?utf-8?B?44CQ5LiT5Lia5Li65oKo5rOo5YaM6aaZ5riv5Y+K5rW35aSW5YWs5Y+477yI5aW95aSE5aSa5aSa77yJ?=
         =?utf-8?B?44CR44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA44CA?=
