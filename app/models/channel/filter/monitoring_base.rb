@@ -47,7 +47,10 @@ class Channel::Filter::MonitoringBase
 
     # follow up detection by meta data
     open_states = Ticket::State.by_category(:open)
-    Ticket.where(state: open_states).each { |ticket|
+    ticket_ids = Ticket.where(state: open_states).order(created_at: :desc).limit(5000).pluck(:id)
+    ticket_ids.each { |ticket_id|
+      ticket = Ticket.find_by(id: ticket_id)
+      next if !ticket
       next if !ticket.preferences
       next if !ticket.preferences['integration']
       next if ticket.preferences['integration'] != integration

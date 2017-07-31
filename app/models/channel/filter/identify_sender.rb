@@ -112,8 +112,6 @@ module Channel::Filter::IdentifySender
           display_name = nil
           if recipient =~ /.*<(.+?)>/
             address = $1
-          elsif recipient =~ /<(.+?)>/
-            address = $1
           end
           if recipient =~ /^(.+?)<(.+?)>/
             display_name = $1
