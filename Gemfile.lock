@@ -61,7 +61,7 @@ GEM
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     clavius (1.0.2)
-    clearbit (0.2.5)
+    clearbit (0.2.7)
       nestful (~> 1.1.0)
     coderay (1.1.1)
     coffee-rails (4.2.1)
@@ -156,7 +156,7 @@ GEM
     guard-symlink (0.1.0)
       guard-compat (~> 1.1)
     hashdiff (0.3.2)
-    hashie (3.5.5)
+    hashie (3.5.6)
     htmlentities (4.3.4)
     http (1.0.4)
       addressable (~> 2.3)
@@ -339,7 +339,6 @@ GEM
     sawyer (0.7.0)
       addressable (>= 2.3.5, < 2.5)
       faraday (~> 0.8, < 0.10)
-    scrub_rb (1.0.1)
     selenium-webdriver (2.53.4)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
@@ -408,13 +407,12 @@ GEM
       hashdiff
     websocket (1.2.3)
     writeexcel (1.0.5)
-    zendesk_api (1.14.0)
+    zendesk_api (1.14.4)
       faraday (~> 0.9)
-      hashie (>= 1.2, < 4.0, != 3.3.0)
+      hashie (>= 3.5.2, < 4.0.0)
       inflection
       mime-types
       multipart-post (~> 2.0)
-      scrub_rb (~> 1.0.1)
 
 PLATFORMS
   ruby
