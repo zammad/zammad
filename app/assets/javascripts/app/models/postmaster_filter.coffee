@@ -6,7 +6,7 @@ class App.PostmasterFilter extends App.Model
   @configure_attributes = [
     { name: 'name',           display: 'Name',              tag: 'input', type: 'text', limit: 250, 'null': false },
     { name: 'channel',        display: 'Channel',           type: 'input', readonly: 1 },
-    { name: 'match',          display: 'Match all of the following',      tag: 'postmaster_match' },
+    { name: 'match',          display: 'Match all of the following',      tag: 'postmaster_match', note: 'You can use regular expression by using "regex:your_reg_exp".' },
     { name: 'perform',        display: 'Perform action of the following', tag: 'postmaster_set' },
     { name: 'note',           display: 'Note',              tag: 'textarea', limit: 250, null: true },
     { name: 'updated_at',     display: 'Updated',           tag: 'datetime', readonly: 1 },
