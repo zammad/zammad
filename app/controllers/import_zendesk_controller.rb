@@ -50,7 +50,7 @@ class ImportZendeskController < ApplicationController
     end
 
     endpoint = "#{params[:url]}/api/v2"
-    endpoint.gsub('//', '/')
+    endpoint.gsub(%r{[^:]//}, '/')
     Setting.set('import_zendesk_endpoint', endpoint)
 
     render json: {

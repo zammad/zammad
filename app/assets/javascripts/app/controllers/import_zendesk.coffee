@@ -117,7 +117,7 @@ class Index extends App.ControllerContent
     e.preventDefault()
     @urlStatus.attr('data-state', '')
     url = @zendeskUrl.val() + '/agent/admin/api'
-    @zendeskUrlApiToken.attr('href', url.replace('//', '/'))
+    @zendeskUrlApiToken.attr('href', url.replace(/[^:]\/\//, '/'))
     @zendeskUrlApiToken.val('HERE')
     @$('[data-slide=zendesk-url]').toggleClass('hide')
     @$('[data-slide=zendesk-credentials]').toggleClass('hide')
