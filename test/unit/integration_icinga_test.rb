@@ -19,7 +19,7 @@ User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-icinga-1@monitoring.znuny.com>
+Message-Id: <20160131094621.29ECD400F29C-icinga-1-0@monitoring.znuny.com>
 From: icinga_not_matching@monitoring.example.com (icinga)
 
 ***** Icinga  *****
@@ -43,6 +43,73 @@ Comment: [] =
     assert(ticket_p.preferences)
     assert_not(ticket_p.preferences['integration'])
     assert_not(ticket_p.preferences['icinga'])
+
+    # RBL check
+    email_raw_string = "To: support@example.com
+Subject: [PROBLEM] RBL check on apn4711.dc.example.com is CRITICAL!
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-icinga-1-1@monitoring.znuny.com>
+From: icinga@monitoring.example.com (icinga)
+
+***** Icinga 2 Service Monitoring on apn4711.dc.example.com *****
+
+=3D=3D> RBL check on apn4711.dc.example.com is CRITICAL! <=3D=3D
+
+Info:    CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of=
+ 38 (ix.dnsbl.example.com)=20
+
+When:    2017-08-06 22:18:43 +0200
+Service: RBL check (Display Name: \"RBL check\")
+Host:    apn4711.dc.example.com (Display Name: \"apn4711.dc.example.com\")
+IPv4:    127.0.0.1="
+
+    ticket_0, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_0.state.name)
+    assert(ticket_0.preferences)
+    assert(ticket_0.preferences['integration'])
+    assert_equal('icinga', ticket_0.preferences['integration'])
+    assert(ticket_0.preferences['icinga'])
+    assert_equal('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")', ticket_0.preferences['icinga']['host'])
+    assert_equal('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)', ticket_0.preferences['icinga']['info'])
+    assert_equal('RBL check (Display Name: "RBL check")', ticket_0.preferences['icinga']['service'])
+    assert_nil(ticket_0.preferences['icinga']['state'])
+
+    # RBL check II
+    email_raw_string = "To: support@example.com
+Subject: [PROBLEM] RBL check on apn4711.dc.example.com is CRITICAL!
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-icinga-1-2@monitoring.znuny.com>
+From: icinga@monitoring.example.com (icinga)
+
+***** Icinga 2 Service Monitoring on apn4711.dc.example.com *****
+
+=3D=3D> RBL check on apn4711.dc.example.com is CRITICAL! <=3D=3D
+
+Info:    CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of=
+ 38 (ix.dnsbl.example.com)=20
+
+When:    2017-08-06 22:18:43 +0200
+Service: RBL check (Display Name: \"RBL check\")
+Host:    apn4711.dc.example.com (Display Name: \"apn4711.dc.example.com\")
+IPv4:    127.0.0.1="
+
+    ticket_0_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_0_1.state.name)
+    assert(ticket_0_1.preferences)
+    assert(ticket_0_1.preferences['integration'])
+    assert_equal('icinga', ticket_0_1.preferences['integration'])
+    assert(ticket_0_1.preferences['icinga'])
+    assert_equal('apn4711.dc.example.com (Display Name: "apn4711.dc.example.com")', ticket_0_1.preferences['icinga']['host'])
+    assert_equal('CHECK_RBL CRITICAL - apn4711.dc.example.com BLACKLISTED on 1 server of 38 (ix.dnsbl.example.com)', ticket_0_1.preferences['icinga']['info'])
+    assert_equal('RBL check (Display Name: "RBL check")', ticket_0_1.preferences['icinga']['service'])
+    assert_nil(ticket_0_1.preferences['icinga']['state'])
+    assert_equal(ticket_0_1.id, ticket_0.id)
 
     # matching sender - CPU Load/host.internal.loc
     email_raw_string = "To: support@example.com

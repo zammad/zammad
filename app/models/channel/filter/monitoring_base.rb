@@ -20,17 +20,17 @@ class Channel::Filter::MonitoringBase
     auto_close_state_id = Setting.get("#{integration}_auto_close_state_id")
     state_recovery_match = '(OK|UP)'
 
-    return if !mail[:from]
-    return if !mail[:body]
+    return if mail[:from].blank?
+    return if mail[:body].blank?
     session_user_id = mail[ 'x-zammad-session-user-id'.to_sym ]
     return if !session_user_id
 
     # check if sender is monitoring
-    return if !mail[:from].match(/#{sender}/i)
+    return if !mail[:from].match(/#{Regexp.quote(sender)}/i)
 
     # get mail attibutes like host and state
     result = {}
-    mail[:body].gsub(%r{(Service|Host|State|Address|Date/Time|Additional\sInfo):(.+?)\n}i) { |_match|
+    mail[:body].gsub(%r{(Service|Host|State|Address|Date/Time|Additional\sInfo|Info):(.+?)\n}i) { |_match|
       key = $1
       if key
         key = key.downcase
@@ -41,6 +41,9 @@ class Channel::Filter::MonitoringBase
       end
       result[key] = value
     }
+
+    # check min. params
+    return if result['host'].blank?
 
     # check if ticket with host is open
     customer = User.lookup(id: session_user_id)
@@ -63,7 +66,7 @@ class Channel::Filter::MonitoringBase
       mail[ 'x-zammad-ticket-id'.to_sym ] = ticket.id
 
       # check if service is recovered
-      if auto_close && result['state'].match(/#{state_recovery_match}/i)
+      if auto_close && result['state'].present? && result['state'].match(/#{state_recovery_match}/i)
         state = Ticket::State.lookup(id: auto_close_state_id)
         if state
           mail[ 'x-zammad-ticket-followup-state'.to_sym ] = state.name
