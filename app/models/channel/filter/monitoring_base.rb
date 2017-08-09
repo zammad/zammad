@@ -45,6 +45,13 @@ class Channel::Filter::MonitoringBase
     # check min. params
     return if result['host'].blank?
 
+    # get state from body
+    if result['state'].blank?
+      if mail[:body] =~ /==>.*\sis\s(.+?)\!\s+?<==/
+        result['state'] = $1
+      end
+    end
+
     # check if ticket with host is open
     customer = User.lookup(id: session_user_id)
 
