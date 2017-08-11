@@ -23,8 +23,12 @@ module ApplicationModel::ChecksAttributeValuesAndLength
       column = columns[name]
       next if !column
 
+      if column.type == :binary
+        self[name].force_encoding('BINARY')
+      end
+
       # strip null byte chars (postgresql will complain about it)
-      if column.sql_type == 'text'
+      if column.type == :text
         if Rails.application.config.db_null_byte == false
           self[name].delete!("\u0000")
         end

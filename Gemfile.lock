@@ -30,14 +30,14 @@ GEM
       activemodel (= 4.2.9)
       activesupport (= 4.2.9)
       arel (~> 6.0)
-    activerecord-nulldb-adapter (0.3.6)
+    activerecord-nulldb-adapter (0.3.7)
       activerecord (>= 2.0.0)
-    activerecord-session_store (1.0.0)
-      actionpack (>= 4.0, < 5.1)
-      activerecord (>= 4.0, < 5.1)
+    activerecord-session_store (1.1.0)
+      actionpack (>= 4.0, < 5.2)
+      activerecord (>= 4.0, < 5.2)
       multi_json (~> 1.11, >= 1.11.2)
       rack (>= 1.5.2, < 3)
-      railties (>= 4.0, < 5.1)
+      railties (>= 4.0, < 5.2)
     activesupport (4.2.9)
       i18n (~> 0.7)
       minitest (~> 5.1)
@@ -49,9 +49,9 @@ GEM
       ffi (~> 1.9)
       ffi-compiler (~> 0.1)
     ast (2.3.0)
-    autoprefixer-rails (6.4.1.1)
+    autoprefixer-rails (7.1.2.4)
       execjs
-    biz (1.6.0)
+    biz (1.7.0)
       clavius (~> 1.0)
       tzinfo
     browser (2.2.0)
@@ -60,7 +60,7 @@ GEM
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     clavius (1.0.2)
-    clearbit (0.2.5)
+    clearbit (0.2.7)
       nestful (~> 1.1.0)
     coderay (1.1.1)
     coffee-rails (4.2.1)
@@ -69,12 +69,12 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.10.0)
+    coffee-script-source (1.12.2)
     coffeelint (1.14.0)
       coffee-script
       execjs
       json
-    composite_primary_keys (8.1.5)
+    composite_primary_keys (8.1.6)
       activerecord (~> 4.2.0)
     concurrent-ruby (1.0.5)
     coveralls (0.8.16)
@@ -86,10 +86,10 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     daemons (1.2.4)
-    delayed_job (4.1.2)
-      activesupport (>= 3.0, < 5.1)
-    delayed_job_active_record (4.1.1)
-      activerecord (>= 3.0, < 5.1)
+    delayed_job (4.1.3)
+      activesupport (>= 3.0, < 5.2)
+    delayed_job_active_record (4.1.2)
+      activerecord (>= 3.0, < 5.2)
       delayed_job (>= 3.0, < 5)
     diff-lcs (1.2.5)
     diffy (3.1.0)
@@ -155,7 +155,7 @@ GEM
       guard
       guard-compat (~> 1.1)
     hashdiff (0.3.2)
-    hashie (3.5.5)
+    hashie (3.5.6)
     htmlentities (4.3.4)
     http (1.0.4)
       addressable (~> 2.3)
@@ -176,7 +176,7 @@ GEM
       addressable
       faraday
       multi_json (>= 1.3.0)
-    libv8 (3.16.14.15)
+    libv8 (3.16.14.19)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -250,7 +250,7 @@ GEM
       omniauth-oauth (~> 1.1)
     parser (2.3.1.2)
       ast (~> 2.2)
-    pg (0.18.4)
+    pg (0.20.0)
     pluginator (1.3.0)
     power_assert (0.3.1)
     powerpack (0.1.1)
@@ -285,14 +285,15 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails-observers (0.1.2)
-      activemodel (~> 4.0)
+    rails-observers (0.1.5)
+      activemodel (>= 4.0)
     railties (4.2.9)
       actionpack (= 4.2.9)
       activesupport (= 4.2.9)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rainbow (2.1.0)
+    rainbow (2.2.2)
+      rake
     raindrops (0.17.0)
     rake (12.0.0)
     rb-fsevent (0.9.7)
@@ -341,7 +342,6 @@ GEM
     sawyer (0.7.0)
       addressable (>= 2.3.5, < 2.5)
       faraday (~> 0.8, < 0.10)
-    scrub_rb (1.0.1)
     selenium-webdriver (2.53.4)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
@@ -375,8 +375,8 @@ GEM
       tins (~> 1.0)
     test-unit (3.2.1)
       power_assert
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
       ref
     thor (0.19.4)
     thread_safe (0.3.6)
@@ -404,7 +404,7 @@ GEM
     unicorn (5.2.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    valid_email2 (1.2.17)
+    valid_email2 (2.0.0)
       activemodel (>= 3.2)
       mail (~> 2.5)
     webmock (2.3.2)
@@ -413,13 +413,12 @@ GEM
       hashdiff
     websocket (1.2.3)
     writeexcel (1.0.5)
-    zendesk_api (1.14.0)
+    zendesk_api (1.14.4)
       faraday (~> 0.9)
-      hashie (>= 1.2, < 4.0, != 3.3.0)
+      hashie (>= 3.5.2, < 4.0.0)
       inflection
       mime-types
       multipart-post (~> 2.0)
-      scrub_rb (~> 1.0.1)
 
 PLATFORMS
   ruby

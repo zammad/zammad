@@ -49,7 +49,9 @@ class ImportZendeskController < ApplicationController
       return
     end
 
-    Setting.set('import_zendesk_endpoint', "#{params[:url]}api/v2")
+    endpoint = "#{params[:url]}/api/v2"
+    endpoint.gsub(%r{[^:]//}, '/')
+    Setting.set('import_zendesk_endpoint', endpoint)
 
     render json: {
       result: 'ok',

@@ -108,7 +108,7 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
     # show errors in form
     if errors
       @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       return false
 
     # disable form
@@ -118,8 +118,10 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
     object.save(
       done: =>
         @close()
-      fail: =>
-        @close()
+      fail: (settings, details) =>
+        @log 'errors', details
+        @formEnable(e)
+        @form.showAlert(details.error_human || details.error || 'Unable to create object!')
     )
 
 class App.ChannelEmailSignature extends App.Controller
@@ -201,7 +203,7 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
     # show errors in form
     if errors
       @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       return false
 
     # disable form
@@ -211,8 +213,10 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
     object.save(
       done: =>
         @close()
-      fail: =>
+      fail: (settings, details) =>
+        @log 'errors', details
         @formEnable(e)
+        @form.showAlert(details.error_human || details.error || 'Unable to create object!')
     )
 
 class App.ChannelEmailAccountOverview extends App.Controller
