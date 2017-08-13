@@ -72,7 +72,7 @@ examples how to use
     return "\#{#{object_name} / no such object}" if !object_refs
 
     # if content of method is a complex datatype, just return
-    if object_methods.empty? && object_refs.class != String && object_refs.class != Float && object_refs.class != Fixnum
+    if object_methods.empty? && object_refs.class != String && object_refs.class != Float && object_refs.class != Integer
       return "\#{#{key} / no such method}"
     end
     object_methods_s = ''
