@@ -9,7 +9,7 @@ class App.ChannelForm extends App.ControllerSubContent
     'change .js-paramsSetting select': 'updateGroup'
 
   elements:
-    '.js-paramsBlock': 'paramsBlock'
+    '.js-code': 'code'
     '.js-paramsSetting': 'paramsSetting'
     '.js-formSetting input': 'formSetting'
 
@@ -43,7 +43,7 @@ class App.ChannelForm extends App.ControllerSubContent
 
     @html element
 
-    @paramsBlock.each (i, block) ->
+    @code.each (i, block) ->
       hljs.highlightBlock block
 
     @updateParamsDesigner()

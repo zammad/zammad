@@ -377,17 +377,26 @@ get count of tickets and tickets which match on selector
     query, bind_params, tables = selector2sql(selectors, current_user)
     return [] if !query
 
-    if !current_user
-      ticket_count = Ticket.where(query, *bind_params).joins(tables).count
-      tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
-      return [ticket_count, tickets]
+    ActiveRecord::Base.transaction(requires_new: true) do
+      begin
+        if !current_user
+          ticket_count = Ticket.where(query, *bind_params).joins(tables).count
+          tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
+          return [ticket_count, tickets]
+        end
+
+        access_condition = Ticket.access_condition(current_user, access)
+        ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
+        tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
+
+        return [ticket_count, tickets]
+      rescue ActiveRecord::StatementInvalid => e
+        Rails.logger.error e.inspect
+        Rails.logger.error e.backtrace
+        raise ActiveRecord::Rollback
+      end
     end
-
-    access_condition = Ticket.access_condition(current_user, access)
-    ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
-    tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
-
-    [ticket_count, tickets]
+    []
   end
 
 =begin
