@@ -306,7 +306,7 @@ class String
     string.gsub!(%r\<div>[[:space:]]*(<br(|/)>([[:space:]]*)){2,}\im, '<div><br>\3')
     string.gsub!(%r\[[:space:]]*(<br>[[:space:]]*){3,}[[:space:]]*</div>\im, '<br><br></div>')
     string.gsub!(%r\<div>[[:space:]]*(<br>[[:space:]]*){1,}[[:space:]]*</div>\im, '<div>&nbsp;</div>')
-    string.gsub!(%r\<div>[[:space:]]*(<div>[[:space:]]*{1,}</div>[[:space:]]*){2,}</div>\im, '<div>&nbsp;</div>')
+    string.gsub!(%r\<div>[[:space:]]*(<div>[[:space:]]*</div>[[:space:]]*){2,}</div>\im, '<div>&nbsp;</div>')
     string.gsub!(%r\<p>[[:space:]]*</p>(<br(|/)>[[:space:]]*){2,}[[:space:]]*\im, '<p> </p><br>')
     string.gsub!(%r{<p>[[:space:]]*</p>(<br(|/)>[[:space:]]*)+<p>[[:space:]]*</p>}im, '<p> </p><p> </p>')
     string.gsub!(%r\(<div>[[:space:]]*</div>[[:space:]]*){2,}\im, '<div> </div>')
