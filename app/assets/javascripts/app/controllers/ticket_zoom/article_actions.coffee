@@ -407,7 +407,7 @@ class App.TicketZoomArticleActions extends App.Controller
       if article.content_type.match('html')
         selected = App.Utils.textCleanup(article.body)
       if article.content_type.match('plain')
-        selected = App.Utils.textCleanup(selected)
+        selected = App.Utils.textCleanup(article.body)
         selected = App.Utils.text2html(selected)
 
     if selected
