@@ -126,6 +126,7 @@ class App.Utils
 
   # htmlEscapedAndPhoneified = App.Utils.phoneify(rawText)
   @phoneify: (string) ->
+    return string if _.isEmpty(string)
     string = string.replace(/[^0-9,\+,#,\*]+/g, '')
       .replace(/(.)\+/, '$1')
     "tel:#{string}"
