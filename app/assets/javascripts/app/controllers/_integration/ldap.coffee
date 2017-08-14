@@ -28,13 +28,20 @@ class Index extends App.ControllerIntegrationBase
     super
     active = @$('.js-switch input').prop('checked')
     if active
-      @ajax(
-        id:   'jobs_config'
-        type: 'POST'
-        url:  "#{@apiPath}/integration/ldap/job_start"
-        processData: true
-        success: (data, status, xhr) =>
-          @render(true)
+      job_start = =>
+        @ajax(
+          id:   'jobs_config'
+          type: 'POST'
+          url:  "#{@apiPath}/integration/ldap/job_start"
+          processData: true
+          success: (data, status, xhr) =>
+            @render(true)
+        )
+
+      App.Delay.set(
+        job_start,
+        600,
+        'job_start',
       )
 
 class Form extends App.Controller
@@ -91,6 +98,7 @@ class Form extends App.Controller
       processData: true
       success: (data, status, xhr) =>
         @render(true)
+        @lastResult()
     )
 
   startWizard: (e) =>

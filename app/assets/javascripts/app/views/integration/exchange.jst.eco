@@ -1,0 +1,71 @@
+<div class="js-lastImport"></div>
+<div class="js-notConfigured">
+  <p><%- @T('No %s configured.', 'Exchange') %></p>
+  <button type="submit" class="btn btn--primary js-wizard"><%- @T('Configure') %></button>
+</div>
+<div class="js-summary hide">
+  <h2><%- @T('Settings') %></h2>
+  <table class="settings-list" style="width: 100%;">
+    <thead>
+      <tr>
+        <th width="30%"><%- @T('Name') %>
+        <th width="70%"><%- @T('Value') %>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="settings-list-row-control"><%- @T('Endpoint') %>
+        <td class="settings-list-row-control"><%= @config.endpoint %>
+      <tbody>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('User') %>
+          <td class="settings-list-row-control"><%= @config.user %>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('Password') %>
+          <td class="settings-list-row-control"><%= @M(@config.password) %>
+    </tbody>
+  </table>
+
+  <h2><%- @T('Mapping') %></h2>
+
+  <h3><%- @T('Folders') %></h3>
+  <% if _.isEmpty(@folders): %>
+    <table class="settings-list settings-list--stretch settings-list--placeholder">
+      <thead><tr><th><%- @T('No Entries') %>
+    </table>
+  <% else: %>
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th><%- @T('Folder') %>
+        <% for folder_name in @folders: %>
+          <tr>
+            <td class="settings-list-row-control"><%= folder_name %>
+        <% end %>
+      </thead>
+      <tbody>
+    </table>
+  <% end %>
+
+  <h3><%- @T('User') %></h3>
+  <% if _.isEmpty(@config.attributes): %>
+    <table class="settings-list settings-list--stretch settings-list--placeholder">
+      <thead><tr><th><%- @T('No Entries') %>
+    </table>
+  <% else: %>
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="40%"><%- @T('Exchange') %>
+          <th width="60%"><%- @T('Zammad') %>
+        <% for key, value of @config.attributes: %>
+          <tr>
+            <td class="settings-list-row-control"><%= key %>
+            <td class="settings-list-row-control"><%= value %>
+        <% end %>
+      </thead>
+      <tbody>
+    </table>
+  <% end %>
+
+  <button type="submit" class="btn btn--primary js-wizard"><%- @T('Change') %></button>
+</div>

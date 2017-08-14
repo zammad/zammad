@@ -2401,7 +2401,7 @@ Setting.create_if_not_exists(
   area:        'Import',
   description: 'A list of active import backends that get scheduled automatically.',
   options:     {},
-  state:       ['Import::Ldap'],
+  state:       ['Import::Ldap', 'Import::Exchange'],
   preferences: {
     permission: ['admin'],
   },
@@ -2858,6 +2858,46 @@ Setting.create_if_not_exists(
         display: '',
         null: true,
         name: 'ldap_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 1,
+    authentication: true,
+    permission: ['admin.integration'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Exchange config',
+  name: 'exchange_config',
+  area: 'Integration::Exchange',
+  description: 'Defines the Exchange config.',
+  options: {},
+  state: {},
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
+  frontend: false,
+)
+Setting.create_if_not_exists(
+  title: 'Exchange integration',
+  name: 'exchange_integration',
+  area: 'Integration::Switch',
+  description: 'Defines if Exchange is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'exchange_integration',
         tag: 'boolean',
         options: {
           true  => 'yes',
