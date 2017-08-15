@@ -499,7 +499,7 @@ Managing Director: Martin Edenhofer
         body_md5: '6021dd92d8e7844e6bb9b5bb7a4adfb8',
         params: {
           from: '"我" <>',
-          from_email: '"我" <>',
+          from_email: 'vipyiming@126.com',
           from_display_name: '',
           subject: '《欧美简讯》',
           to: '377861373 <377861373@qq.com>',

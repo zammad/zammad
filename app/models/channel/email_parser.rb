@@ -98,13 +98,23 @@ class Channel::EmailParser
       data[field.to_sym] = ''
     }
 
-    # get sender
+    # get sender with @ / email address
     from = nil
     ['from', 'reply-to', 'return-path'].each { |item|
       next if data[item.to_sym].blank?
+      next if data[item.to_sym] !~ /@/
       from = data[item.to_sym]
       break if from
     }
+
+    # in case of no sender with email address - get sender
+    if !from
+      ['from', 'reply-to', 'return-path'].each { |item|
+        next if data[item.to_sym].blank?
+        from = data[item.to_sym]
+        break if from
+      }
+    end
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
