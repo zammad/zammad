@@ -7,7 +7,7 @@ class ImportZendeskController < ApplicationController
     return if setup_done_response
 
     # validate
-    if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
+    if params[:url].blank? || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
         result: 'invalid',
         message: 'Invalid URL!',
@@ -50,7 +50,7 @@ class ImportZendeskController < ApplicationController
     end
 
     endpoint = "#{params[:url]}/api/v2"
-    endpoint.gsub(%r{[^:]//}, '/')
+    endpoint.gsub!(%r{([^:])//+}, '\\1/')
     Setting.set('import_zendesk_endpoint', endpoint)
 
     render json: {
@@ -94,6 +94,7 @@ class ImportZendeskController < ApplicationController
   def import_start
     return if setup_done_response
     Setting.set('import_mode', true)
+    Setting.set('import_backend', 'zendesk')
 
     # start migration
     Import::Zendesk.delay.start_bg
