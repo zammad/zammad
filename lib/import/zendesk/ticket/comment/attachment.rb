@@ -20,6 +20,8 @@ module Import
               },
               created_by_id: 1
             )
+          rescue => e
+            log e.message
           end
 
           private
