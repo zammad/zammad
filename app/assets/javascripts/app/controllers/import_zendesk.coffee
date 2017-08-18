@@ -10,6 +10,7 @@ class Index extends App.ControllerContent
     '.zendesk-api-token-error':              'apiTokenErrorMessage'
     '#zendesk-email':                        'zendeskEmail'
     '#zendesk-api-token':                    'zendeskApiToken'
+    '.js-ticket-count-info':                 'ticketCountInfo'
   updateMigrationDisplayLoop: 0
 
   events:
@@ -172,6 +173,10 @@ class Index extends App.ControllerContent
           for key, item of data.data
             if item.done > item.total
               item.done = item.total
+
+            if key == 'Ticket' && item.total >= 1000
+              @ticketCountInfo.removeClass('hide')
+
             element = @$('.js-' + key.toLowerCase() )
             element.find('.js-done').text(item.done)
             element.find('.js-total').text(item.total)
