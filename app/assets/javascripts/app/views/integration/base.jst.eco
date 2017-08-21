@@ -10,9 +10,10 @@
 <div class="page-content">
   <% if @description: %>
     <% for item in @description: %>
-      <p><%- @T(item[0], item[1], item[2]) %></p>
+      <p><%- @T(item...) %></p>
     <% end %>
   <% end %>
   <div class="js-form"></div>
+  <div class="js-scriptSnipped"></div>
   <div class="js-log"></div>
 </div>
