@@ -40,8 +40,8 @@ class ImportZendeskController < ApplicationController
       return
     end
 
-    # since 2016-10-15 a redirect to a signup page has been implemented
-    if response.body =~ /(Take it for a risk-free|Take it for a risk-free)/i
+    # since 2016-10-15 a redirect to a marketing page has been implemented
+    if response.body !~ /#{params[:url]}/
       render json: {
         result: 'invalid',
         message_human: 'Hostname not found!',
