@@ -8,6 +8,7 @@ class EmailAddress < ApplicationModel
   validates       :realname, presence: true
   validates       :email,    presence: true
 
+  before_validation :check_email
   before_create   :check_if_channel_exists_set_inactive
   before_update   :check_if_channel_exists_set_inactive
   after_create    :update_email_address_id
@@ -40,6 +41,15 @@ check and if channel not exists reset configured channels for email addresses
   end
 
   private
+
+  def check_email
+    return true if Setting.get('import_mode')
+    return true if email.blank?
+    self.email = email.downcase.strip
+    raise Exceptions::UnprocessableEntity, 'Invalid email' if email !~ /@/
+    raise Exceptions::UnprocessableEntity, 'Invalid email' if email =~ /\s/
+    true
+  end
 
   # set email address to inactive/active if channel exists or not
   def check_if_channel_exists_set_inactive
