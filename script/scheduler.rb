@@ -47,6 +47,7 @@ daemon_options = {
 
 name = 'scheduler'
 Daemons.run_proc(name, daemon_options) do
+
   if ARGV.include?('--')
     ARGV.slice! 0..ARGV.index('--')
   else
@@ -54,6 +55,12 @@ Daemons.run_proc(name, daemon_options) do
   end
 
   after_fork(dir)
+
+  Rails.logger.info 'Scheduler started.'
+
+  at_exit do
+    Rails.logger.info 'Scheduler stopped.'
+  end
 
   require 'scheduler'
   Scheduler.threads

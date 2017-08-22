@@ -1,0 +1,7 @@
+<tr class="js-entry">
+  <td style="max-width: 240px" class="settings-list-control-cell js-exchangeAttribute">
+  <td class="settings-list-control-cell js-userAttribute">
+  <td class="settings-list-row-control">
+    <div class="btn btn--text js-remove">
+      <%- @Icon('trash') %> <%- @T('Remove') %>
+    </div>

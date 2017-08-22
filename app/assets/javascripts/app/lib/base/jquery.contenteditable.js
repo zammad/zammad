@@ -104,12 +104,14 @@
 
         // break <blockquote> after enter on empty line
         sel = window.getSelection()
-        node = $(sel.anchorNode)
-        if (node.parent().is('blockquote')) {
-          e.preventDefault()
-          document.execCommand('Insertparagraph')
-          document.execCommand('Outdent')
-          return
+        if (sel) {
+          node = $(sel.anchorNode)
+          if (node && node.parent() && node.parent().is('blockquote')) {
+            e.preventDefault()
+            document.execCommand('Insertparagraph')
+            document.execCommand('Outdent')
+            return
+          }
         }
 
         // behavior to enter new line on alt+enter
@@ -246,7 +248,7 @@
 
       // limit check
       if ( !_this.allowKey(e) ) {
-        if ( !_this.maxLengthOk( 1 ) ) {
+        if ( !_this.maxLengthOk(1) ) {
           e.preventDefault()
           return
         }

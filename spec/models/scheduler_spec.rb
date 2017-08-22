@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-RSpec::Matchers.define_negated_matcher :not_change, :change
-
 RSpec.describe Scheduler do
 
   before do

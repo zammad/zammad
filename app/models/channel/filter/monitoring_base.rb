@@ -62,8 +62,6 @@ class Channel::Filter::MonitoringBase
       ticket = Ticket.find_by(id: ticket_id)
       next if !ticket
       next if !ticket.preferences
-      next if !ticket.preferences['integration']
-      next if ticket.preferences['integration'] != integration
       next if !ticket.preferences[integration]
       next if !ticket.preferences[integration]['host']
       next if ticket.preferences[integration]['host'] != result['host']
@@ -88,7 +86,6 @@ class Channel::Filter::MonitoringBase
         mail[ 'x-zammad-ticket-preferences'.to_sym ] = {}
       end
       preferences = {}
-      preferences['integration'] = integration
       preferences[integration] = result
       preferences.each { |key, value|
         mail[ 'x-zammad-ticket-preferences'.to_sym ][key] = value

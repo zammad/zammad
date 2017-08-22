@@ -5,9 +5,7 @@ module Ticket::Overviews
 
 all overviews by user
 
-  result = Ticket::Overviews.all(
-    current_user: User.find(123),
-  )
+  result = Ticket::Overviews.all(current_user: User.find(123))
 
 returns
 

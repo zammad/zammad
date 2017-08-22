@@ -1,0 +1,22 @@
+class Sequencer
+  class Sequence
+    module Import
+      module Exchange
+        class FolderContacts < Sequencer::Sequence::Base
+
+          def self.sequence
+            [
+              'Import::Exchange::FolderContacts::DryRunPayload',
+              'Exchange::Connection',
+              'Import::Exchange::FolderContacts::FolderIds',
+              'Import::Exchange::FolderContacts::Sum',
+              'Import::Common::ImportJob::Statistics::Update',
+              'Import::Common::ImportJob::Statistics::Store',
+              'Import::Exchange::FolderContacts::SubSequence',
+            ]
+          end
+        end
+      end
+    end
+  end
+end

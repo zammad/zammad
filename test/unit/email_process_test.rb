@@ -135,6 +135,37 @@ Some Textäöü".encode('ISO-8859-1'),
         },
       },
       {
+        data: "From: Realname
+To: customer@example.com
+Subject: abc some subject
+Reply-To: \"no-reply-without-from-email@example.com\" <no-reply-without-from-email@example.com>
+
+Some Text",
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'abc some subject',
+          },
+          1 => {
+            body: 'Some Text',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'no-reply-without-from-email@example.com',
+              lastname: '',
+              fullname: 'no-reply-without-from-email@example.com',
+              email: 'no-reply-without-from-email@example.com',
+            },
+          ],
+        },
+      },
+      {
         data: "From: me@example.com
 To: Alexander Ha <service-d1@example.com>,
  Alexander Re <re-mail@example.de>, Hauke Ko

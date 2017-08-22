@@ -15,22 +15,26 @@ module ApplicationController::HandlesErrors
   def not_found(e)
     logger.error e
     respond_to_exception(e, :not_found)
+    http_log
   end
 
   def unprocessable_entity(e)
     logger.error e
     respond_to_exception(e, :unprocessable_entity)
+    http_log
   end
 
   def internal_server_error(e)
     logger.error e
     respond_to_exception(e, :internal_server_error)
+    http_log
   end
 
   def unauthorized(e)
     error = humanize_error(e.message)
     response.headers['X-Failure'] = error.fetch(:error_human, error[:error])
     respond_to_exception(e, :unauthorized)
+    http_log
   end
 
   private

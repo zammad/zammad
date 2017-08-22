@@ -1094,6 +1094,10 @@ result
     # ignore if no state has changed
     return true if !changes['state_id']
 
+    # ignore if new state is blank and
+    # let handle ActiveRecord the error
+    return if state_id.blank?
+
     # check if new state isn't pending*
     current_state      = Ticket::State.lookup(id: state_id)
     current_state_type = Ticket::StateType.lookup(id: current_state.state_type_id)

@@ -80,6 +80,9 @@ gem 'browser'
 gem 'slack-notifier'
 gem 'clearbit'
 gem 'zendesk_api'
+gem 'viewpoint'
+gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm.git'
+gem 'autodiscover', git: 'https://github.com/thorsteneckel/autodiscover.git'
 
 # event machine
 gem 'eventmachine'

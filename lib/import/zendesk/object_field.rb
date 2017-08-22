@@ -15,7 +15,7 @@ module Import
       private
 
       def local_name(object_field)
-        @local_name ||= remote_name(object_field).gsub(%r{[\s\/]}, '_').underscore.gsub(/_{2,}/, '_')
+        @local_name ||= remote_name(object_field).gsub(%r{[\s\/]}, '_').underscore.gsub(/_{2,}/, '_').gsub(/_id(s?)$/, '_no\1')
       end
 
       def remote_name(object_field)
