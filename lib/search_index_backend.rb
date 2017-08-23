@@ -198,9 +198,12 @@ return search result
       data['query']['bool']['must'] = []
     end
 
-    # add * on simple query search
-    if query && query =~ /^[[:alpha:]]+$/
-      query += '*'
+    # add * on simple query like "somephrase23" or "attribute: somephrase23"
+    if query.present?
+      query.strip!
+      if query =~ /^([[:alpha:],0-9]+|[[:alpha:],0-9]+\:\s+[[:alpha:],0-9]+)$/
+        query += '*'
+      end
     end
 
     # real search condition
