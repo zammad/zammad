@@ -199,7 +199,7 @@ return search result
     end
 
     # add * on simple query search
-    if query && query =~ /^\w+$/
+    if query && query =~ /^[[:alpha:]]+$/
       query += '*'
     end
 
