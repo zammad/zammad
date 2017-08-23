@@ -14,7 +14,7 @@ module Import
               future: dynamic_field['Config']['YearsInFuture'] != '0',
               past:   dynamic_field['Config']['YearsInPast'] != '0',
               diff:   dynamic_field['Config']['DefaultValue'].to_i / 60 / 60 / 24,
-              null:   false,
+              null:   true,
             }
           )
         end

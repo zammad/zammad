@@ -8,7 +8,7 @@ module Import
             data_option: {
               default: dynamic_field['Config']['DefaultValue'],
               rows:    dynamic_field['Config']['Rows'],
-              null:    false,
+              null:    true,
             }
           )
         end

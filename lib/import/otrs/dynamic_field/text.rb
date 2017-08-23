@@ -9,7 +9,7 @@ module Import
               default:   dynamic_field['Config']['DefaultValue'],
               type:      'text',
               maxlength: 255,
-              null:      false,
+              null:      true,
             }
           )
         end
