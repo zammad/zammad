@@ -201,7 +201,7 @@ return search result
     # add * on simple query like "somephrase23" or "attribute: somephrase23"
     if query.present?
       query.strip!
-      if query =~ /^([[:alpha:],0-9]+|[[:alpha:]]+\:\s+[[:alpha:],0-9]+)$/
+      if query =~ /^([[:alpha:],0-9]+|[[:alpha:],0-9]+\:\s+[[:alpha:],0-9]+)$/
         query += '*'
       end
     end
