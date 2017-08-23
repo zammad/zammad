@@ -26,7 +26,7 @@ RSpec.describe Import::OTRS::DynamicField::TextArea do
       data_option:   {
         default: '',
         rows:    '20',
-        null:    false
+        null:    true
       }
     }
 

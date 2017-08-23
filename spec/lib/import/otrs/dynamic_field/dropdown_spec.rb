@@ -32,8 +32,9 @@ RSpec.describe Import::OTRS::DynamicField::Dropdown do
           'Köln'    => 'Köln',
           'Berlin'  => 'Berlin'
         },
-        null:      true,
-        translate: false
+        nulloption: true,
+        null:       true,
+        translate:  false
       }
     }
 
