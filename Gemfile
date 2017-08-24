@@ -74,6 +74,7 @@ gem 'argon2'
 
 gem 'writeexcel'
 gem 'icalendar'
+gem 'icalendar-recurrence'
 gem 'browser'
 
 # integrations

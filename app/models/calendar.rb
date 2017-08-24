@@ -150,14 +150,16 @@ returns
     return if !ical_url
 
     # only sync every 5 days
-    cache_key = "CalendarIcal::#{id}"
-    cache = Cache.get(cache_key)
-    return if !last_log && cache && cache[:ical_url] == ical_url
+    if id
+      cache_key = "CalendarIcal::#{id}"
+      cache = Cache.get(cache_key)
+      return if !last_log && cache && cache[:ical_url] == ical_url
+    end
 
     begin
       events = {}
-      if ical_url && !ical_url.empty?
-        events = Calendar.parse(ical_url)
+      if ical_url.present?
+        events = Calendar.fetch_parse(ical_url)
       end
 
       # sync with public_holidays
@@ -189,11 +191,13 @@ returns
         }
       }
       self.last_log = nil
-      cache = Cache.write(
-        cache_key,
-        { public_holidays: public_holidays, ical_url: ical_url },
-        { expires_in: 5.days },
-      )
+      if id
+        Cache.write(
+          cache_key,
+          { public_holidays: public_holidays, ical_url: ical_url },
+          { expires_in: 1.day },
+        )
+      end
     rescue => e
       self.last_log = e.inspect
     end
@@ -205,7 +209,7 @@ returns
     true
   end
 
-  def self.parse(location)
+  def self.fetch_parse(location)
     if location =~ /^http/i
       result = UserAgent.get(location)
       if !result.success?
@@ -220,20 +224,41 @@ returns
     cal = cals.first
     events = {}
     cal.events.each { |event|
+      if event.rrule
+
+        # loop till days
+        interval_frame_start = Date.parse("#{Time.zone.now - 1.year}-01-01")
+        interval_frame_end   = Date.parse("#{Time.zone.now + 3.years}-12-31")
+        occurrences          = event.occurrences_between(interval_frame_start, interval_frame_end)
+        if occurrences.present?
+          occurrences.each { |occurrence|
+            result = Calendar.day_and_comment_by_event(event, occurrence.start_time)
+            next if !result
+            events[result[0]] = result[1]
+          }
+        end
+      end
       next if event.dtstart < Time.zone.now - 1.year
       next if event.dtstart > Time.zone.now + 3.years
-      day = "#{event.dtstart.year}-#{format('%02d', event.dtstart.month)}-#{format('%02d', event.dtstart.day)}"
-      comment = event.summary || event.description
-      comment = Encode.conv( 'utf8', comment.to_s.force_encoding('utf-8') )
-      if !comment.valid_encoding?
-        comment = comment.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-      end
-
-      # ignore daylight saving time entries
-      next if comment =~ /(daylight saving|sommerzeit|summertime)/i
-      events[day] = comment
+      result = Calendar.day_and_comment_by_event(event, event.dtstart)
+      next if !result
+      events[result[0]] = result[1]
     }
     events.sort.to_h
+  end
+
+  # get day and comment by event
+  def self.day_and_comment_by_event(event, start_time)
+    day = "#{start_time.year}-#{format('%02d', start_time.month)}-#{format('%02d', start_time.day)}"
+    comment = event.summary || event.description
+    comment = Encode.conv( 'utf8', comment.to_s.force_encoding('utf-8') )
+    if !comment.valid_encoding?
+      comment = comment.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+    end
+
+    # ignore daylight saving time entries
+    return if comment =~ /(daylight saving|sommerzeit|summertime)/i
+    [day, comment]
   end
 
   private
@@ -254,6 +279,7 @@ returns
   def min_one_check
     if !Calendar.find_by(default: true)
       first = Calendar.order(:created_at, :id).limit(1).first
+      return true if !first
       first.default = true
       first.save
     end
