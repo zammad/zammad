@@ -38,7 +38,7 @@ module Import
               Store.add(
                 object:      'Ticket::Article',
                 o_id:        local_article.id,
-                filename:    decoded_filename,
+                filename:    decoded_filename.force_encoding('utf-8'),
                 data:        decoded_content,
                 preferences: {
                   'Mime-Type'           => attachment['ContentType'],
@@ -53,6 +53,9 @@ module Import
             log "Ticket #{local_article.ticket_id} - #{sha} - #{e.class}: #{e}"
             sleep rand 3
             retry if !(retries -= 1).zero?
+            raise
+          rescue => e
+            log "Ticket #{local_article.ticket_id} - #{sha} - #{e}: #{attachment.inspect}"
             raise
           ensure
             queue_cleanup(sha)
