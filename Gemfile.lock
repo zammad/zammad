@@ -185,6 +185,10 @@ GEM
     httpclient (2.8.3)
     i18n (0.8.6)
     icalendar (2.4.1)
+    icalendar-recurrence (1.1.2)
+      icalendar (~> 2.0)
+      ice_cube (~> 0.13)
+    ice_cube (0.16.2)
     inflection (1.0.0)
     json (1.8.6)
     jwt (1.5.6)
@@ -481,6 +485,7 @@ DEPENDENCIES
   guard-symlink
   htmlentities
   icalendar
+  icalendar-recurrence
   json
   koala
   libv8
