@@ -289,7 +289,7 @@ class TicketTest < ActiveSupport::TestCase
 
   test 'ticket subject' do
 
-    ticket1 = Ticket.create(
+    ticket = Ticket.create(
       title: 'subject test 1',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -298,12 +298,48 @@ class TicketTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal('subject test 1', ticket1.title)
-    assert_equal("ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('ABC subject test 1'))
-    assert_equal("RE: ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('ABC subject test 1', true))
-    assert_equal("RE: ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('  ABC subject test 1', true))
-    assert_equal("RE: ABC subject test 1 [Ticket##{ticket1.number}]", ticket1.subject_build('ABC subject test 1  ', true))
-    ticket1.destroy
+    assert_equal('subject test 1', ticket.title)
+    assert_equal("ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('ABC subject test 1'))
+    assert_equal("RE: ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('ABC subject test 1', true))
+    assert_equal("RE: ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('  ABC subject test 1', true))
+    assert_equal("RE: ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('ABC subject test 1  ', true))
+    ticket.destroy
+
+    Setting.set('ticket_hook_position', 'left')
+
+    ticket = Ticket.create(
+      title: 'subject test 1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal('subject test 1', ticket.title)
+    assert_equal("[Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('ABC subject test 1'))
+    assert_equal("RE: [Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('ABC subject test 1', true))
+    assert_equal("RE: [Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('  ABC subject test 1', true))
+    assert_equal("RE: [Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('ABC subject test 1  ', true))
+    ticket.destroy
+
+    Setting.set('ticket_hook_position', 'none')
+
+    ticket = Ticket.create(
+      title: 'subject test 1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal('subject test 1', ticket.title)
+    assert_equal('ABC subject test 1', ticket.subject_build('ABC subject test 1'))
+    assert_equal('RE: ABC subject test 1', ticket.subject_build('ABC subject test 1', true))
+    assert_equal('RE: ABC subject test 1', ticket.subject_build('  ABC subject test 1', true))
+    assert_equal('RE: ABC subject test 1', ticket.subject_build('ABC subject test 1  ', true))
+    ticket.destroy
 
   end
 
