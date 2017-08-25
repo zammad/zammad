@@ -288,6 +288,8 @@ class TicketTest < ActiveSupport::TestCase
   end
 
   test 'ticket subject' do
+    ticket_hook_position = Setting.get('ticket_hook_position')
+    Setting.set('ticket_hook_position', 'right')
 
     ticket = Ticket.create(
       title: 'subject test 1',
@@ -341,6 +343,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal('RE: ABC subject test 1', ticket.subject_build('ABC subject test 1  ', true))
     ticket.destroy
 
+    Setting.set('ticket_hook_position', ticket_hook_position)
   end
 
   test 'ticket followup number check' do
