@@ -23,6 +23,7 @@
 .icon-facebook-button { width: 29px; height: 24px; }
 .icon-facebook { width: 17px; height: 17px; }
 .icon-form { width: 17px; height: 17px; }
+.icon-forward { width: 16px; height: 17px; }
 .icon-full-logo { width: 175px; height: 50px; }
 .icon-github-button { width: 29px; height: 24px; }
 .icon-gitlab-button { width: 29px; height: 24px; }
@@ -37,8 +38,8 @@
 .icon-linkedin-button { width: 29px; height: 24px; }
 .icon-list { width: 16px; height: 16px; }
 .icon-loading { width: 16px; height: 16px; }
-.icon-lock-open { width: 16px; height: 16px; }
-.icon-lock { width: 16px; height: 16px; }
+.icon-lock-open { width: 16px; height: 17px; }
+.icon-lock { width: 16px; height: 17px; }
 .icon-logo { width: 42px; height: 36px; }
 .icon-logotype { width: 91px; height: 15px; }
 .icon-long-arrow-right { width: 11px; height: 11px; }
@@ -56,7 +57,6 @@
 .icon-note { width: 16px; height: 16px; }
 .icon-oauth2-button { width: 29px; height: 24px; }
 .icon-office365-button { width: 29px; height: 24px; }
-.icon-weibo-button { width: 29px; height: 24px; }
 .icon-one-ticket { width: 48px; height: 10px; }
 .icon-organization { width: 16px; height: 16px; }
 .icon-outbound-calls { width: 17px; height: 17px; }
@@ -74,13 +74,13 @@
 .icon-received-calls { width: 17px; height: 17px; }
 .icon-reload { width: 16px; height: 16px; }
 .icon-reopening { width: 68px; height: 47px; }
-.icon-reply-all { width: 16px; height: 16px; }
-.icon-reply { width: 16px; height: 16px; }
+.icon-reply-all { width: 16px; height: 17px; }
+.icon-reply { width: 16px; height: 17px; }
 .icon-report { width: 20px; height: 20px; }
 .icon-searchdetail { width: 18px; height: 14px; }
 .icon-signout { width: 15px; height: 19px; }
 .icon-small-dot { width: 16px; height: 16px; }
-.icon-split { width: 16px; height: 16px; }
+.icon-split { width: 16px; height: 17px; }
 .icon-status-modified-outer-circle { width: 16px; height: 16px; }
 .icon-status { width: 16px; height: 16px; }
 .icon-stopwatch { width: 77px; height: 83px; }
@@ -97,5 +97,6 @@
 .icon-unmute { width: 16px; height: 16px; }
 .icon-user { width: 16px; height: 16px; }
 .icon-web { width: 17px; height: 17px; }
+.icon-weibo-button { width: 29px; height: 24px; }
 .icon-zoom-in { width: 20px; height: 20px; }
 .icon-zoom-out { width: 20px; height: 20px; }

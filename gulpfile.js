@@ -12,7 +12,11 @@ gulp.task('svgstore', function () {
   return gulp
     .src(iconsource)
     .pipe(rename({prefix: 'icon-'}))
-    .pipe(svgmin())
+    .pipe(svgmin({
+      js2svg: {
+        pretty: true
+      }
+    }))
     .pipe(cheerio({
       run: function ($) {
           // remove green-screen color
