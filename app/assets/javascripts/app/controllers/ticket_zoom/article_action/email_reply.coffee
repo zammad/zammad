@@ -10,13 +10,6 @@ class EmailReply extends App.Controller
         icon: 'reply'
         href: '#'
       }
-      actions.push {
-        name: 'forward'
-        type: 'emailForward'
-        #icon: 'forward'
-        icon: 'info'
-        href: '#'
-      }
       recipients = []
       if article.sender.name is 'Customer'
         if article.from
@@ -57,6 +50,15 @@ class EmailReply extends App.Controller
           icon: 'reply-all'
           href: '#'
         }
+
+      actions.push {
+        name: 'forward'
+        type: 'emailForward'
+        #icon: 'forward'
+        icon: 'line-right-arrow'
+        href: '#'
+      }
+
     if article.sender.name is 'Customer' && article.type.name is 'phone'
       actions.push {
         name: 'reply'
@@ -68,7 +70,7 @@ class EmailReply extends App.Controller
         name: 'forward'
         type: 'emailForward'
         #icon: 'forward'
-        icon: 'info'
+        icon: 'line-right-arrow'
         href: '#'
       }
     if article.sender.name is 'Agent' && article.type.name is 'phone'
@@ -82,7 +84,7 @@ class EmailReply extends App.Controller
         name: 'forward'
         type: 'emailForward'
         #icon: 'forward'
-        icon: 'info'
+        icon: 'line-right-arrow'
         href: '#'
       }
 

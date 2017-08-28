@@ -4985,6 +4985,18 @@ footer {
       fill: currentColor;
     }
 
+    .article-action-name {
+      @media screen and (max-width: 1080px) {
+        display: none;
+      }
+
+      @media screen and (max-width: 1358px) {
+        .main:not(.is-closed) & {
+          display: none;
+        }
+      }
+    }
+
 .article-add {
   position: relative;
   z-index: 1; // fixed chrome 49 + flex issue, not shown article

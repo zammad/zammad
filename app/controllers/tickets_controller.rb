@@ -2,6 +2,7 @@
 
 class TicketsController < ApplicationController
   include CreatesTicketArticles
+  include ClonesTicketArticleAttachments
   include TicketStats
 
   prepend_before_action :authentication_check
@@ -353,32 +354,13 @@ class TicketsController < ApplicationController
     access!(ticket, 'read')
     assets = ticket.assets({})
 
-    # get related articles
     article = Ticket::Article.find(params[:article_id])
+    access!(article.ticket, 'read')
     assets = article.assets(assets)
-
-    attachments = []
-    if params[:form_id].present?
-      attachments = Store.list(
-        object: 'UploadCache',
-        o_id: params[:form_id],
-      ).to_a
-      article.attachments.each do |attachment|
-        next if attachment.preferences['Content-ID'].present?
-        file = Store.add(
-          object: 'UploadCache',
-          o_id: params[:form_id],
-          data: attachment.content,
-          filename: attachment.filename,
-          preferences: attachment.preferences,
-        )
-        attachments.push file
-      end
-    end
 
     render json: {
       assets: assets,
-      attachments: attachments,
+      attachments: article_attachments_clone(article),
     }
   end
 
