@@ -22,22 +22,28 @@ returns
     ticket_hook         = Setting.get('ticket_hook')
     ticket_hook_divider = Setting.get('ticket_hook_divider')
     ticket_subject_re   = Setting.get('ticket_subject_re')
-    if is_reply && !ticket_subject_re.empty?
-      subject = "#{ticket_subject_re}: #{subject}"
-    end
 
     # none position
     if Setting.get('ticket_hook_position') == 'none'
+      if is_reply && ticket_subject_re.present?
+        subject = "#{ticket_subject_re}: #{subject}"
+      end
       return subject
     end
 
     # right position
     if Setting.get('ticket_hook_position') == 'right'
-      return subject + " [#{ticket_hook}#{ticket_hook_divider}#{number}]"
+      if is_reply && ticket_subject_re.present?
+        subject = "#{ticket_subject_re}: #{subject}"
+      end
+      return "#{subject} [#{ticket_hook}#{ticket_hook_divider}#{number}]"
     end
 
     # left position
-    "[#{ticket_hook}#{ticket_hook_divider}#{number}] " + subject
+    if is_reply && ticket_subject_re.present?
+      return "#{ticket_subject_re}: [#{ticket_hook}#{ticket_hook_divider}#{number}] #{subject}"
+    end
+    "[#{ticket_hook}#{ticket_hook_divider}#{number}] #{subject}"
   end
 
 =begin

@@ -10,9 +10,9 @@ class Widget
 |
 | Hi there, nice to meet you!
 |
-| Visit %chttps://zammad.org/participate%c and let's make Zammad better.
+| Visit %chttp://zammad.com/jobs%c to learn about our current job openings.
 |
-| The Zammad Team.
+| Your Zammad Team
 |
 """
     console.log(banner, 'text-decoration: underline;', 'text-decoration: none;')

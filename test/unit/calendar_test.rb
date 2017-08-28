@@ -237,8 +237,6 @@ class CalendarTest < ActiveSupport::TestCase
     assert_equal('Christmas1', calendar1.public_holidays['2019-12-24']['summary'])
     assert_nil(calendar1.public_holidays['2020-12-24'])
 
-    Calendar.destroy_all
-
     travel_back
 
   end
