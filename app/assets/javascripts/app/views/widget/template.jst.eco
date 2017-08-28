@@ -4,8 +4,10 @@
       <label class="" for="template_name"><%- @T('Select Template') %></label>
       <div id="form-template"></div>
     </div>
-    <button type="submit" class="btn" data-type="template_delete"><%- @T('Delete') %></button>
-    <button type="submit" class="btn" data-type="template_select"><%- @T('Apply') %></button>
+    <div class="horizontal">
+      <button type="submit" class="btn btn--action" data-type="template_delete"><%- @T('Delete') %></button>
+      <button type="submit" class="btn btn--action align-right" data-type="template_select"><%- @T('Apply') %></button>
+    </div>
   </form>
   <hr>
   <form>
@@ -13,8 +15,10 @@
       <label class="" for="template_name"><%- @T('Save as template') %></label>
       <input type="text" name="template_name" id="template_name" class="form-control" value="<%= @template.name %>"/>
     </div>
-    <button type="submit" class="btn" data-type="template_save"><%- @T('Save') %></button>
-</form>
+    <div class="horizontal">
+      <button type="submit" class="btn btn--action align-right" data-type="template_save"><%- @T('Save') %></button>
+    </div>
+  </form>
 </div>
 
 <div class="templates-welcome">
