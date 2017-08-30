@@ -475,6 +475,7 @@ If you\'re reading this message in your email, click the ticket number link that
       last_contact_at
       last_contact_agent_at
       last_contact_customer_at
+      last_owner_update_at
       create_article_type_id
       create_article_sender_id
       article_count
