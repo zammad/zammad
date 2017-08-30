@@ -47,7 +47,7 @@ class Sequencer
 
               def compareable(value)
                 return nil if value.blank?
-                return value.sort if value.respond_to(:sort)
+                return value.sort if value.respond_to?(:sort)
                 value
               end
             end
