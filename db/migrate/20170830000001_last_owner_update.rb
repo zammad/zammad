@@ -20,6 +20,8 @@ class LastOwnerUpdate < ActiveRecord::Migration
       period: 10.minutes,
       prio: 1,
       active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
 
     state_ids = Ticket::State.by_category(:work_on).pluck(:id)
