@@ -23,6 +23,7 @@ module Zammad
     config.active_record.observers =
       'observer::_session',
       'observer::_ticket::_close_time',
+      'observer::_ticket::_last_owner_update',
       'observer::_ticket::_user_ticket_counter',
       'observer::_ticket::_article_changes',
       'observer::_ticket::_article::_fillup_from_general',
