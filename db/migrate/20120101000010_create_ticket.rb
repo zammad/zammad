@@ -69,6 +69,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :last_contact_at,                  :timestamp, limit: 3,   null: true
       t.column :last_contact_agent_at,            :timestamp, limit: 3,   null: true
       t.column :last_contact_customer_at,         :timestamp, limit: 3,   null: true
+      t.column :last_owner_update_at,             :timestamp, limit: 3,   null: true
       t.column :create_article_type_id,           :integer,               null: true
       t.column :create_article_sender_id,         :integer,               null: true
       t.column :article_count,                    :integer,               null: true
@@ -103,6 +104,7 @@ class CreateTicket < ActiveRecord::Migration
     add_index :tickets, [:last_contact_at]
     add_index :tickets, [:last_contact_agent_at]
     add_index :tickets, [:last_contact_customer_at]
+    add_index :tickets, [:last_owner_update_at]
     add_index :tickets, [:create_article_type_id]
     add_index :tickets, [:create_article_sender_id]
     add_index :tickets, [:created_by_id]

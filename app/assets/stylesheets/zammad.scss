@@ -5879,6 +5879,10 @@ footer {
   padding-bottom: 14px;
 }
 
+.templates-manage fieldset {
+  margin: 0;
+}
+
 .template-attributes {
   margin: 17px 0 19px;
 }
@@ -5987,6 +5991,10 @@ footer {
   max-width: 660px;
   margin-top: 35px;
   margin-bottom: 35px;
+  
+  &.wizard {
+    margin: 35px auto;
+  }
 }
 .modal--large .modal-dialog {
   max-width: 740px;

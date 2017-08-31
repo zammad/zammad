@@ -48,6 +48,7 @@ class Ticket < ApplicationModel
                                      :last_contact_at,
                                      :last_contact_agent_at,
                                      :last_contact_customer_at,
+                                     :last_owner_update_at,
                                      :preferences
 
   history_attributes_ignored :create_article_type_id,
@@ -113,7 +114,7 @@ returns
     pending_action = Ticket::StateType.find_by(name: 'pending action')
     ticket_states_pending_action = Ticket::State.where(state_type_id: pending_action)
                                                 .where.not(next_state_id: nil)
-    if !ticket_states_pending_action.empty?
+    if ticket_states_pending_action.present?
       next_state_map = {}
       ticket_states_pending_action.each { |state|
         next_state_map[state.id] = state.next_state_id
@@ -137,7 +138,7 @@ returns
     pending_reminder = Ticket::StateType.find_by(name: 'pending reminder')
     ticket_states_pending_reminder = Ticket::State.where(state_type_id: pending_reminder)
 
-    if !ticket_states_pending_reminder.empty?
+    if ticket_states_pending_reminder.present?
       reminder_state_map = {}
       ticket_states_pending_reminder.each { |state|
         reminder_state_map[state.id] = state.next_state_id
@@ -223,6 +224,47 @@ returns
       )
       result.push ticket
     }
+    result
+  end
+
+=begin
+
+processes tickets which auto unassign time has reached
+
+  processed_tickets = Ticket.process_auto_unassign
+
+returns
+
+  processed_tickets = [<Ticket>, ...]
+
+=end
+
+  def self.process_auto_unassign
+
+    # process pending action tickets
+    state_ids = Ticket::State.by_category(:work_on).pluck(:id)
+    return [] if state_ids.blank?
+    result = []
+    groups = Group.where(active: true).where('assignment_timeout IS NOT NULL AND groups.assignment_timeout != 0')
+    return [] if groups.blank?
+    groups.each { |group|
+      next if group.assignment_timeout.blank?
+      ticket_ids = Ticket.where('state_id IN (?) AND owner_id != 1 AND group_id = ?', state_ids, group.id).limit(600).pluck(:id)
+      ticket_ids.each { |ticket_id|
+        ticket = Ticket.find_by(id: ticket_id)
+        next if !ticket
+        minutes_since_last_assignment = Time.zone.now - ticket.last_owner_update_at
+        next if (minutes_since_last_assignment / 60) <= group.assignment_timeout
+        Transaction.execute do
+          ticket.owner_id      = 1
+          ticket.updated_at    = Time.zone.now
+          ticket.updated_by_id = 1
+          ticket.save!
+        end
+        result.push ticket
+      }
+    }
+
     result
   end
 
