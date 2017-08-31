@@ -61,13 +61,13 @@ class App.Controller extends Spine.Controller
   clearDelay: (delay_id) =>
     App.Delay.clear(delay_id, @controllerId)
 
-  delay: (callback, timeout, delay_id, queue = true) =>
+  delay: (callback, timeout, delay_id, queue = false) =>
     App.Delay.set(callback, timeout, delay_id, @controllerId, queue)
 
   clearInterval: (interval_id) =>
     App.Interval.clear(interval_id, @controllerId)
 
-  interval: (callback, interval, interval_id, queue = true) =>
+  interval: (callback, interval, interval_id, queue = false) =>
     App.Interval.set(callback, interval, interval_id, @controllerId, queue)
 
   releaseController: =>

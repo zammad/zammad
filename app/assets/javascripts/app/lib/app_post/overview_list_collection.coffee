@@ -71,7 +71,10 @@ class _Singleton
   callback: (view, data) =>
     for counter, meta of @callbacks
       if meta.view is view
-        meta.callback(data)
+        callback = ->
+          meta.callback(data)
+        App.QueueManager.add('ticket_overviews', callback)
+        App.QueueManager.run('ticket_overviews')
 
 class App.OverviewListCollection
   _instance = new _Singleton
