@@ -13,6 +13,13 @@ Scheduler.create_if_not_exists(
   active: true,
 )
 Scheduler.create_if_not_exists(
+  name: 'Process auto unassign tickets',
+  method: 'Ticket.process_auto_unassign',
+  period: 10.minutes,
+  prio: 1,
+  active: true,
+)
+Scheduler.create_if_not_exists(
   name: 'Import OTRS diff load',
   method: 'Import::OTRS.diff_worker',
   period: 3.minutes,
