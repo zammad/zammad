@@ -5,7 +5,9 @@ class Sequencer
         module Model
           module Attributes
             class CheckMandatory < Sequencer::Unit::Base
-              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::SkipOnProvidedInstanceAction
+              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::InstanceAction
+
+              skip_any_instance_action
 
               uses :mapped
               provides :instance_action

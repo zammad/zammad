@@ -5,7 +5,9 @@ class Sequencer
         module Model
           class Update < Sequencer::Unit::Base
             include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
-            prepend ::Sequencer::Unit::Import::Common::Model::Mixin::SkipOnProvidedInstanceAction
+            prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::InstanceAction
+
+            skip_any_instance_action
 
             uses :instance, :mapped
             provides :instance_action

@@ -8,8 +8,10 @@ class Sequencer
           module Skip
             module Blank
               class Base < Sequencer::Unit::Base
-                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::SkipOnProvidedInstanceAction
                 include ::Sequencer::Unit::Common::Mixin::DynamicAttribute
+                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::InstanceAction
+
+                skip_any_instance_action
 
                 provides :instance_action
 

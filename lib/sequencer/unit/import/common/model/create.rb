@@ -5,7 +5,9 @@ class Sequencer
         module Model
           class Create < Sequencer::Unit::Base
             include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
-            prepend ::Sequencer::Unit::Import::Common::Model::Mixin::SkipOnProvidedInstanceAction
+            prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::InstanceAction
+
+            skip_any_instance_action
 
             uses :mapped, :model_class
             provides :instance, :instance_action
