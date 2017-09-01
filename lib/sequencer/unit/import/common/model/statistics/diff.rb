@@ -1,4 +1,4 @@
-require 'sequencer/unit/import/common/model/statistics/mixin/diff'
+require 'sequencer/unit/import/common/model/statistics/mixin/instance_action_diff'
 
 class Sequencer
   class Unit
@@ -7,7 +7,7 @@ class Sequencer
         module Model
           module Statistics
             class Diff < Sequencer::Unit::Base
-              include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::Diff
+              include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::InstanceActionDiff
 
               def process
                 state.provide(:statistics_diff, diff)
