@@ -4,7 +4,7 @@ class Sequencer
       module Common
         module ImportJob
           module Payload
-            class ToState < Sequencer::Unit::Base
+            class ToAttribute < Sequencer::Unit::Base
 
               uses :import_job
 
