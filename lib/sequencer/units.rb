@@ -1,11 +1,9 @@
-require 'mixin/instance_wrapper'
+require 'sequencer/units/attribute'
+require 'sequencer/units/attributes'
 
 class Sequencer
-  class Units
+  class Units < SimpleDelegator
     include ::Enumerable
-    include ::Mixin::InstanceWrapper
-
-    wrap :@units
 
     # Initializes a new Sequencer::Units instance with the given Units Array.
     #
@@ -14,7 +12,7 @@ class Sequencer
     # @example
     #  Sequencer::Units.new('Example::Unit', 'Sequencer::Unit::Second::Unit')
     def initialize(*units)
-      @units = units
+      super(units)
     end
 
     # Required #each implementation for ::Enumerable functionality. Constantizes
@@ -27,7 +25,7 @@ class Sequencer
     #
     # @return [nil]
     def each
-      @units.each do |unit|
+      __getobj__.each do |unit|
         yield constantize(unit)
       end
     end
@@ -58,7 +56,7 @@ class Sequencer
     #
     # @return [Object] the Unit class for the requested index
     def [](index)
-      constantize(@units[index])
+      constantize(__getobj__[index])
     end
 
     private
