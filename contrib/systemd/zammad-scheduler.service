@@ -8,9 +8,9 @@ User=zammad
 Group=zammad
 WorkingDirectory=/srv/http/zammad/
 
-ExecStart=/bin/bash -l -c "RAILS_ENV=production /home/zammad/.rbenv/shims/bundle exec script/scheduler.rb run"
+ExecStart=/bin/bash -l -c "RAILS_ENV=production /srv/http/zammad/.rbenv/shims/bundle exec script/scheduler.rb run"
 
-ExecStop=/bin/bash -l -c "RAILS_ENV=production /home/zammad/.rbenv/shims/bundle exec script/scheduler.rb stop"
+ExecStop=/bin/bash -l -c "RAILS_ENV=production /srv/http/zammad/.rbenv/shims/bundle exec script/scheduler.rb stop"
 
 TimeoutSec=300
 
