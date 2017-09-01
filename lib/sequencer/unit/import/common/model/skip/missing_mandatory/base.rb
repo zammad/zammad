@@ -1,4 +1,4 @@
-require 'sequencer/unit/mixin/dynamic_attribute'
+require 'sequencer/unit/common/mixin/dynamic_attribute'
 
 class Sequencer
   class Unit
@@ -9,7 +9,7 @@ class Sequencer
             module MissingMandatory
               class Base < Sequencer::Unit::Base
                 prepend ::Sequencer::Unit::Import::Common::Model::Mixin::SkipOnProvidedInstanceAction
-                include ::Sequencer::Unit::Mixin::DynamicAttribute
+                include ::Sequencer::Unit::Common::Mixin::DynamicAttribute
 
                 provides :instance_action
 
