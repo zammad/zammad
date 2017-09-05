@@ -33,14 +33,15 @@ class App.UiElement.ticket_perform_action
               elements["#{groupKey}.#{config.name}"] = config
 
     # add ticket deletion action
-    elements['ticket.action'] =
-      name: 'action'
-      display: 'Action'
-      tag: 'select'
-      null: false
-      translate: true
-      options:
-        delete: 'delete'
+    if attribute.ticket_delete
+      elements['ticket.action'] =
+        name: 'action'
+        display: 'Action'
+        tag: 'select'
+        null: false
+        translate: true
+        options:
+          delete: 'Delete'
 
     [defaults, groups, elements]
 
