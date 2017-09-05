@@ -54,8 +54,10 @@ returns
           search_params[:level] = level
         end
 
-        result = Cti::CallerId.where(search_params).group(:user_id, :id).order(id: 'DESC').limit(20)
-
+        caller_ids = Cti::CallerId.select('MAX(id) as caller_id').where(search_params).group(:user_id).order('caller_id DESC').limit(20).map(&:caller_id)
+        Cti::CallerId.where(id: caller_ids).order(id: :desc).each { |record|
+          result.push record
+        }
         break if result.present?
       }
       result
