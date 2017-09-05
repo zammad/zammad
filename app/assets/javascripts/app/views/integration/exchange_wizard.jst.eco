@@ -115,7 +115,7 @@
         <a class="btn btn--text btn--secondary js-goToSlide align-left" data-slide="js-bind"><%- @T('Go Back') %></a>
       </div>
       <div class="modal-rightFooter">
-        <button class="btn btn--primary align-right js-submitTry"><%- @T('Continue') %></button>
+        <button class="btn btn--primary align-right js-submitTry is-disabled"><%- @T('Continue') %></button>
       </div>
     </div>
   </form>

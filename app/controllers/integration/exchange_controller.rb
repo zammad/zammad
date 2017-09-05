@@ -33,15 +33,20 @@ class Integration::ExchangeController < ApplicationController
 
   def mapping
     answer_with do
-      Sequencer.process('Import::Exchange::AttributesExamples',
-                        parameters: {
-                          ews_folder_ids: params[:folders],
-                          ews_config:     {
-                            endpoint: params[:endpoint],
-                            user:     params[:user],
-                            password: params[:password],
-                          }
-                        })
+      raise 'Please select at least one folder.' if params[:folders].blank?
+
+      examples = Sequencer.process('Import::Exchange::AttributesExamples',
+                                   parameters: {
+                                     ews_folder_ids: params[:folders],
+                                     ews_config:     {
+                                       endpoint: params[:endpoint],
+                                       user:     params[:user],
+                                       password: params[:password],
+                                     }
+                                   })
+      examples.tap do |result|
+        raise 'No entries found in selected folder(s).' if result[:attributes].blank?
+      end
     end
   end
 

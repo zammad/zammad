@@ -187,6 +187,7 @@ class ConnectionWizard extends App.WizardModal
   elements:
     '.modal-body': 'body'
     '.js-foldersSelect': 'foldersSelect'
+    '.js-folders .js-submitTry': 'foldersSelectSubmit'
     '.js-userMappingForm': 'userMappingForm'
     '.js-expertForm': 'expertForm'
 
@@ -321,6 +322,11 @@ class ConnectionWizard extends App.WizardModal
       nulloption: false
       options: options
       value: selected
+      onChange: (val) =>
+        if val && val.length > 0
+          @foldersSelectSubmit.removeClass('is-disabled')
+        else
+          @foldersSelectSubmit.addClass('is-disabled')
     )
 
   mapping: (e) =>
