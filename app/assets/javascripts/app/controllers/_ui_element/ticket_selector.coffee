@@ -156,7 +156,7 @@ class App.UiElement.ticket_selector
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       return if !groupAndAttribute
-      @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute, false)
+      @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute)
     )
 
     # bind for preview
@@ -244,9 +244,9 @@ class App.UiElement.ticket_selector
     if groupAndAttribute
       elementRow.find('.js-attributeSelector select').val(groupAndAttribute)
 
-    @buildOperator(elementFull, elementRow, groupAndAttribute, elements, meta, attribute, true)
+    @buildOperator(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
-  @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute, buildValue) ->
+  @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
 
     name = "#{attribute.name}::#{groupAndAttribute}::operator"
@@ -284,9 +284,9 @@ class App.UiElement.ticket_selector
 
     elementRow.find('.js-operator select').replaceWith(selection)
 
-    @buildPreCondition(elementFull, elementRow, groupAndAttribute, elements, meta, attribute, buildValue)
+    @buildPreCondition(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
-  @buildPreCondition: (elementFull, elementRow, groupAndAttribute, elements, meta, attributeConfig, buildValue = true) ->
+  @buildPreCondition: (elementFull, elementRow, groupAndAttribute, elements, meta, attributeConfig) ->
     currentOperator = elementRow.find('.js-operator option:selected').attr('value')
     currentPreCondition = elementRow.find('.js-preCondition option:selected').attr('value')
 
@@ -318,7 +318,6 @@ class App.UiElement.ticket_selector
     if !preCondition
       elementRow.find('.js-preCondition select').html('')
       elementRow.find('.js-preCondition').addClass('hide')
-      return if !buildValue
       toggleValue()
       @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
       return
@@ -351,7 +350,6 @@ class App.UiElement.ticket_selector
       toggleValue()
     )
 
-    return if !buildValue
     @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
     toggleValue()
 
