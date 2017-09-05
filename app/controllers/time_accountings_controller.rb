@@ -8,7 +8,7 @@ class TimeAccountingsController < ApplicationController
     year = params[:year] || Time.zone.now.year
     month = params[:month] || Time.zone.now.month
 
-    start_periode = Time.parse("#{year}-#{month}-01")
+    start_periode = Time.zone.parse("#{year}-#{month}-01")
     end_periode = start_periode.end_of_month
 
     time_unit = {}
@@ -217,7 +217,7 @@ class TimeAccountingsController < ApplicationController
     year = params[:year] || Time.zone.now.year
     month = params[:month] || Time.zone.now.month
 
-    start_periode = Time.parse("#{year}-#{month}-01")
+    start_periode = Time.zone.parse("#{year}-#{month}-01")
     end_periode = start_periode.end_of_month
 
     time_unit = {}
@@ -297,7 +297,7 @@ class TimeAccountingsController < ApplicationController
     year = params[:year] || Time.zone.now.year
     month = params[:month] || Time.zone.now.month
 
-    start_periode = Time.parse("#{year}-#{month}-01")
+    start_periode = Time.zone.parse("#{year}-#{month}-01")
     end_periode = start_periode.end_of_month
 
     time_unit = {}
