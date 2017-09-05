@@ -3,12 +3,12 @@ require 'test_helper'
 
 class CtiCallerIdTest < ActiveSupport::TestCase
 
-  test '2 lookups' do
+  setup do
 
     Ticket.destroy_all
     Cti::CallerId.destroy_all
 
-    agent1 = User.create_or_update(
+    @agent1 = User.create_or_update(
       login: 'ticket-caller_id-agent1@example.com',
       firstname: 'CallerId',
       lastname: 'Agent1',
@@ -22,7 +22,7 @@ class CtiCallerIdTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    agent2 = User.create_or_update(
+    @agent2 = User.create_or_update(
       login: 'ticket-caller_id-agent2@example.com',
       firstname: 'CallerId',
       lastname: 'Agent2',
@@ -34,7 +34,7 @@ class CtiCallerIdTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    agent3 = User.create_or_update(
+    @agent3 = User.create_or_update(
       login: 'ticket-caller_id-agent3@example.com',
       firstname: 'CallerId',
       lastname: 'Agent3',
@@ -46,7 +46,7 @@ class CtiCallerIdTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    customer1 = User.create_or_update(
+    @customer1 = User.create_or_update(
       login: 'ticket-caller_id-customer1@example.com',
       firstname: 'CallerId',
       lastname: 'Customer1',
@@ -57,6 +57,10 @@ class CtiCallerIdTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
+  end
+
+  test '1 lookups' do
+
     Cti::CallerId.rebuild
 
     caller_ids = Cti::CallerId.lookup('491111222277')
@@ -64,27 +68,27 @@ class CtiCallerIdTest < ActiveSupport::TestCase
 
     caller_ids = Cti::CallerId.lookup('491111222223')
     assert_equal(1, caller_ids.length)
-    assert_equal(agent1.id, caller_ids[0].user_id)
+    assert_equal(@agent1.id, caller_ids[0].user_id)
     assert_equal('known', caller_ids[0].level)
 
     caller_ids = Cti::CallerId.lookup('492222222222')
     assert_equal(2, caller_ids.length)
-    assert_equal(agent3.id, caller_ids[0].user_id)
+    assert_equal(@agent3.id, caller_ids[0].user_id)
     assert_equal('known', caller_ids[0].level)
-    assert_equal(agent2.id, caller_ids[1].user_id)
+    assert_equal(@agent2.id, caller_ids[1].user_id)
     assert_equal('known', caller_ids[1].level)
 
     # create ticket in group
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some caller id test 1',
       group: Group.lookup(name: 'Users'),
-      customer: customer1,
+      customer: @customer1,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
-    article1 = Ticket::Article.create(
+    article1 = Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -96,22 +100,22 @@ Mob: +49 333 8362222",
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: customer1.id,
-      created_by_id: customer1.id,
+      updated_by_id: @customer1.id,
+      created_by_id: @customer1.id,
     )
     assert(ticket1)
 
     # create ticket in group
-    ticket2 = Ticket.create(
+    ticket2 = Ticket.create!(
       title: 'some caller id test 2',
       group: Group.lookup(name: 'Users'),
-      customer: customer1,
+      customer: @customer1,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
-    article2 = Ticket::Article.create(
+    article2 = Ticket::Article.create!(
       ticket_id: ticket2.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -123,8 +127,8 @@ Mob: +49 333 1112222",
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Agent').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: agent1.id,
-      created_by_id: agent1.id,
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
     )
     assert(ticket2)
 
@@ -135,19 +139,19 @@ Mob: +49 333 1112222",
 
     caller_ids = Cti::CallerId.lookup('491111222223')
     assert_equal(1, caller_ids.length)
-    assert_equal(agent1.id, caller_ids[0].user_id)
+    assert_equal(@agent1.id, caller_ids[0].user_id)
     assert_equal('known', caller_ids[0].level)
 
     caller_ids = Cti::CallerId.lookup('492222222222')
     assert_equal(2, caller_ids.length)
-    assert_equal(agent3.id, caller_ids[0].user_id)
+    assert_equal(@agent3.id, caller_ids[0].user_id)
     assert_equal('known', caller_ids[0].level)
-    assert_equal(agent2.id, caller_ids[1].user_id)
+    assert_equal(@agent2.id, caller_ids[1].user_id)
     assert_equal('known', caller_ids[1].level)
 
     caller_ids = Cti::CallerId.lookup('492226112222')
     assert_equal(1, caller_ids.length)
-    assert_equal(customer1.id, caller_ids[0].user_id)
+    assert_equal(@customer1.id, caller_ids[0].user_id)
     assert_equal('maybe', caller_ids[0].level)
 
     caller_ids = Cti::CallerId.lookup('492221112222')
@@ -155,7 +159,7 @@ Mob: +49 333 1112222",
 
   end
 
-  test '3 lookups' do
+  test '2 lookups' do
 
     Cti::CallerId.destroy_all
 
@@ -242,4 +246,83 @@ Mob: +49 333 1112222",
     assert_nil(caller_ids[0].comment)
 
   end
+
+  test '3 process - log' do
+
+    ticket1 = Ticket.create!(
+      title: 'some caller id test 1',
+      group: Group.lookup(name: 'Users'),
+      customer: @customer1,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
+    )
+    article1 = Ticket::Article.create!(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message\nFon (GEL): +49 111 366-1111 Mi-Fr
+Fon (LIN): +49 222 6112222 Mo-Di
+Mob: +49 333 8362222",
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: @customer1.id,
+      created_by_id: @customer1.id,
+    )
+    assert(ticket1)
+    ticket2 = Ticket.create!(
+      title: 'some caller id test 2',
+      group: Group.lookup(name: 'Users'),
+      customer: @customer1,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: @agent1.id,
+      created_by_id: @agent1.id,
+    )
+    article2 = Ticket::Article.create!(
+      ticket_id: ticket2.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message\nFon (GEL): +49 111 366-1111 Mi-Fr
+Fon (LIN): +49 222 6112222 Mo-Di
+Mob: +49 333 8362222",
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: @customer1.id,
+      created_by_id: @customer1.id,
+    )
+    assert(ticket2)
+
+    Cti::CallerId.rebuild
+
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'newCall',
+      'user' => 'user 1',
+      'from' => '491113661111',
+      'to' => '4930600000000',
+      'callId' => '4991155921769858278-1',
+      'direction' => 'in',
+    )
+
+    log = Cti::Log.log
+    assert(log[:list])
+    assert(log[:assets])
+    assert(log[:list][0])
+    assert_not(log[:list][1])
+    assert(log[:list][0].preferences)
+    assert(log[:list][0].preferences[:from])
+    assert_equal(1, log[:list][0].preferences[:from].count)
+    assert_equal(@customer1.id, log[:list][0].preferences[:from][0][:user_id])
+    assert_equal('maybe', log[:list][0].preferences[:from][0][:level])
+
+  end
+
 end

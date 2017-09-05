@@ -266,7 +266,22 @@ returns
       }
     end
 
-    # processes a incoming event
+=begin
+
+processes a incoming event
+
+Cti::Log.process(
+  'cause' => '',
+  'event' => 'newCall',
+  'user' => 'user 1',
+  'from' => '4912347114711',
+  'to' => '4930600000000',
+  'callId' => '4991155921769858278-1',
+  'direction' => 'in',
+)
+
+=end
+
     def self.process(params)
       comment = params['cause']
       event   = params['event']
