@@ -20,7 +20,7 @@ class App.UiElement.postmaster_set
             name:     'Customer'
             relation: 'User'
             tag:      'user_autocompletion'
-            disableCreateUser: true
+            disableCreateObject: true
           }
           {
             value:    'group_id'
@@ -32,7 +32,7 @@ class App.UiElement.postmaster_set
             name:     'Owner'
             relation: 'User'
             tag:      'user_autocompletion'
-            disableCreateUser: true
+            disableCreateObject: true
           }
         ]
       article:

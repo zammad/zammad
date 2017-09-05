@@ -160,6 +160,34 @@ Overview.create_if_not_exists(
   },
 )
 
+Overview.create_if_not_exists(
+  name: 'My replacement Tickets',
+  link: 'my_replacement_tickets',
+  prio: 1080,
+  role_ids: [overview_role.id],
+  out_of_office: true,
+  condition: {
+    'ticket.state_id' => {
+      operator: 'is',
+      value: Ticket::State.by_category(:open).pluck(:id),
+    },
+    #'ticket.out_of_office_replacement_id' => {
+    #  operator: 'is',
+    #  pre_condition: 'current_user.organization_id',
+    #},
+  },
+  order: {
+    by: 'created_at',
+    direction: 'DESC',
+  },
+  view: {
+    d: %w(title customer group owner escalation_at),
+    s: %w(title customer group owner escalation_at),
+    m: %w(number title customer group owner escalation_at),
+    view_mode_default: 's',
+  },
+)
+
 overview_role = Role.find_by(name: 'Customer')
 Overview.create_if_not_exists(
   name: 'My Tickets',

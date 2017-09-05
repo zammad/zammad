@@ -39,8 +39,8 @@ class User < ApplicationModel
   include User::SearchIndex
 
   before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
-  before_create   :check_preferences_default, :validate_roles, :domain_based_assignment, :set_locale
-  before_update   :check_preferences_default, :validate_roles, :reset_login_failed
+  before_create   :check_preferences_default, :validate_roles, :validate_ooo, :domain_based_assignment, :set_locale
+  before_update   :check_preferences_default, :validate_roles, :validate_ooo, :reset_login_failed
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy, :user_device_destroy
@@ -156,6 +156,45 @@ returns
 
   def role?(role_name)
     roles.where(name: role_name).any?
+  end
+
+=begin
+
+check if user is in role
+
+  user = User.find(123)
+  result = user.out_of_office?
+
+returns
+
+  result = true|false
+
+=end
+
+  def out_of_office?
+    return false if out_of_office != true
+    return false if out_of_office_start_at.blank?
+    return false if out_of_office_end_at.blank?
+    Time.zone.today.between?(out_of_office_start_at, out_of_office_end_at)
+  end
+
+=begin
+
+check if user is in role
+
+  user = User.find(123)
+  result = user.out_of_office_agent
+
+returns
+
+  result = user_model
+
+=end
+
+  def out_of_office_agent
+    return if !out_of_office?
+    return if out_of_office_replacement_id.blank?
+    User.find_by(id: out_of_office_replacement_id)
   end
 
 =begin
@@ -922,6 +961,15 @@ returns
     true
   end
 
+  def validate_ooo
+    return true if out_of_office != true
+    raise Exceptions::UnprocessableEntity, 'out of office start is required' if out_of_office_start_at.blank?
+    raise Exceptions::UnprocessableEntity, 'out of office end is required' if out_of_office_end_at.blank?
+    raise Exceptions::UnprocessableEntity, 'out of office end is before start' if out_of_office_start_at > out_of_office_end_at
+    raise Exceptions::UnprocessableEntity, 'out of office replacement user is required' if out_of_office_replacement_id.blank?
+    raise Exceptions::UnprocessableEntity, 'out of office no such replacement user' if !User.find_by(id: out_of_office_replacement_id)
+    true
+  end
 =begin
 
 checks if the current user is the last one

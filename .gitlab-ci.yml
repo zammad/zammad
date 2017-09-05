@@ -343,7 +343,7 @@ test:integration:otrs_5_mysql:
     - mysql
   script:
     - export RAILS_ENV=test
-    - export IMPORT_OTRS_ENDPOINT="http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+    - export IMPORT_OTRS_ENDPOINT="http://vz1109.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
     - rake db:create
     - rake db:migrate
     - ruby -I test/ test/integration/otrs_import_test.rb
@@ -356,7 +356,7 @@ test:integration:otrs_5_postgresql:
     - postgresql
   script:
     - export RAILS_ENV=test
-    - export IMPORT_OTRS_ENDPOINT="http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+    - export IMPORT_OTRS_ENDPOINT="http://vz1109.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
     - rake db:create
     - rake db:migrate
     - ruby -I test/ test/integration/otrs_import_test.rb

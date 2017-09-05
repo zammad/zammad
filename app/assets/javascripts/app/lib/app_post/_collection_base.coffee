@@ -5,9 +5,9 @@ class App._CollectionSingletonBase
   constructor: ->
     @callbacks = {}
     @counter = 0
-
+    @key = "collection-#{@event}"
     # read from cache
-    cache = App.SessionStorage.get("collection-#{@event}")
+    cache = App.SessionStorage.get(@key)
     if cache
       @set(cache)
 
@@ -73,6 +73,9 @@ class App._CollectionSingletonBase
 
   callback: (data) =>
     for counter, attr of @callbacks
-      attr.callback(data)
-      if attr.one
-        delete @callbacks[counter]
+      callback = ->
+        attr.callback(data)
+        if attr.one
+          delete @callbacks[counter]
+      App.QueueManager.add(@key, callback)
+      App.QueueManager.run(@key)

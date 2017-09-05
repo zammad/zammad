@@ -3695,6 +3695,16 @@ footer {
     opacity: 0.5;
   }
 
+  &--inactive {
+    filter: grayscale(100%);
+    opacity: 0.2;
+  }
+
+  &--vacation {
+    filter: grayscale(70%);
+    opacity: 1;
+  }
+
   &--unique {
     background-image: image_url("/assets/images/avatar-bg.png");
     background-size: 300px 226px;
@@ -7816,6 +7826,10 @@ output {
 
   h2 {
     margin-bottom: 0;
+    
+    .action-form-status .icon {
+      margin-top: 0;
+    }
   }
 
   .action-block,

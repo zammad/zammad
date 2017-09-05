@@ -8,6 +8,7 @@ Zammad::Application.routes.draw do
   match api_path + '/users/password_reset_verify', to: 'users#password_reset_verify', via: :post
   match api_path + '/users/password_change',       to: 'users#password_change',       via: :post
   match api_path + '/users/preferences',           to: 'users#preferences',           via: :put
+  match api_path + '/users/out_of_office',         to: 'users#out_of_office',         via: :put
   match api_path + '/users/account',               to: 'users#account_remove',        via: :delete
 
   match api_path + '/users/avatar',                to: 'users#avatar_new',            via: :post

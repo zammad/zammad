@@ -1,10 +1,10 @@
 class App.Delay
   _instance = undefined
 
-  @set: (callback, timeout, key, level) ->
+  @set: (callback, timeout, key, level, queue) ->
     if _instance == undefined
       _instance ?= new _delaySingleton
-    _instance.set(callback, timeout, key, level)
+    _instance.set(callback, timeout, key, level, queue)
 
   @clear: (key, level) ->
     if _instance == undefined
@@ -21,6 +21,11 @@ class App.Delay
       _instance ?= new _delaySingleton
     _instance.reset()
 
+  @count: ->
+    if _instance == undefined
+      _instance ?= new _intervalSingleton
+    _instance.count()
+
   @_all: ->
     if _instance == undefined
       _instance ?= new _delaySingleton
@@ -32,7 +37,7 @@ class _delaySingleton extends Spine.Module
   constructor: ->
     @levelStack = {}
 
-  set: (callback, timeout, key, level) =>
+  set: (callback, timeout, key, level, queue) =>
 
     if !level
       level = '_all'
@@ -44,11 +49,15 @@ class _delaySingleton extends Spine.Module
       key = Math.floor(Math.random() * 99999)
 
     # setTimeout
-    @log 'debug', 'set', key, timeout, level, callback
-    call = =>
+    @log 'debug', 'set', key, timeout, level, callback, queue
+    localCallback = =>
       @clear(key, level)
-      callback()
-    delay_id = setTimeout(call, timeout)
+      if queue
+        App.QueueManager.add('delay', callback)
+        App.QueueManager.run('delay')
+      else
+        callback()
+    delay_id = setTimeout(localCallback, timeout)
 
     # remember all delays
     if !@levelStack[level]
@@ -92,6 +101,13 @@ class _delaySingleton extends Spine.Module
         @clear(key, level)
       @levelStack[level] = {}
     true
+
+  count: =>
+    return 0 if !@levelStack
+    count = 0
+    for levelName, levelValue of @levelStack
+      count += Object.keys(levelValue).length
+    count
 
   _all: =>
     @levelStack

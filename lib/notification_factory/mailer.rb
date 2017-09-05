@@ -35,27 +35,47 @@ returns
     matrix = user.preferences['notification_config']['matrix']
     return if !matrix
 
-    # check if group is in selecd groups
-    if ticket.owner_id != user.id
+    owned_by_nobody = false
+    owned_by_me = false
+    if ticket.owner_id == 1
+      owned_by_nobody = true
+    elsif ticket.owner_id == user.id
+      owned_by_me = true
+    else
+      # check the replacement chain of max 10
+      # if the current user is in it
+      check_for = ticket.owner
+      10.times do
+        replacement = check_for.out_of_office_agent
+        break if !replacement
+
+        check_for = replacement
+        next if replacement.id != user.id
+
+        owned_by_me = true
+        break
+      end
+    end
+
+    # check if group is in selected groups
+    if !owned_by_me
       selected_group_ids = user.preferences['notification_config']['group_ids']
-      if selected_group_ids
-        if selected_group_ids.class == Array
-          hit = nil
-          if selected_group_ids.empty?
-            hit = true
-          elsif selected_group_ids[0] == '-' && selected_group_ids.count == 1
-            hit = true
-          else
-            hit = false
-            selected_group_ids.each { |selected_group_id|
-              if selected_group_id.to_s == ticket.group_id.to_s
-                hit = true
-                break
-              end
-            }
-          end
-          return if !hit
+      if selected_group_ids.is_a?(Array)
+        hit = nil
+        if selected_group_ids.empty?
+          hit = true
+        elsif selected_group_ids[0] == '-' && selected_group_ids.count == 1
+          hit = true
+        else
+          hit = false
+          selected_group_ids.each { |selected_group_id|
+            if selected_group_id.to_s == ticket.group_id.to_s
+              hit = true
+              break
+            end
+          }
         end
+        return if !hit # no group access
       end
     end
     return if !matrix[type]
@@ -64,13 +84,13 @@ returns
     return if !data['criteria']
     channels = data['channel']
     return if !channels
-    if data['criteria']['owned_by_me'] && ticket.owner_id == user.id
+    if data['criteria']['owned_by_me'] && owned_by_me
       return {
         user: user,
         channels: channels
       }
     end
-    if data['criteria']['owned_by_nobody'] && ticket.owner_id == 1
+    if data['criteria']['owned_by_nobody'] && owned_by_nobody
       return {
         user: user,
         channels: channels

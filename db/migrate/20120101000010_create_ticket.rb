@@ -238,6 +238,7 @@ class CreateTicket < ActiveRecord::Migration
       t.column :order,                :string,  limit: 2500,   null: false
       t.column :group_by,             :string,  limit: 250,    null: true
       t.column :organization_shared,  :boolean,                null: false, default: false
+      t.column :out_of_office,        :boolean,                null: false, default: false
       t.column :view,                 :string,  limit: 1000,   null: false
       t.column :active,               :boolean,                null: false, default: true
       t.column :updated_by_id,        :integer,                null: false

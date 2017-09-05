@@ -5,7 +5,7 @@ class FormController < ApplicationController
   before_action :cors_preflight_check_execute
   after_action :set_access_control_headers_execute
 
-  def config
+  def configuration
     return if !enabled?
     return if !fingerprint_exists?
     return if limit_reached?
@@ -16,17 +16,17 @@ class FormController < ApplicationController
 
     endpoint = "#{http_type}://#{fqdn}#{api_path}/form_submit"
 
-    config = {
+    result = {
       enabled:  Setting.get('form_ticket_create'),
       endpoint: endpoint,
       token:    token_gen(params[:fingerprint])
     }
 
     if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
-      config[:enabled] = true
+      result[:enabled] = true
     end
 
-    render json: config, status: :ok
+    render json: result, status: :ok
   end
 
   def submit
@@ -127,11 +127,12 @@ class FormController < ApplicationController
     )
 
     if params[:file]
+
       params[:file].each { |file|
         Store.add(
           object: 'Ticket::Article',
           o_id: article.id,
-          data: File.read(file.tempfile),
+          data: file.read,
           filename: file.original_filename,
           preferences: {
             'Mime-Type' => file.content_type,

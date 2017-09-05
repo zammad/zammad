@@ -538,7 +538,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/email_verify.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN"}'
+curl http://localhost/api/v1/users/email_verify -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN"}'
 
 =end
 
@@ -567,7 +567,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/email_verify_send.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"email": "some_email@example.com"}'
+curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"email": "some_email@example.com"}'
 
 =end
 
@@ -626,7 +626,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"username": "some_username"}'
+curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"username": "some_username"}'
 
 =end
 
@@ -678,7 +678,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN", "password" "new_password"}'
+curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN", "password" "new_password"}'
 
 =end
 
@@ -734,7 +734,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new": "password_new"}'
+curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new": "password_new"}'
 
 =end
 
@@ -781,7 +781,7 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
 =begin
 
 Resource:
-PUT /api/v1/users/preferences.json
+PUT /api/v1/users/preferences
 
 Payload:
 {
@@ -795,7 +795,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"language": "de", "notifications": true}'
+curl http://localhost/api/v1/users/preferences -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"language": "de", "notifications": true}'
 
 =end
 
@@ -808,7 +808,7 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
         params[:user].each { |key, value|
           user.preferences[key.to_sym] = value
         }
-        user.save
+        user.save!
       end
     end
     render json: { message: 'ok' }, status: :ok
@@ -817,7 +817,47 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
 =begin
 
 Resource:
-DELETE /api/v1/users/account.json
+PUT /api/v1/users/out_of_office
+
+Payload:
+{
+  "out_of_office": true,
+  "out_of_office_start_at": true,
+  "out_of_office_end_at": true,
+  "out_of_office_replacement_id": 123,
+  "out_of_office_text": 'honeymoon'
+}
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/v1/users/out_of_office -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"out_of_office": true, "out_of_office_replacement_id": 123}'
+
+=end
+
+  def out_of_office
+    raise Exceptions::UnprocessableEntity, 'No current user!' if !current_user
+    user = User.find(current_user.id)
+    user.with_lock do
+      user.assign_attributes(
+        out_of_office:                params[:out_of_office],
+        out_of_office_start_at:       params[:out_of_office_start_at],
+        out_of_office_end_at:         params[:out_of_office_end_at],
+        out_of_office_replacement_id: params[:out_of_office_replacement_id],
+      )
+      user.preferences[:out_of_office_text] = params[:out_of_office_text]
+      user.save!
+    end
+    render json: { message: 'ok' }, status: :ok
+  end
+
+=begin
+
+Resource:
+DELETE /api/v1/users/account
 
 Payload:
 {
@@ -831,7 +871,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/account.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"provider": "twitter", "uid": 581482342942}'
+curl http://localhost/api/v1/users/account -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"provider": "twitter", "uid": 581482342942}'
 
 =end
 

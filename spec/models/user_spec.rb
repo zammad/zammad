@@ -26,6 +26,34 @@ RSpec.describe User do
     end
   end
 
+  context '#out_of_office_agent' do
+
+    it 'responds to out_of_office_agent' do
+      user = create(:user)
+      expect(user).to respond_to(:out_of_office_agent)
+    end
+
+    context 'replacement' do
+
+      it 'finds assigned' do
+        user_replacement = create(:user)
+
+        user_ooo = create(:user,
+                          out_of_office:                true,
+                          out_of_office_start_at:       Time.zone.yesterday,
+                          out_of_office_end_at:         Time.zone.tomorrow,
+                          out_of_office_replacement_id: user_replacement.id,)
+
+        expect(user_ooo.out_of_office_agent).to eq user_replacement
+      end
+
+      it 'finds none for available users' do
+        user = create(:user)
+        expect(user.out_of_office_agent).to be nil
+      end
+    end
+  end
+
   context '#max_login_failed?' do
 
     it 'responds to max_login_failed?' do

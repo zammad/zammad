@@ -1,0 +1,34 @@
+<div class="page-header">
+  <div class="page-header-title"><h1><%- @T('Out of Office') %></h1></div>
+</div>
+
+<form class="action">
+  <div class="action-flow action-flow--row">
+    <div class="action-row">
+      <div class="action-flow action-flow--noWrap">
+        <h2><span class="action-form-status">
+            <% if @localData.out_of_office is true: %>
+              <%- @Icon('status', 'ok inline') %>
+            <% else: %>
+              <%- @Icon('status', 'error inline') %>
+            <% end %></span> <input id="out_of_office_reason" name="out_of_office_text" class="form-control form-control--inline" type="text" placeholder="<%- @Ti('e. g.') %> <%- @Ti(@placeholder) %>" value="<% if !_.isEmpty(@localData.out_of_office_text): %><%= @localData.out_of_office_text %><% end %>"></h2>
+      </div>
+    </div>
+    <div class="action-block action-block--flex">
+      <div class="label"><%- @T('From') %></div>
+      <div class="form-group js-startDate"></div>
+    </div>
+    <div class="action-block action-block--flex">
+      <div class="label"><%- @T('Till') %></div>
+      <div class="form-group js-endDate"></div>
+    </div>
+    <div class="action-row">
+      <label for="out_of_office_replacement"><%- @T('Replacement') %></label>
+      <div class="dropdown js-recipientDropdown"></div>
+    </div>
+    <div class="action-controls">
+      <div class="btn btn--danger js-disabled"><%- @Ti('Disable') %></div>
+      <div class="btn btn--create js-enable"><%- @Ti('Enable') %></div>
+    </div>
+  </div>
+</form>
