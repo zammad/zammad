@@ -40,6 +40,10 @@ class CreateBase < ActiveRecord::Migration
       t.timestamp :last_login,        limit: 3,   null: true
       t.string :source,               limit: 200, null: true
       t.integer :login_failed,                    null: false, default: 0
+      t.boolean :out_of_office,                   null: false, default: false
+      t.date :out_of_office_start_at,             null: true
+      t.date :out_of_office_end_at,               null: true
+      t.integer :out_of_office_replacement_id,    null: true
       t.string :preferences,          limit: 8000, null: true
       t.integer :updated_by_id,                   null: false
       t.integer :created_by_id,                   null: false
@@ -54,10 +58,13 @@ class CreateBase < ActiveRecord::Migration
     add_index :users, [:phone]
     add_index :users, [:fax]
     add_index :users, [:mobile]
+    add_index :users, [:out_of_office, :out_of_office_start_at, :out_of_office_end_at], name: 'index_out_of_office'
+    add_index :users, [:out_of_office_replacement_id]
     add_index :users, [:source]
     add_index :users, [:created_by_id]
     add_foreign_key :users, :users, column: :created_by_id
     add_foreign_key :users, :users, column: :updated_by_id
+    add_foreign_key :users, :users, column: :out_of_office_replacement_id
 
     create_table :signatures do |t|
       t.string :name,                 limit: 100,  null: false

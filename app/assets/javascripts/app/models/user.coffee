@@ -53,8 +53,14 @@ class App.User extends App.Model
     cssClass += ' ' if cssClass
     cssClass += "size-#{ size }"
 
+    if @active is false
+      cssClass += ' avatar--inactive'
+
+    if @isOutOfOffice()
+      cssClass += ' avatar--vacation'
+
     if placement
-      placement = " data-placement='#{ placement }'"
+      placement = " data-placement='#{placement}'"
 
     if !avatar
       if type is 'personal'
@@ -103,6 +109,19 @@ class App.User extends App.Model
       placement: placement
       vip: vip
       url: @imageUrl()
+
+  isOutOfOffice: ->
+    return false if @out_of_office isnt true
+    start_time = @out_of_office_start_at
+    return false if !start_time
+    end_time = @out_of_office_end_at
+    return false if !end_time
+    start_time = new Date(Date.parse(start_time))
+    end_time = new Date(Date.parse(end_time))
+    now = new Date((new Date).toDateString())
+    if start_time <= now && end_time >= now
+      return true
+    false
 
   imageUrl: ->
     return if !@image
@@ -237,3 +256,16 @@ class App.User extends App.Model
           break
       return access if access
     false
+
+  @outOfOfficeTextPlaceholder: ->
+    today = new Date()
+    outOfOfficeText = 'Christmas holiday'
+    if today.getMonth() < 3
+      outOfOfficeText = 'Easter holiday'
+    else if today.getMonth() < 9
+      outOfOfficeText = 'Summer holiday'
+    outOfOfficeText
+
+  outOfOfficeText: ->
+    return @preferences.out_of_office_text if !_.isEmpty(@preferences.out_of_office_text)
+    App.User.outOfOfficeTextPlaceholder()

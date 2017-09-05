@@ -1499,7 +1499,7 @@ class InputsRef extends App.ControllerContent
         null: false
         relation: 'User'
         autocapitalize: false
-        disableCreateUser: true
+        disableCreateObject: true
         multiple: true
 
     @$('.userOrganizationAutocompletePlaceholder').replaceWith( userOrganizationAutocomplete.element() )

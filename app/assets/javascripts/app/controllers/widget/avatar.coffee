@@ -7,6 +7,12 @@ class App.WidgetAvatar extends App.ObserverController
     email: true
     image: true
     vip: true
+    out_of_office: true,
+    out_of_office_start_at: true,
+    out_of_office_end_at: true,
+    out_of_office_replacement_id: true,
+    active: true
+
   globalRerender: false
 
   render: (user) =>

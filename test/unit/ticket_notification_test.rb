@@ -56,6 +56,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       lastname: 'Agent1',
       email: 'ticket-notification-agent1@example.com',
       password: 'agentpw',
+      out_of_office: false,
       active: true,
       roles: roles,
       groups: groups,
@@ -71,11 +72,44 @@ class TicketNotificationTest < ActiveSupport::TestCase
       lastname: 'Agent2',
       email: 'ticket-notification-agent2@example.com',
       password: 'agentpw',
+      out_of_office: false,
       active: true,
       roles: roles,
       groups: groups,
       preferences: {
         locale: 'en-ca',
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    @agent3 = User.create_or_update(
+      login: 'ticket-notification-agent3@example.com',
+      firstname: 'Notification',
+      lastname: 'Agent3',
+      email: 'ticket-notification-agent3@example.com',
+      password: 'agentpw',
+      out_of_office: false,
+      active: true,
+      roles: roles,
+      groups: groups,
+      preferences: {
+        locale: 'de-de',
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    @agent4 = User.create_or_update(
+      login: 'ticket-notification-agent4@example.com',
+      firstname: 'Notification',
+      lastname: 'Agent4',
+      email: 'ticket-notification-agent4@example.com',
+      password: 'agentpw',
+      out_of_office: false,
+      active: true,
+      roles: roles,
+      groups: groups,
+      preferences: {
+        locale: 'de-de',
       },
       updated_by_id: 1,
       created_by_id: 1,
@@ -941,6 +975,126 @@ class TicketNotificationTest < ActiveSupport::TestCase
     assert_not(list_objects['Ticket'][ticket1.id][:changes]['priority'])
     assert_equal(2, list_objects['Ticket'][ticket1.id][:changes]['priority_id'][0])
     assert_equal(1, list_objects['Ticket'][ticket1.id][:changes]['priority_id'][1])
+
+  end
+
+  test 'ticket notification - out of office' do
+
+    # create ticket in group
+    ticket1 = Ticket.create!(
+      title: 'some notification test out of office',
+      group: Group.lookup(name: 'TicketNotificationTest'),
+      customer: @customer,
+      owner_id: @agent2.id,
+      #state: Ticket::State.lookup(name: 'new'),
+      #priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
+    )
+    Ticket::Article.create!(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
+    )
+    assert(ticket1, 'ticket created - ticket notification simple')
+
+    # execute object transaction
+    Observer::Transaction.commit
+    Scheduler.worker(true)
+
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent1, 'email'), ticket1.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket1, @agent2, 'email'), ticket1.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent3, 'email'), ticket1.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket1, @agent4, 'email'), ticket1.id)
+
+    @agent2.out_of_office = true
+    @agent2.preferences[:out_of_office_text] = 'at the doctor'
+    @agent2.out_of_office_replacement_id = @agent3.id
+    @agent2.out_of_office_start_at = Time.zone.today - 2.days
+    @agent2.out_of_office_end_at = Time.zone.today + 2.days
+    @agent2.save!
+
+    # create ticket in group
+    ticket2 = Ticket.create!(
+      title: 'some notification test out of office',
+      group: Group.lookup(name: 'TicketNotificationTest'),
+      customer: @customer,
+      owner_id: @agent2.id,
+      #state: Ticket::State.lookup(name: 'new'),
+      #priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
+    )
+    Ticket::Article.create!(
+      ticket_id: ticket2.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'email').first,
+      updated_by_id: @customer.id,
+      created_by_id: @customer.id,
+    )
+    assert(ticket2, 'ticket created - ticket notification simple')
+
+    # execute object transaction
+    Observer::Transaction.commit
+    Scheduler.worker(true)
+
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, @agent2, 'email'), ticket2.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, @agent3, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent4, 'email'), ticket2.id)
+
+    # update ticket attributes
+    ticket2.title    = "#{ticket2.title} - #2"
+    ticket2.priority = Ticket::Priority.lookup(name: '3 high')
+    ticket2.save!
+
+    # execute object transaction
+    Observer::Transaction.commit
+    Scheduler.worker(true)
+
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, @agent2, 'email'), ticket2.id)
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket2, @agent3, 'email'), ticket2.id)
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent4, 'email'), ticket2.id)
+
+    @agent3.out_of_office = true
+    @agent3.preferences[:out_of_office_text] = 'at the doctor'
+    @agent3.out_of_office_replacement_id = @agent4.id
+    @agent3.out_of_office_start_at = Time.zone.today - 2.days
+    @agent3.out_of_office_end_at = Time.zone.today + 2.days
+    @agent3.save!
+
+    # update ticket attributes
+    ticket2.title    = "#{ticket2.title} - #3"
+    ticket2.priority = Ticket::Priority.lookup(name: '3 high')
+    ticket2.save!
+
+    # execute object transaction
+    Observer::Transaction.commit
+    Scheduler.worker(true)
+
+    # verify notifications to @agent1 + @agent2
+    assert_equal(0, NotificationFactory::Mailer.already_sent?(ticket2, @agent1, 'email'), ticket2.id)
+    assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket2, @agent2, 'email'), ticket2.id)
+    assert_equal(3, NotificationFactory::Mailer.already_sent?(ticket2, @agent3, 'email'), ticket2.id)
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket2, @agent4, 'email'), ticket2.id)
 
   end
 

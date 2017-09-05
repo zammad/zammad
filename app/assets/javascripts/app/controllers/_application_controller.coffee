@@ -344,7 +344,10 @@ class App.Controller extends Spine.Controller
       title: ->
         userId = $(@).data('id')
         user   = App.User.find(userId)
-        App.Utils.htmlEscape(user.displayName())
+        headline = App.Utils.htmlEscape(user.displayName())
+        if user.isOutOfOffice()
+          headline += " (#{App.Utils.htmlEscape(user.outOfOfficeText())})"
+        headline
       content: ->
         userId = $(@).data('id')
         user   = App.User.fullLocal(userId)

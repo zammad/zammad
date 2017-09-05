@@ -180,6 +180,10 @@ class ZendeskImportTest < ActiveSupport::TestCase
       last_login
       source
       login_failed
+      out_of_office
+      out_of_office_start_at
+      out_of_office_end_at
+      out_of_office_replacement_id
       preferences
       updated_by_id
       created_by_id
