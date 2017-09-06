@@ -86,16 +86,16 @@ class App.WidgetTag extends App.Controller
       return
     @add(item)
 
-  add: (items) =>
+  add: (items, source = '') =>
     for item in items.split(',')
       item = item.trim()
-      @addItem(item)
+      @addItem(item, source)
 
-  addItem: (item) =>
+  addItem: (item, source = '') =>
     if _.contains(@localTags, item)
       @render()
       return
-    return if App.Config.get('tag_new') is false && !@possibleTags[item]
+    return if source != 'macro' && App.Config.get('tag_new') is false && !@possibleTags[item]
     @localTags.push item
     @render()
     App[@object_type].tagAdd(@object.id, item)

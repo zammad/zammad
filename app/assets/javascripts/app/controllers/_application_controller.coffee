@@ -185,6 +185,17 @@ class App.Controller extends Spine.Controller
   formValidate: (data) ->
     App.ControllerForm.validate(data)
 
+  # get all query params of the url
+  queryParam: ->
+    return if !@query
+    pairs = @query.split(';')
+    params = {}
+    for pair in pairs
+      result = pair.match('(.+?)=(.*)')
+      if result && result[1]
+        params[result[1]] = result[2]
+    params
+
 #  redirectToLogin: (data) ->
 #
 

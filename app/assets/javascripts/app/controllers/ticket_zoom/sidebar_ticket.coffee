@@ -69,7 +69,7 @@ class SidebarTicket extends App.Controller
       if args.tags
         @tagWidget.reload(args.tags)
       if args.tagAdd
-        @tagWidget.add(args.tagAdd)
+        @tagWidget.add(args.tagAdd, args.source)
       if args.tagRemove
         @tagWidget.remove(args.tagRemove)
 
