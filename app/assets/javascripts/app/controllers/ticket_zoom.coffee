@@ -693,7 +693,7 @@ class App.TicketZoom extends App.Controller
         tagAdd: (tag) =>
           return if !@sidebar
           return if !@sidebar.reload
-          @sidebar.reload(tagAdd: tag)
+          @sidebar.reload(tagAdd: tag, source: 'macro')
         tagRemove: (tag) =>
           return if !@sidebar
           return if !@sidebar.reload
