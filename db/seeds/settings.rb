@@ -3039,6 +3039,46 @@ Setting.create_if_not_exists(
   frontend: false,
 )
 Setting.create_if_not_exists(
+  title: 'i-doit integration',
+  name: 'idoit_integration',
+  area: 'Integration::Switch',
+  description: 'Defines if i-doit (http://www.i-doit) is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'idoit_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 1,
+    authentication: true,
+    permission: ['admin.integration'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'i-doit config',
+  name: 'idoit_config',
+  area: 'Integration::Idoit',
+  description: 'Defines the i-doit config.',
+  options: {},
+  state: {},
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
+  frontend: false,
+)
+Setting.create_if_not_exists(
   title: 'Defines sync transaction backend.',
   name: '0100_trigger',
   area: 'Transaction::Backend::Sync',

@@ -309,6 +309,23 @@ class App.ControllerConfirm extends App.ControllerModal
     if @callback
       @callback()
 
+class App.ControllerErrorModal extends App.ControllerModal
+  buttonClose: true
+  buttonCancel: false
+  buttonSubmit: 'Close'
+  #buttonClass: 'btn--danger'
+  head: 'Error'
+  #small: true
+  #shown: true
+
+  content: ->
+    @message
+
+  onSubmit: =>
+    @close()
+    if @callback
+      @callback()
+
 class App.ControllerDrox extends App.Controller
   constructor: (params) ->
     super

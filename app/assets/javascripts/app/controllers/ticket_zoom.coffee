@@ -473,6 +473,7 @@ class App.TicketZoom extends App.Controller
         sidebarState: @sidebarState
         object_id:    @ticket_id
         model:        'Ticket'
+        query:        @query
         taskGet:      @taskGet
         task_key:     @task_key
         formMeta:     @formMeta
@@ -796,6 +797,9 @@ class App.TicketZoom extends App.Controller
 
         # reset form after save
         @reset()
+
+        if @sidebar
+          @sidebar.commit()
 
         if taskAction is 'closeNextInOverview'
           if @overview_id
