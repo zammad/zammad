@@ -221,7 +221,7 @@ class App.TicketOverview extends App.Controller
             if @batchCountIndex == @batchCount
               App.Event.trigger('overview:fetch')
         )
-        return
+      return
 
     if action is 'group_assign'
       @batchCount = items.length
