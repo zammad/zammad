@@ -183,9 +183,7 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
   def restart_failed_jobs
     access_check
 
-    Scheduler.where(status: 'error', active: false).each do |scheduler|
-      scheduler.update(active: true)
-    end
+    Scheduler.restart_failed_jobs
 
     render json: {}, status: :ok
   end

@@ -267,4 +267,18 @@ class Scheduler < ApplicationModel
 
   end
 
+  # This function restarts failed jobs to retry them
+  #
+  # @example
+  #   Scheduler.restart_failed_jobs
+  #
+  # return [true]
+  def self.restart_failed_jobs
+    Scheduler.where(status: 'error', active: false).each do |scheduler|
+      scheduler.update(active: true)
+    end
+
+    true
+  end
+
 end
