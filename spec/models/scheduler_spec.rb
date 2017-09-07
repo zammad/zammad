@@ -26,6 +26,24 @@ RSpec.describe Scheduler do
     SpecSpace.send(:remove_const, :DelayedJobBackend)
   end
 
+  describe '._start_job' do
+
+    it 'sets error status/message for failed jobs' do
+      job = create(:scheduler)
+      described_class._start_job(job)
+      expect(job.status).to eq 'error'
+      expect(job.active).to be false
+      expect(job.error_message).to be_present
+    end
+
+    it 'executes job that is expected to succeed' do
+      expect(Setting).to receive(:reload)
+      job = create(:scheduler, method: 'Setting.reload')
+      described_class._start_job(job)
+      expect(job.status).to eq 'ok'
+    end
+  end
+
   describe '.cleanup' do
 
     it 'gets called by .threads' do
