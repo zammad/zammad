@@ -26,6 +26,17 @@ RSpec.describe Scheduler do
     SpecSpace.send(:remove_const, :DelayedJobBackend)
   end
 
+  describe '.failed_jobs' do
+
+    it 'does list failed jobs' do
+      job = create(:scheduler, status: 'error', active: false)
+      failed_list = described_class.failed_jobs
+      expect(failed_list).to be_present
+      expect(failed_list).to include(job)
+    end
+
+  end
+
   describe '.restart_failed_jobs' do
 
     it 'does restart failed jobs' do
@@ -34,7 +45,6 @@ RSpec.describe Scheduler do
       job.reload
       expect(job.active).to be true
     end
-
   end
 
   describe '._start_job' do

@@ -82,8 +82,8 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       issues.push 'scheduler not running'
     end
 
-    Scheduler.where(status: 'error', active: false).each do |scheduler|
-      issues.push "Failed to run scheduled job '#{scheduler.name}'. Cause: #{scheduler.error_message}"
+    Scheduler.failed_jobs.each do |job|
+      issues.push "Failed to run scheduled job '#{job.name}'. Cause: #{job.error_message}"
       actions.add(:restart_failed_jobs)
     end
 
