@@ -1,5 +1,80 @@
 # coffeelint: disable=no_unnecessary_double_quotes
 class App.Utils
+  @mapTagAttributes:
+    'TABLE': ['align', 'bgcolor', 'border', 'cellpadding', 'cellspacing', 'frame', 'rules', 'sortable', 'summary', 'width', 'style']
+    'TD': ['abbr', 'align', 'axis', 'colspan', 'headers', 'rowspan', 'valign', 'width', 'style']
+    'TH': ['abbr', 'align', 'axis', 'colspan', 'headers', 'rowspan', 'scope', 'sorted', 'valign', 'width', 'style']
+    'TR': ['width', 'style']
+
+  @mapCss:
+    'TABLE': [
+      'background', 'background-color', 'color', 'font-size', 'vertical-align',
+      'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
+      'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
+      'text-align',
+      'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
+
+      'border-top-width',
+      'border-right-width',
+      'border-bottom-width',
+      'border-left-width',
+
+      'border-top-color',
+      'border-right-color',
+      'border-bottom-color',
+      'border-left-color',
+    ]
+    'TH': [
+      'background', 'background-color', 'color', 'font-size', 'vertical-align',
+      'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
+      'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
+      'text-align',
+      'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
+
+      'border-top-width',
+      'border-right-width',
+      'border-bottom-width',
+      'border-left-width',
+
+      'border-top-color',
+      'border-right-color',
+      'border-bottom-color',
+      'border-left-color',
+    ]
+    'TR': [
+      'background', 'background-color', 'color', 'font-size', 'vertical-align',
+      'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
+      'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
+      'text-align',
+      'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
+
+      'border-top-width',
+      'border-right-width',
+      'border-bottom-width',
+      'border-left-width',
+
+      'border-top-color',
+      'border-right-color',
+      'border-bottom-color',
+      'border-left-color',
+    ]
+    'TD': [
+      'background', 'background-color', 'color', 'font-size', 'vertical-align',
+      'margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
+      'padding', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left',
+      'text-align',
+      'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
+
+      'border-top-width',
+      'border-right-width',
+      'border-bottom-width',
+      'border-left-width',
+
+      'border-top-color',
+      'border-right-color',
+      'border-bottom-color',
+      'border-left-color',
+    ]
 
   # textCleand = App.Utils.textCleanup(rawText)
   @textCleanup: (ascii) ->
@@ -49,10 +124,12 @@ class App.Utils
   @linkify: (string) ->
     window.linkify(string)
 
-  # htmlEscapedAndLinkified = App.Utils.linkify(rawText)
+  # htmlEscapedAndPhoneified = App.Utils.phoneify(rawText)
   @phoneify: (string) ->
-    string = string.replace(/\s+/g, '')
-    "tel://#{encodeURIComponent(string)}"
+    return string if _.isEmpty(string)
+    string = string.replace(/[^0-9,\+,#,\*]+/g, '')
+      .replace(/(.)\+/, '$1')
+    "tel:#{string}"
 
   # wrappedText = App.Utils.wrap(rawText, maxLineLength)
   @wrap: (ascii, max = 82) ->
@@ -125,6 +202,7 @@ class App.Utils
       child = el.firstChild
       break if !child
       break if child.nodeType isnt 1 || child.tagName isnt 'BR'
+      break if !child.remove
       child.remove()
 
     loop
@@ -133,6 +211,7 @@ class App.Utils
       child = el.lastChild
       break if !child
       break if child.nodeType isnt 1 || child.tagName isnt 'BR'
+      break if !child.remove
       child.remove()
 
   # true|false = App.Utils.htmlLastLineEmpty(element)
@@ -155,12 +234,12 @@ class App.Utils
     @_removeWordMarkup(html)
 
     # remove tags, keep content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, th, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, br, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head').remove()
+    html.find('div, span, p, li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, table, thead, tbody, tr, th, td, h1, h2, h3, h4, h5, h6, br, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head').remove()
 
     html
 
@@ -172,20 +251,19 @@ class App.Utils
     # remove comments
     @_removeComments(html)
 
-    # remove style and class
-    if parent
-      @_removeAttributes(html)
-
     # remove work markup
     @_removeWordMarkup(html)
 
     # remove tags, keep content
-    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, th, td, h1, h2, h3, h4, h5, h6').replaceWith( ->
       $(@).contents()
     )
 
     # remove tags & content
-    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, td, h1, h2, h3, h4, h5, h6, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head').remove()
+    html.find('li, ul, ol, a, b, u, i, label, small, strong, strike, pre, code, center, blockquote, form, fieldset, textarea, font, address, table, thead, tbody, tr, th, td, h1, h2, h3, h4, h5, h6, hr, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head').remove()
+
+    # remove style and class
+    @_removeAttributes(html, parent)
 
     html
 
@@ -196,9 +274,6 @@ class App.Utils
 
     # remove comments
     @_removeComments(html)
-
-    # remove style and class
-    @_removeAttributes(html)
 
     # remove work markup
     @_removeWordMarkup(html)
@@ -230,6 +305,9 @@ class App.Utils
     # remove tags & content
     html.find('font, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
 
+    # remove style and class
+    @_cleanAttributes(html)
+
     html
 
   @_checkTypeOf: (item) ->
@@ -250,26 +328,64 @@ class App.Utils
     catch err
       return $("<div>#{item}</div>")
 
-  @_removeAttributes: (html, parent = true) ->
+  @_cleanAttribute: (element) ->
+    return if !element
+
+    if @mapTagAttributes[element.nodeName]
+      atts = element.attributes
+      for att in atts
+        if att && att.name && !_.contains(@mapTagAttributes[element.nodeName], att.name)
+          element.removeAttribute(att.name)
+    else
+      @_removeAttribute(element)
+
+    if @mapCss[element.nodeName]
+      elementStyle = element.style
+      styleOld = ''
+      for prop in elementStyle
+        styleOld += "#{prop}:#{elementStyle[prop]};"
+
+      if styleOld && styleOld.split
+        styleNew = ''
+        for local_pear in styleOld.split(';')
+          prop = local_pear.split(':')
+          if prop[0] && prop[0].trim
+            key = prop[0].trim()
+            if _.contains(@mapCss[element.nodeName], key)
+              styleNew += "#{local_pear};"
+        if styleNew isnt ''
+          element.setAttribute('style', styleNew)
+        else
+          element.removeAttribute('style')
+
+  @_cleanAttributes: (html, parent = true) ->
     if parent
-      html.find('*')
-        .removeAttr('style')
-        .removeAttr('class')
-        .removeAttr('title')
-        .removeAttr('lang')
-        .removeAttr('type')
-        .removeAttr('id')
-        .removeAttr('wrap')
-        .removeAttrs(/data-/)
+      html.each((index, element) => @_cleanAttribute(element) )
+    html.find('*').each((index, element) => @_cleanAttribute(element) )
     html
-      .removeAttr('style')
+
+  @_removeAttribute: (element) ->
+    return if !element
+    $element = $(element)
+    for att in element.attributes
+      if att && att.name
+        element.removeAttribute(att.name)
+        #$element.removeAttr(att.name)
+
+    $element.removeAttr('style')
       .removeAttr('class')
-      .removeAttr('title')
       .removeAttr('lang')
       .removeAttr('type')
+      .removeAttr('align')
       .removeAttr('id')
       .removeAttr('wrap')
+      .removeAttr('title')
       .removeAttrs(/data-/)
+
+  @_removeAttributes: (html, parent = true) ->
+    if parent
+      html.each((index, element) => @_removeAttribute(element) )
+    html.find('*').each((index, element) => @_removeAttribute(element) )
     html
 
   @_removeComments: (html) ->
@@ -535,6 +651,7 @@ class App.Utils
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
   @replaceTags: (template, objects) ->
     template = template.replace( /#\{\s{0,2}(.+?)\s{0,2}\}/g, (index, key) ->
+      key = key.replace(/<.+?>/g, '')
       levels  = key.split(/\./)
       dataRef = objects
       for level in levels
@@ -781,3 +898,10 @@ class App.Utils
     result = newOrderMethod(a, b, applyOrder)
     return false if !result
     applyOrder
+
+  @textLengthWithUrl: (text, url_max_length = 23) ->
+    length = 0
+    return length if !text
+    placeholder = Array(url_max_length + 1).join('X')
+    text = text.replace(/http(s|):\/\/[-A-Za-z0-9+&@#\/%?=~_\|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]/img, placeholder)
+    text.length

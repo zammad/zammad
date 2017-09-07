@@ -204,6 +204,42 @@ class UserDeviceTest < ActiveSupport::TestCase
     )
     assert_equal(user_device2.id, user_device6.id)
 
+    # signin without ua from country A via basic auth -> new device #3
+    user_device7 = UserDevice.add(
+      '',
+      '91.115.248.231',
+      @agent.id,
+      nil,
+      'basic_auth',
+    )
+    assert_not_equal(user_device6.id, user_device7.id)
+
+    user_device8 = UserDevice.add(
+      '',
+      '91.115.248.231',
+      @agent.id,
+      nil,
+      'basic_auth',
+    )
+    assert_equal(user_device7.id, user_device8.id)
+
+    user_device9 = UserDevice.add(
+      nil,
+      '91.115.248.231',
+      @agent.id,
+      nil,
+      'basic_auth',
+    )
+    assert_equal(user_device8.id, user_device9.id)
+
+    user_device10 = UserDevice.add(
+      nil,
+      '176.198.137.254',
+      @agent.id,
+      nil,
+      'basic_auth',
+    )
+    assert_not_equal(user_device9.id, user_device10.id)
   end
 
   test 'ddd - api test' do

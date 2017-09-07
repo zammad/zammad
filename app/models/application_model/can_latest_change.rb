@@ -23,7 +23,7 @@ returns
 
       # if we do not have it cached, do lookup
       if !updated_at
-        o = select(:updated_at).order(updated_at: :desc).limit(1).first
+        o = select(:updated_at).order(updated_at: :desc, id: :desc).limit(1).first
         if o
           updated_at = o.updated_at
           latest_change_set(updated_at)
@@ -34,7 +34,7 @@ returns
 
     def latest_change_set(updated_at)
       key        = "#{new.class.name}_latest_change"
-      expires_in = 31_536_000 # 1 year
+      expires_in = 86_400 # 1 day
 
       if updated_at.nil?
         Cache.delete(key)

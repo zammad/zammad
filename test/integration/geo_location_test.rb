@@ -51,7 +51,7 @@ class GeoLocationTest < ActiveSupport::TestCase
       login: 'some_geo_login2',
       firstname: 'First',
       lastname: 'Last',
-      email: 'some_geo_login1@example.com',
+      email: 'some_geo_login2@example.com',
       password: 'test',
       street: 'Marienstrasse 13',
       city: 'Berlin',

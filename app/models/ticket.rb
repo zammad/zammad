@@ -10,11 +10,10 @@ class Ticket < ApplicationModel
   include HasOnlineNotifications
   include HasKarmaActivityLog
   include HasLinks
+  include Ticket::ChecksAccess
 
   include Ticket::Escalation
   include Ticket::Subject
-  load 'ticket/permission.rb'
-  include Ticket::Permission
   load 'ticket/assets.rb'
   include Ticket::Assets
   load 'ticket/search_index.rb'
@@ -49,6 +48,7 @@ class Ticket < ApplicationModel
                                      :last_contact_at,
                                      :last_contact_agent_at,
                                      :last_contact_customer_at,
+                                     :last_owner_update_at,
                                      :preferences
 
   history_attributes_ignored :create_article_type_id,
@@ -75,33 +75,9 @@ class Ticket < ApplicationModel
 
 =begin
 
-list of agents in group of ticket
-
-  ticket = Ticket.find(123)
-  result = ticket.agent_of_group
-
-returns
-
-  result = [user1, user2, ...]
-
-=end
-
-  def agent_of_group
-    roles = Role.with_permissions('ticket.agent')
-    role_ids = roles.map(&:id)
-    Group.find(group_id)
-         .users.where(active: true)
-         .joins(:roles)
-         .where('roles.id' => role_ids, 'roles.active' => true)
-         .order('users.login')
-         .uniq()
-  end
-
-=begin
-
 get user access conditions
 
-  conditions = Ticket.access_condition( User.find(1) )
+  conditions = Ticket.access_condition( User.find(1) , 'full')
 
 returns
 
@@ -109,22 +85,14 @@ returns
 
 =end
 
-  def self.access_condition(user)
-    access_condition = []
+  def self.access_condition(user, access)
     if user.permissions?('ticket.agent')
-      group_ids = Group.select('groups.id').joins(:users)
-                       .where('groups_users.user_id = ?', user.id)
-                       .where('groups.active = ?', true)
-                       .map(&:id)
-      access_condition = [ 'group_id IN (?)', group_ids ]
+      ['group_id IN (?)', user.group_ids_access(access)]
+    elsif !user.organization || ( !user.organization.shared || user.organization.shared == false )
+      ['tickets.customer_id = ?', user.id]
     else
-      access_condition = if !user.organization || ( !user.organization.shared || user.organization.shared == false )
-                           [ 'tickets.customer_id = ?', user.id ]
-                         else
-                           [ '(tickets.customer_id = ? OR tickets.organization_id = ?)', user.id, user.organization.id ]
-                         end
+      ['(tickets.customer_id = ? OR tickets.organization_id = ?)', user.id, user.organization.id]
     end
-    access_condition
   end
 
 =begin
@@ -146,7 +114,7 @@ returns
     pending_action = Ticket::StateType.find_by(name: 'pending action')
     ticket_states_pending_action = Ticket::State.where(state_type_id: pending_action)
                                                 .where.not(next_state_id: nil)
-    if !ticket_states_pending_action.empty?
+    if ticket_states_pending_action.present?
       next_state_map = {}
       ticket_states_pending_action.each { |state|
         next_state_map[state.id] = state.next_state_id
@@ -170,7 +138,7 @@ returns
     pending_reminder = Ticket::StateType.find_by(name: 'pending reminder')
     ticket_states_pending_reminder = Ticket::State.where(state_type_id: pending_reminder)
 
-    if !ticket_states_pending_reminder.empty?
+    if ticket_states_pending_reminder.present?
       reminder_state_map = {}
       ticket_states_pending_reminder.each { |state|
         reminder_state_map[state.id] = state.next_state_id
@@ -261,6 +229,47 @@ returns
 
 =begin
 
+processes tickets which auto unassign time has reached
+
+  processed_tickets = Ticket.process_auto_unassign
+
+returns
+
+  processed_tickets = [<Ticket>, ...]
+
+=end
+
+  def self.process_auto_unassign
+
+    # process pending action tickets
+    state_ids = Ticket::State.by_category(:work_on).pluck(:id)
+    return [] if state_ids.blank?
+    result = []
+    groups = Group.where(active: true).where('assignment_timeout IS NOT NULL AND groups.assignment_timeout != 0')
+    return [] if groups.blank?
+    groups.each { |group|
+      next if group.assignment_timeout.blank?
+      ticket_ids = Ticket.where('state_id IN (?) AND owner_id != 1 AND group_id = ?', state_ids, group.id).limit(600).pluck(:id)
+      ticket_ids.each { |ticket_id|
+        ticket = Ticket.find_by(id: ticket_id)
+        next if !ticket
+        minutes_since_last_assignment = Time.zone.now - ticket.last_owner_update_at
+        next if (minutes_since_last_assignment / 60) <= group.assignment_timeout
+        Transaction.execute do
+          ticket.owner_id      = 1
+          ticket.updated_at    = Time.zone.now
+          ticket.updated_by_id = 1
+          ticket.save!
+        end
+        result.push ticket
+      }
+    }
+
+    result
+  end
+
+=begin
+
 merge tickets
 
   ticket = Ticket.find(123)
@@ -276,6 +285,14 @@ returns
 =end
 
   def merge_to(data)
+
+    # prevent cross merging tickets
+    target_ticket = Ticket.find_by(id: data[:ticket_id])
+    raise 'no target ticket given' if !target_ticket
+    raise Exceptions::UnprocessableEntity, 'ticket already merged, no merge into merged ticket possible' if target_ticket.state.state_type.name == 'merged'
+
+    # check different ticket ids
+    raise Exceptions::UnprocessableEntity, 'Can\'t merge ticket with it self!' if id == target_ticket.id
 
     # update articles
     Transaction.execute do
@@ -329,7 +346,7 @@ returns
       save!
 
       # touch new ticket (to broadcast change)
-      Ticket.find(data[:ticket_id]).touch
+      target_ticket.touch
     end
     true
   end
@@ -360,7 +377,7 @@ returns
     state      = Ticket::State.lookup(id: state_id)
     state_type = Ticket::StateType.lookup(id: state.state_type_id)
 
-    # always to set unseen for ticket owner
+    # always to set unseen for ticket owner and users which did not the update
     if state_type.name != 'merged'
       if user_id_check
         return false if user_id_check == owner_id && user_id_check != updated_by_id
@@ -393,26 +410,35 @@ returns
 
 get count of tickets and tickets which match on selector
 
-  ticket_count, tickets = Ticket.selectors(params[:condition], limit, current_user)
+  ticket_count, tickets = Ticket.selectors(params[:condition], limit, current_user, 'full')
 
 =end
 
-  def self.selectors(selectors, limit = 10, current_user = nil)
+  def self.selectors(selectors, limit = 10, current_user = nil, access = 'full')
     raise 'no selectors given' if !selectors
     query, bind_params, tables = selector2sql(selectors, current_user)
     return [] if !query
 
-    if !current_user
-      ticket_count = Ticket.where(query, *bind_params).joins(tables).count
-      tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
-      return [ticket_count, tickets]
+    ActiveRecord::Base.transaction(requires_new: true) do
+      begin
+        if !current_user
+          ticket_count = Ticket.where(query, *bind_params).joins(tables).count
+          tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
+          return [ticket_count, tickets]
+        end
+
+        access_condition = Ticket.access_condition(current_user, access)
+        ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
+        tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
+
+        return [ticket_count, tickets]
+      rescue ActiveRecord::StatementInvalid => e
+        Rails.logger.error e.inspect
+        Rails.logger.error e.backtrace
+        raise ActiveRecord::Rollback
+      end
     end
-
-    access_condition = Ticket.access_condition(current_user)
-    ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
-    tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
-
-    [ticket_count, tickets]
+    []
   end
 
 =begin
@@ -537,7 +563,7 @@ condition example
             query += "#{attribute} IN (?)"
             bind_params.push 1
           else
-            query += "#{attribute} IS NOT NULL"
+            query += "#{attribute} IS NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
@@ -551,7 +577,7 @@ condition example
         else
           # rubocop:disable Style/IfInsideElse
           if selector['value'].nil?
-            query += "#{attribute} IS NOT NULL"
+            query += "#{attribute} IS NULL"
           else
             query += "#{attribute} IN (?)"
             bind_params.push selector['value']
@@ -564,7 +590,7 @@ condition example
             query += "#{attribute} NOT IN (?)"
             bind_params.push 1
           else
-            query += "#{attribute} IS NULL"
+            query += "#{attribute} IS NOT NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
           query += "#{attribute} NOT IN (?)"
@@ -801,9 +827,9 @@ perform changes on ticket
             email = User.lookup(id: owner_id).email
             recipients_raw.push(email)
           elsif recipient == 'ticket_agents'
-            agent_of_group.each { |user|
+            User.group_access(group_id, 'full').sort_by(&:login).each do |user|
               recipients_raw.push(user.email)
-            }
+            end
           else
             logger.error "Unknown email notification recipient '#{recipient}'"
             next
@@ -812,6 +838,19 @@ perform changes on ticket
 
         recipients_checked = []
         recipients_raw.each { |recipient_email|
+
+          skip_user = false
+          users = User.where(email: recipient_email)
+          users.each { |user|
+            next if user.preferences[:mail_delivery_failed] != true
+            next if !user.preferences[:mail_delivery_failed_data]
+            till_blocked = ((user.preferences[:mail_delivery_failed_data] - Time.zone.now - 60.days) / 60 / 60 / 24).round
+            next if till_blocked.positive?
+            logger.info "Send no trigger based notification to #{recipient_email} because email is marked as mail_delivery_failed for #{till_blocked} days"
+            skip_user = true
+            break
+          }
+          next if skip_user
 
           # send notifications only to email adresses
           next if !recipient_email
@@ -838,10 +877,51 @@ perform changes on ticket
           if item && item[:article_id]
             article = Ticket::Article.lookup(id: item[:article_id])
             if article && article.preferences['is-auto-response'] == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
-              logger.info "Send not trigger based notification to #{recipient_email} because of auto response tagged incoming email"
+              logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
               next
             end
           end
+
+          # loop protection / check if maximal count of trigger mail has reached
+          map = {
+            10 => 10,
+            30 => 15,
+            60 => 25,
+            180 => 50,
+            600 => 100,
+          }
+          skip = false
+          map.each { |minutes, count|
+            already_sent = Ticket::Article.where(
+              ticket_id: id,
+              sender: Ticket::Article::Sender.find_by(name: 'System'),
+              type: Ticket::Article::Type.find_by(name: 'email'),
+            ).where("ticket_articles.created_at > ? AND ticket_articles.to LIKE '%#{recipient_email.strip}%'", Time.zone.now - minutes.minutes).count
+            next if already_sent < count
+            logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} for this ticket within last #{minutes} minutes (loop protection)"
+            skip = true
+            break
+          }
+          next if skip
+          map = {
+            10 => 30,
+            30 => 60,
+            60 => 120,
+            180 => 240,
+            600 => 360,
+          }
+          skip = false
+          map.each { |minutes, count|
+            already_sent = Ticket::Article.where(
+              sender: Ticket::Article::Sender.find_by(name: 'System'),
+              type: Ticket::Article::Type.find_by(name: 'email'),
+            ).where("ticket_articles.created_at > ? AND ticket_articles.to LIKE '%#{recipient_email.strip}%'", Time.zone.now - minutes.minutes).count
+            next if already_sent < count
+            logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{minutes} minutes (loop protection)"
+            skip = true
+            break
+          }
+          next if skip
 
           email = recipient_email.downcase.strip
           next if recipients_checked.include?(email)
@@ -1028,42 +1108,46 @@ result
   private
 
   def check_generate
-    return if number
+    return true if number
     self.number = Ticket::Number.generate
+    true
   end
 
   def check_title
-    return if !title
+    return true if !title
     title.gsub!(/\s|\t|\r/, ' ')
+    true
   end
 
   def check_defaults
     if !owner_id
       self.owner_id = 1
     end
-
-    return if !customer_id
-
+    return true if !customer_id
     customer = User.find_by(id: customer_id)
-    return if !customer
-    return if organization_id == customer.organization_id
-
+    return true if !customer
+    return true if organization_id == customer.organization_id
     self.organization_id = customer.organization_id
+    true
   end
 
   def reset_pending_time
 
     # ignore if no state has changed
-    return if !changes['state_id']
+    return true if !changes['state_id']
+
+    # ignore if new state is blank and
+    # let handle ActiveRecord the error
+    return if state_id.blank?
 
     # check if new state isn't pending*
     current_state      = Ticket::State.lookup(id: state_id)
     current_state_type = Ticket::StateType.lookup(id: current_state.state_type_id)
 
     # in case, set pending_time to nil
-    return if current_state_type.name =~ /^pending/i
-
+    return true if current_state_type.name =~ /^pending/i
     self.pending_time = nil
+    true
   end
 
   def check_escalation_update
@@ -1072,20 +1156,18 @@ result
   end
 
   def set_default_state
-    return if state_id
-
+    return true if state_id
     default_ticket_state = Ticket::State.find_by(default_create: true)
-    return if !default_ticket_state
-
+    return true if !default_ticket_state
     self.state_id = default_ticket_state.id
+    true
   end
 
   def set_default_priority
-    return if priority_id
-
+    return true if priority_id
     default_ticket_priority = Ticket::Priority.find_by(default_create: true)
-    return if !default_ticket_priority
-
+    return true if !default_ticket_priority
     self.priority_id = default_ticket_priority.id
+    true
   end
 end

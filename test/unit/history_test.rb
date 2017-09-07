@@ -155,12 +155,12 @@ class HistoryTest < ActiveSupport::TestCase
 
       # use transaction
       ActiveRecord::Base.transaction do
-        ticket = Ticket.create(test[:ticket_create][:ticket])
+        ticket = Ticket.create!(test[:ticket_create][:ticket])
         test[:ticket_create][:article][:ticket_id] = ticket.id
-        article = Ticket::Article.create(test[:ticket_create][:article])
+        article = Ticket::Article.create!(test[:ticket_create][:article])
 
-        assert_equal(ticket.class.to_s, 'Ticket')
-        assert_equal(article.class.to_s, 'Ticket::Article')
+        assert_equal(ticket.class, Ticket)
+        assert_equal(article.class, Ticket::Article)
 
         # update ticket
         if test[:ticket_update][:ticket]
@@ -185,25 +185,21 @@ class HistoryTest < ActiveSupport::TestCase
     }
 
     # delete tickets
-    tickets.each { |ticket|
-      ticket_id = ticket.id
-      ticket.destroy
-      found = Ticket.where(id: ticket_id).first
-      assert_not(found, 'Ticket destroyed')
-    }
+    tickets.each(&:destroy!)
   end
 
   test 'user' do
+    name = rand(999_999)
     tests = [
 
       # test 1
       {
         user_create: {
           user: {
-            login: 'some_login_test',
+            login: "some_login_test-#{name}",
             firstname: 'Bob',
             lastname: 'Smith',
-            email: 'somebody@example.com',
+            email: "somebody-#{name}@example.com",
             active: true,
             updated_by_id: current_user.id,
             created_by_id: current_user.id,
@@ -213,7 +209,7 @@ class HistoryTest < ActiveSupport::TestCase
           user: {
             firstname: 'Bob',
             lastname: 'Master',
-            email: 'master@example.com',
+            email: "master-#{name}@example.com",
             active: false,
           },
         },
@@ -236,8 +232,8 @@ class HistoryTest < ActiveSupport::TestCase
             history_object: 'User',
             history_type: 'updated',
             history_attribute: 'email',
-            value_from: 'somebody@example.com',
-            value_to: 'master@example.com',
+            value_from: "somebody-#{name}@example.com",
+            value_to: "master-#{name}@example.com",
           },
           {
             result: true,
@@ -258,9 +254,8 @@ class HistoryTest < ActiveSupport::TestCase
 
       # user transaction
       ActiveRecord::Base.transaction do
-        user = User.create(test[:user_create][:user])
-
-        assert_equal(user.class.to_s, 'User')
+        user = User.create!(test[:user_create][:user])
+        assert_equal(user.class, User)
 
         # update user
         if test[:user_update][:user]
@@ -277,12 +272,7 @@ class HistoryTest < ActiveSupport::TestCase
     }
 
     # delete user
-    users.each { |user|
-      user_id = user.id
-      user.destroy
-      found = User.where(id: user_id).first
-      assert_not(found, 'User destroyed')
-    }
+    users.each(&:destroy!)
   end
 
   test 'organization' do
@@ -328,9 +318,8 @@ class HistoryTest < ActiveSupport::TestCase
 
       # user transaction
       ActiveRecord::Base.transaction do
-        organization = Organization.create(test[:organization_create][:organization])
-
-        assert_equal(organization.class.to_s, 'Organization')
+        organization = Organization.create!(test[:organization_create][:organization])
+        assert_equal(organization.class, Organization)
 
         # update organization
         if test[:organization_update][:organization]
@@ -346,12 +335,7 @@ class HistoryTest < ActiveSupport::TestCase
     }
 
     # delete user
-    organizations.each { |organization|
-      organization_id = organization.id
-      organization.destroy
-      found = Organization.where(id: organization_id).first
-      assert_not(found, 'Organization destroyed')
-    }
+    organizations.each(&:destroy!)
   end
 
   def history_check(history_list, history_check)

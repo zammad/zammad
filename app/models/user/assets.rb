@@ -32,7 +32,7 @@ returns
         local_attributes = attributes_with_association_ids
 
         # do not transfer crypted pw
-        local_attributes['password'] = ''
+        local_attributes.delete('password')
 
         # set temp. current attributes to assets pool to prevent
         # loops, will be updated with lookup attributes later
@@ -65,7 +65,7 @@ returns
 
         # get groups
         if local_attributes['group_ids']
-          local_attributes['group_ids'].each { |group_id|
+          local_attributes['group_ids'].each { |group_id, _access|
             group = Group.lookup(id: group_id)
             next if !group
             data = group.assets(data)

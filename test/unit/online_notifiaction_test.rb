@@ -2,18 +2,15 @@
 require 'test_helper'
 
 class OnlineNotificationTest < ActiveSupport::TestCase
-  group = nil
-  agent_user1 = nil
-  agent_user2 = nil
-  customer_user = nil
-  test 'aaa - setup' do
-    role  = Role.lookup(name: 'Agent')
-    group = Group.create_or_update(
+
+  setup do
+    role = Role.lookup(name: 'Agent')
+    @group = Group.create_or_update(
       name: 'OnlineNotificationTest',
       updated_by_id: 1,
       created_by_id: 1
     )
-    agent_user1 = User.create_or_update(
+    @agent_user1 = User.create_or_update(
       login: 'agent_online_notify1',
       firstname: 'Bob',
       lastname: 'Smith',
@@ -21,11 +18,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       password: 'some_pass',
       active: true,
       role_ids: [role.id],
-      group_ids: [group.id],
+      group_ids: [@group.id],
       updated_by_id: 1,
       created_by_id: 1
     )
-    agent_user2 = User.create_or_update(
+    @agent_user2 = User.create_or_update(
       login: 'agent_online_notify2',
       firstname: 'Bob',
       lastname: 'Smith',
@@ -33,11 +30,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       password: 'some_pass',
       active: true,
       role_ids: [role.id],
-      group_ids: [group.id],
+      group_ids: [@group.id],
       updated_by_id: 1,
       created_by_id: 1
     )
-    customer_user = User.lookup(email: 'nicole.braun@zammad.org')
+    @customer_user = User.lookup(email: 'nicole.braun@zammad.org')
   end
 
   test 'ticket notification' do
@@ -46,19 +43,19 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # case #1
     ticket1 = Ticket.create(
-      group: group,
-      customer_id: customer_user.id,
+      group: @group,
+      customer_id: @customer_user.id,
       owner_id: User.lookup(login: '-').id,
       title: 'Unit Test 1 (äöüß)!',
       state_id: Ticket::State.lookup(name: 'closed').id,
       priority_id: Ticket::Priority.lookup(name: '2 normal').id,
-      updated_by_id: agent_user1.id,
-      created_by_id: agent_user1.id,
+      updated_by_id: @agent_user1.id,
+      created_by_id: @agent_user1.id,
     )
     article1 = Ticket::Article.create(
       ticket_id: ticket1.id,
-      updated_by_id: agent_user1.id,
-      created_by_id: agent_user1.id,
+      updated_by_id: @agent_user1.id,
+      created_by_id: @agent_user1.id,
       type_id: Ticket::Article::Type.lookup(name: 'phone').id,
       sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
       from: 'Unit Test <unittest@example.com>',
@@ -76,16 +73,16 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already closed
     assert(OnlineNotification.all_seen?('Ticket', ticket1.id))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket1.id, 'create', agent_user1, false))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket1.id, 'create', agent_user1, true))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket1.id, 'create', agent_user1, false))
-    assert(OnlineNotification.exists?(agent_user2, 'Ticket', ticket1.id, 'create', agent_user1, true))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'create', @agent_user1, false))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'create', @agent_user1, true))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'create', @agent_user1, false))
+    assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'create', @agent_user1, true))
 
     ticket1.update_attributes(
       title: 'Unit Test 1 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'open').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
-      updated_by_id: customer_user.id,
+      updated_by_id: @customer_user.id,
     )
 
     # execute object transaction
@@ -94,26 +91,26 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already open
     assert(!OnlineNotification.all_seen?('Ticket', ticket1.id))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket1.id, 'update', customer_user, true))
-    assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket1.id, 'update', customer_user, false))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket1.id, 'update', customer_user, true))
-    assert(OnlineNotification.exists?(agent_user2, 'Ticket', ticket1.id, 'update', customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'update', @customer_user, true))
+    assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket1.id, 'update', @customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'update', @customer_user, true))
+    assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'update', @customer_user, false))
 
     # case #2
     ticket2 = Ticket.create(
-      group: group,
-      customer_id: customer_user.id,
-      owner_id: agent_user1.id,
+      group: @group,
+      customer_id: @customer_user.id,
+      owner_id: @agent_user1.id,
       title: 'Unit Test 1 (äöüß)!',
       state_id: Ticket::State.lookup(name: 'closed').id,
       priority_id: Ticket::Priority.lookup(name: '2 normal').id,
-      updated_by_id: customer_user.id,
-      created_by_id: customer_user.id,
+      updated_by_id: @customer_user.id,
+      created_by_id: @customer_user.id,
     )
     article2 = Ticket::Article.create(
       ticket_id: ticket2.id,
-      updated_by_id: customer_user.id,
-      created_by_id: customer_user.id,
+      updated_by_id: @customer_user.id,
+      created_by_id: @customer_user.id,
       type_id: Ticket::Article::Type.lookup(name: 'phone').id,
       sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
       from: 'Unit Test <unittest@example.com>',
@@ -131,16 +128,16 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already closed
     assert(!OnlineNotification.all_seen?('Ticket', ticket2.id))
-    assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket2.id, 'create', customer_user, false))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket2.id, 'create', customer_user, true))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket2.id, 'create', customer_user, false))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket2.id, 'create', customer_user, true))
+    assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket2.id, 'create', @customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket2.id, 'create', @customer_user, true))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'create', @customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'create', @customer_user, true))
 
     ticket2.update_attributes(
       title: 'Unit Test 1 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'open').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
-      updated_by_id: customer_user.id,
+      updated_by_id: @customer_user.id,
     )
 
     # execute object transaction
@@ -149,26 +146,26 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already open
     assert(!OnlineNotification.all_seen?('Ticket', ticket2.id))
-    assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket2.id, 'update', customer_user, false))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket2.id, 'update', customer_user, true))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket2.id, 'update', customer_user, true))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket2.id, 'update', customer_user, false))
+    assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket2.id, 'update', @customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket2.id, 'update', @customer_user, true))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'update', @customer_user, true))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'update', @customer_user, false))
 
     # case #3
     ticket3 = Ticket.create(
-      group: group,
-      customer_id: customer_user.id,
+      group: @group,
+      customer_id: @customer_user.id,
       owner_id: User.lookup(login: '-').id,
       title: 'Unit Test 2 (äöüß)!',
       state_id: Ticket::State.lookup(name: 'new').id,
       priority_id: Ticket::Priority.lookup(name: '2 normal').id,
-      updated_by_id: agent_user1.id,
-      created_by_id: agent_user1.id,
+      updated_by_id: @agent_user1.id,
+      created_by_id: @agent_user1.id,
     )
     article3 = Ticket::Article.create(
       ticket_id: ticket3.id,
-      updated_by_id: agent_user1.id,
-      created_by_id: agent_user1.id,
+      updated_by_id: @agent_user1.id,
+      created_by_id: @agent_user1.id,
       type_id: Ticket::Article::Type.lookup(name: 'phone').id,
       sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
       from: 'Unit Test <unittest@example.com>',
@@ -185,16 +182,16 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already new
     assert(!OnlineNotification.all_seen?('Ticket', ticket3.id))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket3.id, 'create', agent_user1, false))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket3.id, 'create', agent_user1, true))
-    assert(OnlineNotification.exists?(agent_user2, 'Ticket', ticket3.id, 'create', agent_user1, false))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket3.id, 'create', agent_user1, true))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'create', @agent_user1, false))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'create', @agent_user1, true))
+    assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'create', @agent_user1, false))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'create', @agent_user1, true))
 
     ticket3.update_attributes(
       title: 'Unit Test 2 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'closed').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
-      updated_by_id: customer_user.id,
+      updated_by_id: @customer_user.id,
     )
 
     # execute object transaction
@@ -203,17 +200,17 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already closed
     assert(OnlineNotification.all_seen?('Ticket', ticket3.id))
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent_user1, 'update'))
-    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, agent_user2, 'update'))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket3.id, 'update', customer_user, false))
-    assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket3.id, 'update', customer_user, true))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket3.id, 'update', customer_user, false))
-    assert(OnlineNotification.exists?(agent_user2, 'Ticket', ticket3.id, 'update', customer_user, true))
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, @agent_user1, 'update'))
+    assert_equal(1, NotificationFactory::Mailer.already_sent?(ticket3, @agent_user2, 'update'))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, false))
+    assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, true))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, false))
+    assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, true))
 
     article3 = Ticket::Article.create(
       ticket_id: ticket3.id,
-      updated_by_id: customer_user.id,
-      created_by_id: customer_user.id,
+      updated_by_id: @customer_user.id,
+      created_by_id: @customer_user.id,
       type_id: Ticket::Article::Type.lookup(name: 'phone').id,
       sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
       from: 'Unit Test <unittest@example.com>',
@@ -227,28 +224,28 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already closed but an follow up arrived later
     assert(!OnlineNotification.all_seen?('Ticket', ticket3.id))
-    assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket3.id, 'update', customer_user, false))
-    assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket3.id, 'update', customer_user, true))
-    assert(OnlineNotification.exists?(agent_user2, 'Ticket', ticket3.id, 'update', customer_user, false))
-    assert(OnlineNotification.exists?(agent_user2, 'Ticket', ticket3.id, 'update', customer_user, true))
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent_user1, 'update'))
-    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, agent_user2, 'update'))
+    assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, false))
+    assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket3.id, 'update', @customer_user, true))
+    assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, false))
+    assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'update', @customer_user, true))
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, @agent_user1, 'update'))
+    assert_equal(2, NotificationFactory::Mailer.already_sent?(ticket3, @agent_user2, 'update'))
 
     # case #4
     ticket4 = Ticket.create(
-      group: group,
-      customer_id: customer_user.id,
-      owner_id: agent_user1.id,
+      group: @group,
+      customer_id: @customer_user.id,
+      owner_id: @agent_user1.id,
       title: 'Unit Test 3 (äöüß)!',
       state_id: Ticket::State.lookup(name: 'new').id,
       priority_id: Ticket::Priority.lookup(name: '2 normal').id,
-      updated_by_id: customer_user.id,
-      created_by_id: customer_user.id,
+      updated_by_id: @customer_user.id,
+      created_by_id: @customer_user.id,
     )
     article4 = Ticket::Article.create(
       ticket_id: ticket4.id,
-      updated_by_id: customer_user.id,
-      created_by_id: customer_user.id,
+      updated_by_id: @customer_user.id,
+      created_by_id: @customer_user.id,
       type_id: Ticket::Article::Type.lookup(name: 'phone').id,
       sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
       from: 'Unit Test <unittest@example.com>',
@@ -265,16 +262,16 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already new
     assert(!OnlineNotification.all_seen?('Ticket', ticket4.id))
-    assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket4.id, 'create', customer_user, false))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket4.id, 'create', customer_user, true))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket4.id, 'create', customer_user, false))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket4.id, 'create', customer_user, true))
+    assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket4.id, 'create', @customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket4.id, 'create', @customer_user, true))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'create', @customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'create', @customer_user, true))
 
     ticket4.update_attributes(
       title: 'Unit Test 3 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'open').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
-      updated_by_id: customer_user.id,
+      updated_by_id: @customer_user.id,
     )
 
     # execute object transaction
@@ -283,26 +280,26 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already open
     assert(!OnlineNotification.all_seen?('Ticket', ticket4.id))
-    assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket4.id, 'update', customer_user, false))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket4.id, 'update', customer_user, true))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket4.id, 'update', customer_user, false))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket4.id, 'update', customer_user, true))
+    assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket4.id, 'update', @customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket4.id, 'update', @customer_user, true))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'update', @customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'update', @customer_user, true))
 
     # case #5
     ticket5 = Ticket.create(
-      group: group,
-      customer_id: customer_user.id,
+      group: @group,
+      customer_id: @customer_user.id,
       owner_id: User.lookup(login: '-').id,
       title: 'Unit Test 4 (äöüß)!',
       state_id: Ticket::State.lookup(name: 'new').id,
       priority_id: Ticket::Priority.lookup( name: '2 normal').id,
-      updated_by_id: agent_user1.id,
-      created_by_id: agent_user1.id,
+      updated_by_id: @agent_user1.id,
+      created_by_id: @agent_user1.id,
     )
     article5 = Ticket::Article.create(
       ticket_id: ticket5.id,
-      updated_by_id: agent_user1.id,
-      created_by_id: agent_user1.id,
+      updated_by_id: @agent_user1.id,
+      created_by_id: @agent_user1.id,
       type_id: Ticket::Article::Type.lookup(name: 'phone').id,
       sender_id: Ticket::Article::Sender.lookup(name: 'Customer').id,
       from: 'Unit Test <unittest@example.com>',
@@ -319,16 +316,16 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already new
     assert(!OnlineNotification.all_seen?('Ticket', ticket5.id))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket5.id, 'create', agent_user1, true))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket5.id, 'create', agent_user1, false))
-    assert(OnlineNotification.exists?(agent_user2, 'Ticket', ticket5.id, 'create', agent_user1, false))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket5.id, 'create', agent_user1, true))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'create', @agent_user1, true))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'create', @agent_user1, false))
+    assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'create', @agent_user1, false))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'create', @agent_user1, true))
 
     ticket5.update_attributes(
       title: 'Unit Test 4 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'open').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
-      updated_by_id: customer_user.id,
+      updated_by_id: @customer_user.id,
     )
 
     # execute object transaction
@@ -337,10 +334,10 @@ class OnlineNotificationTest < ActiveSupport::TestCase
 
     # because it's already open
     assert(!OnlineNotification.all_seen?('Ticket', ticket5.id))
-    assert(OnlineNotification.exists?(agent_user1, 'Ticket', ticket5.id, 'update', customer_user, false))
-    assert(!OnlineNotification.exists?(agent_user1, 'Ticket', ticket5.id, 'update', customer_user, true))
-    assert(OnlineNotification.exists?(agent_user2, 'Ticket', ticket5.id, 'update', customer_user, false))
-    assert(!OnlineNotification.exists?(agent_user2, 'Ticket', ticket5.id, 'update', customer_user, true))
+    assert(OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'update', @customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user1, 'Ticket', ticket5.id, 'update', @customer_user, true))
+    assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'update', @customer_user, false))
+    assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'update', @customer_user, true))
 
     # merge tickets - also remove notifications of merged tickets
     tickets[0].merge_to(
@@ -374,8 +371,8 @@ class OnlineNotificationTest < ActiveSupport::TestCase
   test 'ticket notification item check' do
     ticket1 = Ticket.create(
       title: 'some title',
-      group: group,
-      customer_id: customer_user.id,
+      group: @group,
+      customer_id: @customer_user.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
@@ -397,96 +394,96 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     )
 
     assert_equal(ticket1.online_notification_seen_state, false)
-    assert_equal(ticket1.online_notification_seen_state(agent_user1), false)
-    assert_equal(ticket1.online_notification_seen_state(agent_user2), false)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user1), false)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user2), false)
 
     # pending reminder, just let new owner to unseed
     ticket1.update_attributes(
-      owner_id: agent_user1.id,
+      owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'pending reminder'),
-      updated_by_id: agent_user2.id,
+      updated_by_id: @agent_user2.id,
     )
 
     assert_equal(ticket1.online_notification_seen_state, true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
-    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user1.id), false)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
     # pending reminder, just let new owner to unseed
     ticket1.update_attributes(
       owner_id: 1,
       state: Ticket::State.lookup(name: 'pending reminder'),
-      updated_by_id: agent_user2.id,
+      updated_by_id: @agent_user2.id,
     )
 
     assert_equal(ticket1.online_notification_seen_state, true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
-    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), false)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user1.id), false)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), false)
 
     # pending reminder, self done, all to unseed
     ticket1.update_attributes(
-      owner_id: agent_user1.id,
+      owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'pending reminder'),
-      updated_by_id: agent_user1.id,
+      updated_by_id: @agent_user1.id,
     )
 
     assert_equal(ticket1.online_notification_seen_state, true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user1.id), true)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
     # pending close, all to unseen
     ticket1.update_attributes(
-      owner_id: agent_user1.id,
+      owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'pending close'),
-      updated_by_id: agent_user2.id,
+      updated_by_id: @agent_user2.id,
     )
 
     assert_equal(ticket1.online_notification_seen_state, true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
-    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user1.id), false)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
     # to open, all to seen
     ticket1.update_attributes(
-      owner_id: agent_user1.id,
+      owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'open'),
-      updated_by_id: agent_user2.id,
+      updated_by_id: @agent_user2.id,
     )
 
     assert_equal(ticket1.online_notification_seen_state, false)
-    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
-    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), false)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user1.id), false)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), false)
 
     # to closed, all only others to seen
     ticket1.update_attributes(
-      owner_id: agent_user1.id,
+      owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'closed'),
-      updated_by_id: agent_user2.id,
+      updated_by_id: @agent_user2.id,
     )
 
     assert_equal(ticket1.online_notification_seen_state, true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), false)
-    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user1.id), false)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
     # to closed by owner self, all to seen
     ticket1.update_attributes(
-      owner_id: agent_user1.id,
+      owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'closed'),
-      updated_by_id: agent_user1.id,
+      updated_by_id: @agent_user1.id,
     )
 
     assert_equal(ticket1.online_notification_seen_state, true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user1.id), true)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
     # to closed by owner self, all to seen
     ticket1.update_attributes(
-      owner_id: agent_user1.id,
+      owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'merged'),
-      updated_by_id: agent_user2.id,
+      updated_by_id: @agent_user2.id,
     )
 
     assert_equal(ticket1.online_notification_seen_state, true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user1.id), true)
-    assert_equal(ticket1.online_notification_seen_state(agent_user2.id), true)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user1.id), true)
+    assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
   end
 
@@ -496,7 +493,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       object:        'Ticket',
       o_id:          123,
       seen:          false,
-      user_id:       agent_user1.id,
+      user_id:       @agent_user1.id,
       created_by_id: 1,
       updated_by_id: 1,
       created_at:    Time.zone.now - 10.months,
@@ -507,7 +504,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       object:        'Ticket',
       o_id:          123,
       seen:          true,
-      user_id:       agent_user1.id,
+      user_id:       @agent_user1.id,
       created_by_id: 1,
       updated_by_id: 1,
       created_at:    Time.zone.now - 10.months,
@@ -518,7 +515,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       object:        'Ticket',
       o_id:          123,
       seen:          false,
-      user_id:       agent_user1.id,
+      user_id:       @agent_user1.id,
       created_by_id: 1,
       updated_by_id: 1,
       created_at:    Time.zone.now - 2.days,
@@ -529,9 +526,9 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       object:        'Ticket',
       o_id:          123,
       seen:          true,
-      user_id:       agent_user1.id,
-      created_by_id: agent_user1.id,
-      updated_by_id: agent_user1.id,
+      user_id:       @agent_user1.id,
+      created_by_id: @agent_user1.id,
+      updated_by_id: @agent_user1.id,
       created_at:    Time.zone.now - 2.days,
       updated_at:    Time.zone.now - 2.days,
     )
@@ -540,9 +537,9 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       object:        'Ticket',
       o_id:          123,
       seen:          true,
-      user_id:       agent_user1.id,
-      created_by_id: agent_user2.id,
-      updated_by_id: agent_user2.id,
+      user_id:       @agent_user1.id,
+      created_by_id: @agent_user2.id,
+      updated_by_id: @agent_user2.id,
       created_at:    Time.zone.now - 2.days,
       updated_at:    Time.zone.now - 2.days,
     )
@@ -551,9 +548,9 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       object:        'Ticket',
       o_id:          123,
       seen:          true,
-      user_id:       agent_user1.id,
-      created_by_id: agent_user1.id,
-      updated_by_id: agent_user1.id,
+      user_id:       @agent_user1.id,
+      created_by_id: @agent_user1.id,
+      updated_by_id: @agent_user1.id,
       created_at:    Time.zone.now - 5.minutes,
       updated_at:    Time.zone.now - 5.minutes,
     )
@@ -562,9 +559,9 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       object:        'Ticket',
       o_id:          123,
       seen:          true,
-      user_id:       agent_user1.id,
-      created_by_id: agent_user2.id,
-      updated_by_id: agent_user2.id,
+      user_id:       @agent_user1.id,
+      created_by_id: @agent_user2.id,
+      updated_by_id: @agent_user2.id,
       created_at:    Time.zone.now - 5.minutes,
       updated_at:    Time.zone.now - 5.minutes,
     )

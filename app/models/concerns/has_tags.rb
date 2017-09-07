@@ -73,6 +73,7 @@ destroy all tags of an object
       o_id: id,
       created_by_id: current_user_id,
     )
+    true
   end
 
 end

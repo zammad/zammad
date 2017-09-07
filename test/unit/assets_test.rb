@@ -62,7 +62,7 @@ class AssetsTest < ActiveSupport::TestCase
     user1 = User.find(user1.id)
     attributes = user1.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user1.id]), 'check assets' )
@@ -70,7 +70,7 @@ class AssetsTest < ActiveSupport::TestCase
     user2 = User.find(user2.id)
     attributes = user2.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user2.id]), 'check assets' )
@@ -78,7 +78,7 @@ class AssetsTest < ActiveSupport::TestCase
     user3 = User.find(user3.id)
     attributes = user3.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user3.id]), 'check assets' )
@@ -96,7 +96,7 @@ class AssetsTest < ActiveSupport::TestCase
     user1_new = User.find(user1.id)
     attributes = user1_new.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( !diff(attributes, assets[:User][user1_new.id]), 'check assets' )
@@ -110,7 +110,7 @@ class AssetsTest < ActiveSupport::TestCase
     user1 = User.find(user1.id)
     attributes = user1.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user1.id]), 'check assets' )
@@ -118,7 +118,7 @@ class AssetsTest < ActiveSupport::TestCase
     user2 = User.find(user2.id)
     attributes = user2.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user2.id]), 'check assets' )
@@ -126,15 +126,15 @@ class AssetsTest < ActiveSupport::TestCase
     user3 = User.find(user3.id)
     attributes = user3.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user3.id]), 'check assets' )
     travel_back
 
-    user1.destroy
-    user2.destroy
     user3.destroy
+    user2.destroy
+    user1.destroy
     org1.destroy
     org2.destroy
 
@@ -209,7 +209,7 @@ class AssetsTest < ActiveSupport::TestCase
     admin1 = User.find(admin1.id)
     attributes = admin1.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][admin1.id]), 'check assets' )
@@ -217,7 +217,7 @@ class AssetsTest < ActiveSupport::TestCase
     user1 = User.find(user1.id)
     attributes = user1.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user1.id]), 'check assets' )
@@ -225,7 +225,7 @@ class AssetsTest < ActiveSupport::TestCase
     user2 = User.find(user2.id)
     attributes = user2.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user2.id]), 'check assets' )
@@ -233,7 +233,7 @@ class AssetsTest < ActiveSupport::TestCase
     user3 = User.find(user3.id)
     attributes = user3.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert_nil( assets[:User][user3.id], 'check assets' )
@@ -251,7 +251,7 @@ class AssetsTest < ActiveSupport::TestCase
 
     attributes = user_new_2.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user_new_2.id]), 'check assets' )
@@ -264,15 +264,15 @@ class AssetsTest < ActiveSupport::TestCase
 
     attributes = user_new_2.attributes_with_association_ids
     attributes['accounts'] = {}
-    attributes['password'] = ''
+    attributes.delete('password')
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert( diff(attributes, assets[:User][user_new_2.id]), 'check assets' )
     travel_back
 
-    user1.destroy
-    user2.destroy
     user3.destroy
+    user2.destroy
+    user1.destroy
     org.destroy
     org_new.destroy
 

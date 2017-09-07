@@ -75,13 +75,14 @@ class Index extends App.ControllerSubContent
     groups = []
     group_ids = @Session.get('group_ids')
     if group_ids
-      for group_id in group_ids
-        group = App.Group.find(group_id)
-        groups.push group
-        if !user_group_config
-          if !config['group_ids']
-            config['group_ids'] = []
-          config['group_ids'].push group_id.toString()
+      for group_id, access of group_ids
+        if _.contains(access, 'full')
+          group = App.Group.find(group_id)
+          groups.push group
+          if !user_group_config
+            if !config['group_ids']
+              config['group_ids'] = []
+            config['group_ids'].push group_id.toString()
 
     for sound in @sounds
       sound.selected = sound.file is App.OnlineNotification.soundFile() ? true : false
@@ -90,7 +91,7 @@ class Index extends App.ControllerSubContent
       groups: groups
       config: config
       sounds: @sounds
-      notification_sound_enabled: App.OnlineNotification.soundEnabled()
+      notificationSoundEnabled: App.OnlineNotification.soundEnabled()
 
   update: (e) =>
 

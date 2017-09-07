@@ -6,9 +6,8 @@ class Organization < ApplicationModel
   include ChecksLatestChangeObserved
   include HasHistory
   include HasSearchIndexBackend
+  include Organization::ChecksAccess
 
-  load 'organization/permission.rb'
-  include Organization::Permission
   load 'organization/assets.rb'
   include Organization::Assets
   extend Organization::Search
@@ -26,11 +25,12 @@ class Organization < ApplicationModel
   private
 
   def domain_cleanup
-    return if domain.blank?
+    return true if domain.blank?
     domain.gsub!(/@/, '')
     domain.gsub!(/\s*/, '')
     domain.strip!
     domain.downcase!
+    true
   end
 
 end

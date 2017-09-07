@@ -92,7 +92,7 @@
   <div class="form-group">
     <label class="inline-label">
       <span class="checkbox-replacement checkbox-replacement--inline">
-        <input type="checkbox" name="notification_sound::enabled" value="true" <% if @notification_sound_enabled: %> checked<% end %> class="js-SoundEnableDisable">
+        <input type="checkbox" name="notification_sound::enabled" value="true" <% if @notificationSoundEnabled: %> checked<% end %> class="js-SoundEnableDisable">
         <%- @Icon('checkbox', 'icon-unchecked') %>
         <%- @Icon('checkbox-checked', 'icon-checked') %>
       </span>

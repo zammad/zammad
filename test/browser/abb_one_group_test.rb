@@ -59,10 +59,10 @@ class AgentTicketActionLevel0Test < TestCase
     )
     exists(
       displayed: false,
-      css: '.modal [name="group_ids"]',
+      css: '.modal .js-groupList',
     )
     exists(
-      css: '.modal [name="group_ids"]:checked',
+      css: '.modal .js-groupListItem[value=full]:checked',
     )
     click(
       css: '.modal button.btn.btn--primary',
@@ -105,10 +105,10 @@ class AgentTicketActionLevel0Test < TestCase
 
     exists(
       displayed: false,
-      css: '.modal [name="group_ids"]',
+      css: '.modal .js-groupList',
     )
     exists_not(
-      css: '.modal [name="group_ids"]:checked',
+      css: '.modal .js-groupListItem[value=full]:checked',
     )
 
     # enable agent role
@@ -117,10 +117,11 @@ class AgentTicketActionLevel0Test < TestCase
     )
 
     exists(
-      css: '.modal [name="group_ids"]',
+      displayed: false,
+      css: '.modal .js-groupList',
     )
     exists(
-      css: '.modal [name="group_ids"]:checked',
+      css: '.modal .js-groupListItem[value=full]:checked',
     )
 
     click(
@@ -214,8 +215,14 @@ class AgentTicketActionLevel0Test < TestCase
       data: {
         name:   "some group #{rand(999_999_999)}",
         member: [
-          'master@example.com',
-          'agent1@example.com',
+          {
+            login: 'master@example.com',
+            access: 'full',
+          },
+          {
+            login: 'agent1@example.com',
+            access: 'full',
+          },
         ],
       },
     )

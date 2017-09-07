@@ -70,8 +70,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
         options.push data
 
     # fill template with gathered options
-    @optionsList.html App.view('generic/searchable_select_options')
-      options: options
+    @optionsList.html @renderOptions options
 
     # refresh elements
     @refreshElements()

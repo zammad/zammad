@@ -79,7 +79,7 @@ function detect_webserver () {
     WEBSERVER="nginx"
     WEBSERVER_CMD="nginx"
     if [ "${OS}" == "DEBIAN" ]; then
-      WEBSERVER_CONF="/etc/nginx/sites-enabled/zammad.conf"
+      WEBSERVER_CONF="/etc/nginx/sites-available/zammad.conf"
     elif [ "${OS}" == "REDHAT" ]; then
       WEBSERVER_CONF="/etc/nginx/conf.d/zammad.conf"
     elif [ "${OS}" == "SUSE" ]; then
@@ -89,7 +89,7 @@ function detect_webserver () {
     WEBSERVER="apache2"
     WEBSERVER_CMD="apache2"
     if [ "${OS}" == "DEBIAN" ]; then
-      WEBSERVER_CONF="/etc/apache2/sites-enabled/zammad.conf"
+      WEBSERVER_CONF="/etc/apache2/sites-available/zammad.conf"
     fi
   elif [ -n "$(which httpd 2> /dev/null)" ]; then
     WEBSERVER="apache2"
@@ -140,11 +140,11 @@ function create_postgresql_db () {
   echo "# Restarting postgresql server"
   ${INIT_CMD} restart postgresql
 
-  echo "# Creating zammad postgresql db"
-  su - postgres -c "createdb -E UTF8 ${DB}"
-
   echo "# Creating zammad postgresql user"
   echo "CREATE USER \"${DB_USER}\" WITH PASSWORD '${DB_PASS}';" | su - postgres -c psql
+
+  echo "# Creating zammad postgresql db"
+  su - postgres -c "createdb -E UTF8 ${DB} -O ${DB_USER}"
 
   echo "# Grant privileges to new postgresql user"
   echo "GRANT ALL PRIVILEGES ON DATABASE \"${DB}\" TO \"${DB_USER}\";" | su - postgres -c psql
@@ -195,8 +195,14 @@ function update_database () {
 
 function create_webserver_config () {
   if [ "${OS}" == "DEBIAN" ]; then
-    test -f /etc/${WEBSERVER}/sites-available/zammad.conf || cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf /etc/${WEBSERVER}/sites-available/zammad.conf
-    test -h ${WEBSERVER_CONF} || ln -s /etc/${WEBSERVER}/sites-available/zammad.conf ${WEBSERVER_CONF}
+    if [ ! -f "${WEBSERVER_CONF}" ]; then
+      if [ -f "/etc/${WEBSERVER}/sites-enabled/zammad.conf" ]; then
+        mv /etc/${WEBSERVER}/sites-enabled/zammad.conf ${WEBSERVER_CONF}
+      else
+        cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf ${WEBSERVER_CONF}
+      fi  
+      ln -s ${WEBSERVER_CONF} /etc/${WEBSERVER}/sites-enabled/zammad.conf
+    fi
     if [ "${WEBSERVER}" == "apache2" ]; then
       a2enmod proxy
       a2enmod proxy_http
@@ -231,6 +237,13 @@ function update_or_install () {
 
     initialise_database
   fi
+}
+
+function set_env_vars () {
+  zammad config:set RUBY_GC_MALLOC_LIMIT=${ZAMMAD_RUBY_GC_MALLOC_LIMIT:=1077216}
+  zammad config:set RUBY_GC_MALLOC_LIMIT_MAX=${ZAMMAD_RUBY_GC_MALLOC_LIMIT_MAX:=2177216}
+  zammad config:set RUBY_GC_OLDMALLOC_LIMIT=${ZAMMAD_RUBY_GC_OLDMALLOC_LIMIT:=2177216}
+  zammad config:set RUBY_GC_OLDMALLOC_LIMIT_MAX=${ZAMMAD_RUBY_GC_OLDMALLOC_LIMIT_MAX:=3000100}
 }
 
 function final_message () {

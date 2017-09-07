@@ -87,6 +87,13 @@ class AAbUnitTest < TestCase
       value: '0',
     )
 
+    location(url: browser_url + '/tests_form_tree_select')
+    sleep 2
+    match(
+      css: '.result .failed',
+      value: '0',
+    )
+
     location(url: browser_url + '/tests_form_column_select')
     sleep 2
     match(

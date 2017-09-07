@@ -3,7 +3,7 @@ before_script:
   - which ruby
   - env
   - test -n "$RNAME" && script/build/test_db_config.sh
-  - test -n "$RNAME" && bundle install
+  - test -n "$RNAME" && bundle install --jobs 8
 
 stages:
   - pre
@@ -127,6 +127,17 @@ test:integration:email_deliver:
     - ruby -I test/ test/integration/email_deliver_test.rb
     - rake db:drop
 
+test:integration:email_keep_on_server:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/email_keep_on_server_test.rb
+    - rake db:drop
+
 test:integration:twitter:
   stage: test
   tags:
@@ -229,7 +240,7 @@ test:integration:slack:
     - rake db:create
     - rake db:migrate
     - echo "gem 'slack-api'" >> Gemfile.local
-    - bundle install
+    - bundle install --jobs 8
     - ruby -I test test/integration/slack_test.rb
     - rake db:drop
 
@@ -281,6 +292,7 @@ test:integration:es_mysql:
     - ruby -I test/ test/integration/elasticsearch_test.rb
     - ruby -I test/ test/controllers/search_controller_test.rb
     - ruby -I test/ test/integration/report_test.rb
+    - ruby -I test/ test/controllers/form_controller_test.rb
     - rake db:drop
 
 test:integration:es_postgresql:
@@ -297,6 +309,7 @@ test:integration:es_postgresql:
     - ruby -I test/ test/integration/elasticsearch_test.rb
     - ruby -I test/ test/controllers/search_controller_test.rb
     - ruby -I test/ test/integration/report_test.rb
+    - ruby -I test/ test/controllers/form_controller_test.rb
     - rake db:drop
 
 test:integration:zendesk_mysql:
@@ -330,7 +343,7 @@ test:integration:otrs_5_mysql:
     - mysql
   script:
     - export RAILS_ENV=test
-    - export IMPORT_OTRS_ENDPOINT="http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+    - export IMPORT_OTRS_ENDPOINT="http://vz1109.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
     - rake db:create
     - rake db:migrate
     - ruby -I test/ test/integration/otrs_import_test.rb
@@ -343,7 +356,7 @@ test:integration:otrs_5_postgresql:
     - postgresql
   script:
     - export RAILS_ENV=test
-    - export IMPORT_OTRS_ENDPOINT="http://vz599.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+    - export IMPORT_OTRS_ENDPOINT="http://vz1109.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
     - rake db:create
     - rake db:migrate
     - ruby -I test/ test/integration/otrs_import_test.rb
@@ -409,6 +422,7 @@ browser:build:
     - rake assets:precompile
     - rake db:drop
   artifacts:
+    expire_in: 1 week
     paths:
     - public/assets/.sprockets-manifest*
     - public/assets/application-*
@@ -426,7 +440,7 @@ test:browser:integration:api_client_ruby:
     - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
     - git clone git@github.com:zammad/zammad-api-client-ruby.git || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - cd zammad-api-client-ruby
-    - bundle install
+    - bundle install --jobs 8
     - export TEST_URL=http://$IP:$BROWSER_PORT
     - rspec || (cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1)
     - cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1

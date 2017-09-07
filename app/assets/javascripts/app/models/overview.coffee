@@ -8,6 +8,7 @@ class App.Overview extends App.Model
     { name: 'role_ids',   display: 'Available for Role',  tag: 'column_select', multiple: true, null: false, relation: 'Role', translate: true },
     { name: 'user_ids',   display: 'Available for User',  tag: 'column_select', multiple: true, null: true,  relation: 'User', sortBy: 'firstname' },
     { name: 'organization_shared', display: 'Only available for Users with shared Organization', tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true },
+    { name: 'out_of_office', display: 'Only available for Users which are replacements for other users.', tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true },
     { name: 'condition',  display: 'Conditions for shown Tickets', tag: 'ticket_selector', null: false },
     { name: 'prio',       display: 'Prio',                readonly: 1 },
     {
@@ -72,4 +73,4 @@ Sie können auch individuelle Übersichten für einzelne Agenten oder agenten Gr
 '''
 
   uiUrl: ->
-    '#ticket/view/' + @link
+    "#ticket/view/#{@link}"

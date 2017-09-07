@@ -75,25 +75,22 @@ class UsersController < ApplicationController
   # @response_message 200 [User] User record matching the requested identifier.
   # @response_message 401        Invalid session.
   def show
-
-    # access deny
-    permission_check_local
+    user = User.find(params[:id])
+    access!(user, 'read')
 
     if params[:expand]
-      user = User.find(params[:id]).attributes_with_association_names
-      render json: user, status: :ok
-      return
+      result = user.attributes_with_association_names
+    elsif params[:full]
+      result = {
+        id:     params[:id],
+        assets: user.assets({}),
+      }
+    else
+      result = user.attributes_with_association_ids
+      result.delete('password')
     end
 
-    if params[:full]
-      full = User.full(params[:id])
-      render json: full
-      return
-    end
-
-    user = User.find(params[:id]).attributes_with_association_ids
-    user.delete('password')
-    render json: user
+    render json: result
   end
 
   # @path      [POST] /users
@@ -108,8 +105,6 @@ class UsersController < ApplicationController
   def create
     clean_params = User.association_name_to_id_convert(params)
     clean_params = User.param_cleanup(clean_params, true)
-    user = User.new(clean_params)
-    user.associations_from_param(params)
 
     # check if it's first user, the admin user
     # inital admin account
@@ -131,6 +126,18 @@ class UsersController < ApplicationController
       if admin_account_exists && !params[:signup]
         raise Exceptions::UnprocessableEntity, 'Only signup with not authenticate user possible!'
       end
+
+      # check if user already exists
+      if clean_params[:email].blank?
+        raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
+      end
+
+      # check if user already exists
+      exists = User.find_by(email: clean_params[:email].downcase.strip)
+      raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.' if exists
+
+      user = User.new(clean_params)
+      user.associations_from_param(params)
       user.updated_by_id = 1
       user.created_by_id = 1
 
@@ -164,19 +171,10 @@ class UsersController < ApplicationController
       # permission check
       permission_check_by_permission(params)
 
-      if params[:role_ids]
-        user.role_ids = params[:role_ids]
-      end
-      if params[:group_ids]
-        user.group_ids = params[:group_ids]
-      end
+      user = User.new(clean_params)
+      user.associations_from_param(params)
     end
 
-    # check if user already exists
-    if !user.email.empty?
-      exists = User.where(email: user.email.downcase).first
-      raise Exceptions::UnprocessableEntity, 'User already exists!' if exists
-    end
     user.save!
 
     # if first user was added, set system init done
@@ -184,7 +182,7 @@ class UsersController < ApplicationController
       Setting.set('system_init_done', true)
 
       # fetch org logo
-      if !user.email.empty?
+      if user.email.present?
         Service::Image.organization_suggest(user.email)
       end
 
@@ -245,34 +243,31 @@ class UsersController < ApplicationController
   # @response_message 200 [User] Updated User record.
   # @response_message 401        Invalid session.
   def update
-
-    # access deny
-    permission_check_local
+    permission_check_by_permission(params)
 
     user = User.find(params[:id])
-    clean_params = User.association_name_to_id_convert(params)
-    clean_params = User.param_cleanup(clean_params, true)
+    access!(user, 'change')
 
     # permission check
     permission_check_by_permission(params)
     user.with_lock do
+      clean_params = User.association_name_to_id_convert(params)
+      clean_params = User.param_cleanup(clean_params, true)
       user.update_attributes(clean_params)
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
-        user.role_ids = params[:role_ids]
-        user.associations_from_param({ role_ids: params[:role_ids], roles: params[:roles] })
+        user.associations_from_param(role_ids: params[:role_ids], roles: params[:roles])
       end
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:group_ids] || params[:groups])
-        user.group_ids = params[:group_ids]
-        user.associations_from_param({ group_ids: params[:group_ids], groups: params[:groups] })
+        user.associations_from_param(group_ids: params[:group_ids], groups: params[:groups])
       end
 
       # only allow Admin's and Agent's
       if current_user.permissions?(['admin.user', 'ticket.agent']) && (params[:organization_ids] || params[:organizations])
-        user.associations_from_param({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
+        user.associations_from_param(organization_ids: params[:organization_ids], organizations: params[:organizations])
       end
 
       if params[:expand]
@@ -298,7 +293,9 @@ class UsersController < ApplicationController
   # @response_message 200 User successfully deleted.
   # @response_message 401 Invalid session.
   def destroy
-    permission_check('admin.user')
+    user = User.find(params[:id])
+    access!(user, 'delete')
+
     model_references_check(User, params)
     model_destroy_render(User, params)
   end
@@ -371,7 +368,7 @@ class UsersController < ApplicationController
       limit: params[:limit],
       current_user: current_user,
     }
-    if params[:role_ids] && !params[:role_ids].empty?
+    if params[:role_ids].present?
       query_params[:role_ids] = params[:role_ids]
     end
 
@@ -457,10 +454,10 @@ class UsersController < ApplicationController
     end
 
     # do query
-    user_all = if params[:role_ids] && !params[:role_ids].empty?
-                 User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where('users.id != 1').order('users.created_at DESC').limit( params[:limit] || 20 )
+    user_all = if params[:role_ids].present?
+                 User.joins(:roles).where('roles.id' => params[:role_ids]).where('users.id != 1').order('users.created_at DESC').limit(params[:limit] || 20)
                else
-                 User.where('id != 1').order('created_at DESC').limit( params[:limit] || 20 )
+                 User.where('id != 1').order('created_at DESC').limit(params[:limit] || 20)
                end
 
     # build result list
@@ -541,7 +538,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/email_verify.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN"}'
+curl http://localhost/api/v1/users/email_verify -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN"}'
 
 =end
 
@@ -570,7 +567,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/email_verify_send.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"email": "some_email@example.com"}'
+curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"email": "some_email@example.com"}'
 
 =end
 
@@ -629,7 +626,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"username": "some_username"}'
+curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"username": "some_username"}'
 
 =end
 
@@ -681,7 +678,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN", "password" "new_password"}'
+curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN", "password" "new_password"}'
 
 =end
 
@@ -737,7 +734,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new": "password_new"}'
+curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new": "password_new"}'
 
 =end
 
@@ -784,7 +781,7 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
 =begin
 
 Resource:
-PUT /api/v1/users/preferences.json
+PUT /api/v1/users/preferences
 
 Payload:
 {
@@ -798,7 +795,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"language": "de", "notifications": true}'
+curl http://localhost/api/v1/users/preferences -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"language": "de", "notifications": true}'
 
 =end
 
@@ -811,7 +808,7 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
         params[:user].each { |key, value|
           user.preferences[key.to_sym] = value
         }
-        user.save
+        user.save!
       end
     end
     render json: { message: 'ok' }, status: :ok
@@ -820,7 +817,47 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
 =begin
 
 Resource:
-DELETE /api/v1/users/account.json
+PUT /api/v1/users/out_of_office
+
+Payload:
+{
+  "out_of_office": true,
+  "out_of_office_start_at": true,
+  "out_of_office_end_at": true,
+  "out_of_office_replacement_id": 123,
+  "out_of_office_text": 'honeymoon'
+}
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/v1/users/out_of_office -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"out_of_office": true, "out_of_office_replacement_id": 123}'
+
+=end
+
+  def out_of_office
+    raise Exceptions::UnprocessableEntity, 'No current user!' if !current_user
+    user = User.find(current_user.id)
+    user.with_lock do
+      user.assign_attributes(
+        out_of_office:                params[:out_of_office],
+        out_of_office_start_at:       params[:out_of_office_start_at],
+        out_of_office_end_at:         params[:out_of_office_end_at],
+        out_of_office_replacement_id: params[:out_of_office_replacement_id],
+      )
+      user.preferences[:out_of_office_text] = params[:out_of_office_text]
+      user.save!
+    end
+    render json: { message: 'ok' }, status: :ok
+  end
+
+=begin
+
+Resource:
+DELETE /api/v1/users/account
 
 Payload:
 {
@@ -834,7 +871,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/account.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"provider": "twitter", "uid": 581482342942}'
+curl http://localhost/api/v1/users/account -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"provider": "twitter", "uid": 581482342942}'
 
 =end
 
@@ -1006,30 +1043,25 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   def permission_check_by_permission(params)
     return true if current_user.permissions?('admin.user')
 
-    if !current_user.permissions?('admin.user') && params[:role_ids]
-      if params[:role_ids].class != Array
-        params[:role_ids] = [params[:role_ids]]
-      end
-      params[:role_ids].each { |role_id|
-        role_local = Role.lookup(id: role_id)
-        if !role_local
-          logger.info "Invalid role_ids for current_user_id: #{current_user.id} role_ids #{role_id}"
-          raise Exceptions::NotAuthorized, 'Invalid role_ids!'
-        end
-        role_name = role_local.name
-        # TODO: check role permissions
-        next if role_name != 'Admin' && role_name != 'Agent'
-        logger.info "This role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{role_name}"
+    %i(role_ids roles).each do |key|
+      next if !params[key]
+      if current_user.permissions?('ticket.agent')
+        params.delete(key)
+      else
+        logger.info "Role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{params[key].inspect}"
         raise Exceptions::NotAuthorized, 'This role assignment is only allowed by admin!'
-      }
+      end
+    end
+    if current_user.permissions?('ticket.agent') && !params[:role_ids] && !params[:roles] && params[:id].blank?
+      params[:role_ids] = Role.signup_role_ids
     end
 
-    if !current_user.permissions?('admin.user') && params[:group_ids]
-      if params[:group_ids].class != Array
-        params[:group_ids] = [params[:group_ids]]
-      end
-      if !params[:group_ids].empty?
-        logger.info "Group relation is only allowed by admin! current_user_id: #{current_user.id} group_ids #{params[:group_ids].inspect}"
+    %i(group_ids groups).each do |key|
+      next if !params[key]
+      if current_user.permissions?('ticket.agent')
+        params.delete(key)
+      else
+        logger.info "Group relation assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{params[key].inspect}"
         raise Exceptions::NotAuthorized, 'Group relation is only allowed by admin!'
       end
     end
@@ -1039,16 +1071,4 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     response_access_deny
     false
   end
-
-  def permission_check_local
-    return true if current_user.permissions?('admin.user')
-    return true if current_user.permissions?('ticket.agent')
-
-    # allow to update any by him self
-    # TODO check certain attributes like roles_ids and group_ids
-    return true if params[:id].to_i == current_user.id
-
-    raise Exceptions::NotAuthorized
-  end
-
 end

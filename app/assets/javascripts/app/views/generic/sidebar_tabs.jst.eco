@@ -11,7 +11,7 @@
   <div class="sidebar-content"></div>
 </div>
 <% end %>
-<div class="tabsSidebar-tabs" style="margin-left: -<%- @scrollbarWidth %>px">
+<div class="tabsSidebar-tabs" style="<%- if @dir is 'rtl' then 'margin-right' else 'margin-left' %>: -<%- @scrollbarWidth %>px">
 <% for item in @items: %>
   <div class="tabsSidebar-tab" data-tab="<%= item.name %>">
     <%- @Icon(item.icon) %>

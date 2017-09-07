@@ -4,6 +4,8 @@ require 'ldap/user'
 require 'ldap/group'
 
 class Integration::LdapController < ApplicationController
+  include Integration::ImportJobBase
+
   prepend_before_action { authentication_check(permission: 'admin.integration.ldap') }
 
   def discover
@@ -14,12 +16,21 @@ class Integration::LdapController < ApplicationController
       attributes: ldap.preferences,
     }
   rescue => e
-    logger.error e
+    # workaround for issue #1114
+    if e.message.end_with?(', 48, Inappropriate Authentication')
+      result = {
+        result:     'ok',
+        attributes: {},
+      }
+    else
+      logger.error e
+      result = {
+        result:  'failed',
+        message: e.message,
+      }
+    end
 
-    render json: {
-      result:  'failed',
-      message: e.message,
-    }
+    render json: result
   end
 
   def bind
@@ -50,49 +61,5 @@ class Integration::LdapController < ApplicationController
       result:  'failed',
       message: e.message,
     }
-  end
-
-  def job_try_index
-    job_index(
-      dry_run:       true,
-      take_finished: params[:finished] == 'true'
-    )
-  end
-
-  def job_try_create
-    ImportJob.dry_run(name: 'Import::Ldap', payload: params)
-    render json: {
-      result: 'ok',
-    }
-  end
-
-  def job_start_index
-    job_index(dry_run: false)
-  end
-
-  def job_start_create
-    backend = 'Import::Ldap'
-    if !ImportJob.exists?(name: backend, finished_at: nil)
-      job = ImportJob.create(name: backend, payload: Setting.get('ldap_config'))
-      job.delay.start
-    end
-    render json: {
-      result: 'ok',
-    }
-  end
-
-  private
-
-  def job_index(dry_run:, take_finished: true)
-    job = ImportJob.find_by(name: 'Import::Ldap', dry_run: dry_run, finished_at: nil)
-    if !job && take_finished
-      job = ImportJob.where(name: 'Import::Ldap', dry_run: dry_run).order(created_at: :desc).limit(1).first
-    end
-
-    if job
-      model_show_render_item(job)
-    else
-      render json: {}
-    end
   end
 end

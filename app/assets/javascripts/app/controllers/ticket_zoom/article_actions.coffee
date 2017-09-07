@@ -391,25 +391,41 @@ class App.TicketZoomArticleActions extends App.Controller
     body = @el.closest('.ticketZoom').find('.article-add [data-name="body"]').html() || ''
 
     # check if quote need to be added
-    selectedText = App.ClipBoard.getSelected()
-    if selectedText
+    signaturePosition = 'bottom'
+    selected = App.ClipBoard.getSelected('html')
+    if selected
+      selected = App.Utils.htmlCleanup(selected).html()
+    if !selected
+      selected = App.ClipBoard.getSelected('text')
+      if selected
+        selected = App.Utils.textCleanup(selected)
+        selected = App.Utils.text2html(selected)
 
-      # clean selection
-      selectedText = App.Utils.textCleanup(selectedText)
+    # full quote, if needed
+    if !selected && article && App.Config.get('ui_ticket_zoom_article_email_full_quote')
+      signaturePosition = 'top'
+      if article.content_type.match('html')
+        selected = App.Utils.textCleanup(article.body)
+      if article.content_type.match('plain')
+        selected = App.Utils.textCleanup(article.body)
+        selected = App.Utils.text2html(selected)
 
-      # convert to html
-      selectedText = App.Utils.text2html(selectedText)
-      if selectedText
-        selectedText = "<div><br><br/></div><div><blockquote type=\"cite\">#{selectedText}</blockquote></div><div><br></div>"
+    if selected
+      selected = "<div><br><br/></div><div><blockquote type=\"cite\">#{selected}</blockquote></div><div><br></div>"
 
-        # add selected text to body
-        body = selectedText + body
+      # add selected text to body
+      body = selected + body
 
     articleNew.body = body
 
     type = App.TicketArticleType.findByAttribute(name:'email')
 
-    App.Event.trigger('ui::ticket::setArticleType', { ticket: @ticket, type: type, article: articleNew } )
+    App.Event.trigger('ui::ticket::setArticleType', {
+      ticket: @ticket
+      type: type
+      article: articleNew
+      signaturePosition: signaturePosition
+    })
 
   telegramPersonalMessageReply: (e) =>
     e.preventDefault()

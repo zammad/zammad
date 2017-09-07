@@ -62,6 +62,7 @@ class SearchController < ApplicationController
         items.each { |item|
           require item[:type].to_filename
           record = Kernel.const_get(item[:type]).lookup(id: item[:id])
+          next if !record
           assets = record.assets(assets)
           result.push item
         }

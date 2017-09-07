@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ObjectManagerAttributesController < ApplicationController
-  before_action { authentication_check(permission: 'admin.object') }
+  prepend_before_action { authentication_check(permission: 'admin.object') }
 
   # GET /object_manager_attributes_list
   def list
@@ -108,7 +108,7 @@ class ObjectManagerAttributesController < ApplicationController
       end
     end
     if params[:data_option] && !params[:data_option].key?(:default)
-      params[:data_option][:default] = if params[:data_type] =~ /^(input|select)$/
+      params[:data_option][:default] = if params[:data_type] =~ /^(input|select|tree_select)$/
                                          ''
                                        end
     end

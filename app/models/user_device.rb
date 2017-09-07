@@ -21,8 +21,9 @@ store new device for user if device not already known
 
   def self.add(user_agent, ip, user_id, fingerprint, type)
 
-    # since gem browser 2 is not handling nil for user_agent, set it to ''
-    user_agent ||= ''
+    if user_agent.blank?
+      user_agent = 'unknown'
+    end
 
     # get location info
     location_details = Service::GeoIp.location(ip)
@@ -60,23 +61,26 @@ store new device for user if device not already known
     end
 
     # get browser details
-    browser = Browser.new(user_agent, accept_language: 'en-us')
-    browser = {
-      plattform: browser.platform.to_s.camelize,
-      name: browser.name,
-      version: browser.version,
-      full_version: browser.full_version,
-    }
+    browser = {}
+    if user_agent != 'unknown'
+      browser = Browser.new(user_agent, accept_language: 'en-us')
+      browser = {
+        plattform: browser.platform.to_s.camelize,
+        name: browser.name,
+        version: browser.version,
+        full_version: browser.full_version,
+      }
+    end
 
     # generate device name
     if browser[:name] == 'Generic Browser'
       browser[:name] = user_agent
     end
     name = ''
-    if browser[:plattform] && browser[:plattform] != 'Other'
+    if browser[:plattform].present? && browser[:plattform] != 'Other'
       name = browser[:plattform]
     end
-    if browser[:name] && browser[:name] != 'Other'
+    if browser[:name].present? && browser[:name] != 'Other'
       if name.present?
         name += ', '
       end
@@ -84,7 +88,7 @@ store new device for user if device not already known
     end
 
     # if not identified, use user agent
-    if !name || name == '' || name == 'Other, Other' || name == 'Other'
+    if name.blank? || name == 'Other, Other' || name == 'Other'
       name = user_agent
       browser[:name] = user_agent
     end
@@ -103,7 +107,7 @@ store new device for user if device not already known
     end
 
     # create new device
-    user_device = create(
+    user_device = create!(
       user_id: user_id,
       name: name,
       os: browser[:plattform],
@@ -206,4 +210,15 @@ send user notification about new device or new location for device
     )
   end
 
+=begin
+
+delete device devices of user
+
+  user_devices = UserDevice.remove(user.id)
+
+=end
+
+  def self.remove(user_id)
+    UserDevice.where(user_id: user_id).destroy_all
+  end
 end

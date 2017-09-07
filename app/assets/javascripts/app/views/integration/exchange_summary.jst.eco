@@ -1,0 +1,16 @@
+<ul>
+  <li><%- @T('%s user to %s user', 'Exchange', 'Zammad') %> (<%= @countDone %>):
+    <ul>
+      <li><%- @T('Users') %>: <%= @job.result.created %> <%- @T('created') %>, <%= @job.result.updated %> <%- @T('updated') %>, <%= @job.result.unchanged %> <%- @T('untouched') %>, <%= @job.result.skipped %> <%- @T('skipped') %>, <%= @job.result.failed %> <%- @T('failed') %>
+    </ul>
+  </li>
+  <% if !_.isEmpty(@job.result.folders): %>
+    <li><%- @T('%s folders', 'Exchange') %>:
+      <ul>
+        <% for folder, result of @job.result.folders: %>
+          <li><%- folder %>: <%= result.created %> <%- @T('created') %>, <%= result.updated %> <%- @T('updated') %>, <%= result.unchanged %> <%- @T('untouched') %>, <%= result.failed %> <%- @T('failed') %>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>

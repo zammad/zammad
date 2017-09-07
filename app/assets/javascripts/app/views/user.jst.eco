@@ -12,8 +12,8 @@
 </div>
 <div class="page-content">
   <div class="searchfield">
-    <%- @Icon('magnifier') %>
     <input class="js-search form-control" name="search" placeholder="<%- @Ti('Search for users') %>" type="search">
+    <%- @Icon('magnifier') %>
   </div>
 
   <div class="userSearch horizontal">

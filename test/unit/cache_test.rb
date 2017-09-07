@@ -43,7 +43,7 @@ class CacheTest < ActiveSupport::TestCase
 
     # test 6
     Cache.write('123', { key: 'some valueöäüß2' }, expires_in: 3.seconds)
-    sleep 5
+    travel 5.seconds
     cache = Cache.get('123')
     assert_nil(cache)
   end

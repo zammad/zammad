@@ -13,27 +13,28 @@ module Channel::Filter::Database
       min_one_rule_exists = false
       filter[:match].each { |key, meta|
         begin
-          next if !meta || !meta['value'] || meta['value'].empty?
+          next if meta.blank? || meta['value'].blank?
+          value = mail[ key.downcase.to_sym ]
+          match_rule = meta['value']
           min_one_rule_exists = true
-          scan = []
-          if mail
-            scan = mail[ key.downcase.to_sym ].scan(/#{meta['value']}/i)
-          end
-          if scan[0]
-            if meta[:operator] == 'contains not'
+          if meta[:operator] == 'contains not'
+            if value.present? && match(value, match_rule, false)
               all_matches_ok = false
+              Rails.logger.info "  matching #{key.downcase}:'#{value}' on #{match_rule}, but shoud not"
             end
-            Rails.logger.info "  matching #{key.downcase}:'#{mail[ key.downcase.to_sym ]}' on #{meta['value']}"
+          elsif meta[:operator] == 'contains'
+            if value.blank? || !match(value, match_rule, true)
+              all_matches_ok = false
+              Rails.logger.info "  not matching #{key.downcase}:'#{value}' on #{match_rule}, but should"
+            end
           else
-            if meta[:operator] == 'contains'
-              all_matches_ok = false
-            end
-            Rails.logger.info "  not matching #{key.downcase}:'#{mail[ key.downcase.to_sym ]}' on #{meta['value']}"
+            all_matches_ok = false
+            Rails.logger.info "  Invalid operator in match #{meta.inspect}"
           end
           break if !all_matches_ok
         rescue => e
           all_matches_ok = false
-          Rails.logger.error "can't use match rule #{meta['value']} on #{mail[ key.to_sym ]}"
+          Rails.logger.error "can't use match rule #{match_rule} on #{value}"
           Rails.logger.error e.inspect
         end
       }
@@ -49,4 +50,31 @@ module Channel::Filter::Database
     }
 
   end
+
+  def self.match(value, match_rule, _should_match, check_mode = false)
+
+    regexp = false
+    if match_rule =~ /^(regex:)(.+?)$/
+      regexp = true
+      match_rule = $2
+    end
+
+    if regexp == false
+      match_rule_quoted = Regexp.quote(match_rule).gsub(/\\\*/, '.*')
+      return true if value =~ /#{match_rule_quoted}/i
+      return false
+    end
+
+    begin
+      return true if value =~ /#{match_rule}/i
+      return false
+    rescue => e
+      message = "Can't use regex '#{match_rule}' on '#{value}': #{e.message}"
+      Rails.logger.error message
+      raise message if check_mode == true
+    end
+
+    false
+  end
+
 end

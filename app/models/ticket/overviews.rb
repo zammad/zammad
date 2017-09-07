@@ -5,9 +5,7 @@ module Ticket::Overviews
 
 all overviews by user
 
-  result = Ticket::Overviews.all(
-    current_user: User.find(123),
-  )
+  result = Ticket::Overviews.all(current_user: User.find(123))
 
 returns
 
@@ -21,11 +19,11 @@ returns
     # get customer overviews
     role_ids = User.joins(:roles).where(users: { id: current_user.id, active: true }, roles: { active: true }).pluck('roles.id')
     if current_user.permissions?('ticket.customer')
-      overviews = if current_user.organization_id && current_user.organization.shared
-                    Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: { active: true }).distinct('overview.id').order(:prio)
-                  else
-                    Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: { active: true, organization_shared: false }).distinct('overview.id').order(:prio)
-                  end
+      overview_filter = { active: true, organization_shared: false }
+      if current_user.organization_id && current_user.organization.shared
+        overview_filter.delete(:organization_shared)
+      end
+      overviews = Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: overview_filter).distinct('overview.id').order(:prio)
       overviews_list = []
       overviews.each { |overview|
         user_ids = overview.user_ids
@@ -37,7 +35,12 @@ returns
 
     # get agent overviews
     return [] if !current_user.permissions?('ticket.agent')
-    overviews = Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: { active: true }).distinct('overview.id').order(:prio)
+    overview_filter = { active: true }
+    overview_filter_not = { out_of_office: true }
+    if User.where('out_of_office = ? AND out_of_office_start_at <= ? AND out_of_office_end_at >= ? AND out_of_office_replacement_id = ? AND active = ?', true, Time.zone.today, Time.zone.today, current_user.id, true).count.positive?
+      overview_filter_not = {}
+    end
+    overviews = Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: overview_filter).where.not(overview_filter_not).distinct('overview.id').order(:prio)
     overviews_list = []
     overviews.each { |overview|
       user_ids = overview.user_ids
@@ -89,7 +92,7 @@ returns
     return [] if overviews.blank?
 
     # get only tickets with permissions
-    access_condition = Ticket.access_condition(user)
+    access_condition = Ticket.access_condition(user, 'overview')
 
     ticket_attributes = Ticket.new.attributes
     list = []

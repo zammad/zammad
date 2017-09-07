@@ -14,6 +14,7 @@ module ApplicationModel::HasCache
   def cache_update(o)
     cache_delete if respond_to?('cache_delete')
     o.cache_delete if o.respond_to?('cache_delete')
+    true
   end
 
   def cache_delete
@@ -52,6 +53,7 @@ module ApplicationModel::HasCache
         Cache.delete(key)
       end
     end
+    true
   end
 
   # methods defined here are going to extend the class, not the instance of it

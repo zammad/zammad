@@ -242,7 +242,7 @@ returns
       # update items
       ActiveRecord::Base.transaction do
         items_to_update.each { |_id, item|
-          item.save
+          item.save!
         }
       end
     }

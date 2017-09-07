@@ -36,7 +36,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
 
   test 'user cache' do
     roles  = Role.where(name: %w(Agent Admin))
-    groups = Group.all
+    groups = Group.all.order(:id)
 
     # be sure that minimum one admin is available
     User.create_or_update(
@@ -65,7 +65,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
       groups: groups,
     )
     assets = user1.assets({})
-    assert_equal(user1.group_ids.sort, assets[:User][user1.id]['group_ids'].sort)
+    assert_equal(user1.group_ids_access_map.sort, assets[:User][user1.id]['group_ids'].sort)
 
     # update group
     group1 = groups.first
@@ -73,15 +73,16 @@ class ObjectCacheTest < ActiveSupport::TestCase
     group1.save
 
     assets = user1.assets({})
+    assert(assets[:Group][group1.id])
     assert_equal(group1.note, assets[:Group][group1.id]['note'])
 
     # update group
-    assert_equal(user1.group_ids.sort, assets[:User][user1.id]['group_ids'].sort)
+    assert_equal(user1.group_ids_access_map.sort, assets[:User][user1.id]['group_ids'].sort)
     user1.group_ids = []
     user1.save
 
     assets = user1.assets({})
-    assert_equal(user1.group_ids.sort, assets[:User][user1.id]['group_ids'].sort)
+    assert_equal(user1.group_ids_access_map.sort, assets[:User][user1.id]['group_ids'].sort)
 
     # update role
     assert_equal(user1.role_ids.sort, assets[:User][user1.id]['role_ids'].sort)

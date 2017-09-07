@@ -1,8 +1,6 @@
 require 'rails_helper'
 require 'import/ldap/user'
 
-RSpec::Matchers.define_negated_matcher :not_change, :change
-
 RSpec.describe Import::Ldap::User do
 
   let(:uid) { 'exampleuid' }
@@ -29,7 +27,8 @@ RSpec.describe Import::Ldap::User do
   let(:user_roles) do
     {
       user_entry.dn => [
-        Role.find_by(name: 'Admin').id
+        Role.find_by(name: 'Admin').id,
+        Role.find_by(name: 'Agent').id
       ]
     }
   end
@@ -90,8 +89,8 @@ RSpec.describe Import::Ldap::User do
           # gets called later it will get initialized
           # with the changed dn
           user_roles[ user_entry.dn ] = [
-            Role.find_by(name: 'Agent').id,
-            Role.find_by(name: 'Admin').id
+            Role.find_by(name: 'Admin').id,
+            Role.find_by(name: 'Agent').id
           ]
 
           # change dn so no mapping will match

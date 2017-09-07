@@ -1,3 +1,4 @@
+<div class="js-error hide fullscreenMessage"></div>
 <div class="sidebar"></div>
 <div class="main flex">
   <div class="overview-header"></div>

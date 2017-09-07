@@ -7,7 +7,7 @@ class ImportZendeskController < ApplicationController
     return if setup_done_response
 
     # validate
-    if !params[:url] || params[:url] !~ %r{^(http|https)://.+?$}
+    if params[:url].blank? || params[:url] !~ %r{^(http|https)://.+?$}
       render json: {
         result: 'invalid',
         message: 'Invalid URL!',
@@ -40,8 +40,8 @@ class ImportZendeskController < ApplicationController
       return
     end
 
-    # since 2016-10-15 a redirect to a signup page has been implemented
-    if response.body =~ /(Take it for a risk-free|Take it for a risk-free)/i
+    # since 2016-10-15 a redirect to a marketing page has been implemented
+    if response.body !~ /#{params[:url]}/
       render json: {
         result: 'invalid',
         message_human: 'Hostname not found!',
@@ -49,7 +49,9 @@ class ImportZendeskController < ApplicationController
       return
     end
 
-    Setting.set('import_zendesk_endpoint', "#{params[:url]}api/v2")
+    endpoint = "#{params[:url]}/api/v2"
+    endpoint.gsub!(%r{([^:])//+}, '\\1/')
+    Setting.set('import_zendesk_endpoint', endpoint)
 
     render json: {
       result: 'ok',
@@ -92,6 +94,7 @@ class ImportZendeskController < ApplicationController
   def import_start
     return if setup_done_response
     Setting.set('import_mode', true)
+    Setting.set('import_backend', 'zendesk')
 
     # start migration
     Import::Zendesk.delay.start_bg

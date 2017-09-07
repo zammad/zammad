@@ -80,21 +80,24 @@ class Ldap
       filter ||= filter()
 
       result = {}
-      @ldap.search(filter, attributes: %w(dn member)) do |entry|
+      @ldap.search(filter, attributes: %w(dn member memberuid)) do |entry|
 
-        members = entry[:member]
+        roles = mapping[entry.dn.downcase]
+        next if roles.blank?
+
+        members = group_user_dns(entry)
         next if members.blank?
-
-        role = mapping[entry.dn.downcase]
-        next if role.blank?
-        role = role.to_i
 
         members.each do |user_dn|
           user_dn_key = user_dn.downcase
 
-          result[user_dn_key] ||= []
-          next if result[user_dn_key].include?(role)
-          result[user_dn_key].push(role)
+          roles.each do |role|
+            role = role.to_i
+
+            result[user_dn_key] ||= []
+            next if result[user_dn_key].include?(role)
+            result[user_dn_key].push(role)
+          end
         end
       end
 
@@ -109,7 +112,7 @@ class Ldap
     #
     # @return [String, nil] The active or found filter or nil if none could be found.
     def filter
-      @filter ||= lookup_filter(['(objectClass=group)'])
+      @filter ||= lookup_filter(['(objectClass=group)', '(objectClass=posixgroup)', '(objectClass=organization)'])
     end
 
     # The active uid attribute of the instance. If none give on initialization an automatic lookup is performed.
@@ -129,6 +132,19 @@ class Ldap
       return if config.blank?
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
+    end
+
+    def group_user_dns(entry)
+      return entry[:member] if entry[:member].present?
+      return if entry[:memberuid].blank?
+
+      entry[:memberuid].collect do |uid|
+        dn = nil
+        @ldap.search("(uid=#{uid})", attributes: %w(dn)) do |user|
+          dn = user.dn
+        end
+        dn
+      end.compact
     end
   end
 end

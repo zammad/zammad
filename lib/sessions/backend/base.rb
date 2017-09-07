@@ -1,6 +1,6 @@
 class Sessions::Backend::Base
 
-  def initialize(user, asset_lookup, client, client_id, ttl = 30)
+  def initialize(user, asset_lookup, client, client_id, ttl = 10)
     @user         = user
     @client       = client
     @client_id    = client_id

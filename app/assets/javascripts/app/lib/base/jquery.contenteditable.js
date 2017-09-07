@@ -88,7 +88,7 @@
     // handle enter
     this.$element.on('keydown', function (e) {
       _this.log('keydown', e.keyCode)
-      if ( _this.preventInput ) {
+      if (_this.preventInput) {
         this.log('preventInput', _this.preventInput)
         return
       }
@@ -97,18 +97,29 @@
       if (e.keyCode === 13) {
 
         // disbale multi line
-        if ( !_this.options.multiline ) {
+        if (!_this.options.multiline) {
           e.preventDefault()
           return
         }
 
         // break <blockquote> after enter on empty line
         sel = window.getSelection()
-        node = $(sel.anchorNode)
-        if (node.parent().is('blockquote')) {
+        if (sel) {
+          node = $(sel.anchorNode)
+          if (node && node.parent() && node.parent().is('blockquote')) {
+            e.preventDefault()
+            document.execCommand('Insertparagraph')
+            document.execCommand('Outdent')
+            return
+          }
+        }
+
+        // behavior to enter new line on alt+enter
+        //  on alt + enter not realy newline is fired, to make
+        //  it compat. to other systems, do it here
+        if (!e.shiftKey && e.altKey && !e.ctrlKey && !e.metaKey) {
           e.preventDefault()
-          document.execCommand('Insertparagraph')
-          document.execCommand('Outdent')
+          _this.paste('<br><br>')
           return
         }
       }
@@ -237,7 +248,7 @@
 
       // limit check
       if ( !_this.allowKey(e) ) {
-        if ( !_this.maxLengthOk( 1 ) ) {
+        if ( !_this.maxLengthOk(1) ) {
           e.preventDefault()
           return
         }
@@ -253,6 +264,9 @@
       var clipboardData
       if (e.clipboardData) { // ie
         clipboardData = e.clipboardData
+      }
+      else if (window.clipboardData) { // ie
+        clipboardData = window.clipboardData
       }
       else if (e.originalEvent.clipboardData) { // other browsers
         clipboardData = e.originalEvent.clipboardData
@@ -292,7 +306,7 @@
               else {
                 img = "<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">"
               }
-              document.execCommand('insertHTML', false, img)
+              _this.paste(img)
             }
 
             // resize if to big
@@ -307,15 +321,23 @@
       }
 
       // check existing + paste text for limit
-      var text = clipboardData.getData('text/html')
-      var docType = 'html'
-      if (!text || text.length === 0) {
-          docType = 'text'
-          text = clipboardData.getData('text/plain')
+      var text, docType
+      try {
+        text = clipboardData.getData('text/html')
+        docType = 'html'
+        if (!text || text.length === 0) {
+            docType = 'text'
+            text = clipboardData.getData('text/plain')
+        }
+        if (!text || text.length === 0) {
+            docType = 'text2'
+            text = clipboardData.getData('text')
+        }
       }
-      if (!text || text.length === 0) {
-          docType = 'text2'
-          text = clipboardData.getData('text')
+      catch (e) {
+        console.log('Sorry, can\'t insert markup because browser is not supporting it.')
+        docType = 'text3'
+        text = clipboardData.getData('text')
       }
       _this.log('paste', docType, text)
 
@@ -355,7 +377,8 @@
       // cleanup
       text = App.Utils.removeEmptyLines(text)
       _this.log('insert', text)
-      document.execCommand('insertHTML', false, text)
+
+      _this.paste(text)
       return true
     })
 
@@ -525,7 +548,30 @@
     }
   }
 
-  $.fn[pluginName] = function ( options ) {
+  // paste some content
+  Plugin.prototype.paste = function(string) {
+    var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+
+    // IE <= 10
+    if (document.selection && document.selection.createRange) {
+      var range = document.selection.createRange()
+      if (range.pasteHTML) {
+        range.pasteHTML(string)
+      }
+    }
+    // IE == 11
+    else if (isIE11 && document.getSelection) {
+      var range = document.getSelection().getRangeAt(0)
+      var nnode = document.createElement('div')
+          range.surroundContents(nnode)
+          nnode.innerHTML = string
+    }
+    else {
+      document.execCommand('insertHTML', false, string)
+    }
+  }
+
+  $.fn[pluginName] = function (options) {
     return this.each(function () {
       if (!$.data(this, 'plugin_' + pluginName)) {
         $.data(this, 'plugin_' + pluginName,
@@ -537,6 +583,9 @@
   // get correct val if textbox
   $.fn.ceg = function() {
     var plugin = $.data(this[0], 'plugin_' + pluginName)
+    if (!plugin) {
+      return
+    }
     return plugin.value()
   }
 

@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.4.1'
 
-gem 'rails', '4.2.7.1'
+gem 'rails', '4.2.9'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
@@ -40,18 +40,20 @@ gem 'omniauth-gitlab'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-twitter'
+gem 'omniauth-microsoft-office365'
 
 gem 'twitter'
 gem 'telegramAPI'
 gem 'koala'
 gem 'mail'
-gem 'email_verifier'
+gem 'valid_email2'
 gem 'htmlentities'
 
 gem 'mime-types'
 
 gem 'biz'
 
+gem 'composite_primary_keys'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
@@ -72,12 +74,16 @@ gem 'argon2'
 
 gem 'writeexcel'
 gem 'icalendar'
+gem 'icalendar-recurrence'
 gem 'browser'
 
 # integrations
 gem 'slack-notifier'
 gem 'clearbit'
 gem 'zendesk_api'
+gem 'viewpoint'
+gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm.git'
+gem 'autodiscover', git: 'https://github.com/thorsteneckel/autodiscover.git'
 
 # event machine
 gem 'eventmachine'

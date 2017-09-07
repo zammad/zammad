@@ -78,7 +78,9 @@ in case of fixing sha hash use:
 
     def self.verify(fix_it = nil)
       success = true
-      Store::File.all.each { |item|
+      file_ids = Store::File.all.pluck(:id)
+      file_ids.each { |item_id|
+        item = Store::File.find(item_id)
         content = item.content
         sha = Digest::SHA256.hexdigest(content)
         logger.info "CHECK: Store::File.find(#{item.id})"
@@ -116,7 +118,9 @@ nice move to keep system responsive
       adapter_source = load_adapter("Store::Provider::#{source}")
       adapter_target = load_adapter("Store::Provider::#{target}")
 
-      Store::File.all.each { |item|
+      file_ids = Store::File.all.pluck(:id)
+      file_ids.each { |item_id|
+        item = Store::File.find(item_id)
         next if item.provider == target
         content = item.content
 

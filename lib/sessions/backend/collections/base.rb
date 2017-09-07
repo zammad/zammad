@@ -36,13 +36,13 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
 
     # check if update has been done
     last_change = self.class.model.constantize.latest_change
-    return if last_change == @last_change
-    @last_change = last_change
+    return if last_change.to_s == @last_change
+    @last_change = last_change.to_s
 
     # load current data
     items = load
 
-    return if !items || items.empty?
+    return if items.blank?
 
     # get relations of data
     all = []

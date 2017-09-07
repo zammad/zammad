@@ -5,7 +5,7 @@ class Stats::TicketWaitingTime
   def self.generate(user)
 
     # get users groups
-    group_ids = user.groups.map(&:id)
+    group_ids = user.group_ids_access('full')
 
     own_waiting = Ticket.where(
       'owner_id = ? AND group_id IN (?) AND updated_at > ?', user.id, group_ids, Time.zone.today

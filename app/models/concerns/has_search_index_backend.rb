@@ -24,6 +24,7 @@ update search index, if configured - will be executed automatically
     # start background job to transfer data to search index
     return if !SearchIndexBackend.enabled?
     Delayed::Job.enqueue(BackgroundJobSearchIndex.new(self.class.to_s, id))
+    true
   end
 
 =begin
@@ -38,6 +39,7 @@ delete search index object, will be executed automatically
   def search_index_destroy
     return if ignore_search_indexing?(:destroy)
     SearchIndexBackend.remove(self.class.to_s, id)
+    true
   end
 
 =begin
@@ -60,6 +62,7 @@ returns
 
     # update backend
     SearchIndexBackend.add(self.class.to_s, attributes)
+    true
   end
 
 =begin
@@ -123,14 +126,16 @@ reload search index with full data
     def search_index_reload
       tolerance       = 5
       tolerance_count = 0
-      all.order('created_at DESC').each { |item|
+      ids = all.order('created_at DESC').pluck(:id)
+      ids.each { |item_id|
+        item = find(item_id)
         next if item.ignore_search_indexing?(:destroy)
         begin
           item.search_index_update_backend
         rescue => e
-          logger.error "Unable to send #{item.class}.find(#{item.id}) backend: #{e.inspect}"
+          logger.error "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}"
           tolerance_count += 1
-          raise "Unable to send #{item.class}.find(#{item.id}) backend: #{e.inspect}" if tolerance_count == tolerance
+          raise "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}" if tolerance_count == tolerance
         end
       }
     end

@@ -9,7 +9,7 @@ module ChecksHtmlSanitized
 
   def sanitized_html_attributes
     html_attributes = self.class.instance_variable_get(:@sanitized_html) || []
-    return if html_attributes.empty?
+    return true if html_attributes.empty?
 
     html_attributes.each do |attribute|
       value = send(attribute)
@@ -19,6 +19,7 @@ module ChecksHtmlSanitized
 
       send("#{attribute}=".to_sym, HtmlSanitizer.strict(value))
     end
+    true
   end
 
   def sanitizeable?(_attribute, _value)

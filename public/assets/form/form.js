@@ -204,8 +204,14 @@ $(function() {
     if (this.options.test) {
       params.test = true
     }
+
+    params.fingerprint = this.fingerprint()
+
     $.ajax({
+      method: 'post',
       url: _this.endpoint_config,
+      cache: false,
+      processData: true,
       data: params
     }).done(function(data) {
       _this.log('debug', 'config:', data)
@@ -256,7 +262,7 @@ $(function() {
       _this.log('debug', 'currentTime', currentTime)
       _this.log('debug', 'modalOpenTime', _this.modalOpenTime.getTime())
       _this.log('debug', 'diffTime', diff)
-      if (diff < 1000*8) {
+      if (diff < 1000*10) {
         alert('Sorry, you look like an robot!')
         return
       }
@@ -317,7 +323,10 @@ $(function() {
       formData.append('test', true)
     }
     formData.append('token', this._config.token)
+
+    formData.append('fingerprint', this.fingerprint())
     _this.log('debug', 'formData', formData)
+
     return formData
   }
 
@@ -461,6 +470,22 @@ $(function() {
       }
     }
     return string
+  }
+
+  Plugin.prototype.fingerprint = function () {
+    var canvas = document.createElement('canvas')
+    var ctx = canvas.getContext('2d')
+    var txt = 'https://zammad.com'
+    ctx.textBaseline = 'top'
+    ctx.font = '12px \'Arial\''
+    ctx.textBaseline = 'alphabetic'
+    ctx.fillStyle = '#f60'
+    ctx.fillRect(125,1,62,20)
+    ctx.fillStyle = '#069'
+    ctx.fillText(txt, 2, 15)
+    ctx.fillStyle = 'rgba(100, 200, 0, 0.7)'
+    ctx.fillText(txt, 4, 17)
+    return canvas.toDataURL()
   }
 
   $.fn[pluginName] = function (options) {

@@ -82,7 +82,7 @@ returns
     # only fetch once in 30 minutes
     return true if !channel.preferences
     return true if !channel.preferences[:last_fetch]
-    return false if channel.preferences[:last_fetch] > Time.zone.now - 30.minutes
+    return false if channel.preferences[:last_fetch] > Time.zone.now - 20.minutes
     true
   end
 
@@ -183,6 +183,24 @@ returns
 =end
 
   def stream
+    sleep_on_unauthorized = 61
+    2.times { |loop_count|
+      begin
+        stream_start
+      rescue Twitter::Error::Unauthorized => e
+        Rails.logger.info "Unable to stream, try #{loop_count}, error #{e.inspect}"
+        if loop_count < 2
+          Rails.logger.info "wait for #{sleep_on_unauthorized} sec. and try it again"
+          sleep sleep_on_unauthorized
+        else
+          raise "Unable to stream, try #{loop_count}, error #{e.inspect}"
+        end
+      end
+    }
+  end
+
+  def stream_start
+
     sync = @channel.options['sync']
     raise 'Need channel.options[\'sync\'] for account, but no params found' if !sync
 
@@ -204,20 +222,21 @@ returns
       next if tweet.class != Twitter::Tweet && tweet.class != Twitter::DirectMessage
 
       # wait until own posts are stored in local database to prevent importing own tweets
-      sleep 4
+      next if @stream_client.locale_sender?(tweet) && own_tweet_already_imported?(tweet)
+
       next if Ticket::Article.find_by(message_id: tweet.id)
 
       # check direct message
       if tweet.class == Twitter::DirectMessage
         if sync['direct_messages'] && sync['direct_messages']['group_id'] != ''
-          next if @stream_client.direct_message_limit_reached(tweet)
+          next if @stream_client.direct_message_limit_reached(tweet, 2)
           @stream_client.to_group(tweet, sync['direct_messages']['group_id'], @channel)
         end
         next
       end
 
       next if !track_retweets? && tweet.retweet?
-      next if @stream_client.tweet_limit_reached(tweet)
+      next if @stream_client.tweet_limit_reached(tweet, 2)
 
       # check if it's mention
       if sync['mentions'] && sync['mentions']['group_id'] != ''
@@ -285,11 +304,13 @@ returns
         next if !track_retweets? && tweet.retweet?
 
         # ignore older messages
-        if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
+        if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
           older_import += 1
           Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
           next
         end
+
+        next if @rest_client.locale_sender?(tweet) && own_tweet_already_imported?(tweet)
         next if Ticket::Article.find_by(message_id: tweet.id)
         break if @rest_client.tweet_limit_reached(tweet)
         @rest_client.to_group(tweet, search[:group_id], @channel)
@@ -307,7 +328,7 @@ returns
       next if !track_retweets? && tweet.retweet?
 
       # ignore older messages
-      if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
+      if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
         older_import += 1
         Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
         next
@@ -327,7 +348,7 @@ returns
     @rest_client.client.direct_messages(full_text: 'true').each { |tweet|
 
       # ignore older messages
-      if (@channel.created_at - 15.days) > tweet.created_at || older_import >= older_import_max
+      if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
         older_import += 1
         Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
         next
@@ -351,4 +372,28 @@ returns
   def track_retweets?
     @channel.options && @channel.options['sync'] && @channel.options['sync']['track_retweets']
   end
+
+  def own_tweet_already_imported?(tweet)
+    event_time = Time.zone.now
+    sleep 4
+    12.times { |loop_count|
+      if Ticket::Article.find_by(message_id: tweet.id)
+        Rails.logger.debug "Own tweet already imported, skipping tweet #{tweet.id}"
+        return true
+      end
+      count = Delayed::Job.where('created_at < ?', event_time).count
+      break if count.zero?
+      sleep_time = 2 * count
+      sleep_time = 5 if sleep_time > 5
+      Rails.logger.debug "Delay importing own tweets - sleep #{sleep_time} (loop #{loop_count})"
+      sleep sleep_time
+    }
+
+    if Ticket::Article.find_by(message_id: tweet.id)
+      Rails.logger.debug "Own tweet already imported, skipping tweet #{tweet.id}"
+      return true
+    end
+    false
+  end
+
 end

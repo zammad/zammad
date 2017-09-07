@@ -49,7 +49,7 @@ add a new attribute entry for an object
     data_type: 'select',
     data_option: {
       relation: 'Group',
-      relation_condition: { access: 'rw' },
+      relation_condition: { access: 'full' },
       multiple: false,
       null: true,
       translate: false,
@@ -107,6 +107,57 @@ possible types
       'aa' => 'aa (comment)',
       'bb' => 'bb (comment)',
     },
+    maxlength: 200,
+    nulloption: true,
+    null: false,
+    multiple: false, # currently only "false" supported
+    translate: true, # optional
+    note: 'some additional comment', # optional
+  },
+
+# tree_select
+
+  data_type: 'tree_select',
+  data_option: {
+    default: 'aa',
+    options: [
+      {
+        'value'       => 'aa',
+        'name'        => 'aa (comment)',
+        'children'    => [
+            {
+              'value' => 'aaa',
+              'name'  => 'aaa (comment)',
+            },
+            {
+              'value' => 'aab',
+              'name'  => 'aab (comment)',
+            },
+            {
+              'value' => 'aac',
+              'name'  => 'aac (comment)',
+            },
+        ]
+      },
+      {
+        'value'       => 'bb',
+        'name'        => 'bb (comment)',
+        'children'    => [
+            {
+              'value' => 'bba',
+              'name'  => 'aaa (comment)',
+            },
+            {
+              'value' => 'bbb',
+              'name'  => 'bbb (comment)',
+            },
+            {
+              'value' => 'bbc',
+              'name'  => 'bbc (comment)',
+            },
+        ]
+      },
+    ],
     maxlength: 200,
     nulloption: true,
     null: false,
@@ -550,7 +601,7 @@ to send no browser reload event, pass false
       end
 
       data_type = nil
-      if attribute.data_type =~ /^input|select|richtext|textarea|checkbox$/
+      if attribute.data_type =~ /^input|select|tree_select|richtext|textarea|checkbox$/
         data_type = :string
       elsif attribute.data_type =~ /^integer|user_autocompletion$/
         data_type = :integer
@@ -564,7 +615,7 @@ to send no browser reload event, pass false
 
       # change field
       if model.column_names.include?(attribute.name)
-        if attribute.data_type =~ /^input|select|richtext|textarea|checkbox$/
+        if attribute.data_type =~ /^input|select|tree_select|richtext|textarea|checkbox$/
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -603,7 +654,7 @@ to send no browser reload event, pass false
       end
 
       # create field
-      if attribute.data_type =~ /^input|select|richtext|textarea|checkbox$/
+      if attribute.data_type =~ /^input|select|tree_select|richtext|textarea|checkbox$/
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -669,6 +720,9 @@ to send no browser reload event, pass false
   def self.reset_database_info(model)
     model.connection.schema_cache.clear!
     model.reset_column_information
+    # rebuild columns cache to reduce the risk of
+    # race conditions in re-setting it with outdated data
+    model.columns
   end
 
   def check_name
@@ -704,7 +758,7 @@ to send no browser reload event, pass false
     if !data_type
       raise 'Need data_type param'
     end
-    if data_type !~ /^(input|user_autocompletion|checkbox|select|datetime|date|tag|richtext|textarea|integer|autocompletion_ajax|boolean|user_permission|active)$/
+    if data_type !~ /^(input|user_autocompletion|checkbox|select|tree_select|datetime|date|tag|richtext|textarea|integer|autocompletion_ajax|boolean|user_permission|active)$/
       raise "Invalid data_type param '#{data_type}'"
     end
 
@@ -735,7 +789,7 @@ to send no browser reload event, pass false
       }
     end
 
-    if data_type == 'select' || data_type == 'checkbox'
+    if data_type == 'select' || data_type == 'tree_select' || data_type == 'checkbox'
       raise 'Need data_option[:default] param' if !data_option.key?(:default)
       raise 'Invalid data_option[:options] or data_option[:relation] param' if data_option[:options].nil? && data_option[:relation].nil?
       if !data_option.key?(:maxlength)

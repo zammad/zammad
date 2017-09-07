@@ -25,6 +25,7 @@ class AgentTicketUpdateAndReloadTest < TestCase
     sleep 6
 
     # check if customer is shown in sidebar
+    click(css: '.active .tabsSidebar-tab[data-tab="customer"]')
     match(
       css: '.active .sidebar[data-tab="customer"]',
       value: 'nicole',
@@ -46,6 +47,7 @@ class AgentTicketUpdateAndReloadTest < TestCase
     reload()
 
     # check if customer is still shown in sidebar
+    click(css: '.active .tabsSidebar-tab[data-tab="customer"]')
     watch_for(
       css: '.active .sidebar[data-tab="customer"]',
       value: 'nicole',

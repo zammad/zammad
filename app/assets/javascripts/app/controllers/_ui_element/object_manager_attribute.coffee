@@ -15,7 +15,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
         attribute: attribute
         params: params
       ))
-      @[localParams.data_type](element, localParams, params)
+      @[localParams.data_type](element, localParams, params, attribute)
       localItem.find('.js-dataMap').html(element)
       localItem.find('.js-dataScreens').html(@dataScreens(attribute, localParams, params))
 
@@ -24,6 +24,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       date: 'Date'
       input: 'Text'
       select: 'Select'
+      tree_select: 'Tree Select'
       boolean: 'Boolean'
       integer: 'Integer'
 
@@ -81,9 +82,9 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
           view:
             shown: true
           invite_customer:
-            show: false
+            shown: false
             required: false
-        'admin.group':
+        'admin.user':
           create:
             shown: true
             required: false
@@ -93,10 +94,10 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
           view:
             shown: true
           invite_agent:
-            show: false
+            shown: false
             required: false
           invite_customer:
-            show: false
+            shown: false
             required: false
       Organization:
         'ticket.customer':
@@ -111,7 +112,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
             required: false
           view:
             shown: true
-        'admin.group':
+        'admin.organization':
           create:
             shown: true
             required: false
@@ -306,6 +307,69 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
         lastSelected = false
         return
       lastSelected = value
+    )
+
+  @buildRow: (element, child, level = 0, parentElement) ->
+    newRow = element.find('.js-template').clone().removeClass('js-template')
+    newRow.find('.js-key').attr('level', level)
+    newRow.find('.js-key').val(child.name)
+    newRow.find('td').first().css('padding-left', "#{(level * 20) + 10}px")
+    if level is 5
+      newRow.find('.js-addChild').addClass('hide')
+
+    if parentElement
+      parentElement.after(newRow)
+      return
+
+    element.find('.js-treeTable').append(newRow)
+    if child.children
+      for subChild in child.children
+        @buildRow(element, subChild, level + 1)
+
+  @tree_select: (item, localParams, params, attribute) ->
+    params.data_option ||= {}
+    params.data_option.options ||= []
+    if _.isEmpty(params.data_option.options)
+      @buildRow(item, {})
+    else
+      for child in params.data_option.options
+        @buildRow(item, child)
+
+    item.on('click', '.js-addRow', (e) =>
+      e.stopPropagation()
+      e.preventDefault()
+      addRow = $(e.currentTarget).closest('tr')
+      level  = parseInt(addRow.find('.js-key').attr('level'))
+      @buildRow(item, {}, level, addRow)
+    )
+
+    item.on('click', '.js-addChild', (e) =>
+      e.stopPropagation()
+      e.preventDefault()
+      addRow = $(e.currentTarget).closest('tr')
+      level  = parseInt(addRow.find('.js-key').attr('level')) + 1
+      @buildRow(item, {}, level, addRow)
+    )
+
+    item.on('click', '.js-remove', (e) ->
+      e.stopPropagation()
+      e.preventDefault()
+      e.stopPro
+      element = $(e.target).closest('tr')
+      level  = parseInt(element.find('.js-key').attr('level'))
+      subElements = 0
+      nextElement = element
+      elementsToDelete = [element]
+      loop
+        nextElement = nextElement.next()
+        break if !nextElement.get(0)
+        nextLevel = parseInt(nextElement.find('.js-key').attr('level'))
+        break if nextLevel <= level
+        subElements += 1
+        elementsToDelete.push nextElement
+      return if subElements isnt 0 && !confirm("Delete #{subElements} sub elements?")
+      for element in elementsToDelete
+        element.remove()
     )
 
   @boolean: (item, localParams, params) ->

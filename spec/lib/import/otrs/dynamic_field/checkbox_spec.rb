@@ -29,7 +29,7 @@ RSpec.describe Import::OTRS::DynamicField::Checkbox do
           true => 'Yes',
           false => 'No'
         },
-        null: false,
+        null: true,
         translate: true
       }
     }

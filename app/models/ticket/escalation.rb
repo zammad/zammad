@@ -322,23 +322,23 @@ returns
 =end
 
   def destination_time(start_time, move_minutes, biz, history_data)
-    destination_time = biz.time(move_minutes, :minutes).after(start_time)
+    local_destination_time = biz.time(move_minutes, :minutes).after(start_time)
 
     # go step by step to end of move_minutes until move_minutes is 0
     200.times.each { |_count|
 
       # check if we have pending time in the range to the destination time
-      working_minutes = period_working_minutes(start_time, destination_time, biz, history_data, true)
+      working_minutes = period_working_minutes(start_time, local_destination_time, biz, history_data, true)
       move_minutes -= working_minutes
 
       # skip if no pending time is given
       break if move_minutes <= 0
 
       # set pending destination to start time and add pending time to destination time
-      start_time       = destination_time
-      destination_time = biz.time(move_minutes, :minutes).after(start_time)
+      start_time             = local_destination_time
+      local_destination_time = biz.time(move_minutes, :minutes).after(start_time)
     }
-    destination_time
+    local_destination_time
   end
 
   # get period working minutes time in minutes

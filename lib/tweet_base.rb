@@ -10,11 +10,11 @@ class TweetBase
   def user(tweet)
 
     if tweet.class == Twitter::DirectMessage
-      Rails.logger.error "Twitter sender for dm (#{tweet.id}): found"
+      Rails.logger.debug "Twitter sender for dm (#{tweet.id}): found"
       Rails.logger.debug tweet.sender.inspect
       return tweet.sender
     elsif tweet.class == Twitter::Tweet
-      Rails.logger.error "Twitter sender for tweet (#{tweet.id}): found"
+      Rails.logger.debug "Twitter sender for tweet (#{tweet.id}): found"
       Rails.logger.debug tweet.user.inspect
       return tweet.user
     else
@@ -62,7 +62,7 @@ class TweetBase
       user_data[:active]    = true
       user_data[:role_ids]  = Role.signup_role_ids
 
-      user = User.create(user_data)
+      user = User.create!(user_data)
     end
 
     if user_data[:image_source]
@@ -93,7 +93,7 @@ class TweetBase
     if auth
       auth.update_attributes(auth_data)
     else
-      Authorization.create(auth_data)
+      Authorization.create!(auth_data)
     end
 
     user
@@ -128,10 +128,10 @@ class TweetBase
 
     state = get_state(channel, tweet)
 
-    Ticket.create(
+    Ticket.create!(
       customer_id: user.id,
       title:       title,
-      group_id:    group_id,
+      group_id:    group_id || Group.first.id,
       state:       state,
       priority:    Ticket::Priority.find_by(name: '2 normal'),
       preferences: {
@@ -235,29 +235,12 @@ class TweetBase
 
     Rails.logger.debug 'import tweet'
 
-    ticket = nil
     # use transaction
     if @connection_type == 'stream'
       ActiveRecord::Base.connection.reconnect!
-
-      # if sender is a system account, wait until twitter message id is stored
-      # on article to prevent two (own created & twitter created) articles
-      tweet_user = user(tweet)
-      Channel.where(area: 'Twitter::Account').each { |local_channel|
-        next if !local_channel.options
-        next if !local_channel.options[:user]
-        next if !local_channel.options[:user][:id]
-        next if local_channel.options[:user][:id].to_s != tweet_user.id.to_s
-        sleep 5
-
-        # return if tweet already exists (send via system)
-        if Ticket::Article.find_by(message_id: tweet.id)
-          Rails.logger.debug "Do not import tweet.id #{tweet.id}, article already exists"
-          return nil
-        end
-      }
     end
 
+    ticket = nil
     Transaction.execute(reset_user_id: true) do
 
       # check if parent exists
@@ -272,8 +255,15 @@ class TweetBase
             ticket = existing_article.ticket
           else
             begin
-              parent_tweet = @client.status(tweet.in_reply_to_status_id)
-              ticket       = to_group(parent_tweet, group_id, channel)
+
+              # in case of streaming mode, get parent tweet via REST client
+              if @connection_type == 'stream'
+                client = TweetRest.new(@auth)
+                parent_tweet = client.status(tweet.in_reply_to_status_id)
+              else
+                parent_tweet = @client.status(tweet.in_reply_to_status_id)
+              end
+              ticket = to_group(parent_tweet, group_id, channel)
             rescue Twitter::Error::NotFound, Twitter::Error::Forbidden => e
               # just ignore if tweet has already gone
               Rails.logger.info "Can't import tweet (#{tweet.in_reply_to_status_id}), #{e.message}"
@@ -343,11 +333,12 @@ class TweetBase
     Ticket::State.find_by(default_follow_up: true)
   end
 
-  def tweet_limit_reached(tweet)
+  def tweet_limit_reached(tweet, factor = 1)
     max_count = 120
     if @connection_type == 'stream'
       max_count = 30
     end
+    max_count = max_count * factor
     type_id = Ticket::Article::Type.lookup(name: 'twitter status').id
     created_at = Time.zone.now - 15.minutes
     created_count = Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count
@@ -358,11 +349,12 @@ class TweetBase
     false
   end
 
-  def direct_message_limit_reached(tweet)
+  def direct_message_limit_reached(tweet, factor = 1)
     max_count = 100
     if @connection_type == 'stream'
       max_count = 40
     end
+    max_count = max_count * factor
     type_id = Ticket::Article::Type.lookup(name: 'twitter direct-message').id
     created_at = Time.zone.now - 15.minutes
     created_count = Ticket::Article.where('created_at > ? AND type_id = ?', created_at, type_id).count
@@ -377,13 +369,34 @@ class TweetBase
 
     # replace Twitter::NullObject with nill to prevent elasticsearch index issue
     preferences.each { |_key, value|
-      next if value.class != ActiveSupport::HashWithIndifferentAccess
+      next if value.class != ActiveSupport::HashWithIndifferentAccess && value.class != Hash
       value.each { |sub_key, sub_level|
+        if sub_level.class == NilClass
+          value[sub_key] = nil
+          next
+        end
+        if sub_level.class == Twitter::Place
+          value[sub_key] = sub_level.attrs
+          next
+        end
         next if sub_level.class != Twitter::NullObject
         value[sub_key] = nil
       }
     }
     preferences
+  end
+
+  def locale_sender?(tweet)
+    tweet_user = user(tweet)
+    Channel.where(area: 'Twitter::Account').each { |local_channel|
+      next if !local_channel.options
+      next if !local_channel.options[:user]
+      next if !local_channel.options[:user][:id]
+      next if local_channel.options[:user][:id].to_s != tweet_user.id.to_s
+      Rails.logger.debug "Tweet is sent by local account with user id #{tweet_user.id} and tweet.id #{tweet.id}"
+      return true
+    }
+    false
   end
 
 end

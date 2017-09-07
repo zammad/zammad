@@ -2,12 +2,6 @@
 require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
-  test 'aaa - setup' do
-    user = User.lookup(id: 1)
-    roles = Role.where(name: %w(Agent Admin))
-    user.roles = roles
-    user.save
-  end
 
   test 'b cache' do
     Sessions::CacheIn.set('last_run_test', true, { expires_in: 1.second })
@@ -56,10 +50,9 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'c session create / update' do
 
     # create users
-    roles  = Role.where(name: ['Agent'])
+    roles  = Role.where(name: %w(Agent))
     groups = Group.all
 
-    UserInfo.current_user_id = 1
     agent1 = User.create_or_update(
       login: 'session-agent-1',
       firstname: 'Session',
@@ -69,9 +62,9 @@ class SessionBasicTest < ActiveSupport::TestCase
       active: true,
       roles: roles,
       groups: groups,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
-    agent1.roles = roles
-    agent1.save
 
     # create sessions
     client_id1 = '123456789'
@@ -109,10 +102,25 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'c collections group' do
     require 'sessions/backend/collections/group.rb'
 
-    UserInfo.current_user_id = 2
-    user = User.lookup(id: 1)
-    collection_client1 = Sessions::Backend::Collections::Group.new(user, {}, false, '123-1', 3)
-    collection_client2 = Sessions::Backend::Collections::Group.new(user, {}, false, '234-2', 3)
+    # create users
+    roles  = Role.where(name: ['Agent'])
+    groups = Group.all
+
+    agent1 = User.create_or_update(
+      login: 'session-collection-agent-1',
+      firstname: 'Session',
+      lastname: 'Agent 1',
+      email: 'session-collection-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    collection_client1 = Sessions::Backend::Collections::Group.new(agent1, {}, false, '123-1', 3)
+    collection_client2 = Sessions::Backend::Collections::Group.new(agent1, {}, false, '234-2', 3)
 
     # get whole collections
     result1 = collection_client1.push
@@ -131,12 +139,14 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # change collection
     group = Group.first
+    travel 4.seconds
     group.touch
     travel 4.seconds
 
     # get whole collections
     result1 = collection_client1.push
     assert(!result1.empty?, 'check collections - after touch')
+
     result2 = collection_client2.push
     assert(!result2.empty?, 'check collections - after touch')
     assert_equal(result1.to_yaml, result2.to_yaml, 'check collections')
@@ -148,7 +158,12 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert_nil(result2, 'check collections - after touch - recall')
 
     # change collection
-    group = Group.create(name: "SomeGroup::#{rand(999_999)}", active: true)
+    group = Group.create!(
+      name: "SomeGroup::#{rand(999_999)}",
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
     travel 4.seconds
 
     # get whole collections
@@ -191,7 +206,6 @@ class SessionBasicTest < ActiveSupport::TestCase
     roles  = Role.where(name: %w(Agent Admin))
     groups = Group.all
 
-    UserInfo.current_user_id = 2
     agent1 = User.create_or_update(
       login: 'activity-stream-agent-1',
       firstname: 'Session',
@@ -201,9 +215,9 @@ class SessionBasicTest < ActiveSupport::TestCase
       active: true,
       roles: roles,
       groups: groups,
+      updated_by_id: 1,
+      created_by_id: 1,
     )
-    agent1.roles = roles
-    assert(agent1.save, 'create/update agent1')
 
     # create min. on activity record
     random_name = "Random:#{rand(9_999_999_999)}"
@@ -230,7 +244,15 @@ class SessionBasicTest < ActiveSupport::TestCase
     assert(!result1, 'check as agent1 - recall 2')
 
     agent1.update_attribute(:email, 'activity-stream-agent11@example.com')
-    ticket = Ticket.create(title: '12323', group_id: 1, priority_id: 1, state_id: 1, customer_id: 1)
+    ticket = Ticket.create!(
+      title: '12323',
+      group_id: 1,
+      priority_id: 1,
+      state_id: 1,
+      customer_id: 1,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
 
     travel 4.seconds
 
@@ -242,25 +264,48 @@ class SessionBasicTest < ActiveSupport::TestCase
 
   test 'c ticket_create' do
 
-    UserInfo.current_user_id = 2
-    user = User.lookup(id: 1)
-    ticket_create_client1 = Sessions::Backend::TicketCreate.new(user, {}, false, '123-1', 3)
+    # create users
+    roles  = Role.where(name: %w(Agent Admin))
+    groups = Group.all
+
+    agent1 = User.create_or_update(
+      login: 'ticket_create-agent-1',
+      firstname: 'Session',
+      lastname: "ticket_create #{rand(99_999)}",
+      email: 'ticket_create-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket_create_client1 = Sessions::Backend::TicketCreate.new(agent1, {}, false, '123-1', 3)
 
     # get as stream
     result1 = ticket_create_client1.push
     assert(result1, 'check ticket_create')
-    sleep 0.6
+    travel 1.second
 
     # next check should be empty
     result1 = ticket_create_client1.push
     assert(!result1, 'check ticket_create - recall')
 
     # next check should be empty
-    sleep 0.6
+    travel 1.second
     result1 = ticket_create_client1.push
     assert(!result1, 'check ticket_create - recall 2')
 
-    Group.create(name: "SomeTicketCreateGroup::#{rand(999_999)}", active: true)
+    Group.create!(
+      name: "SomeTicketCreateGroup::#{rand(999_999)}",
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    groups = Group.all
+    agent1.groups = groups
+    agent1.save!
 
     travel 4.seconds
 

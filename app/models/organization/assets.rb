@@ -39,7 +39,12 @@ returns
         # loops, will be updated with lookup attributes later
         data[ app_model_organization ][ id ] = local_attributes
 
-        if local_attributes['member_ids']
+        if local_attributes['member_ids'].present?
+
+          # featrue used for different propose, do limit refernces
+          if local_attributes['member_ids'].count > 100
+            local_attributes['member_ids'] = local_attributes['member_ids'].sort[0, 100]
+          end
           local_attributes['member_ids'].each { |local_user_id|
             next if data[ app_model_user ][ local_user_id ]
             user = User.lookup(id: local_user_id)

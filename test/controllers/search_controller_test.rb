@@ -1,14 +1,9 @@
 # encoding: utf-8
 require 'test_helper'
+require 'rake'
 
 class SearchControllerTest < ActionDispatch::IntegrationTest
-  def base_data
-
-    # clear cache
-    Cache.clear
-
-    # remove background jobs
-    Delayed::Job.destroy_all
+  setup do
 
     # set current user
     UserInfo.current_user_id = 1
@@ -90,18 +85,14 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       organization_id: @organization.id,
     )
 
-    Ticket.all.destroy_all
-
-    @ticket1 = Ticket.create(
+    @ticket1 = Ticket.create!(
       title: 'test 1234-1',
       group: Group.lookup(name: 'Users'),
       customer_id: @customer_without_org.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: 1,
-      created_by_id: 1,
     )
-    @article1 = Ticket::Article.create(
+    @article1 = Ticket::Article.create!(
       ticket_id: @ticket1.id,
       from: 'some_sender1@example.com',
       to: 'some_recipient1@example.com',
@@ -111,20 +102,16 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: 1,
-      created_by_id: 1,
     )
-    sleep 1
-    @ticket2 = Ticket.create(
+    travel 1.second
+    @ticket2 = Ticket.create!(
       title: 'test 1234-2',
       group: Group.lookup(name: 'Users'),
       customer_id: @customer_with_org2.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: 1,
-      created_by_id: 1,
     )
-    @article2 = Ticket::Article.create(
+    @article2 = Ticket::Article.create!(
       ticket_id: @ticket2.id,
       from: 'some_sender2@example.com',
       to: 'some_recipient2@example.com',
@@ -134,20 +121,16 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: 1,
-      created_by_id: 1,
     )
-    sleep 1
-    @ticket3 = Ticket.create(
+    travel 1.second
+    @ticket3 = Ticket.create!(
       title: 'test 1234-2',
       group: Group.lookup(name: 'Users'),
       customer_id: @customer_with_org3.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
-      updated_by_id: 1,
-      created_by_id: 1,
     )
-    @article3 = Ticket::Article.create(
+    @article3 = Ticket::Article.create!(
       ticket_id: @ticket3.id,
       from: 'some_sender3@example.com',
       to: 'some_recipient3@example.com',
@@ -157,12 +140,10 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      updated_by_id: 1,
-      created_by_id: 1,
     )
 
     # configure es
-    if ENV['ES_URL']
+    if ENV['ES_URL'].present?
       #fail "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
       Setting.set('es_url', ENV['ES_URL'])
 
@@ -171,18 +152,25 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       # Setting.set('es_user', 'elasticsearch')
       # Setting.set('es_password', 'zammad')
 
+      if ENV['ES_INDEX_RAND'].present?
+        ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
+      end
+      if ENV['ES_INDEX'].blank?
+        raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+      end
+      Setting.set('es_index', ENV['ES_INDEX'])
+
       # set max attachment size in mb
       Setting.set('es_attachment_max_size_in_mb', 1)
 
-      if ENV['ES_INDEX']
-        #fail "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
-        Setting.set('es_index', ENV['ES_INDEX'])
-      end
+      travel 1.minute
 
       # drop/create indexes
+      Rake::Task.clear
+      Zammad::Application.load_tasks
       #Rake::Task["searchindex:drop"].execute
       #Rake::Task["searchindex:create"].execute
-      system('rake searchindex:rebuild')
+      Rake::Task['searchindex:rebuild'].execute
 
       # execute background jobs
       Scheduler.worker(true)
@@ -191,9 +179,13 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'settings index with nobody' do
-    base_data
+  teardown do
+    if ENV['ES_URL'].present?
+      Rake::Task['searchindex:drop'].execute
+    end
+  end
 
+  test 'settings index with nobody' do
     params = {
       query: 'test 1234',
       limit: 2,
@@ -219,19 +211,15 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Hash, result.class)
     assert_not(result.empty?)
     assert_equal('authentication failed', result['error'])
-
   end
 
   test 'settings index with admin' do
-    base_data
-
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('search-admin@example.com', 'adminpw')
 
     params = {
       query: '1234*',
       limit: 1,
     }
-
     post '/api/v1/search', params.to_json, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -293,12 +281,9 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     assert_equal('User', result['result'][0]['type'])
     assert_equal(@agent.id, result['result'][0]['id'])
     assert_not(result['result'][1])
-
   end
 
   test 'settings index with agent' do
-    base_data
-
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('search-agent@example.com', 'agentpw')
 
     params = {
@@ -367,12 +352,9 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     assert_equal('User', result['result'][0]['type'])
     assert_equal(@agent.id, result['result'][0]['id'])
     assert_not(result['result'][1])
-
   end
 
   test 'settings index with customer 1' do
-    base_data
-
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('search-customer1@example.com', 'customer1pw')
 
     params = {
@@ -413,12 +395,9 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_not(result['result'][0])
-
   end
 
   test 'settings index with customer 2' do
-    base_data
-
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('search-customer2@example.com', 'customer2pw')
 
     params = {
@@ -463,7 +442,6 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_not(result['result'][0])
-
   end
 
 end

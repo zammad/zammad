@@ -447,7 +447,7 @@ Managing Director: Martin Edenhofer
           # mutt c1abb5fb77a9d2ab2017749a7987c074
           {
             md5: '2ef81e47872d42efce7ef34bfa2de043',
-            filename: 'file-1',
+            filename: '¼¨Ð§¹ÜÀí,¾¿¾¹Ë­´íÁË.xls',
           },
         ],
         params: {
@@ -499,7 +499,7 @@ Managing Director: Martin Edenhofer
         body_md5: '6021dd92d8e7844e6bb9b5bb7a4adfb8',
         params: {
           from: '"我" <>',
-          from_email: '"我" <>',
+          from_email: 'vipyiming@126.com',
           from_display_name: '',
           subject: '《欧美简讯》',
           to: '377861373 <377861373@qq.com>',
@@ -1099,6 +1099,98 @@ end
           body: 'no visible content'
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail56.box'),
+        body_md5: 'ee40e852b9fa18652ea66e2eda1ecbd3',
+        attachments: [
+          {
+            md5: 'cd82962457892d2e2f2d6914da3a88ed',
+            filename: 'message.html',
+          },
+          {
+            md5: 'ddbdf67aa2f5c60c294008a54d57082b',
+            filename: 'Hofjägeralle Wasserschaden.jpg',
+          },
+        ],
+        params: {
+          from: 'Martin Edenhofer <martin@example.de>',
+          from_email: 'martin@example.de',
+          from_display_name: 'Martin Edenhofer',
+          subject: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
+          content_type: 'text/html',
+          body: 'Enjoy!',
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail57.box'),
+        body_md5: '3c5e4cf2d2a9bc572f10cd6222556027',
+        attachments: [
+          {
+            md5: 'ddbdf67aa2f5c60c294008a54d57082b',
+            filename: 'Hofjägeralle Wasserschaden.jpg',
+          },
+        ],
+        params: {
+          from: 'example@example.com',
+          from_email: 'example@example.com',
+          from_display_name: '',
+          subject: 'W.: Invoice',
+          content_type: 'text/plain',
+          body: ' 
+
+
+----- Original Nachricht ----
+Von:     example@example.com
+An:      bob@example.com
+Datum:   30.05.2017 16:17
+Betreff: Invoice
+
+Dear Mrs.Weber
+
+anbei mal wieder ein paar Invoice.
+
+Wünsche Ihnen noch einen schönen Arbeitstag.
+
+Mit freundlichen Grüßen
+
+Bob Smith
+',
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail58.box'),
+        body_md5: '548917e0bff0806f9b27c09bbf23bb38',
+        params: {
+          from: 'Yangzhou ABC Lighting Equipment <bob@example.com>, LTD <ly@example.com>',
+          from_email: 'bob@example.com',
+          from_display_name: 'Yangzhou ABC Lighting Equipment',
+          subject: 'new design solar street lights',
+          content_type: 'text/plain',
+          body: "äöüß ad asd
+
+-Martin
+
+--
+Old programmers never die. They just branch to a new address."
+        },
+      },
+      {
+        data: IO.binread('test/fixtures/mail59.box'),
+        body_md5: '548917e0bff0806f9b27c09bbf23bb38',
+        params: {
+          from: '"Yangzhou ABC Lighting Equipment " <>, "LTD" <ly@example.com>',
+          from_email: 'ly@example.com',
+          from_display_name: 'LTD',
+          subject: 'new design solar street lights',
+          content_type: 'text/plain',
+          body: "äöüß ad asd
+
+-Martin
+
+--
+Old programmers never die. They just branch to a new address."
+        },
+      },
     ]
 
     count = 0
@@ -1139,7 +1231,7 @@ end
           found = false
           data[:attachments].each { |attachment_parser|
             next if found
-            file_md5 = Digest::MD5.hexdigest( attachment_parser[:data] )
+            file_md5 = Digest::MD5.hexdigest(attachment_parser[:data])
             #puts 'Attachment:' + attachment_parser.inspect + '-' + file_md5
             if attachment[:md5] == file_md5
               found = true

@@ -3,20 +3,8 @@
 require 'test_helper'
 
 class EmailPostmasterTest < ActiveSupport::TestCase
-  test 'process with postmaster filter' do
-    group_default = Group.lookup(name: 'Users')
-    group1 = Group.create_if_not_exists(
-      name: 'Test Group1',
-      created_by_id: 1,
-      updated_by_id: 1,
-    )
-    group2 = Group.create_if_not_exists(
-      name: 'Test Group2',
-      created_by_id: 1,
-      updated_by_id: 1,
-    )
-    PostmasterFilter.destroy_all
-    PostmasterFilter.create(
+  test 'valid/invalid postmaster filter' do
+    PostmasterFilter.create!(
       name: 'not used',
       match: {
         from: {
@@ -34,7 +22,390 @@ class EmailPostmasterTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
-    PostmasterFilter.create(
+    assert_raises(Exceptions::UnprocessableEntity) {
+      PostmasterFilter.create!(
+        name: 'empty filter should not work',
+        match: {},
+        perform: {
+          'X-Zammad-Ticket-priority' => {
+            value: '3 high',
+          },
+        },
+        channel: 'email',
+        active: true,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+    }
+    assert_raises(Exceptions::UnprocessableEntity) {
+      PostmasterFilter.create!(
+        name: 'empty filter should not work',
+        match: {
+          from: {
+            operator: 'contains',
+            value: '',
+          },
+        },
+        perform: {
+          'X-Zammad-Ticket-priority' => {
+            value: '3 high',
+          },
+        },
+        channel: 'email',
+        active: true,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+    }
+    assert_raises(Exceptions::UnprocessableEntity) {
+      PostmasterFilter.create!(
+        name: 'invalid regex',
+        match: {
+          from: {
+            operator: 'contains',
+            value: 'regex:[]',
+          },
+        },
+        perform: {
+          'X-Zammad-Ticket-priority' => {
+            value: '3 high',
+          },
+        },
+        channel: 'email',
+        active: true,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+    }
+    assert_raises(Exceptions::UnprocessableEntity) {
+      PostmasterFilter.create!(
+        name: 'invalid regex',
+        match: {
+          from: {
+            operator: 'contains',
+            value: 'regex:??',
+          },
+        },
+        perform: {
+          'X-Zammad-Ticket-priority' => {
+            value: '3 high',
+          },
+        },
+        channel: 'email',
+        active: true,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+    }
+    assert_raises(Exceptions::UnprocessableEntity) {
+      PostmasterFilter.create!(
+        name: 'invalid regex',
+        match: {
+          from: {
+            operator: 'contains',
+            value: 'regex:*',
+          },
+        },
+        perform: {
+          'X-Zammad-Ticket-priority' => {
+            value: '3 high',
+          },
+        },
+        channel: 'email',
+        active: true,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+    }
+    PostmasterFilter.create!(
+      name: 'use .*',
+      match: {
+        from: {
+          operator: 'contains',
+          value: '*',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-priority' => {
+          value: '3 high',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+  end
+
+  test 'process with postmaster filter with regex' do
+    group_default = Group.lookup(name: 'Users')
+    group1 = Group.create_if_not_exists(
+      name: 'Test Group1',
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    group2 = Group.create_if_not_exists(
+      name: 'Test Group2',
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'used - empty selector',
+      match: {
+        from: {
+          operator: 'contains',
+          value: 'regex:.*',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-group_id' => {
+          value: group2.id,
+        },
+        'X-Zammad-Ticket-priority_id' => {
+          value: '1',
+        },
+        'x-Zammad-Article-Internal' => {
+          value: true,
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: Some Body <somebody@example.com>
+To: Bob <bod@example.com>
+Cc: any@example.com
+Subject: some subject - no selector
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+
+    assert_equal('Test Group2', ticket.group.name)
+    assert_equal('1 low', ticket.priority.name)
+    assert_equal('some subject - no selector', ticket.title)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(true, article.internal)
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'used - empty selector',
+      match: {
+        from: {
+          operator: 'contains',
+          value: '*',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-group_id' => {
+          value: group2.id,
+        },
+        'X-Zammad-Ticket-priority_id' => {
+          value: '1',
+        },
+        'x-Zammad-Article-Internal' => {
+          value: true,
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: Some Body <somebody@example.com>
+To: Bob <bod@example.com>
+Cc: any@example.com
+Subject: some subject - no selector
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+
+    assert_equal('Test Group2', ticket.group.name)
+    assert_equal('1 low', ticket.priority.name)
+    assert_equal('some subject - no selector', ticket.title)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(true, article.internal)
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'used - empty selector',
+      match: {
+        subject: {
+          operator: 'contains',
+          value: '*me*',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-group_id' => {
+          value: group2.id,
+        },
+        'X-Zammad-Ticket-priority_id' => {
+          value: '1',
+        },
+        'x-Zammad-Article-Internal' => {
+          value: true,
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: Some Body <somebody@example.com>
+To: Bob <bod@example.com>
+Cc: any@example.com
+Subject: *me*
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+
+    assert_equal('Test Group2', ticket.group.name)
+    assert_equal('1 low', ticket.priority.name)
+    assert_equal('*me*', ticket.title)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(true, article.internal)
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'used - empty selector',
+      match: {
+        subject: {
+          operator: 'contains not',
+          value: '*me*',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-group_id' => {
+          value: group2.id,
+        },
+        'X-Zammad-Ticket-priority_id' => {
+          value: '1',
+        },
+        'x-Zammad-Article-Internal' => {
+          value: true,
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: Some Body <somebody@example.com>
+To: Bob <bod@example.com>
+Cc: any@example.com
+Subject: *mo*
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+
+    assert_equal('Test Group2', ticket.group.name)
+    assert_equal('1 low', ticket.priority.name)
+    assert_equal('*mo*', ticket.title)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(true, article.internal)
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'used - empty selector',
+      match: {
+        subject: {
+          operator: 'contains not',
+          value: '*me*',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-group_id' => {
+          value: group2.id,
+        },
+        'X-Zammad-Ticket-priority_id' => {
+          value: '1',
+        },
+        'x-Zammad-Article-Internal' => {
+          value: true,
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: Some Body <somebody@example.com>
+To: Bob <bod@example.com>
+Cc: any@example.com
+Subject: *me*
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+
+    assert_equal('Users', ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('*me*', ticket.title)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(false, article.internal)
+
+    PostmasterFilter.destroy_all
+  end
+
+  test 'process with postmaster filter' do
+    group_default = Group.lookup(name: 'Users')
+    group1 = Group.create_if_not_exists(
+      name: 'Test Group1',
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    group2 = Group.create_if_not_exists(
+      name: 'Test Group2',
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'not used',
+      match: {
+        from: {
+          operator: 'contains',
+          value: 'nobody@example.com',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-priority' => {
+          value: '3 high',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    PostmasterFilter.create!(
       name: 'used',
       match: {
         from: {
@@ -55,7 +426,8 @@ class EmailPostmasterTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
-    PostmasterFilter.create(
+
+    PostmasterFilter.create!(
       name: 'used x-any-recipient',
       match: {
         'x-any-recipient' => {
@@ -76,6 +448,7 @@ class EmailPostmasterTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+
 
     data = 'From: me@example.com
 To: customer@example.com
@@ -111,9 +484,8 @@ Some Text'
     assert_equal('email', article.type.name)
     assert_equal(true, article.internal)
 
-
-    PostmasterFilter.create(
-      name: 'used x-any-recipient',
+    PostmasterFilter.create!(
+      name: 'used x-any-recipient 2',
       match: {
         'x-any-recipient' => {
           operator: 'contains not',
@@ -157,53 +529,8 @@ Some Text'
 
     PostmasterFilter.destroy_all
 
-    PostmasterFilter.create(
-      name: 'used - empty selector',
-      match: {
-        from: {
-          operator: 'contains',
-          value: '',
-        },
-      },
-      perform: {
-        'X-Zammad-Ticket-group_id' => {
-          value: group2.id,
-        },
-        'X-Zammad-Ticket-priority_id' => {
-          value: '1',
-        },
-        'x-Zammad-Article-Internal' => {
-          value: true,
-        },
-      },
-      channel: 'email',
-      active: true,
-      created_by_id: 1,
-      updated_by_id: 1,
-    )
-
-    data = 'From: Some Body <somebody@example.com>
-To: Bob <bod@example.com>
-Cc: any@example.com
-Subject: some subject - no selector
-
-Some Text'
-
-    parser = Channel::EmailParser.new
-    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
-
-    assert_equal('Users', ticket.group.name)
-    assert_equal('2 normal', ticket.priority.name)
-    assert_equal('some subject - no selector', ticket.title)
-
-    assert_equal('Customer', article.sender.name)
-    assert_equal('email', article.type.name)
-    assert_equal(false, article.internal)
-
-    PostmasterFilter.destroy_all
-
     # follow up with create post master filter test
-    PostmasterFilter.create(
+    PostmasterFilter.create!(
       name: 'used - empty selector',
       match: {
         from: {
@@ -270,7 +597,7 @@ Some Text"
 
     PostmasterFilter.destroy_all
 
-    PostmasterFilter.create(
+    PostmasterFilter.create!(
       name: 'used',
       match: {
         from: {
@@ -310,7 +637,7 @@ Some Text'
     assert_equal('me@example.com', ticket.customer.email)
 
     PostmasterFilter.destroy_all
-    PostmasterFilter.create(
+    PostmasterFilter.create!(
       name: 'used',
       match: {
         from: {
@@ -350,7 +677,7 @@ Some Text'
     assert_equal('me@example.com', ticket.customer.email)
 
     PostmasterFilter.destroy_all
-    PostmasterFilter.create(
+    PostmasterFilter.create!(
       name: 'used',
       match: {
         from: {
@@ -394,6 +721,205 @@ Some Text'
     assert_equal('2 normal', ticket.priority.name)
 
     PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'Autoresponder',
+      match: {
+        'auto-submitted' => {
+          'operator' => 'contains not',
+          'value' => 'auto-generated',
+        },
+        'from' => {
+          'operator' => 'contains',
+          'value' => '@example.com',
+        }
+      },
+      perform: {
+        'x-zammad-article-internal' => {
+          'value' => 'true',
+        },
+        'x-zammad-article-type_id' => {
+          'value' => Ticket::Article::Type.find_by(name: 'note').id.to_s,
+        },
+        'x-zammad-ignore' => {
+          'value' => 'false',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: ME Bob <me@example.com>
+To: customer@example.com
+Subject: some subject
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+    assert_equal('Users', ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('some subject', ticket.title)
+    assert_equal('me@example.com', ticket.customer.email)
+    assert_equal('2 normal', ticket.priority.name)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('note', article.type.name)
+    assert_equal(true, article.internal)
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'Autoresponder',
+      match: {
+        'auto-submitted' => {
+          'operator' => 'contains',
+          'value' => 'auto-generated',
+        },
+        'from' => {
+          'operator' => 'contains',
+          'value' => '@example.com',
+        }
+      },
+      perform: {
+        'x-zammad-article-internal' => {
+          'value' => 'true',
+        },
+        'x-zammad-article-type_id' => {
+          'value' => Ticket::Article::Type.find_by(name: 'note').id.to_s,
+        },
+        'x-zammad-ignore' => {
+          'value' => 'false',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: ME Bob <me@example.com>
+To: customer@example.com
+Subject: some subject
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+    assert_equal('Users', ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('some subject', ticket.title)
+    assert_equal('me@example.com', ticket.customer.email)
+    assert_equal('2 normal', ticket.priority.name)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(false, article.internal)
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'Autoresponder',
+      match: {
+        'auto-submitted' => {
+          'operator' => 'contains not',
+          'value' => 'auto-generated',
+        },
+        'to' => {
+          'operator' => 'contains',
+          'value' => 'customer@example.com',
+        },
+        'from' => {
+          'operator' => 'contains',
+          'value' => '@example.com',
+        }
+      },
+      perform: {
+        'x-zammad-article-internal' => {
+          'value' => 'true',
+        },
+        'x-zammad-article-type_id' => {
+          'value' => Ticket::Article::Type.find_by(name: 'note').id.to_s,
+        },
+        'x-zammad-ignore' => {
+          'value' => 'false',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: ME Bob <me@example.com>
+To: customer@example.com
+Subject: some subject
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+    assert_equal('Users', ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('some subject', ticket.title)
+    assert_equal('me@example.com', ticket.customer.email)
+    assert_equal('2 normal', ticket.priority.name)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('note', article.type.name)
+    assert_equal(true, article.internal)
+
+    PostmasterFilter.destroy_all
+    PostmasterFilter.create!(
+      name: 'Autoresponder',
+      match: {
+        'auto-submitted' => {
+          'operator' => 'contains',
+          'value' => 'auto-generated',
+        },
+        'to' => {
+          'operator' => 'contains',
+          'value' => 'customer1@example.com',
+        },
+        'from' => {
+          'operator' => 'contains',
+          'value' => '@example.com',
+        }
+      },
+      perform: {
+        'x-zammad-article-internal' => {
+          'value' => 'true',
+        },
+        'x-zammad-article-type_id' => {
+          'value' => Ticket::Article::Type.find_by(name: 'note').id.to_s,
+        },
+        'x-zammad-ignore' => {
+          'value' => 'false',
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: ME Bob <me@example.com>
+To: customer@example.com
+Subject: some subject
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({ group_id: group_default.id, trusted: false }, data)
+    assert_equal('Users', ticket.group.name)
+    assert_equal('2 normal', ticket.priority.name)
+    assert_equal('some subject', ticket.title)
+    assert_equal('me@example.com', ticket.customer.email)
+    assert_equal('2 normal', ticket.priority.name)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(false, article.internal)
+
   end
 
 end

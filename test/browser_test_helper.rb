@@ -472,13 +472,14 @@ class TestCase < Test::Unit::TestCase
     if params[:position] == 'botton'
       position = 'false'
     end
-
+    screenshot(browser: instance, comment: 'scroll_to_before')
     execute(
       browser:  instance,
       js:       "\$('#{params[:css]}').get(0).scrollIntoView(#{position})",
       mute_log: params[:mute_log]
     )
     sleep 0.3
+    screenshot(browser: instance, comment: 'scroll_to_after')
   end
 
 =begin
@@ -495,7 +496,9 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
+    screenshot(browser: instance, comment: 'modal_ready_before')
     sleep 3
+    screenshot(browser: instance, comment: 'modal_ready_after')
   end
 
 =begin
@@ -513,11 +516,13 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
+    screenshot(browser: instance, comment: 'modal_disappear_before')
     watch_for_disappear(
       browser: instance,
       css:     '.modal',
       timeout: params[:timeout] || 8,
     )
+    screenshot(browser: instance, comment: 'modal_disappear_after')
   end
 
 =begin
@@ -1864,17 +1869,31 @@ wait untill text in selector disabppears
 
         # check if owner selection exists
         count = instance.find_elements(css: '.content.active .newTicket select[name="group_id"] option').count
+        if count.nonzero?
+          instance.find_elements(css: '.content.active .newTicket select[name="group_id"] option').each { |element|
+            log('ticket_create invalid group count', text: element.text)
+          }
+        end
         assert_equal(0, count, 'owner selection should not be showm')
 
         # check count of agents, should be only 3 / - selection + master + agent on init screen
         count = instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').count
+        if count != 3
+          instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').each { |element|
+            log('ticket_create invalid owner count', text: element.text)
+          }
+        end
         assert_equal(3, count, 'check if owner selection is - selection + master + agent per default')
-
       else
 
         # check count of agents, should be only 1 / - selection on init screen
         if !params[:disable_group_check]
           count = instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').count
+          if count != 1
+            instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').each { |element|
+              log('ticket_create invalid owner count', text: element.text)
+            }
+          end
           assert_equal(1, count, 'check if owner selection is empty per default')
         end
         select(
@@ -2242,7 +2261,7 @@ wait untill text in selector disabppears
     9.times {
       begin
         text = instance.find_elements(css: '.content.active .js-reset')[0].text
-        if !text || text.empty?
+        if text.blank?
           screenshot(browser: instance, comment: 'ticket_update_ok')
           sleep 1
           return true
@@ -2869,7 +2888,10 @@ wait untill text in selector disabppears
       name:      'some sla' + random,
       signature: 'some signature bame',
       member:    [
-        'some_user_login',
+        {
+          login: 'some_user_login',
+          access: 'all',
+        },
       ],
     },
   )
@@ -2922,20 +2944,21 @@ wait untill text in selector disabppears
 
         # add member
         if data[:member]
-          data[:member].each { |login|
+          data[:member].each { |member|
             instance.find_elements(css: 'a[href="#manage"]')[0].click
             sleep 1
             instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
             sleep 3
             element = instance.find_elements(css: '.content.active [name="search"]')[0]
             element.clear
-            element.send_keys(login)
+            element.send_keys(member[:login])
             sleep 3
             #instance.find_elements(:css => '.content.active table [data-id]')[0].click
             instance.execute_script('$(".content.active  table [data-id] td").first().click()')
-            sleep 3
+            modal_ready(browser: instance)
             #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
-            instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
+            instance.execute_script('$(".js-groupList tr:contains(\"' + data[:name] + '\") .js-groupListItem[value=' + member[:access] + ']").prop("checked", true)')
+            screenshot(browser: instance, comment: 'group_create_member')
             instance.find_elements(css: '.modal button.js-submit')[0].click
             modal_disappear(browser: instance)
           }

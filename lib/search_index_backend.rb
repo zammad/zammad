@@ -15,7 +15,7 @@ create/update/delete index
             :articles => {
               :type       => 'nested',
               :properties => {
-                'attachments' => { :type => 'attachment' }
+                'attachment' => { :type => 'attachment' }
               }
             }
           }
@@ -198,9 +198,12 @@ return search result
       data['query']['bool']['must'] = []
     end
 
-    # add * on simple query search
-    if query && query =~ /^\w+$/
-      query += '*'
+    # add * on simple query like "somephrase23" or "attribute: somephrase23"
+    if query.present?
+      query.strip!
+      if query =~ /^([[:alpha:],0-9]+|[[:alpha:],0-9]+\:\s+[[:alpha:],0-9]+)$/
+        query += '*'
+      end
     end
 
     # real search condition
@@ -427,8 +430,7 @@ return true if backend is configured
 =end
 
   def self.enabled?
-    return if !Setting.get('es_url')
-    return if Setting.get('es_url').empty?
+    return false if Setting.get('es_url').blank?
     true
   end
 

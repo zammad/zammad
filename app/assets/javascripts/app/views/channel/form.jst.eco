@@ -10,8 +10,20 @@
 <div class="page-content">
   <p><%- @T('With form you can add a form to your web page which directly generates a ticket for you.') %></p>
 
+  <h2><%- @T('Settings') %></h2>
+  <form class="js-paramsSetting">
+    <fieldset>
+      <div class="input form-group formGroup--halfSize">
+        <div class="formGroup-label">
+          <label for="form-group"><%- @T('Group selection for Ticket creation') %></label>
+        </div>
+        <div class="controls js-groupSelector" id="from-group"></div>
+      </div>
+    </fieldset>
+  </form>
+
   <h2><%- @T('Designer') %></h2>
-  <form class="js-params">
+  <form class="js-paramsDesigner">
 
     <fieldset>
       <div class="input form-group formGroup--halfSize">
@@ -114,6 +126,9 @@
       </div>
     </div>
   </div>
+  <h3><%- @T('Requirements') %></h3>
+  <p><%- @T("Zammad Forms requires jQuery. If you don't already use it on your website include it like this:") %></p>
+  <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-2.1.4.min.js"&gt;&lt;/script&gt;</code></pre>
 
   <p><%- @T('You need to add the following Javascript code snippet to your web page') %>:</p>
 

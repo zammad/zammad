@@ -266,7 +266,22 @@ returns
       }
     end
 
-    # processes a incoming event
+=begin
+
+processes a incoming event
+
+Cti::Log.process(
+  'cause' => '',
+  'event' => 'newCall',
+  'user' => 'user 1',
+  'from' => '4912347114711',
+  'to' => '4930600000000',
+  'callId' => '4991155921769858278-1',
+  'direction' => 'in',
+)
+
+=end
+
     def self.process(params)
       comment = params['cause']
       event   = params['event']
@@ -358,5 +373,23 @@ returns
         )
       }
     end
+
+=begin
+
+cleanup caller logs
+
+  Cti::Log.cleanup
+
+optional you can put the max oldest chat entries as argument
+
+  Cti::Log.cleanup(12.months)
+
+=end
+
+    def self.cleanup(diff = 12.months)
+      Cti::Log.where('created_at < ?', Time.zone.now - diff).delete_all
+      true
+    end
+
   end
 end

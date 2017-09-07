@@ -1,6 +1,17 @@
 require 'rails_helper'
+require 'models/concerns/has_groups_examples'
+require 'models/concerns/has_roles_examples'
+require 'models/concerns/has_groups_permissions_examples'
 
 RSpec.describe User do
+
+  let(:group_access_instance) { create(:user, roles: [Role.find_by(name: 'Agent')]) }
+  let(:new_group_access_instance) { build(:user, roles: [Role.find_by(name: 'Agent')]) }
+  let(:group_access_no_permission_instance) { build(:user) }
+
+  include_examples 'HasGroups'
+  include_examples 'HasRoles'
+  include_examples 'HasGroups and Permissions'
 
   let(:new_password) { 'N3W54V3PW!' }
 
@@ -12,6 +23,34 @@ RSpec.describe User do
         user.password = new_password
         user.save
       }.to change { user.login_failed }.to(0)
+    end
+  end
+
+  context '#out_of_office_agent' do
+
+    it 'responds to out_of_office_agent' do
+      user = create(:user)
+      expect(user).to respond_to(:out_of_office_agent)
+    end
+
+    context 'replacement' do
+
+      it 'finds assigned' do
+        user_replacement = create(:user)
+
+        user_ooo = create(:user,
+                          out_of_office:                true,
+                          out_of_office_start_at:       Time.zone.yesterday,
+                          out_of_office_end_at:         Time.zone.tomorrow,
+                          out_of_office_replacement_id: user_replacement.id,)
+
+        expect(user_ooo.out_of_office_agent).to eq user_replacement
+      end
+
+      it 'finds none for available users' do
+        user = create(:user)
+        expect(user.out_of_office_agent).to be nil
+      end
     end
   end
 

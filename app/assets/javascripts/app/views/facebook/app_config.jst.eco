@@ -9,7 +9,7 @@
       <label for="application_id">Facebook APP ID <span>*</span></label>
     </div>
     <div class="controls">
-      <input id="application_id" type="text" name="application_id" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.application_id %><% end %>" class="form-control" required autocomplete="new-password">
+      <input id="application_id" type="text" name="application_id" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.application_id %><% end %>" class="form-control" required autocomplete="off">
     </div>
   </div>
   <div class="input form-group">
@@ -17,7 +17,7 @@
       <label for="application_secret">Facebook App Secret <span>*</span></label>
     </div>
     <div class="controls">
-      <input id="application_secret" type="text" name="application_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.application_secret %><% end %>" class="form-control" required autocomplete="new-password">
+      <input id="application_secret" type="text" name="application_secret" value="<% if @external_credential && @external_credential.credentials: %><%= @external_credential.credentials.application_secret %><% end %>" class="form-control" required autocomplete="off">
     </div>
   </div>
   <h2><%- @T('Your callback URL') %></h2>

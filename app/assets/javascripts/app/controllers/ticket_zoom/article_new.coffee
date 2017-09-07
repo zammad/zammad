@@ -28,7 +28,62 @@ class App.TicketZoomArticleNew extends App.Controller
   constructor: ->
     super
 
-    # set possble article types
+    @internalSelector = true
+    @type = @defaults['type'] || 'note'
+    @setPossibleArticleTypes()
+
+    if @permissionCheck('ticket.customer')
+      @internalSelector = false
+
+    @textareaHeight =
+      open:   148
+      closed: 20
+
+    @dragEventCounter = 0
+    @attachments      = []
+
+    @render()
+
+    if @defaults.body or @isIE10()
+      @openTextarea(null, true)
+
+    # set article type and expand text area
+    @bind('ui::ticket::setArticleType', (data) =>
+      return if data.ticket.id.toString() isnt @ticket_id.toString()
+
+      @openTextarea(null, true)
+      for key, value of data.article
+        if key is 'body'
+          @$('[data-name="' + key + '"]').html(value)
+        else
+          @$('[name="' + key + '"]').val(value).trigger('change')
+
+      # preselect article type
+      @setArticleType(data.type.name, data.signaturePosition)
+
+      # set focus at end of field
+      if data.position is 'end'
+        @placeCaretAtEnd(@textarea.get(0))
+        return
+
+      # set focus into field
+      @textarea.focus()
+    )
+
+    # reset new article screen
+    @bind('ui::ticket::taskReset', (data) =>
+      return if data.ticket_id.toString() isnt @ticket_id.toString()
+      @type     = 'note'
+      @defaults = {}
+      @render()
+    )
+
+    # rerender, e. g. on language change
+    @bind('ui:rerender', =>
+      @render()
+    )
+
+  setPossibleArticleTypes: =>
     possibleArticleType =
       note: true
       phone: true
@@ -50,12 +105,9 @@ class App.TicketZoomArticleNew extends App.Controller
         possibleArticleType['email'] = true
 
     # gets referenced in @setArticleType
-    @internalSelector = true
-    @type = @defaults['type'] || 'note'
     @articleTypes = []
     if possibleArticleType.note
-      internal = @Config.get('ui_ticket_zoom_article_new_internal')
-
+      internal = @Config.get('ui_ticket_zoom_article_note_new_internal')
       @articleTypes.push {
         name:       'note'
         icon:       'note'
@@ -64,10 +116,13 @@ class App.TicketZoomArticleNew extends App.Controller
         features:   ['attachment']
       }
     if possibleArticleType.email
+      attributes = ['to', 'cc', 'subject']
+      if !@Config.get('ui_ticket_zoom_article_email_subject')
+        attributes = ['to', 'cc']
       @articleTypes.push {
         name:       'email'
         icon:       'email'
-        attributes: ['to', 'cc']
+        attributes: attributes
         internal:   false,
         features:   ['attachment']
       }
@@ -80,22 +135,28 @@ class App.TicketZoomArticleNew extends App.Controller
         features:   []
       }
     if possibleArticleType['twitter status']
+      attributes = ['body:limit', 'body:initials']
+      if !@Config.get('ui_ticket_zoom_article_twitter_initials')
+        attributes = ['body:limit']
       @articleTypes.push {
         name:              'twitter status'
         icon:              'twitter'
         attributes:        []
         internal:          false,
-        features:          ['body:limit']
+        features:          ['body:limit', 'body:initials']
         maxTextLength:     140
         warningTextLength: 30
       }
     if possibleArticleType['twitter direct-message']
+      attributes = ['body:limit', 'body:initials']
+      if !@Config.get('ui_ticket_zoom_article_twitter_initials')
+        attributes = ['body:limit']
       @articleTypes.push {
         name:              'twitter direct-message'
         icon:              'twitter'
         attributes:        ['to']
         internal:          false,
-        features:          ['body:limit']
+        features:          ['body:limit', 'body:initials']
         maxTextLength:     10000
         warningTextLength: 500
       }
@@ -129,57 +190,6 @@ class App.TicketZoomArticleNew extends App.Controller
           features:   ['attachment']
         },
       ]
-
-    if @permissionCheck('ticket.customer')
-      @internalSelector = false
-
-    @textareaHeight =
-      open:   148
-      closed: 20
-
-    @dragEventCounter = 0
-    @attachments      = []
-
-    @render()
-
-    if @defaults.body or @isIE10()
-      @openTextarea(null, true)
-
-    # set article type and expand text area
-    @bind('ui::ticket::setArticleType', (data) =>
-      return if data.ticket.id.toString() isnt @ticket_id.toString()
-
-      @openTextarea(null, true)
-      for key, value of data.article
-        if key is 'body'
-          @$('[data-name="' + key + '"]').html(value)
-        else
-          @$('[name="' + key + '"]').val(value).trigger('change')
-
-      # preselect article type
-      @setArticleType(data.type.name)
-
-      # set focus at end of field
-      if data.position is 'end'
-        @placeCaretAtEnd(@textarea.get(0))
-        return
-
-      # set focus into field
-      @textarea.focus()
-    )
-
-    # reset new article screen
-    @bind('ui::ticket::taskReset', (data) =>
-      return if data.ticket_id.toString() isnt @ticket_id.toString()
-      @type     = 'note'
-      @defaults = {}
-      @render()
-    )
-
-    # rerender, e. g. on language change
-    @bind('ui:rerender', =>
-      @render()
-    )
 
   placeCaretAtEnd: (el) ->
     el.focus()
@@ -229,7 +239,7 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
     configure_attributes = [
-      { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateUser: false },
+      { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateObject: false },
     ]
 
     controller = new App.ControllerForm(
@@ -300,6 +310,7 @@ class App.TicketZoomArticleNew extends App.Controller
         data:
           ticket: ticket
           user: App.Session.get()
+          config: App.Config.all()
       )
       callback = (ticket) ->
         textModule.reload(
@@ -318,9 +329,6 @@ class App.TicketZoomArticleNew extends App.Controller
       params.form_id      = @form_id
       params.content_type = 'text/html'
 
-      if !params['internal']
-        params['internal'] = false
-
       if @permissionCheck('ticket.customer')
         sender           = App.TicketArticleSender.findByAttribute('name', 'Customer')
         type             = App.TicketArticleType.findByAttribute('name', 'web')
@@ -332,15 +340,20 @@ class App.TicketZoomArticleNew extends App.Controller
         params.sender_id = sender.id
         params.type_id   = type.id
 
+    if params.internal
+      params.internal = true
+    else
+      params.internal = false
+
     if params.type is 'twitter status'
       App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
       params.content_type = 'text/plain'
-      params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
+      params.body = App.Utils.html2text(params.body, true)
 
     if params.type is 'twitter direct-message'
       App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
       params.content_type = 'text/plain'
-      params.body = "#{App.Utils.html2text(params.body, true)}\n#{@signature.text()}"
+      params.body = App.Utils.html2text(params.body, true)
 
     if params.type is 'facebook feed comment'
       App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
@@ -351,6 +364,16 @@ class App.TicketZoomArticleNew extends App.Controller
       App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
       params.content_type = 'text/plain'
       params.body = App.Utils.html2text(params.body, true)
+
+    # add initals?
+    for articleType in @articleTypes
+      if articleType.name is @type
+        if _.contains(articleType.features, 'body:initials')
+          if params.content_type is 'text/html'
+            params.body = "#{params.body}</br>#{@signature.text()}"
+          else
+            params.body = "#{params.body}\n#{@signature.text()}"
+          break
 
     params
 
@@ -411,11 +434,11 @@ class App.TicketZoomArticleNew extends App.Controller
           return false
 
     if params.type is 'twitter status'
-      textLength = @maxTextLength - params.body.length
+      textLength = @maxTextLength - App.Utils.textLengthWithUrl(params.body)
       return false if textLength < 0
 
     if params.type is 'twitter direct-message'
-      textLength = @maxTextLength - params.body.length
+      textLength = @maxTextLength - App.Utils.textLengthWithUrl(params.body)
       return false if textLength < 0
 
     true
@@ -461,12 +484,14 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @$('[name=internal]').val('')
 
-  setArticleType: (type) =>
+  setArticleType: (type, signaturePosition = 'bottom') =>
     wasScrolledToBottom = @isScrolledToBottom()
     @type = type
     @$('[name=type]').val(type).trigger('change')
     @articleNewEdit.attr('data-type', type)
     @$('.js-selectableTypes').addClass('hide').filter("[data-type='#{type}']").removeClass('hide')
+
+    @setPossibleArticleTypes()
 
     # get config
     config = {}
@@ -500,7 +525,7 @@ class App.TicketZoomArticleNew extends App.Controller
         @$('[data-name=body] [data-signature="true"]').remove()
 
       # apply new signature
-      signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), ticket: ticketCurrent })
+      signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), ticket: ticketCurrent, config: App.Config.all() })
 
       body = @$('[data-name=body]')
       if App.Utils.signatureCheck(body.html() || '', signatureFinished)
@@ -508,7 +533,10 @@ class App.TicketZoomArticleNew extends App.Controller
           body.append('<br><br>')
         signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
         App.Utils.htmlStrip(signature)
-        body.append(signature)
+        if signaturePosition is 'top'
+          body.prepend(signature)
+        else
+          body.append(signature)
         @$('[data-name=body]').replaceWith(body)
 
     # remove old signature
@@ -534,12 +562,27 @@ class App.TicketZoomArticleNew extends App.Controller
         for name in articleType.features
           if name is 'attachment'
             @$('.article-attachment, .attachments').removeClass('hide')
+          if name is 'body:initials'
+            @updateInitials()
           if name is 'body:limit'
             @maxTextLength = articleType.maxTextLength
             @warningTextLength = articleType.warningTextLength
             @delay(@updateLetterCount, 600)
-            @updateInitials()
             @$('.js-textSizeLimit').removeClass('hide')
+
+    # convert remote src images to data uri
+    @$('[data-name=body] img').each( (i,image) ->
+      $image = $(image)
+      src = $image.attr('src')
+      if !_.isEmpty(src) && !src.match(/^data:image/i)
+        canvas = document.createElement('canvas')
+        canvas.width = image.width
+        canvas.height = image.height
+        ctx = canvas.getContext('2d')
+        ctx.drawImage(image, 0, 0)
+        dataURL = canvas.toDataURL()
+        $image.attr('src', dataURL)
+    )
 
     @scrollToBottom() if wasScrolledToBottom
 
@@ -557,7 +600,8 @@ class App.TicketZoomArticleNew extends App.Controller
     return if !@maxTextLength
     return if !@warningTextLength
     params = @params()
-    textLength = @maxTextLength - params.body.length
+    textLength = App.Utils.textLengthWithUrl(params.body)
+    textLength = @maxTextLength - textLength
     className = switch
       when textLength < 0 then 'label-danger'
       when textLength < @warningTextLength then 'label-warning'

@@ -72,6 +72,7 @@ class App.UiElement.user_permission
       rolesSelected: rolesSelected
       groupsSelected: groupsSelected
       hideGroups: hideGroups
+      groupAccesses: App.Group.accesses()
     ) )
 
     # if customer, remove admin and agent
@@ -105,7 +106,7 @@ class App.UiElement.user_permission
 
           # select groups if only one is available
           if hideGroups
-            item.find('.js-groupList [name=group_ids]').prop('checked', false)
+            item.find('.js-groupList .js-groupListItem[value=full]').prop('checked', false)
         return
 
       # if role with groups plugin is selected, show group selection
@@ -114,7 +115,7 @@ class App.UiElement.user_permission
 
         # select groups if only one is available
         if hideGroups
-          item.find('.js-groupList [name=group_ids]').prop('checked', true)
+          item.find('.js-groupList .js-groupListItem[value=full]').prop('checked', true)
 
       for trigger in triggers
         trigger.trigger('change')

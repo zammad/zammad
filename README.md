@@ -9,7 +9,7 @@ with a team of agents?
 
 You're going to love Zammad!
 
-## Statusbadges
+## Status
 
 - Build: [![Build Status](https://travis-ci.org/zammad/zammad.svg?branch=develop)](https://travis-ci.org/zammad/zammad)
 - Code: [![Code Climate](https://codeclimate.com/github/zammad/zammad/badges/gpa.svg)](https://codeclimate.com/github/zammad/zammad) [![Coverage Status](https://coveralls.io/repos/github/zammad/zammad/badge.svg)](https://coveralls.io/github/zammad/zammad)

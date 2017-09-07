@@ -48,7 +48,7 @@ class RecentViewTest < ActiveSupport::TestCase
     ticket2.destroy
 
     list = RecentView.list(user1)
-    assert(!list[0], 'check if recent view list is empty')
+    assert_not(list[0], 'check if recent view list is empty')
     travel_back
   end
 
@@ -61,7 +61,7 @@ class RecentViewTest < ActiveSupport::TestCase
 
     # check if list is empty
     list = RecentView.list(user)
-    assert(!list[0], 'check if recent view list is empty')
+    assert_not(list[0], 'check if recent view list is empty')
 
     # log entry of not existing record
     RecentView.user_log_destroy(user)
@@ -69,7 +69,7 @@ class RecentViewTest < ActiveSupport::TestCase
 
     # check if list is empty
     list = RecentView.list(user)
-    assert(!list[0], 'check if recent view list is empty')
+    assert_not(list[0], 'check if recent view list is empty')
 
     # log entry of not existing model with permission check
     RecentView.user_log_destroy(user)
@@ -77,7 +77,7 @@ class RecentViewTest < ActiveSupport::TestCase
 
     # check if list is empty
     list = RecentView.list(user)
-    assert(!list[0], 'check if recent view list is empty')
+    assert_not(list[0], 'check if recent view list is empty')
   end
 
   test 'permission tests' do
@@ -103,6 +103,12 @@ class RecentViewTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1
     )
+    organization2 = Organization.create_if_not_exists(
+      name: 'Customer Organization Recent View 2',
+      note: 'some note',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
 
     # no access for customer
     ticket1 = Ticket.create(
@@ -122,7 +128,7 @@ class RecentViewTest < ActiveSupport::TestCase
 
     # check if list is empty
     list = RecentView.list(customer)
-    assert(!list[0], 'check if recent view list is empty')
+    assert_not(list[0], 'check if recent view list is empty')
 
     # log entry of not existing object
     RecentView.user_log_destroy(agent)
@@ -130,7 +136,7 @@ class RecentViewTest < ActiveSupport::TestCase
 
     # check if list is empty
     list = RecentView.list(agent)
-    assert(!list[0], 'check if recent view list is empty')
+    assert_not(list[0], 'check if recent view list is empty')
 
     # access for customer via customer id
     ticket1 = Ticket.create(
@@ -152,27 +158,31 @@ class RecentViewTest < ActiveSupport::TestCase
     list = RecentView.list(customer)
     assert(list[0]['o_id'], ticket1.id)
     assert(list[0]['object'], 'Ticket')
-    assert(!list[1], 'check if recent view list is empty')
+    assert_not(list[1], 'check if recent view list is empty')
 
     # log entry
-    organization = Organization.find(1)
+    organization1 = Organization.find(1)
     RecentView.user_log_destroy(customer)
-    RecentView.log(organization.class.to_s, organization.id, customer)
+    RecentView.log(organization1.class.to_s, organization1.id, customer)
+    RecentView.log(organization2.class.to_s, organization2.id, customer)
 
     # check if list is empty
     list = RecentView.list(customer)
-    assert(!list[0], 'check if recent view list is empty')
+    assert(list[0], 'check if recent view list is empty')
+    assert_not(list[1], 'check if recent view list is empty')
 
     # log entry
-    organization = Organization.find(1)
+    organization1 = Organization.find(1)
     RecentView.user_log_destroy(agent)
-    RecentView.log(organization.class.to_s, organization.id, agent)
+    RecentView.log(organization1.class.to_s, organization1.id, agent)
 
     # check if list is empty
     list = RecentView.list(agent)
-    assert(list[0]['o_id'], organization.id)
+    assert(list[0]['o_id'], organization1.id)
     assert(list[0]['object'], 'Organization')
-    assert(!list[1], 'check if recent view list is empty')
+    assert_not(list[1], 'check if recent view list is empty')
+
+    organization2.destroy
   end
 
 end

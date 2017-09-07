@@ -9,15 +9,15 @@
         <fieldset>
           <div class="form-group">
             <label><%- @T('Full Name') %></label>
-            <input type="text" class="form-control" value="" name="realname" placeholder="<%- @Ti('Organization Support') %>" required autocomplete="new-password">
+            <input type="text" class="form-control" value="" name="realname" placeholder="<%- @Ti('Organization Support') %>" required autocomplete="off">
           </div>
           <div class="form-group">
             <label><%- @T('Email') %></label>
-            <input type="email" class="form-control" value="" name="email" placeholder="<%- @Ti('support@example.com') %>" required autocomplete="new-password">
+            <input type="email" class="form-control" value="" name="email" placeholder="<%- @Ti('support@example.com') %>" required autocomplete="off">
           </div>
           <div class="form-group">
             <label><%- @T('Password') %></label>
-            <input type="password" class="form-control" name="password" value="" required autocomplete="new-password">
+            <input type="password" class="form-control" name="password" value="" required autocomplete="off">
           </div>
         </fieldset>
       </div>
@@ -63,7 +63,7 @@
   </form>
 
   <form class="setup wizard hide js-inbound">
-    <div class="wizard-slide">
+    <div class="wizard-slide wizard-slide--large">
       <h2><%- @T('Email Inbound') %></h2>
       <div class="wizard-body vertical justified">
         <div class="alert alert--danger hide" role="alert"></div>

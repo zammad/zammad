@@ -13,12 +13,14 @@ module Import
       private
 
       def init_callback(_attribute)
-        raise 'Missing init_callback method implementation for this object attribute'
       end
 
       def add(object, name, attribute)
         ObjectManager::Attribute.add( attribute_config(object, name, attribute) )
         ObjectManager::Attribute.migration_execute(false)
+      rescue => e
+        # rubocop:disable Style/SpecialGlobalVars
+        raise $!, "Problem with ObjectManager Attribute '#{name}': #{$!}", $!.backtrace
       end
 
       def attribute_config(object, name, attribute)

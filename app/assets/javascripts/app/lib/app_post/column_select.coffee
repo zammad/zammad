@@ -33,6 +33,11 @@ class App.ColumnSelect extends Spine.Controller
       @select @pickedValue
     , 300, {trailing: false}
 
+    if @attribute.onChange
+      @shadow.on('change', =>
+        @attribute.onChange(@shadow.val())
+      )
+
   render: ->
     @values = []
     _.each @options.attribute.options, (option) =>

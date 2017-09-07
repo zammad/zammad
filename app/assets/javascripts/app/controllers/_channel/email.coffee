@@ -45,9 +45,7 @@ class App.ChannelEmailFilter extends App.Controller
 
     template = $( '<div><div class="overview"></div><a data-type="new" class="btn btn--success">' + App.i18n.translateContent('New') + '</a></div>' )
 
-    description = '''
-With Filters you can e. g. dispatch new Tickets into certain groups or set a certain priority for Tickets of an VIP customer.
-'''
+    description = 'With filters you can e. g. dispatch new tickets into certain groups or set a certain priority for tickets of a VIP customer.'
 
     new App.ControllerTable(
       el:       template.find('.overview')
@@ -110,7 +108,7 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
     # show errors in form
     if errors
       @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       return false
 
     # disable form
@@ -120,8 +118,10 @@ class App.ChannelEmailFilterEdit extends App.ControllerModal
     object.save(
       done: =>
         @close()
-      fail: =>
-        @close()
+      fail: (settings, details) =>
+        @log 'errors', details
+        @formEnable(e)
+        @form.showAlert(details.error_human || details.error || 'Unable to create object!')
     )
 
 class App.ChannelEmailSignature extends App.Controller
@@ -203,7 +203,7 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
     # show errors in form
     if errors
       @log 'error', errors
-      @formValidate( form: e.target, errors: errors )
+      @formValidate(form: e.target, errors: errors)
       return false
 
     # disable form
@@ -213,8 +213,10 @@ class App.ChannelEmailSignatureEdit extends App.ControllerModal
     object.save(
       done: =>
         @close()
-      fail: =>
+      fail: (settings, details) =>
+        @log 'errors', details
         @formEnable(e)
+        @form.showAlert(details.error_human || details.error || 'Unable to create object!')
     )
 
 class App.ChannelEmailAccountOverview extends App.Controller
@@ -533,8 +535,8 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
 
     # base
     configureAttributesBase = [
-      { name: 'realname', display: 'Organization & Department Name', tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'new-password' },
-      { name: 'email',    display: 'Email',    tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'new-password' },
+      { name: 'realname', display: 'Organization & Department Name', tag: 'input',  type: 'text', limit: 160, null: false, placeholder: 'Organization Support', autocomplete: 'off' },
+      { name: 'email',    display: 'Email',    tag: 'input',  type: 'email', limit: 120, null: false, placeholder: 'support@example.com', autocapitalize: false, autocomplete: 'off' },
       { name: 'password', display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
       { name: 'group_id', display: 'Destination Group', tag: 'select', null: false, relation: 'Group', nulloption: true },
     ]
@@ -562,21 +564,24 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
 
     # inbound
     configureAttributesInbound = [
-      { name: 'adapter',            display: 'Type',     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
-      { name: 'options::host',      display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
-      { name: 'options::user',      display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', },
-      { name: 'options::password',  display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
-      { name: 'options::ssl',       display: 'SSL',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
-      { name: 'options::port',      display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
-      { name: 'options::folder',    display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false },
+      { name: 'adapter',                  display: 'Type',     tag: 'select', multiple: false, null: false, options: @channelDriver.email.inbound },
+      { name: 'options::host',            display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
+      { name: 'options::user',            display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off' },
+      { name: 'options::password',        display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
+      { name: 'options::ssl',             display: 'SSL',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
+      { name: 'options::port',            display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
+      { name: 'options::folder',          display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
+      { name: 'options::keep_on_server',  display: 'Keep messages on server', tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
     ]
 
     showHideFolder = (params, attribute, attributes, classname, form, ui) ->
       return if !params
       if params.adapter is 'imap'
         ui.show('options::folder')
+        ui.show('options::keep_on_server')
         return
       ui.hide('options::folder')
+      ui.hide('options::keep_on_server')
 
     handlePort = (params, attribute, attributes, classname, form, ui) ->
       return if !params
@@ -608,9 +613,10 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     # fill user / password based on intro info
     channel_used = { options: {} }
     if @account['meta']
-      channel_used['options']['user']     = @account['meta']['email']
-      channel_used['options']['password'] = @account['meta']['password']
-      channel_used['options']['folder']   = @account['meta']['folder']
+      channel_used['options']['user']           = @account['meta']['email']
+      channel_used['options']['password']       = @account['meta']['password']
+      channel_used['options']['folder']         = @account['meta']['folder']
+      channel_used['options']['keep_on_server'] = @account['meta']['keep_on_server']
 
     # show used backend
     @$('.base-outbound-settings').html('')
@@ -618,7 +624,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     if adapter is 'smtp'
       configureAttributesOutbound = [
         { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
-        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off', },
         { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
         { name: 'options::port',     display: 'Port',     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
       ]
@@ -672,7 +678,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
             for key, value of data.setting
               @account[key] = value
 
-          if data.content_messages && data.content_messages > 0
+          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
             message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
@@ -726,7 +732,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
           # remember account settings
           @account.inbound = params
 
-          if data.content_messages && data.content_messages > 0
+          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
             message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
@@ -932,7 +938,7 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
     if adapter is 'smtp'
       configureAttributesOutbound = [
         { name: 'options::host',     display: 'Host',     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
-        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password' },
+        { name: 'options::user',     display: 'User',     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
         { name: 'options::password', display: 'Password', tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
         { name: 'options::port',     display: 'Port',     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false },
       ]

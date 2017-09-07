@@ -35,3 +35,11 @@ class App.Group extends App.Model
 
     return App.view('avatar_group')
       cssClass: cssClass.join(' ')
+
+  @accesses: ->
+    read: 'Read'
+    create: 'Create'
+    change: 'Change'
+    delete: 'Delete'
+    overview: 'Overview'
+    full: 'Full'

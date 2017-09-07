@@ -17,5 +17,6 @@ delete object online notification list, will be executed automatically
 
   def karma_activity_log_destroy
     Karma::ActivityLog.remove(self.class.to_s, id)
+    true
   end
 end

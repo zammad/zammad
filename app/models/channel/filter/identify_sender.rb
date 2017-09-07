@@ -35,7 +35,7 @@ module Channel::Filter::IdentifySender
             items.each { |item|
 
               # skip if recipient is system email
-              next if EmailAddress.find_by(email: item.address)
+              next if EmailAddress.find_by(email: item.address.downcase)
 
               customer_user = user_create(
                 login: item.address,
@@ -103,13 +103,14 @@ module Channel::Filter::IdentifySender
       rescue => e
         # parse not parseable fields by mail gem like
         #  - Max Kohl | [example.com] <kohl@example.com>
+        #  - Max Kohl <max.kohl <max.kohl@example.com>
         Rails.logger.error 'ERROR: ' + e.inspect
-        Rails.logger.error 'ERROR: try it by my self'
+        Rails.logger.error "ERROR: try it by my self (#{item}): #{mail[item.to_sym]}"
         recipients = mail[item.to_sym].to_s.split(',')
         recipients.each { |recipient|
           address = nil
           display_name = nil
-          if recipient =~ /<(.+?)>/
+          if recipient =~ /.*<(.+?)>/
             address = $1
           end
           if recipient =~ /^(.+?)<(.+?)>/

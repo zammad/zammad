@@ -5,7 +5,7 @@ module Sessions
 
   # get application root directory
   @root = Dir.pwd.to_s
-  if !@root || @root.empty? || @root == '/'
+  if @root.blank? || @root == '/'
     @root = Rails.root
   end
 
@@ -214,9 +214,10 @@ returns
     return false if !data
     path = "#{@path}/#{client_id}"
     data[:meta][:last_ping] = Time.now.utc.to_i
-    content = data.to_json
     File.open("#{path}/session", 'wb' ) { |file|
-      file.write content
+      file.flock(File::LOCK_EX)
+      file.write data.to_json
+      file.flock(File::LOCK_UN)
     }
     true
   end
@@ -261,7 +262,7 @@ returns
     end
     begin
       File.open(session_file, 'rb') { |file|
-        file.flock(File::LOCK_EX)
+        file.flock(File::LOCK_SH)
         all = file.read
         file.flock(File::LOCK_UN)
         data_json = JSON.parse(all)
@@ -378,8 +379,8 @@ broadcase also not to sender
       next if !session
 
       if recipient != 'public'
-        next if !session[:user]
-        next if !session[:user]['id']
+        next if session[:user].blank?
+        next if session[:user]['id'].blank?
       end
 
       if sender_user_id
@@ -432,14 +433,15 @@ returns
   end
 
   def self.queue_file_read(path, filename)
-    file_old = "#{path}#{filename}"
-    file_new = "#{path}a-#{filename}"
-    FileUtils.mv(file_old, file_new)
+    location = "#{path}#{filename}"
     message = ''
-    File.open(file_new, 'rb') { |file|
+    File.open(location, 'rb') { |file|
+      file.flock(File::LOCK_EX)
       message = file.read
+      file.flock(File::LOCK_UN)
     }
-    File.delete(file_new)
+    File.delete(location)
+    return if message.blank?
     begin
       return JSON.parse(message)
     rescue => e
@@ -466,13 +468,15 @@ remove all session and spool messages
     msg = JSON.generate(data)
     path = "#{@path}/spool/"
     FileUtils.mkpath path
+    data = {
+      msg: msg,
+      timestamp: Time.now.utc.to_i,
+    }
     file_path = "#{path}/#{Time.now.utc.to_f}-#{rand(99_999)}"
     File.open(file_path, 'wb') { |file|
-      data = {
-        msg: msg,
-        timestamp: Time.now.utc.to_i,
-      }
+      file.flock(File::LOCK_EX)
       file.write data.to_json
+      file.flock(File::LOCK_UN)
     }
   end
 
@@ -491,7 +495,9 @@ remove all session and spool messages
       filename = "#{path}/#{entry}"
       next if !File.exist?(filename)
       File.open(filename, 'rb') { |file|
+        file.flock(File::LOCK_SH)
         message = file.read
+        file.flock(File::LOCK_UN)
         begin
           spool = JSON.parse(message)
           message_parsed = JSON.parse(spool['msg'])

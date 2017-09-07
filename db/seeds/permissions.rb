@@ -306,7 +306,7 @@ Permission.create_if_not_exists(
 )
 Permission.create_if_not_exists(
   name: 'ticket.customer',
-  note: 'Access to Customer Tickets based on current_user.id and current_user.organization_id',
+  note: 'Access to Customer Tickets based on current_user and organization',
   preferences: {
     not: ['ticket.agent'],
   },

@@ -98,13 +98,23 @@ class Channel::EmailParser
       data[field.to_sym] = ''
     }
 
-    # get sender
+    # get sender with @ / email address
     from = nil
     ['from', 'reply-to', 'return-path'].each { |item|
       next if data[item.to_sym].blank?
+      next if data[item.to_sym] !~ /@/
       from = data[item.to_sym]
       break if from
     }
+
+    # in case of no sender with email address - get sender
+    if !from
+      ['from', 'reply-to', 'return-path'].each { |item|
+        next if data[item.to_sym].blank?
+        from = data[item.to_sym]
+        break if from
+      }
+    end
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
@@ -117,32 +127,7 @@ class Channel::EmailParser
     }
 
     # set extra headers
-    begin
-      data[:from_email]        = Mail::Address.new(from).address
-      data[:from_local]        = Mail::Address.new(from).local
-      data[:from_domain]       = Mail::Address.new(from).domain
-      data[:from_display_name] = Mail::Address.new(from).display_name ||
-                                 (Mail::Address.new(from).comments && Mail::Address.new(from).comments[0])
-    rescue
-      from.strip!
-      if from =~ /^(.+?)<(.+?)@(.+?)>$/
-        data[:from_email]        = "#{$2}@#{$3}"
-        data[:from_local]        = $2
-        data[:from_domain]       = $3
-        data[:from_display_name] = $1
-      else
-        data[:from_email]  = from
-        data[:from_local]  = from
-        data[:from_domain] = from
-      end
-    end
-
-    # do extra decoding because we needed to use field.value
-    data[:from_display_name] = Mail::Field.new('X-From', data[:from_display_name]).to_s
-    data[:from_display_name].delete!('"')
-    data[:from_display_name].strip!
-    data[:from_display_name].gsub!(/^'/, '')
-    data[:from_display_name].gsub!(/'$/, '')
+    data = data.merge(Channel::EmailParser.sender_properties(from))
 
     # do extra encoding (see issue#1045)
     if data[:subject].present?
@@ -176,6 +161,7 @@ class Channel::EmailParser
       if data[:body].empty? && mail.text_part
         data[:body] = mail.text_part.body.decoded
         data[:body] = Encode.conv(mail.text_part.charset, data[:body])
+        data[:body] = data[:body].to_s.force_encoding('utf-8')
 
         if !data[:body].valid_encoding?
           data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
@@ -328,7 +314,17 @@ class Channel::EmailParser
     # get file preferences
     headers_store = {}
     file.header.fields.each { |field|
-      headers_store[field.name.to_s] = field.value.to_s
+
+      # full line, encode, ready for storage
+      begin
+        value = Encode.conv('utf8', field.to_s)
+        if value.blank?
+          value = field.raw_value
+        end
+        headers_store[field.name.to_s] = value
+      rescue => e
+        headers_store[field.name.to_s] = field.raw_value
+      end
     }
 
     # get filename from content-disposition
@@ -339,12 +335,26 @@ class Channel::EmailParser
       filename = file.header[:content_disposition].filename
     rescue
       begin
-        result = file.header[:content_disposition].to_s.scan( /filename=("|)(.+?)("|);/i )
-        if result && result[0] && result[0][1]
-          filename = result[0][1]
+        if file.header[:content_disposition].to_s =~ /filename="(.+?)"/i
+          filename = $1
+        elsif file.header[:content_disposition].to_s =~ /filename='(.+?)'/i
+          filename = $1
+        elsif file.header[:content_disposition].to_s =~ /filename=(.+?);/i
+          filename = $1
         end
       rescue
         Rails.logger.debug 'Unable to get filename'
+      end
+    end
+
+    # as fallback, use raw values
+    if filename.blank?
+      if headers_store['Content-Disposition'].to_s =~ /filename="(.+?)"/i
+        filename = $1
+      elsif headers_store['Content-Disposition'].to_s =~ /filename='(.+?)'/i
+        filename = $1
+      elsif headers_store['Content-Disposition'].to_s =~ /filename=(.+?);/i
+        filename = $1
       end
     end
 
@@ -636,6 +646,49 @@ returns
 
     return false if !class_instance.association_id_validation(attribute, value)
     true
+  end
+
+  def self.sender_properties(from)
+    data = {}
+
+    begin
+      list = Mail::AddressList.new(from)
+      list.addresses.each { |address|
+        data[:from_email] = address.address
+        data[:from_local]        = address.local
+        data[:from_domain]       = address.domain
+        data[:from_display_name] = address.display_name ||
+                                   (address.comments && address.comments[0])
+        break if data[:from_email].present? && data[:from_email] =~ /@/
+      }
+    rescue => e
+      if from =~ /<>/ && from =~ /<.+?>/
+        data = sender_properties(from.gsub(/<>/, ''))
+      end
+    end
+
+    if data.empty? || data[:from_email].blank?
+      from.strip!
+      if from =~ /^(.+?)<(.+?)@(.+?)>$/
+        data[:from_email]        = "#{$2}@#{$3}"
+        data[:from_local]        = $2
+        data[:from_domain]       = $3
+        data[:from_display_name] = $1
+      else
+        data[:from_email]  = from
+        data[:from_local]  = from
+        data[:from_domain] = from
+      end
+    end
+
+    # do extra decoding because we needed to use field.value
+    data[:from_display_name] = Mail::Field.new('X-From', data[:from_display_name]).to_s
+    data[:from_display_name].delete!('"')
+    data[:from_display_name].strip!
+    data[:from_display_name].gsub!(/^'/, '')
+    data[:from_display_name].gsub!(/'$/, '')
+
+    data
   end
 
   def set_attributes_by_x_headers(item_object, header_name, mail, suffix = false)

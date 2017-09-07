@@ -67,15 +67,15 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( true, user1.active )
 
     assert( user1.roles.include?( role_agent ) )
-    assert( !user1.roles.include?( role_admin ) )
-    assert( !user1.roles.include?( role_customer ) )
-    #assert( !user1.roles.include?( role_report ) )
+    assert_not( user1.roles.include?( role_admin ) )
+    assert_not( user1.roles.include?( role_customer ) )
+    #assert_not( user1.roles.include?( role_report ) )
 
     group_dasa = Group.where( name: 'dasa' ).first
     group_raw  = Group.where( name: 'Raw' ).first
 
-    assert( !user1.groups.include?( group_dasa ) )
-    assert( user1.groups.include?( group_raw ) )
+    assert_not( user1.groups_access('full').include?( group_dasa ) )
+    assert( user1.groups_access('full').include?( group_raw ) )
 
     user2 = User.find(3)
     assert_equal( 'agent-2 firstname äöüß', user2.firstname )
@@ -86,11 +86,11 @@ class OtrsImportTest < ActiveSupport::TestCase
 
     assert( user2.roles.include?( role_agent ) )
     assert( user2.roles.include?( role_admin ) )
-    assert( !user2.roles.include?( role_customer ) )
+    assert_not( user2.roles.include?( role_customer ) )
     #assert( user2.roles.include?( role_report ) )
 
-    assert( user2.groups.include?( group_dasa ) )
-    assert( user2.groups.include?( group_raw ) )
+    assert( user2.groups_access('full').include?( group_dasa ) )
+    assert( user2.groups_access('full').include?( group_raw ) )
 
     user3 = User.find(7)
     assert_equal( 'invalid', user3.firstname )
@@ -100,12 +100,12 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( false, user3.active )
 
     assert( user3.roles.include?( role_agent ) )
-    assert( !user3.roles.include?( role_admin ) )
-    assert( !user3.roles.include?( role_customer ) )
+    assert_not( user3.roles.include?( role_admin ) )
+    assert_not( user3.roles.include?( role_customer ) )
     #assert( user3.roles.include?( role_report ) )
 
-    assert( !user3.groups.include?( group_dasa ) )
-    assert( !user3.groups.include?( group_raw ) )
+    assert_not( user3.groups_access('full').include?( group_dasa ) )
+    assert_not( user3.groups_access('full').include?( group_raw ) )
 
     user4 = User.find(8)
     assert_equal( 'invalid-temp', user4.firstname )
@@ -115,12 +115,12 @@ class OtrsImportTest < ActiveSupport::TestCase
     assert_equal( false, user4.active )
 
     assert( user4.roles.include?( role_agent ) )
-    assert( !user4.roles.include?( role_admin ) )
-    assert( !user4.roles.include?( role_customer ) )
+    assert_not( user4.roles.include?( role_admin ) )
+    assert_not( user4.roles.include?( role_customer ) )
     #assert( user4.roles.include?( role_report ) )
 
-    assert( !user4.groups.include?( group_dasa ) )
-    assert( !user4.groups.include?( group_raw ) )
+    assert_not( user4.groups_access('full').include?( group_dasa ) )
+    assert_not( user4.groups_access('full').include?( group_raw ) )
 
   end
 

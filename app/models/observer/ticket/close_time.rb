@@ -16,13 +16,13 @@ class Observer::Ticket::CloseTime < ActiveRecord::Observer
   def _check(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
     # check if close_at is already set
     return true if record.close_at
 
     # check if ticket is closed now
-    return if !record.state_id
+    return true if !record.state_id
     state = Ticket::State.lookup(id: record.state_id)
     state_type = Ticket::StateType.lookup(id: state.state_type_id)
     return true if state_type.name != 'closed'

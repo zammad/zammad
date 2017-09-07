@@ -113,6 +113,10 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       @createToken name, objectId
     else
       if object.email
+
+        # quote name for special character
+        if name.match(/\@|,|;|\^|\+|#|§|\$|%|&|\/|\(|\)|=|\?|!|\*|\[|\]/)
+          name = "\"#{name}\""
         name += " <#{object.email}>"
 
       @objectSelect.val(name)
@@ -390,14 +394,14 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       properties:
         translateX: 0
       options:
-        speed: 300
+        duration: 240
 
     # fade out list
     @recipientList.velocity
       properties:
         translateX: '-100%'
       options:
-        speed: 300
+        duration: 240
         complete: => @recipientList.height(@organizationList.height())
 
   hideOrganizationMembers: (e) =>
@@ -413,7 +417,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       properties:
         translateX: 0
       options:
-        speed: 300
+        duration: 240
 
     # reset list height
     @recipientList.height('')
@@ -423,7 +427,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       properties:
         translateX: '100%'
       options:
-        speed: 300
+        duration: 240
         complete: => @organizationList.addClass('hide')
 
   newObject: (e) ->

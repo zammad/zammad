@@ -13,6 +13,13 @@ Scheduler.create_if_not_exists(
   active: true,
 )
 Scheduler.create_if_not_exists(
+  name: 'Process auto unassign tickets',
+  method: 'Ticket.process_auto_unassign',
+  period: 10.minutes,
+  prio: 1,
+  active: true,
+)
+Scheduler.create_if_not_exists(
   name: 'Import OTRS diff load',
   method: 'Import::OTRS.diff_worker',
   period: 3.minutes,
@@ -151,6 +158,15 @@ Scheduler.create_if_not_exists(
   name: 'Cleanup HttpLog',
   method: 'HttpLog.cleanup',
   period: 1.day,
+  prio: 2,
+  active: true,
+  updated_by_id: 1,
+  created_by_id: 1,
+)
+Scheduler.create_if_not_exists(
+  name: 'Cleanup Cti::Log',
+  method: 'Cti::Log.cleanup',
+  period: 1.month,
   prio: 2,
   active: true,
   updated_by_id: 1,

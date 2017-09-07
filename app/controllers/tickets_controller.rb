@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class TicketsController < ApplicationController
-  include AccessesTickets
   include CreatesTicketArticles
   include TicketStats
 
@@ -21,7 +20,7 @@ class TicketsController < ApplicationController
       per_page = 100
     end
 
-    access_condition = Ticket.access_condition(current_user)
+    access_condition = Ticket.access_condition(current_user, 'read')
     tickets = Ticket.where(access_condition).order(id: 'ASC').offset(offset).limit(per_page)
 
     if params[:expand]
@@ -52,10 +51,8 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/tickets/1
   def show
-
-    # permission check
     ticket = Ticket.find(params[:id])
-    ticket_permission(ticket)
+    access!(ticket, 'read')
 
     if params[:expand]
       result = ticket.attributes_with_association_names
@@ -180,10 +177,8 @@ class TicketsController < ApplicationController
 
   # PUT /api/v1/tickets/1
   def update
-
-    # permission check
     ticket = Ticket.find(params[:id])
-    ticket_permission(ticket)
+    access!(ticket, 'change')
 
     clean_params = Ticket.association_name_to_id_convert(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
@@ -218,10 +213,8 @@ class TicketsController < ApplicationController
 
   # DELETE /api/v1/tickets/1
   def destroy
-
-    # permission check
     ticket = Ticket.find(params[:id])
-    ticket_permission(ticket)
+    access!(ticket, 'delete')
 
     raise Exceptions::NotAuthorized, 'Not authorized (admin permission required)!' if !current_user.permissions?('admin')
 
@@ -247,9 +240,7 @@ class TicketsController < ApplicationController
 
     # get ticket data
     ticket = Ticket.find(params[:id])
-
-    # permission check
-    ticket_permission(ticket)
+    access!(ticket, 'read')
 
     # get history of ticket
     history = ticket.history_get(true)
@@ -265,7 +256,7 @@ class TicketsController < ApplicationController
     assets = ticket.assets({})
 
     # open tickets by customer
-    access_condition = Ticket.access_condition(current_user)
+    access_condition = Ticket.access_condition(current_user, 'read')
 
     ticket_lists = Ticket
                    .where(
@@ -328,9 +319,7 @@ class TicketsController < ApplicationController
       }
       return
     end
-
-    # permission check
-    ticket_permission(ticket_master)
+    access!(ticket_master, 'full')
 
     # check slave ticket
     ticket_slave = Ticket.find_by(id: params[:slave_ticket_id])
@@ -341,18 +330,7 @@ class TicketsController < ApplicationController
       }
       return
     end
-
-    # permission check
-    ticket_permission(ticket_slave)
-
-    # check diffetent ticket ids
-    if ticket_slave.id == ticket_master.id
-      render json: {
-        result: 'failed',
-        message: 'Can\'t merge ticket with it self!',
-      }
-      return
-    end
+    access!(ticket_slave, 'full')
 
     # merge ticket
     ticket_slave.merge_to(
@@ -370,10 +348,8 @@ class TicketsController < ApplicationController
 
   # GET /api/v1/ticket_split
   def ticket_split
-
-    # permission check
     ticket = Ticket.find(params[:ticket_id])
-    ticket_permission(ticket)
+    access!(ticket, 'read')
     assets = ticket.assets({})
 
     # get related articles
@@ -390,7 +366,7 @@ class TicketsController < ApplicationController
 
     # get attributes to update
     attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
-      user: current_user,
+      current_user: current_user,
     )
     render json: attributes_to_change
   end
@@ -483,7 +459,7 @@ class TicketsController < ApplicationController
     # lookup open user tickets
     limit            = 100
     assets           = {}
-    access_condition = Ticket.access_condition(current_user)
+    access_condition = Ticket.access_condition(current_user, 'read')
 
     user_tickets = {}
     if params[:user_id]
@@ -578,7 +554,10 @@ class TicketsController < ApplicationController
   def ticket_all(ticket)
 
     # get attributes to update
-    attributes_to_change = Ticket::ScreenOptions.attributes_to_change(user: current_user, ticket: ticket)
+    attributes_to_change = Ticket::ScreenOptions.attributes_to_change(
+      current_user: current_user,
+      ticket:       ticket
+    )
 
     # get related users
     assets = attributes_to_change[:assets]

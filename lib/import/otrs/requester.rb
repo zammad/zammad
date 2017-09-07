@@ -95,6 +95,8 @@ module Import
 
       def handle_response(response)
         encoded_body = Encode.conv('utf8', response.body.to_s)
+        # remove null bytes otherwise PostgreSQL will fail
+        encoded_body.gsub!('\u0000', '')
         JSON.parse(encoded_body)
       end
 

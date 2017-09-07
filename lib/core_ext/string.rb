@@ -81,7 +81,7 @@ class String
   def html2text(string_only = false, strict = false)
     string = "#{self}" # rubocop:disable Style/UnneededInterpolation
 
-    # in case of invalid encodeing, strip invalid chars
+    # in case of invalid encoding, strip invalid chars
     # see also test/fixtures/mail21.box
     # note: string.encode!('UTF-8', 'UTF-8', :invalid => :replace, :replace => '?') was not detecting invalid chars
     if !string.valid_encoding?
@@ -306,7 +306,7 @@ class String
     string.gsub!(%r\<div>[[:space:]]*(<br(|/)>([[:space:]]*)){2,}\im, '<div><br>\3')
     string.gsub!(%r\[[:space:]]*(<br>[[:space:]]*){3,}[[:space:]]*</div>\im, '<br><br></div>')
     string.gsub!(%r\<div>[[:space:]]*(<br>[[:space:]]*){1,}[[:space:]]*</div>\im, '<div>&nbsp;</div>')
-    string.gsub!(%r\<div>[[:space:]]*(<div>[[:space:]]*{1,}</div>[[:space:]]*){2,}</div>\im, '<div>&nbsp;</div>')
+    string.gsub!(%r\<div>[[:space:]]*(<div>[[:space:]]*</div>[[:space:]]*){2,}</div>\im, '<div>&nbsp;</div>')
     string.gsub!(%r\<p>[[:space:]]*</p>(<br(|/)>[[:space:]]*){2,}[[:space:]]*\im, '<p> </p><br>')
     string.gsub!(%r{<p>[[:space:]]*</p>(<br(|/)>[[:space:]]*)+<p>[[:space:]]*</p>}im, '<p> </p><p> </p>')
     string.gsub!(%r\(<div>[[:space:]]*</div>[[:space:]]*){2,}\im, '<div> </div>')

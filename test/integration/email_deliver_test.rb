@@ -4,16 +4,16 @@ require 'test_helper'
 class EmailDeliverTest < ActiveSupport::TestCase
   test 'basic check' do
 
-    if !ENV['MAIL_SERVER']
+    if ENV['MAIL_SERVER'].blank?
       raise "Need MAIL_SERVER as ENV variable like export MAIL_SERVER='mx.example.com'"
     end
-    if !ENV['MAIL_SERVER_ACCOUNT']
+    if ENV['MAIL_SERVER_ACCOUNT'].blank?
       raise "Need MAIL_SERVER_ACCOUNT as ENV variable like export MAIL_SERVER_ACCOUNT='user:somepass'"
     end
     server_login = ENV['MAIL_SERVER_ACCOUNT'].split(':')[0]
     server_password = ENV['MAIL_SERVER_ACCOUNT'].split(':')[1]
 
-    email_address = EmailAddress.create(
+    email_address = EmailAddress.create!(
       realname: 'me Helpdesk',
       email: "me#{rand(999_999_999)}@example.com",
       updated_by_id: 1,
@@ -27,7 +27,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    channel = Channel.create(
+    channel = Channel.create!(
       area: 'Email::Account',
       group_id: group.id,
       options: {
@@ -50,9 +50,9 @@ class EmailDeliverTest < ActiveSupport::TestCase
     )
 
     email_address.channel_id = channel.id
-    email_address.save
+    email_address.save!
 
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some delivery test',
       group: group,
       customer_id: 2,
@@ -63,7 +63,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     )
     assert(ticket1, 'ticket created')
 
-    article1 = Ticket::Article.create(
+    article1 = Ticket::Article.create!(
       ticket_id: ticket1.id,
       to: 'some_recipient@example_not_existing_what_ever.com',
       subject: 'some subject',
@@ -189,7 +189,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     # remove background jobs
     Delayed::Job.destroy_all
 
-    article2 = Ticket::Article.create(
+    article2 = Ticket::Article.create!(
       ticket_id: ticket1.id,
       to: 'some_recipient@example_not_existing_what_ever.com',
       subject: 'some subject2',
@@ -202,9 +202,13 @@ class EmailDeliverTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
+    ticket1.state = Ticket::State.find_by(name: 'closed')
+    ticket1.save
+
     assert_raises(RuntimeError) {
       Scheduler.worker(true)
     }
+    ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
     assert_equal(2, ticket1.articles.count)
@@ -214,6 +218,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert(article2_lookup.preferences['delivery_status_message'])
 
     Scheduler.worker(true)
+    ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
     assert_equal(2, ticket1.articles.count)
@@ -221,11 +226,13 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert_equal('fail', article2_lookup.preferences['delivery_status'])
     assert(article2_lookup.preferences['delivery_status_date'])
     assert(article2_lookup.preferences['delivery_status_message'])
+    assert_equal('closed', ticket1.state.name)
 
     sleep 6
     assert_raises(RuntimeError) {
       Scheduler.worker(true)
     }
+    ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
     assert_equal(2, ticket1.articles.count)
@@ -233,30 +240,39 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert_equal('fail', article2_lookup.preferences['delivery_status'])
     assert(article2_lookup.preferences['delivery_status_date'])
     assert(article2_lookup.preferences['delivery_status_message'])
+    assert_equal('closed', ticket1.state.name)
 
     Scheduler.worker(true)
+    ticket1.reload
+
     article2_lookup = Ticket::Article.find(article2.id)
     assert_equal(2, ticket1.articles.count)
     assert_equal(2, article2_lookup.preferences['delivery_retry'])
     assert_equal('fail', article2_lookup.preferences['delivery_status'])
     assert(article2_lookup.preferences['delivery_status_date'])
     assert(article2_lookup.preferences['delivery_status_message'])
+    assert_equal('closed', ticket1.state.name)
 
     sleep 11
     assert_raises(RuntimeError) {
       Scheduler.worker(true)
     }
+    ticket1.reload
+
     article2_lookup = Ticket::Article.find(article2.id)
     assert_equal(2, ticket1.articles.count)
     assert_equal(3, article2_lookup.preferences['delivery_retry'])
     assert_equal('fail', article2_lookup.preferences['delivery_status'])
     assert(article2_lookup.preferences['delivery_status_date'])
     assert(article2_lookup.preferences['delivery_status_message'])
+    assert_equal('closed', ticket1.state.name)
 
     sleep 16
     assert_raises(RuntimeError) {
       Scheduler.worker(true)
     }
+    ticket1.reload
+
     article2_lookup = Ticket::Article.find(article2.id)
     article_delivery_system = ticket1.articles.last
     assert_equal(3, ticket1.articles.count)
@@ -267,7 +283,8 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert_equal('System', article_delivery_system.sender.name)
     assert_equal(true, article_delivery_system.preferences['delivery_message'])
     assert_equal(article2.id, article_delivery_system.preferences['delivery_article_id_related'])
-
+    assert_equal(true, article_delivery_system.preferences['notification'])
+    assert_equal(Ticket::State.find_by(default_follow_up: true).name, ticket1.state.name)
   end
 
 end
