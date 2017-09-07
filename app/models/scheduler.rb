@@ -169,11 +169,13 @@ class Scheduler < ApplicationModel
   end
 
   def self._start_job(job, try_count = 0, try_run_time = Time.zone.now)
-    job.last_run      = Time.zone.now
-    job.pid           = Thread.current.object_id
-    job.status        = 'ok'
-    job.error_message = ''
-    job.save
+    job.update(
+      last_run:      Time.zone.now,
+      pid:           Thread.current.object_id,
+      status:        'ok',
+      error_message: '',
+    )
+
     logger.info "execute #{job.method} (try_count #{try_count})..."
     eval job.method() # rubocop:disable Lint/Eval
   rescue => e
@@ -203,10 +205,11 @@ class Scheduler < ApplicationModel
       error = "Failed to run #{job.method} after #{try_count} tries #{e.inspect}"
       logger.error error
 
-      job.error_message = error
-      job.status        = 'error'
-      job.active        = false
-      job.save
+      job.update(
+        error_message: error,
+        status: 'error',
+        active: false,
+      )
     end
   end
 

@@ -81,9 +81,9 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       issues.push 'scheduler not running'
     end
 
-    Scheduler.where(status: 'error').each { |scheduler|
+    Scheduler.where(status: 'error').each do |scheduler|
       issues.push "Failed to run scheduled job \'#{scheduler.name}\'. Cause: #{scheduler.error_message}"
-    }
+    end
 
     token = Setting.get('monitoring_token')
 
@@ -181,16 +181,14 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
     access_check
 
     count = 0
-    Scheduler.where(status: 'error').where(active: false).each { |scheduler|
-      scheduler.active = true
-      scheduler.save
+    Scheduler.where(status: 'error', active: false).each do |scheduler|
+      scheduler.update(active: true)
       count += 1
-    }
+    end
 
-    result = {
+    render json: {
       job_restart_count: count
     }
-    render json: result
   end
 
   private
