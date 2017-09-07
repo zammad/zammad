@@ -391,4 +391,10 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
 
   end
 
+  test '09 check restart_failed_jobs' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('monitoring-admin@example.com', 'adminpw')
+    post "/api/v1/monitoring/restart_failed_jobs", {}, @headers.merge('Authorization' => credentials)
+    assert_response(200)
+  end
+
 end
