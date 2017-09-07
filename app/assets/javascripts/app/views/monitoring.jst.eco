@@ -34,14 +34,8 @@
         <% end %>
       <% end %>
     </ul>
-    <% if !_.isEmpty(@data.issues): %>
+    <% if _.contains(@data.actions, 'restart_failed_jobs'): %>
       <button class="btn btn--primary js-restartFailedJobs"><%- @T('Restart failed jobs') %></button>
-      <% if !_.isUndefined(@job_restart_count): %>
-        <p>
-          <%- @T('%s failed job(s) marked for restart', @job_restart_count) %>
-          <%- @T(', restarting...') if @job_restart_count > 0 %>
-        </p>
-      <% end %>
     <% end %>
   </div>
 

@@ -30,10 +30,7 @@ class Index extends App.ControllerSubContent
     )
 
   render: =>
-    @html App.view('monitoring')(
-      data: @data
-      job_restart_count: @job_restart_count
-    )
+    @html App.view('monitoring')(data: @data)
 
   resetToken: (e) =>
     e.preventDefault()
@@ -53,8 +50,7 @@ class Index extends App.ControllerSubContent
       type:  'POST'
       url:   "#{@apiPath}/monitoring/restart_failed_jobs"
       success: (data) =>
-        @job_restart_count = data.job_restart_count
-        @render()
+        @load()
     )
 
 App.Config.set('Monitoring', { prio: 3600, name: 'Monitoring', parent: '#system', target: '#system/monitoring', controller: Index, permission: ['admin.monitoring'] }, 'NavBarAdmin')
