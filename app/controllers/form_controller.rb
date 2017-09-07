@@ -5,7 +5,7 @@ class FormController < ApplicationController
   before_action :cors_preflight_check_execute
   after_action :set_access_control_headers_execute
 
-  def config
+  def configuration
     return if !enabled?
     return if !fingerprint_exists?
     return if limit_reached?
@@ -16,17 +16,17 @@ class FormController < ApplicationController
 
     endpoint = "#{http_type}://#{fqdn}#{api_path}/form_submit"
 
-    config = {
+    result = {
       enabled:  Setting.get('form_ticket_create'),
       endpoint: endpoint,
       token:    token_gen(params[:fingerprint])
     }
 
     if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
-      config[:enabled] = true
+      result[:enabled] = true
     end
 
-    render json: config, status: :ok
+    render json: result, status: :ok
   end
 
   def submit
@@ -127,11 +127,12 @@ class FormController < ApplicationController
     )
 
     if params[:file]
+
       params[:file].each { |file|
         Store.add(
           object: 'Ticket::Article',
           o_id: article.id,
-          data: File.read(file.tempfile),
+          data: file.read,
           filename: file.original_filename,
           preferences: {
             'Mime-Type' => file.content_type,
@@ -154,7 +155,7 @@ class FormController < ApplicationController
   private
 
   def token_gen(fingerprint)
-    crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret'))
+    crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret')[0, 32])
     fingerprint = "#{Base64.strict_encode64(Setting.get('fqdn'))}:#{Time.zone.now.to_i}:#{Base64.strict_encode64(fingerprint)}"
     Base64.strict_encode64(crypt.encrypt_and_sign(fingerprint))
   end
@@ -166,7 +167,7 @@ class FormController < ApplicationController
       return false
     end
     begin
-      crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret'))
+      crypt = ActiveSupport::MessageEncryptor.new(Setting.get('application_secret')[0, 32])
       result = crypt.decrypt_and_verify(Base64.decode64(token))
     rescue
       Rails.logger.info 'Invalid token for form!'

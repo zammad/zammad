@@ -33,7 +33,7 @@ RSpec.describe Import::OTRS::DynamicField::DateTime do
         future: true,
         past: true,
         diff: 72,
-        null: false
+        null: true
       }
     }
 

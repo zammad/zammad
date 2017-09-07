@@ -401,10 +401,11 @@ class App.TicketZoom extends App.Controller
         nav:            @nav
         isCustomer:     @permissionCheck('ticket.customer')
         scrollbarWidth: App.Utils.getScrollBarWidth()
+        dir:            App.i18n.dir()
       )
 
       new App.TicketZoomOverviewNavigator(
-        el:          elLocal.find('.overview-navigator')
+        el:          elLocal.find('.js-overviewNavigatorContainer')
         ticket_id:   @ticket_id
         overview_id: @overview_id
       )
@@ -412,13 +413,13 @@ class App.TicketZoom extends App.Controller
       new App.TicketZoomTitle(
         object_id:   @ticket_id
         overview_id: @overview_id
-        el:          elLocal.find('.ticket-title')
+        el:          elLocal.find('.js-ticketTitleContainer')
         task_key:    @task_key
       )
 
       new App.TicketZoomMeta(
         object_id: @ticket_id
-        el:        elLocal.find('.ticket-meta')
+        el:        elLocal.find('.js-ticketMetaContainer')
       )
 
       @attributeBar = new App.TicketZoomAttributeBar(
@@ -445,7 +446,12 @@ class App.TicketZoom extends App.Controller
       )
 
       @highligher = new App.TicketZoomHighlighter(
-        el:        elLocal.find('.highlighter')
+        el:        elLocal.find('.js-highlighterContainer')
+        ticket_id: @ticket_id
+      )
+
+      new App.TicketZoomSetting(
+        el:        elLocal.find('.js-settingContainer')
         ticket_id: @ticket_id
       )
 
@@ -467,6 +473,7 @@ class App.TicketZoom extends App.Controller
         sidebarState: @sidebarState
         object_id:    @ticket_id
         model:        'Ticket'
+        query:        @query
         taskGet:      @taskGet
         task_key:     @task_key
         formMeta:     @formMeta
@@ -557,14 +564,16 @@ class App.TicketZoom extends App.Controller
     return if !@ticket
     currentStoreTicket = @ticket.attributes()
     delete currentStoreTicket.article
+    internal = @Config.get('ui_ticket_zoom_article_note_new_internal')
     currentStore  =
       ticket:  currentStoreTicket
       article:
         to:          ''
         cc:          ''
+        subject:     ''
         type:        'note'
         body:        ''
-        internal:    'true'
+        internal:    internal
         in_reply_to: ''
 
     if @permissionCheck('ticket.customer')
@@ -575,7 +584,7 @@ class App.TicketZoom extends App.Controller
   formCurrent: =>
     currentParams =
       ticket:  @formParam(@el.find('.edit'))
-      article: @formParam(@el.find('.article-add'))
+      article: @articleNew.params()
 
     # add attachments if exist
     attachmentCount = @$('.article-add .textBubble .attachments .attachment').length
@@ -684,7 +693,7 @@ class App.TicketZoom extends App.Controller
         tagAdd: (tag) =>
           return if !@sidebar
           return if !@sidebar.reload
-          @sidebar.reload(tagAdd: tag)
+          @sidebar.reload(tagAdd: tag, source: 'macro')
         tagRemove: (tag) =>
           return if !@sidebar
           return if !@sidebar.reload
@@ -788,6 +797,9 @@ class App.TicketZoom extends App.Controller
 
         # reset form after save
         @reset()
+
+        if @sidebar
+          @sidebar.commit()
 
         if taskAction is 'closeNextInOverview'
           if @overview_id

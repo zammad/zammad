@@ -1,4 +1,4 @@
-class FixedTwitterTicketArticlePreferences < ActiveRecord::Migration
+class FixedTwitterTicketArticlePreferences3 < ActiveRecord::Migration
   def up
 
     # return if it's a new setup
@@ -6,12 +6,18 @@ class FixedTwitterTicketArticlePreferences < ActiveRecord::Migration
 
     # find article preferences with Twitter::NullObject and replace it with nill to prevent elasticsearch index issue
     article_type = Ticket::Article::Type.find_by(name: 'twitter status')
-    Ticket::Article.where(type_id: article_type.id).each { |article|
+    article_ids = Ticket::Article.where(type_id: article_type.id).pluck(:id)
+    article_ids.each { |article_id|
+      article = Ticket::Article.find(article_id)
       next if !article.preferences
       changed = false
       article.preferences.each { |_key, value|
         next if value.class != ActiveSupport::HashWithIndifferentAccess
         value.each { |sub_key, sub_level|
+          if sub_level.class == NilClass
+            value[sub_key] = nil
+            next
+          end
           if sub_level.class == Twitter::Place
             value[sub_key] = sub_level.attrs
             changed = true

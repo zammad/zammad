@@ -26,39 +26,61 @@ class Transaction::Notification
 
     # return if we run import mode
     return if Setting.get('import_mode')
-
     return if @item[:object] != 'Ticket'
-
     return if @params[:disable_notification]
 
-    ticket = Ticket.find(@item[:object_id])
+    ticket = Ticket.find_by(id: @item[:object_id])
+    return if !ticket
     if @item[:article_id]
       article = Ticket::Article.find(@item[:article_id])
 
       # ignore notifications
       sender = Ticket::Article::Sender.lookup(id: article.sender_id)
       if sender && sender.name == 'System'
-        return if @item[:changes].empty?
-        article = nil
+        return if @item[:changes].blank? && article.preferences[:notification] != true
+        if article.preferences[:notification] != true
+          article = nil
+        end
       end
     end
 
     # find recipients
     recipients_and_channels = []
+    recipients_reason = {}
 
     # loop through all users
     possible_recipients = User.group_access(ticket.group_id, 'full').sort_by(&:login)
-    if ticket.owner_id == 1
+
+    # apply owner
+    if ticket.owner_id != 1
       possible_recipients.push ticket.owner
+      recipients_reason[ticket.owner_id] = 'are assigned'
+    end
+
+    # apply out of office agents
+    possible_recipients_additions = Set.new
+    possible_recipients.each { |user|
+      recursive_ooo_replacements(
+        user:         user,
+        replacements: possible_recipients_additions,
+        reasons:      recipients_reason,
+      )
+    }
+
+    if possible_recipients_additions.present?
+      # join unique entries
+      possible_recipients = possible_recipients | possible_recipients_additions.to_a
     end
 
     already_checked_recipient_ids = {}
     possible_recipients.each { |user|
       result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])
       next if !result
-      next if already_checked_recipient_ids[result[:user].id]
-      already_checked_recipient_ids[result[:user].id] = true
+      next if already_checked_recipient_ids[user.id]
+      already_checked_recipient_ids[user.id] = true
       recipients_and_channels.push result
+      next if recipients_reason[user.id]
+      recipients_reason[user.id] = 'are in group'
     }
 
     # send notifications
@@ -74,11 +96,11 @@ class Transaction::Notification
       end
 
       # ignore inactive users
-      next if !user.active
+      next if !user.active?
 
       # ignore if no changes has been done
       changes = human_changes(user, ticket)
-      next if @item[:type] == 'update' && !article && (!changes || changes.empty?)
+      next if @item[:type] == 'update' && !article && changes.blank?
 
       # check if today already notified
       if @item[:type] == 'reminder_reached' || @item[:type] == 'escalation' || @item[:type] == 'escalation_warning'
@@ -117,7 +139,7 @@ class Transaction::Notification
           OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation_warning', user)
 
         # on updates without state changes create unseen messages
-        elsif @item[:type] != 'create' && (!@item[:changes] || @item[:changes].empty? || !@item[:changes]['state_id'])
+        elsif @item[:type] != 'create' && (@item[:changes].blank? || @item[:changes]['state_id'].blank?)
           seen = false
         else
           seen = ticket.online_notification_seen_state(user.id)
@@ -178,6 +200,7 @@ class Transaction::Notification
           recipient: user,
           current_user: current_user,
           changes: changes,
+          reason: recipients_reason[user.id],
         },
         message_id: "<notification.#{DateTime.current.to_s(:number)}.#{ticket.id}.#{user.id}.#{rand(999_999)}@#{Setting.get('fqdn')}>",
         references: ticket.get_references,
@@ -292,6 +315,29 @@ class Transaction::Notification
                          end
     }
     changes
+  end
+
+  private
+
+  def recursive_ooo_replacements(user:, replacements:, reasons:, level: 0)
+    if level == 10
+      Rails.logger.warn("Found more than 10 replacement levels for agent #{user}.")
+      return
+    end
+
+    replacement = user.out_of_office_agent
+    return if !replacement
+    # return for already found, added and checked users
+    # to prevent re-doing complete lookup paths
+    return if !replacements.add?(replacement)
+    reasons[replacement.id] = 'are the out-of-office replacement of the owner'
+
+    recursive_ooo_replacements(
+      user:         replacement,
+      replacements: replacements,
+      reasons:      reasons,
+      level:        level + 1
+    )
   end
 
 end

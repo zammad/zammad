@@ -1,5 +1,6 @@
 class SidebarOrganization extends App.Controller
   sidebarItem: =>
+    return if !@permissionCheck('ticket.agent')
     return if !@ticket.organization_id
     {
       head: 'Organization'

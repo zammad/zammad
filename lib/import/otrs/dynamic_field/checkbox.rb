@@ -11,7 +11,7 @@ module Import
                 true  => 'Yes',
                 false => 'No',
               },
-              null:      false,
+              null:      true,
               translate: true,
             }
           )

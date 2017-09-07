@@ -22,6 +22,12 @@ class EmailBuildTest < ActiveSupport::TestCase
     assert(result !~ /font-family/, 'test 2')
     assert(result =~ %r{<b>test</b>}, 'test 2')
 
+    # Issue #1230, missing backslashes
+    # 'Test URL: \\storage\project\100242-Inc'
+    html = '<b>Test URL</b>: \\\\storage\\project\\100242-Inc'
+    result = Channel::EmailBuild.html_complete_check(html)
+    assert(result.include?(html), 'backslashes must be kept')
+
   end
 
   test 'html email + attachment check' do

@@ -148,6 +148,16 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
     ).render
     assert_equal(CGI.escapeHTML(ticket.title), result)
 
+    template = "\#{<a href=\"/test123\">ticket.\" title</a>}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(CGI.escapeHTML(ticket.title), result)
+
     template = "some test<br>\#{article.body}"
     result = described_class.new(
       {

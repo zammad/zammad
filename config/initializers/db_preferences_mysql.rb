@@ -1,6 +1,7 @@
 # mysql
 if ActiveRecord::Base.connection_config[:adapter] == 'mysql2'
   Rails.application.config.db_4bytes_utf8 = false
+  Rails.application.config.db_null_byte = true
 
   # mysql version check
   #  mysql example: "5.7.3"

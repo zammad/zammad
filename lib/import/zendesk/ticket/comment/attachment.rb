@@ -3,7 +3,7 @@ module Import
     class Ticket
       class Comment
         class Attachment
-          extend Import::Helper
+          include Import::Helper
 
           def initialize(attachment, local_article)
 
@@ -20,6 +20,8 @@ module Import
               },
               created_by_id: 1
             )
+          rescue => e
+            log e.message
           end
 
           private
@@ -35,6 +37,7 @@ module Import
             )
             return response if response.success?
             log response.error
+            nil
           end
         end
       end

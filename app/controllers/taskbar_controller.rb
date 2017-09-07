@@ -21,14 +21,18 @@ class TaskbarController < ApplicationController
   def update
     taskbar = Taskbar.find(params[:id])
     access(taskbar)
-    taskbar.update_attributes!(Taskbar.param_cleanup(params))
+    taskbar.with_lock do
+      taskbar.update_attributes!(Taskbar.param_cleanup(params))
+    end
     model_update_render_item(taskbar)
   end
 
   def destroy
     taskbar = Taskbar.find(params[:id])
     access(taskbar)
-    taskbar.destroy
+    taskbar.with_lock do
+      taskbar.destroy
+    end
     model_destroy_render_item()
   end
 

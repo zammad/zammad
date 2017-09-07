@@ -32,6 +32,10 @@ class App.Model extends Spine.Model
       return @title
     if @subject
       return @subject
+    if @phone
+      return @phone
+    if @login
+      return @login
     return '???'
 
   displayNameLong: ->
@@ -57,6 +61,12 @@ class App.Model extends Spine.Model
       return @email
     if @title
       return @title
+    if @subject
+      return @subject
+    if @phone
+      return @phone
+    if @login
+      return @login
     return '???'
 
   icon: (user) ->
@@ -162,6 +172,31 @@ class App.Model extends Spine.Model
 
     # return no errors
     return
+
+  ###
+
+set new attributes of model (remove already available attributes)
+
+  App.Model.attributesSet(attributes)
+
+  ###
+
+  @attributesSet: (attributes) ->
+
+    configure_attributes = App[ @.className ].configure_attributes
+    attributesNew = []
+    for localAttribute in configure_attributes
+      found = false
+      for attribute in attributes
+        if attribute.name is localAttribute.name
+          found = true
+          break
+      if !found
+        attributesNew.push localAttribute
+    for attribute in attributes
+      App[@.className].attributes.push attribute.name
+      attributesNew.push attribute
+    App[ @.className ].configure_attributes = attributesNew
 
   ###
 

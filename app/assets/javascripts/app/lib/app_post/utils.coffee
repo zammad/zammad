@@ -124,10 +124,12 @@ class App.Utils
   @linkify: (string) ->
     window.linkify(string)
 
-  # htmlEscapedAndLinkified = App.Utils.linkify(rawText)
+  # htmlEscapedAndPhoneified = App.Utils.phoneify(rawText)
   @phoneify: (string) ->
-    string = string.replace(/\s+/g, '')
-    "tel://#{encodeURIComponent(string)}"
+    return string if _.isEmpty(string)
+    string = string.replace(/[^0-9,\+,#,\*]+/g, '')
+      .replace(/(.)\+/, '$1')
+    "tel:#{string}"
 
   # wrappedText = App.Utils.wrap(rawText, maxLineLength)
   @wrap: (ascii, max = 82) ->
@@ -649,6 +651,7 @@ class App.Utils
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
   @replaceTags: (template, objects) ->
     template = template.replace( /#\{\s{0,2}(.+?)\s{0,2}\}/g, (index, key) ->
+      key = key.replace(/<.+?>/g, '')
       levels  = key.split(/\./)
       dataRef = objects
       for level in levels

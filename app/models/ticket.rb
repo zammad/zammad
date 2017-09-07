@@ -48,6 +48,7 @@ class Ticket < ApplicationModel
                                      :last_contact_at,
                                      :last_contact_agent_at,
                                      :last_contact_customer_at,
+                                     :last_owner_update_at,
                                      :preferences
 
   history_attributes_ignored :create_article_type_id,
@@ -113,7 +114,7 @@ returns
     pending_action = Ticket::StateType.find_by(name: 'pending action')
     ticket_states_pending_action = Ticket::State.where(state_type_id: pending_action)
                                                 .where.not(next_state_id: nil)
-    if !ticket_states_pending_action.empty?
+    if ticket_states_pending_action.present?
       next_state_map = {}
       ticket_states_pending_action.each { |state|
         next_state_map[state.id] = state.next_state_id
@@ -137,7 +138,7 @@ returns
     pending_reminder = Ticket::StateType.find_by(name: 'pending reminder')
     ticket_states_pending_reminder = Ticket::State.where(state_type_id: pending_reminder)
 
-    if !ticket_states_pending_reminder.empty?
+    if ticket_states_pending_reminder.present?
       reminder_state_map = {}
       ticket_states_pending_reminder.each { |state|
         reminder_state_map[state.id] = state.next_state_id
@@ -228,6 +229,47 @@ returns
 
 =begin
 
+processes tickets which auto unassign time has reached
+
+  processed_tickets = Ticket.process_auto_unassign
+
+returns
+
+  processed_tickets = [<Ticket>, ...]
+
+=end
+
+  def self.process_auto_unassign
+
+    # process pending action tickets
+    state_ids = Ticket::State.by_category(:work_on).pluck(:id)
+    return [] if state_ids.blank?
+    result = []
+    groups = Group.where(active: true).where('assignment_timeout IS NOT NULL AND groups.assignment_timeout != 0')
+    return [] if groups.blank?
+    groups.each { |group|
+      next if group.assignment_timeout.blank?
+      ticket_ids = Ticket.where('state_id IN (?) AND owner_id != 1 AND group_id = ?', state_ids, group.id).limit(600).pluck(:id)
+      ticket_ids.each { |ticket_id|
+        ticket = Ticket.find_by(id: ticket_id)
+        next if !ticket
+        minutes_since_last_assignment = Time.zone.now - ticket.last_owner_update_at
+        next if (minutes_since_last_assignment / 60) <= group.assignment_timeout
+        Transaction.execute do
+          ticket.owner_id      = 1
+          ticket.updated_at    = Time.zone.now
+          ticket.updated_by_id = 1
+          ticket.save!
+        end
+        result.push ticket
+      }
+    }
+
+    result
+  end
+
+=begin
+
 merge tickets
 
   ticket = Ticket.find(123)
@@ -243,6 +285,14 @@ returns
 =end
 
   def merge_to(data)
+
+    # prevent cross merging tickets
+    target_ticket = Ticket.find_by(id: data[:ticket_id])
+    raise 'no target ticket given' if !target_ticket
+    raise Exceptions::UnprocessableEntity, 'ticket already merged, no merge into merged ticket possible' if target_ticket.state.state_type.name == 'merged'
+
+    # check different ticket ids
+    raise Exceptions::UnprocessableEntity, 'Can\'t merge ticket with it self!' if id == target_ticket.id
 
     # update articles
     Transaction.execute do
@@ -296,7 +346,7 @@ returns
       save!
 
       # touch new ticket (to broadcast change)
-      Ticket.find(data[:ticket_id]).touch
+      target_ticket.touch
     end
     true
   end
@@ -327,7 +377,7 @@ returns
     state      = Ticket::State.lookup(id: state_id)
     state_type = Ticket::StateType.lookup(id: state.state_type_id)
 
-    # always to set unseen for ticket owner
+    # always to set unseen for ticket owner and users which did not the update
     if state_type.name != 'merged'
       if user_id_check
         return false if user_id_check == owner_id && user_id_check != updated_by_id
@@ -369,17 +419,26 @@ get count of tickets and tickets which match on selector
     query, bind_params, tables = selector2sql(selectors, current_user)
     return [] if !query
 
-    if !current_user
-      ticket_count = Ticket.where(query, *bind_params).joins(tables).count
-      tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
-      return [ticket_count, tickets]
+    ActiveRecord::Base.transaction(requires_new: true) do
+      begin
+        if !current_user
+          ticket_count = Ticket.where(query, *bind_params).joins(tables).count
+          tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
+          return [ticket_count, tickets]
+        end
+
+        access_condition = Ticket.access_condition(current_user, access)
+        ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
+        tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
+
+        return [ticket_count, tickets]
+      rescue ActiveRecord::StatementInvalid => e
+        Rails.logger.error e.inspect
+        Rails.logger.error e.backtrace
+        raise ActiveRecord::Rollback
+      end
     end
-
-    access_condition = Ticket.access_condition(current_user, access)
-    ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
-    tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
-
-    [ticket_count, tickets]
+    []
   end
 
 =begin
@@ -504,7 +563,7 @@ condition example
             query += "#{attribute} IN (?)"
             bind_params.push 1
           else
-            query += "#{attribute} IS NOT NULL"
+            query += "#{attribute} IS NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
@@ -518,7 +577,7 @@ condition example
         else
           # rubocop:disable Style/IfInsideElse
           if selector['value'].nil?
-            query += "#{attribute} IS NOT NULL"
+            query += "#{attribute} IS NULL"
           else
             query += "#{attribute} IN (?)"
             bind_params.push selector['value']
@@ -531,7 +590,7 @@ condition example
             query += "#{attribute} NOT IN (?)"
             bind_params.push 1
           else
-            query += "#{attribute} IS NULL"
+            query += "#{attribute} IS NOT NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
           query += "#{attribute} NOT IN (?)"
@@ -1076,6 +1135,10 @@ result
 
     # ignore if no state has changed
     return true if !changes['state_id']
+
+    # ignore if new state is blank and
+    # let handle ActiveRecord the error
+    return if state_id.blank?
 
     # check if new state isn't pending*
     current_state      = Ticket::State.lookup(id: state_id)

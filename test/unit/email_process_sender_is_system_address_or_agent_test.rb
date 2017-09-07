@@ -7,7 +7,7 @@ class EmailProcessSenderIsSystemAddressOrAgent < ActiveSupport::TestCase
     EmailAddress.create_or_update(
       channel_id: 1,
       realname: 'My System',
-      email: 'myzammad@system.test',
+      email: 'Myzammad@system.TEST',
       active: true,
       updated_by_id: 1,
       created_by_id: 1,
@@ -173,6 +173,57 @@ Some Text"
     assert_equal('Agent', ticket.create_article_sender.name)
     assert_equal('Agent', article.sender.name)
     assert_equal('ticket-system-sender-customer1@example.com', ticket.customer.email)
+    assert_equal(agent1.id, ticket.created_by_id)
+    assert_equal(agent1.id, article.created_by_id)
+
+    email_raw_string = "From: ticket-system-sender-AGENT1@example.com
+To: MYZAMMAD@system.test, ticket-system-sender-CUSTOMER1@example.com
+Subject: some subject #4
+
+Some Text"
+
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket = Ticket.find(ticket_p.id)
+    article = Ticket::Article.find(article_p.id)
+    assert_equal('some subject #4', ticket.title)
+    assert_equal('open', ticket.state.name)
+    assert_equal('Agent', ticket.create_article_sender.name)
+    assert_equal('Agent', article.sender.name)
+    assert_equal('ticket-system-sender-customer1@example.com', ticket.customer.email)
+    assert_equal(agent1.id, ticket.created_by_id)
+    assert_equal(agent1.id, article.created_by_id)
+
+    email_raw_string = "From: ticket-system-sender-agent1@example.com
+To: myzammad@system.test
+Subject: some subject #5
+
+Some Text"
+
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket = Ticket.find(ticket_p.id)
+    article = Ticket::Article.find(article_p.id)
+    assert_equal('some subject #5', ticket.title)
+    assert_equal('open', ticket.state.name)
+    assert_equal('Agent', ticket.create_article_sender.name)
+    assert_equal('Agent', article.sender.name)
+    assert_equal('ticket-system-sender-agent1@example.com', ticket.customer.email)
+    assert_equal(agent1.id, ticket.created_by_id)
+    assert_equal(agent1.id, article.created_by_id)
+
+    email_raw_string = "From: ticket-system-sender-agent1@example.com
+To: myZammad@system.Test
+Subject: some subject #6
+
+Some Text"
+
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket = Ticket.find(ticket_p.id)
+    article = Ticket::Article.find(article_p.id)
+    assert_equal('some subject #6', ticket.title)
+    assert_equal('open', ticket.state.name)
+    assert_equal('Agent', ticket.create_article_sender.name)
+    assert_equal('Agent', article.sender.name)
+    assert_equal('ticket-system-sender-agent1@example.com', ticket.customer.email)
     assert_equal(agent1.id, ticket.created_by_id)
     assert_equal(agent1.id, article.created_by_id)
 

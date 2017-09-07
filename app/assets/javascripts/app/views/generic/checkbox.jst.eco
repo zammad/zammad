@@ -4,7 +4,7 @@
     <input type="checkbox" value="<%= row.value %>" name="<%= @attribute.name %>" <%= row.checked %>/>
     <%- @Icon('checkbox', 'icon-unchecked') %>
     <%- @Icon('checkbox-checked', 'icon-checked') %>
-    <span class="label-text"><%= row.name %> <% if row.note: %>- <span class="help-text"><%= row.note %></span><% end %></span>
+    <span class="label-text"><%= row.name %> <% if row.note: %>- <span class="help-text"><%- @T(row.note) %></span><% end %></span>
   </label>
 <% end %>
 </div>

@@ -16,6 +16,7 @@
     font-size: 16px;
   }
   .footer {
+    font-size: 10px;
     color: #aaaaaa;
     border-top-style:solid;
     border-top-width:1px;
@@ -40,6 +41,13 @@
 
 <% if @objects[:standalone] != true %>
 <div class="footer">
-  <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/notifications"><%= t 'Manage your notifications settings' %></a> <% if !c('organization').empty? %>| <%= c 'organization' %><% end %>
+  <% if @objects[:reason] %>
+    <% reason = t('You are receiving this because you "%s".') %>
+    <% reason_item = t (@objects[:reason]) %>
+    <% reason.gsub!('%s', reason_item) %>
+    <%= reason %> |
+  <% end %>
+  <a href="<%= c 'http_type' %>://<%= c 'fqdn' %>/#profile/notifications"><%= t 'Manage your notifications settings' %></a>
+  <% if c('organization').present? %>| <%= c 'organization' %><% end %>
 </div>
 <% end %>

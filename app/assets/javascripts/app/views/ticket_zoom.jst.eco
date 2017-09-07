@@ -1,21 +1,23 @@
 <div class="tabsSidebar-holder">
-  <div class="scrollPageHeader tabsSidebar-sidebarSpacer" style="right: <%- @scrollbarWidth %>px">
+  <div class="scrollPageHeader tabsSidebar-sidebarSpacer" style="<%- if @dir is 'rtl' then 'left' else 'right' %>: <%- @scrollbarWidth %>px">
     <small><%- @C('ticket_hook') %> <span class="ticket-number"><%- @ticket.number %></span></small>
-    <div class="ticket-title"></div>
-    <div class="highlighter"></div>
-    <div class="overview-navigator"></div>
+    <div class="js-ticketTitleContainer ticket-title"></div>
+    <div class="js-highlighterContainer highlighter"></div>
+    <div class="js-overviewNavigatorContainer overview-navigator"></div>
   </div>
   <div class="main no-padding flex tabsSidebar-sidebarSpacer tabsSidebar-tabsSpacer">
     <div class="ticketZoom">
       <div class="ticketZoom-controls">
-        <div class="highlighter"></div>
-        <div class="overview-navigator"></div>
+        <div class="js-settingContainer"></div>
+        <div class="spacer"></div>
+        <div class="js-highlighterContainer highlighter"></div>
+        <div class="js-overviewNavigatorContainer overview-navigator"></div>
       </div>
       <div class="ticketZoom-header">
         <div class="flex vertical center">
           <div class="js-avatar"></div>
-          <div class="ticket-title"></div>
-          <div class="ticket-meta"></div>
+          <div class="js-ticketTitleContainer ticket-title"></div>
+          <div class="js-ticketMetaContainer"></div>
         </div>
       </div>
       <div class="ticket-article"></div>

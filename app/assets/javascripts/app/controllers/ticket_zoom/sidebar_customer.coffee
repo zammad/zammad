@@ -1,7 +1,7 @@
 class SidebarCustomer extends App.Controller
   sidebarItem: =>
     return if !@permissionCheck('ticket.agent')
-    {
+    items = {
       head:    'Customer'
       name:    'customer'
       icon:    'person'
@@ -11,14 +11,16 @@ class SidebarCustomer extends App.Controller
           name:     'customer-change'
           callback: @changeCustomer
         },
-        {
-          title:    'Edit Customer'
-          name:     'customer-edit'
-          callback: @editCustomer
-        },
       ]
       callback: @showCustomer
     }
+    return items if @ticket && @ticket.customer_id == 1
+    items.actions.push {
+      title:    'Edit Customer'
+      name:     'customer-edit'
+      callback: @editCustomer
+    }
+    items
 
   showCustomer: (el) =>
     @el = el

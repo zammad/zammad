@@ -1,0 +1,13 @@
+<% for object in @objects: %>
+  <div class="sidebar-block">
+    <label class="horizontal">
+      <%- @T(object.title) %>
+      <div class="list-item-delete js-delete" data-object-id="<%= object.id %>" data-type="remove">
+        <%- @Icon('diagonal-cross') %>
+      </div>
+    </label>
+    <%- @T('ID') %>: <a href="<%- object.link %>" target="_blank"><%= object.id %><br></a>
+    <%- @T('Status') %>: <%= object.cmdb_status_title %><br>
+    <%- @T('Type') %>: <%= object.type_title %><br>
+  </div>
+<% end %>

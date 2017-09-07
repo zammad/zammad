@@ -54,7 +54,7 @@ class Transaction::Karma
 
     if @item[:type] == 'reminder_reached'
       return if ticket.owner_id == 1
-      return if ticket.pending_time > Time.zone.now - 2.days
+      return if ticket.pending_time && ticket.pending_time > Time.zone.now - 2.days
       Karma::ActivityLog.add('ticket reminder overdue (+2 days)', ticket.owner, 'Ticket', ticket.id)
       return
     end

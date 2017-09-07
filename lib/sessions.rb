@@ -5,7 +5,7 @@ module Sessions
 
   # get application root directory
   @root = Dir.pwd.to_s
-  if !@root || @root.empty? || @root == '/'
+  if @root.blank? || @root == '/'
     @root = Rails.root
   end
 
@@ -379,8 +379,8 @@ broadcase also not to sender
       next if !session
 
       if recipient != 'public'
-        next if !session[:user]
-        next if !session[:user]['id']
+        next if session[:user].blank?
+        next if session[:user]['id'].blank?
       end
 
       if sender_user_id

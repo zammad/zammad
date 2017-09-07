@@ -38,12 +38,12 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
-  before_validation :check_name, :check_email, :check_login, :ensure_password
-  before_create   :check_preferences_default, :validate_roles, :domain_based_assignment, :set_locale
-  before_update   :check_preferences_default, :validate_roles, :reset_login_failed
+  before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
+  before_create   :check_preferences_default, :validate_roles, :validate_ooo, :domain_based_assignment, :set_locale
+  before_update   :check_preferences_default, :validate_roles, :validate_ooo, :reset_login_failed
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
-  after_destroy   :avatar_destroy
+  after_destroy   :avatar_destroy, :user_device_destroy
 
   has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, before_remove: :last_admin_check, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
@@ -156,6 +156,45 @@ returns
 
   def role?(role_name)
     roles.where(name: role_name).any?
+  end
+
+=begin
+
+check if user is in role
+
+  user = User.find(123)
+  result = user.out_of_office?
+
+returns
+
+  result = true|false
+
+=end
+
+  def out_of_office?
+    return false if out_of_office != true
+    return false if out_of_office_start_at.blank?
+    return false if out_of_office_end_at.blank?
+    Time.zone.today.between?(out_of_office_start_at, out_of_office_end_at)
+  end
+
+=begin
+
+check if user is in role
+
+  user = User.find(123)
+  result = user.out_of_office_agent
+
+returns
+
+  result = user_model
+
+=end
+
+  def out_of_office_agent
+    return if !out_of_office?
+    return if out_of_office_replacement_id.blank?
+    User.find_by(id: out_of_office_replacement_id)
   end
 
 =begin
@@ -845,7 +884,7 @@ returns
 
   def check_email
     return true if Setting.get('import_mode')
-    return true if email.empty?
+    return true if email.blank?
     self.email = email.downcase.strip
     return true if id == 1
     raise Exceptions::UnprocessableEntity, 'Invalid email' if email !~ /@/
@@ -867,9 +906,9 @@ returns
       end
     end
 
-    # if no email, complain about missing login
-    if id != 1 && login.blank?
-      raise Exceptions::UnprocessableEntity, 'Attribute \'login\' required!'
+    # generate auto login
+    if login.blank?
+      self.login = "auto-#{Time.zone.now.to_i}-#{rand(999_999)}"
     end
 
     # check if login already exists
@@ -878,12 +917,33 @@ returns
     while check
       exists = User.find_by(login: login)
       if exists && exists.id != id
-        self.login = login + rand(999).to_s
+        self.login = "#{login}#{rand(999)}"
       else
         check = false
       end
     end
     true
+  end
+
+  def ensure_roles
+    return true if role_ids.present?
+    self.role_ids = Role.signup_role_ids
+  end
+
+  def ensure_identifier
+    return true if email.present? || firstname.present? || lastname.present? || phone.present?
+    return true if login.present? && !login.start_with?('auto-')
+    raise Exceptions::UnprocessableEntity, 'Minimum one identifier (login, firstname, lastname, phone or email) for user is required.'
+  end
+
+  def ensure_uniq_email
+    return true if Setting.get('user_email_multiple_use')
+    return true if Setting.get('import_mode')
+    return true if email.blank?
+    return true if !changes
+    return true if !changes['email']
+    return true if !User.find_by(email: email.downcase.strip)
+    raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.'
   end
 
   def validate_roles
@@ -901,6 +961,15 @@ returns
     true
   end
 
+  def validate_ooo
+    return true if out_of_office != true
+    raise Exceptions::UnprocessableEntity, 'out of office start is required' if out_of_office_start_at.blank?
+    raise Exceptions::UnprocessableEntity, 'out of office end is required' if out_of_office_end_at.blank?
+    raise Exceptions::UnprocessableEntity, 'out of office end is before start' if out_of_office_start_at > out_of_office_end_at
+    raise Exceptions::UnprocessableEntity, 'out of office replacement user is required' if out_of_office_replacement_id.blank?
+    raise Exceptions::UnprocessableEntity, 'out of office no such replacement user' if !User.find_by(id: out_of_office_replacement_id)
+    true
+  end
 =begin
 
 checks if the current user is the last one
@@ -991,6 +1060,10 @@ raise 'Minimum one user need to have admin permissions'
 
   def avatar_destroy
     Avatar.remove('User', id)
+  end
+
+  def user_device_destroy
+    UserDevice.remove(id)
   end
 
   def ensure_password

@@ -1,0 +1,25 @@
+<hr>
+<% if _.isEmpty(@items): %>
+  <%- @T('none') %>
+<% else: %>
+<table class="table">
+  <thead>
+    <th style="width: 30px"></th>
+    <th style="width: 50px"><%- @T('ID') %></th>
+    <th><%- @T('Name') %></th>
+    <th><%- @T('Status') %></th>
+    <th><%- @T('Link') %></th>
+  </thead>
+  <tbody>
+  <% for item in @items: %>
+    <tr>
+      <td><input type="checkbox" name="object_id" value="<%= item.id %>"/></td>
+      <td><%= item.id %></td>
+      <td><%= item.title %></td>
+      <td><%= item.cmdb_status_title %></td>
+      <td><a href="<%- item.link %>" target="_blank">i-doit</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<% end %>

@@ -1,8 +1,6 @@
 require 'rails_helper'
 require 'lib/import/transaction_factory_examples'
 
-RSpec::Matchers.define_negated_matcher :not_change, :change
-
 RSpec.describe Import::OTRS::StateFactory do
   it_behaves_like 'Import::TransactionFactory'
 

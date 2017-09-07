@@ -8,7 +8,7 @@ class TimeAccountingsController < ApplicationController
     year = params[:year] || Time.zone.now.year
     month = params[:month] || Time.zone.now.month
 
-    start_periode = Date.parse("#{year}-#{month}-01")
+    start_periode = Time.zone.parse("#{year}-#{month}-01")
     end_periode = start_periode.end_of_month
 
     time_unit = {}
@@ -93,9 +93,84 @@ class TimeAccountingsController < ApplicationController
           name: 'Time Units Total',
           width: 10,
         },
+        {
+          name: 'Created at',
+          width: 10,
+        },
+        {
+          name: 'Closed at',
+          width: 10,
+        },
+        {
+          name: 'Close Escalation At',
+          width: 10,
+        },
+        {
+          name: 'Close In Min',
+          width: 10,
+        },
+        {
+          name: 'Close Diff In Min',
+          width: 10,
+        },
+        {
+          name: 'First Response At',
+          width: 10,
+        },
+        {
+          name: 'First Response Escalation At',
+          width: 10,
+        },
+        {
+          name: 'First Response In Min',
+          width: 10,
+        },
+        {
+          name: 'First Response Diff In Min',
+          width: 10,
+        },
+        {
+          name: 'Update Escalation At',
+          width: 10,
+        },
+        {
+          name: 'Update In Min',
+          width: 10,
+        },
+        {
+          name: 'Update Diff In Min',
+          width: 10,
+        },
+        {
+          name: 'Last Contact At',
+          width: 10,
+        },
+        {
+          name: 'Last Contact Agent At',
+          width: 10,
+        },
+        {
+          name: 'Last Contact Customer At',
+          width: 10,
+        },
+        {
+          name: 'Article Count',
+          width: 10,
+        },
+        {
+          name: 'Escalation At',
+          width: 10,
+        },
       ]
       result = []
       results.each { |row|
+        row[:ticket].keys.each { |field|
+          next if row[:ticket][field].blank?
+          next if !row[:ticket][field].is_a?(ActiveSupport::TimeWithZone)
+
+          row[:ticket][field] = row[:ticket][field].iso8601
+        }
+
         result_row = [
           row[:ticket]['number'],
           row[:ticket]['title'],
@@ -104,6 +179,23 @@ class TimeAccountingsController < ApplicationController
           row[:agent],
           row[:time_unit],
           row[:ticket]['time_unit'],
+          row[:ticket]['created_at'],
+          row[:ticket]['close_at'],
+          row[:ticket]['close_escalation_at'],
+          row[:ticket]['close_in_min'],
+          row[:ticket]['close_diff_in_min'],
+          row[:ticket]['first_response_at'],
+          row[:ticket]['first_response_escalation_at'],
+          row[:ticket]['first_response_in_min'],
+          row[:ticket]['first_response_diff_in_min'],
+          row[:ticket]['update_escalation_at'],
+          row[:ticket]['update_in_min'],
+          row[:ticket]['update_diff_in_min'],
+          row[:ticket]['last_contact_at'],
+          row[:ticket]['last_contact_agent_at'],
+          row[:ticket]['last_contact_customer_at'],
+          row[:ticket]['article_count'],
+          row[:ticket]['escalation_at'],
         ]
         result.push result_row
       }
@@ -125,7 +217,7 @@ class TimeAccountingsController < ApplicationController
     year = params[:year] || Time.zone.now.year
     month = params[:month] || Time.zone.now.month
 
-    start_periode = Date.parse("#{year}-#{month}-01")
+    start_periode = Time.zone.parse("#{year}-#{month}-01")
     end_periode = start_periode.end_of_month
 
     time_unit = {}
@@ -205,7 +297,7 @@ class TimeAccountingsController < ApplicationController
     year = params[:year] || Time.zone.now.year
     month = params[:month] || Time.zone.now.month
 
-    start_periode = Date.parse("#{year}-#{month}-01")
+    start_periode = Time.zone.parse("#{year}-#{month}-01")
     end_periode = start_periode.end_of_month
 
     time_unit = {}

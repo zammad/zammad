@@ -1,10 +1,10 @@
 class App.Interval
   _instance = undefined
 
-  @set: (callback, timeout, key, level) ->
+  @set: (callback, timeout, key, level, queue) ->
     if _instance == undefined
       _instance ?= new _intervalSingleton
-    _instance.set(callback, timeout, key, level)
+    _instance.set(callback, timeout, key, level, queue)
 
   @clear: (key, level) ->
     if _instance == undefined
@@ -21,6 +21,11 @@ class App.Interval
       _instance ?= new _intervalSingleton
     _instance.reset()
 
+  @count: ->
+    if _instance == undefined
+      _instance ?= new _intervalSingleton
+    _instance.count()
+
   @_all: ->
     if _instance == undefined
       _instance ?= new _intervalSingleton
@@ -32,7 +37,7 @@ class _intervalSingleton extends Spine.Module
   constructor: ->
     @levelStack = {}
 
-  set: (callback, timeout, key, level) =>
+  set: (callback, timeout, key, level, queue) =>
 
     if !level
       level = '_all'
@@ -44,9 +49,15 @@ class _intervalSingleton extends Spine.Module
       key = Math.floor(Math.random() * 99999)
 
     # setTimeout
-    @log 'debug', 'set', key, timeout, level, callback
-    callback()
-    interval_id = setInterval(callback, timeout)
+    @log 'debug', 'set', key, timeout, level, callback, queue
+    localCallback = ->
+      if queue
+        App.QueueManager.add('interval', callback)
+        App.QueueManager.run('interval')
+      else
+        callback()
+    localCallback()
+    interval_id = setInterval(localCallback, timeout)
 
     # remember all interval
     if !@levelStack[level]
@@ -90,6 +101,13 @@ class _intervalSingleton extends Spine.Module
         @clear(key, level)
       @levelStack[level] = {}
     true
+
+  count: =>
+    return 0 if !@levelStack
+    count = 0
+    for levelName, levelValue of @levelStack
+      count += Object.keys(levelValue).length
+    count
 
   _all: =>
     @levelStack

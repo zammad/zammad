@@ -720,6 +720,9 @@ to send no browser reload event, pass false
   def self.reset_database_info(model)
     model.connection.schema_cache.clear!
     model.reset_column_information
+    # rebuild columns cache to reduce the risk of
+    # race conditions in re-setting it with outdated data
+    model.columns
   end
 
   def check_name

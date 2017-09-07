@@ -133,9 +133,9 @@ reload search index with full data
         begin
           item.search_index_update_backend
         rescue => e
-          logger.error "Unable to send #{item.class}.find(#{item.id}) backend: #{e.inspect}"
+          logger.error "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}"
           tolerance_count += 1
-          raise "Unable to send #{item.class}.find(#{item.id}) backend: #{e.inspect}" if tolerance_count == tolerance
+          raise "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}" if tolerance_count == tolerance
         end
       }
     end

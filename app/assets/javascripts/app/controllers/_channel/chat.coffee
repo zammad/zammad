@@ -21,7 +21,6 @@ class App.ChannelChat extends App.ControllerSubContent
     '.js-chat-welcome': 'chatWelcome'
     '.js-testurl-input': 'urlInput'
     '.js-backgroundColor': 'chatBackground'
-    '.js-paramsBlock': 'paramsBlock'
     '.js-code': 'code'
     '.js-palette': 'palette'
     '.js-color': 'colorField'
@@ -361,7 +360,7 @@ class App.ChannelChat extends App.ControllerSubContent
     @$('.js-modal-params').html(paramString)
 
     # highlight
-    @paramsBlock.each (i, block) ->
+    @code.each (i, block) ->
       hljs.highlightBlock block
 
 App.Config.set('Chat', { prio: 4000, name: 'Chat', parent: '#channels', target: '#channels/chat', controller: App.ChannelChat, permission: ['admin.chat'] }, 'NavBarAdmin')

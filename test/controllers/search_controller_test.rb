@@ -179,6 +179,12 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  teardown do
+    if ENV['ES_URL'].present?
+      Rake::Task['searchindex:drop'].execute
+    end
+  end
+
   test 'settings index with nobody' do
     params = {
       query: 'test 1234',

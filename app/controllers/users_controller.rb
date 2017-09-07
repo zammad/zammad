@@ -126,6 +126,16 @@ class UsersController < ApplicationController
       if admin_account_exists && !params[:signup]
         raise Exceptions::UnprocessableEntity, 'Only signup with not authenticate user possible!'
       end
+
+      # check if user already exists
+      if clean_params[:email].blank?
+        raise Exceptions::UnprocessableEntity, 'Attribute \'email\' required!'
+      end
+
+      # check if user already exists
+      exists = User.find_by(email: clean_params[:email].downcase.strip)
+      raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.' if exists
+
       user = User.new(clean_params)
       user.associations_from_param(params)
       user.updated_by_id = 1
@@ -165,11 +175,6 @@ class UsersController < ApplicationController
       user.associations_from_param(params)
     end
 
-    # check if user already exists
-    if !user.email.empty?
-      exists = User.where(email: user.email.downcase).first
-      raise Exceptions::UnprocessableEntity, 'User already exists!' if exists
-    end
     user.save!
 
     # if first user was added, set system init done
@@ -177,7 +182,7 @@ class UsersController < ApplicationController
       Setting.set('system_init_done', true)
 
       # fetch org logo
-      if !user.email.empty?
+      if user.email.present?
         Service::Image.organization_suggest(user.email)
       end
 
@@ -252,17 +257,17 @@ class UsersController < ApplicationController
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
-        user.associations_from_param({ role_ids: params[:role_ids], roles: params[:roles] })
+        user.associations_from_param(role_ids: params[:role_ids], roles: params[:roles])
       end
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:group_ids] || params[:groups])
-        user.associations_from_param({ group_ids: params[:group_ids], groups: params[:groups] })
+        user.associations_from_param(group_ids: params[:group_ids], groups: params[:groups])
       end
 
       # only allow Admin's and Agent's
       if current_user.permissions?(['admin.user', 'ticket.agent']) && (params[:organization_ids] || params[:organizations])
-        user.associations_from_param({ organization_ids: params[:organization_ids], organizations: params[:organizations] })
+        user.associations_from_param(organization_ids: params[:organization_ids], organizations: params[:organizations])
       end
 
       if params[:expand]
@@ -363,7 +368,7 @@ class UsersController < ApplicationController
       limit: params[:limit],
       current_user: current_user,
     }
-    if params[:role_ids] && !params[:role_ids].empty?
+    if params[:role_ids].present?
       query_params[:role_ids] = params[:role_ids]
     end
 
@@ -449,10 +454,10 @@ class UsersController < ApplicationController
     end
 
     # do query
-    user_all = if params[:role_ids] && !params[:role_ids].empty?
-                 User.joins(:roles).where( 'roles.id' => params[:role_ids] ).where('users.id != 1').order('users.created_at DESC').limit( params[:limit] || 20 )
+    user_all = if params[:role_ids].present?
+                 User.joins(:roles).where('roles.id' => params[:role_ids]).where('users.id != 1').order('users.created_at DESC').limit(params[:limit] || 20)
                else
-                 User.where('id != 1').order('created_at DESC').limit( params[:limit] || 20 )
+                 User.where('id != 1').order('created_at DESC').limit(params[:limit] || 20)
                end
 
     # build result list
@@ -533,7 +538,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/email_verify.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN"}'
+curl http://localhost/api/v1/users/email_verify -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN"}'
 
 =end
 
@@ -562,7 +567,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/email_verify_send.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"email": "some_email@example.com"}'
+curl http://localhost/api/v1/users/email_verify_send -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"email": "some_email@example.com"}'
 
 =end
 
@@ -621,7 +626,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_reset.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"username": "some_username"}'
+curl http://localhost/api/v1/users/password_reset -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"username": "some_username"}'
 
 =end
 
@@ -673,7 +678,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_reset_verify.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN", "password" "new_password"}'
+curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"token": "SoMeToKeN", "password" "new_password"}'
 
 =end
 
@@ -729,7 +734,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new": "password_new"}'
+curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"password_old": "password_old", "password_new": "password_new"}'
 
 =end
 
@@ -776,7 +781,7 @@ curl http://localhost/api/v1/users/password_change.json -v -u #{login}:#{passwor
 =begin
 
 Resource:
-PUT /api/v1/users/preferences.json
+PUT /api/v1/users/preferences
 
 Payload:
 {
@@ -790,7 +795,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"language": "de", "notifications": true}'
+curl http://localhost/api/v1/users/preferences -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"language": "de", "notifications": true}'
 
 =end
 
@@ -803,7 +808,7 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
         params[:user].each { |key, value|
           user.preferences[key.to_sym] = value
         }
-        user.save
+        user.save!
       end
     end
     render json: { message: 'ok' }, status: :ok
@@ -812,7 +817,47 @@ curl http://localhost/api/v1/users/preferences.json -v -u #{login}:#{password} -
 =begin
 
 Resource:
-DELETE /api/v1/users/account.json
+PUT /api/v1/users/out_of_office
+
+Payload:
+{
+  "out_of_office": true,
+  "out_of_office_start_at": true,
+  "out_of_office_end_at": true,
+  "out_of_office_replacement_id": 123,
+  "out_of_office_text": 'honeymoon'
+}
+
+Response:
+{
+  :message => 'ok'
+}
+
+Test:
+curl http://localhost/api/v1/users/out_of_office -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"out_of_office": true, "out_of_office_replacement_id": 123}'
+
+=end
+
+  def out_of_office
+    raise Exceptions::UnprocessableEntity, 'No current user!' if !current_user
+    user = User.find(current_user.id)
+    user.with_lock do
+      user.assign_attributes(
+        out_of_office:                params[:out_of_office],
+        out_of_office_start_at:       params[:out_of_office_start_at],
+        out_of_office_end_at:         params[:out_of_office_end_at],
+        out_of_office_replacement_id: params[:out_of_office_replacement_id],
+      )
+      user.preferences[:out_of_office_text] = params[:out_of_office_text]
+      user.save!
+    end
+    render json: { message: 'ok' }, status: :ok
+  end
+
+=begin
+
+Resource:
+DELETE /api/v1/users/account
 
 Payload:
 {
@@ -826,7 +871,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/users/account.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"provider": "twitter", "uid": 581482342942}'
+curl http://localhost/api/v1/users/account -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"provider": "twitter", "uid": 581482342942}'
 
 =end
 

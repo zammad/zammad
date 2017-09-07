@@ -88,9 +88,11 @@ class Taskbar < ApplicationModel
     # update other taskbars
     Taskbar.where(key: key).order(:created_at, :id).each { |taskbar|
       next if taskbar.id == id
-      taskbar.preferences = preferences
-      taskbar.local_update = true
-      taskbar.save!
+      taskbar.with_lock do
+        taskbar.preferences = preferences
+        taskbar.local_update = true
+        taskbar.save!
+      end
     }
 
     return true if destroyed?

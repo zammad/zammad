@@ -43,17 +43,21 @@
 
     this.$element.on('keydown', function (e) {
 
-      // esc
-      if (e.keyCode === 27) {
-        _this.close()
-      }
-
       // navigate through item
       if (_this.isActive()) {
+
+        // esc
+        if (e.keyCode === 27) {
+          e.preventDefault()
+          e.stopPropagation()
+          _this.close()
+          return
+        }
 
         // enter
         if (e.keyCode === 13) {
           e.preventDefault()
+          e.stopPropagation()
           var id = _this.$widget.find('.dropdown-menu li.is-active').data('id')
 
           // as fallback use hovered element
@@ -72,12 +76,14 @@
         // arrow keys left/right
         if (e.keyCode === 37 || e.keyCode === 39) {
           e.preventDefault()
+          e.stopPropagation()
           return
         }
 
         // up or down
         if (e.keyCode === 38 || e.keyCode === 40) {
           e.preventDefault()
+          e.stopPropagation()
           var active = _this.$widget.find('.dropdown-menu li.is-active')
           active.removeClass('is-active')
 
@@ -92,6 +98,9 @@
 
           var menu = _this.$widget.find('.dropdown-menu')
 
+          if (!active.get(0)) {
+            return
+          }
           if (active.position().top < 0) {
             // scroll up
             menu.scrollTop( menu.scrollTop() + active.position().top )
@@ -102,7 +111,11 @@
             menu.scrollTop( menu.scrollTop() + invisibleHeight )
           }
         }
+      }
 
+      // esc
+      if (e.keyCode === 27) {
+        _this.close()
       }
     })
 
@@ -180,14 +193,14 @@
   Plugin.prototype.renderBase = function() {
     this.$element.after('<div class="shortcut dropdown"><ul class="dropdown-menu" style="max-height: 200px;"></ul></div>')
     this.$widget = this.$element.next()
-    this.$widget.on('click', 'li', $.proxy(this.onEntryClick, this))
+    this.$widget.on('mousedown', 'li', $.proxy(this.onEntryClick, this))
     this.$widget.on('mouseenter', 'li', $.proxy(this.onMouseEnter, this))
   }
 
   // set height of widget
   Plugin.prototype.movePosition = function() {
     if (!this._position) return
-    var height       = this.$element.height() + 2
+    var height       = this.$element.outerHeight() + 2
     var widgetHeight = this.$widget.find('ul').height() //+ 60 // + height
     var top          = -( widgetHeight + height ) + this._position.top
     var left = this._position.left - 6
@@ -250,9 +263,21 @@
 
   // paste some content
   Plugin.prototype.paste = function(string) {
-    if (document.selection) { // IE
+    var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+
+    // IE <= 10
+    if (document.selection && document.selection.createRange) {
       var range = document.selection.createRange()
-      range.pasteHTML(string)
+      if (range.pasteHTML) {
+        range.pasteHTML(string)
+      }
+    }
+    // IE == 11
+    else if (isIE11 && document.getSelection) {
+      var range = document.getSelection().getRangeAt(0)
+      var nnode = document.createElement('div')
+          range.surroundContents(nnode)
+          nnode.innerHTML = string
     }
     else {
       document.execCommand('insertHTML', false, string)
@@ -295,14 +320,7 @@
     // for chrome, insert space again
     if (start) {
       if (spacerChar === ' ') {
-        string = "&nbsp;"
-        if (document.selection) { // IE
-          var range = document.selection.createRange()
-          range.pasteHTML(string)
-        }
-        else {
-          document.execCommand('insertHTML', false, string)
-        }
+        this.paste('&nbsp;')
       }
     }
   }
@@ -313,6 +331,7 @@
   }
 
   Plugin.prototype.onEntryClick = function(event) {
+    event.preventDefault()
     var id = $(event.target).data('id')
     this.take(id)
   }
@@ -325,7 +344,7 @@
     }
     for (var i = 0; i < this.collection.length; i++) {
       var item = this.collection[i]
-      if ( item.id == id ) {
+      if (item.id == id) {
         var content = item.content
         this.cutInput()
         this.paste(content)

@@ -52,6 +52,7 @@ example
     host: 'outlook.office365.com',
     user: 'xxx@znuny.onmicrosoft.com',
     password: 'xxx',
+    keep_on_server: true,
   }
   channel = Channel.last
   instance = Channel::Driver::Imap.new
@@ -60,13 +61,18 @@ example
 =end
 
   def fetch (options, channel, check_type = '', verify_string = '')
-    ssl  = true
-    port = 993
+    ssl            = true
+    port           = 993
+    keep_on_server = false
+    folder         = 'INBOX'
+    if options[:keep_on_server] == true || options[:keep_on_server] == 'true'
+      keep_on_server = true
+    end
     if options.key?(:ssl) && options[:ssl] == false
       ssl  = false
       port = 143
     end
-    if options.key?(:port) && !options[:port].empty?
+    if options.key?(:port) && options[:port].present?
       port = options[:port]
 
       # disable ssl for non ssl ports
@@ -74,8 +80,11 @@ example
         ssl = false
       end
     end
+    if options[:folder].present?
+      folder = options[:folder]
+    end
 
-    Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},folder=#{options[:folder]})"
+    Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},folder=#{folder},keep_on_server=#{keep_on_server})"
 
     # on check, reduce open_timeout to have faster probing
     timeout = 45
@@ -90,17 +99,17 @@ example
     @imap.login(options[:user], options[:password])
 
     # select folder
-    if !options[:folder] || options[:folder].empty?
-      @imap.select('INBOX')
-    else
-      @imap.select(options[:folder])
-    end
+    @imap.select(folder)
 
     # sort messages by date on server (if not supported), if not fetch messages via search (first in, first out)
+    filter = ['ALL']
+    if keep_on_server && check_type != 'check' && check_type != 'verify'
+      filter = %w(NOT SEEN)
+    end
     begin
-      message_ids = @imap.sort(['DATE'], ['ALL'], 'US-ASCII')
+      message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
     rescue
-      message_ids = @imap.search(['ALL'])
+      message_ids = @imap.search(filter)
     end
 
     # check mode only
@@ -168,9 +177,8 @@ example
     message_ids.each do |message_id|
       count += 1
       Rails.logger.info " - message #{count}/#{count_all}"
-      #Rails.logger.info msg.to_s
 
-      message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'FLAGS', 'INTERNALDATE'])[0]
+      message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'ENVELOPE', 'FLAGS', 'INTERNALDATE'])[0]
 
       # ignore to big messages
       info = too_big?(message_meta, count, count_all)
@@ -182,14 +190,23 @@ example
       # ignore deleted messages
       next if deleted?(message_meta, count, count_all)
 
+      # ignore already imported
+      next if already_imported?(message_id, message_meta, count, count_all, keep_on_server)
+
       # delete email from server after article was created
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
       next if !msg
       process(channel, msg, false)
-      @imap.store(message_id, '+FLAGS', [:Deleted])
+      if !keep_on_server
+        @imap.store(message_id, '+FLAGS', [:Deleted])
+      else
+        @imap.store(message_id, '+FLAGS', [:Seen])
+      end
       count_fetched += 1
     end
-    @imap.expunge()
+    if !keep_on_server
+      @imap.expunge()
+    end
     disconnect
     if count.zero?
       Rails.logger.info ' - no message'
@@ -208,6 +225,20 @@ example
   end
 
   private
+
+  def already_imported?(message_id, message_meta, count, count_all, keep_on_server)
+    return false if !keep_on_server
+    return false if !message_meta.attr
+    return false if !message_meta.attr['ENVELOPE']
+    local_message_id = message_meta.attr['ENVELOPE'].message_id
+    return false if local_message_id.blank?
+    local_message_id_md5 = Digest::MD5.hexdigest(local_message_id)
+    article = Ticket::Article.where(message_id_md5: local_message_id_md5).order('created_at DESC, id DESC').limit(1).first
+    return false if !article
+    @imap.store(message_id, '+FLAGS', [:Seen])
+    Rails.logger.info "  - ignore message #{count}/#{count_all} - because message message id already imported"
+    true
+  end
 
   def deleted?(message_meta, count, count_all)
     return false if !message_meta.attr['FLAGS'].include?(:Deleted)

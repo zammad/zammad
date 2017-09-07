@@ -25,6 +25,7 @@ class App.HttpLog extends App.Controller
   render: =>
     @html App.view('widget/http_log')(
       records: @records
+      description: @description
     )
 
   show: (e) =>

@@ -126,7 +126,23 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(422)
     result = JSON.parse(@response.body)
     assert(result['error'])
-    assert_equal('User already exists!', result['error'])
+    assert_equal('Email address is already used for other user.', result['error'])
+
+    # email missing with enabled feature
+    params = { firstname: 'some firstname', signup: true }
+    post '/api/v1/users', params.to_json, headers
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert(result['error'])
+    assert_equal('Attribute \'email\' required!', result['error'])
+
+    # email missing with enabled feature
+    params = { firstname: 'some firstname', signup: true }
+    post '/api/v1/users', params.to_json, headers
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert(result['error'])
+    assert_equal('Attribute \'email\' required!', result['error'])
 
     # create user with enabled feature (take customer role)
     params = { firstname: 'Me First', lastname: 'Me Last', email: 'new_here@example.com', signup: true }
@@ -322,7 +338,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(422)
     result = JSON.parse(@response.body)
     assert(result)
-    assert_equal('User already exists!', result['error'])
+    assert_equal('Email address is already used for other user.', result['error'])
 
     # missing required attributes
     params = { note: 'some note' }
@@ -330,15 +346,9 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_response(422)
     result = JSON.parse(@response.body)
     assert(result)
-    assert_equal('Attribute \'login\' required!', result['error'])
+    assert_equal('Minimum one identifier (login, firstname, lastname, phone or email) for user is required.', result['error'])
 
-    params = { firstname: 'newfirstname123', note: 'some note' }
-    post '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
-    assert_response(422)
-    result = JSON.parse(@response.body)
-    assert(result)
-    assert_equal('Attribute \'login\' required!', result['error'])
-
+    # invalid email
     params = { firstname: 'newfirstname123', email: 'some_what', note: 'some note' }
     post '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
     assert_response(422)
@@ -346,6 +356,20 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert(result)
     assert_equal('Invalid email', result['error'])
 
+    # with valid attributes
+    params = { firstname: 'newfirstname123', note: 'some note' }
+    post '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert(result)
+    user = User.find(result['id'])
+    assert_not(user.role?('Admin'))
+    assert_not(user.role?('Agent'))
+    assert(user.role?('Customer'))
+    assert(result['login'].start_with?('auto-'))
+    assert_equal('', result['email'])
+    assert_equal('newfirstname123', result['firstname'])
+    assert_equal('', result['lastname'])
   end
 
   test 'user index and create with agent' do

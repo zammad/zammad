@@ -180,6 +180,10 @@ class ZendeskImportTest < ActiveSupport::TestCase
       last_login
       source
       login_failed
+      out_of_office
+      out_of_office_start_at
+      out_of_office_end_at
+      out_of_office_replacement_id
       preferences
       updated_by_id
       created_by_id
@@ -475,6 +479,7 @@ If you\'re reading this message in your email, click the ticket number link that
       last_contact_at
       last_contact_agent_at
       last_contact_customer_at
+      last_owner_update_at
       create_article_type_id
       create_article_sender_id
       article_count

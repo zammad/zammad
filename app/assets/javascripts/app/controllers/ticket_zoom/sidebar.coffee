@@ -9,18 +9,32 @@ class App.TicketZoomSidebar extends App.ObserverController
       if backend && backend.reload
         backend.reload(args)
 
+  commit: (args) =>
+    for key, backend of @sidebarBackends
+      if backend && backend.commit
+        backend.commit(args)
+
   render: (ticket) =>
-    @sidebarBackends = {}
+    @sidebarBackends ||= {}
     @sidebarItems = []
     sidebarBackends = App.Config.get('TicketZoomSidebar')
     keys = _.keys(sidebarBackends).sort()
     for key in keys
-      @sidebarBackends[key] = new sidebarBackends[key](
-        ticket:   ticket
-        taskGet:  @taskGet
-        formMeta: @formMeta
-        markForm: @markForm
-      )
+      if !@sidebarBackends[key] || !@sidebarBackends[key].reload
+        @sidebarBackends[key] = new sidebarBackends[key](
+          ticket:   ticket
+          query:    @query
+          taskGet:  @taskGet
+          formMeta: @formMeta
+          markForm: @markForm
+        )
+      else
+        @sidebarBackends[key].reload(
+          params:  @params
+          query:   @query
+          formMeta: @formMeta
+          markForm: @markForm
+        )
       item = @sidebarBackends[key].sidebarItem()
       if item
         @sidebarItems.push item

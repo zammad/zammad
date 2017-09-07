@@ -9,6 +9,7 @@ class App.TicketCreate extends App.Controller
 
   constructor: (params) ->
     super
+    @sidebarState = {}
 
     # define default type
     @default_type = 'phone-in'
@@ -91,6 +92,8 @@ class App.TicketCreate extends App.Controller
     else
       @$('[name="cc"]').closest('.form-group').addClass('hide')
 
+    App.TaskManager.touch(@task_key)
+
   meta: =>
     text = ''
     if @articleAttributes
@@ -99,10 +102,10 @@ class App.TicketCreate extends App.Controller
     if title
       text = "#{text}: #{title}"
     meta =
-      url:   @url()
-      head:  text
-      title: text
-      id:    @id
+      url:       @url()
+      head:      text
+      title:     text
+      id:        @id
       iconClass: 'pen'
 
   url: =>
@@ -228,7 +231,7 @@ class App.TicketCreate extends App.Controller
         type = @$('[name="formSenderType"]').val()
 
         if signature isnt undefined &&  signature.body && type is 'email-out'
-          signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get() })
+          signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), config: App.Config.all() })
 
           body = @$('[data-name=body]')
           if App.Utils.signatureCheck(body.html() || '', signatureFinished)
@@ -330,27 +333,47 @@ class App.TicketCreate extends App.Controller
     # show text module UI
     @textModule = new App.WidgetTextModule(
       el: @$('[data-name="body"]').parent()
-    )
-
-    new Sidebar(
-      el:         @sidebar
-      params:     @formDefault
-      textModule: @textModule
+      data:
+        config: App.Config.all()
+        user: App.Session.get()
     )
 
     $('#tags').tokenfield()
+
+    @sidebarWidget = new App.TicketCreateSidebar(
+      el:           @sidebar
+      params:       @formDefault
+      sidebarState: @sidebarState
+      task_key:     @task_key
+      query:        @query
+    )
+
+    if @formDefault.customer_id
+      callback = (customer) =>
+        @localUserInfoCallback(@formDefault, customer)
+      App.User.full(@formDefault.customer_id, callback)
 
     # update taskbar with new meta data
     App.TaskManager.touch(@task_key)
 
   localUserInfo: (e) =>
-
+    return if !@sidebarWidget
     params = App.ControllerForm.params($(e.target).closest('form'))
 
-    new Sidebar(
-      el:         @sidebar
-      params:     params
-      textModule: @textModule
+    if params.customer_id
+      callback = (customer) =>
+        @localUserInfoCallback(params, customer)
+      App.User.full(params.customer_id, callback)
+      return
+    @localUserInfoCallback(params)
+
+  localUserInfoCallback: (params, customer = {}) =>
+    @sidebarWidget.render(params)
+    @textModule.reload(
+      config: App.Config.all()
+      user: App.Session.get()
+      ticket:
+        customer: customer
     )
 
   cancel: (e) ->
@@ -475,6 +498,10 @@ class App.TicketCreate extends App.Controller
         # scroll to top
         ui.scrollTo()
 
+        # add sidebar params
+        if ui.sidebarWidget
+          ui.sidebarWidget.commit(ticket_id: @id)
+
         # access to group
         for group_id, access of App.Session.get('group_ids')
           if @group_id.toString() is group_id.toString()
@@ -495,114 +522,6 @@ class App.TicketCreate extends App.Controller
         )
     )
 
-class Sidebar extends App.Controller
-  constructor: ->
-    super
-
-    # load user
-    if @params['customer_id']
-      App.User.full(@params['customer_id'], @render)
-      return
-
-    # render ui
-    @render()
-
-  render: (user) =>
-
-    items = []
-    if user
-
-      showCustomer = (el) =>
-        # update text module UI
-        if @textModule
-          @textModule.reload(
-            ticket:
-              customer: user
-            user: App.Session.get()
-          )
-
-        new App.WidgetUser(
-          el:      el
-          user_id: user.id
-        )
-
-      editCustomer = (e, el) =>
-        new App.ControllerGenericEdit(
-          id: @params.customer_id
-          genericObject: 'User'
-          screen: 'edit'
-          pageData:
-            title:   'Users'
-            object:  'User'
-            objects: 'Users'
-          container: @el.closest('.content')
-        )
-      items.push {
-        head: 'Customer'
-        name: 'customer'
-        icon: 'person'
-        actions: [
-          {
-            title:    'Edit Customer'
-            name:     'Edit Customer'
-            class:    'glyphicon glyphicon-edit'
-            callback: editCustomer
-          },
-        ]
-        callback: showCustomer
-      }
-
-      if user.organization_id
-        editOrganization = (e, el) =>
-          new App.ControllerGenericEdit(
-            id: user.organization_id
-            genericObject: 'Organization'
-            pageData:
-              title:   'Organizations'
-              object:  'Organization'
-              objects: 'Organizations'
-            container: @el.closest('.content')
-          )
-        showOrganization = (el) ->
-          new App.WidgetOrganization(
-            el:              el
-            organization_id: user.organization_id
-          )
-        items.push {
-          head: 'Organization'
-          name: 'organization'
-          icon: 'group'
-          actions: [
-            {
-              title:    'Edit Organization'
-              name:     'Edit Organization'
-              class:    'glyphicon glyphicon-edit'
-              callback: editOrganization
-            },
-          ]
-          callback: showOrganization
-        }
-
-    showTemplates = (el) ->
-
-      # show template UI
-      new App.WidgetTemplate(
-        el:          el
-        #template_id: template['id']
-      )
-
-    items.push {
-      head: 'Templates'
-      name: 'template'
-      icon: 'templates'
-      callback: showTemplates
-    }
-
-    new App.Sidebar(
-      el:    @el
-      items: items
-    )
-
 class Router extends App.ControllerPermanent
   requiredPermission: 'ticket.agent'
   constructor: (params) ->
@@ -618,6 +537,9 @@ class Router extends App.ControllerPermanent
       if params.customer_id
         split = "/customer/#{params.customer_id}"
 
+      if params.query
+        split = "/query/#{params.query}"
+
       id = Math.floor( Math.random() * 99999 )
       @navigate "#ticket/create/id/#{id}#{split}"
       return
@@ -628,6 +550,7 @@ class Router extends App.ControllerPermanent
       article_id:  params.article_id
       type:        params.type
       customer_id: params.customer_id
+      query:       params.query
       id:          params.id
 
     App.TaskManager.execute(
@@ -643,6 +566,7 @@ App.Config.set('ticket/create/', Router, 'Routes')
 App.Config.set('ticket/create/id/:id', Router, 'Routes')
 App.Config.set('ticket/create/customer/:customer_id', Router, 'Routes')
 App.Config.set('ticket/create/id/:id/customer/:customer_id', Router, 'Routes')
+App.Config.set('ticket/create/id/:id/query/:query', Router, 'Routes')
 
 # split ticket
 App.Config.set('ticket/create/:ticket_id/:article_id', Router, 'Routes')

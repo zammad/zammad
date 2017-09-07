@@ -124,7 +124,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     local_record.preferences['delivery_status'] = 'fail'
     local_record.preferences['delivery_status_message'] = message
     local_record.preferences['delivery_status_date'] = Time.zone.now
-    local_record.save
+    local_record.save!
     Rails.logger.error message
 
     if local_record.preferences['delivery_retry'] > 3
@@ -141,7 +141,10 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
         recipient_list += local_record[key]
       }
 
-      Ticket::Article.create(
+      # reopen ticket and notify agent
+      Observer::Transaction.reset
+      UserInfo.current_user_id = 1
+      Ticket::Article.create!(
         ticket_id: local_record.ticket_id,
         content_type: 'text/plain',
         body: "Unable to send email to '#{recipient_list}': #{message}",
@@ -151,10 +154,14 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
         preferences: {
           delivery_article_id_related: local_record.id,
           delivery_message: true,
+          notification: true,
         },
-        updated_by_id: 1,
-        created_by_id: 1,
       )
+      ticket       = Ticket.find(local_record.ticket_id)
+      ticket.state = Ticket::State.find_by(default_follow_up: true)
+      ticket.save!
+      Observer::Transaction.commit
+      UserInfo.current_user_id = nil
     end
 
     raise message
@@ -166,7 +173,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
 
   def reschedule_at(current_time, attempts)
     if Rails.env.production?
-      return current_time + attempts * 20.seconds
+      return current_time + attempts * 25.seconds
     end
     current_time + 5.seconds
   end

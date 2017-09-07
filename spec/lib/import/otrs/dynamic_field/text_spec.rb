@@ -27,7 +27,7 @@ RSpec.describe Import::OTRS::DynamicField::Text do
         default:   '',
         type:      'text',
         maxlength: 255,
-        null:      false
+        null:      true
       }
     }
 

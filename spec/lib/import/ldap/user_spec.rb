@@ -1,8 +1,6 @@
 require 'rails_helper'
 require 'import/ldap/user'
 
-RSpec::Matchers.define_negated_matcher :not_change, :change
-
 RSpec.describe Import::Ldap::User do
 
   let(:uid) { 'exampleuid' }

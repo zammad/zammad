@@ -201,12 +201,42 @@ test("html2text", function() {
 test("phoneify", function() {
 
   var source = "+1 123 123 123-123"
-  var should = 'tel://%2B1123123123-123'
+  var should = 'tel:+1123123123123'
   var result = App.Utils.phoneify(source)
   equal(result, should, source)
 
   source = "+1 123 123 A 123-123<>"
-  should = 'tel://%2B1123123A123-123%3C%3E'
+  should = 'tel:+1123123123123'
+  result = App.Utils.phoneify(source)
+  equal(result, should, source)
+
+  source = "+1 (123) 123 123-123"
+  should = 'tel:+1123123123123'
+  result = App.Utils.phoneify(source)
+  equal(result, should, source)
+
+  source = "+1 (123) 123 1#23-123"
+  should = 'tel:+11231231#23123'
+  result = App.Utils.phoneify(source)
+  equal(result, should, source)
+
+  source = "+1 (123) 12*3 1#23-123"
+  should = 'tel:+112312*31#23123'
+  result = App.Utils.phoneify(source)
+  equal(result, should, source)
+
+  source = "+1 (123) 12+3"
+  should = 'tel:+1123123'
+  result = App.Utils.phoneify(source)
+  equal(result, should, source)
+
+  source = "+1 (123) 123 "
+  should = 'tel:+1123123'
+  result = App.Utils.phoneify(source)
+  equal(result, should, source)
+
+  source = "  +1 (123) 123 "
+  should = 'tel:+1123123'
   result = App.Utils.phoneify(source)
   equal(result, should, source)
 })
@@ -1100,6 +1130,16 @@ test("check replace tags", function() {
   verify = App.Utils.replaceTags(message, data)
   equal(verify, result)
 
+  message = "<div>#{user.firstname} #{<a href=\"/test\">user.lastname</a>}</div>"
+  result  = '<div>Bob Smith</div>'
+  data    = {
+    user: {
+      firstname: 'Bob',
+      lastname: 'Smith',
+    },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
 });
 
 // check attibute validation

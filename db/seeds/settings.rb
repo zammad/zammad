@@ -479,7 +479,7 @@ Setting.create_if_not_exists(
       {
         display: '',
         null: false,
-        name: 'proxy_passowrd',
+        name: 'proxy_password',
         tag: 'input',
       },
     ],
@@ -489,6 +489,30 @@ Setting.create_if_not_exists(
     disabled: true,
     online_service_disable: true,
     prio: 3,
+    permission: ['admin.system'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'No Proxy',
+  name: 'proxy_no',
+  area: 'System::Network',
+  description: 'No proxy for the following hosts.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'proxy_no',
+        tag: 'input',
+      },
+    ],
+  },
+  state: 'localhost,127.0.0.0,::1',
+  preferences: {
+    disabled: true,
+    online_service_disable: true,
+    prio: 4,
     permission: ['admin.system'],
   },
   frontend: false
@@ -546,18 +570,17 @@ Setting.create_if_not_exists(
   },
   frontend: true
 )
-
 Setting.create_if_not_exists(
-  title: 'Define default visibility of new a new article',
-  name: 'ui_ticket_zoom_article_new_internal',
+  title: 'Note - default visibility',
+  name: 'ui_ticket_zoom_article_note_new_internal',
   area: 'UI::TicketZoom',
-  description: 'Set default visibility of new a new article.',
+  description: 'Default visibility for new note.',
   options: {
     form: [
       {
         display: '',
         null: true,
-        name: 'ui_ticket_zoom_article_new_internal',
+        name: 'ui_ticket_zoom_article_note_new_internal',
         tag: 'boolean',
         translate: true,
         options: {
@@ -569,7 +592,88 @@ Setting.create_if_not_exists(
   },
   state: true,
   preferences: {
-    prio: 1,
+    prio: 100,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Email - subject field',
+  name: 'ui_ticket_zoom_article_email_subject',
+  area: 'UI::TicketZoom',
+  description: 'Use subject field for emails. If disabled, the ticket title will be used as subject.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_article_email_subject',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 200,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Email - full quote',
+  name: 'ui_ticket_zoom_article_email_full_quote',
+  area: 'UI::TicketZoom',
+  description: 'Enable if you want to quote the full email in your answer. The quoted email will be put at the end of your answer. If you just want to quote a certain phrase, just mark the text and press reply (this feature is always available).',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_article_email_full_quote',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 220,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Twitter - tweet initials',
+  name: 'ui_ticket_zoom_article_twitter_initials',
+  area: 'UI::TicketZoom',
+  description: 'Add sender initials to end of a tweet.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_article_twitter_initials',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: true,
+  preferences: {
+    prio: 300,
     permission: ['admin.ui'],
   },
   frontend: true
@@ -624,6 +728,31 @@ Setting.create_if_not_exists(
     permission: ['admin.security'],
   },
   frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'User email for muliple users',
+  name: 'user_email_multiple_use',
+  area: 'Model::User',
+  description: 'Allow to use email address for muliple users.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'user_email_multiple_use',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    permission: ['admin'],
+  },
+  frontend: false
 )
 Setting.create_if_not_exists(
   title: 'Authentication via %s',
@@ -1006,6 +1135,63 @@ Setting.create_if_not_exists(
 
 Setting.create_if_not_exists(
   title: 'Authentication via %s',
+  name: 'auth_microsoft_office365',
+  area: 'Security::ThirdPartyAuthentication',
+  description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'auth_microsoft_office365',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_microsoft_office365_credentials'],
+    title_i18n: ['Office 365'],
+    description_i18n: ['Office 365', 'Microsoft Application Registration Portal', 'https://apps.dev.microsoft.com'],
+    permission: ['admin.security'],
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Office 365 App Credentials',
+  name: 'auth_microsoft_office365_credentials',
+  area: 'Security::ThirdPartyAuthentication::Office365',
+  description: 'Enables user authentication via Office 365.',
+  options: {
+    form: [
+      {
+        display: 'App ID',
+        null: true,
+        name: 'app_id',
+        tag: 'input',
+      },
+      {
+        display: 'App Secret',
+        null: true,
+        name: 'app_secret',
+        tag: 'input',
+      },
+    ],
+  },
+  state: {},
+  preferences: {
+    permission: ['admin.security'],
+  },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Authentication via %s',
   name: 'auth_oauth2',
   area: 'Security::ThirdPartyAuthentication',
   description: 'Enables user authentication via generic OAuth2. Register your app first.',
@@ -1063,7 +1249,7 @@ Setting.create_if_not_exists(
         null: true,
         name: 'site',
         tag: 'input',
-        placeholder: 'https://gitlab.YOURDOMAIN.com',
+        placeholder: 'https://oauth.YOURDOMAIN.com',
       },
       {
         display: 'authorize_url',
@@ -2215,7 +2401,7 @@ Setting.create_if_not_exists(
   area:        'Import',
   description: 'A list of active import backends that get scheduled automatically.',
   options:     {},
-  state:       ['Import::Ldap'],
+  state:       ['Import::Ldap', 'Import::Exchange'],
   preferences: {
     permission: ['admin'],
   },
@@ -2662,6 +2848,117 @@ Setting.create_if_not_exists(
   frontend: false
 )
 Setting.create_if_not_exists(
+  title: 'Check_MK integration',
+  name: 'check_mk_integration',
+  area: 'Integration::Switch',
+  description: 'Defines if Check_MK (http://mathias-kettner.com/check_mk.html) is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'check_mk_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 1,
+    permission: ['admin.integration'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Group',
+  name: 'check_mk_group_id',
+  area: 'Integration::CheckMK',
+  description: 'Defines the group of created tickets.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'check_mk_group_id',
+        tag: 'select',
+        relation: 'Group',
+      },
+    ],
+  },
+  state: 1,
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Auto close',
+  name: 'check_mk_auto_close',
+  area: 'Integration::CheckMK',
+  description: 'Defines if tickets should be closed if service is recovered.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'check_mk_auto_close',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: true,
+  preferences: {
+    prio: 3,
+    permission: ['admin.integration'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Auto close state',
+  name: 'check_mk_auto_close_state_id',
+  area: 'Integration::CheckMK',
+  description: 'Defines the state of auto closed tickets.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'check_mk_auto_close_state_id',
+        tag: 'select',
+        relation: 'TicketState',
+      },
+    ],
+  },
+  state: 4,
+  preferences: {
+    prio: 4,
+    permission: ['admin.integration'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Check_MK tolen',
+  name: 'check_mk_token',
+  area: 'Core',
+  description: 'Defines the Check_MK token for allowing updates.',
+  options: {},
+  state: SecureRandom.hex(16),
+  preferences: {
+    permission: ['admin.integration'],
+  },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
   title: 'LDAP integration',
   name: 'ldap_integration',
   area: 'Integration::Switch',
@@ -2689,10 +2986,90 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
+  title: 'Exchange config',
+  name: 'exchange_config',
+  area: 'Integration::Exchange',
+  description: 'Defines the Exchange config.',
+  options: {},
+  state: {},
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
+  frontend: false,
+)
+Setting.create_if_not_exists(
+  title: 'Exchange integration',
+  name: 'exchange_integration',
+  area: 'Integration::Switch',
+  description: 'Defines if Exchange is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'exchange_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 1,
+    authentication: true,
+    permission: ['admin.integration'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
   title: 'LDAP config',
   name: 'ldap_config',
   area: 'Integration::LDAP',
   description: 'Defines the LDAP config.',
+  options: {},
+  state: {},
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
+  frontend: false,
+)
+Setting.create_if_not_exists(
+  title: 'i-doit integration',
+  name: 'idoit_integration',
+  area: 'Integration::Switch',
+  description: 'Defines if i-doit (http://www.i-doit) is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'idoit_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 1,
+    authentication: true,
+    permission: ['admin.integration'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'i-doit config',
+  name: 'idoit_config',
+  area: 'Integration::Idoit',
+  description: 'Defines the i-doit config.',
   options: {},
   state: {},
   preferences: {

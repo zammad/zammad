@@ -3,17 +3,17 @@
   "version": "1.0.0",
   "description": "Zammad Customer Chat Javascript Widget",
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-autoprefixer": "^3.0.2",
-    "gulp-coffee": "^2.3.1",
-    "gulp-concat": "^2.6.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-coffee": "^2.3.4",
+    "gulp-concat": "^2.6.1",
     "gulp-eco": "0.0.2",
-    "gulp-plumber": "^1.0.1",
+    "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.0.4",
-    "gulp-uglify": "^1.4.2",
-    "gulp-util": "^3.0.6",
-    "merge-stream": "^1.0.0",
-    "sass.js": "^0.9.2"
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "merge-stream": "^1.0.1",
+    "sass.js": "^0.10.5"
   }
 }

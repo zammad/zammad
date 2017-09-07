@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-RSpec::Matchers.define_negated_matcher :not_change, :change
-
 RSpec.describe Import::BaseResource do
 
   it "needs an implementation of the 'import_class' method" do
