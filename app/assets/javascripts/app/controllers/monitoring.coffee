@@ -4,7 +4,7 @@ class Index extends App.ControllerSubContent
   events:
     'click .js-resetToken': 'resetToken'
     'click .js-select': 'selectAll'
-    'click .js-restartDeadJobs': 'restartDeadJobs'
+    'click .js-restartFailedJobs': 'restartFailedJobs'
 
   constructor: ->
     super
@@ -46,12 +46,12 @@ class Index extends App.ControllerSubContent
         @load()
     )
 
-  restartDeadJobs: (e) =>
+  restartFailedJobs: (e) =>
     e.preventDefault()
     @ajax(
-      id:    'restart_dead_jobs_request'
+      id:    'restart_failed_jobs_request'
       type:  'POST'
-      url:   "#{@apiPath}/monitoring/restart_dead_jobs"
+      url:   "#{@apiPath}/monitoring/restart_failed_jobs"
       success: (data) =>
         @job_restart_count = data.job_restart_count
         @render()

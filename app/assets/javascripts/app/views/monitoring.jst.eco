@@ -35,10 +35,10 @@
       <% end %>
     </ul>
     <% if !_.isEmpty(@data.issues): %>
-      <button class="btn btn--primary js-restartDeadJobs"><%- @T('Restart Dead Jobs') %></button>
+      <button class="btn btn--primary js-restartFailedJobs"><%- @T('Restart Failed Jobs') %></button>
       <% if !_.isUndefined(@job_restart_count): %>
         <p>
-          <%- @T('Detected %s dead job(s) available for restart', @job_restart_count) %>
+          <%- @T('Detected %s failed job(s) available for restart', @job_restart_count) %>
           <%- ', restarting...' if @job_restart_count > 0 %>
         </p>
       <% end %>

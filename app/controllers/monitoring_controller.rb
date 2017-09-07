@@ -177,7 +177,7 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
     render json: result, status: :created
   end
 
-  def restart_dead_jobs
+  def restart_failed_jobs
     access_check
 
     count = 0
