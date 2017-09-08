@@ -73,7 +73,7 @@ returns
       query.delete! '*'
       organizations = Organization.where(
         'name LIKE ? OR note LIKE ?', "%#{query}%", "%#{query}%"
-      ).order('name').limit(limit)
+      ).order('name').limit(limit).to_a
 
       # if only a few organizations are found, search for names of users
       if organizations.length <= 3

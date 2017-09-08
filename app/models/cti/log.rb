@@ -338,7 +338,7 @@ Cti::Log.process(
         log.comment = comment
         log.save
       else
-        raise ArgumentError, "Unknown event #{event}"
+        raise ArgumentError, "Unknown event #{event.inspect}"
       end
     end
 

@@ -1,4 +1,4 @@
-class ObjectManagerUpdateUser < ActiveRecord::Migration
+class ObjectManagerUpdateUser < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

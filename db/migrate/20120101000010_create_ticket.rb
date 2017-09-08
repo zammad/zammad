@@ -1,4 +1,4 @@
-class CreateTicket < ActiveRecord::Migration
+class CreateTicket < ActiveRecord::Migration[4.2]
   def up
     create_table :ticket_state_types do |t|
       t.column :name,                 :string, limit: 250, null: false

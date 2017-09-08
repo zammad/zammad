@@ -30,6 +30,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     token_or_permission_check
 
     issues = []
+    actions = Set.new
 
     # channel check
     last_run_tolerance = Time.zone.now - 1.hour
@@ -81,6 +82,11 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       issues.push 'scheduler not running'
     end
 
+    Scheduler.failed_jobs.each do |job|
+      issues.push "Failed to run scheduled job '#{job.name}'. Cause: #{job.error_message}"
+      actions.add(:restart_failed_jobs)
+    end
+
     token = Setting.get('monitoring_token')
 
     if issues.empty?
@@ -96,8 +102,9 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     result = {
       healthy: false,
       message: issues.join(';'),
-      issues: issues,
-      token: token,
+      issues:  issues,
+      actions: actions,
+      token:   token,
     }
     render json: result
   end
@@ -171,6 +178,14 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
       token: token,
     }
     render json: result, status: :created
+  end
+
+  def restart_failed_jobs
+    access_check
+
+    Scheduler.restart_failed_jobs
+
+    render json: {}, status: :ok
   end
 
   private

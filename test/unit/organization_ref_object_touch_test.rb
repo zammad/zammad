@@ -61,7 +61,7 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: "some title1\n äöüß",
       group: Group.lookup(name: 'Users'),
       customer_id: customer1.id,
@@ -78,7 +78,7 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
     travel 4.seconds
 
     organization1.name = 'Ref Object Update Org 1/1'
-    organization1.save
+    organization1.save!
 
     # check if ticket and customer has been touched
     ticket = Ticket.find(ticket.id)
@@ -88,7 +88,7 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
       assert(false, 'ticket.updated_at has not been updated')
     end
 
-    customer1 = User.find(customer1.id)
+    customer1.reload
     if customer1.updated_at > 2.seconds.ago
       assert(true, 'customer1.updated_at has been updated')
     else
@@ -98,25 +98,24 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
     travel 4.seconds
 
     customer2.organization_id = organization1.id
-    customer2.save
+    customer2.save!
 
     # check if customer1 and organization has been touched
-    customer1 = User.find(customer1.id)
+    customer1.reload
     if customer1.updated_at > 2.seconds.ago
       assert(true, 'customer1.updated_at has been updated')
     else
       assert(false, 'customer1.updated_at has not been updated')
     end
 
-    organization1 = Organization.find(organization1.id)
+    organization1.reload
     if organization1.updated_at > 2.seconds.ago
       assert(true, 'organization1.updated_at has been updated')
     else
       assert(false, 'organization1.updated_at has not been updated')
     end
 
-    delete = ticket.destroy
-    assert(delete, 'ticket destroy')
+    assert(ticket.destroy, 'ticket destroy')
     travel_back
   end
 
@@ -193,7 +192,7 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
       )
     }
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: "some title1\n äöüß",
       group: Group.lookup(name: 'Users'),
       customer_id: customer1.id,
@@ -208,36 +207,35 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
     assert_equal(ticket.customer.id, customer1.id)
     assert_equal(ticket.organization.id, organization1.id)
 
-    customer1 = User.find(customer1.id)
+    customer1.reload
     assert_not_equal('2015-02-05 16:37:00 UTC', customer1.updated_at.to_s)
     customer1_updated_at = customer1.updated_at
 
     travel 4.seconds
     organization1.name = 'Ref Object Update Org 1 (no update)/1'
-    organization1.save
+    organization1.save!
     organization1_updated_at = organization1.updated_at
 
     # check if ticket and customer has been touched
     ticket = Ticket.find(ticket.id)
     assert_equal('2015-02-05 16:39:00 UTC', ticket.updated_at.to_s)
 
-    customer1 = User.find(customer1.id)
+    customer1.reload
     assert_equal(customer1_updated_at.to_s, customer1.updated_at.to_s)
 
     travel 4.seconds
 
     customer2.organization_id = organization1.id
-    customer2.save
+    customer2.save!
 
     # check if customer1 and organization has been touched
-    customer1 = User.find(customer1.id)
+    customer1.reload
     assert_equal(customer1_updated_at.to_s, customer1.updated_at.to_s)
 
-    organization1 = Organization.find(organization1.id)
+    organization1.reload
     assert_equal(organization1_updated_at.to_s, organization1.updated_at.to_s)
 
-    delete = ticket.destroy
-    assert(delete, 'ticket destroy')
+    assert(ticket.destroy, 'ticket destroy')
     travel_back
   end
 

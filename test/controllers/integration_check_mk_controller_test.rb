@@ -9,12 +9,12 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '01 without token' do
-    post '/api/v1/integration/check_mk/', {}
+    post '/api/v1/integration/check_mk/', params: {}
     assert_response(404)
   end
 
   test '01 invalid token & enabled feature' do
-    post '/api/v1/integration/check_mk/invalid_token', {}
+    post '/api/v1/integration/check_mk/invalid_token', params: {}
     assert_response(422)
 
     result = JSON.parse(@response.body)
@@ -25,7 +25,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
   test '01 invalid token & disabled feature' do
     Setting.set('check_mk_integration', false)
 
-    post '/api/v1/integration/check_mk/invalid_token', {}
+    post '/api/v1/integration/check_mk/invalid_token', params: {}
     assert_response(422)
 
     result = JSON.parse(@response.body)
@@ -40,7 +40,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       host: 'some host',
       service: 'some service',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -60,7 +60,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       host: 'some host',
       service: 'some service',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -81,7 +81,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       host: 'some host',
       service: 'some service',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -101,7 +101,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       host: 'some host',
       service: 'some service',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -120,7 +120,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       host: 'some host',
       service: 'some service',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -141,7 +141,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       host: 'some host',
       service: 'some service',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -158,7 +158,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       host: 'some host',
       service: 'some service',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -178,7 +178,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       host: 'some host',
       service: 'some service',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -197,7 +197,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       host: 'some host',
       service: 'some service',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -217,7 +217,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       state: 'down',
       host: 'some host',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -236,7 +236,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       state: 'down',
       host: 'some host',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -254,7 +254,7 @@ class IntegationCheckMkControllerTest < ActionDispatch::IntegrationTest
       state: 'up',
       host: 'some host',
     }
-    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params
+    post "/api/v1/integration/check_mk/#{Setting.get('check_mk_token')}", params: params
     assert_response(200)
 
     result = JSON.parse(@response.body)

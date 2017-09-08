@@ -31,15 +31,16 @@ class ObjectManagerAttributesController < ApplicationController
     )
     raise Exceptions::UnprocessableEntity, 'already exists' if exists
 
+    local_params = params.permit!.to_h
     begin
       object_manager_attribute = ObjectManager::Attribute.add(
-        object: params[:object],
-        name: params[:name],
-        display: params[:display],
-        data_type: params[:data_type],
-        data_option: params[:data_option],
-        active: params[:active],
-        screens: params[:screens],
+        object: local_params[:object],
+        name: local_params[:name],
+        display: local_params[:display],
+        data_type: local_params[:data_type],
+        data_option: local_params[:data_option],
+        active: local_params[:active],
+        screens: local_params[:screens],
         position: 1550,
         editable: true,
       )
@@ -52,15 +53,17 @@ class ObjectManagerAttributesController < ApplicationController
   # PUT /object_manager_attributes/1
   def update
     check_params
+
+    local_params = params.permit!.to_h
     begin
       object_manager_attribute = ObjectManager::Attribute.add(
-        object: params[:object],
-        name: params[:name],
-        display: params[:display],
-        data_type: params[:data_type],
-        data_option: params[:data_option],
-        active: params[:active],
-        screens: params[:screens],
+        object: local_params[:object],
+        name: local_params[:name],
+        display: local_params[:display],
+        data_type: local_params[:data_type],
+        data_option: local_params[:data_option],
+        active: local_params[:active],
+        screens: local_params[:screens],
         position: 1550,
         editable: true,
       )

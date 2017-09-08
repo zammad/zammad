@@ -23,8 +23,8 @@ returns
 
     def param_cleanup(params, new_object = false)
 
-      if params.respond_to?('permit!')
-        params.permit!
+      if params.respond_to?(:permit!)
+        params = params.permit!.to_h
       end
 
       if params.nil?

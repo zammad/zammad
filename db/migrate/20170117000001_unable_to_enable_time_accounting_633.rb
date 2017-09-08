@@ -1,4 +1,4 @@
-class UnableToEnableTimeAccounting633 < ActiveRecord::Migration
+class UnableToEnableTimeAccounting633 < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

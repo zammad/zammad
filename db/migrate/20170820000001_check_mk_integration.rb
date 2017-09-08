@@ -1,4 +1,4 @@
-class CheckMkIntegration < ActiveRecord::Migration
+class CheckMkIntegration < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

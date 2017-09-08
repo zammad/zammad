@@ -293,6 +293,10 @@ returns
 
     def association_name_to_id_convert(params)
 
+      if params.respond_to?(:permit!)
+        params = params.permit!.to_h
+      end
+
       data = {}
       params.each { |key, value|
         data[key.to_sym] = value

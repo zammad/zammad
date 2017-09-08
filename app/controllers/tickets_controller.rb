@@ -93,7 +93,7 @@ class TicketsController < ApplicationController
         render json: { error: 'Invalid email of customer' }, status: :unprocessable_entity
         return
       end
-      customer = User.find_by(email: email)
+      customer = User.find_by(email: email.downcase)
       if !customer
         role_ids = Role.signup_role_ids
         customer = User.create(
@@ -122,7 +122,7 @@ class TicketsController < ApplicationController
     ticket.with_lock do
 
       # create tags if given
-      if params[:tags] && !params[:tags].empty?
+      if params[:tags].present?
         tags = params[:tags].split(/,/)
         tags.each { |tag|
           ticket.tag_add(tag)
@@ -142,12 +142,13 @@ class TicketsController < ApplicationController
     #     child: [ticket_id1, ticket_id2, ...]
     #   },
     # }
-    if params[:links]
-      raise 'Invalid link structure' if params[:links].to_h.class != Hash
-      params[:links].each { |target_object, link_types_with_object_ids|
-        raise 'Invalid link structure (Object)' if link_types_with_object_ids.to_h.class != Hash
+    if params[:links].present?
+      link = params[:links].permit!.to_h
+      raise Exceptions::UnprocessableEntity, 'Invalid link structure' if !link.is_a? Hash
+      link.each { |target_object, link_types_with_object_ids|
+        raise Exceptions::UnprocessableEntity, 'Invalid link structure (Object)' if !link_types_with_object_ids.is_a? Hash
         link_types_with_object_ids.each { |link_type, object_ids|
-          raise 'Invalid link structure (Object->LinkType)' if object_ids.class != Array
+          raise Exceptions::UnprocessableEntity, 'Invalid link structure (Object->LinkType)' if !object_ids.is_a? Array
           object_ids.each { |local_object_id|
             link = Link.add(
               link_type: link_type,
@@ -399,7 +400,7 @@ class TicketsController < ApplicationController
     # do pagination if needed
     if params[:page] && params[:per_page]
       offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      tickets = tickets.slice(offset, params[:per_page].to_i) || []
+      tickets = tickets[offset, params[:per_page].to_i] || []
     end
 
     if params[:expand]

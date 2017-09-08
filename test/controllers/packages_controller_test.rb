@@ -53,7 +53,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
   test '01 packages index with nobody' do
 
     # index
-    get '/api/v1/packages', {}, @headers
+    get '/api/v1/packages', params: {}, headers: @headers
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -67,7 +67,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('packages-admin@example.com', 'adminpw')
 
     # index
-    get '/api/v1/packages', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/packages', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -79,7 +79,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('packages-admin@example.com', 'wrongadminpw')
 
     # index
-    get '/api/v1/packages', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/packages', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -93,7 +93,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('packages-admin@example.com', 'adminpw')
 
     # index
-    get '/api/v1/packages', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/packages', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -105,7 +105,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('packages-agent@example.com', 'agentpw')
 
     # index
-    get '/api/v1/packages', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/packages', params: {}, headers: @headers.merge('Authorization' => credentials)
 
     assert_response(401)
     result = JSON.parse(@response.body)
@@ -119,7 +119,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('packages-customer1@example.com', 'customer1pw')
 
     # index
-    get '/api/v1/packages', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/packages', params: {}, headers: @headers.merge('Authorization' => credentials)
 
     assert_response(401)
     result = JSON.parse(@response.body)

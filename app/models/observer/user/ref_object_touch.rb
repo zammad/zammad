@@ -18,7 +18,7 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
   def ref_object_touch(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
     # touch old organization if changed
     member_ids = []
@@ -47,9 +47,9 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
 
     # touch old/current customer
     member_ids.uniq.each { |user_id|
-      if user_id != record.id
-        User.find(user_id).touch
-      end
+      next if user_id == record.id
+      User.find(user_id).touch
     }
+    true
   end
 end

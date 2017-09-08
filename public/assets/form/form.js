@@ -26,6 +26,7 @@ $(function() {
         tag: 'input',
         type: 'text',
         placeholder: 'Your Name',
+        defaultValue: '',
       },
       {
         display: 'Email',
@@ -33,12 +34,14 @@ $(function() {
         tag: 'input',
         type: 'email',
         placeholder: 'Your Email',
+        defaultValue: function () {return User.email;},
       },
       {
         display: 'Message',
         name: 'body',
         tag: 'textarea',
         placeholder: 'Your Message...',
+        defaultValue: '',
         rows: 7,
       },
       {
@@ -74,6 +77,7 @@ $(function() {
         tag: 'input',
         type: 'text',
         placeholder: 'Your Name',
+        defaultValue: '',
       },
       {
         display: 'Email',
@@ -81,12 +85,14 @@ $(function() {
         tag: 'input',
         type: 'email',
         placeholder: 'Your Email',
+        defaultValue: '',
       },
       {
         display: 'Message',
         name: 'body',
         tag: 'textarea',
         placeholder: 'Your Message...',
+        defaultValue: '',
         rows: 7,
       },
     ],
@@ -360,13 +366,14 @@ $(function() {
       $form.append('<h2>' + this.options.messageTitle + '</h2>')
     }
     $.each(this.options.attributes, function(index, value) {
-      var item = $('<div class="form-group"><label>' + _this.T(value.display) + '</label></div>')
+      var item = $('<div class="form-group"><label>' + _this.T(value.display) + '</label></div>');
+      var defaultValue = (typeof value.defaultValue === 'function') ? value.defaultValue() : value.defaultValue;
       for (var i=0; i < (value.repeat ? value.repeat : 1); i++) {
         if (value.tag == 'input') {
-          item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '">')
+          item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '">')
         }
         else if (value.tag == 'textarea') {
-          item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '"></textarea>')
+          item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '">' + (defaultValue || '') + '</textarea>')
         }
       }
       $form.append(item)

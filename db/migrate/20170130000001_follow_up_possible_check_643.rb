@@ -1,4 +1,4 @@
-class FollowUpPossibleCheck643 < ActiveRecord::Migration
+class FollowUpPossibleCheck643 < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

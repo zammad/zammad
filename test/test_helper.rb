@@ -28,7 +28,7 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # disable transactions
-  self.use_transactional_fixtures = false
+  self.use_transactional_tests = false
 
   # clear cache
   Cache.clear

@@ -5,7 +5,7 @@ require 'cache'
 
 class ActiveSupport::TestCase
   # disable transactions
-  #self.use_transactional_fixtures = false
+  #self.use_transactional_tests = false
 
   ActiveRecord::Base.logger = Rails.logger.clone
   ActiveRecord::Base.logger.level = Logger::INFO

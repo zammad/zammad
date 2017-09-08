@@ -61,7 +61,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         type: 'note',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -80,7 +80,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         type: 'note',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -97,7 +97,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
       customer_id: @customer_without_org.id,
       article: {},
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -116,7 +116,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         body: 'some test 123',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -140,7 +140,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         body: 'some test 123',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -160,7 +160,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         body: 'some test 123',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     #assert_response(422)
     #result = JSON.parse(@response.body)
     #assert_equal(Hash, result.class)
@@ -188,7 +188,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         body: 'some test 123',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -208,7 +208,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         body: 'some test 123',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -231,7 +231,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         body: 'some test 123',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -252,7 +252,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         body: 'some test 123',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -273,7 +273,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         subject: 'some test 123',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -296,7 +296,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         ],
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -339,7 +339,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         ],
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -375,7 +375,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         ],
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -397,7 +397,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
         ],
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -419,7 +419,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       },
     }
 
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -463,7 +463,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       },
     }
 
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -506,7 +506,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         }
       }
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -540,7 +540,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       created_by_id: 1,
     )
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
-    get "/api/v1/tickets/#{ticket.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/#{ticket.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -549,13 +549,13 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     params = {
       title: 'ticket with wrong ticket id - 2',
     }
-    put "/api/v1/tickets/#{ticket.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('Not authorized', result['error'])
 
-    delete "/api/v1/tickets/#{ticket.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/tickets/#{ticket.id}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -574,7 +574,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       created_by_id: 1,
     )
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
-    get "/api/v1/tickets/#{ticket.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/#{ticket.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -588,7 +588,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       title: "#{title} - 2",
       customer_id: @agent.id,
     }
-    put "/api/v1/tickets/#{ticket.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -603,7 +603,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       subject: 'some subject',
       body: 'some body',
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     article_result = JSON.parse(@response.body)
     assert_equal(Hash, article_result.class)
@@ -618,7 +618,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(Ticket::Article::Type.lookup(name: 'note').id, article_result['type_id'])
 
     Scheduler.worker(true)
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -633,14 +633,14 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         },
       },
     }
-    post '/api/v1/tickets/search', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets/search', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['tickets'][0])
     assert_equal(1, result['tickets_count'])
 
-    delete "/api/v1/ticket_articles/#{article_result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/ticket_articles/#{article_result['id']}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
 
     params = {
@@ -651,7 +651,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       type: 'email',
       internal: true,
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -668,7 +668,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     params = {
       subject: 'new subject',
     }
-    put "/api/v1/ticket_articles/#{result['id']}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/ticket_articles/#{result['id']}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -682,13 +682,13 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(Ticket::Article::Sender.lookup(name: 'Agent').id, result['sender_id'])
     assert_equal(Ticket::Article::Type.lookup(name: 'email').id, result['type_id'])
 
-    delete "/api/v1/ticket_articles/#{result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/ticket_articles/#{result['id']}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('Not authorized (admin permission required)!', result['error'])
 
-    delete "/api/v1/tickets/#{ticket.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/tickets/#{ticket.id}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -706,7 +706,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       created_by_id: 1,
     )
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
-    get "/api/v1/tickets/#{ticket.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/#{ticket.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -720,7 +720,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       title: 'ticket with corret ticket id - 2',
       customer_id: @agent.id,
     }
-    put "/api/v1/tickets/#{ticket.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -736,7 +736,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       subject: 'some subject',
       body: 'some body',
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -754,7 +754,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       subject: 'new subject',
       internal: true,
     }
-    put "/api/v1/ticket_articles/#{result['id']}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/ticket_articles/#{result['id']}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -768,7 +768,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(Ticket::Article::Sender.lookup(name: 'Agent').id, result['sender_id'])
     assert_equal(Ticket::Article::Type.lookup(name: 'note').id, result['type_id'])
 
-    delete "/api/v1/ticket_articles/#{result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/ticket_articles/#{result['id']}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
 
     params = {
@@ -777,7 +777,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       body: 'some body',
       type: 'email',
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -791,10 +791,10 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(Ticket::Article::Sender.lookup(name: 'Agent').id, result['sender_id'])
     assert_equal(Ticket::Article::Type.lookup(name: 'email').id, result['type_id'])
 
-    delete "/api/v1/ticket_articles/#{result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/ticket_articles/#{result['id']}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
 
-    delete "/api/v1/tickets/#{ticket.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/tickets/#{ticket.id}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
   end
 
@@ -826,7 +826,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     }
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -834,7 +834,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(tickets[0].id, result['tickets'][19])
     assert_equal(20, result['tickets_count'])
 
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=10", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=10", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -842,7 +842,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(tickets[10].id, result['tickets'][9])
     assert_equal(10, result['tickets_count'])
 
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40&page=1&per_page=5", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40&page=1&per_page=5", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -850,7 +850,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(tickets[15].id, result['tickets'][4])
     assert_equal(5, result['tickets_count'])
 
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40&page=2&per_page=5", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40&page=2&per_page=5", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -858,7 +858,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(tickets[10].id, result['tickets'][4])
     assert_equal(5, result['tickets_count'])
 
-    get '/api/v1/tickets?limit=40&page=1&per_page=5', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/tickets?limit=40&page=1&per_page=5', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
@@ -867,7 +867,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(tickets[4].id, result[4]['id'])
     assert_equal(5, result.count)
 
-    get '/api/v1/tickets?limit=40&page=2&per_page=5', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/tickets?limit=40&page=2&per_page=5', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
@@ -889,7 +889,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         body: 'some body',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -914,7 +914,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         sender: 'System',
       },
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -936,7 +936,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       created_by_id: 1,
     )
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-customer1@example.com', 'customer1pw')
-    get "/api/v1/tickets/#{ticket.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/#{ticket.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -945,13 +945,13 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     params = {
       title: 'ticket with wrong ticket id - 2',
     }
-    put "/api/v1/tickets/#{ticket.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('Not authorized', result['error'])
 
-    delete "/api/v1/tickets/#{ticket.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/tickets/#{ticket.id}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -970,7 +970,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       created_by_id: 1,
     )
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-customer1@example.com', 'customer1pw')
-    get "/api/v1/tickets/#{ticket.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/#{ticket.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -984,7 +984,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       title: "#{title} - 2",
       customer_id: @agent.id,
     }
-    put "/api/v1/tickets/#{ticket.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -999,7 +999,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       subject: 'some subject',
       body: 'some body',
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     article_result = JSON.parse(@response.body)
     assert_equal(Hash, article_result.class)
@@ -1013,7 +1013,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(Ticket::Article::Type.lookup(name: 'note').id, article_result['type_id'])
 
     Scheduler.worker(true)
-    get "/api/v1/tickets/search?query=#{CGI.escape(title)}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -1028,14 +1028,14 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         },
       },
     }
-    post '/api/v1/tickets/search', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets/search', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(ticket.id, result['tickets'][0])
     assert_equal(1, result['tickets_count'])
 
-    delete "/api/v1/ticket_articles/#{article_result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/ticket_articles/#{article_result['id']}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -1048,7 +1048,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       type: 'email',
       sender: 'Agent',
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -1061,7 +1061,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(Ticket::Article::Sender.lookup(name: 'Customer').id, result['sender_id'])
     assert_equal(Ticket::Article::Type.lookup(name: 'note').id, result['type_id'])
 
-    delete "/api/v1/ticket_articles/#{result['id']}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/ticket_articles/#{result['id']}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -1077,7 +1077,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       internal: true,
     }
 
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -1094,13 +1094,13 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     params = {
       subject: 'new subject',
     }
-    put "/api/v1/ticket_articles/#{result['id']}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/ticket_articles/#{result['id']}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('Not authorized (ticket.agent or admin permission required)!', result['error'])
 
-    delete "/api/v1/tickets/#{ticket.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/tickets/#{ticket.id}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)

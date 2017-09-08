@@ -257,7 +257,7 @@ module HasGroups
   end
 
   def destroy_group_relations
-    group_through.klass.destroy_all(group_through.foreign_key => id)
+    group_through.klass.where(group_through.foreign_key => id).destroy_all
   end
 
   # methods defined here are going to extend the class, not the instance of it

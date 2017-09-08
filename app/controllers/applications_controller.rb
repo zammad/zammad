@@ -58,7 +58,7 @@ class ApplicationsController < ApplicationController
   private
 
   def clean_params
-    params_data = params.permit! #.to_h
+    params_data = params.permit!.to_h
     params_data.delete('application')
     params_data.delete('action')
     params_data.delete('controller')

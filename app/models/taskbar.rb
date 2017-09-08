@@ -13,16 +13,15 @@ class Taskbar < ApplicationModel
   attr_accessor :local_update
 
   def state_changed?
-    return false if !state
-    return false if state.empty?
+    return false if state.blank?
     state.each { |_key, value|
-      if value.class == Hash || value.class == ActiveSupport::HashWithIndifferentAccess
+      if value.is_a? Hash
         value.each { |_key1, value1|
-          next if value1 && value1.empty?
+          next if value1.blank?
           return true
         }
       else
-        next if value && value.empty?
+        next if value.blank?
         return true
       end
     }
