@@ -2003,7 +2003,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: '(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?\..+?',
+  state: '(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?',
   preferences: {
     online_service_disable: true,
     permission: ['admin.channel_email'],
