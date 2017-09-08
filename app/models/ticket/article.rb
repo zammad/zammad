@@ -15,8 +15,8 @@ class Ticket::Article < ApplicationModel
   belongs_to    :created_by,  class_name: 'User'
   belongs_to    :updated_by,  class_name: 'User'
   store         :preferences
-  before_create :check_subject, :check_message_id_md5
-  before_update :check_subject, :check_message_id_md5
+  before_create :check_subject, :check_body, :check_message_id_md5
+  before_update :check_subject, :check_body, :check_message_id_md5
 
   sanitized_html :body
 
@@ -283,6 +283,22 @@ returns
   def check_subject
     return if !subject
     subject.gsub!(/\s|\t|\r/, ' ')
+  end
+
+  # strip body length or raise exception
+  def check_body
+    return true if body.blank?
+    limit = 1_500_000
+    current_length = body.length
+    if body.length > limit
+      if ApplicationHandleInfo.current.present? && ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
+        logger.warn "WARNING: cut string because of database length #{self.class}.body(#{limit} but is #{current_length})"
+        self.body = body[0, limit]
+      else
+        raise Exceptions::UnprocessableEntity, "body if article is to large, #{current_length} chars - only #{limit} allowed"
+      end
+    end
+    true
   end
 
   def history_log_attributes
