@@ -1,7 +1,7 @@
 # Change Log
 
-## [1.6.0](https://github.com/zammad/zammad/tree/1.6.0) (2017-xx-xx)
-[Full Changelog](https://github.com/zammad/zammad/compare/1.4.0...1.5.0)
+## [2.1.0](https://github.com/zammad/zammad/tree/2.1.0) (2017-xx-xx)
+[Full Changelog](https://github.com/zammad/zammad/compare/2.0.0...2.1.0)
 
 **Implemented enhancements:**
 

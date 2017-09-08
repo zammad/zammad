@@ -113,6 +113,10 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
       @createToken name, objectId
     else
       if object.email
+
+        # quote name for special character
+        if name.match(/\@|,|;|\^|\+|#|§|\$|%|&|\/|\(|\)|=|\?|!|\*|\[|\]/)
+          name = "\"#{name}\""
         name += " <#{object.email}>"
 
       @objectSelect.val(name)
