@@ -514,6 +514,8 @@ class CreateBase < ActiveRecord::Migration
       t.integer :prio,                                  null: false
       t.string :pid,                      limit: 250,   null: true
       t.string :note,                     limit: 250,   null: true
+      t.string :error_message,                          null: true
+      t.string :status,                                 null: true
       t.boolean :active,                                null: false, default: false
       t.integer :updated_by_id,                         null: false
       t.integer :created_by_id,                         null: false

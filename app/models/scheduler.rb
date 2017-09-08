@@ -169,9 +169,13 @@ class Scheduler < ApplicationModel
   end
 
   def self._start_job(job, try_count = 0, try_run_time = Time.zone.now)
-    job.last_run = Time.zone.now
-    job.pid      = Thread.current.object_id
-    job.save
+    job.update(
+      last_run:      Time.zone.now,
+      pid:           Thread.current.object_id,
+      status:        'ok',
+      error_message: '',
+    )
+
     logger.info "execute #{job.method} (try_count #{try_count})..."
     eval job.method() # rubocop:disable Lint/Eval
   rescue => e
@@ -197,7 +201,15 @@ class Scheduler < ApplicationModel
     if try_run_max > try_count
       _start_job(job, try_count, try_run_time)
     else
-      raise "STOP thread for #{job.method} after #{try_count} tries (#{e.inspect})"
+      @@jobs_started[ job.id ] = false
+      error = "Failed to run #{job.method} after #{try_count} tries #{e.inspect}"
+      logger.error error
+
+      job.update(
+        error_message: error,
+        status: 'error',
+        active: false,
+      )
     end
   end
 
@@ -253,6 +265,30 @@ class Scheduler < ApplicationModel
       ActiveRecord::Base.connection.close
     }
 
+  end
+
+  # This function returns a list of failed jobs
+  #
+  # @example
+  #   Scheduler.failed_jobs
+  #
+  # return [Array]
+  def self.failed_jobs
+    where(status: 'error', active: false)
+  end
+
+  # This function restarts failed jobs to retry them
+  #
+  # @example
+  #   Scheduler.restart_failed_jobs
+  #
+  # return [true]
+  def self.restart_failed_jobs
+    failed_jobs.each do |job|
+      job.update(active: true)
+    end
+
+    true
   end
 
 end
