@@ -870,7 +870,7 @@ perform changes on ticket
           rescue => e
             logger.error "ERROR: Invalid regex '#{send_no_auto_response_reg_exp}' in setting send_no_auto_response_reg_exp"
             logger.error 'ERROR: ' + e.inspect
-            next if recipient_email =~ /(mailer-daemon|postmaster|abuse|root)@.+?\..+?/i
+            next if recipient_email =~ /(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?/i
           end
 
           # check if notification should be send because of customer emails
