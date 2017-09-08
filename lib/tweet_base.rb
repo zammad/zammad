@@ -153,12 +153,12 @@ class TweetBase
     from = nil
     article_type = nil
     in_reply_to = nil
-    preferences = {}
+    twitter_preferences = {}
     if tweet.class == Twitter::DirectMessage
       article_type = 'twitter direct-message'
       to = "@#{tweet.recipient.screen_name}"
       from = "@#{tweet.sender.screen_name}"
-      preferences = {
+      twitter_preferences = {
         created_at: tweet.created_at,
         recipient_id: tweet.recipient.id,
         recipient_screen_name: tweet.recipient.screen_name,
@@ -182,7 +182,7 @@ class TweetBase
       end
       in_reply_to = tweet.in_reply_to_status_id
 
-      preferences = {
+      twitter_preferences = {
         mention_ids: mention_ids,
         geo: tweet.geo,
         retweeted: tweet.retweeted?,
@@ -208,6 +208,17 @@ class TweetBase
       ticket.save!
     end
 
+    article_preferences = {
+      twitter: twitter_preferences,
+      links: [
+        {
+          url: "https://twitter.com/statuses/#{tweet.id}",
+          target: '_blank',
+          name: 'on Twitter',
+        },
+      ],
+    }
+
     Ticket::Article.create!(
       from:        from,
       to:          to,
@@ -218,16 +229,7 @@ class TweetBase
       type_id:     Ticket::Article::Type.find_by(name: article_type).id,
       sender_id:   Ticket::Article::Sender.find_by(name: 'Customer').id,
       internal:    false,
-      preferences: {
-        twitter: preferences_cleanup(preferences),
-        links: [
-          {
-            url: "https://twitter.com/statuses/#{tweet.id}",
-            target: '_blank',
-            name: 'on Twitter',
-          },
-        ],
-      }
+      preferences: preferences_cleanup(article_preferences),
     )
   end
 
@@ -369,7 +371,7 @@ class TweetBase
 
     # replace Twitter::NullObject with nill to prevent elasticsearch index issue
     preferences.each { |_key, value|
-      next if value.class != ActiveSupport::HashWithIndifferentAccess && value.class != Hash
+      next if !value.is_a?(Hash)
       value.each { |sub_key, sub_level|
         if sub_level.class == NilClass
           value[sub_key] = nil

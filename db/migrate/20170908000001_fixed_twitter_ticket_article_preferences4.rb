@@ -1,11 +1,11 @@
-class FixedTwitterTicketArticlePreferences3 < ActiveRecord::Migration[4.2]
+class FixedTwitterTicketArticlePreferences4 < ActiveRecord::Migration
   def up
 
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
 
     # find article preferences with Twitter::NullObject and replace it with nill to prevent elasticsearch index issue
-    article_type = Ticket::Article::Type.find_by(name: 'twitter status')
+    article_type = Ticket::Article::Type.find_by(name: ['twitter status', 'twitter direct-message'])
     article_ids = Ticket::Article.where(type_id: article_type.id).pluck(:id)
     article_ids.each { |article_id|
       article = Ticket::Article.find(article_id)
