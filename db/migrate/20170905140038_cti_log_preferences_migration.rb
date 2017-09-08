@@ -33,6 +33,7 @@ class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
         # loop over all instances and covert them
         # to an Hash via .attributes
         updated = item.preferences[direction].each_with_object([]) do |caller_id, new_direction|
+          next if !caller_id.respond_to?(:attributes)
           new_direction.push(caller_id.attributes)
         end
 
