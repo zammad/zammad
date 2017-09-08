@@ -1,4 +1,4 @@
-class ForeignKeys < ActiveRecord::Migration
+class ForeignKeys < ActiveRecord::Migration[4.2]
   disable_ddl_transaction!
 
   def change

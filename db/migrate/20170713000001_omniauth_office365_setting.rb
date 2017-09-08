@@ -1,4 +1,4 @@
-class OmniauthOffice365Setting < ActiveRecord::Migration
+class OmniauthOffice365Setting < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

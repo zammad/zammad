@@ -18,10 +18,10 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
   def ref_object_touch(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
     # featrue used for different propose, do not touch references
-    return if User.where(organization_id: record.id).count > 100
+    return true if User.where(organization_id: record.id).count > 100
 
     # touch organizations tickets
     Ticket.select('id').where(organization_id: record.id).pluck(:id).each { |ticket_id|
@@ -32,11 +32,12 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
     }
 
     # touch current members
-    record.member_ids.uniq.each { |user_id|
+    User.select('id').where(organization_id: record.id).pluck(:id).each { |user_id|
       user = User.find(user_id)
       user.with_lock do
         user.touch
       end
     }
+    true
   end
 end

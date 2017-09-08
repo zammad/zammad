@@ -1,4 +1,4 @@
-class SchedulerStatus < ActiveRecord::Migration
+class SchedulerStatus < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

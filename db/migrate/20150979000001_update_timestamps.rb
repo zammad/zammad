@@ -1,4 +1,4 @@
-class UpdateTimestamps < ActiveRecord::Migration
+class UpdateTimestamps < ActiveRecord::Migration[4.2]
   def up
     # get all models
     Models.all.each { |_model, value|

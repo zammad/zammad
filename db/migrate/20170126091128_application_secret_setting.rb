@@ -1,4 +1,4 @@
-class ApplicationSecretSetting < ActiveRecord::Migration
+class ApplicationSecretSetting < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

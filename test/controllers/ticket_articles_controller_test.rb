@@ -61,7 +61,7 @@ class TicketArticlesControllerTest < ActionDispatch::IntegrationTest
         body: 'some body',
       }
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
 
@@ -71,7 +71,7 @@ class TicketArticlesControllerTest < ActionDispatch::IntegrationTest
       body: 'some body',
       type: 'note',
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -94,7 +94,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" />',
       type: 'note',
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -127,7 +127,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         'mime-type' => 'text/plain',
       ],
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -143,7 +143,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(1, ticket.articles[2].attachments.count)
     assert_equal(1, ticket.articles[3].attachments.count)
 
-    get "/api/v1/ticket_articles/#{result['id']}?expand=true", {}.to_json, @headers.merge('Authorization' => credentials)
+    get "/api/v1/ticket_articles/#{result['id']}?expand=true", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -164,7 +164,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         body: 'some body',
       }
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
 
@@ -174,7 +174,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       body: 'some body',
       type: 'note',
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -197,7 +197,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       sender: 'Agent',
       type: 'note',
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -223,7 +223,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       type: 'note',
       internal: true,
     }
-    post '/api/v1/ticket_articles', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -266,13 +266,13 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(0, ticket.articles[3].attachments.count)
     assert_equal(0, ticket.articles[4].attachments.count)
 
-    get "/api/v1/ticket_articles/#{article.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    get "/api/v1/ticket_articles/#{article.id}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('Not authorized', result['error'])
 
-    put "/api/v1/ticket_articles/#{article.id}", { internal: false }.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/ticket_articles/#{article.id}", params: { internal: false }.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -293,7 +293,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         type: 'phone',
       }
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -317,7 +317,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
         origin_by_id: 1,
       }
     }
-    post '/api/v1/tickets', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)

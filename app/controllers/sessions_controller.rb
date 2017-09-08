@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
     if params[:remember_me]
       expire_after = 1.year
     end
-    env['rack.session.options'][:expire_after] = expire_after
+    request.env['rack.session.options'][:expire_after] = expire_after
 
     # set session user
     current_user_set(user)

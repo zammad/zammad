@@ -41,7 +41,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '01 - get config call' do
-    post '/api/v1/form_config', {}.to_json, @headers
+    post '/api/v1/form_config', params: {}.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -50,7 +50,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
 
   test '02 - get config call' do
     Setting.set('form_ticket_create', true)
-    post '/api/v1/form_config', {}.to_json, @headers
+    post '/api/v1/form_config', params: {}.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -61,7 +61,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
   test '03 - get config call & do submit' do
     Setting.set('form_ticket_create', true)
     fingerprint = SecureRandom.hex(40)
-    post '/api/v1/form_config', { fingerprint: fingerprint }.to_json, @headers
+    post '/api/v1/form_config', params: { fingerprint: fingerprint }.to_json, headers: @headers
 
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -71,13 +71,13 @@ class FormControllerTest < ActionDispatch::IntegrationTest
     assert(result['token'])
     token = result['token']
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: 'invalid' }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: 'invalid' }.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
     assert_equal(result['error'], 'Not authorized')
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: token }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token }.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -88,7 +88,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result['errors']['title'], 'required')
     assert_equal(result['errors']['body'], 'required')
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: token, email: 'some' }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, email: 'some' }.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -99,7 +99,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result['errors']['title'], 'required')
     assert_equal(result['errors']['body'], 'required')
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test', body: 'hello' }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test', body: 'hello' }.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -111,7 +111,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
 
     travel 5.hours
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test', body: 'hello' }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test', body: 'hello' }.to_json, headers: @headers
 
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -124,7 +124,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
 
     travel 20.hours
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test', body: 'hello' }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test', body: 'hello' }.to_json, headers: @headers
     assert_response(401)
 
   end
@@ -132,7 +132,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
   test '04 - get config call & do submit' do
     Setting.set('form_ticket_create', true)
     fingerprint = SecureRandom.hex(40)
-    post '/api/v1/form_config', { fingerprint: fingerprint }.to_json, @headers
+    post '/api/v1/form_config', params: { fingerprint: fingerprint }.to_json, headers: @headers
 
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -142,13 +142,13 @@ class FormControllerTest < ActionDispatch::IntegrationTest
     assert(result['token'])
     token = result['token']
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: 'invalid' }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: 'invalid' }.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
     assert_equal(result['error'], 'Not authorized')
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: token }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token }.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -159,7 +159,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result['errors']['title'], 'required')
     assert_equal(result['errors']['body'], 'required')
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: token, email: 'some' }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, email: 'some' }.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -170,7 +170,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result['errors']['title'], 'required')
     assert_equal(result['errors']['body'], 'required')
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'somebody@example.com', title: 'test', body: 'hello' }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'somebody@example.com', title: 'test', body: 'hello' }.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -185,7 +185,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
 
     Setting.set('form_ticket_create', true)
     fingerprint = SecureRandom.hex(40)
-    post '/api/v1/form_config', { fingerprint: fingerprint }.to_json, @headers
+    post '/api/v1/form_config', params: { fingerprint: fingerprint }.to_json, headers: @headers
 
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -197,7 +197,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
 
     (1..20).each { |count|
       travel 10.seconds
-      post '/api/v1/form_submit', { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: "test#{count}", body: 'hello' }.to_json, @headers
+      post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: "test#{count}", body: 'hello' }.to_json, headers: @headers
       assert_response(200)
       result = JSON.parse(@response.body)
       assert_equal(result.class, Hash)
@@ -212,7 +212,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
 
     sleep 10 # wait until elasticsearch is index
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test-last', body: 'hello' }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test-last', body: 'hello' }.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -222,7 +222,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
 
     (1..20).each { |count|
       travel 10.seconds
-      post '/api/v1/form_submit', { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: "test-2-#{count}", body: 'hello' }.to_json, @headers
+      post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: "test-2-#{count}", body: 'hello' }.to_json, headers: @headers
       assert_response(200)
       result = JSON.parse(@response.body)
       assert_equal(result.class, Hash)
@@ -237,7 +237,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
 
     sleep 10 # wait until elasticsearch is index
 
-    post '/api/v1/form_submit', { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test-2-last', body: 'hello' }.to_json, @headers
+    post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: 'test-2-last', body: 'hello' }.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)

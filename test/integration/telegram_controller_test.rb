@@ -72,27 +72,27 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     UserInfo.current_user_id = nil
 
     # start communication #1
-    post '/api/v1/channels/telegram_webhook', read_messaage('personal1_message_start'), @headers
+    post '/api/v1/channels/telegram_webhook', params: read_messaage('personal1_message_start'), headers: @headers
     assert_response(404)
     result = JSON.parse(@response.body)
 
-    post '/api/v1/channels_telegram_webhook/not_existing', read_messaage('personal1_message_start'), @headers
+    post '/api/v1/channels_telegram_webhook/not_existing', params: read_messaage('personal1_message_start'), headers: @headers
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal('bot param missing', result['error'])
 
     callback_url = "/api/v1/channels_telegram_webhook/not_existing?bid=#{channel.options[:bot][:id]}"
-    post callback_url, read_messaage('personal1_message_start'), @headers
+    post callback_url, params: read_messaage('personal1_message_start'), headers: @headers
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal('invalid callback token', result['error'])
 
     callback_url = "/api/v1/channels_telegram_webhook/#{channel.options[:callback_token]}?bid=#{channel.options[:bot][:id]}"
-    post callback_url, read_messaage('personal1_message_start'), @headers
+    post callback_url, params: read_messaage('personal1_message_start'), headers: @headers
     assert_response(200)
 
     # send message1
-    post callback_url, read_messaage('personal1_message_content1'), @headers
+    post callback_url, params: read_messaage('personal1_message_content1'), headers: @headers
     assert_response(200)
     assert_equal(1, Ticket.count)
     ticket = Ticket.last
@@ -103,7 +103,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/plain', ticket.articles.first.content_type)
 
     # send same message again, ignore it
-    post callback_url, read_messaage('personal1_message_content1'), @headers
+    post callback_url, params: read_messaage('personal1_message_content1'), headers: @headers
     assert_response(200)
     ticket = Ticket.last
     assert_equal('Hello, I need your Help', ticket.title)
@@ -113,7 +113,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/plain', ticket.articles.first.content_type)
 
     # send message2
-    post callback_url, read_messaage('personal1_message_content2'), @headers
+    post callback_url, params: read_messaage('personal1_message_content2'), headers: @headers
     assert_response(200)
     ticket = Ticket.last
     assert_equal('Hello, I need your Help', ticket.title)
@@ -123,7 +123,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/plain', ticket.articles.last.content_type)
 
     # send end message
-    post callback_url, read_messaage('personal1_message_end'), @headers
+    post callback_url, params: read_messaage('personal1_message_end'), headers: @headers
     assert_response(200)
     ticket = Ticket.last
     assert_equal('Hello, I need your Help', ticket.title)
@@ -133,11 +133,11 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/plain', ticket.articles.last.content_type)
 
     # start communication #2
-    post callback_url, read_messaage('personal2_message_start'), @headers
+    post callback_url, params: read_messaage('personal2_message_start'), headers: @headers
     assert_response(200)
 
     # send message1
-    post callback_url, read_messaage('personal2_message_content1'), @headers
+    post callback_url, params: read_messaage('personal2_message_content1'), headers: @headers
     assert_response(200)
     assert_equal(2, Ticket.count)
     ticket = Ticket.last
@@ -148,7 +148,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/plain', ticket.articles.first.content_type)
 
     # send message2
-    post callback_url, read_messaage('personal2_message_content2'), @headers
+    post callback_url, params: read_messaage('personal2_message_content2'), headers: @headers
     assert_response(200)
     assert_equal(2, Ticket.count)
     ticket = Ticket.last
@@ -159,11 +159,11 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/plain', ticket.articles.last.content_type)
 
     # start communication #3
-    post callback_url, read_messaage('personal3_message_start'), @headers
+    post callback_url, params: read_messaage('personal3_message_start'), headers: @headers
     assert_response(200)
 
     # send message1
-    post callback_url, read_messaage('personal3_message_content1'), @headers
+    post callback_url, params: read_messaage('personal3_message_content1'), headers: @headers
     assert_response(200)
     assert_equal(3, Ticket.count)
     ticket = Ticket.last
@@ -179,7 +179,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     stub_request(:get, "https://api.telegram.org/file/bot#{token}/abc123")
       .to_return(status: 200, body: 'ABC1', headers: {})
 
-    post callback_url, read_messaage('personal3_message_content2'), @headers
+    post callback_url, params: read_messaage('personal3_message_content2'), headers: @headers
     assert_response(200)
     assert_equal(3, Ticket.count)
     ticket = Ticket.last
@@ -197,7 +197,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=BQADAgADDgAD7x6ZSC_-1LMkOEmoAg")
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123BQADAgADDgAD7x6ZSC_-1LMkOEmoAg","file_path":"abc123"}}', headers: {})
 
-    post callback_url, read_messaage('personal3_message_content3'), @headers
+    post callback_url, params: read_messaage('personal3_message_content3'), headers: @headers
     assert_response(200)
     assert_equal(3, Ticket.count)
     ticket = Ticket.last
@@ -209,7 +209,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, ticket.articles.last.attachments.count)
 
     # update message1
-    post callback_url, read_messaage('personal3_message_content4'), @headers
+    post callback_url, params: read_messaage('personal3_message_content4'), headers: @headers
     assert_response(200)
     assert_equal(3, Ticket.count)
     ticket = Ticket.last
@@ -227,7 +227,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=AwADAgADVQADCEIYSZwyOmSZK9iZAg")
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123AwADAgADVQADCEIYSZwyOmSZK9iZAg","file_path":"abc123"}}', headers: {})
 
-    post callback_url, read_messaage('personal3_message_content5'), @headers
+    post callback_url, params: read_messaage('personal3_message_content5'), headers: @headers
     assert_response(200)
     assert_equal(3, Ticket.count)
     ticket = Ticket.last
@@ -243,7 +243,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=BQADAwAD0QIAAqbJWAAB8OkQqgtDQe0C")
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123BQADAwAD0QIAAqbJWAAB8OkQqgtDQe0C","file_path":"abc123"}}', headers: {})
 
-    post callback_url, read_messaage('personal4_message_content1'), @headers
+    post callback_url, params: read_messaage('personal4_message_content1'), headers: @headers
     assert_response(200)
     assert_equal(4, Ticket.count)
     ticket = Ticket.last
@@ -262,7 +262,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=AgADAgADwacxGxk5MUmim45lijOwsKk1Sw0ABNQoaI8BwR_z_2MFAAEC")
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123AgADAgADwacxGxk5MUmim45lijOwsKk1Sw0ABNQoaI8BwR_z_2MFAAEC","file_path":"abc123"}}', headers: {})
 
-    post callback_url, read_messaage('personal5_message_content1'), @headers
+    post callback_url, params: read_messaage('personal5_message_content1'), headers: @headers
     assert_response(200)
     assert_equal(5, Ticket.count)
     ticket = Ticket.last
@@ -273,7 +273,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/html', ticket.articles.last.content_type)
     assert_equal(0, ticket.articles.last.attachments.count)
 
-    post callback_url, read_messaage('personal5_message_content2'), @headers
+    post callback_url, params: read_messaage('personal5_message_content2'), headers: @headers
     assert_response(200)
     assert_equal(5, Ticket.count)
     ticket = Ticket.last

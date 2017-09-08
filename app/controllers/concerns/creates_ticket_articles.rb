@@ -13,10 +13,10 @@ module CreatesTicketArticles
     raise Exceptions::UnprocessableEntity, 'Need at least article: { body: "some text" }' if !params[:body]
 
     # fill default values
-    if params[:type_id].empty? && params[:type].empty?
+    if params[:type_id].blank? && params[:type].blank?
       params[:type_id] = Ticket::Article::Type.lookup(name: 'note').id
     end
-    if params[:sender_id].empty? && params[:sender].empty?
+    if params[:sender_id].blank? && params[:sender].blank?
       sender = 'Customer'
       if current_user.permissions?('ticket.agent')
         sender = 'Agent'
@@ -73,7 +73,7 @@ module CreatesTicketArticles
     }
 
     # add attachments as param
-    if params[:attachments]
+    if params[:attachments].present?
       params[:attachments].each_with_index { |attachment, index|
 
         # validation
@@ -112,7 +112,7 @@ module CreatesTicketArticles
       )
     end
 
-    return article if !form_id
+    return article if form_id.blank?
 
     # remove attachments from upload cache
     Store.remove(

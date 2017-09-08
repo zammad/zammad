@@ -75,7 +75,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   test 'settings index with nobody' do
 
     # index
-    get '/api/v1/settings', {}, @headers
+    get '/api/v1/settings', params: {}, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -83,7 +83,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # show
     setting = Setting.find_by(name: 'product_name')
-    get "/api/v1/settings/#{setting.id}", {}, @headers
+    get "/api/v1/settings/#{setting.id}", params: {}, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('authentication failed', result['error'])
@@ -94,7 +94,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('setting-admin@example.com', 'adminpw')
 
     # index
-    get '/api/v1/settings', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/settings', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
@@ -114,14 +114,14 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # show
     setting = Setting.find_by(name: 'product_name')
-    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/settings/#{setting.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('product_name', result['name'])
 
     setting = Setting.find_by(name: 'api_token_access')
-    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/settings/#{setting.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -137,7 +137,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
         some_new_key: true,
       }
     }
-    put "/api/v1/settings/#{setting.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/settings/#{setting.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -156,7 +156,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
         some_new_key: true,
       }
     }
-    put "/api/v1/settings/#{setting.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/settings/#{setting.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -167,7 +167,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # delete
     setting = Setting.find_by(name: 'product_name')
-    delete "/api/v1/settings/#{setting.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/settings/#{setting.id}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('Not authorized (feature not possible)', result['error'])
@@ -178,7 +178,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('setting-admin-api@example.com', 'adminpw')
 
     # index
-    get '/api/v1/settings', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/settings', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
@@ -198,13 +198,13 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # show
     setting = Setting.find_by(name: 'product_name')
-    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/settings/#{setting.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('Not authorized (required ["admin.branding"])', result['error'])
 
     setting = Setting.find_by(name: 'api_token_access')
-    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/settings/#{setting.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -220,7 +220,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
         some_new_key: true,
       }
     }
-    put "/api/v1/settings/#{setting.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/settings/#{setting.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('Not authorized (required ["admin.branding"])', result['error'])
@@ -235,7 +235,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
         some_new_key: true,
       }
     }
-    put "/api/v1/settings/#{setting.id}", params.to_json, @headers.merge('Authorization' => credentials)
+    put "/api/v1/settings/#{setting.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -246,7 +246,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # delete
     setting = Setting.find_by(name: 'product_name')
-    delete "/api/v1/settings/#{setting.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/settings/#{setting.id}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('Not authorized (feature not possible)', result['error'])
@@ -257,7 +257,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('setting-agent@example.com', 'agentpw')
 
     # index
-    get '/api/v1/settings', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/settings', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -266,7 +266,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # show
     setting = Setting.find_by(name: 'product_name')
-    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/settings/#{setting.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('Not authorized (user)!', result['error'])
@@ -277,7 +277,7 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('setting-customer1@example.com', 'customer1pw')
 
     # index
-    get '/api/v1/settings', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/settings', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -286,14 +286,14 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
 
     # show
     setting = Setting.find_by(name: 'product_name')
-    get "/api/v1/settings/#{setting.id}", {}, @headers.merge('Authorization' => credentials)
+    get "/api/v1/settings/#{setting.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('Not authorized (user)!', result['error'])
 
     # delete
     setting = Setting.find_by(name: 'product_name')
-    delete "/api/v1/settings/#{setting.id}", {}.to_json, @headers.merge('Authorization' => credentials)
+    delete "/api/v1/settings/#{setting.id}", params: {}.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal('Not authorized (user)!', result['error'])

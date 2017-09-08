@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.4.1'
 
-gem 'rails', '4.2.9'
+gem 'rails', '5.0.5'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 

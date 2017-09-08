@@ -95,7 +95,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - I
     params = 'event=newCall&direction=in&from=4912347114711&to=4930600000000&callId=4991155921769858278-1&user%5B%5D=user+1&user%5B%5D=user+2'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     on_hangup = nil
     on_answer = nil
@@ -110,7 +110,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - II - block caller
     params = 'event=newCall&direction=in&from=491715000000&to=4930600000000&callId=4991155921769858278-2&user%5B%5D=user+1&user%5B%5D=user+2'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     on_hangup = nil
     on_answer = nil
@@ -130,7 +130,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # outbound - I - set default_caller_id
     params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&callId=8621106404543334274-3&user%5B%5D=user+1'
-    post '/api/v1/sipgate/out', params
+    post '/api/v1/sipgate/out', params: params
     assert_response(200)
     on_hangup = nil
     on_answer = nil
@@ -155,7 +155,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # outbound - II - set caller_id based on routing_table by explicite number
     params = 'event=newCall&direction=out&from=4930600000000&to=491714000000&callId=8621106404543334274-4&user%5B%5D=user+1'
-    post '/api/v1/sipgate/out', params
+    post '/api/v1/sipgate/out', params: params
     assert_response(200)
     on_hangup = nil
     on_answer = nil
@@ -180,7 +180,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # outbound - III - set caller_id based on routing_table by 41*
     params = 'event=newCall&direction=out&from=4930600000000&to=4147110000000&callId=8621106404543334274-5&user%5B%5D=user+1'
-    post '/api/v1/sipgate/out', params
+    post '/api/v1/sipgate/out', params: params
     assert_response(200)
     on_hangup = nil
     on_answer = nil
@@ -206,7 +206,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
     # no config
     Setting.set('sipgate_config', {})
     params = 'event=newCall&direction=in&from=4912347114711&to=4930600000000&callId=4991155921769858278-6&user%5B%5D=user+1&user%5B%5D=user+2'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(422)
     error = nil
     content = @response.body
@@ -222,7 +222,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # outbound - I - new call
     params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&callId=1234567890-1&user%5B%5D=user+1'
-    post '/api/v1/sipgate/out', params
+    post '/api/v1/sipgate/out', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-1')
     assert(log)
@@ -237,7 +237,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # outbound - I - hangup by agent
     params = 'event=hangup&direction=out&callId=1234567890-1&cause=cancel'
-    post '/api/v1/sipgate/out', params
+    post '/api/v1/sipgate/out', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-1')
     assert(log)
@@ -252,7 +252,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # outbound - II - new call
     params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&callId=1234567890-2&user%5B%5D=user+1'
-    post '/api/v1/sipgate/out', params
+    post '/api/v1/sipgate/out', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-2')
     assert(log)
@@ -267,7 +267,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # outbound - II - answer by customer
     params = 'event=answer&direction=out&callId=1234567890-2&from=4930600000000&to=4912347114711'
-    post '/api/v1/sipgate/out', params
+    post '/api/v1/sipgate/out', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-2')
     assert(log)
@@ -282,7 +282,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # outbound - II - hangup by customer
     params = 'event=hangup&direction=out&callId=1234567890-2&cause=normalClearing&from=4930600000000&to=4912347114711'
-    post '/api/v1/sipgate/out', params
+    post '/api/v1/sipgate/out', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-2')
     assert(log)
@@ -297,7 +297,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - I - new call
     params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-3&user%5B%5D=user+1'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-3')
     assert(log)
@@ -312,7 +312,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - I - answer by customer
     params = 'event=answer&direction=in&callId=1234567890-3&to=4930600000000&from=4912347114711'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-3')
     assert(log)
@@ -327,7 +327,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - I - hangup by customer
     params = 'event=hangup&direction=in&callId=1234567890-3&cause=normalClearing&to=4930600000000&from=4912347114711'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-3')
     assert(log)
@@ -342,7 +342,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - II - new call
     params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-4&user%5B%5D=user+1,user+2'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-4')
     assert(log)
@@ -357,7 +357,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - II - answer by voicemail
     params = 'event=answer&direction=in&callId=1234567890-4&to=4930600000000&from=4912347114711&user=voicemail'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-4')
     assert(log)
@@ -372,7 +372,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - II - hangup by customer
     params = 'event=hangup&direction=in&callId=1234567890-4&cause=normalClearing&to=4930600000000&from=4912347114711'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-4')
     assert(log)
@@ -387,7 +387,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - III - new call
     params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&callId=1234567890-5&user%5B%5D=user+1,user+2'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-5')
     assert(log)
@@ -402,7 +402,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - III - hangup by customer
     params = 'event=hangup&direction=in&callId=1234567890-5&cause=normalClearing&to=4930600000000&from=4912347114711'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-5')
     assert(log)
@@ -417,7 +417,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     # inbound - IV - new call
     params = 'event=newCall&direction=in&to=4930600000000&from=49999992222222&callId=1234567890-6&user%5B%5D=user+1,user+2'
-    post '/api/v1/sipgate/in', params
+    post '/api/v1/sipgate/in', params: params
     assert_response(200)
     log = Cti::Log.find_by(call_id: '1234567890-6')
     assert(log)
@@ -441,7 +441,7 @@ class SipgateControllerTest < ActionDispatch::IntegrationTest
 
     headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('cti-agent@example.com', 'agentpw')
-    get '/api/v1/cti/log', {}, headers.merge('Authorization' => credentials)
+    get '/api/v1/cti/log', headers: headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result['list'].class, Array)

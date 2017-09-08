@@ -55,7 +55,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     admin_credentials = ActionController::HttpAuthentication::Basic.encode_credentials('api-admin@example.com', 'adminpw')
 
     Setting.set('api_password_access', false)
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(401)
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     result = JSON.parse(@response.body)
@@ -63,7 +63,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal('API password access disabled!', result['error'])
 
     Setting.set('api_password_access', true)
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     assert_equal('*', @response.header['Access-Control-Allow-Origin'])
     result = JSON.parse(@response.body)
@@ -76,7 +76,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     agent_credentials = ActionController::HttpAuthentication::Basic.encode_credentials('api-agent@example.com', 'agentpw')
 
     Setting.set('api_password_access', false)
-    get '/api/v1/tickets', {}, @headers.merge('Authorization' => agent_credentials)
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => agent_credentials)
     assert_response(401)
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     result = JSON.parse(@response.body)
@@ -84,7 +84,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal('API password access disabled!', result['error'])
 
     Setting.set('api_password_access', true)
-    get '/api/v1/tickets', {}, @headers.merge('Authorization' => agent_credentials)
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => agent_credentials)
     assert_response(200)
     assert_equal('*', @response.header['Access-Control-Allow-Origin'])
     result = JSON.parse(@response.body)
@@ -97,7 +97,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     customer_credentials = ActionController::HttpAuthentication::Basic.encode_credentials('api-customer1@example.com', 'customer1pw')
 
     Setting.set('api_password_access', false)
-    get '/api/v1/tickets', {}, @headers.merge('Authorization' => customer_credentials)
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => customer_credentials)
     assert_response(401)
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     result = JSON.parse(@response.body)
@@ -105,7 +105,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal('API password access disabled!', result['error'])
 
     Setting.set('api_password_access', true)
-    get '/api/v1/tickets', {}, @headers.merge('Authorization' => customer_credentials)
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => customer_credentials)
     assert_response(200)
     assert_equal('*', @response.header['Access-Control-Allow-Origin'])
     result = JSON.parse(@response.body)
@@ -126,7 +126,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     admin_credentials = "Token token=#{admin_token.name}"
 
     Setting.set('api_token_access', false)
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(401)
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     result = JSON.parse(@response.body)
@@ -134,7 +134,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal('API token access disabled!', result['error'])
 
     Setting.set('api_token_access', true)
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     assert_equal('*', @response.header['Access-Control-Allow-Origin'])
 
@@ -145,7 +145,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     admin_token.preferences[:permission] = ['admin.session_not_existing']
     admin_token.save!
 
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -154,7 +154,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     admin_token.preferences[:permission] = []
     admin_token.save!
 
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -163,7 +163,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     @admin.active = false
     @admin.save!
 
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -172,7 +172,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     admin_token.preferences[:permission] = ['admin.session']
     admin_token.save!
 
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -181,13 +181,13 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     @admin.active = true
     @admin.save!
 
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert(result)
 
-    get '/api/v1/roles', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/roles', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -196,7 +196,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     admin_token.preferences[:permission] = ['admin.session_not_existing', 'admin.role']
     admin_token.save!
 
-    get '/api/v1/roles', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/roles', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
@@ -205,14 +205,14 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     admin_token.preferences[:permission] = ['ticket.agent']
     admin_token.save!
 
-    get '/api/v1/organizations', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/organizations', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
 
     name = "some org name #{rand(999_999_999)}"
-    post '/api/v1/organizations', { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    post '/api/v1/organizations', params: { name: name }.to_json, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -220,7 +220,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert(result)
 
     name = "some org name #{rand(999_999_999)} - 2"
-    put "/api/v1/organizations/#{result['id']}", { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    put "/api/v1/organizations/#{result['id']}", params: { name: name }.to_json, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -230,14 +230,14 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     admin_token.preferences[:permission] = ['admin.organization']
     admin_token.save!
 
-    get '/api/v1/organizations', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/organizations', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
 
     name = "some org name #{rand(999_999_999)}"
-    post '/api/v1/organizations', { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    post '/api/v1/organizations', params: { name: name }.to_json, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -245,7 +245,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert(result)
 
     name = "some org name #{rand(999_999_999)} - 2"
-    put "/api/v1/organizations/#{result['id']}", { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    put "/api/v1/organizations/#{result['id']}", params: { name: name }.to_json, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -255,14 +255,14 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     admin_token.preferences[:permission] = ['admin']
     admin_token.save!
 
-    get '/api/v1/organizations', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/organizations', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
 
     name = "some org name #{rand(999_999_999)}"
-    post '/api/v1/organizations', { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    post '/api/v1/organizations', params: { name: name }.to_json, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -270,7 +270,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert(result)
 
     name = "some org name #{rand(999_999_999)} - 2"
-    put "/api/v1/organizations/#{result['id']}", { name: name }.to_json, @headers.merge('Authorization' => admin_credentials)
+    put "/api/v1/organizations/#{result['id']}", params: { name: name }.to_json, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -289,7 +289,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     agent_credentials = "Token token=#{agent_token.name}"
 
     Setting.set('api_token_access', false)
-    get '/api/v1/tickets', {}, @headers.merge('Authorization' => agent_credentials)
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => agent_credentials)
     assert_response(401)
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     result = JSON.parse(@response.body)
@@ -297,21 +297,21 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal('API token access disabled!', result['error'])
 
     Setting.set('api_token_access', true)
-    get '/api/v1/tickets', {}, @headers.merge('Authorization' => agent_credentials)
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => agent_credentials)
     assert_response(200)
     assert_equal('*', @response.header['Access-Control-Allow-Origin'])
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
 
-    get '/api/v1/organizations', {}, @headers.merge('Authorization' => agent_credentials)
+    get '/api/v1/organizations', params: {}, headers: @headers.merge('Authorization' => agent_credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
 
     name = "some org name #{rand(999_999_999)}"
-    post '/api/v1/organizations', { name: name }.to_json, @headers.merge('Authorization' => agent_credentials)
+    post '/api/v1/organizations', params: { name: name }.to_json, headers: @headers.merge('Authorization' => agent_credentials)
     assert_response(401)
 
   end
@@ -326,7 +326,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     customer_credentials = "Token token=#{customer_token.name}"
 
     Setting.set('api_token_access', false)
-    get '/api/v1/tickets', {}, @headers.merge('Authorization' => customer_credentials)
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => customer_credentials)
     assert_response(401)
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     result = JSON.parse(@response.body)
@@ -334,21 +334,21 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal('API token access disabled!', result['error'])
 
     Setting.set('api_token_access', true)
-    get '/api/v1/tickets', {}, @headers.merge('Authorization' => customer_credentials)
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => customer_credentials)
     assert_equal('*', @response.header['Access-Control-Allow-Origin'])
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
 
-    get '/api/v1/organizations', {}, @headers.merge('Authorization' => customer_credentials)
+    get '/api/v1/organizations', params: {}, headers: @headers.merge('Authorization' => customer_credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
     assert(result)
 
     name = "some org name #{rand(999_999_999)}"
-    post '/api/v1/organizations', { name: name }.to_json, @headers.merge('Authorization' => customer_credentials)
+    post '/api/v1/organizations', params: { name: name }.to_json, headers: @headers.merge('Authorization' => customer_credentials)
     assert_response(401)
   end
 
@@ -365,7 +365,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     @admin.save!
 
     Setting.set('api_token_access', false)
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(401)
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     result = JSON.parse(@response.body)
@@ -373,7 +373,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal('API token access disabled!', result['error'])
 
     Setting.set('api_token_access', true)
-    get '/api/v1/sessions', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/sessions', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(401)
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     result = JSON.parse(@response.body)
@@ -393,7 +393,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     )
     admin_credentials = "Token token=#{admin_token.name}"
 
-    get '/api/v1/tickets', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(401)
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     result = JSON.parse(@response.body)
@@ -416,7 +416,7 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     )
     admin_credentials = "Token token=#{admin_token.name}"
 
-    get '/api/v1/tickets', {}, @headers.merge('Authorization' => admin_credentials)
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => admin_credentials)
     assert_response(200)
     assert_equal('*', @response.header['Access-Control-Allow-Origin'])
     result = JSON.parse(@response.body)
@@ -429,11 +429,11 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
 
   test 'session auth - admin' do
 
-    post '/api/v1/signin', { username: 'api-admin@example.com', password: 'adminpw', fingerprint: '123456789' }
+    post '/api/v1/signin', params: { username: 'api-admin@example.com', password: 'adminpw', fingerprint: '123456789' }
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     assert_response(201)
 
-    get '/api/v1/sessions', {}
+    get '/api/v1/sessions', params: {}
     assert_response(200)
     assert_not(@response.header.key?('Access-Control-Allow-Origin'))
     result = JSON.parse(@response.body)

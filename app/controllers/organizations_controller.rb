@@ -252,7 +252,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     # do pagination if needed
     if params[:page] && params[:per_page]
       offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      organization_all = organization_all.slice(offset, params[:per_page].to_i) || []
+      organization_all = organization_all[offset, params[:per_page].to_i] || []
     end
 
     if params[:expand]

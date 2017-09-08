@@ -95,12 +95,12 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
     )
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
-    get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store1.id}", {}, 'Authorization' => credentials
+    get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store1.id}", params: {}, headers: { 'Authorization' => credentials }
     assert_response(200)
     assert_equal('some content', @response.body)
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
-    get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store1.id}", {}, 'Authorization' => credentials
+    get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store1.id}", params: {}, headers: { 'Authorization' => credentials }
     assert_response(401)
     assert_match(/401: Unauthorized/, @response.body)
 
@@ -119,23 +119,23 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
     )
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
-    get "/api/v1/ticket_attachment/#{ticket2.id}/#{article1.id}/#{store1.id}", {}, 'Authorization' => credentials
+    get "/api/v1/ticket_attachment/#{ticket2.id}/#{article1.id}/#{store1.id}", params: {}, headers: { 'Authorization' => credentials }
     assert_response(200)
     assert_equal('some content', @response.body)
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
-    get "/api/v1/ticket_attachment/#{ticket2.id}/#{article2.id}/#{store1.id}", {}, 'Authorization' => credentials
+    get "/api/v1/ticket_attachment/#{ticket2.id}/#{article2.id}/#{store1.id}", params: {}, headers: { 'Authorization' => credentials }
     assert_response(401)
     assert_match(/401: Unauthorized/, @response.body)
 
     # allow access via merged ticket id also
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
-    get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store1.id}", {}, 'Authorization' => credentials
+    get "/api/v1/ticket_attachment/#{ticket1.id}/#{article1.id}/#{store1.id}", params: {}, headers: { 'Authorization' => credentials }
     assert_response(200)
     assert_equal('some content', @response.body)
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
-    get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store1.id}", {}, 'Authorization' => credentials
+    get "/api/v1/ticket_attachment/#{ticket1.id}/#{article2.id}/#{store1.id}", params: {}, headers: { 'Authorization' => credentials }
     assert_response(401)
     assert_match(/401: Unauthorized/, @response.body)
 

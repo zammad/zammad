@@ -1,4 +1,4 @@
-class CreateBase < ActiveRecord::Migration
+class CreateBase < ActiveRecord::Migration[4.2]
   def up
 
     # clear old caches to start from scratch

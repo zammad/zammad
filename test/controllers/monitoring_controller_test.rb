@@ -80,7 +80,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
   test '01 monitoring without token' do
 
     # health_check
-    get '/api/v1/monitoring/health_check', {}, @headers
+    get '/api/v1/monitoring/health_check', params: {}, headers: @headers
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -89,7 +89,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Not authorized', result['error'])
 
     # status
-    get '/api/v1/monitoring/status', {}, @headers
+    get '/api/v1/monitoring/status', params: {}, headers: @headers
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -101,7 +101,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Not authorized', result['error'])
 
     # token
-    post '/api/v1/monitoring/token', {}, @headers
+    post '/api/v1/monitoring/token', params: {}, headers: @headers
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -114,7 +114,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
   test '02 monitoring with wrong token' do
 
     # health_check
-    get '/api/v1/monitoring/health_check?token=abc', {}, @headers
+    get '/api/v1/monitoring/health_check?token=abc', params: {}, headers: @headers
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -123,7 +123,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Not authorized', result['error'])
 
     # status
-    get '/api/v1/monitoring/status?token=abc', {}, @headers
+    get '/api/v1/monitoring/status?token=abc', params: {}, headers: @headers
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -135,7 +135,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Not authorized', result['error'])
 
     # token
-    post '/api/v1/monitoring/token', { token: 'abc' }.to_json, @headers
+    post '/api/v1/monitoring/token', params: { token: 'abc' }.to_json, headers: @headers
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -148,7 +148,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
   test '03 monitoring with correct token' do
 
     # health_check
-    get "/api/v1/monitoring/health_check?token=#{@token}", {}, @headers
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -158,7 +158,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('success', result['message'])
 
     # status
-    get "/api/v1/monitoring/status?token=#{@token}", {}, @headers
+    get "/api/v1/monitoring/status?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -170,7 +170,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result.key?('last_created_at'))
 
     # token
-    post '/api/v1/monitoring/token', { token: @token }.to_json, @headers
+    post '/api/v1/monitoring/token', params: { token: @token }.to_json, headers: @headers
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -185,7 +185,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('monitoring-admin@example.com', 'adminpw')
 
     # health_check
-    get '/api/v1/monitoring/health_check', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/monitoring/health_check', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -195,7 +195,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('success', result['message'])
 
     # status
-    get '/api/v1/monitoring/status', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/monitoring/status', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -207,7 +207,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result.key?('last_created_at'))
 
     # token
-    post '/api/v1/monitoring/token', { token: @token }.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/monitoring/token', params: { token: @token }.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(201)
 
     result = JSON.parse(@response.body)
@@ -223,7 +223,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('monitoring-agent@example.com', 'agentpw')
 
     # health_check
-    get '/api/v1/monitoring/health_check', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/monitoring/health_check', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -232,7 +232,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Not authorized (user)!', result['error'])
 
     # status
-    get '/api/v1/monitoring/status', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/monitoring/status', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -244,7 +244,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Not authorized (user)!', result['error'])
 
     # token
-    post '/api/v1/monitoring/token', { token: @token }.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/monitoring/token', params: { token: @token }.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -263,7 +263,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('monitoring-admin@example.com', 'adminpw')
 
     # health_check
-    get '/api/v1/monitoring/health_check', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/monitoring/health_check', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -272,7 +272,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Not authorized (user)!', result['error'])
 
     # status
-    get '/api/v1/monitoring/status', {}, @headers.merge('Authorization' => credentials)
+    get '/api/v1/monitoring/status', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -284,7 +284,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Not authorized (user)!', result['error'])
 
     # token
-    post '/api/v1/monitoring/token', { token: @token }.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/monitoring/token', params: { token: @token }.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -303,7 +303,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     permission.save!
 
     # health_check
-    get "/api/v1/monitoring/health_check?token=#{@token}", {}, @headers
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -313,7 +313,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal('success', result['message'])
 
     # status
-    get "/api/v1/monitoring/status?token=#{@token}", {}, @headers
+    get "/api/v1/monitoring/status?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -325,7 +325,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result.key?('last_created_at'))
 
     # token
-    post '/api/v1/monitoring/token', { token: @token }.to_json, @headers
+    post '/api/v1/monitoring/token', params: { token: @token }.to_json, headers: @headers
     assert_response(401)
 
     result = JSON.parse(@response.body)
@@ -348,7 +348,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     channel.save!
 
     # health_check
-    get "/api/v1/monitoring/health_check?token=#{@token}", {}, @headers
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -364,7 +364,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     scheduler.save!
 
     # health_check
-    get "/api/v1/monitoring/health_check?token=#{@token}", {}, @headers
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -379,7 +379,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     FileUtils.touch("#{dir}/test.eml")
 
     # health_check
-    get "/api/v1/monitoring/health_check?token=#{@token}", {}, @headers
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
     result = JSON.parse(@response.body)
@@ -393,7 +393,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
 
   test '09 check restart_failed_jobs' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('monitoring-admin@example.com', 'adminpw')
-    post '/api/v1/monitoring/restart_failed_jobs', {}, @headers.merge('Authorization' => credentials)
+    post '/api/v1/monitoring/restart_failed_jobs', params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
   end
 
