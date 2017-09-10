@@ -47,6 +47,7 @@ class Taskbar < ApplicationModel
 
   def set_user
     return true if local_update
+    return true if !UserInfo.current_user_id
     self.user_id = UserInfo.current_user_id
   end
 

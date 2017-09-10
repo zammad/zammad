@@ -61,6 +61,7 @@ class ActiveSupport::TestCase
     ActivityStream.destroy_all
     PostmasterFilter.destroy_all
     Ticket.destroy_all
+    Taskbar.destroy_all
 
     # reset settings
     Setting.all.pluck(:name).each { |name|
