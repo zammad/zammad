@@ -59,7 +59,7 @@ class TaskbarsControllerTest < ActionDispatch::IntegrationTest
       active: false,
     }
 
-    post '/api/v1/taskbar', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    post '/api/v1/taskbar', params.to_json, @headers.merge('Authorization' => credentials)
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -74,7 +74,7 @@ class TaskbarsControllerTest < ActionDispatch::IntegrationTest
       ticket_id: 5,
       shown: false,
     }
-    put "/api/v1/taskbar/#{taskbar_id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    put "/api/v1/taskbar/#{taskbar_id}", params.to_json, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -88,13 +88,13 @@ class TaskbarsControllerTest < ActionDispatch::IntegrationTest
     params = {
       active: true,
     }
-    put "/api/v1/taskbar/#{taskbar_id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    put "/api/v1/taskbar/#{taskbar_id}", params.to_json, @headers.merge('Authorization' => credentials)
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('Not allowed to access this task.', result['error'])
 
-    delete "/api/v1/taskbar/#{taskbar_id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    delete "/api/v1/taskbar/#{taskbar_id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(422)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -102,7 +102,7 @@ class TaskbarsControllerTest < ActionDispatch::IntegrationTest
 
     # delete with correct user
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('taskbar-agent@example.com', 'agentpw')
-    delete "/api/v1/taskbar/#{taskbar_id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    delete "/api/v1/taskbar/#{taskbar_id}", {}, @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
