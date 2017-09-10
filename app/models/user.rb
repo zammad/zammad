@@ -505,7 +505,7 @@ returns
         permission_ids.push permission.id
       }
       next if permission_ids.empty?
-      Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).uniq().pluck(:id).each { |role_id|
+      Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().pluck(:id).each { |role_id|
         role_ids.push role_id
       }
       total_role_ids.push role_ids

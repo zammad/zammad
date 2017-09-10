@@ -1,4 +1,4 @@
-class PrettyDateOptionsAdded < ActiveRecord::Migration
+class PrettyDateOptionsAdded < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

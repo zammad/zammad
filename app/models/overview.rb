@@ -42,7 +42,7 @@ class Overview < ApplicationModel
 
   def link_name(name)
     local_link = name.downcase
-    local_link = local_link.parameterize('_')
+    local_link = local_link.parameterize(separator: '_')
     local_link.gsub!(/\s/, '_')
     local_link.gsub!(/_+/, '_')
     local_link = URI.escape(local_link)

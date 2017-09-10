@@ -1,4 +1,4 @@
-class SlackGroupConfigIssue587 < ActiveRecord::Migration
+class SlackGroupConfigIssue587 < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

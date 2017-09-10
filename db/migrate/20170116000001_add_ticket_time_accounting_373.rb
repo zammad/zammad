@@ -1,4 +1,4 @@
-class AddTicketTimeAccounting373 < ActiveRecord::Migration
+class AddTicketTimeAccounting373 < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

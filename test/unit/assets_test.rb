@@ -87,7 +87,7 @@ class AssetsTest < ActiveSupport::TestCase
     travel 2.seconds
     org2 = Organization.find(org1.id)
     org2.note = "some note...#{rand(9_999_999_999_999)}"
-    org2.save
+    org2.save!
 
     attributes = org2.attributes_with_association_ids
     attributes.delete('user_ids')
@@ -132,12 +132,11 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user3.id]), 'check assets' )
     travel_back
 
-    user3.destroy
-    user2.destroy
-    user1.destroy
-    org1.destroy
-    org2.destroy
-
+    user3.destroy!
+    user2.destroy!
+    user1.destroy!
+    org1.destroy!
+    assert_not(Organization.find_by(id: org2.id))
   end
 
   test 'organization' do
@@ -242,7 +241,7 @@ class AssetsTest < ActiveSupport::TestCase
     travel 2.seconds
     user_new_2 = User.find(user2.id)
     user_new_2.lastname = 'assets2'
-    user_new_2.save
+    user_new_2.save!
 
     org_new = Organization.find(org.id)
     attributes = org_new.attributes_with_association_ids
@@ -270,12 +269,11 @@ class AssetsTest < ActiveSupport::TestCase
     assert( diff(attributes, assets[:User][user_new_2.id]), 'check assets' )
     travel_back
 
-    user3.destroy
-    user2.destroy
-    user1.destroy
-    org.destroy
-    org_new.destroy
-
+    user3.destroy!
+    user2.destroy!
+    user1.destroy!
+    org.destroy!
+    assert_not(Organization.find_by(id: org_new.id))
   end
 
   def diff(o1, o2)

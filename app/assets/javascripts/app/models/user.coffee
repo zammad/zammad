@@ -119,6 +119,7 @@ class App.User extends App.Model
     start_time = new Date(Date.parse(start_time))
     end_time = new Date(Date.parse(end_time))
     now = new Date((new Date).toDateString())
+    now.setDate(now.getDate() + 1)
     if start_time <= now && end_time >= now
       return true
     false

@@ -34,6 +34,9 @@
         <% end %>
       <% end %>
     </ul>
+    <% if _.contains(@data.actions, 'restart_failed_jobs'): %>
+      <button class="btn btn--primary js-restartFailedJobs"><%- @T('Restart failed jobs') %></button>
+    <% end %>
   </div>
 
 </div>

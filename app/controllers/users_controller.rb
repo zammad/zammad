@@ -378,7 +378,7 @@ class UsersController < ApplicationController
     # do pagination if needed
     if params[:page] && params[:per_page]
       offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      user_all = user_all.slice(offset, params[:per_page].to_i) || []
+      user_all = user_all[offset, params[:per_page].to_i] || []
     end
 
     if params[:expand]

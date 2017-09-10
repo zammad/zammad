@@ -223,9 +223,9 @@ returns
 
       lookup(extract_numbers(caller_id)).each { |record|
         if record.level == 'known'
-          preferences_known[direction].push record
+          preferences_known[direction].push record.attributes
         else
-          preferences_maybe[direction].push record
+          preferences_maybe[direction].push record.attributes
         end
         comment = ''
         if record.user_id

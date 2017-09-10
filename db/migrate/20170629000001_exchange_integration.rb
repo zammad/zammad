@@ -1,4 +1,4 @@
-class ExchangeIntegration < ActiveRecord::Migration
+class ExchangeIntegration < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

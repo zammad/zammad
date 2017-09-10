@@ -1,4 +1,4 @@
-class LastOwnerUpdate < ActiveRecord::Migration
+class LastOwnerUpdate < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

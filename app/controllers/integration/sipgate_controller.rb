@@ -9,7 +9,7 @@ class Integration::SipgateController < ApplicationController
   # notify about inbound call / block inbound call
   def in
     if params['event'] == 'newCall'
-      config_inbound = config[:inbound] || {}
+      config_inbound = config_integration[:inbound] || {}
       block_caller_ids = config_inbound[:block_caller_ids] || []
 
       # check if call need to be blocked
@@ -43,8 +43,8 @@ class Integration::SipgateController < ApplicationController
 
   # set caller id of outbound call
   def out
-    config_outbound = config[:outbound][:routing_table]
-    default_caller_id = config[:outbound][:default_caller_id]
+    config_outbound = config_integration[:outbound][:routing_table]
+    default_caller_id = config_integration[:outbound][:default_caller_id]
 
     xml = Builder::XmlMarkup.new(indent: 2)
     xml.instruct!
@@ -89,14 +89,14 @@ class Integration::SipgateController < ApplicationController
       xml_error('Feature is disable, please contact your admin to enable it!')
       return
     end
-    if !config || !config[:inbound] || !config[:outbound]
+    if !config_integration || !config_integration[:inbound] || !config_integration[:outbound]
       xml_error('Feature not configured, please contact your admin!')
       return
     end
   end
 
-  def config
-    @config ||= Setting.get('sipgate_config')
+  def config_integration
+    @config_integration ||= Setting.get('sipgate_config')
   end
 
   def xml_error(error)

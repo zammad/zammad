@@ -28,7 +28,7 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # disable transactions
-  self.use_transactional_fixtures = false
+  self.use_transactional_tests = false
 
   # clear cache
   Cache.clear
@@ -61,6 +61,7 @@ class ActiveSupport::TestCase
     ActivityStream.destroy_all
     PostmasterFilter.destroy_all
     Ticket.destroy_all
+    Taskbar.destroy_all
 
     # reset settings
     Setting.all.pluck(:name).each { |name|

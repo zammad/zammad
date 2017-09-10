@@ -416,7 +416,6 @@ browser:build:
     - core
   script:
     - export RAILS_ENV=production
-    - rake db:drop;
     - rake db:create
     - rake db:migrate
     - rake assets:precompile

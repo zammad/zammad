@@ -191,21 +191,21 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 2,
     }
 
-    post '/api/v1/search/ticket', params.to_json, @headers
+    post '/api/v1/search/ticket', params: params.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_not(result.empty?)
     assert_equal('authentication failed', result['error'])
 
-    post '/api/v1/search/user', params.to_json, @headers
+    post '/api/v1/search/user', params: params.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_not(result.empty?)
     assert_equal('authentication failed', result['error'])
 
-    post '/api/v1/search', params.to_json, @headers
+    post '/api/v1/search', params: params.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -220,7 +220,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       query: '1234*',
       limit: 1,
     }
-    post '/api/v1/search', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -236,7 +236,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -256,7 +256,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search/ticket', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search/ticket', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -274,7 +274,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search/user', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search/user', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -291,7 +291,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 1,
     }
 
-    post '/api/v1/search', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -307,7 +307,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -327,7 +327,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search/ticket', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search/ticket', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -345,7 +345,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search/user', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search/user', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -362,7 +362,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -376,7 +376,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search/ticket', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search/ticket', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -390,7 +390,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search/user', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search/user', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -405,7 +405,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -421,7 +421,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search/ticket', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search/ticket', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -437,7 +437,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
       limit: 10,
     }
 
-    post '/api/v1/search/user', params.to_json, @headers.merge('Authorization' => credentials)
+    post '/api/v1/search/user', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)

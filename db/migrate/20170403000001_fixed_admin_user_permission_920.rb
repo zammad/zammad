@@ -1,4 +1,4 @@
-class FixedAdminUserPermission920 < ActiveRecord::Migration
+class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup

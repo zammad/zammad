@@ -1,4 +1,4 @@
-class RemoveLastLoginFromHistory722 < ActiveRecord::Migration
+class RemoveLastLoginFromHistory722 < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
