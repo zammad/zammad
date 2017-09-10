@@ -10,35 +10,36 @@ class TaskbarController < ApplicationController
 
   def show
     taskbar = Taskbar.find(params[:id])
-    access(taskbar)
-    model_show_render_item(taskbar)
+    access_to_taskbar(taskbar)
+    model_create_render(Taskbar, params)
   end
 
   def create
+    task_user(params)
     model_create_render(Taskbar, params)
   end
 
   def update
     taskbar = Taskbar.find(params[:id])
-    access(taskbar)
-    taskbar.with_lock do
-      taskbar.update_attributes!(Taskbar.param_cleanup(params))
-    end
-    model_update_render_item(taskbar)
+    access_to_taskbar(taskbar)
+    task_user(params)
+    model_update_render(Taskbar, params)
   end
 
   def destroy
     taskbar = Taskbar.find(params[:id])
-    access(taskbar)
-    taskbar.with_lock do
-      taskbar.destroy
-    end
-    model_destroy_render_item()
+    access_to_taskbar(taskbar)
+    model_destroy_render(Taskbar, params)
   end
 
   private
 
-  def access(taskbar)
+  def access_to_taskbar(taskbar)
     raise Exceptions::UnprocessableEntity, 'Not allowed to access this task.' if taskbar.user_id != current_user.id
   end
+
+  def task_user(params)
+    params[:user_id] = current_user.id
+  end
+
 end
