@@ -40,6 +40,16 @@ search user
     current_user: user_model,
   )
 
+or with certain role_ids | permissions
+
+  result = User.search(
+    query: 'some search term',
+    limit: 15,
+    current_user: user_model,
+    role_ids: [1,2,3],
+    permissions: ['ticket.agent']
+  )
+
 returns
 
   result = [user_model1, user_model2, ...]
@@ -56,9 +66,28 @@ returns
       # enable search only for agents and admins
       return [] if !search_preferences(current_user)
 
+      # lookup for roles of permission
+      if params[:permissions].present?
+        params[:role_ids] ||= []
+        role_ids = Role.with_permissions(params[:permissions]).pluck(:id)
+        params[:role_ids].concat(role_ids)
+      end
+
       # try search index backend
       if SearchIndexBackend.enabled?
-        items = SearchIndexBackend.search(query, limit, 'User')
+        query_extention = {}
+        if params[:role_ids].present?
+          query_extention['bool'] = {}
+          query_extention['bool']['must'] = []
+          if !params[:role_ids].is_a?(Array)
+            params[:role_ids] = [params[:role_ids]]
+          end
+          access_condition = {
+            'query_string' => { 'default_field' => 'role_ids', 'query' => "\"#{params[:role_ids].join('" OR "')}\"" }
+          }
+          query_extention['bool']['must'].push access_condition
+        end
+        items = SearchIndexBackend.search(query, limit, 'User', query_extention)
         users = []
         items.each { |item|
           user = User.lookup(id: item[:id])

@@ -57,7 +57,7 @@ class SearchController < ApplicationController
       }
 
       # do only one query to index search backend
-      if !objects_with_direct_search_index.empty?
+      if objects_with_direct_search_index.present?
         items = SearchIndexBackend.search(query, limit, objects_with_direct_search_index)
         items.each { |item|
           require item[:type].to_filename
@@ -71,7 +71,7 @@ class SearchController < ApplicationController
       # e. g. do ticket query by Ticket class to handle ticket permissions
       objects_without_direct_search_index.each { |object|
         object_result = search_generic_backend(object, query, limit, current_user, assets)
-        if !object_result.empty?
+        if object_result.present?
           result = result.concat(object_result)
         end
       }
@@ -92,7 +92,7 @@ class SearchController < ApplicationController
       # do query
       objects_in_order.each { |object|
         object_result = search_generic_backend(object, query, limit, current_user, assets)
-        if !object_result.empty?
+        if object_result.present?
           result = result.concat(object_result)
         end
       }

@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'test_helper'
+require 'rake'
 
 class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -82,6 +83,39 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
       roles: roles,
       organization_id: @organization.id,
     )
+
+    # configure es
+    if ENV['ES_URL'].present?
+      #fail "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
+      Setting.set('es_url', ENV['ES_URL'])
+
+      # Setting.set('es_url', 'http://127.0.0.1:9200')
+      # Setting.set('es_index', 'estest.local_zammad')
+      # Setting.set('es_user', 'elasticsearch')
+      # Setting.set('es_password', 'zammad')
+
+      if ENV['ES_INDEX_RAND'].present?
+        ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
+      end
+      if ENV['ES_INDEX'].blank?
+        raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+      end
+      Setting.set('es_index', ENV['ES_INDEX'])
+
+      travel 1.minute
+
+      # drop/create indexes
+      Rake::Task.clear
+      Zammad::Application.load_tasks
+      #Rake::Task["searchindex:drop"].execute
+      #Rake::Task["searchindex:create"].execute
+      Rake::Task['searchindex:rebuild'].execute
+
+      # execute background jobs
+      Scheduler.worker(true)
+
+      sleep 6
+    end
 
   end
 
@@ -460,10 +494,12 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # search as agent
     Scheduler.worker(true)
+    sleep 2 # let es time to come ready
     get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)
+
     assert_equal(result_user1['id'], result[0]['id'])
     assert_equal("Customer#{firstname}", result[0]['firstname'])
     assert_equal('Customer Last', result[0]['lastname'])
@@ -481,6 +517,42 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     assert(result[0]['roles'])
 
     get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&label=true", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(result_user1['id'], result[0]['id'])
+    assert_equal("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>", result[0]['label'])
+    assert_equal("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>", result[0]['value'])
+    assert_not(result[0]['role_ids'])
+    assert_not(result[0]['roles'])
+
+    role = Role.find_by(name: 'Agent')
+    get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&role_ids=#{role.id}&label=true", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(0, result.count)
+
+    role = Role.find_by(name: 'Customer')
+    get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&role_ids=#{role.id}&label=true", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(result_user1['id'], result[0]['id'])
+    assert_equal("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>", result[0]['label'])
+    assert_equal("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>", result[0]['value'])
+    assert_not(result[0]['role_ids'])
+    assert_not(result[0]['roles'])
+
+    permission = Permission.find_by(name: 'ticket.agent')
+    get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&permissions=#{permission.name}&label=true", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(0, result.count)
+
+    permission = Permission.find_by(name: 'ticket.customer')
+    get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&permissions=#{permission.name}&label=true", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Array, result.class)

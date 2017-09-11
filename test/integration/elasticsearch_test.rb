@@ -124,6 +124,13 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_not(attributes['password'])
     assert_not(attributes['organization'])
 
+    attributes = @customer1.search_index_attribute_lookup
+    assert_equal('ES', attributes['firstname'])
+    assert_equal('Customer1', attributes['lastname'])
+    assert_equal('es-customer1@example.com', attributes['email'])
+    assert_not(attributes['password'])
+    assert_equal('Customer Organization Update', attributes['organization'])
+
     # organization
     attributes = @organization1.search_index_data
     assert_equal('Customer Organization Update', attributes['name'])
