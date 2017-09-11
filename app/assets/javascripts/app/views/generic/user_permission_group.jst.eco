@@ -1,0 +1,29 @@
+<div style="padding-left: 18px; padding-top: 10px; width: 95%;" class="js-groupList <% if @hideGroups: %>js-groupListHide hidden<% end %>">
+  <hr>
+  <table class="settings-list" style="width: 100%;">
+    <thead>
+      <th><%- @T('Group') %>
+      <% for key, text of @groupAccesses: %>
+        <th><%- @T(text) %>
+      <% end %>
+    <tbody>
+  <% for group in @groups: %>
+  <%   permissions = [] %>
+  <%   if @params.group_ids && @params.group_ids[group.id]: %>
+  <%     permissions = @params.group_ids[group.id] %>
+  <%   end %>
+    <tr>
+      <td>
+        <%= group.displayName() %>
+      <% for key, text of @groupAccesses: %>
+        <td>
+        <label class="inline-label checkbox-replacement">
+          <input class="js-groupListItem" type="checkbox" value="<%= key %>" name="group_ids::<%= group.id %>" <% if _.contains(permissions, key): %>checked<% end %>/>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+</div>
