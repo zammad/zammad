@@ -80,6 +80,17 @@ class App.UiElement.ticket_selector
             if config.name && config.name.match(myRegExp)
               config.operator = operator
             elements["#{groupKey}.#{config.name}"] = config
+
+    if attribute.out_of_office
+      elements['ticket.out_of_office_replacement_id'] =
+        name: 'out_of_office_replacement_id'
+        display: 'Out of office replacement'
+        tag: 'autocompletion_ajax'
+        relation: 'User'
+        null: false
+        translate: true
+        operator: ['is', 'is not']
+
     [defaults, groups, elements]
 
   @rowContainer: (groups, elements, attribute) ->

@@ -5,6 +5,33 @@ class User
 
 =begin
 
+lookup name of ref. objects
+
+  user = User.find(123)
+  attributes = user.search_index_attribute_lookup
+
+returns
+
+  attributes # object with lookup data
+
+=end
+
+    def search_index_attribute_lookup
+      attributes = super
+
+      attributes['permissions'] = []
+      permissions_with_child_ids.each do |permission_id|
+        permission = Permission.lookup(id: permission_id)
+        next if !permission
+        attributes['permissions'].push permission.name
+      end
+      attributes['role_ids'] = role_ids
+
+      attributes
+    end
+
+=begin
+
 get data to store in search index
 
   user = User.find(2)
@@ -30,12 +57,12 @@ returns
         next if key == 'preferences'
         next if key == 'password'
         next if !value
-        next if value.respond_to?('empty?') && value.empty?
+        next if value.respond_to?('blank?') && value.blank?
         attributes[key] = value
       }
-      return if attributes.empty?
+      return if attributes.blank?
 
-      if attributes['organization_id']
+      if attributes['organization_id'].present?
         organization = Organization.lookup(id: attributes['organization_id'])
         if organization
           attributes['organization'] = organization.name

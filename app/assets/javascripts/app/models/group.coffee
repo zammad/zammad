@@ -40,6 +40,5 @@ class App.Group extends App.Model
     read: 'Read'
     create: 'Create'
     change: 'Change'
-    delete: 'Delete'
     overview: 'Overview'
     full: 'Full'

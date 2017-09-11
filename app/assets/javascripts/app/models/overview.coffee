@@ -9,7 +9,7 @@ class App.Overview extends App.Model
     { name: 'user_ids',   display: 'Available for User',  tag: 'column_select', multiple: true, null: true,  relation: 'User', sortBy: 'firstname' },
     { name: 'organization_shared', display: 'Only available for Users with shared Organization', tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true },
     { name: 'out_of_office', display: 'Only available for Users which are replacements for other users.', tag: 'select', options: { true: 'yes', false: 'no' }, default: false, null: true },
-    { name: 'condition',  display: 'Conditions for shown Tickets', tag: 'ticket_selector', null: false },
+    { name: 'condition',  display: 'Conditions for shown Tickets', tag: 'ticket_selector', null: false, out_of_office: true },
     { name: 'prio',       display: 'Prio',                readonly: 1 },
     {
       name:    'view::s'
