@@ -41,7 +41,7 @@ module ApplicationController::RendersModels
     generic_object.with_lock do
 
       # set attributes
-      generic_object.update_attributes!(clean_params)
+      generic_object.update!(clean_params)
 
       # set relations
       generic_object.associations_from_param(params)

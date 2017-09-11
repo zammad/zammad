@@ -119,7 +119,7 @@ returns
       if data[:id]
         record = find_by(id: data[:id])
         if record
-          record.update_attributes(data)
+          record.update!(data)
           return record
         end
         record = new(data)
@@ -135,7 +135,7 @@ returns
                   end
         records.each { |loop_record|
           if loop_record.name == data[:name]
-            loop_record.update_attributes(data)
+            loop_record.update!(data)
             return loop_record
           end
         }
@@ -152,7 +152,7 @@ returns
                   end
         records.each { |loop_record|
           if loop_record.login.casecmp(data[:login]).zero?
-            loop_record.update_attributes(data)
+            loop_record.update!(data)
             return loop_record
           end
         }
@@ -169,7 +169,7 @@ returns
                   end
         records.each { |loop_record|
           if loop_record.email.casecmp(data[:email]).zero?
-            loop_record.update_attributes(data)
+            loop_record.update!(data)
             return loop_record
           end
         }
@@ -186,7 +186,7 @@ returns
                   end
         records.each { |loop_record|
           if loop_record.locale.casecmp(data[:locale]).zero?
-            loop_record.update_attributes(data)
+            loop_record.update!(data)
             return loop_record
           end
         }

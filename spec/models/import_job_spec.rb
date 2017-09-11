@@ -221,7 +221,7 @@ RSpec.describe ImportJob do
       instance    = create(:import_job)
       delayed_job = double()
 
-      instance.update_attribute(:finished_at, Time.zone.now)
+      instance.update!(finished_at: Time.zone.now)
 
       expect(instance.reschedule?(delayed_job)).to be false
     end

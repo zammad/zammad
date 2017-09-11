@@ -47,7 +47,7 @@ returns calendar object
     # find if auto generated calendar exists
     calendar = Calendar.find_by(default: true, updated_by_id: 1, created_by_id: 1)
     if calendar
-      calendar.update_attributes(calendar_details)
+      calendar.update!(calendar_details)
       return calendar
     end
     create(calendar_details)

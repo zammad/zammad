@@ -45,7 +45,7 @@ class ApplicationsController < ApplicationController
 
   def update
     application = Doorkeeper::Application.find(params[:id])
-    application.update_attributes!(clean_params)
+    application.update!(clean_params)
     render json: application, status: :ok
   end
 

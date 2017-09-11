@@ -73,7 +73,7 @@ add a new history entry for an object
       history_record = History.find_by(id: data[:id])
     end
     if history_record
-      history_record.update_attributes(record)
+      history_record.update!(record)
     else
       record_new = History.create(record)
       if record[:id]

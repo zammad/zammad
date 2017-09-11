@@ -47,7 +47,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     )
 
     travel 100.seconds
-    ticket.update_attributes(
+    ticket.update!(
       title: 'Unit Test 1 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'open').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
@@ -55,7 +55,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     updated_at = ticket.updated_at
 
     travel 1.second
-    ticket.update_attributes(
+    ticket.update!(
       title: 'Unit Test 2 (äöüß) - update!',
       priority_id: Ticket::Priority.lookup(name: '2 normal').id,
     )
@@ -99,11 +99,11 @@ class ActivityStreamTest < ActiveSupport::TestCase
     travel 100.seconds
     assert_equal(organization.class, Organization)
 
-    organization.update_attributes(name: 'some name (äöüß)')
+    organization.update!(name: 'some name (äöüß)')
     updated_at = organization.updated_at
 
     travel 10.seconds
-    organization.update_attributes(name: 'some name 2 (äöüß)')
+    organization.update!(name: 'some name 2 (äöüß)')
 
     # check activity_stream
     stream = @admin_user.activity_stream(3)
@@ -138,7 +138,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
       created_by_id: @current_user.id,
     )
     assert_equal(user.class, User)
-    user.update_attributes(
+    user.update!(
       firstname: 'Bob U',
       lastname: 'Smith U',
     )
@@ -172,14 +172,14 @@ class ActivityStreamTest < ActiveSupport::TestCase
     travel 100.seconds
     assert_equal(user.class, User)
 
-    user.update_attributes(
+    user.update!(
       firstname: 'Bob U',
       lastname: 'Smith U',
     )
     updated_at = user.updated_at
 
     travel 10.seconds
-    user.update_attributes(
+    user.update!(
       firstname: 'Bob',
       lastname: 'Smith',
     )

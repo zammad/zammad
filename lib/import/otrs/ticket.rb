@@ -50,7 +50,7 @@ module Import
         @local_ticket = ::Ticket.find_by(id: ticket[:id])
         return false if !@local_ticket
         log "update Ticket.find_by(id: #{ticket[:id]})"
-        @local_ticket.update_attributes(ticket)
+        @local_ticket.update!(ticket)
         true
       end
 

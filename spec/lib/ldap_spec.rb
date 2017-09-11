@@ -279,7 +279,7 @@ RSpec.describe Ldap do
         expect(mocked_ldap).to receive(:search).with(include(expected)).and_yield(yield_entry).and_return(true)
 
         check_entry = nil
-        instancesearch(filter, additional) { |entry| check_entry = entry }
+        instance.search(filter, additional) { |entry| check_entry = entry }
         expect(check_entry).to eq(yield_entry)
       end
 

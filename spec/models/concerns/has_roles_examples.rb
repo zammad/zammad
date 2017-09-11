@@ -5,7 +5,7 @@ RSpec.shared_examples 'HasRoles' do
   context 'role' do
 
     let(:group_access_instance_inactive) {
-      group_access_instance.update_attribute(:active, false)
+      group_access_instance.update!(active: false)
       group_access_instance
     }
     let(:role) { create(:role) }

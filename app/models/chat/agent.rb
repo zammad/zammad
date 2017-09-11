@@ -34,7 +34,7 @@ class Chat::Agent < ApplicationModel
       updated_by_id: params[:updated_by_id]
     )
     if chat_agent
-      chat_agent.update_attributes(params)
+      chat_agent.update!(params)
     else
       Chat::Agent.create(params)
     end

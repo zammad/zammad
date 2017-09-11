@@ -371,7 +371,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
             end
           }
           if update_needed
-            translation.update_attributes(translation_raw.symbolize_keys!)
+            translation.update!(translation_raw.symbolize_keys!)
             translation.save
           end
         else

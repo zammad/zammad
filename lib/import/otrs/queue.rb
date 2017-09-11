@@ -33,7 +33,7 @@ module Import
         @local_queue = Group.find_by(id: queue[:id])
         return false if !@local_queue
         log "update Group.find_by(id: #{queue[:id]})"
-        @local_queue.update_attributes(queue)
+        @local_queue.update!(queue)
         true
       end
 

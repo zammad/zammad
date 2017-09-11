@@ -93,7 +93,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('OTRS is an Open Source helpdesk software and an IT Service Management software free of licence costs. Improve your Customer Service Management with OTRS.', organization2_lookup.note)
 
     # update with own values (do not overwrite)
-    customer2.update_attributes(
+    customer2.update!(
       firstname: 'Martini',
       note: 'changed by my self',
     )
@@ -122,7 +122,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('Norsk-Data-Straße 1, 61352 Bad Homburg vor der Höhe, Germany', customer2_lookup.address)
 
     # update with own values (do not overwrite)
-    customer2.update_attributes(
+    customer2.update!(
       firstname: '',
       note: 'changed by my self',
     )
@@ -139,7 +139,7 @@ class ClearbitTest < ActiveSupport::TestCase
     assert_equal('Norsk-Data-Straße 1, 61352 Bad Homburg vor der Höhe, Germany', customer2_lookup.address)
 
     # update with changed values at clearbit site (do overwrite)
-    customer2.update_attributes(
+    customer2.update!(
       email: 'me2@example.com',
     )
 

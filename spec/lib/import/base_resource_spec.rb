@@ -121,8 +121,8 @@ RSpec.describe Import::BaseResource do
         old_signature = create(:signature)
         old_users     = create_list(:user, 2)
 
-        group.update_attribute(:signature_id, old_signature.id)
-        group.update_attribute(:user_ids, old_users.collect(&:id))
+        group.update!(signature_id: old_signature.id)
+        group.update!(user_ids: old_users.collect(&:id))
 
         # simulate next import run
         travel 20.minutes

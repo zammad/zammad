@@ -169,7 +169,7 @@ class Scheduler < ApplicationModel
   end
 
   def self._start_job(job, try_count = 0, try_run_time = Time.zone.now)
-    job.update(
+    job.update!(
       last_run:      Time.zone.now,
       pid:           Thread.current.object_id,
       status:        'ok',
@@ -205,7 +205,7 @@ class Scheduler < ApplicationModel
       error = "Failed to run #{job.method} after #{try_count} tries #{e.inspect}"
       logger.error error
 
-      job.update(
+      job.update!(
         error_message: error,
         status: 'error',
         active: false,
@@ -285,7 +285,7 @@ class Scheduler < ApplicationModel
   # return [true]
   def self.restart_failed_jobs
     failed_jobs.each do |job|
-      job.update(active: true)
+      job.update!(active: true)
     end
 
     true

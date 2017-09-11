@@ -211,7 +211,7 @@ add avatar by url
 
     # update existing
     if avatar_already_exists
-      avatar_already_exists.update_attributes(record)
+      avatar_already_exists.update!(record)
       avatar = avatar_already_exists
 
     # add new one and set it as default

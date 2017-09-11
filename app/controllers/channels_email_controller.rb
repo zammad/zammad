@@ -124,7 +124,7 @@ class ChannelsEmailController < ApplicationController
     # update account
     if channel_id
       channel = Channel.find(channel_id)
-      channel.update_attributes(
+      channel.update!(
         options: {
           inbound: params[:inbound],
           outbound: params[:outbound],
@@ -163,7 +163,7 @@ class ChannelsEmailController < ApplicationController
     end
 
     if address
-      address.update_attributes(
+      address.update!(
         realname: params[:meta][:realname],
         email: email,
         active: true,

@@ -243,7 +243,7 @@ class SessionBasicTest < ActiveSupport::TestCase
     result1 = as_client1.push
     assert(!result1, 'check as agent1 - recall 2')
 
-    agent1.update_attribute(:email, 'activity-stream-agent11@example.com')
+    agent1.update!(email: 'activity-stream-agent11@example.com')
     ticket = Ticket.create!(
       title: '12323',
       group_id: 1,

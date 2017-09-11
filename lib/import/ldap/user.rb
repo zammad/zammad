@@ -29,7 +29,7 @@ module Import
           # the active state this way to send notifications
           # to the client
           ::User.where(id: slice).each do |user|
-            user.update_attribute(:active, false)
+            user.update!(active: false)
           end
         end
       end

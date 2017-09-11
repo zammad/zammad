@@ -88,7 +88,7 @@ RSpec.describe Import::Zendesk::Ticket::Comment do
       expect(Import::Zendesk::Ticket::Comment::Sender).to receive(:local_id).with(local_user_id).and_return(update_structure[:sender_id])
 
       local_article = double()
-      expect(local_article).to receive(:update_attributes).with(update_structure)
+      expect(local_article).to receive(:update!).with(update_structure)
 
       expect(::Ticket::Article).to receive(:find_by).with(message_id: comment.id).and_return(local_article)
 
@@ -186,7 +186,7 @@ RSpec.describe Import::Zendesk::Ticket::Comment do
         expect(Import::Zendesk::Ticket::Comment::Sender).to receive(:local_id).with(local_user_id).and_return(update_structure[:sender_id])
 
         local_article = double()
-        expect(local_article).to receive(:update_attributes).with(update_structure)
+        expect(local_article).to receive(:update!).with(update_structure)
 
         expect(::Ticket::Article).to receive(:find_by).with(message_id: comment.id).and_return(local_article)
 
@@ -282,7 +282,7 @@ RSpec.describe Import::Zendesk::Ticket::Comment do
         expect(Import::Zendesk::Ticket::Comment::Sender).to receive(:local_id).with(local_user_id).and_return(update_structure[:sender_id])
 
         local_article = double()
-        expect(local_article).to receive(:update_attributes).with(update_structure)
+        expect(local_article).to receive(:update!).with(update_structure)
 
         expect(::Ticket::Article).to receive(:find_by).with(message_id: comment.id).and_return(local_article)
 
@@ -373,7 +373,7 @@ RSpec.describe Import::Zendesk::Ticket::Comment do
         expect(Import::Zendesk::Ticket::Comment::Sender).to receive(:local_id).with(local_user_id).and_return(update_structure[:sender_id])
 
         local_article = double()
-        expect(local_article).to receive(:update_attributes).with(update_structure)
+        expect(local_article).to receive(:update!).with(update_structure)
 
         expect(::Ticket::Article).to receive(:find_by).with(message_id: comment.id).and_return(local_article)
 
@@ -461,7 +461,7 @@ RSpec.describe Import::Zendesk::Ticket::Comment do
         expect(Import::Zendesk::Ticket::Comment::Sender).to receive(:local_id).with(local_user_id).and_return(update_structure[:sender_id])
 
         local_article = double()
-        expect(local_article).to receive(:update_attributes).with(update_structure)
+        expect(local_article).to receive(:update!).with(update_structure)
 
         expect(::Ticket::Article).to receive(:find_by).with(message_id: comment.id).and_return(local_article)
 
@@ -544,7 +544,7 @@ RSpec.describe Import::Zendesk::Ticket::Comment do
       expect(Import::Zendesk::Ticket::Comment::Sender).to receive(:local_id).with(local_user_id).and_return(update_structure[:sender_id])
 
       local_article = double()
-      expect(local_article).to receive(:update_attributes).with(update_structure)
+      expect(local_article).to receive(:update!).with(update_structure)
 
       expect(::Ticket::Article).to receive(:find_by).with(message_id: comment.id).and_return(local_article)
 
@@ -626,7 +626,7 @@ RSpec.describe Import::Zendesk::Ticket::Comment do
       expect(Import::Zendesk::Ticket::Comment::Sender).to receive(:local_id).with(local_user_id).and_return(update_structure[:sender_id])
 
       local_article = double()
-      expect(local_article).to receive(:update_attributes).with(update_structure)
+      expect(local_article).to receive(:update!).with(update_structure)
 
       expect(::Ticket::Article).to receive(:find_by).with(message_id: comment.id).and_return(local_article)
 

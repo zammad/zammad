@@ -168,7 +168,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min verify 2')
 
     # set first response in time
-    ticket.update_attributes(
+    ticket.update!(
       first_response_at: '2013-03-21 10:00:00 UTC',
     )
 
@@ -187,7 +187,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min verify 3')
 
     # set first reponse over time
-    ticket.update_attributes(
+    ticket.update!(
       first_response_at: '2013-03-21 14:00:00 UTC',
     )
 
@@ -206,7 +206,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min verify 4')
 
     # set update time in time
-    ticket.update_attributes(
+    ticket.update!(
       last_contact_agent_at: '2013-03-21 11:00:00 UTC',
     )
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_at verify 5')
@@ -225,7 +225,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min verify 5')
 
     # set update time over time
-    ticket.update_attributes(
+    ticket.update!(
       last_contact_agent_at: '2013-03-21 12:00:00 UTC',
     )
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_at verify 6')
@@ -244,7 +244,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min verify 6')
 
     # set update time over time
-    ticket.update_attributes(
+    ticket.update!(
       last_contact_customer_at: '2013-03-21 12:05:00 UTC',
     )
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_at verify 6')
@@ -263,7 +263,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min verify 6')
 
     # set update time over time
-    ticket.update_attributes(
+    ticket.update!(
       last_contact_agent_at: '2013-03-21 12:10:00 UTC',
     )
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 12:30:00 UTC', 'ticket.escalation_at verify 6')
@@ -282,7 +282,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min verify 6')
 
     # set close time in time
-    ticket.update_attributes(
+    ticket.update!(
       close_at: '2013-03-21 11:30:00 UTC',
     )
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 14:10:00 UTC', 'ticket.escalation_at verify 7')
@@ -301,7 +301,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.close_diff_in_min, 60, 'ticket.close_diff_in_min verify 7')
 
     # set close time over time
-    ticket.update_attributes(
+    ticket.update!(
       close_at: '2013-03-21 13:00:00 UTC',
     )
     assert_equal(ticket.escalation_at.gmtime.to_s, '2013-03-21 14:10:00 UTC', 'ticket.escalation_at verify 8')
@@ -320,7 +320,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.close_diff_in_min, -30, 'ticket.close_diff_in_min verify 8')
 
     # set close time over time
-    ticket.update_attributes(
+    ticket.update!(
       state: Ticket::State.lookup(name: 'closed')
     )
     assert_nil(ticket.escalation_at, 'ticket.escalation_at verify 9')
@@ -1097,12 +1097,12 @@ class TicketSlaTest < ActiveSupport::TestCase
     )
 
     # set update time
-    ticket.update_attributes(
+    ticket.update!(
       last_contact_agent_at: '2013-06-04 10:15:00 UTC',
     )
 
     # set first response time
-    ticket.update_attributes(
+    ticket.update!(
       first_response_at: '2013-06-04 10:45:00 UTC',
     )
 
@@ -1121,7 +1121,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       updated_at: '2013-06-04 12:00:00 UTC'
     )
 
-    ticket.update_attributes(
+    ticket.update!(
       close_at: '2013-06-04 12:00:00 UTC',
     )
 
@@ -1218,7 +1218,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       created_at: '2013-06-04 12:00:00 UTC',
       updated_at: '2013-06-04 12:00:00 UTC',
     )
-    ticket.update_attributes(
+    ticket.update!(
       close_at: '2013-06-04 12:00:00 UTC',
     )
     ticket.escalation_calculation(true)
@@ -1346,7 +1346,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       created_at: '2013-06-04 12:00:00 UTC',
       updated_at: '2013-06-04 12:00:00 UTC',
     )
-    ticket.update_attributes(
+    ticket.update!(
       close_at: '2013-06-04 12:00:00 UTC',
     )
 
@@ -1489,7 +1489,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       created_at: '2013-06-04 12:00:00 UTC',
       updated_at: '2013-06-04 12:00:00 UTC',
     )
-    ticket.update_attributes(
+    ticket.update!(
       close_at: '2013-06-04 12:00:00 UTC',
     )
 
@@ -2074,7 +2074,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_escalation_at, 'ticket.close_escalation_at verify 1')
 
     # set sla's for timezone "Europe/Berlin" wintertime (+1), so UTC times are 3:00-18:00
-    calendar.update_attributes(
+    calendar.update!(
       business_hours: {
         mon: {
           active: true,

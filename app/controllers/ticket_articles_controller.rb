@@ -111,7 +111,7 @@ class TicketArticlesController < ApplicationController
     clean_params = Ticket::Article.association_name_to_id_convert(params)
     clean_params = Ticket::Article.param_cleanup(clean_params, true)
 
-    article.update_attributes!(clean_params)
+    article.update!(clean_params)
 
     if params[:expand]
       result = article.attributes_with_association_names

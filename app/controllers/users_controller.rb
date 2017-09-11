@@ -253,7 +253,7 @@ class UsersController < ApplicationController
     user.with_lock do
       clean_params = User.association_name_to_id_convert(params)
       clean_params = User.param_cleanup(clean_params, true)
-      user.update_attributes(clean_params)
+      user.update!(clean_params)
 
       # only allow Admin's
       if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
@@ -765,7 +765,7 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
       return
     end
 
-    user.update_attributes(password: params[:password_new])
+    user.update!(password: params[:password_new])
 
     NotificationFactory::Mailer.notification(
       template: 'password_change',
@@ -980,7 +980,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     # update user link
     user = User.find(current_user.id)
-    user.update_attributes(image: avatar.store_hash)
+    user.update!(image: avatar.store_hash)
 
     render json: { avatar: avatar }, status: :ok
   end
@@ -996,7 +996,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
 
     # update user link
     user = User.find(current_user.id)
-    user.update_attributes(image: avatar.store_hash)
+    user.update!(image: avatar.store_hash)
 
     render json: {}, status: :ok
   end
@@ -1013,7 +1013,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     # update user link
     avatar = Avatar.get_default('User', current_user.id)
     user = User.find(current_user.id)
-    user.update_attributes(image: avatar.store_hash)
+    user.update!(image: avatar.store_hash)
 
     render json: {}, status: :ok
   end

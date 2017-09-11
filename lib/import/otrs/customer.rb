@@ -44,7 +44,7 @@ module Import
         @local_customer = Organization.find_by(name: customer[:name])
         return false if !@local_customer
         log "update Organization.find_by(name: #{customer[:name]})"
-        @local_customer.update_attributes(customer)
+        @local_customer.update!(customer)
         true
       end
 

@@ -53,7 +53,7 @@ module Import
         @local_article = ::Ticket::Article.find_by(id: article[:id])
         return false if !@local_article
         log "update Ticket::Article.find_by(id: #{article[:id]})"
-        @local_article.update_attributes(article)
+        @local_article.update!(article)
         true
       end
 

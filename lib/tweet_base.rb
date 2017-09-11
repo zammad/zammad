@@ -52,7 +52,7 @@ class TweetBase
         next if !new_value || new_value.empty?
         user_data[target] = new_value
       }
-      user.update_attributes(user_data)
+      user.update!(user_data)
     else
       user_data[:login]     = tweet_user.screen_name
       user_data[:firstname] = tweet_user.name
@@ -91,7 +91,7 @@ class TweetBase
       provider: 'twitter'
     }
     if auth
-      auth.update_attributes(auth_data)
+      auth.update!(auth_data)
     else
       Authorization.create!(auth_data)
     end

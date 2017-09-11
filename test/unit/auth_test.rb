@@ -5,7 +5,7 @@ class AuthTest < ActiveSupport::TestCase
   test 'auth' do
 
     user = User.find_by(email: 'nicole.braun@zammad.org')
-    user.update_attributes(
+    user.update!(
       login: 'nicole.braun',
       firstname: 'Nicole',
       lastname: 'Braun',

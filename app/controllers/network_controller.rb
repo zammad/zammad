@@ -63,7 +63,7 @@ class NetworksController < ApplicationController
     @network = Network.find(params[:id])
 
     respond_to do |format|
-      if @network.update_attributes(params[:network])
+      if @network.update!(params[:network])
         format.html { redirect_to @network, notice: 'Network was successfully updated.' }
         format.json { render json: @network, status: :ok }
       else
