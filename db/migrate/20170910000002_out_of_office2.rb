@@ -9,6 +9,18 @@ class OutOfOffice2 < ActiveRecord::Migration
       Overview.reset_column_information
     end
 
+    if !ActiveRecord::Base.connection.column_exists?(:users, :out_of_office)
+      add_column :users, :out_of_office, :boolean, null: false, default: false
+      add_column :users, :out_of_office_start_at, :date, null: true
+      add_column :users, :out_of_office_end_at, :date, null: true
+      add_column :users, :out_of_office_replacement_id, :integer, null: true
+
+      add_index :users, [:out_of_office, :out_of_office_start_at, :out_of_office_end_at], name: 'index_out_of_office'
+      add_index :users, [:out_of_office_replacement_id]
+      add_foreign_key :users, :users, column: :out_of_office_replacement_id
+      User.reset_column_information
+    end
+
     role_ids = Role.with_permissions(['ticket.agent']).map(&:id)
     overview_role = Role.find_by(name: 'Agent')
     Overview.create_or_update(
@@ -40,18 +52,6 @@ class OutOfOffice2 < ActiveRecord::Migration
       updated_by_id: 1,
       created_by_id: 1,
     )
-
-    if !ActiveRecord::Base.connection.column_exists?(:users, :out_of_office)
-      add_column :users, :out_of_office, :boolean, null: false, default: false
-      add_column :users, :out_of_office_start_at, :date, null: true
-      add_column :users, :out_of_office_end_at, :date, null: true
-      add_column :users, :out_of_office_replacement_id, :integer, null: true
-
-      add_index :users, [:out_of_office, :out_of_office_start_at, :out_of_office_end_at], name: 'index_out_of_office'
-      add_index :users, [:out_of_office_replacement_id]
-      add_foreign_key :users, :users, column: :out_of_office_replacement_id
-      User.reset_column_information
-    end
 
     Cache.clear
   end
