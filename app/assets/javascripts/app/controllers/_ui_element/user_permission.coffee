@@ -67,9 +67,14 @@ class App.UiElement.user_permission
     item = $( App.view('generic/user_permission')(
       attribute: attribute
       roles: roles
-      groups: groups
       params: params
       rolesSelected: rolesSelected
+    ) )
+
+    item.find('.js-groups').html(App.view('generic/user_permission_group')(
+      attribute: attribute
+      groups: groups
+      params: params
       groupsSelected: groupsSelected
       hideGroups: hideGroups
       groupAccesses: App.Group.accesses()
@@ -101,7 +106,11 @@ class App.UiElement.user_permission
 
       # if role with groups plugin is deselected, hide group selection
       if !checked
-        if rolesWithGroupPlugin[role_id] is 'group'
+        show = false
+        for role_id, group of rolesWithGroupPlugin
+          if item.find("[name=role_ids][value=#{role_id}]").prop('checked')
+            show = true
+        if !show
           item.find('.js-groupList').addClass('hidden')
 
           # select groups if only one is available
