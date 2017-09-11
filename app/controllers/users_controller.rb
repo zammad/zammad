@@ -368,8 +368,9 @@ class UsersController < ApplicationController
       limit: params[:limit],
       current_user: current_user,
     }
-    if params[:role_ids].present?
-      query_params[:role_ids] = params[:role_ids]
+    [:role_ids, :permissions].each do |key|
+      next if params[key].blank?
+      query_params[key] = params[key]
     end
 
     # do query

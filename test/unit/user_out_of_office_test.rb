@@ -14,6 +14,7 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
       email: 'user-out_of_office-agent1@example.com',
       password: 'agentpw',
       active: true,
+      out_of_office: false,
       roles: roles,
       groups: groups,
     )
@@ -24,6 +25,7 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
       email: 'user-out_of_office-agent2@example.com',
       password: 'agentpw',
       active: true,
+      out_of_office: false,
       roles: roles,
       groups: groups,
     )
@@ -34,6 +36,7 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
       email: 'user-out_of_office-agent3@example.com',
       password: 'agentpw',
       active: true,
+      out_of_office: false,
       roles: roles,
       groups: groups,
     )
@@ -99,6 +102,9 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
     travel 2.days
 
     assert(@agent1.out_of_office?)
+    assert(@agent1.out_of_office_agent_of.blank?)
+    assert_equal(1, @agent2.out_of_office_agent_of.count)
+    assert_equal(@agent1.id, @agent2.out_of_office_agent_of[0].id)
 
     travel 1.day
 
@@ -116,6 +122,9 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
 
     assert_not(@agent2.out_of_office_agent)
 
+    assert_equal(0, @agent1.out_of_office_agent_of.count)
+    assert_equal(0, @agent2.out_of_office_agent_of.count)
+
     @agent2.out_of_office = true
     @agent2.out_of_office_start_at = Time.zone.now
     @agent2.out_of_office_end_at = Time.zone.now + 4.days
@@ -126,6 +135,23 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
 
     assert_equal(@agent2.out_of_office_agent.id, @agent3.id)
 
+    assert_equal(0, @agent1.out_of_office_agent_of.count)
+    assert_equal(0, @agent2.out_of_office_agent_of.count)
+    assert_equal(1, @agent3.out_of_office_agent_of.count)
+    assert_equal(@agent2.id, @agent3.out_of_office_agent_of[0].id)
+
+    travel 4.days
+
+    assert_equal(0, @agent1.out_of_office_agent_of.count)
+    assert_equal(0, @agent2.out_of_office_agent_of.count)
+    assert_equal(1, @agent3.out_of_office_agent_of.count)
+    assert_equal(@agent2.id, @agent3.out_of_office_agent_of[0].id)
+
+    travel 1.day
+
+    assert_equal(0, @agent1.out_of_office_agent_of.count)
+    assert_equal(0, @agent2.out_of_office_agent_of.count)
+    assert_equal(0, @agent3.out_of_office_agent_of.count)
   end
 
 end

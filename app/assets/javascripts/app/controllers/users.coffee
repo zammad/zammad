@@ -140,7 +140,7 @@ class Index extends App.ControllerSubContent
     App.Ajax.request(
       id: 'search'
       type: 'GET'
-      url: @apiPath + '/users/search'
+      url: "#{@apiPath}/users/search"
       data:
         query: @query
         limit: 140
@@ -165,7 +165,7 @@ class Index extends App.ControllerSubContent
       type: 'GET'
       url: "#{@apiPath}/users/recent"
       data:
-        limit: 40
+        limit: 50
         role_ids: role_ids
         full: 1
       processData: true

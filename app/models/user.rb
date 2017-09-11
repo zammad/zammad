@@ -199,6 +199,23 @@ returns
 
 =begin
 
+gets users where user is replacement
+
+  user = User.find(123)
+  result = user.out_of_office_agent_of
+
+returns
+
+  result = [user_model1, user_model2]
+
+=end
+
+  def out_of_office_agent_of
+    User.where(active: true, out_of_office: true, out_of_office_replacement_id: id).where('out_of_office_start_at <= ? AND out_of_office_end_at >= ?', Time.zone.today, Time.zone.today)
+  end
+
+=begin
+
 get users activity stream
 
   user = User.find(123)

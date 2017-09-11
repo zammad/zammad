@@ -14,7 +14,7 @@ class App.UiElement.autocompletion
 
       # call calback on init
       if @callback && attribute.value && @params
-        @callback( @params )
+        @callback(@params)
 
       b = (event, item) =>
         # set html form attribute
@@ -24,7 +24,7 @@ class App.UiElement.autocompletion
         # call calback
         if @callback
           params = App.ControllerForm.params(form)
-          @callback( params )
+          @callback(params)
       ###
       $(@local_attribute_full).tagsInput(
         autocomplete_url: '/users/search',
@@ -33,7 +33,7 @@ class App.UiElement.autocompletion
         auto: {
           source: '/users/search',
           minLength: 2,
-          select: ( event, ui ) ->
+          select: (event, ui) ->
             #@log 'notice', 'selected', event, ui
             b(event, ui.item)
         }
@@ -45,8 +45,8 @@ class App.UiElement.autocompletion
       $(local_attribute_full).autocomplete(
         source: source,
         minLength: attribute.minLengt || 3,
-        select: ( event, ui ) ->
+        select: (event, ui) ->
           b(event, ui.item)
       )
-    App.Delay.set( a, 280, undefined, 'form_autocompletion' )
+    App.Delay.set(a, 280, undefined, 'form_autocompletion')
     item

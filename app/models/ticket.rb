@@ -549,6 +549,12 @@ condition example
       # get attributes
       attributes = attribute.split(/\./)
       attribute = "#{attributes[0]}s.#{attributes[1]}"
+
+      # magic selectors
+      if attributes[0] == 'ticket' && attributes[1] == 'out_of_office_replacement_id'
+        attribute = "#{attributes[0]}s.owner_id"
+      end
+
       if attributes[0] == 'ticket' && attributes[1] == 'tags'
         selector['value'] = selector['value'].split(/,/).collect(&:strip)
       end
@@ -567,8 +573,13 @@ condition example
           end
         elsif selector['pre_condition'] == 'current_user.id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
-          query += "#{attribute} IN (?)"
-          bind_params.push current_user_id
+          if attributes[1] == 'out_of_office_replacement_id'
+            query += "#{attribute} IN (?)"
+            bind_params.push User.find(current_user_id).out_of_office_agent_of.pluck(:id)
+          else
+            query += "#{attribute} IN (?)"
+            bind_params.push current_user_id
+          end
         elsif selector['pre_condition'] == 'current_user.organization_id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
           query += "#{attribute} IN (?)"
@@ -579,8 +590,13 @@ condition example
           if selector['value'].nil?
             query += "#{attribute} IS NULL"
           else
-            query += "#{attribute} IN (?)"
-            bind_params.push selector['value']
+            if attributes[1] == 'out_of_office_replacement_id'
+              query += "#{attribute} IN (?)"
+              bind_params.push User.find(selector['value']).out_of_office_agent_of.pluck(:id)
+            else
+              query += "#{attribute} IN (?)"
+              bind_params.push selector['value']
+            end
           end
           # rubocop:enable Style/IfInsideElse
         end
@@ -593,8 +609,13 @@ condition example
             query += "#{attribute} IS NOT NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
-          query += "#{attribute} NOT IN (?)"
-          bind_params.push current_user_id
+          if attributes[1] == 'out_of_office_replacement_id'
+            query += "#{attribute} NOT IN (?)"
+            bind_params.push User.find(current_user_id).out_of_office_agent_of.pluck(:id)
+          else
+            query += "#{attribute} NOT IN (?)"
+            bind_params.push current_user_id
+          end
         elsif selector['pre_condition'] == 'current_user.organization_id'
           query += "#{attribute} NOT IN (?)"
           user = User.lookup(id: current_user_id)
@@ -604,8 +625,13 @@ condition example
           if selector['value'].nil?
             query += "#{attribute} IS NOT NULL"
           else
-            query += "#{attribute} NOT IN (?)"
-            bind_params.push selector['value']
+            if attributes[1] == 'out_of_office_replacement_id'
+              query += "#{attribute} NOT IN (?)"
+              bind_params.push User.find(selector['value']).out_of_office_agent_of.pluck(:id)
+            else
+              query += "#{attribute} NOT IN (?)"
+              bind_params.push selector['value']
+            end
           end
           # rubocop:enable Style/IfInsideElse
         end
