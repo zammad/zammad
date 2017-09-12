@@ -135,9 +135,9 @@ module Import
     end
 
     def inform(message)
-      @import_job.update_attribute(:result, {
-                                     info: message
-                                   })
+      @import_job.update!(result: {
+                            info: message
+                          })
     end
   end
 end

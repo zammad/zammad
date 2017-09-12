@@ -43,7 +43,7 @@ module Import
         end
 
         log "update User.find_by(id: #{user[:id]})"
-        @local_user.update_attributes(user)
+        @local_user.update!(user)
         true
       end
 

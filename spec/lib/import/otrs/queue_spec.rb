@@ -11,7 +11,7 @@ RSpec.describe Import::OTRS::Queue do
 
   def updates_with(zammad_structure)
     expect(import_object).to receive(:find_by).and_return(existing_object)
-    expect(existing_object).to receive(:update_attributes).with(zammad_structure)
+    expect(existing_object).to receive(:update!).with(zammad_structure)
     expect(import_object).not_to receive(:new)
     start_import_test
   end

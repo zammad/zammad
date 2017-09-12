@@ -66,7 +66,7 @@ class ReportTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    @ticket1.update_attributes(
+    @ticket1.update!(
       group: Group.lookup(name: 'Users'),
       updated_at: '2015-10-28 14:30:00 UTC',
     )
@@ -97,7 +97,7 @@ class ReportTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    @ticket2.update_attributes(
+    @ticket2.update!(
       group_id: group2.id,
       updated_at: '2015-10-28 14:30:00 UTC',
     )
@@ -184,7 +184,7 @@ class ReportTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    @ticket5.update_attributes(
+    @ticket5.update!(
       state: Ticket::State.lookup(name: 'open'),
       updated_at: '2015-10-28 14:30:00 UTC',
     )

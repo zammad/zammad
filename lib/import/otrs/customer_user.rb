@@ -52,7 +52,7 @@ module Import
         end
 
         log "update User.find_by(login: #{customer[:login]})"
-        @local_customer.update_attributes(customer)
+        @local_customer.update!(customer)
         true
       end
 

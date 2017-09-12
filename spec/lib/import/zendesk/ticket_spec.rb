@@ -122,7 +122,7 @@ RSpec.describe Import::Zendesk::Ticket do
     expect(Import::Zendesk::Ticket::CommentFactory).to receive(:import).with(ticket.comments, local_ticket, ticket)
 
     expect(::Ticket).to receive(:find_by).with(id: expected_structure[:id]).and_return(local_ticket)
-    expect(local_ticket).to receive(:update_attributes).with(expected_structure)
+    expect(local_ticket).to receive(:update!).with(expected_structure)
 
     created_instance = described_class.new(ticket)
   end

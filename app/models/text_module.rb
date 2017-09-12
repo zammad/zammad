@@ -38,7 +38,7 @@ load text modules from online
         exists = TextModule.find_by(foreign_id: text_module['foreign_id'])
         if exists
           next if !overwrite_existing_item
-          exists.update(text_module.symbolize_keys!)
+          exists.update!(text_module.symbolize_keys!)
         else
           text_module[:updated_by_id] = 1
           text_module[:created_by_id] = 1

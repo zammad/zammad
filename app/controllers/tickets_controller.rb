@@ -192,7 +192,7 @@ class TicketsController < ApplicationController
     end
 
     ticket.with_lock do
-      ticket.update_attributes!(clean_params)
+      ticket.update!(clean_params)
       if params[:article]
         article_create(ticket, params[:article])
       end

@@ -34,7 +34,7 @@ module Import
         @local_state = ::Ticket::State.find_by(id: state[:id])
         return false if !@local_state
         log "update Ticket::State.find_by(id: #{state[:id]})"
-        @local_state.update_attributes(state)
+        @local_state.update!(state)
         true
       end
 

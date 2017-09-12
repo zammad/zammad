@@ -610,7 +610,7 @@ returns
     return if !user
 
     # reset password
-    user.update_attributes(password: password)
+    user.update!(password: password)
 
     # delete token
     Token.find_by(action: 'PasswordReset', name: token).destroy
@@ -689,7 +689,7 @@ returns
     return if user && local_user.id != user.id
 
     # set verified
-    local_user.update_attributes(verified: true)
+    local_user.update!(verified: true)
 
     # delete token
     Token.find_by(action: 'Signup', name: token).destroy

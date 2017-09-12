@@ -271,7 +271,7 @@ class UserTest < ActiveSupport::TestCase
         assert_equal(test[:create_verify][:image_md5], file_md5, "create avatar md5 check in (#{test[:name]})")
       end
       if test[:update]
-        user.update_attributes( test[:update] )
+        user.update!( test[:update] )
 
         test[:update_verify].each { |key, value|
           next if key == :image_md5
@@ -848,18 +848,18 @@ class UserTest < ActiveSupport::TestCase
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(3, admin_count_inital)
 
-    admin1.update_attribute(:roles, Role.where(name: %w(Agent)))
+    admin1.update!(roles: Role.where(name: %w(Agent)))
 
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(2, admin_count_inital)
 
-    admin2.update_attribute(:roles, Role.where(name: %w(Agent)))
+    admin2.update!(roles: Role.where(name: %w(Agent)))
 
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(1, admin_count_inital)
 
     assert_raises(Exceptions::UnprocessableEntity) {
-      admin3.update_attribute(:roles, Role.where(name: %w(Agent)))
+      admin3.update!(roles: Role.where(name: %w(Agent)))
     }
 
     admin_count_inital = User.with_permissions('admin').count

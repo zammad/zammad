@@ -141,7 +141,7 @@ module Channel::Filter::IdentifySender
       if user.firstname.blank? && user.lastname.blank?
         if data[:firstname].present?
           data[:firstname] = cleanup_name(data[:firstname])
-          user.update_attributes(
+          user.update!(
             firstname: data[:firstname]
           )
         end
@@ -166,7 +166,7 @@ module Channel::Filter::IdentifySender
     data[:created_by_id] = 1
 
     user = User.create(data)
-    user.update_attributes(
+    user.update!(
       updated_by_id: user.id,
       created_by_id: user.id,
     )

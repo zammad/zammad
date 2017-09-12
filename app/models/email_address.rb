@@ -69,7 +69,7 @@ check and if channel not exists reset configured channels for email addresses
   # delete group.email_address_id reference if email address get's deleted
   def delete_group_reference
     Group.where(email_address_id: id).each { |group|
-      group.update_attributes!(email_address_id: nil)
+      group.update!(email_address_id: nil)
     }
   end
 

@@ -147,7 +147,7 @@ result
         next if !new_value || new_value.empty?
         user_data[target] = new_value
       }
-      user.update_attributes(user_data)
+      user.update!(user_data)
     else
       user_data[:login] = item_user['id']
       if item_user['first_name'] && item_user['last_name']

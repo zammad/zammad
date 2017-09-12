@@ -243,7 +243,7 @@ returns
     }
     if auth
       user = User.find(auth.user_id)
-      user.update_attributes(user_data)
+      user.update!(user_data)
     else
       if message_user[:username]
         user_data[:note] = "Telegram @#{message_user[:username]}"
@@ -261,7 +261,7 @@ returns
       provider: 'telegram'
     }
     if auth
-      auth.update_attributes(auth_data)
+      auth.update!(auth_data)
     else
       Authorization.create(auth_data)
     end
