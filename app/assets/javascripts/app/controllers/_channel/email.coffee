@@ -334,12 +334,13 @@ class App.ChannelEmailAccountOverview extends App.Controller
   disable: (e) =>
     e.preventDefault()
     id   = $(e.target).closest('.action').data('id')
-    item = App.Channel.find(id)
-    item.active = false
-    item.save(
-      done: =>
-        @load()
-      fail: =>
+    @ajax(
+      id:   'email_disable'
+      type: 'POST'
+      url:  @apiPath + '/channels/email_disable'
+      data: JSON.stringify(id: id),
+      processData: true
+      success: =>
         @load()
     )
 
