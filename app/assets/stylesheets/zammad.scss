@@ -6103,6 +6103,11 @@ footer {
   right: 10px;
 }
 
+.dropdown-backdrop {
+  position: fixed;
+  @extend .zIndex-5; // has to be behind dropdown-menu (dropdown-menu is also zIndex-5 but behind dropdown-backdrop in dom)
+}
+
 .dropdown-menu {
   @extend .zIndex-5; // has to be behind modal windows and beneath notifications (popover)
   position: absolute;
