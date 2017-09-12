@@ -19,6 +19,7 @@ Zammad::Application.routes.draw do
 
   # channels
   match api_path + '/channels/group/:id',             to: 'channels#group_update',        via: :post
+  match api_path + '/channels/email_disable',         to: 'channels#disable',             via: :post
   match api_path + '/channels/:id',                   to: 'channels#destroy',             via: :delete
 
 end

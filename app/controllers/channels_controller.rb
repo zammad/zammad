@@ -45,6 +45,13 @@ curl http://localhost/api/v1/channels.json -v -u #{login}:#{password} -H "Conten
     model_destroy_render(Channel, params)
   end
 
+  def disable
+    channel = Channel.find_by(id: params[:id], area: 'Email::Account')
+    channel.active = false
+    channel.save!
+    render json: {}
+  end
+
   def twitter_index
     permission_check('admin.channel_twitter')
     assets = {}
