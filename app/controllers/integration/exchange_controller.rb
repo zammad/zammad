@@ -13,7 +13,7 @@ class Integration::ExchangeController < ApplicationController
       )
 
       {
-        endpoint: client.autodiscover.ews_url,
+        endpoint: client.try(:autodiscover).try(:ews_url),
       }
     end
   end

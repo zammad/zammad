@@ -78,7 +78,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'create', @agent_user1, false))
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket1.id, 'create', @agent_user1, true))
 
-    ticket1.update_attributes(
+    ticket1.update!(
       title: 'Unit Test 1 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'open').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
@@ -133,7 +133,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'create', @customer_user, false))
     assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket2.id, 'create', @customer_user, true))
 
-    ticket2.update_attributes(
+    ticket2.update!(
       title: 'Unit Test 1 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'open').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
@@ -187,7 +187,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'create', @agent_user1, false))
     assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket3.id, 'create', @agent_user1, true))
 
-    ticket3.update_attributes(
+    ticket3.update!(
       title: 'Unit Test 2 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'closed').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
@@ -267,7 +267,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'create', @customer_user, false))
     assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket4.id, 'create', @customer_user, true))
 
-    ticket4.update_attributes(
+    ticket4.update!(
       title: 'Unit Test 3 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'open').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
@@ -321,7 +321,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert(OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'create', @agent_user1, false))
     assert(!OnlineNotification.exists?(@agent_user2, 'Ticket', ticket5.id, 'create', @agent_user1, true))
 
-    ticket5.update_attributes(
+    ticket5.update!(
       title: 'Unit Test 4 (äöüß) - update!',
       state_id: Ticket::State.lookup(name: 'open').id,
       priority_id: Ticket::Priority.lookup(name: '1 low').id,
@@ -398,7 +398,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert_equal(ticket1.online_notification_seen_state(@agent_user2), false)
 
     # pending reminder, just let new owner to unseed
-    ticket1.update_attributes(
+    ticket1.update!(
       owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'pending reminder'),
       updated_by_id: @agent_user2.id,
@@ -409,7 +409,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
     # pending reminder, just let new owner to unseed
-    ticket1.update_attributes(
+    ticket1.update!(
       owner_id: 1,
       state: Ticket::State.lookup(name: 'pending reminder'),
       updated_by_id: @agent_user2.id,
@@ -420,7 +420,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), false)
 
     # pending reminder, self done, all to unseed
-    ticket1.update_attributes(
+    ticket1.update!(
       owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'pending reminder'),
       updated_by_id: @agent_user1.id,
@@ -431,7 +431,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
     # pending close, all to unseen
-    ticket1.update_attributes(
+    ticket1.update!(
       owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'pending close'),
       updated_by_id: @agent_user2.id,
@@ -442,7 +442,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
     # to open, all to seen
-    ticket1.update_attributes(
+    ticket1.update!(
       owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'open'),
       updated_by_id: @agent_user2.id,
@@ -453,7 +453,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), false)
 
     # to closed, all only others to seen
-    ticket1.update_attributes(
+    ticket1.update!(
       owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'closed'),
       updated_by_id: @agent_user2.id,
@@ -464,7 +464,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
     # to closed by owner self, all to seen
-    ticket1.update_attributes(
+    ticket1.update!(
       owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'closed'),
       updated_by_id: @agent_user1.id,
@@ -475,7 +475,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert_equal(ticket1.online_notification_seen_state(@agent_user2.id), true)
 
     # to closed by owner self, all to seen
-    ticket1.update_attributes(
+    ticket1.update!(
       owner_id: @agent_user1.id,
       state: Ticket::State.lookup(name: 'merged'),
       updated_by_id: @agent_user2.id,

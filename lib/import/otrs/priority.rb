@@ -33,7 +33,7 @@ module Import
         @local_priority = ::Ticket::Priority.find_by(id: priority[:id])
         return false if !@local_priority
         log "update Ticket::Priority.find_by(id: #{priority[:id]})"
-        @local_priority.update_attributes(priority)
+        @local_priority.update!(priority)
         true
       end
 

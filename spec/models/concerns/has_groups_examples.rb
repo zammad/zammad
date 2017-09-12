@@ -4,7 +4,7 @@ RSpec.shared_examples 'HasGroups' do
 
   context 'group' do
     let(:group_access_instance_inactive) {
-      group_access_instance.update_attribute(:active, false)
+      group_access_instance.update!(active: false)
       group_access_instance
     }
     let(:group_full) { create(:group) }

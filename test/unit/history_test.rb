@@ -164,10 +164,10 @@ class HistoryTest < ActiveSupport::TestCase
 
         # update ticket
         if test[:ticket_update][:ticket]
-          ticket.update_attributes(test[:ticket_update][:ticket])
+          ticket.update!(test[:ticket_update][:ticket])
         end
         if test[:ticket_update][:article]
-          article.update_attributes(test[:ticket_update][:article])
+          article.update!(test[:ticket_update][:article])
         end
       end
 
@@ -260,7 +260,7 @@ class HistoryTest < ActiveSupport::TestCase
         # update user
         if test[:user_update][:user]
           test[:user_update][:user][:active] = false
-          user.update_attributes(test[:user_update][:user])
+          user.update!(test[:user_update][:user])
         end
       end
 
@@ -323,7 +323,7 @@ class HistoryTest < ActiveSupport::TestCase
 
         # update organization
         if test[:organization_update][:organization]
-          organization.update_attributes(test[:organization_update][:organization])
+          organization.update!(test[:organization_update][:organization])
         end
       end
 

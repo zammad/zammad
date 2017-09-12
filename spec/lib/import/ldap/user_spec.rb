@@ -245,7 +245,7 @@ RSpec.describe Import::Ldap::User do
 
         it "doesn't detect false changes" do
           # make sure that the nothing has changed
-          User.find_by(login: uid).update_attribute(:email, 'example@example.com')
+          User.find_by(login: uid).update!(email: 'example@example.com')
 
           expect_any_instance_of(User).not_to receive(:save!)
           instance = described_class.new(user_entry, ldap_config, user_roles, signup_role_ids)

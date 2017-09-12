@@ -117,7 +117,7 @@ RSpec.describe Scheduler do
 
         # lock job (simluates interrupted scheduler task)
         locked_job = Delayed::Job.last
-        locked_job.update_attribute(:locked_at, Time.zone.now)
+        locked_job.update!(locked_at: Time.zone.now)
 
         expect do
           simulate_threads_call
@@ -134,7 +134,7 @@ RSpec.describe Scheduler do
 
           # lock job (simluates interrupted scheduler task)
           locked_job = Delayed::Job.last
-          locked_job.update_attribute(:locked_at, Time.zone.now)
+          locked_job.update!(locked_at: Time.zone.now)
 
           expect do
             simulate_threads_call
@@ -151,7 +151,7 @@ RSpec.describe Scheduler do
 
           # lock job (simluates interrupted scheduler task)
           locked_job = Delayed::Job.last
-          locked_job.update_attribute(:locked_at, Time.zone.now)
+          locked_job.update!(locked_at: Time.zone.now)
 
           expect do
             simulate_threads_call

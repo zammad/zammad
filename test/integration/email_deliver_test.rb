@@ -91,7 +91,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert_nil(article1_lookup.preferences['delivery_status_message'])
 
     # send with invalid smtp settings
-    channel.update_attributes(
+    channel.update!(
       options: {
         inbound: {
           adapter: 'imap',
@@ -125,7 +125,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert(article1_lookup.preferences['delivery_status_message'])
 
     # send with correct smtp settings
-    channel.update_attributes(
+    channel.update!(
       options: {
         inbound: {
           adapter: 'imap',
@@ -162,7 +162,7 @@ class EmailDeliverTest < ActiveSupport::TestCase
     Delayed::Job.destroy_all
 
     # send with invalid smtp settings
-    channel.update_attributes(
+    channel.update!(
       options: {
         inbound: {
           adapter: 'imap',

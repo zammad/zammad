@@ -15,9 +15,9 @@ RSpec.describe Import::OTRS::CustomerUser do
     expect(import_object).to receive(:find_by).and_return(existing_object)
     # we delete the :role_ids from the zammad_structure to make sure that
     # a) role_ids call returns the initial role_ids
-    # b) and update_attributes gets called without them
+    # b) and update! gets called without them
     expect(existing_object).to receive(:role_ids).and_return(zammad_structure.delete(:role_ids)).at_least(:once)
-    expect(existing_object).to receive(:update_attributes).with(zammad_structure)
+    expect(existing_object).to receive(:update!).with(zammad_structure)
     expect(import_object).not_to receive(:new)
     start_import_test
   end

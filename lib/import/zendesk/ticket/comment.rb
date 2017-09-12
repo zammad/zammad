@@ -19,7 +19,7 @@ module Import
         def updated?(article)
           @local_article = ::Ticket::Article.find_by(message_id: article[:message_id])
           return false if !@local_article
-          @local_article.update_attributes(article)
+          @local_article.update!(article)
           true
         end
 

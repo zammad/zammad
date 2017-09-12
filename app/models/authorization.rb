@@ -14,14 +14,14 @@ class Authorization < ApplicationModel
     if auth
 
       # update auth tokens
-      auth.update_attributes(
+      auth.update!(
         token: hash['credentials']['token'],
         secret: hash['credentials']['secret']
       )
 
       # update username of auth entry if empty
       if !auth.username && hash['info']['nickname']
-        auth.update_attributes(
+        auth.update!(
           username: hash['info']['nickname'],
         )
       end

@@ -117,9 +117,9 @@ all:
       data.each { |locale|
         exists = Locale.find_by(locale: locale['locale'])
         if exists
-          exists.update(locale.symbolize_keys!)
+          exists.update!(locale.symbolize_keys!)
         else
-          Locale.create(locale.symbolize_keys!)
+          Locale.create!(locale.symbolize_keys!)
         end
       }
     end
