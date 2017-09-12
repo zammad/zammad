@@ -92,7 +92,7 @@ class ChannelsEmailController < ApplicationController
   end
 
   def verify
-
+    params.permit!
     email = params[:email] || params[:meta][:email]
     email = email.downcase
     channel_id = params[:channel_id]
@@ -105,8 +105,8 @@ class ChannelsEmailController < ApplicationController
 
     # check delivery for 30 sek.
     result = EmailHelper::Verify.email(
-      outbound: params[:outbound],
-      inbound: params[:inbound],
+      outbound: params[:outbound].to_h,
+      inbound: params[:inbound].to_h,
       sender: email,
       subject: params[:subject],
     )
@@ -126,8 +126,8 @@ class ChannelsEmailController < ApplicationController
       channel = Channel.find(channel_id)
       channel.update_attributes(
         options: {
-          inbound: params[:inbound],
-          outbound: params[:outbound],
+          inbound: params[:inbound].to_h,
+          outbound: params[:outbound].to_h,
         },
         group_id: params[:group_id],
         last_log_in: nil,
@@ -143,8 +143,8 @@ class ChannelsEmailController < ApplicationController
     channel = Channel.create(
       area: 'Email::Account',
       options: {
-        inbound: params[:inbound],
-        outbound: params[:outbound],
+        inbound: params[:inbound].to_h,
+        outbound: params[:outbound].to_h,
       },
       group_id: params[:group_id],
       last_log_in: nil,
@@ -210,6 +210,7 @@ class ChannelsEmailController < ApplicationController
   end
 
   def notification
+    params.permit!
 
     check_online_service
 
@@ -230,7 +231,7 @@ class ChannelsEmailController < ApplicationController
           channel.options = {
             outbound: {
               adapter: adapter,
-              options: params[:options],
+              options: params[:options].to_h,
             },
           }
           channel.status_out   = 'ok'
