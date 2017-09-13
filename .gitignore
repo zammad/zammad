@@ -46,6 +46,8 @@
 
 # Ignore all logfiles and tempfiles.
 /log
+/public/assets/*
+/public/assets/images/*
 /public/assets/*.*
 /public/assets/app
 /public/assets/custom

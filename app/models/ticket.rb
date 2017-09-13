@@ -255,8 +255,14 @@ returns
         next if !ticket
         minutes_since_last_assignment = Time.zone.now - ticket.last_owner_update_at
         next if (minutes_since_last_assignment / 60) <= group.assignment_timeout
+
+        result = User.getAgentId(
+          role_id:      2,
+          group_id:     self.group_id
+        )
+
         Transaction.execute do
-          ticket.owner_id      = 1
+          ticket.owner_id      = result.ids.sample
           ticket.updated_at    = Time.zone.now
           ticket.updated_by_id = 1
           ticket.save!
@@ -990,6 +996,8 @@ perform changes on ticket
           objects: objects,
           quote: true,
         )
+        print "hello"
+
 
         Ticket::Article.create(
           ticket_id: id,
@@ -1147,7 +1155,11 @@ result
 
   def check_defaults
     if !owner_id
-      self.owner_id = 1
+      result = User.getAgentId(
+        role_id:      2,
+        group_id:     self.group_id
+      )
+      self.owner_id = result.ids.sample
     end
     return true if !customer_id
     customer = User.find_by(id: customer_id)

@@ -111,5 +111,13 @@ returns
               end
       users
     end
+
+    def getAgentId(params)
+      # get params
+      group_id = params[:group_id]
+      role_id = params[:role_id]
+      users = User.joins(:roles, :groups).where('roles.id' => role_id, 'groups.id' => group_id)
+      users
+    end
   end
 end
