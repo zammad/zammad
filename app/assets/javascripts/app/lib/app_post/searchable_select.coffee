@@ -16,14 +16,14 @@ class App.SearchableSelect extends Spine.Controller
     'keyup .js-input':       'onKeyUp'
 
   elements:
-    '.js-dropdown': 'dropdown'
-    '.js-option, .js-enter': 'optionItems'
-    '.js-input': 'input'
-    '.js-shadow': 'shadowInput'
-    '.js-optionsList': 'optionsList'
-    '.js-optionsSubmenu': 'optionsSubmenu'
+    '.js-dropdown':               'dropdown'
+    '.js-option, .js-enter':      'optionItems'
+    '.js-input':                  'input'
+    '.js-shadow':                 'shadowInput'
+    '.js-optionsList':            'optionsList'
+    '.js-optionsSubmenu':         'optionsSubmenu'
     '.js-autocomplete-invisible': 'invisiblePart'
-    '.js-autocomplete-visible': 'visiblePart'
+    '.js-autocomplete-visible':   'visiblePart'
 
   className: 'searchableSelect dropdown dropdown--actions'
 
