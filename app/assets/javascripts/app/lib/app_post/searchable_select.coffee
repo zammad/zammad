@@ -322,6 +322,9 @@ class App.SearchableSelect extends Spine.Controller
       if @shadowInput.val() is ''
         event.preventDefault()
         @toggle()
+      else
+        @trigger 'enter'
+        @el.trigger 'enter'
       return
 
     event.preventDefault()
