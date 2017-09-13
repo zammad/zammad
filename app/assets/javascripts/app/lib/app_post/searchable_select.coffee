@@ -4,6 +4,7 @@ class App.SearchableSelect extends Spine.Controller
     'input .js-input':       'onInput'
     'blur .js-input':        'onBlur'
     'focus .js-input':       'onFocus'
+    'focus .js-shadow':      'onShadowFocus'
     'click .js-option':      'selectItem'
     'click .js-enter':       'navigateIn'
     'click .js-back':        'navigateOut'
@@ -350,6 +351,10 @@ class App.SearchableSelect extends Spine.Controller
     textEnd = @input.val().length
     @input.prop('selectionStart', textEnd)
     @input.prop('selectionEnd', textEnd)
+
+  # propergate focus to our visible input
+  onShadowFocus: ->
+    @input.focus()
 
   onInput: (event) =>
     @toggle() if not @isOpen
