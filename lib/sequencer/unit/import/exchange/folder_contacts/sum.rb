@@ -1,12 +1,10 @@
-require 'sequencer/mixin/exchange/folder'
-
 class Sequencer
   class Unit
     module Import
       module Exchange
         module FolderContacts
           class Sum < Sequencer::Unit::Base
-            include ::Sequencer::Mixin::Exchange::Folder
+            include ::Sequencer::Unit::Exchange::Folders::Mixin::Folder
 
             uses :ews_folder_ids
             provides :statistics_diff

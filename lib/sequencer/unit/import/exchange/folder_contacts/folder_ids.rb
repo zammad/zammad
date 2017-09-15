@@ -1,12 +1,10 @@
-require 'sequencer/mixin/exchange/folder'
-
 class Sequencer
   class Unit
     module Import
       module Exchange
         module FolderContacts
           class FolderIds < Sequencer::Unit::Base
-            include ::Sequencer::Mixin::Exchange::Folder
+            include ::Sequencer::Unit::Exchange::Folders::Mixin::Folder
 
             provides :ews_folder_ids
 

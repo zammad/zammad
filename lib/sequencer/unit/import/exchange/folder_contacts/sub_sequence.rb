@@ -1,4 +1,3 @@
-require 'sequencer/mixin/exchange/folder'
 require 'sequencer/mixin/import_job/resource_loop'
 
 class Sequencer
@@ -7,7 +6,7 @@ class Sequencer
       module Exchange
         module FolderContacts
           class SubSequence < Sequencer::Unit::Base
-            include ::Sequencer::Mixin::Exchange::Folder
+            include ::Sequencer::Unit::Exchange::Folders::Mixin::Folder
             include ::Sequencer::Mixin::ImportJob::ResourceLoop
 
             uses :ews_folder_ids, :import_job
