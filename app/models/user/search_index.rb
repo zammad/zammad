@@ -21,7 +21,7 @@ returns
 
       attributes['permissions'] = []
       permissions_with_child_ids.each do |permission_id|
-        permission = Permission.lookup(id: permission_id)
+        permission = ::Permission.lookup(id: permission_id)
         next if !permission
         attributes['permissions'].push permission.name
       end
