@@ -2,18 +2,17 @@
 Description=Zammad
 After=syslog.target
 After=network.target
+StopWhenUnneeded=true
+Wants=zammad-rails.service
+Wants=zammad-scheduler.service
+Wants=zammad-websocket.service
 
 [Service]
 Type=simple
-User=<zammad
+User=zammad
 Group=zammad
-
-ExecStart=bash -l -c "RAILS_ENV=production bundle exec script/websocket-server.rb start -d -i tmp/pids/websocket.pid -p 6042 -b 127.0.0.1"
-
-ExecStop=bash -l -c "RAILS_ENV=production bundle exec script/websocket-server.rb stop -d -i tmp/pids/websocket.pid -p 6042 -b 127.0.0.1"
-
-# Give a reasonable amount of time for the server to start up/shut down
-TimeoutSec=300
+Restart=always
+ExecStart=/bin/sleep infinity
 
 [Install]
 WantedBy=multi-user.target
