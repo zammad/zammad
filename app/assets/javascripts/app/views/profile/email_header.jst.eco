@@ -1,0 +1,12 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <h1><%- @T('Language') %></h1>
+  </div>
+</div>
+<div class="page-content">
+  <p><%- @T('Change your language.') %></p>
+  <form class="settings-entry horizontal end">
+    <div class="form-item header_pre flex"></div>
+    <button type="submit" class="btn btn--primary"><%- @T('Submit') %></button>
+  </form>
+</div>

@@ -815,6 +815,12 @@ curl http://localhost/api/v1/users/preferences -v -u #{login}:#{password} -H "Co
     render json: { message: 'ok' }, status: :ok
   end
 
+  def get_preferences
+    raise Exceptions::UnprocessableEntity, 'No current user!' if !current_user
+    user = User.find(current_user.id)
+    render json: { message: 'ok', header_pre:  user.preferences[:header_pre]}, status: :ok
+  end
+
 =begin
 
 Resource:

@@ -179,6 +179,7 @@ class ArticleViewItem extends App.ObserverController
     @html App.view('ticket_zoom/article_view')(
       ticket:     @ticket
       article:    article
+      user:       App.Session.get()
       isCustomer: @permissionCheck('ticket.customer')
     )
 
@@ -192,6 +193,7 @@ class ArticleViewItem extends App.ObserverController
       el:              @$('.js-article-actions')
       ticket:          @ticket
       article:         article
+      user:            "A"
       lastAttributres: @lastAttributres
     )
 
@@ -216,7 +218,7 @@ class ArticleViewItem extends App.ObserverController
 
     @measureSeeMore()
 
-  measureSeeMore: =>
+  measureSeeMore: (e) =>
     maxHeight               = 560
     minHeight               = 90
     bubbleContent           = @textBubbleContent
@@ -251,7 +253,9 @@ class ArticleViewItem extends App.ObserverController
       markerHeight = offsetTop.top
 
     # if signature marker exists and heigth is within maxHeight
-    if markerHeight && markerHeight < maxHeight
+    if (markerHeight && markerHeight < maxHeight) || bubbleOverflowContainer.hasClass('Yes')
+      # @toggleMetaTimeout = setTimeout(@toggleMeta, 120, e)
+
       newHeigth = markerHeight + 30
       if newHeigth < minHeight
         newHeigth = minHeight
@@ -260,6 +264,7 @@ class ArticleViewItem extends App.ObserverController
       bubbleContent.attr('data-height-origin', newHeigth)
       bubbleContent.css('height', "#{newHeigth}px")
       bubbleOverflowContainer.removeClass('hide')
+      @toggleMeta(false, {target: bubbleOverflowContainer})
 
     # if heigth is higher then maxHeight
     else if bubbleContentHeigth > maxHeight
@@ -284,11 +289,14 @@ class ArticleViewItem extends App.ObserverController
       @toggleMetaTimeout = setTimeout(@toggleMeta, delay, e)
       @lastClick = +new Date
 
-  toggleMeta: (e) =>
-    e.preventDefault()
-
+  toggleMeta: (e, option = {}) =>
+    if(e)
+      e.preventDefault()
+      target = e.target
+    else
+      target = option['target']
     animSpeed      = 300
-    article        = $(e.target).closest('.ticket-article-item')
+    article        = $(target).closest('.ticket-article-item')
     metaTopClip    = article.find('.article-meta-clip.top')
     metaBottomClip = article.find('.article-meta-clip.bottom')
     metaTop        = article.find('.article-content-meta.top')
