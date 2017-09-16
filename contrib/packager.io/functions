@@ -223,8 +223,11 @@ function setup_elasticsearch () {
   echo "# Configuring Elasticsearch..."
   /usr/share/elasticsearch/bin/elasticsearch-plugin install mapper-attachments
   ${INIT_CMD} restart elasticsearch
-  sleep 10
   zammad run rails r "Setting.set('es_url', \"${ES_CONNECTION:-http://127.0.0.1:9200}\")"
+}
+
+function elasticsearch_searchindex_rebuild () {
+  echo "# (Re)building Elasticsearch searchindex..."
   zammad run rake searchindex:rebuild
 }
 
@@ -244,9 +247,11 @@ function update_or_install () {
 
     update_database_yml
 
+    setup_elasticsearch
+
     initialise_database
 
-    setup_elasticsearch
+    elasticsearch_searchindex_rebuild
   fi
 }
 
