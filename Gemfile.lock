@@ -402,7 +402,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.13)
-    telegramAPI (1.2.2)
+    telegramAPI (1.4.1)
       rest-client (~> 1.7, >= 1.7.3)
     term-ansicolor (1.6.0)
       tins (~> 1.0)
