@@ -156,7 +156,9 @@ class App.UiElement.ApplicationUiElement
       # if active or if active doesn't exist
       if item.active || !activeSupport || isSelected
         nameNew = '?'
-        if item.displayName
+        if item.email
+          nameNew = item.email
+        else if item.displayName
           nameNew = item.displayName()
         else if item.name
           nameNew = item.name
