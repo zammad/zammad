@@ -1,13 +1,13 @@
 #!/bin/bash
 #
-# trigger build of https://github.com/zammad/zammad-docker-compose on https://travis-ci.org/zammad/zammad-docker-compose and upload it to https://hub.docker.com/r/zammad/zammad-docker-compose/
+# trigger build of https://github.com/zammad/zammad on https://travis-ci.org/zammad/zammad and upload it to https://hub.docker.com/r/zammad/zammad
 #
 
 REPO_USER="zammad"
-REPO="zammad-docker-compose"
-BRANCH="master"
+REPO="zammad"
+BRANCH="develop"
 
-if [ "${TRAVIS_BRANCH}" == 'stable' ]; then
+if [ "${TRAVIS_BRANCH}" == 'develop' ]; then
   curl -X POST \
     -H "Content-Type: application/json" \
     -H "Travis-API-Version: 3" \
