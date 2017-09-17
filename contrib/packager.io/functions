@@ -221,7 +221,7 @@ function create_webserver_config () {
 
 function setup_elasticsearch () {
   echo "# Configuring Elasticsearch..."
-  /usr/share/elasticsearch/bin/elasticsearch-plugin install mapper-attachments
+  yes | /usr/share/elasticsearch/bin/elasticsearch-plugin install mapper-attachments
   ${INIT_CMD} restart elasticsearch
   zammad run rails r "Setting.set('es_url', \"${ES_CONNECTION:-http://127.0.0.1:9200}\")"
 }
