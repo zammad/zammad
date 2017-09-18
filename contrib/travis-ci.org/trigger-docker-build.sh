@@ -4,7 +4,7 @@
 #
 
 REPO_USER="zammad"
-REPO="zammad"
+REPO="zammad-docker"
 BRANCH="develop"
 
 if [ "${TRAVIS_BRANCH}" == 'develop' ]; then
