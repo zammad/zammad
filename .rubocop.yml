@@ -62,7 +62,7 @@ Style/LeadingCommentSpace:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#hash-space'
   Enabled: false
 
-Style/MethodCallWithoutArgsParentheses:
+Style/MethodCallParentheses:
   Description: 'Do not use parentheses for method calls with no arguments.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-args-no-parens'
   Enabled: false
