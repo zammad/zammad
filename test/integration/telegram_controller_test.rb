@@ -20,7 +20,7 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     Channel.where(area: 'Telegram::Bot').destroy_all
 
     # try with invalid token
-    stub_request(:get, 'https://api.telegram.org/botnot_existing/getMe')
+    stub_request(:post, 'https://api.telegram.org/botnot_existing/getMe')
       .to_return(status: 404, body: '{"ok":false,"error_code":404,"description":"Not Found"}', headers: {})
 
     assert_raises(RuntimeError) {
@@ -28,13 +28,13 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     }
 
     # try valid token
-    stub_request(:get, "https://api.telegram.org/bot#{token}/getMe")
+    stub_request(:post, "https://api.telegram.org/bot#{token}/getMe")
       .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
 
     bot = Telegram.check_token(token)
     assert_equal(bot_id, bot['id'])
 
-    stub_request(:get, "https://api.telegram.org/bot#{token}/getMe")
+    stub_request(:post, "https://api.telegram.org/bot#{token}/getMe")
       .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
 
     Setting.set('http_type', 'http')
@@ -43,9 +43,10 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     }
 
     # try invalid port
-    stub_request(:get, "https://api.telegram.org:443/bot#{token}/getMe")
+    stub_request(:post, "https://api.telegram.org:443/bot#{token}/getMe")
       .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
-    stub_request(:get, "https://api.telegram.org:443/bot#{token}/setWebhook?url=https://somehost.example.com:12345/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}")
+    stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
+      .with(body: { 'url' => "https://somehost.example.com:12345/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}" })
       .to_return(status: 400, body: '{"ok":false,"error_code":400,"description":"Bad Request: bad webhook: Webhook can be set up only on ports 80, 88, 443 or 8443"}', headers: {})
 
     Setting.set('http_type', 'https')
@@ -55,7 +56,8 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     }
 
     # try invalid host
-    stub_request(:get, "https://api.telegram.org:443/bot#{token}/setWebhook?url=https://somehost.example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}")
+    stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
+      .with(body: { 'url' => "https://somehost.example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}" })
       .to_return(status: 400, body: '{"ok":false,"error_code":400,"description":"Bad Request: bad webhook: getaddrinfo: Name or service not known"}', headers: {})
 
     Setting.set('fqdn', 'somehost.example.com')
@@ -64,7 +66,8 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     }
 
     # valid token, host and port
-    stub_request(:get, "https://api.telegram.org:443/bot#{token}/setWebhook?url=https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}")
+    stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
+      .with(body: { 'url' => "https://example.com/api/v1/channels_telegram_webhook/callback_token?bid=#{bot_id}" })
       .to_return(status: 200, body: '{"ok":true,"result":true,"description":"Webhook was set"}', headers: {})
 
     Setting.set('fqdn', 'example.com')
@@ -174,7 +177,8 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/plain', ticket.articles.last.content_type)
 
     # send message2
-    stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=ABC-123VabcOcv123w0ABHywrcPqfrbAYIABC")
+    stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
+      .with(body: { 'file_id' => 'ABC-123VabcOcv123w0ABHywrcPqfrbAYIABC' })
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123VabcOcv123w0ABHywrcPqfrbAYIABC","file_path":"abc123"}}', headers: {})
     stub_request(:get, "https://api.telegram.org/file/bot#{token}/abc123")
       .to_return(status: 200, body: 'ABC1', headers: {})
@@ -190,11 +194,13 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/html', ticket.articles.last.content_type)
 
     # send message3
-    stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=AAQCABO0I4INAATATQAB5HWPq4XgxQACAg")
+    stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
+      .with(body: { 'file_id' => 'AAQCABO0I4INAATATQAB5HWPq4XgxQACAg' })
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123AAQCABO0I4INAATATQAB5HWPq4XgxQACAg","file_path":"abc123"}}', headers: {})
     stub_request(:get, "https://api.telegram.org/file/bot#{token}/abc123")
       .to_return(status: 200, body: 'ABC2', headers: {})
-    stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=BQADAgADDgAD7x6ZSC_-1LMkOEmoAg")
+    stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
+      .with(body: { 'file_id' => 'BQADAgADDgAD7x6ZSC_-1LMkOEmoAg' })
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123BQADAgADDgAD7x6ZSC_-1LMkOEmoAg","file_path":"abc123"}}', headers: {})
 
     post callback_url, params: read_messaage('personal3_message_content3'), headers: @headers
@@ -224,7 +230,8 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/plain', ticket.articles.first.content_type)
 
     # send voice5
-    stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=AwADAgADVQADCEIYSZwyOmSZK9iZAg")
+    stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
+      .with(body: { 'file_id' => 'AwADAgADVQADCEIYSZwyOmSZK9iZAg' })
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123AwADAgADVQADCEIYSZwyOmSZK9iZAg","file_path":"abc123"}}', headers: {})
 
     post callback_url, params: read_messaage('personal3_message_content5'), headers: @headers
@@ -238,9 +245,11 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, ticket.articles.last.attachments.count)
 
     # start communication #4 - with sticker
-    stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=AAQDABO3-e4qAASs6ZOjJUT7tQ4lAAIC")
+    stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
+      .with(body: { 'file_id' => 'AAQDABO3-e4qAASs6ZOjJUT7tQ4lAAIC' })
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123AAQDABO3-e4qAASs6ZOjJUT7tQ4lAAIC","file_path":"abc123"}}', headers: {})
-    stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=BQADAwAD0QIAAqbJWAAB8OkQqgtDQe0C")
+    stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
+      .with(body: { 'file_id' => 'BQADAwAD0QIAAqbJWAAB8OkQqgtDQe0C' })
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123BQADAwAD0QIAAqbJWAAB8OkQqgtDQe0C","file_path":"abc123"}}', headers: {})
 
     post callback_url, params: read_messaage('personal4_message_content1'), headers: @headers
@@ -259,7 +268,8 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal(1, ticket.articles.last.attachments.count)
 
     # start communication #5 - with photo
-    stub_request(:get, "https://api.telegram.org/bot#{token}/getFile?file_id=AgADAgADwacxGxk5MUmim45lijOwsKk1Sw0ABNQoaI8BwR_z_2MFAAEC")
+    stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
+      .with(body: { 'file_id' => 'AgADAgADwacxGxk5MUmim45lijOwsKk1Sw0ABNQoaI8BwR_z_2MFAAEC' })
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123AgADAgADwacxGxk5MUmim45lijOwsKk1Sw0ABNQoaI8BwR_z_2MFAAEC","file_path":"abc123"}}', headers: {})
 
     post callback_url, params: read_messaage('personal5_message_content1'), headers: @headers
