@@ -107,7 +107,7 @@ group :development, :test do
   gem 'coveralls',         require: false
 
   # UI tests w/ Selenium
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '2.53.4'
 
   # livereload on template changes (html, js, css)
   gem 'guard',             require: false
