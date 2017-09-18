@@ -59,7 +59,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
       else if object.type is 'User'
         user = App.User.find( object.id )
         data =
-          name:  "#{user.email}"
+          name:  "#{user.displayName()}"
           value: user.id
         options.push data
       else if object.type is 'Organization'

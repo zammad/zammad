@@ -156,19 +156,20 @@ class App.UiElement.ApplicationUiElement
       # if active or if active doesn't exist
       if item.active || !activeSupport || isSelected
         nameNew = '?'
-        if item.email
-          nameNew = item.email
-        else if item.displayName
+        optionsObject = {
+          value: item.id,
+          note:  item.note
+        }
+        if item.displayName
           nameNew = item.displayName()
+          if item.email
+            optionsObject.tooltip = item.email
         else if item.name
           nameNew = item.name
         if attribute.translate
           nameNew = App.i18n.translateInline(nameNew)
-        attribute.options.push {
-          name:  nameNew,
-          value: item.id,
-          note:  item.note,
-        }
+        optionsObject.name = nameNew
+        attribute.options.push optionsObject
 
     attribute.sortBy = null
 
@@ -186,13 +187,13 @@ class App.UiElement.ApplicationUiElement
   @selectedOptions: (attribute) ->
     return if !attribute.options
 
-    # lookup of any record, if it need to be selected
+    # lookup of any record, if it needs to be selected
     for record in attribute.options
       if @_selectedOptionsIsSelected(attribute.value, record)
         record.selected = 'selected'
         record.checked = 'checked'
 
-    # if noting is selected / checked, use default as selected / checked
+    # if nothing is selected / checked, use default as selected / checked
     selected = false
     for record in attribute.options
       if record.selected || record.checked
