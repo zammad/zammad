@@ -154,7 +154,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       params: params
     )
     configureAttributes = [
-      { name: 'data_option::type', display: 'Type', tag: 'select', null: false, default: 'text', options: {text: 'Text', tel: 'Phone', email: 'Email', url: 'Url'}, translate: true },
+      { name: 'data_option::type', display: 'Type', tag: 'select', null: false, default: 'text', options: {text: 'Text', tel: 'Phone', email: 'Email', url: 'Url', ip: 'IP Address'}, translate: true },
     ]
     inputType = new App.ControllerForm(
       model:

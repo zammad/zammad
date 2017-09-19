@@ -772,7 +772,7 @@ to send no browser reload event, pass false
     # validate data_option
     if data_type == 'input'
       raise 'Need data_option[:type] param' if !data_option[:type]
-      raise "Invalid data_option[:type] param '#{data_option[:type]}'" if data_option[:type] !~ /^(text|password|tel|fax|email|url)$/
+      raise "Invalid data_option[:type] param '#{data_option[:type]}'" if data_option[:type] !~ /^(text|password|tel|fax|email|url|ip)$/
       raise 'Need data_option[:maxlength] param' if !data_option[:maxlength]
       raise "Invalid data_option[:maxlength] param #{data_option[:maxlength]}" if data_option[:maxlength].to_s !~ /^\d+?$/
     end

@@ -34,7 +34,7 @@ Locale.create_if_not_exists(
   name: 'English (United States)',
 )
 Locale.sync
-Translation.sync
+# Translation.sync
 
 Calendar.init_setup
 
