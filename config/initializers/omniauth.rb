@@ -46,4 +46,12 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     },
   }
 
+ provider :oidc_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database', {
+    client_options: {
+      site: 'https://not_change_will_be_set_by_database',
+      authorize_url: '/oauth/authorize',
+      token_url: '/oauth/token',
+    },
+ }
+
 end

@@ -69,8 +69,10 @@ GEM
       ffi (~> 1.9)
       ffi-compiler (~> 0.1)
     ast (2.3.0)
+    attr_required (1.0.1)
     autoprefixer-rails (7.1.3)
       execjs
+    bindata (2.4.1)
     biz (1.7.0)
       clavius (~> 1.0)
       tzinfo
@@ -195,6 +197,12 @@ GEM
     ice_cube (0.16.2)
     inflection (1.0.0)
     json (2.1.0)
+    json-jwt (1.7.2)
+      activesupport
+      bindata
+      multi_json (>= 1.3)
+      securecompare
+      url_safe_base64
     jwt (1.5.6)
     kgio (2.11.0)
     koala (3.0.0)
@@ -274,9 +282,23 @@ GEM
     omniauth-oauth2 (1.4.0)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
+    omniauth-oidc (1.0.1)
+      omniauth (~> 1.3)
+      openid_connect (~> 0.12)
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
+    openid_connect (0.12.0)
+      activemodel
+      attr_required (>= 1.0.0)
+      json (>= 1.4.3)
+      json-jwt (>= 1.5.0)
+      rack-oauth2 (>= 1.3.1)
+      swd (>= 1.0.0)
+      tzinfo
+      validate_email
+      validate_url
+      webfinger (>= 1.0.1)
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.20.0)
@@ -294,6 +316,12 @@ GEM
     rack (2.0.3)
     rack-livereload (0.3.16)
       rack
+    rack-oauth2 (1.6.2)
+      activesupport (>= 2.3)
+      attr_required (>= 0.0.5)
+      httpclient (>= 2.4)
+      multi_json (>= 1.3.6)
+      rack (>= 1.1)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.5)
@@ -375,7 +403,8 @@ GEM
     sawyer (0.8.1)
       addressable (>= 2.3.5, < 2.6)
       faraday (~> 0.8, < 1.0)
-    selenium-webdriver (2.53.4)
+    securecompare (1.0.0)
+    selenium-webdriver (3.5.2)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
     shellany (0.0.1)
@@ -402,6 +431,12 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.13)
+    swd (1.0.1)
+      activesupport (>= 3)
+      attr_required (>= 0.0.5)
+      httpclient (>= 2.4)
+      i18n
+      json (>= 1.4.3)
     telegramAPI (1.2.2)
       rest-client (~> 1.7, >= 1.7.3)
     term-ansicolor (1.6.0)
@@ -436,14 +471,25 @@ GEM
     unicorn (5.3.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
+    url_safe_base64 (0.2.2)
     valid_email2 (2.0.1)
       activemodel (>= 3.2)
       mail (~> 2.5)
+    validate_email (0.1.6)
+      activemodel (>= 3.0)
+      mail (>= 2.2.5)
+    validate_url (1.0.2)
+      activemodel (>= 3.0.0)
+      addressable
     viewpoint (1.1.0)
       httpclient
       logging
       nokogiri
       rubyntlm
+    webfinger (1.0.2)
+      activesupport
+      httpclient (>= 2.4)
+      multi_json
     webmock (3.0.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -509,6 +555,7 @@ DEPENDENCIES
   omniauth-linkedin-oauth2
   omniauth-microsoft-office365
   omniauth-oauth2
+  omniauth-oidc
   omniauth-twitter
   pg
   pre-commit
@@ -546,4 +593,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.4
+   1.16.0.pre.2

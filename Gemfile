@@ -41,6 +41,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-twitter'
 gem 'omniauth-microsoft-office365'
+gem 'omniauth-oidc'
 
 gem 'twitter'
 gem 'telegramAPI'
