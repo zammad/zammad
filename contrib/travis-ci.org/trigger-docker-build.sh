@@ -5,7 +5,7 @@
 
 REPO_USER="zammad"
 REPO="zammad-docker"
-BRANCH="develop"
+BRANCH="master"
 
 if [ "${TRAVIS_BRANCH}" == 'develop' ]; then
   curl -X POST \
