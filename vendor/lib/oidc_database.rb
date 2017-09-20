@@ -1,6 +1,6 @@
-class OidcDatabase < OmniAuth::Strategies::OAuth2
+class OidcDatabase < OmniAuth::Strategies::Oidc
   option :name, 'oidc'
-
+ 
   def initialize(app, *args, &block)
 
     # database lookup
@@ -8,7 +8,6 @@ class OidcDatabase < OmniAuth::Strategies::OAuth2
     args[0] = config['app_id']
     args[1] = config['app_secret']
     args[2][:client_options] = args[2][:client_options].merge(config.symbolize_keys)
-    args[2][:scope] = 'openid profile email'
     super
   end
 
