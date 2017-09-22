@@ -471,12 +471,13 @@ pre code.hljs {
     }
   }
 
-  // used in .recipientList-controls
+  // used in .recipientList-controls and in breadcrumbs
   &.btn--onDark {
-    background: none;
+    background: hsla(200,100%,97%,0.15);
+    border-color: hsl(250,7%,16%);
     color: white;
 
-    svg {
+    .icon {
       fill: currentColor;
       opacity: 1;
     }
@@ -2235,7 +2236,7 @@ kbd {
 .help-block {
   margin: 0;
   color: #bcbcbc;
-  font-size: 12px;
+  font-size: 13px;
 
   &.help-block--center {
     text-align: center;
@@ -2243,7 +2244,7 @@ kbd {
 }
 
 .help-block:not(:empty) {
-  margin: 8px 2px 10px;
+  margin: 8px 2px 0;
 }
 
 /* replace music icon with attachment */
@@ -2778,6 +2779,28 @@ form {
 
   &.form--flexibleWidth .controls {
     display: table;
+  }
+
+  &.form--grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    margin-right: -10px;
+
+    .form-group {
+      display: block;
+      padding: 0 10px;
+      width: 100%;
+
+      $sizes: "1/2", "1/3", "2/3", "1/4", "2/4", "3/4", "1/5", "2/5", "3/5", "4/5";
+
+      @each $size in $sizes {
+        &[data-width="#{$size}"] {
+          width: calc(#{$size} * 100%);
+        }
+      }
+    }
   }
 }
 
@@ -3909,6 +3932,17 @@ footer {
     border-top: none;
   }
 
+  .nav-pills > li > a > .icon {
+    fill: currentColor;
+    flex-shrink: 0;
+    align-self: center;
+    margin-top: -2px;
+
+    &:first-child {
+      @include bidi-style(margin-right, 5px, margin-right, 0);
+    }
+  }
+
   .nav-pills > li > a > .badge {
     margin-left: auto;
     margin-right: 5px;
@@ -3927,6 +3961,10 @@ footer {
   padding: 10px 20px;
   overflow: auto;
   position: relative;
+  
+  &--large-padding {
+    padding: 30px 40px;
+  }
 }
 
 .main--tabs,
@@ -6486,6 +6524,7 @@ footer {
 .nav {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .nav a {
@@ -7709,7 +7748,8 @@ output {
   }
 
   .searchableSelect-shadow {
-    display: none;
+    position: absolute;
+    left: -9999px;
   }
 
   .dropdown-menu {
@@ -8973,7 +9013,6 @@ output {
   }
 }
 
-
 /*
 
   ----------------
@@ -9104,6 +9143,10 @@ body.fit {
 
 .center {
   align-items: center;
+}
+
+.baseline {
+  align-items: baseline;
 }
 
 .centered {
