@@ -446,7 +446,6 @@ pre code.hljs {
 
     .icon {
       margin: -2px 5px 0 -2px;
-      fill: hsl(0,0%,60%);
     }
 
     .icon:only-child {
@@ -476,9 +475,8 @@ pre code.hljs {
     background: hsla(200,100%,97%,0.15);
     border-color: hsl(250,7%,16%);
     color: white;
-
+    
     .icon {
-      fill: currentColor;
       opacity: 1;
     }
   }
@@ -521,15 +519,12 @@ pre code.hljs {
     &.btn--text {
       color: $supergood-color;
     }
-
-    .icon {
-      fill: white;
-    }
   }
 
   &.btn--danger {
     color: white;
     background: hsl(0,65%,55%);
+    
     &:active {
       background: hsl(0,65%,45%);
     }
@@ -555,7 +550,6 @@ pre code.hljs {
     text-align: start;
 
     .icon {
-      fill: currentColor;
       opacity: 1;
     }
 
@@ -733,8 +727,21 @@ pre code.hljs {
     border-top: 1px solid hsl(240,2%,92%);
   }
 
-  .btn + .btn {
-    @include bidi-style(margin-left, 0, margin-right, 10px);
+  .btn {
+    &:not(:first-child) {
+      border-top-left-radius: 0;  
+      border-bottom-left-radius: 0;  
+    }
+
+    &:not(:last-child) {
+      border-top-right-radius: 0;  
+      border-bottom-right-radius: 0;
+      border-right-width: 0;
+    }
+
+    + .btn {
+      @include bidi-style(margin-left, 0, margin-right, 10px);
+    }
   }
 
   .btn--text, .btn--textLarge {
@@ -3890,23 +3897,28 @@ footer {
   .nav-pills > li > a,
   .nav-pills > li > a:focus,
   .nav-pills > li > a:active {
-    padding: 0;
-    height: 40px;
     color: #0f94d6;
-    line-height: 39px;
     border-radius: 0;
-    border-top: 1px solid #f2f2f3;
     background: transparent; /* a:focus, a:active with bg: transparent fixes gray focus bg in IE 10 */
     display: flex;
     @extend .u-textTruncate;
+  }
+
+  .nav-pills.nav-stacked > li > a,
+  .nav-pills.nav-stacked > li > a:focus,
+  .nav-pills.nav-stacked > li > a:active {
+    padding: 0;
+    height: 40px;
+    line-height: 39px;
+    border-top: 1px solid #f2f2f3;
   }
 
   .nav-pills > li:hover > a {
     background: #f2f2f3;
   }
 
-  .nav-pills > li:hover > a,
-  .nav-pills > li:hover + li:not(.active) > a {
+  .nav-pills.nav-stacked > li:hover > a,
+  .nav-pills.nav-stacked > li:hover + li:not(.active) > a {
     border-color: transparent;
   }
 
@@ -3918,10 +3930,10 @@ footer {
     border-color: initial;
   }
 
-  .nav-pills > li:hover > a,
-  .nav-pills > li.active > a,
-  .nav-pills > li.active > a:hover,
-  .nav-pills > li.active > a:focus {
+  .nav-pills.nav-stacked > li:hover > a,
+  .nav-pills.nav-stacked > li.active > a,
+  .nav-pills.nav-stacked > li.active > a:hover,
+  .nav-pills.nav-stacked > li.active > a:focus {
     padding-left: 10px;
     padding-right: 10px;
     margin-left: -10px;
@@ -5635,6 +5647,10 @@ footer {
 
   &.is-closed {
     margin-bottom: -60px;
+  }
+
+  &--border {
+    border-top: 1px solid hsl(0,0%,94%);
   }
 }
 
