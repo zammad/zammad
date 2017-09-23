@@ -78,6 +78,8 @@ class App.Auth
       # update model definition (needed for not authenticated areas like wizard)
       if data.models
         for model, attributes of data.models
+          if !App[model]
+            throw "No such model App.#{model}"
           for attribute in attributes
             App[model].attributes.push attribute.name
             App[model].configure_attributes.push attribute
@@ -100,6 +102,8 @@ class App.Auth
     # update model definition
     if data.models
       for model, attributes of data.models
+        if !App[model]
+          throw "No such model App.#{model}"
         for attribute in attributes
           App[model].attributes.push attribute.name
           App[model].configure_attributes.push attribute
