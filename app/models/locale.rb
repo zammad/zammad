@@ -99,6 +99,8 @@ all:
       },
       {
         json: true,
+        open_timeout: 8,
+        read_timeout: 24,
       }
     )
 
