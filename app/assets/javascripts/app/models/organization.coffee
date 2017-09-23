@@ -32,7 +32,7 @@ Mit **Organisationen** können Sie Kunden **gruppieren**. Dies hat u. a. zwei be
 
   @_fillUp: (data) ->
 
-    # addd users of organization
+    # add users of organization
     if data['member_ids']
       data['members'] = []
       for user_id in data['member_ids']
