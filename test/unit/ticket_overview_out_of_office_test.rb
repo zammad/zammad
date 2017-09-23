@@ -224,8 +224,6 @@ class TicketOverviewOutOfOfficeTest < ActiveSupport::TestCase
     @agent1.out_of_office_replacement_id = @agent2.id
     @agent1.save!
 
-    p User.where(active: true, out_of_office: true, out_of_office_replacement_id: @agent2.id)
-    p User.where(active: true, out_of_office: true, out_of_office_replacement_id: @agent2.id).where('out_of_office_start_at <= ? AND out_of_office_end_at >= ?', Time.zone.today, Time.zone.today)
     assert_equal(@agent2.out_of_office_agent_of.count, 1)
     assert(@agent2.out_of_office_agent_of[0])
     assert_equal(@agent2.out_of_office_agent_of[0].id, @agent1.id)
