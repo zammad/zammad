@@ -209,7 +209,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       }
     )
     assert_equal('invalid', result[:result])
-    assert_equal('Authentication failed, username incorrect!', result[:message_human])
+    assert_match(/Authentication failed, username incorrect|Authentication failed, invalid credentials/, result[:message_human])
     assert_equal('imap.gmail.com', result[:settings][:options][:host])
 
     result = EmailHelper::Probe.inbound(
@@ -225,8 +225,8 @@ class EmailHelperTest < ActiveSupport::TestCase
     assert_equal('invalid', result[:result])
 
     # if we have to many failed logins, we need to handle another error message
-    if result[:message_human] && !result[:message_human].empty?
-      assert_equal('Authentication failed, invalid credentials!', result[:message_human])
+    if result[:message_human].present?
+      assert_match(/Authentication failed, username incorrect|Authentication failed, invalid credentials/, result[:message_human])
     else
       assert_match(/Web login required/, result[:message])
     end
@@ -457,7 +457,7 @@ class EmailHelperTest < ActiveSupport::TestCase
       email: mailbox_user,
       password: mailbox_password,
     )
-    assert_equal(nil, result[:reason])
+    assert_nil(result[:reason])
     assert_equal('ok', result[:result])
     assert_equal('pop.gmail.com', result[:setting][:inbound][:options][:host])
     assert_equal('smtp.gmail.com', result[:setting][:outbound][:options][:host])

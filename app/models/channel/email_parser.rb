@@ -475,7 +475,7 @@ returns
     # check ignore header
     if mail['x-zammad-ignore'.to_sym] == 'true' || mail['x-zammad-ignore'.to_sym] == true
       Rails.logger.info "ignored email with msgid '#{mail[:message_id]}' from '#{mail[:from]}' because of x-zammad-ignore header"
-      return true
+      return
     end
 
     # set interface handle
@@ -514,7 +514,7 @@ returns
         set_attributes_by_x_headers(ticket, 'ticket', mail, 'followup')
 
         # save changes set by x-zammad-ticket-followup-* headers
-        ticket.save if ticket.changed?
+        ticket.save! if ticket.has_changes_to_save?
 
         state      = Ticket::State.find(ticket.state_id)
         state_type = Ticket::StateType.find(state.state_type_id)
@@ -650,7 +650,7 @@ returns
 
   def self.sender_properties(from)
     data = {}
-
+    return data if from.blank?
     begin
       list = Mail::AddressList.new(from)
       list.addresses.each { |address|

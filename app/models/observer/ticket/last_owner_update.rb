@@ -20,7 +20,7 @@ class Observer::Ticket::LastOwnerUpdate < ActiveRecord::Observer
 
     # check if owner has changed
     if type == 'update'
-      return true if record.changes['owner_id'].blank?
+      return true if record.changes_to_save['owner_id'].blank?
     end
 
     # check if owner is nobody

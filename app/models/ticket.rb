@@ -1160,7 +1160,7 @@ result
   def reset_pending_time
 
     # ignore if no state has changed
-    return true if !changes['state_id']
+    return true if !changes_to_save['state_id']
 
     # ignore if new state is blank and
     # let handle ActiveRecord the error

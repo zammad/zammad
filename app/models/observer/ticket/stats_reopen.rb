@@ -19,6 +19,6 @@ class Observer::Ticket::StatsReopen < ActiveRecord::Observer
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    Stats::TicketReopen.log('Ticket', record.id, record.changes, record.updated_by_id)
+    Stats::TicketReopen.log('Ticket', record.id, record.saved_changes, record.updated_by_id)
   end
 end

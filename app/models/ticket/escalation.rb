@@ -76,10 +76,10 @@ returns
 
     # if no escalation is enabled
     if !sla || !calendar
-      preferences[:escalation_calculation] = {}
 
       # nothing to change
       return false if !escalation_at && !first_response_escalation_at && !update_escalation_at && !close_escalation_at
+      preferences['escalation_calculation'] = {}
       self.escalation_at = nil
       self.first_response_escalation_at = nil
       self.escalation_at = nil
@@ -122,7 +122,7 @@ returns
       first_response_at_changed = false
     end
     last_update_at_changed = true
-    if escalation_calculation['last_update_at'] == last_update_at && !changes['state_id']
+    if escalation_calculation['last_update_at'] == last_update_at && !saved_change_to_attribute('state_id')
       last_update_at_changed = false
     end
     close_at_changed = true
@@ -352,7 +352,7 @@ returns
     ).map(&:name)
 
     # add state changes till now
-    if add_current && changes['state_id'] && changes['state_id'][0] && changes['state_id'][1]
+    if add_current && saved_change_to_attribute('state_id') && saved_change_to_attribute('state_id')[0] && saved_change_to_attribute('state_id')[1]
       last_history_state = nil
       history_list.each { |history_item|
         next if !history_item['attribute']
@@ -361,14 +361,14 @@ returns
         last_history_state = history_item
       }
       local_updated_at = updated_at
-      if changes['updated_at'] && changes['updated_at'][1]
-        local_updated_at = changes['updated_at'][1]
+      if saved_change_to_attribute('updated_at') && saved_change_to_attribute('updated_at')[1]
+        local_updated_at = saved_change_to_attribute('updated_at')[1]
       end
       history_item = {
         'attribute' => 'state',
         'created_at' => local_updated_at,
-        'value_from' => Ticket::State.find(changes['state_id'][0]).name,
-        'value_to' => Ticket::State.find(changes['state_id'][1]).name,
+        'value_from' => Ticket::State.find(saved_change_to_attribute('state_id')[0]).name,
+        'value_to' => Ticket::State.find(saved_change_to_attribute('state_id')[1]).name,
       }
       if last_history_state
         last_history_state = history_item

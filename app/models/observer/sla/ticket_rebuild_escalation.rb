@@ -27,7 +27,7 @@ class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
   def _check(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode') && !Setting.get('import_ignore_sla')
+    return true if Setting.get('import_mode') && !Setting.get('import_ignore_sla')
 
     # check if condition has changed
     changed = false
@@ -38,11 +38,11 @@ class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
                         %w(timezone business_hours default ical_url public_holidays)
                       end
     fields_to_check.each { |item|
-      next if !record.changes[item]
-      next if record.changes[item][0] == record.changes[item][1]
+      next if !record.saved_change_to_attribute(item)
+      next if record.saved_change_to_attribute(item)[0] == record.saved_change_to_attribute(item)[1]
       changed = true
     }
-    return if !changed
+    return true if !changed
 
     _rebuild(record)
   end
