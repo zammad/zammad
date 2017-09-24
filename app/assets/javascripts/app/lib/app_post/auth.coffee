@@ -76,13 +76,7 @@ class App.Auth
       App.Session.init()
 
       # update model definition (needed for not authenticated areas like wizard)
-      if data.models
-        for model, attributes of data.models
-          if !App[model]
-            throw "No such model App.#{model}"
-          for attribute in attributes
-            App[model].attributes.push attribute.name
-            App[model].configure_attributes.push attribute
+      @_updateModelAttributes(data.models)
 
       # set locale
       locale = window.navigator.userLanguage || window.navigator.language || 'en-us'
@@ -100,13 +94,7 @@ class App.Auth
       App.Event.trigger('clearStore')
 
     # update model definition
-    if data.models
-      for model, attributes of data.models
-        if !App[model]
-          throw "No such model App.#{model}"
-        for attribute in attributes
-          App[model].attributes.push attribute.name
-          App[model].configure_attributes.push attribute
+    @_updateModelAttributes(data.models)
 
     # update config
     for key, value of data.config
@@ -139,6 +127,14 @@ class App.Auth
     App.Event.trigger('ui:rerender')
     App.TaskManager.tasksInitial()
 
+  @_updateModelAttributes: (models) ->
+    return if _.isEmpty(models)
+
+    for model, attributes of models
+      if App[model]
+        if _.isFunction(App[model].updateAttributes)
+          App[model].updateAttributes(attributes)
+
   @_logout: (rerender = true) ->
     App.Log.debug 'Auth', '_logout'
 
@@ -152,6 +148,15 @@ class App.Auth
       window.location.href = '#login'
       App.Event.trigger('ui:rerender')
     App.Event.trigger('clearStore')
+
+    # clear all in-memory data of all App.Model's
+    for model_key, model_object of App
+      if _.isFunction(model_object.resetCallbacks)
+        model_object.resetCallbacks()
+      if _.isFunction(model_object.resetAttributes)
+        model_object.resetAttributes()
+      if _.isFunction(model_object.clearInMemory)
+        model_object.clearInMemory()
 
   @_loginError: ->
     App.Log.debug 'Auth', '_loginError:error'

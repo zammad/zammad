@@ -812,3 +812,29 @@ set new attributes of model (remove already available attributes)
         item:   item
       processData: true
     )
+
+  @clearInMemory: ->
+    return if !@className
+
+    # reset attributes to prevent cached forms on relogin
+    if !_.isEmpty(App[@className].org_configure_attributes)
+      App[@className].configure_attributes = App[@className].org_configure_attributes
+
+    # reset cached values of model
+    App[@className].deleteAll()
+
+  @updateAttributes: (attributes) ->
+    return if !@className
+    if _.isEmpty(@org_configure_attributes)
+      @org_configure_attributes = clone(@configure_attributes)
+    for attribute in attributes
+      @attributes.push attribute.name
+      @configure_attributes.push attribute
+
+  @resetAttributes: ->
+    return if _.isEmpty(@org_configure_attributes)
+    @configure_attributes = @org_configure_attributes
+
+  @resetCallbacks: ->
+    @SUBSCRIPTION_ITEM = {}
+    @SUBSCRIPTION_COLLECTION = {}

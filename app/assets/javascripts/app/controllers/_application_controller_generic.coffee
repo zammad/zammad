@@ -1162,7 +1162,7 @@ class App.ObserverController extends App.Controller
     @log 'debug', 'new', @object_id, @model
 
     if App[@model].exists(@object_id)
-      @maybeRender( App[@model].fullLocal(@object_id) )
+      @maybeRender(App[@model].fullLocal(@object_id))
     else
       App[@model].full(@object_id, @maybeRender)
 
@@ -1170,7 +1170,8 @@ class App.ObserverController extends App.Controller
     if @globalRerender
       @bind('ui:rerender', =>
         @lastAttributres = undefined
-        @maybeRender( App[@model].fullLocal(@object_id) )
+        console.log('aaaa', @model, @template)
+        @maybeRender(App[@model].fullLocal(@object_id))
       )
 
   subscribe: (object, typeOfChange) =>
