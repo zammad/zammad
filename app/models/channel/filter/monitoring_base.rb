@@ -26,16 +26,15 @@ class Channel::Filter::MonitoringBase
     return if !session_user_id
 
     # check if sender is monitoring
-    # return if !mail[:from].match(/#{Regexp.quote(sender)}/i)
-    if sender =~ /^(regex:)(.+?)$/
+    if sender =~ /^(regex:)(.+?)$/ # check if sender setting has regex:
       regex = true
-      match_rule = $2
+      match_rule = $2 # assign the second regex 
     else
-      return if !mail[:from].match(/#{Regexp.quote(sender)}/i)
+      return if !mail[:from].match(/#{Regexp.quote(sender)}/i) # check if there is an exact (non-regex) email
     end
 
     if regex == true
-      return if !mail[:from].match(/#{match_rule}/i)
+      return if !mail[:from].match(/#{match_rule}/i) # check if the regex is matched (eg. nagios@.*)
     end
   
     #  return if !mail[:from].match(/#{Regexp.quote(sender)}/i)
