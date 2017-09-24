@@ -26,6 +26,7 @@ class Channel::Filter::MonitoringBase
     return if !session_user_id
 
     # check if sender is monitoring
+    regex = false
     if sender =~ /^(regex:)(.+?)$/ # check if sender setting has regex:
       regex = true
       match_rule = $2 # assign the second regex 
