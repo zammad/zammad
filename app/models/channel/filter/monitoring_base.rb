@@ -26,8 +26,22 @@ class Channel::Filter::MonitoringBase
     return if !session_user_id
 
     # check if sender is monitoring
-    return if !mail[:from].match(/#{Regexp.quote(sender)}/i)
+    # return if !mail[:from].match(/#{Regexp.quote(sender)}/i)
+    if sender =~ /^(regex:)(.+?)$/
+      regex = true
+      match_rule = $2
+    else
+      return if !mail[:from].match(/#{Regexp.quote(sender)}/i)
+    end
 
+    if regex == true
+      return if !mail[:from].match(/#{match_rule}/i)
+    end
+  
+    #  return if !mail[:from].match(/#{Regexp.quote(sender)}/i)
+    #end
+    # return if !mail[:from].match(/#{match_rule}/i)
+ 
     # get mail attibutes like host and state
     result = {}
     mail[:body].gsub(%r{(Service|Host|State|Address|Date/Time|Additional\sInfo|Info):(.+?)\n}i) { |_match|
