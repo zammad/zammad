@@ -1,4 +1,42 @@
-Neues Ticket (#{ticket.title})
+<div class="zammad-email-container">
+  <div class="zammad-email-notification">
+    <div class="zammad-email-notification-header">
+      <div class="row">
+        <div class="col-md-2 col-sm-2 col-xs-3">
+          <img src="<%= image_tag 'assets/images/icons.svg' %>" class="zammad-email-notification-image img-circle">
+        </div>
+        <div class="col-md-10 col-sm-10 col-xs-9">
+          <h1 class="zen-title">Neues Ticket: (#{ticket.title})</h1>
+          <p class="zen-content">Empfänger: #{recipient.firstname}</p>
+        </div>
+      </div>
+    </div>
+    <div class="zammad-email-notification-body">
+      Hallo #{recipient.firstname},<br><br>
+
+      es wurde ein neues Ticket (#{ticket.title}) von "<strong>#{current_user.longname}</strong>". <br><br>
+
+      #{t('Group')}: #{ticket.group.name} <br>
+      #{t('Owner')}: #{ticket.owner.fullname} <br>
+      #{t('State')}: #{t(ticket.state.name)} <br><br>
+
+      <% if @objects[:article] %>
+        #{t('Information')}:<br><br>
+
+        <blockquote>
+          #{article.body_as_html}
+        </blockquote>
+      <% end %>
+    </div>
+    <div class="zammad-email-notification-footer">
+      <div class="text-center">
+        <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Neues Ticket (#{ticket.title})
 
 <div>Hallo #{recipient.firstname},</div>
 <br>
@@ -21,4 +59,4 @@ Neues Ticket (#{ticket.title})
 <br>
 <div>
   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
-</div>
+</div> -->
