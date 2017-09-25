@@ -85,6 +85,7 @@ gem 'zendesk_api'
 gem 'viewpoint'
 gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm.git'
 gem 'autodiscover', git: 'https://github.com/thorsteneckel/autodiscover.git'
+gem 'wysiwyg-rails'
 
 # event machine
 gem 'eventmachine'

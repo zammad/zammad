@@ -42,6 +42,8 @@
 //= require ./app/lib/rangy/rangy-textrange.js
 //= require ./app/lib/rangy/rangy-highlighter.js
 
+//= require froala_editor.min.js
+
 //= require_tree ./app/lib/base
 
 //= require ./app/index.coffee

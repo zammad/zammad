@@ -11,7 +11,7 @@
             <input type="hidden" name="form_id" value="<%= @form_id %>"/>
 
             <div class="ticket-form-top"></div>
-            <div class="article-form-top"></div>
+            <div id="editor" class="article-form-top"></div>
 
             <div class="formset-inset">
               <div class="ticket-form-middle horizontal two-columns"></div>
@@ -30,3 +30,7 @@
 </div>
 
 <div class="sidebar"></div>
+
+<script>
+  $('#editor').froalaEditor();
+</script>
