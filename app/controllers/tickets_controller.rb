@@ -606,10 +606,12 @@ class TicketsController < ApplicationController
 
   def reopen_role_validation
     ticket = Ticket.find(params[:id])
-    new_state = params[:state][:id] if params[:state]
-
-    # Validate that a ticket's customer is also not an agent
-    is_customer = ticket.customer.role?('Customer')
+    if params[:state_id]
+      new_state = params[:state_id]
+    elsif params[:state]
+      new_state = params[:state][:id]
+    end
+    is_customer = current_user.role?('Customer')
 
     # Validate against ID in case of I18n
     raise Exceptions::NotAuthorized, 'Not authorized' if ticket.state_id == 4 && new_state.to_i == 2 && is_customer
