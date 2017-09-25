@@ -16,6 +16,12 @@ require 'daemons'
 
 def before_fork
 
+  # clear all connections before for, reconnect later ActiveRecord::Base.connection.reconnect!
+  # issue #1405 - Scheduler not running because of Bad file descriptor in PGConsumeInput()
+  # https://github.com/zammad/zammad/issues/1405
+  # see also https://bitbucket.org/ged/ruby-pg/issues/260/frequent-crashes-with-multithreading
+  ActiveRecord::Base.clear_all_connections!
+
   # remember open file handles
   @files_to_reopen = []
   ObjectSpace.each_object(File) do |file|
