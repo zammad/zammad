@@ -8,40 +8,12 @@ class IntegrationIcingaTest < ActiveSupport::TestCase
   # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#host-states
   # http://docs.icinga.org/icinga2/latest/doc/module/icinga2/chapter/monitoring-basics#service-states
 
-  test 'base tests' do
-
+  setup do
     Setting.set('icinga_integration', true)
+    Setting.set('icinga_sender', 'icinga2@monitoring.example.com')
+  end
 
-    # not matching sender
-    email_raw_string = "To: support@example.com
-Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
-User-Agent: Heirloom mailx 12.5 7/5/10
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <20160131094621.29ECD400F29C-icinga-1-0@monitoring.znuny.com>
-From: icinga_not_matching@monitoring.example.com (icinga)
-
-***** Icinga  *****
-
-Notification Type: PROBLEM
-
-Service: CPU Load
-Host: host.internal.loc
-Address:=20
-State: WARNING
-
-Date/Time: 2016-01-31 10:46:20 +0100
-
-Additional Info: WARNING - load average: 3.44, 0.99, 0.35
-
-Comment: [] =
-"
-
-    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
-    assert_equal('new', ticket_p.state.name)
-    assert(ticket_p.preferences)
-    assert_not(ticket_p.preferences['icinga'])
+  test 'base tests' do
 
     # RBL check
     email_raw_string = "To: support@example.com
@@ -51,7 +23,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 Message-Id: <20160131094621.29ECD400F29C-icinga-1-1@monitoring.znuny.com>
-From: icinga@monitoring.example.com (icinga)
+From: icinga2@monitoring.example.com (icinga)
 
 ***** Icinga 2 Service Monitoring on apn4711.dc.example.com *****
 
@@ -82,7 +54,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 Message-Id: <20160131094621.29ECD400F29C-icinga-1-2@monitoring.znuny.com>
-From: icinga@monitoring.example.com (icinga)
+From: icinga2@monitoring.example.com (icinga)
 
 ***** Icinga 2 Service Monitoring on apn4711.dc.example.com *****
 
@@ -113,7 +85,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 Message-Id: <20160131094621.29ECD400F29C-icinga-1-2@monitoring.znuny.com>
-From: icinga@monitoring.example.com (icinga)
+From: icinga2@monitoring.example.com (icinga)
 
 ***** Icinga 2 Service Monitoring on apn4711.dc.example.com *****
 
@@ -145,7 +117,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 Message-Id: <20160131094621.29ECD400F29C-icinga-2@monitoring.znuny.com>
-From: icinga@monitoring.example.com (icinga)
+From: icinga2@monitoring.example.com (icinga)
 
 ***** Icinga  *****
 
@@ -179,7 +151,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 Message-Id: <20160131094621.29ECD400F29C-icinga-3@monitoring.znuny.com>
-From: icinga@monitoring.example.com (icinga)
+From: icinga2@monitoring.example.com (icinga)
 
 ***** Icinga  *****
 
@@ -214,7 +186,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 Message-Id: <20160131094621.29ECD400F29C-icinga-4@monitoring.znuny.com>
-From: icinga@monitoring.example.com (icinga)
+From: icinga2@monitoring.example.com (icinga)
 
 ***** Icinga  *****
 
@@ -249,7 +221,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 Message-Id: <20160131094621.29ECD400F29C-icinga-5@monitoring.znuny.com>
-From: icinga@monitoring.example.com (icinga)
+From: icinga2@monitoring.example.com (icinga)
 
 ***** Icinga  *****
 
@@ -284,7 +256,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 Message-Id: <20160131094621.29ECD400F29C-icinga-5@monitoring.znuny.com>
-From: icinga@monitoring.example.com (icinga)
+From: icinga2@monitoring.example.com (icinga)
 
 ***** Icinga *****
 
@@ -317,7 +289,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 Message-Id: <20160131094621.29ECD400F29C-icinga-5@monitoring.znuny.com>
-From: icinga@monitoring.example.com (icinga)
+From: icinga2@monitoring.example.com (icinga)
 
 ***** Icinga *****
 
@@ -341,9 +313,246 @@ Comment: [] =
     assert_equal('apn4711.dc.example.com', ticket_3.preferences['icinga']['host'])
     assert_nil(ticket_3_1.preferences['icinga']['service'])
     assert_equal('DOWN', ticket_3_1.preferences['icinga']['state'])
+  end
 
-    #Setting.set('icinga_integration', false)
+  test 'not matching sender tests' do
 
+    # not matching sender
+    email_raw_string = "To: support@example.com
+Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-icinga-1-0@monitoring.znuny.com>
+From: icinga_not_matching@monitoring.example.com (icinga)
+
+***** Icinga  *****
+
+Notification Type: PROBLEM
+
+Service: CPU Load
+Host: host.internal.loc
+Address:=20
+State: WARNING
+
+Date/Time: 2016-01-31 10:46:20 +0100
+
+Additional Info: WARNING - load average: 3.44, 0.99, 0.35
+
+Comment: [] =
+"
+
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_p.state.name)
+    assert(ticket_p.preferences)
+    assert_not(ticket_p.preferences['icinga'])
+
+    Setting.set('icinga_sender', 'regex:icinga2@monitoring.example.com')
+
+    # not matching sender
+    email_raw_string = "To: support@example.com
+Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-icinga-1-0@monitoring.znuny.com>
+From: icinga_not_matching@monitoring.example.com (icinga)
+
+***** Icinga  *****
+
+Notification Type: PROBLEM
+
+Service: CPU Load
+Host: host.internal.loc
+Address:=20
+State: WARNING
+
+Date/Time: 2016-01-31 10:46:20 +0100
+
+Additional Info: WARNING - load average: 3.44, 0.99, 0.35
+
+Comment: [] =
+"
+
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_p.state.name)
+    assert(ticket_p.preferences)
+    assert_not(ticket_p.preferences['icinga'])
+
+    # not matching sender
+    email_raw_string = "To: support@example.com
+Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-icinga-1-0@monitoring.znuny.com>
+Return-Path: bob@example.com
+
+***** Icinga  *****
+
+Notification Type: PROBLEM
+
+Service: CPU Load
+Host: host.internal.loc
+Address:=20
+State: WARNING
+
+Date/Time: 2016-01-31 10:46:20 +0100
+
+Additional Info: WARNING - load average: 3.44, 0.99, 0.35
+
+Comment: [] =
+"
+
+    ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_p.state.name)
+    assert(ticket_p.preferences)
+    assert_not(ticket_p.preferences['icinga'])
+  end
+
+  test 'matching sender tests' do
+
+    # matching sender - follow up - CPU Load/host.internal.loc
+    email_raw_string = "To: support@example.com
+Subject: PROBLEM - host.internal.loc - CPU Load is WARNING
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-icinga-4@monitoring.znuny.com>
+From: icinga2@monitoring.example.com (icinga)
+
+***** Icinga  *****
+
+Notification Type: PROBLEM
+
+Service: CPU Load
+Host: host.internal.loc
+Address:=20
+State: WARNING
+
+Date/Time: 2016-01-31 10:46:20 +0100
+
+Additional Info: WARNING - load average: 3.44, 0.99, 0.35
+
+Comment: [] =
+"
+
+    ticket_1_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_1_1.state.name)
+    assert(ticket_1_1.preferences)
+    assert(ticket_1_1.preferences['icinga'])
+    assert_equal('host.internal.loc', ticket_1_1.preferences['icinga']['host'])
+    assert_equal('CPU Load', ticket_1_1.preferences['icinga']['service'])
+    assert_equal('WARNING', ticket_1_1.preferences['icinga']['state'])
+
+    Setting.set('icinga_sender', 'regex:icinga2@monitoring.example.com')
+
+    # matching sender I
+    email_raw_string = "To: support@example.com
+Subject: PROBLEM - host1.internal.loc - CPU Load is WARNING
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-icinga-4@monitoring.znuny.com>
+From: icinga2@monitoring.example.com (icinga)
+
+***** Icinga  *****
+
+Notification Type: PROBLEM
+
+Service: CPU Load
+Host: host1.internal.loc
+Address:=20
+State: WARNING
+
+Date/Time: 2016-01-31 10:46:20 +0100
+
+Additional Info: WARNING - load average: 3.44, 0.99, 0.35
+
+Comment: [] =
+"
+
+    ticket_1_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_1_1.state.name)
+    assert(ticket_1_1.preferences)
+    assert(ticket_1_1.preferences['icinga'])
+    assert_equal('host1.internal.loc', ticket_1_1.preferences['icinga']['host'])
+    assert_equal('CPU Load', ticket_1_1.preferences['icinga']['service'])
+    assert_equal('WARNING', ticket_1_1.preferences['icinga']['state'])
+
+    # matching sender I
+    Setting.set('icinga_sender', 'regex:(icinga2|abc123)@monitoring.example.com')
+
+    email_raw_string = "To: support@example.com
+Subject: PROBLEM - host2.internal.loc - CPU Load is WARNING
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-icinga-4@monitoring.znuny.com>
+From: icinga2@monitoring.example.com (icinga)
+
+***** Icinga  *****
+
+Notification Type: PROBLEM
+
+Service: CPU Load
+Host: host2.internal.loc
+Address:=20
+State: WARNING
+
+Date/Time: 2016-01-31 10:46:20 +0100
+
+Additional Info: WARNING - load average: 3.44, 0.99, 0.35
+
+Comment: [] =
+"
+
+    ticket_1_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_1_1.state.name)
+    assert(ticket_1_1.preferences)
+    assert(ticket_1_1.preferences['icinga'])
+    assert_equal('host2.internal.loc', ticket_1_1.preferences['icinga']['host'])
+    assert_equal('CPU Load', ticket_1_1.preferences['icinga']['service'])
+    assert_equal('WARNING', ticket_1_1.preferences['icinga']['state'])
+
+  end
+
+  test 'recover without problem tests' do
+
+    # host up without problem
+    email_raw_string = "To: support@example.com
+Subject: RECOVERY - apn4711.dc.example.com is UP
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20160131094621.29ECD400F29C-icinga-5@monitoring.znuny.com>
+From: icinga2@monitoring.example.com (icinga)
+
+***** Icinga *****
+
+Notification Type: RECOVERY
+
+Host: apn4711.dc.example.com
+Address: 127.0.0.1
+State: UP
+
+Date/Time: 2017-01-14 12:07:11 +0100
+
+Additional Info: PING OK - Packet loss = 0%, RTA = 21.37 ms
+
+Comment: [] =
+"
+    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    ticket_count = Ticket.count
+    assert_not(ticket_1)
+    assert_equal(ticket_count, Ticket.count)
   end
 
 end
