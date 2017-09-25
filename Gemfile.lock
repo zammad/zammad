@@ -285,7 +285,7 @@ GEM
       rack
     parser (2.4.0.0)
       ast (~> 2.2)
-    pg (0.20.0)
+    pg (0.21.0)
     pluginator (1.5.0)
     power_assert (1.1.0)
     powerpack (0.1.1)
