@@ -11,7 +11,7 @@ class Integration::ExchangeController < ApplicationController
         email:    params[:user],
         password: params[:password],
       )
-
+      client.http.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
       {
         endpoint: client.try(:autodiscover).try(:ews_url),
       }
