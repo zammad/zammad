@@ -91,7 +91,7 @@ class KarmaTest < ActiveSupport::TestCase
     ticket1.updated_by_id = agent1.id
     ticket1.updated_at = Time.zone.now - 9.hours
     ticket1.created_at = Time.zone.now - 9.hours
-    ticket1.save
+    ticket1.save!
 
     # execute object transaction
     Observer::Transaction.commit
@@ -113,7 +113,7 @@ class KarmaTest < ActiveSupport::TestCase
     ticket1.updated_by_id = agent1.id
     ticket1.updated_at = Time.zone.now - 9.hours
     ticket1.created_at = Time.zone.now - 9.hours
-    ticket1.save
+    ticket1.save!
 
     # execute object transaction
     Observer::Transaction.commit
@@ -127,7 +127,7 @@ class KarmaTest < ActiveSupport::TestCase
     ticket1.updated_by_id = agent2.id
     ticket1.updated_at = Time.zone.now - 9.hours
     ticket1.created_at = Time.zone.now - 9.hours
-    ticket1.save
+    ticket1.save!
 
     # execute object transaction
     Observer::Transaction.commit
@@ -138,7 +138,7 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal(0, Karma.score_by_user(customer1))
 
     ticket1.state = Ticket::State.lookup(name: 'open')
-    ticket1.save
+    ticket1.save!
 
     Ticket::Article.create(
       ticket_id: ticket1.id,
@@ -169,7 +169,7 @@ class KarmaTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     ticket1.state = Ticket::State.lookup(name: 'closed')
-    ticket1.save
+    ticket1.save!
 
     # execute object transaction
     Observer::Transaction.commit
@@ -385,7 +385,7 @@ class KarmaTest < ActiveSupport::TestCase
 
     ticket2.state = Ticket::State.lookup(name: 'pending reminder')
     ticket2.pending_time = Time.zone.now - 1.day
-    ticket2.save
+    ticket2.save!
 
     Ticket.process_pending
 
@@ -395,7 +395,7 @@ class KarmaTest < ActiveSupport::TestCase
 
     ticket2.state = Ticket::State.lookup(name: 'pending reminder')
     ticket2.pending_time = Time.zone.now - 3.days
-    ticket2.save
+    ticket2.save!
 
     Ticket.process_pending
 
@@ -459,7 +459,7 @@ class KarmaTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     ticket2.state = Ticket::State.lookup(name: 'open')
-    ticket2.save
+    ticket2.save!
 
     Observer::Transaction.commit
     Scheduler.worker(true)
@@ -511,10 +511,10 @@ class KarmaTest < ActiveSupport::TestCase
     assert_equal('Hero', Karma::User.level_by_score(50_000))
 
     # cleanup
-    ticket1.destroy
-    ticket2.destroy
-    calendar1.destroy
-    sla1.destroy
+    ticket1.destroy!
+    ticket2.destroy!
+    calendar1.destroy!
+    sla1.destroy!
 
   end
 

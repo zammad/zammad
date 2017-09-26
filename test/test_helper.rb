@@ -62,6 +62,8 @@ class ActiveSupport::TestCase
     PostmasterFilter.destroy_all
     Ticket.destroy_all
     Taskbar.destroy_all
+    Sla.destroy_all
+    Calendar.destroy_all
 
     # reset settings
     Setting.all.pluck(:name).each { |name|

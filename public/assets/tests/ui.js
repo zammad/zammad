@@ -109,4 +109,8 @@ test("check pretty date", function() {
   result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 30.5));
   equal(result, 'in 30 days', 'in 30.5 days')
 
+  // 
+
+
+
 });

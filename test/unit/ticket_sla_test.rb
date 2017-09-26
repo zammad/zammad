@@ -497,6 +497,8 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.last_contact_agent_at.to_s, article_outbound.created_at.to_s, 'ticket.last_contact_agent_at verify - inbound')
     assert_equal(ticket.first_response_at.to_s, article_outbound.created_at.to_s, 'ticket.first_response_at verify - inbound')
     assert_nil(ticket.close_at, 'ticket.close_at verify - inbound')
+    calendar1.destroy!
+    calendar2.destroy!
   end
 
   test 'ticket sla + selector' do
@@ -605,6 +607,7 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_in_min, 'ticket.close_in_min')
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min')
 
+    calendar1.destroy!
   end
 
   test 'ticket sla + timezone + holiday' do
@@ -849,12 +852,13 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.update_escalation_at.gmtime.to_s, '2015-09-23 08:30:00 UTC', 'ticket.update_escalation_at verify 1')
     assert_equal(ticket.close_escalation_at.gmtime.to_s, '2015-09-23 09:30:00 UTC', 'ticket.close_escalation_at verify 1')
 
-    delete = sla.destroy
+    delete = sla.destroy!
     assert(delete, 'sla destroy')
 
-    delete = ticket.destroy
+    delete = ticket.destroy!
     assert(delete, 'ticket destroy')
 
+    calendar.destroy!
   end
 
   test 'ticket escalation suspend close reopen bug' do
@@ -1043,13 +1047,15 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket2.first_response_in_min, 'ticket2.first_response_in_min verify 3')
     assert_nil(ticket2.first_response_diff_in_min, 'ticket2.first_response_diff_in_min verify 3')
 
-    delete = sla.destroy
+    delete = sla.destroy!
     assert(delete, 'sla destroy')
 
-    delete = ticket1.destroy
+    delete = ticket1.destroy!
     assert(delete, 'ticket1 destroy')
-    delete = ticket2.destroy
+    delete = ticket2.destroy!
     assert(delete, 'ticket2 destroy')
+
+    calendar.destroy!
   end
 
   test 'ticket escalation suspend' do
@@ -1552,12 +1558,13 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.close_in_min, 60, 'ticket.close_in_min verify 3')
     assert_equal(ticket.close_diff_in_min, 180, 'ticket.close_diff_in_min# verify 3')
 
-    delete = sla.destroy
+    delete = sla.destroy!
     assert(delete, 'sla destroy')
 
-    delete = ticket.destroy
+    delete = ticket.destroy!
     assert(delete, 'ticket destroy')
 
+    calendar.destroy!
   end
 
   test 'ticket ticket.title and article.subject' do
@@ -1718,12 +1725,13 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_nil(ticket.close_in_min, 'ticket.close_in_min verify 3')
     assert_nil(ticket.close_diff_in_min, 'ticket.close_diff_in_min# verify 3')
 
-    delete = sla.destroy
+    delete = sla.destroy!
     assert(delete, 'sla destroy')
 
-    delete = ticket.destroy
+    delete = ticket.destroy!
     assert(delete, 'ticket destroy')
 
+    calendar.destroy!
   end
 
   test 'ticket sla + holiday 222' do
@@ -1943,11 +1951,13 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-11-09 10:26:36 UTC', 'ticket.update_escalation_at verify 1')
     assert_nil(ticket.close_escalation_at, 'ticket.close_escalation_at verify 1')
 
-    delete = sla.destroy
+    delete = sla.destroy!
     assert(delete, 'sla destroy')
 
-    delete = ticket.destroy
+    delete = ticket.destroy!
     assert(delete, 'ticket destroy')
+
+    calendar.destroy!
   end
 
   test 'ticket sla + observer check' do
@@ -2124,11 +2134,13 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-11-07 15:26:36 UTC', 'ticket.update_escalation_at verify 1')
     assert_nil(ticket.close_escalation_at, 'ticket.close_escalation_at verify 1')
 
-    delete = sla.destroy
+    delete = sla.destroy!
     assert(delete, 'sla destroy')
 
-    delete = ticket.destroy
+    delete = ticket.destroy!
     assert(delete, 'ticket destroy')
+
+    calendar.destroy!
   end
 
 end

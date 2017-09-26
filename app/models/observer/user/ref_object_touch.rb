@@ -22,7 +22,7 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
 
     # touch old organization if changed
     member_ids = []
-    organization_id_changed = record.changes['organization_id']
+    organization_id_changed = record.saved_changes['organization_id']
     if organization_id_changed && organization_id_changed[0] != organization_id_changed[1]
       if organization_id_changed[0]
 

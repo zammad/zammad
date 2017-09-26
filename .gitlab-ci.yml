@@ -278,6 +278,18 @@ test:integration:telegram:
     - ruby -I test test/integration/telegram_controller_test.rb
     - rake db:drop
 
+test:integration:idoit:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - rake db:seed
+    - ruby -I test test/integration/idoit_controller_test.rb
+    - rake db:drop
+
 test:integration:es_mysql:
   stage: test
   tags:
