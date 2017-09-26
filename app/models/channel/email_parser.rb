@@ -475,7 +475,7 @@ returns
     # check ignore header
     if mail['x-zammad-ignore'.to_sym] == 'true' || mail['x-zammad-ignore'.to_sym] == true
       Rails.logger.info "ignored email with msgid '#{mail[:message_id]}' from '#{mail[:from]}' because of x-zammad-ignore header"
-      return true
+      return
     end
 
     # set interface handle
