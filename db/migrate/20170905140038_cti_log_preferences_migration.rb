@@ -33,6 +33,7 @@ end
 class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
 
   def change
+
     # correct all entries
     Cti::Log.all.pluck(:id).each do |item_id|
       item = Cti::Log.find(item_id)
@@ -40,6 +41,7 @@ class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
       next if item.preferences.blank?
 
       # check from and to keys which hold the instances
+      preferences = {}
       %w(from to).each do |direction|
         next if item.preferences[direction].blank?
 
@@ -51,11 +53,11 @@ class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
         end
 
         # overwrite the old key with the converted data
-        item.preferences[direction] = updated
+        preferences[direction] = updated
       end
 
       # update entry
-      item.save!
+      item.update_column(:preferences, preferences)
     end
   end
 end
