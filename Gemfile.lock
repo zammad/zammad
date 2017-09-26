@@ -151,6 +151,8 @@ GEM
       rake
     figaro (1.1.1)
       thor (~> 0.14)
+    font-awesome-sass (4.7.0)
+      sass (>= 3.2)
     formatador (0.2.5)
     github_changelog_generator (1.14.3)
       activesupport
@@ -460,6 +462,9 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     writeexcel (1.0.5)
+    wysiwyg-rails (2.7.0)
+      font-awesome-sass (~> 4.4, >= 4.4.0)
+      railties (>= 3.2, < 6.0)
     zendesk_api (1.14.4)
       faraday (~> 0.9)
       hashie (>= 3.5.2, < 4.0.0)
@@ -548,6 +553,7 @@ DEPENDENCIES
   viewpoint
   webmock
   writeexcel
+  wysiwyg-rails
   zendesk_api
 
 RUBY VERSION

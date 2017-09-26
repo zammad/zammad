@@ -1,4 +1,42 @@
-新工單 (#{ticket.title})
+<div class="zammad-email-container">
+  <div class="zammad-email-notification">
+    <div class="zammad-email-notification-header">
+      <div class="row">
+        <div class="col-md-2 col-sm-2 col-xs-3">
+          <img src="<%= image_tag 'assets/images/icons.svg' %>" class="zammad-email-notification-image img-circle">
+        </div>
+        <div class="col-md-10 col-sm-10 col-xs-9">
+          <h1 class="zen-title">新工單: (#{ticket.title})</h1>
+          <p class="zen-content">接受者: #{recipient.firstname}</p>
+        </div>
+      </div>
+    </div>
+    <div class="zammad-email-notification-body">
+      你好 #{recipient.firstname},<br><br>
+
+      "<b>#{current_user.longname}</b>" 客戶創建了一張標題為 (#{ticket.title}) 的新工單.<br><br>
+
+      #{t('Group')}: #{ticket.group.name} <br>
+      #{t('Owner')}: #{ticket.owner.fullname} <br>
+      #{t('State')}: #{t(ticket.state.name)} <br><br>
+
+      <% if @objects[:article] %>
+        #{t('Information')}:<br><br>
+
+        <blockquote>
+          #{article.body_as_html}
+        </blockquote>
+      <% end %>
+    </div>
+    <div class="zammad-email-notification-footer">
+      <div class="text-center">
+        <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 新工單 (#{ticket.title})
 
 <div>你好, #{recipient.firstname}:</div>
 <br>
@@ -21,4 +59,4 @@
 <br>
 <div>
   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
-</div>
+</div> -->
