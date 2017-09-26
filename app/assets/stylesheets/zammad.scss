@@ -2334,6 +2334,10 @@ kbd {
         0 6px 20px 0 rgba(0, 0, 0, 0.09);
     }
   }
+
+  .btn:not(.btn--text) {
+    min-width: calc(33% - 6px); // auth provider width
+  }
 }
 
 .login .hero-unit {
