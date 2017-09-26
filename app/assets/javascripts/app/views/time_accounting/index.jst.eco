@@ -25,13 +25,13 @@
     <div class="well">
       <div class="btn-group btn-group--full" role="group" aria-label="">
         <% for item in @timeRangeYear: %>
-          <div class="btn btn--textLarge js-timePickerYear<%- ' is-selected' if @year is item.value %>" data-id="<%= @timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
+          <div class="btn btn--text btn--large js-timePickerYear<%- ' is-selected' if @year is item.value %>" data-id="<%= @timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
         <% end %>
       </div>
 
       <div class="btn-group btn-group--full" role="group" aria-label="">
         <% for item in @timeRangeMonth: %>
-          <div class="btn btn--textLarge js-timePickerMonth<%- ' is-selected' if @month is item.value %>" data-id="<%= @timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
+          <div class="btn btn--text btn--large js-timePickerMonth<%- ' is-selected' if @month is item.value %>" data-id="<%= @timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
         <% end %>
       </div>
     </div>

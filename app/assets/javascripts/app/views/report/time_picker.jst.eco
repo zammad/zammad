@@ -2,7 +2,7 @@
   <% if @params.timeRange is 'day': %>
     <div class="btn-group btn-group--full" role="group" aria-label="">
       <% for item in @timeRangeDay: %>
-        <div class="btn btn--textLarge js-timePickerDay<%- ' is-selected' if @params.day is item.value %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
+        <div class="btn btn--text btn--large js-timePickerDay<%- ' is-selected' if @params.day is item.value %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
       <% end %>
     </div>
   <% end %>
@@ -10,7 +10,7 @@
   <% if @params.timeRange is 'day' || @params.timeRange is 'month': %>
     <div class="btn-group btn-group--full" role="group" aria-label="">
       <% for item in @timeRangeMonth: %>
-        <div class="btn btn--textLarge js-timePickerMonth<%- ' is-selected' if @params.month is item.value %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
+        <div class="btn btn--text btn--large js-timePickerMonth<%- ' is-selected' if @params.month is item.value %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
       <% end %>
     </div>
   <% end %>
@@ -18,7 +18,7 @@
   <% if @params.timeRange is 'week': %>
     <div class="btn-group btn-group--full" role="group" aria-label="">
       <% for item in @timeRangeWeek: %>
-        <div class="btn btn--textLarge js-timePickerWeek<%- ' is-selected' if @params.week is item.value %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
+        <div class="btn btn--text btn--large js-timePickerWeek<%- ' is-selected' if @params.week is item.value %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
       <% end %>
     </div>
   <% end %>
@@ -26,7 +26,7 @@
   <% if @params.timeRange isnt 'realtime': %>
     <div class="btn-group btn-group--full" role="group" aria-label="">
       <% for item in @timeRangeYear: %>
-        <div class="btn btn--textLarge js-timePickerYear<%- ' is-selected' if @params.year is item.value %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
+        <div class="btn btn--text btn--large js-timePickerYear<%- ' is-selected' if @params.year is item.value %>" data-id="<%= @params.timeRange %>" data-type="<%= item.value %>"><%= item.display %></div>
       <% end %>
     </div>
   <% end %>

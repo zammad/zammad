@@ -385,7 +385,7 @@ pre code.hljs {
     fill: currentColor;
   }
 
-  &.btn--icon--last .icon {
+  &--icon--last .icon {
     @include bidi-style(margin-left, 5px, margin-right, 0); // so far only used in ticket_zoom secondaryAction dropup
   }
 
@@ -393,23 +393,23 @@ pre code.hljs {
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
 
-  &.btn--small {
+  &--small {
     padding-top: 5px;
     padding-bottom: 4px;
   }
 
-  &.btn--slim {
+  &--slim {
     padding-left: 12px;
     padding-right: 12px;
   }
 
-  &.btn--fullWidth {
+  &--fullWidth {
     width: 100%;
     text-align: center;
     justify-content: center;
   }
 
-  &.btn--table {
+  &--table {
     padding: 4px 9px;
     border: none;
     margin: 5px 6px 0;
@@ -434,7 +434,7 @@ pre code.hljs {
     background: hsl(0,0%,98%);
   }
 
-  &.btn--action {
+  &--action {
     text-transform: uppercase;
     color: hsl(0,0%,60%);
     font-size: 12px;
@@ -471,7 +471,7 @@ pre code.hljs {
   }
 
   // used in .recipientList-controls and in breadcrumbs
-  &.btn--onDark {
+  &--onDark {
     background: hsla(200,100%,97%,0.15);
     border-color: hsl(250,7%,16%);
     color: white;
@@ -481,7 +481,7 @@ pre code.hljs {
     }
   }
 
-  &.btn--primary {
+  &--primary {
     color: white;
     background: hsl(203,65%,55%);
     &:active {
@@ -493,13 +493,13 @@ pre code.hljs {
     }
   }
 
-  &.btn--secondary {
+  &--secondary {
     color: hsl(202,68%,54%);
   }
 
-  &.btn--positive,
-  &.btn--create,
-  &.btn--success {
+  &--positive,
+  &--create,
+  &--success {
     color: white;
     background: hsl(145,51%,45%);
 
@@ -521,7 +521,7 @@ pre code.hljs {
     }
   }
 
-  &.btn--danger {
+  &--danger {
     color: white;
     background: hsl(0,65%,55%);
     
@@ -539,7 +539,7 @@ pre code.hljs {
     }
   }
 
-  &.btn--text {
+  &--text {
     font-size: inherit;
     margin: -10px;
     padding: 10px;
@@ -603,12 +603,13 @@ pre code.hljs {
     }
   }
 
-  &.btn--textLarge {
-    @extend .btn--text;
-    margin: 0px;
+  &--large {
+    &.btn--text {
+      margin: 0;
+    }
   }
 
-  &.btn--quad {
+  &--quad {
     padding: 10px 12px 9px;
 
     .icon {
@@ -616,21 +617,21 @@ pre code.hljs {
     }
   }
 
-  &.btn--split--first {
+  &--split--first {
     @include bidi-style(border-radius, 3px 0 0 3px, border-radius, 0 3px 3px 0);
   }
-  &.btn--split,
-  &.btn--split--last {
+  &--split,
+  &--split--last {
     border-radius: 0;
     @include bidi-style(border-left-width, 0, border-right-width, 1px);
     @include ltr(margin-left, 0 !important);
     @include rtl(margin-right, 0 !important);
   }
-  &.btn--split--last {
+  &--split--last {
     @include bidi-style(border-radius, 0 3px 3px 0, border-radius, 3px 0 0 3px);
   }
 
-  &.btn--dropdown {
+  &--dropdown {
     position: relative;
 
     select {
@@ -717,7 +718,7 @@ pre code.hljs {
   display: inline-flex;
   flex-wrap: wrap;
 
-  &.btn-group--full {
+  &--full {
     display: flex;
   }
 
@@ -744,7 +745,7 @@ pre code.hljs {
     }
   }
 
-  .btn--text, .btn--textLarge {
+  .btn--text {
     padding: 6px 10px 5px; /* reporting main.eco */
     display: inline-block;
     border-radius: 3px;
@@ -2332,6 +2333,10 @@ kbd {
         0 8px 17px 0 rgba(0, 0, 0, 0.1),
         0 6px 20px 0 rgba(0, 0, 0, 0.09);
     }
+  }
+
+  .btn:not(.btn--text) {
+    min-width: calc(33.33% - 6px); // auth provider width
   }
 }
 
