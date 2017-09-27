@@ -201,7 +201,7 @@ class Observer::Transaction < ActiveRecord::Observer
 
     # ignore certain attributes
     real_changes = {}
-    record.changes.each { |key, value|
+    record.changes_to_save.each { |key, value|
       next if key == 'updated_at'
       next if key == 'first_response_at'
       next if key == 'close_at'

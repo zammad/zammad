@@ -37,7 +37,7 @@ module Import
     def changed_attributes
       return if @resource.blank?
       # dry run
-      return @resource.changes if @resource.changed?
+      return @resource.changes_to_save if @resource.has_changes_to_save?
       # live run
       @resource.previous_changes
     end

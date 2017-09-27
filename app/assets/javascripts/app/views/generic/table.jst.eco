@@ -20,9 +20,7 @@
     <% for header, i in @headers: %>
       <th class="js-tableHead<%= " #{ header.className }" if header.className %><%= " align-#{ header.align }" if header.align %>" style="<% if header.displayWidth: %>width:<%= header.displayWidth %>px<% end %>" data-column-key="<%= header.name %>">
         <div class="table-column-head<%= ' js-sort' if @tableId %>">
-          <div class="table-column-title">
-          <%- @T(header.display) %>
-          </div>
+          <div class="table-column-title"><%- @T(header.display) %></div>
           <div class="table-column-sortIcon">
           <% if header.sortOrderIcon: %>
             <%- @Icon(header.sortOrderIcon[0], header.sortOrderIcon[1]) %>
@@ -36,5 +34,5 @@
     <% end %>
     </tr>
   </thead>
-  <tbody><%- @tableBody %></tbody>
+  <tbody class="js-tableBody"><%- @tableBody %></tbody>
 </table>

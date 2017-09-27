@@ -1,4 +1,4 @@
-<tr class="item<%= ' is-inactive' if @object.active is false %>" data-id="<%= @object.id %>" data-position="<%= @position %>">
+<tr class="item<%= ' is-inactive' if @object.active is false %>" data-id="<%= @object.id %>">
 <% if @sortable: %>
   <td class="table-draggable"><%- @Icon('draggable') %></td>
 <% end %>

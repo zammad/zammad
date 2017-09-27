@@ -61,7 +61,7 @@ class CalendarTest < ActiveSupport::TestCase
     assert_equal(true, calendar3.default)
 
     calendar2.default = true
-    calendar2.save
+    calendar2.save!
 
     calendar1 = Calendar.find_by(name: 'US 1')
     calendar2 = Calendar.find_by(name: 'US 2')
@@ -72,7 +72,7 @@ class CalendarTest < ActiveSupport::TestCase
     assert_equal(false, calendar3.default)
 
     calendar2.default = false
-    calendar2.save
+    calendar2.save!
 
     calendar1 = Calendar.find_by(name: 'US 1')
     calendar2 = Calendar.find_by(name: 'US 2')
@@ -82,12 +82,16 @@ class CalendarTest < ActiveSupport::TestCase
     assert_equal(false, calendar2.default)
     assert_equal(false, calendar3.default)
 
-    calendar1.destroy
+    calendar1.destroy!
     calendar2 = Calendar.find_by(name: 'US 2')
     calendar3 = Calendar.find_by(name: 'US 3')
 
     assert_equal(true, calendar2.default)
     assert_equal(false, calendar3.default)
+
+    calendar2.destroy!
+    calendar3.destroy!
+
     travel_back
   end
 
@@ -236,6 +240,8 @@ class CalendarTest < ActiveSupport::TestCase
     assert_equal(true, calendar1.public_holidays['2019-12-24']['active'])
     assert_equal('Christmas1', calendar1.public_holidays['2019-12-24']['summary'])
     assert_nil(calendar1.public_holidays['2020-12-24'])
+
+    calendar1.destroy!
 
     travel_back
 

@@ -1691,7 +1691,7 @@
 
                     pos.width = axis.labelWidth;
 
-                    var style = ["position:absolute", "text-align:" + align ];
+                    var style = ["position:absolute", "white-space:nowrap", "text-align:" + align ];
                     for (var a in pos)
                         style.push(a + ":" + pos[a] + "px")
                     

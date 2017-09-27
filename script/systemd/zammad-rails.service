@@ -1,0 +1,24 @@
+[Unit]
+Description=Zammad railsserver
+After=syslog.target
+After=network.target
+After=zammad.service
+Requires=zammad.service
+
+[Service]
+Type=simple
+User=zammad
+Group=zammad
+Restart=always
+
+WorkingDirectory=/opt/zammad
+
+Environment=RAILS_ENV=production
+Environment=BUNDLE_BINARY=bundle
+Environment=ZAMMAD_BIND_IP=127.0.0.1
+Environment=ZAMMAD_RAILS_PORT=3000
+
+ExecStart=/bin/bash -l -c "${BUNDLE_BINARY} exec script/rails server -b ${ZAMMAD_BIND_IP} -p ${ZAMMAD_RAILS_PORT}"
+
+[Install]
+WantedBy=zammad.service

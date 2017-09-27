@@ -6,6 +6,7 @@ class App._CollectionSingletonBase
     @callbacks = {}
     @counter = 0
     @key = "collection-#{@event}"
+
     # read from cache
     cache = App.SessionStorage.get(@key)
     if cache
@@ -15,6 +16,9 @@ class App._CollectionSingletonBase
     App.Event.bind @event, (data) =>
       @set(data)
       @callback(data)
+
+    App.Event.bind 'auth:logout', (data) =>
+      @clear(data)
 
   get: =>
     @collectionData
@@ -79,3 +83,6 @@ class App._CollectionSingletonBase
           delete @callbacks[counter]
       App.QueueManager.add(@key, callback)
       App.QueueManager.run(@key)
+
+  clear: =>
+    @collectionData = undefined

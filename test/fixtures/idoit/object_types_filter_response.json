@@ -1,0 +1,18 @@
+{
+  "jsonrpc": "2.0",
+  "result": [{
+    "id": "26",
+    "title": "demo.example.com",
+    "sysid": "SYSID_1485512390",
+    "type": "59",
+    "created": "2017-01-27 11:19:24",
+    "updated": "2017-01-27 11:19:49",
+    "type_title": "Virtual server",
+    "type_group_title": "Infrastructure",
+    "status": "2",
+    "cmdb_status": "6",
+    "cmdb_status_title": "in operation",
+    "image": "https://idoit.example.com/i-doit/images/objecttypes/empty.png"
+  }],
+  "id": 1
+}

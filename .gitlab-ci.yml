@@ -8,7 +8,8 @@ before_script:
 stages:
   - pre
   - test
-  - browser
+  - browser-core
+  - browser-integration
 
 pre:rubocop:
   stage: pre
@@ -278,6 +279,18 @@ test:integration:telegram:
     - ruby -I test test/integration/telegram_controller_test.rb
     - rake db:drop
 
+test:integration:idoit:
+  stage: test
+  tags:
+    - core
+  script:
+    - export RAILS_ENV=test
+    - rake db:create
+    - rake db:migrate
+    - rake db:seed
+    - ruby -I test test/integration/idoit_controller_test.rb
+    - rake db:drop
+
 test:integration:es_mysql:
   stage: test
   tags:
@@ -430,7 +443,7 @@ browser:build:
     - public/assets/print-*
 
 test:browser:integration:api_client_ruby:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -447,7 +460,7 @@ test:browser:integration:api_client_ruby:
     - cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:integration:api_client_php:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -467,7 +480,7 @@ test:browser:integration:api_client_php:
     - cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:twitter_ff:
-  stage: browser
+  stage: browser-integration
   dependencies:
     - browser:build
   tags:
@@ -484,7 +497,7 @@ test:browser:twitter_ff:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:facebook_ff:
-  stage: browser
+  stage: browser-integration
   dependencies:
     - browser:build
   tags:
@@ -501,7 +514,7 @@ test:browser:facebook_ff:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:autowizard_ff:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -517,7 +530,7 @@ test:browser:autowizard_ff:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_1_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -538,7 +551,7 @@ test:browser:core:ff_1_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_2_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -559,7 +572,7 @@ test:browser:core:ff_2_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_3_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -576,7 +589,7 @@ test:browser:core:ff_3_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_4_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -597,7 +610,7 @@ test:browser:core:ff_4_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_5_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -618,7 +631,7 @@ test:browser:core:ff_5_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_6_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -639,7 +652,7 @@ test:browser:core:ff_6_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_1_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -660,7 +673,7 @@ test:browser:core:ff_1_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_2_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -681,7 +694,7 @@ test:browser:core:ff_2_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_3_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -698,7 +711,7 @@ test:browser:core:ff_3_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_4_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -719,7 +732,7 @@ test:browser:core:ff_4_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_5_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -740,7 +753,7 @@ test:browser:core:ff_5_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:ff_6_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -761,7 +774,7 @@ test:browser:core:ff_6_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_1_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -782,7 +795,7 @@ test:browser:core:chrome_1_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_2_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -803,7 +816,7 @@ test:browser:core:chrome_2_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_3_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -824,7 +837,7 @@ test:browser:core:chrome_3_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_4_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -845,7 +858,7 @@ test:browser:core:chrome_4_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_5_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -866,7 +879,7 @@ test:browser:core:chrome_5_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_6_mysql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -887,7 +900,7 @@ test:browser:core:chrome_6_mysql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_1_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -908,7 +921,7 @@ test:browser:core:chrome_1_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_2_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -929,7 +942,7 @@ test:browser:core:chrome_2_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_3_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -950,7 +963,7 @@ test:browser:core:chrome_3_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_4_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -971,7 +984,7 @@ test:browser:core:chrome_4_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_5_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -992,7 +1005,7 @@ test:browser:core:chrome_5_postgresql:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:core:chrome_6_postgresql:
-  stage: browser
+  stage: browser-core
   dependencies:
     - browser:build
   tags:
@@ -1012,8 +1025,23 @@ test:browser:core:chrome_6_postgresql:
     - rake test:browser || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
+test:browser:autowizard_chrome:
+  stage: browser-core
+  dependencies:
+    - browser:build
+  tags:
+    - browser
+  script:
+    - export BROWSER=chrome
+    - export BROWSER_URL=http://$IP:$BROWSER_PORT
+    - RAILS_ENV=test rake db:create
+    - cp contrib/auto_wizard_example.json auto_wizard.json
+    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
+    - ruby -I test/ test/integration/auto_wizard_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
+    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
+
 test:browser:integration:twitter_chrome:
-  stage: browser
+  stage: browser-integration
   dependencies:
     - browser:build
   tags:
@@ -1029,7 +1057,7 @@ test:browser:integration:twitter_chrome:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:integration:facebook_chrome:
-  stage: browser
+  stage: browser-integration
   dependencies:
     - browser:build
   tags:
@@ -1045,7 +1073,7 @@ test:browser:integration:facebook_chrome:
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:integration:otrs_chrome:
-  stage: browser
+  stage: browser-integration
   dependencies:
     - browser:build
   tags:
@@ -1058,23 +1086,8 @@ test:browser:integration:otrs_chrome:
     - ruby -I test/ test/integration/otrs_import_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
-test:browser:integration:autowizard_chrome:
-  stage: browser
-  dependencies:
-    - browser:build
-  tags:
-    - browser
-  script:
-    - export BROWSER=chrome
-    - export BROWSER_URL=http://$IP:$BROWSER_PORT
-    - RAILS_ENV=test rake db:create
-    - cp contrib/auto_wizard_example.json auto_wizard.json
-    - script/build/test_startup.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1
-    - ruby -I test/ test/integration/auto_wizard_browser_test.rb || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
-    - script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
-
 test:browser:integration:zendesk_chrome:
-  stage: browser
+  stage: browser-integration
   dependencies:
     - browser:build
   tags:

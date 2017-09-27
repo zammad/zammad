@@ -61,7 +61,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
 
     params = { without_fingerprint: 'none', username: 'user-device-admin', password: 'adminpw' }
-    post '/api/v1/signin', params.to_json, @headers
+    post '/api/v1/signin', params: params.to_json, headers: @headers
     assert_response(422)
     result = JSON.parse(@response.body)
 
@@ -85,7 +85,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
 
     params = { fingerprint: 'my_finger_print', username: 'user-device-admin', password: 'adminpw' }
-    post '/api/v1/signin', params.to_json, @headers
+    post '/api/v1/signin', params: params.to_json, headers: @headers
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -102,7 +102,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     sleep 2
 
     params = {}
-    get '/api/v1/users', params.to_json, @headers
+    get '/api/v1/users', params: params.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Array)
@@ -117,7 +117,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     assert_equal(user_device_last.updated_at.to_s, user_device_first.updated_at.to_s)
 
     params = { fingerprint: 'my_finger_print' }
-    get '/api/v1/signshow', params, @headers
+    get '/api/v1/signshow', params: params, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -135,7 +135,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     ENV['USER_DEVICE_UPDATED_AT'] = (Time.zone.now - 4.hours).to_s
     params = {}
-    get '/api/v1/users', params.to_json, @headers
+    get '/api/v1/users', params: params.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Array)
@@ -153,7 +153,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     ENV['TEST_REMOTE_IP'] = '195.65.29.254' # ch
 
     params = {}
-    get '/api/v1/users', params.to_json, @headers
+    get '/api/v1/users', params: params.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
 
@@ -171,7 +171,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
   test '04 - login index with admin with fingerprint - II' do
 
     params = { fingerprint: 'my_finger_print_II', username: 'user-device-admin', password: 'adminpw' }
-    post '/api/v1/signin', params.to_json, @headers
+    post '/api/v1/signin', params: params.to_json, headers: @headers
     assert_response(201)
     result = JSON.parse(@response.body)
 
@@ -185,7 +185,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     assert(result['config'])
     assert('my_finger_print_II', controller.session[:user_device_fingerprint])
 
-    get '/api/v1/users', params.to_json, @headers
+    get '/api/v1/users', params: params.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Array)
@@ -197,7 +197,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
 
     params = { fingerprint: 'my_finger_print_II' }
-    get '/api/v1/signshow', params, @headers
+    get '/api/v1/signshow', params: params, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Hash)
@@ -214,7 +214,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     ENV['TEST_REMOTE_IP'] = '195.65.29.254' # ch
 
     params = {}
-    get '/api/v1/users', params.to_json, @headers
+    get '/api/v1/users', params: params.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
 
@@ -232,7 +232,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
   test '05 - login index with admin with fingerprint - II' do
 
     params = { fingerprint: 'my_finger_print_II', username: 'user-device-admin', password: 'adminpw' }
-    post '/api/v1/signin', params.to_json, @headers
+    post '/api/v1/signin', params: params.to_json, headers: @headers
     assert_response(201)
     result = JSON.parse(@response.body)
 
@@ -253,7 +253,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('user-device-admin', 'adminpw')
 
     params = {}
-    get '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
+    get '/api/v1/users', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
 
@@ -267,7 +267,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     sleep 2
 
     params = {}
-    get '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
+    get '/api/v1/users', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
 
@@ -285,7 +285,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     user_device_last.save!
 
     params = {}
-    get '/api/v1/users', params, @headers.merge('Authorization' => credentials)
+    get '/api/v1/users', params: params, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
 
@@ -307,7 +307,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('user-device-admin', 'adminpw')
 
     params = {}
-    get '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
+    get '/api/v1/users', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
 
@@ -330,7 +330,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('user-device-agent', 'agentpw')
 
     params = {}
-    get '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
+    get '/api/v1/users', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
 
@@ -353,7 +353,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('user-device-agent', 'agentpw')
 
     params = {}
-    get '/api/v1/users', params.to_json, @headers.merge('Authorization' => credentials)
+    get '/api/v1/users', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
 
@@ -375,7 +375,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     ENV['SWITCHED_FROM_USER_ID'] = @admin.id.to_s
 
     params = { fingerprint: 'my_finger_print_II', username: 'user-device-agent', password: 'agentpw' }
-    post '/api/v1/signin', params.to_json, @headers
+    post '/api/v1/signin', params: params.to_json, headers: @headers
     assert_response(201)
     result = JSON.parse(@response.body)
 
@@ -397,7 +397,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     ENV['USER_DEVICE_UPDATED_AT'] = (Time.zone.now - 4.hours).to_s
     params = {}
-    get '/api/v1/users', params.to_json, @headers
+    get '/api/v1/users', params: params.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(result.class, Array)
@@ -412,7 +412,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     ENV['TEST_REMOTE_IP'] = '195.65.29.254' # ch
     params = {}
-    get '/api/v1/users', params.to_json, @headers
+    get '/api/v1/users', params: params.to_json, headers: @headers
     assert_response(200)
     result = JSON.parse(@response.body)
 

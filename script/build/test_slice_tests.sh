@@ -60,6 +60,7 @@ if [ "$LEVEL" == '1' ]; then
   # test/browser/taskbar_session_test.rb
   # test/browser/taskbar_task_test.rb
   # test/browser/translation_test.rb
+  rm test/browser/user_switch_cache_test.rb
 
 elif [ "$LEVEL" == '2' ]; then
   echo "slicing level 2"
@@ -117,6 +118,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/translation_test.rb
+  #rm test/browser/user_switch_cache_test.rb
 
 elif [ "$LEVEL" == '3' ]; then
   echo "slicing level 3"
@@ -174,6 +176,7 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/translation_test.rb
+  rm test/browser/user_switch_cache_test.rb
 
 elif [ "$LEVEL" == '4' ]; then
   echo "slicing level 4"
@@ -231,6 +234,7 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/translation_test.rb
+  rm test/browser/user_switch_cache_test.rb
 
 elif [ "$LEVEL" == '5' ]; then
   echo "slicing level 5"
@@ -287,6 +291,7 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/translation_test.rb
+  rm test/browser/user_switch_cache_test.rb
 
 elif [ "$LEVEL" == '6' ]; then
   echo "slicing level 6"
@@ -346,6 +351,7 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/translation_test.rb
+  rm test/browser/user_switch_cache_test.rb
 
 else
   echo "ERROR: Invalid level $LEVEL - 1, 2, 3, 4, 5 or 6 is available"

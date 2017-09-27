@@ -104,7 +104,7 @@ class Taskbar < ApplicationModel
   end
 
   def notify_clients
-    return true if !changes['preferences']
+    return true if !saved_change_to_attribute?('preferences')
     data = {
       event: 'taskbar:preferences',
       data: {
