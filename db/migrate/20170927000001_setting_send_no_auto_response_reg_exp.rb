@@ -1,4 +1,4 @@
-class SettingSendNoAutoResponseRegExp < ActiveRecord::Migration[5.0]
+class SettingSendNoAutoResponseRegExp < ActiveRecord::Migration
   def up
 
     # return if it's a new setup
