@@ -1297,7 +1297,7 @@ Setting.create_if_not_exists(
     controller: 'SettingsAreaSwitch',
     sub: ['auth_weibo_credentials'],
     title_i18n: ['Weibo'],
-    description_i18n: ['Sina Weibo', 'Weibo Open Protal', 'http://open.weibo.com'],
+    description_i18n: ['Sina Weibo', 'Sina Weibo Open Protal', 'http://open.weibo.com'],
     permission: ['admin.security'],
   },
   state: false,
