@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Channel::Filter::MonitoringBase
-
   # according
 
   # Icinga
@@ -27,7 +26,7 @@ class Channel::Filter::MonitoringBase
     return if !session_user_id
 
     # check if sender is monitoring
-    return if !Channel::Filter::Database.match(mail[:from], sender, true, true)
+    return if !EmailRegex.match(mail[:from], sender, true, true)
 
     # get mail attibutes like host and state
     result = {}
