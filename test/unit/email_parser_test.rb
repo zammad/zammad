@@ -1191,6 +1191,26 @@ Old programmers never die. They just branch to a new address."
 Old programmers never die. They just branch to a new address."
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail61.box'),
+        body_md5: 'f6cc330eeee70f9be5f4cf6b0c97a89f',
+        params: {
+          from: 'example Support <support@example.com>',
+          from_email: 'support@example.com',
+          from_display_name: 'example Support',
+          subject: 'Re: [DT2205029] Messung',
+          content_type: 'text/html',
+          body: "<div>
+<p>Guten Morgen John Smith,</p><p>&nbsp;</p><p>vielen Dank für die Rückmeldung!<br>
+<br>
+</p><p>&nbsp;</p><p>Mit freundlichen Grüßen</p><p>Zaihan</p><p>&nbsp;</p><div>
+<div>
+<span class=\"js-signatureMarker\"></span><p><b>Von:</b> John Smith [mailto:john.smith@example.com] <br>
+<b>Gesendet:</b> Mittwoch, 27. September 2017 07:53<br>
+<b>An:</b> example Support<br>
+<b>Betreff:</b> Messung</p></div></div><p>&nbsp;</p><p>Hallo Zaihan,</p><p>&nbsp;</p><p>wie am Montag besprochen, ein kurzes feedback. Das am Nachmittag aufgetretene Problem, dass aufgrund von großen Sprüngen der Messlinie die Abmessungen sehr schwierig waren, ist nicht mehr aufgetreten.</p><p>Wenn das Problem nochmal auftreten sollte, melde ich mich.</p><p>&nbsp;</p><p>Viele Grüße</p><p>John Smith</p></div>"
+        }
+      }
     ]
 
     count = 0
