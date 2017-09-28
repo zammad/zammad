@@ -53,6 +53,13 @@ class Channel::Filter::MonitoringBase
       end
     end
 
+    # get state from subject
+    if result['state'].blank?
+      if mail[:subject] =~ /on\s.+?\sis\s(.+?)\!/
+        result['state'] = $1
+      end
+    end
+
     # check if ticket with host is open
     customer = User.lookup(id: session_user_id)
 
@@ -73,6 +80,7 @@ class Channel::Filter::MonitoringBase
 
       # check if service is recovered
       if auto_close && result['state'].present? && result['state'].match(/#{state_recovery_match}/i)
+        Rails.logger.info "MonitoringBase.#{integration} set autoclose to state_id #{auto_close_state_id}"
         state = Ticket::State.lookup(id: auto_close_state_id)
         if state
           mail[ 'x-zammad-ticket-followup-state'.to_sym ] = state.name
