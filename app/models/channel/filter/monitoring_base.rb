@@ -46,10 +46,19 @@ class Channel::Filter::MonitoringBase
     # check min. params
     return if result['host'].blank?
 
-    # get state from body
+    # get state by body - ichinga new templates
     if result['state'].blank?
       if mail[:body] =~ /==>.*\sis\s(.+?)\!\s+?<==/
         result['state'] = $1
+      end
+    end
+
+    # get state by subject - ichinga new templates "state:" is not in body anymore
+    # Subject: [PROBLEM] Ping IPv4 on host1234.dc.example.com is WARNING!
+    # Subject: [PROBLEM] Host host1234.dc.example.com is DOWN!
+    if result['state'].blank?
+      if mail[:subject] =~ /(on|Host)\s.+?\sis\s(.+?)\!/
+        result['state'] = $2
       end
     end
 
@@ -73,6 +82,7 @@ class Channel::Filter::MonitoringBase
 
       # check if service is recovered
       if auto_close && result['state'].present? && result['state'].match(/#{state_recovery_match}/i)
+        Rails.logger.info "MonitoringBase.#{integration} set autoclose to state_id #{auto_close_state_id}"
         state = Ticket::State.lookup(id: auto_close_state_id)
         if state
           mail[ 'x-zammad-ticket-followup-state'.to_sym ] = state.name
