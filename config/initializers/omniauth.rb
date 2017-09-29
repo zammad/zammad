@@ -48,9 +48,9 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   # auth0 database connect
   provider :auth0_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database', {
-     authorize_params: { 
-       scope: 'openid profile email' 
-     }, 
+    authorize_params: {
+      scope: 'openid profile email'
+    },
   }
 
 end

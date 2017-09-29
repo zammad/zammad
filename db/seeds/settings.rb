@@ -1140,12 +1140,12 @@ Setting.create_if_not_exists(
   description: 'Enables user authentication via %s. Register your app first at [%s](%s).',
   options: {
     form: [
-      { 
+      {
         display: '',
         null: true,
         name: 'auth_auth0',
         tag: 'boolean',
-        options: { 
+        options: {
           true  => 'yes',
           false => 'no',
         },
@@ -1169,19 +1169,19 @@ Setting.create_if_not_exists(
   description: 'Enables user authentication via Auth0.',
   options: {
     form: [
-      { 
+      {
         display: 'App ID',
         null: true,
         name: 'client_id',
         tag: 'input',
       },
-      { 
+      {
         display: 'App Secret',
         null: true,
         name: 'client_secret',
         tag: 'input',
       },
-      { 
+      {
         display: 'site',
         null: true,
         name: 'site',
