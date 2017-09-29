@@ -5,12 +5,12 @@ class App.Session
     _instance ?= new _sessionSingleton
     _instance.clear()
 
-  @get: ( key ) ->
+  @get: (key) ->
     if _instance == undefined
       _instance ?= new _sessionSingleton
     _instance.get(key)
 
-  @set: ( user ) ->
+  @set: (user) ->
     if _instance == undefined
       _instance ?= new _sessionSingleton
     _instance.set(user)
@@ -24,11 +24,11 @@ class _sessionSingleton extends Spine.Module
   clear: ->
     @user = undefined
 
-  get: ( key ) ->
+  get: (key) ->
     return if !@user
     if key
       return @user[key]
     @user
 
-  set: ( user ) ->
+  set: (user) ->
     @user = user

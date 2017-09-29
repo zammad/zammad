@@ -33,13 +33,13 @@ log object update history with all updated attributes, if configured - will be e
 =end
 
   def history_update
-    return if !changed?
+    return if !saved_changes?
 
     # return if it's no update
     return if new_record?
 
     # new record also triggers update, so ignore new records
-    changes = self.changes
+    changes = saved_changes
     if history_changes_last_done
       history_changes_last_done.each { |key, value|
         if changes.key?(key) && changes[key] == value

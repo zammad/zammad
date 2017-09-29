@@ -55,7 +55,7 @@ returns
     }
 
     ignored_attributes = self.class.instance_variable_get(:@search_index_attributes_ignored) || []
-    return attributes if ignored_attributes.empty?
+    return attributes if ignored_attributes.blank?
 
     ignored_attributes.each { |attribute|
       attributes.delete(attribute.to_s)

@@ -25,7 +25,7 @@ class App.User extends App.Model
   ]
 
   uiUrl: ->
-    '#user/profile/' + @id
+    "#user/profile/#{@id}"
 
   icon: ->
     'user'

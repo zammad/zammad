@@ -1055,7 +1055,7 @@ raise 'Minimum one user need to have admin permissions'
   def avatar_for_email_check
     return true if email.blank?
     return true if email !~ /@/
-    return true if !changes['email'] && updated_at > Time.zone.now - 10.days
+    return true if !saved_change_to_attribute?('email') && updated_at > Time.zone.now - 10.days
 
     # save/update avatar
     avatar = Avatar.auto_detection(
@@ -1106,8 +1106,7 @@ raise 'Minimum one user need to have admin permissions'
 
   # reset login_failed if password is changed
   def reset_login_failed
-    return true if !changes
-    return true if !changes['password']
+    return true if !will_save_change_to_attribute?('password')
     self.login_failed = 0
     true
   end

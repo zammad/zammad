@@ -41,14 +41,14 @@ module ApplicationModel::HasCache
     }
 
     # delete old name / login caches
-    if changed?
-      if changes.key?('name')
-        name = changes['name'][0]
+    if saved_changes?
+      if saved_changes.key?('name')
+        name = saved_changes['name'][0]
         key = "#{self.class}::#{name}"
         Cache.delete(key)
       end
-      if changes.key?('login')
-        name = changes['login'][0]
+      if saved_changes.key?('login')
+        name = saved_changes['login'][0]
         key = "#{self.class}::#{name}"
         Cache.delete(key)
       end

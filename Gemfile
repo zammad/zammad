@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.4.1'
 
-gem 'rails', '5.0.5'
+gem 'rails', '5.1.4'
 gem 'rails-observers'
 gem 'activerecord-session_store'
 
@@ -54,7 +54,8 @@ gem 'mime-types'
 
 gem 'biz'
 
-gem 'composite_primary_keys'
+# temporary till pull request gets merged: https://github.com/composite-primary-keys/composite_primary_keys/pull/404
+gem 'composite_primary_keys', git: 'https://github.com/jkowens/composite_primary_keys.git', branch: 'rails-5_1'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
@@ -108,7 +109,7 @@ group :development, :test do
   gem 'coveralls',         require: false
 
   # UI tests w/ Selenium
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '2.53.4'
 
   # livereload on template changes (html, js, css)
   gem 'guard',             require: false

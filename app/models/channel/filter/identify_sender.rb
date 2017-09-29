@@ -87,6 +87,8 @@ module Channel::Filter::IdentifySender
 
   # create to and cc user
   def self.create_recipients(mail)
+    max_count = 40
+    current_count = 0
     ['raw-to', 'raw-cc'].each { |item|
       next if !mail[item.to_sym]
       begin
@@ -99,6 +101,8 @@ module Channel::Filter::IdentifySender
             lastname: '',
             email: address_data.address,
           )
+          current_count += 1
+          return false if current_count == max_count
         }
       rescue => e
         # parse not parseable fields by mail gem like
@@ -122,6 +126,8 @@ module Channel::Filter::IdentifySender
             lastname: '',
             email: address,
           )
+          current_count += 1
+          return false if current_count == max_count
         }
       end
     }

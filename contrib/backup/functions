@@ -155,10 +155,10 @@ function restore_zammad () {
 
   if [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "# Restoring PostgrSQL DB"
-    gunzip -ck < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | su -c "psql -d ${DB_NAME}" postgres
+    zcat ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | su -c "psql -d ${DB_NAME}" postgres
   elif [ "${DB_ADAPTER}" == "mysql2" ]; then
     echo "# Restoring MySQL DB"
-    gunzip -ck < ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
+    zcat ${BACKUP_DIR}/${RESTORE_DB_DATE}_zammad_db.${DB_FILE_EXT}.gz | mysql -u${DB_USER} -p${DB_PASS} ${DB_NAME}
   fi
 }
 

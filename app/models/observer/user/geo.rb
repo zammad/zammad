@@ -47,13 +47,15 @@ class Observer::User::Geo < ActiveRecord::Observer
     address = ''
     location = %w(address street zip city country)
     location.each { |item|
-      if record[item] && record[item] != ''
-        address = address + ',' + record[item]
+      next if record[item].blank?
+      if address.present?
+        address += ', '
       end
+      address += record[item]
     }
 
     # return if no address is given
-    return if address == ''
+    return if address.blank?
 
     # lookup
     latlng = Service::GeoLocation.geocode(address)

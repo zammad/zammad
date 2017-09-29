@@ -1,13 +1,18 @@
 [Unit]
-Description=Zammad Application
+Description=Zammad
+After=syslog.target
+After=network.target
+StopWhenUnneeded=true
+Wants=zammad-rails.service
+Wants=zammad-scheduler.service
+Wants=zammad-websocket.service
 
 [Service]
-Type=forking
+Type=simple
 User=zammad
-WorkingDirectory=/home/zammad/zammad
-Environment=RAILS_ENV=production
-PIDFile=/var/run/zammad.puma.pid
-ExecStart=puma -p 3000 -d -e production --pidfile /var/run/zammad.puma.pid
+Group=zammad
+Restart=always
+ExecStart=/bin/sleep infinity
 
 [Install]
 WantedBy=multi-user.target
