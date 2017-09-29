@@ -46,17 +46,19 @@ class Channel::Filter::MonitoringBase
     # check min. params
     return if result['host'].blank?
 
-    # get state from body
+    # get state by body - ichinga new templates
     if result['state'].blank?
       if mail[:body] =~ /==>.*\sis\s(.+?)\!\s+?<==/
         result['state'] = $1
       end
     end
 
-    # get state from subject
+    # get state by subject - ichinga new templates "state:" is not in body anymore
+    # Subject: [PROBLEM] Ping IPv4 on host1234.dc.example.com is WARNING!
+    # Subject: [PROBLEM] Host host1234.dc.example.com is DOWN!
     if result['state'].blank?
-      if mail[:subject] =~ /on\s.+?\sis\s(.+?)\!/
-        result['state'] = $1
+      if mail[:subject] =~ /(on|Host)\s.+?\sis\s(.+?)\!/
+        result['state'] = $2
       end
     end
 
