@@ -4,6 +4,8 @@ require 'cache'
 
 class Service::GeoIp::Zammad
   def self.location(address)
+    return {} if address == '127.0.0.1'
+    return {} if address == '::1'
 
     # check cache
     cache_key = "zammadgeoip::#{address}"

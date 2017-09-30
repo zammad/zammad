@@ -39,9 +39,9 @@ class Sequencer
 
             def changes
               @changes ||= begin
-                if instance.changed?
+                if instance.has_changes_to_save?
                   # dry run
-                  instance.changes
+                  instance.changes_to_save
                 else
                   # live run
                   instance.previous_changes

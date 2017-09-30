@@ -200,7 +200,7 @@ function create_webserver_config () {
         mv /etc/${WEBSERVER}/sites-enabled/zammad.conf ${WEBSERVER_CONF}
       else
         cp ${ZAMMAD_DIR}/contrib/${WEBSERVER}/zammad.conf ${WEBSERVER_CONF}
-      fi  
+      fi
       ln -s ${WEBSERVER_CONF} /etc/${WEBSERVER}/sites-enabled/zammad.conf
     fi
     if [ "${WEBSERVER}" == "apache2" ]; then
@@ -219,6 +219,18 @@ function create_webserver_config () {
   ${INIT_CMD} restart ${WEBSERVER_CMD}
 }
 
+function setup_elasticsearch () {
+  echo "# Configuring Elasticsearch..."
+  yes | /usr/share/elasticsearch/bin/elasticsearch-plugin install mapper-attachments
+  ${INIT_CMD} restart elasticsearch
+  zammad run rails r "Setting.set('es_url', \"${ES_CONNECTION:-http://127.0.0.1:9200}\")"
+}
+
+function elasticsearch_searchindex_rebuild () {
+  echo "# (Re)building Elasticsearch searchindex..."
+  zammad run rake searchindex:rebuild
+}
+
 function update_or_install () {
   if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     update_database
@@ -235,7 +247,11 @@ function update_or_install () {
 
     update_database_yml
 
+    setup_elasticsearch
+
     initialise_database
+
+    elasticsearch_searchindex_rebuild
   fi
 }
 

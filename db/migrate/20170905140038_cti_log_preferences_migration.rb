@@ -1,6 +1,8 @@
 # Rails dropped the class
 # ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter::MysqlDateTime
 # via: https://github.com/rails/rails/commit/f1a0fa9e19b7e4ccaea191fc6cf0613880222ee7
+# ActiveRecord::ConnectionAdapters::PostgreSQL::OID::Integer
+# via: https://github.com/rails/rails/commit/aafee233fb3b4211ee0bfb1fca776c159bd1067e
 # which we use in stored Cti::Log instance preferences.
 # Since we don't need the instances but just an Hash we have to:
 # - create a dummy class
@@ -17,16 +19,29 @@ module ActiveRecord
     end
   end
 end
+module ActiveRecord
+  module ConnectionAdapters
+    module PostgreSQL
+      module OID
+        class Integer < Type::Integer
+        end
+      end
+    end
+  end
+end
 
 class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
 
   def change
+
     # correct all entries
-    Cti::Log.all.each do |item|
+    Cti::Log.all.pluck(:id).each do |item_id|
+      item = Cti::Log.find(item_id)
       next if !item.preferences
       next if item.preferences.blank?
 
       # check from and to keys which hold the instances
+      preferences = {}
       %w(from to).each do |direction|
         next if item.preferences[direction].blank?
 
@@ -38,11 +53,11 @@ class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
         end
 
         # overwrite the old key with the converted data
-        item.preferences[direction] = updated
+        preferences[direction] = updated
       end
 
       # update entry
-      item.save!
+      item.update_column(:preferences, preferences)
     end
   end
 end

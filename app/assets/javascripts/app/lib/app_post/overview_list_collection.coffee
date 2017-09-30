@@ -14,6 +14,9 @@ class _Singleton
       @overview[data.overview.view] = data
       @callback(data.overview.view, data)
 
+    App.Event.bind 'auth:logout', (data) =>
+      @clear(data)
+
   get: (view) ->
     @overview[view]
 
@@ -75,6 +78,12 @@ class _Singleton
           meta.callback(data)
         App.QueueManager.add('ticket_overviews', callback)
         App.QueueManager.run('ticket_overviews')
+
+  clear: =>
+    @overview = {}
+    @callbacks = {}
+    @fetchActive = {}
+    @counter = 0
 
 class App.OverviewListCollection
   _instance = new _Singleton

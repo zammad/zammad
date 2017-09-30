@@ -11,10 +11,10 @@
   </thead>
   <tbody>
     <% for item in @list: %>
-    <tr <% if item.state is 'hangup' && item.done: %>class="is-grayed-out"<% end %> data-id="<%- item.id %>">
+    <tr <% if item.done: %>class="is-grayed-out"<% end %> data-id="<%- item.id %>">
       <td class="table-checkbox" style="vertical-align: middle">
-        <label class="checkbox-replacement<% if item.state isnt 'hangup': %> is-disabled<% end %>">
-          <input type="checkbox" class="js-check"<% if item.done: %> checked<% end %><% if item.state isnt 'hangup': %> disabled<% end %>>
+        <label class="checkbox-replacement<% if item.disabled is true: %> is-disabled<% end %>">
+          <input type="checkbox" class="js-check"<% if item.done: %> checked<% end %><% if item.disabled is true: %> disabled<% end %>>
           <%- @Icon('checkbox', 'icon-unchecked') %>
           <%- @Icon('checkbox-checked', 'icon-checked') %>
         </label>

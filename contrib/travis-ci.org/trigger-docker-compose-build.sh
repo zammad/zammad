@@ -7,7 +7,7 @@ REPO_USER="zammad"
 REPO="zammad-docker-compose"
 BRANCH="master"
 
-if [ ${TRAVIS_BRANCH} == 'stable' ]; then
+if [ "${TRAVIS_BRANCH}" == 'stable' ]; then
   curl -X POST \
     -H "Content-Type: application/json" \
     -H "Travis-API-Version: 3" \

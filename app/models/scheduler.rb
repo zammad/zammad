@@ -12,10 +12,8 @@ class Scheduler < ApplicationModel
     Thread.abort_on_exception = true
 
     # reconnect in case db connection is lost
-    # See issue #1080
     begin
       ActiveRecord::Base.connection.reconnect!
-    rescue PG::UnableToSend => e # rubocop:disable Lint/HandleExceptions
     rescue => e
       logger.error "Can't reconnect to database #{e.inspect}"
     end

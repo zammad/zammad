@@ -81,8 +81,8 @@ push translations to online
       },
       {
         json: true,
-        open_timeout: 6,
-        read_timeout: 16,
+        open_timeout: 8,
+        read_timeout: 24,
       }
     )
     raise "Can't push translations to #{url}: #{result.error}" if !result.success?
