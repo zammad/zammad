@@ -16,7 +16,7 @@ Some Text"
     ticket = Ticket.find(ticket_p.id)
     assert_equal('test max sender identify', ticket.title)
 
-    assert_equal(current_users + 40, User.count)
+    assert_equal(current_users + 41, User.count)
   end
 
   def generate_recipient(count)
