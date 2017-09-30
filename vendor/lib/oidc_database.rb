@@ -1,6 +1,6 @@
 class OidcDatabase < OmniAuth::Strategies::Oidc
   option :name, 'oidc'
- 
+
   def initialize(app, *args, &block)
 
     # database lookup

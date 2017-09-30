@@ -1309,26 +1309,26 @@ Setting.create_if_not_exists(
   description: 'Enables user authentication via OpenID Connect.',
   options: {
     form: [
-      { 
+      {
         display: 'Name',
         null: true,
         name: 'name',
         tag: 'input',
         placeholder: 'Some Provider Name',
       },
-      { 
+      {
         display: 'App ID',
         null: true,
         name: 'app_id',
         tag: 'input',
       },
-      { 
+      {
         display: 'App Secret',
         null: true,
         name: 'app_secret',
         tag: 'input',
       },
-      { 
+      {
         display: 'Site',
         null: true,
         name: 'site',
