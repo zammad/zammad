@@ -135,6 +135,9 @@ group :development, :test do
 
   # mock http calls
   gem 'webmock'
+
+  # database cleaner
+  gem 'database_cleaner'
 end
 
 gem 'puma', group: :puma

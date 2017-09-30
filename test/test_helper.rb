@@ -4,6 +4,7 @@ require 'rails/test_help'
 require 'cache'
 require 'simplecov'
 require 'simplecov-rcov'
+require 'database_cleaner'
 require 'coveralls'
 Coveralls.wear!
 
@@ -32,6 +33,9 @@ class ActiveSupport::TestCase
 
   # clear cache
   Cache.clear
+
+  # database cleaner strategy
+  DatabaseCleaner.strategy = :truncation
 
   # load seeds
   load "#{Rails.root}/db/seeds.rb"
@@ -64,6 +68,8 @@ class ActiveSupport::TestCase
     Taskbar.destroy_all
     Sla.destroy_all
     Calendar.destroy_all
+
+    DatabaseCleaner.start
 
     # reset settings
     Setting.all.pluck(:name).each { |name|
@@ -119,6 +125,10 @@ class ActiveSupport::TestCase
       count += 1
     }
     count
+  end
+
+  def teardown
+    DatabaseCleaner.clean
   end
 
 end
