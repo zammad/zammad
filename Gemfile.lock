@@ -112,6 +112,7 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     daemons (1.2.4)
+    database_cleaner (1.6.1)
     delayed_job (4.1.3)
       activesupport (>= 3.0, < 5.2)
     delayed_job_active_record (4.1.2)
@@ -485,6 +486,7 @@ DEPENDENCIES
   composite_primary_keys!
   coveralls
   daemons
+  database_cleaner
   delayed_job_active_record
   diffy
   doorkeeper
@@ -554,4 +556,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.4
+   1.16.0.pre.2
