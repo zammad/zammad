@@ -9,11 +9,11 @@ namespace :test do
     if !args.opts
       args.opts = ''
     end
-    Dir.glob('test/browser/*_test.rb').sort.each { |r|
+    Dir.glob('test/browser/*_test.rb').sort.each do |r|
       sh "#{args.opts} ruby -Itest #{r}" do |ok, res|
         raise 'Failed test. ' + res.inspect if !ok
       end
-    }
+    end
     puts 'All browser tests, elapsed: ' + (Time.zone.now - start).to_s + ' seconds'
 
   end

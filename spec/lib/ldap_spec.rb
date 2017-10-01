@@ -206,13 +206,13 @@ RSpec.describe Ldap do
     # expectations and reuse it in 'let' instance
     # as return param of Net::LDAP.new
     let(:mocked_ldap) { double(bind: true) }
-    let(:instance) {
+    let(:instance) do
       expect(Net::LDAP).to receive(:new).and_return(mocked_ldap)
       described_class.new(
         host: 'localhost',
         port: 1337,
       )
-    }
+    end
 
     context '#preferences' do
 

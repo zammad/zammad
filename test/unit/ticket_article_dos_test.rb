@@ -72,7 +72,7 @@ class TicketArticleDos < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       article3 = Ticket::Article.create!(
         ticket_id: ticket3.id,
         type_id: Ticket::Article::Type.find_by(name: 'phone').id,
@@ -83,7 +83,7 @@ class TicketArticleDos < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1,
       )
-    }
+    end
 
   end
 
