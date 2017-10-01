@@ -53,7 +53,7 @@ returns
       stop_interval = 60
     end
     result = []
-    (1..stop_interval).each { |_counter|
+    (1..stop_interval).each do |_counter|
       match = false
       if !result_es
         raise "Invalid es result #{result_es.inspect}"
@@ -67,7 +67,7 @@ returns
       if !result_es['aggregations']['time_buckets']['buckets']
         raise "Invalid es result, no buckets #{result_es.inspect}"
       end
-      result_es['aggregations']['time_buckets']['buckets'].each { |item|
+      result_es['aggregations']['time_buckets']['buckets'].each do |item|
         if params[:interval] == 'minute'
           item['key_as_string'] = item['key_as_string'].sub(/:\d\d.\d\d\dZ$/, '')
           start_string = start.iso8601.sub(/:\d\dZ$/, '')
@@ -90,7 +90,7 @@ returns
         elsif params[:interval] == 'minute'
           start = start + 1.minute
         end
-      }
+      end
       next if match
       result.push 0
       if params[:interval] == 'month'
@@ -104,7 +104,7 @@ returns
       elsif params[:interval] == 'minute'
         start = start + 1.minute
       end
-    }
+    end
     result
   end
 
@@ -147,10 +147,10 @@ returns
 
     result = SearchIndexBackend.selectors(['Ticket'], selector, limit, nil, aggs_interval)
     assets = {}
-    result[:ticket_ids].each { |ticket_id|
+    result[:ticket_ids].each do |ticket_id|
       ticket_full = Ticket.find(ticket_id)
       assets = ticket_full.assets(assets)
-    }
+    end
     result[:assets] = assets
     result
   end

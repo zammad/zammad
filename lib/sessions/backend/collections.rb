@@ -11,14 +11,14 @@ class Sessions::Backend::Collections < Sessions::Backend::Base
 
   def push
     results = []
-    @backends.each { |backend|
+    @backends.each do |backend|
       #puts "B: #{backend.inspect}"
       result = backend.push
       #puts "R: #{result.inspect}"
       if result
         results.push result
       end
-    }
+    end
     results
   end
 
@@ -30,7 +30,7 @@ class Sessions::Backend::Collections < Sessions::Backend::Base
     # load collections to deliver from external files
     dir = File.expand_path('../../../../', __FILE__)
     files = Dir.glob("#{dir}/lib/sessions/backend/collections/*.rb")
-    files.each { |file|
+    files.each do |file|
       file.gsub!("#{dir}/lib/", '')
       file.gsub!(/\.rb$/, '')
       next if file.classify == 'Sessions::Backend::Collections::Base'
@@ -40,7 +40,7 @@ class Sessions::Backend::Collections < Sessions::Backend::Base
       if backend
         backends.push backend
       end
-    }
+    end
 
     backends
   end

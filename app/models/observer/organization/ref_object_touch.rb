@@ -24,20 +24,20 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
     return true if User.where(organization_id: record.id).count > 100
 
     # touch organizations tickets
-    Ticket.select('id').where(organization_id: record.id).pluck(:id).each { |ticket_id|
+    Ticket.select('id').where(organization_id: record.id).pluck(:id).each do |ticket_id|
       ticket = Ticket.find(ticket_id)
       ticket.with_lock do
         ticket.touch
       end
-    }
+    end
 
     # touch current members
-    User.select('id').where(organization_id: record.id).pluck(:id).each { |user_id|
+    User.select('id').where(organization_id: record.id).pluck(:id).each do |user_id|
       user = User.find(user_id)
       user.with_lock do
         user.touch
       end
-    }
+    end
     true
   end
 end

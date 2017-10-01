@@ -8,7 +8,7 @@ class ApplicationsController < ApplicationController
     if params[:full]
       assets = {}
       item_ids = []
-      all.each { |item|
+      all.each do |item|
         item_ids.push item.id
         if !assets[:Application]
           assets[:Application] = {}
@@ -16,7 +16,7 @@ class ApplicationsController < ApplicationController
         application = item.attributes
         application[:clients] = Doorkeeper::AccessToken.where(application_id: item.id).count
         assets[:Application][item.id] = application
-      }
+      end
       render json: {
         record_ids: item_ids,
         assets: assets,

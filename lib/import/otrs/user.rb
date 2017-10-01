@@ -92,7 +92,7 @@ module Import
       def group_ids(user)
         result = []
         queues = Import::OTRS::Requester.load('Queue')
-        queues.each { |queue|
+        queues.each do |queue|
 
           permissions = user['GroupIDs'][ queue['GroupID'] ]
 
@@ -100,7 +100,7 @@ module Import
           next if !permissions.include?('rw')
 
           result.push queue['QueueID']
-        }
+        end
 
         # lookup by roles
 
@@ -113,11 +113,11 @@ module Import
 
       def role_ids(user)
         local_role_ids = []
-        roles(user).each { |role|
+        roles(user).each do |role|
           role_lookup = Role.lookup(name: role)
           next if !role_lookup
           local_role_ids.push role_lookup.id
-        }
+        end
         local_role_ids
       end
 
@@ -135,9 +135,9 @@ module Import
 
       def groups_from_groups(role_object, groups)
         result = []
-        groups.each { |group|
+        groups.each do |group|
           result += groups_from_otrs_group(role_object, group)
-        }
+        end
         result
       end
 
@@ -162,10 +162,10 @@ module Import
       def groups_from_otrs_roles(user)
         result = []
         roles  = Import::OTRS::Requester.load('Role')
-        roles.each { |role|
+        roles.each do |role|
           next if !user['RoleIDs'].include?(role['ID'])
           result += groups_from_otrs_groups(role['GroupIDs'])
-        }
+        end
         result
       end
     end

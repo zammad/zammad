@@ -39,10 +39,10 @@ dedicated:
 =end
 
   def self.load(dedicated_locale = nil)
-    locals_to_sync(dedicated_locale).each { |locale|
+    locals_to_sync(dedicated_locale).each do |locale|
       fetch(locale)
       load_from_file(locale)
-    }
+    end
     true
   end
 
@@ -59,11 +59,11 @@ push translations to online
     # only push changed translations
     translations         = Translation.where(locale: locale)
     translations_to_push = []
-    translations.each { |translation|
+    translations.each do |translation|
       if translation.target != translation.target_initial
         translations_to_push.push translation
       end
-    }
+    end
 
     return true if translations_to_push.empty?
 
@@ -107,14 +107,14 @@ reset translations to origin
 
     # only push changed translations
     translations = Translation.where(locale: locale)
-    translations.each { |translation|
+    translations.each do |translation|
       if !translation.target_initial || translation.target_initial.empty?
         translation.destroy
       elsif translation.target != translation.target_initial
         translation.target = translation.target_initial
         translation.save
       end
-    }
+    end
 
     true
   end
@@ -145,7 +145,7 @@ get list of translations
                    else
                      Translation.where(locale: locale.downcase).where.not(target: '').order(:source)
                    end
-    translations.each { |item|
+    translations.each do |item|
       translation_item = []
       translation_item = if admin
                            [
@@ -164,18 +164,18 @@ get list of translations
                            ]
                          end
       list.push translation_item
-    }
+    end
 
     # add presorted on top
     presorted_list = []
-    %w(yes no or Year Years Month Months Day Days Hour Hours Minute Minutes Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec January February March April May June July August September October November December Mon Tue Wed Thu Fri Sat Sun Monday Tuesday Wednesday Thursday Friday Saturday Sunday).each { |presort|
-      list.each { |item|
+    %w(yes no or Year Years Month Months Day Days Hour Hours Minute Minutes Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec January February March April May June July August September October November December Mon Tue Wed Thu Fri Sat Sun Monday Tuesday Wednesday Thursday Friday Saturday Sunday).each do |presort|
+      list.each do |item|
         next if item[1] != presort
         presorted_list.push item
         list.delete item
         #list.unshift presort
-      }
-    }
+      end
+    end
     data['list'] = presorted_list.concat list
 
     # set cache
@@ -198,15 +198,15 @@ translate strings in ruby context, e. g. for notifications
 
     # translate string
     records = Translation.where(locale: locale, source: string)
-    records.each { |record|
+    records.each do |record|
       return record.target if record.source == string
-    }
+    end
 
     # fallback lookup in en
     records = Translation.where(locale: 'en', source: string)
-    records.each { |record|
+    records.each do |record|
       return record.target if record.source == string
-    }
+    end
 
     string
   end
@@ -228,12 +228,12 @@ all:
   def self.load_from_file(dedicated_locale = nil)
     version = Version.get
     directory = Rails.root.join('config/translations')
-    locals_to_sync(dedicated_locale).each { |locale|
+    locals_to_sync(dedicated_locale).each do |locale|
       file = Rails.root.join("#{directory}/#{locale}-#{version}.yml")
       return false if !File.exist?(file)
       data = YAML.load_file(file)
       to_database(locale, data)
-    }
+    end
     true
   end
 
@@ -253,7 +253,7 @@ all:
 
   def self.fetch(dedicated_locale = nil)
     version = Version.get
-    locals_to_sync(dedicated_locale).each { |locale|
+    locals_to_sync(dedicated_locale).each do |locale|
       url = "https://i18n.zammad.com/api/v1/translations/#{locale}"
       if !UserInfo.current_user_id
         UserInfo.current_user_id = 1
@@ -279,7 +279,7 @@ all:
       File.open(file, 'w') do |out|
         YAML.dump(result.data, out)
       end
-    }
+    end
     true
   end
 
@@ -321,7 +321,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
     header = rows.shift
 
     translation_raw = []
-    rows.each { |row|
+    rows.each do |row|
       raise "Can't import translation, source is missing" if row[0].blank?
       if row[1].blank?
         warn "Skipped #{row[0]}, because translation is blank"
@@ -337,7 +337,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
         'format'         => row[2],
       }
       translation_raw.push item
-    }
+    end
     to_database(locale.name, translation_raw)
     true
   end
@@ -345,21 +345,21 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
   private_class_method def self.to_database(locale, data)
     translations = Translation.where(locale: locale).all
     ActiveRecord::Base.transaction do
-      data.each { |translation_raw|
+      data.each do |translation_raw|
 
         # handle case insensitive sql
         translation = nil
-        translations.each { |item|
+        translations.each do |item|
           next if item.format != translation_raw['format']
           next if item.source != translation_raw['source']
           translation = item
           break
-        }
+        end
         if translation
 
           # verify if update is needed
           update_needed = false
-          translation_raw.each { |key, _value|
+          translation_raw.each do |key, _value|
 
             # if translation target has changes
             next unless translation_raw[key] != translation.target
@@ -369,7 +369,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
               update_needed = true
               break
             end
-          }
+          end
           if update_needed
             translation.update!(translation_raw.symbolize_keys!)
             translation.save
@@ -381,7 +381,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
           end
           Translation.create(translation_raw.symbolize_keys!)
         end
-      }
+      end
     end
   end
 
@@ -389,9 +389,9 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
     locales_list = []
     if !dedicated_locale
       locales = Locale.to_sync
-      locales.each { |locale|
+      locales.each do |locale|
         locales_list.push locale.locale
-      }
+      end
     else
       locales_list = [dedicated_locale]
     end

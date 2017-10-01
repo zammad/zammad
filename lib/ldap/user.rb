@@ -61,11 +61,11 @@ class Ldap
     # @return [String] The uid attribute.
     def self.uid_attribute(attributes)
       result = nil
-      %i(samaccountname userprincipalname uid dn).each { |attribute|
+      %i(samaccountname userprincipalname uid dn).each do |attribute|
         next if attributes[attribute].blank?
         result = attribute.to_s
         break
-      }
+      end
       result
     end
 

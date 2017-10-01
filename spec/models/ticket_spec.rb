@@ -42,23 +42,23 @@ RSpec.describe Ticket do
       )
       expect(result).to be(true)
 
-      expect {
+      expect do
         result = target_ticket.merge_to(
           ticket_id: source_ticket.id,
           user_id:   1,
         )
-      }.to raise_error('ticket already merged, no merge into merged ticket possible')
+      end.to raise_error('ticket already merged, no merge into merged ticket possible')
     end
 
     it 'prevents merging ticket in it self' do
       source_ticket = create(:ticket)
 
-      expect {
+      expect do
         result = source_ticket.merge_to(
           ticket_id: source_ticket.id,
           user_id:   1,
         )
-      }.to raise_error('Can\'t merge ticket with it self!')
+      end.to raise_error('Can\'t merge ticket with it self!')
     end
 
   end

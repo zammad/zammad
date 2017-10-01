@@ -46,16 +46,16 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
 
     # get relations of data
     all = []
-    items.each { |item|
+    items.each do |item|
       all.push item.attributes_with_association_ids
-    }
+    end
 
     # collect assets
     assets = {}
-    items.each { |item|
+    items.each do |item|
       next if !asset_needed?(item)
       assets = item.assets(assets)
-    }
+    end
     if !@client
       return {
         collection: {

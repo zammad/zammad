@@ -24,7 +24,7 @@ check and if channel not exists reset configured channels for email addresses
 =end
 
   def self.channel_cleanup
-    EmailAddress.all.each { |email_address|
+    EmailAddress.all.each do |email_address|
 
       # set to active if channel exists
       if email_address.channel_id && Channel.find_by(id: email_address.channel_id)
@@ -37,7 +37,7 @@ check and if channel not exists reset configured channels for email addresses
       # set in inactive if channel not longer exists
       next if !email_address.active
       email_address.save!
-    }
+    end
   end
 
   private
@@ -68,9 +68,9 @@ check and if channel not exists reset configured channels for email addresses
 
   # delete group.email_address_id reference if email address get's deleted
   def delete_group_reference
-    Group.where(email_address_id: id).each { |group|
+    Group.where(email_address_id: id).each do |group|
       group.update!(email_address_id: nil)
-    }
+    end
   end
 
   # keep email email address is of inital group filled

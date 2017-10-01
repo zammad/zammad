@@ -33,7 +33,7 @@ end
 if !File.directory?(directory_translations)
   Dir.mkdir(directory_translations, 0o755)
 end
-data.each { |locale|
+data.each do |locale|
   url = "#{url_translations}#{locale['locale']}?version=#{version}"
   uri = URI.parse(url)
   http = Net::HTTP.new(uri.host, uri.port)
@@ -46,5 +46,5 @@ data.each { |locale|
   File.open(file, 'w') do |out|
     YAML.dump(data, out)
   end
-}
+end
 puts 'done'

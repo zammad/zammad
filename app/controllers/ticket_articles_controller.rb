@@ -39,13 +39,13 @@ class TicketArticlesController < ApplicationController
     articles = []
 
     if params[:expand]
-      ticket.articles.each { |article|
+      ticket.articles.each do |article|
 
         # ignore internal article if customer is requesting
         next if article.internal == true && current_user.permissions?('ticket.customer')
         result = article.attributes_with_association_names
         articles.push result
-      }
+      end
 
       render json: articles, status: :ok
       return
@@ -54,14 +54,14 @@ class TicketArticlesController < ApplicationController
     if params[:full]
       assets = {}
       record_ids = []
-      ticket.articles.each { |article|
+      ticket.articles.each do |article|
 
         # ignore internal article if customer is requesting
         next if article.internal == true && current_user.permissions?('ticket.customer')
 
         record_ids.push article.id
         assets = article.assets({})
-      }
+      end
       render json: {
         record_ids: record_ids,
         assets: assets,
@@ -69,12 +69,12 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    ticket.articles.each { |article|
+    ticket.articles.each do |article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && current_user.permissions?('ticket.customer')
       articles.push article.attributes_with_association_names
-    }
+    end
     render json: articles
   end
 
@@ -224,11 +224,11 @@ class TicketArticlesController < ApplicationController
 
     list = article.attachments || []
     access = false
-    list.each { |item|
+    list.each do |item|
       if item.id.to_i == params[:id].to_i
         access = true
       end
-    }
+    end
     raise Exceptions::NotAuthorized, 'Requested file id is not linked with article_id.' if !access
 
     # find file

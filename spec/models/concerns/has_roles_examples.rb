@@ -4,10 +4,10 @@ RSpec.shared_examples 'HasRoles' do
 
   context 'role' do
 
-    let(:group_access_instance_inactive) {
+    let(:group_access_instance_inactive) do
       group_access_instance.update!(active: false)
       group_access_instance
-    }
+    end
     let(:role) { create(:role) }
     let(:group_instance) { create(:group) }
     let(:group_role) { create(:group) }

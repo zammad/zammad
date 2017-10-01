@@ -42,9 +42,9 @@ returns
 
     # store session data in session file
     FileUtils.mkpath path_tmp
-    File.open(session_file, 'wb') { |file|
+    File.open(session_file, 'wb') do |file|
       file.write content
-    }
+    end
 
     # destroy old session if needed
     if File.exist?(path)
@@ -148,11 +148,11 @@ returns
   def self.list
     client_ids = sessions
     session_list = {}
-    client_ids.each { |client_id|
+    client_ids.each do |client_id|
       data = get(client_id)
       next if !data
       session_list[client_id] = data
-    }
+    end
     session_list
   end
 
@@ -188,12 +188,12 @@ returns
   def self.destroy_idle_sessions(idle_time_in_sec = 240)
     list_of_closed_sessions = []
     clients                 = Sessions.list
-    clients.each { |client_id, client|
+    clients.each do |client_id, client|
       if !client[:meta] || !client[:meta][:last_ping] || ( client[:meta][:last_ping].to_i + idle_time_in_sec ) < Time.now.utc.to_i
         list_of_closed_sessions.push client_id
         Sessions.destroy(client_id)
       end
-    }
+    end
     list_of_closed_sessions
   end
 
@@ -214,11 +214,11 @@ returns
     return false if !data
     path = "#{@path}/#{client_id}"
     data[:meta][:last_ping] = Time.now.utc.to_i
-    File.open("#{path}/session", 'wb' ) { |file|
+    File.open("#{path}/session", 'wb' ) do |file|
       file.flock(File::LOCK_EX)
       file.write data.to_json
       file.flock(File::LOCK_UN)
-    }
+    end
     true
   end
 
@@ -261,7 +261,7 @@ returns
       return
     end
     begin
-      File.open(session_file, 'rb') { |file|
+      File.open(session_file, 'rb') do |file|
         file.flock(File::LOCK_SH)
         all = file.read
         file.flock(File::LOCK_UN)
@@ -270,7 +270,7 @@ returns
           data        = symbolize_keys(data_json)
           data[:user] = data_json['user'] # for compat. reasons
         end
-      }
+      end
     rescue => e
       log('error', e.inspect)
       destroy(client_id)
@@ -308,12 +308,12 @@ returns
     end
     return false if !File.directory? path
     begin
-      File.open(location, 'wb') { |file|
+      File.open(location, 'wb') do |file|
         file.flock(File::LOCK_EX)
         file.write data.to_json
         file.flock(File::LOCK_UN)
         file.close
-      }
+      end
     rescue => e
       log('error', e.inspect)
       log('error', "error in writing message file '#{location}'")
@@ -338,14 +338,14 @@ returns
 
     # list all current clients
     client_list = sessions
-    client_list.each { |client_id|
+    client_list.each do |client_id|
       session = Sessions.get(client_id)
       next if !session
       next if !session[:user]
       next if !session[:user]['id']
       next if session[:user]['id'].to_i != user_id.to_i
       Sessions.send(client_id, data)
-    }
+    end
     true
   end
 
@@ -374,7 +374,7 @@ broadcase also not to sender
     # list all current clients
     recipients = []
     client_list = sessions
-    client_list.each { |client_id|
+    client_list.each do |client_id|
       session = Sessions.get(client_id)
       next if !session
 
@@ -388,7 +388,7 @@ broadcase also not to sender
       end
       Sessions.send(client_id, data)
       recipients.push client_id
-    }
+    end
     recipients
   end
 
@@ -417,29 +417,29 @@ returns
     path  = "#{@path}/#{client_id}/"
     data  = []
     files = []
-    Dir.foreach(path) { |entry|
+    Dir.foreach(path) do |entry|
       next if entry == '.'
       next if entry == '..'
       files.push entry
-    }
-    files.sort.each { |entry|
+    end
+    files.sort.each do |entry|
       filename = "#{path}/#{entry}"
       next if entry !~ /^send/
       message = Sessions.queue_file_read(path, entry)
       next if !message
       data.push message
-    }
+    end
     data
   end
 
   def self.queue_file_read(path, filename)
     location = "#{path}#{filename}"
     message = ''
-    File.open(location, 'rb') { |file|
+    File.open(location, 'rb') do |file|
       file.flock(File::LOCK_EX)
       message = file.read
       file.flock(File::LOCK_UN)
-    }
+    end
     File.delete(location)
     return if message.blank?
     begin
@@ -473,11 +473,11 @@ remove all session and spool messages
       timestamp: Time.now.utc.to_i,
     }
     file_path = "#{path}/#{Time.now.utc.to_f}-#{rand(99_999)}"
-    File.open(file_path, 'wb') { |file|
+    File.open(file_path, 'wb') do |file|
       file.flock(File::LOCK_EX)
       file.write data.to_json
       file.flock(File::LOCK_UN)
-    }
+    end
   end
 
   def self.spool_list(timestamp, current_user_id)
@@ -486,15 +486,15 @@ remove all session and spool messages
     data      = []
     to_delete = []
     files     = []
-    Dir.foreach(path) { |entry|
+    Dir.foreach(path) do |entry|
       next if entry == '.'
       next if entry == '..'
       files.push entry
-    }
-    files.sort.each { |entry|
+    end
+    files.sort.each do |entry|
       filename = "#{path}/#{entry}"
       next if !File.exist?(filename)
-      File.open(filename, 'rb') { |file|
+      File.open(filename, 'rb') do |file|
         file.flock(File::LOCK_SH)
         message = file.read
         file.flock(File::LOCK_UN)
@@ -522,7 +522,7 @@ remove all session and spool messages
           # spool to recipient list
           if message_parsed['recipient'] && message_parsed['recipient']['user_id']
 
-            message_parsed['recipient']['user_id'].each { |user_id|
+            message_parsed['recipient']['user_id'].each do |user_id|
 
               next if current_user_id != user_id
 
@@ -536,7 +536,7 @@ remove all session and spool messages
                 message: message,
               }
               data.push item
-            }
+            end
 
           # spool to every client
           else
@@ -551,11 +551,11 @@ remove all session and spool messages
             data.push item
           end
         end
-      }
-    }
-    to_delete.each { |file|
+      end
+    end
+    to_delete.each do |file|
       File.delete(file)
-    }
+    end
     data
   end
 
@@ -569,7 +569,7 @@ remove all session and spool messages
     Thread.abort_on_exception = true
     loop do
       client_ids = sessions
-      client_ids.each { |client_id|
+      client_ids.each do |client_id|
 
         # connection already open, ignore
         next if @@client_threads[client_id]
@@ -586,14 +586,14 @@ remove all session and spool messages
         next if @@client_threads[client_id]
 
         @@client_threads[client_id] = true
-        @@client_threads[client_id] = Thread.new {
+        @@client_threads[client_id] = Thread.new do
           thread_client(client_id)
           @@client_threads[client_id] = nil
           log('debug', "close client (#{client_id}) thread")
           ActiveRecord::Base.connection.close
-        }
+        end
         sleep 0.5
-      }
+      end
 
       # system settings
       sleep 0.5
@@ -662,7 +662,7 @@ returns
   end
 
   def self.symbolize_keys(hash)
-    hash.each_with_object({}) { |(key, value), result|
+    hash.each_with_object({}) do |(key, value), result|
       new_key = case key
                 when String then key.to_sym
                 else key
@@ -672,7 +672,7 @@ returns
                   else value
                   end
       result[new_key] = new_value
-    }
+    end
   end
 
   # we use it in rails and non rails context

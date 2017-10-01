@@ -44,7 +44,7 @@ returns
     def self.lookup(caller_id)
 
       result = []
-      ['known', 'maybe', nil].each { |level|
+      ['known', 'maybe', nil].each do |level|
 
         search_params = {
           caller_id: caller_id,
@@ -55,11 +55,11 @@ returns
         end
 
         caller_ids = Cti::CallerId.select('MAX(id) as caller_id').where(search_params).group(:user_id).order('caller_id DESC').limit(20).map(&:caller_id)
-        Cti::CallerId.where(id: caller_ids).order(id: :desc).each { |record|
+        Cti::CallerId.where(id: caller_ids).order(id: :desc).each do |record|
           result.push record
-        }
+        end
         break if result.present?
-      }
+      end
       result
     end
 
@@ -73,11 +73,11 @@ returns
       map = config
       level = nil
       model = nil
-      map.each { |item|
+      map.each do |item|
         next if item[:model] != record.class
         level = item[:level]
         model = item[:model]
-      }
+      end
       return if !level || !model
       build_item(record, model, level)
     end
@@ -108,17 +108,17 @@ returns
       # get caller ids
       caller_ids = []
       attributes = record.attributes
-      attributes.each { |_attribute, value|
+      attributes.each do |_attribute, value|
         next if value.class != String
         next if value.empty?
         local_caller_ids = Cti::CallerId.extract_numbers(value)
         next if local_caller_ids.empty?
         caller_ids = caller_ids.concat(local_caller_ids)
-      }
+      end
 
       # store caller ids
       Cti::CallerId.where(object: model.to_s, o_id: record.id).destroy_all
-      caller_ids.each { |caller_id|
+      caller_ids.each do |caller_id|
         Cti::CallerId.maybe_add(
           caller_id: caller_id,
           level: level,
@@ -126,7 +126,7 @@ returns
           o_id: record.id,
           user_id: user_id,
         )
-      }
+      end
       true
     end
 
@@ -139,13 +139,13 @@ returns
     def self.rebuild
       transaction do
         delete_all
-        config.each { |item|
+        config.each do |item|
           level = item[:level]
           model = item[:model]
           item[:model].find_each(batch_size: 500) do |record|
             build_item(record, model, level)
           end
-        }
+        end
       end
     end
 
@@ -221,7 +221,7 @@ returns
       preferences_maybe = {}
       preferences_maybe[direction] = []
 
-      lookup(extract_numbers(caller_id)).each { |record|
+      lookup(extract_numbers(caller_id)).each do |record|
         if record.level == 'known'
           preferences_known[direction].push record.attributes
         else
@@ -247,7 +247,7 @@ returns
           end
           from_comment_maybe += comment
         end
-      }
+      end
       return [from_comment_known, preferences_known] if !from_comment_known.empty?
       return ["maybe #{from_comment_maybe}", preferences_maybe] if !from_comment_maybe.empty?
       nil

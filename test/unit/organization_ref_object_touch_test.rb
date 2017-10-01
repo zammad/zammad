@@ -176,7 +176,7 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    (1..100).each { |count|
+    (1..100).each do |count|
       User.create_or_update(
         login: "organization-ref-object-update-customer3-#{count}@example.com",
         firstname: 'Notification',
@@ -190,7 +190,7 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1,
       )
-    }
+    end
 
     ticket = Ticket.create!(
       title: "some title1\n äöüß",

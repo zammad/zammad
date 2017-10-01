@@ -140,7 +140,7 @@ stream all accounts
 
       current_channels = []
       channels = Channel.where('active = ? AND area LIKE ?', true, '%::Account')
-      channels.each { |channel|
+      channels.each do |channel|
         next if channel.options[:adapter] != 'twitter'
         channel_id = channel.id.to_s
         current_channels.push channel_id
@@ -174,7 +174,7 @@ stream all accounts
         sleep @@channel_stream.count
 
         # start threads for each channel
-        @@channel_stream[channel_id][:thread] = Thread.new {
+        @@channel_stream[channel_id][:thread] = Thread.new do
           begin
             logger.info "Started stream channel for '#{channel.id}' (#{channel.area})..."
             @@channel_stream[channel_id] ||= {}
@@ -192,11 +192,11 @@ stream all accounts
             channel.save
             @@channel_stream[channel_id] = false
           end
-        }
-      }
+        end
+      end
 
       # cleanup deleted channels
-      last_channels.each { |channel_id|
+      last_channels.each do |channel_id|
         next if !@@channel_stream[channel_id.to_s]
         next if current_channels.include?(channel_id)
         logger.info "channel (#{channel_id}) not longer active, stop thread"
@@ -204,7 +204,7 @@ stream all accounts
         @@channel_stream[channel_id.to_s][:thread].join
         @@channel_stream[channel_id.to_s][:stream_instance].disconnect
         @@channel_stream[channel_id.to_s] = false
-      }
+      end
       last_channels = current_channels
 
       sleep 20

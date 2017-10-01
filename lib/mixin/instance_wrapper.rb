@@ -16,9 +16,9 @@ module Mixin
       #
       # @return [nil]
       def wrap(variable)
-        define_method(:instance) {
+        define_method(:instance) do
           instance_variable_get(variable)
-        }
+        end
       end
     end
 

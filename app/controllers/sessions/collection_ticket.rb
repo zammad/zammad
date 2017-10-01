@@ -5,42 +5,42 @@ module ExtraCollection
 
     # all ticket stuff
     collections[ Macro.to_app_model ] = []
-    Macro.all.each { |item|
+    Macro.all.each do |item|
       assets = item.assets(assets)
-    }
+    end
     collections[ Ticket::StateType.to_app_model ] = []
-    Ticket::StateType.all.each { |item|
+    Ticket::StateType.all.each do |item|
       assets = item.assets(assets)
-    }
+    end
     collections[ Ticket::State.to_app_model ] = []
-    Ticket::State.all.each { |item|
+    Ticket::State.all.each do |item|
       assets = item.assets(assets)
-    }
+    end
     collections[ Ticket::Priority.to_app_model ] = []
-    Ticket::Priority.all.each { |item|
+    Ticket::Priority.all.each do |item|
       assets = item.assets(assets)
-    }
+    end
     collections[ Ticket::Article::Type.to_app_model ] = []
-    Ticket::Article::Type.all.each { |item|
+    Ticket::Article::Type.all.each do |item|
       assets = item.assets(assets)
-    }
+    end
     collections[ Ticket::Article::Sender.to_app_model ] = []
-    Ticket::Article::Sender.all.each { |item|
+    Ticket::Article::Sender.all.each do |item|
       assets = item.assets(assets)
-    }
+    end
     if user.permissions?(['ticket.agent', 'admin.channel_email'])
 
       # all signatures
       collections[ Signature.to_app_model ] = []
-      Signature.all.each { |item|
+      Signature.all.each do |item|
         assets = item.assets(assets)
-      }
+      end
 
       # all email addresses
       collections[ EmailAddress.to_app_model ] = []
-      EmailAddress.all.each { |item|
+      EmailAddress.all.each do |item|
         assets = item.assets(assets)
-      }
+      end
     end
     [collections, assets]
   end

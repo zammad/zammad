@@ -49,9 +49,9 @@ module Import
           'Automations'        => 0,
         }
 
-        result.each { |object, _score|
+        result.each do |object, _score|
           result[ object ] = statistic_count(object)
-        }
+        end
 
         Cache.write('import_zendesk_stats', result)
         result

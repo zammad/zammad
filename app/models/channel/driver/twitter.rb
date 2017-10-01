@@ -184,7 +184,7 @@ returns
 
   def stream
     sleep_on_unauthorized = 61
-    2.times { |loop_count|
+    2.times do |loop_count|
       begin
         stream_start
       rescue Twitter::Error::Unauthorized => e
@@ -196,7 +196,7 @@ returns
           raise "Unable to stream, try #{loop_count}, error #{e.inspect}"
         end
       end
-    }
+    end
   end
 
   def stream_start
@@ -207,9 +207,9 @@ returns
     filter = {}
     if sync['search']
       hashtags = []
-      sync['search'].each { |item|
+      sync['search'].each do |item|
         hashtags.push item['term']
-      }
+      end
       filter[:track] = hashtags.join(',')
     end
     if sync['mentions'] && sync['mentions']['group_id'] != ''
@@ -242,11 +242,11 @@ returns
       if sync['mentions'] && sync['mentions']['group_id'] != ''
         hit = false
         if tweet.user_mentions
-          tweet.user_mentions.each { |user|
+          tweet.user_mentions.each do |user|
             if user.id.to_s == @channel.options['user']['id'].to_s
               hit = true
             end
-          }
+          end
         end
         if hit
           @stream_client.to_group(tweet, sync['mentions']['group_id'], @channel)
@@ -257,14 +257,14 @@ returns
       # check hashtags
       if sync['search'] && tweet.hashtags
         hit = false
-        sync['search'].each { |item|
-          tweet.hashtags.each { |hashtag|
+        sync['search'].each do |item|
+          tweet.hashtags.each do |hashtag|
             next if item['term'] !~ /^#/
             if item['term'].sub(/^#/, '') == hashtag.text
               hit = item
             end
-          }
-        }
+          end
+        end
         if hit
           @stream_client.to_group(tweet, hit['group_id'], @channel)
           next
@@ -275,12 +275,12 @@ returns
       if sync['search']
         hit = false
         body = tweet.text
-        sync['search'].each { |item|
+        sync['search'].each do |item|
           next if item['term'] =~ /^#/
           if body =~ /#{item['term']}/
             hit = item
           end
-        }
+        end
         if hit
           @stream_client.to_group(tweet, hit['group_id'], @channel)
         end
@@ -293,14 +293,14 @@ returns
 
   def fetch_search
     return if @sync[:search].blank?
-    @sync[:search].each { |search|
+    @sync[:search].each do |search|
       next if search[:term].blank?
       next if search[:group_id].blank?
       result_type = search[:type] || 'mixed'
       Rails.logger.debug " - searching for '#{search[:term]}'"
       older_import = 0
       older_import_max = 20
-      @rest_client.client.search(search[:term], result_type: result_type).collect { |tweet|
+      @rest_client.client.search(search[:term], result_type: result_type).collect do |tweet|
         next if !track_retweets? && tweet.retweet?
 
         # ignore older messages
@@ -314,8 +314,8 @@ returns
         next if Ticket::Article.find_by(message_id: tweet.id)
         break if @rest_client.tweet_limit_reached(tweet)
         @rest_client.to_group(tweet, search[:group_id], @channel)
-      }
-    }
+      end
+    end
   end
 
   def fetch_mentions
@@ -324,7 +324,7 @@ returns
     Rails.logger.debug ' - searching for mentions'
     older_import = 0
     older_import_max = 20
-    @rest_client.client.mentions_timeline.each { |tweet|
+    @rest_client.client.mentions_timeline.each do |tweet|
       next if !track_retweets? && tweet.retweet?
 
       # ignore older messages
@@ -336,7 +336,7 @@ returns
       next if Ticket::Article.find_by(message_id: tweet.id)
       break if @rest_client.tweet_limit_reached(tweet)
       @rest_client.to_group(tweet, @sync[:mentions][:group_id], @channel)
-    }
+    end
   end
 
   def fetch_direct_messages
@@ -345,7 +345,7 @@ returns
     Rails.logger.debug ' - searching for direct_messages'
     older_import = 0
     older_import_max = 20
-    @rest_client.client.direct_messages(full_text: 'true').each { |tweet|
+    @rest_client.client.direct_messages(full_text: 'true').each do |tweet|
 
       # ignore older messages
       if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
@@ -356,7 +356,7 @@ returns
       next if Ticket::Article.find_by(message_id: tweet.id)
       break if @rest_client.direct_message_limit_reached(tweet)
       @rest_client.to_group(tweet, @sync[:direct_messages][:group_id], @channel)
-    }
+    end
   end
 
   def check_external_credential(options)
@@ -376,7 +376,7 @@ returns
   def own_tweet_already_imported?(tweet)
     event_time = Time.zone.now
     sleep 4
-    12.times { |loop_count|
+    12.times do |loop_count|
       if Ticket::Article.find_by(message_id: tweet.id)
         Rails.logger.debug "Own tweet already imported, skipping tweet #{tweet.id}"
         return true
@@ -387,7 +387,7 @@ returns
       sleep_time = 5 if sleep_time > 5
       Rails.logger.debug "Delay importing own tweets - sleep #{sleep_time} (loop #{loop_count})"
       sleep sleep_time
-    }
+    end
 
     if Ticket::Article.find_by(message_id: tweet.id)
       Rails.logger.debug "Own tweet already imported, skipping tweet #{tweet.id}"

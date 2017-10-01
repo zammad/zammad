@@ -29,9 +29,9 @@ returns
                   else
                     where(name: data[:name])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           return loop_record if loop_record.name == data[:name]
-        }
+        end
       elsif data[:login]
 
         # do lookup with == to handle case insensitive databases
@@ -40,9 +40,9 @@ returns
                   else
                     where(login: data[:login])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           return loop_record if loop_record.login == data[:login]
-        }
+        end
       elsif data[:email]
 
         # do lookup with == to handle case insensitive databases
@@ -51,9 +51,9 @@ returns
                   else
                     where(email: data[:email])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           return loop_record if loop_record.email == data[:email]
-        }
+        end
       elsif data[:locale] && data[:source]
 
         # do lookup with == to handle case insensitive databases
@@ -62,9 +62,9 @@ returns
                   else
                     where(locale: data[:locale], source: data[:source])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           return loop_record if loop_record.source == data[:source]
-        }
+        end
       end
       create(data)
     end
@@ -133,12 +133,12 @@ returns
                   else
                     where(name: data[:name])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           if loop_record.name == data[:name]
             loop_record.update!(data)
             return loop_record
           end
-        }
+        end
         record = new(data)
         record.save
         return record
@@ -150,12 +150,12 @@ returns
                   else
                     where(login: data[:login])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           if loop_record.login.casecmp(data[:login]).zero?
             loop_record.update!(data)
             return loop_record
           end
-        }
+        end
         record = new(data)
         record.save
         return record
@@ -167,12 +167,12 @@ returns
                   else
                     where(email: data[:email])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           if loop_record.email.casecmp(data[:email]).zero?
             loop_record.update!(data)
             return loop_record
           end
-        }
+        end
         record = new(data)
         record.save
         return record
@@ -184,12 +184,12 @@ returns
                   else
                     where(locale: data[:locale])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           if loop_record.locale.casecmp(data[:locale]).zero?
             loop_record.update!(data)
             return loop_record
           end
-        }
+        end
         record = new(data)
         record.save
         return record

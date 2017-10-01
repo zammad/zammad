@@ -13,7 +13,7 @@ module Import
         statistic
 
         # start thread to observe current state
-        status_update_thread = Thread.new {
+        status_update_thread = Thread.new do
           loop do
             result = {
               data: current_state,
@@ -22,7 +22,7 @@ module Import
             Cache.write('import:state', result, expires_in: 10.minutes)
             sleep 8
           end
-        }
+        end
         sleep 2
 
         # start import data

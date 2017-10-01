@@ -355,7 +355,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     assert(!OnlineNotification.all_seen?('Ticket', tickets[1].id), 'no notifications for master ticket available')
 
     # delete tickets
-    tickets.each { |ticket|
+    tickets.each do |ticket|
       ticket_id = ticket.id
       ticket.destroy
       found = Ticket.find_by(id: ticket_id)
@@ -365,7 +365,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       Scheduler.worker(true)
       notifications = OnlineNotification.list_by_object('Ticket', ticket_id)
       assert(notifications.empty?, 'still notifications for destroyed ticket available')
-    }
+    end
   end
 
   test 'ticket notification item check' do

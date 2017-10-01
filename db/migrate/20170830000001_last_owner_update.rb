@@ -5,10 +5,10 @@ class LastOwnerUpdate < ActiveRecord::Migration[4.2]
     return if !Setting.find_by(name: 'system_init_done')
 
     # reset assignment_timeout to prevent unwanted things happen
-    Group.all.each { |group|
+    Group.all.each do |group|
       group.assignment_timeout = nil
       group.save!
-    }
+    end
 
     add_column :tickets, :last_owner_update_at, :timestamp, limit: 3, null: true
     add_index :tickets, [:last_owner_update_at]
@@ -27,12 +27,12 @@ class LastOwnerUpdate < ActiveRecord::Migration[4.2]
     state_ids = Ticket::State.by_category(:work_on).pluck(:id)
     if state_ids.present?
       ticket_ids = Ticket.where('tickets.state_id IN (?) AND tickets.owner_id != 1', state_ids).order(created_at: :desc).limit(1000).pluck(:id)
-      ticket_ids.each { |ticket_id|
+      ticket_ids.each do |ticket_id|
         ticket = Ticket.find_by(id: ticket_id)
         next if !ticket
         ticket.last_owner_update_at = last_owner_update_at(ticket)
         ticket.save!
-      }
+      end
     end
   end
 

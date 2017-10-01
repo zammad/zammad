@@ -247,18 +247,18 @@ returns
 
       # add assets
       assets = {}
-      list.each { |item|
+      list.each do |item|
         next if !item.preferences
-        %w(from to).each { |direction|
+        %w(from to).each do |direction|
           next if !item.preferences[direction]
-          item.preferences[direction].each { |caller_id|
+          item.preferences[direction].each do |caller_id|
             next if !caller_id['user_id']
             user = User.lookup(id: caller_id['user_id'])
             next if !user
             assets = user.assets(assets)
-          }
-        }
-      }
+          end
+        end
+      end
 
       {
         list: list,
@@ -344,7 +344,7 @@ Cti::Log.process(
 
     def push_event
       users = User.with_permissions('cti.agent')
-      users.each { |user|
+      users.each do |user|
 
         # send notify about event
         Sessions.send_to(
@@ -354,14 +354,14 @@ Cti::Log.process(
             data: self,
           },
         )
-      }
+      end
     end
 
     def push_caller_list
       list = Cti::Log.log
 
       users = User.with_permissions('cti.agent')
-      users.each { |user|
+      users.each do |user|
 
         # send notify on create/update/delete
         Sessions.send_to(
@@ -371,7 +371,7 @@ Cti::Log.process(
             data: list,
           },
         )
-      }
+      end
     end
 
 =begin

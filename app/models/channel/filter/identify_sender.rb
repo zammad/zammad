@@ -32,7 +32,7 @@ module Channel::Filter::IdentifySender
           to = 'raw-to'.to_sym
           if mail[to] && mail[to].addrs
             items = mail[to].addrs
-            items.each { |item|
+            items.each do |item|
 
               # skip if recipient is system email
               next if EmailAddress.find_by(email: item.address.downcase)
@@ -43,7 +43,7 @@ module Channel::Filter::IdentifySender
                 email: item.address,
               )
               break
-            }
+            end
           end
         rescue => e
           Rails.logger.error 'ERROR: SenderIsSystemAddress: ' + e.inspect
@@ -89,12 +89,12 @@ module Channel::Filter::IdentifySender
   def self.create_recipients(mail)
     max_count = 40
     current_count = 0
-    ['raw-to', 'raw-cc'].each { |item|
+    ['raw-to', 'raw-cc'].each do |item|
       next if !mail[item.to_sym]
       begin
         next if !mail[item.to_sym].addrs
         items = mail[item.to_sym].addrs
-        items.each { |address_data|
+        items.each do |address_data|
           next if address_data.address.blank?
           user_create(
             firstname: address_data.display_name,
@@ -103,7 +103,7 @@ module Channel::Filter::IdentifySender
           )
           current_count += 1
           return false if current_count == max_count
-        }
+        end
       rescue => e
         # parse not parseable fields by mail gem like
         #  - Max Kohl | [example.com] <kohl@example.com>
@@ -111,7 +111,7 @@ module Channel::Filter::IdentifySender
         Rails.logger.error 'ERROR: ' + e.inspect
         Rails.logger.error "ERROR: try it by my self (#{item}): #{mail[item.to_sym]}"
         recipients = mail[item.to_sym].to_s.split(',')
-        recipients.each { |recipient|
+        recipients.each do |recipient|
           address = nil
           display_name = nil
           if recipient =~ /.*<(.+?)>/
@@ -128,9 +128,9 @@ module Channel::Filter::IdentifySender
           )
           current_count += 1
           return false if current_count == max_count
-        }
+        end
       end
-    }
+    end
   end
 
   def self.user_create(data)
@@ -159,12 +159,12 @@ module Channel::Filter::IdentifySender
     role_ids = Role.signup_role_ids
 
     # fillup
-    %w(firstname lastname).each { |item|
+    %w(firstname lastname).each do |item|
       if data[item.to_sym].nil?
         data[item.to_sym] = ''
       end
       data[item.to_sym] = cleanup_name(data[item.to_sym])
-    }
+    end
     data[:password]      = ''
     data[:active]        = true
     data[:role_ids]      = role_ids

@@ -63,9 +63,9 @@ class LongPollingController < ApplicationController
     begin
 
       # update last ping
-      4.times {
+      4.times do
         sleep 0.25
-      }
+      end
       #sleep 1
       Sessions.touch(client_id)
 
@@ -82,9 +82,9 @@ class LongPollingController < ApplicationController
           render json: queue
           return
         end
-        8.times {
+        8.times do
           sleep 0.25
-        }
+        end
         #sleep 2
         if count.zero?
           render json: { event: 'pong' }

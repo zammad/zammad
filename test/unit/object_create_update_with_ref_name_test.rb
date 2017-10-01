@@ -62,7 +62,7 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
     assert(org3.member_ids.sort.include?(user2.id))
     assert_not_equal(org2.id, org3.id)
 
-    assert_raises( ActiveRecord::AssociationTypeMismatch ) {
+    assert_raises( ActiveRecord::AssociationTypeMismatch ) do
       Organization.create_or_update_with_ref(
         name: 'some org update_with_ref member2',
         members: ['object_ref_name2@example.org'],
@@ -70,7 +70,7 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1,
       )
-    }
+    end
 
   end
 

@@ -33,11 +33,11 @@ class OtrsImportTest < ActiveSupport::TestCase
   test 'check dynamic fields' do
     local_objects = ObjectManager::Attribute.list_full
 
-    object_attribute_names = local_objects.reject { |local_object|
+    object_attribute_names = local_objects.reject do |local_object|
       local_object[:object] != 'Ticket'
-    }.collect { |local_object|
+    end.collect do |local_object|
       local_object['name']
-    }
+    end
     expected_object_attribute_names = %w(vertriebsweg te_test sugar_crm_remote_no sugar_crm_company_selected_no sugar_crm_company_selection combine itsm_criticality customer_id itsm_impact itsm_review_required itsm_decision_result itsm_repair_start_time itsm_recovery_start_time itsm_decision_date title itsm_due_date topic_no open_exchange_ticket_number hostname ticket_free_key11 type ticket_free_text11 open_exchange_tn topic zarafa_tn group_id scom_hostname checkbox_example scom_uuid scom_state scom_service location owner_id department customer_location state_id pending_time priority_id tags)
 
     assert_equal(expected_object_attribute_names, object_attribute_names, 'dynamic field names')

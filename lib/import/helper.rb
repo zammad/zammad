@@ -20,11 +20,11 @@ module Import
     end
 
     def utf8_encode(data)
-      data.each { |key, value|
+      data.each do |key, value|
         next if !value
         next if value.class != String
         data[key] = Encode.conv('utf8', value)
-      }
+      end
     end
 
     def reset_primary_key_sequence(table)

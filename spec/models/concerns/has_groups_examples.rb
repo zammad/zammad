@@ -3,10 +3,10 @@
 RSpec.shared_examples 'HasGroups' do
 
   context 'group' do
-    let(:group_access_instance_inactive) {
+    let(:group_access_instance_inactive) do
       group_access_instance.update!(active: false)
       group_access_instance
-    }
+    end
     let(:group_full) { create(:group) }
     let(:group_read) { create(:group) }
     let(:group_inactive) { create(:group, active: false) }

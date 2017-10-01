@@ -76,7 +76,7 @@ examples how to use
       return "\#{#{key} / no such method}"
     end
     object_methods_s = ''
-    object_methods.each { |method_raw|
+    object_methods.each do |method_raw|
 
       method = method_raw.strip
 
@@ -100,7 +100,7 @@ examples how to use
       rescue => e
         object_refs = "\#{#{object_name}.#{object_methods_s} / e.message}"
       end
-    }
+    end
     placeholder = if !value
                     object_refs
                   else

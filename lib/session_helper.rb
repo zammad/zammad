@@ -7,10 +7,10 @@ module SessionHelper
     # load collections to deliver from external files
     dir = File.expand_path('../../', __FILE__)
     files = Dir.glob( "#{dir}/app/controllers/sessions/collection_*.rb")
-    files.each { |file|
+    files.each do |file|
       load file
       (default_collection, assets) = ExtraCollection.session(default_collection, assets, user)
-    }
+    end
 
     [default_collection, assets]
   end
@@ -18,10 +18,10 @@ module SessionHelper
   def self.models(user = nil)
     models = {}
     objects = ObjectManager.list_objects
-    objects.each { |object|
+    objects.each do |object|
       attributes = ObjectManager::Attribute.by_object(object, user)
       models[object] = attributes
-    }
+    end
     models
   end
 

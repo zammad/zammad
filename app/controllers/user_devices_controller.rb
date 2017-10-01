@@ -6,7 +6,7 @@ class UserDevicesController < ApplicationController
   def index
     devices = UserDevice.where(user_id: current_user.id).order('updated_at DESC, name ASC')
     devices_full = []
-    devices.each { |device|
+    devices.each do |device|
       attributes = device.attributes
       if device.location_details['city_name'] && !device.location_details['city_name'].empty?
         attributes['location'] += ", #{device.location_details['city_name']}"
@@ -21,7 +21,7 @@ class UserDevicesController < ApplicationController
         attributes['current'] = true
       end
       devices_full.push attributes
-    }
+    end
     model_index_render_result(devices_full)
   end
 
@@ -32,12 +32,12 @@ class UserDevicesController < ApplicationController
 
     # delete device and session's
     if user_device
-      SessionHelper.list.each { |session|
+      SessionHelper.list.each do |session|
         next if !session.data['user_id']
         next if !session.data['user_device_id']
         next if session.data['user_device_id'] != user_device.id
         SessionHelper.destroy( session.id )
-      }
+      end
       user_device.destroy
     end
     render json: {}, status: :ok

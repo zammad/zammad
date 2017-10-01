@@ -57,7 +57,7 @@ class RecentView < ApplicationModel
                    end
 
     list = []
-    recent_views.each { |item|
+    recent_views.each do |item|
       data           = item.attributes
       data['object'] = ObjectLookup.by_id(data['recent_view_object_id'])
       data.delete('recent_view_object_id')
@@ -67,7 +67,7 @@ class RecentView < ApplicationModel
 
       # add to result list
       list.push data
-    }
+    end
     list
   end
 

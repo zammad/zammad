@@ -61,13 +61,13 @@ result
 
   def pages
     pages = []
-    @client.get_connections('me', 'accounts').each { |page|
+    @client.get_connections('me', 'accounts').each do |page|
       pages.push(
         id:           page['id'],
         name:         page['name'],
         access_token: page['access_token'],
       )
-    }
+    end
     pages
   end
 
@@ -141,12 +141,12 @@ result
       }
 
       # ignore if value is already set
-      map.each { |target, source|
+      map.each do |target, source|
         next if user[target] && !user[target].empty?
         new_value = tweet_user.send(source).to_s
         next if !new_value || new_value.empty?
         user_data[target] = new_value
-      }
+      end
       user.update!(user_data)
     else
       user_data[:login] = item_user['id']
@@ -237,14 +237,14 @@ result
 
     to = nil
     if post['to'] && post['to']['data']
-      post['to']['data'].each { |to_entry|
+      post['to']['data'].each do |to_entry|
         if !to
           to = ''
         else
           to += ', '
         end
         to += to_entry['name']
-      }
+      end
     end
 
     feed_post = {
@@ -267,7 +267,7 @@ result
       base_url = ticket.preferences['facebook']['permalink_url']
     end
 
-    articles.each { |article|
+    articles.each do |article|
       next if Ticket::Article.find_by(message_id: article[:message_id])
 
       # set ticket state to open if not new
@@ -305,7 +305,7 @@ result
         },
       }.merge(article)
       Ticket::Article.create(article)
-    }
+    end
   end
 
   def to_group(post, group_id, channel, page)
@@ -360,13 +360,13 @@ result
 
   def access_token_for_page(lookup)
     access_token = nil
-    pages.each { |page|
+    pages.each do |page|
       next if !lookup[:page_id] && !lookup[:page]
       next if lookup[:page_id] && lookup[:page_id].to_s != page[:id]
       next if lookup[:page] && lookup[:page] != page[:name]
       access_token = page[:access_token]
       break
-    }
+    end
     access_token
   end
 
@@ -378,7 +378,7 @@ result
     result = []
     return result if comments.empty?
 
-    comments.each { |comment|
+    comments.each do |comment|
       user = to_user(comment)
       next if !user
       article_data = {
@@ -392,7 +392,7 @@ result
       sub_comments = @client.get_object("#{comment['id']}/comments", fields: 'id,from,to,message,created_time')
       sub_articles = nested_comments(sub_comments, comment['id'])
       result += sub_articles
-    }
+    end
 
     result
   end

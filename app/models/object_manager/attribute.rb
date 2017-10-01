@@ -29,12 +29,12 @@ list of all attributes
     result = ObjectManager::Attribute.all.order('position ASC, name ASC')
     attributes = []
     assets = {}
-    result.each { |item|
+    result.each do |item|
       attribute = item.attributes
       attribute[:object] = ObjectLookup.by_id(item.object_lookup_id)
       attribute.delete('object_lookup_id')
       attributes.push attribute
-    }
+    end
     attributes
   end
 
@@ -279,11 +279,11 @@ possible types
 
       # if data_option has changed, store it for next migration
       if !force
-        [:name, :display, :data_type, :position, :active].each { |key|
+        [:name, :display, :data_type, :position, :active].each do |key|
           next if record[key] == data[key]
           data[:to_config] = true
           break
-        }
+        end
         if record[:data_option] != data[:data_option]
 
           # do we need a database migration?
@@ -298,9 +298,9 @@ possible types
       end
 
       # update attributes
-      data.each { |key, value|
+      data.each do |key, value|
         record[key.to_sym] = value
-      }
+      end
 
       # check editable & name
       if !force
@@ -434,7 +434,7 @@ returns:
       to_delete: false,
     ).order('position ASC, name ASC')
     attributes = []
-    result.each { |item|
+    result.each do |item|
       data = {
         name: item.name,
         display: item.display,
@@ -444,32 +444,32 @@ returns:
       if item.data_option[:permission] && item.data_option[:permission].any?
         next if !user
         hint = false
-        item.data_option[:permission].each { |permission|
+        item.data_option[:permission].each do |permission|
           next if !user.permissions?(permission)
           hint = true
           break
-        }
+        end
         next if !hint
       end
 
       if item.screens
         data[:screen] = {}
-        item.screens.each { |screen, permission_options|
+        item.screens.each do |screen, permission_options|
           data[:screen][screen] = {}
-          permission_options.each { |permission, options|
+          permission_options.each do |permission, options|
             if permission == '-all-'
               data[:screen][screen] = options
             elsif user && user.permissions?(permission)
               data[:screen][screen] = options
             end
-          }
-        }
+          end
+        end
       end
       if item.data_option
         data = data.merge(item.data_option.symbolize_keys)
       end
       attributes.push data
-    }
+    end
     attributes
   end
 
@@ -492,9 +492,9 @@ returns:
   def self.by_object_as_hash(object, user)
     list = by_object(object, user)
     hash = {}
-    list.each { |item|
+    list.each do |item|
       hash[ item[:name] ] = item
-    }
+    end
     hash
   end
 
@@ -512,13 +512,13 @@ returns
 
   def self.discard_changes
     ObjectManager::Attribute.where('to_create = ?', true).each(&:destroy)
-    ObjectManager::Attribute.where('to_delete = ? OR to_config = ?', true, true).each { |attribute|
+    ObjectManager::Attribute.where('to_delete = ? OR to_config = ?', true, true).each do |attribute|
       attribute.to_migrate = false
       attribute.to_delete = false
       attribute.to_config = false
       attribute.data_option_new = {}
       attribute.save
-    }
+    end
     true
   end
 
@@ -576,7 +576,7 @@ to send no browser reload event, pass false
     # check if field already exists
     execute_db_count = 0
     execute_config_count = 0
-    migrations.each { |attribute|
+    migrations.each do |attribute|
       model = Kernel.const_get(attribute.object_lookup.name)
 
       # remove field
@@ -698,7 +698,7 @@ to send no browser reload event, pass false
 
       reset_database_info(model)
       execute_db_count += 1
-    }
+    end
 
     # sent maintenance message to clients
     if send_event
@@ -783,10 +783,10 @@ to send no browser reload event, pass false
     end
 
     if data_type == 'integer'
-      [:min, :max].each { |item|
+      [:min, :max].each do |item|
         raise "Need data_option[#{item.inspect}] param" if !data_option[item]
         raise "Invalid data_option[#{item.inspect}] param #{data_option[item]}" if data_option[item].to_s !~ /^\d+?$/
-      }
+      end
     end
 
     if data_type == 'select' || data_type == 'tree_select' || data_type == 'checkbox'

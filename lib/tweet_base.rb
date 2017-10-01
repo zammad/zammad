@@ -46,12 +46,12 @@ class TweetBase
       }
 
       # ignore if value is already set
-      map.each { |target, source|
+      map.each do |target, source|
         next if user[target] && !user[target].empty?
         new_value = tweet_user.send(source).to_s
         next if !new_value || new_value.empty?
         user_data[target] = new_value
-      }
+      end
       user.update!(user_data)
     else
       user_data[:login]     = tweet_user.screen_name
@@ -170,7 +170,7 @@ class TweetBase
       from = "@#{tweet.user.screen_name}"
       mention_ids = []
       if tweet.user_mentions
-        tweet.user_mentions.each { |local_user|
+        tweet.user_mentions.each do |local_user|
           if !to
             to = ''
           else
@@ -178,7 +178,7 @@ class TweetBase
           end
           to += "@#{local_user.screen_name}"
           mention_ids.push local_user.id
-        }
+        end
       end
       in_reply_to = tweet.in_reply_to_status_id
 
@@ -370,9 +370,9 @@ class TweetBase
   def preferences_cleanup(preferences)
 
     # replace Twitter::NullObject with nill to prevent elasticsearch index issue
-    preferences.each { |_key, value|
+    preferences.each do |_key, value|
       next if !value.is_a?(Hash)
-      value.each { |sub_key, sub_level|
+      value.each do |sub_key, sub_level|
         if sub_level.class == NilClass
           value[sub_key] = nil
           next
@@ -383,21 +383,21 @@ class TweetBase
         end
         next if sub_level.class != Twitter::NullObject
         value[sub_key] = nil
-      }
-    }
+      end
+    end
     preferences
   end
 
   def locale_sender?(tweet)
     tweet_user = user(tweet)
-    Channel.where(area: 'Twitter::Account').each { |local_channel|
+    Channel.where(area: 'Twitter::Account').each do |local_channel|
       next if !local_channel.options
       next if !local_channel.options[:user]
       next if !local_channel.options[:user][:id]
       next if local_channel.options[:user][:id].to_s != tweet_user.id.to_s
       Rails.logger.debug "Tweet is sent by local account with user id #{tweet_user.id} and tweet.id #{tweet.id}"
       return true
-    }
+    end
     false
   end
 

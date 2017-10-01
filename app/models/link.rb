@@ -31,25 +31,25 @@ class Link < ApplicationModel
       'link_object_source_id = ? AND link_object_source_value = ?', linkobject.id, data[:link_object_value]
     )
 
-    list.each { |item|
+    list.each do |item|
       link = {}
       link['link_type']         = @map[ Link::Type.find( item.link_type_id ).name ]
       link['link_object']       = Link::Object.find( item.link_object_target_id ).name
       link['link_object_value'] = item.link_object_target_value
       items.push link
-    }
+    end
 
     # get links for the other site
     list = Link.where(
       'link_object_target_id = ? AND link_object_target_value = ?', linkobject.id, data[:link_object_value]
     )
-    list.each { |item|
+    list.each do |item|
       link = {}
       link['link_type']         = Link::Type.find( item.link_type_id ).name
       link['link_object']       = Link::Object.find( item.link_object_source_id ).name
       link['link_object_value'] = item.link_object_source_value
       items.push link
-    }
+    end
 
     items
   end

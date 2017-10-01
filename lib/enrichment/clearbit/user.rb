@@ -156,9 +156,9 @@ module Enrichment
 
         def all
           users = User.of_role(Role.signup_roles)
-          users.each { |user|
+          users.each do |user|
             new(user).synced?
-          }
+          end
         end
       end
     end

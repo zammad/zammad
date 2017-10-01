@@ -10,10 +10,10 @@ module Import
 
       def import_loop(records, *args)
 
-        count_update_hook = proc { |record|
+        count_update_hook = proc do |record|
           yield(record)
           update_ticket_count(records)
-        }
+        end
 
         super(records, *args, &count_update_hook)
       end

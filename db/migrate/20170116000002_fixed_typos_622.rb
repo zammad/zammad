@@ -18,12 +18,12 @@ class FixedTypos622 < ActiveRecord::Migration[4.2]
       'postmaster_follow_up_search_in' => 'In default the follow up check is done via the subject of an email. With this setting you can add more fields where the follow up check is executed.',
     }
 
-    setting_map.each { |key, description|
+    setting_map.each do |key, description|
       local_setting = Setting.find_by(name: key)
       next if !local_setting
       local_setting.description = description
       local_setting.save!
-    }
+    end
 
     Translation.sync
 

@@ -12,7 +12,7 @@ class TimeAccountingsController < ApplicationController
     end_periode = start_periode.end_of_month
 
     time_unit = {}
-    Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :time_unit, :created_by_id).each { |record|
+    Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :time_unit, :created_by_id).each do |record|
       if !time_unit[record[0]]
         time_unit[record[0]] = {
           time_unit: 0,
@@ -20,12 +20,12 @@ class TimeAccountingsController < ApplicationController
         }
       end
       time_unit[record[0]][:time_unit] += record[1]
-    }
+    end
     customers = {}
     organizations = {}
     agents = {}
     results = []
-    time_unit.each { |ticket_id, local_time_unit|
+    time_unit.each do |ticket_id, local_time_unit|
       ticket = Ticket.lookup(id: ticket_id)
       next if !ticket
       if !customers[ticket.customer_id]
@@ -61,7 +61,7 @@ class TimeAccountingsController < ApplicationController
         agent: agents[local_time_unit[:agent_id]],
       }
       results.push result
-    }
+    end
 
     if params[:download]
       header = [
@@ -163,13 +163,13 @@ class TimeAccountingsController < ApplicationController
         },
       ]
       result = []
-      results.each { |row|
-        row[:ticket].keys.each { |field|
+      results.each do |row|
+        row[:ticket].keys.each do |field|
           next if row[:ticket][field].blank?
           next if !row[:ticket][field].is_a?(ActiveSupport::TimeWithZone)
 
           row[:ticket][field] = row[:ticket][field].iso8601
-        }
+        end
 
         result_row = [
           row[:ticket]['number'],
@@ -198,7 +198,7 @@ class TimeAccountingsController < ApplicationController
           row[:ticket]['escalation_at'],
         ]
         result.push result_row
-      }
+      end
       content = sheet("By Ticket #{year}-#{month}", header, result)
       send_data(
         content,
@@ -221,7 +221,7 @@ class TimeAccountingsController < ApplicationController
     end_periode = start_periode.end_of_month
 
     time_unit = {}
-    Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :time_unit, :created_by_id).each { |record|
+    Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :time_unit, :created_by_id).each do |record|
       if !time_unit[record[0]]
         time_unit[record[0]] = {
           time_unit: 0,
@@ -229,10 +229,10 @@ class TimeAccountingsController < ApplicationController
         }
       end
       time_unit[record[0]][:time_unit] += record[1]
-    }
+    end
 
     customers = {}
-    time_unit.each { |ticket_id, local_time_unit|
+    time_unit.each do |ticket_id, local_time_unit|
       ticket = Ticket.lookup(id: ticket_id)
       next if !ticket
       if !customers[ticket.customer_id]
@@ -248,11 +248,11 @@ class TimeAccountingsController < ApplicationController
         next
       end
       customers[ticket.customer_id][:time_unit] += local_time_unit[:time_unit]
-    }
+    end
     results = []
-    customers.each { |_customer_id, content|
+    customers.each do |_customer_id, content|
       results.push content
-    }
+    end
 
     if params[:download]
       header = [
@@ -270,7 +270,7 @@ class TimeAccountingsController < ApplicationController
         }
       ]
       result = []
-      results.each { |row|
+      results.each do |row|
         customer_name = User.find(row[:customer]['id']).fullname
         organization_name = ''
         if row[:organization].present?
@@ -278,7 +278,7 @@ class TimeAccountingsController < ApplicationController
         end
         result_row = [customer_name, organization_name, row[:time_unit]]
         result.push result_row
-      }
+      end
       content = sheet("By Customer #{year}-#{month}", header, result)
       send_data(
         content,
@@ -301,7 +301,7 @@ class TimeAccountingsController < ApplicationController
     end_periode = start_periode.end_of_month
 
     time_unit = {}
-    Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :time_unit, :created_by_id).each { |record|
+    Ticket::TimeAccounting.where('created_at >= ? AND created_at <= ?', start_periode, end_periode).pluck(:ticket_id, :time_unit, :created_by_id).each do |record|
       if !time_unit[record[0]]
         time_unit[record[0]] = {
           time_unit: 0,
@@ -309,10 +309,10 @@ class TimeAccountingsController < ApplicationController
         }
       end
       time_unit[record[0]][:time_unit] += record[1]
-    }
+    end
 
     organizations = {}
-    time_unit.each { |ticket_id, local_time_unit|
+    time_unit.each do |ticket_id, local_time_unit|
       ticket = Ticket.lookup(id: ticket_id)
       next if !ticket
       next if !ticket.organization_id
@@ -324,11 +324,11 @@ class TimeAccountingsController < ApplicationController
         next
       end
       organizations[ticket.organization_id][:time_unit] += local_time_unit[:time_unit]
-    }
+    end
     results = []
-    organizations.each { |_customer_id, content|
+    organizations.each do |_customer_id, content|
       results.push content
-    }
+    end
 
     if params[:download]
       header = [
@@ -342,14 +342,14 @@ class TimeAccountingsController < ApplicationController
         }
       ]
       result = []
-      results.each { |row|
+      results.each do |row|
         organization_name = ''
         if row[:organization].present?
           organization_name = row[:organization]['name']
         end
         result_row = [organization_name, row[:time_unit]]
         result.push result_row
-      }
+      end
       content = sheet("By Organization #{year}-#{month}", header, result)
       send_data(
         content,
@@ -389,23 +389,23 @@ class TimeAccountingsController < ApplicationController
     format_header.set_bg_color('gray')
     format_header.set_color('white')
     count = 0
-    header.each { |item|
+    header.each do |item|
       if item[:width]
         worksheet.set_column(count, count, item[:width])
       end
       worksheet.write(2, count, item[:name], format_header)
       count += 1
-    }
+    end
 
     row_count = 2
-    result.each { |row|
+    result.each do |row|
       row_count += 1
       row_item_count = 0
-      row.each { |item|
+      row.each do |item|
         worksheet.write(row_count, row_item_count, item)
         row_item_count += 1
-      }
-    }
+      end
+    end
 
     workbook.close
 
