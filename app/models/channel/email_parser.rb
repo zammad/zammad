@@ -432,22 +432,27 @@ returns
 
     _process(channel, msg)
   rescue => e
-
-    # store unprocessable email for bug reporting
-    path = "#{Rails.root}/tmp/unprocessable_mail/"
-    FileUtils.mkpath path
-    md5 = Digest::MD5.hexdigest(msg)
-    filename = "#{path}/#{md5}.eml"
-    message = "ERROR: Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
-    p message # rubocop:disable Rails/Output
-    p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
-    Rails.logger.error message
-    Rails.logger.error e
-    File.open(filename, 'wb') { |file|
-      file.write msg
-    }
-    return false if exception == false
-    raise e.inspect + e.backtrace.inspect
+      if e.message = "can't process tickets for email channel data"
+        Rails.logger.error message
+        Rails.logger.error e
+        raise e.inspect + e.backtrace.inspect
+      else
+        # store unprocessable email for bug reporting
+        path = "#{Rails.root}/tmp/unprocessable_mail/"
+        FileUtils.mkpath path
+        md5 = Digest::MD5.hexdigest(msg)
+        filename = "#{path}/#{md5}.eml"
+        message = "ERROR: Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
+        p message # rubocop:disable Rails/Output
+        p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
+        Rails.logger.error message
+        Rails.logger.error e
+        File.open(filename, 'wb') { |file|
+          file.write msg
+        }
+        return false if exception == false
+        raise e.inspect + e.backtrace.inspect
+      end
   end
 
   def _process(channel, msg)
@@ -485,125 +490,131 @@ returns
     article      = nil
     session_user = nil
 
-    # use transaction
-    Transaction.execute(interface_handle: "#{original_interface_handle}.postmaster") do
+    begin
+      # use transaction
+      Transaction.execute(interface_handle: "#{original_interface_handle}.postmaster") do
 
-      # get sender user
-      session_user_id = mail['x-zammad-session-user-id'.to_sym]
-      if !session_user_id
-        raise 'No x-zammad-session-user-id, no sender set!'
-      end
-      session_user = User.lookup(id: session_user_id)
-      if !session_user
-        raise "No user found for x-zammad-session-user-id: #{session_user_id}!"
-      end
+        # get sender user
+        session_user_id = mail['x-zammad-session-user-id'.to_sym]
+        if !session_user_id
+          raise 'No x-zammad-session-user-id, no sender set!'
+        end
+        session_user = User.lookup(id: session_user_id)
+        if !session_user
+          raise "No user found for x-zammad-session-user-id: #{session_user_id}!"
+        end
 
-      # set current user
-      UserInfo.current_user_id = session_user.id
+        # set current user
+        serInfo.current_user_id = session_user.id
 
-      # get ticket# based on email headers
-      if mail['x-zammad-ticket-id'.to_sym]
-        ticket = Ticket.find_by(id: mail['x-zammad-ticket-id'.to_sym])
-      end
-      if mail['x-zammad-ticket-number'.to_sym]
-        ticket = Ticket.find_by(number: mail['x-zammad-ticket-number'.to_sym])
-      end
+        # get ticket# based on email headers
+        if mail['x-zammad-ticket-id'.to_sym]
+          ticket = Ticket.find_by(id: mail['x-zammad-ticket-id'.to_sym])
+        end
+        if mail['x-zammad-ticket-number'.to_sym]
+          ticket = Ticket.find_by(number: mail['x-zammad-ticket-number'.to_sym])
+        end
 
-      # set ticket state to open if not new
-      if ticket
-        set_attributes_by_x_headers(ticket, 'ticket', mail, 'followup')
+        # set ticket state to open if not new
+        if ticket
+          set_attributes_by_x_headers(ticket, 'ticket', mail, 'followup')
 
-        # save changes set by x-zammad-ticket-followup-* headers
-        ticket.save! if ticket.has_changes_to_save?
+          # save changes set by x-zammad-ticket-followup-* headers
+          ticket.save! if ticket.has_changes_to_save?
 
-        state      = Ticket::State.find(ticket.state_id)
-        state_type = Ticket::StateType.find(state.state_type_id)
+          state      = Ticket::State.find(ticket.state_id)
+          state_type = Ticket::StateType.find(state.state_type_id)
 
-        # set ticket to open again or keep create state
-        if !mail['x-zammad-ticket-followup-state'.to_sym] && !mail['x-zammad-ticket-followup-state_id'.to_sym]
-          new_state = Ticket::State.find_by(default_create: true)
-          if ticket.state_id != new_state.id && !mail['x-zammad-out-of-office'.to_sym]
-            ticket.state = Ticket::State.find_by(default_follow_up: true)
-            ticket.save!
+          # set ticket to open again or keep create state
+          if !mail['x-zammad-ticket-followup-state'.to_sym] && !mail['x-zammad-ticket-followup-state_id'.to_sym]
+            new_state = Ticket::State.find_by(default_create: true)
+            if ticket.state_id != new_state.id && !mail['x-zammad-out-of-office'.to_sym]
+              ticket.state = Ticket::State.find_by(default_follow_up: true)
+              ticket.save!
+            end
+          end
+        end
+
+        # create new ticket
+        if !ticket
+
+          preferences = {}
+          if channel[:id]
+            preferences = {
+              channel_id: channel[:id]
+            }
+          end
+
+          # get default group where ticket is created
+          group = nil
+          if channel[:group_id]
+            group = Group.lookup(id: channel[:group_id])
+          end
+          if !group || group && !group.active
+            group = Group.where(active: true).order('id ASC').first
+          end
+          if !group
+            group = Group.first
+          end
+          title = mail[:subject]
+          if title.blank?
+            title = '-'
+          end
+          ticket = Ticket.new(
+            group_id: group.id,
+            title: title,
+            preferences: preferences,
+          )
+          set_attributes_by_x_headers(ticket, 'ticket', mail)
+
+          # create ticket
+          ticket.save!
+        end
+
+        # set attributes
+        ticket.with_lock do
+          article = Ticket::Article.new(
+            ticket_id: ticket.id,
+            type_id: Ticket::Article::Type.find_by(name: 'email').id,
+            sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
+            content_type: mail[:content_type],
+            body: mail[:body],
+            from: mail[:from],
+            reply_to: mail[:"reply-to"],
+            to: mail[:to],
+            cc: mail[:cc],
+            subject: mail[:subject],
+            message_id: mail[:message_id],
+            internal: false,
+          )
+
+          # x-headers lookup
+          set_attributes_by_x_headers(article, 'article', mail)
+
+          # create article
+          article.save!
+
+          # store mail plain
+          article.save_as_raw(msg)
+
+          # store attachments
+          if mail[:attachments]
+            mail[:attachments].each do |attachment|
+              Store.add(
+                object: 'Ticket::Article',
+                o_id: article.id,
+                data: attachment[:data],
+                filename: attachment[:filename],
+                preferences: attachment[:preferences]
+              )
+            end
           end
         end
       end
-
-      # create new ticket
-      if !ticket
-
-        preferences = {}
-        if channel[:id]
-          preferences = {
-            channel_id: channel[:id]
-          }
-        end
-
-        # get default group where ticket is created
-        group = nil
-        if channel[:group_id]
-          group = Group.lookup(id: channel[:group_id])
-        end
-        if !group || group && !group.active
-          group = Group.where(active: true).order('id ASC').first
-        end
-        if !group
-          group = Group.first
-        end
-        title = mail[:subject]
-        if title.blank?
-          title = '-'
-        end
-        ticket = Ticket.new(
-          group_id: group.id,
-          title: title,
-          preferences: preferences,
-        )
-        set_attributes_by_x_headers(ticket, 'ticket', mail)
-
-        # create ticket
-        ticket.save!
-      end
-
-      # set attributes
-      ticket.with_lock do
-        article = Ticket::Article.new(
-          ticket_id: ticket.id,
-          type_id: Ticket::Article::Type.find_by(name: 'email').id,
-          sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
-          content_type: mail[:content_type],
-          body: mail[:body],
-          from: mail[:from],
-          reply_to: mail[:"reply-to"],
-          to: mail[:to],
-          cc: mail[:cc],
-          subject: mail[:subject],
-          message_id: mail[:message_id],
-          internal: false,
-        )
-
-        # x-headers lookup
-        set_attributes_by_x_headers(article, 'article', mail)
-
-        # create article
-        article.save!
-
-        # store mail plain
-        article.save_as_raw(msg)
-
-        # store attachments
-        if mail[:attachments]
-          mail[:attachments].each do |attachment|
-            Store.add(
-              object: 'Ticket::Article',
-              o_id: article.id,
-              data: attachment[:data],
-              filename: attachment[:filename],
-              preferences: attachment[:preferences]
-            )
-          end
-        end
-      end
+    rescue => e
+      Rails.logger.error "can't process tickets for email channel data"
+      Rails.logger.error e.inspect
+      raise "can't process tickets for email channel data"
     end
 
     # run postmaster post filter
