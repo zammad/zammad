@@ -432,26 +432,22 @@ returns
 
     _process(channel, msg)
   rescue => e
-    if e.message == "error processing ticket"
-      raise e.inspect
-    else
-
-      # store unprocessable email for bug reporting
-      path = "#{Rails.root}/tmp/unprocessable_mail/"
-      FileUtils.mkpath path
-      md5 = Digest::MD5.hexdigest(msg)
-      filename = "#{path}/#{md5}.eml"
-      message = "ERROR: Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
-      p message # rubocop:disable Rails/Output
-      p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
-      Rails.logger.error message
-      Rails.logger.error e
-      File.open(filename, 'wb') do |file|
-        file.write msg
-      end
-      return false if exception == false
-      raise e.inspect + e.backtrace.inspect
+    raise e.inspect if e.message == 'error processing ticket'
+    # store unprocessable email for bug reporting
+    path = "#{Rails.root}/tmp/unprocessable_mail/"
+    FileUtils.mkpath path
+    md5 = Digest::MD5.hexdigest(msg)
+    filename = "#{path}/#{md5}.eml"
+    message = "ERROR: Can't process email, you will find it for bug reporting under #{filename}, please create an issue at https://github.com/zammad/zammad/issues"
+    p message # rubocop:disable Rails/Output
+    p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
+    Rails.logger.error message
+    Rails.logger.error e
+    File.open(filename, 'wb') do |file|
+      file.write msg
     end
+    return false if exception == false
+    raise e.inspect + e.backtrace.inspect
   end
 
   def _process(channel, msg)
@@ -612,7 +608,7 @@ returns
       end
     rescue => e
       Rails.logger.error e.inspect + e.backtrace.inspect
-      raise "error processing ticket"
+      raise 'error processing ticket'
     end
 
     # run postmaster post filter
