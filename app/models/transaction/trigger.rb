@@ -45,7 +45,7 @@ class Transaction::Trigger
     original_user_id = UserInfo.current_user_id
 
     Transaction.execute(reset_user_id: true, disable: ['Transaction::Trigger', 'Transaction::Notification']) do
-      triggers.each { |trigger|
+      triggers.each do |trigger|
         condition = trigger.condition
 
         # check if one article attribute is used
@@ -138,7 +138,7 @@ class Transaction::Trigger
           user_id = article.updated_by_id
         end
         ticket.perform_changes(trigger.perform, 'trigger', @item, user_id)
-      }
+      end
     end
     UserInfo.current_user_id = original_user_id
   end

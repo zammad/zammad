@@ -154,10 +154,10 @@ return search result
     return [] if !query
     if index.class == Array
       ids = []
-      index.each { |local_index|
+      index.each do |local_index|
         local_ids = search_by_index(query, limit, local_index, query_extention)
         ids = ids.concat(local_ids)
-      }
+      end
       return ids
     end
     search_by_index(query, limit, index, query_extention)
@@ -241,14 +241,14 @@ return search result
     return ids if !data
     return ids if !data['hits']
     return ids if !data['hits']['hits']
-    data['hits']['hits'].each { |item|
+    data['hits']['hits'].each do |item|
       Rails.logger.info "... #{item['_type']} #{item['_id']}"
       data = {
         id: item['_id'],
         type: item['_type'],
       }
       ids.push data
-    }
+    end
     ids
   end
 
@@ -331,9 +331,9 @@ get count of tickets and tickets which match on selector
 
     if !aggs_interval || !aggs_interval[:interval]
       ticket_ids = []
-      response.data['hits']['hits'].each { |item|
+      response.data['hits']['hits'].each do |item|
         ticket_ids.push item['_id']
-      }
+      end
       return {
         count: response.data['hits']['total'],
         ticket_ids: ticket_ids,
@@ -346,7 +346,7 @@ get count of tickets and tickets which match on selector
     query_must = []
     query_must_not = []
     if selector && !selector.empty?
-      selector.each { |key, data|
+      selector.each do |key, data|
         key_tmp = key.sub(/^.+?\./, '')
         t = {}
         if data['value'].class == Array
@@ -367,7 +367,7 @@ get count of tickets and tickets which match on selector
         else
           raise "unknown operator '#{data['operator']}'"
         end
-      }
+      end
     end
     data = {
       query: {},

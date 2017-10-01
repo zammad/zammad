@@ -28,14 +28,14 @@ module Channel::Filter::FollowUpCheck
 
     # get ticket# from attachment
     if setting.include?('attachment') && mail[:attachments]
-      mail[:attachments].each { |attachment|
+      mail[:attachments].each do |attachment|
         next if !attachment[:data]
         ticket = Ticket::Number.check(attachment[:data])
         next if !ticket
         Rails.logger.debug "Follow up for '##{ticket.number}' in attachment."
         mail['x-zammad-ticket-id'.to_sym] = ticket.id
         return true
-      }
+      end
     end
 
     # get ticket# from references
@@ -54,14 +54,14 @@ module Channel::Filter::FollowUpCheck
       end
       if references != ''
         message_ids = references.split(/\s+/)
-        message_ids.each { |message_id|
+        message_ids.each do |message_id|
           message_id_md5 = Digest::MD5.hexdigest(message_id)
           article = Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
           next if !article
           Rails.logger.debug "Follow up for '##{article.ticket.number}' in references."
           mail['x-zammad-ticket-id'.to_sym] = article.ticket_id
           return true
-        }
+        end
       end
     end
 
@@ -81,7 +81,7 @@ module Channel::Filter::FollowUpCheck
       end
       if references != ''
         message_ids = references.split(/\s+/)
-        message_ids.each { |message_id|
+        message_ids.each do |message_id|
           message_id_md5 = Digest::MD5.hexdigest(message_id)
           article = Ticket::Article.where(message_id_md5: message_id_md5).order('created_at DESC, id DESC').limit(1).first
           next if !article
@@ -100,7 +100,7 @@ module Channel::Filter::FollowUpCheck
           Rails.logger.debug "Follow up for '##{article.ticket.number}' in references with same subject as inital article."
           mail['x-zammad-ticket-id'.to_sym] = article_first.ticket_id
           return true
-        }
+        end
       end
     end
 

@@ -79,7 +79,7 @@ in case of fixing sha hash use:
     def self.verify(fix_it = nil)
       success = true
       file_ids = Store::File.all.pluck(:id)
-      file_ids.each { |item_id|
+      file_ids.each do |item_id|
         item = Store::File.find(item_id)
         content = item.content
         sha = Digest::SHA256.hexdigest(content)
@@ -92,7 +92,7 @@ in case of fixing sha hash use:
         if fix_it
           item.update_attribute(:sha, sha)
         end
-      }
+      end
       success
     end
 
@@ -119,7 +119,7 @@ nice move to keep system responsive
       adapter_target = load_adapter("Store::Provider::#{target}")
 
       file_ids = Store::File.all.pluck(:id)
-      file_ids.each { |item_id|
+      file_ids.each do |item_id|
         item = Store::File.find(item_id)
         next if item.provider == target
         content = item.content
@@ -136,7 +136,7 @@ nice move to keep system responsive
         logger.info "Moved file #{item.sha} from #{source} to #{target}"
 
         sleep delay if delay
-      }
+      end
       true
     end
 

@@ -55,9 +55,9 @@ class Stats::TicketWaitingTime
     average_time   = 0
     count_articles = 0
 
-    tickets.each { |ticket|
+    tickets.each do |ticket|
       count_time = 0
-      ticket.articles.joins(:type).where('ticket_articles.created_at > ? AND ticket_articles.internal = ? AND ticket_article_types.communication = ?', start_time, false, true).each { |article|
+      ticket.articles.joins(:type).where('ticket_articles.created_at > ? AND ticket_articles.internal = ? AND ticket_article_types.communication = ?', start_time, false, true).each do |article|
         if article.sender.name == 'Customer'
           count_time = article.created_at.to_i
         elsif count_time.positive?
@@ -65,8 +65,8 @@ class Stats::TicketWaitingTime
           count_articles += 1
           count_time      = 0
         end
-      }
-    }
+      end
+    end
 
     if count_articles.positive?
       average_time = average_time / count_articles

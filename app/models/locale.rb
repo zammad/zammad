@@ -116,14 +116,14 @@ all:
 
   private_class_method def self.to_database(data)
     ActiveRecord::Base.transaction do
-      data.each { |locale|
+      data.each do |locale|
         exists = Locale.find_by(locale: locale['locale'])
         if exists
           exists.update!(locale.symbolize_keys!)
         else
           Locale.create!(locale.symbolize_keys!)
         end
-      }
+      end
     end
   end
 

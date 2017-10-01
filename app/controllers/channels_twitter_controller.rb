@@ -5,14 +5,14 @@ class ChannelsTwitterController < ApplicationController
 
   def index
     assets = {}
-    ExternalCredential.where(name: 'twitter').each { |external_credential|
+    ExternalCredential.where(name: 'twitter').each do |external_credential|
       assets = external_credential.assets(assets)
-    }
+    end
     channel_ids = []
-    Channel.where(area: 'Twitter::Account').order(:id).each { |channel|
+    Channel.where(area: 'Twitter::Account').order(:id).each do |channel|
       assets = channel.assets(assets)
       channel_ids.push channel.id
-    }
+    end
     render json: {
       assets: assets,
       channel_ids: channel_ids,

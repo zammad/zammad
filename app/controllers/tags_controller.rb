@@ -7,13 +7,13 @@ class TagsController < ApplicationController
   def search
     list = Tag::Item.where('name_downcase LIKE ?', "#{params[:term].strip.downcase}%").order('name ASC').limit(params[:limit] || 10)
     results = []
-    list.each { |item|
+    list.each do |item|
       result = {
         id: item.id,
         value: item.name,
       }
       results.push result
-    }
+    end
     render json: results
   end
 
@@ -63,14 +63,14 @@ class TagsController < ApplicationController
     permission_check('admin.tag')
     list = Tag::Item.order('name ASC').limit(params[:limit] || 1000)
     results = []
-    list.each { |item|
+    list.each do |item|
       result = {
         id: item.id,
         name: item.name,
         count: Tag.where(tag_item_id: item.id).count
       }
       results.push result
-    }
+    end
     render json: results
   end
 

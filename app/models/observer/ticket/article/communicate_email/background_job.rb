@@ -90,7 +90,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
 
     # add history record
     recipient_list = ''
-    [:to, :cc].each { |key|
+    [:to, :cc].each do |key|
 
       next if !record[key]
       next if record[key] == ''
@@ -99,7 +99,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
         recipient_list += ','
       end
       recipient_list += record[key]
-    }
+    end
 
     Rails.logger.info "Send email to: '#{recipient_list}' (from #{record.from})"
 
@@ -130,7 +130,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     if local_record.preferences['delivery_retry'] > 3
 
       recipient_list = ''
-      [:to, :cc].each { |key|
+      [:to, :cc].each do |key|
 
         next if !local_record[key]
         next if local_record[key] == ''
@@ -139,7 +139,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
           recipient_list += ','
         end
         recipient_list += local_record[key]
-      }
+      end
 
       # reopen ticket and notify agent
       Observer::Transaction.reset

@@ -18,11 +18,11 @@ returns
   def self.generate
 
     # generate number
-    49_999.times {
+    49_999.times do
       number = adapter.generate
       ticket = Ticket.find_by(number: number)
       return number if !ticket
-    }
+    end
     raise "Can't generate new ticket number!"
   end
 

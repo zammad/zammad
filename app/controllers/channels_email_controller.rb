@@ -11,12 +11,12 @@ class ChannelsEmailController < ApplicationController
     not_used_email_address_ids = []
     accounts_fixed = []
     assets = {}
-    Channel.order(:id).each { |channel|
+    Channel.order(:id).each do |channel|
       if system_online_service && channel.preferences && channel.preferences['online_service_disable']
         email_addresses = EmailAddress.where(channel_id: channel.id)
-        email_addresses.each { |email_address|
+        email_addresses.each do |email_address|
           accounts_fixed.push email_address
-        }
+        end
         next
       end
       if channel.area == 'Email::Account'
@@ -26,15 +26,15 @@ class ChannelsEmailController < ApplicationController
         notification_channel_ids.push channel.id
         assets = channel.assets(assets)
       end
-    }
-    EmailAddress.all.each { |email_address|
+    end
+    EmailAddress.all.each do |email_address|
       next if system_online_service && email_address.preferences && email_address.preferences['online_service_disable']
       email_address_ids.push email_address.id
       assets = email_address.assets(assets)
       if !email_address.channel_id || !email_address.active || !Channel.find_by(id: email_address.channel_id)
         not_used_email_address_ids.push email_address.id
       end
-    }
+    end
     render json: {
       accounts_fixed: accounts_fixed,
       assets: assets,
@@ -224,7 +224,7 @@ class ChannelsEmailController < ApplicationController
     # save settings
     if result[:result] == 'ok'
 
-      Channel.where(area: 'Email::Notification').each { |channel|
+      Channel.where(area: 'Email::Notification').each do |channel|
         active = false
         if adapter =~ /^#{channel.options[:outbound][:adapter]}$/i
           active = true
@@ -239,7 +239,7 @@ class ChannelsEmailController < ApplicationController
         end
         channel.active = active
         channel.save
-      }
+      end
     end
     render json: result
   end
@@ -247,7 +247,7 @@ class ChannelsEmailController < ApplicationController
   private
 
   def account_duplicate?(result, channel_id = nil)
-    Channel.where(area: 'Email::Account').each { |channel|
+    Channel.where(area: 'Email::Account').each do |channel|
       next if !channel.options
       next if !channel.options[:inbound]
       next if !channel.options[:inbound][:adapter]
@@ -261,7 +261,7 @@ class ChannelsEmailController < ApplicationController
         message: 'Account already exists!',
       }
       return true
-    }
+    end
     false
   end
 

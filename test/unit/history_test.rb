@@ -148,7 +148,7 @@ class HistoryTest < ActiveSupport::TestCase
       },
     ]
     tickets = []
-    tests.each { |test|
+    tests.each do |test|
 
       ticket = nil
       article = nil
@@ -182,7 +182,7 @@ class HistoryTest < ActiveSupport::TestCase
 
       # check history
       history_check(ticket.history_get, test[:history_check])
-    }
+    end
 
     # delete tickets
     tickets.each(&:destroy!)
@@ -248,7 +248,7 @@ class HistoryTest < ActiveSupport::TestCase
 
     ]
     users = []
-    tests.each { |test|
+    tests.each do |test|
 
       user = nil
 
@@ -269,7 +269,7 @@ class HistoryTest < ActiveSupport::TestCase
 
       # check history
       history_check(user.history_get, test[:history_check])
-    }
+    end
 
     # delete user
     users.each(&:destroy!)
@@ -312,7 +312,7 @@ class HistoryTest < ActiveSupport::TestCase
       },
     ]
     organizations = []
-    tests.each { |test|
+    tests.each do |test|
 
       organization = nil
 
@@ -332,16 +332,16 @@ class HistoryTest < ActiveSupport::TestCase
 
       # check history
       history_check(organization.history_get, test[:history_check])
-    }
+    end
 
     # delete user
     organizations.each(&:destroy!)
   end
 
   def history_check(history_list, history_check)
-    history_check.each { |check_item|
+    history_check.each do |check_item|
       match = false
-      history_list.each { |history_item|
+      history_list.each do |history_item|
         next if match
         next if history_item['object'] != check_item[:history_object]
         next if history_item['type'] != check_item[:history_type]
@@ -367,13 +367,13 @@ class HistoryTest < ActiveSupport::TestCase
         if check_item[:id_to]
           assert_equal(check_item[:id_to], history_item['id_to'], "check history :id_to #{history_item['id_to']} ok")
         end
-      }
+      end
       if check_item[:result]
         assert(match, "history check not matched! #{check_item.inspect}")
       else
         assert_not(match, "history check matched but should not! #{check_item.inspect}")
       end
-    }
+    end
   end
 
 end

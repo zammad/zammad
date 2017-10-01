@@ -39,7 +39,7 @@ class ExternalCredential::Twitter
     user = client.user
 
     # check if account already exists
-    Channel.where(area: 'Twitter::Account').each { |channel|
+    Channel.where(area: 'Twitter::Account').each do |channel|
       next if !channel.options
       next if !channel.options['user']
       next if !channel.options['user']['id']
@@ -51,7 +51,7 @@ class ExternalCredential::Twitter
       channel.options['auth']['oauth_token_secret'] = access_token.secret
       channel.save
       return channel
-    }
+    end
 
     # create channel
     Channel.create(

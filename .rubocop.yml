@@ -99,14 +99,6 @@ Style/EmptyLinesAroundModuleBody:
   Description: "Keeps track of empty lines around module bodies."
   Enabled: false
 
-Style/BlockDelimiters:
-  Description: >-
-                Avoid using {...} for multi-line blocks (multiline chaining is
-                always ugly).
-                Prefer {...} over do...end for single-line blocks.
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#single-line-blocks'
-  Enabled: false
-
 Style/MultilineBlockChain:
   Description: 'Avoid multi-line chains of blocks.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#single-line-blocks'

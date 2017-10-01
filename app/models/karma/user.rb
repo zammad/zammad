@@ -30,14 +30,14 @@ class Karma::User < ApplicationModel
   def self.level_by_score(score)
     level = nil
     karma_levels = Setting.get('karma_levels')
-    karma_levels.each { |local_level|
+    karma_levels.each do |local_level|
       if !level
         level = local_level[:name]
       end
       next if local_level[:start] && score < local_level[:start]
       next if local_level[:end] && score > local_level[:end]
       level = local_level[:name]
-    }
+    end
     level
   end
 

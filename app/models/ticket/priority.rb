@@ -23,12 +23,12 @@ class Ticket::Priority < ApplicationModel
     end
 
     if priorities_with_default.count > 1
-      Ticket::Priority.all.each { |local_priority|
+      Ticket::Priority.all.each do |local_priority|
         next if local_priority.id == id
         local_priority.default_create = false
         local_priority.callback_loop = true
         local_priority.save!
-      }
+      end
     end
   end
 end

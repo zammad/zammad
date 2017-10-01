@@ -34,9 +34,9 @@ class UsersController < ApplicationController
 
     if params[:expand]
       list = []
-      users.each { |user|
+      users.each do |user|
         list.push user.attributes_with_association_names
-      }
+      end
       render json: list, status: :ok
       return
     end
@@ -44,10 +44,10 @@ class UsersController < ApplicationController
     if params[:full]
       assets = {}
       item_ids = []
-      users.each { |item|
+      users.each do |item|
         item_ids.push item.id
         assets = item.assets(assets)
-      }
+      end
       render json: {
         record_ids: item_ids,
         assets: assets,
@@ -56,9 +56,9 @@ class UsersController < ApplicationController
     end
 
     users_all = []
-    users.each { |user|
+    users.each do |user|
       users_all.push User.lookup(id: user.id).attributes_with_association_ids
-    }
+    end
     render json: users_all, status: :ok
   end
 
@@ -145,12 +145,12 @@ class UsersController < ApplicationController
       group_ids = []
       role_ids  = []
       if count <= 2
-        Role.where(name: %w(Admin Agent)).each { |role|
+        Role.where(name: %w(Admin Agent)).each do |role|
           role_ids.push role.id
-        }
-        Group.all().each { |group|
+        end
+        Group.all().each do |group|
           group_ids.push group.id
-        }
+        end
 
         # everybody else will go as customer per default
       else
@@ -384,9 +384,9 @@ class UsersController < ApplicationController
 
     if params[:expand]
       list = []
-      user_all.each { |user|
+      user_all.each do |user|
         list.push user.attributes_with_association_names
-      }
+      end
       render json: list, status: :ok
       return
     end
@@ -394,14 +394,14 @@ class UsersController < ApplicationController
     # build result list
     if params[:label]
       users = []
-      user_all.each { |user|
+      user_all.each do |user|
         realname = user.firstname.to_s + ' ' + user.lastname.to_s
         if user.email && user.email.to_s != ''
           realname = realname + ' <' + user.email.to_s + '>'
         end
         a = { id: user.id, label: realname, value: realname }
         users.push a
-      }
+      end
 
       # return result
       render json: users
@@ -411,10 +411,10 @@ class UsersController < ApplicationController
     if params[:full]
       user_ids = []
       assets   = {}
-      user_all.each { |user|
+      user_all.each do |user|
         assets = user.assets(assets)
         user_ids.push user.id
-      }
+      end
 
       # return result
       render json: {
@@ -425,9 +425,9 @@ class UsersController < ApplicationController
     end
 
     list = []
-    user_all.each { |user|
+    user_all.each do |user|
       list.push user.attributes_with_association_ids
-    }
+    end
     render json: list, status: :ok
   end
 
@@ -464,14 +464,14 @@ class UsersController < ApplicationController
     # build result list
     if !params[:full]
       users = []
-      user_all.each { |user|
+      user_all.each do |user|
         realname = user.firstname.to_s + ' ' + user.lastname.to_s
         if user.email && user.email.to_s != ''
           realname = realname + ' <' + user.email.to_s + '>'
         end
         a = { id: user.id, label: realname, value: realname }
         users.push a
-      }
+      end
 
       # return result
       render json: users
@@ -480,10 +480,10 @@ class UsersController < ApplicationController
 
     user_ids = []
     assets   = {}
-    user_all.each { |user|
+    user_all.each do |user|
       assets = user.assets(assets)
       user_ids.push user.id
-    }
+    end
 
     # return result
     render json: {
@@ -806,9 +806,9 @@ curl http://localhost/api/v1/users/preferences -v -u #{login}:#{password} -H "Co
     if params[:user]
       user = User.find(current_user.id)
       user.with_lock do
-        params[:user].each { |key, value|
+        params[:user].each do |key, value|
           user.preferences[key.to_sym] = value
-        }
+        end
         user.save!
       end
     end

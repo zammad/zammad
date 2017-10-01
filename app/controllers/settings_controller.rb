@@ -6,10 +6,10 @@ class SettingsController < ApplicationController
   # GET /settings
   def index
     list = []
-    Setting.all.each { |setting|
+    Setting.all.each do |setting|
       next if setting.preferences[:permission] && !current_user.permissions?(setting.preferences[:permission])
       list.push setting
-    }
+    end
     render json: list, status: :ok
   end
 
@@ -93,13 +93,13 @@ class SettingsController < ApplicationController
 
   def keep_certain_attributes
     setting = Setting.find(params[:id])
-    [:name, :area, :state_initial, :frontend, :options].each { |key|
+    [:name, :area, :state_initial, :frontend, :options].each do |key|
       params.delete(key)
-    }
+    end
     if !params[:preferences].empty?
-      [:online_service_disable, :permission, :render].each { |key|
+      [:online_service_disable, :permission, :render].each do |key|
         params[:preferences].delete(key)
-      }
+      end
       params[:preferences].merge!(setting.preferences)
     end
     params

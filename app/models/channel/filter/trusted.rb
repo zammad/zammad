@@ -7,21 +7,21 @@ module Channel::Filter::Trusted
 
     # check if trust x-headers
     if !channel[:trusted]
-      mail.each { |key, _value|
+      mail.each do |key, _value|
         next if key !~ /^x-zammad/i
         mail.delete(key)
-      }
+      end
       return
     end
 
     # verify values
-    mail.each { |key, value|
+    mail.each do |key, value|
       next if key !~ /^x-zammad/i
 
       # no assoc exists, remove header
       next if Channel::EmailParser.check_attributes_by_x_headers(key, value)
       mail.delete(key.to_sym)
-    }
+    end
 
   end
 end

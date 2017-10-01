@@ -10,10 +10,10 @@ class Ticket::TimeAccounting < ApplicationModel
   def ticket_time_unit_update
     exists = false
     time_units = 0
-    Ticket::TimeAccounting.where(ticket_id: ticket_id).each { |record|
+    Ticket::TimeAccounting.where(ticket_id: ticket_id).each do |record|
       time_units += record.time_unit
       exists = true
-    }
+    end
     return false if exists == false
     ticket = Ticket.lookup(id: ticket_id)
     return false if !ticket

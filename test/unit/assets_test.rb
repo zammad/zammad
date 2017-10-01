@@ -278,14 +278,14 @@ class AssetsTest < ActiveSupport::TestCase
 
   def diff(o1, o2)
     return true if o1 == o2
-    %w(updated_at created_at).each { |item|
+    %w(updated_at created_at).each do |item|
       if o1[item]
         o1[item] = o1[item].to_s
       end
       if o2[item]
         o2[item] = o2[item].to_s
       end
-    }
+    end
     return true if (o1.to_a - o2.to_a).empty?
     #puts "ERROR: difference \n1: #{o1.inspect}\n2: #{o2.inspect}\ndiff: #{(o1.to_a - o2.to_a).inspect}"
     false

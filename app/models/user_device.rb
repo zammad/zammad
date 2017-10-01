@@ -39,11 +39,11 @@ store new device for user if device not already known
         user_id: user_id,
         fingerprint: fingerprint,
       )
-      user_devices.each { |local_user_device|
+      user_devices.each do |local_user_device|
         device_exists_by_fingerprint = true
         next if local_user_device.location != location
         return action(local_user_device.id, user_agent, ip, user_id, type) if local_user_device
-      }
+      end
     end
 
     # for basic_auth|token_auth search for user agent
@@ -53,11 +53,11 @@ store new device for user if device not already known
         user_id: user_id,
         user_agent: user_agent,
       )
-      user_devices.each { |local_user_device|
+      user_devices.each do |local_user_device|
         device_exists_by_user_agent = true
         next if local_user_device.location != location
         return action(local_user_device.id, user_agent, ip, user_id, type) if local_user_device
-      }
+      end
     end
 
     # get browser details

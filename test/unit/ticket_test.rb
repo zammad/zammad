@@ -262,10 +262,10 @@ class TicketTest < ActiveSupport::TestCase
   test 'ticket process_pending' do
 
     # close all other pending close tickets first
-    Ticket.where('pending_time IS NOT NULL').each { |ticket|
+    Ticket.where('pending_time IS NOT NULL').each do |ticket|
       ticket.state = Ticket::State.lookup(name: 'closed')
       ticket.save!
-    }
+    end
 
     ticket = Ticket.create(
       title: 'pending close test',

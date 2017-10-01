@@ -9,7 +9,7 @@ module Channel::Filter::BounceFollowUpCheck
     return if !mail[:attachments]
     return if mail[ 'x-zammad-ticket-id'.to_sym ]
 
-    mail[:attachments].each { |attachment|
+    mail[:attachments].each do |attachment|
       next if !attachment[:preferences]
       next if attachment[:preferences]['Mime-Type'] != 'message/rfc822'
       next if !attachment[:data]
@@ -25,7 +25,7 @@ module Channel::Filter::BounceFollowUpCheck
       mail[ 'x-zammad-is-auto-response'.to_sym ] = true
 
       return true
-    }
+    end
 
   end
 end

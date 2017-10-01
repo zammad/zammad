@@ -37,7 +37,7 @@ class Scheduler < ApplicationModel
 
       # read/load jobs and check if it is alredy started
       jobs = Scheduler.where('active = ?', true).order('prio ASC')
-      jobs.each { |job|
+      jobs.each do |job|
 
         # ignore job is still running
         next if @@jobs_started[ job.id ]
@@ -49,7 +49,7 @@ class Scheduler < ApplicationModel
         @@jobs_started[ job.id ] = true
         start_job(job)
         sleep 10
-      }
+      end
       sleep 60
     end
   end
@@ -130,7 +130,7 @@ class Scheduler < ApplicationModel
 
   def self.start_job(job)
 
-    Thread.new {
+    Thread.new do
       ApplicationHandleInfo.current = 'scheduler'
 
       logger.info "Started job thread for '#{job.name}' (#{job.method})..."
@@ -163,7 +163,7 @@ class Scheduler < ApplicationModel
 
       # release thread lock
       @@jobs_started[ job.id ] = false
-    }
+    end
   end
 
   def self._start_job(job, try_count = 0, try_run_time = Time.zone.now)
@@ -235,7 +235,7 @@ class Scheduler < ApplicationModel
 
     # used for production
     wait = 8
-    Thread.new {
+    Thread.new do
       sleep wait
 
       logger.info "Starting worker thread #{Delayed::Job}"
@@ -261,7 +261,7 @@ class Scheduler < ApplicationModel
 
       logger.info ' ...stopped worker thread'
       ActiveRecord::Base.connection.close
-    }
+    end
 
   end
 

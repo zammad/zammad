@@ -27,7 +27,7 @@ RSpec.describe Import::OTRS::Priority do
   context 'default' do
 
     let(:object_structure) { load_priority_json('default') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: '1',
         updated_by_id: '1',
@@ -37,7 +37,7 @@ RSpec.describe Import::OTRS::Priority do
         name: '4 high',
         id: '4'
       }
-    }
+    end
 
     it 'creates' do
       creates_with(zammad_structure)

@@ -138,11 +138,11 @@ class TwitterTest < ActiveSupport::TestCase
     end
 
     tweet_found = false
-    client.user_timeline(system_login_without_at).each { |tweet|
+    client.user_timeline(system_login_without_at).each do |tweet|
       next if tweet.id.to_s != article.message_id.to_s
       tweet_found = true
       break
-    }
+    end
     assert(tweet_found, "found outbound '#{text}' tweet '#{article.message_id}'")
 
     reply_text = "#{system_login} on my side the weather is nice, too! 😍😍😍 #weather#{rand(999_999)}"
@@ -156,14 +156,14 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 10
     article = nil
-    2.times {
+    2.times do
       Channel.fetch
 
       # check if follow up article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
       sleep 10
-    }
+    end
 
     assert(article, "article tweet '#{tweet.id}' imported")
     assert_equal(customer_login, article.from, 'ticket article from')
@@ -200,14 +200,14 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 20
     article = nil
-    2.times {
+    2.times do
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
       sleep 20
-    }
+    end
     assert(article, "Can't find tweet id #{tweet.id}/#{text}")
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_nil(article.to, 'ticket article to')
@@ -235,12 +235,12 @@ class TwitterTest < ActiveSupport::TestCase
     assert_equal(customer_login, article.to, 'ticket article to')
     sleep 5
     tweet_found = false
-    client.user_timeline(system_login_without_at).each { |local_tweet|
+    client.user_timeline(system_login_without_at).each do |local_tweet|
       sleep 10
       next if local_tweet.id.to_s != article.message_id.to_s
       tweet_found = true
       break
-    }
+    end
     assert(tweet_found, "found outbound '#{reply_text}' tweet '#{article.message_id}'")
 
     channel = Channel.find(channel.id)
@@ -270,14 +270,14 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 20
     article = nil
-    2.times {
+    2.times do
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
       sleep 20
-    }
+    end
 
     assert(article, "Can't find tweet id #{tweet.id}/#{text}")
     assert_equal('closed', ticket.reload.state.name)
@@ -293,9 +293,9 @@ class TwitterTest < ActiveSupport::TestCase
       config.access_token_secret = system_token_secret
     end
     dms = client.direct_messages(count: 100)
-    dms.each { |dm|
+    dms.each do |dm|
       client.destroy_direct_message(dm.id)
-    }
+    end
     client = Twitter::REST::Client.new(
       consumer_key:        consumer_key,
       consumer_secret:     consumer_secret,
@@ -303,9 +303,9 @@ class TwitterTest < ActiveSupport::TestCase
       access_token_secret: customer_token_secret
     )
     dms = client.direct_messages(count: 100)
-    dms.each { |dm|
+    dms.each do |dm|
       client.destroy_direct_message(dm.id)
-    }
+    end
     hash  = "#citheo44 #{hash_gen}"
     text  = "How about #{rand_word} the details? #{hash} - #{'Long' * 50}"
     dm = client.create_direct_message(
@@ -317,14 +317,14 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    1.times {
+    1.times do
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
       sleep 10
-    }
+    end
 
     assert(article, "inbound article '#{text}' created")
     assert_equal(customer_login, article.from, 'ticket article from')
@@ -367,14 +367,14 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    1.times {
+    1.times do
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
       sleep 10
-    }
+    end
 
     assert(article, "inbound article '#{text}' created")
     assert_equal(customer_login, article.from, 'ticket article inbound from')
@@ -400,14 +400,14 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    1.times {
+    1.times do
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
       sleep 15
-    }
+    end
 
     assert(article, "inbound article '#{text}' created with dm id #{dm.id}")
     assert_equal(customer_login, article.from, 'ticket article inbound from')
@@ -454,14 +454,14 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    2.times {
+    2.times do
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: retweet.id)
       break if article
       sleep 10
-    }
+    end
 
     assert(article, "retweet article '#{text}' created")
   end
@@ -495,22 +495,22 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    2.times {
+    2.times do
       Channel.fetch
 
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: retweet.id)
       break if article
       sleep 10
-    }
+    end
 
     assert_nil(article, "retweet article '#{text}' not created")
   end
 
   test 'f streaming test' do
-    thread = Thread.new {
+    thread = Thread.new do
       Channel.stream
-    }
+    end
     sleep 10
 
     # new tweet I - by me_bauer
@@ -528,14 +528,14 @@ class TwitterTest < ActiveSupport::TestCase
     )
 
     article = nil
-    5.times {
+    5.times do
       Scheduler.worker(true)
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
       ActiveRecord::Base.clear_all_connections!
       ActiveRecord::Base.connection.query_cache.clear
       sleep 10
-    }
+    end
     assert(article, "article from customer with text '#{text}' message_id '#{tweet.id}' created")
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_nil(article.to, 'ticket article to')
@@ -554,14 +554,14 @@ class TwitterTest < ActiveSupport::TestCase
     )
 
     article = nil
-    5.times {
+    5.times do
       Scheduler.worker(true)
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
       ActiveRecord::Base.clear_all_connections!
       ActiveRecord::Base.connection.query_cache.clear
       sleep 10
-    }
+    end
     assert(article, "article from customer with text '#{text}' message_id '#{tweet.id}' created")
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_nil(article.to, 'ticket article to')
@@ -587,12 +587,12 @@ class TwitterTest < ActiveSupport::TestCase
     sleep 5
 
     tweet_found = false
-    client.user_timeline(system_login_without_at).each { |local_tweet|
+    client.user_timeline(system_login_without_at).each do |local_tweet|
       sleep 10
       next if local_tweet.id.to_s != article.message_id.to_s
       tweet_found = true
       break
-    }
+    end
     assert(tweet_found, "found outbound '#{reply_text}' tweet '#{article.message_id}'")
 
     count = Ticket::Article.where(message_id: article.message_id).count
@@ -620,12 +620,12 @@ class TwitterTest < ActiveSupport::TestCase
     assert(dm, "dm with ##{hash} created")
 
     article = nil
-    5.times {
+    5.times do
       Scheduler.worker(true)
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
       sleep 10
-    }
+    end
     assert(article, "inbound article '#{text}' message_id '#{dm.id}' created")
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_equal(system_login, article.to, 'ticket article to')
@@ -634,7 +634,7 @@ class TwitterTest < ActiveSupport::TestCase
   end
 
   test 'g streaming test retweet enabled' do
-    thread = Thread.new {
+    thread = Thread.new do
       # enable track_retweets in current thread
       # since Threads are not spawned in the same scope
       # as the current test is running in .....
@@ -643,7 +643,7 @@ class TwitterTest < ActiveSupport::TestCase
       channel_thread.save!
 
       Channel.stream
-    }
+    end
     sleep 10
 
     client = Twitter::REST::Client.new do |config|
@@ -669,7 +669,7 @@ class TwitterTest < ActiveSupport::TestCase
     # fetch check system account
     sleep 15
     article = nil
-    2.times {
+    2.times do
       Channel.fetch
 
       # check if ticket and article has been created
@@ -678,7 +678,7 @@ class TwitterTest < ActiveSupport::TestCase
       ActiveRecord::Base.clear_all_connections!
       ActiveRecord::Base.connection.query_cache.clear
       sleep 10
-    }
+    end
 
     assert(article, "retweet article '#{text}' created")
 
@@ -687,7 +687,7 @@ class TwitterTest < ActiveSupport::TestCase
   end
 
   test 'h streaming test retweet disabled' do
-    thread = Thread.new {
+    thread = Thread.new do
       # disable track_retweets in current thread
       # since Threads are not spawned in the same scope
       # as the current test is running in .....
@@ -696,7 +696,7 @@ class TwitterTest < ActiveSupport::TestCase
       channel_thread.save!
 
       Channel.stream
-    }
+    end
     sleep 10
 
     client = Twitter::REST::Client.new do |config|
@@ -721,12 +721,12 @@ class TwitterTest < ActiveSupport::TestCase
 
     # fetch check system account
     article = nil
-    4.times {
+    4.times do
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: retweet.id)
       break if article
       sleep 10
-    }
+    end
 
     assert_nil(article, "retweet article '#{text}' not created")
 
@@ -737,7 +737,7 @@ class TwitterTest < ActiveSupport::TestCase
   test 'i restart stream after config of channel has changed' do
     hash = "#citheo#{rand(999)}"
 
-    thread = Thread.new {
+    thread = Thread.new do
       Channel.stream
       sleep 10
       item = {
@@ -747,7 +747,7 @@ class TwitterTest < ActiveSupport::TestCase
       channel_thread = Channel.find(channel.id)
       channel_thread[:options]['sync']['search'].push item
       channel_thread.save!
-    }
+    end
 
     sleep 60
 
@@ -765,14 +765,14 @@ class TwitterTest < ActiveSupport::TestCase
       text,
     )
     article = nil
-    5.times {
+    5.times do
       Scheduler.worker(true)
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
       ActiveRecord::Base.clear_all_connections!
       ActiveRecord::Base.connection.query_cache.clear
       sleep 10
-    }
+    end
     assert(article, "article from customer with text '#{text}' message_id '#{tweet.id}' created")
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_nil(article.to, 'ticket article to')

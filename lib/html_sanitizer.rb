@@ -54,16 +54,16 @@ satinize html string based on whiltelist
       if node && node.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
         if node.class == Nokogiri::XML::Text
           urls = []
-          node.content.scan(%r{((http|https|ftp|tel)://.+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)}mxi).each { |match|
+          node.content.scan(%r{((http|https|ftp|tel)://.+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)}mxi).each do |match|
             if match[0]
               urls.push match[0].to_s.strip
             end
-          }
-          node.content.scan(/(^|:|;|\s)(www\..+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)/mxi).each { |match|
+          end
+          node.content.scan(/(^|:|;|\s)(www\..+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)/mxi).each do |match|
             if match[1]
               urls.push match[1].to_s.strip
             end
-          }
+          end
           next if urls.empty?
           add_link(node.content, urls, node)
         end
@@ -119,13 +119,13 @@ satinize html string based on whiltelist
       if node['class']
         classes = node['class'].gsub(/\t|\n|\r/, '').split(' ')
         class_new = ''
-        classes.each { |local_class|
+        classes.each do |local_class|
           next if !classes_whitelist.include?(local_class.to_s.strip)
           if class_new != ''
             class_new += ' '
           end
           class_new += local_class
-        }
+        end
         if class_new != ''
           node['class'] = class_new
         else
@@ -134,7 +134,7 @@ satinize html string based on whiltelist
       end
 
       # move style attributes to css attributes
-      attributes_2_css.each { |key|
+      attributes_2_css.each do |key|
         next if !node[key]
         if node['style'].empty?
           node['style'] = ''
@@ -148,20 +148,20 @@ satinize html string based on whiltelist
           value += 'px'
         end
         node['style'] += "#{key}:#{value}"
-      }
+      end
 
       # clean style / only use allowed style properties
       if node['style']
         pears = node['style'].downcase.gsub(/\t|\n|\r/, '').split(';')
         style = ''
-        pears.each { |local_pear|
+        pears.each do |local_pear|
           prop = local_pear.split(':')
           next if !prop[0]
           key = prop[0].strip
           next if !css_properties_whitelist.include?(node.name)
           next if !css_properties_whitelist[node.name].include?(key)
           style += "#{local_pear};"
-        }
+        end
         node['style'] = style
         if style == ''
           node.delete('style')
@@ -169,19 +169,19 @@ satinize html string based on whiltelist
       end
 
       # scan for invalid link content
-      %w(href style).each { |attribute_name|
+      %w(href style).each do |attribute_name|
         next if !node[attribute_name]
         href = cleanup_target(node[attribute_name])
         next if href !~ /(javascript|livescript|vbscript):/i
         node.delete(attribute_name)
-      }
+      end
 
       # remove attributes if not whitelisted
-      node.each { |attribute, _value|
+      node.each do |attribute, _value|
         attribute_name = attribute.downcase
         next if attributes_whitelist[:all].include?(attribute_name) || (attributes_whitelist[node.name] && attributes_whitelist[node.name].include?(attribute_name))
         node.delete(attribute)
-      }
+      end
 
       # remove mailto links
       if node['href']
@@ -243,7 +243,7 @@ cleanup html string:
       next if !tags_backlist.include?(node.name)
       hit = false
       local_node = nil
-      (1..5).each { |_count|
+      (1..5).each do |_count|
         local_node = if local_node
                        local_node.parent
                      else
@@ -252,7 +252,7 @@ cleanup html string:
         break if !local_node
         next if local_node.name != 'td'
         hit = true
-      }
+      end
       next if hit && node.keys.count.positive?
       node.replace cleanup_replace_tags(node.children.to_s)
       Loofah::Scrubber::STOP
@@ -449,7 +449,7 @@ satinize style of img tags
           style = 'max-width:100%;'
           if node['style']
             pears = node['style'].downcase.gsub(/\t|\n|\r/, '').split(';')
-            pears.each { |local_pear|
+            pears.each do |local_pear|
               prop = local_pear.split(':')
               next if !prop[0]
               key = prop[0].strip
@@ -457,7 +457,7 @@ satinize style of img tags
                 key = 'max-height'
               end
               style += "#{key}:#{prop[1]};"
-            }
+            end
           end
           node['style'] = style
         end

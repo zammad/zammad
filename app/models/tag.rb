@@ -146,11 +146,11 @@ returns
       o_id: data[:o_id],
     )
     tags = []
-    tag_search.each { |tag|
+    tag_search.each do |tag|
       tag_item = Tag::Item.lookup(id: tag.tag_item_id)
       next if !tag_item
       tags.push tag_item.name
-    }
+    end
     tags
   end
 
@@ -222,7 +222,7 @@ rename tag items
       if already_existing_tag
 
         # re-assign old tag to already existing tag
-        Tag.where(tag_item_id: old_tag_item.id).each { |tag|
+        Tag.where(tag_item_id: old_tag_item.id).each do |tag|
 
           # check if tag already exists on object
           if Tag.find_by(tag_object_id: tag.tag_object_id, o_id: tag.o_id, tag_item_id: already_existing_tag.id)
@@ -244,7 +244,7 @@ rename tag items
             object: tag_object.name,
             o_id: tag.o_id,
           )
-        }
+        end
 
         # delete not longer used tag
         old_tag_item.destroy
@@ -256,13 +256,13 @@ rename tag items
       old_tag_item.save
 
       # touch reference objects
-      Tag.where(tag_item_id: old_tag_item.id).each { |tag|
+      Tag.where(tag_item_id: old_tag_item.id).each do |tag|
         tag_object = Tag::Object.lookup(id: tag.tag_object_id)
         Tag.touch_reference_by_params(
           object: tag_object.name,
           o_id: tag.o_id,
         )
-      }
+      end
 
       true
     end
@@ -278,14 +278,14 @@ remove tag item (destroy with reverences)
     def self.remove(id)
 
       # search for references, destroy and touch
-      Tag.where(tag_item_id: id).each { |tag|
+      Tag.where(tag_item_id: id).each do |tag|
         tag_object = Tag::Object.lookup(id: tag.tag_object_id)
         tag.destroy
         Tag.touch_reference_by_params(
           object: tag_object.name,
           o_id: tag.o_id,
         )
-      }
+      end
       Tag::Item.find(id).destroy
       true
     end

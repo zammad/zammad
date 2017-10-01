@@ -9,19 +9,19 @@ RSpec.describe Import::OTRS::Article::AttachmentFactory do
   end
 
   let(:local_article) { instance_double(Ticket::Article, ticket_id: 1337, id: 42) }
-  let(:attachments) {
+  let(:attachments) do
     [
       load_attachment_json('default'),
       load_attachment_json('default'),
       load_attachment_json('default')
     ]
-  }
-  let(:start_import) {
+  end
+  let(:start_import) do
     described_class.import(
       attachments:   attachments,
       local_article: local_article
     )
-  }
+  end
 
   def import_expectations
     expect(Store).to receive(:add).exactly(3).times.with(hash_including(

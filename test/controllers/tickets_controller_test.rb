@@ -801,7 +801,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   test '02.05 ticket pagination' do
     title = "ticket pagination #{rand(999_999_999)}"
     tickets = []
-    (1..20).each { |count|
+    (1..20).each do |count|
       ticket = Ticket.create!(
         title: "#{title} - #{count}",
         group: Group.lookup(name: 'Users'),
@@ -823,7 +823,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       )
       tickets.push ticket
       travel 2.seconds
-    }
+    end
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
     get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: {}, headers: @headers.merge('Authorization' => credentials)

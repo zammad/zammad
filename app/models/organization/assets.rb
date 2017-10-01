@@ -45,23 +45,23 @@ returns
           if local_attributes['member_ids'].count > 100
             local_attributes['member_ids'] = local_attributes['member_ids'].sort[0, 100]
           end
-          local_attributes['member_ids'].each { |local_user_id|
+          local_attributes['member_ids'].each do |local_user_id|
             next if data[ app_model_user ][ local_user_id ]
             user = User.lookup(id: local_user_id)
             next if !user
             data = user.assets(data)
-          }
+          end
         end
 
         data[ app_model_organization ][ id ] = local_attributes
       end
-      %w(created_by_id updated_by_id).each { |local_user_id|
+      %w(created_by_id updated_by_id).each do |local_user_id|
         next if !self[ local_user_id ]
         next if data[ app_model_user ][ self[ local_user_id ] ]
         user = User.lookup(id: self[ local_user_id ])
         next if !user
         data = user.assets(data)
-      }
+      end
       data
     end
   end

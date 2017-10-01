@@ -59,26 +59,26 @@ returns
     return article if article['body'] !~ /<img/i
 
     inline_attachments = {}
-    article['body'].gsub!( /(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>/im ) { |item|
+    article['body'].gsub!( /(<img[[:space:]](|.+?)src=")cid:(.+?)"(|.+?)>/im ) do |item|
       tag_start = $1
       cid = $3
       tag_end = $4
       replace = item
 
       # look for attachment
-      article['attachments'].each { |file|
+      article['attachments'].each do |file|
         next if !file[:preferences] || !file[:preferences]['Content-ID'] || (file[:preferences]['Content-ID'] != cid && file[:preferences]['Content-ID'] != "<#{cid}>" )
         replace = "#{tag_start}/api/v1/ticket_attachment/#{article['ticket_id']}/#{article['id']}/#{file[:id]}\"#{tag_end}>"
         inline_attachments[file[:id]] = true
         break
-      }
+      end
       replace
-    }
+    end
     new_attachments = []
-    article['attachments'].each { |file|
+    article['attachments'].each do |file|
       next if inline_attachments[file[:id]]
       new_attachments.push file
-    }
+    end
     article['attachments'] = new_attachments
     article
   end
@@ -98,21 +98,21 @@ returns
 
   def attachments_inline
     inline_attachments = {}
-    body.gsub( /<img[[:space:]](|.+?)src="cid:(.+?)"(|.+?)>/im ) { |_item|
+    body.gsub( /<img[[:space:]](|.+?)src="cid:(.+?)"(|.+?)>/im ) do |_item|
       cid = $2
 
       # look for attachment
-      attachments.each { |file|
+      attachments.each do |file|
         next if !file.preferences['Content-ID'] || (file.preferences['Content-ID'] != cid && file.preferences['Content-ID'] != "<#{cid}>" )
         inline_attachments[file.id] = true
         break
-      }
-    }
+      end
+    end
     new_attachments = []
-    attachments.each { |file|
+    attachments.each do |file|
       next if !inline_attachments[file.id]
       new_attachments.push file
-    }
+    end
     new_attachments
   end
 
@@ -232,7 +232,7 @@ returns
   def attributes_with_association_names
     attributes = super
     attributes['attachments'] = []
-    attachments.each { |attachment|
+    attachments.each do |attachment|
       item = {
         id: attachment['id'],
         filename: attachment['filename'],
@@ -240,7 +240,7 @@ returns
         preferences: attachment['preferences'],
       }
       attributes['attachments'].push item
-    }
+    end
     Ticket::Article.insert_urls(attributes)
   end
 
@@ -260,7 +260,7 @@ returns
   def attributes_with_association_ids
     attributes = super
     attributes['attachments'] = []
-    attachments.each { |attachment|
+    attachments.each do |attachment|
       item = {
         id: attachment['id'],
         filename: attachment['filename'],
@@ -268,7 +268,7 @@ returns
         preferences: attachment['preferences'],
       }
       attributes['attachments'].push item
-    }
+    end
     if attributes['body'] && attributes['content_type'] =~ %r{text/html}i
       attributes['body'] = HtmlSanitizer.dynamic_image_size(attributes['body'])
     end
