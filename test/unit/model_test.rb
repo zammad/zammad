@@ -11,7 +11,7 @@ class ModelTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_raises( ActiveRecord::RecordNotUnique ) {
+    assert_raises( ActiveRecord::RecordNotUnique ) do
       Group.create_if_not_exists(
         name: 'model1-Create_If_Not_Exists',
         active: true,
@@ -19,7 +19,7 @@ class ModelTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1,
       )
-    }
+    end
 
     group2 = Group.create_if_not_exists(
       name: 'model1-create_if_not_exists',
@@ -40,7 +40,7 @@ class ModelTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_raises( ActiveRecord::RecordNotUnique ) {
+    assert_raises( ActiveRecord::RecordNotUnique ) do
       Group.create_or_update(
         name: 'model1-Create_Or_Update',
         active: true,
@@ -48,7 +48,7 @@ class ModelTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1,
       )
-    }
+    end
 
     group2 = Group.create_or_update(
       name: 'model1-create_or_update',

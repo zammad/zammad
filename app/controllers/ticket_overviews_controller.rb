@@ -12,7 +12,7 @@ class TicketOverviewsController < ApplicationController
     if !params[:view]
       index_and_lists = Ticket::Overviews.index(current_user)
       indexes = []
-      index_and_lists.each { |index|
+      index_and_lists.each do |index|
         assets = {}
         overview = Overview.lookup(id: index[:overview][:id])
         meta = {
@@ -22,7 +22,7 @@ class TicketOverviewsController < ApplicationController
           count: index[:count],
         }
         indexes.push meta
-      }
+      end
       render json: indexes
       return
     end
@@ -31,17 +31,17 @@ class TicketOverviewsController < ApplicationController
 
     assets = {}
     result = {}
-    index_and_lists.each { |index|
+    index_and_lists.each do |index|
       next if index[:overview][:view] != params[:view]
 
       overview = Overview.lookup(id: index[:overview][:id])
       assets = overview.assets(assets)
-      index[:tickets].each { |ticket_meta|
+      index[:tickets].each do |ticket_meta|
         ticket = Ticket.lookup(id: ticket_meta[:id])
         assets = ticket.assets(assets)
-      }
+      end
       result = index
-    }
+    end
 
     render json: {
       assets: assets,

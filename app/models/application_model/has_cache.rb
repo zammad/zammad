@@ -36,9 +36,9 @@ module ApplicationModel::HasCache
       keys.push "#{self.class}::#{login}"
     end
 
-    keys.each { |key|
+    keys.each do |key|
       Cache.delete(key)
-    }
+    end
 
     # delete old name / login caches
     if saved_changes?

@@ -25,11 +25,11 @@ class ImportOtrsController < ApplicationController
     response = UserAgent.request(params[:url])
     if !response.success? && response.code.to_s !~ /^40.$/
       message_human = ''
-      translation_map.each { |key, message|
+      translation_map.each do |key, message|
         if response.error.to_s =~ /#{Regexp.escape(key)}/i
           message_human = message
         end
-      }
+      end
       render json: {
         result: 'invalid',
         message_human: message_human,
@@ -128,20 +128,20 @@ class ImportOtrsController < ApplicationController
     # check count of dynamic fields
     dynamic_field_count = 0
     dynamic_fields = Import::OTRS::Requester.load('DynamicField')
-    dynamic_fields.each { |dynamic_field|
+    dynamic_fields.each do |dynamic_field|
       next if dynamic_field['ValidID'].to_i != 1
       dynamic_field_count += 1
-    }
+    end
     if dynamic_field_count > 20
       issues.push 'otrsDynamicFields'
     end
 
     # check if process exsists
     sys_configs = Import::OTRS::Requester.load('SysConfig')
-    sys_configs.each { |sys_config|
+    sys_configs.each do |sys_config|
       next if sys_config['Key'] != 'Process'
       issues.push 'otrsProcesses'
-    }
+    end
 
     result = 'ok'
     if !issues.empty?

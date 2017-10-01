@@ -12,13 +12,13 @@ class LinksController < ApplicationController
 
     assets = {}
     link_list = []
-    links.each { |item|
+    links.each do |item|
       link_list.push item
       if item['link_object'] == 'Ticket'
         ticket = Ticket.lookup(id: item['link_object_value'])
         assets = ticket.assets(assets)
       end
-    }
+    end
 
     # return result
     render json: {

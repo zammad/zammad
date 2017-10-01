@@ -32,7 +32,7 @@ returns:
 
     # verify installed files
     issues = {}
-    package['files'].each { |file|
+    package['files'].each do |file|
       if !File.exist?(file['location'])
         logger.error "File #{file['location']} is missing"
         issues[file['location']] = 'missing'
@@ -43,7 +43,7 @@ returns:
       next if content_package == content_fs
       logger.error "File #{file['location']} is different"
       issues[file['location']] = 'changed'
-    }
+    end
     return nil if issues.empty?
     issues
   end
@@ -65,9 +65,9 @@ install all packages located under auto_install/*.zpm
         data.push entry
       end
     end
-    data.each { |file|
+    data.each do |file|
       install(file: "#{path}/#{file}")
-    }
+    end
     data
   end
 
@@ -273,11 +273,11 @@ returns
     end
 
     # write files
-    package['files'].each { |file|
+    package['files'].each do |file|
       permission = file['permission'] || '644'
       content    = Base64.decode64(file['content'])
       _write_file(file['location'], permission, content)
-    }
+    end
 
     # update package state
     package_db.state = 'installed'
@@ -343,11 +343,11 @@ returns
       Package::Migration.migrate(package['name'], 'reverse')
     end
 
-    package['files'].each { |file|
+    package['files'].each do |file|
       permission = file['permission'] || '644'
       content    = Base64.decode64(file['content'])
       _delete_file(file['location'], permission, content)
-    }
+    end
 
     # delete package
     if !data[:reinstall]
@@ -370,11 +370,11 @@ execute all pending package migrations at once
 =end
 
   def self.migration_execute
-    Package.all.each { |package|
+    Package.all.each do |package|
       json_file = Package._get_bin(package.name, package.version)
       package   = JSON.parse(json_file)
       Package::Migration.migrate(package['name'])
-    }
+    end
   end
 
   def self._get_bin(name, version)
@@ -435,17 +435,17 @@ execute all pending package migrations at once
 
     # check if directories need to be created
     directories = location.split '/'
-    (0..(directories.length - 2) ).each { |position|
+    (0..(directories.length - 2) ).each do |position|
       tmp_path = ''
-      (1..position).each { |count|
+      (1..position).each do |count|
         tmp_path = "#{tmp_path}/#{directories[count]}"
-      }
+      end
 
       next if tmp_path == ''
       next if File.exist?(tmp_path)
 
       Dir.mkdir(tmp_path, 0o755)
-    }
+    end
 
     # install file
     begin
@@ -501,11 +501,11 @@ execute all pending package migrations at once
 
       # get existing migrations
       migrations_existing = []
-      Dir.foreach(location) { |entry|
+      Dir.foreach(location) do |entry|
         next if entry == '.'
         next if entry == '..'
         migrations_existing.push entry
-      }
+      end
 
       # up
       migrations_existing = migrations_existing.sort
@@ -515,7 +515,7 @@ execute all pending package migrations at once
         migrations_existing = migrations_existing.reverse
       end
 
-      migrations_existing.each { |migration|
+      migrations_existing.each do |migration|
         next if migration !~ /\.rb$/
         version = nil
         name    = nil
@@ -550,7 +550,7 @@ execute all pending package migrations at once
           classname.constantize.up
           Package::Migration.create(name: package.underscore, version: version)
         end
-      }
+      end
     end
 
     def self.root

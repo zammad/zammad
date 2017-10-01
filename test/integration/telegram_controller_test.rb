@@ -23,9 +23,9 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     stub_request(:post, 'https://api.telegram.org/botnot_existing/getMe')
       .to_return(status: 404, body: '{"ok":false,"error_code":404,"description":"Not Found"}', headers: {})
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       Telegram.check_token('not_existing')
-    }
+    end
 
     # try valid token
     stub_request(:post, "https://api.telegram.org/bot#{token}/getMe")
@@ -38,9 +38,9 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
       .to_return(status: 200, body: "{\"ok\":true,\"result\":{\"id\":#{bot_id},\"first_name\":\"Chrispresso Customer Service\",\"username\":\"ChrispressoBot\"}}", headers: {})
 
     Setting.set('http_type', 'http')
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!' })
-    }
+    end
 
     # try invalid port
     stub_request(:post, "https://api.telegram.org:443/bot#{token}/getMe")
@@ -51,9 +51,9 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
 
     Setting.set('http_type', 'https')
     Setting.set('fqdn', 'somehost.example.com:12345')
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!' })
-    }
+    end
 
     # try invalid host
     stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")
@@ -61,9 +61,9 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
       .to_return(status: 400, body: '{"ok":false,"error_code":400,"description":"Bad Request: bad webhook: getaddrinfo: Name or service not known"}', headers: {})
 
     Setting.set('fqdn', 'somehost.example.com')
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       Telegram.create_or_update_channel(token, { group_id: group_id, welcome: 'hi!' })
-    }
+    end
 
     # valid token, host and port
     stub_request(:post, "https://api.telegram.org:443/bot#{token}/setWebhook")

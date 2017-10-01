@@ -243,14 +243,14 @@ class FirstStepsController < ApplicationController
       test_ticket_active = false
     end
     return result if test_ticket_active
-    result.each { |item|
+    result.each do |item|
       items = []
-      item[:items].each { |local_item|
+      item[:items].each do |local_item|
         next if local_item[:name] == 'Create a Test Ticket'
         items.push local_item
-      }
+      end
       item[:items] = items
-    }
+    end
     result
   end
 

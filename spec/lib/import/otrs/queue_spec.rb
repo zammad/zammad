@@ -27,7 +27,7 @@ RSpec.describe Import::OTRS::Queue do
   context 'default' do
 
     let(:object_structure) { load_queue_json('default') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: 1,
         updated_by_id: 1,
@@ -38,7 +38,7 @@ RSpec.describe Import::OTRS::Queue do
         id: '11',
         note: 'Some comment'
       }
-    }
+    end
 
     it 'creates' do
       creates_with(zammad_structure)

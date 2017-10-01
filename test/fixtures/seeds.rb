@@ -18,7 +18,7 @@ email_address = EmailAddress.create_or_update(
   updated_by_id: 1,
   created_by_id: 1
 )
-Group.all.each { |group|
+Group.all.each do |group|
   group.email_address_id = email_address.id
   group.save
-}
+end

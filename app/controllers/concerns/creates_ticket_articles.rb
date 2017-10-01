@@ -62,7 +62,7 @@ module CreatesTicketArticles
     article.save!
 
     # store inline attachments
-    attachments_inline.each { |attachment|
+    attachments_inline.each do |attachment|
       Store.add(
         object: 'Ticket::Article',
         o_id: article.id,
@@ -70,24 +70,24 @@ module CreatesTicketArticles
         filename: attachment[:filename],
         preferences: attachment[:preferences],
       )
-    }
+    end
 
     # add attachments as param
     if params[:attachments].present?
-      params[:attachments].each_with_index { |attachment, index|
+      params[:attachments].each_with_index do |attachment, index|
 
         # validation
-        ['mime-type', 'filename', 'data'].each { |key|
+        ['mime-type', 'filename', 'data'].each do |key|
           next if attachment[key]
           raise Exceptions::UnprocessableEntity, "Attachment needs '#{key}' param for attachment with index '#{index}'"
-        }
+        end
 
         preferences = {}
-        ['charset', 'mime-type'].each { |key|
+        ['charset', 'mime-type'].each do |key|
           next if !attachment[key]
           store_key = key.tr('-', '_').camelize.gsub(/(.+)([A-Z])/, '\1_\2').tr('_', '-')
           preferences[store_key] = attachment[key]
-        }
+        end
 
         if attachment[:data] !~ %r{^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$}
           raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"
@@ -100,7 +100,7 @@ module CreatesTicketArticles
           filename: attachment[:filename],
           preferences: preferences,
         )
-      }
+      end
     end
 
     # account time

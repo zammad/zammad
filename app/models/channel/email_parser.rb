@@ -74,7 +74,7 @@ class Channel::EmailParser
     mail = Mail.new(msg)
 
     # set all headers
-    mail.header.fields.each { |field|
+    mail.header.fields.each do |field|
 
       # full line, encode, ready for storage
       begin
@@ -89,42 +89,42 @@ class Channel::EmailParser
 
       # if we need to access the lines by objects later again
       data["raw-#{field.name.downcase}".to_sym] = field
-    }
+    end
 
     # verify content, ignore recipients with non email address
-    ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |field|
+    ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each do |field|
       next if data[field.to_sym].blank?
       next if data[field.to_sym] =~ /@/
       data[field.to_sym] = ''
-    }
+    end
 
     # get sender with @ / email address
     from = nil
-    ['from', 'reply-to', 'return-path'].each { |item|
+    ['from', 'reply-to', 'return-path'].each do |item|
       next if data[item.to_sym].blank?
       next if data[item.to_sym] !~ /@/
       from = data[item.to_sym]
       break if from
-    }
+    end
 
     # in case of no sender with email address - get sender
     if !from
-      ['from', 'reply-to', 'return-path'].each { |item|
+      ['from', 'reply-to', 'return-path'].each do |item|
         next if data[item.to_sym].blank?
         from = data[item.to_sym]
         break if from
-      }
+      end
     end
 
     # set x-any-recipient
     data['x-any-recipient'.to_sym] = ''
-    ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each { |item|
+    ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each do |item|
       next if data[item.to_sym].blank?
       if data['x-any-recipient'.to_sym] != ''
         data['x-any-recipient'.to_sym] += ', '
       end
       data['x-any-recipient'.to_sym] += mail[item.to_sym].to_s
-    }
+    end
 
     # set extra headers
     data = data.merge(Channel::EmailParser.sender_properties(from))
@@ -197,7 +197,7 @@ class Channel::EmailParser
 
       # get attachments
       if mail.parts
-        mail.parts.each { |part|
+        mail.parts.each do |part|
 
           # protect process to work fine with spam emails, see test/fixtures/mail15.box
           begin
@@ -207,7 +207,7 @@ class Channel::EmailParser
             attachs = _get_attachment(part, data[:attachments], mail)
             data[:attachments].concat(attachs)
           end
-        }
+        end
       end
 
     # not multipart email
@@ -298,10 +298,10 @@ class Channel::EmailParser
     # check if sub parts are available
     if !file.parts.empty?
       a = []
-      file.parts.each { |p|
+      file.parts.each do |p|
         attachment = _get_attachment(p, attachments, mail)
         a.concat(attachment)
-      }
+      end
       return a
     end
 
@@ -313,7 +313,7 @@ class Channel::EmailParser
 
     # get file preferences
     headers_store = {}
-    file.header.fields.each { |field|
+    file.header.fields.each do |field|
 
       # full line, encode, ready for storage
       begin
@@ -325,7 +325,7 @@ class Channel::EmailParser
       rescue => e
         headers_store[field.name.to_s] = field.raw_value
       end
-    }
+    end
 
     # get filename from content-disposition
     filename = nil
@@ -364,16 +364,16 @@ class Channel::EmailParser
     # generate file name
     if filename.blank?
       attachment_count = 0
-      (1..1000).each { |count|
+      (1..1000).each do |count|
         filename_exists = false
         filename = 'file-' + count.to_s
-        attachments.each { |attachment|
+        attachments.each do |attachment|
           if attachment[:filename] == filename
             filename_exists = true
           end
-        }
+        end
         break if filename_exists == false
-      }
+      end
     end
 
     # get mime type
@@ -463,10 +463,10 @@ returns
     # run postmaster pre filter
     UserInfo.current_user_id = 1
     filters = {}
-    Setting.where(area: 'Postmaster::PreFilter').order(:name).each { |setting|
+    Setting.where(area: 'Postmaster::PreFilter').order(:name).each do |setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
-    }
-    filters.each { |_prio, backend|
+    end
+    filters.each do |_prio, backend|
       Rails.logger.debug "run postmaster pre filter #{backend}"
       begin
         backend.run(channel, mail)
@@ -475,7 +475,7 @@ returns
         Rails.logger.error e.inspect
         raise e
       end
-    }
+    end
 
     # check ignore header
     if mail['x-zammad-ignore'.to_sym] == 'true' || mail['x-zammad-ignore'.to_sym] == true
@@ -619,10 +619,10 @@ returns
 
     # run postmaster post filter
     filters = {}
-    Setting.where(area: 'Postmaster::PostFilter').order(:name).each { |setting|
+    Setting.where(area: 'Postmaster::PostFilter').order(:name).each do |setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
-    }
-    filters.each { |_prio, backend|
+    end
+    filters.each do |_prio, backend|
       Rails.logger.debug "run postmaster post filter #{backend}"
       begin
         backend.run(channel, mail, ticket, article, session_user)
@@ -630,7 +630,7 @@ returns
         Rails.logger.error "can't run postmaster post filter #{backend}"
         Rails.logger.error e.inspect
       end
-    }
+    end
 
     # return new objects
     [ticket, article, session_user, mail]
@@ -664,14 +664,14 @@ returns
     return data if from.blank?
     begin
       list = Mail::AddressList.new(from)
-      list.addresses.each { |address|
+      list.addresses.each do |address|
         data[:from_email] = address.address
         data[:from_local]        = address.local
         data[:from_domain]       = address.domain
         data[:from_display_name] = address.display_name ||
                                    (address.comments && address.comments[0])
         break if data[:from_email].present? && data[:from_email] =~ /@/
-      }
+      end
     rescue => e
       if from =~ /<>/ && from =~ /<.+?>/
         data = sender_properties(from.gsub(/<>/, ''))
@@ -705,7 +705,7 @@ returns
   def set_attributes_by_x_headers(item_object, header_name, mail, suffix = false)
 
     # loop all x-zammad-hedaer-* headers
-    item_object.attributes.each { |key, _value|
+    item_object.attributes.each do |key, _value|
 
       # ignore read only attributes
       next if key == 'updated_by_id'
@@ -723,7 +723,7 @@ returns
         # only set value on _id if value/reference lookup exists
         if mail[ header.to_sym ]
           Rails.logger.info "header #{header} found #{mail[header.to_sym]}"
-          item_object.class.reflect_on_all_associations.map { |assoc|
+          item_object.class.reflect_on_all_associations.map do |assoc|
 
             next if assoc.name.to_s != key_short
 
@@ -753,7 +753,7 @@ returns
 
             # no assoc exists, remove header
             mail.delete(header.to_sym)
-          }
+          end
         end
       end
 
@@ -766,7 +766,7 @@ returns
         Rails.logger.info "header #{header} found #{mail[header.to_sym]}"
         item_object[key] = mail[header.to_sym]
       end
-    }
+    end
   end
 
 end

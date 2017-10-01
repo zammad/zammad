@@ -22,14 +22,14 @@ module ApplicationController::LogsHttpAccess
       content_encoding: request.headers['Content-Encoding'],
       source: request.headers['User-Agent'] || request.headers['Server'],
     }
-    request.headers.each { |key, value|
+    request.headers.each do |key, value|
       next if key[0, 5] != 'HTTP_'
       request_data[:content] += if key == 'HTTP_COOKIE'
                                   "#{key}: xxxxx\n"
                                 else
                                   "#{key}: #{value}\n"
                                 end
-    }
+    end
     body = request.body.read
     if body
       request_data[:content] += "\n" + body
@@ -44,9 +44,9 @@ module ApplicationController::LogsHttpAccess
       content_encoding: nil,
       source: nil,
     }
-    response.headers.each { |key, value|
+    response.headers.each do |key, value|
       response_data[:content] += "#{key}: #{value}\n"
-    }
+    end
     body = response.body
     if body
       response_data[:content] += "\n" + body

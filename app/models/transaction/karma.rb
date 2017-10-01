@@ -76,7 +76,7 @@ class Transaction::Karma
 
       # did user send a response to customer before?
       current_time = @item[:created_at]
-      ticket.articles.reverse.each { |local_article|
+      ticket.articles.reverse.each do |local_article|
         next if local_article.created_at > current_time
         next if local_article.created_by_id != @item[:user_id]
         next if local_article.internal
@@ -90,7 +90,7 @@ class Transaction::Karma
 
         Karma::ActivityLog.add('ticket close', user, 'Ticket', ticket.id)
         break
-      }
+      end
     end
 
     # pending state
@@ -120,7 +120,7 @@ class Transaction::Karma
     if articles.count > 1
       last_sender_customer = nil
       last_customer_contact = nil
-      articles.each { |local_article|
+      articles.each do |local_article|
         next if local_article.id == article.id
         next if local_article.internal
 
@@ -140,7 +140,7 @@ class Transaction::Karma
 
         next if local_sender.name != 'Customer'
         last_customer_contact = local_article.created_at
-      }
+      end
       if last_sender_customer && last_customer_contact
         diff =  article.created_at - last_customer_contact
         if diff >= 0

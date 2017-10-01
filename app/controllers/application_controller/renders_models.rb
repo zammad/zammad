@@ -111,9 +111,9 @@ module ApplicationController::RendersModels
 
     if params[:expand]
       list = []
-      generic_objects.each { |generic_object|
+      generic_objects.each do |generic_object|
         list.push generic_object.attributes_with_association_names
-      }
+      end
       render json: list, status: :ok
       return
     end
@@ -121,10 +121,10 @@ module ApplicationController::RendersModels
     if params[:full]
       assets = {}
       item_ids = []
-      generic_objects.each { |item|
+      generic_objects.each do |item|
         item_ids.push item.id
         assets = item.assets(assets)
-      }
+      end
       render json: {
         record_ids: item_ids,
         assets: assets,
@@ -133,9 +133,9 @@ module ApplicationController::RendersModels
     end
 
     generic_objects_with_associations = []
-    generic_objects.each { |item|
+    generic_objects.each do |item|
       generic_objects_with_associations.push item.attributes_with_association_ids
-    }
+    end
     model_index_render_result(generic_objects_with_associations)
   end
 

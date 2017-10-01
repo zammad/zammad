@@ -21,10 +21,10 @@ returns
 
     def generate_uniq_name(name)
       return name if !exists?(name: name)
-      (1..100).each { |counter|
+      (1..100).each do |counter|
         name = "#{name}_#{counter}"
         break if !exists?(name: name)
-      }
+      end
       name
     end
   end

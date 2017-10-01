@@ -12,13 +12,13 @@ module ActiveRecord
           column_names = index_columns.split ', '
           if column_names.class == Array
             index_columns_new = []
-            column_names.each { |i|
+            column_names.each do |i|
               if i =~ /^"(name|login|locale|alias)"$/ || i =~ /name"$/
                 index_columns_new.push "LOWER(#{i})"
               else
                 index_columns_new.push i
               end
-            }
+            end
             index_columns = index_columns_new.join ', '
           end
 

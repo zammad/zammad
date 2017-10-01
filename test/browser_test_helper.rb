@@ -55,7 +55,7 @@ class TestCase < Test::Unit::TestCase
     end
 
     # avoid "Cannot read property 'get_Current' of undefined" issues
-    (1..5).each { |count|
+    (1..5).each do |count|
       begin
         local_browser = browser_instance_remote
         break
@@ -64,7 +64,7 @@ class TestCase < Test::Unit::TestCase
         sleep wait_until_ready
         log('browser_instance', { rescure: true, count: count, sleep: wait_until_ready })
       end
-    }
+    end
 
     local_browser
   end
@@ -116,10 +116,10 @@ class TestCase < Test::Unit::TestCase
 
   def teardown
     return if !@browsers
-    @browsers.each { |_hash, local_browser|
+    @browsers.each do |_hash, local_browser|
       screenshot(browser: local_browser, comment: 'teardown')
       browser_instance_close(local_browser)
-    }
+    end
   end
 
   def screenshot(params)
@@ -258,7 +258,7 @@ class TestCase < Test::Unit::TestCase
       mute_log: true,
     )
 
-    5.times {
+    5.times do
       sleep 1
       login = instance.find_elements(css: '#login')[0]
 
@@ -266,7 +266,7 @@ class TestCase < Test::Unit::TestCase
       screenshot(browser: instance, comment: 'logout_ok')
       assert(true, 'logout ok')
       return
-    }
+    end
     screenshot(browser: instance, comment: 'logout_failed')
     raise 'no login box found, seems logout was not successfully!'
   end
@@ -635,9 +635,9 @@ class TestCase < Test::Unit::TestCase
     else
       element.send_keys('')
       keys = params[:value].to_s.split('')
-      keys.each { |key|
+      keys.each do |key|
         instance.action.send_keys(key).perform
-      }
+      end
     end
 
     # it's not working stable with ff via selenium, use js
@@ -830,13 +830,13 @@ class TestCase < Test::Unit::TestCase
     end
     screenshot(browser: instance, comment: 'sendkey_before')
     if params[:value].class == Array
-      params[:value].each { |key|
+      params[:value].each do |key|
         if element
           element.send_keys(key)
         else
           instance.action.send_keys(key).perform
         end
-      }
+      end
       screenshot(browser: instance, comment: 'sendkey_after')
       return
     end
@@ -878,11 +878,11 @@ class TestCase < Test::Unit::TestCase
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       success  = false
       if dropdown.selected_options
-        dropdown.selected_options.each { |option|
+        dropdown.selected_options.each do |option|
           if option.text == params[:value]
             success = true
           end
-        }
+        end
       end
       if params[:should_not_match]
         if success
@@ -1019,7 +1019,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     end
 
     cookies = instance.manage.all_cookies
-    cookies.each { |cookie|
+    cookies.each do |cookie|
       #puts "CCC #{cookie.inspect}"
       # :name=>"_zammad_session_c25832f4de2", :value=>"adc31cd21615cb0a7ab269184ec8b76f", :path=>"/", :domain=>"localhost", :expires=>nil, :secure=>false}
       next if cookie[:name] !~ /#{params[:name]}/i
@@ -1038,7 +1038,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
       return if !params[:should_not_exist]
 
       raise "cookie with name '#{params[:name]}' should not exist, but exists '#{cookies}'"
-    }
+    end
     if params[:should_not_exist]
       assert(true, "cookie with name '#{params[:name]}' is not existing")
       return
@@ -1227,9 +1227,9 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
 
     instance = params[:browser] || @browser
 
-    params[:files].each { |file|
+    params[:files].each do |file|
       instance.find_elements(css: params[:css])[0].send_keys "#{Rails.root}/#{file}"
-    }
+    end
     sleep 2 * params[:files].count
   end
 
@@ -1257,7 +1257,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     end
     loops = timeout.to_i * 2
     text = ''
-    (1..loops).each {
+    (1..loops).each do
       element = instance.find_elements(css: params[:css])[0]
       if element #&& element.displayed?
         begin
@@ -1288,7 +1288,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
         end
       end
       sleep 0.5
-    }
+    end
     screenshot(browser: instance, comment: 'watch_for_failed')
     if !params[:attribute] && !params[:value]
       raise "'#{params[:css]}' not found"
@@ -1329,7 +1329,7 @@ wait untill text in selector disabppears
     end
     loops = timeout.to_i
     text  = ''
-    (1..loops).each {
+    (1..loops).each do
       element = instance.find_elements(css: params[:css])[0]
       if !element #|| element.displayed?
         assert(true, 'not found')
@@ -1349,7 +1349,7 @@ wait untill text in selector disabppears
         end
       end
       sleep 1
-    }
+    end
     screenshot(browser: instance, comment: 'disappear_failed')
     raise "#{params[:css]}) still exsists"
   end
@@ -1631,13 +1631,13 @@ wait untill text in selector disabppears
           sleep 0.1
         end
       end
-      data[:roles].each { |role|
+      data[:roles].each do |role|
         instance.execute_script("$(\".modal [data-name=role_ids] .js-pool .js-option:not(.is-hidden):contains('#{role}')\").first().click()")
-      }
+      end
     end
 
     if data[:selector]
-      data[:selector].each { |key, value|
+      data[:selector].each do |key, value|
         select(
           browser:  instance,
           css:      '.modal .ticket_selector .js-attributeSelector select',
@@ -1652,7 +1652,7 @@ wait untill text in selector disabppears
           deselect_all: true,
           mute_log:     true,
         )
-      }
+      end
     end
 
     if data['order::direction']
@@ -1666,7 +1666,7 @@ wait untill text in selector disabppears
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    11.times {
+    11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -1678,7 +1678,7 @@ wait untill text in selector disabppears
         return overview
       end
       sleep 1
-    }
+    end
     screenshot(browser: instance, comment: 'overview_create_failed')
     raise 'overview creation failed'
   end
@@ -1737,13 +1737,13 @@ wait untill text in selector disabppears
           sleep 0.1
         end
       end
-      data[:roles].each { |role|
+      data[:roles].each do |role|
         instance.execute_script("$(\".modal [data-name=role_ids] .js-pool .js-option:not(.is-hidden):contains('#{role}')\").first().click()")
-      }
+      end
     end
 
     if data[:selector]
-      data[:selector].each { |key, value|
+      data[:selector].each do |key, value|
         select(
           browser:  instance,
           css:      '.modal .ticket_selector .js-attributeSelector select',
@@ -1758,7 +1758,7 @@ wait untill text in selector disabppears
           deselect_all: true,
           mute_log:     true,
         )
-      }
+      end
     end
 
     if data['order::direction']
@@ -1772,7 +1772,7 @@ wait untill text in selector disabppears
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    11.times {
+    11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -1784,7 +1784,7 @@ wait untill text in selector disabppears
         return overview
       end
       sleep 1
-    }
+    end
     screenshot(browser: instance, comment: 'overview_update_failed')
     raise 'overview update failed'
   end
@@ -1851,14 +1851,14 @@ wait untill text in selector disabppears
     )
 
     found = false
-    7.times {
+    7.times do
       element = instance.find_elements(css: '.content.active .newTicket')[0]
       if element
         found = true
         break
       end
       sleep 1
-    }
+    end
     if !found
       screenshot(browser: instance, comment: 'ticket_create_failed')
       raise 'no ticket create screen found!'
@@ -1870,18 +1870,18 @@ wait untill text in selector disabppears
         # check if owner selection exists
         count = instance.find_elements(css: '.content.active .newTicket select[name="group_id"] option').count
         if count.nonzero?
-          instance.find_elements(css: '.content.active .newTicket select[name="group_id"] option').each { |element|
+          instance.find_elements(css: '.content.active .newTicket select[name="group_id"] option').each do |element|
             log('ticket_create invalid group count', text: element.text)
-          }
+          end
         end
         assert_equal(0, count, 'owner selection should not be showm')
 
         # check count of agents, should be only 3 / - selection + master + agent on init screen
         count = instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').count
         if count != 3
-          instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').each { |element|
+          instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').each do |element|
             log('ticket_create invalid owner count', text: element.text)
-          }
+          end
         end
         assert_equal(3, count, 'check if owner selection is - selection + master + agent per default')
       else
@@ -1890,9 +1890,9 @@ wait untill text in selector disabppears
         if !params[:disable_group_check]
           count = instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').count
           if count != 1
-            instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').each { |element|
+            instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').each do |element|
               log('ticket_create invalid owner count', text: element.text)
-            }
+            end
           end
           assert_equal(1, count, 'check if owner selection is empty per default')
         end
@@ -1964,23 +1964,23 @@ wait untill text in selector disabppears
     end
 
     if params[:custom_data_select]
-      params[:custom_data_select].each { |local_key, local_value|
+      params[:custom_data_select].each do |local_key, local_value|
         select(
           browser: instance,
           css:     ".content.active .newTicket select[name=\"#{local_key}\"]",
           value:   local_value,
         )
-      }
+      end
     end
     if params[:custom_data_input]
-      params[:custom_data_input].each { |local_key, local_value|
+      params[:custom_data_input].each do |local_key, local_value|
         set(
           browser: instance,
           css:     ".content.active .newTicket input[name=\"#{local_key}\"]",
           value:   local_value,
           clear:   true,
         )
-      }
+      end
     end
 
     if data[:attachment]
@@ -2004,7 +2004,7 @@ wait untill text in selector disabppears
     )
 
     sleep 1
-    9.times {
+    9.times do
       if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
         assert(true, 'ticket created')
         sleep 2.5
@@ -2026,7 +2026,7 @@ wait untill text in selector disabppears
         end
       end
       sleep 1
-    }
+    end
     screenshot(browser: instance, comment: 'ticket_create_failed')
     raise "ticket creation failed, can't get zoom url (current url is '#{instance.current_url}')"
   end
@@ -2198,28 +2198,28 @@ wait untill text in selector disabppears
     end
 
     if params[:custom_data_select]
-      params[:custom_data_select].each { |local_key, local_value|
+      params[:custom_data_select].each do |local_key, local_value|
         select(
           browser: instance,
           css:     ".active .sidebar select[name=\"#{local_key}\"]",
           value:   local_value,
         )
-      }
+      end
     end
     if params[:custom_data_input]
-      params[:custom_data_input].each { |local_key, local_value|
+      params[:custom_data_input].each do |local_key, local_value|
         set(
           browser: instance,
           css:     ".active .sidebar input[name=\"#{local_key}\"]",
           value:   local_value,
           clear:   true,
         )
-      }
+      end
     end
 
     if data[:state] || data[:group] || data[:body] || !params[:custom_data_select].empty? || !params[:custom_data_input].empty?
       found = nil
-      9.times {
+      9.times do
 
         break if found
 
@@ -2232,7 +2232,7 @@ wait untill text in selector disabppears
           # try again
         end
         sleep 1
-      }
+      end
       if !found
         screenshot(browser: instance, comment: 'ticket_update_discard_message_failed')
         raise 'no discard message found'
@@ -2258,7 +2258,7 @@ wait untill text in selector disabppears
       return
     end
 
-    9.times {
+    9.times do
       begin
         text = instance.find_elements(css: '.content.active .js-reset')[0].text
         if text.blank?
@@ -2270,7 +2270,7 @@ wait untill text in selector disabppears
         # try again
       end
       sleep 1
-    }
+    end
     screenshot(browser: instance, comment: 'ticket_update_failed')
     raise 'unable to update ticket'
   end
@@ -2321,7 +2321,7 @@ wait untill text in selector disabppears
     end
 
     if params[:custom_data_select]
-      params[:custom_data_select].each { |local_key, local_value|
+      params[:custom_data_select].each do |local_key, local_value|
         element = instance.find_elements(css: ".active .sidebar select[name=\"#{local_key}\"] option[selected]").first
         value = element.text.strip
         if value =~ /#{local_value}/i
@@ -2329,10 +2329,10 @@ wait untill text in selector disabppears
         else
           raise "not matching '#{value}' in #{local_key} '#{local_value}'"
         end
-      }
+      end
     end
     if params[:custom_data_input]
-      params[:custom_data_input].each { |local_key, local_value|
+      params[:custom_data_input].each do |local_key, local_value|
         element = instance.find_elements(css: ".active .sidebar input[name=\"#{local_key}\"]").first
         value = element.text.strip
         if value =~ /#{local_value}/i
@@ -2340,7 +2340,7 @@ wait untill text in selector disabppears
         else
           raise "not matching '#{value}' in #{local_key} '#{local_value}'"
         end
-      }
+      end
     end
 
     true
@@ -2521,17 +2521,17 @@ wait untill text in selector disabppears
     #)
 
     overviews = {}
-    instance.find_elements(css: '.content.active .sidebar a[href]').each { |element|
+    instance.find_elements(css: '.content.active .sidebar a[href]').each do |element|
       url = element.attribute('href')
       url.gsub!(%r{(http|https)://.+?/(.+?)$}, '\\2')
       overviews[url] = 0
       #puts url.inspect
       #puts element.inspect
-    }
-    overviews.each { |url, _value|
+    end
+    overviews.each do |url, _value|
       count          = instance.find_elements(css: ".content.active .sidebar a[href=\"#{url}\"] .badge")[0].text
       overviews[url] = count.to_i
-    }
+    end
     log('overview_counter', overviews)
     overviews
   end
@@ -2732,7 +2732,7 @@ wait untill text in selector disabppears
     element.send_keys(data[:first_response_time_in_text])
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    7.times {
+    7.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -2741,7 +2741,7 @@ wait untill text in selector disabppears
         return true
       end
       sleep 1
-    }
+    end
     screenshot(browser: instance, comment: 'sla_create_failed')
     raise 'sla creation failed'
   end
@@ -2799,7 +2799,7 @@ wait untill text in selector disabppears
     )
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    7.times {
+    7.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -2808,7 +2808,7 @@ wait untill text in selector disabppears
         return true
       end
       sleep 1
-    }
+    end
     screenshot(browser: instance, comment: 'text_module_create_failed')
     raise 'text module creation failed'
   end
@@ -2866,7 +2866,7 @@ wait untill text in selector disabppears
     )
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    11.times {
+    11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -2875,7 +2875,7 @@ wait untill text in selector disabppears
         return true
       end
       sleep 1
-    }
+    end
     screenshot(browser: instance, comment: 'signature_create_failed')
     raise 'signature creation failed'
   end
@@ -2935,7 +2935,7 @@ wait untill text in selector disabppears
     end
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    11.times {
+    11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -2944,7 +2944,7 @@ wait untill text in selector disabppears
 
         # add member
         if data[:member]
-          data[:member].each { |member|
+          data[:member].each do |member|
             instance.find_elements(css: 'a[href="#manage"]')[0].click
             sleep 1
             instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
@@ -2961,12 +2961,12 @@ wait untill text in selector disabppears
             screenshot(browser: instance, comment: 'group_create_member')
             instance.find_elements(css: '.modal button.js-submit')[0].click
             modal_disappear(browser: instance)
-          }
+          end
         end
       end
       sleep 1
       return true
-    }
+    end
     screenshot(browser: instance, comment: 'group_create_failed')
     raise 'group creation failed'
   end
@@ -3028,7 +3028,7 @@ wait untill text in selector disabppears
     end
 
     if data.key?(:permission)
-      data[:permission].each { |permission_name, permission_value|
+      data[:permission].each do |permission_name, permission_value|
         if permission_value == false
           uncheck(
             browser: instance,
@@ -3040,12 +3040,12 @@ wait untill text in selector disabppears
             css:     ".modal [data-permission-name=\"#{permission_name}\"]",
           )
         end
-      }
+      end
     end
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    11.times {
+    11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -3054,7 +3054,7 @@ wait untill text in selector disabppears
 
         # add member
         if data[:member]
-          data[:member].each { |login|
+          data[:member].each do |login|
             instance.find_elements(css: 'a[href="#manage"]')[0].click
             sleep 1
             instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
@@ -3070,12 +3070,12 @@ wait untill text in selector disabppears
             instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
             instance.find_elements(css: '.modal button.js-submit')[0].click
             modal_disappear(browser: instance)
-          }
+          end
         end
       end
       sleep 1
       return true
-    }
+    end
     screenshot(browser: instance, comment: 'role_create_failed')
     raise 'role creation failed'
   end
@@ -3134,7 +3134,7 @@ wait untill text in selector disabppears
     end
 
     if data.key?(:permission)
-      data[:permission].each { |permission_name, permission_value|
+      data[:permission].each do |permission_name, permission_value|
         if permission_value == false
           uncheck(
             browser: instance,
@@ -3146,7 +3146,7 @@ wait untill text in selector disabppears
             css:     ".modal [data-permission-name=\"#{permission_name}\"]",
           )
         end
-      }
+      end
     end
 
     if data.key?(:active)
@@ -3161,7 +3161,7 @@ wait untill text in selector disabppears
 
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
-    11.times {
+    11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -3170,7 +3170,7 @@ wait untill text in selector disabppears
 
         # add member
         if data[:member]
-          data[:member].each { |login|
+          data[:member].each do |login|
             instance.find_elements(css: 'a[href="#manage"]')[0].click
             sleep 1
             instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
@@ -3186,12 +3186,12 @@ wait untill text in selector disabppears
             instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
             instance.find_elements(css: '.modal button.js-submit')[0].click
             modal_disappear(browser: instance)
-          }
+          end
         end
       end
       sleep 1
       return true
-    }
+    end
     screenshot(browser: instance, comment: 'role_edit_failed')
     raise 'role edit failed'
   end
@@ -3339,7 +3339,7 @@ wait untill text in selector disabppears
           element.clear
           element.send_keys(data[:data_option][:options][:false])
         else
-          data[:data_option][:options].each { |key, value|
+          data[:data_option][:options].each do |key, value|
             element = instance.find_elements(css: '.modal .js-Table .js-key').last
             element.clear
             element.send_keys(key)
@@ -3348,18 +3348,18 @@ wait untill text in selector disabppears
             element.send_keys(value)
             element = instance.find_elements(css: '.modal .js-Table .js-add')[0]
             element.click
-          }
+          end
         end
       end
 
-      [:default, :min, :max, :diff].each { |key|
+      [:default, :min, :max, :diff].each do |key|
         next if !data[:data_option].key?(key)
         element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
         element.clear
         element.send_keys(data[:data_option][key])
-      }
+      end
 
-      [:future, :past].each { |key|
+      [:future, :past].each do |key|
         next if !data[:data_option].key?(key)
         select(
           browser:  instance,
@@ -3367,7 +3367,7 @@ wait untill text in selector disabppears
           value:    data[:data_option][key],
           mute_log: true,
         )
-      }
+      end
 
     end
     instance.find_elements(css: '.modal button.js-submit')[0].click
@@ -3385,7 +3385,7 @@ wait untill text in selector disabppears
       return
     end
 
-    11.times {
+    11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -3394,7 +3394,7 @@ wait untill text in selector disabppears
         return true
       end
       sleep 1
-    }
+    end
     screenshot(browser: instance, comment: 'object_manager_attribute_create_failed')
     raise 'object manager attribute creation failed'
   end
@@ -3461,7 +3461,7 @@ wait untill text in selector disabppears
           element.clear
           element.send_keys(data[:data_option][:options][:false])
         else
-          data[:data_option][:options].each { |key, value|
+          data[:data_option][:options].each do |key, value|
             element = instance.find_elements(css: '.modal .js-Table .js-key').last
             element.clear
             element.send_keys(key)
@@ -3470,18 +3470,18 @@ wait untill text in selector disabppears
             element.send_keys(value)
             element = instance.find_elements(css: '.modal .js-Table .js-add')[0]
             element.click
-          }
+          end
         end
       end
 
-      [:default, :min, :max, :diff].each { |key|
+      [:default, :min, :max, :diff].each do |key|
         next if !data[:data_option].key?(key)
         element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
         element.clear
         element.send_keys(data[:data_option][key])
-      }
+      end
 
-      [:future, :past].each { |key|
+      [:future, :past].each do |key|
         next if !data[:data_option].key?(key)
         select(
           browser:  instance,
@@ -3489,7 +3489,7 @@ wait untill text in selector disabppears
           value:    data[:data_option][key],
           mute_log: true,
         )
-      }
+      end
 
     end
     instance.find_elements(css: '.modal button.js-submit')[0].click
@@ -3507,7 +3507,7 @@ wait untill text in selector disabppears
       return
     end
 
-    11.times {
+    11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
       if text =~ /#{Regexp.quote(data[:name])}/
@@ -3516,7 +3516,7 @@ wait untill text in selector disabppears
         return true
       end
       sleep 1
-    }
+    end
     screenshot(browser: instance, comment: 'object_manager_attribute_update_failed')
     raise 'object manager attribute update failed'
   end
@@ -3617,21 +3617,21 @@ wait untill text in selector disabppears
     assert(tags[0])
 
     tags_found = {}
-    params[:tags].each { |key, _value|
+    params[:tags].each do |key, _value|
       tags_found[key] = false
-    }
+    end
 
-    tags.each { |element|
+    tags.each do |element|
       text = element.text
       if tags_found.key?(text)
         tags_found[text] = true
       else
         assert(false, "tag exists but is not in check to verify '#{text}'")
       end
-    }
-    params[:tags].each { |key, value|
+    end
+    params[:tags].each do |key, value|
       assert_equal(value, tags_found[key], "tag '#{key}'")
-    }
+    end
   end
 
   def quote(string)
@@ -3656,11 +3656,11 @@ wait untill text in selector disabppears
       instance = params[:browser] || @browser
       if instance
         logs = instance.manage.logs.get(:browser)
-        logs.each { |log|
+        logs.each do |log|
           next if log.level == 'WARNING' && log.message =~ /Declaration\sdropped./ # ignore ff css warnings
           time = Time.zone.parse(Time.zone.at(log.timestamp / 1000).to_datetime.to_s)
           puts "#{time}/#{log.level}: #{log.message}"
-        }
+        end
       end
     rescue
       # failed to get logs

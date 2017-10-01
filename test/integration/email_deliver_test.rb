@@ -114,10 +114,10 @@ class EmailDeliverTest < ActiveSupport::TestCase
         },
       },
     )
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       result = Observer::Ticket::Article::CommunicateEmail::BackgroundJob.new(article1.id)
       assert_not(result.perform)
-    }
+    end
     article1_lookup = Ticket::Article.find(article1.id)
     assert_equal(2, article1_lookup.preferences['delivery_retry'])
     assert_equal('fail', article1_lookup.preferences['delivery_status'])
@@ -205,9 +205,9 @@ class EmailDeliverTest < ActiveSupport::TestCase
     ticket1.state = Ticket::State.find_by(name: 'closed')
     ticket1.save
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       Scheduler.worker(true)
-    }
+    end
     ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
@@ -229,9 +229,9 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert_equal('closed', ticket1.state.name)
 
     sleep 6
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       Scheduler.worker(true)
-    }
+    end
     ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
@@ -254,9 +254,9 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert_equal('closed', ticket1.state.name)
 
     sleep 11
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       Scheduler.worker(true)
-    }
+    end
     ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)
@@ -268,9 +268,9 @@ class EmailDeliverTest < ActiveSupport::TestCase
     assert_equal('closed', ticket1.state.name)
 
     sleep 16
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       Scheduler.worker(true)
-    }
+    end
     ticket1.reload
 
     article2_lookup = Ticket::Article.find(article2.id)

@@ -27,11 +27,11 @@ class ImportZendeskController < ApplicationController
 
     if !response.success?
       message_human = ''
-      translation_map.each { |key, message|
+      translation_map.each do |key, message|
         if response.error.to_s =~ /#{Regexp.escape(key)}/i
           message_human = message
         end
-      }
+      end
       render json: {
         result: 'invalid',
         message_human: message_human,

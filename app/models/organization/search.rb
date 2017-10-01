@@ -60,11 +60,11 @@ returns
       if SearchIndexBackend.enabled?
         items = SearchIndexBackend.search(query, limit, 'Organization')
         organizations = []
-        items.each { |item|
+        items.each do |item|
           organization = Organization.lookup(id: item[:id])
           next if !organization
           organizations.push organization
-        }
+        end
         return organizations
       end
 
@@ -80,19 +80,19 @@ returns
         organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name').joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id').where(
           'users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"
         ).order('organizations.name').limit(limit)
-        organizations_by_user.each { |organization_by_user|
+        organizations_by_user.each do |organization_by_user|
           organization_exists = false
-          organizations.each { |organization|
+          organizations.each do |organization|
             if organization.id == organization_by_user.id
               organization_exists = true
             end
-          }
+          end
 
           # get model with full data
           if !organization_exists
             organizations.push Organization.find(organization_by_user.id)
           end
-        }
+        end
       end
       organizations
     end

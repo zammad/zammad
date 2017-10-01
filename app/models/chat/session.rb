@@ -22,29 +22,29 @@ class Chat::Session < ApplicationModel
     return true if !preferences
     return true if !preferences[:participants]
     count = 0
-    preferences[:participants].each { |client_id|
+    preferences[:participants].each do |client_id|
       next if !Sessions.session_exists?(client_id)
       count += 1
-    }
+    end
     return true if count >= 2
     false
   end
 
   def send_to_recipients(message, ignore_client_id = nil)
-    preferences[:participants].each { |local_client_id|
+    preferences[:participants].each do |local_client_id|
       next if local_client_id == ignore_client_id
       Sessions.send(local_client_id, message)
-    }
+    end
     true
   end
 
   def position
     return if state != 'waiting'
     position = 0
-    Chat::Session.where(state: 'waiting').order(created_at: :asc).each { |chat_session|
+    Chat::Session.where(state: 'waiting').order(created_at: :asc).each do |chat_session|
       position += 1
       break if chat_session.id == id
-    }
+    end
     position
   end
 
@@ -52,22 +52,22 @@ class Chat::Session < ApplicationModel
     chat_session = Chat::Session.find_by(session_id: session_id)
     return if !chat_session
     session_attributes = []
-    Chat::Message.where(chat_session_id: chat_session.id).order(created_at: :asc).each { |message|
+    Chat::Message.where(chat_session_id: chat_session.id).order(created_at: :asc).each do |message|
       session_attributes.push message.attributes
-    }
+    end
     session_attributes
   end
 
   def self.active_chats_by_user_id(user_id)
     actice_sessions = []
-    Chat::Session.where(state: 'running', user_id: user_id).order(created_at: :asc).each { |session|
+    Chat::Session.where(state: 'running', user_id: user_id).order(created_at: :asc).each do |session|
       session_attributes = session.attributes
       session_attributes['messages'] = []
-      Chat::Message.where(chat_session_id: session.id).order(created_at: :asc).each { |message|
+      Chat::Message.where(chat_session_id: session.id).order(created_at: :asc).each do |message|
         session_attributes['messages'].push message.attributes
-      }
+      end
       actice_sessions.push session_attributes
-    }
+    end
     actice_sessions
   end
 end

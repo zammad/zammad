@@ -72,16 +72,16 @@ RSpec.describe Ldap::User do
 
   context 'instance methods' do
 
-    let(:initialization_config) {
+    let(:initialization_config) do
       {
         uid_attribute: 'samaccountname',
         filter:        '(objectClass=user)',
       }
-    }
+    end
 
-    let(:instance) {
+    let(:instance) do
       described_class.new(initialization_config, ldap: mocked_ldap)
-    }
+    end
 
     context '#valid?' do
 
@@ -145,11 +145,11 @@ RSpec.describe Ldap::User do
 
     context '#filter' do
 
-      let(:initialization_config) {
+      let(:initialization_config) do
         {
           uid_attribute: 'samaccountname',
         }
-      }
+      end
 
       it 'responds to #filter' do
         expect(instance).to respond_to(:filter)
@@ -168,11 +168,11 @@ RSpec.describe Ldap::User do
 
     context '#uid_attribute' do
 
-      let(:initialization_config) {
+      let(:initialization_config) do
         {
           filter: '(objectClass=user)',
         }
-      }
+      end
 
       it 'responds to #uid_attribute' do
         expect(instance).to respond_to(:uid_attribute)

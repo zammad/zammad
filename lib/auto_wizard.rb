@@ -83,27 +83,27 @@ returns
 
     # set Settings
     if auto_wizard_hash['Settings']
-      auto_wizard_hash['Settings'].each { |setting_data|
+      auto_wizard_hash['Settings'].each do |setting_data|
         Setting.set(setting_data['name'], setting_data['value'])
-      }
+      end
     end
 
     # create EmailAddresses/Channels/Signatures
     model_map = {
       'Organizations' => 'Organization',
     }
-    model_map.each { |map_name, model|
+    model_map.each do |map_name, model|
       next if !auto_wizard_hash[map_name]
-      auto_wizard_hash[map_name].each { |data|
+      auto_wizard_hash[map_name].each do |data|
         generic_object = Kernel.const_get(model)
         data.symbolize_keys!
         generic_object.create_or_update_with_ref(data)
-      }
-    }
+      end
+    end
 
     # create Users
     if auto_wizard_hash['Users']
-      auto_wizard_hash['Users'].each { |user_data|
+      auto_wizard_hash['Users'].each do |user_data|
         user_data.symbolize_keys!
 
         if admin_user.id == 1
@@ -127,7 +127,7 @@ returns
         if admin_user.email
           Service::Image.organization_suggest(admin_user.email)
         end
-      }
+      end
     end
 
     # create EmailAddresses/Channels/Signatures
@@ -137,14 +137,14 @@ returns
       'Signatures'     => 'Signature',
       'Groups'         => 'Group',
     }
-    model_map.each { |map_name, model|
+    model_map.each do |map_name, model|
       next if !auto_wizard_hash[map_name]
-      auto_wizard_hash[map_name].each { |data|
+      auto_wizard_hash[map_name].each do |data|
         generic_object = Kernel.const_get(model)
         data.symbolize_keys!
         generic_object.create_or_update_with_ref(data)
-      }
-    }
+      end
+    end
 
     # reset primary key sequences
     DbHelper.import_post

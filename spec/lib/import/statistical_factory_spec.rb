@@ -30,11 +30,11 @@ RSpec.describe Import::StatisticalFactory do
     Import::Test::GroupFactory.reset_statistics
   end
 
-  let(:attributes) {
+  let(:attributes) do
     attributes = attributes_for(:group)
     attributes[:id] = 1337
     attributes
-  }
+  end
 
   context 'statistics' do
 

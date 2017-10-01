@@ -128,7 +128,7 @@ class TagTest < ActiveSupport::TestCase
       },
 
     ]
-    tests.each { |test|
+    tests.each do |test|
       tags = nil
       if test[:tag_add]
         tags    = test[:tag_add]
@@ -140,17 +140,17 @@ class TagTest < ActiveSupport::TestCase
         assert(success, 'Tag.tag_remove successful')
       end
       list = Tag.tag_list(tags)
-      test[:verify][:items].each { |key, value|
+      test[:verify][:items].each do |key, value|
         if value == true
           assert(list.include?(key), "Tag verify - should exists but exists #{key}")
         else
           assert(!list.include?(key), "Tag verify - exists but should not #{key}")
         end
-      }
-    }
+      end
+    end
 
     # delete tags
-    tests.each { |test|
+    tests.each do |test|
       tags = nil
       tags = if test[:tag_add]
                test[:tag_add]
@@ -161,7 +161,7 @@ class TagTest < ActiveSupport::TestCase
       assert(success, 'Tag.tag_remove successful')
       list = Tag.tag_list(tags)
       assert(!list.include?(tags[:item]), 'Tag entry destroyed')
-    }
+    end
   end
 
   test 'tags - real live' do

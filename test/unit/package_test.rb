@@ -301,7 +301,7 @@ class PackageTest < ActiveSupport::TestCase
       },
 
     ]
-    tests.each { |test|
+    tests.each do |test|
       if test[:action] == 'install'
         begin
           package = Package.install(string: test[:zpm])
@@ -373,15 +373,15 @@ class PackageTest < ActiveSupport::TestCase
       next if !test[:verify]
       next if !test[:verify][:check_files]
 
-      test[:verify][:check_files].each { |item|
+      test[:verify][:check_files].each do |item|
         exists = File.exist?(item[:location])
         if item[:result]
           assert(exists, "'#{item[:location]}' exists" )
         else
           assert(!exists, "'#{item[:location]}' doesn't exists" )
         end
-      }
-    }
+      end
+    end
 
   end
 end

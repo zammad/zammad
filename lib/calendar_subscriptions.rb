@@ -7,13 +7,13 @@ class CalendarSubscriptions
     @preferences = {}
 
     default_preferences = Setting.where(area: 'Defaults::CalendarSubscriptions')
-    default_preferences.each { |calendar_subscription|
+    default_preferences.each do |calendar_subscription|
 
       next if calendar_subscription.name !~ /\Adefaults_calendar_subscriptions_(.*)\z/
 
       object_name                 = $1
       @preferences[ object_name ] = calendar_subscription.state_current[:value]
-    }
+    end
 
     return if !@user.preferences[:calendar_subscriptions]
     return if @user.preferences[:calendar_subscriptions].empty?
@@ -22,10 +22,10 @@ class CalendarSubscriptions
 
   def all
     events_data = []
-    @preferences.each { |object_name, _sub_structure|
+    @preferences.each do |object_name, _sub_structure|
       result      = generic_call(object_name)
       events_data = events_data + result
-    }
+    end
     to_ical(events_data)
   end
 

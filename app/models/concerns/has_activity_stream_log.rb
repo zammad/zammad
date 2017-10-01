@@ -38,11 +38,11 @@ log object update activity stream, if configured - will be executed automaticall
     ignored_attributes += %i(created_at updated_at created_by_id updated_by_id)
 
     log = false
-    saved_changes.each { |key, _value|
+    saved_changes.each do |key, _value|
       next if ignored_attributes.include?(key.to_sym)
 
       log = true
-    }
+    end
     return true if !log
     activity_stream_log('update', self['updated_by_id'])
     true

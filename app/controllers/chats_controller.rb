@@ -6,10 +6,10 @@ class ChatsController < ApplicationController
   def index
     chat_ids = []
     assets = {}
-    Chat.order(:id).each { |chat|
+    Chat.order(:id).each do |chat|
       chat_ids.push chat.id
       assets = chat.assets(assets)
-    }
+    end
     setting = Setting.find_by(name: 'chat')
     assets = setting.assets(assets)
     render json: {

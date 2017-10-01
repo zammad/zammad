@@ -82,26 +82,26 @@ class FacebookTest < ActiveSupport::TestCase
   test 'b - available pages' do
     client = Facebook.new(user_access_token)
     page_found = false
-    client.pages.each { |page|
+    client.pages.each do |page|
       next if page[:name] != page_name
       page_found = true
       assert_equal(page_id, page[:id])
       assert_equal(page_name, page[:name])
-    }
+    end
     assert(page_found, "Page lookup for '#{page_name}'")
   end
 
   # check access to pages
   test 'c - page access' do
     page_found = false
-    provider_options[:pages].each { |page|
+    provider_options[:pages].each do |page|
       client = Facebook.new(page['access_token'])
       current_user = client.current_user
       next if page['name'] != page_name
       page_found = true
       assert_equal(page_id, current_user['id'])
       assert_equal(page_name, current_user['name'])
-    }
+    end
 
     assert(page_found, "Page lookup for '#{page_name}'")
   end
