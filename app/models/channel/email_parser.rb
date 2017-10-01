@@ -443,9 +443,7 @@ returns
     p 'ERROR: ' + e.inspect # rubocop:disable Rails/Output
     Rails.logger.error message
     Rails.logger.error e
-    File.open(filename, 'wb') do |file|
-      file.write msg
-    end
+    File.open(filename, 'wb') { |file| file.write msg }
     return false if exception == false
     raise e.inspect + e.backtrace.inspect
   end
@@ -458,9 +456,7 @@ returns
     # run postmaster pre filter
     UserInfo.current_user_id = 1
     filters = {}
-    Setting.where(area: 'Postmaster::PreFilter').order(:name).each do |setting|
-      filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
-    end
+    Setting.where(area: 'Postmaster::PreFilter').order(:name).each { |setting|  filters[setting.name] = Kernel.const_get(Setting.get(setting.name)) }
     filters.each do |_prio, backend|
       Rails.logger.debug "run postmaster pre filter #{backend}"
       begin
@@ -608,9 +604,7 @@ returns
 
     # run postmaster post filter
     filters = {}
-    Setting.where(area: 'Postmaster::PostFilter').order(:name).each do |setting|
-      filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
-    end
+    Setting.where(area: 'Postmaster::PostFilter').order(:name).each { |setting| filters[setting.name] = Kernel.const_get(Setting.get(setting.name)) }
     filters.each do |_prio, backend|
       Rails.logger.debug "run postmaster post filter #{backend}"
       begin
