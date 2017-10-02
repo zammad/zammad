@@ -125,6 +125,20 @@ returns
 
 =begin
 
+  Channel::Driver::Twitter.streamable?
+
+returns
+
+  true|false
+
+=end
+
+  def self.streamable?
+    true
+  end
+
+=begin
+
 create stream endpoint form twitter account
 
   options = {
@@ -183,8 +197,8 @@ returns
 =end
 
   def stream
-    sleep_on_unauthorized = 61
-    2.times { |loop_count|
+    sleep_on_unauthorized = 65
+    2.times do |loop_count|
       begin
         stream_start
       rescue Twitter::Error::Unauthorized => e
@@ -196,7 +210,7 @@ returns
           raise "Unable to stream, try #{loop_count}, error #{e.inspect}"
         end
       end
-    }
+    end
   end
 
   def stream_start
