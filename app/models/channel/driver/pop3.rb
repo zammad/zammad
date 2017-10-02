@@ -44,7 +44,7 @@ returns
 
 =end
 
-  def fetch (options, channel, check_type = '', verify_string = '')
+  def fetch(options, channel, check_type = '', verify_string = '')
     ssl  = true
     port = 995
     if options.key?(:ssl) && options[:ssl] == false
@@ -178,6 +178,20 @@ returns
 
   def fetchable?(_channel)
     true
+  end
+
+=begin
+
+  Channel::Driver::Pop3.streamable?
+
+returns
+
+  true|false
+
+=end
+
+  def self.streamable?
+    false
   end
 
   def disconnect
