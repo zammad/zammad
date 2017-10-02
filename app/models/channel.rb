@@ -142,7 +142,8 @@ stream all accounts
       current_channels = []
       channels = Channel.where('active = ? AND area LIKE ?', true, '%::Account')
       channels.each do |channel|
-        adapter      = channel.options[:adapter]
+        adapter = channel.options[:adapter]
+        next if adapter.blank?
         driver_class = Object.const_get("Channel::Driver::#{adapter.to_classname}")
         next if !driver_class.respond_to?(:streamable?)
         next if !driver_class.streamable?
