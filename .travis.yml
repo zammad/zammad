@@ -21,6 +21,7 @@ language: ruby
 rvm:
   - 2.4.1
 before_install:
+  - git fetch --unshallow
   - sudo apt-get -qq update
   - sudo apt-get install -y curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev postfix
   - if [ "${DB}" = "mysql" ]; then mysql -u root -e "CREATE USER 'some_user'@'localhost' IDENTIFIED BY 'some_pass';"; fi
@@ -29,6 +30,7 @@ before_install:
   - if [ "${DB}" = "postgresql" ]; then psql -c 'create database zammad_test;' -U postgres; fi
   - if [ "${DB}" = "postgresql" ]; then cp config/database.yml.test-postgresql config/database.yml; fi
   - export RAILS_ENV=test
+  - export ZAMMAD_VERSION=$(git describe --tags | sed -e 's/-[a-z0-9]\{8,\}.*//g')
 install:
   - if [ "${DB}" = "mysql" ]; then bundle install --without postgres; fi
   - if [ "${DB}" = "postgresql" ]; then bundle install; fi
