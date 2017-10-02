@@ -11,7 +11,7 @@ module ExtraCollection
       assets = item.assets(assets)
     }
 
-    collections[ OnlineNotification.to_app_model ] = OnlineNotification.list(user, 100)
+    collections[ OnlineNotification.to_app_model ] = OnlineNotification.list(user, 200)
     assets = ApplicationModel.assets_of_object_list(collections[ OnlineNotification.to_app_model ], assets)
 
     collections[ RecentView.to_app_model ] = RecentView.list(user, 10)
