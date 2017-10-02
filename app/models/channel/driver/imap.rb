@@ -60,7 +60,7 @@ example
 
 =end
 
-  def fetch (options, channel, check_type = '', verify_string = '')
+  def fetch(options, channel, check_type = '', verify_string = '')
     ssl            = true
     port           = 993
     keep_on_server = false
@@ -222,6 +222,20 @@ example
   def disconnect
     return if !@imap
     @imap.disconnect()
+  end
+
+=begin
+
+  Channel::Driver::Imap.streamable?
+
+returns
+
+  true|false
+
+=end
+
+  def self.streamable?
+    false
   end
 
   private
