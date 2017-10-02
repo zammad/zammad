@@ -17,22 +17,22 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
 
     # channel cleanup
     Channel.where.not(area: 'Email::Notification').destroy_all
-    Channel.all.each { |channel|
+    Channel.all.each do |channel|
       channel.status_in  = 'ok'
       channel.status_out = 'ok'
       channel.last_log_in = nil
       channel.last_log_out = nil
       channel.save!
-    }
+    end
     dir = "#{Rails.root}/tmp/unprocessable_mail"
     Dir.glob("#{dir}/*.eml") do |entry|
       File.delete(entry)
     end
 
-    Scheduler.where(active: true).each { |scheduler|
+    Scheduler.where(active: true).each do |scheduler|
       scheduler.last_run = Time.zone.now
       scheduler.save!
-    }
+    end
 
     permission = Permission.find_by(name: 'admin.monitoring')
     permission.active = true

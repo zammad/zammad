@@ -200,7 +200,7 @@ class AaaGettingStartedTest < TestCase
   def test_b_accounts_auto
     #return # TODO: temp disable
     accounts = []
-    (1..10).each { |count|
+    (1..10).each do |count|
       next if !ENV["MAILBOX_AUTO#{count}"]
       mailbox_user     = ENV["MAILBOX_AUTO#{count}"].split(':')[0]
       mailbox_password = ENV["MAILBOX_AUTO#{count}"].split(':')[1]
@@ -210,7 +210,7 @@ class AaaGettingStartedTest < TestCase
         password: mailbox_password,
       }
       accounts.push account
-    }
+    end
     if accounts.empty?
       #raise "Need min. MAILBOX_AUTO1 as ENV variable like export MAILBOX_AUTO1='nicole.braun2015@gmail.com:somepass'"
       puts "NOTICE: Need min. MAILBOX_AUTO1 as ENV variable like export MAILBOX_AUTO1='nicole.braun2015@gmail.com:somepass'"
@@ -222,7 +222,7 @@ class AaaGettingStartedTest < TestCase
       password: 'test',
       url: browser_url,
     )
-    accounts.each { |account|
+    accounts.each do |account|
 
       # getting started - auto mail
       location(url: browser_url + '/#getting_started/channel')
@@ -257,13 +257,13 @@ class AaaGettingStartedTest < TestCase
       location_check(
         url: '#getting_started/agents',
       )
-    }
+    end
   end
 
   def test_b_accounts_manual
     #return # TODO: temp disable
     accounts = []
-    (1..10).each { |count|
+    (1..10).each do |count|
       next if !ENV["MAILBOX_MANUAL#{count}"]
       mailbox_user     = ENV["MAILBOX_MANUAL#{count}"].split(':')[0]
       mailbox_password = ENV["MAILBOX_MANUAL#{count}"].split(':')[1]
@@ -281,7 +281,7 @@ class AaaGettingStartedTest < TestCase
         },
       }
       accounts.push account
-    }
+    end
     if accounts.empty?
       #raise "Need min. MAILBOX_MANUAL1 as ENV variable like export MAILBOX_MANUAL1='nicole.bauer2015@yahoo.de:somepass:imap.mail.yahoo.com:smtp.mail.yahoo.com'"
       puts "NOTICE: Need min. MAILBOX_MANUAL1 as ENV variable like export MAILBOX_MANUAL1='nicole.bauer2015@yahoo.de:somepass:imap.mail.yahoo.com:smtp.mail.yahoo.com'"
@@ -294,7 +294,7 @@ class AaaGettingStartedTest < TestCase
       password: 'test',
       url: browser_url,
     )
-    accounts.each { |account|
+    accounts.each do |account|
 
       # getting started - manual mail
       location(url: browser_url + '/#getting_started/channel')
@@ -360,6 +360,6 @@ class AaaGettingStartedTest < TestCase
       location_check(
         url: '#getting_started/agents',
       )
-    }
+    end
   end
 end

@@ -4,7 +4,7 @@ class TriggerRecipientUpdate < ActiveRecord::Migration[4.2]
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
 
-    ['auto reply (on new tickets)', 'auto reply (on follow up of tickets)'].each { |name|
+    ['auto reply (on new tickets)', 'auto reply (on follow up of tickets)'].each do |name|
       begin
         trigger = Trigger.find_by(name: name)
         next if trigger.blank?
@@ -17,7 +17,7 @@ class TriggerRecipientUpdate < ActiveRecord::Migration[4.2]
       rescue => e
         Rails.logger.error "Unable to update Trigger.find(#{trigger.id}) '#{trigger.inspect}': #{e.message}"
       end
-    }
+    end
 
   end
 end

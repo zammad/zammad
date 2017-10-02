@@ -22,23 +22,23 @@ returns
   def self.find_signature(messages)
 
     string_list = []
-    messages.each { |message|
+    messages.each do |message|
       if message[:content_type] =~ %r{text/html}i
         string_list.push message[:content].html2text(true)
         next
       end
       string_list.push message[:content]
-    }
+    end
 
     # hash with possible signature and count of matches in string list
     possible_signatures = {}
 
     # loop all strings in array
-    string_list.each_with_index { |_main_string, main_string_index|
+    string_list.each_with_index do |_main_string, main_string_index|
       break if main_string_index + 1 > string_list.length - 1
 
       # loop all all strings in array except of the previous index
-      ( main_string_index + 1..string_list.length - 1 ).each { |second_string_index|
+      ( main_string_index + 1..string_list.length - 1 ).each do |second_string_index|
 
         # get content of string 1
         string1_content = string_list[main_string_index]
@@ -56,7 +56,7 @@ returns
         match_block = nil
 
         # loop of lines of the diff result
-        ( 0..diff_result_array.length - 1 ).each { |diff_string_index|
+        ( 0..diff_result_array.length - 1 ).each do |diff_string_index|
 
           # if no block with difference is defined then we try to find a string block without a difference
           if !match_block
@@ -83,11 +83,11 @@ returns
             # get string of possible signature, use only the first 10 lines
             match_max_content = 0
             match_content = ''
-            ( match_block..match_block_total ).each { |match_block_index|
+            ( match_block..match_block_total ).each do |match_block_index|
               break if match_max_content == 10
               match_max_content += 1
               match_content += "#{diff_result_array[match_block_index][1..-1]}\n"
-            }
+            end
 
             # count the match of the signature in string list to rank
             # the signature
@@ -98,9 +98,9 @@ returns
           end
 
           match_block = nil
-        }
-      }
-    }
+        end
+      end
+    end
 
     # loop all possible signature by rating and return highest rating
     possible_signatures.sort { |a1, a2| a2[1].to_i <=> a1[1].to_i }.map do |content, _score|
@@ -187,7 +187,7 @@ returns
       create_article_sender_id: sender.id
     ).limit(5).order(id: :desc)
     article_bodies = []
-    tickets.each { |ticket|
+    tickets.each do |ticket|
       article = ticket.articles.first
       next if !article
       data = {
@@ -195,7 +195,7 @@ returns
         content_type: article.content_type,
       }
       article_bodies.push data
-    }
+    end
 
     find_signature(article_bodies)
   end
@@ -213,9 +213,9 @@ returns
 =end
 
   def self.rebuild_all_user
-    User.select('id').where(active: true).order(id: :desc).each { |local_user|
+    User.select('id').where(active: true).order(id: :desc).each do |local_user|
       rebuild_user(local_user.id)
-    }
+    end
     true
   end
 
@@ -259,7 +259,7 @@ returns
   def self.rebuild_all_articles
 
     article_type = Ticket::Article::Type.lookup(name: 'email')
-    Ticket::Article.select('id').where(type_id: article_type.id).order(id: :desc).each { |local_article|
+    Ticket::Article.select('id').where(type_id: article_type.id).order(id: :desc).each do |local_article|
       article = Ticket::Article.find(local_article.id)
       user = User.find(article.created_by_id)
       next if !user.preferences[:signature_detection]
@@ -274,7 +274,7 @@ returns
 
       article.preferences[:signature_detection] = signature_line
       article.save
-    }
+    end
     true
   end
 

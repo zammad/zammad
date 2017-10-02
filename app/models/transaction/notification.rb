@@ -59,13 +59,13 @@ class Transaction::Notification
 
     # apply out of office agents
     possible_recipients_additions = Set.new
-    possible_recipients.each { |user|
+    possible_recipients.each do |user|
       recursive_ooo_replacements(
         user:         user,
         replacements: possible_recipients_additions,
         reasons:      recipients_reason,
       )
-    }
+    end
 
     if possible_recipients_additions.present?
       # join unique entries
@@ -73,7 +73,7 @@ class Transaction::Notification
     end
 
     already_checked_recipient_ids = {}
-    possible_recipients.each { |user|
+    possible_recipients.each do |user|
       result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])
       next if !result
       next if already_checked_recipient_ids[user.id]
@@ -81,7 +81,7 @@ class Transaction::Notification
       recipients_and_channels.push result
       next if recipients_reason[user.id]
       recipients_reason[user.id] = 'are in group'
-    }
+    end
 
     # send notifications
     recipient_list = ''
@@ -109,13 +109,13 @@ class Transaction::Notification
           identifier = user.login
         end
         already_notified = false
-        History.list('Ticket', ticket.id).each { |history|
+        History.list('Ticket', ticket.id).each do |history|
           next if history['type'] != 'notification'
           next if history['value_to'] !~ /\(#{Regexp.escape(@item[:type])}:/
           next if history['value_to'] !~ /#{Regexp.escape(identifier)}\(/
           next if !history['created_at'].today?
           already_notified = true
-        }
+        end
         next if already_notified
       end
 
@@ -237,7 +237,7 @@ class Transaction::Notification
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
     #puts "AL #{attribute_list.inspect}"
     user_related_changes = {}
-    @item[:changes].each { |key, value|
+    @item[:changes].each do |key, value|
 
       # if no config exists, use all attributes
       if !attribute_list || attribute_list.empty?
@@ -247,10 +247,10 @@ class Transaction::Notification
       elsif attribute_list[key.to_s]
         user_related_changes[key] = value
       end
-    }
+    end
 
     changes = {}
-    user_related_changes.each { |key, value|
+    user_related_changes.each do |key, value|
 
       # get attribute name
       attribute_name           = key.to_s
@@ -313,7 +313,7 @@ class Transaction::Notification
                          else
                            [value_str[0].to_s, value_str[1].to_s]
                          end
-    }
+    end
     changes
   end
 

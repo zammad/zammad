@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
     return if !get_params
 
     result = {}
-    get_params[:metric][:backend].each { |backend|
+    get_params[:metric][:backend].each do |backend|
       condition = get_params[:profile].condition
       if backend[:condition]
         backend[:condition].merge(condition)
@@ -40,7 +40,7 @@ class ReportsController < ApplicationController
         selector:    backend[:condition],
         params:      backend[:params],
       )
-    }
+    end
 
     #created = aggs(start, stop, range, 'created_at', profile.condition)
     #closed = aggs(start, stop, range, 'close_at', profile.condition)
@@ -76,7 +76,7 @@ class ReportsController < ApplicationController
 
     # get data
     result = {}
-    get_params[:metric][:backend].each { |backend|
+    get_params[:metric][:backend].each do |backend|
       next if params[:downloadBackendSelected] != backend[:name]
       condition = get_params[:profile].condition
       if backend[:condition]
@@ -103,7 +103,7 @@ class ReportsController < ApplicationController
         type: 'application/vnd.ms-excel',
         disposition: 'attachment'
       )
-    }
+    end
     return if params[:sheet]
 
     render json: result
@@ -117,10 +117,10 @@ class ReportsController < ApplicationController
     if params[:profile_id]
       profile = Report::Profile.find(params[:profile_id])
     else
-      params[:profiles].each { |profile_id, active|
+      params[:profiles].each do |profile_id, active|
         next if !active
         profile = Report::Profile.find(profile_id)
-      }
+      end
     end
     if !profile
       raise Exceptions::UnprocessableEntity, 'No such active profile'

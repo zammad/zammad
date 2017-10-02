@@ -25,9 +25,9 @@ class TicketsController < ApplicationController
 
     if params[:expand]
       list = []
-      tickets.each { |ticket|
+      tickets.each do |ticket|
         list.push ticket.attributes_with_association_names
-      }
+      end
       render json: list, status: :ok
       return
     end
@@ -35,10 +35,10 @@ class TicketsController < ApplicationController
     if params[:full]
       assets = {}
       item_ids = []
-      tickets.each { |item|
+      tickets.each do |item|
         item_ids.push item.id
         assets = item.assets(assets)
-      }
+      end
       render json: {
         record_ids: item_ids,
         assets: assets,
@@ -80,9 +80,9 @@ class TicketsController < ApplicationController
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
-      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each { |key|
+      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each do |key|
         clean_params.delete(key)
-      }
+      end
       clean_params[:customer_id] = current_user.id
     end
 
@@ -124,9 +124,9 @@ class TicketsController < ApplicationController
       # create tags if given
       if params[:tags].present?
         tags = params[:tags].split(/,/)
-        tags.each { |tag|
+        tags.each do |tag|
           ticket.tag_add(tag)
-        }
+        end
       end
 
       # create article if given
@@ -145,11 +145,11 @@ class TicketsController < ApplicationController
     if params[:links].present?
       link = params[:links].permit!.to_h
       raise Exceptions::UnprocessableEntity, 'Invalid link structure' if !link.is_a? Hash
-      link.each { |target_object, link_types_with_object_ids|
+      link.each do |target_object, link_types_with_object_ids|
         raise Exceptions::UnprocessableEntity, 'Invalid link structure (Object)' if !link_types_with_object_ids.is_a? Hash
-        link_types_with_object_ids.each { |link_type, object_ids|
+        link_types_with_object_ids.each do |link_type, object_ids|
           raise Exceptions::UnprocessableEntity, 'Invalid link structure (Object->LinkType)' if !object_ids.is_a? Array
-          object_ids.each { |local_object_id|
+          object_ids.each do |local_object_id|
             link = Link.add(
               link_type: link_type,
               link_object_target: target_object,
@@ -157,9 +157,9 @@ class TicketsController < ApplicationController
               link_object_source: 'Ticket',
               link_object_source_value: ticket.id,
             )
-          }
-        }
-      }
+          end
+        end
+      end
     end
 
     if params[:expand]
@@ -186,9 +186,9 @@ class TicketsController < ApplicationController
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
-      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each { |key|
+      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each do |key|
         clean_params.delete(key)
-      }
+      end
     end
 
     ticket.with_lock do
@@ -285,20 +285,20 @@ class TicketsController < ApplicationController
 
     # get related assets
     ticket_ids_by_customer = []
-    ticket_lists.each { |ticket_list|
+    ticket_lists.each do |ticket_list|
       ticket_ids_by_customer.push ticket_list.id
       assets = ticket_list.assets(assets)
-    }
+    end
 
     ticket_ids_recent_viewed = []
     recent_views = RecentView.list(current_user, 8, 'Ticket').delete_if { |object| object['o_id'] == ticket.id }
-    recent_views.each { |recent_view|
+    recent_views.each do |recent_view|
       next if recent_view['object'] != 'Ticket'
       ticket_ids_recent_viewed.push recent_view['o_id']
       recent_view_ticket = Ticket.find(recent_view['o_id'])
       next if recent_view_ticket.state.state_type.name == 'merged'
       assets = recent_view_ticket.assets(assets)
-    }
+    end
 
     # return result
     render json: {
@@ -405,9 +405,9 @@ class TicketsController < ApplicationController
 
     if params[:expand]
       list = []
-      tickets.each { |ticket|
+      tickets.each do |ticket|
         list.push ticket.attributes_with_association_names
-      }
+      end
       render json: list, status: :ok
       return
     end
@@ -490,9 +490,9 @@ class TicketsController < ApplicationController
           },
         },
       }
-      conditions.each { |key, local_condition|
+      conditions.each do |key, local_condition|
         user_tickets[key] = ticket_ids_and_assets(local_condition, current_user, limit, assets)
-      }
+      end
 
       # generate stats by user
       condition = {
@@ -531,9 +531,9 @@ class TicketsController < ApplicationController
           },
         },
       }
-      conditions.each { |key, local_condition|
+      conditions.each do |key, local_condition|
         org_tickets[key] = ticket_ids_and_assets(local_condition, current_user, limit, assets)
-      }
+      end
 
       # generate stats by org
       condition = {
@@ -566,14 +566,14 @@ class TicketsController < ApplicationController
 
     # get related users
     article_ids = []
-    ticket.articles.each { |article|
+    ticket.articles.each do |article|
 
       # ignore internal article if customer is requesting
       next if article.internal == true && current_user.permissions?('ticket.customer')
 
       article_ids.push article.id
       assets = article.assets(assets)
-    }
+    end
 
     # get links
     links = Link.list(
@@ -581,13 +581,13 @@ class TicketsController < ApplicationController
       link_object_value: ticket.id,
     )
     link_list = []
-    links.each { |item|
+    links.each do |item|
       link_list.push item
       if item['link_object'] == 'Ticket'
         linked_ticket = Ticket.lookup(id: item['link_object_value'])
         assets = linked_ticket.assets(assets)
       end
-    }
+    end
 
     # get tags
     tags = ticket.tag_list

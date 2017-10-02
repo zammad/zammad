@@ -148,20 +148,20 @@ returns
     ).limit( data[:limit] || 15 ).order('created_at DESC')
     assets = {}
     ticket_ids_open = []
-    tickets_open.each { |ticket|
+    tickets_open.each do |ticket|
       ticket_ids_open.push ticket.id
       assets = ticket.assets(assets)
-    }
+    end
 
     tickets_closed = Ticket.where(
       customer_id: data[:customer_id],
       state_id: state_list_closed
     ).limit( data[:limit] || 15 ).order('created_at DESC')
     ticket_ids_closed = []
-    tickets_closed.each { |ticket|
+    tickets_closed.each do |ticket|
       ticket_ids_closed.push ticket.id
       assets = ticket.assets(assets)
-    }
+    end
 
     {
       ticket_ids_open: ticket_ids_open,

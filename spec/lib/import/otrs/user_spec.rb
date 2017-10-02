@@ -72,7 +72,7 @@ RSpec.describe Import::OTRS::User do
   context 'default' do
 
     let(:object_structure) { load_user_json('default') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: 1,
         updated_by_id: 1,
@@ -89,7 +89,7 @@ RSpec.describe Import::OTRS::User do
         lastname: 'OTRS',
         login: 'root@localhost'
       }
-    }
+    end
 
     it 'creates' do
       prepare_expectations
@@ -105,7 +105,7 @@ RSpec.describe Import::OTRS::User do
   context 'no groups' do
 
     let(:object_structure) { load_user_json('no_groups') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: 1,
         updated_by_id: 1,
@@ -122,7 +122,7 @@ RSpec.describe Import::OTRS::User do
         lastname: 'agent-2-for-role-2',
         login: 'agent-2-for-role-2'
       }
-    }
+    end
 
     it 'creates' do
       prepare_expectations
@@ -138,7 +138,7 @@ RSpec.describe Import::OTRS::User do
   context 'capital email' do
 
     let(:object_structure) { load_user_json('capital_email') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: 1,
         updated_by_id: 1,
@@ -155,7 +155,7 @@ RSpec.describe Import::OTRS::User do
         lastname: 'OTRS',
         login: 'root@localhost'
       }
-    }
+    end
 
     it 'creates' do
       prepare_expectations

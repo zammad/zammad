@@ -68,7 +68,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
     # push overview index
     indexes = []
-    index_and_lists.each { |index|
+    index_and_lists.each do |index|
       assets = {}
       overview = Overview.lookup(id: index[:overview][:id])
       meta = {
@@ -78,7 +78,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
         count: index[:count],
       }
       indexes.push meta
-    }
+    end
     if @client
       @client.log "push overview_index for user #{@user.id}"
       @client.send(
@@ -89,7 +89,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
     # push overviews
     results = []
-    index_and_lists.each { |data|
+    index_and_lists.each do |data|
 
       # do not deliver unchanged lists
       next if @last_overview[data[:overview][:id]] == data
@@ -100,11 +100,11 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       if asset_needed?(overview)
         assets = overview.assets(assets)
       end
-      data[:tickets].each { |ticket_meta|
+      data[:tickets].each do |ticket_meta|
         ticket = Ticket.lookup(id: ticket_meta[:id])
         next if !asset_needed?(ticket)
         assets = ticket.assets(assets)
-      }
+      end
       data[:assets] = assets
 
       if !@client
@@ -123,7 +123,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
           data: data,
         )
       end
-    }
+    end
     return results if !@client
     nil
   end

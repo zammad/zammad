@@ -31,7 +31,7 @@ class Channel::Filter::MonitoringBase
 
     # get mail attibutes like host and state
     result = {}
-    mail[:body].gsub(%r{(Service|Host|State|Address|Date/Time|Additional\sInfo|Info):(.+?)\n}i) { |_match|
+    mail[:body].gsub(%r{(Service|Host|State|Address|Date/Time|Additional\sInfo|Info):(.+?)\n}i) do |_match|
       key = $1
       if key
         key = key.downcase
@@ -41,7 +41,7 @@ class Channel::Filter::MonitoringBase
         value.strip!
       end
       result[key] = value
-    }
+    end
 
     # check min. params
     return if result['host'].blank?
@@ -68,7 +68,7 @@ class Channel::Filter::MonitoringBase
     # follow up detection by meta data
     open_states = Ticket::State.by_category(:open)
     ticket_ids = Ticket.where(state: open_states).order(created_at: :desc).limit(5000).pluck(:id)
-    ticket_ids.each { |ticket_id|
+    ticket_ids.each do |ticket_id|
       ticket = Ticket.find_by(id: ticket_id)
       next if !ticket
       next if !ticket.preferences
@@ -89,7 +89,7 @@ class Channel::Filter::MonitoringBase
         end
       end
       return true
-    }
+    end
 
     # new ticket, set meta data
     if !mail[ 'x-zammad-ticket-id'.to_sym ]
@@ -98,9 +98,9 @@ class Channel::Filter::MonitoringBase
       end
       preferences = {}
       preferences[integration] = result
-      preferences.each { |key, value|
+      preferences.each do |key, value|
         mail[ 'x-zammad-ticket-preferences'.to_sym ][key] = value
-      }
+      end
     end
 
     # ignorte states

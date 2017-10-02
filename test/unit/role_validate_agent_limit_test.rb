@@ -48,9 +48,9 @@ class RoleValidateAgentLimit < ActiveSupport::TestCase
     )
 
     role_agent_limit_success.permissions = permission_ticket_agent
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       role_agent_limit_fail.permissions = permission_ticket_agent
-    }
+    end
 
     user1.destroy
     user2.destroy

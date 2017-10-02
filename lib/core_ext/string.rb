@@ -58,13 +58,13 @@ class String
   # More details: http://pjambet.github.io/blog/emojis-and-mysql/
   def utf8_to_3bytesutf8
     return self if Rails.application.config.db_4bytes_utf8
-    each_char.select { |c|
+    each_char.select do |c|
       if c.bytes.count > 3
         Rails.logger.warn "strip out 4 bytes utf8 chars '#{c}' of '#{self}'"
         next
       end
       c
-    }
+    end
              .join('')
   end
 
@@ -95,14 +95,14 @@ class String
     link_list = ''
     counter   = 0
     if !string_only
-      string.gsub!(/<a[[:space:]].*?href=("|')(.+?)("|').*?>/ix) {
+      string.gsub!(/<a[[:space:]].*?href=("|')(.+?)("|').*?>/ix) do
         link = $2
         counter = counter + 1
         link_list += "[#{counter}] #{link}\n"
         "[#{counter}] "
-      }
+      end
     else
-      string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) { |_placeholder|
+      string.gsub!(%r{<a[[:space:]]+(|\S+[[:space:]]+)href=("|')(.+?)("|')([[:space:]]*|[[:space:]]+[^>]*)>(.+?)<[[:space:]]*/a[[:space:]]*>}mxi) do |_placeholder|
         link = $3
         text = $6
         text.gsub!(/\<.+?\>/, '')
@@ -134,7 +134,7 @@ class String
                       else
                         "#{link} (######LINKRAW:#{text}######)"
                       end
-      }
+      end
     end
 
     # remove style tags with content
@@ -147,12 +147,12 @@ class String
     end
 
     # pre/code handling 1/2
-    string.gsub!(%r{<pre>(.+?)</pre>}m) { |placeholder|
+    string.gsub!(%r{<pre>(.+?)</pre>}m) do |placeholder|
       placeholder = placeholder.gsub(/\n/, '###BR###')
-    }
-    string.gsub!(%r{<code>(.+?)</code>}m) { |placeholder|
+    end
+    string.gsub!(%r{<code>(.+?)</code>}m) do |placeholder|
       placeholder = placeholder.gsub(/\n/, '###BR###')
-    }
+    end
 
     # insert spaces on [A-z]\n[A-z]
     string.gsub!(/([A-z])[[:space:]]([A-z])/m, '\1 \2')
@@ -161,9 +161,9 @@ class String
     string.gsub!(/(\n\r|\r\r\n|\r\n|\n)/, '')
 
     # blockquote handling
-    string.gsub!(%r{<blockquote(| [^>]*)>(.+?)</blockquote>}m) {
+    string.gsub!(%r{<blockquote(| [^>]*)>(.+?)</blockquote>}m) do
       "\n" + $2.html2text(true).gsub(/^(.*)$/, '&gt; \1') + "\n"
-    }
+    end
 
     # pre/code handling 2/2
     string.gsub!(/###BR###/, "\n")
@@ -192,7 +192,7 @@ class String
 
     # add hyperlinks
     if strict
-      string.gsub!(%r{([[:space:]])((http|https|ftp|tel)://.+?|(www..+?))([[:space:]]|\.[[:space:]]|,[[:space:]])}mxi) { |_placeholder|
+      string.gsub!(%r{([[:space:]])((http|https|ftp|tel)://.+?|(www..+?))([[:space:]]|\.[[:space:]]|,[[:space:]])}mxi) do |_placeholder|
         pre = $1
         content = $2
         post = $5
@@ -204,7 +204,7 @@ class String
                       else
                         "#{pre}#{content}#{post}"
                       end
-      }
+      end
     end
 
     # try HTMLEntities, if it fails on invalid signes, use manual way
@@ -221,12 +221,12 @@ class String
       string.gsub!('&nbsp;', ' ')
 
       # encode html entities like "&#8211;"
-      string.gsub!(/(&\#(\d+);?)/x) {
+      string.gsub!(/(&\#(\d+);?)/x) do
         $2.chr
-      }
+      end
 
       # encode html entities like "&#3d;"
-      string.gsub!(/(&\#[xX]([0-9a-fA-F]+);?)/x) {
+      string.gsub!(/(&\#[xX]([0-9a-fA-F]+);?)/x) do
         chr_orig = $1
         hex      = $2.hex
         if hex
@@ -249,7 +249,7 @@ class String
           chr_orig = '?'
         end
         chr_orig
-      }
+      end
     end
 
     # remove tailing empty spaces
@@ -341,11 +341,11 @@ class String
         '<blockquote(|.+?)>[[:space:]]*<div>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]]',
         '<div(|.+?)>[[:space:]]*<br>[[:space:]]*(On|Am|Le|El|Den|Dňa|W dniu|Il|Op|Dne|Dana)[[:space:]].{1,500}<blockquote',
       ]
-      map.each { |regexp|
-        string.sub!(/#{regexp}/m) { |placeholder|
+      map.each do |regexp|
+        string.sub!(/#{regexp}/m) do |placeholder|
           placeholder = "#{marker}#{placeholder}"
-        }
-      }
+        end
+      end
       return string
     end
 
@@ -356,9 +356,9 @@ class String
     end
 
     # search for signature separator "--\n"
-    string.sub!(/^\s{0,2}--\s{0,2}$/) { |placeholder|
+    string.sub!(/^\s{0,2}--\s{0,2}$/) do |placeholder|
       placeholder = "#{marker}#{placeholder}"
-    }
+    end
 
     map = {}
     # Apple Mail
@@ -412,16 +412,16 @@ class String
     # edv hotline schrieb:
     #map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
 
-    map.each { |_key, regexp|
+    map.each do |_key, regexp|
       begin
-        string.sub!(/#{regexp}/) { |placeholder|
+        string.sub!(/#{regexp}/) do |placeholder|
           placeholder = "#{marker}#{placeholder}"
-        }
+        end
       rescue
         # regexp was not possible because of some string encoding issue, use next
         Rails.logger.debug "Invalid string/charset combination with regexp #{regexp} in string"
       end
-    }
+    end
 
     string
   end

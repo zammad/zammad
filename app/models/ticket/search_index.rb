@@ -34,14 +34,14 @@ returns
     # collect article data
     articles = Ticket::Article.where(ticket_id: id)
     attributes['article'] = []
-    articles.each { |article|
+    articles.each do |article|
       article_attributes = article.attributes
 
       # remove note needed attributes
       ignore = %w(message_id_md5)
-      ignore.each { |attribute|
+      ignore.each do |attribute|
         article_attributes.delete(attribute)
-      }
+      end
 
       # lookup attributes of ref. objects (normally name and note)
       article_attributes = article.search_index_attribute_lookup
@@ -52,7 +52,7 @@ returns
       end
 
       # lookup attachments
-      article.attachments.each { |attachment|
+      article.attachments.each do |attachment|
         if !article_attributes['attachment']
           article_attributes['attachment'] = []
         end
@@ -74,9 +74,9 @@ returns
           '_content' => Base64.encode64(attachment.content)
         }
         article_attributes['attachment'].push data
-      }
+      end
       attributes['article'].push article_attributes
-    }
+    end
 
     attributes
   end

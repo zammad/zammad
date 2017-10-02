@@ -27,14 +27,14 @@ class Stats::TicketResponseTime
     total = 0
     count_own = 0
     own = 0
-    items.each { |_item|
+    items.each do |_item|
       ticket = Ticket.lookup(id: data[:ticket_id])
       if ticket.owner_id == user.id
         count_own += 1
         own += data[:time]
       end
       total += data[:time]
-    }
+    end
     if total.nonzero?
       own = (own / count_own).round
     end

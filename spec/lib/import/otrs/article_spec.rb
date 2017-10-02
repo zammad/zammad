@@ -27,7 +27,7 @@ RSpec.describe Import::OTRS::Article do
   context 'customer phone' do
 
     let(:object_structure) { load_article_json('customer_phone_attachment') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: '3',
         updated_by_id: 1,
@@ -48,7 +48,7 @@ RSpec.describe Import::OTRS::Article do
         internal:      false,
         sender_id:     2
       }
-    }
+    end
 
     it 'creates' do
       expect(Import::OTRS::Article::AttachmentFactory).to receive(:import)
@@ -64,7 +64,7 @@ RSpec.describe Import::OTRS::Article do
   context 'content type with comma' do
 
     let(:object_structure) { load_article_json('content_type_comma') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: '3',
         updated_by_id: 1,
@@ -85,7 +85,7 @@ RSpec.describe Import::OTRS::Article do
         internal:      false,
         sender_id:     2
       }
-    }
+    end
 
     it 'creates' do
       expect(Import::OTRS::Article::AttachmentFactory).to receive(:import)
@@ -101,7 +101,7 @@ RSpec.describe Import::OTRS::Article do
   context 'no content type' do
 
     let(:object_structure) { load_article_json('no_content_type') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: '1',
         updated_by_id: 1,
@@ -121,7 +121,7 @@ RSpec.describe Import::OTRS::Article do
         internal: false,
         sender_id: 2
       }
-    }
+    end
 
     it 'creates' do
       creates_with(zammad_structure)
@@ -135,7 +135,7 @@ RSpec.describe Import::OTRS::Article do
   context 'no article body' do
 
     let(:object_structure) { load_article_json('customer_phone_no_body') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: '3',
         updated_by_id: 1,
@@ -156,7 +156,7 @@ RSpec.describe Import::OTRS::Article do
         internal:      false,
         sender_id:     2
       }
-    }
+    end
 
     it 'creates' do
       creates_with(zammad_structure)

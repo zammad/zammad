@@ -136,7 +136,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
   end
 
   def check_if_collection_exists(results, collection, attributes = nil)
-    results.each { |result|
+    results.each do |result|
       next if !result
       next if !result[:collection]
       next if !result[:collection][collection]
@@ -145,9 +145,9 @@ class SessionCollectionsTest < ActiveSupport::TestCase
       return true if !attributes
 
       # check if objetc with attributes in collection exists
-      result[:collection][collection].each { |item|
+      result[:collection][collection].each do |item|
         match_all = true
-        attributes.each { |key, value|
+        attributes.each do |key, value|
 
           # sort array, database result maybe unsorted
           item_attributes = item[ key.to_s ]
@@ -163,10 +163,10 @@ class SessionCollectionsTest < ActiveSupport::TestCase
             #p "FAILED: #{key} -> #{item_attributes.inspect} vs. #{value.inspect}"
             match_all = false
           end
-        }
+        end
         return true if match_all
-      }
-    }
+      end
+    end
     nil
   end
 

@@ -184,9 +184,9 @@ Setting.create_or_update(
   frontend: true
 )
 options = {}
-(10..99).each { |item|
+(10..99).each do |item|
   options[item] = item
-}
+end
 system_id = rand(10..99)
 Setting.create_if_not_exists(
   title: 'SystemID',

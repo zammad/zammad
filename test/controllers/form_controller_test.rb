@@ -195,7 +195,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
     assert(result['token'])
     token = result['token']
 
-    (1..20).each { |count|
+    (1..20).each do |count|
       travel 10.seconds
       post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: "test#{count}", body: 'hello' }.to_json, headers: @headers
       assert_response(200)
@@ -208,7 +208,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
       assert(result['ticket']['number'])
       Scheduler.worker(true)
       sleep 1 # wait until elasticsearch is index
-    }
+    end
 
     sleep 10 # wait until elasticsearch is index
 
@@ -220,7 +220,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
 
     @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json', 'REMOTE_ADDR' => '1.2.3.5' }
 
-    (1..20).each { |count|
+    (1..20).each do |count|
       travel 10.seconds
       post '/api/v1/form_submit', params: { fingerprint: fingerprint, token: token, name: 'Bob Smith', email: 'discard@znuny.com', title: "test-2-#{count}", body: 'hello' }.to_json, headers: @headers
       assert_response(200)
@@ -233,7 +233,7 @@ class FormControllerTest < ActionDispatch::IntegrationTest
       assert(result['ticket']['number'])
       Scheduler.worker(true)
       sleep 1 # wait until elasticsearch is index
-    }
+    end
 
     sleep 10 # wait until elasticsearch is index
 

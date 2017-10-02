@@ -116,14 +116,14 @@ returns
                                                 .where.not(next_state_id: nil)
     if ticket_states_pending_action.present?
       next_state_map = {}
-      ticket_states_pending_action.each { |state|
+      ticket_states_pending_action.each do |state|
         next_state_map[state.id] = state.next_state_id
-      }
+      end
 
       tickets = where(state_id: next_state_map.keys)
                 .where('pending_time <= ?', Time.zone.now)
 
-      tickets.each { |ticket|
+      tickets.each do |ticket|
         Transaction.execute do
           ticket.state_id      = next_state_map[ticket.state_id]
           ticket.updated_at    = Time.zone.now
@@ -131,7 +131,7 @@ returns
           ticket.save!
         end
         result.push ticket
-      }
+      end
     end
 
     # process pending reminder tickets
@@ -140,14 +140,14 @@ returns
 
     if ticket_states_pending_reminder.present?
       reminder_state_map = {}
-      ticket_states_pending_reminder.each { |state|
+      ticket_states_pending_reminder.each do |state|
         reminder_state_map[state.id] = state.next_state_id
-      }
+      end
 
       tickets = where(state_id: reminder_state_map.keys)
                 .where('pending_time <= ?', Time.zone.now)
 
-      tickets.each { |ticket|
+      tickets.each do |ticket|
 
         article_id = nil
         article = Ticket::Article.last_customer_agent_article(ticket.id)
@@ -165,7 +165,7 @@ returns
         )
 
         result.push ticket
-      }
+      end
     end
 
     result
@@ -190,7 +190,7 @@ returns
 
     tickets = where('escalation_at <= ?', Time.zone.now + 15.minutes)
 
-    tickets.each { |ticket|
+    tickets.each do |ticket|
 
       # get sla
       sla = ticket.escalation_calculation_get_sla
@@ -223,7 +223,7 @@ returns
         user_id: 1,
       )
       result.push ticket
-    }
+    end
     result
   end
 
@@ -247,10 +247,10 @@ returns
     result = []
     groups = Group.where(active: true).where('assignment_timeout IS NOT NULL AND groups.assignment_timeout != 0')
     return [] if groups.blank?
-    groups.each { |group|
+    groups.each do |group|
       next if group.assignment_timeout.blank?
       ticket_ids = Ticket.where('state_id IN (?) AND owner_id != 1 AND group_id = ?', state_ids, group.id).limit(600).pluck(:id)
-      ticket_ids.each { |ticket_id|
+      ticket_ids.each do |ticket_id|
         ticket = Ticket.find_by(id: ticket_id)
         next if !ticket
         minutes_since_last_assignment = Time.zone.now - ticket.last_owner_update_at
@@ -262,8 +262,8 @@ returns
           ticket.save!
         end
         result.push ticket
-      }
-    }
+      end
+    end
 
     result
   end
@@ -502,7 +502,7 @@ condition example
 
     # get tables to join
     tables = ''
-    selectors.each { |attribute, selector|
+    selectors.each do |attribute, selector|
       selector = attribute.split(/\./)
       next if !selector[1]
       next if selector[0] == 'ticket'
@@ -525,10 +525,10 @@ condition example
       else
         raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
       end
-    }
+    end
 
     # add conditions
-    selectors.each { |attribute, selector_raw|
+    selectors.each do |attribute, selector_raw|
 
       # validation
       raise "Invalid selector #{selector_raw.inspect}" if !selector_raw
@@ -787,7 +787,7 @@ condition example
       else
         raise "Invalid operator '#{selector['operator']}' for '#{selector['value'].inspect}'"
       end
-    }
+    end
 
     [query, bind_params, tables]
   end
@@ -830,7 +830,7 @@ perform changes on ticket
         end
 
         recipients_raw = []
-        value_recipient.each { |recipient|
+        value_recipient.each do |recipient|
           if recipient == 'article_last_sender'
             if item && item[:article_id]
               article = Ticket::Article.lookup(id: item[:article_id])
@@ -860,14 +860,14 @@ perform changes on ticket
             logger.error "Unknown email notification recipient '#{recipient}'"
             next
           end
-        }
+        end
 
         recipients_checked = []
-        recipients_raw.each { |recipient_email|
+        recipients_raw.each do |recipient_email|
 
           skip_user = false
           users = User.where(email: recipient_email)
-          users.each { |user|
+          users.each do |user|
             next if user.preferences[:mail_delivery_failed] != true
             next if !user.preferences[:mail_delivery_failed_data]
             till_blocked = ((user.preferences[:mail_delivery_failed_data] - Time.zone.now - 60.days) / 60 / 60 / 24).round
@@ -875,7 +875,7 @@ perform changes on ticket
             logger.info "Send no trigger based notification to #{recipient_email} because email is marked as mail_delivery_failed for #{till_blocked} days"
             skip_user = true
             break
-          }
+          end
           next if skip_user
 
           # send notifications only to email adresses
@@ -917,7 +917,7 @@ perform changes on ticket
             600 => 100,
           }
           skip = false
-          map.each { |minutes, count|
+          map.each do |minutes, count|
             already_sent = Ticket::Article.where(
               ticket_id: id,
               sender: Ticket::Article::Sender.find_by(name: 'System'),
@@ -927,7 +927,7 @@ perform changes on ticket
             logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} for this ticket within last #{minutes} minutes (loop protection)"
             skip = true
             break
-          }
+          end
           next if skip
           map = {
             10 => 30,
@@ -937,7 +937,7 @@ perform changes on ticket
             600 => 360,
           }
           skip = false
-          map.each { |minutes, count|
+          map.each do |minutes, count|
             already_sent = Ticket::Article.where(
               sender: Ticket::Article::Sender.find_by(name: 'System'),
               type: Ticket::Article::Type.find_by(name: 'email'),
@@ -946,13 +946,13 @@ perform changes on ticket
             logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{minutes} minutes (loop protection)"
             skip = true
             break
-          }
+          end
           next if skip
 
           email = recipient_email.downcase.strip
           next if recipients_checked.include?(email)
           recipients_checked.push(email)
-        }
+        end
 
         next if recipients_checked.blank?
         recipient_string = recipients_checked.join(', ')
@@ -1014,13 +1014,13 @@ perform changes on ticket
         next if value['value'].blank?
         tags = value['value'].split(/,/)
         if value['operator'] == 'add'
-          tags.each { |tag|
+          tags.each do |tag|
             tag_add(tag)
-          }
+          end
         elsif value['operator'] == 'remove'
-          tags.each { |tag|
+          tags.each do |tag|
             tag_remove(tag)
-          }
+          end
         else
           logger.error "Unknown #{attribute} operator #{value['operator']}"
         end
@@ -1080,17 +1080,17 @@ result
 
   def get_references(ignore = [])
     references = []
-    Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).each { |article|
+    Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).each do |article|
       if !article.in_reply_to.empty?
         references.push article.in_reply_to
       end
       next if !article.message_id
       next if article.message_id.empty?
       references.push article.message_id
-    }
-    ignore.each { |item|
+    end
+    ignore.each do |item|
       references.delete(item)
-    }
+    end
     references
   end
 
@@ -1116,7 +1116,7 @@ result
 
     # get related objects
     assets = {}
-    list.each { |item|
+    list.each do |item|
       record = Kernel.const_get(item['object']).find(item['o_id'])
       assets = record.assets(assets)
 
@@ -1124,7 +1124,7 @@ result
         record = Kernel.const_get(item['related_object']).find( item['related_o_id'])
         assets = record.assets(assets)
       end
-    }
+    end
     {
       history: list,
       assets: assets,

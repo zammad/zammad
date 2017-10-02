@@ -7,8 +7,8 @@ RSpec.describe Import::OTRS::History do
   let(:object_structure) { load_history_json('article/default') }
 
   it 'requires an implementation of init_callback' do
-    expect {
+    expect do
       start_import_test
-    }.to raise_error(RuntimeError)
+    end.to raise_error(RuntimeError)
   end
 end

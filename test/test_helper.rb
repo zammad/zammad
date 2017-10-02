@@ -66,10 +66,10 @@ class ActiveSupport::TestCase
     Calendar.destroy_all
 
     # reset settings
-    Setting.all.pluck(:name).each { |name|
+    Setting.all.pluck(:name).each do |name|
       next if name == 'models_searchable' # skip setting
       Setting.reset(name, false)
-    }
+    end
     Setting.set('system_init_done', true)
     Setting.reload
 
@@ -94,12 +94,12 @@ class ActiveSupport::TestCase
       lines.push line
     end
     count = 0
-    lines.reverse.each { |line|
+    lines.reverse.each do |line|
       break if line =~ /\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/
       next if line !~ /Send notification \(#{type}\)/
       next if line !~ /to:\s#{recipient}/
       count += 1
-    }
+    end
     count
   end
 
@@ -112,12 +112,12 @@ class ActiveSupport::TestCase
       lines.push line
     end
     count = 0
-    lines.reverse.each { |line|
+    lines.reverse.each do |line|
       break if line =~ /\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/
       next if line !~ /Send email to:/
       next if line !~ /to:\s'#{recipient}'/
       count += 1
-    }
+    end
     count
   end
 

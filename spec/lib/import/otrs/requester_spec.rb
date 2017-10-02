@@ -16,14 +16,14 @@ RSpec.describe Import::OTRS::Requester do
 
     context 'caching request results' do
 
-      let(:response) {
+      let(:response) do
         response      = double()
         response_body = double()
         expect(response_body).to receive(:to_s).at_least(:once).and_return('{"Result": {}}')
         expect(response).to receive('success?').at_least(:once).and_return(true)
         expect(response).to receive('body').at_least(:once).and_return(response_body)
         response
-      }
+      end
 
       it 'is active if no args are given' do
         expect(UserAgent).to receive(:post).and_return(response)

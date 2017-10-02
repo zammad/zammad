@@ -68,8 +68,8 @@ returns on fail
       # get mx records, try to find provider based on mx records
       mx_records = EmailHelper.mx_records(domain)
       domains = domains.concat(mx_records)
-      provider_map.each { |_provider, settings|
-        domains.each { |domain_to_check|
+      provider_map.each do |_provider, settings|
+        domains.each do |domain_to_check|
 
           next if domain_to_check !~ /#{settings[:domain]}/i
 
@@ -95,8 +95,8 @@ returns on fail
             content_messages: result_inbound[:content_messages],
             setting: settings,
           }
-        }
-      }
+        end
+      end
 
       # probe guess settings
 
@@ -109,7 +109,7 @@ returns on fail
         setting: {}
       }
       success = false
-      inbound_map.each { |config|
+      inbound_map.each do |config|
 
         # add folder to config if needed
         if !params[:folder].empty? && config[:options]
@@ -127,7 +127,7 @@ returns on fail
         result[:content_messages]  = result_inbound[:content_messages]
 
         break
-      }
+      end
 
       # give up, no possible inbound found
       if !success
@@ -143,7 +143,7 @@ returns on fail
       outbound_map = outbound_mx + outbound_guess
 
       success = false
-      outbound_map.each { |config|
+      outbound_map.each do |config|
         Rails.logger.debug "OUTBOUND PROBE GUESS: #{config.inspect}"
         result_outbound = EmailHelper::Probe.outbound(config, params[:email])
         Rails.logger.debug "OUTBOUND RESULT GUESS: #{result_outbound.inspect}"
@@ -153,7 +153,7 @@ returns on fail
         success                     = true
         result[:setting][:outbound] = config
         break
-      }
+      end
 
       # give up, no possible outbound found
       if !success
@@ -337,7 +337,7 @@ returns on fail
           white_map = {
             'Recipient address rejected' => true,
           }
-          white_map.each { |key, _message|
+          white_map.each do |key, _message|
 
             next if e.message !~ /#{Regexp.escape(key)}/i
 
@@ -346,7 +346,7 @@ returns on fail
               settings: params,
               notice: e.message,
             }
-          }
+          end
         end
         return {
           result: 'invalid',
@@ -362,9 +362,9 @@ returns on fail
     end
 
     def self.invalid_field(message_backend)
-      invalid_fields.each { |key, fields|
+      invalid_fields.each do |key, fields|
         return fields if message_backend =~ /#{Regexp.escape(key)}/i
-      }
+      end
       {}
     end
 
@@ -387,9 +387,9 @@ returns on fail
     end
 
     def self.translation(message_backend)
-      translations.each { |key, message_human|
+      translations.each do |key, message_human|
         return message_human if message_backend =~ /#{Regexp.escape(key)}/i
-      }
+      end
       nil
     end
 

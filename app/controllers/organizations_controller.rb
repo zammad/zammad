@@ -71,9 +71,9 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
 
     if params[:expand]
       list = []
-      organizations.each { |organization|
+      organizations.each do |organization|
         list.push organization.attributes_with_association_names
-      }
+      end
       render json: list, status: :ok
       return
     end
@@ -81,10 +81,10 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
     if params[:full]
       assets = {}
       item_ids = []
-      organizations.each { |item|
+      organizations.each do |item|
         item_ids.push item.id
         assets = item.assets(assets)
-      }
+      end
       render json: {
         record_ids: item_ids,
         assets: assets,
@@ -92,9 +92,9 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
       return
     end
     list = []
-    organizations.each { |organization|
+    organizations.each do |organization|
       list.push organization.attributes_with_association_ids
-    }
+    end
     render json: list
   end
 
@@ -257,9 +257,9 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
     if params[:expand]
       list = []
-      organization_all.each { |organization|
+      organization_all.each do |organization|
         list.push organization.attributes_with_association_names
-      }
+      end
       render json: list, status: :ok
       return
     end
@@ -267,10 +267,10 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     # build result list
     if params[:label]
       organizations = []
-      organization_all.each { |organization|
+      organization_all.each do |organization|
         a = { id: organization.id, label: organization.name, value: organization.name }
         organizations.push a
-      }
+      end
 
       # return result
       render json: organizations
@@ -280,10 +280,10 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     if params[:full]
       organization_ids = []
       assets = {}
-      organization_all.each { |organization|
+      organization_all.each do |organization|
         assets = organization.assets(assets)
         organization_ids.push organization.id
-      }
+      end
 
       # return result
       render json: {
@@ -294,9 +294,9 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     end
 
     list = []
-    organization_all.each { |organization|
+    organization_all.each do |organization|
       list.push organization.attributes_with_association_ids
-    }
+    end
     render json: list, status: :ok
   end
 

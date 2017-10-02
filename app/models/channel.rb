@@ -15,6 +15,7 @@ class Channel < ApplicationModel
 
   # rubocop:disable Style/ClassVars
   @@channel_stream = {}
+  @@channel_stream_started_till_at = {}
 # rubocop:enable Style/ClassVars
 
 =begin
@@ -63,7 +64,7 @@ fetch one account
       self.status_in   = result[:result]
       self.last_log_in = result[:notice]
       preferences[:last_fetch] = Time.zone.now
-      save
+      save!
     rescue => e
       error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
       logger.error error
@@ -71,7 +72,7 @@ fetch one account
       self.status_in = 'error'
       self.last_log_in = error
       preferences[:last_fetch] = Time.zone.now
-      save
+      save!
     end
 
   end
@@ -116,7 +117,7 @@ stream instance of account
       logger.error e.backtrace
       self.status_in = 'error'
       self.last_log_in = error
-      save
+      save!
     end
 
   end
@@ -132,7 +133,7 @@ stream all accounts
   def self.stream
     Thread.abort_on_exception = true
 
-    auto_reconnect_after = 25
+    auto_reconnect_after = 180
     last_channels = []
 
     loop do
@@ -140,12 +141,21 @@ stream all accounts
 
       current_channels = []
       channels = Channel.where('active = ? AND area LIKE ?', true, '%::Account')
-      channels.each { |channel|
-        next if channel.options[:adapter] != 'twitter'
+      channels.each do |channel|
+        adapter      = channel.options[:adapter]
+        driver_class = Object.const_get("Channel::Driver::#{adapter.to_classname}")
+        next if !driver_class.respond_to?(:streamable?)
+        next if !driver_class.streamable?
         channel_id = channel.id.to_s
+
+        if @@channel_stream[channel_id].blank? && @@channel_stream_started_till_at[channel_id] && @@channel_stream_started_till_at[channel_id] > Time.zone.now - 65.seconds
+          logger.info "skipp channel (#{channel_id}) for streaming, already tried to connect or connection was active within the last minute"
+          next
+        end
+
         current_channels.push channel_id
 
-        # exit it channel has changed or connection is older then 25 min.
+        # exit it channel has changed or connection is older then 180 minutes
         if @@channel_stream[channel_id]
           if @@channel_stream[channel_id][:updated_at] != channel.updated_at
             logger.info "channel (#{channel.id}) has changed, stop thread"
@@ -153,12 +163,14 @@ stream all accounts
             @@channel_stream[channel_id][:thread].join
             @@channel_stream[channel_id][:stream_instance].disconnect
             @@channel_stream[channel_id] = false
+            @@channel_stream_started_till_at[channel_id] = Time.zone.now
           elsif @@channel_stream[channel_id][:started_at] && @@channel_stream[channel_id][:started_at] < Time.zone.now - auto_reconnect_after.minutes
             logger.info "channel (#{channel.id}) reconnect - thread is older then #{auto_reconnect_after} minutes, restart thread"
             @@channel_stream[channel_id][:thread].exit
             @@channel_stream[channel_id][:thread].join
             @@channel_stream[channel_id][:stream_instance].disconnect
             @@channel_stream[channel_id] = false
+            @@channel_stream_started_till_at[channel_id] = Time.zone.now
           end
         end
 
@@ -174,37 +186,44 @@ stream all accounts
         sleep @@channel_stream.count
 
         # start threads for each channel
-        @@channel_stream[channel_id][:thread] = Thread.new {
+        @@channel_stream[channel_id][:thread] = Thread.new do
           begin
             logger.info "Started stream channel for '#{channel.id}' (#{channel.area})..."
+            channel.status_in = 'ok'
+            channel.last_log_in = ''
+            channel.save!
+            @@channel_stream_started_till_at[channel_id] = Time.zone.now
             @@channel_stream[channel_id] ||= {}
             @@channel_stream[channel_id][:stream_instance] = channel.stream_instance
             @@channel_stream[channel_id][:stream_instance].stream
             @@channel_stream[channel_id][:stream_instance].disconnect
             @@channel_stream[channel_id] = false
-            logger.info " ...stopped thread for '#{channel.id}'"
+            @@channel_stream_started_till_at[channel_id] = Time.zone.now
+            logger.info " ...stopped stream thread for '#{channel.id}'"
           rescue => e
-            error = "Can't use channel (#{channel.id}): #{e.inspect}"
+            error = "Can't use stream for channel (#{channel.id}): #{e.inspect}"
             logger.error error
             logger.error e.backtrace
             channel.status_in = 'error'
             channel.last_log_in = error
-            channel.save
+            channel.save!
             @@channel_stream[channel_id] = false
           end
-        }
-      }
+        end
+      end
 
       # cleanup deleted channels
-      last_channels.each { |channel_id|
-        next if !@@channel_stream[channel_id.to_s]
+      last_channels.each do |channel_id|
+        next if @@channel_stream[channel_id].blank?
         next if current_channels.include?(channel_id)
-        logger.info "channel (#{channel_id}) not longer active, stop thread"
-        @@channel_stream[channel_id.to_s][:thread].exit
-        @@channel_stream[channel_id.to_s][:thread].join
-        @@channel_stream[channel_id.to_s][:stream_instance].disconnect
-        @@channel_stream[channel_id.to_s] = false
-      }
+        logger.info "channel (#{channel_id}) not longer active, stop stream thread"
+        @@channel_stream[channel_id][:thread].exit
+        @@channel_stream[channel_id][:thread].join
+        @@channel_stream[channel_id][:stream_instance].disconnect
+        @@channel_stream[channel_id] = false
+        @@channel_stream_started_till_at[channel_id] = Time.zone.now
+      end
+
       last_channels = current_channels
 
       sleep 20
@@ -245,14 +264,14 @@ send via account
       result = driver_instance.send(adapter_options, mail_params, notification)
       self.status_out   = 'ok'
       self.last_log_out = ''
-      save
+      save!
     rescue => e
       error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
       logger.error error
       logger.error e.backtrace
       self.status_out = 'error'
       self.last_log_out = error
-      save
+      save!
       raise error
     end
     result

@@ -125,11 +125,11 @@ or with filter:
 
     # add link to idoit
     if result.data['result'].class == Array
-      result.data['result'].each { |item|
+      result.data['result'].each do |item|
         next if !item['id']
         item['link'] = "#{_url_cleanup_baseurl(url)}/?objID=#{item['id']}"
         item['link'].gsub!(%r{([^:])//+}, '\\1/')
-      }
+      end
     end
     result.data
   end

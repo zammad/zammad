@@ -128,7 +128,7 @@ class FormController < ApplicationController
 
     if params[:file]
 
-      params[:file].each { |file|
+      params[:file].each do |file|
         Store.add(
           object: 'Ticket::Article',
           o_id: article.id,
@@ -138,7 +138,7 @@ class FormController < ApplicationController
             'Mime-Type' => file.content_type,
           }
         )
-      }
+      end
     end
 
     UserInfo.current_user_id = 1

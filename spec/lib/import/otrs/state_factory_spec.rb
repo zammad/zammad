@@ -31,13 +31,13 @@ RSpec.describe Import::OTRS::StateFactory do
       name:   'pending_time',
     )
 
-    expect {
+    expect do
       described_class.import(state_backend_param)
 
       # sync changes
       ticket_state_id.reload
       ticket_pending_time.reload
-    }.to change {
+    end.to change {
       ticket_state_id.data_option
     }.and change {
       ticket_state_id.screens
@@ -59,13 +59,13 @@ RSpec.describe Import::OTRS::StateFactory do
 
     expect(Import::OTRS).to receive(:diff?).and_return(true)
 
-    expect {
+    expect do
       described_class.update_attribute_settings
 
       # sync changes
       ticket_state_id.reload
       ticket_pending_time.reload
-    }.to not_change {
+    end.to not_change {
       ticket_state_id.data_option
     }.and not_change {
       ticket_state_id.screens
@@ -109,7 +109,7 @@ RSpec.describe Import::OTRS::StateFactory do
 
   context 'changing Ticket::State IDs' do
 
-    let(:state_backend_param) {
+    let(:state_backend_param) do
       states = %w(new open merged pending_reminder pending_auto_close_p pending_auto_close_n pending_auto_close_p closed_successful closed_unsuccessful closed_successful removed)
 
       state_backend_param = []
@@ -117,7 +117,7 @@ RSpec.describe Import::OTRS::StateFactory do
         state_backend_param.push(load_state_json(state))
       end
       state_backend_param
-    }
+    end
 
     it 'updates Overviews' do
       name     = 'My pending reached Tickets'

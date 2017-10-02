@@ -13,7 +13,7 @@ class Integration::SipgateController < ApplicationController
       block_caller_ids = config_inbound[:block_caller_ids] || []
 
       # check if call need to be blocked
-      block_caller_ids.each { |item|
+      block_caller_ids.each do |item|
         next unless item[:caller_id] == params['from']
         xml = Builder::XmlMarkup.new(indent: 2)
         xml.instruct!
@@ -30,7 +30,7 @@ class Integration::SipgateController < ApplicationController
         end
         Cti::Log.process(params)
         return true
-      }
+      end
     end
 
     Cti::Log.process(params)
@@ -54,7 +54,7 @@ class Integration::SipgateController < ApplicationController
     to      = params[:to]
     from    = nil
     if to
-      config_outbound.each { |row|
+      config_outbound.each do |row|
         dest = row[:dest].gsub(/\*/, '.+?')
         next if to !~ /^#{dest}$/
         from = row[:caller_id]
@@ -62,7 +62,7 @@ class Integration::SipgateController < ApplicationController
           xml.Dial(callerId: from) { xml.Number(params[:to]) }
         end
         break
-      }
+      end
       if !content && default_caller_id
         from = default_caller_id
         content = xml.Response(onHangup: url, onAnswer: url) do

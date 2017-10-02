@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe Import::BaseResource do
 
   it "needs an implementation of the 'import_class' method" do
-    expect {
+    expect do
       described_class.new(attributes_for(:group))
-    }.to raise_error(NoMethodError)
+    end.to raise_error(NoMethodError)
   end
 
   context "implemented 'import_class' method" do
@@ -31,11 +31,11 @@ RSpec.describe Import::BaseResource do
       Import::Test.send(:remove_const, :Group)
     end
 
-    let(:attributes) {
+    let(:attributes) do
       attributes      = attributes_for(:group)
       attributes[:id] = 1337
       attributes
-    }
+    end
 
     context 'live run' do
 

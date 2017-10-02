@@ -31,7 +31,7 @@ class RoleTest < ActiveSupport::TestCase
       preferences: {},
     )
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       Role.create(
         name: 'Test1',
         note: 'Test1 Role.',
@@ -39,8 +39,8 @@ class RoleTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1
       )
-    }
-    assert_raises(RuntimeError) {
+    end
+    assert_raises(RuntimeError) do
       Role.create(
         name: 'Test1',
         note: 'Test1 Role.',
@@ -48,8 +48,8 @@ class RoleTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1
       )
-    }
-    assert_raises(RuntimeError) {
+    end
+    assert_raises(RuntimeError) do
       Role.create(
         name: 'Test1',
         note: 'Test1 Role.',
@@ -57,7 +57,7 @@ class RoleTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1
       )
-    }
+    end
     role11 = Role.create(
       name: 'Test1.1',
       note: 'Test1.1 Role.',

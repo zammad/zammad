@@ -34,15 +34,15 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
 
     # channel check
     last_run_tolerance = Time.zone.now - 1.hour
-    Channel.where(active: true).each { |channel|
+    Channel.where(active: true).each do |channel|
 
       # inbound channel
       if channel.status_in == 'error'
         message = "Channel: #{channel.area} in "
-        %w(host user uid).each { |key|
+        %w(host user uid).each do |key|
           next if !channel.options[key] || channel.options[key].empty?
           message += "key:#{channel.options[key]};"
-        }
+        end
         issues.push "#{message} #{channel.last_log_in}"
       end
       if channel.preferences && channel.preferences['last_fetch'] && channel.preferences['last_fetch'] < last_run_tolerance
@@ -52,32 +52,32 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       # outbound channel
       next if channel.status_out != 'error'
       message = "Channel: #{channel.area} out "
-      %w(host user uid).each { |key|
+      %w(host user uid).each do |key|
         next if !channel.options[key] || channel.options[key].empty?
         message += "key:#{channel.options[key]};"
-      }
+      end
       issues.push "#{message} #{channel.last_log_out}"
-    }
+    end
 
     # unprocessable mail check
     directory = "#{Rails.root}/tmp/unprocessable_mail"
     if File.exist?(directory)
       count = 0
-      Dir.glob("#{directory}/*.eml") { |_entry|
+      Dir.glob("#{directory}/*.eml") do |_entry|
         count += 1
-      }
+      end
       if count.nonzero?
         issues.push "unprocessable mails: #{count}"
       end
     end
 
     # scheduler check
-    Scheduler.where(active: true).where.not(last_run: nil).each { |scheduler|
+    Scheduler.where(active: true).where.not(last_run: nil).each do |scheduler|
       next if scheduler.period <= 300
       next if scheduler.last_run + scheduler.period.seconds > Time.zone.now - 5.minutes
       issues.push 'scheduler not running'
       break
-    }
+    end
     if Scheduler.where(active: true, last_run: nil).count == Scheduler.where(active: true).count
       issues.push 'scheduler not running'
     end
@@ -158,13 +158,13 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
       tickets: Ticket,
       ticket_articles: Ticket::Article,
     }
-    map.each { |key, class_name|
+    map.each do |key, class_name|
       status[:counts][key] = class_name.count
       last = class_name.last
       status[:last_created_at][key] = if last
                                         last.created_at
                                       end
-    }
+    end
 
     render json: status
   end

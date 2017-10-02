@@ -77,7 +77,7 @@ or
       end
 
       # looking for verify email
-      9.times {
+      9.times do
         sleep 5
 
         # fetch mailbox
@@ -105,7 +105,7 @@ or
         next if fetch_result[:result] != 'ok'
 
         return fetch_result
-      }
+      end
 
       {
         result: 'invalid',

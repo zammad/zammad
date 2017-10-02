@@ -25,7 +25,7 @@ module Channel::Filter::FollowUpMerged
     return if links.blank?
 
     merge_ticket = nil
-    links.each { |link|
+    links.each do |link|
       next if link['link_type'] != 'parent'
       next if link['link_object'] != 'Ticket'
 
@@ -37,7 +37,7 @@ module Channel::Filter::FollowUpMerged
       merge_ticket = check_ticket
 
       break
-    }
+    end
     merge_ticket
   end
 end
