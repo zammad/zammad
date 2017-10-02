@@ -124,7 +124,7 @@ returns
         UserInfo.current_user_id = admin_user.id
 
         # fetch org logo
-        if admin_user.email
+        if admin_user.email.present?
           Service::Image.organization_suggest(admin_user.email)
         end
       }
