@@ -36,7 +36,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.boolean :vip,                                         default: false
       t.boolean :verified,                        null: false, default: false
       t.boolean :active,                          null: false, default: true
-      t.string :note,                 limit: 250, null: true, default: ''
+      t.string :note,                 limit: 5000, null: true, default: ''
       t.timestamp :last_login,        limit: 3,   null: true
       t.string :source,               limit: 200, null: true
       t.integer :login_failed,                    null: false, default: 0
@@ -147,7 +147,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :domain,                 limit: 250, null: true,  default: ''
       t.boolean :domain_assignment,                 null: false, default: false
       t.boolean :active,                            null: false, default: true
-      t.string :note,                   limit: 250, null: true,  default: ''
+      t.string :note,                   limit: 5000, null: true,  default: ''
       t.integer :updated_by_id,                     null: false
       t.integer :created_by_id,                     null: false
       t.timestamps limit: 3,   null: false
