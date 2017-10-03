@@ -7,11 +7,11 @@ Requires=zammad.service
 
 [Service]
 EnvironmentFile=/etc/zammad/zammad.env
-User=${ZAMMAD_USER}
-Group=${ZAMMAD_GROUP}
+User=zammad
+Group=zammad
 Restart=always
 
-WorkingDirectory=${ZAMMAD_WORKING_DIRECTORY}
+WorkingDirectory=/opt/zammad
 
 ExecStart=/bin/bash -l -c "${BUNDLE_BINARY} exec script/websocket-server.rb -b ${ZAMMAD_BIND_IP} -p ${ZAMMAD_WEBSOCKET_PORT} start"
 

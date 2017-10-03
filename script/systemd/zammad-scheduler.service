@@ -8,11 +8,11 @@ Requires=zammad.service
 [Service]
 Type=forking
 EnvironmentFile=/etc/zammad/zammad.env
-User=${ZAMMAD_USER}
-Group=${ZAMMAD_GROUP}
+User=zammad
+Group=zammad
 Restart=always
 
-WorkingDirectory=${ZAMMAD_WORKING_DIRECTORY}
+WorkingDirectory=/opt/zammad
 
 ExecStart=/bin/bash -l -c "${BUNDLE_BINARY} exec script/scheduler.rb start"
 
