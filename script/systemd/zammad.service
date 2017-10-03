@@ -8,9 +8,9 @@ Wants=zammad-scheduler.service
 Wants=zammad-websocket.service
 
 [Service]
-Type=simple
-User=zammad
-Group=zammad
+EnvironmentFile=/etc/zammad/zammad.env
+User=${ZAMMAD_USER:-zammad}
+Group=${ZAMMAD_GROUP:-zammad}
 Restart=always
 ExecStart=/bin/sleep infinity
 

@@ -6,19 +6,14 @@ After=zammad.service
 Requires=zammad.service
 
 [Service]
-Type=simple
-User=zammad
-Group=zammad
+EnvironmentFile=/etc/zammad/zammad.env
+User=${ZAMMAD_USER:-zammad}
+Group=${ZAMMAD_GROUP:-zammad}
 Restart=always
 
-WorkingDirectory=/opt/zammad
+WorkingDirectory=${ZAMMAD_WORKING_DIRECTORY:-/opt/zammad}
 
-Environment=RAILS_ENV=production
-Environment=BUNDLE_BINARY=bundle
-Environment=ZAMMAD_BIND_IP=127.0.0.1
-Environment=ZAMMAD_WEBSOCKET_PORT=6042
-
-ExecStart=/bin/bash -l -c "${BUNDLE_BINARY} exec script/websocket-server.rb -b ${ZAMMAD_BIND_IP} -p ${ZAMMAD_WEBSOCKET_PORT} start"
+ExecStart=/bin/bash -l -c "${BUNDLE_BINARY:-bundle} exec script/websocket-server.rb -b ${ZAMMAD_BIND_IP:-127.0.0.1} -p ${ZAMMAD_WEBSOCKET_PORT:-6042} start"
 
 [Install]
 WantedBy=zammad.service
