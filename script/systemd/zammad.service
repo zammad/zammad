@@ -9,8 +9,8 @@ Wants=zammad-websocket.service
 
 [Service]
 EnvironmentFile=/etc/zammad/zammad.env
-User=${ZAMMAD_USER:-zammad}
-Group=${ZAMMAD_GROUP:-zammad}
+User=${ZAMMAD_USER}
+Group=${ZAMMAD_GROUP}
 Restart=always
 ExecStart=/bin/sleep infinity
 

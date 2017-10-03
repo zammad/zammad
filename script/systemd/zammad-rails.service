@@ -7,13 +7,13 @@ Requires=zammad.service
 
 [Service]
 EnvironmentFile=/etc/zammad/zammad.env
-User=${ZAMMAD_USER:-zammad}
-Group=${ZAMMAD_GROUP:-zammad}
+User=${ZAMMAD_USER}
+Group=${ZAMMAD_GROUP}
 Restart=always
 
-WorkingDirectory=${ZAMMAD_WORKING_DIRECTORY:-/opt/zammad}
+WorkingDirectory=${ZAMMAD_WORKING_DIRECTORY}
 
-ExecStart=/bin/bash -l -c "${BUNDLE_BINARY:-bundle} exec script/rails server -b ${ZAMMAD_BIND_IP:-127.0.0.1} -p ${ZAMMAD_RAILS_PORT:-3000}"
+ExecStart=/bin/bash -l -c "${BUNDLE_BINARY} exec script/rails server -b ${ZAMMAD_BIND_IP} -p ${ZAMMAD_RAILS_PORT}"
 
 [Install]
 WantedBy=zammad.service
