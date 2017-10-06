@@ -255,7 +255,6 @@ returns
         next if !ticket
         minutes_since_last_assignment = Time.zone.now - ticket.last_owner_update_at
         next if (minutes_since_last_assignment / 60) <= group.assignment_timeout
-
         Transaction.execute do
           ticket.owner_id      = 1
           ticket.updated_at    = Time.zone.now
@@ -1197,5 +1196,4 @@ result
     self.priority_id = default_ticket_priority.id
     true
   end
-
 end
