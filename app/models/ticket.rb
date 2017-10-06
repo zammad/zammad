@@ -256,13 +256,8 @@ returns
         minutes_since_last_assignment = Time.zone.now - ticket.last_owner_update_at
         next if (minutes_since_last_assignment / 60) <= group.assignment_timeout
 
-        # result = User.getAgentId(
-        #   role_id:      2,
-        #   group_id:     self.group_id
-        # )
-
         Transaction.execute do
-          # ticket.owner_id      = result.ids.sample
+          ticket.owner_id      = 1
           ticket.updated_at    = Time.zone.now
           ticket.updated_by_id = 1
           ticket.save!
@@ -1202,16 +1197,5 @@ result
     self.priority_id = default_ticket_priority.id
     true
   end
-
-  # set a random owner everytime a new ticket is created.
-  # def set_random_owner
-  #   return true if owner_id != 1
-  #   Rails.logger.info " Process ticket auto assign for manually created ticket..."
-  #   result = User.getAgentId(
-  #     role_id:      2,
-  #     group_id:     self.group_id
-  #   )
-  #   self.owner_id = result.ids.sample
-  # end
 
 end
