@@ -1,5 +1,5 @@
 [Unit]
-Description=Zammad railsserver
+Description=Zammad rails server
 After=syslog.target
 After=network.target
 After=zammad.service
