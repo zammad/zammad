@@ -938,10 +938,19 @@ class App.Utils
       return articleNew
 
     if type.name is 'email' || type.name is 'web'
+      localEmailAddresses = []
+      for address in email_addresses
+        if address && !_.isEmpty(address.email)
+          localEmailAddresses.push address.email.toString().toLowerCase()
+
+      isLocalAddress = (address) ->
+        return false if _.isEmpty(address)
+        _.contains(localEmailAddresses, address.toString().toLowerCase())
+
       article_created_by_email = undefined
       if article_created_by && article_created_by.email
         article_created_by_email = article_created_by.email.toLowerCase()
-      if article.sender.name is 'Agent' && article_created_by_email && article.from && !article.from.match(article_created_by_email)
+      if article.sender.name is 'Agent' && ((article_created_by_email && article.from && !article.from.match(article_created_by_email)) || isLocalAddress(article.from))
         articleNew.to = article.to
       else
         if article.reply_to
@@ -956,15 +965,6 @@ class App.Utils
 
       # filter for uniq recipients
       recipientAddresses = {}
-
-      localEmailAddresses = []
-      for address in email_addresses
-        if address && !_.isEmpty(address.email)
-          localEmailAddresses.push address.email.toString().toLowerCase()
-
-      isLocalAddress = (address) ->
-        return false if _.isEmpty(address)
-        _.contains(localEmailAddresses, address.toString().toLowerCase())
 
       addAddresses = (addressLine, line) ->
         lineNew = ''
