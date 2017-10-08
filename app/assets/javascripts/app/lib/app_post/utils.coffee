@@ -941,7 +941,7 @@ class App.Utils
       article_created_by_email = undefined
       if article_created_by && article_created_by.email
         article_created_by_email = article_created_by.email.toLowerCase()
-      if article.sender.name is 'Agent' && article_created_by_email && article.from && !article.from.match(article_created_by_email) # (!article.from.match(article_created_by_email) || !EmailAddress(XXXXX) )
+      if article.sender.name is 'Agent' && article_created_by_email && article.from && !article.from.match(article_created_by_email)
         articleNew.to = article.to
       else
         if article.reply_to
@@ -968,11 +968,6 @@ class App.Utils
 
       addAddresses = (addressLine, line) ->
         lineNew = ''
-        if !_.isEmpty(line)
-          if !_.isEmpty(addressLine)
-            addressLine += ', '
-          addressLine += line
-
         recipients = emailAddresses.parseAddressList(addressLine)
         if !_.isEmpty(recipients)
           for recipient in recipients
@@ -992,16 +987,21 @@ class App.Utils
                   lineNew = lineNew + localRecipientAddress
 
         lineNew
+        if !_.isEmpty(line)
+          if !_.isEmpty(lineNew)
+            lineNew += ', '
+          lineNew += line
+        lineNew
 
       if articleNew.to
         articleNew.to = addAddresses(articleNew.to)
 
       if all
         if article.from
-          articleNew.cc = addAddresses(articleNew.cc, article.from)
+          articleNew.to = addAddresses(article.from, articleNew.to)
         if article.to
-          articleNew.cc = addAddresses(articleNew.cc, article.to)
+          articleNew.to = addAddresses(article.to, articleNew.to)
         if article.cc
-          articleNew.cc = addAddresses(articleNew.cc, article.cc)
+          articleNew.cc = addAddresses(article.cc, articleNew.cc)
 
     articleNew
