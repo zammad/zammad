@@ -2321,7 +2321,7 @@ test('check getRecipientArticle format', function() {
     customer: customer,
   }
   article = {
-    message_id: 'message_id15',
+    message_id: 'message_id16',
     created_by: customer,
     type: {
       name: 'email',
@@ -2337,7 +2337,7 @@ test('check getRecipientArticle format', function() {
     to:          'customer@example.com, customer1@example.com, customer2@example.com, customer2+2@example.com',
     cc:          '',
     body:        '',
-    in_reply_to: 'message_id15',
+    in_reply_to: 'message_id16',
   }
   email_addresses = [
     {
@@ -2360,13 +2360,13 @@ test('check getRecipientArticle format', function() {
     login: 'login',
     firstname: 'firstname',
     lastname: 'lastname',
-    email: 'agent@example.com',
+    email: 'zammad@example.com',
   }
   ticket = {
     customer: customer,
   }
   article = {
-    message_id: 'message_id16',
+    message_id: 'message_id17',
     created_by: agent,
     type: {
       name: 'email',
@@ -2382,7 +2382,7 @@ test('check getRecipientArticle format', function() {
     to:          'customer@example.com',
     cc:          '',
     body:        '',
-    in_reply_to: 'message_id16',
+    in_reply_to: 'message_id17',
   }
   email_addresses = [
     {
@@ -2393,6 +2393,51 @@ test('check getRecipientArticle format', function() {
     }
   ]
   verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, true)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'zammad@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id18',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'zammad@example.com',
+    to: 'customer@example.com',
+    cc: '',
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id18',
+  }
+  email_addresses = [
+    {
+      email: 'zammad@example.com',
+    },
+    {
+      email: 'zammad2@example.com',
+    }
+  ]
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, false)
   deepEqual(verify, result)
 
 });
