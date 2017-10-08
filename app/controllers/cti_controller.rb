@@ -22,7 +22,7 @@ class CtiController < ApplicationController
   def done
     log = Cti::Log.find(params['id'])
     log.done = params['done']
-    log.save
+    log.save!
     render json: {}
   end
 

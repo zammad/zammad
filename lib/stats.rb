@@ -31,47 +31,47 @@ returns
     users = User.with_permissions('ticket.agent')
     agent_count = 0
     user_result = {}
-    users.each { |user|
+    users.each do |user|
       next if user.id == 1
       next if !user.active
       agent_count += 1
       data = {}
-      backends.each { |backend|
+      backends.each do |backend|
         data[backend] = backend.generate(user)
-      }
+      end
       user_result[user.id] = data
-    }
+    end
 
     # calculate average
     backend_average_sum = {}
-    user_result.each { |_user_id, data|
-      data.each { |backend_model, backend_result|
+    user_result.each do |_user_id, data|
+      data.each do |backend_model, backend_result|
         next if !backend_result.key?(:used_for_average)
         if !backend_average_sum[backend_model]
           backend_average_sum[backend_model] = 0
         end
         backend_average_sum[backend_model] += backend_result[:used_for_average]
-      }
-    }
+      end
+    end
 
     # generate average param and icon state
-    backend_average_sum.each { |backend_model_average, result|
+    backend_average_sum.each do |backend_model_average, result|
       average = ( result.to_f / agent_count.to_f ).round(1)
-      user_result.each { |user_id, data|
+      user_result.each do |user_id, data|
         next if !data[backend_model_average]
         next if !data[backend_model_average].key?(:used_for_average)
         data[backend_model_average][:average_per_agent] = average
 
         # generate icon state
         backend_model_average.to_s.constantize.average_state(data[backend_model_average], user_id)
-      }
-    }
+      end
+    end
 
-    user_result.each { |user_id, data|
+    user_result.each do |user_id, data|
       data_for_user = {}
-      data.each { |backend, result|
+      data.each do |backend, result|
         data_for_user[backend.to_app_model] = result
-      }
+      end
       state_store = StatsStore.sync(
         object: 'User',
         o_id: user_id,
@@ -90,7 +90,7 @@ returns
         event: 'dashboard_stats_rebuild',
       }
       Sessions.send_to(user_id, event)
-    }
+    end
 
     true
   end

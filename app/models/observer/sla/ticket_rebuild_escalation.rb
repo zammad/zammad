@@ -37,11 +37,11 @@ class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
                       else
                         %w(timezone business_hours default ical_url public_holidays)
                       end
-    fields_to_check.each { |item|
+    fields_to_check.each do |item|
       next if !record.saved_change_to_attribute(item)
       next if record.saved_change_to_attribute(item)[0] == record.saved_change_to_attribute(item)[1]
       changed = true
-    }
+    end
     return true if !changed
 
     _rebuild(record)

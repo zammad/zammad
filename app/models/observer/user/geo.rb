@@ -24,16 +24,16 @@ class Observer::User::Geo < ActiveRecord::Observer
       return if !current
 
       current_location = {}
-      location.each { |item|
+      location.each do |item|
         current_location[item] = current[item]
-      }
+      end
     end
 
     # get full address
     next_location = {}
-    location.each { |item|
+    location.each do |item|
       next_location[item] = record[item]
-    }
+    end
 
     # return if address hasn't changed and geo data is already available
     return if (current_location == next_location) && record.preferences['lat'] && record.preferences['lng']
@@ -46,14 +46,16 @@ class Observer::User::Geo < ActiveRecord::Observer
   def geo_update(record)
     address = ''
     location = %w(address street zip city country)
-    location.each { |item|
-      if record[item] && record[item] != ''
-        address = address + ',' + record[item]
+    location.each do |item|
+      next if record[item].blank?
+      if address.present?
+        address += ', '
       end
-    }
+      address += record[item]
+    end
 
     # return if no address is given
-    return if address == ''
+    return if address.blank?
 
     # lookup
     latlng = Service::GeoLocation.geocode(address)

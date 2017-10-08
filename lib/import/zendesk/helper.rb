@@ -9,9 +9,9 @@ module Import
       def get_fields(zendesk_fields)
         return {} if !zendesk_fields
         fields = {}
-        zendesk_fields.each { |key, value|
+        zendesk_fields.each do |key, value|
           fields[key] = value
-        }
+        end
         fields
       end
     end

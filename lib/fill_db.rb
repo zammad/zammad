@@ -30,10 +30,10 @@ e. g.
 
       ActiveRecord::Base.transaction do
 
-        (1..organizations).each {
+        (1..organizations).each do
           organization = Organization.create( name: 'FillOrganization::' + rand(999_999).to_s, active: true )
           organization_pool.push organization
-        }
+        end
 
       end
     else
@@ -49,7 +49,7 @@ e. g.
 
       ActiveRecord::Base.transaction do
 
-        (1..agents).each {
+        (1..agents).each do
           suffix = rand(99_999).to_s
           user = User.create_or_update(
             login: "filldb-agent-#{suffix}",
@@ -62,7 +62,7 @@ e. g.
             groups: groups_all,
           )
           agent_pool.push user
-        }
+        end
 
       end
     else
@@ -78,7 +78,7 @@ e. g.
 
       ActiveRecord::Base.transaction do
 
-        (1..customers).each {
+        (1..customers).each do
           suffix = rand(99_999).to_s
           organization = nil
           if !organization_pool.empty? && rand(2) == 1
@@ -95,7 +95,7 @@ e. g.
             roles: roles,
           )
           customer_pool.push user
-        }
+        end
 
       end
     else
@@ -110,16 +110,16 @@ e. g.
 
       ActiveRecord::Base.transaction do
 
-        (1..groups).each {
+        (1..groups).each do
           group = Group.create( name: 'FillGroup::' + rand(999_999).to_s, active: true )
           group_pool.push group
-          Role.where(name: 'Agent').first.users.where(active: true).each { |user|
+          Role.where(name: 'Agent').first.users.where(active: true).each do |user|
             user_groups = user.groups
             user_groups.push group
             user.groups = user_groups
             user.save
-          }
-        }
+          end
+        end
 
       end
     else
@@ -135,7 +135,7 @@ e. g.
 
       ActiveRecord::Base.transaction do
 
-        (1..tickets).each {
+        (1..tickets).each do
           customer = customer_pool[ rand(customer_pool.length - 1) ]
           agent    = agent_pool[ rand(agent_pool.length - 1) ]
           ticket = Ticket.create(
@@ -162,7 +162,7 @@ e. g.
             updated_by_id: agent.id,
             created_by_id: agent.id,
           )
-        }
+        end
       end
 
     end

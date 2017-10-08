@@ -12,11 +12,11 @@ class OverviewRoleIds < ActiveRecord::Migration[4.2]
     add_index :overviews_roles, [:role_id]
     Overview.connection.schema_cache.clear!
     Overview.reset_column_information
-    Overview.all.each { |overview|
+    Overview.all.each do |overview|
       next if overview.role_id.blank?
       overview.role_ids = [overview.role_id]
       overview.save!
-    }
+    end
     remove_column :overviews, :role_id
 
     Cache.clear

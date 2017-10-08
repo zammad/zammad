@@ -8,10 +8,10 @@ class CalendarsController < ApplicationController
     # calendars
     assets = {}
     calendar_ids = []
-    Calendar.all.order(:name, :created_at).each { |calendar|
+    Calendar.all.order(:name, :created_at).each do |calendar|
       calendar_ids.push calendar.id
       assets = calendar.assets(assets)
-    }
+    end
 
     ical_feeds = Calendar.ical_feeds
     timezones = Calendar.timezones

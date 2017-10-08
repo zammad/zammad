@@ -46,7 +46,7 @@ returns
       start = Time.zone.parse(params[:range_start])
       stop_interval = 60
     end
-    (1..stop_interval).each { |_counter|
+    (1..stop_interval).each do |_counter|
       if params[:interval] == 'month'
         stop = start.next_month
       elsif params[:interval] == 'week'
@@ -75,7 +75,7 @@ returns
       count = history_count(local_params)
       result.push count
       start = stop
-    }
+    end
     result
   end
 
@@ -124,10 +124,10 @@ returns
     local_params = defaults.merge(local_params)
     result = history(local_params)
     assets = {}
-    result[:ticket_ids].each { |ticket_id|
+    result[:ticket_ids].each do |ticket_id|
       ticket_full = Ticket.find(ticket_id)
       assets = ticket_full.assets(assets)
-    }
+    end
     result[:assets] = assets
     result
   end

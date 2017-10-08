@@ -17,12 +17,12 @@ module Channel::Filter::SenderIsSystemAddress
     begin
       return if !mail[form].addrs
       items = mail[form].addrs
-      items.each { |item|
+      items.each do |item|
         next if !EmailAddress.find_by(email: item.address.downcase)
         mail['x-zammad-ticket-create-article-sender'.to_sym] = 'Agent'
         mail['x-zammad-article-sender'.to_sym] = 'Agent'
         return true
-      }
+      end
     rescue => e
       Rails.logger.error 'ERROR: SenderIsSystemAddress: ' + e.inspect
     end

@@ -2669,7 +2669,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
   end
 
   test '1 empty condition should not create errors' do
-    assert_raises(Exception) {
+    assert_raises(Exception) do
       trigger_empty = Trigger.create_or_update(
         name: 'aaa loop check',
         condition: {
@@ -2690,7 +2690,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
   end
 
   test 'article_last_sender trigger -> reply_to' do

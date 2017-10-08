@@ -87,7 +87,7 @@ module Import
 
       def dynamic_fields(ticket)
         result = {}
-        ticket.keys.each { |key|
+        ticket.keys.each do |key|
 
           key_string = key.to_s
 
@@ -98,7 +98,7 @@ module Import
           dynamic_field_name = Import::OTRS::DynamicField.convert_name(dynamic_field_name)
 
           result[dynamic_field_name.to_sym] = ticket[key_string]
-        }
+        end
         result
       end
 
@@ -142,14 +142,14 @@ module Import
 
       def first_customer_id(articles)
         user_id = nil
-        articles.each { |article|
+        articles.each do |article|
           next if article['SenderType'] != 'customer'
           next if article['From'].empty?
           user = Import::OTRS::ArticleCustomer.find(article)
           break if !user
           user_id = user.id
           break
-        }
+        end
         user_id
       end
 
@@ -161,10 +161,10 @@ module Import
       end
 
       def fix_timestamps(ticket)
-        ticket.each { |key, value|
+        ticket.each do |key, value|
           next if value != '0000-00-00 00:00:00'
           ticket[key] = nil
-        }
+        end
       end
 
       # fix OTRS 3.1 bug, no close time if ticket is created

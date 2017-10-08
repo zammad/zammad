@@ -53,7 +53,7 @@ class StoreTest < ActiveSupport::TestCase
       },
     ]
 
-    files.each { |file|
+    files.each do |file|
       sha = Digest::SHA256.hexdigest( file[:data] )
 
       # add attachments
@@ -83,14 +83,14 @@ class StoreTest < ActiveSupport::TestCase
 
       # provider check
       assert_equal( 'DB', attachments[0].provider )
-    }
+    end
 
     success = Store::File.verify
     assert success, 'verify ok'
 
     Store::File.move( 'DB', 'File' )
 
-    files.each { |file|
+    files.each do |file|
       sha = Digest::SHA256.hexdigest( file[:data] )
 
       # get list of attachments
@@ -109,14 +109,14 @@ class StoreTest < ActiveSupport::TestCase
 
       # provider check
       assert_equal( 'File', attachments[0].provider )
-    }
+    end
 
     success = Store::File.verify
     assert success, 'verify ok'
 
     Store::File.move( 'File', 'DB' )
 
-    files.each { |file|
+    files.each do |file|
       sha = Digest::SHA256.hexdigest( file[:data] )
 
       # get list of attachments
@@ -149,6 +149,6 @@ class StoreTest < ActiveSupport::TestCase
         o_id: file[:o_id],
       )
       assert !attachments[0]
-    }
+    end
   end
 end

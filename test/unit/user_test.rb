@@ -242,7 +242,7 @@ class UserTest < ActiveSupport::TestCase
       },
     ]
 
-    tests.each { |test|
+    tests.each do |test|
 
       # check if user exists
       user = User.where(login: test[:create][:login]).first
@@ -252,7 +252,7 @@ class UserTest < ActiveSupport::TestCase
 
       user = User.create( test[:create] )
 
-      test[:create_verify].each { |key, value|
+      test[:create_verify].each do |key, value|
         next if key == :image_md5
         if user.respond_to?(key)
           result = user.send(key)
@@ -264,7 +264,7 @@ class UserTest < ActiveSupport::TestCase
         else
           assert_equal(value, user[key], "create check #{key} in (#{test[:name]})")
         end
-      }
+      end
       if test[:create_verify][:image_md5]
         file = Avatar.get_by_hash(user.image)
         file_md5 = Digest::MD5.hexdigest(file.content)
@@ -273,14 +273,14 @@ class UserTest < ActiveSupport::TestCase
       if test[:update]
         user.update!( test[:update] )
 
-        test[:update_verify].each { |key, value|
+        test[:update_verify].each do |key, value|
           next if key == :image_md5
           if user.respond_to?(key)
             assert_equal(value, user.send(key), "update check #{key} in (#{test[:name]})")
           else
             assert_equal(value, user[key], "update check #{key} in (#{test[:name]})")
           end
-        }
+        end
 
         if test[:update_verify][:image_md5]
           file = Avatar.get_by_hash( user.image )
@@ -290,7 +290,7 @@ class UserTest < ActiveSupport::TestCase
       end
 
       user.destroy!
-    }
+    end
   end
 
   test 'without email - but login eq email' do
@@ -387,7 +387,7 @@ class UserTest < ActiveSupport::TestCase
     assert(admin1.id)
     assert_equal(admin1.email, email1)
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       User.create!(
         login: "#{email1}-1",
         firstname: 'Role',
@@ -399,7 +399,7 @@ class UserTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1,
       )
-    }
+    end
 
     email2 = "admin2-role_without_email#{name}@example.com"
     admin2 = User.create!(
@@ -413,10 +413,10 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       admin2.email = email1
       admin2.save!
-    }
+    end
 
     admin1.email = admin1.email
     admin1.save!
@@ -632,7 +632,7 @@ class UserTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
     name = rand(999_999_999)
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       User.create_or_update(
         login: "customer-role#{name}@example.com",
         firstname: 'Role',
@@ -644,8 +644,8 @@ class UserTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1,
       )
-    }
-    assert_raises(RuntimeError) {
+    end
+    assert_raises(RuntimeError) do
       User.create_or_update(
         login: "customer-role#{name}@example.com",
         firstname: 'Role',
@@ -657,7 +657,7 @@ class UserTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1,
       )
-    }
+    end
     user1 = User.create_or_update(
       login: "customer-role#{name}@example.com",
       firstname: 'Role',
@@ -688,7 +688,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not(user1.role_ids.include?(test_role_2.id))
     assert_not(user1.role_ids.include?(test_role_3.id))
     assert(user1.role_ids.include?(test_role_4.id))
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       User.create_or_update(
         login: "customer-role#{name}@example.com",
         firstname: 'Role',
@@ -700,8 +700,8 @@ class UserTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1,
       )
-    }
-    assert_raises(RuntimeError) {
+    end
+    assert_raises(RuntimeError) do
       User.create_or_update(
         login: "customer-role#{name}@example.com",
         firstname: 'Role',
@@ -713,7 +713,7 @@ class UserTest < ActiveSupport::TestCase
         updated_by_id: 1,
         created_by_id: 1,
       )
-    }
+    end
     assert(user1.role_ids.include?(test_role_1.id))
     assert_not(user1.role_ids.include?(test_role_2.id))
     assert_not(user1.role_ids.include?(test_role_3.id))
@@ -858,9 +858,9 @@ class UserTest < ActiveSupport::TestCase
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(1, admin_count_inital)
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       admin3.update!(roles: Role.where(name: %w(Agent)))
-    }
+    end
 
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(1, admin_count_inital)

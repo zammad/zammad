@@ -13,6 +13,6 @@ if [ "${TRAVIS_BRANCH}" == 'stable' ]; then
     -H "Travis-API-Version: 3" \
     -H "Accept: application/json" \
     -H "Authorization: token ${TRAVIS_API_TOKEN}" \
-    -d '{"request": {"branch":"'${BRANCH}'"}}' \
+    -d '{"request":{ "branch":"'${BRANCH}'","config":{"env":{"ZAMMAD_VERSION":"'${ZAMMAD_VERSION}'"}}}}' \
     "https://api.travis-ci.org/repo/${REPO_USER}%2F${REPO}/requests"
 fi

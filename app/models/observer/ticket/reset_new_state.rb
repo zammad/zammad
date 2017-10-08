@@ -8,6 +8,9 @@ class Observer::Ticket::ResetNewState < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
+    # only change state if not processed via postmaster
+    return if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
+
     # if article in internal
     return true if record.internal
 

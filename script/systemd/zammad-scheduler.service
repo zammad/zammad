@@ -6,17 +6,15 @@ After=zammad.service
 Requires=zammad.service
 
 [Service]
-Type=simple
+Type=forking
+EnvironmentFile=/etc/zammad/zammad.env
 User=zammad
 Group=zammad
 Restart=always
 
 WorkingDirectory=/opt/zammad
 
-Environment=RAILS_ENV=production
-Environment=BUNDLE_BINARY=bundle
-
-ExecStart=/bin/bash -l -c "${BUNDLE_BINARY} exec script/scheduler.rb start -t"
+ExecStart=/bin/bash -l -c "${BUNDLE_BINARY} exec script/scheduler.rb start"
 
 [Install]
 WantedBy=zammad.service

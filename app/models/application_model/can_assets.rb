@@ -33,13 +33,13 @@ returns
 
     return data if !self['created_by_id'] && !self['updated_by_id']
     app_model_user = User.to_app_model
-    %w(created_by_id updated_by_id).each { |local_user_id|
+    %w(created_by_id updated_by_id).each do |local_user_id|
       next if !self[ local_user_id ]
       next if data[ app_model_user ] && data[ app_model_user ][ self[ local_user_id ] ]
       user = User.lookup(id: self[ local_user_id ])
       next if !user
       data = user.assets(data)
-    }
+    end
     data
   end
 
@@ -57,7 +57,7 @@ get assets and record_ids of selector
 
     # get assets of condition
     models = Models.all
-    send(selector).each { |item, content|
+    send(selector).each do |item, content|
       attribute = item.split(/\./)
       next if !attribute[1]
       begin
@@ -74,19 +74,19 @@ get assets and record_ids of selector
       next if !models[attribute_class][:reflections][reflection].klass
       attribute_ref_class = models[attribute_class][:reflections][reflection].klass
       if content['value'].instance_of?(Array)
-        content['value'].each { |item_id|
+        content['value'].each do |item_id|
           attribute_object = attribute_ref_class.find_by(id: item_id)
           if attribute_object
             assets = attribute_object.assets(assets)
           end
-        }
+        end
       else
         attribute_object = attribute_ref_class.find_by(id: content['value'])
         if attribute_object
           assets = attribute_object.assets(assets)
         end
       end
-    }
+    end
     assets
   end
 
@@ -134,7 +134,7 @@ get assets of object list
 =end
 
     def assets_of_object_list(list, assets = {})
-      list.each { |item|
+      list.each do |item|
         require item['object'].to_filename
         record = Kernel.const_get(item['object']).find(item['o_id'])
         assets = record.assets(assets)
@@ -146,7 +146,7 @@ get assets of object list
           user = User.find(item['updated_by_id'])
           assets = user.assets(assets)
         end
-      }
+      end
       assets
     end
   end

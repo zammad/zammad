@@ -89,11 +89,11 @@ returns
         end
         items = SearchIndexBackend.search(query, limit, 'User', query_extention)
         users = []
-        items.each { |item|
+        items.each do |item|
           user = User.lookup(id: item[:id])
           next if !user
           users.push user
-        }
+        end
         return users
       end
 

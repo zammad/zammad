@@ -108,18 +108,18 @@ reload config settings
     end
 
     if settings.present?
-      settings.each { |setting|
+      settings.each do |setting|
         @@raw[setting[0]] = setting[1]['value']
-      }
-      @@raw.each { |key, value|
+      end
+      @@raw.each do |key, value|
         if value.class != String
           @@current[key] = value
           next
         end
-        @@current[key] = value.gsub(/\#\{config\.(.+?)\}/) {
+        @@current[key] = value.gsub(/\#\{config\.(.+?)\}/) do
           @@raw[$1].to_s
-        }
-      }
+        end
+      end
     end
 
     @@change_id = Cache.get('Setting::ChangeId') # rubocop:disable Style/ClassVars

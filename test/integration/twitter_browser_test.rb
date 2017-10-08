@@ -265,9 +265,9 @@ class TwitterBrowserTest < TestCase
     # watch till tweet reached customer
     sleep 10
     text = nil
-    client.search(re_hash, result_type: 'mixed').collect { |local_tweet|
+    client.search(re_hash, result_type: 'mixed').collect do |local_tweet|
       text = local_tweet.text
-    }
+    end
     assert(text)
 
   end

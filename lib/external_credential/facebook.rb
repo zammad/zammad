@@ -43,17 +43,17 @@ class ExternalCredential::Facebook
     user = client.get_object('me')
     #p client.get_connections('me', 'accounts').inspect
     pages = []
-    client.get_connections('me', 'accounts').each { |page|
+    client.get_connections('me', 'accounts').each do |page|
       pages.push(
         id:           page['id'],
         name:         page['name'],
         access_token: page['access_token'],
         perms:        page['perms'],
       )
-    }
+    end
 
     # check if account already exists
-    Channel.where(area: 'Facebook::Account').each { |channel|
+    Channel.where(area: 'Facebook::Account').each do |channel|
       next if !channel.options
       next if !channel.options['user']
       next if !channel.options['user']['id']
@@ -62,7 +62,7 @@ class ExternalCredential::Facebook
       channel.options['pages'] = pages
       channel.save
       return channel
-    }
+    end
 
     # create channel
     Channel.create(

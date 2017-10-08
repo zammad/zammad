@@ -49,7 +49,7 @@ returns
 
     def search_index_data
       attributes = {}
-      self.attributes.each { |key, value|
+      self.attributes.each do |key, value|
         next if key == 'created_at'
         next if key == 'updated_at'
         next if key == 'created_by_id'
@@ -59,7 +59,7 @@ returns
         next if !value
         next if value.respond_to?('blank?') && value.blank?
         attributes[key] = value
-      }
+      end
       return if attributes.blank?
 
       if attributes['organization_id'].present?

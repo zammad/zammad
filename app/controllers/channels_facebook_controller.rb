@@ -5,14 +5,14 @@ class ChannelsFacebookController < ApplicationController
 
   def index
     assets = {}
-    ExternalCredential.where(name: 'facebook').each { |external_credential|
+    ExternalCredential.where(name: 'facebook').each do |external_credential|
       assets = external_credential.assets(assets)
-    }
+    end
     channel_ids = []
-    Channel.where(area: 'Facebook::Account').order(:id).each { |channel|
+    Channel.where(area: 'Facebook::Account').order(:id).each do |channel|
       assets = channel.assets(assets)
       channel_ids.push channel.id
-    }
+    end
     render json: {
       assets: assets,
       channel_ids: channel_ids,

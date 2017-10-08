@@ -22,9 +22,9 @@ returns
       # add org members for search index data
       attributes['members'] = []
       users = User.where(organization_id: id)
-      users.each { |user|
+      users.each do |user|
         attributes['members'].push user.search_index_data
-      }
+      end
 
       attributes
     end

@@ -61,16 +61,16 @@ RSpec.describe Ldap::Group do
 
   context 'instance methods' do
 
-    let(:initialization_config) {
+    let(:initialization_config) do
       {
         uid_attribute: 'dn',
         filter:        '(objectClass=group)',
       }
-    }
+    end
 
-    let(:instance) {
+    let(:instance) do
       described_class.new(initialization_config, ldap: mocked_ldap)
-    }
+    end
 
     context '#list' do
 
@@ -87,11 +87,11 @@ RSpec.describe Ldap::Group do
 
     context '#filter' do
 
-      let(:initialization_config) {
+      let(:initialization_config) do
         {
           uid_attribute: 'dn',
         }
-      }
+      end
 
       it 'responds to #filter' do
         expect(instance).to respond_to(:filter)

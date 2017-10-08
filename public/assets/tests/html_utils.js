@@ -1750,4 +1750,696 @@ test("check textLengthWithUrl format", function() {
 
 });
 
+// check getRecipientArticle format
+test('check getRecipientArticle format', function() {
+
+  var customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  var ticket = {
+    customer: customer,
+  }
+  var article = {
+    type: {
+      name: 'phone',
+    },
+    sender: {
+      name: 'Customer',
+    },
+    from: customer.email,
+    to: 'some group',
+    message_id: 'message_id1',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    },
+  }
+  var result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id1',
+  }
+  var verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    type: {
+      name: 'phone',
+    },
+    sender: {
+      name: 'Customer',
+    },
+    from: customer.email,
+    message_id: 'message_id2',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    },
+  }
+  result = {
+    to:          '',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id2',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id3',
+    type: {
+      name: 'phone',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    },
+  }
+  result = {
+    to:          '',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id3',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id4',
+    created_by: customer,
+    type: {
+      name: 'web',
+    },
+    sender: {
+      name: 'Customer',
+    },
+    from: customer.email,
+    to: 'some group',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    },
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id4',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id5',
+    type: {
+      name: 'web',
+    },
+    sender: {
+      name: 'Customer',
+    },
+    from: customer.email,
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    }
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id5',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id6',
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Customer',
+    },
+    from: customer.email,
+    to: 'some group',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    }
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id6',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'agent@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id7',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'zammad@example.com',
+    to: 'customer@example.com',
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id7',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'agent@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id8',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'agent@example.com',
+    to: 'customer@example.com',
+  }
+  result = {
+    to:          'agent@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id8',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'agent@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id9',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'Agent@Example.com',
+    to: 'customer@example.com',
+    cc: 'zammad@example.com',
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id9',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'agent@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id10',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'Agent@Example.com',
+    to: 'customer@example.com, agent@example.com',
+    cc: 'zammad@example.com',
+  }
+  result = {
+    to:          'customer@example.com, agent@example.com',
+    cc:          'zammad@example.com',
+    body:        '',
+    in_reply_to: 'message_id10',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type, [], true)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'agent@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id11',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'Agent@Example.com',
+    to: 'customeR@EXAMPLE.com, agent@example.com',
+    cc: 'zammad@example.com, customer@example.com',
+  }
+  result = {
+    to:          'customer@example.com, agent@example.com',
+    cc:          'zammad@example.com',
+    body:        '',
+    in_reply_to: 'message_id11',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, [], true)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'agent@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id12',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'Agent@Example.com',
+    to: 'customeR@EXAMPLE.com, agent@example.com, zammad2@EXAMPLE.com',
+    cc: 'zammad@example.com, customer2@example.com',
+  }
+  result = {
+    to:          'customer@example.com, agent@example.com',
+    cc:          'customer2@example.com',
+    body:        '',
+    in_reply_to: 'message_id12',
+  }
+  email_addresses = [
+    {
+      email: 'zammad@example.com',
+    },
+    {
+      email: 'zammad2@example.com',
+    }
+  ]
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, true)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'AGENT@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id13',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'Agent@Example.com',
+    to: 'customeR@EXAMPLE.com, agent@example.com, zammad2@EXAMPLE.com',
+    cc: 'zammad@example.com, customer2@example.com',
+  }
+  result = {
+    to:          'customer@example.com, agent@example.com',
+    cc:          'customer2@example.com',
+    body:        '',
+    in_reply_to: 'message_id13',
+  }
+  email_addresses = [
+    {
+      email: 'zammad@example.com',
+    },
+    {
+      email: 'zammad2@example.com',
+    }
+  ]
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, true)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'zammad@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id14',
+    created_by: customer,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'zammad@EXAMPLE.com',
+    to: 'customeR@EXAMPLE.com, agent@example.com, zammad2@EXAMPLE.com',
+    cc: 'zammad@example.com, customer2@example.com',
+  }
+  result = {
+    to:          'customer@example.com, agent@example.com',
+    cc:          'customer2@example.com',
+    body:        '',
+    in_reply_to: 'message_id14',
+  }
+  email_addresses = [
+    {
+      email: 'zammad@example.com',
+    },
+    {
+      email: 'zammad2@example.com',
+    }
+  ]
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, true)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id15',
+    created_by: customer,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'customer@example.com',
+    to: 'customer1@example.com, customer2@example.com, zammad@example.com',
+    cc: '',
+  }
+  result = {
+    to:          'customer@example.com, customer1@example.com, customer2@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id15',
+  }
+  email_addresses = [
+    {
+      email: 'zammad@example.com',
+    },
+    {
+      email: 'zammad2@example.com',
+    }
+  ]
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, true)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id16',
+    created_by: customer,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'customer@example.com',
+    to: 'customer1@example.com, customer2@example.com, zammad@example.com, customer2+2@example.com',
+    cc: '',
+  }
+  result = {
+    to:          'customer@example.com, customer1@example.com, customer2@example.com, customer2+2@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id16',
+  }
+  email_addresses = [
+    {
+      email: 'zammad@example.com',
+    },
+    {
+      email: 'zammad2@example.com',
+    }
+  ]
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, true)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'zammad@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id17',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'zammad@example.com',
+    to: 'customer@example.com',
+    cc: '',
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id17',
+  }
+  email_addresses = [
+    {
+      email: 'zammad@example.com',
+    },
+    {
+      email: 'zammad2@example.com',
+    }
+  ]
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, true)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'zammad@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id18',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'zammad@example.com',
+    to: 'customer@example.com',
+    cc: '',
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id18',
+  }
+  email_addresses = [
+    {
+      email: 'zammad@example.com',
+    },
+    {
+      email: 'zammad2@example.com',
+    }
+  ]
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, false)
+  deepEqual(verify, result)
+
+});
+
 }

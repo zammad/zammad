@@ -107,17 +107,17 @@ returns
     end
     roles = []
     permission_ids = []
-    keys.each { |key|
-      Object.const_get('Permission').with_parents(key).each { |local_key|
+    keys.each do |key|
+      Object.const_get('Permission').with_parents(key).each do |local_key|
         permission = Object.const_get('Permission').lookup(name: local_key)
         next if !permission
         permission_ids.push permission.id
-      }
+      end
       next if permission_ids.empty?
-      Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().each { |role|
+      Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().each do |role|
         roles.push role
-      }
-    }
+      end
+    end
     return [] if roles.empty?
     roles
   end
@@ -126,17 +126,17 @@ returns
 
   def validate_permissions
     return true if !self.permission_ids
-    permission_ids.each { |permission_id|
+    permission_ids.each do |permission_id|
       permission = Permission.lookup(id: permission_id)
       raise "Unable to find permission for id #{permission_id}" if !permission
       raise "Permission #{permission.name} is disabled" if permission.preferences[:disabled] == true
       next unless permission.preferences[:not]
-      permission.preferences[:not].each { |local_permission_name|
+      permission.preferences[:not].each do |local_permission_name|
         local_permission = Permission.lookup(name: local_permission_name)
         next if !local_permission
         raise "Permission #{permission.name} conflicts with #{local_permission.name}" if permission_ids.include?(local_permission.id)
-      }
-    }
+      end
+    end
     true
   end
 

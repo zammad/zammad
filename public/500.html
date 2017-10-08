@@ -11,10 +11,10 @@
 <% else %>
   <div><%= @exception.message %></div>
   <% if @exception.backtrace %>
-    <div>Traceback:</div>
-    <% @exception.backtrace.each {|row| %>
-      <%= row %><br>
-    <% } %>
+    <pre><code>
+<% @exception.backtrace.each {|row| %>
+  <%= row %>
+<% } %></code></pre>
   <% end %>
 <% end %>
 </body>

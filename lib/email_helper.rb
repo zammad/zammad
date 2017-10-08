@@ -213,7 +213,7 @@ returns
 
   def self.provider_inbound_mx(user, email, password, mx_domains)
     inbounds = []
-    mx_domains.each { |domain|
+    mx_domains.each do |domain|
       inbound = [
         {
           adapter: 'imap',
@@ -237,7 +237,7 @@ returns
         },
       ]
       inbounds = inbounds.concat(inbound)
-    }
+    end
     inbounds
   end
 
@@ -412,7 +412,7 @@ returns
 
   def self.provider_outbound_mx(user, email, password, mx_domains)
     outbounds = []
-    mx_domains.each { |domain|
+    mx_domains.each do |domain|
       outbound = [
         {
           adapter: 'smtp',
@@ -456,7 +456,7 @@ returns
         },
       ]
       outbounds = outbounds.concat(outbound)
-    }
+    end
     outbounds
   end
 
@@ -606,9 +606,9 @@ returns
     begin
       mxs = Resolv::DNS.open do |dns|
         ress = dns.getresources(domain, Resolv::DNS::Resource::IN::MX)
-        ress.map { |r|
+        ress.map do |r|
           [r.exchange.to_s, IPSocket.getaddress(r.exchange.to_s), r.preference]
-        }
+        end
       end
     rescue => e
       Rails.logger.error e

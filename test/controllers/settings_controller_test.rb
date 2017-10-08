@@ -101,14 +101,14 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert(result)
     hit_api = false
     hit_product_name = false
-    result.each { |setting|
+    result.each do |setting|
       if setting['name'] == 'api_token_access'
         hit_api = true
       end
       if setting['name'] == 'product_name'
         hit_product_name = true
       end
-    }
+    end
     assert_equal(true, hit_api)
     assert_equal(true, hit_product_name)
 
@@ -185,14 +185,14 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert(result)
     hit_api = false
     hit_product_name = false
-    result.each { |setting|
+    result.each do |setting|
       if setting['name'] == 'api_token_access'
         hit_api = true
       end
       if setting['name'] == 'product_name'
         hit_product_name = true
       end
-    }
+    end
     assert_equal(true, hit_api)
     assert_equal(false, hit_product_name)
 
