@@ -945,9 +945,9 @@ function handleOpts(opts, defs) {
 parse5322.parseOneAddress = parseOneAddressSimple;
 parse5322.parseAddressList = parseAddressListSimple;
 
-// if electron is used, go back to non CommonJS
-//if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined' && !(window.process && window.process.version && window.process.versions.electron)) {
+// in Zammad context, go back to non CommonJS
+// if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+if (false) {
     module.exports = parse5322;
 } else {
     global.emailAddresses = parse5322;
