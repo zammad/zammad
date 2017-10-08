@@ -45,7 +45,7 @@ class User < ApplicationModel
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy, :user_device_destroy
 
-  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, before_remove: :last_admin_check, class_name: 'Role'
+  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: [:validate_agent_limit, :validate_role], before_remove: :last_admin_check, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
@@ -987,6 +987,21 @@ returns
     raise Exceptions::UnprocessableEntity, 'out of office no such replacement user' if !User.find_by(id: out_of_office_replacement_id)
     true
   end
+
+  def validate_role(role)
+    return true if !role_ids
+    role = Role.lookup(id: role.id)
+    raise "Unable to find role for id #{role_id}" if !role
+    if role.preferences[:not].present?
+      role.preferences[:not].each do |local_role_name|
+        local_role = Role.lookup(name: local_role_name)
+        next if !local_role
+        raise "Role #{role.name} conflicts with #{local_role.name}" if role_ids.include?(local_role.id)
+      end
+    end
+    true
+  end
+
 =begin
 
 checks if the current user is the last one
