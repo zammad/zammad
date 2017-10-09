@@ -22,17 +22,17 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
 
   def push
 
-    # check permission based access
-    if self.class.permissions
-      return if !@user.permissions?(self.class.permissions)
-    end
-
     # check timeout
     timeout = Sessions::CacheIn.get(client_key)
     return if timeout
 
     # set new timeout
     Sessions::CacheIn.set(client_key, true, { expires_in: @ttl.seconds })
+
+    # check permission based access
+    if self.class.permissions
+      return if !@user.permissions?(self.class.permissions)
+    end
 
     # check if update has been done
     last_change = self.class.model.constantize.latest_change

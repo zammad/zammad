@@ -693,7 +693,7 @@ returns
 
   def set_attributes_by_x_headers(item_object, header_name, mail, suffix = false)
 
-    # loop all x-zammad-hedaer-* headers
+    # loop all x-zammad-header-* headers
     item_object.attributes.each do |key, _value|
 
       # ignore read only attributes
@@ -711,37 +711,34 @@ returns
 
         # only set value on _id if value/reference lookup exists
         if mail[ header.to_sym ]
-          Rails.logger.info "header #{header} found #{mail[header.to_sym]}"
+
+          Rails.logger.info "set_attributes_by_x_headers header #{header} found #{mail[header.to_sym]}"
           item_object.class.reflect_on_all_associations.map do |assoc|
 
             next if assoc.name.to_s != key_short
 
-            Rails.logger.info "ASSOC found #{assoc.class_name} lookup #{mail[header.to_sym]}"
+            Rails.logger.info "set_attributes_by_x_headers found #{assoc.class_name} lookup for '#{mail[header.to_sym]}'"
             item = assoc.class_name.constantize
 
             assoc_object = nil
-            assoc_has_object = false
             if item.respond_to?(:name)
-              assoc_has_object = true
-              if item.lookup(name: mail[header.to_sym])
-                assoc_object = item.lookup(name: mail[header.to_sym])
-              end
-            elsif item.respond_to?(:login)
-              assoc_has_object = true
-              if item.lookup(login: mail[header.to_sym])
-                assoc_object = item.lookup(login: mail[header.to_sym])
-              end
+              assoc_object = item.lookup(name: mail[header.to_sym])
+            end
+            if !assoc_object && item.respond_to?(:login)
+              assoc_object = item.lookup(login: mail[header.to_sym])
             end
 
-            next if assoc_has_object == false
+            if assoc_object.blank?
 
-            if assoc_object
-              item_object[key] = assoc_object.id
+              # no assoc exists, remove header
+              mail.delete(header.to_sym)
               next
             end
 
-            # no assoc exists, remove header
-            mail.delete(header.to_sym)
+            Rails.logger.info "set_attributes_by_x_headers assign #{item_object.class} #{key}=#{assoc_object.id}"
+
+            item_object[key] = assoc_object.id
+
           end
         end
       end
@@ -752,7 +749,7 @@ returns
         header = "x-zammad-#{header_name}-#{suffix}-#{key}"
       end
       if mail[header.to_sym]
-        Rails.logger.info "header #{header} found #{mail[header.to_sym]}"
+        Rails.logger.info "set_attributes_by_x_headers header #{header} found. Assign #{key}=#{mail[header.to_sym]}"
         item_object[key] = mail[header.to_sym]
       end
     end

@@ -151,7 +151,7 @@ add avatar by url
       data[:full][:mime_type] = mime_type
 
     # try zammad backend to find image based on email
-    elsif data[:url] && data[:url] =~ /@/
+    elsif data[:url].present? && data[:url] =~ /@/
 
       # check if source ist already updated within last 3 minutes
       if avatar_already_exists && avatar_already_exists.source_url == data[:url]

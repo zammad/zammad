@@ -1077,7 +1077,7 @@ ObjectManager::Attribute.add(
   data_type: 'richtext',
   data_option: {
     type: 'text',
-    maxlength: 250,
+    maxlength: 5000,
     null: true,
     note: 'Notes are visible to agents only, never to customers.',
   },
@@ -1329,7 +1329,7 @@ ObjectManager::Attribute.add(
   data_type: 'richtext',
   data_option: {
     type: 'text',
-    maxlength: 250,
+    maxlength: 5000,
     null: true,
     note: 'Notes are visible to agents only, never to customers.',
   },

@@ -59,6 +59,8 @@ module Channel::Filter::Database
       match_rule = $2
     end
 
+    value ||= ''
+
     if regexp == false
       match_rule_quoted = Regexp.quote(match_rule).gsub(/\\\*/, '.*')
       return true if value =~ /#{match_rule_quoted}/i
