@@ -39,13 +39,13 @@ class User < ApplicationModel
   include User::SearchIndex
 
   before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
-  before_create   :check_preferences_default, :validate_roles, :validate_ooo, :domain_based_assignment, :set_locale
-  before_update   :check_preferences_default, :validate_roles, :validate_ooo, :reset_login_failed
+  before_create   :check_preferences_default, :validate_ooo, :domain_based_assignment, :set_locale
+  before_update   :check_preferences_default, :validate_ooo, :reset_login_failed
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy, :user_device_destroy
 
-  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: [:validate_agent_limit, :validate_role], before_remove: :last_admin_check, class_name: 'Role'
+  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: [:validate_agent_limit, :validate_roles], before_remove: :last_admin_check, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
@@ -963,21 +963,6 @@ returns
     raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.'
   end
 
-  def validate_roles
-    return true if !role_ids
-    role_ids.each do |role_id|
-      role = Role.lookup(id: role_id)
-      raise "Unable to find role for id #{role_id}" if !role
-      next if !role.preferences[:not]
-      role.preferences[:not].each do |local_role_name|
-        local_role = Role.lookup(name: local_role_name)
-        next if !local_role
-        raise "Role #{role.name} conflicts with #{local_role.name}" if role_ids.include?(local_role.id)
-      end
-    end
-    true
-  end
-
   def validate_ooo
     return true if out_of_office != true
     raise Exceptions::UnprocessableEntity, 'out of office start is required' if out_of_office_start_at.blank?
@@ -988,7 +973,7 @@ returns
     true
   end
 
-  def validate_role(role)
+  def validate_roles(role)
     return true if !role_ids
     role = Role.lookup(id: role.id)
     raise "Unable to find role for id #{role_id}" if !role
