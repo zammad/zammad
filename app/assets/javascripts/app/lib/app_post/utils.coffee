@@ -950,8 +950,23 @@ class App.Utils
       article_created_by_email = undefined
       if article_created_by && article_created_by.email
         article_created_by_email = article_created_by.email.toLowerCase()
-      if article.sender.name is 'Agent' && ((article_created_by_email && article.from && !article.from.match(article_created_by_email)) || isLocalAddress(article.from))
+
+      # check if article sender is local
+      if !_.isEmpty(article.from)
+        senderIsLocal = false
+        senders = emailAddresses.parseAddressList(article.from)
+        if senders && senders[0] && senders[0].address
+          senderIsLocal = isLocalAddress(senders[0].address)
+
+      # sender is local
+      if senderIsLocal
         articleNew.to = article.to
+
+      # sender is agent from is different (sender was system)
+      else if article.sender.name is 'Agent' && article_created_by_email && article.from && !article.from.match(article_created_by_email)
+        articleNew.to = article.to
+
+      # sender was regular customer
       else
         if article.reply_to
           articleNew.to = article.reply_to

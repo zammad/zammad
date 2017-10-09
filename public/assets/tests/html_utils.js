@@ -2419,8 +2419,8 @@ test('check getRecipientArticle format', function() {
     sender: {
       name: 'Agent',
     },
-    from: 'zammad@example.com',
-    to: 'customer@example.com',
+    from: 'Sender <zammad@example.com>',
+    to: 'Customer <customer@example.com>',
     cc: '',
   }
   result = {
