@@ -134,11 +134,6 @@ class Index extends App.ControllerSubContent
                 online: true
               }
 
-    # validation
-    if !params['notification_config']['matrix']
-      @log('error', 'invalid notification_config, matrix is missing')
-      return
-
     # check missing channels
     for key, value of params['notification_config']['matrix']
       if !value.channel
