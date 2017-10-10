@@ -255,18 +255,17 @@ class FormControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     token = result['token']
     params = {
-        fingerprint: fingerprint,
-        token: token,
-        name: 'Bob Smith',
-        email: 'discard@znuny.com',
-        title: 'test',
-        body: 'hello'
+      fingerprint: fingerprint,
+      token: token,
+      name: 'Bob Smith',
+      email: 'discard@znuny.com',
+      title: 'test',
+      body: 'hello'
     }
 
     post '/api/v1/form_submit', params: params.to_json, headers: @headers
 
     assert_response(401)
   end
-
 
 end
