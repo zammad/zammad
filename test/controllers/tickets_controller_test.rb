@@ -876,6 +876,23 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(tickets[9].id, result[4]['id'])
     assert_equal(5, result.count)
 
+    get '/api/v1/tickets/open?limit=40&page=2&per_page=5', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    tickets = Ticket.order(:id).limit(10)
+    assert_equal(tickets[5].id, result[0]['id'])
+    assert_equal(tickets[9].id, result[4]['id'])
+    assert_equal(5, result.count)
+
+    get '/api/v1/tickets/closed?limit=40&page=2&per_page=5', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    tickets = Ticket.order(:id).limit(10)
+    assert_equal(tickets[5].id, result[0]['id'])
+    assert_equal(tickets[9].id, result[4]['id'])
+    assert_equal(5, result.count)
   end
 
   test '03.01 ticket create with customer minimal' do

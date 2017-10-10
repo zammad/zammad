@@ -3,6 +3,7 @@
 class TicketsController < ApplicationController
   include CreatesTicketArticles
   include TicketStats
+  include TicketSort
 
   prepend_before_action :authentication_check
 
@@ -47,6 +48,16 @@ class TicketsController < ApplicationController
     end
 
     render json: tickets
+  end
+
+  # GET /api/v1/tickets/open
+  def open
+    ticket_sort("close_at IS NULL")
+  end
+
+  # GET /api/v1/tickets/closed
+  def closed
+    ticket_sort("close_at IS NOT NULL")
   end
 
   # GET /api/v1/tickets/1
