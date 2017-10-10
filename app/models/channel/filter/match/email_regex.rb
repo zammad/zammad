@@ -1,5 +1,4 @@
-module EmailRegex
-  extend ActiveSupport::Concern
+module Channel::Filter::Match::EmailRegex
 
   def self.match(value, match_rule, _should_match, check_mode = false)
     regexp = false
