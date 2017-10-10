@@ -1,9 +1,9 @@
 GIT
-  remote: https://github.com/jkowens/composite_primary_keys.git
-  revision: 7f4670b54b3c6e94992161b4efe2c8717d7c0e71
-  branch: rails-5_1
+  remote: git://github.com/composite-primary-keys/composite_primary_keys.git
+  revision: d0ba96d4f44b008496cf891bfb964b54d28c1e8b
+  tag: v10.0.0
   specs:
-    composite_primary_keys (9.0.7)
+    composite_primary_keys (10.0.0)
       activerecord (~> 5.1.0)
 
 GIT
@@ -554,4 +554,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.4
+   1.16.0.pre.2
