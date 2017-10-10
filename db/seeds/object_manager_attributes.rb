@@ -29,6 +29,45 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force: true,
   object: 'Ticket',
+  name: 'ipaddress',
+  display: 'IP Address',
+  data_type: 'input',
+  data_option: {
+    placeholder: 'IPv4 or IPv6 Address',
+    type: 'ip',
+    null: false,
+    maxlength: 200,
+    screens: {
+      create_middle: {
+        'ticket.customer' => {
+          shown: true,
+          item_class: 'column'
+        },
+        'ticket.agent' => {
+          shown: true,
+          item_class: 'column'
+        }
+      },
+      edit: {
+        'ticket.customer' => {
+          shown: true
+        },
+        'ticket.agent' => {
+          shown: true
+        }
+      }
+    }
+  },
+  editable: true, 
+  active: false,
+  to_create: false,
+  to_migrate: false,
+  to_delete: false,
+  position: 1550
+)
+ObjectManager::Attribute.add(
+  force: true,
+  object: 'Ticket',
   name: 'customer_id',
   display: 'Customer',
   data_type: 'user_autocompletion',
