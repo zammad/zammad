@@ -2645,6 +2645,11 @@ ol.tabs li {
     background: hsl(15,100%,47%);
   }
 
+  &.auth-provider--auth0 {
+    background: hsl(0,0%,93%);
+    color: hsl(0,0%,46%) !important;
+  }
+
   .provider-name {
     flex: 1;
   }

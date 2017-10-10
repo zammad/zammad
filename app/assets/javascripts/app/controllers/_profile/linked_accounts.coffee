@@ -55,6 +55,11 @@ class Index extends App.ControllerSubContent
 
 App.Config.set('LinkedAccounts', { prio: 4000, name: 'Linked Accounts', parent: '#profile', target: '#profile/linked', controller: Index, permission: ['user_preferences.linked_accounts'] }, 'NavBarProfile')
 App.Config.set('auth_provider_all', {
+  auth0:
+    url:    '/auth/auth0'
+    name:   'Auth0'
+    config: 'auth_auth0'
+    class:  'auth0'
   facebook:
     url:    '/auth/facebook'
     name:   'Facebook'
