@@ -37,7 +37,7 @@ RSpec.describe Import::OTRS::Ticket do
   context 'default' do
 
     let(:object_structure) { load_ticket_json('default') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         title:         'test #3',
         owner_id:      1,
@@ -53,7 +53,7 @@ RSpec.describe Import::OTRS::Ticket do
         id:            '730',
         close_at:      '2014-11-21 00:21:08'
       }
-    }
+    end
 
     it 'creates' do
       import_backend_expectations
@@ -69,7 +69,7 @@ RSpec.describe Import::OTRS::Ticket do
   context 'no title' do
 
     let(:object_structure) { load_ticket_json('no_title') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         title: '**EMPTY**',
         owner_id: 1,
@@ -85,7 +85,7 @@ RSpec.describe Import::OTRS::Ticket do
         id: '730',
         close_at: '2014-11-21 00:21:08'
       }
-    }
+    end
 
     it 'creates' do
       import_backend_expectations
@@ -101,7 +101,7 @@ RSpec.describe Import::OTRS::Ticket do
   context 'unknown customer' do
 
     let(:object_structure) { load_ticket_json('unknown_customer') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         owner_id: 1,
         customer_id: 1337,
@@ -116,7 +116,7 @@ RSpec.describe Import::OTRS::Ticket do
         title: 'Ask me about performance',
         id: '540'
       }
-    }
+    end
 
     def article_based_customer_expectation
       user = instance_double(::User)

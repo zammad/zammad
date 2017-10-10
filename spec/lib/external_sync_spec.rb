@@ -15,8 +15,8 @@ RSpec.describe ExternalSync do
         current_changes:  current_changes,
       )
 
-      expect(result).to          be false
-      expect(object.changed?).to be false
+      expect(result).to                      be false
+      expect(object.has_changes_to_save?).to be false
     end
 
     it 'keeps ActiveRecord instance unchanged on local and remote changes' do
@@ -30,8 +30,8 @@ RSpec.describe ExternalSync do
         current_changes:  current_changes,
       )
 
-      expect(result).to          be false
-      expect(object.changed?).to be false
+      expect(result).to                      be false
+      expect(object.has_changes_to_save?).to be false
     end
 
     it 'changes ActiveRecord instance attribute(s) for remote changes' do
@@ -45,8 +45,8 @@ RSpec.describe ExternalSync do
         current_changes:  current_changes,
       )
 
-      expect(result).to          be true
-      expect(object.changed?).to be true
+      expect(result).to                      be true
+      expect(object.has_changes_to_save?).to be true
     end
 
     it 'prevents ActiveRecord method calls' do
@@ -61,9 +61,9 @@ RSpec.describe ExternalSync do
         current_changes:  current_changes,
       )
 
-      expect(result).to          be false
-      expect(object.changed?).to be false
-      expect(object.destroyed?).to be false
+      expect(result).to                      be false
+      expect(object.has_changes_to_save?).to be false
+      expect(object.destroyed?).to           be false
     end
 
   end

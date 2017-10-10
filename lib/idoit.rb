@@ -42,7 +42,7 @@ returns
       "container": "0",
       "const": "C__OBJTYPE__SERVICE",
       "color": "987384",
-      "image": "https://demo.panic.at/i-doit/images/objecttypes/service.jpg",
+      "image": "https://demo.example.com/i-doit/images/objecttypes/service.jpg",
       "icon": "images/icons/silk/application_osx_terminal.png",
       "cats": "4",
       "tree_group": "1",
@@ -56,7 +56,7 @@ returns
       "container": "0",
       "const": "C__OBJTYPE__APPLICATION",
       "color": "E4B9D7",
-      "image": "https://demo.panic.at/i-doit/images/objecttypes/application.jpg",
+      "image": "https://demo.example.com/i-doit/images/objecttypes/application.jpg",
       "icon": "images/icons/silk/application_xp.png",
       "cats": "20",
       "tree_group": "1",
@@ -71,7 +71,7 @@ or with filter:
   "result": [
     {
       "id": "26",
-      "title": "demo.panic.at",
+      "title": "demo.example.com",
       "sysid": "SYSID_1485512390",
       "type": "59",
       "created": "2017-01-27 11:19:24",
@@ -81,7 +81,7 @@ or with filter:
       "status": "2",
       "cmdb_status": "6",
       "cmdb_status_title": "in operation",
-      "image": "https://demo.panic.at/i-doit/images/objecttypes/empty.png"
+      "image": "https://demo.example.com/i-doit/images/objecttypes/empty.png"
     },
   ],
 
@@ -125,16 +125,18 @@ or with filter:
 
     # add link to idoit
     if result.data['result'].class == Array
-      result.data['result'].each { |item|
+      result.data['result'].each do |item|
         next if !item['id']
         item['link'] = "#{_url_cleanup_baseurl(url)}/?objID=#{item['id']}"
         item['link'].gsub!(%r{([^:])//+}, '\\1/')
-      }
+      end
     end
     result.data
   end
 
   def self._url_cleanup(url)
+    url.gsub!(/^[[:space:]]+/, '')
+    url.gsub!(/[[:space:]]+$/, '')
     raise "Invalid endpoint '#{url}', need to start with http:// or https://" if url !~ %r{^http(s|)://}i
     url = _url_cleanup_baseurl(url)
     url = "#{url}/src/jsonrpc.php"
@@ -142,6 +144,8 @@ or with filter:
   end
 
   def self._url_cleanup_baseurl(url)
+    url.gsub!(/^[[:space:]]+/, '')
+    url.gsub!(/[[:space:]]+$/, '')
     raise "Invalid endpoint '#{url}', need to start with http:// or https://" if url !~ %r{^http(s|)://}i
     url.gsub!(%r{src/jsonrpc.php}, '')
     url.gsub(%r{([^:])//+}, '\\1/')

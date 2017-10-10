@@ -38,12 +38,12 @@ returns
                   else
                     where(name: data[:name])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           if loop_record.name == data[:name]
             cache_set(data[:name], loop_record)
             return loop_record
           end
-        }
+        end
         return
       elsif data[:login]
         cache = cache_get(data[:login])
@@ -55,12 +55,12 @@ returns
                   else
                     where(login: data[:login])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           if loop_record.login == data[:login]
             cache_set(data[:login], loop_record)
             return loop_record
           end
-        }
+        end
         return
       elsif data[:email]
         cache = cache_get(data[:email])
@@ -72,12 +72,12 @@ returns
                   else
                     where(email: data[:email])
                   end
-        records.each { |loop_record|
+        records.each do |loop_record|
           if loop_record.email == data[:email]
             cache_set(data[:email], loop_record)
             return loop_record
           end
-        }
+        end
         return
       end
 

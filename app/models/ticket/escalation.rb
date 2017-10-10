@@ -17,9 +17,9 @@ returns
     state_list_open = Ticket::State.by_category(:open)
 
     ticket_ids = Ticket.where(state_id: state_list_open).pluck(:id)
-    ticket_ids.each { |ticket_id|
+    ticket_ids.each do |ticket_id|
       Ticket.find(ticket_id).escalation_calculation(true)
-    }
+    end
   end
 
 =begin
@@ -76,10 +76,10 @@ returns
 
     # if no escalation is enabled
     if !sla || !calendar
-      preferences[:escalation_calculation] = {}
 
       # nothing to change
       return false if !escalation_at && !first_response_escalation_at && !update_escalation_at && !close_escalation_at
+      preferences['escalation_calculation'] = {}
       self.escalation_at = nil
       self.first_response_escalation_at = nil
       self.escalation_at = nil
@@ -122,7 +122,7 @@ returns
       first_response_at_changed = false
     end
     last_update_at_changed = true
-    if escalation_calculation['last_update_at'] == last_update_at && !changes['state_id']
+    if escalation_calculation['last_update_at'] == last_update_at && !saved_change_to_attribute('state_id')
       last_update_at_changed = false
     end
     close_at_changed = true
@@ -152,16 +152,16 @@ returns
 
       # get business hours
       hours = {}
-      calendar.business_hours.each { |day, meta|
+      calendar.business_hours.each do |day, meta|
         next if !meta[:active]
         next if !meta[:timeframes]
         hours[day.to_sym] = {}
-        meta[:timeframes].each { |frame|
+        meta[:timeframes].each do |frame|
           next if !frame[0]
           next if !frame[1]
           hours[day.to_sym][frame[0]] = frame[1]
-        }
-      }
+        end
+      end
       config.hours = hours
       if hours.blank?
         raise "No configured hours found in calendar #{calendar.inspect}"
@@ -170,12 +170,12 @@ returns
       # get holidays
       holidays = []
       if calendar.public_holidays
-        calendar.public_holidays.each { |day, meta|
+        calendar.public_holidays.each do |day, meta|
           next if !meta
           next if !meta['active']
           next if meta['removed']
           holidays.push Date.parse(day)
-        }
+        end
       end
       config.holidays = holidays
       config.time_zone = calendar.timezone
@@ -293,7 +293,7 @@ returns
       sla_list = Sla.all.order(:name, :created_at)
       Cache.write('SLA::List::Active', sla_list, { expires_in: 1.hour })
     end
-    sla_list.each { |sla|
+    sla_list.each do |sla|
       if !sla.condition || sla.condition.empty?
         sla_selected = sla
       elsif sla.condition
@@ -303,7 +303,7 @@ returns
         sla_selected = sla
         break
       end
-    }
+    end
     sla_selected
   end
 
@@ -325,7 +325,7 @@ returns
     local_destination_time = biz.time(move_minutes, :minutes).after(start_time)
 
     # go step by step to end of move_minutes until move_minutes is 0
-    200.times.each { |_count|
+    200.times.each do |_count|
 
       # check if we have pending time in the range to the destination time
       working_minutes = period_working_minutes(start_time, local_destination_time, biz, history_data, true)
@@ -337,7 +337,7 @@ returns
       # set pending destination to start time and add pending time to destination time
       start_time             = local_destination_time
       local_destination_time = biz.time(move_minutes, :minutes).after(start_time)
-    }
+    end
     local_destination_time
   end
 
@@ -352,23 +352,23 @@ returns
     ).map(&:name)
 
     # add state changes till now
-    if add_current && changes['state_id'] && changes['state_id'][0] && changes['state_id'][1]
+    if add_current && saved_change_to_attribute('state_id') && saved_change_to_attribute('state_id')[0] && saved_change_to_attribute('state_id')[1]
       last_history_state = nil
-      history_list.each { |history_item|
+      history_list.each do |history_item|
         next if !history_item['attribute']
         next if history_item['attribute'] != 'state'
         next if history_item['id']
         last_history_state = history_item
-      }
+      end
       local_updated_at = updated_at
-      if changes['updated_at'] && changes['updated_at'][1]
-        local_updated_at = changes['updated_at'][1]
+      if saved_change_to_attribute('updated_at') && saved_change_to_attribute('updated_at')[1]
+        local_updated_at = saved_change_to_attribute('updated_at')[1]
       end
       history_item = {
         'attribute' => 'state',
         'created_at' => local_updated_at,
-        'value_from' => Ticket::State.find(changes['state_id'][0]).name,
-        'value_to' => Ticket::State.find(changes['state_id'][1]).name,
+        'value_from' => Ticket::State.find(saved_change_to_attribute('state_id')[0]).name,
+        'value_to' => Ticket::State.find(saved_change_to_attribute('state_id')[1]).name,
       }
       if last_history_state
         last_history_state = history_item
@@ -377,7 +377,7 @@ returns
       end
     end
 
-    history_list.each { |history|
+    history_list.each do |history|
 
       # ignore if it isn't a state change
       next if !history['attribute']
@@ -416,7 +416,7 @@ returns
       # remember for next loop last state
       last_state        = history['value_to']
       last_state_change = created_at
-    }
+    end
 
     # if we have time to count after history entries has finished
     if last_state_change && last_state_change < end_time

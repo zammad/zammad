@@ -18,7 +18,7 @@ returns
   def search_index_attribute_lookup
 
     attributes = self.attributes
-    self.attributes.each { |key, value|
+    self.attributes.each do |key, value|
       next if !value
 
       # get attribute name
@@ -52,14 +52,14 @@ returns
 
       # save name of ref object
       attributes[ attribute_name ] = value
-    }
+    end
 
     ignored_attributes = self.class.instance_variable_get(:@search_index_attributes_ignored) || []
-    return attributes if ignored_attributes.empty?
+    return attributes if ignored_attributes.blank?
 
-    ignored_attributes.each { |attribute|
+    ignored_attributes.each do |attribute|
       attributes.delete(attribute.to_s)
-    }
+    end
 
     attributes
   end

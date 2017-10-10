@@ -73,7 +73,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_not(attribute1)
 
     # create invalid attributes
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute2 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test2_id',
@@ -90,8 +90,8 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
-    assert_raises(RuntimeError) {
+    end
+    assert_raises(RuntimeError) do
       attribute3 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test3_ids',
@@ -108,8 +108,8 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
-    assert_raises(RuntimeError) {
+    end
+    assert_raises(RuntimeError) do
       attribute4 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test4',
@@ -125,7 +125,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
 
     attribute5 = ObjectManager::Attribute.add(
       object: 'Ticket',
@@ -153,7 +153,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       name: 'test5',
     )
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute6 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test6',
@@ -172,7 +172,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
 
     attribute7 = ObjectManager::Attribute.add(
       object: 'Ticket',
@@ -200,7 +200,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       name: 'test7',
     )
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute8 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test8',
@@ -216,7 +216,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
 
     attribute9 = ObjectManager::Attribute.add(
       object: 'Ticket',
@@ -242,7 +242,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       name: 'test9',
     )
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute10 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test10',
@@ -259,7 +259,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
 
     attribute11 = ObjectManager::Attribute.add(
       object: 'Ticket',
@@ -285,7 +285,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       name: 'test11',
     )
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute12 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test12',
@@ -302,10 +302,10 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute13 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test13|',
@@ -323,10 +323,10 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute14 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test14!',
@@ -344,10 +344,10 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute15 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test15ä',
@@ -365,10 +365,10 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute16 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test16',
@@ -385,10 +385,10 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute17 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test17',
@@ -404,10 +404,10 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) {
+    assert_raises(RuntimeError) do
       attribute18 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'delete',
@@ -424,7 +424,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
         created_by_id: 1,
         updated_by_id: 1,
       )
-    }
+    end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
   end

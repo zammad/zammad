@@ -175,8 +175,10 @@ class ConnectionWizard extends App.WizardModal
 
   events:
     'submit form.js-discover':           'discover'
+    'submit form.js-discoverSsl':        'discover'
     'submit form.js-bind':               'folders'
     'submit form.js-folders':            'mapping'
+    'click .js-cancelSsl':               'showSlideDiscover'
     'click .js-mapping .js-submitTry':   'mappingChange'
     'click .js-try .js-submitSave':      'save'
     'click .js-close':                   'hide'
@@ -244,6 +246,9 @@ class ConnectionWizard extends App.WizardModal
     @$('.js-bind input[name="user"]').val(@wizardConfig.user)
     @$('.js-bind input[name="password"]').val(@wizardConfig.password)
 
+  showSlideDiscover: =>
+    @showSlide('js-discover')
+
   discover: (e) =>
     e.preventDefault()
     @showSlide('js-connect')
@@ -256,8 +261,15 @@ class ConnectionWizard extends App.WizardModal
       processData: true
       success: (data, status, xhr) =>
         if data.result isnt 'ok'
-          @showSlide('js-discover')
-          @showAlert('js-discover', data.message)
+
+          if data.message.indexOf('certificate verify failed') is -1
+            @showSlide('js-discover')
+            @showAlert('js-discover', data.message)
+          else
+            @$('.js-discoverSsl input[name="user"]').val(params.user)
+            @$('.js-discoverSsl input[name="password"]').val(params.password)
+            @showSlide('js-discoverSsl')
+
           return
 
         @wizardConfig.endpoint = data.endpoint

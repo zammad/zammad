@@ -33,19 +33,19 @@ log object update history with all updated attributes, if configured - will be e
 =end
 
   def history_update
-    return if !changed?
+    return if !saved_changes?
 
     # return if it's no update
     return if new_record?
 
     # new record also triggers update, so ignore new records
-    changes = self.changes
+    changes = saved_changes
     if history_changes_last_done
-      history_changes_last_done.each { |key, value|
+      history_changes_last_done.each do |key, value|
         if changes.key?(key) && changes[key] == value
           changes.delete(key)
         end
-      }
+      end
     end
     self.history_changes_last_done = changes
     #logger.info 'updated ' + self.changes.inspect
@@ -55,7 +55,7 @@ log object update history with all updated attributes, if configured - will be e
     ignored_attributes  = self.class.instance_variable_get(:@history_attributes_ignored) || []
     ignored_attributes += %i(created_at updated_at created_by_id updated_by_id)
 
-    changes.each { |key, value|
+    changes.each do |key, value|
 
       next if ignored_attributes.include?(key.to_sym)
 
@@ -104,7 +104,7 @@ log object update history with all updated attributes, if configured - will be e
       }
       #logger.info "HIST NEW #{self.class.to_s}.find(#{self.id}) #{data.inspect}"
       history_log('updated', updated_by_id, data)
-    }
+    end
   end
 
 =begin
@@ -212,7 +212,7 @@ returns
 
     # get related objects
     history = History.list(self.class.name, self['id'], nil, true)
-    history[:list].each { |item|
+    history[:list].each do |item|
       record = Kernel.const_get(item['object']).find(item['o_id'])
 
       history[:assets] = record.assets(history[:assets])
@@ -221,7 +221,7 @@ returns
         record = Kernel.const_get(item['related_object']).find(item['related_o_id'])
         history[:assets] = record.assets(history[:assets])
       end
-    }
+    end
     {
       history: history[:list],
       assets: history[:assets],

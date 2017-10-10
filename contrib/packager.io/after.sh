@@ -12,4 +12,4 @@ contrib/packager.io/fetch_locales.rb
 
 # delete asset cache
 rm -r tmp/cache
-rm -r vendor/bundle/ruby/2.3.0
+

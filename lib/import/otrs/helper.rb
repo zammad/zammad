@@ -10,11 +10,11 @@ module Import
         result = {}
         # use the mapping of the class in which
         # this module gets extended
-        self.class::MAPPING.each { |key_sym, value|
+        self.class::MAPPING.each do |key_sym, value|
           key = key_sym.to_s
           next if !record.key?(key)
           result[value] = record[key]
-        }
+        end
         result
       end
 

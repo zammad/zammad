@@ -22,7 +22,7 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
 
     # touch old organization if changed
     member_ids = []
-    organization_id_changed = record.changes['organization_id']
+    organization_id_changed = record.saved_changes['organization_id']
     if organization_id_changed && organization_id_changed[0] != organization_id_changed[1]
       if organization_id_changed[0]
 
@@ -46,10 +46,10 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
     end
 
     # touch old/current customer
-    member_ids.uniq.each { |user_id|
+    member_ids.uniq.each do |user_id|
       next if user_id == record.id
       User.find(user_id).touch
-    }
+    end
     true
   end
 end

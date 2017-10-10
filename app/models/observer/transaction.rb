@@ -31,26 +31,26 @@ class Observer::Transaction < ActiveRecord::Observer
 
     # get asyn backends
     sync_backends = []
-    Setting.where(area: 'Transaction::Backend::Sync').order(:name).each { |setting|
+    Setting.where(area: 'Transaction::Backend::Sync').order(:name).each do |setting|
       backend = Setting.get(setting.name)
       next if params[:disable] && params[:disable].include?(backend)
       sync_backends.push Kernel.const_get(backend)
-    }
+    end
 
     # get uniq objects
     list_objects = get_uniq_changes(list)
-    list_objects.each { |_object, objects|
-      objects.each { |_id, item|
+    list_objects.each do |_object, objects|
+      objects.each do |_id, item|
 
         # execute sync backends
-        sync_backends.each { |backend|
+        sync_backends.each do |backend|
           execute_singel_backend(backend, item, params)
-        }
+        end
 
         # execute async backends
         Delayed::Job.enqueue(Transaction::BackgroundJob.new(item, params))
-      }
-    }
+      end
+    end
   end
 
   def self.execute_singel_backend(backend, item, params)
@@ -115,7 +115,7 @@ class Observer::Transaction < ActiveRecord::Observer
 
   def self.get_uniq_changes(events)
     list_objects = {}
-    events.each { |event|
+    events.each do |event|
 
       # simulate article create as ticket update
       article = nil
@@ -159,13 +159,13 @@ class Observer::Transaction < ActiveRecord::Observer
         if !store[:changes]
           store[:changes] = event[:changes]
         else
-          event[:changes].each { |key, value|
+          event[:changes].each do |key, value|
             if !store[:changes][key]
               store[:changes][key] = value
             else
               store[:changes][key][1] = value[1]
             end
-          }
+          end
         end
       end
 
@@ -173,7 +173,7 @@ class Observer::Transaction < ActiveRecord::Observer
       if article
         store[:article_id] = article.id
       end
-    }
+    end
     list_objects
   end
 
@@ -201,7 +201,7 @@ class Observer::Transaction < ActiveRecord::Observer
 
     # ignore certain attributes
     real_changes = {}
-    record.changes.each { |key, value|
+    record.changes_to_save.each do |key, value|
       next if key == 'updated_at'
       next if key == 'first_response_at'
       next if key == 'close_at'
@@ -212,7 +212,7 @@ class Observer::Transaction < ActiveRecord::Observer
       next if key == 'create_article_type_id'
       next if key == 'create_article_sender_id'
       real_changes[key] = value
-    }
+    end
 
     # do not send anything if nothing has changed
     return true if real_changes.empty?

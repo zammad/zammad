@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Sequencer::Unit::Common::AttributeMapper, sequencer: :unit do
 
-  let(:map) {
+  let(:map) do
     {
       old_key: :new_key,
       second:  :new_second,
     }
-  }
+  end
 
   it 'expects an implementation of the .map method' do
     expect do

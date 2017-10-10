@@ -9,7 +9,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
     return if !mail[:attachments]
 
     # remember, do not send notifications to certain recipients again if failed permanent
-    mail[:attachments].each { |attachment|
+    mail[:attachments].each do |attachment|
       next if !attachment[:preferences]
       next if attachment[:preferences]['Mime-Type'] != 'message/rfc822'
       next if !attachment[:data]
@@ -28,19 +28,19 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       # get recipient of origin article, if only one - mark this user to not sent notifications anymore
       recipients = []
       if article.sender.name == 'System' || article.sender.name == 'Agent'
-        %w(to cc).each { |line|
+        %w(to cc).each do |line|
           next if article[line].blank?
           recipients = []
           begin
             list = Mail::AddressList.new(article[line])
-            list.addresses.each { |address|
+            list.addresses.each do |address|
               next if address.address.blank?
               recipients.push address.address.downcase
-            }
+            end
           rescue
             Rails.logger.info "Unable to parse email address in '#{article[line]}'"
           end
-        }
+        end
         if recipients.count > 1
           recipients = []
         end
@@ -56,16 +56,16 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       end
 
       # set user preferences
-      recipients.each { |recipient|
+      recipients.each do |recipient|
         users = User.where(email: recipient)
-        users.each { |user|
+        users.each do |user|
           next if !user
           user.preferences[:mail_delivery_failed] = true
           user.preferences[:mail_delivery_failed_data] = Time.zone.now
           user.save!
-        }
-      }
-    }
+        end
+      end
+    end
 
     true
 

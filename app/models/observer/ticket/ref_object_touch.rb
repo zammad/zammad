@@ -18,10 +18,10 @@ class Observer::Ticket::RefObjectTouch < ActiveRecord::Observer
   def ref_object_touch(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
     # touch old customer if changed
-    cutomer_id_changed = record.changes['customer_id']
+    cutomer_id_changed = record.saved_changes['customer_id']
     if cutomer_id_changed && cutomer_id_changed[0] != cutomer_id_changed[1]
       if cutomer_id_changed[0]
         User.find(cutomer_id_changed[0]).touch
@@ -34,7 +34,7 @@ class Observer::Ticket::RefObjectTouch < ActiveRecord::Observer
     end
 
     # touch old organization if changed
-    organization_id_changed = record.changes['organization_id']
+    organization_id_changed = record.saved_changes['organization_id']
     if organization_id_changed && organization_id_changed[0] != organization_id_changed[1]
       if organization_id_changed[0]
         Organization.find(organization_id_changed[0]).touch
@@ -42,7 +42,7 @@ class Observer::Ticket::RefObjectTouch < ActiveRecord::Observer
     end
 
     # touch new/current organization
-    return if !record.organization
+    return true if !record.organization
 
     record.organization.touch
   end

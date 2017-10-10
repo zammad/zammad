@@ -1,8 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Integration::IdoitController < ApplicationController
-  prepend_before_action -> { authentication_check(permission: ['agent.integration.idoit', 'admin.integration.idoit']) }, except: [:verify]
+  prepend_before_action -> { authentication_check(permission: ['agent.integration.idoit', 'admin.integration.idoit']) }, except: [:verify, :query, :update]
   prepend_before_action -> { authentication_check(permission: ['admin.integration.idoit']) }, only: [:verify]
+  prepend_before_action -> { authentication_check(permission: ['ticket.agent']) }, only: [:query, :update]
 
   def verify
     response = ::Idoit.verify(params[:api_token], params[:endpoint], params[:client_id])

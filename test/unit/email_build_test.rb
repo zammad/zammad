@@ -74,7 +74,7 @@ class EmailBuildTest < ActiveSupport::TestCase
 
     # check attachments
     if data[:attachments]
-      data[:attachments].each { |attachment|
+      data[:attachments].each do |attachment|
         if attachment[:filename] == 'message.html'
           assert_nil(attachment[:preferences]['Content-ID'])
           assert_equal(true, attachment[:preferences]['content-alternative'])
@@ -88,7 +88,7 @@ class EmailBuildTest < ActiveSupport::TestCase
         else
           assert(false, "invalid attachment, should not be there, #{attachment.inspect}")
         end
-      }
+      end
     end
   end
 
@@ -128,7 +128,7 @@ class EmailBuildTest < ActiveSupport::TestCase
 
     # check attachments
     if data[:attachments]
-      data[:attachments].each { |attachment|
+      data[:attachments].each do |attachment|
         if attachment[:filename] == 'somename.png'
           assert_nil(attachment[:preferences]['Content-ID'])
           assert_nil(attachment[:preferences]['content-alternative'])
@@ -137,7 +137,7 @@ class EmailBuildTest < ActiveSupport::TestCase
         else
           assert(false, "invalid attachment, should not be there, #{attachment.inspect}")
         end
-      }
+      end
     end
   end
 

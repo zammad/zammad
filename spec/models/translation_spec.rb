@@ -38,12 +38,12 @@ RSpec.describe Translation do
 
       # check for non existing custom changes
       list = Translation.lang(locale)
-      list['list'].each { |item|
+      list['list'].each do |item|
         translation = Translation.find_by(source: item[1], locale: locale)
         expect(translation.class).to be(Translation)
         expect(locale).to eq(translation.locale)
         expect(translation.target).to eq(translation.target_initial)
-      }
+      end
 
       # add custom changes
       translation = Translation.find_by(locale: locale, source: 'open')
@@ -54,7 +54,7 @@ RSpec.describe Translation do
       translation.save!
 
       list = Translation.lang(locale)
-      list['list'].each { |item|
+      list['list'].each do |item|
         translation = Translation.find_by(source: item[1], locale: locale)
         expect(translation.class).to be(Translation)
         expect(locale).to eq(translation.locale)
@@ -64,12 +64,12 @@ RSpec.describe Translation do
         else
           expect(translation.target).to eq(translation.target_initial)
         end
-      }
+      end
 
       # check for existing custom changes after new translations are loaded
       Translation.load(locale)
       list = Translation.lang(locale)
-      list['list'].each { |item|
+      list['list'].each do |item|
         translation = Translation.find_by(source: item[1], locale: locale)
         expect(translation.class).to be(Translation)
         expect(locale).to eq(translation.locale)
@@ -79,17 +79,17 @@ RSpec.describe Translation do
         else
           expect(translation.target).to eq(translation.target_initial)
         end
-      }
+      end
 
       # reset custom translations and check for non existing custom changes
       Translation.reset(locale)
       list = Translation.lang(locale)
-      list['list'].each { |item|
+      list['list'].each do |item|
         translation = Translation.find_by(source: item[1], locale: locale)
         expect(translation.class).to be(Translation)
         expect(locale).to eq(translation.locale)
         expect(translation.target).to eq(translation.target_initial)
-      }
+      end
     end
 
   end

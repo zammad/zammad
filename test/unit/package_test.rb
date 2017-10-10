@@ -33,7 +33,7 @@ class PackageTest < ActiveSupport::TestCase
     {
       "permission": "644",
       "location": "db/addon/unit_test_sample/20121212000001_create_base.rb",
-      "content": "Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uDQogIGRlZiBzZWxmLnVw\nDQogICBjcmVhdGVfdGFibGUgOnNhbXBsZV90YWJsZXMgZG8gfHR8DQogICAgICB0LmNvbHVtbiA6\nbmFtZSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiAxNTAsICA6bnVsbCA9PiB0cnVlDQog\nICAgICB0LmNvbHVtbiA6ZGF0YSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiA1MDAwLCA6\nbnVsbCA9PiB0cnVlDQogICAgZW5kDQogIGVuZA0KDQogIGRlZiBzZWxmLmRvd24NCiAgICBkcm9w\nX3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k"
+      "content": "Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uWzQuMl0NCiAgZGVmIHNlbGYudXANCiAgIGNyZWF0ZV90YWJsZSA6c2FtcGxlX3RhYmxlcyBkbyB8dHwNCiAgICAgIHQuY29sdW1uIDpuYW1lLCAgICAgICAgICAgOnN0cmluZywgOmxpbWl0ID0+IDE1MCwgIDpudWxsID0+IHRydWUNCiAgICAgIHQuY29sdW1uIDpkYXRhLCAgICAgICAgICAgOnN0cmluZywgOmxpbWl0ID0+IDUwMDAsIDpudWxsID0+IHRydWUNCiAgICBlbmQNCiAgZW5kDQoNCiAgZGVmIHNlbGYuZG93bg0KICAgIGRyb3BfdGFibGUgOnNhbXBsZV90YWJsZXMNCiAgZW5kDQplbmQ="
     }
   ]
 }',
@@ -168,7 +168,7 @@ class PackageTest < ActiveSupport::TestCase
     {
       "permission": "644",
       "location": "db/addon/unit_test_sample/20121212000001_create_base.rb",
-      "content": "Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uDQogIGRlZiBzZWxmLnVw\nDQogICBjcmVhdGVfdGFibGUgOnNhbXBsZV90YWJsZXMgZG8gfHR8DQogICAgICB0LmNvbHVtbiA6\nbmFtZSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiAxNTAsICA6bnVsbCA9PiB0cnVlDQog\nICAgICB0LmNvbHVtbiA6ZGF0YSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiA1MDAwLCA6\nbnVsbCA9PiB0cnVlDQogICAgZW5kDQogIGVuZA0KDQogIGRlZiBzZWxmLmRvd24NCiAgICBkcm9w\nX3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k"
+      "content": "Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uWzQuMl0NCiAgZGVmIHNlbGYudXANCiAgIGNyZWF0ZV90YWJsZSA6c2FtcGxlX3RhYmxlcyBkbyB8dHwNCiAgICAgIHQuY29sdW1uIDpuYW1lLCAgICAgICAgICAgOnN0cmluZywgOmxpbWl0ID0+IDE1MCwgIDpudWxsID0+IHRydWUNCiAgICAgIHQuY29sdW1uIDpkYXRhLCAgICAgICAgICAgOnN0cmluZywgOmxpbWl0ID0+IDUwMDAsIDpudWxsID0+IHRydWUNCiAgICBlbmQNCiAgZW5kDQoNCiAgZGVmIHNlbGYuZG93bg0KICAgIGRyb3BfdGFibGUgOnNhbXBsZV90YWJsZXMNCiAgZW5kDQplbmQ="
     }
   ]
 }',
@@ -248,7 +248,7 @@ class PackageTest < ActiveSupport::TestCase
     {
       "permission": "644",
       "location": "db/addon/unit_test_sample/20121212000001_create_base.rb",
-      "content": "Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uDQogIGRlZiBzZWxmLnVw\nDQogICBjcmVhdGVfdGFibGUgOnNhbXBsZV90YWJsZXMgZG8gfHR8DQogICAgICB0LmNvbHVtbiA6\nbmFtZSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiAxNTAsICA6bnVsbCA9PiB0cnVlDQog\nICAgICB0LmNvbHVtbiA6ZGF0YSwgICAgICAgICAgIDpzdHJpbmcsIDpsaW1pdCA9PiA1MDAwLCA6\nbnVsbCA9PiB0cnVlDQogICAgZW5kDQogIGVuZA0KDQogIGRlZiBzZWxmLmRvd24NCiAgICBkcm9w\nX3RhYmxlIDpzYW1wbGVfdGFibGVzDQogIGVuZA0KZW5k"
+      "content": "Y2xhc3MgQ3JlYXRlQmFzZSA8IEFjdGl2ZVJlY29yZDo6TWlncmF0aW9uWzQuMl0NCiAgZGVmIHNlbGYudXANCiAgIGNyZWF0ZV90YWJsZSA6c2FtcGxlX3RhYmxlcyBkbyB8dHwNCiAgICAgIHQuY29sdW1uIDpuYW1lLCAgICAgICAgICAgOnN0cmluZywgOmxpbWl0ID0+IDE1MCwgIDpudWxsID0+IHRydWUNCiAgICAgIHQuY29sdW1uIDpkYXRhLCAgICAgICAgICAgOnN0cmluZywgOmxpbWl0ID0+IDUwMDAsIDpudWxsID0+IHRydWUNCiAgICBlbmQNCiAgZW5kDQoNCiAgZGVmIHNlbGYuZG93bg0KICAgIGRyb3BfdGFibGUgOnNhbXBsZV90YWJsZXMNCiAgZW5kDQplbmQ="
     }
   ]
 }',
@@ -301,60 +301,60 @@ class PackageTest < ActiveSupport::TestCase
       },
 
     ]
-    tests.each { |test|
+    tests.each do |test|
       if test[:action] == 'install'
         begin
-          package = Package.install( string: test[:zpm] )
+          package = Package.install(string: test[:zpm])
         rescue => e
           puts 'ERROR: ' + e.inspect
         end
         if test[:result]
-          assert( package, 'install package not successful' )
+          assert(package, 'install package not successful')
           issues = package.verify
-          assert( !issues, 'package verify not successful' )
+          assert(!issues, 'package verify not successful')
         else
-          assert( !package, 'install package successful but should not' )
+          assert(!package, 'install package successful but should not')
         end
       elsif test[:action] == 'reinstall'
         begin
-          package = Package.reinstall( test[:name] )
+          package = Package.reinstall(test[:name])
         rescue
           package = false
         end
         if test[:result]
-          assert( package, 'reinstall package not successful' )
+          assert(package, 'reinstall package not successful')
           issues = package.verify
-          assert( !issues, 'package verify not successful' )
+          assert(!issues, 'package verify not successful')
         else
-          assert( !package, 'reinstall package successful but should not' )
+          assert(!package, 'reinstall package successful but should not')
         end
       elsif test[:action] == 'uninstall'
         if test[:zpm]
           begin
-            package = Package.uninstall( string: test[:zpm] )
+            package = Package.uninstall(string: test[:zpm])
           rescue
             package = false
           end
         else
           begin
-            package = Package.uninstall( name: test[:name], version: test[:version] )
+            package = Package.uninstall(name: test[:name], version: test[:version])
           rescue
             package = false
           end
         end
         if test[:result]
-          assert( package, 'uninstall package not successful' )
+          assert(package, 'uninstall package not successful')
         else
-          assert( !package, 'uninstall package successful but should not' )
+          assert(!package, 'uninstall package successful but should not')
         end
       elsif test[:action] == 'auto_install'
         if test[:zpm]
-          if !File.exist?( Rails.root.to_s + '/auto_install/' )
-            Dir.mkdir( Rails.root.to_s + '/auto_install/', 0o755)
+          if !File.exist?(Rails.root.to_s + '/auto_install/')
+            Dir.mkdir(Rails.root.to_s + '/auto_install/', 0o755)
           end
           location = Rails.root.to_s + '/auto_install/unittest.zpm'
-          file = File.new( location, 'wb' )
-          file.write( test[:zpm] )
+          file = File.new(location, 'wb')
+          file.write(test[:zpm])
           file.close
         end
         begin
@@ -363,25 +363,25 @@ class PackageTest < ActiveSupport::TestCase
           success = false
         end
         if test[:zpm]
-          File.delete( location )
+          File.delete(location )
         end
       end
       if test[:verify] && test[:verify][:package]
-        exists = Package.where( name: test[:verify][:package][:name], version: test[:verify][:package][:version] ).first
-        assert( exists, "package '#{test[:verify][:package][:name]}' is not installed" )
+        exists = Package.where(name: test[:verify][:package][:name], version: test[:verify][:package][:version]).first
+        assert(exists, "package '#{test[:verify][:package][:name]}' is not installed" )
       end
       next if !test[:verify]
       next if !test[:verify][:check_files]
 
-      test[:verify][:check_files].each { |item|
-        exists = File.exist?( item[:location] )
+      test[:verify][:check_files].each do |item|
+        exists = File.exist?(item[:location])
         if item[:result]
-          assert( exists, "'#{item[:location]}' exists" )
+          assert(exists, "'#{item[:location]}' exists" )
         else
-          assert( !exists, "'#{item[:location]}' doesn't exists" )
+          assert(!exists, "'#{item[:location]}' doesn't exists" )
         end
-      }
-    }
+      end
+    end
 
   end
 end

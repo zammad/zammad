@@ -64,9 +64,9 @@ module Import
       def sum_stat(objects)
         data = statistic
         sum  = 0
-        objects.each { |object|
+        objects.each do |object|
           sum += data[object]
-        }
+        end
         sum
       end
     end

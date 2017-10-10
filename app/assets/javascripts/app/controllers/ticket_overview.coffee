@@ -540,20 +540,23 @@ class App.TicketOverview extends App.Controller
   render: ->
     elLocal = $(App.view('ticket_overview/index')())
 
-    @navBarControllerVertical = new Navbar
+    @navBarControllerVertical = new Navbar(
       el:       elLocal.find('.overview-header')
       view:     @view
       vertical: true
+    )
 
-    @navBarController = new Navbar
+    @navBarController = new Navbar(
       el:   elLocal.filter('.sidebar')
       view: @view
+    )
 
-    @contentController = new Table
+    @contentController = new Table(
       el:          elLocal.find('.overview-table')
       view:        @view
       keyboardOn:  @keyboardOn
       keyboardOff: @keyboardOff
+    )
 
     @renderBatchOverlay(elLocal.filter('.js-batch-overlay'))
 
@@ -662,10 +665,12 @@ class App.TicketOverview extends App.Controller
     @viewLast = @view
 
     # build content
-    if @contentController
-      @contentController.update(
-        view: @view
-      )
+    @contentController = new Table(
+      el:          @$('.overview-table')
+      view:        @view
+      keyboardOn:  @keyboardOn
+      keyboardOff: @keyboardOff
+    )
 
   hide: =>
     @keyboardOff()
@@ -908,7 +913,7 @@ class Table extends App.Controller
     super
 
     if @view
-      @bindId = App.OverviewListCollection.bind(@view, @render)
+      @bindId = App.OverviewListCollection.bind(@view, @updateTable)
 
     # rerender view, e. g. on langauge change
     @bind 'ui:rerender', =>
@@ -924,18 +929,17 @@ class Table extends App.Controller
     for key, value of params
       @[key] = value
 
-    @view_mode = App.LocalStorage.get("mode:#{@view}", @Session.get('id')) || 's'
-    @log 'notice', 'view:', @view, @view_mode
-
     return if !@view
 
     if @view
       if @bindId
         App.OverviewListCollection.unbind(@bindId)
-      @bindId = App.OverviewListCollection.bind(@view, @render)
+      @bindId = App.OverviewListCollection.bind(@view, @updateTable)
 
-  render: (data) =>
-    return if !data
+  updateTable: (data) =>
+    if !@table
+      @render(data)
+      return
 
     # use cache
     overview = data.overview
@@ -947,13 +951,38 @@ class Table extends App.Controller
     ticketListShow = []
     for ticket in tickets
       ticketListShow.push App.Ticket.find(ticket.id)
+    console.log('overview', overview)
+    @overview = App.Overview.find(overview.id)
+    console.log('TTT', @overview.view.s)
+    @table.update(
+      overviewAttributes: @overview.view.s
+      objects:            ticketListShow
+      groupBy:            @overview.group_by
+      orderBy:            @overview.order.by
+      orderDirection:     @overview.order.direction
+    )
+
+  render: (data) =>
+    return if !data
+
+    # use cache
+    overview = data.overview
+    tickets  = data.tickets
+
+    return if !overview && !tickets
+
+    @view_mode = App.LocalStorage.get("mode:#{@view}", @Session.get('id')) || 's'
+    console.log 'notice', 'view:', @view, @view_mode
+
+    # get ticket list
+    ticketListShow = []
+    for ticket in tickets
+      ticketListShow.push App.Ticket.find(ticket.id)
 
     # if customer and no ticket exists, show the following message only
     if !ticketListShow[0] && @permissionCheck('ticket.customer')
       @html App.view('customer_not_ticket_exists')()
       return
-
-    @selected = @getSelected()
 
     # set page title
     @overview = App.Overview.find(overview.id)
@@ -1086,7 +1115,7 @@ class Table extends App.Controller
         attribute.title  = object.iconTitle()
         value
 
-      new App.ControllerTable(
+      @table = new App.ControllerTable(
         tableId:        "ticket_overview_#{@overview.id}"
         overview:       @overview.view.s
         el:             @$('.table-overview')
@@ -1122,8 +1151,6 @@ class Table extends App.Controller
           events:
             'click': callbackCheckbox
       )
-
-    @setSelected(@selected)
 
     # start user popups
     @userPopups()
@@ -1164,22 +1191,6 @@ class Table extends App.Controller
         else
           bulkAll.prop('checked', false)
           bulkAll.prop('indeterminate', true)
-    )
-
-  getSelected: ->
-    @ticketIDs = []
-    @$('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
-      ticketId = $(element).val()
-      @ticketIDs.push ticketId
-    )
-    @ticketIDs
-
-  setSelected: (ticketIDs) ->
-    @$('.table-overview').find('[name="bulk"]').each( (index, element) ->
-      ticketId = $(element).val()
-      for ticketIdSelected in ticketIDs
-        if ticketIdSelected is ticketId
-          $(element).prop('checked', true)
     )
 
   viewmode: (e) =>
@@ -1497,6 +1508,7 @@ class App.OverviewSettings extends App.ControllerModal
           App.OverviewListCollection.fetch(@overview.link)
         else
           App.OverviewIndexCollection.trigger()
+          console.log('TRIGGER', @overview.link)
           App.OverviewListCollection.trigger(@overview.link)
 
         # close modal

@@ -139,9 +139,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     assert_equal(messages.count, 0, 'messages count')
 
     # start jobs
-    jobs = Thread.new {
+    jobs = Thread.new do
       Sessions.jobs
-    }
+    end
     sleep 6
 
     # check client threads
@@ -231,9 +231,9 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     Sessions.destroy(client_id3)
 
     # start jobs
-    jobs = Thread.new {
+    jobs = Thread.new do
       Sessions.jobs
-    }
+    end
     sleep 5
     Sessions.create(client_id1_0, agent1.attributes, { type: 'websocket' })
     sleep 6.5
@@ -323,25 +323,25 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     #puts "cid: #{client_id}"
     #puts "m: #{messages.inspect}"
     collections_result = {}
-    messages.each { |message|
+    messages.each do |message|
       #puts ""
       #puts "message: #{message.inspect}"
       next if message['event'] != 'resetCollection'
       #puts "rc: "
       next if !message['data']
 
-      message['data'].each { |key, _value|
+      message['data'].each do |key, _value|
         #puts "rc: #{key}"
         collections_result[key] = true
-      }
-    }
+      end
+    end
     #puts "c: #{collections_result.inspect}"
-    collections_orig.each { |key, _value|
+    collections_orig.each do |key, _value|
       if collections_orig[key].nil?
         assert_nil(collections_result[key], "collection message for #{key} #{type}-check (client_id #{client_id})")
       else
         assert_equal(collections_orig[key], collections_result[key], "collection message for #{key} #{type}-check (client_id #{client_id})")
       end
-    }
+    end
   end
 end

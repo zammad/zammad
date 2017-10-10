@@ -133,9 +133,9 @@ class ZendeskImportTest < ActiveSupport::TestCase
       },
     ]
 
-    checks.each { |check|
+    checks.each do |check|
       user = User.find(check[:id])
-      check[:data].each { |key, value|
+      check[:data].each do |key, value|
         user_value = user[key]
         text       = "user.#{key} for user_id #{check[:id]}"
 
@@ -144,10 +144,10 @@ class ZendeskImportTest < ActiveSupport::TestCase
         else
           assert_equal(value, user_value, text)
         end
-      }
+      end
       assert_equal(check[:roles], user.roles.sort.to_a, "#{user.login} roles")
       assert_equal(check[:groups], user.groups_access('full').sort.to_a, "#{user.login} groups")
-    }
+    end
   end
 
   # check user fields
@@ -223,12 +223,12 @@ class ZendeskImportTest < ActiveSupport::TestCase
       },
     ]
 
-    checks.each { |check|
+    checks.each do |check|
       group = Group.find(check[:id])
-      check[:data].each { |key, value|
+      check[:data].each do |key, value|
         assert_equal(value, group[key], "group.#{key} for group_id #{check[:id]}")
-      }
-    }
+      end
+    end
   end
 
   # check imported organizations
@@ -255,9 +255,9 @@ class ZendeskImportTest < ActiveSupport::TestCase
       },
     ]
 
-    checks.each { |check|
+    checks.each do |check|
       organization = Organization.find(check[:id])
-      check[:data].each { |key, value|
+      check[:data].each do |key, value|
         organization_value = organization[key]
         text               = "organization.#{key} for organization_id #{check[:id]}"
 
@@ -266,8 +266,8 @@ class ZendeskImportTest < ActiveSupport::TestCase
         else
           assert_equal(value, organization_value, text)
         end
-      }
-    }
+      end
+    end
   end
 
   # check organization fields
@@ -391,9 +391,9 @@ If you\'re reading this message in your email, click the ticket number link that
       # },
     ]
 
-    checks.each { |check|
+    checks.each do |check|
       ticket = Ticket.find(check[:id])
-      check[:data].each { |key, value|
+      check[:data].each do |key, value|
         ticket_value = ticket[key]
         text         = "ticket.#{key} for ticket_id #{check[:id]}"
 
@@ -402,8 +402,8 @@ If you\'re reading this message in your email, click the ticket number link that
         else
           assert_equal(value, ticket_value, text)
         end
-      }
-    }
+      end
+    end
   end
 
   test 'check article attachments' do
@@ -435,20 +435,20 @@ If you\'re reading this message in your email, click the ticket number link that
       },
     ]
 
-    checks.each { |check|
+    checks.each do |check|
       article = Ticket::Article.find_by(message_id: check[:message_id])
 
       assert_equal(check[:data][:count], article.attachments.count, 'attachemnt count')
 
-      (1..check[:data][:count]).each { |attachment_counter|
+      (1..check[:data][:count]).each do |attachment_counter|
 
         attachment         = article.attachments[ attachment_counter - 1 ]
         compare_attachment = check[:data][ attachment_counter ]
 
         assert_equal(compare_attachment[:filename], attachment.filename, 'attachment file name')
         assert_equal(compare_attachment[:preferences], attachment[:preferences], 'attachment preferences')
-      }
-    }
+      end
+    end
   end
 
   # check ticket fields

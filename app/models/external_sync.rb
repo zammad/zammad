@@ -8,7 +8,7 @@ class ExternalSync < ApplicationModel
     def changed?(object:, previous_changes: {}, current_changes:)
       changed = false
       previous_changes ||= {}
-      current_changes.each { |attribute, value|
+      current_changes.each do |attribute, value|
         next if !object.attributes.key?(attribute.to_s)
         next if object[attribute] == value
         next if object[attribute].present? && object[attribute] != previous_changes[attribute]
@@ -19,7 +19,7 @@ class ExternalSync < ApplicationModel
         rescue => e
           Rails.logger.error "ERROR: Unable to assign attribute #{attribute} to object #{object.class.name}: #{e.inspect}"
         end
-      }
+      end
       changed
     end
 
@@ -32,7 +32,7 @@ class ExternalSync < ApplicationModel
                            end
 
       result = {}
-      mapping.each { |remote_key, local_key|
+      mapping.each do |remote_key, local_key|
 
         local_key_sym = local_key.to_sym
 
@@ -40,7 +40,7 @@ class ExternalSync < ApplicationModel
         value = extract(remote_key, information_source)
         next if value.blank?
         result[local_key_sym] = value
-      }
+      end
       result
     end
 

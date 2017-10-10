@@ -107,7 +107,7 @@ class Transaction::Slack
       color = '#38ad69'
     end
 
-    config['items'].each { |local_config|
+    config['items'].each do |local_config|
       next if local_config['webhook'].empty?
 
       # check if reminder_reached/escalation/escalation_warning is already sent today
@@ -131,11 +131,11 @@ class Transaction::Slack
       # check action
       if local_config['types'].class == Array
         hit = false
-        local_config['types'].each { |type|
+        local_config['types'].each do |type|
           next if type.to_s != @item[:type].to_s
           hit = true
           break
-        }
+        end
         next if !hit
       elsif local_config['types']
         next if local_config['types'].to_s != @item[:type].to_s
@@ -144,11 +144,11 @@ class Transaction::Slack
       # check group
       if local_config['group_ids'].class == Array
         hit = false
-        local_config['group_ids'].each { |group_id|
+        local_config['group_ids'].each do |group_id|
           next if group_id.to_s != ticket.group_id.to_s
           hit = true
           break
-        }
+        end
         next if !hit
       elsif local_config['group_ids']
         next if local_config['group_ids'].to_s != ticket.group_id.to_s
@@ -189,7 +189,7 @@ class Transaction::Slack
         next
       end
       Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})"
-    }
+    end
 
   end
 
@@ -203,7 +203,7 @@ class Transaction::Slack
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
     #puts "AL #{attribute_list.inspect}"
     user_related_changes = {}
-    @item[:changes].each { |key, value|
+    @item[:changes].each do |key, value|
 
       # if no config exists, use all attributes
       if !attribute_list || attribute_list.empty?
@@ -213,10 +213,10 @@ class Transaction::Slack
       elsif attribute_list[key.to_s]
         user_related_changes[key] = value
       end
-    }
+    end
 
     changes = {}
-    user_related_changes.each { |key, value|
+    user_related_changes.each do |key, value|
 
       # get attribute name
       attribute_name           = key.to_s
@@ -279,7 +279,7 @@ class Transaction::Slack
                          else
                            [value_str[0].to_s, value_str[1].to_s]
                          end
-    }
+    end
     changes
   end
 

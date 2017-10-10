@@ -10,13 +10,13 @@ Rails.application.routes.draw do
   # load routes from external files
   dir = File.expand_path('../', __FILE__)
   files = Dir.glob( "#{dir}/routes/*.rb" )
-  files.each { |file|
+  files.each do |file|
     if Rails.configuration.cache_classes
       require file
     else
       load file
     end
-  }
+  end
 
   match '*a', to: 'errors#routing', via: [:get, :post, :put, :delete]
 

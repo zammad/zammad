@@ -9,6 +9,11 @@ class Service::Image::Zammad
   @@total_timeout = 6
 
   def self.user(email)
+    raise Exceptions::UnprocessableEntity, 'no email given' if email.blank?
+
+    email.downcase!
+
+    return if email =~ /@example.com$/
 
     # fetch image
     response = UserAgent.post(
@@ -35,9 +40,13 @@ class Service::Image::Zammad
   end
 
   def self.organization(domain)
+    raise Exceptions::UnprocessableEntity, 'no domain given' if domain.blank?
 
     # strip, just use domain name
     domain = domain.sub(/^.+?@(.+?)$/, '\1')
+
+    domain.downcase!
+    return if domain == 'example.com'
 
     # fetch org logo
     response = UserAgent.post(

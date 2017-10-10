@@ -278,14 +278,14 @@ class AssetsTest < ActiveSupport::TestCase
 
   def diff(o1, o2)
     return true if o1 == o2
-    %w(updated_at created_at).each { |item|
+    %w(updated_at created_at).each do |item|
       if o1[item]
         o1[item] = o1[item].to_s
       end
       if o2[item]
         o2[item] = o2[item].to_s
       end
-    }
+    end
     return true if (o1.to_a - o2.to_a).empty?
     #puts "ERROR: difference \n1: #{o1.inspect}\n2: #{o2.inspect}\ndiff: #{(o1.to_a - o2.to_a).inspect}"
     false
@@ -446,7 +446,21 @@ class AssetsTest < ActiveSupport::TestCase
       roles: roles,
     )
 
-    calendar1 = Calendar.first
+    calendar1 = Calendar.create_or_update(
+      name: 'US 1',
+      timezone: 'America/Los_Angeles',
+      business_hours: {
+        mon: { '09:00' => '17:00' },
+        tue: { '09:00' => '17:00' },
+        wed: { '09:00' => '17:00' },
+        thu: { '09:00' => '17:00' },
+        fri: { '09:00' => '17:00' }
+      },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
     ticket_state1 = Ticket::State.find_by(name: 'new')
     ticket_state2 = Ticket::State.find_by(name: 'open')
     sla = Sla.create_or_update(

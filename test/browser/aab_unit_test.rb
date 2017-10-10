@@ -118,6 +118,13 @@ class AAbUnitTest < TestCase
       value: '0',
     )
 
+    location(url: browser_url + '/tests_table_extended')
+    sleep 4
+    match(
+      css: '.result .failed',
+      value: '0',
+    )
+
     location(url: browser_url + '/tests_html_utils')
     sleep 4
     match(

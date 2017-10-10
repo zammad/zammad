@@ -54,7 +54,7 @@ class OtrsImportBrowserTest < TestCase
     watch_for(
       css: 'body',
       value: 'login',
-      timeout: 480,
+      timeout: 600,
     )
 
   end

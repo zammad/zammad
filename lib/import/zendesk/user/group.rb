@@ -16,7 +16,7 @@ module Import
           groups = []
           return groups if mapping[user.id].empty?
 
-          mapping[user.id].each { |zendesk_group_id|
+          mapping[user.id].each do |zendesk_group_id|
 
             local_group_id = Import::Zendesk::GroupFactory.local_id(zendesk_group_id)
 
@@ -25,7 +25,7 @@ module Import
             group = ::Group.find( local_group_id )
 
             groups.push(group)
-          }
+          end
           groups
         end
 
@@ -37,11 +37,11 @@ module Import
 
           @mapping = {}
 
-          Import::Zendesk::Requester.client.group_memberships.all! { |group_membership|
+          Import::Zendesk::Requester.client.group_memberships.all! do |group_membership|
 
             @mapping[ group_membership.user_id ] ||= []
             @mapping[ group_membership.user_id ].push( group_membership.group_id )
-          }
+          end
 
           @mapping
         end

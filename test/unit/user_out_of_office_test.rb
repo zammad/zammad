@@ -49,33 +49,33 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
     assert_not(@agent2.out_of_office?)
     assert_not(@agent3.out_of_office?)
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       @agent1.out_of_office = true
       @agent1.out_of_office_start_at = Time.zone.now + 2.days
       @agent1.out_of_office_end_at = Time.zone.now
       @agent1.save!
-    }
+    end
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       @agent1.out_of_office = true
       @agent1.out_of_office_start_at = Time.zone.now
       @agent1.out_of_office_end_at = Time.zone.now - 2.days
       @agent1.save!
-    }
+    end
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       @agent1.out_of_office = true
       @agent1.out_of_office_start_at = nil
       @agent1.out_of_office_end_at = Time.zone.now
       @agent1.save!
-    }
+    end
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       @agent1.out_of_office = true
       @agent1.out_of_office_start_at = Time.zone.now
       @agent1.out_of_office_end_at = nil
       @agent1.save!
-    }
+    end
 
     @agent1.out_of_office = false
     @agent1.out_of_office_start_at = Time.zone.now + 2.days
@@ -84,16 +84,16 @@ class UserOutOfOfficeTest < ActiveSupport::TestCase
 
     assert_not(@agent1.out_of_office?)
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       @agent1.out_of_office = true
       @agent1.out_of_office_start_at = Time.zone.now + 2.days
       @agent1.out_of_office_end_at = Time.zone.now + 4.days
       @agent1.save!
-    }
-    assert_raises(Exceptions::UnprocessableEntity) {
+    end
+    assert_raises(Exceptions::UnprocessableEntity) do
       @agent1.out_of_office_replacement_id = 999_999_999_999 # not existing
       @agent1.save!
-    }
+    end
     @agent1.out_of_office_replacement_id = @agent2.id
     @agent1.save!
 

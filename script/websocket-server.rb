@@ -119,11 +119,11 @@ end
 
 @clients = {}
 Rails.configuration.interface = 'websocket'
-EventMachine.run {
+EventMachine.run do
   EventMachine::WebSocket.start( host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: tls_options ) do |ws|
 
     # register client connection
-    ws.onopen { |handshake|
+    ws.onopen do |handshake|
       headers = handshake.headers
       remote_ip = get_remote_ip(headers)
       client_id = ws.object_id.to_s
@@ -139,10 +139,10 @@ EventMachine.run {
           remote_ip:   remote_ip,
         }
       end
-    }
+    end
 
     # unregister client connection
-    ws.onclose {
+    ws.onclose do
       client_id = ws.object_id.to_s
       log 'notice', 'Client disconnected.', client_id
 
@@ -152,10 +152,10 @@ EventMachine.run {
       end
 
       Sessions.destroy(client_id)
-    }
+    end
 
     # manage messages
-    ws.onmessage { |msg|
+    ws.onmessage do |msg|
 
       client_id = ws.object_id.to_s
       log 'debug', "received: #{msg} ", client_id
@@ -194,46 +194,46 @@ EventMachine.run {
       else
         log 'error', "unknown message '#{data.inspect}'", client_id
       end
-    }
+    end
   end
 
   # check unused connections
-  EventMachine.add_timer(0.5) {
+  EventMachine.add_timer(0.5) do
     check_unused_connections
-  }
+  end
 
   # check open unused connections, kick all connection without activitie in the last 2 minutes
-  EventMachine.add_periodic_timer(120) {
+  EventMachine.add_periodic_timer(120) do
     check_unused_connections
-  }
+  end
 
-  EventMachine.add_periodic_timer(20) {
+  EventMachine.add_periodic_timer(20) do
 
     # websocket
     log 'notice', "Status: websocket clients: #{@clients.size}"
-    @clients.each { |client_id, _client|
+    @clients.each do |client_id, _client|
       log 'notice', 'working...', client_id
-    }
+    end
 
     # ajax
     client_list = Sessions.list
     clients = 0
-    client_list.each { |_client_id, client|
+    client_list.each do |_client_id, client|
       next if client[:meta][:type] == 'websocket'
       clients = clients + 1
-    }
+    end
     log 'notice', "Status: ajax clients: #{clients}"
-    client_list.each { |client_id, client|
+    client_list.each do |client_id, client|
       next if client[:meta][:type] == 'websocket'
       log 'notice', 'working...', client_id
-    }
+    end
 
-  }
+  end
 
-  EventMachine.add_periodic_timer(0.4) {
+  EventMachine.add_periodic_timer(0.4) do
     next if @clients.size.zero?
     #log 'debug', 'checking for data to send...'
-    @clients.each { |client_id, client|
+    @clients.each do |client_id, client|
       next if client[:disconnect]
       log 'debug', 'checking for data...', client_id
       begin
@@ -253,8 +253,8 @@ EventMachine.run {
           end
         end
       end
-    }
-  }
+    end
+  end
 
   def get_remote_ip(headers)
     return headers['X-Forwarded-For'] if headers && headers['X-Forwarded-For']
@@ -281,7 +281,7 @@ EventMachine.run {
     idle_time_in_sec = 4 * 60
 
     # close unused web socket sessions
-    @clients.each { |client_id, client|
+    @clients.each do |client_id, client|
 
       next if ( client[:last_ping].to_i + idle_time_in_sec ) >= Time.now.utc.to_i
 
@@ -296,13 +296,13 @@ EventMachine.run {
       # delete session from client list
       sleep 0.3
       @clients.delete(client_id)
-    }
+    end
 
     # close unused ajax long polling sessions
     clients = Sessions.destroy_idle_sessions(idle_time_in_sec)
-    clients.each { |client_id|
+    clients.each do |client_id|
       log 'notice', 'closing idle long polling connection', client_id
-    }
+    end
   end
 
   def log(level, data, client_id = '-')
@@ -313,4 +313,4 @@ EventMachine.run {
     #puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
   end
 
-}
+end

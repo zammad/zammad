@@ -32,9 +32,9 @@ returns
       end
 
       data = {}
-      params.each { |key, value|
+      params.each do |key, value|
         data[key.to_sym] = value
-      }
+      end
 
       # ignore id for new objects
       if new_object && params[:id]
@@ -43,11 +43,11 @@ returns
 
       # only use object attributes
       clean_params = {}
-      new.attributes.each { |attribute, _value|
+      new.attributes.each do |attribute, _value|
         next if !data.key?(attribute.to_sym)
 
         # check reference records, referenced by _id attributes
-        reflect_on_all_associations.map { |assoc|
+        reflect_on_all_associations.map do |assoc|
           class_name = assoc.options[:class_name]
           next if !class_name
           name = "#{assoc.name}_id".to_sym
@@ -55,9 +55,9 @@ returns
           next if data[name].blank?
           next if assoc.klass.lookup(id: data[name])
           raise ArgumentError, "Invalid value for param '#{name}': #{data[name].inspect}"
-        }
+        end
         clean_params[attribute.to_sym] = data[attribute.to_sym]
-      }
+      end
 
       # we do want to set this via database
       filter_unused_params(clean_params)
@@ -80,9 +80,9 @@ returns
     def filter_unused_params(data)
 
       # we do want to set this via database
-      [:action, :controller, :updated_at, :created_at, :updated_by_id, :created_by_id, :updated_by, :created_by].each { |key|
+      [:action, :controller, :updated_at, :created_at, :updated_by_id, :created_by_id, :updated_by, :created_by].each do |key|
         data.delete(key)
-      }
+      end
 
       data
     end

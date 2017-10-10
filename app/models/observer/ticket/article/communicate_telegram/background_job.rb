@@ -30,14 +30,14 @@ class Observer::Ticket::Article::CommunicateTelegram::BackgroundJob
       api = TelegramAPI.new(channel.options[:api_token])
       chat_id = ticket.preferences[:telegram][:chat_id]
       result = api.sendMessage(chat_id, article.body)
-      article.attachments.each { |file|
+      article.attachments.each do |file|
         parts = file.filename.split(/^(.*)(\..+?)$/)
         t = Tempfile.new([parts[1], parts[2]])
         t.binmode
         t.write(file.content)
         t.rewind
         api.sendDocument(chat_id, t.path.to_s)
-      }
+      end
     rescue => e
       log_error(article, e.message)
       return

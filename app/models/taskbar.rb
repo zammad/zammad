@@ -14,17 +14,17 @@ class Taskbar < ApplicationModel
 
   def state_changed?
     return false if state.blank?
-    state.each { |_key, value|
+    state.each do |_key, value|
       if value.is_a? Hash
-        value.each { |_key1, value1|
+        value.each do |_key1, value1|
           next if value1.blank?
           return true
-        }
+        end
       else
         next if value.blank?
         return true
       end
-    }
+    end
     false
   end
 
@@ -35,11 +35,11 @@ class Taskbar < ApplicationModel
     return true if changes.empty?
     if changes['notify']
       count = 0
-      changes.each { |attribute, _value|
+      changes.each do |attribute, _value|
         next if attribute == 'updated_at'
         next if attribute == 'created_at'
         count += 1
-      }
+      end
       return true if count <= 1
     end
     self.last_contact = Time.zone.now
@@ -59,7 +59,7 @@ class Taskbar < ApplicationModel
       self.preferences = {}
     end
     preferences[:tasks] = []
-    Taskbar.where(key: key).order(:created_at, :id).each { |taskbar|
+    Taskbar.where(key: key).order(:created_at, :id).each do |taskbar|
       if taskbar.id == id
         local_changed = state_changed?
         local_last_contact = last_contact
@@ -74,7 +74,7 @@ class Taskbar < ApplicationModel
         changed: local_changed,
       }
       preferences[:tasks].push task
-    }
+    end
     if !id
       changed = state_changed?
       task = {
@@ -86,14 +86,14 @@ class Taskbar < ApplicationModel
     end
 
     # update other taskbars
-    Taskbar.where(key: key).order(:created_at, :id).each { |taskbar|
+    Taskbar.where(key: key).order(:created_at, :id).each do |taskbar|
       next if taskbar.id == id
       taskbar.with_lock do
         taskbar.preferences = preferences
         taskbar.local_update = true
         taskbar.save!
       end
-    }
+    end
 
     return true if destroyed?
 
@@ -104,7 +104,7 @@ class Taskbar < ApplicationModel
   end
 
   def notify_clients
-    return true if !changes['preferences']
+    return true if !saved_change_to_attribute?('preferences')
     data = {
       event: 'taskbar:preferences',
       data: {

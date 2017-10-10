@@ -86,16 +86,16 @@ returns
         local_permissions = [data[:permission]]
       end
       match = false
-      local_permissions.each { |local_permission|
+      local_permissions.each do |local_permission|
         local_permissions = Permission.with_parents(local_permission)
-        local_permissions.each { |local_permission_name|
+        local_permissions.each do |local_permission_name|
           next if !token.preferences[:permission].include?(local_permission_name)
           match = true
           break
-        }
+        end
         next if !match
         break
-      }
+      end
       return if !match
     end
 

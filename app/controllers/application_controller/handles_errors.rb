@@ -44,12 +44,12 @@ module ApplicationController::HandlesErrors
 
     respond_to do |format|
       format.json { render json: humanize_error(e.message), status: status }
-      format.any {
+      format.any do
         @exception = e
         @traceback = !Rails.env.production?
         file = File.open(Rails.root.join('public', "#{status_code}.html"), 'r')
         render inline: file.read, status: status
-      }
+      end
     end
   end
 

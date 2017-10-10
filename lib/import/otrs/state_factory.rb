@@ -12,10 +12,10 @@ module Import
 
       def backup
         # rename states to handle not uniq issues
-        ::Ticket::State.all.each { |state|
+        ::Ticket::State.all.each do |state|
           state.name = state.name + '_tmp'
           state.save
-        }
+        end
       end
 
       def import_loop(records, *_args, &import_block)

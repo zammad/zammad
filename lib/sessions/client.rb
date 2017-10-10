@@ -36,16 +36,16 @@ class Sessions::Client
         asset_lookup = {}
 
         # release old objects
-        backend_pool.collect! {
+        backend_pool.collect! do
           nil
-        }
+        end
 
         # create new pool
         backend_pool = []
-        backends.each { |backend|
+        backends.each do |backend|
           item = backend.constantize.new(user, asset_lookup, self, @client_id)
           backend_pool.push item
-        }
+        end
       end
 
       loop_count += 1

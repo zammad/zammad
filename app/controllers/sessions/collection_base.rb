@@ -7,36 +7,36 @@ module ExtraCollection
     collections[ Locale.to_app_model ] = Locale.where(active: true)
 
     collections[ Taskbar.to_app_model ] = Taskbar.where(user_id: user.id)
-    collections[ Taskbar.to_app_model ].each { |item|
+    collections[ Taskbar.to_app_model ].each do |item|
       assets = item.assets(assets)
-    }
+    end
 
-    collections[ OnlineNotification.to_app_model ] = OnlineNotification.list(user, 100)
+    collections[ OnlineNotification.to_app_model ] = OnlineNotification.list(user, 200)
     assets = ApplicationModel.assets_of_object_list(collections[ OnlineNotification.to_app_model ], assets)
 
     collections[ RecentView.to_app_model ] = RecentView.list(user, 10)
     assets = RecentView.assets_of_object_list(collections[ RecentView.to_app_model ], assets)
 
     collections[ Permission.to_app_model ] = []
-    Permission.all.each { |item|
+    Permission.all.each do |item|
       assets = item.assets(assets)
-    }
+    end
 
     collections[ Role.to_app_model ] = []
-    Role.all.each { |item|
+    Role.all.each do |item|
       assets = item.assets(assets)
-    }
+    end
 
     collections[ Group.to_app_model ] = []
-    Group.all.each { |item|
+    Group.all.each do |item|
       assets = item.assets(assets)
-    }
+    end
 
     collections[ Organization.to_app_model ] = []
     if user.organization_id
-      Organization.where(id: user.organization_id).each { |item|
+      Organization.where(id: user.organization_id).each do |item|
         assets = item.assets(assets)
-      }
+      end
     end
 
     [collections, assets]

@@ -179,9 +179,9 @@ returns
     if !path
       path = "#{Rails.root}/tmp/#{filename}"
     end
-    ::File.open(path, 'wb') { |handle|
+    ::File.open(path, 'wb') do |handle|
       handle.write file.content
-    }
+    end
     path
   end
 

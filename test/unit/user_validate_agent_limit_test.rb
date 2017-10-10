@@ -25,7 +25,7 @@ class UserValidateAgentLimit < ActiveSupport::TestCase
       roles:       [role_agent],
     )
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       user3 = User.create(
         firstname: 'Firstname2',
         lastname:  'Lastname2',
@@ -33,7 +33,7 @@ class UserValidateAgentLimit < ActiveSupport::TestCase
         login:     'some-agentlimit-2@example.com',
         roles:     [role_agent],
       )
-    }
+    end
 
     user3 = User.create(
       firstname: 'Firstname2',
@@ -43,9 +43,9 @@ class UserValidateAgentLimit < ActiveSupport::TestCase
       roles:     [role_customer],
     )
 
-    assert_raises(Exceptions::UnprocessableEntity) {
+    assert_raises(Exceptions::UnprocessableEntity) do
       user3.roles = [role_agent]
-    }
+    end
 
     user1.destroy
     user2.destroy

@@ -369,11 +369,11 @@ returns
     role_ids = Role.signup_role_ids
     url = ''
     if hash['info']['urls']
-      hash['info']['urls'].each { |_name, local_url|
+      hash['info']['urls'].each do |_name, local_url|
         next if !local_url
         next if local_url.empty?
         url = local_url
-      }
+      end
     end
     create(
       login: hash['info']['nickname'] || hash['uid'],
@@ -408,10 +408,10 @@ returns
 
   def permissions
     list = {}
-    Object.const_get('Permission').select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?) AND permissions.active = ?', role_ids, true).pluck(:name, :preferences).each { |permission|
+    Object.const_get('Permission').select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?) AND permissions.active = ?', role_ids, true).pluck(:name, :preferences).each do |permission|
       next if permission[1]['selectable'] == false
       list[permission[0]] = true
-    }
+    end
     list
   end
 
@@ -439,7 +439,7 @@ returns
     if key.class == String
       keys = [key]
     end
-    keys.each { |local_key|
+    keys.each do |local_key|
       cache_key = "User::permissions?:local_key:::#{id}"
       if Rails.env.production?
         cache = Cache.get(cache_key)
@@ -456,12 +456,12 @@ returns
         permissions = Object.const_get('Permission').with_parents(local_key)
         list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?) AND permissions.active = ?', role_ids, true, permissions, true).pluck(:preferences)
       end
-      list.each { |preferences|
+      list.each do |preferences|
         next if preferences[:selectable] == false
         Cache.write(key, true, expires_in: 10.seconds)
         return true
-      }
-    }
+      end
+    end
     Cache.write(key, false, expires_in: 10.seconds)
     false
   end
@@ -482,12 +482,12 @@ returns
   def permissions_with_child_ids
     where = ''
     where_bind = [true]
-    permissions.each { |permission_name, _value|
+    permissions.each do |permission_name, _value|
       where += ' OR ' if where != ''
       where += 'permissions.name = ? OR permissions.name LIKE ?'
       where_bind.push permission_name
       where_bind.push "#{permission_name}.%"
-    }
+    end
     return [] if where == ''
     Object.const_get('Permission').where("permissions.active = ? AND (#{where})", *where_bind).pluck(:id)
   end
@@ -514,27 +514,27 @@ returns
     end
     total_role_ids = []
     permission_ids = []
-    keys.each { |key|
+    keys.each do |key|
       role_ids = []
-      Object.const_get('Permission').with_parents(key).each { |local_key|
+      Object.const_get('Permission').with_parents(key).each do |local_key|
         permission = Object.const_get('Permission').lookup(name: local_key)
         next if !permission
         permission_ids.push permission.id
-      }
+      end
       next if permission_ids.empty?
-      Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().pluck(:id).each { |role_id|
+      Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().pluck(:id).each do |role_id|
         role_ids.push role_id
-      }
+      end
       total_role_ids.push role_ids
-    }
+    end
     return [] if total_role_ids.empty?
     condition = ''
-    total_role_ids.each { |_role_ids|
+    total_role_ids.each do |_role_ids|
       if condition != ''
         condition += ' OR '
       end
       condition += 'roles_users.role_id IN (?)'
-    }
+    end
     User.joins(:users_roles).where("(#{condition}) AND users.active = ?", *total_role_ids, true).distinct.order(:id)
   end
 
@@ -763,18 +763,18 @@ returns
     default = Rails.configuration.preferences_default_by_permission
     return false if !default
     default.deep_stringify_keys!
-    User.with_permissions(permission.name).each { |user|
+    User.with_permissions(permission.name).each do |user|
       next if !default[permission.name]
       has_changed = false
-      default[permission.name].each { |key, value|
+      default[permission.name].each do |key, value|
         next if !force && user.preferences[key]
         has_changed = true
         user.preferences[key] = value
-      }
+      end
       if has_changed
         user.save!
       end
-    }
+    end
     true
   end
 
@@ -796,9 +796,9 @@ returns
     default = Rails.configuration.preferences_default_by_permission
     return false if !default
     default.deep_stringify_keys!
-    role.permissions.each { |permission|
+    role.permissions.each do |permission|
       User.update_default_preferences_by_permission(permission.name, force)
-    }
+    end
     true
   end
 
@@ -807,14 +807,14 @@ returns
     return if !default
     default.deep_stringify_keys!
     has_changed = false
-    o.permissions.each { |permission|
+    o.permissions.each do |permission|
       next if !default[permission.name]
-      default[permission.name].each { |key, value|
+      default[permission.name].each do |key, value|
         next if preferences[key]
         preferences[key] = value
         has_changed = true
-      }
-    }
+      end
+    end
 
     return true if !has_changed
 
@@ -830,9 +830,9 @@ returns
   def check_preferences_default
     if @preferences_default.blank?
       if id
-        roles.each { |role|
+        roles.each do |role|
           check_notifications(role, false)
-        }
+        end
       end
     end
     return if @preferences_default.blank?
@@ -965,16 +965,16 @@ returns
 
   def validate_roles
     return true if !role_ids
-    role_ids.each { |role_id|
+    role_ids.each do |role_id|
       role = Role.lookup(id: role_id)
       raise "Unable to find role for id #{role_id}" if !role
       next if !role.preferences[:not]
-      role.preferences[:not].each { |local_role_name|
+      role.preferences[:not].each do |local_role_name|
         local_role = Role.lookup(name: local_role_name)
         next if !local_role
         raise "Role #{role.name} conflicts with #{local_role.name}" if role_ids.include?(local_role.id)
-      }
-    }
+      end
+    end
     true
   end
 
@@ -1055,7 +1055,7 @@ raise 'Minimum one user need to have admin permissions'
   def avatar_for_email_check
     return true if email.blank?
     return true if email !~ /@/
-    return true if !changes['email'] && updated_at > Time.zone.now - 10.days
+    return true if !saved_change_to_attribute?('email') && updated_at > Time.zone.now - 10.days
 
     # save/update avatar
     avatar = Avatar.auto_detection(
@@ -1106,8 +1106,7 @@ raise 'Minimum one user need to have admin permissions'
 
   # reset login_failed if password is changed
   def reset_login_failed
-    return true if !changes
-    return true if !changes['password']
+    return true if !will_save_change_to_attribute?('password')
     self.login_failed = 0
     true
   end

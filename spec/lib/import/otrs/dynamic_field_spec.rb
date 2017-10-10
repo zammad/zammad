@@ -9,8 +9,8 @@ RSpec.describe Import::OTRS::DynamicField do
 
   it 'requires an implementation of init_callback' do
     expect(ObjectManager::Attribute).to receive(:get).and_return(false)
-    expect {
+    expect do
       start_import_test
-    }.to raise_error(RuntimeError)
+    end.to raise_error(RuntimeError)
   end
 end

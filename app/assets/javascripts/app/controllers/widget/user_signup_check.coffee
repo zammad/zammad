@@ -23,6 +23,7 @@ class Widget extends App.Controller
 
   verify: (userId) ->
     return if !userId
+    return if !App.User.exists(userId)
     user = App.User.find(userId)
     return if user.source isnt 'signup'
     return if user.verified is true

@@ -84,11 +84,11 @@ returns
 
   def search_index_data
     attributes = {}
-    %w(name note).each { |key|
+    %w(name note).each do |key|
       next if !self[key]
       next if self[key].respond_to?('blank?') && self[key].blank?
       attributes[key] = self[key]
-    }
+    end
     return true if attributes.blank?
     attributes
   end
@@ -127,7 +127,7 @@ reload search index with full data
       tolerance       = 5
       tolerance_count = 0
       ids = all.order('created_at DESC').pluck(:id)
-      ids.each { |item_id|
+      ids.each do |item_id|
         item = find(item_id)
         next if item.ignore_search_indexing?(:destroy)
         begin
@@ -137,7 +137,7 @@ reload search index with full data
           tolerance_count += 1
           raise "Unable to send #{item.class}.find(#{item.id}).search_index_update_backend backend: #{e.inspect}" if tolerance_count == tolerance
         end
-      }
+      end
     end
   end
 end

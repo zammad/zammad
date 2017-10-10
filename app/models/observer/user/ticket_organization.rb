@@ -15,16 +15,16 @@ class Observer::User::TicketOrganization < ActiveRecord::Observer
   def check_organization(record)
 
     # check if organization has changed
-    return if !record.changes['organization_id']
+    return true if !record.saved_change_to_attribute?('organization_id')
 
     # update last 100 tickets of user
     tickets = Ticket.where(customer_id: record.id).limit(100)
-    tickets.each { |ticket|
+    tickets.each do |ticket|
       if ticket.organization_id != record.organization_id
         ticket.organization_id = record.organization_id
         ticket.save
       end
-    }
+    end
   end
 
 end

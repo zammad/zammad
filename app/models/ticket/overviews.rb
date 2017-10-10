@@ -25,11 +25,11 @@ returns
       end
       overviews = Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: overview_filter).distinct('overview.id').order(:prio)
       overviews_list = []
-      overviews.each { |overview|
+      overviews.each do |overview|
         user_ids = overview.user_ids
         next if !user_ids.empty? && !user_ids.include?(current_user.id)
         overviews_list.push overview
-      }
+      end
       return overviews_list
     end
 
@@ -42,11 +42,11 @@ returns
     end
     overviews = Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: overview_filter).where.not(overview_filter_not).distinct('overview.id').order(:prio)
     overviews_list = []
-    overviews.each { |overview|
+    overviews.each do |overview|
       user_ids = overview.user_ids
       next if !user_ids.empty? && !user_ids.include?(current_user.id)
       overviews_list.push overview
-    }
+    end
     overviews_list
   end
 
@@ -96,7 +96,7 @@ returns
 
     ticket_attributes = Ticket.new.attributes
     list = []
-    overviews.each { |overview|
+    overviews.each do |overview|
       query_condition, bind_condition, tables = Ticket.selector2sql(overview.condition, user)
 
       # validate direction
@@ -135,13 +135,13 @@ returns
                             .pluck(:id, :updated_at)
 
       tickets = []
-      ticket_result.each { |ticket|
+      ticket_result.each do |ticket|
         ticket_item = {
           id: ticket[0],
           updated_at: ticket[1],
         }
         tickets.push ticket_item
-      }
+      end
       count = Ticket.where(access_condition).where(query_condition, *bind_condition).joins(tables).count()
       item = {
         overview: {
@@ -155,7 +155,7 @@ returns
       }
 
       list.push item
-    }
+    end
     list
   end
 

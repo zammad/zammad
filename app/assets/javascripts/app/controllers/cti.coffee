@@ -142,7 +142,7 @@ class App.CTI extends App.Controller
 
     for item in @list
       item.status_class = ''
-
+      item.disabled = true
       if item.state is 'newCall'
         item.state_human = 'ringing'
         item.status_class = 'neutral'
@@ -150,6 +150,7 @@ class App.CTI extends App.Controller
         item.state_human = 'connected'
         item.status_class = 'ok'
       else if item.state is 'hangup'
+        item.disabled = false
         item.state_human = switch item.comment
           when 'cancel', 'noAnswer', 'congestion' then 'not reached'
           when 'busy' then 'busy'
@@ -163,6 +164,10 @@ class App.CTI extends App.Controller
 
       if item.start && item.end
         item.duration = format((Date.parse(item.end) - Date.parse(item.start))/1000)
+
+      diff_in_min = ((Date.now() - Date.parse(item.created_at)) / 1000) / 60
+      if diff_in_min > 1
+        item.disabled = false
 
     @userPopupsDestroy()
     @callerLog.html( App.view('cti/caller_log')(list: @list))

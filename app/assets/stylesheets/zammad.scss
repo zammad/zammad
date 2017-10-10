@@ -385,7 +385,7 @@ pre code.hljs {
     fill: currentColor;
   }
 
-  &.btn--icon--last .icon {
+  &--icon--last .icon {
     @include bidi-style(margin-left, 5px, margin-right, 0); // so far only used in ticket_zoom secondaryAction dropup
   }
 
@@ -393,23 +393,23 @@ pre code.hljs {
     box-shadow: 0 0 0 3px hsl(201,62%,90%);
   }
 
-  &.btn--small {
+  &--small {
     padding-top: 5px;
     padding-bottom: 4px;
   }
 
-  &.btn--slim {
+  &--slim {
     padding-left: 12px;
     padding-right: 12px;
   }
 
-  &.btn--fullWidth {
+  &--fullWidth {
     width: 100%;
     text-align: center;
     justify-content: center;
   }
 
-  &.btn--table {
+  &--table {
     padding: 4px 9px;
     border: none;
     margin: 5px 6px 0;
@@ -434,7 +434,7 @@ pre code.hljs {
     background: hsl(0,0%,98%);
   }
 
-  &.btn--action {
+  &--action {
     text-transform: uppercase;
     color: hsl(0,0%,60%);
     font-size: 12px;
@@ -446,7 +446,6 @@ pre code.hljs {
 
     .icon {
       margin: -2px 5px 0 -2px;
-      fill: hsl(0,0%,60%);
     }
 
     .icon:only-child {
@@ -471,18 +470,18 @@ pre code.hljs {
     }
   }
 
-  // used in .recipientList-controls
-  &.btn--onDark {
-    background: none;
+  // used in .recipientList-controls and in breadcrumbs
+  &--onDark {
+    background: hsla(200,100%,97%,0.15);
+    border-color: hsl(250,7%,16%);
     color: white;
-
-    svg {
-      fill: currentColor;
+    
+    .icon {
       opacity: 1;
     }
   }
 
-  &.btn--primary {
+  &--primary {
     color: white;
     background: hsl(203,65%,55%);
     &:active {
@@ -494,13 +493,13 @@ pre code.hljs {
     }
   }
 
-  &.btn--secondary {
+  &--secondary {
     color: hsl(202,68%,54%);
   }
 
-  &.btn--positive,
-  &.btn--create,
-  &.btn--success {
+  &--positive,
+  &--create,
+  &--success {
     color: white;
     background: hsl(145,51%,45%);
 
@@ -520,15 +519,12 @@ pre code.hljs {
     &.btn--text {
       color: $supergood-color;
     }
-
-    .icon {
-      fill: white;
-    }
   }
 
-  &.btn--danger {
+  &--danger {
     color: white;
     background: hsl(0,65%,55%);
+    
     &:active {
       background: hsl(0,65%,45%);
     }
@@ -543,7 +539,7 @@ pre code.hljs {
     }
   }
 
-  &.btn--text {
+  &--text {
     font-size: inherit;
     margin: -10px;
     padding: 10px;
@@ -554,7 +550,6 @@ pre code.hljs {
     text-align: start;
 
     .icon {
-      fill: currentColor;
       opacity: 1;
     }
 
@@ -608,12 +603,13 @@ pre code.hljs {
     }
   }
 
-  &.btn--textLarge {
-    @extend .btn--text;
-    margin: 0px;
+  &--large {
+    &.btn--text {
+      margin: 0;
+    }
   }
 
-  &.btn--quad {
+  &--quad {
     padding: 10px 12px 9px;
 
     .icon {
@@ -621,21 +617,21 @@ pre code.hljs {
     }
   }
 
-  &.btn--split--first {
+  &--split--first {
     @include bidi-style(border-radius, 3px 0 0 3px, border-radius, 0 3px 3px 0);
   }
-  &.btn--split,
-  &.btn--split--last {
+  &--split,
+  &--split--last {
     border-radius: 0;
     @include bidi-style(border-left-width, 0, border-right-width, 1px);
     @include ltr(margin-left, 0 !important);
     @include rtl(margin-right, 0 !important);
   }
-  &.btn--split--last {
+  &--split--last {
     @include bidi-style(border-radius, 0 3px 3px 0, border-radius, 3px 0 0 3px);
   }
 
-  &.btn--dropdown {
+  &--dropdown {
     position: relative;
 
     select {
@@ -722,7 +718,7 @@ pre code.hljs {
   display: inline-flex;
   flex-wrap: wrap;
 
-  &.btn-group--full {
+  &--full {
     display: flex;
   }
 
@@ -732,11 +728,24 @@ pre code.hljs {
     border-top: 1px solid hsl(240,2%,92%);
   }
 
-  .btn + .btn {
-    @include bidi-style(margin-left, 0, margin-right, 10px);
+  .btn {
+    &:not(:first-child) {
+      border-top-left-radius: 0;  
+      border-bottom-left-radius: 0;  
+    }
+
+    &:not(:last-child) {
+      border-top-right-radius: 0;  
+      border-bottom-right-radius: 0;
+      border-right-width: 0;
+    }
+
+    + .btn {
+      @include bidi-style(margin-left, 0, margin-right, 10px);
+    }
   }
 
-  .btn--text, .btn--textLarge {
+  .btn--text {
     padding: 6px 10px 5px; /* reporting main.eco */
     display: inline-block;
     border-radius: 3px;
@@ -2235,7 +2244,7 @@ kbd {
 .help-block {
   margin: 0;
   color: #bcbcbc;
-  font-size: 12px;
+  font-size: 13px;
 
   &.help-block--center {
     text-align: center;
@@ -2243,7 +2252,7 @@ kbd {
 }
 
 .help-block:not(:empty) {
-  margin: 8px 2px 10px;
+  margin: 8px 2px 0;
 }
 
 /* replace music icon with attachment */
@@ -2324,6 +2333,10 @@ kbd {
         0 8px 17px 0 rgba(0, 0, 0, 0.1),
         0 6px 20px 0 rgba(0, 0, 0, 0.09);
     }
+  }
+
+  .btn:not(.btn--text) {
+    min-width: calc(33.33% - 6px); // auth provider width
   }
 }
 
@@ -2778,6 +2791,28 @@ form {
 
   &.form--flexibleWidth .controls {
     display: table;
+  }
+
+  &.form--grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    margin-right: -10px;
+
+    .form-group {
+      display: block;
+      padding: 0 10px;
+      width: 100%;
+
+      $sizes: "1/2", "1/3", "2/3", "1/4", "2/4", "3/4", "1/5", "2/5", "3/5", "4/5";
+
+      @each $size in $sizes {
+        &[data-width="#{$size}"] {
+          width: calc(#{$size} * 100%);
+        }
+      }
+    }
   }
 }
 
@@ -3867,23 +3902,28 @@ footer {
   .nav-pills > li > a,
   .nav-pills > li > a:focus,
   .nav-pills > li > a:active {
-    padding: 0;
-    height: 40px;
     color: #0f94d6;
-    line-height: 39px;
     border-radius: 0;
-    border-top: 1px solid #f2f2f3;
     background: transparent; /* a:focus, a:active with bg: transparent fixes gray focus bg in IE 10 */
     display: flex;
     @extend .u-textTruncate;
+  }
+
+  .nav-pills.nav-stacked > li > a,
+  .nav-pills.nav-stacked > li > a:focus,
+  .nav-pills.nav-stacked > li > a:active {
+    padding: 0;
+    height: 40px;
+    line-height: 39px;
+    border-top: 1px solid #f2f2f3;
   }
 
   .nav-pills > li:hover > a {
     background: #f2f2f3;
   }
 
-  .nav-pills > li:hover > a,
-  .nav-pills > li:hover + li:not(.active) > a {
+  .nav-pills.nav-stacked > li:hover > a,
+  .nav-pills.nav-stacked > li:hover + li:not(.active) > a {
     border-color: transparent;
   }
 
@@ -3895,10 +3935,10 @@ footer {
     border-color: initial;
   }
 
-  .nav-pills > li:hover > a,
-  .nav-pills > li.active > a,
-  .nav-pills > li.active > a:hover,
-  .nav-pills > li.active > a:focus {
+  .nav-pills.nav-stacked > li:hover > a,
+  .nav-pills.nav-stacked > li.active > a,
+  .nav-pills.nav-stacked > li.active > a:hover,
+  .nav-pills.nav-stacked > li.active > a:focus {
     padding-left: 10px;
     padding-right: 10px;
     margin-left: -10px;
@@ -3907,6 +3947,17 @@ footer {
 
   .sidebar:not(.NavBarAdmin) .nav-pills > li:first-child > a {
     border-top: none;
+  }
+
+  .nav-pills > li > a > .icon {
+    fill: currentColor;
+    flex-shrink: 0;
+    align-self: center;
+    margin-top: -2px;
+
+    &:first-child {
+      @include bidi-style(margin-right, 5px, margin-right, 0);
+    }
   }
 
   .nav-pills > li > a > .badge {
@@ -3927,6 +3978,10 @@ footer {
   padding: 10px 20px;
   overflow: auto;
   position: relative;
+  
+  &--large-padding {
+    padding: 30px 40px;
+  }
 }
 
 .main--tabs,
@@ -5598,6 +5653,10 @@ footer {
   &.is-closed {
     margin-bottom: -60px;
   }
+
+  &--border {
+    border-top: 1px solid hsl(0,0%,94%);
+  }
 }
 
 .newTicket {
@@ -6486,6 +6545,7 @@ footer {
 .nav {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .nav a {
@@ -7709,7 +7769,8 @@ output {
   }
 
   .searchableSelect-shadow {
-    display: none;
+    position: absolute;
+    left: -9999px;
   }
 
   .dropdown-menu {
@@ -8973,7 +9034,6 @@ output {
   }
 }
 
-
 /*
 
   ----------------
@@ -9104,6 +9164,10 @@ body.fit {
 
 .center {
   align-items: center;
+}
+
+.baseline {
+  align-items: baseline;
 }
 
 .centered {
