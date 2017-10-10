@@ -15,9 +15,9 @@ class PostmasterFilter < ApplicationModel
       raise Exceptions::UnprocessableEntity, 'value invalid/empty' if meta['value'].blank?
       begin
         if meta['operator'] == 'contains not'
-          Channel::Filter::Match::EmailRegex.match('test content', meta['value'], false, true)
+          Channel::Filter::Match::EmailRegex.match(value: 'test content', match_rule: meta['value'], check_mode: true)
         else
-          Channel::Filter::Match::EmailRegex.match('test content', meta['value'], true, true)
+          Channel::Filter::Match::EmailRegex.match(value: 'test content', match_rule: meta['value'], check_mode: true)
         end
       rescue => e
         raise Exceptions::UnprocessableEntity, e.message

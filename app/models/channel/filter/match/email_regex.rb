@@ -1,6 +1,6 @@
 module Channel::Filter::Match::EmailRegex
 
-  def self.match(value, match_rule, _should_match, check_mode = false)
+  def self.match(value:, match_rule:, check_mode: false)
     regexp = false
     if match_rule =~ /^(regex:)(.+?)$/
       regexp = true

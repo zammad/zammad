@@ -26,7 +26,7 @@ class Channel::Filter::MonitoringBase
     return if !session_user_id
 
     # check if sender is monitoring
-    return if !Channel::Filter::Match::EmailRegex.match(mail[:from], sender, true, true)
+    return if !Channel::Filter::Match::EmailRegex.match(value: mail[:from], match_rule: sender, check_mode: true)
 
     # get mail attibutes like host and state
     result = {}
