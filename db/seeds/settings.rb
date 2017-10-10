@@ -1275,6 +1275,89 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Authentication via %s',
+  name: 'auth_oidc',
+  area: 'Security::ThirdPartyAuthentication',
+  description: 'Enables user authentication via OpenID Connect. Register your app first.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'auth_oidc',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    controller: 'SettingsAreaSwitch',
+    sub: ['auth_oidc_credentials'],
+    title_i18n: ['OpenID Connect'],
+    permission: ['admin.security'],
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'OpenID Connect App Credentials',
+  name: 'auth_oidc_credentials',
+  area: 'Security::ThirdPartyAuthentication::Oidc',
+  description: 'Enables user authentication via OpenID Connect.',
+  options: {
+    form: [
+      {
+        display: 'Name',
+        null: true,
+        name: 'name',
+        tag: 'input',
+        placeholder: 'Some Provider Name',
+      },
+      {
+        display: 'App ID',
+        null: true,
+        name: 'app_id',
+        tag: 'input',
+      },
+      {
+        display: 'App Secret',
+        null: true,
+        name: 'app_secret',
+        tag: 'input',
+      },
+      {
+        display: 'Site',
+        null: true,
+        name: 'site',
+        tag: 'input',
+        placeholder: 'https://oidc.YOURDOMAIN.com',
+      },
+      {
+        display: 'authorize_url',
+        null: true,
+        name: 'authorize_url',
+        tag: 'input',
+        placeholder: '/oauth2/authorize',
+      },
+      {
+        display: 'token_url',
+        null: true,
+        name: 'token_url',
+        tag: 'input',
+        placeholder: '/oauth2/token',
+      },
+    ],
+  },
+  state: {},
+  preferences: {
+    permission: ['admin.security'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
   title: 'Minimum length',
   name: 'password_min_size',
   area: 'Security::Password',

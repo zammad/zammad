@@ -1,4 +1,16 @@
 GIT
+  remote: git://github.com/sdoxsee/omniauth-oidc.git
+  revision: 3e5333425c6912847758bc8c8c3fab97536c6304
+  ref: 3e53334
+  specs:
+    omniauth-oidc (0.0.1)
+      addressable (~> 2.3)
+      jwt (~> 1.0)
+      multi_json (~> 1.3)
+      omniauth (>= 1.1.1)
+      omniauth-oauth2 (>= 1.1.1)
+
+GIT
   remote: https://github.com/jkowens/composite_primary_keys.git
   revision: 7f4670b54b3c6e94992161b4efe2c8717d7c0e71
   branch: rails-5_1
@@ -517,6 +529,7 @@ DEPENDENCIES
   omniauth-linkedin-oauth2
   omniauth-microsoft-office365
   omniauth-oauth2
+  omniauth-oidc!
   omniauth-twitter
   pg
   pre-commit
@@ -554,4 +567,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.15.4
+   1.16.0.pre.2

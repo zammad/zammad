@@ -95,4 +95,9 @@ App.Config.set('auth_provider_all', {
     name:   'OAuth2'
     config: 'auth_oauth2'
     class:  'oauth2'
+  oidc:
+    url:    '/auth/oidc'
+    name:   'OpenID'
+    config: 'auth_oidc'
+    class:  'oidc'
 })

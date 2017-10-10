@@ -41,6 +41,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-twitter'
 gem 'omniauth-microsoft-office365'
+gem 'omniauth-oidc', github: 'sdoxsee/omniauth-oidc', ref: '3e53334'
 
 gem 'twitter'
 gem 'telegramAPI'
