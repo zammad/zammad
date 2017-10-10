@@ -108,11 +108,11 @@ returns
 
   def self.timezones
     list = {}
-    TZInfo::Timezone.all_country_zone_identifiers.each { |timezone|
+    TZInfo::Timezone.all_country_zone_identifiers.each do |timezone|
       t = TZInfo::Timezone.get(timezone)
       diff = t.current_period.utc_total_offset / 60 / 60
       list[ timezone ] = diff
-    }
+    end
     list
   end
 
@@ -168,14 +168,14 @@ returns
       end
 
       # remove old ical entries if feed has changed
-      public_holidays.each { |day, meta|
+      public_holidays.each do |day, meta|
         next if !public_holidays[day]['feed']
         next if meta['feed'] == Digest::MD5.hexdigest(ical_url)
         public_holidays.delete(day)
-      }
+      end
 
       # sync new ical feed dates
-      events.each { |day, summary|
+      events.each do |day, summary|
         if !public_holidays[day]
           public_holidays[day] = {}
         end
@@ -189,7 +189,7 @@ returns
           summary: summary,
           feed: Digest::MD5.hexdigest(ical_url)
         }
-      }
+      end
       self.last_log = nil
       if id
         Cache.write(
@@ -223,7 +223,7 @@ returns
     cals = Icalendar::Calendar.parse(cal_file)
     cal = cals.first
     events = {}
-    cal.events.each { |event|
+    cal.events.each do |event|
       if event.rrule
 
         # loop till days
@@ -231,11 +231,11 @@ returns
         interval_frame_end   = Date.parse("#{Time.zone.now + 3.years}-12-31")
         occurrences          = event.occurrences_between(interval_frame_start, interval_frame_end)
         if occurrences.present?
-          occurrences.each { |occurrence|
+          occurrences.each do |occurrence|
             result = Calendar.day_and_comment_by_event(event, occurrence.start_time)
             next if !result
             events[result[0]] = result[1]
-          }
+          end
         end
       end
       next if event.dtstart < Time.zone.now - 1.year
@@ -243,7 +243,7 @@ returns
       result = Calendar.day_and_comment_by_event(event, event.dtstart)
       next if !result
       events[result[0]] = result[1]
-    }
+    end
     events.sort.to_h
   end
 
@@ -266,12 +266,12 @@ returns
   # if changed calendar is default, set all others default to false
   def sync_default
     return true if !default
-    Calendar.find_each { |calendar|
+    Calendar.find_each do |calendar|
       next if calendar.id == id
       next if !calendar.default
       calendar.default = false
       calendar.save
-    }
+    end
     true
   end
 
@@ -286,7 +286,7 @@ returns
 
     # check if sla's are refer to an existing calendar
     default_calendar = Calendar.find_by(default: true)
-    Sla.find_each { |sla|
+    Sla.find_each do |sla|
       if !sla.calendar_id
         sla.calendar_id = default_calendar.id
         sla.save!
@@ -296,7 +296,7 @@ returns
         sla.calendar_id = default_calendar.id
         sla.save!
       end
-    }
+    end
     true
   end
 
@@ -311,7 +311,7 @@ returns
 
     # fillup feed info
     before = public_holidays_was
-    public_holidays.each { |day, meta|
+    public_holidays.each do |day, meta|
       if before && before[day] && before[day]['feed']
         meta['feed'] = before[day]['feed']
       end
@@ -320,7 +320,7 @@ returns
                        else
                          false
                        end
-    }
+    end
     true
   end
 end

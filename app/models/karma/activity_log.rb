@@ -74,7 +74,7 @@ remove whole karma activity log of an object
   def self.latest(user, limit = 12)
     result = []
     logs = Karma::ActivityLog.where(user_id: user.id).order(id: :desc).limit(limit)
-    logs.each { |log|
+    logs.each do |log|
       last = result.last
       if last && last[:object_id] == log.object_id && last[:o_id] == log.o_id && last[:created_at] == log.created_at
         comment = {
@@ -97,7 +97,7 @@ remove whole karma activity log of an object
         created_at: log.created_at,
       }
       result.push data
-    }
+    end
     result
   end
 

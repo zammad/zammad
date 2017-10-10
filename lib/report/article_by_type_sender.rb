@@ -43,7 +43,7 @@ returns
       start = Time.zone.parse(params[:range_start])
       stop_interval = 60
     end
-    (1..stop_interval).each { |_counter|
+    (1..stop_interval).each do |_counter|
       if params[:interval] == 'month'
         stop = start.next_month
       elsif params[:interval] == 'week'
@@ -69,7 +69,7 @@ returns
                              ).count
       result.push count
       start = stop
-    }
+    end
     result
   end
 

@@ -19,10 +19,10 @@ RSpec.describe User do
 
     it 'resets login_failed on password change' do
       user = create(:user_login_failed)
-      expect {
+      expect do
         user.password = new_password
         user.save
-      }.to change { user.login_failed }.to(0)
+      end.to change { user.login_failed }.to(0)
     end
   end
 
@@ -161,10 +161,10 @@ RSpec.describe User do
       token = create(:token_password_reset)
       user  = User.find(token.user_id)
 
-      expect {
+      expect do
         described_class.password_reset_via_token(token.name, new_password)
         user.reload
-      }.to change {
+      end.to change {
         user.password
       }.and change {
         Token.count
@@ -181,9 +181,9 @@ RSpec.describe User do
       allow(Setting).to receive(:get)
 
       user = build(:user, password: '{sha2}dd9c764fa7ea18cd992c8600006d3dc3ac983d1ba22e9ba2d71f6207456be0ba') # zammad
-      expect {
+      expect do
         user.save
-      }.to_not change {
+      end.to_not change {
         user.password
       }
     end

@@ -313,6 +313,114 @@ Comment: [] =
     assert_equal('apn4711.dc.example.com', ticket_3.preferences['icinga']['host'])
     assert_nil(ticket_3_1.preferences['icinga']['service'])
     assert_equal('DOWN', ticket_3_1.preferences['icinga']['state'])
+
+    # ping down
+    email_raw_string = "To: support@example.com
+Subject: [PROBLEM] Ping IPv4 on apn4711.dc.example.com is WARNING!
+From: icinga2@monitoring.example.com (icinga)
+
+***** Service Monitoring on monitoring.example.com *****
+
+Ping IPv4 on apn4711.dc.example.com is WARNING!
+
+Info:    PING WARNING - Packet loss =3D 0%, RTA =3D 160.57 ms
+
+When:    2017-09-28 09:41:03 +0200
+Service: Ping IPv4
+Host:    apn4711.dc.example.com
+IPv4:    127.0.0.1="
+
+    ticket_4, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_4.state.name)
+    assert(ticket_4.preferences)
+    assert(ticket_4.preferences['icinga'])
+    assert_equal('apn4711.dc.example.com', ticket_4.preferences['icinga']['host'])
+    assert_equal('Ping IPv4', ticket_4.preferences['icinga']['service'])
+    assert_equal('WARNING', ticket_4.preferences['icinga']['state'])
+    assert_not_equal(ticket_4.id, ticket_1.id)
+
+    # ping up
+    email_raw_string = "To: support@example.com
+Subject: [RECOVERY] Ping IPv4 on apn4711.dc.example.com is OK!
+From: icinga2@monitoring.example.com (icinga)
+
+***** Service Monitoring on monitoring.example.com *****
+
+Ping IPv4 on apn4711.dc.example.com is OK!
+
+Info:    PING OK - Packet loss =3D 0%, RTA =3D 20.23 ms
+
+When:    2017-09-28 11:42:01 +0200
+Service: Ping IPv4
+Host:    apn4711.dc.example.com
+IPv4:    127.0.0.1="
+
+    ticket_4_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal(ticket_4.id, ticket_4_1.id)
+    assert_equal('closed', ticket_4_1.state.name)
+    assert(ticket_4_1.preferences)
+    assert(ticket_4_1.preferences['icinga'])
+    assert_equal('apn4711.dc.example.com', ticket_4.preferences['icinga']['host'])
+    assert_equal('Ping IPv4', ticket_4.preferences['icinga']['service'])
+    assert_equal('WARNING', ticket_4_1.preferences['icinga']['state'])
+
+    # host down
+    email_raw_string = "To: support@example.com
+Subject: [PROBLEM] Host apn4709.dc.example.com is DOWN!
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+From: icinga2@monitoring.example.com (icinga)
+
+***** Host Monitoring on monitoring.example.com *****
+
+apn4709.dc.example.com is DOWN!
+
+Info:    CRITICAL - Plugin timed out
+
+
+When:    2017-09-29 14:19:40 +0200
+Host:    apn4709.dc.example.com
+IPv4:=09 127.0.0.1="
+
+    ticket_5, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_5.state.name)
+    assert(ticket_5.preferences)
+    assert(ticket_5.preferences['icinga'])
+    assert_equal('apn4709.dc.example.com', ticket_5.preferences['icinga']['host'])
+    assert_nil(ticket_5.preferences['icinga']['service'])
+    assert_equal('DOWN', ticket_5.preferences['icinga']['state'])
+    assert_not_equal(ticket_5.id, ticket_1.id)
+
+    # host up
+    email_raw_string = "To: support@example.com
+Subject: [RECOVERY] Host apn4709.dc.example.com is UP!
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+From: icinga2@monitoring.example.com (icinga)
+
+***** Host Monitoring on monitoring.example.com *****
+
+apn4709.dc.example.com is UP!
+
+Info:    PING OK - Packet loss =3D 0%, RTA =3D 20.20 ms
+
+When:    2017-09-29 14:23:36 +0200
+Host:    apn4709.dc.example.com
+IPv4:=09 127.0.0.1=
+"
+    ticket_5_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal(ticket_5.id, ticket_5_1.id)
+    assert_equal('closed', ticket_5_1.state.name)
+    assert(ticket_5_1.preferences)
+    assert(ticket_5_1.preferences['icinga'])
+    assert_equal('apn4709.dc.example.com', ticket_5.preferences['icinga']['host'])
+    assert_nil(ticket_5_1.preferences['icinga']['service'])
+    assert_equal('DOWN', ticket_5_1.preferences['icinga']['state'])
+
   end
 
   test 'not matching sender tests' do

@@ -56,13 +56,13 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
       if tweet.user_mentions
         to = ''
         mention_ids = []
-        tweet.user_mentions.each { |user|
+        tweet.user_mentions.each do |user|
           if to != ''
             to += ' '
           end
           to += "@#{user.screen_name}"
           mention_ids.push user.id
-        }
+        end
         article.to = to
         article.preferences['twitter'] = {
           mention_ids: mention_ids,

@@ -96,14 +96,14 @@ returns:
         next
       end
 
-      Ticket::State.all.each { |local_state|
+      Ticket::State.all.each do |local_state|
         next if local_state.id == id
         next if local_state[default_field] == false
         local_state[default_field] = false
         local_state.callback_loop = true
         local_state.save!
         next
-      }
+      end
     end
   end
 

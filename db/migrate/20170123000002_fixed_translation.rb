@@ -410,7 +410,7 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
       },
     ]
 
-    settings_update.each { |setting|
+    settings_update.each do |setting|
       fetched_setting = Setting.find_by(name: setting['name'] )
       next if !fetched_setting
 
@@ -423,7 +423,7 @@ class FixedTranslation < ActiveRecord::Migration[4.2]
       end
 
       fetched_setting.save!
-    }
+    end
 
     Translation.sync
 

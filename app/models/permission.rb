@@ -21,13 +21,13 @@ returns
   def self.with_parents(key)
     names = []
     part = ''
-    key.split('.').each { |local_part|
+    key.split('.').each do |local_part|
       if part != ''
         part += '.'
       end
       part += local_part
       names.push part
-    }
+    end
     names
   end
 

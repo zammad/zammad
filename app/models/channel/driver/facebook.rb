@@ -31,10 +31,10 @@ class Channel::Driver::Facebook
 
   def send(options, fb_object_id, article, _notification = false)
     access_token = nil
-    options['pages'].each { |page|
+    options['pages'].each do |page|
       next if page['id'].to_s != fb_object_id.to_s
       access_token = page['access_token']
-    }
+    end
     if !access_token
       raise "No access_token found for fb_object_id: #{fb_object_id}"
     end
@@ -63,12 +63,26 @@ class Channel::Driver::Facebook
   def disconnect
   end
 
+=begin
+
+  Channel::Driver::Facebook.streamable?
+
+returns
+
+  true|false
+
+=end
+
+  def self.streamable?
+    false
+  end
+
   private
 
   def get_page(page_id)
-    @pages.each { |page|
+    @pages.each do |page|
       return page if page['id'].to_s == page_id.to_s
-    }
+    end
     nil
   end
 
@@ -79,14 +93,14 @@ class Channel::Driver::Facebook
     older_import = 0
     older_import_max = 12
 
-    @sync['pages'].each { |page_to_sync_id, page_to_sync_params|
+    @sync['pages'].each do |page_to_sync_id, page_to_sync_params|
       page = get_page(page_to_sync_id)
       next if !page
       next if page_to_sync_params['group_id'].blank?
       page_client = Facebook.new(page['access_token'])
 
       posts = page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,permalink_url,comments{id,from,to,message,created_time}')
-      posts.each { |post|
+      posts.each do |post|
 
         # ignore older messages
         if (@channel.created_at - 15.days) > Time.zone.parse(post['created_time']) || older_import >= older_import_max
@@ -96,8 +110,8 @@ class Channel::Driver::Facebook
         end
 
         page_client.to_group(post, page_to_sync_params['group_id'], @channel, page)
-      }
-    }
+      end
+    end
 
     true
   end

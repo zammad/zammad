@@ -79,9 +79,9 @@ module Import
 
       Thread.abort_on_exception = true
       threads                   = {}
-      (1..thread_count).each { |thread|
+      (1..thread_count).each do |thread|
 
-        threads[thread] = Thread.new {
+        threads[thread] = Thread.new do
 
           # In some environments the Model.reset_column_information
           # is not reflected to threads. So an import error message appears.
@@ -108,11 +108,11 @@ module Import
             Thread.current[:loop_count] += 1
           end
           ActiveRecord::Base.connection.close
-        }
-      }
-      (1..thread_count).each { |thread|
+        end
+      end
+      (1..thread_count).each do |thread|
         threads[thread].join
-      }
+      end
     end
 
     def limit_import(remote_object, args = {})

@@ -741,26 +741,26 @@ class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
       Agent: 'ticket.agent',
       Customer: 'ticket.customer',
     }
-    ObjectManager::Attribute.all.each { |attribute|
+    ObjectManager::Attribute.all.each do |attribute|
       next if attribute.screens.blank?
       screens = {}
-      attribute.screens.each { |screen, role_value|
+      attribute.screens.each do |screen, role_value|
         if role_value.blank?
           screens[screen] = role_value
         else
           screens[screen] = {}
-          role_value.each { |role, value|
+          role_value.each do |role, value|
             if map[role.to_sym]
               screens[screen][map[role.to_sym]] = value
             else
               screens[screen][role] = value
             end
-          }
+          end
         end
-      }
+      end
       attribute.screens = screens
       attribute.save!
-    }
+    end
 
   end
 

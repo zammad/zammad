@@ -47,10 +47,16 @@ body.error-message {
   height: auto;
 }
 
+pre {
+  text-align: left;
+  padding-bottom: 1em;
+  background: white;
+  color: #222;
+}
+
 h1 {
   margin: 0;
   color: #444a4f;
-  max-width: 450px;
 }
 
 .dark h1 {

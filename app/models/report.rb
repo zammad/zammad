@@ -306,11 +306,11 @@ class Report
     ]
     config[:metric][:communication][:backend] = backend
 
-    config[:metric].each { |metric_key, metric_value|
-      metric_value[:backend].each { |metric_backend|
+    config[:metric].each do |metric_key, metric_value|
+      metric_value[:backend].each do |metric_backend|
         metric_backend[:name] = "#{metric_key}::#{metric_backend[:name]}"
-      }
-    }
+      end
+    end
 
     config
   end

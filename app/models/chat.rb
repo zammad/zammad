@@ -65,21 +65,21 @@ class Chat < ApplicationModel
   def self.agent_state(user_id)
     return { state: 'chat_disabled' } if !Setting.get('chat')
     assets = {}
-    Chat.where(active: true).each { |chat|
+    Chat.where(active: true).each do |chat|
       assets = chat.assets(assets)
-    }
+    end
     active_agent_ids = []
-    active_agents.each { |user|
+    active_agents.each do |user|
       active_agent_ids.push user.id
       assets = user.assets(assets)
-    }
+    end
     runningchat_session_list_local = running_chat_session_list
-    runningchat_session_list_local.each { |session|
+    runningchat_session_list_local.each do |session|
       next if !session['user_id']
       user = User.lookup(id: session['user_id'])
       next if !user
       assets = user.assets(assets)
-    }
+    end
     {
       waiting_chat_count: waiting_chat_count,
       waiting_chat_session_list: waiting_chat_session_list,
@@ -107,9 +107,9 @@ class Chat < ApplicationModel
 
   def self.waiting_chat_session_list
     sessions = []
-    Chat::Session.where(state: ['waiting']).each { |session|
+    Chat::Session.where(state: ['waiting']).each do |session|
       sessions.push session.attributes
-    }
+    end
     sessions
   end
 
@@ -119,9 +119,9 @@ class Chat < ApplicationModel
 
   def self.running_chat_session_list
     sessions = []
-    Chat::Session.where(state: ['running']).each { |session|
+    Chat::Session.where(state: ['running']).each do |session|
       sessions.push session.attributes
-    }
+    end
     sessions
   end
 
@@ -131,9 +131,9 @@ class Chat < ApplicationModel
 
   def self.available_agents(diff = 2.minutes)
     agents = {}
-    Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).each { |record|
+    Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).each do |record|
       agents[record.updated_by_id] = record.concurrent
-    }
+    end
     agents
   end
 
@@ -143,19 +143,19 @@ class Chat < ApplicationModel
 
   def self.active_agents(diff = 2.minutes)
     users = []
-    Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).each { |record|
+    Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).each do |record|
       user = User.lookup(id: record.updated_by_id)
       next if !user
       users.push user
-    }
+    end
     users
   end
 
   def self.seads_total(diff = 2.minutes)
     total = 0
-    available_agents(diff).each { |_user_id, concurrent|
+    available_agents(diff).each do |_user_id, concurrent|
       total += concurrent
-    }
+    end
     total
   end
 
@@ -178,14 +178,14 @@ optional you can ignore it for dedecated user
   def self.broadcast_agent_state_update(ignore_user_id = nil)
 
     # send broadcast to agents
-    Chat::Agent.where('active = ? OR updated_at > ?', true, Time.zone.now - 8.hours).each { |item|
+    Chat::Agent.where('active = ? OR updated_at > ?', true, Time.zone.now - 8.hours).each do |item|
       next if item.updated_by_id == ignore_user_id
       data = {
         event: 'chat_status_agent',
         data: Chat.agent_state(item.updated_by_id),
       }
       Sessions.send_to(item.updated_by_id, data)
-    }
+    end
   end
 
 =begin
@@ -200,7 +200,7 @@ broadcast new customer queue position to all waiting customers
 
     # send position update to other waiting sessions
     position = 0
-    Chat::Session.where(state: 'waiting').order('created_at ASC').each { |local_chat_session|
+    Chat::Session.where(state: 'waiting').order('created_at ASC').each do |local_chat_session|
       position += 1
       data = {
         event: 'chat_session_queue',
@@ -211,7 +211,7 @@ broadcast new customer queue position to all waiting customers
         },
       }
       local_chat_session.send_to_recipients(data)
-    }
+    end
   end
 
 =begin
@@ -227,10 +227,10 @@ optional you can put the max oldest chat entries
 =end
 
   def self.cleanup(diff = 3.months)
-    Chat::Session.where(state: 'closed').where('updated_at < ?', Time.zone.now - diff).each { |chat_session|
+    Chat::Session.where(state: 'closed').where('updated_at < ?', Time.zone.now - diff).each do |chat_session|
       Chat::Message.where(chat_session_id: chat_session.id).delete_all
       chat_session.destroy
-    }
+    end
 
     true
   end
@@ -248,7 +248,7 @@ optional you can put the max oldest chat sessions as argument
 =end
 
   def self.cleanup_close(diff = 5.minutes)
-    Chat::Session.where.not(state: 'closed').where('updated_at < ?', Time.zone.now - diff).each { |chat_session|
+    Chat::Session.where.not(state: 'closed').where('updated_at < ?', Time.zone.now - diff).each do |chat_session|
       next if chat_session.recipients_active?
       chat_session.state = 'closed'
       chat_session.save
@@ -260,7 +260,7 @@ optional you can put the max oldest chat sessions as argument
         },
       }
       chat_session.send_to_recipients(message)
-    }
+    end
     true
   end
 

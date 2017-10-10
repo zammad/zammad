@@ -905,3 +905,125 @@ class App.Utils
     placeholder = Array(url_max_length + 1).join('X')
     text = text.replace(/http(s|):\/\/[-A-Za-z0-9+&@#\/%?=~_\|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]/img, placeholder)
     text.length
+
+  @getRecipientArticle: (ticket, article, article_created_by, type, email_addresses = [], all) ->
+
+    # empty form
+    articleNew = {
+      to:          ''
+      cc:          ''
+      body:        ''
+      in_reply_to: ''
+    }
+
+    if article.message_id
+      articleNew.in_reply_to = article.message_id
+
+    if type.name is 'phone'
+
+      # inbound call
+      if article.sender.name is 'Agent'
+        if article.to
+          articleNew.to = article.to
+
+      # outbound call
+      else if article.to
+        articleNew.to = article.to
+
+      # if sender is customer but in article.from is no email, try to get
+      # customers email via customer user
+      if articleNew.to && !articleNew.to.match(/@/)
+        articleNew.to = ticket.customer.email
+
+      return articleNew
+
+    if type.name is 'email' || type.name is 'web'
+      localEmailAddresses = []
+      for address in email_addresses
+        if address && !_.isEmpty(address.email)
+          localEmailAddresses.push address.email.toString().toLowerCase()
+
+      isLocalAddress = (address) ->
+        return false if _.isEmpty(address)
+        _.contains(localEmailAddresses, address.toString().toLowerCase())
+
+      article_created_by_email = undefined
+      if article_created_by && article_created_by.email
+        article_created_by_email = article_created_by.email.toLowerCase()
+
+      # check if article sender is local
+      senderIsLocal = false
+      if !_.isEmpty(article.from)
+        senders = emailAddresses.parseAddressList(article.from)
+        if senders && senders[0] && senders[0].address
+          senderIsLocal = isLocalAddress(senders[0].address)
+
+      # check if article recipient is local
+      recipientIsLocal = false
+      if !_.isEmpty(article.to)
+        recipients = emailAddresses.parseAddressList(article.to)
+        if recipients && recipients[0] && recipients[0].address
+          recipientIsLocal = isLocalAddress(recipients[0].address)
+
+      # sender is local
+      if senderIsLocal
+        articleNew.to = article.to
+
+      # sender is agent - sent via system
+      else if article.sender.name is 'Agent' && article_created_by_email && article.from && article.from.toString().toLowerCase().match(article_created_by_email) && !recipientIsLocal
+        articleNew.to = article.to
+
+      # sender was regular customer
+      else
+        if article.reply_to
+          articleNew.to = article.reply_to
+        else
+          articleNew.to = article.from
+
+        # if sender is customer but in article.from is no email, try to get
+        # customers email via customer user
+        if articleNew.to && !articleNew.to.match(/@/)
+          articleNew.to = article.created_by.email
+
+      # filter for uniq recipients
+      recipientAddresses = {}
+
+      addAddresses = (addressLine, line) ->
+        lineNew = ''
+        recipients = emailAddresses.parseAddressList(addressLine)
+        if !_.isEmpty(recipients)
+          for recipient in recipients
+            if !_.isEmpty(recipient.address)
+              localRecipientAddress = recipient.address.toString().toLowerCase()
+
+              # check if address is not local
+              if !isLocalAddress(localRecipientAddress)
+
+                # filter for uniq recipients
+                if !recipientAddresses[localRecipientAddress]
+                  recipientAddresses[localRecipientAddress] = true
+
+                  # add recipient
+                  if lineNew
+                    lineNew = lineNew + ', '
+                  lineNew = lineNew + localRecipientAddress
+
+        lineNew
+        if !_.isEmpty(line)
+          if !_.isEmpty(lineNew)
+            lineNew += ', '
+          lineNew += line
+        lineNew
+
+      if articleNew.to
+        articleNew.to = addAddresses(articleNew.to)
+
+      if all
+        if article.from
+          articleNew.to = addAddresses(article.from, articleNew.to)
+        if article.to
+          articleNew.to = addAddresses(article.to, articleNew.to)
+        if article.cc
+          articleNew.cc = addAddresses(article.cc, articleNew.cc)
+
+    articleNew

@@ -28,7 +28,7 @@ RSpec.describe Import::OTRS::State do
   context 'closed' do
 
     let(:object_structure) { load_state_json('default') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: 1,
         updated_by_id: 1,
@@ -40,7 +40,7 @@ RSpec.describe Import::OTRS::State do
         id: '2',
         note: 'Ticket is closed successful.'
       }
-    }
+    end
 
     it 'creates' do
       creates_with(zammad_structure)

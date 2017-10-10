@@ -40,7 +40,7 @@ returns
       start = Time.zone.parse(params[:range_start])
       stop_interval = 60
     end
-    (1..stop_interval).each { |_counter|
+    (1..stop_interval).each do |_counter|
       if params[:interval] == 'month'
         stop = start.next_month
       elsif params[:interval] == 'week'
@@ -64,7 +64,7 @@ returns
       )
       result.push count
       start = stop
-    }
+    end
     result
   end
 
@@ -99,10 +99,10 @@ returns
       selector: params[:selector]
     )
     assets = {}
-    result[:ticket_ids].each { |ticket_id|
+    result[:ticket_ids].each do |ticket_id|
       ticket_full = Ticket.find(ticket_id)
       assets = ticket_full.assets(assets)
-    }
+    end
     result[:assets] = assets
     result
   end
@@ -113,11 +113,11 @@ returns
     return ticket_state_ids if ticket_state_ids
     ticket_state_types = Ticket::StateType.where( name: %w(closed merged removed) )
     ticket_state_ids = []
-    ticket_state_types.each { |ticket_state_type|
-      ticket_state_type.states.each { |ticket_state|
+    ticket_state_types.each do |ticket_state_type|
+      ticket_state_type.states.each do |ticket_state|
         ticket_state_ids.push ticket_state.id
-      }
-    }
+      end
+    end
     Cache.write( key, ticket_state_ids, { expires_in: 2.days } )
     ticket_state_ids
   end

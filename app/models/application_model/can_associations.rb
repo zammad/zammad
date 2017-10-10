@@ -29,7 +29,7 @@ returns
     end
 
     # set relations by id/verify if ref exists
-    self.class.reflect_on_all_associations.map { |assoc|
+    self.class.reflect_on_all_associations.map do |assoc|
       assoc_name = assoc.name
       next if association_attributes_ignored.include?(assoc_name)
       real_ids = assoc_name[0, assoc_name.length - 1] + '_ids'
@@ -40,7 +40,7 @@ returns
         list_of_items = [ params[real_ids] ]
       end
       list = []
-      list_of_items.each { |item_id|
+      list_of_items.each do |item_id|
         next if !item_id
         lookup = assoc.klass.lookup(id: item_id)
 
@@ -49,12 +49,12 @@ returns
           raise ArgumentError, "No value found for '#{assoc_name}' with id #{item_id.inspect}"
         end
         list.push item_id
-      }
+      end
       send("#{real_ids}=", list)
-    }
+    end
 
     # set relations by name/lookup
-    self.class.reflect_on_all_associations.map { |assoc|
+    self.class.reflect_on_all_associations.map do |assoc|
       assoc_name = assoc.name
       next if association_attributes_ignored.include?(assoc_name)
       real_ids = assoc_name[0, assoc_name.length - 1] + '_ids'
@@ -66,7 +66,7 @@ returns
       next if !params[real_values].instance_of?(Array)
       list = []
       class_object = assoc.klass
-      params[real_values].each { |value|
+      params[real_values].each do |value|
         lookup = nil
         if class_object == User
           if !lookup
@@ -84,9 +84,9 @@ returns
           raise ArgumentError, "No lookup value found for '#{assoc_name}': #{value.inspect}"
         end
         list.push lookup.id
-      }
+      end
       send("#{real_ids}=", list)
-    }
+    end
   end
 
 =begin
@@ -110,12 +110,12 @@ returns
 
     # get relations
     attributes = self.attributes
-    self.class.reflect_on_all_associations.map { |assoc|
+    self.class.reflect_on_all_associations.map do |assoc|
       next if association_attributes_ignored.include?(assoc.name)
       real_ids = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
       next if !respond_to?(real_ids)
       attributes[real_ids] = send(real_ids)
-    }
+    end
 
     # special handling for group access associations
     if respond_to?(:group_ids_access_map)
@@ -145,21 +145,21 @@ returns
 
     # get relations
     attributes = attributes_with_association_ids
-    self.class.reflect_on_all_associations.map { |assoc|
+    self.class.reflect_on_all_associations.map do |assoc|
       next if !respond_to?(assoc.name)
       next if association_attributes_ignored.include?(assoc.name)
       ref = send(assoc.name)
       next if !ref
       if ref.respond_to?(:first)
         attributes[assoc.name.to_s] = []
-        ref.each { |item|
+        ref.each do |item|
           if item[:login]
             attributes[assoc.name.to_s].push item[:login]
             next
           end
           next if !item[:name]
           attributes[assoc.name.to_s].push item[:name]
-        }
+        end
         if ref.count.positive? && attributes[assoc.name.to_s].empty?
           attributes.delete(assoc.name.to_s)
         end
@@ -171,7 +171,7 @@ returns
       end
       next if !ref[:name]
       attributes[assoc.name.to_s] = ref[:name]
-    }
+    end
 
     # special handling for group access associations
     if respond_to?(:group_names_access_map)
@@ -182,12 +182,12 @@ returns
     {
       'created_by_id' => 'created_by',
       'updated_by_id' => 'updated_by',
-    }.each { |source, destination|
+    }.each do |source, destination|
       next if !attributes[source]
       user = User.lookup(id: attributes[source])
       next if !user
       attributes[destination] = user.login
-    }
+    end
 
     filter_attributes(attributes)
 
@@ -196,9 +196,9 @@ returns
 
   def filter_attributes(attributes)
     # remove forbitten attributes
-    %w(password token tokens token_ids).each { |item|
+    %w(password token tokens token_ids).each do |item|
       attributes.delete(item)
-    }
+    end
   end
 
 =begin
@@ -217,22 +217,22 @@ returns
   def association_id_validation(attribute_id, value)
     return true if value.nil?
 
-    attributes.each { |key, _value|
+    attributes.each do |key, _value|
       next if key != attribute_id
 
       # check if id is assigned
       next if !key.end_with?('_id')
       key_short = key.chomp('_id')
 
-      self.class.reflect_on_all_associations.map { |assoc|
+      self.class.reflect_on_all_associations.map do |assoc|
         next if assoc.name.to_s != key_short
         item = assoc.class_name.constantize
         return false if !item.respond_to?(:find_by)
         ref_object = item.find_by(id: value)
         return false if !ref_object
         return true
-      }
-    }
+      end
+    end
     true
   end
 
@@ -298,13 +298,13 @@ returns
       end
 
       data = {}
-      params.each { |key, value|
+      params.each do |key, value|
         data[key.to_sym] = value
-      }
+      end
 
       data.symbolize_keys!
       available_attributes = attribute_names
-      reflect_on_all_associations.map { |assoc|
+      reflect_on_all_associations.map do |assoc|
 
         assoc_name = assoc.name
         value      = data[assoc_name]
@@ -360,7 +360,7 @@ returns
         # get association class and do lookup
         class_object = assoc.klass
         lookup_ids = []
-        value.each { |item|
+        value.each do |item|
           lookup = nil
           if class_object == User
             if item.instance_of?(String)
@@ -382,14 +382,14 @@ returns
             raise ArgumentError, "No lookup value found for '#{assoc_name}': #{item.inspect}"
           end
           lookup_ids.push lookup.id
-        }
+        end
 
         # release data value
         data.delete(assoc_name)
 
         # remember id reference
         data[ref_names.to_sym] = lookup_ids
-      }
+      end
 
       data
     end

@@ -25,7 +25,7 @@ class Integration::CheckMkController < ApplicationController
     open_states = Ticket::State.by_category(:open)
     ticket_ids = Ticket.where(state: open_states).order(created_at: :desc).limit(5000).pluck(:id)
     ticket_ids_found = []
-    ticket_ids.each { |ticket_id|
+    ticket_ids.each do |ticket_id|
       ticket = Ticket.find_by(id: ticket_id)
       next if !ticket
       next if !ticket.preferences
@@ -36,7 +36,7 @@ class Integration::CheckMkController < ApplicationController
 
       # found open ticket for service+host
       ticket_ids_found.push ticket.id
-    }
+    end
 
     # new ticket, set meta data
     title = "#{params[:host]} is #{params[:state]}"
@@ -51,7 +51,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT']}
 
     # add article
     if params[:state].present? && ticket_ids_found.present?
-      ticket_ids_found.each { |ticket_id|
+      ticket_ids_found.each do |ticket_id|
         ticket = Ticket.find_by(id: ticket_id)
         next if !ticket
         article = Ticket::Article.create!(
@@ -62,7 +62,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT']}
           subject: title,
           internal: false,
         )
-      }
+      end
       if (!auto_close && params[:state].match(/#{state_recovery_match}/i)) || !params[:state].match(/#{state_recovery_match}/i)
         render json: {
           result: 'ticket already open, added note',
@@ -81,12 +81,12 @@ UserAgent: #{request.env['HTTP_USER_AGENT']}
         return
       end
       state = Ticket::State.lookup(id: auto_close_state_id)
-      ticket_ids_found.each { |ticket_id|
+      ticket_ids_found.each do |ticket_id|
         ticket = Ticket.find_by(id: ticket_id)
         next if !ticket
         ticket.state_id = auto_close_state_id
         ticket.save!
-      }
+      end
       render json: {
         result: "closed tickets with ids #{ticket_ids_found.join(',')}",
         ticket_ids: ticket_ids_found,

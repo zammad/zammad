@@ -40,7 +40,7 @@ RSpec.describe Import::OTRS::CustomerUser do
   context 'regular user' do
 
     let(:object_structure) { load_customer_json('default') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id:   '1',
         updated_by_id:   '1',
@@ -63,7 +63,8 @@ RSpec.describe Import::OTRS::CustomerUser do
         zip:             nil,
         city:            nil,
         country:         nil
-      }}
+      }
+    end
 
     it 'creates' do
       creates_with(zammad_structure)
@@ -77,7 +78,7 @@ RSpec.describe Import::OTRS::CustomerUser do
   context 'no timestamps' do
 
     let(:object_structure) { load_customer_json('no_timestamps') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id:   '1',
         updated_by_id:   '1',
@@ -100,7 +101,8 @@ RSpec.describe Import::OTRS::CustomerUser do
         zip:             nil,
         city:            nil,
         country:         nil
-      }}
+      }
+    end
 
     before(:each) do
       travel_to DateTime.current
@@ -122,7 +124,7 @@ RSpec.describe Import::OTRS::CustomerUser do
   context 'regular user' do
 
     let(:object_structure) { load_customer_json('capital_email') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id:   '1',
         updated_by_id:   '1',
@@ -145,7 +147,8 @@ RSpec.describe Import::OTRS::CustomerUser do
         zip:             nil,
         city:            nil,
         country:         nil
-      }}
+      }
+    end
 
     it 'creates' do
       creates_with(zammad_structure)

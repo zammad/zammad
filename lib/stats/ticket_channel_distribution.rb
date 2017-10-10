@@ -34,15 +34,15 @@ class Stats::TicketChannelDistribution
     result = {}
     total_in = 0
     total_out = 0
-    channels.each { |channel|
+    channels.each do |channel|
       result[channel[:sender].to_sym] = {
         icon: channel[:icon]
       }
       type_ids = []
-      Ticket::Article::Type.all.each { |type|
+      Ticket::Article::Type.all.each do |type|
         next if type.name !~ /^#{channel[:sender]}/i
         type_ids.push type.id
-      }
+      end
 
       sender = Ticket::Article::Sender.lookup( name: 'Customer' )
       count = Ticket.where(group_id: group_ids).joins(:articles).where(
@@ -61,10 +61,10 @@ class Stats::TicketChannelDistribution
       ).count
       result[channel[:sender].to_sym][:outbound] = count
       total_out += count
-    }
+    end
 
     # append in percent
-    channels.each { |channel|
+    channels.each do |channel|
       count = result[channel[:sender].to_sym][:inbound]
       #puts "#{channel.inspect}:in/#{result.inspect}:#{count}"
       in_process_precent = if count.zero?
@@ -81,7 +81,7 @@ class Stats::TicketChannelDistribution
                               (count * 1000) / ((total_out * 1000) / 100)
                             end
       result[channel[:sender].to_sym][:outbound_in_percent] = out_process_precent
-    }
+    end
 
     { channels: result }
   end

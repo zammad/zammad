@@ -21,9 +21,9 @@ RSpec.describe Import::ModelResource do
   let(:group_data) { attributes_for(:group).merge(id: 1337) }
 
   it 'creates model Objects by class name' do
-    expect {
+    expect do
       Import::Test::Group.new(group_data)
-    }.to change { Group.count }.by(1)
+    end.to change { Group.count }.by(1)
   end
 
   it 'updates model Objects by class name' do

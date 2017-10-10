@@ -26,7 +26,7 @@ RSpec.describe Import::OTRS::Customer do
   context 'Organization' do
 
     let(:object_structure) { load_customer_json('default') }
-    let(:zammad_structure) {
+    let(:zammad_structure) do
       {
         created_by_id: '1',
         updated_by_id: '1',
@@ -35,7 +35,8 @@ RSpec.describe Import::OTRS::Customer do
         created_at:    '2014-06-06 12:41:03',
         name:          'test922896',
         note:          'test922896'
-      }}
+      }
+    end
 
     it 'creates' do
       creates_with(zammad_structure)
@@ -50,11 +51,11 @@ RSpec.describe Import::OTRS::Customer do
 
     let(:customer_id) { 'test922896' }
     let(:object_structure) { load_customer_json('default') }
-    let(:otrs_dummy_response) {
+    let(:otrs_dummy_response) do
       [
         object_structure
       ]
-    }
+    end
 
     it 'responds to by_customer_id' do
       expect(described_class).to respond_to('by_customer_id')

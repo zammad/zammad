@@ -8,7 +8,7 @@ Wants=zammad-scheduler.service
 Wants=zammad-websocket.service
 
 [Service]
-Type=simple
+EnvironmentFile=/etc/zammad/zammad.env
 User=zammad
 Group=zammad
 Restart=always

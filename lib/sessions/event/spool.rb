@@ -16,7 +16,7 @@ class Sessions::Event::Spool < Sessions::Event::Base
     end
 
     spool = Sessions.spool_list(@payload['timestamp'], @session['id'])
-    spool.each { |item|
+    spool.each do |item|
 
       # create new msg to push to client
       if item[:type] == 'direct'
@@ -25,7 +25,7 @@ class Sessions::Event::Spool < Sessions::Event::Base
         log 'notice', 'send spool'
       end
       websocket_send(@client_id, item[:message])
-    }
+    end
 
     # send spool:sent event to client
     log 'notice', 'send spool:sent event'

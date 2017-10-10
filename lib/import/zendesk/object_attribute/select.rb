@@ -17,9 +17,9 @@ module Import
 
         def options(object_attribte)
           result = {}
-          object_attribte.custom_field_options.each { |entry|
+          object_attribte.custom_field_options.each do |entry|
             result[ entry['value'] ] = entry['name']
-          }
+          end
           result
         end
       end

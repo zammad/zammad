@@ -130,17 +130,17 @@ returns
       items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention)
       if !full
         ids = []
-        items.each { |item|
+        items.each do |item|
           ids.push item[:id]
-        }
+        end
         return ids
       end
       tickets = []
-      items.each { |item|
+      items.each do |item|
         ticket = Ticket.lookup(id: item[:id])
         next if !ticket
         tickets.push ticket
-      }
+      end
       return tickets
     end
 
@@ -170,16 +170,16 @@ returns
     # build result list
     if !full
       ids = []
-      tickets_all.each { |ticket|
+      tickets_all.each do |ticket|
         ids.push ticket.id
-      }
+      end
       return ids
     end
 
     tickets = []
-    tickets_all.each { |ticket|
+    tickets_all.each do |ticket|
       tickets.push Ticket.lookup(id: ticket.id)
-    }
+    end
     tickets
   end
 end

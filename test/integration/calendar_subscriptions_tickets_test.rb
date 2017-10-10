@@ -185,10 +185,10 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
     },
   ]
 
-  tickets.each { |ticket|
+  tickets.each do |ticket|
 
     Ticket.create( ticket )
-  }
+  end
 
   defaults_disabled = {
     escalation: {
@@ -254,7 +254,7 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
       },
     ]
 
-    tests.each { |test_data|
+    tests.each do |test_data|
 
       preferences = defaults_disabled.merge( test_data[:preferences] )
 
@@ -269,7 +269,7 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
       calendar_subscriptions = CalendarSubscriptions.new( user )
       ical                   = calendar_subscriptions.all
 
-      event_data.each { |event|
+      event_data.each do |event|
 
         contained = false
         if ical =~ /#{event[:summary]}/
@@ -277,8 +277,8 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
         end
 
         assert( contained, "#{test_data[:name]} new_open ical contains '#{event[:summary]}'" )
-      }
-    }
+      end
+    end
   end
 
   test 'pending' do
@@ -330,7 +330,7 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
       },
     ]
 
-    tests.each { |test_data|
+    tests.each do |test_data|
 
       preferences = defaults_disabled.merge( test_data[:preferences] )
 
@@ -345,7 +345,7 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
       calendar_subscriptions = CalendarSubscriptions.new( user )
       ical                   = calendar_subscriptions.all
 
-      event_data.each { |event|
+      event_data.each do |event|
 
         contained = false
         if ical =~ /#{event[:summary]}/
@@ -353,8 +353,8 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
         end
 
         assert( contained, "#{test_data[:name]} pending ical contains '#{event[:summary]}'" )
-      }
-    }
+      end
+    end
   end
 
   test 'escalation' do
@@ -406,7 +406,7 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
       },
     ]
 
-    tests.each { |test_data|
+    tests.each do |test_data|
 
       preferences = defaults_disabled.merge( test_data[:preferences] )
 
@@ -421,7 +421,7 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
       calendar_subscriptions = CalendarSubscriptions.new( user )
       ical                   = calendar_subscriptions.all
 
-      event_data.each { |event|
+      event_data.each do |event|
 
         contained = false
         if ical =~ /#{event[:summary]}/
@@ -429,8 +429,8 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
         end
 
         assert( contained, "#{test_data[:name]} escalation ical contains '#{event[:summary]}'" )
-      }
-    }
+      end
+    end
   end
 
 end

@@ -127,14 +127,14 @@ returns
 =end
 
   def self.bot_duplicate?(bot_id, channel_id = nil)
-    Channel.where(area: 'Telegram::Bot').each { |channel|
+    Channel.where(area: 'Telegram::Bot').each do |channel|
       next if !channel.options
       next if !channel.options[:bot]
       next if !channel.options[:bot][:id]
       next if channel.options[:bot][:id] != bot_id
       next if channel.id.to_s == channel_id.to_s
       return true
-    }
+    end
     false
   end
 
@@ -151,12 +151,12 @@ returns
 =end
 
   def self.bot_by_bot_id(bot_id)
-    Channel.where(area: 'Telegram::Bot').each { |channel|
+    Channel.where(area: 'Telegram::Bot').each do |channel|
       next if !channel.options
       next if !channel.options[:bot]
       next if !channel.options[:bot][:id]
       return channel if channel.options[:bot][:id].to_s == bot_id.to_s
-    }
+    end
     nil
   end
 
@@ -174,19 +174,19 @@ returns
 
   def self.message_id(params)
     message_id = nil
-    [:message, :edited_message].each { |key|
+    [:message, :edited_message].each do |key|
       next if !params[key]
       next if !params[key][:message_id]
       message_id = params[key][:message_id]
       break
-    }
+    end
     if message_id
-      [:message, :edited_message].each { |key|
+      [:message, :edited_message].each do |key|
         next if !params[key]
         next if !params[key][:chat]
         next if !params[key][:chat][:id]
         message_id = "#{message_id}.#{params[key][:chat][:id]}"
-      }
+      end
     end
     if !message_id
       message_id = params[:update_id]
@@ -279,14 +279,14 @@ returns
 
     # prepare title
     title = '-'
-    [:text, :caption].each { |area|
+    [:text, :caption].each do |area|
       next if !params[:message]
       next if !params[:message][area]
       title = params[:message][area]
       break
-    }
+    end
     if title == '-'
-      [:sticker, :photo, :document, :voice].each { |area|
+      [:sticker, :photo, :document, :voice].each do |area|
         begin
           next if !params[:message]
           next if !params[:message][area]
@@ -297,7 +297,7 @@ returns
           # just go ahead
           title
         end
-      }
+      end
     end
     if title.length > 60
       title = "#{title[0, 60]}..."
@@ -388,7 +388,7 @@ returns
       max_width = 650 * 2
       last_width = 0
       last_height = 0
-      params[:message][:photo].each { |file|
+      params[:message][:photo].each do |file|
         if !photo
           photo = file
           last_width = file['width'].to_i
@@ -398,7 +398,7 @@ returns
         photo = file
         last_width = file['width'].to_i
         last_height = file['height'].to_i
-      }
+      end
       if last_width > 650
         last_width = (last_width / 2).to_i
         last_height = (last_height / 2).to_i

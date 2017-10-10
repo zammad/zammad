@@ -29,14 +29,14 @@ class SearchController < ApplicationController
     # get priorities of result
     objects_in_order = []
     objects_in_order_hash = {}
-    objects.each { |object|
+    objects.each do |object|
       preferences = object.constantize.search_preferences(current_user)
       next if !preferences
       objects_in_order_hash[preferences[:prio]] = object
-    }
-    objects_in_order_hash.keys.sort.reverse_each { |prio|
+    end
+    objects_in_order_hash.keys.sort.reverse_each do |prio|
       objects_in_order.push objects_in_order_hash[prio]
-    }
+    end
 
     # try search index backend
     assets = {}
@@ -46,7 +46,7 @@ class SearchController < ApplicationController
       # get direct search index based objects
       objects_with_direct_search_index = []
       objects_without_direct_search_index = []
-      objects.each { |object|
+      objects.each do |object|
         preferences = object.constantize.search_preferences(current_user)
         next if !preferences
         if preferences[:direct_search_index]
@@ -54,48 +54,48 @@ class SearchController < ApplicationController
         else
           objects_without_direct_search_index.push object
         end
-      }
+      end
 
       # do only one query to index search backend
       if objects_with_direct_search_index.present?
         items = SearchIndexBackend.search(query, limit, objects_with_direct_search_index)
-        items.each { |item|
+        items.each do |item|
           require item[:type].to_filename
           record = Kernel.const_get(item[:type]).lookup(id: item[:id])
           next if !record
           assets = record.assets(assets)
           result.push item
-        }
+        end
       end
 
       # e. g. do ticket query by Ticket class to handle ticket permissions
-      objects_without_direct_search_index.each { |object|
+      objects_without_direct_search_index.each do |object|
         object_result = search_generic_backend(object, query, limit, current_user, assets)
         if object_result.present?
           result = result.concat(object_result)
         end
-      }
+      end
 
       # sort order by object priority
       result_in_order = []
-      objects_in_order.each { |object|
-        result.each { |item|
+      objects_in_order.each do |object|
+        result.each do |item|
           next if item[:type] != object
           item[:id] = item[:id].to_i
           result_in_order.push item
-        }
-      }
+        end
+      end
       result = result_in_order
 
     else
 
       # do query
-      objects_in_order.each { |object|
+      objects_in_order.each do |object|
         object_result = search_generic_backend(object, query, limit, current_user, assets)
         if object_result.present?
           result = result.concat(object_result)
         end
-      }
+      end
     end
 
     render json: {
