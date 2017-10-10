@@ -53,8 +53,7 @@ gem 'mime-types'
 
 gem 'biz'
 
-# temporary till pull request gets merged: https://github.com/composite-primary-keys/composite_primary_keys/pull/404
-gem 'composite_primary_keys', git: 'https://github.com/jkowens/composite_primary_keys.git', branch: 'rails-5_1'
+gem 'composite_primary_keys'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
