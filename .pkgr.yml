@@ -14,6 +14,11 @@ targets:
       - elasticsearch
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
+  debian-9:
+    dependencies:
+      - elasticsearch
+      - nginx|apache2
+      - postgresql|mariadb-server|sqlite      
   ubuntu-16.04:
     dependencies:
       - elasticsearch
