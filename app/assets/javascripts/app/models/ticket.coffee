@@ -200,6 +200,14 @@ class App.Ticket extends App.Model
           result = true if objectValue.toString().match(contains_regex)
         else if condition.operator == 'contains not'
           result = true if !objectValue.toString().match(contains_regex)
+        else if condition.operator == 'contains all'
+          result = true if !objectValue.toString().match(contains_regex)
+        else if condition.operator == 'contains one'
+          result = true if !objectValue.toString().match(contains_regex)
+        else if condition.operator == 'contains all not'
+          result = true if !objectValue.toString().match(contains_regex)
+        else if condition.operator == 'contains one not'
+          result = true if !objectValue.toString().match(contains_regex)
         else if condition.operator == 'is'
           result = true if objectValue.toString().trim().toLowerCase() is loopConditionValue.toString().trim().toLowerCase()
         else if condition.operator == 'is not'
