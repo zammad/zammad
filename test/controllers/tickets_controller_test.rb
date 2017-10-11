@@ -1107,4 +1107,22 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal('Not authorized (admin permission required)!', result['error'])
   end
 
+  test '03.05 open state blocked after closed for customer role' do
+    title = "customer ticket #{rand(999_999_999)}"
+    ticket = Ticket.create!(
+      title: title,
+      group: Group.lookup(name: 'Users'),
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'closed')
+    )
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-customer1@example.com', 'customer1pw')
+    get "/api/v1/tickets/#{ticket.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+
+    params = {
+        state: Ticket::State.lookup(name: 'open')
+    }
+    put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(401)
+  end
 end

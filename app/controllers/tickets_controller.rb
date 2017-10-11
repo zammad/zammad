@@ -5,6 +5,7 @@ class TicketsController < ApplicationController
   include TicketStats
 
   prepend_before_action :authentication_check
+  before_action :reopen_role_validation, only: :update
 
   # GET /api/v1/tickets
   def index
@@ -601,6 +602,19 @@ class TicketsController < ApplicationController
       tags: tags,
       form_meta: attributes_to_change[:form_meta],
     }
+  end
+
+  def reopen_role_validation
+    ticket = Ticket.find(params[:id])
+    if params[:state_id]
+      new_state = params[:state_id]
+    elsif params[:state]
+      new_state = params[:state][:id]
+    end
+    is_customer = current_user.role?('Customer')
+
+    # Validate against ID in case of I18n
+    raise Exceptions::NotAuthorized, 'Not authorized' if ticket.state_id == 4 && new_state.to_i == 2 && is_customer
   end
 
 end
