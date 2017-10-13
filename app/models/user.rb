@@ -963,6 +963,17 @@ returns
     raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.'
   end
 
+  def validate_roles(role)
+    return true if !role_ids # we need role_ids for checking in role_ids below, in this method
+    return true if role.preferences[:not].blank?
+    role.preferences[:not].each do |local_role_name|
+      local_role = Role.lookup(name: local_role_name)
+      next if role_ids.exclude?(local_role.id)
+      raise "Role #{role.name} conflicts with #{local_role.name}"
+    end
+    true
+  end
+
   def validate_ooo
     return true if out_of_office != true
     raise Exceptions::UnprocessableEntity, 'out of office start is required' if out_of_office_start_at.blank?
@@ -970,20 +981,6 @@ returns
     raise Exceptions::UnprocessableEntity, 'out of office end is before start' if out_of_office_start_at > out_of_office_end_at
     raise Exceptions::UnprocessableEntity, 'out of office replacement user is required' if out_of_office_replacement_id.blank?
     raise Exceptions::UnprocessableEntity, 'out of office no such replacement user' if !User.find_by(id: out_of_office_replacement_id)
-    true
-  end
-
-  def validate_roles(role)
-    return true if !role_ids
-    role = Role.lookup(id: role.id)
-    raise "Unable to find role for id #{role_id}" if !role
-    if role.preferences[:not].present?
-      role.preferences[:not].each do |local_role_name|
-        local_role = Role.lookup(name: local_role_name)
-        next if !local_role
-        raise "Role #{role.name} conflicts with #{local_role.name}" if role_ids.include?(local_role.id)
-      end
-    end
     true
   end
 
