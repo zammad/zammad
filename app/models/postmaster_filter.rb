@@ -14,11 +14,7 @@ class PostmasterFilter < ApplicationModel
       raise Exceptions::UnprocessableEntity, 'operator invalid, ony "contains" and "contains not" is supported' if meta['operator'].blank? || meta['operator'] !~ /^(contains|contains not)$/
       raise Exceptions::UnprocessableEntity, 'value invalid/empty' if meta['value'].blank?
       begin
-        if meta['operator'] == 'contains not'
-          Channel::Filter::Match::EmailRegex.match(value: 'test content', match_rule: meta['value'], check_mode: true)
-        else
-          Channel::Filter::Match::EmailRegex.match(value: 'test content', match_rule: meta['value'], check_mode: true)
-        end
+        Channel::Filter::Match::EmailRegex.match(value: 'test content', match_rule: meta['value'], check_mode: true)
       rescue => e
         raise Exceptions::UnprocessableEntity, e.message
       end
