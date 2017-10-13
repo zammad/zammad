@@ -226,7 +226,7 @@ class App.ControllerTable extends App.Controller
 
         # check if order is still correct
         if @_isSame(newRows, newCurrentRows) is true
-          for position in removePositions
+          for position in removePositions.reverse()
             @$("tbody > tr:nth-child(#{position+1})").remove()
           @currentRows = newCurrentRows
           console.log('fullRender.contentRemoved', removePositions)
@@ -534,7 +534,6 @@ class App.ControllerTable extends App.Controller
   sortList: =>
     return if _.isEmpty(@objects)
 
-
     orderBy = @customOrderBy || @orderBy
     orderDirection = @customOrderDirection || @orderDirection
 
@@ -549,7 +548,7 @@ class App.ControllerTable extends App.Controller
 
     if orderBy
       for header in @headers
-        if header.name is orderBy || "#{header.name}_id" is orderBy# || header.name.substring(0, header.name.length - 3) is orderBy
+        if header.name is orderBy || "#{header.name}_id" is orderBy
           localObjects = _.sortBy(
             @objects
             (item) ->
@@ -577,7 +576,40 @@ class App.ControllerTable extends App.Controller
             header.sortOrderIcon = ['arrow-up', 'table-sort-arrow']
         else
           header.sortOrderIcon = undefined
-      @objects = localObjects
+
+      # in case order by is not in show column, use orderBy attribute
+      if !localObjects
+        for attributeName, attribute of @attributesList
+          if attributeName is orderBy || "#{attributeName}_id" is orderBy
+
+            # order by
+            localObjects = _.sortBy(
+              @objects
+              (item) ->
+                # if we need to sort translated col.
+                if attribute.translate
+                  return App.i18n.translateInline(item[attribute.name])
+
+                # if we need to sort by relation name
+                if attribute.relation
+                  if item[attribute.name]
+                    localItem = App[attribute.relation].findNative(item[attribute.name])
+                    if localItem
+                      if localItem.displayName
+                        localItem = localItem.displayName().toLowerCase()
+                      if localItem.name
+                        localItem = localItem.name.toLowerCase()
+                      return localItem
+                  return ''
+                item[attribute.name]
+            )
+            if orderDirection is 'DESC'
+              localObjects = localObjects.reverse()
+
+      if localObjects
+        @objects = localObjects
+      else
+        console.log("Unable to orderBy objects, no attribute found with name #{orderBy}")
 
     # group by
     if @groupBy

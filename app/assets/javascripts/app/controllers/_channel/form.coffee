@@ -38,7 +38,6 @@ class App.ChannelForm extends App.ControllerSubContent
       value: group_id
       #class: 'form-control--small'
     )
-    console.log('s', element.find('.js-groupSelector'), selection)
     element.find('.js-groupSelector').html(selection)
 
     @html element

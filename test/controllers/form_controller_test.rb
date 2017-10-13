@@ -244,4 +244,28 @@ class FormControllerTest < ActionDispatch::IntegrationTest
     assert(result['error'])
   end
 
+  test '06 - customer_ticket_create false disables form' do
+    Setting.set('form_ticket_create', true)
+    Setting.set('customer_ticket_create', false)
+
+    fingerprint = SecureRandom.hex(40)
+
+    post '/api/v1/form_config', params: { fingerprint: fingerprint }.to_json, headers: @headers
+
+    result = JSON.parse(@response.body)
+    token = result['token']
+    params = {
+      fingerprint: fingerprint,
+      token: token,
+      name: 'Bob Smith',
+      email: 'discard@znuny.com',
+      title: 'test',
+      body: 'hello'
+    }
+
+    post '/api/v1/form_submit', params: params.to_json, headers: @headers
+
+    assert_response(401)
+  end
+
 end
