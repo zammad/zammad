@@ -156,6 +156,10 @@ module Import
         else
           state[association] = source.send(association)
         end
+
+        # sort arrays to avoid wrong change detection
+        next if !state[association].respond_to?(:sort!)
+        state[association].sort!
       end
       state
     end
