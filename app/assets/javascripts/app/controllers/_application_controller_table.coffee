@@ -112,12 +112,14 @@ class App.ControllerTable extends App.Controller
   renderState:        undefined
   groupBy:            undefined
 
+  shownPerPage: 150
+  shownPage: 0
+
   destroy: false
 
   columnsLength: undefined
   headers: undefined
   headerWidth: {}
-  maxShown: 150
 
   currentRows: []
 
@@ -142,8 +144,7 @@ class App.ControllerTable extends App.Controller
     @overviewAttributes ||= @overview || @model.configure_overview || []
     @attributesListRaw ||= @attribute_list || @model.configure_attributes || {}
     @attributesList = App.Model.attributesGet(false, @attributesListRaw)
-    #@setHeaderWidths = App.Model.setHeaderWidthsGet(false, @attributesList)
-    @destroy    = @model.configure_delete
+    @destroy = @model.configure_delete
 
     throw 'overviewAttributes needed' if _.isEmpty(@overviewAttributes)
     throw 'attributesList needed' if _.isEmpty(@attributesList)
@@ -182,7 +183,25 @@ class App.ControllerTable extends App.Controller
     App.QueueManager.add('tableRender', localeRender)
     App.QueueManager.run('tableRender')
 
+  renderPager: (el, find = false) =>
+    pages = parseInt(((@objects.length - 1)  / @shownPerPage))
+    if pages < 1
+      if find
+        el.find('.js-pager').html('')
+      else
+        el.filter('.js-pager').html('')
+      return
+    pager = App.view('generic/table_pager')(
+      page:    @shownPage
+      pages:   pages
+    )
+    if find
+      el.find('.js-pager').html(pager)
+    else
+      el.filter('.js-pager').html(pager)
+
   render: =>
+    @setMaxPage()
     if @renderState is undefined
 
       # check if table is empty
@@ -246,6 +265,7 @@ class App.ControllerTable extends App.Controller
               @$("tbody > tr:nth-child(#{position})").after(newCurrentRows[position])
           @currentRows = newCurrentRows
           console.log('fullRender.contentRemoved', removePositions, addPositions)
+          @renderPager(@el, true)
           return ['fullRender.contentRemoved', removePositions, addPositions]
 
       if newRows.length isnt @currentRows.length
@@ -281,6 +301,8 @@ class App.ControllerTable extends App.Controller
     else
       @currentRows = clone(rows)
     container.find('.js-tableBody').html(rows)
+
+    @renderPager(container)
 
     cursorMap =
       click:    'pointer'
@@ -402,6 +424,17 @@ class App.ControllerTable extends App.Controller
         update: @dndCallback
       container.find('tbody').sortable(dndOptions)
 
+    # click on pager
+    container.delegate('.js-page', 'click', (e) =>
+      e.stopPropagation()
+      page = $(e.currentTarget).attr 'data-page'
+      render = =>
+        @shownPage = page
+        @renderTableFull()
+      App.QueueManager.add('tableRender', render)
+      App.QueueManager.run('tableRender')
+    )
+
     @el.html(container)
     @setBulkSelected(bulkIds)
 
@@ -424,7 +457,7 @@ class App.ControllerTable extends App.Controller
       columnsLength++
     groupLast = ''
     tableBody = []
-    objectsToShow = @objects.slice(0, @maxShown)
+    objectsToShow = @objectsOfPage(@shownPage)
     for object in objectsToShow
       if object
         position++
@@ -548,6 +581,15 @@ class App.ControllerTable extends App.Controller
       @columnsLength++
     console.log('tableHeaders: new headers', @headers)
     ['new headers', @headers]
+
+  setMaxPage: =>
+    pages = parseInt(((@objects.length - 1)  / @shownPerPage))
+    if parseInt(@shownPage) > pages
+      @shownPage = pages
+
+  objectsOfPage: (page = 0) =>
+    page = parseInt(page)
+    @objects.slice(page * @shownPerPage, (page + 1) * @shownPerPage)
 
   sortList: =>
     return if _.isEmpty(@objects)
@@ -679,8 +721,6 @@ class App.ControllerTable extends App.Controller
 
     @objects = localObjects
     @lastSortedobjects = localObjects
-
-    localObjects
 
   # bind on delete dialog
   deleteRow: (id, e) =>
