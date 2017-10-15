@@ -108,6 +108,8 @@ class App.TicketOverview extends App.Controller
     $(document).off 'mouseup.item'
     pos = @batchDragger.data()
 
+    @clearDelay('clear-hovered-batch-entry')
+
     if !@hoveredBatchEntry
       @cleanUpDrag()
       return
@@ -513,6 +515,7 @@ class App.TicketOverview extends App.Controller
       @hoveredBatchEntry = entryAtPoint.closest('.js-batch-overlay-entry').addClass('is-hovered')
 
   highlightBatchEntry: (event) ->
+    @clearDelay('clear-hovered-batch-entry')
     @hoveredBatchEntry = $(event.currentTarget).closest('.js-batch-overlay-entry').addClass('is-hovered')
 
     if @hoveredBatchEntry.attr('data-action') is 'group_assign'
@@ -528,7 +531,9 @@ class App.TicketOverview extends App.Controller
         clearTimeout @batchAssignGroupHintTimeout
 
     @hoveredBatchEntry.removeClass('is-hovered')
-    @hoveredBatchEntry = null
+    delay = =>
+      @hoveredBatchEntry = null
+    @delay(delay, 800, 'clear-hovered-batch-entry')
 
   blinkBatchEntry: =>
     @hoveredBatchEntry
@@ -953,7 +958,6 @@ class Table extends App.Controller
       ticketListShow.push App.Ticket.find(ticket.id)
     console.log('overview', overview)
     @overview = App.Overview.find(overview.id)
-    console.log('TTT', @overview.view.s)
     @table.update(
       overviewAttributes: @overview.view.s
       objects:            ticketListShow
@@ -1508,7 +1512,6 @@ class App.OverviewSettings extends App.ControllerModal
           App.OverviewListCollection.fetch(@overview.link)
         else
           App.OverviewIndexCollection.trigger()
-          console.log('TRIGGER', @overview.link)
           App.OverviewListCollection.trigger(@overview.link)
 
         # close modal
