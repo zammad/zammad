@@ -117,6 +117,7 @@ class App.ControllerTable extends App.Controller
   columnsLength: undefined
   headers: undefined
   headerWidth: {}
+  maxShown: 150
 
   currentRows: []
 
@@ -141,7 +142,6 @@ class App.ControllerTable extends App.Controller
     @overviewAttributes ||= @overview || @model.configure_overview || []
     @attributesListRaw ||= @attribute_list || @model.configure_attributes || {}
     @attributesList = App.Model.attributesGet(false, @attributesListRaw)
-    console.log('Table', @overviewAttributes, @overview)
     #@setHeaderWidths = App.Model.setHeaderWidthsGet(false, @attributesList)
     @destroy    = @model.configure_delete
 
@@ -168,16 +168,18 @@ class App.ControllerTable extends App.Controller
     $(window).off 'resize.table', @onResize
 
   update: (params) =>
-    console.log('params', params)
-    for key, value of params
-      @[key] = value
-
     if params.sync is true
+      for key, value of params
+        @[key] = value
       return @render()
-    @renderQueue()
+    @renderQueue(params)
 
-  renderQueue: =>
-    App.QueueManager.add('tableRender', @render)
+  renderQueue: (params) =>
+    localeRender = =>
+      for key, value of params
+        @[key] = value
+      @render()
+    App.QueueManager.add('tableRender', localeRender)
     App.QueueManager.run('tableRender')
 
   render: =>
@@ -214,8 +216,12 @@ class App.ControllerTable extends App.Controller
       removedRows = _.difference(@currentRows, newRows)
       addedRows = _.difference(newRows, @currentRows)
 
+      #console.log('newRows', newRows)
+      #console.log('removedRows', removedRows)
+      #console.log('addedRows', addedRows)
+
       # if only rows are removed
-      if _.isEmpty(addedRows) && !_.isEmpty(removedRows) && removedRows.length < 15 && !_.isEmpty(newRows)
+      if (!_.isEmpty(addedRows) || !_.isEmpty(removedRows)) && addedRows.length < 10 && removedRows.length < 15 && removedRows.length < newRows.length && !_.isEmpty(newRows)
         newCurrentRows = []
         removePositions = []
         for position in [0..@currentRows.length-1]
@@ -223,14 +229,24 @@ class App.ControllerTable extends App.Controller
             removePositions.push position
           else
             newCurrentRows.push @currentRows[position]
+        addPositions = []
+        for position in [0..newRows.length-1]
+          if _.contains(addedRows, newRows[position])
+            addPositions.push position
+            newCurrentRows.splice(position,0,newRows[position])
 
         # check if order is still correct
         if @_isSame(newRows, newCurrentRows) is true
           for position in removePositions.reverse()
             @$("tbody > tr:nth-child(#{position+1})").remove()
+          for position in addPositions
+            if position is 0
+              @$('tbody').append(newCurrentRows[position])
+            else
+              @$("tbody > tr:nth-child(#{position})").after(newCurrentRows[position])
           @currentRows = newCurrentRows
-          console.log('fullRender.contentRemoved', removePositions)
-          return ['fullRender.contentRemoved', removePositions]
+          console.log('fullRender.contentRemoved', removePositions, addPositions)
+          return ['fullRender.contentRemoved', removePositions, addPositions]
 
       if newRows.length isnt @currentRows.length
         result = ['fullRender.lenghtChanged', @currentRows.length, newRows.length]
@@ -254,7 +270,7 @@ class App.ControllerTable extends App.Controller
     )
 
   renderTableFull: (rows) =>
-    console.log('renderTableFull', @orderBy, @orderDirection)
+    console.log('renderTableFull', @orderBy, @orderDirection, @objects)
     @tableHeaders()
     @sortList()
     bulkIds = @getBulkSelected()
@@ -408,14 +424,16 @@ class App.ControllerTable extends App.Controller
       columnsLength++
     groupLast = ''
     tableBody = []
-    for object in @objects
-      position++
-      if @groupBy
-        groupByName = App.viewPrint(object, @groupBy, @attributesList)
-        if groupLast isnt groupByName
-          groupLast = groupByName
-          tableBody.push @renderTableGroupByRow(object, position, groupByName)
-      tableBody.push @renderTableRow(object, position)
+    objectsToShow = @objects.slice(0, @maxShown)
+    for object in objectsToShow
+      if object
+        position++
+        if @groupBy
+          groupByName = App.viewPrint(object, @groupBy, @attributesList)
+          if groupLast isnt groupByName
+            groupLast = groupByName
+            tableBody.push @renderTableGroupByRow(object, position, groupByName)
+        tableBody.push @renderTableRow(object, position)
     tableBody
 
   renderTableGroupByRow: (object, position, groupByName) =>
@@ -552,6 +570,12 @@ class App.ControllerTable extends App.Controller
           localObjects = _.sortBy(
             @objects
             (item) ->
+
+              # error handling
+              if !item
+                console.log('Got empty object in order by with header _.sortBy')
+                return ''
+
               # if we need to sort translated col.
               if header.translate
                 return App.i18n.translateInline(item[header.name])
@@ -586,6 +610,12 @@ class App.ControllerTable extends App.Controller
             localObjects = _.sortBy(
               @objects
               (item) ->
+
+                # error handling
+                if !item
+                  console.log('Got empty object in order by in attribute _.sortBy')
+                  return ''
+
                 # if we need to sort translated col.
                 if attribute.translate
                   return App.i18n.translateInline(item[attribute.name])
