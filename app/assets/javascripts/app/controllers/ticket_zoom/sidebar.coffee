@@ -27,6 +27,8 @@ class App.TicketZoomSidebar extends App.ObserverController
           taskGet:  @taskGet
           formMeta: @formMeta
           markForm: @markForm
+          tags:     @tags
+          links:    @links
         )
       else
         @sidebarBackends[key].reload(
@@ -34,6 +36,8 @@ class App.TicketZoomSidebar extends App.ObserverController
           query:   @query
           formMeta: @formMeta
           markForm: @markForm
+          tags:     @tags
+          links:    @links
         )
       item = @sidebarBackends[key].sidebarItem()
       if item
