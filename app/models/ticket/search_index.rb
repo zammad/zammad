@@ -35,16 +35,15 @@ returns
     articles = Ticket::Article.where(ticket_id: id)
     attributes['article'] = []
     articles.each do |article|
-      article_attributes = article.attributes
-
-      # remove note needed attributes
-      ignore = %w(message_id_md5)
-      ignore.each do |attribute|
-        article_attributes.delete(attribute)
-      end
 
       # lookup attributes of ref. objects (normally name and note)
       article_attributes = article.search_index_attribute_lookup
+
+      # remove note needed attributes
+      ignore = %w(message_id_md5 ticket)
+      ignore.each do |attribute|
+        article_attributes.delete(attribute)
+      end
 
       # index raw text body
       if article_attributes['content_type'] && article_attributes['content_type'] == 'text/html' && article_attributes['body']
