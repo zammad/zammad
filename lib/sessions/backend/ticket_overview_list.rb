@@ -23,7 +23,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
     index_and_lists = Ticket::Overviews.index(@user)
 
     # no data exists
-    return if !index_and_lists || index_and_lists.empty?
+    return if index_and_lists.blank?
 
     # no change exists
     return if @last_change == index_and_lists
