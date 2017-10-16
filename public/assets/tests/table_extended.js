@@ -1013,11 +1013,11 @@ test('table new - initial list', function() {
   equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Erstellt', 'check header')
   equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
   equal(el.find('tbody > tr:nth-child(1) > td').length, 3)
-  equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '2 normal')
+  equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '1 niedrig')
   equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '10.06.2014')
   equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'true')
   equal(el.find('tbody > tr:nth-child(2) > td').length, 3)
-  equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '1 niedrig')
+  equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '2 normal')
   equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014')
   equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'true')
   equal(el.find('tbody > tr:nth-child(3) > td').length, 0)
@@ -1320,5 +1320,105 @@ test('table new - initial list', function() {
   equal(el.find('.js-pager').first().find('.js-page').length, 2)
   equal(el.find('.js-pager').first().find('.js-page.is-selected').length, 1)
   equal(el.find('.js-pager').first().find('.js-page.is-selected').text(), '1')
+
+  $('#table').append('<hr><h1>table with data</h1><div id="table-new7"></div>')
+  var el = $('#table-new7')
+
+  App.TicketPriority.refresh([
+    {
+      id:         1,
+      name:       '1 low',
+      note:       'some note 1',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+    {
+      id:         2,
+      name:       '2 normal',
+      note:       'some note 2',
+      active:     false,
+      created_at: '2014-06-10T10:17:34.000Z',
+    },
+    {
+      id:         3,
+      name:       '3 high',
+      note:       'some note 3',
+      active:     false,
+      created_at: '2014-06-10T10:17:38.000Z',
+    },
+  ], {clear: true})
+
+  var table = new App.ControllerTable({
+    el:                 el,
+    overviewAttributes: ['name', 'created_at', 'active'],
+    model:              App.TicketPriority,
+    objects:            App.TicketPriority.search({sortBy:'name', order: 'ASC'}),
+    checkbox:           false,
+    radio:              false,
+  })
+  //equal(el.find('table').length, 0, 'row count')
+  //table.render()
+  equal(el.find('table > thead > tr').length, 1, 'row count')
+  equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Erstellt', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
+  equal(el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '1 niedrig', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'true', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '2 normal', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(3) > td').length, 3, 'check row 3')
+  equal(el.find('tbody > tr:nth-child(3) > td:first').text().trim(), '3 hoch', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(4) > td').length, 0, 'check row 3')
+
+  App.TicketPriority.refresh([
+    {
+      id:         1,
+      name:       '1 low',
+      note:       'some note',
+      active:     true,
+      created_at: '2014-06-12T11:17:34.000Z',
+    },
+    {
+      id:         2,
+      name:       '2 normal',
+      note:       'some note 2',
+      active:     false,
+      created_at: '2014-06-10T10:17:34.000Z',
+    },
+    {
+      id:         3,
+      name:       '3 high',
+      note:       'some note 3',
+      active:     false,
+      created_at: '2014-06-10T10:17:38.000Z',
+    },
+  ], {clear: true})
+
+  result = table.update({sync: true, objects: App.TicketPriority.search({sortBy:'name', order: 'ASC'})})
+  equal(result[0], 'fullRender.contentRemoved')
+  equal(result[1][0], 0)
+  equal(result[1][1], undefined)
+  equal(result[2][0], 0)
+  equal(result[2][1], undefined)
+
+  equal(el.find('table > thead > tr').length, 1, 'row count')
+  equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Erstellt', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
+  equal(el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '1 niedrig', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '12.06.2014', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'true', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '2 normal', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(3) > td').length, 3, 'check row 3')
+  equal(el.find('tbody > tr:nth-child(3) > td:first').text().trim(), '3 hoch', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(4) > td').length, 0, 'check row 3')
 
 })
