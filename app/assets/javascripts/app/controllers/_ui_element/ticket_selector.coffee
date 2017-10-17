@@ -313,7 +313,7 @@ class App.UiElement.ticket_selector
         elementRow.find('.js-value').removeClass('hide')
         @buildValue(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
 
-    # force to use auto complition on user lookup
+    # force to use auto completion on user lookup
     attribute = _.clone(attributeConfig)
 
     name = "#{attribute.name}::#{groupAndAttribute}::value"
