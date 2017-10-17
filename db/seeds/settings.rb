@@ -3379,29 +3379,3 @@ Setting.create_if_not_exists(
   preferences: { online_service_disable: true },
   frontend: false
 )
-Setting.create_if_not_exists(
-  title: 'Ticket Auto Assign',
-  name: 'ticket_auto_assign',
-  area: 'Ticket::Base',
-  description: "Auto assign ticket to agents. If enabled, when a new ticket is created, it will be assigned to a random agent in the system belonging to same group as the ticket.",
-  options: {
-    form: [
-      {
-        display: '',
-        null: true,
-        name: 'ticket_auto_assign',
-        tag: 'select',
-        translate: true,
-        options: {
-          true => 'Enabled',
-          false => 'Disabled'
-        },
-      },
-    ],
-  },
-  state: true,
-  preferences: {
-    permission: ['admin.ticket'],
-  },
-  frontend: false
-)
