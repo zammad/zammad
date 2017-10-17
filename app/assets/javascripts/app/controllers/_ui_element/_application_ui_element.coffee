@@ -160,13 +160,15 @@ class App.UiElement.ApplicationUiElement
           nameNew = item.displayName()
         else if item.name
           nameNew = item.name
+
         if attribute.translate
           nameNew = App.i18n.translateInline(nameNew)
-        attribute.options.push {
-          name:  nameNew,
+
+        attribute.options.push
           value: item.id,
           note:  item.note,
-        }
+          name:  nameNew,
+          title: if item.email then item.email else nameNew
 
     attribute.sortBy = null
 
