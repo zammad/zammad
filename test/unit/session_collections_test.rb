@@ -200,7 +200,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(data[:assets])
     assert_not(data[:assets][:Group])
 
-    travel 65.minutes
+    travel 125.minutes
 
     client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push

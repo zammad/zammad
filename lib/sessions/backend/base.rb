@@ -30,7 +30,7 @@ class Sessions::Backend::Base
     return true if @asset_lookup[class_name][record_id].blank?
     return true if @asset_lookup[class_name][record_id][:updated_at] < updated_at
     return true if @asset_lookup[class_name][record_id][:pushed_at].blank?
-    return true if @asset_lookup[class_name][record_id][:pushed_at] < Time.zone.now - 1.hour
+    return true if @asset_lookup[class_name][record_id][:pushed_at] < Time.zone.now - 2.hours
     false
   end
 

@@ -53,7 +53,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     assert_not(client1.asset_needed_by_updated_at?(ticket.class.to_s, ticket.id, ticket.updated_at))
     assert_not(client2.asset_needed_by_updated_at?(ticket.class.to_s, ticket.id, ticket.updated_at))
 
-    travel 60.minutes
+    travel 120.minutes
 
     assert(client1.asset_needed_by_updated_at?(ticket.class.to_s, ticket.id, ticket.updated_at))
     client1.asset_push(ticket, {})
@@ -75,7 +75,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     assert_not(client1.asset_needed?(ticket))
     assert_not(client2.asset_needed?(ticket))
 
-    travel 65.minutes
+    travel 125.minutes
 
     assert(client1.asset_needed?(ticket))
     client1.asset_push(ticket, {})
@@ -153,7 +153,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
     assert_not(result1[1][:data][:assets][:Ticket][ticket3.id])
     assert_equal(result1[1][:data][:assets][:Ticket][ticket4.id]['title'], ticket4.title)
 
-    travel 65.minutes
+    travel 125.minutes
     ticket1.touch
     result1 = client1.push
     assert(result1, 'check ticket_overview_index - recall 8')
