@@ -197,6 +197,14 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
     data = client1.push
     assert_equal(data[:collection][:Group][0]['id'], groups[0].id)
+    assert(data[:assets])
+    assert_not(data[:assets][:Group])
+
+    travel 65.minutes
+
+    client1 = Sessions::Backend::Collections::Group.new(agent1, assets, false, '123-1', 4)
+    data = client1.push
+    assert_equal(data[:collection][:Group][0]['id'], groups[0].id)
     assert(data[:assets][:Group][groups.first.id])
 
     travel 2.minutes

@@ -44,7 +44,7 @@ class Sessions::Backend::ActivityStream
 
     data = load
 
-    return if !data || data.empty?
+    return if data.blank?
 
     if !@client
       return {

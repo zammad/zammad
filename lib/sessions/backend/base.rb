@@ -9,25 +9,28 @@ class Sessions::Backend::Base
     @last_change  = nil
   end
 
-  def asset_needed?(record)
+  def asset_push(record, assets)
     class_name = record.class.to_s
-    if !@asset_lookup || !@asset_lookup[class_name] || !@asset_lookup[class_name][record.id]
-      @asset_lookup[class_name] ||= {}
-      @asset_lookup[class_name][record.id] = {
-        updated_at: record.updated_at,
-        pushed_at: Time.zone.now,
-      }
-      return true
-    end
+    @asset_lookup[class_name] ||= {}
+    @asset_lookup[class_name][record.id] = {
+      updated_at: record.updated_at,
+      pushed_at: Time.zone.now,
+    }
+    record.assets(assets)
+  end
 
-    if (!@asset_lookup[class_name][record.id][:updated_at] || @asset_lookup[class_name][record.id][:updated_at] < record.updated_at) ||
-       (!@asset_lookup[class_name][record.id][:pushed_at] || @asset_lookup[class_name][record.id][:pushed_at] > Time.zone.now - 45.seconds)
-      @asset_lookup[class_name][record.id] = {
-        updated_at: record.updated_at,
-        pushed_at: Time.zone.now,
-      }
-      return true
-    end
+  def asset_needed?(record)
+    return false if !asset_needed_by_updated_at?(record.class.to_s, record.id, record.updated_at)
+    true
+  end
+
+  def asset_needed_by_updated_at?(class_name, record_id, updated_at)
+    return true if @asset_lookup.blank?
+    return true if @asset_lookup[class_name].blank?
+    return true if @asset_lookup[class_name][record_id].blank?
+    return true if @asset_lookup[class_name][record_id][:updated_at] < updated_at
+    return true if @asset_lookup[class_name][record_id][:pushed_at].blank?
+    return true if @asset_lookup[class_name][record_id][:pushed_at] < Time.zone.now - 1.hour
     false
   end
 
