@@ -300,11 +300,15 @@ module HasGroups
       access   = ensure_group_access_list_parameter(access)
 
       # check direct access
-      ids   = group_through.klass.includes(name.downcase).where(group_id: group_id, access: access, table_name => { active: true }).pluck(group_through.foreign_key)
-      ids ||= []
+      instances = joins(group_through.name)
+                  .where( group_through.table_name => { group_id: group_id, access: access }, active: true )
 
-      # get instances and check for required permission
-      instances = where(id: ids).select(&:groups_access_permission?)
+      if respond_to?(:permissions?)
+        permissions = Permission.with_parents('ticket.agent')
+        instances = instances
+                    .joins(roles: :permissions)
+                    .where(roles: { active: true }, permissions: { name: permissions, active: true })
+      end
 
       # check indirect access through roles if possible
       return instances if !respond_to?(:role_access)
