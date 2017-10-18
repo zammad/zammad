@@ -108,13 +108,33 @@ returns
     cache = Cache.get(key)
     return cache if cache
 
-    # get relations
     attributes = self.attributes
-    self.class.reflect_on_all_associations.map do |assoc|
-      next if association_attributes_ignored.include?(assoc.name)
-      real_ids = assoc.name.to_s[0, assoc.name.to_s.length - 1] + '_ids'
-      next if !respond_to?(real_ids)
-      attributes[real_ids] = send(real_ids)
+    relevant   = %i(has_and_belongs_to_many has_many)
+    eager_load = []
+    pluck      = []
+    keys       = []
+    self.class.reflect_on_all_associations.each do |assoc|
+      next if relevant.exclude?(assoc.macro)
+
+      assoc_name = assoc.name
+      next if association_attributes_ignored.include?(assoc_name)
+
+      eager_load.push(assoc_name)
+      pluck.push("#{assoc.table_name}.id")
+      keys.push("#{assoc_name.to_s.singularize}_ids")
+    end
+
+    if eager_load.present?
+      ids = self.class.eager_load(eager_load)
+                .where(id: id)
+                .pluck(*pluck)
+
+      if keys.size > 1
+        values = ids.transpose.map(&:compact).map(&:uniq)
+        attributes.merge!( keys.zip( values ).to_h )
+      else
+        attributes[ keys.first ] = ids.compact
+      end
     end
 
     # special handling for group access associations

@@ -10,7 +10,7 @@ module HasGroups
     after_create :check_group_access_buffer
     after_update :check_group_access_buffer
 
-    association_attributes_ignored :groups
+    association_attributes_ignored :groups, group_through_identifier
 
     has_many group_through_identifier
     has_many :groups, through: group_through_identifier do
