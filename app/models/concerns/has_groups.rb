@@ -204,11 +204,9 @@ module HasGroups
     return {} if !active?
     return {} if !groups_access_permission?
 
-    {}.tap do |hash|
-      groups.access.where(active: true).pluck(key, :access).each do |entry|
-        hash[ entry[0] ] ||= []
-        hash[ entry[0] ].push(entry[1])
-      end
+    groups.access.where(active: true).pluck(key, :access).each_with_object({}) do |entry, hash|
+      hash[ entry[0] ] ||= []
+      hash[ entry[0] ].push(entry[1])
     end
   end
 
