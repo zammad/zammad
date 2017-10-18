@@ -46,4 +46,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     },
   }
 
+  # weibo database connect
+  provider :weibo_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database'
+
 end
