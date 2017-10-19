@@ -277,6 +277,9 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
+    omniauth-weibo-oauth2 (0.4.5)
+      omniauth (~> 1.5)
+      omniauth-oauth2 (>= 1.4.0)
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.21.0)
@@ -512,6 +515,7 @@ DEPENDENCIES
   omniauth-microsoft-office365
   omniauth-oauth2
   omniauth-twitter
+  omniauth-weibo-oauth2
   pg
   pre-commit
   puma
