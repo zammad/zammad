@@ -18,12 +18,12 @@ module Channel::Filter::Database
           match_rule = meta['value']
           min_one_rule_exists = true
           if meta[:operator] == 'contains not'
-            if value.present? && Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule, check_mode: false)
+            if value.present? && Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
               all_matches_ok = false
               Rails.logger.info "  matching #{key.downcase}:'#{value}' on #{match_rule}, but shoud not"
             end
           elsif meta[:operator] == 'contains'
-            if value.blank? || !Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule, check_mode: true)
+            if value.blank? || !Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
               all_matches_ok = false
               Rails.logger.info "  not matching #{key.downcase}:'#{value}' on #{match_rule}, but should"
             end
