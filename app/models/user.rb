@@ -958,6 +958,7 @@ returns
     return true if role.preferences[:not].blank?
     role.preferences[:not].each do |local_role_name|
       local_role = Role.lookup(name: local_role_name)
+      next if !local_role
       next if role_ids.exclude?(local_role.id)
       raise "Role #{role.name} conflicts with #{local_role.name}"
     end
