@@ -91,7 +91,7 @@ class RoleTest < ActiveSupport::TestCase
 
   test 'permission default' do
     roles = Role.with_permissions('not_existing')
-    assert(roles.empty?)
+    assert(roles.blank?)
 
     roles = Role.with_permissions('admin')
     assert_equal('Admin', roles.first.name)
@@ -114,6 +114,28 @@ class RoleTest < ActiveSupport::TestCase
     roles = Role.with_permissions(['ticket.customer', 'not_existing'])
     assert_equal('Customer', roles.first.name)
 
+  end
+
+  test 'with permission' do
+    permission_test1 = Permission.create_or_update(
+      name: 'test-with-permission1',
+      note: 'parent test permission 1',
+    )
+    permission_test2 = Permission.create_or_update(
+      name: 'test-with-permission2',
+      note: 'parent test permission 2',
+    )
+    name = rand(999_999_999)
+    role = Role.create(
+      name: "Test with Permission? #{name}",
+      note: "Test with Permission? #{name} Role.",
+      permissions: [permission_test2],
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    assert_not(role.with_permission?('test-with-permission1'))
+    assert(role.with_permission?('test-with-permission2'))
+    assert(role.with_permission?(['test-with-permission2', 'some_other_permission']))
   end
 
 end
