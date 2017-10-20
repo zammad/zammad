@@ -104,83 +104,81 @@ add avatar by url
     end
 
     # fetch image based on http url
-    if data[:url] =~ /^http/
+    if data[:url].present?
+      if data[:url] =~ /^http/
 
-      # check if source ist already updated within last 2 minutes
-      if avatar_already_exists && avatar_already_exists.source_url == data[:url]
-        return if avatar_already_exists.updated_at > 2.minutes.ago
-      end
+        # check if source ist already updated within last 2 minutes
+        if avatar_already_exists && avatar_already_exists.source_url == data[:url]
+          return if avatar_already_exists.updated_at > 2.minutes.ago
+        end
 
-      # twitter workaround to get bigger avatar images
-      # see also https://dev.twitter.com/overview/general/user-profile-images-and-banners
-      if data[:url] =~ %r{//pbs.twimg.com/}i
-        data[:url].sub!(/normal\.(png|jpg|gif)$/, 'bigger.\1')
-      end
+        # twitter workaround to get bigger avatar images
+        # see also https://dev.twitter.com/overview/general/user-profile-images-and-banners
+        if data[:url] =~ %r{//pbs.twimg.com/}i
+          data[:url].sub!(/normal\.(png|jpg|gif)$/, 'bigger.\1')
+        end
 
-      # fetch image
-      response = UserAgent.get(
-        data[:url],
-        {},
-        {
-          open_timeout: 4,
-          read_timeout: 6,
-          total_timeout: 6,
-        },
-      )
-      if !response.success?
-        logger.info "Can't fetch '#{data[:url]}' (maybe no avatar available), http code: #{response.code}"
-        return
-      end
-      logger.info "Fetchd image '#{data[:url]}', http code: #{response.code}"
-      mime_type = 'image'
-      if data[:url] =~ /\.png/i
-        mime_type = 'image/png'
-      end
-      if data[:url] =~ /\.(jpg|jpeg)/i
-        mime_type = 'image/jpeg'
-      end
-      if !data[:resize]
-        data[:resize] = {}
-      end
-      data[:resize][:content] = response.body
-      data[:resize][:mime_type] = mime_type
-      if !data[:full]
-        data[:full] = {}
-      end
-      data[:full][:content] = response.body
-      data[:full][:mime_type] = mime_type
+        # fetch image
+        response = UserAgent.get(
+          data[:url],
+          {},
+          {
+            open_timeout: 4,
+            read_timeout: 6,
+            total_timeout: 6,
+          },
+        )
+        if !response.success?
+          logger.info "Can't fetch '#{data[:url]}' (maybe no avatar available), http code: #{response.code}"
+          return
+        end
+        logger.info "Fetchd image '#{data[:url]}', http code: #{response.code}"
+        mime_type = 'image'
+        if data[:url] =~ /\.png/i
+          mime_type = 'image/png'
+        end
+        if data[:url] =~ /\.(jpg|jpeg)/i
+          mime_type = 'image/jpeg'
+        end
+        if !data[:resize]
+          data[:resize] = {}
+        end
+        data[:resize][:content] = response.body
+        data[:resize][:mime_type] = mime_type
+        data[:full] ||= {}
+        data[:full][:content] = response.body
+        data[:full][:mime_type] = mime_type
 
-    # try zammad backend to find image based on email
-    elsif data[:url].present? && data[:url] =~ /@/
+      # try zammad backend to find image based on email
+      elsif data[:url] =~ /@/
 
-      # check if source ist already updated within last 3 minutes
-      if avatar_already_exists && avatar_already_exists.source_url == data[:url]
-        return if avatar_already_exists.updated_at > 2.minutes.ago
-      end
+        # check if source ist already updated within last 3 minutes
+        if avatar_already_exists && avatar_already_exists.source_url == data[:url]
+          return if avatar_already_exists.updated_at > 2.minutes.ago
+        end
 
-      # fetch image
-      image = Service::Image.user(data[:url])
-      return if !image
-      if !data[:resize]
-        data[:resize] = {}
+        # fetch image
+        image = Service::Image.user(data[:url])
+        return if !image
+        data[:resize] ||= {}
+        data[:resize] = image
+        data[:full] ||= {}
+        data[:full] = image
       end
-      data[:resize] = image
-      if !data[:full]
-        data[:full] = {}
-      end
-      data[:full] = image
     end
 
     # check if avatar need to be updated
-    record[:store_hash] = Digest::MD5.hexdigest(data[:resize][:content])
-    if avatar_already_exists && avatar_already_exists.store_hash == record[:store_hash]
-      avatar_already_exists.touch
-      return avatar_already_exists
+    if data[:resize].present? && data[:resize][:content].present?
+      record[:store_hash] = Digest::MD5.hexdigest(data[:resize][:content])
+      if avatar_already_exists && avatar_already_exists.store_hash == record[:store_hash]
+        avatar_already_exists.touch
+        return avatar_already_exists
+      end
     end
 
     # store images
     object_name = "Avatar::#{data[:object]}"
-    if data[:full]
+    if data[:full].present?
       store_full = Store.add(
         object: "#{object_name}::Full",
         o_id: data[:o_id],
@@ -194,7 +192,7 @@ add avatar by url
       record[:store_full_id] = store_full.id
       record[:store_hash]    = Digest::MD5.hexdigest(data[:full][:content])
     end
-    if data[:resize]
+    if data[:resize].present?
       store_resize = Store.add(
         object: "#{object_name}::Resize",
         o_id: data[:o_id],
@@ -206,8 +204,10 @@ add avatar by url
         created_by_id: data[:created_by_id],
       )
       record[:store_resize_id] = store_resize.id
-      record[:store_hash]      = Digest::MD5.hexdigest(data[:resize][:content] )
+      record[:store_hash]      = Digest::MD5.hexdigest(data[:resize][:content])
     end
+
+    return if record[:store_resize_id].blank? || record[:store_hash].blank?
 
     # update existing
     if avatar_already_exists
