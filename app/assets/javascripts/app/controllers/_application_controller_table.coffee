@@ -112,6 +112,9 @@ class App.ControllerTable extends App.Controller
   renderState:        undefined
   groupBy:            undefined
 
+  shownPerPage: 150
+  shownPage: 0
+
   destroy: false
 
   columnsLength: undefined
@@ -141,9 +144,7 @@ class App.ControllerTable extends App.Controller
     @overviewAttributes ||= @overview || @model.configure_overview || []
     @attributesListRaw ||= @attribute_list || @model.configure_attributes || {}
     @attributesList = App.Model.attributesGet(false, @attributesListRaw)
-    console.log('Table', @overviewAttributes, @overview)
-    #@setHeaderWidths = App.Model.setHeaderWidthsGet(false, @attributesList)
-    @destroy    = @model.configure_delete
+    @destroy = @model.configure_delete
 
     throw 'overviewAttributes needed' if _.isEmpty(@overviewAttributes)
     throw 'attributesList needed' if _.isEmpty(@attributesList)
@@ -168,19 +169,39 @@ class App.ControllerTable extends App.Controller
     $(window).off 'resize.table', @onResize
 
   update: (params) =>
-    console.log('params', params)
-    for key, value of params
-      @[key] = value
-
     if params.sync is true
+      for key, value of params
+        @[key] = value
       return @render()
-    @renderQueue()
+    @renderQueue(params)
 
-  renderQueue: =>
-    App.QueueManager.add('tableRender', @render)
+  renderQueue: (params) =>
+    localeRender = =>
+      for key, value of params
+        @[key] = value
+      @render()
+    App.QueueManager.add('tableRender', localeRender)
     App.QueueManager.run('tableRender')
 
+  renderPager: (el, find = false) =>
+    pages = parseInt(((@objects.length - 1)  / @shownPerPage))
+    if pages < 1
+      if find
+        el.find('.js-pager').html('')
+      else
+        el.filter('.js-pager').html('')
+      return
+    pager = App.view('generic/table_pager')(
+      page:    @shownPage
+      pages:   pages
+    )
+    if find
+      el.find('.js-pager').html(pager)
+    else
+      el.filter('.js-pager').html(pager)
+
   render: =>
+    @setMaxPage()
     if @renderState is undefined
 
       # check if table is empty
@@ -214,8 +235,12 @@ class App.ControllerTable extends App.Controller
       removedRows = _.difference(@currentRows, newRows)
       addedRows = _.difference(newRows, @currentRows)
 
+      #console.log('newRows', newRows)
+      #console.log('removedRows', removedRows)
+      #console.log('addedRows', addedRows)
+
       # if only rows are removed
-      if _.isEmpty(addedRows) && !_.isEmpty(removedRows) && removedRows.length < 15 && !_.isEmpty(newRows)
+      if (!_.isEmpty(addedRows) || !_.isEmpty(removedRows)) && addedRows.length < 10 && removedRows.length < 15 && removedRows.length < newRows.length && !_.isEmpty(newRows)
         newCurrentRows = []
         removePositions = []
         for position in [0..@currentRows.length-1]
@@ -223,14 +248,28 @@ class App.ControllerTable extends App.Controller
             removePositions.push position
           else
             newCurrentRows.push @currentRows[position]
+        addPositions = []
+        for position in [0..newRows.length-1]
+          if _.contains(addedRows, newRows[position])
+            addPositions.push position
+            newCurrentRows.splice(position,0,newRows[position])
 
         # check if order is still correct
         if @_isSame(newRows, newCurrentRows) is true
           for position in removePositions.reverse()
             @$("tbody > tr:nth-child(#{position+1})").remove()
+          for position in addPositions
+            if position is 0
+              if @$('tbody tr:nth-child(1)').get(0)
+                @$('tbody tr:nth-child(1)').before(newCurrentRows[position])
+              else
+                @$('tbody').append(newCurrentRows[position])
+            else
+              @$("tbody > tr:nth-child(#{position})").after(newCurrentRows[position])
           @currentRows = newCurrentRows
-          console.log('fullRender.contentRemoved', removePositions)
-          return ['fullRender.contentRemoved', removePositions]
+          console.log('fullRender.contentRemoved', removePositions, addPositions)
+          @renderPager(@el, true)
+          return ['fullRender.contentRemoved', removePositions, addPositions]
 
       if newRows.length isnt @currentRows.length
         result = ['fullRender.lenghtChanged', @currentRows.length, newRows.length]
@@ -254,7 +293,7 @@ class App.ControllerTable extends App.Controller
     )
 
   renderTableFull: (rows) =>
-    console.log('renderTableFull', @orderBy, @orderDirection)
+    console.log('renderTableFull', @orderBy, @orderDirection, @objects)
     @tableHeaders()
     @sortList()
     bulkIds = @getBulkSelected()
@@ -265,6 +304,8 @@ class App.ControllerTable extends App.Controller
     else
       @currentRows = clone(rows)
     container.find('.js-tableBody').html(rows)
+
+    @renderPager(container)
 
     cursorMap =
       click:    'pointer'
@@ -386,6 +427,17 @@ class App.ControllerTable extends App.Controller
         update: @dndCallback
       container.find('tbody').sortable(dndOptions)
 
+    # click on pager
+    container.delegate('.js-page', 'click', (e) =>
+      e.stopPropagation()
+      page = $(e.currentTarget).attr 'data-page'
+      render = =>
+        @shownPage = page
+        @renderTableFull()
+      App.QueueManager.add('tableRender', render)
+      App.QueueManager.run('tableRender')
+    )
+
     @el.html(container)
     @setBulkSelected(bulkIds)
 
@@ -408,14 +460,16 @@ class App.ControllerTable extends App.Controller
       columnsLength++
     groupLast = ''
     tableBody = []
-    for object in @objects
-      position++
-      if @groupBy
-        groupByName = App.viewPrint(object, @groupBy, @attributesList)
-        if groupLast isnt groupByName
-          groupLast = groupByName
-          tableBody.push @renderTableGroupByRow(object, position, groupByName)
-      tableBody.push @renderTableRow(object, position)
+    objectsToShow = @objectsOfPage(@shownPage)
+    for object in objectsToShow
+      if object
+        position++
+        if @groupBy
+          groupByName = App.viewPrint(object, @groupBy, @attributesList)
+          if groupLast isnt groupByName
+            groupLast = groupByName
+            tableBody.push @renderTableGroupByRow(object, position, groupByName)
+        tableBody.push @renderTableRow(object, position)
     tableBody
 
   renderTableGroupByRow: (object, position, groupByName) =>
@@ -531,6 +585,15 @@ class App.ControllerTable extends App.Controller
     console.log('tableHeaders: new headers', @headers)
     ['new headers', @headers]
 
+  setMaxPage: =>
+    pages = parseInt(((@objects.length - 1)  / @shownPerPage))
+    if parseInt(@shownPage) > pages
+      @shownPage = pages
+
+  objectsOfPage: (page = 0) =>
+    page = parseInt(page)
+    @objects.slice(page * @shownPerPage, (page + 1) * @shownPerPage)
+
   sortList: =>
     return if _.isEmpty(@objects)
 
@@ -552,6 +615,12 @@ class App.ControllerTable extends App.Controller
           localObjects = _.sortBy(
             @objects
             (item) ->
+
+              # error handling
+              if !item
+                console.log('Got empty object in order by with header _.sortBy')
+                return ''
+
               # if we need to sort translated col.
               if header.translate
                 return App.i18n.translateInline(item[header.name])
@@ -586,6 +655,12 @@ class App.ControllerTable extends App.Controller
             localObjects = _.sortBy(
               @objects
               (item) ->
+
+                # error handling
+                if !item
+                  console.log('Got empty object in order by in attribute _.sortBy')
+                  return ''
+
                 # if we need to sort translated col.
                 if attribute.translate
                   return App.i18n.translateInline(item[attribute.name])
@@ -649,8 +724,6 @@ class App.ControllerTable extends App.Controller
 
     @objects = localObjects
     @lastSortedobjects = localObjects
-
-    localObjects
 
   # bind on delete dialog
   deleteRow: (id, e) =>

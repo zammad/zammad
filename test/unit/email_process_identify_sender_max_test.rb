@@ -25,8 +25,8 @@ Some Text"
       if recipients.present?
         recipients += ', '
       end
-      domain = "#{Time.zone.now.to_i}-#{rand(999_999_999)}.example.com"
-      email = "#{Time.zone.now.to_i}-#{rand(999_999_999)}@#{domain}"
+      domain = "#{Time.zone.now.to_i}-#{rand(999_999_999_999_999)}.example.com"
+      email = "#{Time.zone.now.to_i}-#{rand(999_999_999_999_999)}@#{domain}"
       recipients += email
     end
     recipients

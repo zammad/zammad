@@ -211,6 +211,8 @@ class AccountEdit extends App.ControllerModal
       )
 
     addSearchTerm = =>
+      params = @getParams()
+      @searchTerms = params.search || []
       @searchTerms.push
         term: ''
         group_id: ''
@@ -219,6 +221,8 @@ class AccountEdit extends App.ControllerModal
 
     removeSearchTerm = (event) =>
       index = $(event.currentTarget).attr('data-index')
+      params = @getParams()
+      @searchTerms = params.search || []
       @searchTerms.splice(index, 1)
       renderSearchTerms()
 
@@ -249,13 +253,7 @@ class AccountEdit extends App.ControllerModal
     content.find('.js-directMessagesGroup').replaceWith createGroupSelection(@channel.options.sync.direct_messages.group_id, 'direct_messages')
     content
 
-  onClosed: =>
-    return if !@isChanged
-    @isChanged = false
-    @load()
-
-  onSubmit: (e) =>
-    @formDisable(e)
+  getParams: =>
     params = @formParams()
     search = []
     position = 0
@@ -269,12 +267,21 @@ class AccountEdit extends App.ControllerModal
           position += 1
       else
         search.push params.search
+    params.search = search
     if params.track_retweets
       params.track_retweets = true
     else
       params.track_retweets = false
-    params.search = search
-    @channel.options.sync = params
+    params
+
+  onClosed: =>
+    return if !@isChanged
+    @isChanged = false
+    @load()
+
+  onSubmit: (e) =>
+    @formDisable(e)
+    @channel.options.sync = @getParams()
     @ajax(
       id:   'channel_twitter_update'
       type: 'POST'

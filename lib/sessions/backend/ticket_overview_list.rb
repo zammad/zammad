@@ -23,7 +23,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
     index_and_lists = Ticket::Overviews.index(@user)
 
     # no data exists
-    return if !index_and_lists || index_and_lists.empty?
+    return if index_and_lists.blank?
 
     # no change exists
     return if @last_change == index_and_lists
@@ -98,12 +98,12 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       assets = {}
       overview = Overview.lookup(id: data[:overview][:id])
       if asset_needed?(overview)
-        assets = overview.assets(assets)
+        assets = asset_push(overview, assets)
       end
       data[:tickets].each do |ticket_meta|
+        next if !asset_needed_by_updated_at?('Ticket', ticket_meta[:id], ticket_meta[:updated_at])
         ticket = Ticket.lookup(id: ticket_meta[:id])
-        next if !asset_needed?(ticket)
-        assets = ticket.assets(assets)
+        assets = asset_push(ticket, assets)
       end
       data[:assets] = assets
 

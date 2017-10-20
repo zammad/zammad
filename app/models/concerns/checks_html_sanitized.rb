@@ -31,7 +31,7 @@ module ChecksHtmlSanitized
 
 =begin
 
-serve methode to mark HTML attrbibutes that need to get sanitized
+serve method to mark HTML attributes that need to get sanitized
 
 class Model < ApplicationModel
   include Sanitized

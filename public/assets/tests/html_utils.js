@@ -1814,7 +1814,7 @@ test('check getRecipientArticle format', function() {
     },
   }
   result = {
-    to:          '',
+    to:          customer.email,
     cc:          '',
     body:        '',
     in_reply_to: 'message_id2',
@@ -1839,6 +1839,7 @@ test('check getRecipientArticle format', function() {
     sender: {
       name: 'Agent',
     },
+    from: 'article_created_by@example.com',
     created_by: {
       login: 'login',
       firstname: 'firstname',
@@ -1847,7 +1848,7 @@ test('check getRecipientArticle format', function() {
     },
   }
   result = {
-    to:          '',
+    to:          customer.email,
     cc:          '',
     body:        '',
     in_reply_to: 'message_id3',

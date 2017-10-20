@@ -1,0 +1,5 @@
+<div class="btn-group btn-group--full" role="group" aria-label="" style="margin-bottom: 5px;">
+  <% for page in [0..@pages]: %>
+    <div class="btn btn--text btn--large js-page<%- ' is-selected' if @page is page || @page is page.toString() %>" data-page="<%= page %>"><%= page + 1 %></div>
+  <% end %>
+</div>

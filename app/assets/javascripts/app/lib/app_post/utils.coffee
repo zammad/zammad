@@ -932,7 +932,7 @@ class App.Utils
 
       # if sender is customer but in article.from is no email, try to get
       # customers email via customer user
-      if articleNew.to && !articleNew.to.match(/@/)
+      if (articleNew.to && !articleNew.to.match(/@/)) || !articleNew.to
         articleNew.to = ticket.customer.email
 
       return articleNew

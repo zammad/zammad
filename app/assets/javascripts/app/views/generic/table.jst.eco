@@ -1,3 +1,4 @@
+<div class="js-pager"></div>
 <table class="table table-hover<%- " #{@class}" if @class %>">
   <thead>
     <tr>
@@ -36,3 +37,4 @@
   </thead>
   <tbody class="js-tableBody"><%- @tableBody %></tbody>
 </table>
+<div class="js-pager"></div>

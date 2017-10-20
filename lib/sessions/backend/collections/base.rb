@@ -54,7 +54,7 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     assets = {}
     items.each do |item|
       next if !asset_needed?(item)
-      assets = item.assets(assets)
+      assets = asset_push(item, assets)
     end
     if !@client
       return {

@@ -408,7 +408,7 @@ returns
 
   def permissions
     list = {}
-    Object.const_get('Permission').select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?) AND permissions.active = ?', role_ids, true).pluck(:name, :preferences).each do |permission|
+    ::Permission.select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?) AND permissions.active = ?', role_ids, true).pluck(:name, :preferences).each do |permission|
       next if permission[1]['selectable'] == false
       list[permission[0]] = true
     end
@@ -440,29 +440,19 @@ returns
       keys = [key]
     end
     keys.each do |local_key|
-      cache_key = "User::permissions?:local_key:::#{id}"
-      if Rails.env.production?
-        cache = Cache.get(cache_key)
-        return cache if cache
-      end
       list = []
       if local_key =~ /\.\*$/
         local_key.sub!('.*', '.%')
-        permissions = Object.const_get('Permission').with_parents(local_key)
-        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?) AND permissions.active = ?', role_ids, true, permissions, local_key, true).pluck(:preferences)
+        permissions = ::Permission.with_parents(local_key)
+        list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?) AND permissions.active = ?', role_ids, true, permissions, local_key, true).pluck(:preferences)
       else
-        permission = Object.const_get('Permission').lookup(name: local_key)
+        permission = ::Permission.lookup(name: local_key)
         break if permission && permission.active == false
-        permissions = Object.const_get('Permission').with_parents(local_key)
-        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?) AND permissions.active = ?', role_ids, true, permissions, true).pluck(:preferences)
+        permissions = ::Permission.with_parents(local_key)
+        list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?) AND permissions.active = ?', role_ids, true, permissions, true).pluck(:preferences)
       end
-      list.each do |preferences|
-        next if preferences[:selectable] == false
-        Cache.write(key, true, expires_in: 10.seconds)
-        return true
-      end
+      return true if list.present?
     end
-    Cache.write(key, false, expires_in: 10.seconds)
     false
   end
 
@@ -489,7 +479,7 @@ returns
       where_bind.push "#{permission_name}.%"
     end
     return [] if where == ''
-    Object.const_get('Permission').where("permissions.active = ? AND (#{where})", *where_bind).pluck(:id)
+    ::Permission.where("permissions.active = ? AND (#{where})", *where_bind).pluck(:id)
   end
 
 =begin
@@ -516,8 +506,8 @@ returns
     permission_ids = []
     keys.each do |key|
       role_ids = []
-      Object.const_get('Permission').with_parents(key).each do |local_key|
-        permission = Object.const_get('Permission').lookup(name: local_key)
+      ::Permission.with_parents(key).each do |local_key|
+        permission = ::Permission.lookup(name: local_key)
         next if !permission
         permission_ids.push permission.id
       end
@@ -758,7 +748,7 @@ returns
 =end
 
   def self.update_default_preferences_by_permission(permission_name, force = false)
-    permission = Object.const_get('Permission').lookup(name: permission_name)
+    permission = ::Permission.lookup(name: permission_name)
     return if !permission
     default = Rails.configuration.preferences_default_by_permission
     return false if !default

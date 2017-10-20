@@ -419,7 +419,7 @@ class AssetsTest < ActiveSupport::TestCase
     assert_not(assets[:User][user5.id], 'check assets')
     assert(assets[:TicketState][ticket_state1.id], 'check assets')
     assert_not(assets[:TicketState][ticket_state2.id], 'check assets')
-
+    overview.destroy!
   end
 
   test 'sla' do
