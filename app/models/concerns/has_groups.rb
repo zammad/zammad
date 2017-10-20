@@ -303,7 +303,7 @@ module HasGroups
       instances = joins(group_through.name)
                   .where( group_through.table_name => { group_id: group_id, access: access }, active: true )
 
-      if respond_to?(:permissions?)
+      if method_defined?(:permissions?)
         permissions = Permission.with_parents('ticket.agent')
         instances = instances
                     .joins(roles: :permissions)
