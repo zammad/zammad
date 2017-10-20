@@ -897,6 +897,25 @@ class UserTest < ActiveSupport::TestCase
 
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(1, admin_count_inital)
+
+    assert_raises(Exceptions::UnprocessableEntity) do
+      admin3.active = false
+      admin3.save!
+    end
+
+    assert_equal(1, User.with_permissions('admin').count)
+    admin_role = Role.find_by(name: 'Admin')
+    assert_raises(Exceptions::UnprocessableEntity) do
+      admin_role.active = false
+      admin_role.save!
+    end
+
+    assert_raises(Exceptions::UnprocessableEntity) do
+      admin_role.permission_revoke('admin')
+    end
+
+    assert_equal(1, User.with_permissions('admin').count)
+
   end
 
   test 'only valid agent in group permission check' do
