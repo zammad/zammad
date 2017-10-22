@@ -80,7 +80,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :preferences,                      :text,      limit: 500.kilobytes + 1, null: true
       t.column :updated_by_id,                    :integer,               null: false
       t.column :created_by_id,                    :integer,               null: false
-      t.column :auto_assign,                      :boolean,               null: false
       t.timestamps limit: 3, null: false
     end
     add_index :tickets, [:state_id]
