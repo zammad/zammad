@@ -10,7 +10,7 @@ module HasGroups
     after_create :check_group_access_buffer
     after_update :check_group_access_buffer
 
-    association_attributes_ignored :groups
+    association_attributes_ignored :groups, group_through_identifier
 
     has_many group_through_identifier
     has_many :groups, through: group_through_identifier do
@@ -204,11 +204,9 @@ module HasGroups
     return {} if !active?
     return {} if !groups_access_permission?
 
-    {}.tap do |hash|
-      groups.access.where(active: true).pluck(key, :access).each do |entry|
-        hash[ entry[0] ] ||= []
-        hash[ entry[0] ].push(entry[1])
-      end
+    groups.access.where(active: true).pluck(key, :access).each_with_object({}) do |entry, hash|
+      hash[ entry[0] ] ||= []
+      hash[ entry[0] ].push(entry[1])
     end
   end
 
@@ -302,11 +300,15 @@ module HasGroups
       access   = ensure_group_access_list_parameter(access)
 
       # check direct access
-      ids   = group_through.klass.includes(name.downcase).where(group_id: group_id, access: access, table_name => { active: true }).pluck(group_through.foreign_key)
-      ids ||= []
+      instances = joins(group_through.name)
+                  .where( group_through.table_name => { group_id: group_id, access: access }, active: true )
 
-      # get instances and check for required permission
-      instances = where(id: ids).select(&:groups_access_permission?)
+      if method_defined?(:permissions?)
+        permissions = Permission.with_parents('ticket.agent')
+        instances = instances
+                    .joins(roles: :permissions)
+                    .where(roles: { active: true }, permissions: { name: permissions, active: true })
+      end
 
       # check indirect access through roles if possible
       return instances if !respond_to?(:role_access)

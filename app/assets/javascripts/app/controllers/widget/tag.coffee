@@ -56,7 +56,7 @@ class App.WidgetTag extends App.Controller
     source = "#{App.Config.get('api_path')}/tag_search"
     @$('.js-newTagInput').autocomplete(
       source: source
-      minLength: 2
+      minLength: 0
       response: (e, ui) =>
         return if !ui
         return if !ui.content
@@ -68,6 +68,7 @@ class App.WidgetTag extends App.Controller
     e.preventDefault()
     @newTagLabel.addClass('hide')
     @newTagInput.removeClass('hide').focus()
+    @newTagInput.trigger(jQuery.Event('keydown'))
     @editMode = true
 
   hideAndAddInput: =>

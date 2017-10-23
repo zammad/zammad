@@ -44,7 +44,7 @@ returns
     overviews_list = []
     overviews.each do |overview|
       user_ids = overview.user_ids
-      next if !user_ids.empty? && !user_ids.include?(current_user.id)
+      next if user_ids.present? && !user_ids.include?(current_user.id)
       overviews_list.push overview
     end
     overviews_list

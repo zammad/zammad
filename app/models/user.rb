@@ -40,12 +40,12 @@ class User < ApplicationModel
 
   before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_create   :check_preferences_default, :validate_roles, :validate_ooo, :domain_based_assignment, :set_locale
-  before_update   :check_preferences_default, :validate_roles, :validate_ooo, :reset_login_failed
+  before_update   :check_preferences_default, :validate_roles, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy, :user_device_destroy
 
-  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit, before_remove: :last_admin_check, class_name: 'Role'
+  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit_by_role, before_remove: :last_admin_check_by_role, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
@@ -283,7 +283,7 @@ returns
 
     sleep 1
     user.login_failed += 1
-    user.save
+    user.save!
     nil
   end
 
@@ -408,7 +408,7 @@ returns
 
   def permissions
     list = {}
-    Object.const_get('Permission').select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?) AND permissions.active = ?', role_ids, true).pluck(:name, :preferences).each do |permission|
+    ::Permission.select('permissions.name, permissions.preferences').joins(:roles).where('roles.id IN (?) AND permissions.active = ?', role_ids, true).pluck(:name, :preferences).each do |permission|
       next if permission[1]['selectable'] == false
       list[permission[0]] = true
     end
@@ -440,29 +440,19 @@ returns
       keys = [key]
     end
     keys.each do |local_key|
-      cache_key = "User::permissions?:local_key:::#{id}"
-      if Rails.env.production?
-        cache = Cache.get(cache_key)
-        return cache if cache
-      end
       list = []
       if local_key =~ /\.\*$/
         local_key.sub!('.*', '.%')
-        permissions = Object.const_get('Permission').with_parents(local_key)
-        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?) AND permissions.active = ?', role_ids, true, permissions, local_key, true).pluck(:preferences)
+        permissions = ::Permission.with_parents(local_key)
+        list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?) AND permissions.active = ?', role_ids, true, permissions, local_key, true).pluck(:preferences)
       else
-        permission = Object.const_get('Permission').lookup(name: local_key)
+        permission = ::Permission.lookup(name: local_key)
         break if permission && permission.active == false
-        permissions = Object.const_get('Permission').with_parents(local_key)
-        list = Object.const_get('Permission').select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?) AND permissions.active = ?', role_ids, true, permissions, true).pluck(:preferences)
+        permissions = ::Permission.with_parents(local_key)
+        list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?) AND permissions.active = ?', role_ids, true, permissions, true).pluck(:preferences)
       end
-      list.each do |preferences|
-        next if preferences[:selectable] == false
-        Cache.write(key, true, expires_in: 10.seconds)
-        return true
-      end
+      return true if list.present?
     end
-    Cache.write(key, false, expires_in: 10.seconds)
     false
   end
 
@@ -489,7 +479,7 @@ returns
       where_bind.push "#{permission_name}.%"
     end
     return [] if where == ''
-    Object.const_get('Permission').where("permissions.active = ? AND (#{where})", *where_bind).pluck(:id)
+    ::Permission.where("permissions.active = ? AND (#{where})", *where_bind).pluck(:id)
   end
 
 =begin
@@ -516,8 +506,8 @@ returns
     permission_ids = []
     keys.each do |key|
       role_ids = []
-      Object.const_get('Permission').with_parents(key).each do |local_key|
-        permission = Object.const_get('Permission').lookup(name: local_key)
+      ::Permission.with_parents(key).each do |local_key|
+        permission = ::Permission.lookup(name: local_key)
         next if !permission
         permission_ids.push permission.id
       end
@@ -758,7 +748,7 @@ returns
 =end
 
   def self.update_default_preferences_by_permission(permission_name, force = false)
-    permission = Object.const_get('Permission').lookup(name: permission_name)
+    permission = ::Permission.lookup(name: permission_name)
     return if !permission
     default = Rails.configuration.preferences_default_by_permission
     return false if !default
@@ -987,10 +977,10 @@ returns
     raise Exceptions::UnprocessableEntity, 'out of office no such replacement user' if !User.find_by(id: out_of_office_replacement_id)
     true
   end
+
 =begin
 
-checks if the current user is the last one
-with admin permissions.
+checks if the current user is the last one with admin permissions.
 
 Raises
 
@@ -998,28 +988,47 @@ raise 'Minimum one user need to have admin permissions'
 
 =end
 
-  def last_admin_check(role)
-    return true if Setting.get('import_mode')
-
-    ticket_admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'] }).pluck(:id)
-    count                 = User.joins(:roles).where(roles: { id: ticket_admin_role_ids }, users: { active: true }).count
-    if ticket_admin_role_ids.include?(role.id)
-      count -= 1
-    end
-
-    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if count < 1
+  def last_admin_check_by_attribute
+    return true if !will_save_change_to_attribute?('active')
+    return true if active != false
+    return true if !permissions?(['admin', 'admin.user'])
+    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
     true
   end
 
-  def validate_agent_limit(role)
-    return true if !Setting.get('system_agent_limit')
+  def last_admin_check_by_role(role)
+    return true if Setting.get('import_mode')
+    return true if !role.with_permission?(['admin', 'admin.user'])
+    raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+    true
+  end
 
-    ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent' }).pluck(:id)
+  def last_admin_check_admin_count
+    admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'], active: true }, roles: { active: true }).pluck(:id)
+    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).count - 1
+  end
+
+  def validate_agent_limit_by_attributes
+    return true if !Setting.get('system_agent_limit')
+    return true if !will_save_change_to_attribute?('active')
+    return true if active != true
+    return true if !permissions?('ticket.agent')
+    ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
+    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).count + 1
+    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
+    true
+  end
+
+  def validate_agent_limit_by_role(role)
+    return true if !Setting.get('system_agent_limit')
+    return true if active != true
+    return true if role.active != true
+    return true if !role.with_permission?('ticket.agent')
+    ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
     count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).count
     if ticket_agent_role_ids.include?(role.id)
       count += 1
     end
-
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
     true
   end

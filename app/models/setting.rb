@@ -38,7 +38,7 @@ set config setting
     end
     setting.state_current = { value: value }
     setting.save!
-    logger.info "Setting.set(#{name}, #{value.inspect})"
+    logger.info "Setting.set('#{name}', #{value.inspect})"
   end
 
 =begin
@@ -72,7 +72,7 @@ reset config setting to default
     return true if !force && setting.state_current == setting.state_initial
     setting.state_current = setting.state_initial
     setting.save!
-    logger.info "Setting.reset(#{name}, #{setting.state_current.inspect})"
+    logger.info "Setting.reset('#{name}', #{setting.state_current.inspect})"
   end
 
 =begin

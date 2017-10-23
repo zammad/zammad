@@ -864,6 +864,71 @@ class UserTest < ActiveSupport::TestCase
 
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(1, admin_count_inital)
+
+    assert_raises(Exceptions::UnprocessableEntity) do
+      admin3.active = false
+      admin3.save!
+    end
+
+    assert_equal(1, User.with_permissions('admin').count)
+    admin_role = Role.find_by(name: 'Admin')
+    assert_raises(Exceptions::UnprocessableEntity) do
+      admin_role.active = false
+      admin_role.save!
+    end
+
+    assert_raises(Exceptions::UnprocessableEntity) do
+      admin_role.permission_revoke('admin')
+    end
+
+    assert_equal(1, User.with_permissions('admin').count)
+
+  end
+
+  test 'only valid agent in group permission check' do
+    name = rand(999_999_999)
+    group = Group.create!(
+      name: "ValidAgentGroupPermission-#{name}",
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    roles  = Role.where(name: 'Agent')
+    agent1 = User.create_or_update(
+      login: "agent-default-vaild_agent_group_permission-1#{name}@example.com",
+      firstname: 'vaild_agent_group_permission-1',
+      lastname: "Agent#{name}",
+      email: "agent-default-vaild_agent_group_permission-1#{name}@example.com",
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: [group],
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    agent2 = User.create_or_update(
+      login: "agent-default-vaild_agent_group_permission-2#{name}@example.com",
+      firstname: 'vaild_agent_group_permission-2',
+      lastname: "Agent#{name}",
+      email: "agent-default-vaild_agent_group_permission-2#{name}@example.com",
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: [group],
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(2, User.group_access(group.id, 'full').count)
+    agent2.active = false
+    agent2.save!
+    assert_equal(1, User.group_access(group.id, 'full').count)
+    agent2.active = true
+    agent2.save!
+    assert_equal(2, User.group_access(group.id, 'full').count)
+    roles = Role.where(name: 'Customer')
+    agent2.roles = roles
+    agent2.save!
+    assert_equal(1, User.group_access(group.id, 'full').count)
   end
 
 end

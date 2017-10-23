@@ -2645,6 +2645,10 @@ ol.tabs li {
     background: hsl(15,100%,47%);
   }
 
+  &.auth-provider--weibo {
+    background: hsl(0,0%,27%);
+  }
+
   .provider-name {
     flex: 1;
   }

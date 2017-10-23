@@ -932,7 +932,7 @@ class App.Utils
 
       # if sender is customer but in article.from is no email, try to get
       # customers email via customer user
-      if articleNew.to && !articleNew.to.match(/@/)
+      if (articleNew.to && !articleNew.to.match(/@/)) || !articleNew.to
         articleNew.to = ticket.customer.email
 
       return articleNew
@@ -952,18 +952,25 @@ class App.Utils
         article_created_by_email = article_created_by.email.toLowerCase()
 
       # check if article sender is local
+      senderIsLocal = false
       if !_.isEmpty(article.from)
-        senderIsLocal = false
         senders = emailAddresses.parseAddressList(article.from)
         if senders && senders[0] && senders[0].address
           senderIsLocal = isLocalAddress(senders[0].address)
+
+      # check if article recipient is local
+      recipientIsLocal = false
+      if !_.isEmpty(article.to)
+        recipients = emailAddresses.parseAddressList(article.to)
+        if recipients && recipients[0] && recipients[0].address
+          recipientIsLocal = isLocalAddress(recipients[0].address)
 
       # sender is local
       if senderIsLocal
         articleNew.to = article.to
 
-      # sender is agent from is different (sender was system)
-      else if article.sender.name is 'Agent' && article_created_by_email && article.from && !article.from.match(article_created_by_email)
+      # sender is agent - sent via system
+      else if article.sender.name is 'Agent' && article_created_by_email && article.from && article.from.toString().toLowerCase().match(article_created_by_email) && !recipientIsLocal
         articleNew.to = article.to
 
       # sender was regular customer

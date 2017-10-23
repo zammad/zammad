@@ -58,6 +58,7 @@ returns
         # get roles
         if local_attributes['role_ids']
           local_attributes['role_ids'].each do |role_id|
+            next if data[:Role] && data[:Role][role_id]
             role = Role.lookup(id: role_id)
             data = role.assets(data)
           end
@@ -66,6 +67,7 @@ returns
         # get groups
         if local_attributes['group_ids']
           local_attributes['group_ids'].each do |group_id, _access|
+            next if data[:Group] && data[:Group][group_id]
             group = Group.lookup(id: group_id)
             next if !group
             data = group.assets(data)
@@ -75,6 +77,7 @@ returns
         # get organizations
         if local_attributes['organization_ids']
           local_attributes['organization_ids'].each do |organization_id|
+            next if data[:Organization] && data[:Organization][organization_id]
             organization = Organization.lookup(id: organization_id)
             next if !organization
             data = organization.assets(data)
@@ -86,7 +89,7 @@ returns
 
       # add organization
       if self.organization_id
-        if !data[ Organization.to_app_model ] || !data[ Organization.to_app_model ][ self.organization_id ]
+        if !data[:Organization] || !data[:Organization][self.organization_id]
           organization = Organization.lookup(id: self.organization_id)
           if organization
             data = organization.assets(data)

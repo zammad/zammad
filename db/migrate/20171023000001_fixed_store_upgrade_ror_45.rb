@@ -1,0 +1,37 @@
+class FixedStoreUpgradeRor45 < ActiveRecord::Migration[5.0]
+  def up
+
+    # return if it's a new setup
+    return if !Setting.find_by(name: 'system_init_done')
+    Cache.clear
+    [Macro, Taskbar, Calendar, Trigger, Channel, Job, PostmasterFilter, Report::Profile, Setting, Sla, Template].each do |class_name|
+      class_name.all.each do |record|
+        begin
+          record.save!
+        rescue => e
+          Rails.logger.error "Unable to save/update #{class_name}.find(#{record.id}): #{e.message}"
+        end
+      end
+    end
+
+    Channel.all.each do |channel|
+      channel = Channel.last
+      next if channel.options.blank?
+      channel.options.each do |key, value|
+        channel.options[key] = cleanup(value)
+      end
+      channel.save!
+    end
+  end
+
+  def cleanup(value)
+    if value.class == ActionController::Parameters
+      value = value.permit!.to_h
+    end
+    return value if value.class != ActiveSupport::HashWithIndifferentAccess && value.class != Hash
+    value.each do |local_key, local_value|
+      value[local_key] = cleanup(local_value)
+    end
+    value
+  end
+end

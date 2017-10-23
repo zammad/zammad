@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/jkowens/composite_primary_keys.git
-  revision: 7f4670b54b3c6e94992161b4efe2c8717d7c0e71
-  branch: rails-5_1
-  specs:
-    composite_primary_keys (9.0.7)
-      activerecord (~> 5.1.0)
-
-GIT
   remote: https://github.com/thorsteneckel/autodiscover.git
   revision: 29d713ee0c8c25fcf74c4292ff13fe1fa4d0d827
   specs:
@@ -102,6 +94,8 @@ GEM
       coffee-script
       execjs
       json
+    composite_primary_keys (10.0.0)
+      activerecord (~> 5.1.0)
     concurrent-ruby (1.0.5)
     coveralls (0.8.21)
       json (>= 1.8, < 3)
@@ -283,6 +277,9 @@ GEM
     omniauth-twitter (1.4.0)
       omniauth-oauth (~> 1.1)
       rack
+    omniauth-weibo-oauth2 (0.4.5)
+      omniauth (~> 1.5)
+      omniauth-oauth2 (>= 1.4.0)
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.21.0)
@@ -482,7 +479,7 @@ DEPENDENCIES
   coffee-rails
   coffee-script-source
   coffeelint
-  composite_primary_keys!
+  composite_primary_keys
   coveralls
   daemons
   delayed_job_active_record
@@ -518,6 +515,7 @@ DEPENDENCIES
   omniauth-microsoft-office365
   omniauth-oauth2
   omniauth-twitter
+  omniauth-weibo-oauth2
   pg
   pre-commit
   puma

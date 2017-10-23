@@ -41,6 +41,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-twitter'
 gem 'omniauth-microsoft-office365'
+gem 'omniauth-weibo-oauth2'
 
 gem 'twitter'
 gem 'telegramAPI'
@@ -53,8 +54,7 @@ gem 'mime-types'
 
 gem 'biz'
 
-# temporary till pull request gets merged: https://github.com/composite-primary-keys/composite_primary_keys/pull/404
-gem 'composite_primary_keys', git: 'https://github.com/jkowens/composite_primary_keys.git', branch: 'rails-5_1'
+gem 'composite_primary_keys'
 gem 'delayed_job_active_record'
 gem 'daemons'
 

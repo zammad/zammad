@@ -222,6 +222,8 @@ returns
     if sync['search']
       hashtags = []
       sync['search'].each do |item|
+        next if item['term'].blank?
+        next if item['group_id'].blank?
         hashtags.push item['term']
       end
       filter[:track] = hashtags.join(',')
@@ -253,7 +255,7 @@ returns
       next if @stream_client.tweet_limit_reached(tweet, 2)
 
       # check if it's mention
-      if sync['mentions'] && sync['mentions']['group_id'] != ''
+      if sync['mentions'] && sync['mentions']['group_id'].present?
         hit = false
         if tweet.user_mentions
           tweet.user_mentions.each do |user|
@@ -272,6 +274,8 @@ returns
       if sync['search'] && tweet.hashtags
         hit = false
         sync['search'].each do |item|
+          next if item['term'].blank?
+          next if item['group_id'].blank?
           tweet.hashtags.each do |hashtag|
             next if item['term'] !~ /^#/
             if item['term'].sub(/^#/, '') == hashtag.text
@@ -290,7 +294,8 @@ returns
         hit = false
         body = tweet.text
         sync['search'].each do |item|
-          next if item['term'] =~ /^#/
+          next if item['term'].blank?
+          next if item['group_id'].blank?
           if body =~ /#{item['term']}/
             hit = item
           end

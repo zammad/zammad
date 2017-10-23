@@ -29,6 +29,7 @@ class ObjectCacheTest < ActiveSupport::TestCase
 
     user1.organization_id = nil
     user1.save
+    org.reload
 
     assets = org.assets({})
     assert_equal(org.member_ids.sort, assets[:Organization][org.id]['member_ids'].sort)

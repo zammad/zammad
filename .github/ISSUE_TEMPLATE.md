@@ -5,6 +5,8 @@ Hi there - thanks for filling an issue. Please ensure the following things befor
 - Make sure to use the latest version of Zammad if possible
 - Add the `log/production.log` file from your system. Attention: Make sure no confidential data is in it!
 - Please write the issue in english
+- Don't remove the template - otherwise we will close the issue without further comments
+- Ask questions about Zammad configuration and usage at our mailinglist. See: https://zammad.org/participate
 
 Note: We always do our best. Unfortunately, sometimes the requests are too much and we can't handle everything at once. If you want to prioritize/escalate your issue, you can do so by means of a support contract (see https://zammad.com/pricing#selfhosted).
 

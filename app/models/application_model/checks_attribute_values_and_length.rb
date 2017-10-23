@@ -18,7 +18,6 @@ module ApplicationModel::ChecksAttributeValuesAndLength
   def check_attribute_values_and_length
     columns = self.class.columns_hash
     attributes.each do |name, value|
-      next if value.blank?
       next if !value.instance_of?(String)
       column = columns[name]
       next if !column
@@ -26,6 +25,8 @@ module ApplicationModel::ChecksAttributeValuesAndLength
       if column.type == :binary
         self[name].force_encoding('BINARY')
       end
+
+      next if value.blank?
 
       # strip null byte chars (postgresql will complain about it)
       if column.type == :text

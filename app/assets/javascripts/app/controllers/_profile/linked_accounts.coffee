@@ -95,4 +95,9 @@ App.Config.set('auth_provider_all', {
     name:   'OAuth2'
     config: 'auth_oauth2'
     class:  'oauth2'
+  weibo:
+    url:    '/auth/weibo'
+    name:   'Weibo'
+    config: 'auth_weibo'
+    class:  'weibo'
 })
