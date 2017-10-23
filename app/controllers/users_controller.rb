@@ -806,7 +806,7 @@ curl http://localhost/api/v1/users/preferences -v -u #{login}:#{password} -H "Co
     if params[:user]
       user = User.find(current_user.id)
       user.with_lock do
-        params[:user].each do |key, value|
+        params[:user].permit!.to_h.each do |key, value|
           user.preferences[key.to_sym] = value
         end
         user.save!
