@@ -231,7 +231,7 @@ class App.CTI extends App.Controller
       id:          'preferences'
       type:        'PUT'
       url:         "#{@apiPath}/users/preferences"
-      data:        JSON.stringify(user: {cti: state})
+      data:        JSON.stringify(cti: state)
       processData: true
     )
 
