@@ -491,6 +491,7 @@ class UserTest < ActiveSupport::TestCase
 
     roles = Role.where(name: 'Agent')
     customer1.roles = roles
+
     customer1.save!
 
     assert_equal(customer1.role_ids.count, 1)
@@ -531,6 +532,38 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal(customer2.role_ids.sort, Role.signup_role_ids)
     customer2.destroy!
+
+    customer3 = User.create_or_update(
+      login: "user-ensure-role2-#{name}@example.com",
+      firstname: 'Role',
+      lastname: "Customer#{name}",
+      email: "user-ensure-role2-#{name}@example.com",
+      password: 'customerpw',
+      roles: roles,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert_raises(RuntimeError) do
+      customer3.roles = Role.where(name: %w(Customer Admin))
+    end
+    assert_raises(RuntimeError) do
+      customer3.roles = Role.where(name: %w(Customer Agent))
+    end
+    customer3.roles = Role.where(name: %w(Admin Agent))
+    customer3.roles.each do |role|
+      assert_not_equal(role.name, 'Customer')
+    end
+    customer3.roles = Role.where(name: 'Admin')
+    customer3.roles.each do |role|
+      assert_not_equal(role.name, 'Customer')
+    end
+    customer3.roles = Role.where(name: 'Agent')
+    customer3.roles.each do |role|
+      assert_not_equal(role.name, 'Customer')
+    end
+    customer3.destroy!
 
     admin.destroy!
   end
