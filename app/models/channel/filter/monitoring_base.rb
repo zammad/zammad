@@ -30,7 +30,7 @@ class Channel::Filter::MonitoringBase
 
     # get mail attibutes like host and state
     result = {}
-    mail[:body].gsub(%r{(Service|Host|State|Address|Date/Time|Additional\sInfo|Info):(.+?)\n}i) do |_match|
+    mail[:body].gsub(%r{(Service|Host|State|Address|Date/Time|Additional\sInfo|Info|Action|Description):(.+?)\n}i) do |_match|
       key = $1
       if key
         key = key.downcase
@@ -45,20 +45,38 @@ class Channel::Filter::MonitoringBase
     # check min. params
     return if result['host'].blank?
 
-    # get state by body - ichinga new templates
+    # icinga - get state by body - new templates
     if result['state'].blank?
       if mail[:body] =~ /==>.*\sis\s(.+?)\!\s+?<==/
         result['state'] = $1
       end
     end
 
-    # get state by subject - ichinga new templates "state:" is not in body anymore
+    # icinga - get state by subject - new templates "state:" is not in body anymore
     # Subject: [PROBLEM] Ping IPv4 on host1234.dc.example.com is WARNING!
     # Subject: [PROBLEM] Host host1234.dc.example.com is DOWN!
     if result['state'].blank?
       if mail[:subject] =~ /(on|Host)\s.+?\sis\s(.+?)\!/
         result['state'] = $2
       end
+    end
+
+    # monit - get missing attributes from body
+    if result['service'].blank?
+      if mail[:body] =~ /\sService\s(.+?)\s/
+        result['service'] = $1
+      end
+    end
+
+    # possible event types https://mmonit.com/monit/documentation/#Setting-an-event-filter
+    if result['state'].blank?
+      result['state'] = if mail[:body] =~ /\s(done|recovery|succeeded|bytes\sok|packets\sok)\s/
+                          'OK'
+                        elsif mail[:body] =~ /(instance\schanged\snot|Link\sup|Exists|Saturation\sok|Speed\sok)/
+                          'OK'
+                        else
+                          'CRITICAL'
+                        end
     end
 
     # check if ticket with host is open
