@@ -9,25 +9,25 @@ class Observer::Ticket::AssignRandomAgent < ActiveRecord::Observer
   end
 
   def assign_agent(record)
-    Rails.logger.info "----Process ticket auto assignment based on the group of ticket-----"
+    Rails.logger.info '----Process ticket auto assignment based on the group of ticket-----'
     ticket = Ticket.lookup(id: record.id)
 
     if ticket.auto_assign == true
-      Rails.logger.info "----Autoassignment flag is true-----"
+      Rails.logger.info '----Autoassignment flag is true-----'
       if ticket.owner_id == 1
-        result = User.getAgentId(
-            role_id:      2,
-            group_id:     ticket.group_id
+        result = User.get_user_ids(
+          role_id:      2,
+          group_id:     ticket.group_id
         )
         # any random pick logic.
         ticket.owner_id = result.ids.sample
         ticket.save
-        Rails.logger.info "----Autoassignment of ticket compeleted-----"
+        Rails.logger.info '----Autoassignment of ticket compeleted-----'
       else
-        Rails.logger.info "----Autoassignment of ticket not required as ticket aleady has an owner-----"
+        Rails.logger.info '----Autoassignment of ticket not required as ticket aleady has an owner-----'
       end
     else
-      Rails.logger.info "----Autoassignment flag is false-----"
+      Rails.logger.info '----Autoassignment flag is false-----'
     end
   end
 end

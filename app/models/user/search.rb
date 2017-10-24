@@ -112,7 +112,7 @@ returns
       users
     end
 
-    def getAgentId(params)
+    def get_user_ids(params)
       # get params
       group_id = params[:group_id]
       role_id = params[:role_id]
