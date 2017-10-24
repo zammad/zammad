@@ -62,7 +62,7 @@ class EmailSignaturDetectionTest < ActiveSupport::TestCase
     fixture_files = {
       'email_signature_detection/client_c_1.html' => { line: 8, content_type: 'text/html' },
       'email_signature_detection/client_c_2.html' => { line: 29, content_type: 'text/html' },
-      'email_signature_detection/client_c_3.html' => { line: 9, content_type: 'text/html' },
+      'email_signature_detection/client_c_3.html' => { line: 6, content_type: 'text/html' },
     }
 
     fixture_messages = []

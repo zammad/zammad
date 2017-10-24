@@ -96,16 +96,16 @@ returns
 
   def fullname
     name = ''
-    if firstname && !firstname.empty?
-      name = name + firstname
+    if firstname.present?
+      name = firstname
     end
-    if lastname && !lastname.empty?
+    if lastname.present?
       if name != ''
         name += ' '
       end
       name += lastname
     end
-    if name == '' && email
+    if name.blank? && email.present?
       name = email
     end
     name
@@ -486,7 +486,7 @@ returns
 
 get all users with permission
 
-  users = User.with_permissions('admin.session')
+  users = User.with_permissions('ticket.agent')
 
 get all users with permission "admin.session" or "ticket.agent"
 
@@ -847,42 +847,55 @@ returns
   end
 
   def check_name
-    return true if !firstname.empty? && !lastname.empty?
+    if firstname.present?
+      firstname.strip!
+    end
+    if lastname.present?
+      lastname.strip!
+    end
 
-    if !firstname.empty? && lastname.empty?
+    return true if firstname.present? && lastname.present?
+
+    if (firstname.blank? && lastname.present?) || (firstname.present? && lastname.blank?)
 
       # "Lastname, Firstname"
-      scan = firstname.scan(/, /)
-      if scan[0]
-        name = firstname.split(', ', 2)
-        if !name[0].nil?
-          self.lastname  = name[0]
+      used_name = if firstname.blank?
+                    lastname
+                  else
+                    firstname
+                  end
+      name = used_name.split(', ', 2)
+      if name.count == 2
+        if name[0].present?
+          self.lastname = name[0]
         end
-        if !name[1].nil?
+        if name[1].present?
           self.firstname = name[1]
         end
         return true
       end
 
       # "Firstname Lastname"
-      name = firstname.split(' ', 2)
-      if !name[0].nil?
-        self.firstname = name[0]
+      name = used_name.split(' ', 2)
+      if name.count == 2
+        if name[0].present?
+          self.firstname = name[0]
+        end
+        if name[1].present?
+          self.lastname = name[1]
+        end
+        return true
       end
-      if !name[1].nil?
-        self.lastname = name[1]
-      end
-      return true
 
     # -no name- "firstname.lastname@example.com"
-    elsif firstname.empty? && lastname.empty? && !email.empty?
+    elsif firstname.blank? && lastname.blank? && email.present?
       scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
       if scan[0]
-        if !scan[0][0].nil?
+        if scan[0][0].present?
           self.firstname = scan[0][0].capitalize
         end
-        if !scan[0][1].nil?
-          self.lastname  = scan[0][1].capitalize
+        if scan[0][1].present?
+          self.lastname = scan[0][1].capitalize
         end
       end
     end
