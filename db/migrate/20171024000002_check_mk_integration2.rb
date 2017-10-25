@@ -1,4 +1,4 @@
-class CheckMkIntegration < ActiveRecord::Migration[4.2]
+class CheckMkIntegration2 < ActiveRecord::Migration[4.2]
   def up
 
     # return if it's a new setup
@@ -31,6 +31,29 @@ class CheckMkIntegration < ActiveRecord::Migration[4.2]
       frontend: false
     )
     Setting.create_if_not_exists(
+      title: 'Sender',
+      name: 'check_mk_sender',
+      area: 'Integration::CheckMK',
+      description: 'Defines the sender email address of the service emails.',
+      options: {
+        form: [
+          {
+            display: '',
+            null: false,
+            name: 'check_mk_sender',
+            tag: 'input',
+            placeholder: 'check_mk@monitoring.example.com',
+          },
+        ],
+      },
+      state: 'check_mk@monitoring.example.com',
+      preferences: {
+        prio: 2,
+        permission: ['admin.integration'],
+      },
+      frontend: false,
+    )
+    Setting.create_if_not_exists(
       title: 'Group',
       name: 'check_mk_group_id',
       area: 'Integration::CheckMK',
@@ -48,7 +71,7 @@ class CheckMkIntegration < ActiveRecord::Migration[4.2]
       },
       state: 1,
       preferences: {
-        prio: 2,
+        prio: 3,
         permission: ['admin.integration'],
       },
       frontend: false
@@ -69,12 +92,13 @@ class CheckMkIntegration < ActiveRecord::Migration[4.2]
               true  => 'yes',
               false => 'no',
             },
+            translate: true,
           },
         ],
       },
       state: true,
       preferences: {
-        prio: 3,
+        prio: 4,
         permission: ['admin.integration'],
       },
       frontend: false
@@ -92,12 +116,13 @@ class CheckMkIntegration < ActiveRecord::Migration[4.2]
             name: 'check_mk_auto_close_state_id',
             tag: 'select',
             relation: 'TicketState',
+            translate: true,
           },
         ],
       },
       state: 4,
       preferences: {
-        prio: 4,
+        prio: 5,
         permission: ['admin.integration'],
       },
       frontend: false
@@ -112,6 +137,15 @@ class CheckMkIntegration < ActiveRecord::Migration[4.2]
       preferences: {
         permission: ['admin.integration'],
       },
+      frontend: false
+    )
+    Setting.create_if_not_exists(
+      title: 'Defines postmaster filter.',
+      name: '5200_postmaster_filter_check_mk',
+      area: 'Postmaster::PreFilter',
+      description: 'Defines postmaster filter to manage Check_MK (http://mathias-kettner.com/check_mk.html) emails.',
+      options: {},
+      state: 'Channel::Filter::CheckMk',
       frontend: false
     )
   end
