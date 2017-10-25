@@ -803,10 +803,12 @@ curl http://localhost/api/v1/users/preferences -v -u #{login}:#{password} -H "Co
   def preferences
     raise Exceptions::UnprocessableEntity, 'No current user!' if !current_user
 
-    if params[:user]
+    preferences_params = params.except(:controller, :action)
+
+    if preferences_params.present?
       user = User.find(current_user.id)
       user.with_lock do
-        params[:user].each do |key, value|
+        preferences_params.permit!.to_h.each do |key, value|
           user.preferences[key.to_sym] = value
         end
         user.save!

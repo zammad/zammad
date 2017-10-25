@@ -12,7 +12,7 @@ class Index extends App.Controller
           id:          'preferences'
           type:        'PUT'
           url:         "#{@apiPath}/users/preferences"
-          data:        JSON.stringify({user:{intro:true}})
+          data:        JSON.stringify(intro: true)
           processData: true
         )
         @navigate '#'

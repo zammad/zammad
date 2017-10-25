@@ -191,7 +191,7 @@ example
       next if deleted?(message_meta, count, count_all)
 
       # ignore already imported
-      next if already_imported?(message_id, message_meta, count, count_all, keep_on_server)
+      next if already_imported?(message_id, message_meta, count, count_all, keep_on_server, channel)
 
       # delete email from server after article was created
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
@@ -240,7 +240,9 @@ returns
 
   private
 
-  def already_imported?(message_id, message_meta, count, count_all, keep_on_server)
+  # rubocop:disable Metrics/ParameterLists
+  def already_imported?(message_id, message_meta, count, count_all, keep_on_server, channel)
+    # rubocop:enable Metrics/ParameterLists
     return false if !keep_on_server
     return false if !message_meta.attr
     return false if !message_meta.attr['ENVELOPE']
@@ -249,6 +251,13 @@ returns
     local_message_id_md5 = Digest::MD5.hexdigest(local_message_id)
     article = Ticket::Article.where(message_id_md5: local_message_id_md5).order('created_at DESC, id DESC').limit(1).first
     return false if !article
+
+    # verify if message is already imported via same channel, if not, import it again
+    ticket = article.ticket
+    if ticket && ticket.preferences && ticket.preferences[:channel_id].present? && channel.present?
+      return false if ticket.preferences[:channel_id] != channel[:id]
+    end
+
     @imap.store(message_id, '+FLAGS', [:Seen])
     Rails.logger.info "  - ignore message #{count}/#{count_all} - because message message id already imported"
     true

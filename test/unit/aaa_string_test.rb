@@ -4,6 +4,55 @@ require 'test_helper'
 
 class AaaStringTest < ActiveSupport::TestCase
 
+  test 'strip' do
+    raw  = ' test   '
+    result = 'test'
+    assert_equal(raw.strip, result)
+
+    raw  = "test\n"
+    result = 'test'
+    assert_equal(raw.strip, result)
+
+    raw  = " test \n test "
+    result = "test \n test"
+    assert_equal(raw.strip, result)
+
+    raw  = " \r\n test \u{200B} \n test\u{200B} \u{200B}"
+    result = "test \u{200B} \n test"
+    assert_equal(raw.strip, result)
+
+    raw = "\xC2\xA92011 Z ".force_encoding('ASCII-8BIT')
+    result = "\xC2\xA92011 Z".force_encoding('ASCII-8BIT')
+    assert_equal(raw.strip, result)
+  end
+
+  test 'strip!' do
+    raw  = ' test   '
+    result = 'test'
+    raw.strip!
+    assert_equal(raw, result)
+
+    raw  = "test\n"
+    result = 'test'
+    raw.strip!
+    assert_equal(raw, result)
+
+    raw  = " test \n test "
+    result = "test \n test"
+    raw.strip!
+    assert_equal(raw, result)
+
+    raw  = " \r\n test \u{200B} \n test\u{200B} \u{200B}"
+    result = "test \u{200B} \n test"
+    raw.strip!
+    assert_equal(raw, result)
+
+    raw = "\xC2\xA92011 Z ".force_encoding('ASCII-8BIT')
+    result = "\xC2\xA92011 Z".force_encoding('ASCII-8BIT')
+    raw.strip!
+    assert_equal(raw, result)
+  end
+
   test 'to_filename ref' do
     modul  = 'test'
     result = 'test'

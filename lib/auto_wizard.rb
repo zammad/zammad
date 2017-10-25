@@ -88,8 +88,9 @@ returns
       end
     end
 
-    # create EmailAddresses/Channels/Signatures
+    # create Permissions/Organization
     model_map = {
+      'Permissions' => 'Permission',
       'Organizations' => 'Organization',
     }
     model_map.each do |map_name, model|

@@ -135,8 +135,7 @@ or with filter:
   end
 
   def self._url_cleanup(url)
-    url.gsub!(/^[[:space:]]+/, '')
-    url.gsub!(/[[:space:]]+$/, '')
+    url.strip!
     raise "Invalid endpoint '#{url}', need to start with http:// or https://" if url !~ %r{^http(s|)://}i
     url = _url_cleanup_baseurl(url)
     url = "#{url}/src/jsonrpc.php"
@@ -144,8 +143,7 @@ or with filter:
   end
 
   def self._url_cleanup_baseurl(url)
-    url.gsub!(/^[[:space:]]+/, '')
-    url.gsub!(/[[:space:]]+$/, '')
+    url.strip!
     raise "Invalid endpoint '#{url}', need to start with http:// or https://" if url !~ %r{^http(s|)://}i
     url.gsub!(%r{src/jsonrpc.php}, '')
     url.gsub(%r{([^:])//+}, '\\1/')

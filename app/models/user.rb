@@ -39,13 +39,13 @@ class User < ApplicationModel
   include User::SearchIndex
 
   before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
-  before_create   :check_preferences_default, :validate_roles, :validate_ooo, :domain_based_assignment, :set_locale
-  before_update   :check_preferences_default, :validate_roles, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
+  before_create   :check_preferences_default, :validate_ooo, :domain_based_assignment, :set_locale
+  before_update   :check_preferences_default, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy, :user_device_destroy
 
-  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: :validate_agent_limit_by_role, before_remove: :last_admin_check_by_role, class_name: 'Role'
+  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: [:validate_agent_limit_by_role, :validate_roles], before_remove: :last_admin_check_by_role, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
@@ -96,16 +96,16 @@ returns
 
   def fullname
     name = ''
-    if firstname && !firstname.empty?
-      name = name + firstname
+    if firstname.present?
+      name = firstname
     end
-    if lastname && !lastname.empty?
+    if lastname.present?
       if name != ''
         name += ' '
       end
       name += lastname
     end
-    if name == '' && email
+    if name.blank? && email.present?
       name = email
     end
     name
@@ -486,7 +486,7 @@ returns
 
 get all users with permission
 
-  users = User.with_permissions('admin.session')
+  users = User.with_permissions('ticket.agent')
 
 get all users with permission "admin.session" or "ticket.agent"
 
@@ -847,42 +847,55 @@ returns
   end
 
   def check_name
-    return true if !firstname.empty? && !lastname.empty?
+    if firstname.present?
+      firstname.strip!
+    end
+    if lastname.present?
+      lastname.strip!
+    end
 
-    if !firstname.empty? && lastname.empty?
+    return true if firstname.present? && lastname.present?
+
+    if (firstname.blank? && lastname.present?) || (firstname.present? && lastname.blank?)
 
       # "Lastname, Firstname"
-      scan = firstname.scan(/, /)
-      if scan[0]
-        name = firstname.split(', ', 2)
-        if !name[0].nil?
-          self.lastname  = name[0]
+      used_name = if firstname.blank?
+                    lastname
+                  else
+                    firstname
+                  end
+      name = used_name.split(', ', 2)
+      if name.count == 2
+        if name[0].present?
+          self.lastname = name[0]
         end
-        if !name[1].nil?
+        if name[1].present?
           self.firstname = name[1]
         end
         return true
       end
 
       # "Firstname Lastname"
-      name = firstname.split(' ', 2)
-      if !name[0].nil?
-        self.firstname = name[0]
+      name = used_name.split(' ', 2)
+      if name.count == 2
+        if name[0].present?
+          self.firstname = name[0]
+        end
+        if name[1].present?
+          self.lastname = name[1]
+        end
+        return true
       end
-      if !name[1].nil?
-        self.lastname = name[1]
-      end
-      return true
 
     # -no name- "firstname.lastname@example.com"
-    elsif firstname.empty? && lastname.empty? && !email.empty?
+    elsif firstname.blank? && lastname.blank? && email.present?
       scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
       if scan[0]
-        if !scan[0][0].nil?
+        if scan[0][0].present?
           self.firstname = scan[0][0].capitalize
         end
-        if !scan[0][1].nil?
-          self.lastname  = scan[0][1].capitalize
+        if scan[0][1].present?
+          self.lastname = scan[0][1].capitalize
         end
       end
     end
@@ -953,17 +966,14 @@ returns
     raise Exceptions::UnprocessableEntity, 'Email address is already used for other user.'
   end
 
-  def validate_roles
-    return true if !role_ids
-    role_ids.each do |role_id|
-      role = Role.lookup(id: role_id)
-      raise "Unable to find role for id #{role_id}" if !role
-      next if !role.preferences[:not]
-      role.preferences[:not].each do |local_role_name|
-        local_role = Role.lookup(name: local_role_name)
-        next if !local_role
-        raise "Role #{role.name} conflicts with #{local_role.name}" if role_ids.include?(local_role.id)
-      end
+  def validate_roles(role)
+    return true if !role_ids # we need role_ids for checking in role_ids below, in this method
+    return true if role.preferences[:not].blank?
+    role.preferences[:not].each do |local_role_name|
+      local_role = Role.lookup(name: local_role_name)
+      next if !local_role
+      next if role_ids.exclude?(local_role.id)
+      raise "Role #{role.name} conflicts with #{local_role.name}"
     end
     true
   end

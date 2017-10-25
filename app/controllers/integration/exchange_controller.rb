@@ -59,7 +59,7 @@ class Integration::ExchangeController < ApplicationController
   # currently a workaround till LDAP is migrated to Sequencer
   def payload_dry_run
     {
-      ews_attributes: params[:attributes],
+      ews_attributes: params[:attributes].permit!.to_h,
       ews_folder_ids: params[:folders],
       ews_config:     {
         endpoint: params[:endpoint],

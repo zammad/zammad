@@ -267,24 +267,24 @@ class App.ControllerTable extends App.Controller
             else
               @$("tbody > tr:nth-child(#{position})").after(newCurrentRows[position])
           @currentRows = newCurrentRows
-          console.log('fullRender.contentRemoved', removePositions, addPositions)
+          #console.log('fullRender.contentRemoved', removePositions, addPositions)
           @renderPager(@el, true)
           return ['fullRender.contentRemoved', removePositions, addPositions]
 
       if newRows.length isnt @currentRows.length
         result = ['fullRender.lenghtChanged', @currentRows.length, newRows.length]
         @renderTableFull(newRows)
-        console.log('result', result)
+        #console.log('result', result)
         return result
 
       # compare rows
       result = @_isSame(newRows, @currentRows)
       if result isnt true
         @renderTableFull(newRows)
-        console.log('result', "fullRender.contentChanged|row(#{result})")
+        #console.log('result', "fullRender.contentChanged|row(#{result})")
         return ['fullRender.contentChanged', result]
 
-    console.log('result', 'noChanges')
+    #console.log('result', 'noChanges')
     return ['noChanges']
 
   renderEmptyList: =>
@@ -293,7 +293,7 @@ class App.ControllerTable extends App.Controller
     )
 
   renderTableFull: (rows) =>
-    console.log('renderTableFull', @orderBy, @orderDirection, @objects)
+    #console.log('renderTableFull', @orderBy, @orderDirection, @objects)
     @tableHeaders()
     @sortList()
     bulkIds = @getBulkSelected()
@@ -501,7 +501,7 @@ class App.ControllerTable extends App.Controller
 
     #console.log('LLL', @lastOrderBy, @orderBy, @lastOrderDirection, @orderDirection, @overviewAttributes, @lastOverview)
     if @headers && @lastOrderBy is orderBy && @lastOrderDirection is orderDirection && !@tableHeadersHasChanged()
-      console.log('tableHeaders: same overviewAttributes just return headers', @headers)
+      #console.log('tableHeaders: same overviewAttributes just return headers', @headers)
       return ['headers are the same', @headers]
     @lastOverview = @overviewAttributes
 
@@ -582,7 +582,7 @@ class App.ControllerTable extends App.Controller
     @columnsLength = @headers.length
     if @checkbox || @radio
       @columnsLength++
-    console.log('tableHeaders: new headers', @headers)
+    #console.log('tableHeaders: new headers', @headers)
     ['new headers', @headers]
 
   setMaxPage: =>
@@ -600,8 +600,8 @@ class App.ControllerTable extends App.Controller
     orderBy = @customOrderBy || @orderBy
     orderDirection = @customOrderDirection || @orderDirection
 
-    console.log('order', @orderBy, @orderDirection)
-    console.log('customOrder', @customOrderBy, @customOrderDirection)
+    #console.log('order', @orderBy, @orderDirection)
+    #console.log('customOrder', @customOrderBy, @customOrderDirection)
 
     return if _.isEmpty(orderBy) && _.isEmpty(@groupBy)
 

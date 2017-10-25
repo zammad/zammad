@@ -59,9 +59,8 @@ class CalendarSubscriptions extends App.ControllerSubContent
   store: ->
     # get data
     data =
-      user:
-        calendar_subscriptions:
-          tickets: @preferences
+      calendar_subscriptions:
+        tickets: @preferences
 
     @ajax(
       id:          'preferences'

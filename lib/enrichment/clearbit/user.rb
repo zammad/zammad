@@ -127,7 +127,7 @@ module Enrichment
           end
         end
 
-        return if @config['api_key'].empty?
+        return if @config['api_key'].blank?
 
         record = {
           direction: 'out',

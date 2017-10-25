@@ -41,7 +41,7 @@ class Index extends App.ControllerSubContent
       id:          'preferences'
       type:        'PUT'
       url:         "#{@apiPath}/users/preferences"
-      data:        JSON.stringify({user:params})
+      data:        JSON.stringify(params)
       processData: true
       success:     @success
       error:       @error

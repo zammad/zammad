@@ -1,4 +1,31 @@
 class String
+  alias old_strip strip
+  alias old_strip! strip!
+
+  def strip!
+    begin
+      sub!(/\A[[[:space:]]\u{200B}\u{FEFF}]+/, '')
+      sub!(/[[[:space:]]\u{200B}\u{FEFF}]+\Z/, '')
+
+    # if incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string) (Encoding::CompatibilityError), use default
+    rescue
+      old_strip!
+    end
+    self
+  end
+
+  def strip
+    begin
+      new_string = sub(/\A[[[:space:]]\u{200B}\u{FEFF}]+/, '')
+      new_string.sub!(/[[[:space:]]\u{200B}\u{FEFF}]+\Z/, '')
+
+    # if incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string) (Encoding::CompatibilityError), use default
+    rescue
+      new_string = old_strip
+    end
+    new_string
+  end
+
   def message_quote
     quote = split("\n")
     body_quote = ''

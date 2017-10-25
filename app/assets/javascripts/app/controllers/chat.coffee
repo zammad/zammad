@@ -219,7 +219,7 @@ class App.CustomerChat extends App.Controller
             id:          'preferences'
             type:        'PUT'
             url:         "#{@apiPath}/users/preferences"
-            data:        JSON.stringify(user: {chat: preferences.chat})
+            data:        JSON.stringify(chat: preferences.chat)
             processData: true
             success:     @success
             error:       @error
@@ -757,7 +757,7 @@ class Setting extends App.ControllerModal
       id:          'preferences'
       type:        'PUT'
       url:         "#{@apiPath}/users/preferences"
-      data:        JSON.stringify({user:params})
+      data:        JSON.stringify(params)
       processData: true
       success:     @success
       error:       @error

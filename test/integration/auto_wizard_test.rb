@@ -126,6 +126,16 @@ class AutoWizardTest < ActiveSupport::TestCase
           value: 'Zammad UnitTest02 System'
         },
       ],
+      Permissions: [
+        {
+          name: 'admin.session',
+          active: false,
+        },
+        {
+          name: 'admin.session.new',
+          active: true,
+        },
+      ],
       Channels: [
         {
           id: 1,
@@ -220,6 +230,11 @@ class AutoWizardTest < ActiveSupport::TestCase
     auto_wizard_data[:Settings].each do |local_setting|
       setting_value = Setting.get(local_setting[:name])
       assert_equal(local_setting[:value], setting_value)
+    end
+    auto_wizard_data[:Permissions].each do |local_permission|
+      permission = Permission.find_by(name: local_permission[:name])
+      assert_equal(local_permission[:name], permission.name)
+      assert_equal(local_permission[:active], permission.active)
     end
   end
 

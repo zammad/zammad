@@ -536,10 +536,10 @@ condition example
       selector = selector_raw.stringify_keys
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
 
-      # validate value / allow empty but only if pre_condition exists and is not specific
+      # validate value / allow blank but only if pre_condition exists and is not specific
       if !selector.key?('value') || ((selector['value'].class == String || selector['value'].class == Array) && (selector['value'].respond_to?(:empty?) && selector['value'].empty?))
         return nil if selector['pre_condition'].nil?
-        return nil if selector['pre_condition'].respond_to?(:empty?) && selector['pre_condition'].empty?
+        return nil if selector['pre_condition'].respond_to?(:blank?) && selector['pre_condition'].blank?
         return nil if selector['pre_condition'] == 'specific'
       end
 

@@ -15,12 +15,18 @@ class FixedStoreUpgradeRor45 < ActiveRecord::Migration[5.0]
     end
 
     Channel.all.each do |channel|
-      channel = Channel.last
       next if channel.options.blank?
       channel.options.each do |key, value|
         channel.options[key] = cleanup(value)
       end
       channel.save!
+    end
+    User.with_permissions('ticket.agent').each do |user|
+      next if user.preferences.blank?
+      user.preferences.each do |key, value|
+        user.preferences[key] = cleanup(value)
+      end
+      user.save!
     end
   end
 

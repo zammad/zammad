@@ -18,12 +18,12 @@ module Channel::Filter::Database
           match_rule = meta['value']
           min_one_rule_exists = true
           if meta[:operator] == 'contains not'
-            if value.present? && match(value, match_rule, false)
+            if value.present? && Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
               all_matches_ok = false
               Rails.logger.info "  matching #{key.downcase}:'#{value}' on #{match_rule}, but shoud not"
             end
           elsif meta[:operator] == 'contains'
-            if value.blank? || !match(value, match_rule, true)
+            if value.blank? || !Channel::Filter::Match::EmailRegex.match(value: value, match_rule: match_rule)
               all_matches_ok = false
               Rails.logger.info "  not matching #{key.downcase}:'#{value}' on #{match_rule}, but should"
             end
@@ -49,34 +49,6 @@ module Channel::Filter::Database
       end
     end
 
-  end
-
-  def self.match(value, match_rule, _should_match, check_mode = false)
-
-    regexp = false
-    if match_rule =~ /^(regex:)(.+?)$/
-      regexp = true
-      match_rule = $2
-    end
-
-    value ||= ''
-
-    if regexp == false
-      match_rule_quoted = Regexp.quote(match_rule).gsub(/\\\*/, '.*')
-      return true if value =~ /#{match_rule_quoted}/i
-      return false
-    end
-
-    begin
-      return true if value =~ /#{match_rule}/i
-      return false
-    rescue => e
-      message = "Can't use regex '#{match_rule}' on '#{value}': #{e.message}"
-      Rails.logger.error message
-      raise message if check_mode == true
-    end
-
-    false
   end
 
 end

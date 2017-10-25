@@ -30,14 +30,18 @@ module Integration::ImportJobBase
   end
 
   def payload_dry_run
-    params
+    clean_payload(params.permit!.to_h)
   end
 
   def payload_import
-    import_setting
+    clean_payload(import_setting)
   end
 
   private
+
+  def clean_payload(payload)
+    payload.except(:wizardData, :action, :controller)
+  end
 
   def answer_with
     result = yield
