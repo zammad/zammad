@@ -193,6 +193,12 @@ function update_database () {
   zammad run rake db:migrate
 }
 
+function update_translations () {
+  echo "# Updating translations..."
+  zammad run rails r 'Locale.sync'
+  zammad run rails r 'Translation.sync'
+}
+
 function create_webserver_config () {
   if [ "${OS}" == "DEBIAN" ]; then
     if [ ! -f "${WEBSERVER_CONF}" ]; then
@@ -234,6 +240,8 @@ function elasticsearch_searchindex_rebuild () {
 function update_or_install () {
   if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     update_database
+
+    update_translations
   else
     create_database_password
 
