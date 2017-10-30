@@ -499,7 +499,6 @@ class App.ControllerTable extends App.Controller
     orderBy = @customOrderBy || @orderBy
     orderDirection = @customOrderDirection || @orderDirection
 
-    #console.log('LLL', @lastOrderBy, @orderBy, @lastOrderDirection, @orderDirection, @overviewAttributes, @lastOverview)
     if @headers && @lastOrderBy is orderBy && @lastOrderDirection is orderDirection && !@tableHeadersHasChanged()
       #console.log('tableHeaders: same overviewAttributes just return headers', @headers)
       return ['headers are the same', @headers]
@@ -609,9 +608,10 @@ class App.ControllerTable extends App.Controller
     @lastOrderDirection = orderDirection
     @lastOrderBy = orderBy
 
+    localObjects is undefined
     if orderBy
       for header in @headers
-        if header.name is orderBy || "#{header.name}_id" is orderBy
+        if header.name is orderBy || "#{header.name}_id" is orderBy || header.name is "#{orderBy}_id"
           localObjects = _.sortBy(
             @objects
             (item) ->
@@ -649,7 +649,7 @@ class App.ControllerTable extends App.Controller
       # in case order by is not in show column, use orderBy attribute
       if !localObjects
         for attributeName, attribute of @attributesList
-          if attributeName is orderBy || "#{attributeName}_id" is orderBy
+          if attributeName is orderBy || "#{attributeName}_id" is orderBy || attributeName is "#{orderBy}_id"
 
             # order by
             localObjects = _.sortBy(
@@ -722,6 +722,7 @@ class App.ControllerTable extends App.Controller
         localObjects = localObjects.concat groupObjects[group]
         groupObjects[group] = [] # release old array
 
+    return if localObjects is undefined
     @objects = localObjects
     @lastSortedobjects = localObjects
 
