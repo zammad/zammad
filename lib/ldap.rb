@@ -151,6 +151,12 @@ class Ldap
       params[:encryption] = @encryption
     end
 
+    # special workaround for IBM bluepages
+    # see issue #1422 for more details
+    if @host == 'bluepages.ibm.com'
+      params[:force_no_page] = true
+    end
+
     params
   end
 

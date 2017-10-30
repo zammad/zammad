@@ -1321,7 +1321,7 @@ test('table new - initial list', function() {
   equal(el.find('.js-pager').first().find('.js-page.is-selected').length, 1)
   equal(el.find('.js-pager').first().find('.js-page.is-selected').text(), '1')
 
-  $('#table').append('<hr><h1>table with data</h1><div id="table-new7"></div>')
+  $('#table').append('<hr><h1>table with data 7</h1><div id="table-new7"></div>')
   var el = $('#table-new7')
 
   App.TicketPriority.refresh([
@@ -1419,6 +1419,231 @@ test('table new - initial list', function() {
   equal(el.find('tbody > tr:nth-child(3) > td').length, 3, 'check row 3')
   equal(el.find('tbody > tr:nth-child(3) > td:first').text().trim(), '3 hoch', 'check row 3')
   equal(el.find('tbody > tr:nth-child(3) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(4) > td').length, 0, 'check row 3')
+
+  $('#table').append('<hr><h1>table with data 8</h1><div id="table-new8"></div>')
+  var el = $('#table-new8')
+  App.TicketPriority.refresh([
+    {
+      id:         1,
+      name:       '1 low',
+      note:       'some note',
+      active:     true,
+      created_at: '2014-06-12T11:17:34.000Z',
+    },
+    {
+      id:         2,
+      name:       '2 normal',
+      note:       'some note 2',
+      active:     false,
+      created_at: '2014-06-10T10:17:34.000Z',
+    },
+    {
+      id:         3,
+      name:       '3 high',
+      note:       'some note 3',
+      active:     false,
+      created_at: '2014-06-10T10:17:38.000Z',
+    },
+  ], {clear: true})
+
+  var table = new App.ControllerTable({
+    el:                 el,
+    overviewAttributes: ['name', 'created_at', 'active'],
+    model:              App.TicketPriority,
+    objects:            App.TicketPriority.all(),
+    checkbox:           false,
+    radio:              false,
+    orderBy:            'not_existing',
+    orderDirection:     'DESC',
+  })
+
+  equal(el.find('table > thead > tr').length, 1, 'row count')
+  equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Erstellt', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
+  equal(el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '1 niedrig', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '12.06.2014', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'true', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '2 normal', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(3) > td').length, 3, 'check row 3')
+  equal(el.find('tbody > tr:nth-child(3) > td:first').text().trim(), '3 hoch', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(4) > td').length, 0, 'check row 3')
+
+  result = table.update({sync: true, objects: App.TicketPriority.all(), orderBy: 'not_existing', orderDirection: 'ASC'})
+  equal(result[0], 'noChanges')
+
+  $('#table').append('<hr><h1>table with data 9</h1><div id="table-new9"></div>')
+  var el = $('#table-new9')
+  App.TicketPriority.refresh([
+    {
+      id:          1,
+      name:        '1 low',
+      external_id: 3,
+      note:        'some note',
+      active:      true,
+      created_at:  '2014-06-12T11:17:34.000Z',
+    },
+    {
+      id:          2,
+      name:        '2 normal',
+      external_id: 2,
+      note:        'some note 2',
+      active:      false,
+      created_at:  '2014-06-10T10:17:34.000Z',
+    },
+    {
+      id:          3,
+      name:        '3 high',
+      external_id: 1,
+      note:        'some note 3',
+      active:      false,
+      created_at:  '2014-06-10T10:17:38.000Z',
+    },
+  ], {clear: true})
+
+  App.TicketPriority.resetAttributes()
+  App.TicketPriority.updateAttributes([{
+    name: 'external_id',
+    display: 'External',
+    tag: 'input',
+    readonly: 1,
+  }])
+
+  var table = new App.ControllerTable({
+    el:                 el,
+    overviewAttributes: ['name', 'created_at', 'active'],
+    model:              App.TicketPriority,
+    objects:            App.TicketPriority.all(),
+    checkbox:           false,
+    radio:              false,
+    orderBy:            'external',
+    orderDirection:     'DESC',
+  })
+
+  equal(el.find('table > thead > tr').length, 1, 'row count')
+  equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Erstellt', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
+  equal(el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '1 niedrig', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '12.06.2014', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'true', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '2 normal', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(3) > td').length, 3, 'check row 3')
+  equal(el.find('tbody > tr:nth-child(3) > td:first').text().trim(), '3 hoch', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(4) > td').length, 0, 'check row 3')
+
+  result = table.update({sync: true, objects: App.TicketPriority.all(), orderBy: 'external', orderDirection: 'ASC'})
+  equal(result[0], 'fullRender.contentChanged')
+  equal(result[1], 0)
+
+  equal(el.find('table > thead > tr').length, 1, 'row count')
+  equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Erstellt', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
+  equal(el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 3')
+  equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '3 hoch', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '2 normal', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(3) > td').length, 3, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(3) > td:first').text().trim(), '1 niedrig', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(2)').text().trim(), '12.06.2014', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(3)').text().trim(), 'true', 'check row 1')
+
+  equal(el.find('tbody > tr:nth-child(4) > td').length, 0, 'check row 3')
+
+  $('#table').append('<hr><h1>table with data 10</h1><div id="table-new10"></div>')
+  var el = $('#table-new10')
+  App.TicketPriority.refresh([
+    {
+      id:          1,
+      name:        '1 low',
+      external_id: 3,
+      note:        'some note',
+      active:      true,
+      created_at:  '2014-06-12T11:17:34.000Z',
+    },
+    {
+      id:          2,
+      name:        '2 normal',
+      external_id: 2,
+      note:        'some note 2',
+      active:      false,
+      created_at:  '2014-06-10T10:17:34.000Z',
+    },
+    {
+      id:          3,
+      name:        '3 high',
+      external_id: 1,
+      note:        'some note 3',
+      active:      false,
+      created_at:  '2014-06-10T10:17:38.000Z',
+    },
+  ], {clear: true})
+  App.TicketPriority.resetAttributes()
+  App.TicketPriority.updateAttributes([{
+    name: 'external',
+    display: 'External',
+    tag: 'input',
+    readonly: 1,
+  }])
+
+  var table = new App.ControllerTable({
+    el:                 el,
+    overviewAttributes: ['name', 'created_at', 'active'],
+    model:              App.TicketPriority,
+    objects:            App.TicketPriority.all(),
+    checkbox:           false,
+    radio:              false,
+    orderBy:            'external',
+    orderDirection:     'ASC',
+  })
+
+  equal(el.find('table > thead > tr').length, 1, 'row count')
+  equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Erstellt', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
+  equal(el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '1 niedrig', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '12.06.2014', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'true', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '2 normal', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(3) > td').length, 3, 'check row 3')
+  equal(el.find('tbody > tr:nth-child(3) > td:first').text().trim(), '3 hoch', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(4) > td').length, 0, 'check row 3')
+
+  result = table.update({sync: true, objects: App.TicketPriority.all(), orderBy: 'external', orderDirection: 'DESC'})
+  equal(result[0], 'fullRender.contentChanged')
+  equal(result[1], 0)
+
+  equal(el.find('table > thead > tr').length, 1, 'row count')
+  equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Name', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Erstellt', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Aktiv', 'check header')
+  equal(el.find('tbody > tr:nth-child(1) > td').length, 3, 'check row 3')
+  equal(el.find('tbody > tr:nth-child(1) > td:first').text().trim(), '3 hoch', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 3')
+  equal(el.find('tbody > tr:nth-child(2) > td').length, 3, 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:first').text().trim(), '2 normal', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), '10.06.2014', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(3) > td').length, 3, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(3) > td:first').text().trim(), '1 niedrig', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(2)').text().trim(), '12.06.2014', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(3)').text().trim(), 'true', 'check row 1')
+
   equal(el.find('tbody > tr:nth-child(4) > td').length, 0, 'check row 3')
 
 })

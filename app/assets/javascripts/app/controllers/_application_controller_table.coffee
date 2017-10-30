@@ -235,9 +235,9 @@ class App.ControllerTable extends App.Controller
       removedRows = _.difference(@currentRows, newRows)
       addedRows = _.difference(newRows, @currentRows)
 
-      #console.log('newRows', newRows)
-      #console.log('removedRows', removedRows)
-      #console.log('addedRows', addedRows)
+      @log 'debug', 'table newRows', newRows
+      @log 'debug', 'table removedRows', removedRows
+      @log 'debug', 'table addedRows', addedRows
 
       # if only rows are removed
       if (!_.isEmpty(addedRows) || !_.isEmpty(removedRows)) && addedRows.length < 10 && removedRows.length < 15 && removedRows.length < newRows.length && !_.isEmpty(newRows)
@@ -267,24 +267,24 @@ class App.ControllerTable extends App.Controller
             else
               @$("tbody > tr:nth-child(#{position})").after(newCurrentRows[position])
           @currentRows = newCurrentRows
-          #console.log('fullRender.contentRemoved', removePositions, addPositions)
+          @log 'debug', 'table.fullRender.contentRemoved', removePositions, addPositions
           @renderPager(@el, true)
           return ['fullRender.contentRemoved', removePositions, addPositions]
 
       if newRows.length isnt @currentRows.length
         result = ['fullRender.lenghtChanged', @currentRows.length, newRows.length]
         @renderTableFull(newRows)
-        #console.log('result', result)
+        @log 'debug', 'table.fullRender.lenghtChanged', result
         return result
 
       # compare rows
       result = @_isSame(newRows, @currentRows)
       if result isnt true
         @renderTableFull(newRows)
-        #console.log('result', "fullRender.contentChanged|row(#{result})")
+        @log 'debug', "table.fullRender.contentChanged|row(#{result})"
         return ['fullRender.contentChanged', result]
 
-    #console.log('result', 'noChanges')
+    @log 'debug', 'table.noChanges'
     return ['noChanges']
 
   renderEmptyList: =>
@@ -293,7 +293,7 @@ class App.ControllerTable extends App.Controller
     )
 
   renderTableFull: (rows) =>
-    #console.log('renderTableFull', @orderBy, @orderDirection, @objects)
+    @log 'debug', 'table.renderTableFull', @orderBy, @orderDirection
     @tableHeaders()
     @sortList()
     bulkIds = @getBulkSelected()
@@ -499,9 +499,8 @@ class App.ControllerTable extends App.Controller
     orderBy = @customOrderBy || @orderBy
     orderDirection = @customOrderDirection || @orderDirection
 
-    #console.log('LLL', @lastOrderBy, @orderBy, @lastOrderDirection, @orderDirection, @overviewAttributes, @lastOverview)
     if @headers && @lastOrderBy is orderBy && @lastOrderDirection is orderDirection && !@tableHeadersHasChanged()
-      #console.log('tableHeaders: same overviewAttributes just return headers', @headers)
+      @log 'debug', 'table.Headers: same overviewAttributes just return headers', @headers
       return ['headers are the same', @headers]
     @lastOverview = @overviewAttributes
 
@@ -582,7 +581,7 @@ class App.ControllerTable extends App.Controller
     @columnsLength = @headers.length
     if @checkbox || @radio
       @columnsLength++
-    #console.log('tableHeaders: new headers', @headers)
+    @log 'debug', 'table.Headers: new headers', @headers
     ['new headers', @headers]
 
   setMaxPage: =>
@@ -600,8 +599,8 @@ class App.ControllerTable extends App.Controller
     orderBy = @customOrderBy || @orderBy
     orderDirection = @customOrderDirection || @orderDirection
 
-    #console.log('order', @orderBy, @orderDirection)
-    #console.log('customOrder', @customOrderBy, @customOrderDirection)
+    @log 'debug', 'table.order', @orderBy, @orderDirection
+    @log 'debug', 'table.customOrder', @customOrderBy, @customOrderDirection
 
     return if _.isEmpty(orderBy) && _.isEmpty(@groupBy)
 
@@ -609,9 +608,10 @@ class App.ControllerTable extends App.Controller
     @lastOrderDirection = orderDirection
     @lastOrderBy = orderBy
 
+    localObjects is undefined
     if orderBy
       for header in @headers
-        if header.name is orderBy || "#{header.name}_id" is orderBy
+        if header.name is orderBy || "#{header.name}_id" is orderBy || header.name is "#{orderBy}_id"
           localObjects = _.sortBy(
             @objects
             (item) ->
@@ -649,7 +649,7 @@ class App.ControllerTable extends App.Controller
       # in case order by is not in show column, use orderBy attribute
       if !localObjects
         for attributeName, attribute of @attributesList
-          if attributeName is orderBy || "#{attributeName}_id" is orderBy
+          if attributeName is orderBy || "#{attributeName}_id" is orderBy || attributeName is "#{orderBy}_id"
 
             # order by
             localObjects = _.sortBy(
@@ -722,6 +722,7 @@ class App.ControllerTable extends App.Controller
         localObjects = localObjects.concat groupObjects[group]
         groupObjects[group] = [] # release old array
 
+    return if localObjects is undefined
     @objects = localObjects
     @lastSortedobjects = localObjects
 

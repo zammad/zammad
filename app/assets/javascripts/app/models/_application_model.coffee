@@ -196,7 +196,7 @@ set new attributes of model (remove already available attributes)
     for attribute in attributes
       App[@.className].attributes.push attribute.name
       attributesNew.push attribute
-    App[ @.className ].configure_attributes = attributesNew
+    App[@.className].configure_attributes = attributesNew
 
   ###
 
@@ -226,7 +226,7 @@ set new attributes of model (remove already available attributes)
 
   @attributesGet: (screen = undefined, attributes = false, noDefaultAttributes = false) ->
     if !attributes
-      attributes = clone(App[ @.className ].configure_attributes, true)
+      attributes = clone(App[@.className].configure_attributes, true)
     else
       attributes = clone(attributes, true)
 
