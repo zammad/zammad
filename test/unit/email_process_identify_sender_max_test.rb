@@ -5,7 +5,7 @@ class EmailProcessIdentifySenderMax < ActiveSupport::TestCase
 
   test 'text max created recipients per email' do
     current_users = User.count
-    email_raw_string = "From: customer@example.com
+    email_raw_string = "From: #{generate_recipient(1)}
 To: #{generate_recipient(22)}
 Cc: #{generate_recipient(22)}
 Subject: test max sender identify
@@ -15,8 +15,7 @@ Some Text"
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     ticket = Ticket.find(ticket_p.id)
     assert_equal('test max sender identify', ticket.title)
-
-    assert_equal(current_users + 40, User.count)
+    assert_equal(current_users + 41, User.count)
   end
 
   def generate_recipient(count)
