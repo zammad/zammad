@@ -157,6 +157,7 @@ App.Config.set(
     description: 'A powerfull service to get more information about your customers.'
     controller: Index
     state: State
+    permission: ['admin.integration.clearbit']
   }
   'NavBarIntegrations'
 )

@@ -33,11 +33,21 @@ class Index extends App.ControllerSubContent
   render: =>
     return if @initRender && @integration
 
+    @user = App.User.find(App.Session.get('id'))
+
     @initRender = true
     integrations = []
     for key, value of @integrationItems
-      value.key = key
-      integrations.push value
+      if !value.permission
+        value.key = key
+        integrations.push value
+      else
+        match = false
+        for permissionName in value.permission
+          if !match && @user.permission(permissionName)
+            match = true
+            value.key = key
+            integrations.push value
     integrations = _.sortBy(integrations, (item) -> return item.name)
     @html App.view('integration/index')(
       head:         'Integrations'

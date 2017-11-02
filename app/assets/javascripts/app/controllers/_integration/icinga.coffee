@@ -26,6 +26,7 @@ App.Config.set(
     description: 'An open source monitoring tool.'
     controller: Index
     state: State
+    permission: ['admin.integration.icinga']
   }
   'NavBarIntegrations'
 )

@@ -535,6 +535,7 @@ App.Config.set(
     description: 'Exchange integration for contacts management.'
     controller: Index
     state: State
+    permission: ['admin.integration.exchange']
   }
   'NavBarIntegrations'
 )
