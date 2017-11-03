@@ -223,6 +223,7 @@ returns
       hashtags = []
       sync['search'].each do |item|
         next if item['term'].blank?
+        next if item['term'] == '#'
         next if item['group_id'].blank?
         hashtags.push item['term']
       end
@@ -275,6 +276,7 @@ returns
         hit = false
         sync['search'].each do |item|
           next if item['term'].blank?
+          next if item['term'] == '#'
           next if item['group_id'].blank?
           tweet.hashtags.each do |hashtag|
             next if item['term'] !~ /^#/
@@ -295,6 +297,7 @@ returns
         body = tweet.text
         sync['search'].each do |item|
           next if item['term'].blank?
+          next if item['term'] == '#'
           next if item['group_id'].blank?
           if body =~ /#{item['term']}/
             hit = item
@@ -314,6 +317,7 @@ returns
     return if @sync[:search].blank?
     @sync[:search].each do |search|
       next if search[:term].blank?
+      next if search[:term] == '#'
       next if search[:group_id].blank?
       result_type = search[:type] || 'mixed'
       Rails.logger.debug " - searching for '#{search[:term]}'"
