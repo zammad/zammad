@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/thorsteneckel/autodiscover.git
-  revision: 29d713ee0c8c25fcf74c4292ff13fe1fa4d0d827
+  revision: ee9b53dfa797ce6d4f970b82beea7fbdd2df56bb
   specs:
     autodiscover (1.0.2)
       httpclient
@@ -221,7 +221,7 @@ GEM
     mime-types (2.99.3)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
-    multi_json (1.12.1)
+    multi_json (1.12.2)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     mysql2 (0.4.9)
