@@ -174,17 +174,18 @@ class ConnectionWizard extends App.WizardModal
     'js-mapping': 'mappingShow'
 
   events:
-    'submit form.js-discover':           'discover'
-    'submit form.js-discoverSsl':        'discover'
-    'submit form.js-bind':               'folders'
-    'submit form.js-folders':            'mapping'
-    'click .js-cancelSsl':               'showSlideDiscover'
-    'click .js-mapping .js-submitTry':   'mappingChange'
-    'click .js-try .js-submitSave':      'save'
-    'click .js-close':                   'hide'
-    'click .js-remove':                  'removeRow'
-    'click .js-userMappingForm .js-add': 'addUserMapping'
-    'click .js-goToSlide':               'goToSlide'
+    'submit form.js-discover':                 'discover'
+    'submit form.js-discoverCertificateIssue': 'discover'
+    'submit form.js-bind':                     'folders'
+    'submit form.js-bindCertificateIssue':     'folders'
+    'submit form.js-folders':                  'mapping'
+    'click .js-cancelSsl':                     'showSlideDiscover'
+    'click .js-mapping .js-submitTry':         'mappingChange'
+    'click .js-try .js-submitSave':            'save'
+    'click .js-close':                         'hide'
+    'click .js-remove':                        'removeRow'
+    'click .js-userMappingForm .js-add':       'addUserMapping'
+    'click .js-goToSlide':                     'goToSlide'
 
   elements:
     '.modal-body': 'body'
@@ -261,20 +262,17 @@ class ConnectionWizard extends App.WizardModal
       processData: true
       success: (data, status, xhr) =>
         if data.result isnt 'ok'
-
-          if data.message.indexOf('certificate') is -1
-            @showSlide('js-discover')
-            @showAlert('js-discover', data.message)
-          else
-            @$('.js-discoverSsl input[name="user"]').val(params.user)
-            @$('.js-discoverSsl input[name="password"]').val(params.password)
-            @showSlide('js-discoverSsl')
-
+          @handleCertificateIssue(
+            message:     data.message
+            wizardClass: 'js-discover'
+            user:        params.user
+            password:    params.password
+          )
           return
 
-        @wizardConfig.endpoint = data.endpoint
-        @wizardConfig.user     = params.user
-        @wizardConfig.password = params.password
+        @wizardConfig.disable_ssl_verify = params.disable_ssl_verify
+        @wizardConfig.user               = params.user
+        @wizardConfig.password           = params.password
 
         @showSlide('js-bind')
         @showBindDetails()
@@ -300,13 +298,19 @@ class ConnectionWizard extends App.WizardModal
       processData: true
       success: (data, status, xhr) =>
         if data.result isnt 'ok'
-          @showSlide('js-bind')
-          @showAlert('js-bind', data.message)
+          @handleCertificateIssue(
+            message:     data.message
+            wizardClass: 'js-bind'
+            endpoint:    params.endpoint
+            user:        params.user
+            password:    params.password
+          )
           return
 
-        @wizardConfig.endpoint = params.endpoint
-        @wizardConfig.user     = params.user
-        @wizardConfig.password = params.password
+        @wizardConfig.disable_ssl_verify = params.disable_ssl_verify
+        @wizardConfig.endpoint           = params.endpoint
+        @wizardConfig.user               = params.user
+        @wizardConfig.password           = params.password
 
         # update wizard data
         @wizardConfig.wizardData = {}
@@ -340,6 +344,45 @@ class ConnectionWizard extends App.WizardModal
         else
           @foldersSelectSubmit.addClass('is-disabled')
     )
+
+  handleCertificateIssue: (params) =>
+    if params.message.indexOf('certificate') is -1
+      @showSlide(params.wizardClass)
+      @showAlert(params.wizardClass, params.message)
+    else
+      wizardClass = "#{params.wizardClass}CertificateIssue"
+
+      domain = @domainFromMessageOrEmail(
+        message: params.message
+        user:    params.user
+      )
+
+      wizardSlide = App.view('integration/exchange_certificate_issue')(
+        wizardClass: wizardClass
+        endpoint:    params.endpoint
+        user:        params.user
+        password:    params.password
+        domain:      domain
+      )
+
+      @$('.js-certificateIssuePlaceholder').html(wizardSlide)
+
+      @showSlide(wizardClass)
+
+  domainFromMessageOrEmail: (params) ->
+
+    # try to extract the hostname from the error message
+    hostname = params.message.match(/hostname[ ]\"([^\"]+)"/i)
+    if hostname
+      return hostname[1]
+
+    # try to extract it from the given user
+    emailDomain = params.user.match(/@(.*)$/)
+    if emailDomain
+      return emailDomain[1]
+
+    # fallback to user - better than no value?!
+    return user
 
   mapping: (e) =>
     e.preventDefault()

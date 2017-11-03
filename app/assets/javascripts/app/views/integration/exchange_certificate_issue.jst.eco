@@ -1,0 +1,25 @@
+<form class="modal-content setup wizard hide <%= @wizardClass %>">
+  <input type="hidden" name="disable_ssl_verify" value="1">
+  <input type="hidden" name="endpoint" value="<%= @endpoint %>">
+  <input type="hidden" name="user" value="<%= @user %>">
+  <input type="hidden" name="password" value="<%= @password %>">
+  <div class="modal-header">
+    <div class="modal-close js-close">
+      <%- @Icon('diagonal-cross') %>
+    </div>
+    <h1 class="modal-title"><%- @T('Your connection is not private') %></h1>
+  </div>
+  <div class="modal-body">
+    <div class="wizard-body vertical">
+      <p><%- @T('The certificate of the domain |%s| could not be verified. This may allow hackers to steal your credentials. If you are sure that you are using a self-signed certificate, you can press "Proceed". Otherwise, please "Cancel".', @domain) %></p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="modal-leftFooter">
+      <button class="btn btn--text btn--danger btn--secondary js-submit"><%- @T('Proceed') %></button>
+    </div>
+    <div class="modal-rightFooter">
+      <a class="btn btn--primary align-right js-cancelSsl"><%- @T('Cancel') %></a>
+    </div>
+  </div>
+</form>

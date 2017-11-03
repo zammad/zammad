@@ -26,11 +26,7 @@ class Integration::ExchangeController < ApplicationController
     answer_with do
       Sequencer.process('Import::Exchange::AvailableFolders',
                         parameters: {
-                          ews_config: {
-                            endpoint: params[:endpoint],
-                            user:     params[:user],
-                            password: params[:password],
-                          }
+                          ews_config: ews_config
                         })
     end
   end
@@ -42,11 +38,7 @@ class Integration::ExchangeController < ApplicationController
       examples = Sequencer.process('Import::Exchange::AttributesExamples',
                                    parameters: {
                                      ews_folder_ids: params[:folders],
-                                     ews_config:     {
-                                       endpoint: params[:endpoint],
-                                       user:     params[:user],
-                                       password: params[:password],
-                                     }
+                                     ews_config:     ews_config
                                    })
       examples.tap do |result|
         raise 'No entries found in selected folder(s).' if result[:attributes].blank?
@@ -61,15 +53,20 @@ class Integration::ExchangeController < ApplicationController
     {
       ews_attributes: params[:attributes].permit!.to_h,
       ews_folder_ids: params[:folders],
-      ews_config:     {
-        endpoint: params[:endpoint],
-        user:     params[:user],
-        password: params[:password],
-      }
+      ews_config:     ews_config
     }
   end
 
   def payload_import
     nil
+  end
+
+  def ews_config
+    {
+      disable_ssl_verify: params[:disable_ssl_verify],
+      endpoint:           params[:endpoint],
+      user:               params[:user],
+      password:           params[:password],
+    }
   end
 end
