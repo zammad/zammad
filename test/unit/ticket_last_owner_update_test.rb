@@ -37,7 +37,7 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket.updated_at.to_i, 1)
 
     ticket.state = Ticket::State.lookup(name: 'closed')
     ticket.save!

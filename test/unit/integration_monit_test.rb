@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'test_helper'
 
-class IntegrationMoniTest < ActiveSupport::TestCase
+class IntegrationMonitTest < ActiveSupport::TestCase
 
   # according
   # https://mmonit.com/monit/documentation/#ALERT-MESSAGES
