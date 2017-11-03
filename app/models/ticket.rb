@@ -249,7 +249,7 @@ returns
     return [] if groups.blank?
     groups.each do |group|
       next if group.assignment_timeout.blank?
-      ticket_ids = Ticket.where('state_id IN (?) AND owner_id != 1 AND group_id = ?', state_ids, group.id).limit(600).pluck(:id)
+      ticket_ids = Ticket.where('state_id IN (?) AND owner_id != 1 AND group_id = ? AND last_owner_update_at IS NOT NULL', state_ids, group.id).limit(600).pluck(:id)
       ticket_ids.each do |ticket_id|
         ticket = Ticket.find_by(id: ticket_id)
         next if !ticket
@@ -922,7 +922,7 @@ perform changes on ticket
               ticket_id: id,
               sender: Ticket::Article::Sender.find_by(name: 'System'),
               type: Ticket::Article::Type.find_by(name: 'email'),
-            ).where("ticket_articles.created_at > ? AND ticket_articles.to LIKE '%#{recipient_email.strip}%'", Time.zone.now - minutes.minutes).count
+            ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{recipient_email.strip}%").count
             next if already_sent < count
             logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} for this ticket within last #{minutes} minutes (loop protection)"
             skip = true
@@ -941,7 +941,7 @@ perform changes on ticket
             already_sent = Ticket::Article.where(
               sender: Ticket::Article::Sender.find_by(name: 'System'),
               type: Ticket::Article::Type.find_by(name: 'email'),
-            ).where("ticket_articles.created_at > ? AND ticket_articles.to LIKE '%#{recipient_email.strip}%'", Time.zone.now - minutes.minutes).count
+            ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{recipient_email.strip}%").count
             next if already_sent < count
             logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{minutes} minutes (loop protection)"
             skip = true

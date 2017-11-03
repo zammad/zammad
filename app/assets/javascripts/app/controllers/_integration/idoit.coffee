@@ -3,7 +3,7 @@ class Index extends App.ControllerIntegrationBase
   featureName: 'i-doit'
   featureConfig: 'idoit_config'
   description: [
-    ['This service allows you to connect i-doit objects with Zammad.']
+    ['This service allows you to connect %s with %s.', 'i-doit', 'Zammad']
   ]
   events:
     'change .js-switch input': 'switch'

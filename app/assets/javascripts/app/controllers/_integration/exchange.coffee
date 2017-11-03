@@ -262,7 +262,7 @@ class ConnectionWizard extends App.WizardModal
       success: (data, status, xhr) =>
         if data.result isnt 'ok'
 
-          if data.message.indexOf('certificate verify failed') is -1
+          if data.message.indexOf('certificate') is -1
             @showSlide('js-discover')
             @showAlert('js-discover', data.message)
           else
@@ -535,6 +535,7 @@ App.Config.set(
     description: 'Exchange integration for contacts management.'
     controller: Index
     state: State
+    permission: ['admin.integration.exchange']
   }
   'NavBarIntegrations'
 )

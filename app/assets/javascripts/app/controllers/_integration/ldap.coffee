@@ -587,6 +587,7 @@ App.Config.set(
     description: 'LDAP integration for user management.'
     controller: Index
     state: State
+    permission: ['admin.integration.ldap']
   }
   'NavBarIntegrations'
 )
