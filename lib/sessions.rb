@@ -579,7 +579,7 @@ remove all session and spool messages
         next if !session_data
         next if !session_data[:user]
         next if !session_data[:user]['id']
-        user = User.lookup( id: session_data[:user]['id'] )
+        user = User.lookup(id: session_data[:user]['id'])
         next if !user
 
         # start client thread
@@ -590,7 +590,9 @@ remove all session and spool messages
           thread_client(client_id)
           @@client_threads[client_id] = nil
           log('debug', "close client (#{client_id}) thread")
-          ActiveRecord::Base.connection.close
+          if ActiveRecord::Base.connection.owner == Thread.current
+            ActiveRecord::Base.connection.close
+          end
         end
         sleep 0.5
       end

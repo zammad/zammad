@@ -4,8 +4,9 @@ require 'rails/test_help'
 require 'cache'
 
 class ActiveSupport::TestCase
-  # disable transactions
-  #self.use_transactional_tests = false
+
+  # disable transactions / to work with own database connections for each thread
+  self.use_transactional_tests = false
 
   ActiveRecord::Base.logger = Rails.logger.clone
   ActiveRecord::Base.logger.level = Logger::INFO
@@ -22,14 +23,11 @@ class ActiveSupport::TestCase
     # clear cache
     Cache.clear
 
+    # reload settings
+    Setting.reload
+
     # remove all session messages
     Sessions.cleanup
-
-    # remove background jobs
-    Delayed::Job.destroy_all
-    Trigger.destroy_all
-    ActivityStream.destroy_all
-    PostmasterFilter.destroy_all
 
     # set current user
     UserInfo.current_user_id = nil

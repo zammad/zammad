@@ -2,6 +2,8 @@
 require 'test_helper'
 
 class ObjectManagerTest < ActiveSupport::TestCase
+  self.use_transactional_tests = false
+
   test 'a object manager' do
 
     list_objects = ObjectManager.list_objects
