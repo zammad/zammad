@@ -376,13 +376,7 @@ class Channel::EmailParser
 
     # generate file name based on content type
     if filename.blank? && headers_store['Content-Type'].present?
-      if headers_store['Content-Type'] =~ %r{^message/delivery-status$}i
-        filename = if headers_store['Content-Description'].present?
-                     "#{headers_store['Content-Description']}.txt"
-                   else
-                     'delivery-status.txt'
-                   end
-      elsif headers_store['Content-Type'] =~ %r{^message/rfc822$}i
+      if headers_store['Content-Type'] =~ %r{^message/rfc822}i
         begin
           parser = Channel::EmailParser.new
           mail_local = parser.parse(file.body.to_s)
@@ -397,20 +391,66 @@ class Channel::EmailParser
           filename = 'Mail.eml'
         end
       end
+
+      # e. g. Content-Type: video/quicktime; name="Video.MOV";
+      if filename.blank?
+        ['name="(.+?)"(;|$)', "name='(.+?)'(;|$)", 'name=(.+?)(;|$)'].each do |regexp|
+          if headers_store['Content-Type'] =~ /#{regexp}/i
+            filename = $1
+            break
+          end
+        end
+      end
+
+      # e. g. Content-Type: video/quicktime
+      if filename.blank?
+        map = {
+          'message/delivery-status': ['txt', 'delivery-status'],
+          'text/plain': %w(txt document),
+          'text/html': %w(html document),
+          'video/quicktime': %w(mov video),
+          'image/jpeg': %w(jpg image),
+          'image/jpg': %w(jpg image),
+          'image/png': %w(png image),
+          'image/gif': %w(gif image),
+        }
+        map.each do |type, ext|
+          next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
+          filename = if headers_store['Content-Description'].present?
+                       "#{headers_store['Content-Description']}.#{ext[0]}"
+                     else
+                       "#{ext[1]}.#{ext[0]}"
+                     end
+          break
+        end
+      end
     end
 
     if filename.blank?
-      attachment_count = 0
-      (1..1000).each do |count|
-        filename_exists = false
-        filename = 'file-' + count.to_s
-        attachments.each do |attachment|
-          if attachment[:filename] == filename
-            filename_exists = true
-          end
+      filename = 'file'
+    end
+
+    attachment_count = 0
+    local_filename = ''
+    local_extention = ''
+    if filename =~ /^(.*?)\.(.+?)$/
+      local_filename = $1
+      local_extention = $2
+    end
+
+    (1..1000).each do |count|
+      filename_exists = false
+      attachments.each do |attachment|
+        if attachment[:filename] == filename
+          filename_exists = true
         end
-        break if filename_exists == false
       end
+      break if filename_exists == false
+      filename = if local_extention.present?
+                   "#{local_filename}#{count}.#{local_extention}"
+                 else
+                   "#{local_filename}#{count}"
+                 end
     end
 
     # get mime type

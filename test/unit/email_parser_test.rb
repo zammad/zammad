@@ -1209,6 +1209,34 @@ Old programmers never die. They just branch to a new address."
             filename: 'image000.jpg',
             cid: 'image000.jpg@01CDB132.D8A510F0',
           },
+          {
+            md5: '6db2535038171c72f97b060a24c8fe06',
+            filename: 'document.html',
+          },
+          {
+            md5: '489ca24a0a54ca9189ea8a5256242fdd',
+            filename: 'document1.html',
+          },
+          {
+            md5: 'b7e1651b0f31312a4e882d289c529ce8',
+            filename: 'Video1.MOV',
+          },
+          {
+            md5: 'dcf4626b3dae9c47a8fd8f001c5d927f',
+            filename: 'Video2.MOV',
+          },
+          {
+            md5: 'a93f87f52ef7cb56cf0576b804364e1e',
+            filename: 'Video3.MOV',
+          },
+          {
+            md5: '370e0cb399d28515ab0692fa76c13b85',
+            filename: 'video.mov',
+          },
+          {
+            md5: '9052bb9367a0bf45e4d3d10635bce8be',
+            filename: 'video1.mov',
+          },
         ],
         params: {
           from: 'Smith Sepp <smith@example.com>',
