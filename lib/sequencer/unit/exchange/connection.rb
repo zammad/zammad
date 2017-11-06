@@ -11,11 +11,36 @@ class Sequencer
           return if state.provided?(:ews_connection)
 
           state.provide(:ews_connection) do
-            config   = ews_config
-            config ||= ::Import::Exchange.config
-
-            Viewpoint::EWSClient.new(config[:endpoint], config[:user], config[:password])
+            Viewpoint::EWSClient.new(
+              config[:endpoint],
+              config[:user],
+              config[:password],
+              additional_opts
+            )
           end
+        end
+
+        private
+
+        def config
+          @config ||= begin
+            ews_config || ::Import::Exchange.config
+          end
+        end
+
+        def additional_opts
+          @additional_opts ||= begin
+            http_opts
+          end
+        end
+
+        def http_opts
+          return {} if config[:disable_ssl_verify].blank?
+          {
+            http_opts: {
+              ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+            }
+          }
         end
       end
     end

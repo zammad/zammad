@@ -37,7 +37,7 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket.updated_at.to_i, 1)
 
     ticket.state = Ticket::State.lookup(name: 'closed')
     ticket.save!
@@ -56,7 +56,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
 
     ticket.state = Ticket::State.lookup(name: 'open')
     ticket.save!
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+
+    assert_in_delta(ticket.updated_at.to_i, ticket.last_owner_update_at.to_i, 1)
 
   end
 
@@ -71,7 +72,7 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+    assert_in_delta(ticket.updated_at.to_i, ticket.last_owner_update_at.to_i, 1)
 
     travel 1.hour
 
@@ -91,7 +92,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
 
     ticket_last_owner_update_at = ticket.last_owner_update_at
     ticket.reload
-    assert_equal(ticket_last_owner_update_at.to_s, ticket.last_owner_update_at.to_s)
+
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket_last_owner_update_at.to_i, 1)
 
     travel 1.hour
 
@@ -111,7 +113,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
 
     ticket_last_owner_update_at = Time.zone.now
     ticket.reload
-    assert_equal(ticket_last_owner_update_at.to_s, ticket.last_owner_update_at.to_s)
+
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket_last_owner_update_at.to_i, 1)
 
   end
 
@@ -130,7 +133,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
     travel 1.hour
     ticket.owner = @agent1
     ticket.save!
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket.updated_at.to_i, 1)
 
     ticket = Ticket.create!(
       title: 'assignment_timeout test 1',
@@ -145,7 +149,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
     travel 1.hour
     ticket.owner = @agent1
     ticket.save!
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket.updated_at.to_i, 1)
 
     ticket = Ticket.create!(
       title: 'assignment_timeout test 1',
@@ -156,7 +161,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket.updated_at.to_i, 1)
 
     ticket.owner_id = 1
     ticket.save!
@@ -171,7 +177,7 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket.updated_at.to_i, 1)
 
     ticket.owner_id = 1
     ticket.save!
@@ -190,7 +196,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
     travel 1.hour
     ticket.owner = @agent1
     ticket.save!
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket.updated_at.to_i, 1)
 
     ticket = Ticket.create!(
       title: 'assignment_timeout test 2',
@@ -205,7 +212,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
     travel 1.hour
     ticket.owner = @agent1
     ticket.save!
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket.updated_at.to_i, 1)
 
     ticket = Ticket.create!(
       title: 'assignment_timeout test 2',
@@ -216,7 +224,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(ticket.last_owner_update_at.to_s, ticket.updated_at.to_s)
+
+    assert_in_delta(ticket.last_owner_update_at.to_i, ticket.updated_at.to_i, 1)
 
     ticket.owner_id = 1
     ticket.save!
@@ -260,7 +269,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(ticket2.last_owner_update_at.to_s, ticket2.updated_at.to_s)
+
+    assert_in_delta(ticket2.last_owner_update_at.to_i, ticket2.updated_at.to_i, 1)
 
     ticket3 = Ticket.create!(
       title: 'assignment_timeout test 3',
@@ -271,7 +281,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(ticket3.last_owner_update_at.to_s, ticket3.updated_at.to_s)
+
+    assert_in_delta(ticket3.last_owner_update_at.to_i, ticket3.updated_at.to_i, 1)
 
     ticket4 = Ticket.create!(
       title: 'assignment_timeout test 4',
@@ -292,7 +303,8 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert_equal(ticket5.last_owner_update_at.to_s, ticket5.updated_at.to_s)
+
+    assert_in_delta(ticket5.last_owner_update_at.to_i, ticket5.updated_at.to_i, 1)
 
     travel 55.minutes
     Ticket.process_auto_unassign
@@ -302,11 +314,11 @@ class TicketLastOwnerUpdateTest < ActiveSupport::TestCase
     assert_equal(ticket1.updated_at.to_s, ticket1after.updated_at.to_s)
 
     ticket2after = Ticket.find(ticket2.id)
-    assert_equal(ticket2.last_owner_update_at.to_s, ticket2after.last_owner_update_at.to_s)
+    assert_in_delta(ticket2.last_owner_update_at.to_i, ticket2after.last_owner_update_at.to_i, 1)
     assert_equal(ticket2.updated_at.to_s, ticket2after.updated_at.to_s)
 
     ticket3after = Ticket.find(ticket3.id)
-    assert_equal(ticket3.last_owner_update_at.to_s, ticket3after.last_owner_update_at.to_s)
+    assert_in_delta(ticket3.last_owner_update_at.to_i, ticket3after.last_owner_update_at.to_i, 1)
     assert_equal(ticket3.updated_at.to_s, ticket3after.updated_at.to_s)
 
     ticket4after = Ticket.find(ticket4.id)

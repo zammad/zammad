@@ -7,10 +7,7 @@ require 'simplecov-rcov'
 require 'coveralls'
 Coveralls.wear!
 
-#ActiveSupport::TestCase.test_order = :sorted
-
 class ActiveSupport::TestCase
-  self.test_order = :sorted
 
   ActiveRecord::Base.logger = Rails.logger.clone
   ActiveRecord::Base.logger.level = Logger::INFO
@@ -26,9 +23,6 @@ class ActiveSupport::TestCase
   merge_timeout = 3600
   SimpleCov.start
   fixtures :all
-
-  # disable transactions
-  self.use_transactional_tests = false
 
   # clear cache
   Cache.clear
@@ -52,26 +46,11 @@ class ActiveSupport::TestCase
     # clear cache
     Cache.clear
 
+    # reload settings
+    Setting.reload
+
     # remove all session messages
     Sessions.cleanup
-
-    # remove background jobs
-    Delayed::Job.destroy_all
-    Trigger.destroy_all
-    ActivityStream.destroy_all
-    PostmasterFilter.destroy_all
-    Ticket.destroy_all
-    Taskbar.destroy_all
-    Sla.destroy_all
-    Calendar.destroy_all
-
-    # reset settings
-    Setting.all.pluck(:name).each do |name|
-      next if name == 'models_searchable' # skip setting
-      Setting.reset(name, false)
-    end
-    Setting.set('system_init_done', true)
-    Setting.reload
 
     # set current user
     UserInfo.current_user_id = nil
