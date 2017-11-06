@@ -79,7 +79,7 @@ class UserValidateAgentLimit < ActiveSupport::TestCase
       permissions: Permission.where(name: 'ticket.agent'),
       active: false,
     )
-    user3.roles =  [role_agent_limit]
+    user3.roles = [role_agent_limit]
     user3.active = true
     user3.save!
 
@@ -89,6 +89,17 @@ class UserValidateAgentLimit < ActiveSupport::TestCase
     end
 
     assert_equal(User.with_permissions('ticket.agent').count, agent_max)
+
+    # set roles of agent again
+    role_admin = Role.lookup(name: 'Admin')
+    user2.roles = [role_agent, role_admin]
+    user2.save!
+
+    user2.role_ids = [role_admin.id, role_agent_limit.id]
+    user2.save!
+
+    user2.role_ids = [role_admin.id.to_s, role_agent_limit.id.to_s]
+    user2.save!
 
     user1.destroy!
     user2.destroy!

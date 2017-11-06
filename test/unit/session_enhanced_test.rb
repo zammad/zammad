@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class SessionEnhancedTest < ActiveSupport::TestCase
-  test 'a check clients and send messages' do
+  test 'check clients and send messages' do
 
     # create users
     roles  = Role.where(name: ['Agent'])
@@ -172,7 +172,8 @@ class SessionEnhancedTest < ActiveSupport::TestCase
     travel_back
   end
 
-  test 'b check client and backends' do
+  test 'check client and backends' do
+
     # create users
     roles        = Role.where(name: ['Agent'])
     groups       = Group.all

@@ -2,6 +2,8 @@
 require 'integration_test_helper'
 
 class ZendeskImportTest < ActiveSupport::TestCase
+  self.test_order = :sorted
+  self.use_transactional_tests = false
 
   if !ENV['IMPORT_ZENDESK_ENDPOINT']
     raise "ERROR: Need IMPORT_ZENDESK_ENDPOINT - hint IMPORT_ZENDESK_ENDPOINT='https://example.zendesk.com/api/v2'"
@@ -45,7 +47,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
 
   # check count of imported items
   test 'check counts' do
-    assert_equal(143, User.count, 'users')
+    assert_equal(144, User.count, 'users')
     assert_equal(3, Group.count, 'groups')
     assert_equal(3, Role.count, 'roles')
     assert_equal(2, Organization.count, 'organizations')
@@ -69,7 +71,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
 
     checks = [
       {
-        id:   4,
+        id:   5,
         data: {
           firstname:     'Bob',
           lastname:      'Smith',
@@ -83,7 +85,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         groups: [group_support],
       },
       {
-        id:   5,
+        id:   6,
         data: {
           firstname:     'Hansimerkur',
           lastname:      '',
@@ -96,7 +98,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         groups: [group_additional_group, group_support],
       },
       {
-        id:   6,
+        id:   7,
         data: {
           firstname: 'Bernd',
           lastname:  'Hofbecker',
@@ -108,7 +110,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         groups: [],
       },
       {
-        id:   7,
+        id:   8,
         data: {
           firstname: 'Zendesk',
           lastname:  '',
@@ -120,7 +122,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
         groups: [],
       },
       {
-        id:   89,
+        id:   90,
         data: {
           firstname: 'Hans',
           lastname:  'Peter Wurst',
@@ -309,7 +311,7 @@ class ZendeskImportTest < ActiveSupport::TestCase
           group_id:                 3,
           priority_id:              3,
           owner_id:                 1,
-          customer_id:              6,
+          customer_id:              7,
           organization_id:          2,
           test_checkbox:            true,
           custom_integer:           999,
@@ -332,7 +334,7 @@ If you\'re reading this message in your email, click the ticket number link that
           group_id:                 3,
           priority_id:              1,
           owner_id:                 1,
-          customer_id:              7,
+          customer_id:              8,
           organization_id:          nil,
           test_checkbox:            false,
           custom_integer:           nil,
@@ -353,7 +355,7 @@ If you\'re reading this message in your email, click the ticket number link that
           group_id:                 3,
           priority_id:              2,
           owner_id:                 1,
-          customer_id:              91,
+          customer_id:              92,
           organization_id:          nil,
         },
       },
@@ -369,7 +371,7 @@ If you\'re reading this message in your email, click the ticket number link that
           group_id:                 1,
           priority_id:              2,
           owner_id:                 1,
-          customer_id:              143,
+          customer_id:              144,
           organization_id:          nil,
         },
       },

@@ -2,13 +2,16 @@
 require 'test_helper'
 
 class UserDeviceControllerTest < ActionDispatch::IntegrationTest
+  self.test_order = :sorted
+  self.use_transactional_tests = false
+
   setup do
 
     # set accept header
     @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
 
     # create agent
-    roles  = Role.where( name: %w(Admin Agent) )
+    roles  = Role.where(name: %w(Admin Agent))
     groups = Group.all
 
     UserInfo.current_user_id = 1
@@ -24,7 +27,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create agent
-    roles = Role.where( name: 'Agent' )
+    roles = Role.where(name: 'Agent')
     @agent = User.create_or_update(
       login: 'user-device-agent',
       firstname: 'UserDevice',
