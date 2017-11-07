@@ -108,7 +108,7 @@ class ObjectManagerAttributesController < ApplicationController
           params[:data_option][:options][true] = params[:data_option][:options][:true]
           params[:data_option][:options].delete(:true)
         end
-        if params[:data_option][:default] ==  'true'
+        if params[:data_option][:default] == 'true'
           params[:data_option][:default] = true
         elsif params[:data_option][:default] == 'false'
           params[:data_option][:default] = false
