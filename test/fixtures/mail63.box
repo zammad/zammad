@@ -1,0 +1,81 @@
+Return-Path: <>
+X-Original-To: me@example.com
+Delivered-To: martin@arber.example.com
+Received-SPF: None (no SPF record) identity=helo; client-ip=127.0.0.1; helo=mx1.example.com; envelope-from=<>; receiver=me@example.com 
+Received: from mx1.example.com (mx1.example.com [127.0.0.1])
+  by arber.example.com (Postfix) with ESMTPS id 617915FEB6
+  for <me@example.com>; Mon,  6 Nov 2017 03:24:31 +0100 (CET)
+Received: by mx1.example.com (Postfix)
+  id E95FC20496FF; Mon,  6 Nov 2017 03:24:30 +0100 (CET)
+Date: Mon,  6 Nov 2017 03:24:30 +0100 (CET)
+From: MAILER-DAEMON@mx1.example.com (Mail Delivery System)
+Subject: Undelivered Mail Returned to Sender
+To: me@example.com
+Auto-Submitted: auto-replied
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status;
+  boundary="D8A14202512E.1509935070/mx1.example.com"
+Message-Id: <20171106022430.E95FC20496FF@mx1.example.com>
+
+This is a MIME-encapsulated message.
+
+--D8A14202512E.1509935070/mx1.example.com
+Content-Description: Notification
+Content-Type: text/plain; charset=us-ascii
+
+This is the mail system at host mx1.example.com.
+
+I'm sorry to have to inform you that your message could not
+be delivered to one or more recipients. It's attached below.
+
+For further assistance, please send mail to postmaster.
+
+If you do so, please include this problem report. You can
+delete your own text from the attached returned message.
+
+                   The mail system
+
+<notextisting@example.com>: user unknown
+
+--D8A14202512E.1509935070/mx1.example.com
+Content-Description: Delivery report
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; mx1.example.com
+X-Postfix-Queue-ID: D8A14202512E
+X-Postfix-Sender: rfc822; me@example.com
+Arrival-Date: Mon,  6 Nov 2017 03:24:29 +0100 (CET)
+
+Final-Recipient: rfc822; notextisting@example.com
+Original-Recipient: rfc822;notextisting@example.com
+Action: failed
+Status: 5.1.1
+Diagnostic-Code: x-unix; user unknown
+
+--D8A14202512E.1509935070/mx1.example.com
+Content-Description: Undelivered Message
+Content-Type: message/rfc822
+
+Return-Path: <me@example.com>
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=127.0.0.1; helo=arber.example.com; envelope-from=me@example.com; receiver=<UNKNOWN> 
+Received: from arber.example.com (arber.example.com [127.0.0.1])
+  (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+  (No client certificate requested)
+  by mx1.example.com (Postfix) with ESMTPS id D8A14202512E
+  for <notextisting@example.com>; Mon,  6 Nov 2017 03:24:29 +0100 (CET)
+Received: from [10.8.0.6] (kanzel.example.com [5.9.62.170])
+  by arber.example.com (Postfix) with ESMTPSA id 498D75FEB6
+  for <notextisting@example.com>; Mon,  6 Nov 2017 03:24:27 +0100 (CET)
+From: Martin Edenhofer <me@example.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Subject: =?utf-8?B?aGVsbG8gMTIzIMOkw7bDvMOf?=
+Message-Id: <E8C3CD7C-8350-4E48-97C5-AE18EE900ECD@example.com>
+Date: Mon, 6 Nov 2017 03:24:25 +0100
+To: notextisting@example.com
+X-Mailer: Apple Mail (2.3273)
+
+hello 123 =C3=A4=C3=B6=C3=BC=C3=9F=
+
+--D8A14202512E.1509935070/mx1.example.com--

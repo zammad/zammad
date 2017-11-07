@@ -158,7 +158,7 @@ class Channel::EmailParser
       end
 
       # text attachment/body exists
-      if data[:body].empty? && mail.text_part
+      if data[:body].blank? && mail.text_part
         data[:body] = mail.text_part.body.decoded
         data[:body] = Encode.conv(mail.text_part.charset, data[:body])
         data[:body] = data[:body].to_s.force_encoding('utf-8')
@@ -170,7 +170,7 @@ class Channel::EmailParser
       end
 
       # any other attachments
-      if data[:body].empty?
+      if data[:body].blank?
         data[:body] = 'no visible content'
         data[:content_type] = 'text/plain'
       end
@@ -296,13 +296,13 @@ class Channel::EmailParser
   def _get_attachment(file, attachments, mail)
 
     # check if sub parts are available
-    if !file.parts.empty?
-      a = []
+    if file.parts.present?
+      list = []
       file.parts.each do |p|
         attachment = _get_attachment(p, attachments, mail)
-        a.concat(attachment)
+        list.concat(attachment)
       end
-      return a
+      return list
     end
 
     # ignore text/plain attachments - already shown in view
@@ -325,6 +325,12 @@ class Channel::EmailParser
       rescue => e
         headers_store[field.name.to_s] = field.raw_value
       end
+    end
+
+    # cleanup content id, <> will be added automatically later
+    if headers_store['Content-ID']
+      headers_store['Content-ID'].gsub!(/^</, '')
+      headers_store['Content-ID'].gsub!(/>$/, '')
     end
 
     # get filename from content-disposition
@@ -361,19 +367,90 @@ class Channel::EmailParser
     # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
     filename ||= file.header[:content_location].to_s
 
-    # generate file name
-    if filename.blank?
-      attachment_count = 0
-      (1..1000).each do |count|
-        filename_exists = false
-        filename = 'file-' + count.to_s
-        attachments.each do |attachment|
-          if attachment[:filename] == filename
-            filename_exists = true
+    # generate file name based on content-id
+    if filename.blank? && headers_store['Content-ID'].present?
+      if headers_store['Content-ID'] =~ /(.+?)@.+?/i
+        filename = $1
+      end
+    end
+
+    # generate file name based on content type
+    if filename.blank? && headers_store['Content-Type'].present?
+      if headers_store['Content-Type'] =~ %r{^message/rfc822}i
+        begin
+          parser = Channel::EmailParser.new
+          mail_local = parser.parse(file.body.to_s)
+          filename = if mail_local[:subject].present?
+                       "#{mail_local[:subject]}.eml"
+                     elsif headers_store['Content-Description'].present?
+                       "#{headers_store['Content-Description']}.eml"
+                     else
+                       'Mail.eml'
+                     end
+        rescue
+          filename = 'Mail.eml'
+        end
+      end
+
+      # e. g. Content-Type: video/quicktime; name="Video.MOV";
+      if filename.blank?
+        ['name="(.+?)"(;|$)', "name='(.+?)'(;|$)", 'name=(.+?)(;|$)'].each do |regexp|
+          if headers_store['Content-Type'] =~ /#{regexp}/i
+            filename = $1
+            break
           end
         end
-        break if filename_exists == false
       end
+
+      # e. g. Content-Type: video/quicktime
+      if filename.blank?
+        map = {
+          'message/delivery-status': ['txt', 'delivery-status'],
+          'text/plain': %w(txt document),
+          'text/html': %w(html document),
+          'video/quicktime': %w(mov video),
+          'image/jpeg': %w(jpg image),
+          'image/jpg': %w(jpg image),
+          'image/png': %w(png image),
+          'image/gif': %w(gif image),
+        }
+        map.each do |type, ext|
+          next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
+          filename = if headers_store['Content-Description'].present?
+                       "#{headers_store['Content-Description']}.#{ext[0]}"
+                     else
+                       "#{ext[1]}.#{ext[0]}"
+                     end
+          break
+        end
+      end
+    end
+
+    if filename.blank?
+      filename = 'file'
+    end
+
+    attachment_count = 0
+    local_filename = ''
+    local_extention = ''
+    if filename =~ /^(.*?)\.(.+?)$/
+      local_filename = $1
+      local_extention = $2
+    end
+
+    (1..1000).each do |count|
+      filename_exists = false
+      attachments.each do |attachment|
+        if attachment[:filename] == filename
+          filename_exists = true
+        end
+      end
+      break if filename_exists == false
+      filename = if local_extention.present?
+                   "#{local_filename}#{count}.#{local_extention}"
+                 else
+                   "#{local_filename}#{count}"
+                 end
     end
 
     # get mime type
@@ -389,12 +466,6 @@ class Channel::EmailParser
     # remove not needed header
     headers_store.delete('Content-Transfer-Encoding')
     headers_store.delete('Content-Disposition')
-
-    # cleanup content id, <> will be added automatically later
-    if headers_store['Content-ID']
-      headers_store['Content-ID'].gsub!(/^</, '')
-      headers_store['Content-ID'].gsub!(/>$/, '')
-    end
 
     # workaround for mail gem
     # https://github.com/zammad/zammad/issues/928
@@ -667,7 +738,7 @@ returns
       end
     end
 
-    if data.empty? || data[:from_email].blank?
+    if data.blank? || data[:from_email].blank?
       from.strip!
       if from =~ /^(.+?)<(.+?)@(.+?)>$/
         data[:from_email]        = "#{$2}@#{$3}"
