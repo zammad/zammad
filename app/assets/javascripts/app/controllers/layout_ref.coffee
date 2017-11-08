@@ -2121,7 +2121,7 @@ class TwitterConversationRef extends App.ControllerContent
     open:   88
     closed: 20
 
-  maxTextLength: 140
+  maxTextLength: 280
   warningTextLength: 10
 
   constructor: ->

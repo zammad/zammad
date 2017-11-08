@@ -144,7 +144,7 @@ class App.TicketZoomArticleNew extends App.Controller
         attributes:        []
         internal:          false,
         features:          ['body:limit', 'body:initials']
-        maxTextLength:     140
+        maxTextLength:     280
         warningTextLength: 30
       }
     if possibleArticleType['twitter direct-message']
