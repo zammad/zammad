@@ -24,7 +24,7 @@ returns
 
     # read used locales based on env, e. g. export Z_LOCALES='en-us:de-de'
     if ENV['Z_LOCALES']
-      locales = Locale.where(active: true, locale: ENV['Z_LOCALES'].split(':') )
+      locales = Locale.where(active: true, locale: ENV['Z_LOCALES'].split(':'))
     end
     locales
   end

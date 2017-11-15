@@ -183,6 +183,25 @@ Setting.create_or_update(
   state: 'relative',
   frontend: true
 )
+Setting.create_if_not_exists(
+  title: 'Locale',
+  name: 'locale_default',
+  area: 'System::Base',
+  description: 'Defines the system default language.',
+  options: {
+    form: [
+      {
+        name: 'locale_default',
+      }
+    ],
+  },
+  state: 'en-us',
+  preferences: {
+    controller: 'SettingsAreaItemDefaultLocale',
+    permission: ['admin.system'],
+  },
+  frontend: true
+)
 options = {}
 (10..99).each do |item|
   options[item] = item

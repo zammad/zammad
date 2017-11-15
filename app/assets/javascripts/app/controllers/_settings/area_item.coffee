@@ -32,7 +32,7 @@ class App.SettingsAreaItem extends App.Controller
     )
 
     new App.ControllerForm(
-      el: @el.find('.form-item'),
+      el: @el.find('.form-item')
       model: { configure_attributes: @configure_attributes, className: '' }
       autofocus: false
     )

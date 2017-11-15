@@ -177,7 +177,7 @@ class FirstStepsController < ApplicationController
     original_user_id = UserInfo.current_user_id
     result = NotificationFactory::Mailer.template(
       template: 'test_ticket',
-      locale: agent.preferences[:locale] || 'en-us',
+      locale: agent.preferences[:locale] || Setting.get('locale_default') || 'en-us',
       objects:  {
         agent: agent,
         customer: customer,

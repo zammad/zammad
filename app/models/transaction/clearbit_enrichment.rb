@@ -31,7 +31,7 @@ class Transaction::ClearbitEnrichment
 
     config = Setting.get('clearbit_config')
     return if !config
-    return if config['api_key'].empty?
+    return if config['api_key'].blank?
 
     user = User.lookup(id: @item[:object_id])
     return if !user

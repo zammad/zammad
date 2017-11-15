@@ -80,6 +80,24 @@ class App.i18n
       _instance ?= new _i18nSingleton()
     _instance.mapTime
 
+  @detectBrowserLocale: ->
+    return 'en-us' if !window.navigator.userLanguage && !window.navigator.language
+
+    if window.navigator.languages
+      allLocales = App.Locale.all()
+      for browserLocale in window.navigator.languages
+        for localAllLocale in allLocales
+          if browserLocale is localAllLocale.locale
+            return localAllLocale.locale
+
+      for browserLocale in window.navigator.languages
+        browserLocale = browserLocale.substr(0, 2)
+        for localAllLocale in allLocales
+          if browserLocale is localAllLocale.alias
+            return localAllLocale.locale
+
+    window.navigator.userLanguage || window.navigator.language || 'en-us'
+
 class _i18nSingleton extends Spine.Module
   @include App.LogInclude
 
