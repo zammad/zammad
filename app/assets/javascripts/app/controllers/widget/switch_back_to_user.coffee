@@ -47,4 +47,4 @@ class Widget extends App.ControllerWidgetOnDemand
       800
     )
 
-App.Config.set( 'switch_back_to_user', Widget, 'Widgets' )
+App.Config.set('switch_back_to_user', Widget, 'Widgets')

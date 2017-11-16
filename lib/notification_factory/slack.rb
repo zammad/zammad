@@ -27,7 +27,7 @@ returns
     end
 
     template = NotificationFactory.template_read(
-      locale: data[:locale] || 'en',
+      locale: data[:locale] || Setting.get('locale_default') || 'en-us',
       template: data[:template],
       format: 'md',
       type: 'slack',

@@ -65,7 +65,7 @@ push translations to online
       end
     end
 
-    return true if translations_to_push.empty?
+    return true if translations_to_push.blank?
 
     url = 'https://i18n.zammad.com/api/v1/translations/thanks_for_your_support'
 
@@ -108,7 +108,7 @@ reset translations to origin
     # only push changed translations
     translations = Translation.where(locale: locale)
     translations.each do |translation|
-      if !translation.target_initial || translation.target_initial.empty?
+      if translation.target_initial.blank?
         translation.destroy
       elsif translation.target != translation.target_initial
         translation.target = translation.target_initial
