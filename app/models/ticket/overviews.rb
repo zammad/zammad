@@ -114,7 +114,7 @@ returns
       order_by = "tickets.#{order_by} #{overview.order[:direction]}"
 
       # check if group by exists
-      if overview.group_by && !overview.group_by.empty?
+      if overview.group_by.present?
         group_by = overview.group_by
         if !ticket_attributes.key?(group_by)
           group_by = if ticket_attributes.key?("#{group_by}_id")
