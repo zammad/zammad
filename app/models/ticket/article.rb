@@ -18,6 +18,7 @@ class Ticket::Article < ApplicationModel
   store         :preferences
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5
+  after_destroy :store_delete
 
   sanitized_html :body
 
@@ -314,6 +315,18 @@ returns
     {
       group_id: Ticket.find(ticket_id).group_id,
     }
+  end
+
+  # delete attachments and mails of article
+  def store_delete
+    Store.remove(
+      object: 'Ticket::Article',
+      o_id:   id,
+    )
+    Store.remove(
+      object: 'Ticket::Article::Mail',
+      o_id:   id,
+    )
   end
 
   class Flag < ApplicationModel
