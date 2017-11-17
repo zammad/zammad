@@ -3,7 +3,7 @@ require 'test_helper'
 
 class TicketTest < ActiveSupport::TestCase
   test 'ticket create' do
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: "some title\n äöüß",
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -19,7 +19,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket.state.name, 'new', 'ticket.state verify')
 
     # create inbound article #1
-    article_inbound1 = Ticket::Article.create(
+    article_inbound1 = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -44,7 +44,7 @@ class TicketTest < ActiveSupport::TestCase
 
     # create inbound article #2
     travel 2.seconds
-    article_inbound2 = Ticket::Article.create(
+    article_inbound2 = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -68,7 +68,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_nil(ticket.close_at, 'ticket.close_at verify - inbound')
 
     # create note article
-    article_note = Ticket::Article.create(
+    article_note = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some person',
       subject: "some\nnote",
@@ -92,7 +92,7 @@ class TicketTest < ActiveSupport::TestCase
 
     # create outbound article
     travel 2.seconds
-    article_outbound = Ticket::Article.create(
+    article_outbound = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_recipient@example.com',
       to: 'some_sender@example.com',
@@ -115,7 +115,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_nil(ticket.close_at, 'ticket.close_at verify - outbound')
 
     # create inbound article #3
-    article_inbound3 = Ticket::Article.create(
+    article_inbound3 = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -140,7 +140,7 @@ class TicketTest < ActiveSupport::TestCase
 
     # create inbound article #4
     travel 2.seconds
-    article_inbound4 = Ticket::Article.create(
+    article_inbound4 = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -192,7 +192,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_nil(ticket.pending_time)
 
     # delete article
-    article_note = Ticket::Article.create(
+    article_note = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some person',
       subject: 'some note',
@@ -218,7 +218,7 @@ class TicketTest < ActiveSupport::TestCase
   end
 
   test 'ticket latest change' do
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'latest change 1',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -231,7 +231,7 @@ class TicketTest < ActiveSupport::TestCase
 
     travel 1.minute
 
-    ticket2 = Ticket.create(
+    ticket2 = Ticket.create!(
       title: 'latest change 2',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -267,7 +267,7 @@ class TicketTest < ActiveSupport::TestCase
       ticket.save!
     end
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'pending close test',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -289,7 +289,7 @@ class TicketTest < ActiveSupport::TestCase
 
   test 'ticket subject' do
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'subject test 1',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -307,7 +307,7 @@ class TicketTest < ActiveSupport::TestCase
 
     Setting.set('ticket_hook_position', 'left')
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'subject test 1',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -325,7 +325,7 @@ class TicketTest < ActiveSupport::TestCase
 
     Setting.set('ticket_hook_position', 'none')
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'subject test 1',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -348,7 +348,7 @@ class TicketTest < ActiveSupport::TestCase
     origin_backend = Setting.get('ticket_number')
     Setting.set('ticket_number', 'Ticket::Number::Increment')
 
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'subject test 1234-1',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -362,7 +362,7 @@ class TicketTest < ActiveSupport::TestCase
     assert_equal(ticket1.id, Ticket::Number.check("Re: Help [Ticket##{ticket1.number}]").id)
 
     Setting.set('ticket_number', 'Ticket::Number::Date')
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'subject test 1234-2',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -380,7 +380,7 @@ class TicketTest < ActiveSupport::TestCase
 
   test 'article attachment helper 1' do
 
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some article helper test1',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -392,7 +392,7 @@ class TicketTest < ActiveSupport::TestCase
     assert(ticket1, 'ticket created')
 
     # create inbound article #1
-    article1 = Ticket::Article.create(
+    article1 = Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -466,7 +466,7 @@ class TicketTest < ActiveSupport::TestCase
 
   test 'article attachment helper 2' do
 
-    ticket1 = Ticket.create(
+    ticket1 = Ticket.create!(
       title: 'some article helper test2',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -478,7 +478,7 @@ class TicketTest < ActiveSupport::TestCase
     assert(ticket1, 'ticket created')
 
     # create inbound article #1
-    article1 = Ticket::Article.create(
+    article1 = Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
