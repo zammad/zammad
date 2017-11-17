@@ -2,7 +2,7 @@
 require 'test_helper'
 
 class RoleValidateAgentLimit < ActiveSupport::TestCase
-  test 'role_validate_agent_limit' do
+  test 'role validate agent limit' do
 
     agent_max = User.with_permissions('ticket.agent').count
     UserInfo.current_user_id = 1
@@ -70,4 +70,57 @@ class RoleValidateAgentLimit < ActiveSupport::TestCase
     role_agent_limit_fail.destroy!
     Setting.set('system_agent_limit', nil)
   end
+
+  test 'role validate agent limit - 1 user 2 ticket.agent roles' do
+
+    agent_max = User.with_permissions('ticket.agent').count
+    UserInfo.current_user_id = 1
+    Setting.set('system_agent_limit', agent_max + 1)
+
+    permission_ticket_agent = Permission.find_by(name: 'ticket.agent')
+
+    role_agent_limit1 = Role.create!(
+      name: 'agent-limit-test1',
+      note: 'agent-limit-test1 Role.',
+      permissions: [permission_ticket_agent],
+      active: true,
+    )
+    role_agent_limit2 = Role.create!(
+      name: 'agent-limit-test2',
+      note: 'agent-limit-test2 Role.',
+      permissions: [permission_ticket_agent],
+      active: true,
+    )
+
+    user1 = User.create!(
+      firstname: 'Firstname',
+      lastname:  'Lastname',
+      email:     'some-agentlimit-role@example.com',
+      login:     'some-agentlimit-role@example.com',
+      roles:     [role_agent_limit1, role_agent_limit2],
+      active:    true,
+    )
+
+    user1.roles = Role.where(name: %w(Admin Agent))
+
+    user1.role_ids = [Role.find_by(name: 'Agent').id]
+
+    user1.role_ids = [Role.find_by(name: 'Agent').id, role_agent_limit1.id]
+
+    assert_raises(Exceptions::UnprocessableEntity) do
+      user2 = User.create!(
+        firstname: 'Firstname2',
+        lastname:  'Lastname2',
+        email:     'some-agentlimit-role-2@example.com',
+        login:     'some-agentlimit-role-2@example.com',
+        roles:     [role_agent_limit1],
+        active:    true,
+      )
+    end
+
+    role_agent_limit1.destroy!
+    role_agent_limit2.destroy!
+    Setting.set('system_agent_limit', nil)
+  end
+
 end

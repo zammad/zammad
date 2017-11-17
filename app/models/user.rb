@@ -1036,8 +1036,22 @@ raise 'Minimum one user need to have admin permissions'
     return true if !role.with_permission?('ticket.agent')
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
     count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).count
+
+    # if new added role is a ticket.agent role
     if ticket_agent_role_ids.include?(role.id)
-      count += 1
+
+      # if user already has a ticket.agent role
+      hint = false
+      role_ids.each do |locale_role_id|
+        next if !ticket_agent_role_ids.include?(locale_role_id)
+        hint = true
+        break
+      end
+
+      # user has not already a ticket.agent role
+      if hint == false
+        count += 1
+      end
     end
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
     true
