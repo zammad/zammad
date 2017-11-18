@@ -20,7 +20,18 @@ class App.TicketZoom extends App.Controller
     @ticket_id    = params.ticket_id
     @article_id   = params.article_id
     @sidebarState = {}
-
+    @expandArticle = false
+    role_ids = $.map App.Session.get('roles'), (a) ->
+                 a.id
+    for localRoleId in role_ids
+        role = App.Role.find(localRoleId)
+        if role
+          for permission_id in role.permission_ids
+            localPermission = App.Permission.find(permission_id)
+            if localPermission
+              if localPermission.name is 'user_preferences.email_header'
+                @expandArticle = true
+                break
     # if we are in init task startup, ignore overview_id
     if !params.init
       @overview_id = params.overview_id
@@ -229,6 +240,12 @@ class App.TicketZoom extends App.Controller
     @shortcutNavigationStart()
     return if !@attributeBar
     @attributeBar.start()
+
+    if @expandArticle
+      $('.textBubble').each (e, el) =>
+        if $(el).parents('.ticket-article-item').hasClass('state--folde-out')
+        else
+          $(el).click();
 
   pagePosition: (params = {}) =>
 

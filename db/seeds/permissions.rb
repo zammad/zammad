@@ -341,6 +341,11 @@ Permission.create_if_not_exists(
     not: ['cti.customer'],
   },
 )
+Permission.create_if_not_exists(
+  name: 'user_preferences.email_header',
+  note: 'Email header information visible by default',
+  preferences: {},
+)
 
 admin = Role.find_by(name: 'Admin')
 admin.permission_grant('user_preferences')
