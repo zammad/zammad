@@ -15,46 +15,83 @@ class Job < ApplicationModel
   before_create :updated_matching, :update_next_run_at
   before_update :updated_matching, :update_next_run_at
 
+=begin
+
+verify each job if needed to run (e. g. if true and times are matching) and execute it
+
+Job.run
+
+=end
+
   def self.run
+    start_at = Time.zone.now
     jobs = Job.where(active: true, running: false)
     jobs.each do |job|
-      logger.debug "Execute job #{job.inspect}"
-
-      next if !job.executable?
-
-      matching = job.matching_count
-      if job.matching != matching
-        job.matching = matching
-        job.save
-      end
-
-      next if !job.in_timeplan?
-
-      # find tickets to change
-      ticket_count, tickets = Ticket.selectors(job.condition, 2_000)
-
-      logger.debug "Job #{job.name} with #{ticket_count} tickets"
-
-      job.processed = ticket_count || 0
-      job.running = true
-      job.save
-
-      if tickets
-        tickets.each do |ticket|
-          Transaction.execute(disable_notification: job.disable_notification, reset_user_id: true) do
-            ticket.perform_changes(job.perform, 'job')
-          end
-        end
-      end
-
-      job.running = false
-      job.last_run_at = Time.zone.now
-      job.save
+      job.run(false, start_at)
     end
     true
   end
 
-  def executable?
+=begin
+
+execute a single job if needed (e. g. if true and times are matching)
+
+job = Job.find(123)
+
+job.run
+
+force to run job (ignore times are matching)
+
+job.run(true)
+
+=end
+
+  def run(force = false, start_at = Time.zone.now)
+    logger.debug "Execute job #{inspect}"
+
+    if !executable?(start_at) && force == false
+      if next_run_at && next_run_at <= Time.zone.now
+        save!
+      end
+      return
+    end
+
+    matching = matching_count
+    if self.matching != matching
+      self.matching = matching
+      save!
+    end
+
+    if !in_timeplan?(start_at) && force == false
+      if next_run_at && next_run_at <= Time.zone.now
+        save!
+      end
+      return
+    end
+
+    # find tickets to change
+    ticket_count, tickets = Ticket.selectors(condition, 2_000)
+
+    logger.debug "Job #{name} with #{ticket_count} tickets"
+
+    self.processed = ticket_count || 0
+    self.running = true
+    save!
+
+    if tickets
+      tickets.each do |ticket|
+        Transaction.execute(disable_notification: disable_notification, reset_user_id: true) do
+          ticket.perform_changes(perform, 'job')
+        end
+      end
+    end
+
+    self.running = false
+    self.last_run_at = Time.zone.now
+    save!
+  end
+
+  def executable?(start_at = Time.zone.now)
     return false if !active
 
     # only execute jobs, older then 1 min, to give admin posibility to change
@@ -62,7 +99,7 @@ class Job < ApplicationModel
 
     # check if jobs need to be executed
     # ignore if job was running within last 10 min.
-    return false if last_run_at && last_run_at > Time.zone.now - 10.minutes
+    return false if last_run_at && last_run_at > start_at - 10.minutes
 
     true
   end

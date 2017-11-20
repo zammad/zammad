@@ -31,7 +31,7 @@ returns
 
     template_subject = nil
     template_body = ''
-    locale = data[:locale] || 'en'
+    locale = data[:locale] || Setting.get('locale_default') || 'en-us'
     template = data[:template]
     format = data[:format]
     type = data[:type]

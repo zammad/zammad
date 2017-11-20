@@ -197,7 +197,7 @@ class Transaction::Slack
 
     return {} if !@item[:changes]
     user = User.find(1)
-    locale = user.preferences[:locale] || 'en-us'
+    locale = user.preferences[:locale] || Setting.get('locale_default') || 'en-us'
 
     # only show allowed attributes
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)

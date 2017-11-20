@@ -25,7 +25,7 @@ examples how to use
 
   def initialize(objects, locale, template, escape = true)
     @objects = objects
-    @locale = locale || 'en-us'
+    @locale = locale || Setting.get('locale_default') || 'en-us'
     @template = NotificationFactory::Template.new(template, escape)
     @escape = escape
   end

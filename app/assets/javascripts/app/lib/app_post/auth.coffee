@@ -79,8 +79,7 @@ class App.Auth
       @_updateModelAttributes(data.models)
 
       # set locale
-      locale = window.navigator.userLanguage || window.navigator.language || 'en-us'
-      App.i18n.set(locale)
+      App.i18n.set(App.i18n.detectBrowserLocale())
 
       # rebuild navbar with new navbar items
       App.Event.trigger('auth')
@@ -120,7 +119,7 @@ class App.Auth
     if preferences && preferences.locale
       locale = preferences.locale
     if !locale
-      locale = window.navigator.userLanguage || window.navigator.language || 'en-us'
+      locale = App.i18n.detectBrowserLocale()
     App.i18n.set(locale)
 
     App.Event.trigger('auth:login', data.session)

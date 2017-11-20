@@ -201,6 +201,66 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     assert_no_match('longname', result[:body])
     assert_match('Current User', result[:body])
 
+    Setting.set('locale_default', 'de-de')
+    result = NotificationFactory::Mailer.template(
+      template: 'ticket_update',
+      objects:  {
+        ticket: ticket,
+        article: article,
+        recipient: agent1,
+        current_user: agent_current_user,
+        changes: changes,
+      },
+    )
+    assert_match('Ticket aktualisiert', result[:subject])
+    assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
+    assert_match('wurde von', result[:body])
+    assert_match('<b>test123</b>', result[:body])
+    assert_match('Benachrichtigungseinstellungen Verwalten', result[:body])
+    assert_no_match('Your', result[:body])
+    assert_no_match('longname', result[:body])
+    assert_match('Current User', result[:body])
+
+    Setting.set('locale_default', 'not_existing')
+    result = NotificationFactory::Mailer.template(
+      template: 'ticket_update',
+      objects:  {
+        ticket: ticket,
+        article: article,
+        recipient: agent1,
+        current_user: agent_current_user,
+        changes: changes,
+      },
+    )
+    assert_match('Updated Ticket', result[:subject])
+    assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
+    assert_match('has been updated by', result[:body])
+    assert_match('<b>test123</b>', result[:body])
+    assert_match('Manage your notifications settings', result[:body])
+    assert_no_match('Dein', result[:body])
+    assert_no_match('longname', result[:body])
+    assert_match('Current User', result[:body])
+
+    Setting.set('locale_default', 'pt-br')
+    result = NotificationFactory::Mailer.template(
+      template: 'ticket_update',
+      objects:  {
+        ticket: ticket,
+        article: article,
+        recipient: agent1,
+        current_user: agent_current_user,
+        changes: changes,
+      },
+    )
+    assert_match('Chamado atualizado', result[:subject])
+    assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
+    assert_match('foi atualizado por', result[:body])
+    assert_match('<b>test123</b>', result[:body])
+    assert_match('Manage your notifications settings', result[:body])
+    assert_no_match('Dein', result[:body])
+    assert_no_match('longname', result[:body])
+    assert_match('Current User', result[:body])
+
   end
 
 end

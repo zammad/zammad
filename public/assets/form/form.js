@@ -124,6 +124,15 @@ $(function() {
         'Attachments': 'Pièces jointes',
         'Your Message...': 'Votre message...',
       },
+      'nl': {
+        'Name': 'Naam',
+        'Your Name': 'Uw naam',
+        'Email': 'Email adres',
+        'Your Email': 'Uw Email adres',
+        'Message': 'Bericht',
+        'Attachments': 'Bijlage',
+        'Your Message...': 'Uw bericht.......',
+      },
       'zh-cn': {
         'Name': '联系人',
         'Your Name': '您的尊姓大名',

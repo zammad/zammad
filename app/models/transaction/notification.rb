@@ -231,7 +231,7 @@ class Transaction::Notification
   def human_changes(user, record)
 
     return {} if !@item[:changes]
-    locale = user.preferences[:locale] || 'en-us'
+    locale = user.preferences[:locale] || Setting.get('locale_default') || 'en-us'
 
     # only show allowed attributes
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
