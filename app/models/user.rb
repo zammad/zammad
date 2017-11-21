@@ -38,7 +38,7 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
-  before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
+  before_validation :check_name, :check_email, :check_login, :check_mail_delivery_failed, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_create   :check_preferences_default, :validate_ooo, :domain_based_assignment, :set_locale
   before_update   :check_preferences_default, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
@@ -942,6 +942,12 @@ returns
         check = false
       end
     end
+    true
+  end
+
+  def check_mail_delivery_failed
+    return true if !changes || !changes['email']
+    preferences.delete(:mail_delivery_failed)
     true
   end
 
