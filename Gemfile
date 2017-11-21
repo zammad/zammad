@@ -131,8 +131,8 @@ group :development, :test do
   # Setting ENV for testing purposes
   gem 'figaro'
 
-  # Use Factory Girl for generating random test data
-  gem 'factory_girl_rails'
+  # Use Factory Bot for generating random test data
+  gem 'factory_bot_rails'
 
   # mock http calls
   gem 'webmock'

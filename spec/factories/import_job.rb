@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :import_job do
     name 'Import::Test'
     payload {}

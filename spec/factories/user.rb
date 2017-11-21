@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :email do |n|
     "nicole.braun#{n}@zammad.org"
   end
 end
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :user do
     login         'nicole.braun'

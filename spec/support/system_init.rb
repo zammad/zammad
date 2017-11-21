@@ -3,7 +3,7 @@ RSpec.configure do |config|
 
     email = 'admin@example.com'
     if !::User.exists?(email: email)
-      FactoryGirl.create(:user,
+      FactoryBot.create(:user,
                          login:     'admin',
                          firstname: 'Admin',
                          lastname:  'Admin',

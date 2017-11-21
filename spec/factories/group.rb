@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :test_group_name do |n|
     "TestGroup#{n}"
   end
 end
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :group do
     name { generate(:test_group_name) }
