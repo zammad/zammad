@@ -12,7 +12,6 @@ module Enrichment
         return false if !@config
         return false if @local_user.email.blank?
 
-        # TODO
         UserInfo.current_user_id = 1
 
         return false if !mapping?

@@ -44,7 +44,7 @@ returns:
       logger.error "File #{file['location']} is different"
       issues[file['location']] = 'changed'
     end
-    return nil if issues.empty?
+    return nil if issues.blank?
     issues
   end
 

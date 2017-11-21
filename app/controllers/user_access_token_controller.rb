@@ -45,10 +45,10 @@ class UserAccessTokenController < ApplicationController
     if Setting.get('api_token_access') == false
       raise Exceptions::UnprocessableEntity, 'API token access disabled!'
     end
-    if params[:label].empty?
+    if params[:label].blank?
       raise Exceptions::UnprocessableEntity, 'Need label!'
     end
-    token = Token.create(
+    token = Token.create!(
       action:      'api',
       label:       params[:label],
       persistent:  true,
@@ -66,7 +66,7 @@ class UserAccessTokenController < ApplicationController
   def destroy
     token = Token.find_by(action: 'api', user_id: current_user.id, id: params[:id])
     raise Exceptions::UnprocessableEntity, 'Unable to find api token!' if !token
-    token.destroy
+    token.destroy!
     render json: {}, status: :ok
   end
 

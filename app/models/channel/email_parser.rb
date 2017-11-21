@@ -615,10 +615,10 @@ returns
         if channel[:group_id]
           group = Group.lookup(id: channel[:group_id])
         end
-        if !group || group && !group.active
+        if group.blank? || group.active == false
           group = Group.where(active: true).order('id ASC').first
         end
-        if !group
+        if group.blank?
           group = Group.first
         end
         title = mail[:subject]

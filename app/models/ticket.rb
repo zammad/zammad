@@ -1031,9 +1031,7 @@ perform changes on ticket
       if key == 'ticket.action'
         next if value['value'].blank?
         next if value['value'] != 'delete'
-
-        destroy
-
+        destroy!
         next
       end
 

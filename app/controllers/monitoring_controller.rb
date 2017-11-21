@@ -40,7 +40,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       if channel.status_in == 'error'
         message = "Channel: #{channel.area} in "
         %w(host user uid).each do |key|
-          next if !channel.options[key] || channel.options[key].empty?
+          next if channel.options[key].blank?
           message += "key:#{channel.options[key]};"
         end
         issues.push "#{message} #{channel.last_log_in}"
@@ -53,7 +53,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       next if channel.status_out != 'error'
       message = "Channel: #{channel.area} out "
       %w(host user uid).each do |key|
-        next if !channel.options[key] || channel.options[key].empty?
+        next if channel.options[key].blank?
         message += "key:#{channel.options[key]};"
       end
       issues.push "#{message} #{channel.last_log_out}"
@@ -89,7 +89,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
 
     token = Setting.get('monitoring_token')
 
-    if issues.empty?
+    if issues.blank?
       result = {
         healthy: true,
         message: 'success',

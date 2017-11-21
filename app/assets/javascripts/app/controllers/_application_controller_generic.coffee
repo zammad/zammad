@@ -685,8 +685,8 @@ class App.Sidebar extends App.Controller
     for item in @items
       area = localEl.filter('.sidebar[data-tab="' + item.name + '"]')
       if item.callback
-        item.callback( area.find('.sidebar-content') )
-      if item.actions
+        item.callback(area.find('.sidebar-content'))
+      if !_.isEmpty(item.actions)
         new App.ActionRow(
           el:    area.find('.js-actions')
           items: item.actions
