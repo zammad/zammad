@@ -75,6 +75,37 @@ tt  p://6 6.000146.0x7.147/">XSS</A>', true), 'XSS (<a href="http://66.000146.0x
     assert_equal(HtmlSanitizer.strict('<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>'), 'alert(1)')
     assert_equal(HtmlSanitizer.strict('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>'), '<a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>')
     assert_equal(HtmlSanitizer.strict('<a style="position:fixed;top:0;left:0;width: 260px;height:100vh;background-color:red;display: block;" href="http://example.com"></a>', true), '<a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>')
+    assert_equal(HtmlSanitizer.strict('<div>
+<style type="text/css">#outlook A {
+.content { WIDTH: 100%; MAX-WIDTH: 740px }
+A { COLOR: #666666; TEXT-DECORATION: none }
+A:link { COLOR: #666666; TEXT-DECORATION: none }
+A:hover { COLOR: #666666; TEXT-DECORATION: none }
+A:active { COLOR: #666666; TEXT-DECORATION: none }
+A:focus { COLOR: #666666; TEXT-DECORATION: none }
+BODY { FONT-FAMILY: Calibri, Arial, Verdana, sans-serif }
+</style>
+<!--[if (gte mso 9)|(IE)]>
+<META name=GENERATOR content="MSHTML 9.00.8112.16800"></HEAD>
+<BODY bgColor=#ffffff>
+<DIV><FONT size=2 face=Arial></FONT>&nbsp;</DIV>
+<BLOCKQUOTE
+style="BORDER-LEFT: #000000 2px solid; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; MARGIN-LEFT: 5px; MARGIN-RIGHT: 0px">
+  <DIV style="FONT: 10pt arial">----- Original Message ----- </DIV>
+  <DIV style="FONT: 10pt arial"><B>To:</B> <A title=smith.test@example.dk
+  href="mailto:smith.test@example.dk">smith.test@example.dk</A> </DIV>
+  <DIV style="FONT: 10pt arial"><B>Sent:</B> Friday, November 10, 2017 9:11
+  PM</DIV>
+  <DIV style="FONT: 10pt arial"><B>Subject:</B> Din bestilling hos
+  example.dk - M123 - KD1234</DIV>
+  <div>&nbsp;</div>
+<![endif]-->test 123
+<blockquote></div>'), '<div>
+
+test 123
+<blockquote></blockquote>
+</div>')
+
   end
 
 end

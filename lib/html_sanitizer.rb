@@ -19,6 +19,9 @@ satinize html string based on whiltelist
     classes_whitelist = ['js-signatureMarker']
     attributes_2_css = %w(width height)
 
+    # remove html comments
+    string.gsub!(/<!--.+?-->/m, '')
+
     scrubber_link = Loofah::Scrubber.new do |node|
 
       # check if href is different to text
@@ -64,7 +67,7 @@ satinize html string based on whiltelist
               urls.push match[1].to_s.strip
             end
           end
-          next if urls.empty?
+          next if urls.blank?
           add_link(node.content, urls, node)
         end
       end
@@ -136,7 +139,7 @@ satinize html string based on whiltelist
       # move style attributes to css attributes
       attributes_2_css.each do |key|
         next if !node[key]
-        if node['style'].empty?
+        if node['style'].blank?
           node['style'] = ''
         else
           node['style'] += ';'
@@ -343,7 +346,7 @@ cleanup html string:
   end
 
   def self.add_link(content, urls, node)
-    if urls.empty?
+    if urls.blank?
       text = Nokogiri::XML::Text.new(content, node.document)
       node.add_next_sibling(text)
       return
