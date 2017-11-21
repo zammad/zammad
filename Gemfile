@@ -91,6 +91,7 @@ gem 'eventmachine'
 gem 'em-websocket'
 
 gem 'diffy'
+gem 'dalli'
 
 # Gems used only for develop/test and not required
 # in production environments by default.
