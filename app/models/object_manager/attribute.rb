@@ -607,6 +607,7 @@ to send no browser reload event, pass false
         data_type = :integer
       elsif attribute.data_type =~ /^boolean|active$/
         data_type = :boolean
+        default_option = attribute.data_option[:default] == "true"
       elsif attribute.data_type =~ /^datetime$/
         data_type = :datetime
       elsif attribute.data_type =~ /^date$/
@@ -636,7 +637,7 @@ to send no browser reload event, pass false
             model.table_name,
             attribute.name,
             data_type,
-            default: attribute.data_option[:default],
+            default: default_option,
             null: true
           )
         else
@@ -675,7 +676,7 @@ to send no browser reload event, pass false
           model.table_name,
           attribute.name,
           data_type,
-          default: attribute.data_option[:default],
+          default: default_option,
           null: true
         )
       elsif attribute.data_type =~ /^datetime|date$/
