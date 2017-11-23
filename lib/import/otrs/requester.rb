@@ -27,7 +27,7 @@ module Import
       def load(object, opts = {})
 
         @cache ||= {}
-        if opts.empty? && @cache[object]
+        if opts.blank? && @cache[object]
           return @cache[object]
         end
 
@@ -39,7 +39,7 @@ module Import
           Diff:      opts[:diff] ? 1 : 0
         )
 
-        return result if !opts.empty?
+        return result if opts.present?
         @cache[object] = result
         @cache[object]
       end

@@ -19,8 +19,7 @@ returns
 
     def load_adapter_by_setting(setting)
       adapter = Setting.get(setting)
-      return if !adapter
-      return if adapter.empty?
+      return if adapter.blank?
 
       # load backend
       load_adapter(adapter)

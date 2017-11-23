@@ -65,7 +65,7 @@ class CalendarSubscriptions::Tickets
         operator: 'is',
         value: Ticket::State.where(
           state_type_id: Ticket::StateType.where(
-            name: %w(new open),
+            name: %w[new open],
           ),
         ).map(&:id),
       },

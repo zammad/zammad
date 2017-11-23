@@ -217,13 +217,12 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.12)
-    mail (2.7.0)
-      mini_mime (>= 0.1.1)
+    mail (2.6.6)
+      mime-types (>= 1.16, < 4)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.9.0)
     mime-types (2.99.3)
-    mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.2)
@@ -389,7 +388,6 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     shellany (0.0.1)
-    simple-rss (1.3.1)
     simple_oauth (0.3.1)
     simplecov (0.15.1)
       docile (~> 1.1.0)
@@ -399,10 +397,6 @@ GEM
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
     slack-notifier (2.3.1)
-    spring (2.0.2)
-      activesupport (>= 4.2)
-    spring-commands-rspec (1.0.4)
-      spring (>= 0.9.1)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -508,7 +502,7 @@ DEPENDENCIES
   json
   koala
   libv8
-  mail
+  mail (= 2.6.6)
   mime-types
   mysql2
   net-ldap
@@ -535,12 +529,9 @@ DEPENDENCIES
   rubyntlm!
   sass-rails
   selenium-webdriver (= 2.53.4)
-  simple-rss
   simplecov
   simplecov-rcov
   slack-notifier
-  spring
-  spring-commands-rspec
   sprockets
   sqlite3
   telegramAPI

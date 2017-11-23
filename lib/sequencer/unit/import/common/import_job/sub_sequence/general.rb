@@ -55,8 +55,7 @@ class Sequencer
                 end
               end
 
-              def processed(_result)
-              end
+              def processed(_result); end
             end
           end
         end

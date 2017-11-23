@@ -123,8 +123,8 @@ returns
           return record
         end
         record = new(data)
-        record.save
-        return record
+        record.save!
+        record
       elsif data[:name]
 
         # do lookup with == to handle case insensitive databases
@@ -140,8 +140,8 @@ returns
           end
         end
         record = new(data)
-        record.save
-        return record
+        record.save!
+        record
       elsif data[:login]
 
         # do lookup with == to handle case insensitive databases
@@ -157,8 +157,8 @@ returns
           end
         end
         record = new(data)
-        record.save
-        return record
+        record.save!
+        record
       elsif data[:email]
 
         # do lookup with == to handle case insensitive databases
@@ -174,8 +174,8 @@ returns
           end
         end
         record = new(data)
-        record.save
-        return record
+        record.save!
+        record
       elsif data[:locale]
 
         # do lookup with == to handle case insensitive databases
@@ -191,8 +191,8 @@ returns
           end
         end
         record = new(data)
-        record.save
-        return record
+        record.save!
+        record
       else
         raise ArgumentError, 'Need name, login, email or locale for create_or_update()'
       end

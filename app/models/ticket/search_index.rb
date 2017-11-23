@@ -40,7 +40,7 @@ returns
       article_attributes = article.search_index_attribute_lookup
 
       # remove note needed attributes
-      ignore = %w(message_id_md5 ticket)
+      ignore = %w[message_id_md5 ticket]
       ignore.each do |attribute|
         article_attributes.delete(attribute)
       end

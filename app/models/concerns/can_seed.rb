@@ -17,7 +17,7 @@ module CanSeed
     end
 
     def seedfile
-      "#{Rails.root}/db/seeds/#{name.pluralize.underscore.tr('/', '_')}.rb"
+      Rails.root.join('db', 'seeds', "#{name.pluralize.underscore.tr('/', '_')}.rb").to_s
     end
   end
 end

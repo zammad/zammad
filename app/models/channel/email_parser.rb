@@ -94,7 +94,7 @@ class Channel::EmailParser
     # verify content, ignore recipients with non email address
     ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each do |field|
       next if data[field.to_sym].blank?
-      next if data[field.to_sym] =~ /@/
+      next if data[field.to_sym].match?(/@/)
       data[field.to_sym] = ''
     end
 
@@ -146,7 +146,7 @@ class Channel::EmailParser
     if mail.multipart?
 
       # html attachment/body may exists and will be converted to strict html
-      if mail.html_part && mail.html_part.body
+      if mail.html_part&.body
         data[:body] = mail.html_part.body.to_s
         data[:body] = Encode.conv(mail.html_part.charset.to_s, data[:body])
         data[:body] = data[:body].html2html_strict.to_s.force_encoding('utf-8')
@@ -196,17 +196,15 @@ class Channel::EmailParser
       end
 
       # get attachments
-      if mail.parts
-        mail.parts.each do |part|
+      mail.parts&.each do |part|
 
-          # protect process to work fine with spam emails, see test/fixtures/mail15.box
-          begin
-            attachs = _get_attachment(part, data[:attachments], mail)
-            data[:attachments].concat(attachs)
-          rescue
-            attachs = _get_attachment(part, data[:attachments], mail)
-            data[:attachments].concat(attachs)
-          end
+        # protect process to work fine with spam emails, see test/fixtures/mail15.box
+        begin
+          attachs = _get_attachment(part, data[:attachments], mail)
+          data[:attachments].concat(attachs)
+        rescue
+          attachs = _get_attachment(part, data[:attachments], mail)
+          data[:attachments].concat(attachs)
         end
       end
 
@@ -306,10 +304,10 @@ class Channel::EmailParser
     end
 
     # ignore text/plain attachments - already shown in view
-    return [] if mail.text_part && mail.text_part.body.to_s == file.body.to_s
+    return [] if mail.text_part&.body.to_s == file.body.to_s
 
     # ignore text/html - html part, already shown in view
-    return [] if mail.html_part && mail.html_part.body.to_s == file.body.to_s
+    return [] if mail.html_part&.body.to_s == file.body.to_s
 
     # get file preferences
     headers_store = {}
@@ -376,7 +374,7 @@ class Channel::EmailParser
 
     # generate file name based on content type
     if filename.blank? && headers_store['Content-Type'].present?
-      if headers_store['Content-Type'] =~ %r{^message/rfc822}i
+      if headers_store['Content-Type'].match?(%r{^message/rfc822}i)
         begin
           parser = Channel::EmailParser.new
           mail_local = parser.parse(file.body.to_s)
@@ -406,13 +404,13 @@ class Channel::EmailParser
       if filename.blank?
         map = {
           'message/delivery-status': ['txt', 'delivery-status'],
-          'text/plain': %w(txt document),
-          'text/html': %w(html document),
-          'video/quicktime': %w(mov video),
-          'image/jpeg': %w(jpg image),
-          'image/jpg': %w(jpg image),
-          'image/png': %w(png image),
-          'image/gif': %w(gif image),
+          'text/plain': %w[txt document],
+          'text/html': %w[html document],
+          'video/quicktime': %w[mov video],
+          'image/jpeg': %w[jpg image],
+          'image/jpg': %w[jpg image],
+          'image/png': %w[png image],
+          'image/gif': %w[gif image],
         }
         map.each do |type, ext|
           next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
@@ -454,12 +452,12 @@ class Channel::EmailParser
     end
 
     # get mime type
-    if file.header[:content_type] && file.header[:content_type].string
+    if file.header[:content_type]&.string
       headers_store['Mime-Type'] = file.header[:content_type].string
     end
 
     # get charset
-    if file.header && file.header.charset
+    if file.header&.charset
       headers_store['Charset'] = file.header.charset
     end
 
@@ -503,9 +501,8 @@ returns
 
     _process(channel, msg)
   rescue => e
-
     # store unprocessable email for bug reporting
-    path = "#{Rails.root}/tmp/unprocessable_mail/"
+    path = Rails.root.join('tmp', 'unprocessable_mail')
     FileUtils.mkpath path
     md5 = Digest::MD5.hexdigest(msg)
     filename = "#{path}/#{md5}.eml"
@@ -532,7 +529,7 @@ returns
     Setting.where(area: 'Postmaster::PreFilter').order(:name).each do |setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     end
-    filters.each do |_prio, backend|
+    filters.each_value do |backend|
       Rails.logger.debug "run postmaster pre filter #{backend}"
       begin
         backend.run(channel, mail)
@@ -663,16 +660,14 @@ returns
         article.save_as_raw(msg)
 
         # store attachments
-        if mail[:attachments]
-          mail[:attachments].each do |attachment|
-            Store.add(
-              object: 'Ticket::Article',
-              o_id: article.id,
-              data: attachment[:data],
-              filename: attachment[:filename],
-              preferences: attachment[:preferences]
-            )
-          end
+        mail[:attachments]&.each do |attachment|
+          Store.add(
+            object: 'Ticket::Article',
+            o_id: article.id,
+            data: attachment[:data],
+            filename: attachment[:filename],
+            preferences: attachment[:preferences]
+          )
         end
       end
     end
@@ -682,7 +677,7 @@ returns
     Setting.where(area: 'Postmaster::PostFilter').order(:name).each do |setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     end
-    filters.each do |_prio, backend|
+    filters.each_value do |backend|
       Rails.logger.debug "run postmaster post filter #{backend}"
       begin
         backend.run(channel, mail, ticket, article, session_user)
@@ -765,7 +760,7 @@ returns
   def set_attributes_by_x_headers(item_object, header_name, mail, suffix = false)
 
     # loop all x-zammad-header-* headers
-    item_object.attributes.each do |key, _value|
+    item_object.attributes.each_key do |key|
 
       # ignore read only attributes
       next if key == 'updated_by_id'
@@ -862,9 +857,9 @@ module Mail
           .+?(?=\=\?|$)                    # Plain String
           )/xmi).map do |matches|
             string, method = *matches
-            if    method == 'b' || method == 'B'
+            if    method == 'b' || method == 'B' # rubocop:disable Style/MultipleComparison
               b_value_decode(string)
-            elsif method == 'q' || method == 'Q'
+            elsif method == 'q' || method == 'Q' # rubocop:disable Style/MultipleComparison
               q_value_decode(string)
             else
               string

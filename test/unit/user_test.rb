@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
@@ -264,9 +264,7 @@ class UserTest < ActiveSupport::TestCase
 
       # check if user exists
       user = User.find_by(login: test[:create][:login])
-      if user
-        user.destroy!
-      end
+      user&.destroy!
 
       user = User.create!(test[:create])
 
@@ -320,7 +318,7 @@ class UserTest < ActiveSupport::TestCase
       email: " #{email} ",
       password: 'customerpw',
       active: true,
-      roles: Role.where(name: %w(Customer)),
+      roles: Role.where(name: %w[Customer]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -336,7 +334,7 @@ class UserTest < ActiveSupport::TestCase
       email: "\u{00a0}#{email}\u{00a0}",
       password: 'customerpw',
       active: true,
-      roles: Role.where(name: %w(Customer)),
+      roles: Role.where(name: %w[Customer]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -354,7 +352,7 @@ class UserTest < ActiveSupport::TestCase
       email: "\u{200B}#{email}\u{200B}",
       password: 'customerpw',
       active: true,
-      roles: Role.where(name: %w(Customer)),
+      roles: Role.where(name: %w[Customer]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -372,7 +370,7 @@ class UserTest < ActiveSupport::TestCase
       email: "\u{200B}#{email}\u{200B}",
       password: 'customerpw',
       active: true,
-      roles: Role.where(name: %w(Customer)),
+      roles: Role.where(name: %w[Customer]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -390,7 +388,7 @@ class UserTest < ActiveSupport::TestCase
       email: "\u{200B}#{email}\u{200B}\u{2007}\u{2008}",
       password: 'customerpw',
       active: true,
-      roles: Role.where(name: %w(Customer)),
+      roles: Role.where(name: %w[Customer]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -413,7 +411,7 @@ class UserTest < ActiveSupport::TestCase
       #email: "",
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -451,7 +449,7 @@ class UserTest < ActiveSupport::TestCase
       #email: "",
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -487,7 +485,7 @@ class UserTest < ActiveSupport::TestCase
       email: email1,
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -503,7 +501,7 @@ class UserTest < ActiveSupport::TestCase
         email: email1,
         password: 'adminpw',
         active: true,
-        roles: Role.where(name: %w(Admin Agent)),
+        roles: Role.where(name: %w[Admin Agent]),
         updated_by_id: 1,
         created_by_id: 1,
       )
@@ -516,7 +514,7 @@ class UserTest < ActiveSupport::TestCase
       email: email2,
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -545,7 +543,7 @@ class UserTest < ActiveSupport::TestCase
       email: email1,
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -560,7 +558,7 @@ class UserTest < ActiveSupport::TestCase
       email: email1,
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -580,7 +578,7 @@ class UserTest < ActiveSupport::TestCase
       email: "admin-role#{name}@example.com",
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -654,12 +652,12 @@ class UserTest < ActiveSupport::TestCase
     )
 
     assert_raises(RuntimeError) do
-      customer3.roles = Role.where(name: %w(Customer Admin))
+      customer3.roles = Role.where(name: %w[Customer Admin])
     end
     assert_raises(RuntimeError) do
-      customer3.roles = Role.where(name: %w(Customer Agent))
+      customer3.roles = Role.where(name: %w[Customer Agent])
     end
-    customer3.roles = Role.where(name: %w(Admin Agent))
+    customer3.roles = Role.where(name: %w[Admin Agent])
     customer3.roles.each do |role|
       assert_not_equal(role.name, 'Customer')
     end
@@ -760,7 +758,7 @@ class UserTest < ActiveSupport::TestCase
       name: 'Test3',
       note: 'People who create Tickets ask for help.',
       preferences: {
-        not: %w(Test1 Test2),
+        not: %w[Test1 Test2],
       },
       updated_by_id: 1,
       created_by_id: 1
@@ -872,7 +870,7 @@ class UserTest < ActiveSupport::TestCase
       email: "admin-role#{name}@example.com",
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -901,7 +899,7 @@ class UserTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     users = User.with_permissions('not_existing')
-    assert(users.empty?)
+    assert(users.blank?)
 
     users = User.with_permissions('admin')
     assert_equal(admin_count + 1, users.count)
@@ -949,7 +947,7 @@ class UserTest < ActiveSupport::TestCase
       email: "admin-role#{random}@example.com",
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -962,7 +960,7 @@ class UserTest < ActiveSupport::TestCase
       email: "admin-role#{random}@example.com",
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -975,7 +973,7 @@ class UserTest < ActiveSupport::TestCase
       email: "admin-role#{random}@example.com",
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -983,18 +981,18 @@ class UserTest < ActiveSupport::TestCase
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(3, admin_count_inital)
 
-    admin1.update!(roles: Role.where(name: %w(Agent)))
+    admin1.update!(roles: Role.where(name: %w[Agent]))
 
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(2, admin_count_inital)
 
-    admin2.update!(roles: Role.where(name: %w(Agent)))
+    admin2.update!(roles: Role.where(name: %w[Agent]))
 
     admin_count_inital = User.with_permissions('admin').count
     assert_equal(1, admin_count_inital)
 
     assert_raises(Exceptions::UnprocessableEntity) do
-      admin3.update!(roles: Role.where(name: %w(Agent)))
+      admin3.update!(roles: Role.where(name: %w[Agent]))
     end
 
     admin_count_inital = User.with_permissions('admin').count

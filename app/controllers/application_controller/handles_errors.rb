@@ -72,7 +72,7 @@ module ApplicationController::HandlesErrors
       data[:error_human] = data[:error]
     end
 
-    if Rails.env.production? && !data[:error_human].empty?
+    if Rails.env.production? && data[:error_human].present?
       data[:error] = data.delete(:error_human)
     end
     data

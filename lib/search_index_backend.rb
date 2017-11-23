@@ -201,7 +201,7 @@ return search result
     # add * on simple query like "somephrase23" or "attribute: somephrase23"
     if query.present?
       query.strip!
-      if query =~ /^([[:alpha:],0-9]+|[[:alpha:],0-9]+\:\s+[[:alpha:],0-9]+)$/
+      if query.match?(/^([[:alpha:],0-9]+|[[:alpha:],0-9]+\:\s+[[:alpha:],0-9]+)$/)
         query += '*'
       end
     end
@@ -345,7 +345,7 @@ get count of tickets and tickets which match on selector
   def self.selector2query(selector, _current_user, aggs_interval, limit)
     query_must = []
     query_must_not = []
-    if selector && !selector.empty?
+    if selector.present?
       selector.each do |key, data|
         key_tmp = key.sub(/^.+?\./, '')
         t = {}
@@ -400,10 +400,10 @@ get count of tickets and tickets which match on selector
       data[:query][:bool] = {}
     end
 
-    if !query_must.empty?
+    if query_must.present?
       data[:query][:bool][:must] = query_must
     end
-    if !query_must_not.empty?
+    if query_must_not.present?
       data[:query][:bool][:must_not] = query_must_not
     end
 

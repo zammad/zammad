@@ -1,10 +1,10 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class AssetsTest < ActiveSupport::TestCase
   test 'user' do
 
-    roles  = Role.where(name: %w(Agent Admin))
+    roles  = Role.where(name: %w[Agent Admin])
     groups = Group.all
     org1   = Organization.create_or_update(
       name: 'some user org',
@@ -141,7 +141,7 @@ class AssetsTest < ActiveSupport::TestCase
 
   test 'organization' do
 
-    roles  = Role.where( name: %w(Agent Admin) )
+    roles  = Role.where( name: %w[Agent Admin] )
     admin1 = User.create_or_update(
       login: 'admin1@example.org',
       firstname: 'admin1',
@@ -154,7 +154,7 @@ class AssetsTest < ActiveSupport::TestCase
       roles: roles,
     )
 
-    roles = Role.where( name: %w(Customer) )
+    roles = Role.where( name: %w[Customer] )
     org   = Organization.create_or_update(
       name: 'some customer org',
       updated_by_id: admin1.id,
@@ -278,7 +278,7 @@ class AssetsTest < ActiveSupport::TestCase
 
   def diff(o1, o2)
     return true if o1 == o2
-    %w(updated_at created_at).each do |item|
+    %w[updated_at created_at].each do |item|
       if o1[item]
         o1[item] = o1[item].to_s
       end
@@ -286,7 +286,7 @@ class AssetsTest < ActiveSupport::TestCase
         o2[item] = o2[item].to_s
       end
     end
-    return true if (o1.to_a - o2.to_a).empty?
+    return true if (o1.to_a - o2.to_a).blank?
     #puts "ERROR: difference \n1: #{o1.inspect}\n2: #{o2.inspect}\ndiff: #{(o1.to_a - o2.to_a).inspect}"
     false
   end
@@ -294,7 +294,7 @@ class AssetsTest < ActiveSupport::TestCase
   test 'overview' do
 
     UserInfo.current_user_id = 1
-    roles = Role.where(name: %w(Customer))
+    roles = Role.where(name: %w[Customer])
 
     user1 = User.create_or_update(
       login: 'assets_overview1@example.org',
@@ -368,9 +368,9 @@ class AssetsTest < ActiveSupport::TestCase
         direction: 'ASC',
       },
       view: {
-        d: %w(title customer group created_at),
-        s: %w(title customer group created_at),
-        m: %w(number title customer group created_at),
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
@@ -405,9 +405,9 @@ class AssetsTest < ActiveSupport::TestCase
         direction: 'ASC',
       },
       view: {
-        d: %w(title customer group created_at),
-        s: %w(title customer group created_at),
-        m: %w(number title customer group created_at),
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
@@ -425,7 +425,7 @@ class AssetsTest < ActiveSupport::TestCase
   test 'sla' do
 
     UserInfo.current_user_id = 1
-    roles = Role.where(name: %w(Customer))
+    roles = Role.where(name: %w[Customer])
 
     user1 = User.create_or_update(
       login: 'assets_sla1@example.org',
@@ -491,7 +491,7 @@ class AssetsTest < ActiveSupport::TestCase
   test 'job' do
 
     UserInfo.current_user_id = 1
-    roles = Role.where(name: %w(Customer))
+    roles = Role.where(name: %w[Customer])
 
     user1 = User.create_or_update(
       login: 'assets_job1@example.org',

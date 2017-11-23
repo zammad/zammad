@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 require 'rake'
 
@@ -9,7 +9,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
 
     # create agent
-    roles  = Role.where(name: %w(Admin Agent))
+    roles  = Role.where(name: %w[Admin Agent])
     groups = Group.all
 
     UserInfo.current_user_id = 1

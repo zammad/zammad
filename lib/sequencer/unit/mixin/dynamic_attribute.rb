@@ -1,4 +1,3 @@
-# rubocop:disable Lint/NestedMethodDefinition
 class Sequencer
   class Unit
     module Mixin

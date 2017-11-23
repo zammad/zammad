@@ -32,7 +32,7 @@ class LdapSupport < ActiveRecord::Migration[4.2]
       },
       state: {
         adapter:          'Auth::Ldap',
-        login_attributes: %w(login email),
+        login_attributes: %w[login email],
       },
       frontend: false
     )

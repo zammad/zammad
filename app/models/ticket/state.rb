@@ -36,7 +36,7 @@ returns:
     when :pending
       state_types = ['pending reminder', 'pending action']
     when :work_on
-      state_types = %w(new open)
+      state_types = %w[new open]
     when :work_on_all
       state_types = ['new', 'open', 'pending reminder']
     when :viewable
@@ -46,13 +46,13 @@ returns:
     when :viewable_agent_edit
       state_types = ['open', 'pending reminder', 'pending action', 'closed']
     when :viewable_customer_new
-      state_types = %w(new closed)
+      state_types = %w[new closed]
     when :viewable_customer_edit
-      state_types = %w(open closed)
+      state_types = %w[open closed]
     when :closed
-      state_types = %w(closed)
+      state_types = %w[closed]
     when :merged
-      state_types = %w(merged)
+      state_types = %w[merged]
     end
 
     raise "Unknown category '#{category}'" if state_types.blank?
@@ -84,7 +84,7 @@ returns:
   def ensure_defaults
     return if callback_loop
 
-    %w(default_create default_follow_up).each do |default_field|
+    %w[default_create default_follow_up].each do |default_field|
       states_with_default = Ticket::State.where(default_field => true)
       next if states_with_default.count == 1
 

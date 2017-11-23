@@ -30,7 +30,7 @@ module Channel::Filter::IdentifySender
         # get first recipient and set customer
         begin
           to = 'raw-to'.to_sym
-          if mail[to] && mail[to].addrs
+          if mail[to]&.addrs
             items = mail[to].addrs
             items.each do |item|
 
@@ -83,6 +83,8 @@ module Channel::Filter::IdentifySender
     if session_user
       mail[ 'x-zammad-session-user-id'.to_sym ] = session_user.id
     end
+
+    true
   end
 
   # create to and cc user
@@ -159,7 +161,7 @@ module Channel::Filter::IdentifySender
     role_ids = Role.signup_role_ids
 
     # fillup
-    %w(firstname lastname).each do |item|
+    %w[firstname lastname].each do |item|
       if data[item.to_sym].nil?
         data[item.to_sym] = ''
       end

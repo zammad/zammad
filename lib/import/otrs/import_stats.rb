@@ -42,7 +42,7 @@ module Import
       end
 
       def base_total
-        sum_stat(%w(Queue State Priority))
+        sum_stat(%w[Queue State Priority])
       end
 
       def user_done
@@ -50,7 +50,7 @@ module Import
       end
 
       def user_total
-        sum_stat(%w(User CustomerUser))
+        sum_stat(%w[User CustomerUser])
       end
 
       def ticket_done
@@ -58,7 +58,7 @@ module Import
       end
 
       def ticket_total
-        sum_stat(%w(Ticket))
+        sum_stat(%w[Ticket])
       end
 
       def sum_stat(objects)

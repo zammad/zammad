@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class OverviewTest < ActiveSupport::TestCase
@@ -18,9 +18,9 @@ class OverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
@@ -40,9 +40,9 @@ class OverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
@@ -62,9 +62,9 @@ class OverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
@@ -84,9 +84,9 @@ class OverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
@@ -106,9 +106,9 @@ class OverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
@@ -126,9 +126,9 @@ class OverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
@@ -150,9 +150,9 @@ class OverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
@@ -172,9 +172,9 @@ class OverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
@@ -195,9 +195,9 @@ class OverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )

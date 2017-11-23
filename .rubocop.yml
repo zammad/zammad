@@ -45,29 +45,29 @@ Style/TrailingCommaInArguments:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
   Enabled: false
 
-Style/SpaceInsideParens:
+Layout/SpaceInsideParens:
   Description: 'No spaces after ( or before ).'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-spaces-braces'
   Enabled: false
 
-Style/SpaceAfterMethodName:
+Layout/SpaceAfterMethodName:
   Description: >-
                  Do not put a space between a method name and the opening
                  parenthesis in a method definition.
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#parens-no-spaces'
   Enabled: false
 
-Style/LeadingCommentSpace:
+Layout/LeadingCommentSpace:
   Description: 'Comments should start with a space.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#hash-space'
   Enabled: false
 
-Style/MethodCallParentheses:
+Style/MethodCallWithoutArgsParentheses:
   Description: 'Do not use parentheses for method calls with no arguments.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-args-no-parens'
   Enabled: false
 
-Style/SpaceInsideBrackets:
+Layout/SpaceInsideBrackets:
   Description: 'No spaces after [ or before ].'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-spaces-braces'
   Enabled: false
@@ -83,19 +83,19 @@ Style/MethodDefParentheses:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#method-parens'
   Enabled: false
 
-Style/EmptyLinesAroundClassBody:
+Layout/EmptyLinesAroundClassBody:
   Description: "Keeps track of empty lines around class bodies."
   Enabled: false
 
-Style/EmptyLinesAroundMethodBody:
+Layout/EmptyLinesAroundMethodBody:
   Description: "Keeps track of empty lines around method bodies."
   Enabled: false
 
-Style/EmptyLinesAroundBlockBody:
+Layout/EmptyLinesAroundBlockBody:
   Description: "Keeps track of empty lines around block bodies."
   Enabled: false
 
-Style/EmptyLinesAroundModuleBody:
+Layout/EmptyLinesAroundModuleBody:
   Description: "Keeps track of empty lines around module bodies."
   Enabled: false
 
@@ -143,17 +143,29 @@ Rails/HasAndBelongsToMany:
 #  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#has-many-through'
   Enabled: false
 
+Rails/SkipsModelValidations:
+  Description: >-
+                 Use methods that skips model validations with caution.
+                 See reference for more information.
+  Reference: 'http://guides.rubyonrails.org/active_record_validations.html#skipping-validations'
+  Enabled: true
+  Exclude:
+    - test/**/*
+
 Style/ClassAndModuleChildren:
   Description: 'Checks style of children classes and modules.'
   Enabled: false
 
-Style/FileName:
+Naming/FileName:
   Description: 'Use snake_case for source file names.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#snake-case-files'
   Enabled: true
   Exclude:
     - 'script/websocket-server.rb'
 
+Naming/VariableNumber:
+  Description: 'Use the configured style when numbering variables.'
+  Enabled: false
 
 # 2.0
 
@@ -184,7 +196,22 @@ Metrics/ModuleLength:
   Description: 'Avoid modules longer than 100 lines of code.'
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
+Lint/RescueWithoutErrorClass:
+  Enabled: false
+
+Rails/ApplicationRecord:
+  Enabled: false
+
 # TODO
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Style/DateTime:
+  Enabled: false
 
 Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
@@ -193,7 +220,7 @@ Style/Documentation:
 Lint/UselessAssignment:
   Enabled: false
 
-Style/ExtraSpacing:
+Layout/ExtraSpacing:
   Description: 'Do not use unnecessary spacing.'
   Enabled: false
 
@@ -216,3 +243,13 @@ Style/NumericPredicate:
   Enabled: true
   Exclude:
     - "**/*_spec.rb"
+
+Lint/AmbiguousBlockAssociation:
+  Description: >-
+                 Checks for ambiguous block association with method when param passed without
+                 parentheses.
+  StyleGuide: '#syntax'
+  Enabled: true
+  Exclude:
+    - "**/*_spec.rb"
+    - "**/*_examples.rb"

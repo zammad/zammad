@@ -108,11 +108,11 @@ returns
       # get caller ids
       caller_ids = []
       attributes = record.attributes
-      attributes.each do |_attribute, value|
+      attributes.each_value do |value|
         next if value.class != String
-        next if value.empty?
+        next if value.blank?
         local_caller_ids = Cti::CallerId.extract_numbers(value)
-        next if local_caller_ids.empty?
+        next if local_caller_ids.blank?
         caller_ids = caller_ids.concat(local_caller_ids)
       end
 
@@ -233,23 +233,23 @@ returns
           if user
             comment += user.fullname
           end
-        elsif !record.comment.empty?
+        elsif record.comment.present?
           comment += record.comment
         end
         if record.level == 'known'
-          if !from_comment_known.empty?
+          if from_comment_known.present?
             from_comment_known += ','
           end
           from_comment_known += comment
         else
-          if !from_comment_maybe.empty?
+          if from_comment_maybe.present?
             from_comment_maybe += ','
           end
           from_comment_maybe += comment
         end
       end
-      return [from_comment_known, preferences_known] if !from_comment_known.empty?
-      return ["maybe #{from_comment_maybe}", preferences_maybe] if !from_comment_maybe.empty?
+      return [from_comment_known, preferences_known] if from_comment_known.present?
+      return ["maybe #{from_comment_maybe}", preferences_maybe] if from_comment_maybe.present?
       nil
     end
 

@@ -80,7 +80,7 @@ class TicketsController < ApplicationController
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
-      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each do |key|
+      %i[owner owner_id customer customer_id organization organization_id preferences].each do |key|
         clean_params.delete(key)
       end
       clean_params[:customer_id] = current_user.id
@@ -186,7 +186,7 @@ class TicketsController < ApplicationController
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
-      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each do |key|
+      %i[owner owner_id customer customer_id organization organization_id preferences].each do |key|
         clean_params.delete(key)
       end
     end
@@ -270,7 +270,7 @@ class TicketsController < ApplicationController
                    .limit(6)
 
     # if we do not have open related tickets, search for any tickets
-    if ticket_lists.empty?
+    if ticket_lists.blank?
       ticket_lists = Ticket
                      .where(
                        customer_id: ticket.customer_id,
@@ -389,11 +389,16 @@ class TicketsController < ApplicationController
       params[:limit].to_i = 100
     end
 
+    query = params[:query]
+    if query.respond_to?(:permit!)
+      query = query.permit!.to_h
+    end
+
     # build result list
     tickets = Ticket.search(
+      query: query,
+      condition: params[:condition].to_h,
       limit: params[:limit],
-      query: params[:query],
-      condition: params[:condition],
       current_user: current_user,
     )
 
@@ -435,11 +440,9 @@ class TicketsController < ApplicationController
 
     assets = {}
     ticket_ids = []
-    if tickets
-      tickets.each do |ticket|
-        ticket_ids.push ticket.id
-        assets = ticket.assets(assets)
-      end
+    tickets&.each do |ticket|
+      ticket_ids.push ticket.id
+      assets = ticket.assets(assets)
     end
 
     # return result
@@ -504,7 +507,7 @@ class TicketsController < ApplicationController
 
     # lookup open org tickets
     org_tickets = {}
-    if params[:organization_id] && !params[:organization_id].empty?
+    if params[:organization_id].present?
       organization = Organization.lookup(id: params[:organization_id])
       if !organization
         raise "No such organization with id #{params[:organization_id]}"

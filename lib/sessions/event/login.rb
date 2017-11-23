@@ -20,7 +20,7 @@ class Sessions::Event::Login < Sessions::Event::Base
 
     new_session_data = {}
 
-    if session && session.data && session.data['user_id']
+    if session&.data && session.data['user_id']
       new_session_data = {
         'id' => session.data['user_id'],
       }

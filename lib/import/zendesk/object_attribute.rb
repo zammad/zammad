@@ -12,8 +12,7 @@ module Import
 
       private
 
-      def init_callback(_attribute)
-      end
+      def init_callback(_attribute); end
 
       def add(object, name, attribute)
         ObjectManager::Attribute.add( attribute_config(object, name, attribute) )

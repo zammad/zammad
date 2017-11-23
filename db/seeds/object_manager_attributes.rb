@@ -1,3 +1,4 @@
+# rubocop:disable Lint/BooleanSymbol
 ObjectManager::Attribute.add(
   force: true,
   object: 'Ticket',
@@ -359,7 +360,10 @@ ObjectManager::Attribute.add(
   display: 'Visibility',
   data_type: 'select',
   data_option: {
-    options: { true: 'internal', false: 'public' },
+    options: {
+      true:  'internal',
+      false: 'public'
+    },
     nulloption: false,
     multiple: false,
     null: true,

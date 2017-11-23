@@ -19,9 +19,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: %w(title customer group created_at),
-    s: %w(title customer group created_at),
-    m: %w(number title customer group created_at),
+    d: %w[title customer group created_at],
+    s: %w[title customer group created_at],
+    m: %w[number title customer group created_at],
     view_mode_default: 's',
   },
 )
@@ -46,9 +46,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: %w(title customer group created_at),
-    s: %w(title customer group created_at),
-    m: %w(number title customer group created_at),
+    d: %w[title customer group created_at],
+    s: %w[title customer group created_at],
+    m: %w[number title customer group created_at],
     view_mode_default: 's',
   },
 )
@@ -78,9 +78,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: %w(title customer group created_at),
-    s: %w(title customer group created_at),
-    m: %w(number title customer group created_at),
+    d: %w[title customer group created_at],
+    s: %w[title customer group created_at],
+    m: %w[number title customer group created_at],
     view_mode_default: 's',
   },
 )
@@ -101,9 +101,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: %w(title customer group state owner created_at),
-    s: %w(title customer group state owner created_at),
-    m: %w(number title customer group state owner created_at),
+    d: %w[title customer group state owner created_at],
+    s: %w[title customer group state owner created_at],
+    m: %w[number title customer group state owner created_at],
     view_mode_default: 's',
   },
 )
@@ -129,9 +129,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: %w(title customer group owner created_at),
-    s: %w(title customer group owner created_at),
-    m: %w(number title customer group owner created_at),
+    d: %w[title customer group owner created_at],
+    s: %w[title customer group owner created_at],
+    m: %w[number title customer group owner created_at],
     view_mode_default: 's',
   },
 )
@@ -153,9 +153,9 @@ Overview.create_if_not_exists(
     direction: 'ASC',
   },
   view: {
-    d: %w(title customer group owner escalation_at),
-    s: %w(title customer group owner escalation_at),
-    m: %w(number title customer group owner escalation_at),
+    d: %w[title customer group owner escalation_at],
+    s: %w[title customer group owner escalation_at],
+    m: %w[number title customer group owner escalation_at],
     view_mode_default: 's',
   },
 )
@@ -181,9 +181,9 @@ Overview.create_if_not_exists(
     direction: 'DESC',
   },
   view: {
-    d: %w(title customer group owner escalation_at),
-    s: %w(title customer group owner escalation_at),
-    m: %w(number title customer group owner escalation_at),
+    d: %w[title customer group owner escalation_at],
+    s: %w[title customer group owner escalation_at],
+    m: %w[number title customer group owner escalation_at],
     view_mode_default: 's',
   },
 )
@@ -209,9 +209,9 @@ Overview.create_if_not_exists(
     direction: 'DESC',
   },
   view: {
-    d: %w(title customer state created_at),
-    s: %w(number title state created_at),
-    m: %w(number title state created_at),
+    d: %w[title customer state created_at],
+    s: %w[number title state created_at],
+    m: %w[number title state created_at],
     view_mode_default: 's',
   },
 )
@@ -236,9 +236,9 @@ Overview.create_if_not_exists(
     direction: 'DESC',
   },
   view: {
-    d: %w(title customer state created_at),
-    s: %w(number title customer state created_at),
-    m: %w(number title customer state created_at),
+    d: %w[title customer state created_at],
+    s: %w[number title customer state created_at],
+    m: %w[number title customer state created_at],
     view_mode_default: 's',
   },
 )

@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class MonitoringController < ApplicationController
-  prepend_before_action -> { authentication_check(permission: 'admin.monitoring') }, except: [:health_check, :status]
+  prepend_before_action -> { authentication_check(permission: 'admin.monitoring') }, except: %i[health_check status]
   skip_before_action :verify_csrf_token
 
 =begin
@@ -39,7 +39,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       # inbound channel
       if channel.status_in == 'error'
         message = "Channel: #{channel.area} in "
-        %w(host user uid).each do |key|
+        %w[host user uid].each do |key|
           next if channel.options[key].blank?
           message += "key:#{channel.options[key]};"
         end
@@ -52,7 +52,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       # outbound channel
       next if channel.status_out != 'error'
       message = "Channel: #{channel.area} out "
-      %w(host user uid).each do |key|
+      %w[host user uid].each do |key|
         next if channel.options[key].blank?
         message += "key:#{channel.options[key]};"
       end
@@ -60,7 +60,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     end
 
     # unprocessable mail check
-    directory = "#{Rails.root}/tmp/unprocessable_mail"
+    directory = Rails.root.join('tmp', 'unprocessable_mail').to_s
     if File.exist?(directory)
       count = 0
       Dir.glob("#{directory}/*.eml") do |_entry|
@@ -161,9 +161,7 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
     map.each do |key, class_name|
       status[:counts][key] = class_name.count
       last = class_name.last
-      status[:last_created_at][key] = if last
-                                        last.created_at
-                                      end
+      status[:last_created_at][key] = last&.created_at
     end
 
     render json: status

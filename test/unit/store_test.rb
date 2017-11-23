@@ -1,11 +1,11 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class StoreTest < ActiveSupport::TestCase
   test 'store fs - get_location' do
     sha = 'ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73'
     location = Store::Provider::File.get_location(sha)
-    assert_equal("#{Rails.root}/storage/fs/ed70/02b4/39e9a/c845f/22357d8/22bac14/44730fbdb6016d3ec9432297b9ec9f73", location)
+    assert_equal(Rails.root.join('storage', 'fs', 'ed70', '02b4', '39e9a', 'c845f', '22357d8', '22bac14', '44730fbdb6016d3ec9432297b9ec9f73').to_s, location)
   end
 
   test 'store fs - empty dir remove' do
@@ -19,13 +19,13 @@ class StoreTest < ActiveSupport::TestCase
     result = Store::Provider::File.delete(sha)
     exists = File.exist?(location)
     assert(!exists)
-    exists = File.exist?("#{Rails.root}/storage/fs/ed70/02b4")
+    exists = File.exist?(Rails.root.join('storage', 'fs', 'ed70', '02b4'))
     assert(!exists)
-    exists = File.exist?("#{Rails.root}/storage/fs/ed70/")
+    exists = File.exist?(Rails.root.join('storage', 'fs', 'ed70'))
     assert(!exists)
-    exists = File.exist?("#{Rails.root}/storage/fs/")
+    exists = File.exist?(Rails.root.join('storage', 'fs'))
     assert(exists)
-    exists = File.exist?("#{Rails.root}/storage/")
+    exists = File.exist?(Rails.root.join('storage'))
     assert(exists)
   end
 

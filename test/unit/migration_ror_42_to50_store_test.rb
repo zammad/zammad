@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 # Rails 5.0 has changed to only store and read ActiveSupport::HashWithIndifferentAccess from stores
 # we extended lib/core_ext/active_record/store/indifferent_coder.rb to read also ActionController::Parameters
 # and convert them to ActiveSupport::HashWithIndifferentAccess for migration in db/migrate/20170910000001_fixed_store_upgrade_45.rb.

@@ -65,14 +65,14 @@ examples how to use
     object_name    = object_methods.shift
 
     # if no object is given, just return
-    return "\#{no such object}" if object_name.empty?
+    return '#{no such object}' if object_name.blank? # rubocop:disable Lint/InterpolationCheck
     object_refs = @objects[object_name] || @objects[object_name.to_sym]
 
     # if object is not in avalable objects, just return
     return "\#{#{object_name} / no such object}" if !object_refs
 
     # if content of method is a complex datatype, just return
-    if object_methods.empty? && object_refs.class != String && object_refs.class != Float && object_refs.class != Integer
+    if object_methods.blank? && object_refs.class != String && object_refs.class != Float && object_refs.class != Integer
       return "\#{#{key} / no such method}"
     end
     object_methods_s = ''

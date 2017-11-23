@@ -11,7 +11,7 @@ class FixedTwitterTicketArticlePreferences4 < ActiveRecord::Migration[5.0]
       article = Ticket::Article.find(article_id)
       next if !article.preferences
       changed = false
-      article.preferences.each do |_key, value|
+      article.preferences.each_value do |value|
         next if value.class != ActiveSupport::HashWithIndifferentAccess
         value.each do |sub_key, sub_level|
           if sub_level.class == NilClass

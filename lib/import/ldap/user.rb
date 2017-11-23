@@ -86,8 +86,8 @@ module Import
         return true if resource[:login].blank?
 
         # skip resource if only ignored attributes are set
-        ignored_attributes = %i(login dn created_by_id updated_by_id active)
-        !resource.except(*ignored_attributes).values.any?(&:present?)
+        ignored_attributes = %i[login dn created_by_id updated_by_id active]
+        resource.except(*ignored_attributes).values.none?(&:present?)
       end
 
       def determine_role_ids(resource)
@@ -168,7 +168,7 @@ module Import
 
         if instance.blank?
           checked_values = [@remote_id]
-          %i(login email).each do |attribute|
+          %i[login email].each do |attribute|
             check_value = resource[attribute]
             next if check_value.blank?
             next if checked_values.include?(check_value)
@@ -204,7 +204,7 @@ module Import
 
         # we have to manually downcase the login and email
         # to avoid wrong attribute change detection
-        %i(login email).each do |attribute|
+        %i[login email].each do |attribute|
           next if mapped[attribute].blank?
           mapped[attribute] = mapped[attribute].downcase
         end

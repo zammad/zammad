@@ -36,7 +36,7 @@ class Transaction::Notification
 
       # ignore notifications
       sender = Ticket::Article::Sender.lookup(id: article.sender_id)
-      if sender && sender.name == 'System'
+      if sender&.name == 'System'
         return if @item[:changes].blank? && article.preferences[:notification] != true
         if article.preferences[:notification] != true
           article = nil
@@ -91,7 +91,7 @@ class Transaction::Notification
 
       # ignore user who changed it by him self via web
       if @params[:interface_handle] == 'application_server'
-        next if article && article.updated_by_id == user.id
+        next if article&.updated_by_id == user.id
         next if !article && @item[:user_id] == user.id
       end
 
@@ -213,7 +213,7 @@ class Transaction::Notification
   end
 
   def add_recipient_list(ticket, user, channels, type)
-    return if channels.empty?
+    return if channels.blank?
     identifier = user.email
     if !identifier || identifier == ''
       identifier = user.login
@@ -240,7 +240,7 @@ class Transaction::Notification
     @item[:changes].each do |key, value|
 
       # if no config exists, use all attributes
-      if !attribute_list || attribute_list.empty?
+      if attribute_list.blank?
         user_related_changes[key] = value
 
       # if config exists, just use existing attributes for user

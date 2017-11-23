@@ -68,7 +68,7 @@ returns
 
     type_ids = []
     if params[:ticket]
-      types = %w(note phone)
+      types = %w[note phone]
       if params[:ticket].group.email_address_id
         types.push 'email'
       end

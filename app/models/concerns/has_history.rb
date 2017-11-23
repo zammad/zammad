@@ -40,11 +40,9 @@ log object update history with all updated attributes, if configured - will be e
 
     # new record also triggers update, so ignore new records
     changes = saved_changes
-    if history_changes_last_done
-      history_changes_last_done.each do |key, value|
-        if changes.key?(key) && changes[key] == value
-          changes.delete(key)
-        end
+    history_changes_last_done&.each do |key, value|
+      if changes.key?(key) && changes[key] == value
+        changes.delete(key)
       end
     end
     self.history_changes_last_done = changes
@@ -53,7 +51,7 @@ log object update history with all updated attributes, if configured - will be e
     return if changes['id'] && !changes['id'][0]
 
     ignored_attributes  = self.class.instance_variable_get(:@history_attributes_ignored) || []
-    ignored_attributes += %i(created_at updated_at created_by_id updated_by_id)
+    ignored_attributes += %i[created_at updated_at created_by_id updated_by_id]
 
     changes.each do |key, value|
 

@@ -178,7 +178,7 @@ returns
       raise "No such file #{store_file_id}!"
     end
     if !path
-      path = "#{Rails.root}/tmp/#{filename}"
+      path = Rails.root.join('tmp', filename)
     end
     ::File.open(path, 'wb') do |handle|
       handle.write file.content

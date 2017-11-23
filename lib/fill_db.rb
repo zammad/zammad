@@ -89,7 +89,7 @@ or if you only want to create 100 tickets
         ActiveRecord::Base.transaction do
           suffix = rand(99_999).to_s
           organization = nil
-          if !organization_pool.empty? && rand(2) == 1
+          if organization_pool.present? && rand(2) == 1
             organization = organization_pool[ organization_pool.length - 1 ]
           end
           user = User.create_or_update(
@@ -137,39 +137,38 @@ or if you only want to create 100 tickets
     priority_pool = Ticket::Priority.all
     state_pool = Ticket::State.all
 
-    if tickets && !tickets.zero?
-      (1..tickets).each do
-        ActiveRecord::Base.transaction do
-          customer = customer_pool[ rand(customer_pool.length - 1) ]
-          agent    = agent_pool[ rand(agent_pool.length - 1) ]
-          ticket = Ticket.create!(
-            title: "some title äöüß#{rand(999_999)}",
-            group: group_pool[ rand(group_pool.length - 1) ],
-            customer: customer,
-            owner: agent,
-            state: state_pool[ rand(state_pool.length - 1) ],
-            priority: priority_pool[ rand(priority_pool.length - 1) ],
-            updated_by_id: agent.id,
-            created_by_id: agent.id,
-          )
+    return if !tickets || tickets.zero?
+    (1..tickets).each do
+      ActiveRecord::Base.transaction do
+        customer = customer_pool[ rand(customer_pool.length - 1) ]
+        agent    = agent_pool[ rand(agent_pool.length - 1) ]
+        ticket = Ticket.create!(
+          title: "some title äöüß#{rand(999_999)}",
+          group: group_pool[ rand(group_pool.length - 1) ],
+          customer: customer,
+          owner: agent,
+          state: state_pool[ rand(state_pool.length - 1) ],
+          priority: priority_pool[ rand(priority_pool.length - 1) ],
+          updated_by_id: agent.id,
+          created_by_id: agent.id,
+        )
 
-          # create article
-          article = Ticket::Article.create!(
-            ticket_id: ticket.id,
-            from: customer.email,
-            to: 'some_recipient@example.com',
-            subject: "some subject#{rand(999_999)}",
-            message_id: "some@id-#{rand(999_999)}",
-            body: 'some message ...',
-            internal: false,
-            sender: Ticket::Article::Sender.where(name: 'Customer').first,
-            type: Ticket::Article::Type.where(name: 'phone').first,
-            updated_by_id: agent.id,
-            created_by_id: agent.id,
-          )
-          puts " Ticket #{ticket.number} created"
-          sleep nice
-        end
+        # create article
+        article = Ticket::Article.create!(
+          ticket_id: ticket.id,
+          from: customer.email,
+          to: 'some_recipient@example.com',
+          subject: "some subject#{rand(999_999)}",
+          message_id: "some@id-#{rand(999_999)}",
+          body: 'some message ...',
+          internal: false,
+          sender: Ticket::Article::Sender.where(name: 'Customer').first,
+          type: Ticket::Article::Type.where(name: 'phone').first,
+          updated_by_id: agent.id,
+          created_by_id: agent.id,
+        )
+        puts " Ticket #{ticket.number} created"
+        sleep nice
       end
     end
   end

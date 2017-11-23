@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'browser_test_helper'
 
 class ChatTest < TestCase

@@ -13,7 +13,7 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
     # add missing foreign keys
     foreign_keys = [
       # Base
-      [:users, :organizations],
+      %i[users organizations],
       [:users, :users, column: :created_by_id],
       [:users, :users, column: :updated_by_id],
 
@@ -23,8 +23,8 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
       [:email_addresses, :users, column: :created_by_id],
       [:email_addresses, :users, column: :updated_by_id],
 
-      [:groups, :signatures],
-      [:groups, :email_addresses],
+      %i[groups signatures],
+      %i[groups email_addresses],
       [:groups, :users, column: :created_by_id],
       [:groups, :users, column: :updated_by_id],
 
@@ -34,29 +34,29 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
       [:organizations, :users, column: :created_by_id],
       [:organizations, :users, column: :updated_by_id],
 
-      [:roles_users, :users],
-      [:roles_users, :roles],
+      %i[roles_users users],
+      %i[roles_users roles],
 
-      [:groups_users, :users],
-      [:groups_users, :groups],
+      %i[groups_users users],
+      %i[groups_users groups],
 
-      [:organizations_users, :users],
-      [:organizations_users, :organizations],
+      %i[organizations_users users],
+      %i[organizations_users organizations],
 
-      [:authorizations, :users],
+      %i[authorizations users],
 
       [:translations, :users, column: :created_by_id],
       [:translations, :users, column: :updated_by_id],
 
-      [:tokens, :users],
+      %i[tokens users],
 
       [:packages, :users, column: :created_by_id],
       [:packages, :users, column: :updated_by_id],
 
-      [:taskbars, :users],
+      %i[taskbars users],
 
-      [:tags, :tag_items],
-      [:tags, :tag_objects],
+      %i[tags tag_items],
+      %i[tags tag_objects],
       [:tags, :users, column: :created_by_id],
 
       [:recent_views, :object_lookups, column: :recent_view_object_id],
@@ -64,17 +64,17 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
 
       [:activity_streams, :type_lookups, column: :activity_stream_type_id],
       [:activity_streams, :object_lookups, column: :activity_stream_object_id],
-      [:activity_streams, :permissions],
-      [:activity_streams, :groups],
+      %i[activity_streams permissions],
+      %i[activity_streams groups],
       [:activity_streams, :users, column: :created_by_id],
 
-      [:histories, :history_types],
-      [:histories, :history_objects],
-      [:histories, :history_attributes],
+      %i[histories history_types],
+      %i[histories history_objects],
+      %i[histories history_attributes],
       [:histories, :users, column: :created_by_id],
 
-      [:stores, :store_objects],
-      [:stores, :store_files],
+      %i[stores store_objects],
+      %i[stores store_files],
       [:stores, :users, column: :created_by_id],
 
       [:avatars, :users, column: :created_by_id],
@@ -89,13 +89,13 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
       [:calendars, :users, column: :created_by_id],
       [:calendars, :users, column: :updated_by_id],
 
-      [:user_devices, :users],
+      %i[user_devices users],
 
-      [:object_manager_attributes, :object_lookups],
+      %i[object_manager_attributes object_lookups],
       [:object_manager_attributes, :users, column: :created_by_id],
       [:object_manager_attributes, :users, column: :updated_by_id],
 
-      [:cti_caller_ids, :users],
+      %i[cti_caller_ids users],
 
       [:stats_stores, :users, column: :created_by_id],
 
@@ -113,12 +113,12 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
       [:ticket_priorities, :users, column: :created_by_id],
       [:ticket_priorities, :users, column: :updated_by_id],
 
-      [:tickets, :groups],
+      %i[tickets groups],
       [:tickets, :users, column: :owner_id],
       [:tickets, :users, column: :customer_id],
       [:tickets, :ticket_priorities, column: :priority_id],
       [:tickets, :ticket_states, column: :state_id],
-      [:tickets, :organizations],
+      %i[tickets organizations],
       [:tickets, :users, column: :created_by_id],
       [:tickets, :users, column: :updated_by_id],
 
@@ -131,7 +131,7 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
       [:ticket_article_senders, :users, column: :created_by_id],
       [:ticket_article_senders, :users, column: :updated_by_id],
 
-      [:ticket_articles, :tickets],
+      %i[ticket_articles tickets],
       [:ticket_articles, :ticket_article_types, column: :type_id],
       [:ticket_articles, :ticket_article_senders, column: :sender_id],
       [:ticket_articles, :users, column: :created_by_id],
@@ -141,21 +141,21 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
       [:ticket_article_flags, :ticket_articles, column: :ticket_article_id],
       [:ticket_article_flags, :users, column: :created_by_id],
 
-      [:ticket_time_accountings, :tickets],
-      [:ticket_time_accountings, :ticket_articles],
+      %i[ticket_time_accountings tickets],
+      %i[ticket_time_accountings ticket_articles],
       [:ticket_time_accountings, :users, column: :created_by_id],
 
       [:overviews, :users, column: :created_by_id],
       [:overviews, :users, column: :updated_by_id],
 
-      [:overviews_roles, :overviews],
-      [:overviews_roles, :roles],
+      %i[overviews_roles overviews],
+      %i[overviews_roles roles],
 
-      [:overviews_users, :overviews],
-      [:overviews_users, :users],
+      %i[overviews_users overviews],
+      %i[overviews_users users],
 
-      [:overviews_groups, :overviews],
-      [:overviews_groups, :groups],
+      %i[overviews_groups overviews],
+      %i[overviews_groups groups],
 
       [:triggers, :users, column: :created_by_id],
       [:triggers, :users, column: :updated_by_id],
@@ -163,26 +163,26 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
       [:jobs, :users, column: :created_by_id],
       [:jobs, :users, column: :updated_by_id],
 
-      [:links, :link_types],
+      %i[links link_types],
 
       [:postmaster_filters, :users, column: :created_by_id],
       [:postmaster_filters, :users, column: :updated_by_id],
 
-      [:text_modules, :users],
+      %i[text_modules users],
       [:text_modules, :users, column: :created_by_id],
       [:text_modules, :users, column: :updated_by_id],
 
-      [:text_modules_groups, :text_modules],
-      [:text_modules_groups, :groups],
+      %i[text_modules_groups text_modules],
+      %i[text_modules_groups groups],
 
-      [:templates, :users],
+      %i[templates users],
       [:templates, :users, column: :created_by_id],
       [:templates, :users, column: :updated_by_id],
 
-      [:templates_groups, :templates],
-      [:templates_groups, :groups],
+      %i[templates_groups templates],
+      %i[templates_groups groups],
 
-      [:channels, :groups],
+      %i[channels groups],
       [:channels, :users, column: :created_by_id],
       [:channels, :users, column: :updated_by_id],
 
@@ -198,12 +198,12 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
       [:chat_topics, :users, column: :created_by_id],
       [:chat_topics, :users, column: :updated_by_id],
 
-      [:chat_sessions, :chats],
-      [:chat_sessions, :users],
+      %i[chat_sessions chats],
+      %i[chat_sessions users],
       [:chat_sessions, :users, column: :created_by_id],
       [:chat_sessions, :users, column: :updated_by_id],
 
-      [:chat_messages, :chat_sessions],
+      %i[chat_messages chat_sessions],
       [:chat_messages, :users, column: :created_by_id],
 
       [:chat_agents, :users, column: :created_by_id],
@@ -212,9 +212,9 @@ class ForeignKeys < ActiveRecord::Migration[4.2]
       [:report_profiles, :users, column: :created_by_id],
       [:report_profiles, :users, column: :updated_by_id],
 
-      [:karma_users, :users],
+      %i[karma_users users],
 
-      [:karma_activity_logs, :users],
+      %i[karma_activity_logs users],
       [:karma_activity_logs, :karma_activities, column: :activity_id],
     ]
 

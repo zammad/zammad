@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class SessionBasicTicketTest < ActiveSupport::TestCase
@@ -30,7 +30,7 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
       groups: groups,
     )
     Overview.destroy_all
-    load "#{Rails.root}/db/seeds/overviews.rb"
+    load Rails.root.join('db', 'seeds', 'overviews.rb')
   end
 
   test 'asset needed' do

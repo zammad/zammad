@@ -5,9 +5,9 @@ RSpec.describe Cti::CallerId do
   describe 'extract_numbers' do
     it { expect(described_class.extract_numbers("some text\ntest 123")).to eq [] }
     it { expect(described_class.extract_numbers('Lorem ipsum dolor sit amet, consectetuer +49 (0) 30 60 00 00 00-0 adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel.')).to eq ['4930600000000'] }
-    it { expect(described_class.extract_numbers("GS Oberalteich\nTelefon  09422 1000 Telefax 09422 805000\nE-Mail:  ")).to eq %w(4994221000 499422805000) }
-    it { expect(described_class.extract_numbers('Tel +41 81 288 63 93 / +41 76 346 72 14 ...')).to eq %w(41812886393 41763467214) }
-    it { expect(described_class.extract_numbers("P: +1 (949) 431 0000\nF: +1 (949) 431 0001\nW: http://znuny")).to eq %w(19494310000 19494310001) }
+    it { expect(described_class.extract_numbers("GS Oberalteich\nTelefon  09422 1000 Telefax 09422 805000\nE-Mail:  ")).to eq %w[4994221000 499422805000] }
+    it { expect(described_class.extract_numbers('Tel +41 81 288 63 93 / +41 76 346 72 14 ...')).to eq %w[41812886393 41763467214] }
+    it { expect(described_class.extract_numbers("P: +1 (949) 431 0000\nF: +1 (949) 431 0001\nW: http://znuny")).to eq %w[19494310000 19494310001] }
   end
 
   describe 'normalize_number' do

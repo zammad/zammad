@@ -124,7 +124,7 @@ module Import
 
       def self.track_found_remote_ids(backend_instance)
         remote_id = backend_instance.remote_id(nil)
-        @deactivation_actions ||= %i(skipped failed)
+        @deactivation_actions ||= %i[skipped failed]
         if @deactivation_actions.include?(backend_instance.action)
           @found_lost_remote_ids.push(remote_id)
         else

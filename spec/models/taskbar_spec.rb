@@ -27,7 +27,7 @@ RSpec.describe Taskbar do
     end
 
     it 'state' do
-      expect(taskbar.state.empty?).to eq(true)
+      expect(taskbar.state.blank?).to eq(true)
     end
 
     it 'check last_contact' do

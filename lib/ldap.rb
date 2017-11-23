@@ -200,11 +200,10 @@ class Ldap
       method: :simple_tls,
     }
 
-    if !@config[:ssl_verify]
-      @encryption[:tls_options] = {
-        verify_mode: OpenSSL::SSL::VERIFY_NONE
-      }
-    end
+    return if @config[:ssl_verify]
+    @encryption[:tls_options] = {
+      verify_mode: OpenSSL::SSL::VERIFY_NONE
+    }
   end
 
   def handle_bind_crendentials

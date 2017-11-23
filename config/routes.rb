@@ -18,6 +18,6 @@ Rails.application.routes.draw do
     end
   end
 
-  match '*a', to: 'errors#routing', via: [:get, :post, :put, :delete]
+  match '*a', to: 'errors#routing', via: %i[get post put delete]
 
 end

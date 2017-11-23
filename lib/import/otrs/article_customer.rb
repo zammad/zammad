@@ -84,7 +84,7 @@ module Import
       def parsed_display_name(from)
         parsed_address = Mail::Address.new(from)
         return parsed_address.display_name if parsed_address.display_name
-        return from if parsed_address.comments.empty?
+        return from if parsed_address.comments.blank?
         parsed_address.comments[0]
       rescue
         from

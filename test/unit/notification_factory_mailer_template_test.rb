@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
@@ -158,8 +158,8 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     changes = {
-      state: %w(aaa bbb),
-      group: %w(xxx yyy),
+      state: %w[aaa bbb],
+      group: %w[xxx yyy],
     }
     result = NotificationFactory::Mailer.template(
       template: 'ticket_update',

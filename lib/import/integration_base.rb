@@ -14,7 +14,7 @@ module Import
       subclass.extend(Forwardable)
 
       # delegate instance methods to the generic class implementations
-      subclass.delegate [:identifier, :active?, :config, :display_name] => subclass
+      subclass.delegate %i[identifier active? config display_name] => subclass
     end
 
     # Defines the integration identifier used for

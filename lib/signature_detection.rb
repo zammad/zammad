@@ -23,7 +23,7 @@ returns
 
     string_list = []
     messages.each do |message|
-      if message[:content_type] =~ %r{text/html}i
+      if message[:content_type].match?(%r{text/html}i)
         string_list.push message[:content].html2text(true)
         next
       end
@@ -78,7 +78,7 @@ returns
 
             # define the block size without any difference
             # except "-" because in this case 1 line is removed to much
-            match_block_total = diff_string_index + (line =~ /^(\\|\+)/i ? -1 : 0)
+            match_block_total = diff_string_index + (line.match?(/^(\\|\+)/i) ? -1 : 0)
 
             # get string of possible signature, use only the first 10 lines
             match_max_content = 0
@@ -128,7 +128,7 @@ returns
 
   def self.find_signature_line(signature, string, content_type)
 
-    if content_type =~ %r{text/html}i
+    if content_type.match?(%r{text/html}i)
       string = string.html2text(true)
     end
 

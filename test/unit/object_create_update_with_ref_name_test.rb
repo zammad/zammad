@@ -1,9 +1,9 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
   test 'organization' do
-    roles  = Role.where(name: %w(Agent Admin))
+    roles  = Role.where(name: %w[Agent Admin])
     groups = Group.all
     user1 = User.create_or_update(
       login: 'object_ref_name1@example.org',
@@ -90,7 +90,7 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
       organization: 'some org update_with_ref user',
       updated_by_id: 1,
       created_by_id: 1,
-      roles: %w(Agent Admin),
+      roles: %w[Agent Admin],
       groups: ['Users'],
     )
     user2 = User.create_or_update_with_ref(
@@ -137,7 +137,7 @@ class ObjectCreateUpdateWithRefNameTest < ActiveSupport::TestCase
       organization_id: nil,
       updated_by_id: 1,
       created_by_id: 1,
-      roles: %w(Agent Admin),
+      roles: %w[Agent Admin],
       groups: [],
     )
     user2 = User.create_or_update_with_ref(

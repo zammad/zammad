@@ -93,6 +93,8 @@ class Integration::SipgateController < ApplicationController
       xml_error('Feature not configured, please contact your admin!')
       return
     end
+
+    true
   end
 
   def config_integration

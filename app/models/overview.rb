@@ -45,14 +45,14 @@ class Overview < ApplicationModel
     local_link = local_link.parameterize(separator: '_')
     local_link.gsub!(/\s/, '_')
     local_link.gsub!(/_+/, '_')
-    local_link = URI.escape(local_link)
+    local_link = CGI.escape(local_link)
     if local_link.blank?
       local_link = id || rand(999)
     end
     check = true
     while check
       exists = Overview.find_by(link: local_link)
-      if exists && exists.id != id
+      if exists&.id != id
         local_link = "#{local_link}_#{rand(999)}"
       else
         check = false

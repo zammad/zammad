@@ -22,7 +22,7 @@ module Import
       end
 
       def supported_types
-        %w(NewTicket StateUpdate Move PriorityUpdate)
+        %w[NewTicket StateUpdate Move PriorityUpdate]
       end
 
       def check_supported(history)

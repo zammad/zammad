@@ -1,112 +1,131 @@
 source 'https://rubygems.org'
 
+# core - base
 ruby '2.4.1'
-
 gem 'rails', '5.1.4'
-gem 'rails-observers'
+
+# core - rails additions
 gem 'activerecord-session_store'
-
-# Bundle edge Rails instead:
-#gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
+gem 'composite_primary_keys'
 gem 'json'
+gem 'rails-observers'
 
-# Supported DBs
+# core - application servers
+gem 'puma', group: :puma
+gem 'unicorn', group: :unicorn
+
+# core - supported ORMs
 gem 'activerecord-nulldb-adapter', group: :nulldb
 gem 'mysql2', group: :mysql
 gem 'pg', group: :postgres
 
+# core - asynchrous task execution
+gem 'daemons'
+gem 'delayed_job_active_record'
+
+# core - websocket
+gem 'em-websocket'
+gem 'eventmachine'
+
+# core - password security
+gem 'argon2'
+
+# performance - Memcached
+gem 'dalli'
+
+# asset handling
 group :assets do
-  gem 'sass-rails' #, github: 'rails/sass-rails'
+  # asset handling - coffee-script
   gem 'coffee-rails'
   gem 'coffee-script-source'
 
-  gem 'sprockets'
-
-  gem 'uglifier'
+  # asset handling - frontend templating
   gem 'eco'
+
+  # asset handling - SASS
+  gem 'sass-rails'
+
+  # asset handling - pipeline
+  gem 'sprockets'
+  gem 'uglifier'
 end
 
 gem 'autoprefixer-rails'
 
+# asset handling - javascript execution for e.g. linux
+gem 'execjs'
+gem 'libv8'
+gem 'therubyracer'
+
+# authentication - provider
 gem 'doorkeeper'
 gem 'oauth2'
 
+# authentication - third party
 gem 'omniauth'
-gem 'omniauth-oauth2'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-gitlab'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
-gem 'omniauth-twitter'
 gem 'omniauth-microsoft-office365'
+gem 'omniauth-oauth2'
+gem 'omniauth-twitter'
 gem 'omniauth-weibo-oauth2'
 
-gem 'twitter'
-gem 'telegramAPI'
+# channels
 gem 'koala'
-gem 'mail'
-gem 'valid_email2'
+gem 'telegramAPI'
+gem 'twitter'
+
+# channels - email additions
 gem 'htmlentities'
-
+gem 'mail', '2.6.6'
 gem 'mime-types'
+gem 'valid_email2'
 
+# feature - business hours
 gem 'biz'
 
-gem 'composite_primary_keys'
-gem 'delayed_job_active_record'
-gem 'daemons'
+# feature - signature diffing
+gem 'diffy'
 
-gem 'simple-rss'
-
-# e. g. on linux we need a javascript execution
-gem 'libv8'
-gem 'execjs'
-gem 'therubyracer'
-
-require 'erb'
-require 'yaml'
-
-gem 'net-ldap'
-
-# password security
-gem 'argon2'
-
+# feature - excel output
 gem 'writeexcel'
-gem 'icalendar'
-gem 'icalendar-recurrence'
+
+# feature - device logging
 gem 'browser'
 
+# feature - iCal export
+gem 'icalendar'
+gem 'icalendar-recurrence'
+
 # integrations
-gem 'slack-notifier'
 gem 'clearbit'
+gem 'net-ldap'
+gem 'slack-notifier'
 gem 'zendesk_api'
-gem 'viewpoint'
-gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm.git'
+
+# integrations - exchange
 gem 'autodiscover', git: 'https://github.com/thorsteneckel/autodiscover.git'
-
-# event machine
-gem 'eventmachine'
-gem 'em-websocket'
-
-gem 'diffy'
-gem 'dalli'
+gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm.git'
+gem 'viewpoint'
 
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do
 
+  # test frameworks
   gem 'rspec-rails'
   gem 'test-unit'
-  gem 'spring'
-  gem 'spring-commands-rspec'
+
+  # test DB
   gem 'sqlite3'
 
   # code coverage
+  gem 'coveralls', require: false
   gem 'simplecov'
   gem 'simplecov-rcov'
-  gem 'coveralls',         require: false
 
   # UI tests w/ Selenium
   gem 'selenium-webdriver', '2.53.4'
@@ -121,9 +140,9 @@ group :development, :test do
   gem 'guard-symlink', require: false
 
   # code QA
+  gem 'coffeelint'
   gem 'pre-commit'
   gem 'rubocop'
-  gem 'coffeelint'
 
   # changelog generation
   gem 'github_changelog_generator'
@@ -138,10 +157,7 @@ group :development, :test do
   gem 'webmock'
 end
 
-gem 'puma', group: :puma
-gem 'unicorn', group: :unicorn
-
-# load onw gem's
+# load onw gems for development and testing purposes
 local_gemfile = File.join(File.dirname(__FILE__), 'Gemfile.local')
 if File.exist?(local_gemfile)
   eval_gemfile local_gemfile

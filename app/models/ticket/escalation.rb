@@ -169,13 +169,11 @@ returns
 
       # get holidays
       holidays = []
-      if calendar.public_holidays
-        calendar.public_holidays.each do |day, meta|
-          next if !meta
-          next if !meta['active']
-          next if meta['removed']
-          holidays.push Date.parse(day)
-        end
+      calendar.public_holidays&.each do |day, meta|
+        next if !meta
+        next if !meta['active']
+        next if meta['removed']
+        holidays.push Date.parse(day)
       end
       config.holidays = holidays
       config.time_zone = calendar.timezone
@@ -294,7 +292,7 @@ returns
       Cache.write('SLA::List::Active', sla_list, { expires_in: 1.hour })
     end
     sla_list.each do |sla|
-      if !sla.condition || sla.condition.empty?
+      if sla.condition.blank?
         sla_selected = sla
       elsif sla.condition
         query_condition, bind_condition, tables = Ticket.selector2sql(sla.condition)
