@@ -397,7 +397,7 @@ class ChatTest < TestCase
     watch_for(
       browser: customer,
       css: '.zammad-chat',
-      value: 'Chat closed by',
+      value: '(Chat closed by|Chat beendet von)',
     )
     click(
       browser: customer,
