@@ -5,7 +5,7 @@ class OverviewAssetsTest < ActiveSupport::TestCase
   test 'assets' do
 
     UserInfo.current_user_id = 1
-    roles = Role.where(name: %w[Customer])
+    roles = Role.where(name: %w(Customer))
 
     user1 = User.create_or_update(
       login: 'assets_overview1@example.org',
@@ -79,9 +79,9 @@ class OverviewAssetsTest < ActiveSupport::TestCase
         direction: 'ASC',
       },
       view: {
-        d: %w[title customer group created_at],
-        s: %w[title customer group created_at],
-        m: %w[number title customer group created_at],
+        d: %w(title customer group created_at),
+        s: %w(title customer group created_at),
+        m: %w(number title customer group created_at),
         view_mode_default: 's',
       },
     )
@@ -116,9 +116,9 @@ class OverviewAssetsTest < ActiveSupport::TestCase
         direction: 'ASC',
       },
       view: {
-        d: %w[title customer group created_at],
-        s: %w[title customer group created_at],
-        m: %w[number title customer group created_at],
+        d: %w(title customer group created_at),
+        s: %w(title customer group created_at),
+        m: %w(number title customer group created_at),
         view_mode_default: 's',
       },
     )

@@ -5,7 +5,7 @@ class SlaAssetsTest < ActiveSupport::TestCase
   test 'assets' do
 
     UserInfo.current_user_id = 1
-    roles = Role.where(name: %w[Customer])
+    roles = Role.where(name: %w(Customer))
 
     user1 = User.create_or_update(
       login: 'assets_sla1@example.org',

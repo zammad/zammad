@@ -4,7 +4,7 @@ require 'test_helper'
 class UserAssetsTest < ActiveSupport::TestCase
   test 'assets' do
 
-    roles  = Role.where(name: %w[Agent Admin])
+    roles  = Role.where(name: %w(Agent Admin))
     groups = Group.all
     org1   = Organization.create_or_update(
       name: 'some user org',
@@ -141,7 +141,7 @@ class UserAssetsTest < ActiveSupport::TestCase
 
   def diff(o1, o2)
     return true if o1 == o2
-    %w[updated_at created_at].each do |item|
+    %w(updated_at created_at).each do |item|
       if o1[item]
         o1[item] = o1[item].to_s
       end
