@@ -1261,7 +1261,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
             sleep 0.5
             return true
 
-          # match pn attribute
+          # match an attribute
           else
             text = if params[:attribute]
                      element.attribute(params[:attribute])
