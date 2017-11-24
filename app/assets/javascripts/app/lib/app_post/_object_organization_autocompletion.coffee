@@ -71,7 +71,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     @open()
 
   focusInput: =>
-    @objectSelect.focus() if not @formControl.hasClass 'focus'
+    @objectSelect.focus() if not @formControl.hasClass('focus')
 
   onBlur: =>
     selectObject = @objectSelect.val()
@@ -84,6 +84,9 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
         if !_.isEmpty(selectObject)
           @objectId.val("guess:#{selectObject}")
     @formControl.removeClass 'focus'
+
+  resetObjectSelection: =>
+    @objectId.val('').trigger('change')
 
   onObjectClick: (e) =>
     objectId = $(e.currentTarget).data('object-id')
@@ -103,23 +106,23 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     # Only work with the last one since its the newest one
     objectId = @objectId.val().split(',').pop()
 
-    return if !objectId
-    return if !App[@objectSingle].exists(objectId)
-    object = App[@objectSingle].find(objectId)
-    name = object.displayName()
+    if objectId && App[@objectSingle].exists(objectId)
+      object = App[@objectSingle].find(objectId)
+      name = object.displayName()
 
-    if @attribute.multiple
-      # create token
-      @createToken name, objectId
-    else
-      if object.email
+      if @attribute.multiple
 
-        # quote name for special character
-        if name.match(/\@|,|;|\^|\+|#|§|\$|%|&|\/|\(|\)|=|\?|!|\*|\[|\]/)
-          name = "\"#{name}\""
-        name += " <#{object.email}>"
+        # create token
+        @createToken(name, objectId)
+      else
+        if object.email
 
-      @objectSelect.val(name)
+          # quote name for special character
+          if name.match(/\@|,|;|\^|\+|#|§|\$|%|&|\/|\(|\)|=|\?|!|\*|\[|\]/)
+            name = "\"#{name}\""
+          name += " <#{object.email}>"
+
+        @objectSelect.val(name)
 
     if @callback
       @callback(objectId)
@@ -321,11 +324,15 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     @hideOrganizationMembers()
 
     # hide dropdown
-    if !query
+    if _.isEmpty(query)
       @emptyResultList()
 
       if !@attribute.disableCreateObject
         @recipientList.append(@buildObjectNew())
+
+      # reset object selection
+      @resetObjectSelection()
+      return
 
     # show dropdown
     if query && ( !@attribute.minLengt || @attribute.minLengt <= query.length )
