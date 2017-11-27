@@ -154,9 +154,9 @@ or if you only want to create 100 tickets
               direction: 'ASC',
             },
             view: {
-              d: %w[title customer group state owner created_at],
-              s: %w[title customer group state owner created_at],
-              m: %w[number title customer group state owner created_at],
+              d: %w(title customer group state owner created_at),
+              s: %w(title customer group state owner created_at),
+              m: %w(number title customer group state owner created_at),
               view_mode_default: 's',
             },
             active: true
