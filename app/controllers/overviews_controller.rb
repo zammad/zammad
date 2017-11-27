@@ -30,7 +30,7 @@ Example:
 =begin
 
 Resource:
-GET /api/v1/overviews.json
+GET /api/v1/overviews
 
 Response:
 [
@@ -47,7 +47,7 @@ Response:
 ]
 
 Test:
-curl http://localhost/api/v1/overviews.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/overviews -v -u #{login}:#{password}
 
 =end
 
@@ -58,7 +58,7 @@ curl http://localhost/api/v1/overviews.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-GET /api/v1/overviews/#{id}.json
+GET /api/v1/overviews/#{id}
 
 Response:
 {
@@ -68,7 +68,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/overviews/#{id}.json -v -u #{login}:#{password}
+curl http://localhost/api/v1/overviews/#{id} -v -u #{login}:#{password}
 
 =end
 
@@ -79,7 +79,7 @@ curl http://localhost/api/v1/overviews/#{id}.json -v -u #{login}:#{password}
 =begin
 
 Resource:
-POST /api/v1/overviews.json
+POST /api/v1/overviews
 
 Payload:
 {
@@ -101,7 +101,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/overviews.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/overviews -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -112,7 +112,7 @@ curl http://localhost/api/v1/overviews.json -v -u #{login}:#{password} -H "Conte
 =begin
 
 Resource:
-PUT /api/v1/overviews/{id}.json
+PUT /api/v1/overviews/{id}
 
 Payload:
 {
@@ -134,7 +134,7 @@ Response:
 }
 
 Test:
-curl http://localhost/api/v1/overviews.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
+curl http://localhost/api/v1/overviews -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"name": "some_name","active": true, "note": "some note"}'
 
 =end
 
@@ -145,17 +145,55 @@ curl http://localhost/api/v1/overviews.json -v -u #{login}:#{password} -H "Conte
 =begin
 
 Resource:
-DELETE /api/v1/overviews/{id}.json
+DELETE /api/v1/overviews/{id}
 
 Response:
 {}
 
 Test:
-curl http://localhost/api/v1/overviews/#{id}.json -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
+curl http://localhost/api/v1/overviews/#{id} -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
 
 =end
 
   def destroy
     model_destroy_render(Overview, params)
+  end
+
+=begin
+
+Resource:
+POST /api/v1/overviews_prio
+
+Payload:
+{
+  "prios": [
+    [overview_id, prio],
+    [overview_id, prio],
+    [overview_id, prio],
+    [overview_id, prio],
+    [overview_id, prio]
+  ]
+}
+
+Response:
+{
+  "success": true,
+}
+
+Test:
+curl http://localhost/api/v1/overviews_prio -v -u #{login}:#{password} -H "Content-Type: application/json" -X POST -d '{"prios": [ [1,1], [44,2] ]}'
+
+=end
+
+  def prio
+    Overview.without_callback(:update, :before, :rearrangement) do
+      params[:prios].each do |overview_prio|
+        overview = Overview.find(overview_prio[0])
+        next if overview.prio == overview_prio[1]
+        overview.prio = overview_prio[1]
+        overview.save!
+      end
+    end
+    render json: { success: true }, status: :ok
   end
 end

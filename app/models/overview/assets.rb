@@ -42,9 +42,7 @@ returns
             data = user.assets(data)
           end
         end
-
         data = assets_of_selector('condition', data)
-
       end
       %w(created_by_id updated_by_id).each do |local_user_id|
         next if !self[ local_user_id ]
