@@ -130,6 +130,7 @@ window.onload = function() {
         "vip": false,
         "id": 434
       },
+      "tags": ["tag a", "tag b"],
       "escalation_at": "2017-02-09T09:16:56.192Z",
       "last_contact_agent_at": "2017-02-09T09:16:56.192Z",
       "last_contact_agent_at": "2017-02-09T09:16:56.192Z",
@@ -191,7 +192,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
 
     setting = {
@@ -202,7 +203,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
   };
 
@@ -215,7 +216,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
 
     setting = {
@@ -226,7 +227,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
   };
 
@@ -243,7 +244,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
 
     setting = {
@@ -256,7 +257,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
 
     setting = {
@@ -270,7 +271,7 @@ window.onload = function() {
       }
     };
 
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
 
     setting = {
@@ -283,7 +284,7 @@ window.onload = function() {
         }
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
 
     setting = {
@@ -296,7 +297,7 @@ window.onload = function() {
         }
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
 
     setting = {
@@ -307,7 +308,7 @@ window.onload = function() {
         }
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
 
     setting = {
@@ -318,7 +319,7 @@ window.onload = function() {
         }
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
   };
 
@@ -335,7 +336,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
 
     setting = {
@@ -348,7 +349,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
 
     setting = {
@@ -362,7 +363,7 @@ window.onload = function() {
       }
     };
 
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
 
     setting = {
@@ -375,7 +376,7 @@ window.onload = function() {
         }
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
 
     setting = {
@@ -388,7 +389,7 @@ window.onload = function() {
         }
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
 
     setting = {
@@ -399,7 +400,7 @@ window.onload = function() {
         }
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
 
     setting = {
@@ -410,8 +411,146 @@ window.onload = function() {
         }
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
+  };
+
+  var testPreConditionTags = function (key, ticket) {
+    App.Session.set(sessionData);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains one",
+          "value": "tag a",
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, true, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains one",
+          "value": "tag aa",
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, false, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains all",
+          "value": "tag a",
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, true, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains all",
+          "value": ["tag a", "not existing"],
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, false, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains all not",
+          "value": "tag a",
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, false, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains all not",
+          "value": ["tag a", "tag b"],
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, false, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains all not",
+          "value": ["tag a", "tag b", "tag c"],
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, false, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains all not",
+          "value": ["tag c", "tag d"],
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, true, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains one not",
+          "value": "tag a",
+        },
+      }
+    };
+
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, true, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains one not",
+          "value": ["tag a", "tag b"],
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, false, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains one not",
+          "value": ["tag a", "tag c"],
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, true, result);
+
+    setting = {
+      "condition": {
+        "ticket.tags": {
+          "operator": "contains one not",
+          "value": ["tag c"],
+        },
+      }
+    };
+    result = App.Ticket.selector(ticket, setting['condition']);
+    equal(result, true, result);
+
   };
 
   var testTime = function (key, value, ticket) {
@@ -425,7 +564,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
 
     valueDate   = new Date(value);
@@ -438,7 +577,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
 
     valueDate   = new Date(value);
@@ -451,7 +590,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, false, result);
 
     valueDate   = new Date(value);
@@ -464,7 +603,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
 
     valueDate   = new Date(value);
@@ -478,7 +617,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, true, result);
   };
 
@@ -492,7 +631,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, expectedResult, result);
   };
 
@@ -506,7 +645,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, expectedResult, result);
   };
 
@@ -520,7 +659,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, expectedResult, result);
   };
 
@@ -534,7 +673,7 @@ window.onload = function() {
         },
       }
     };
-    result = App.Ticket.selector(ticket, setting['condition'] );
+    result = App.Ticket.selector(ticket, setting['condition']);
     equal(result, expectedResult, result);
   };
 
@@ -612,7 +751,7 @@ window.onload = function() {
     testTimeBeforeRelative('ticket.pending_time', 1, 'hour', false, ticket);
 
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() - 60 * 60 * 2 * 1000 );
+    compareDate.setTime( compareDate.getTime() - 60 * 60 * 2 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeBeforeRelative('ticket.pending_time', 1, 'hour', true, ticket);
 
@@ -621,7 +760,7 @@ window.onload = function() {
     testTimeBeforeRelative('ticket.pending_time', 1, 'day', false, ticket);
 
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() - 60 * 60 * 48 * 1000 );
+    compareDate.setTime( compareDate.getTime() - 60 * 60 * 48 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeBeforeRelative('ticket.pending_time', 1, 'day', true, ticket);
 
@@ -630,7 +769,7 @@ window.onload = function() {
     testTimeBeforeRelative('ticket.pending_time', 1, 'year', false, ticket);
 
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() - 60 * 60 * 365 * 2 * 1000 );
+    compareDate.setTime( compareDate.getTime() - 60 * 60 * 365 * 2 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeBeforeRelative('ticket.pending_time', 1, 'year', true, ticket);
 
@@ -643,7 +782,7 @@ window.onload = function() {
     testTimeAfterRelative('ticket.pending_time', 1, 'hour', false, ticket);
 
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() + 60 * 60 * 2 * 1000 );
+    compareDate.setTime( compareDate.getTime() + 60 * 60 * 2 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeAfterRelative('ticket.pending_time', 1, 'hour', true, ticket);
 
@@ -652,7 +791,7 @@ window.onload = function() {
     testTimeAfterRelative('ticket.pending_time', 1, 'day', false, ticket);
 
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() + 60 * 60 * 48 * 1000 );
+    compareDate.setTime( compareDate.getTime() + 60 * 60 * 48 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeAfterRelative('ticket.pending_time', 1, 'day', true, ticket);
 
@@ -661,7 +800,7 @@ window.onload = function() {
     testTimeAfterRelative('ticket.pending_time', 1, 'year', false, ticket);
 
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() + 60 * 60 * 365 * 2 * 1000 );
+    compareDate.setTime( compareDate.getTime() + 60 * 60 * 365 * 2 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeAfterRelative('ticket.pending_time', 1, 'year', true, ticket);
 
@@ -672,12 +811,12 @@ window.onload = function() {
 
     // hour
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() - 60 * 60 * 0.5 * 1000 );
+    compareDate.setTime( compareDate.getTime() - 60 * 60 * 0.5 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeWithinLastRelative('ticket.pending_time', 1, 'hour', true, ticket);
 
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() - 60 * 60 * 2 * 1000 );
+    compareDate.setTime( compareDate.getTime() - 60 * 60 * 2 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeWithinLastRelative('ticket.pending_time', 1, 'hour', false, ticket);
 
@@ -687,12 +826,12 @@ window.onload = function() {
 
     // hour
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() + 60 * 60 * 0.5 * 1000 );
+    compareDate.setTime( compareDate.getTime() + 60 * 60 * 0.5 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeWithinNextRelative('ticket.pending_time', 1, 'hour', true, ticket);
 
     compareDate = new Date();
-    compareDate.setTime( compareDate.getTime() + 60 * 60 * 2 * 1000 );
+    compareDate.setTime( compareDate.getTime() + 60 * 60 * 2 * 1000);
     ticket.pending_time = compareDate.toISOString();
     testTimeWithinNextRelative('ticket.pending_time', 1, 'hour', false, ticket);
   });
@@ -776,6 +915,13 @@ window.onload = function() {
     App.Session.set(sessionData);
 
     testPreConditionUser('ticket.updated_by_id', '6', ticket, sessionData);
+  });
+
+  test("ticket tags", function() {
+    ticket = new App.Ticket();
+    ticket.load(ticketData);
+
+    testPreConditionTags('ticket.tags', ticket);
   });
 
   test("article from", function() {
