@@ -1175,7 +1175,6 @@ class App.ObserverController extends App.Controller
     if @globalRerender
       @bind('ui:rerender', =>
         @lastAttributres = undefined
-        console.log('aaaa', @model, @template)
         @maybeRender(App[@model].fullLocal(@object_id))
       )
 
