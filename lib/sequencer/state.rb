@@ -262,7 +262,7 @@ class Sequencer
           remove = !attribute.will_be_used?
           remove ||= attribute.to <= @index
           if remove && attribute.will_be_used?
-            logger.debug("Removing unneeded attribute '#{identifier}': #{@values[identifier]}")
+            logger.debug("Removing unneeded attribute '#{identifier}': #{@values[identifier].inspect}")
           end
           remove
         end
