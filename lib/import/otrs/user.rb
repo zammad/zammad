@@ -38,7 +38,7 @@ module Import
         return false if !@local_user
 
         # only update roles if different (reduce sql statements)
-        if user[:role_ids] && user[:role_ids].sort == @local_user.role_ids.sort
+        if user[:role_ids]&.sort == @local_user.role_ids.sort
           user.delete(:role_ids)
         end
 
@@ -143,7 +143,7 @@ module Import
 
       def groups_from_otrs_group(role_object, group)
         result = []
-        return result if role_object['GroupIDs'].empty?
+        return result if role_object['GroupIDs'].blank?
         permissions = role_object['GroupIDs'][ group['ID'] ]
 
         return result if !permissions

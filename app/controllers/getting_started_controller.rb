@@ -66,7 +66,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
 
     # verify auto wizard file
     auto_wizard_data = AutoWizard.data
-    if !auto_wizard_data || auto_wizard_data.empty?
+    if auto_wizard_data.blank?
       render json: {
         auto_wizard: true,
         auto_wizard_success: false,
@@ -132,7 +132,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
     end
 
     # validate organization
-    if !params[:organization] || params[:organization].empty?
+    if params[:organization].blank?
       messages[:organization] = 'Invalid!'
     else
       settings[:organization] = params[:organization]
@@ -146,7 +146,7 @@ curl http://localhost/api/v1/getting_started -v -u #{login}:#{password}
       end
     end
 
-    if !messages.empty?
+    if messages.present?
       render json: {
         result: 'invalid',
         messages: messages,

@@ -67,7 +67,7 @@ module Import
           return true if local_attachments.count == attachments.count
           # get a common ground
           local_attachments.each(&:delete)
-          return true if attachments.empty?
+          return true if attachments.blank?
           false
         end
 

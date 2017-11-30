@@ -48,6 +48,7 @@ class Transaction::CtiCallerIdDetection
       Cti::CallerId.build(user)
     end
 
+    true
   end
 
 end

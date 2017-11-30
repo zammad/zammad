@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   # add custom attributes via:
   # mocked_entry         = build(:ldap_entry)

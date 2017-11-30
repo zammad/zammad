@@ -15,8 +15,8 @@ class ActiveSupport::TestCase
   Cache.clear
 
   # load seeds
-  load "#{Rails.root}/db/seeds.rb"
-  load "#{Rails.root}/test/fixtures/seeds.rb"
+  load Rails.root.join('db', 'seeds.rb')
+  load Rails.root.join('test', 'fixtures', 'seeds.rb')
 
   setup do
 

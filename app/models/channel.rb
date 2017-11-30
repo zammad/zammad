@@ -50,7 +50,6 @@ fetch one account
     end
 
     begin
-
       # we need to require each channel backend individually otherwise we get a
       # 'warning: toplevel constant Twitter referenced by Channel::Driver::Twitter' error e.g.
       # so we have to convert the channel name to the filename via Rails String.underscore
@@ -94,7 +93,6 @@ stream instance of account
     adapter = options[:adapter]
 
     begin
-
       # we need to require each channel backend individually otherwise we get a
       # 'warning: toplevel constant Twitter referenced by Channel::Driver::Twitter' error e.g.
       # so we have to convert the channel name to the filename via Rails String.underscore
@@ -264,7 +262,6 @@ send via account
     result = nil
 
     begin
-
       # we need to require each channel backend individually otherwise we get a
       # 'warning: toplevel constant Twitter referenced by Channel::Driver::Twitter' error e.g.
       # so we have to convert the channel name to the filename via Rails String.underscore

@@ -49,7 +49,7 @@ module Import
           'Automations'        => 0,
         }
 
-        result.each do |object, _score|
+        result.each_key do |object|
           result[ object ] = statistic_count(object)
         end
 

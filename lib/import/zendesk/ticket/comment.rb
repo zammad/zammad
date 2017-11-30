@@ -62,7 +62,7 @@ module Import
 
         def import_attachments(comment)
           attachments = comment.attachments
-          return if attachments.empty?
+          return if attachments.blank?
           Import::Zendesk::Ticket::Comment::AttachmentFactory.import(attachments, @local_article)
         end
       end

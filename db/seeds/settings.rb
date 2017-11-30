@@ -236,7 +236,7 @@ Setting.create_if_not_exists(
   title: 'Fully Qualified Domain Name',
   name: 'fqdn',
   area: 'System::Base',
-  description: 'Defines the fully qualified domain name of the system. This setting is used as a variable, #{setting.fqdn} which is found in all forms of messaging used by the application, to build links to the tickets within your system.',
+  description: 'Defines the fully qualified domain name of the system. This setting is used as a variable, #{setting.fqdn} which is found in all forms of messaging used by the application, to build links to the tickets within your system.', # rubocop:disable Lint/InterpolationCheck
   options: {
     form: [
       {
@@ -792,7 +792,7 @@ Setting.create_if_not_exists(
     uid: 'mail',
     base: 'dc=example,dc=org',
     always_filter: '',
-    always_roles: %w(Admin Agent),
+    always_roles: %w[Admin Agent],
     always_groups: ['Users'],
     sync_params: {
       firstname: 'sn',
@@ -1580,7 +1580,7 @@ Setting.create_if_not_exists(
   },
   state: 'Ticket::Number::Increment',
   preferences: {
-    settings_included: %w(ticket_number_increment ticket_number_date),
+    settings_included: %w[ticket_number_increment ticket_number_date],
     controller: 'SettingsAreaTicketNumber',
     permission: ['admin.ticket'],
   },
@@ -2042,6 +2042,32 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Customer selection based on sender and receiver list',
+  name: 'postmaster_sender_is_agent_search_for_customer',
+  area: 'Email::Base',
+  description: 'If the sender is an agent, set the first user in the recipient list as a customer.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'postmaster_sender_is_agent_search_for_customer',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: true,
+  preferences: {
+    permission: ['admin.channel_email'],
+  },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
   title: 'Notification Sender',
   name: 'notification_sender',
   area: 'Email::Base',
@@ -2056,7 +2082,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: 'Notification Master <noreply@#{config.fqdn}>',
+  state: 'Notification Master <noreply@#{config.fqdn}>', # rubocop:disable Lint/InterpolationCheck
   preferences: {
     online_service_disable: true,
     permission: ['admin.channel_email'],

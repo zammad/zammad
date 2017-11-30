@@ -10,7 +10,7 @@ class Observer::Ticket::Article::FillupFromOriginById < ActiveRecord::Observer
 
     # only do fill of from if article got created via application_server (e. g. not
     # if article and sender type is set via *.postmaster)
-    return if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
+    return if ApplicationHandleInfo.postmaster?
 
     # check if origin_by_id exists
     return if record.origin_by_id.present?

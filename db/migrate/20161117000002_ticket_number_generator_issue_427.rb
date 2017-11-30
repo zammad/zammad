@@ -5,7 +5,7 @@ class TicketNumberGeneratorIssue427 < ActiveRecord::Migration[4.2]
 
     setting = Setting.find_by(name: 'ticket_number')
     setting.preferences = {
-      settings_included: %w(ticket_number_increment ticket_number_date),
+      settings_included: %w[ticket_number_increment ticket_number_date],
       controller: 'SettingsAreaTicketNumber',
       permission: ['admin.ticket'],
     }

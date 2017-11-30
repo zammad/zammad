@@ -21,8 +21,7 @@ RSpec.describe Import::OTRS::User do
     start_import_test
   end
 
-  def role_delete_expecations(role_ids)
-  end
+  def role_delete_expecations(role_ids); end
 
   def load_user_json(file)
     json_fixture("import/otrs/user/#{file}")

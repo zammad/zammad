@@ -12,11 +12,11 @@ class TweetBase
     if tweet.class == Twitter::DirectMessage
       Rails.logger.debug "Twitter sender for dm (#{tweet.id}): found"
       Rails.logger.debug tweet.sender.inspect
-      return tweet.sender
+      tweet.sender
     elsif tweet.class == Twitter::Tweet
       Rails.logger.debug "Twitter sender for tweet (#{tweet.id}): found"
       Rails.logger.debug tweet.user.inspect
-      return tweet.user
+      tweet.user
     else
       raise "Unknown tweet type '#{tweet.class}'"
     end
@@ -47,9 +47,9 @@ class TweetBase
 
       # ignore if value is already set
       map.each do |target, source|
-        next if user[target] && !user[target].empty?
+        next if user[target].present?
         new_value = tweet_user.send(source).to_s
-        next if !new_value || new_value.empty?
+        next if new_value.blank?
         user_data[target] = new_value
       end
       user.update!(user_data)
@@ -113,7 +113,7 @@ class TweetBase
         customer_id:         user.id,
         state:               Ticket::State.where.not(
           state_type_id: Ticket::StateType.where(
-            name: %w(closed merged removed),
+            name: %w[closed merged removed],
           )
         )
       )
@@ -169,16 +169,14 @@ class TweetBase
       article_type = 'twitter status'
       from = "@#{tweet.user.screen_name}"
       mention_ids = []
-      if tweet.user_mentions
-        tweet.user_mentions.each do |local_user|
-          if !to
-            to = ''
-          else
-            to += ', '
-          end
-          to += "@#{local_user.screen_name}"
-          mention_ids.push local_user.id
+      tweet.user_mentions&.each do |local_user|
+        if !to
+          to = ''
+        else
+          to += ', '
         end
+        to += "@#{local_user.screen_name}"
+        mention_ids.push local_user.id
       end
       in_reply_to = tweet.in_reply_to_status_id
 
@@ -257,7 +255,6 @@ class TweetBase
             ticket = existing_article.ticket
           else
             begin
-
               # in case of streaming mode, get parent tweet via REST client
               if @connection_type == 'stream'
                 client = TweetRest.new(@auth)
@@ -370,7 +367,7 @@ class TweetBase
   def preferences_cleanup(preferences)
 
     # replace Twitter::NullObject with nill to prevent elasticsearch index issue
-    preferences.each do |_key, value|
+    preferences.each_value do |value|
       next if !value.is_a?(Hash)
       value.each do |sub_key, sub_level|
         if sub_level.class == NilClass

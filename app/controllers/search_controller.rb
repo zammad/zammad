@@ -16,6 +16,9 @@ class SearchController < ApplicationController
 
     # get params
     query = params[:query]
+    if query.respond_to?(:permit!)
+      query = query.permit!.to_h
+    end
     limit = params[:limit] || 10
 
     # convert objects string into array of class names

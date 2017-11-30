@@ -90,7 +90,7 @@ in case of fixing sha hash use:
         store = Store.find_by(store_file_id: item.id)
         logger.error "STORE: #{store.inspect}"
         if fix_it
-          item.update_attribute(:sha, sha)
+          item.update_attribute(:sha, sha) # rubocop:disable Rails/SkipsModelValidations
         end
       end
       success
@@ -128,7 +128,7 @@ nice move to keep system responsive
         adapter_target.add(content, item.sha)
 
         # update meta data
-        item.update_attribute(:provider, target)
+        item.update_attribute(:provider, target) # rubocop:disable Rails/SkipsModelValidations
 
         # remove from old provider
         adapter_source.delete(item.sha)

@@ -13,7 +13,6 @@ module Enrichment
       def synced?
         return false if !@config
 
-        # TODO
         UserInfo.current_user_id = 1
 
         return false if !mapping?
@@ -74,7 +73,7 @@ module Enrichment
         return false if @user.organization_id
 
         # can't create organization without name
-        return false if @current_changes[:name].empty?
+        return false if @current_changes[:name].blank?
 
         organization = create_current
 
@@ -95,7 +94,7 @@ module Enrichment
           object:          organization,
           current_changes: @current_changes,
         )
-        organization.save
+        organization.save!
 
         ExternalSync.create(
           source:       @source,
@@ -127,10 +126,10 @@ module Enrichment
         )
 
         organization.updated_by_id = 1
-        organization.save
+        organization.save!
 
         @external_organization.last_payload = @payload
-        @external_organization.save
+        @external_organization.save!
 
         organization
       end

@@ -22,7 +22,7 @@ module Import
             return if local_attachments.count == records.count
             # get a common ground
             local_attachments.each(&:delete)
-            return if records.empty?
+            return if records.blank?
 
             records.each(&import_block)
           end

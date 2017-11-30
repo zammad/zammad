@@ -35,7 +35,7 @@ returns
 =end
 
   def self.set_webhook(token, callback_url)
-    if callback_url =~ %r{^http://}i
+    if callback_url.match?(%r{^http://}i)
       raise 'webhook url need to start with https://, you use http://'
     end
     api = TelegramAPI.new(token)
@@ -174,14 +174,14 @@ returns
 
   def self.message_id(params)
     message_id = nil
-    [:message, :edited_message].each do |key|
+    %i[message edited_message].each do |key|
       next if !params[key]
       next if !params[key][:message_id]
       message_id = params[key][:message_id]
       break
     end
     if message_id
-      [:message, :edited_message].each do |key|
+      %i[message edited_message].each do |key|
         next if !params[key]
         next if !params[key][:chat]
         next if !params[key][:chat][:id]
@@ -279,14 +279,14 @@ returns
 
     # prepare title
     title = '-'
-    [:text, :caption].each do |area|
+    %i[text caption].each do |area|
       next if !params[:message]
       next if !params[:message][area]
       title = params[:message][area]
       break
     end
     if title == '-'
-      [:sticker, :photo, :document, :voice].each do |area|
+      %i[sticker photo document voice].each do |area|
         begin
           next if !params[:message]
           next if !params[:message][area]
@@ -304,7 +304,7 @@ returns
     end
 
     # find ticket or create one
-    state_ids = Ticket::State.where(name: %w(closed merged removed)).pluck(:id)
+    state_ids = Ticket::State.where(name: %w[closed merged removed]).pluck(:id)
     ticket = Ticket.where(customer_id: user.id).where.not(state_id: state_ids).order(:updated_at).first
     if ticket
 

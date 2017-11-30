@@ -24,7 +24,7 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
 
     # save ticket
     if !changed
-      record.ticket.touch
+      record.ticket.touch # rubocop:disable Rails/SkipsModelValidations
       return
     end
     record.ticket.save
@@ -38,7 +38,7 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
 
     # save ticket
     if !changed
-      record.ticket.touch
+      record.ticket.touch # rubocop:disable Rails/SkipsModelValidations
       return
     end
     record.ticket.save!

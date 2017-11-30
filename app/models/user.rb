@@ -38,14 +38,14 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
-  before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
+  before_validation :check_name, :check_email, :check_login, :check_mail_delivery_failed, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_create   :check_preferences_default, :validate_ooo, :domain_based_assignment, :set_locale
   before_update   :check_preferences_default, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy, :user_device_destroy
 
-  has_and_belongs_to_many :roles,           after_add: [:cache_update, :check_notifications], after_remove: :cache_update, before_add: [:validate_agent_limit_by_role, :validate_roles], before_remove: :last_admin_check_by_role, class_name: 'Role'
+  has_and_belongs_to_many :roles,           after_add: %i[cache_update check_notifications], after_remove: :cache_update, before_add: %i[validate_agent_limit_by_role validate_roles], before_remove: :last_admin_check_by_role, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
@@ -368,12 +368,9 @@ returns
 
     role_ids = Role.signup_role_ids
     url = ''
-    if hash['info']['urls']
-      hash['info']['urls'].each do |_name, local_url|
-        next if !local_url
-        next if local_url.empty?
-        url = local_url
-      end
+    hash['info']['urls']&.each_value do |local_url|
+      next if local_url.blank?
+      url = local_url
     end
     create(
       login: hash['info']['nickname'] || hash['uid'],
@@ -441,13 +438,13 @@ returns
     end
     keys.each do |local_key|
       list = []
-      if local_key =~ /\.\*$/
+      if local_key.match?(/\.\*$/)
         local_key.sub!('.*', '.%')
         permissions = ::Permission.with_parents(local_key)
         list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND (permissions.name IN (?) OR permissions.name LIKE ?) AND permissions.active = ?', role_ids, true, permissions, local_key, true).pluck(:preferences)
       else
         permission = ::Permission.lookup(name: local_key)
-        break if permission && permission.active == false
+        break if permission&.active == false
         permissions = ::Permission.with_parents(local_key)
         list = ::Permission.select('preferences').joins(:roles).where('roles.id IN (?) AND roles.active = ? AND permissions.name IN (?) AND permissions.active = ?', role_ids, true, permissions, true).pluck(:preferences)
       end
@@ -472,7 +469,7 @@ returns
   def permissions_with_child_ids
     where = ''
     where_bind = [true]
-    permissions.each do |permission_name, _value|
+    permissions.each_key do |permission_name|
       where += ' OR ' if where != ''
       where += 'permissions.name = ? OR permissions.name LIKE ?'
       where_bind.push permission_name
@@ -511,13 +508,13 @@ returns
         next if !permission
         permission_ids.push permission.id
       end
-      next if permission_ids.empty?
+      next if permission_ids.blank?
       Role.joins(:roles_permissions).joins(:permissions).where('permissions_roles.permission_id IN (?) AND roles.active = ? AND permissions.active = ?', permission_ids, true, true).distinct().pluck(:id).each do |role_id|
         role_ids.push role_id
       end
       total_role_ids.push role_ids
     end
-    return [] if total_role_ids.empty?
+    return [] if total_role_ids.blank?
     condition = ''
     total_role_ids.each do |_role_ids|
       if condition != ''
@@ -792,7 +789,7 @@ returns
     true
   end
 
-  def check_notifications(o, shouldSave = true)
+  def check_notifications(o, should_save = true)
     default = Rails.configuration.preferences_default_by_permission
     return if !default
     default.deep_stringify_keys!
@@ -808,7 +805,7 @@ returns
 
     return true if !has_changed
 
-    if id && shouldSave
+    if id && should_save
       save!
       return true
     end
@@ -908,7 +905,7 @@ returns
     self.email = email.downcase.strip
     return true if id == 1
     raise Exceptions::UnprocessableEntity, 'Invalid email' if email !~ /@/
-    raise Exceptions::UnprocessableEntity, 'Invalid email' if email =~ /\s/
+    raise Exceptions::UnprocessableEntity, 'Invalid email' if email.match?(/\s/)
     true
   end
 
@@ -936,12 +933,18 @@ returns
     check      = true
     while check
       exists = User.find_by(login: login)
-      if exists && exists.id != id
+      if exists && exists.id != id # rubocop:disable Style/SafeNavigation
         self.login = "#{login}#{rand(999)}"
       else
         check = false
       end
     end
+    true
+  end
+
+  def check_mail_delivery_failed
+    return true if !changes || !changes['email']
+    preferences.delete(:mail_delivery_failed)
     true
   end
 
@@ -1103,7 +1106,7 @@ raise 'Minimum one user need to have admin permissions'
     # update user link
     return true if !avatar
 
-    update_column(:image, avatar.store_hash)
+    update_column(:image, avatar.store_hash) # rubocop:disable Rails/SkipsModelValidations
     cache_delete
     true
   end

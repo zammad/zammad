@@ -1,4 +1,4 @@
-# encoding: utf-8
+# rubocop:disable Lint/InterpolationCheck
 require 'test_helper'
 
 class TicketTriggerTest < ActiveSupport::TestCase
@@ -189,7 +189,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal(%w(aa kk abc), ticket1.tag_list)
+    assert_equal(%w[aa kk abc], ticket1.tag_list)
     article1 = ticket1.articles.last
     assert_match('Zammad <zammad@localhost>', article1.from)
     assert_match('nicole.braun@zammad.org', article1.to)
@@ -208,7 +208,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal(%w(aa kk abc), ticket1.tag_list)
+    assert_equal(%w[aa kk abc], ticket1.tag_list)
 
     ticket1.state = Ticket::State.lookup(name: 'open')
     ticket1.save!
@@ -221,7 +221,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('open', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal(%w(aa kk abc), ticket1.tag_list)
+    assert_equal(%w[aa kk abc], ticket1.tag_list)
 
     ticket1.state = Ticket::State.lookup(name: 'new')
     ticket1.save!
@@ -234,7 +234,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal(%w(aa abc), ticket1.tag_list)
+    assert_equal(%w[aa abc], ticket1.tag_list)
 
     ticket2 = Ticket.create(
       title: "some title\n äöüß",
@@ -303,7 +303,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket3.state.name, 'ticket3.state verify')
     assert_equal('3 high', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(3, ticket3.articles.count, 'ticket3.articles verify')
-    assert_equal(%w(aa kk abc article_create_trigger), ticket3.tag_list)
+    assert_equal(%w[aa kk abc article_create_trigger], ticket3.tag_list)
     article3 = ticket3.articles[1]
     assert_match('Zammad <zammad@localhost>', article3.from)
     assert_match('nicole.braun@zammad.org', article3.to)
@@ -341,7 +341,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket3.state.name, 'ticket3.state verify')
     assert_equal('3 high', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(4, ticket3.articles.count, 'ticket3.articles verify')
-    assert_equal(%w(aa abc article_create_trigger), ticket3.tag_list)
+    assert_equal(%w[aa abc article_create_trigger], ticket3.tag_list)
 
     Ticket::Article.create(
       ticket_id: ticket3.id,
@@ -366,7 +366,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket3.state.name, 'ticket3.state verify')
     assert_equal('3 high', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(5, ticket3.articles.count, 'ticket3.articles verify')
-    assert_equal(%w(aa abc article_create_trigger), ticket3.tag_list)
+    assert_equal(%w[aa abc article_create_trigger], ticket3.tag_list)
 
     Ticket::Article.create(
       ticket_id: ticket3.id,
@@ -391,7 +391,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket3.state.name, 'ticket3.state verify')
     assert_equal('3 high', ticket3.priority.name, 'ticket3.priority verify')
     assert_equal(7, ticket3.articles.count, 'ticket3.articles verify')
-    assert_equal(%w(aa abc article_create_trigger), ticket3.tag_list)
+    assert_equal(%w[aa abc article_create_trigger], ticket3.tag_list)
   end
 
   test '2 actions - create' do
@@ -2959,7 +2959,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       perform: {
         'notification.email' => {
           'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
-          'recipient' => %w(ticket_owner article_last_sender),
+          'recipient' => %w[ticket_owner article_last_sender],
           'subject' => 'Thanks for your inquiry (#{ticket.title})!',
         },
       },
@@ -2975,7 +2975,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       email: 'admin+owner_recipient@example.com',
       password: 'adminpw',
       active: true,
-      roles: Role.where(name: %w(Admin Agent)),
+      roles: Role.where(name: %w[Admin Agent]),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -3469,7 +3469,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
-    assert_equal(%w(aa kk), ticket1.tag_list)
+    assert_equal(%w[aa kk], ticket1.tag_list)
     article1 = ticket1.articles.last
     assert_match('Zammad <zammad@localhost>', article1.from)
     assert_match('nicole.braun@zammad.org', article1.to)

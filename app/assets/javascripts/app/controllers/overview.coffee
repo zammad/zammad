@@ -23,17 +23,22 @@ class Index extends App.ControllerSubContent
         ]
       container: @el.closest('.content')
       large: true
-      dndCallback: =>
+      dndCallback: (e, item) =>
         items = @el.find('table > tbody > tr')
-        order = []
+        prios = []
         prio = 0
         for item in items
           prio += 1
           id = $(item).data('id')
-          overview = App.Overview.find(id)
-          if overview.prio isnt prio
-            overview.prio = prio
-            overview.save()
+          prios.push [id, prio]
+
+        @ajax(
+          id:          'overview_prio'
+          type:        'POST'
+          url:         "#{@apiPath}/overviews_prio"
+          processData: true
+          data:        JSON.stringify(prios: prios)
+        )
     )
 
 App.Config.set('Overview', { prio: 2300, name: 'Overviews', parent: '#manage', target: '#manage/overviews', controller: Index, permission: ['admin.overview'] }, 'NavBarAdmin')

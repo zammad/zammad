@@ -22,15 +22,15 @@ module Channel::Filter::IdentifySender
     if !customer_user && mail[ 'x-zammad-customer-email'.to_sym ].present?
       customer_user = User.find_by(email: mail[ 'x-zammad-customer-email'.to_sym ])
     end
-    if !customer_user
 
-      # get correct customer
+    # get correct customer
+    if !customer_user && Setting.get('postmaster_sender_is_agent_search_for_customer') == true
       if mail[ 'x-zammad-ticket-create-article-sender'.to_sym ] == 'Agent'
 
         # get first recipient and set customer
         begin
           to = 'raw-to'.to_sym
-          if mail[to] && mail[to].addrs
+          if mail[to]&.addrs
             items = mail[to].addrs
             items.each do |item|
 
@@ -46,18 +46,21 @@ module Channel::Filter::IdentifySender
             end
           end
         rescue => e
-          Rails.logger.error 'ERROR: SenderIsSystemAddress: ' + e.inspect
+          Rails.logger.error "SenderIsSystemAddress: ##{e.inspect}"
         end
       end
-      if !customer_user
-        customer_user = user_create(
-          login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-          firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
-          lastname: mail[ 'x-zammad-customer-lastname'.to_sym ],
-          email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-        )
-      end
     end
+
+    # take regular from as customer
+    if !customer_user
+      customer_user = user_create(
+        login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+        firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
+        lastname: mail[ 'x-zammad-customer-lastname'.to_sym ],
+        email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+      )
+    end
+
     create_recipients(mail)
     mail[ 'x-zammad-ticket-customer_id'.to_sym ] = customer_user.id
 
@@ -83,6 +86,8 @@ module Channel::Filter::IdentifySender
     if session_user
       mail[ 'x-zammad-session-user-id'.to_sym ] = session_user.id
     end
+
+    true
   end
 
   # create to and cc user
@@ -159,7 +164,7 @@ module Channel::Filter::IdentifySender
     role_ids = Role.signup_role_ids
 
     # fillup
-    %w(firstname lastname).each do |item|
+    %w[firstname lastname].each do |item|
       if data[item.to_sym].nil?
         data[item.to_sym] = ''
       end

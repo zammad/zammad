@@ -11,44 +11,44 @@ class Ldap
   class User
     include Ldap::FilterLookup
 
-    BLACKLISTED = [
-      :admincount,
-      :accountexpires,
-      :badpasswordtime,
-      :badpwdcount,
-      :countrycode,
-      :distinguishedname,
-      :dnshostname,
-      :dscorepropagationdata,
-      :instancetype,
-      :iscriticalsystemobject,
-      :useraccountcontrol,
-      :usercertificate,
-      :objectclass,
-      :objectcategory,
-      :objectguid,
-      :objectsid,
-      :primarygroupid,
-      :pwdlastset,
-      :lastlogoff,
-      :lastlogon,
-      :lastlogontimestamp,
-      :localpolicyflags,
-      :lockouttime,
-      :logoncount,
-      :logonhours,
-      :'msdfsr-computerreferencebl',
-      :'msds-supportedencryptiontypes',
-      :ridsetreferences,
-      :samaccounttype,
-      :memberof,
-      :serverreferencebl,
-      :serviceprincipalname,
-      :showinadvancedviewonly,
-      :usnchanged,
-      :usncreated,
-      :whenchanged,
-      :whencreated,
+    BLACKLISTED = %i[
+      admincount
+      accountexpires
+      badpasswordtime
+      badpwdcount
+      countrycode
+      distinguishedname
+      dnshostname
+      dscorepropagationdata
+      instancetype
+      iscriticalsystemobject
+      useraccountcontrol
+      usercertificate
+      objectclass
+      objectcategory
+      objectguid
+      objectsid
+      primarygroupid
+      pwdlastset
+      lastlogoff
+      lastlogon
+      lastlogontimestamp
+      localpolicyflags
+      lockouttime
+      logoncount
+      logonhours
+      msdfsr-computerreferencebl
+      msds-supportedencryptiontypes
+      ridsetreferences
+      samaccounttype
+      memberof
+      serverreferencebl
+      serviceprincipalname
+      showinadvancedviewonly
+      usnchanged
+      usncreated
+      whenchanged
+      whencreated
     ].freeze
 
     # Returns the uid attribute.
@@ -61,7 +61,7 @@ class Ldap
     # @return [String] The uid attribute.
     def self.uid_attribute(attributes)
       result = nil
-      %i(samaccountname userprincipalname uid dn).each do |attribute|
+      %i[samaccountname userprincipalname uid dn].each do |attribute|
         next if attributes[attribute].blank?
         result = attribute.to_s
         break

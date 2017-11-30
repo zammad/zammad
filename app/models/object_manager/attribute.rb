@@ -279,7 +279,7 @@ possible types
 
       # if data_option has changed, store it for next migration
       if !force
-        [:name, :display, :data_type, :position, :active].each do |key|
+        %i[name display data_type position active].each do |key|
           next if record[key] == data[key]
           data[:to_config] = true
           break
@@ -441,7 +441,7 @@ returns:
         tag: item.data_type,
         #:null     => item.null,
       }
-      if item.data_option[:permission] && item.data_option[:permission].any?
+      if item.data_option[:permission]&.any?
         next if !user
         hint = false
         item.data_option[:permission].each do |permission|
@@ -459,7 +459,7 @@ returns:
           permission_options.each do |permission, options|
             if permission == '-all-'
               data[:screen][screen] = options
-            elsif user && user.permissions?(permission)
+            elsif user&.permissions?(permission)
               data[:screen][screen] = options
             end
           end
@@ -535,7 +535,7 @@ returns
 =end
 
   def self.pending_migration?
-    return false if migrations.empty?
+    return false if migrations.blank?
     true
   end
 
@@ -601,21 +601,21 @@ to send no browser reload event, pass false
       end
 
       data_type = nil
-      if attribute.data_type =~ /^input|select|tree_select|richtext|textarea|checkbox$/
+      if attribute.data_type.match?(/^input|select|tree_select|richtext|textarea|checkbox$/)
         data_type = :string
-      elsif attribute.data_type =~ /^integer|user_autocompletion$/
+      elsif attribute.data_type.match?(/^integer|user_autocompletion$/)
         data_type = :integer
-      elsif attribute.data_type =~ /^boolean|active$/
+      elsif attribute.data_type.match?(/^boolean|active$/)
         data_type = :boolean
-      elsif attribute.data_type =~ /^datetime$/
+      elsif attribute.data_type.match?(/^datetime$/)
         data_type = :datetime
-      elsif attribute.data_type =~ /^date$/
+      elsif attribute.data_type.match?(/^date$/)
         data_type = :date
       end
 
       # change field
       if model.column_names.include?(attribute.name)
-        if attribute.data_type =~ /^input|select|tree_select|richtext|textarea|checkbox$/
+        if attribute.data_type.match?(/^input|select|tree_select|richtext|textarea|checkbox$/)
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -623,7 +623,7 @@ to send no browser reload event, pass false
             limit: attribute.data_option[:maxlength],
             null: true
           )
-        elsif attribute.data_type =~ /^integer|user_autocompletion|datetime|date$/
+        elsif attribute.data_type.match?(/^integer|user_autocompletion|datetime|date$/)
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -631,7 +631,7 @@ to send no browser reload event, pass false
             default: attribute.data_option[:default],
             null: true
           )
-        elsif attribute.data_type =~ /^boolean|active$/
+        elsif attribute.data_type.match?(/^boolean|active$/)
           ActiveRecord::Migration.change_column(
             model.table_name,
             attribute.name,
@@ -654,7 +654,7 @@ to send no browser reload event, pass false
       end
 
       # create field
-      if attribute.data_type =~ /^input|select|tree_select|richtext|textarea|checkbox$/
+      if attribute.data_type.match?(/^input|select|tree_select|richtext|textarea|checkbox$/)
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -662,7 +662,7 @@ to send no browser reload event, pass false
           limit: attribute.data_option[:maxlength],
           null: true
         )
-      elsif attribute.data_type =~ /^integer|user_autocompletion$/
+      elsif attribute.data_type.match?(/^integer|user_autocompletion$/)
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -670,7 +670,7 @@ to send no browser reload event, pass false
           default: attribute.data_option[:default],
           null: true
         )
-      elsif attribute.data_type =~ /^boolean|active$/
+      elsif attribute.data_type.match?(/^boolean|active$/)
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -678,7 +678,7 @@ to send no browser reload event, pass false
           default: attribute.data_option[:default],
           null: true
         )
-      elsif attribute.data_type =~ /^datetime|date$/
+      elsif attribute.data_type.match?(/^datetime|date$/)
         ActiveRecord::Migration.add_column(
           model.table_name,
           attribute.name,
@@ -727,26 +727,20 @@ to send no browser reload event, pass false
 
   def check_name
     return if !name
-    if name =~ /_(id|ids)$/i || name =~ /^id$/i
-      raise 'Name can\'t get used, *_id and *_ids are not allowed'
-    elsif name =~ /\s/
-      raise 'Spaces in name are not allowed'
-    elsif name !~ /^[a-z0-9_]+$/
-      raise 'Only letters from a-z, numbers from 0-9, and _ are allowed'
-    elsif name !~ /[a-z]/
-      raise 'At least one letters is needed'
-    elsif name =~ /^(destroy|true|false|integer|select|drop|create|alter|index|table|varchar|blob|date|datetime|timestamp)$/
-      raise "#{name} is a reserved word, please choose a different one"
+
+    raise 'Name can\'t get used, *_id and *_ids are not allowed' if name.match?(/_(id|ids)$/i) || name.match?(/^id$/i)
+    raise 'Spaces in name are not allowed' if name.match?(/\s/)
+    raise 'Only letters from a-z, numbers from 0-9, and _ are allowed' if !name.match?(/^[a-z0-9_]+$/)
+    raise 'At least one letters is needed' if !name.match?(/[a-z]/)
 
     # do not allow model method names as attributes
-    else
-      model = Kernel.const_get(object_lookup.name)
-      record = model.new
-      if record.respond_to?(name.to_sym) && !record.attributes.key?(name)
-        raise "#{name} is a reserved word, please choose a different one"
-      end
-    end
-    true
+    reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp]
+    raise "#{name} is a reserved word, please choose a different one" if name.match?(/^(#{reserved_words.join('|')})$/)
+
+    record = object_lookup.name.constantize.new
+    return true if !record.respond_to?(name.to_sym)
+    return true if record.attributes.key?(name)
+    raise "#{name} is a reserved word, please choose a different one"
   end
 
   def check_editable
@@ -783,7 +777,7 @@ to send no browser reload event, pass false
     end
 
     if data_type == 'integer'
-      [:min, :max].each do |item|
+      %i[min max].each do |item|
         raise "Need data_option[#{item.inspect}] param" if !data_option[item]
         raise "Invalid data_option[#{item.inspect}] param #{data_option[item]}" if data_option[item].to_s !~ /^\d+?$/
       end
@@ -817,6 +811,7 @@ to send no browser reload event, pass false
       raise 'Need data_option[:diff] param in days' if data_option[:diff].nil?
     end
 
+    true
   end
 
 end

@@ -30,7 +30,7 @@ RSpec.describe ::Auth::Ldap do
 
       instance = described_class.new(
         adapter:          described_class.name,
-        login_attributes: %w(firstname),
+        login_attributes: %w[firstname],
       )
 
       ldap_user = double

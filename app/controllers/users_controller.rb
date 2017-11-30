@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class UsersController < ApplicationController
-  prepend_before_action :authentication_check, except: [:create, :password_reset_send, :password_reset_verify, :image]
+  prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image]
   prepend_before_action :authentication_check_only, only: [:create]
 
   # @path       [GET] /users
@@ -145,7 +145,7 @@ class UsersController < ApplicationController
       group_ids = []
       role_ids  = []
       if count <= 2
-        Role.where(name: %w(Admin Agent)).each do |role|
+        Role.where(name: %w[Admin Agent]).each do |role|
           role_ids.push role.id
         end
         Group.all().each do |group|
@@ -363,12 +363,17 @@ class UsersController < ApplicationController
       params[:limit].to_i = 500
     end
 
+    query = params[:query]
+    if query.respond_to?(:permit!)
+      query = query.permit!.to_h
+    end
+
     query_params = {
-      query: params[:query],
+      query: query,
       limit: params[:limit],
       current_user: current_user,
     }
-    [:role_ids, :permissions].each do |key|
+    %i[role_ids permissions].each do |key|
       next if params[key].blank?
       query_params[key] = params[key]
     end
@@ -1046,7 +1051,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   def permission_check_by_permission(params)
     return true if current_user.permissions?('admin.user')
 
-    %i(role_ids roles).each do |key|
+    %i[role_ids roles].each do |key|
       next if !params[key]
       if current_user.permissions?('ticket.agent')
         params.delete(key)
@@ -1059,7 +1064,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
       params[:role_ids] = Role.signup_role_ids
     end
 
-    %i(group_ids groups).each do |key|
+    %i[group_ids groups].each do |key|
       next if !params[key]
       if current_user.permissions?('ticket.agent')
         params.delete(key)

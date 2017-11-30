@@ -249,7 +249,7 @@ returns
       assets = {}
       list.each do |item|
         next if !item.preferences
-        %w(from to).each do |direction|
+        %w[from to].each do |direction|
           next if !item.preferences[direction]
           item.preferences[direction].each do |caller_id|
             next if !caller_id['user_id']

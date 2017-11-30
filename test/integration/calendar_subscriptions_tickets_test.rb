@@ -1,4 +1,4 @@
-## encoding: utf-8
+
 require 'integration_test_helper'
 
 class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
@@ -272,7 +272,7 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
       event_data.each do |event|
 
         contained = false
-        if ical =~ /#{event[:summary]}/
+        if ical.match?(/#{event[:summary]}/)
           contained = true
         end
 
@@ -348,7 +348,7 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
       event_data.each do |event|
 
         contained = false
-        if ical =~ /#{event[:summary]}/
+        if ical.match?(/#{event[:summary]}/)
           contained = true
         end
 
@@ -424,7 +424,7 @@ class CalendarSubscriptionsTicketsTest < ActiveSupport::TestCase
       event_data.each do |event|
 
         contained = false
-        if ical =~ /#{event[:summary]}/
+        if ical.match?(/#{event[:summary]}/)
           contained = true
         end
 

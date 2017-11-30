@@ -11,7 +11,7 @@ list all backend managed object
 =end
 
   def self.list_objects
-    %w(Ticket TicketArticle User Organization Group)
+    %w[Ticket TicketArticle User Organization Group]
   end
 
 =begin
@@ -23,7 +23,7 @@ list all frontend managed object
 =end
 
   def self.list_frontend_objects
-    %w(Ticket User Organization Group)
+    %w[Ticket User Organization Group]
   end
 
 end

@@ -1,7 +1,7 @@
 class SidebarCustomer extends App.Controller
   sidebarItem: =>
     return if !@permissionCheck('ticket.agent')
-    return if !@params.customer_id
+    return if _.isEmpty(@params.customer_id)
     {
       head:    'Customer'
       name:    'customer'
@@ -18,6 +18,7 @@ class SidebarCustomer extends App.Controller
 
   showCustomer: (el) =>
     @el = el
+    return if _.isEmpty(@params.customer_id)
     new App.WidgetUser(
       el:       @el
       user_id:  @params.customer_id

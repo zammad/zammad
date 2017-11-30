@@ -2,7 +2,7 @@ module Import
   class BaseResource
     include Import::Helper
 
-    attr_reader :resource, :remote_id, :errors
+    attr_reader :resource, :errors
 
     def initialize(resource, *args)
       @action = :unknown
@@ -69,7 +69,7 @@ module Import
 
     def initialize_associations_states
       @associations = {}
-      %i(before after).each do |state|
+      %i[before after].each do |state|
         @associations[state] ||= {}
       end
     end
@@ -236,7 +236,7 @@ module Import
     def handle_args(_resource, *args)
       return if !args
       return if !args.is_a?(Array)
-      return if args.empty?
+      return if args.blank?
 
       last_arg = args.last
       return if !last_arg.is_a?(Hash)

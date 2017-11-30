@@ -65,19 +65,19 @@ module Import
 
       def update_ticket_state
         agent_new = ::Ticket::State.where(
-          state_type_id: ::Ticket::StateType.where.not(name: %w(merged removed))
+          state_type_id: ::Ticket::StateType.where.not(name: %w[merged removed])
         ).pluck(:id)
 
         agent_edit = ::Ticket::State.where(
-          state_type_id: ::Ticket::StateType.where.not(name: %w(new merged removed))
+          state_type_id: ::Ticket::StateType.where.not(name: %w[new merged removed])
         ).pluck(:id)
 
         customer_new = ::Ticket::State.where(
-          state_type_id: ::Ticket::StateType.where.not(name: %w(new closed))
+          state_type_id: ::Ticket::StateType.where.not(name: %w[new closed])
         ).pluck(:id)
 
         customer_edit = ::Ticket::State.where(
-          state_type_id: ::Ticket::StateType.where.not(name: %w(open closed))
+          state_type_id: ::Ticket::StateType.where.not(name: %w[open closed])
         ).pluck(:id)
 
         ticket_state_id = ::ObjectManager::Attribute.get(

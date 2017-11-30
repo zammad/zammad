@@ -1,4 +1,4 @@
-# encoding: utf-8
+# rubocop:disable Lint/InterpolationCheck
 require 'test_helper'
 
 class EmailProcessBounceFollowUpTest < ActiveSupport::TestCase
@@ -38,7 +38,7 @@ class EmailProcessBounceFollowUpTest < ActiveSupport::TestCase
   end
 
   test 'process with bounce trigger email loop check - article based blocker' do
-    roles = Role.where(name: %w(Customer))
+    roles = Role.where(name: %w[Customer])
     customer1 = User.create_or_update(
       login: 'ticket-bounce-trigger1@example.com',
       firstname: 'Notification',
@@ -145,7 +145,7 @@ class EmailProcessBounceFollowUpTest < ActiveSupport::TestCase
   end
 
   test 'process with bounce trigger email loop check - bounce based blocker' do
-    roles = Role.where(name: %w(Customer))
+    roles = Role.where(name: %w[Customer])
     customer2 = User.create_or_update(
       login: 'ticket-bounce-trigger2@example.com',
       firstname: 'Notification',

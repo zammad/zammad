@@ -164,7 +164,7 @@ class TimeAccountingsController < ApplicationController
       ]
       result = []
       results.each do |row|
-        row[:ticket].keys.each do |field|
+        row[:ticket].each_key do |field|
           next if row[:ticket][field].blank?
           next if !row[:ticket][field].is_a?(ActiveSupport::TimeWithZone)
 
@@ -250,7 +250,7 @@ class TimeAccountingsController < ApplicationController
       customers[ticket.customer_id][:time_unit] += local_time_unit[:time_unit]
     end
     results = []
-    customers.each do |_customer_id, content|
+    customers.each_value do |content|
       results.push content
     end
 
@@ -326,7 +326,7 @@ class TimeAccountingsController < ApplicationController
       organizations[ticket.organization_id][:time_unit] += local_time_unit[:time_unit]
     end
     results = []
-    organizations.each do |_customer_id, content|
+    organizations.each_value do |content|
       results.push content
     end
 

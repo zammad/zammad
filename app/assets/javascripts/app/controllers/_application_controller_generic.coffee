@@ -148,24 +148,26 @@ class App.ControllerGenericIndex extends App.Controller
         return item
       )
 
-    # show description button, only if content exists
-    showDescription = false
-    if App[ @genericObject ].description && !_.isEmpty(objects)
-      showDescription = true
+    if !@table
 
-    @html App.view('generic/admin/index')(
-      head:            @pageData.objects
-      notes:           @pageData.notes
-      buttons:         @pageData.buttons
-      menus:           @pageData.menus
-      showDescription: showDescription
-    )
+      # show description button, only if content exists
+      showDescription = false
+      if App[ @genericObject ].description && !_.isEmpty(objects)
+        showDescription = true
 
-    # show description in content if no no content exists
-    if _.isEmpty(objects) && App[ @genericObject ].description
-      description = marked(App[ @genericObject ].description)
-      @$('.table-overview').html(description)
-      return
+      @html App.view('generic/admin/index')(
+        head:            @pageData.objects
+        notes:           @pageData.notes
+        buttons:         @pageData.buttons
+        menus:           @pageData.menus
+        showDescription: showDescription
+      )
+
+      # show description in content if no no content exists
+      if _.isEmpty(objects) && App[ @genericObject ].description
+        description = marked(App[ @genericObject ].description)
+        @$('.table-overview').html(description)
+        return
 
     # append content table
     params = _.extend(
@@ -184,7 +186,10 @@ class App.ControllerGenericIndex extends App.Controller
       },
       @pageData.tableExtend
     )
-    new App.ControllerTable(params)
+    if !@table
+      @table = new App.ControllerTable(params)
+    else
+      @table.update(objects: objects)
 
   edit: (id, e) =>
     e.preventDefault()
@@ -685,8 +690,8 @@ class App.Sidebar extends App.Controller
     for item in @items
       area = localEl.filter('.sidebar[data-tab="' + item.name + '"]')
       if item.callback
-        item.callback( area.find('.sidebar-content') )
-      if item.actions
+        item.callback(area.find('.sidebar-content'))
+      if !_.isEmpty(item.actions)
         new App.ActionRow(
           el:    area.find('.js-actions')
           items: item.actions

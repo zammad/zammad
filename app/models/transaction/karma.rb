@@ -98,6 +98,7 @@ class Transaction::Karma
       Karma::ActivityLog.add('ticket pending state', user, 'Ticket', ticket.id)
     end
 
+    true
   end
 
   def ticket_article_karma(user)
@@ -132,11 +133,7 @@ class Transaction::Karma
         return false if !local_sender
         next if local_sender.name == 'System'
 
-        last_sender_customer = if local_sender.name == 'Customer'
-                                 true
-                               else
-                                 false
-                               end
+        last_sender_customer = local_sender.name == 'Customer'
 
         next if local_sender.name != 'Customer'
         last_customer_contact = local_article.created_at
@@ -158,9 +155,11 @@ class Transaction::Karma
     end
 
     ### text module
-    if article.preferences[:text_module_ids] && !article.preferences[:text_module_ids].empty?
+    if article.preferences[:text_module_ids].present?
       Karma::ActivityLog.add('text module', user, 'Ticket', @item[:object_id])
     end
+
+    true
   end
 
   def tagging(user)

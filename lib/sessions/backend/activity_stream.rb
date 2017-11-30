@@ -17,12 +17,12 @@ class Sessions::Backend::ActivityStream
       return
     end
 
-    if activity_stream && activity_stream.first && activity_stream.first['created_at'] == @last_change
+    if activity_stream&.first && activity_stream.first['created_at'] == @last_change
       return
     end
 
     # update last changed
-    if activity_stream && activity_stream.first
+    if activity_stream&.first
       @last_change = activity_stream.first['created_at']
     end
 

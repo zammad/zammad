@@ -51,12 +51,11 @@ class Store::Provider::File
     end
 
     # check if dir need to be removed
-    base = "#{Rails.root}/storage/fs"
     locations = location.split('/')
     (0..locations.count).reverse_each do |count|
       local_location = locations[0, count].join('/')
-      break if local_location =~ %r{storage/fs/{0,4}$}
-      break if !Dir["#{local_location}/*"].empty?
+      break if local_location.match?(%r{storage/fs/{0,4}$})
+      break if Dir["#{local_location}/*"].present?
       FileUtils.rmdir(local_location)
     end
   end
@@ -65,8 +64,8 @@ class Store::Provider::File
   def self.get_location(sha)
 
     # generate directory
-    base   = "#{Rails.root}/storage/fs/"
-    parts  = []
+    base = Rails.root.join('storage', 'fs').to_s
+    parts = []
     length1 = 4
     length2 = 5
     length3 = 7

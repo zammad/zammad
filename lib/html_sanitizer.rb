@@ -17,7 +17,10 @@ satinize html string based on whiltelist
     attributes_whitelist = Rails.configuration.html_sanitizer_attributes_whitelist
     css_properties_whitelist = Rails.configuration.html_sanitizer_css_properties_whitelist
     classes_whitelist = ['js-signatureMarker']
-    attributes_2_css = %w(width height)
+    attributes_2_css = %w[width height]
+
+    # remove html comments
+    string.gsub!(/<!--.+?-->/m, '')
 
     scrubber_link = Loofah::Scrubber.new do |node|
 
@@ -26,7 +29,7 @@ satinize html string based on whiltelist
         if node['href'].blank?
           node.replace node.children.to_s
           Loofah::Scrubber::STOP
-        elsif ((node.children.empty? || node.children.first.class == Nokogiri::XML::Text) && node.text.present?) || (node.children.size == 1 && node.children.first.content == node.content && node.content.present?)
+        elsif ((node.children.blank? || node.children.first.class == Nokogiri::XML::Text) && node.text.present?) || (node.children.size == 1 && node.children.first.content == node.content && node.content.present?)
           if node.text.downcase.start_with?('http', 'ftp', '//')
             a = Nokogiri::XML::Node.new 'a', node.document
             a['href'] = node['href']
@@ -51,7 +54,7 @@ satinize html string based on whiltelist
       end
 
       # check if text has urls which need to be clickable
-      if node && node.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
+      if node&.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
         if node.class == Nokogiri::XML::Text
           urls = []
           node.content.scan(%r{((http|https|ftp|tel)://.+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)}mxi).each do |match|
@@ -64,7 +67,7 @@ satinize html string based on whiltelist
               urls.push match[1].to_s.strip
             end
           end
-          next if urls.empty?
+          next if urls.blank?
           add_link(node.content, urls, node)
         end
       end
@@ -136,7 +139,7 @@ satinize html string based on whiltelist
       # move style attributes to css attributes
       attributes_2_css.each do |key|
         next if !node[key]
-        if node['style'].empty?
+        if node['style'].blank?
           node['style'] = ''
         else
           node['style'] += ';'
@@ -169,7 +172,7 @@ satinize html string based on whiltelist
       end
 
       # scan for invalid link content
-      %w(href style).each do |attribute_name|
+      %w[href style].each do |attribute_name|
         next if !node[attribute_name]
         href = cleanup_target(node[attribute_name])
         next if href !~ /(javascript|livescript|vbscript):/i
@@ -177,9 +180,9 @@ satinize html string based on whiltelist
       end
 
       # remove attributes if not whitelisted
-      node.each do |attribute, _value|
+      node.each do |attribute, _value| # rubocop:disable Performance/HashEachMethods
         attribute_name = attribute.downcase
-        next if attributes_whitelist[:all].include?(attribute_name) || (attributes_whitelist[node.name] && attributes_whitelist[node.name].include?(attribute_name))
+        next if attributes_whitelist[:all].include?(attribute_name) || (attributes_whitelist[node.name]&.include?(attribute_name))
         node.delete(attribute)
       end
 
@@ -238,7 +241,7 @@ cleanup html string:
 
   def self.cleanup_replace_tags(string)
     #return string
-    tags_backlist = %w(span center)
+    tags_backlist = %w[span center]
     scrubber = Loofah::Scrubber.new do |node|
       next if !tags_backlist.include?(node.name)
       hit = false
@@ -262,11 +265,11 @@ cleanup html string:
 
   def self.cleanup_structure(string, type = 'all')
     remove_empty_nodes = if type == 'pre'
-                           %w(span)
+                           %w[span]
                          else
-                           %w(p div span small table)
+                           %w[p div span small table]
                          end
-    remove_empty_last_nodes = %w(b i u small table)
+    remove_empty_last_nodes = %w[b i u small table]
 
     # remove last empty nodes and empty -not needed- parrent nodes
     scrubber_structure = Loofah::Scrubber.new do |node|
@@ -343,7 +346,7 @@ cleanup html string:
   end
 
   def self.add_link(content, urls, node)
-    if urls.empty?
+    if urls.blank?
       text = Nokogiri::XML::Text.new(content, node.document)
       node.add_next_sibling(text)
       return
@@ -354,7 +357,7 @@ cleanup html string:
       pre = $1
       post = $2
 
-      if url =~ /^www/i
+      if url.match?(/^www/i)
         url = "http://#{url}"
       end
 
@@ -376,6 +379,8 @@ cleanup html string:
       return if post.blank?
       add_link(post, urls, a)
     end
+
+    true
   end
 
   def self.html_decode(string)
@@ -383,20 +388,20 @@ cleanup html string:
   end
 
   def self.cleanup_target(string)
-    string = URI.unescape(string).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+    string = CGI.unescape(string).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
     string.gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '')
   end
 
   def self.url_same?(url_new, url_old)
-    url_new = URI.unescape(url_new.to_s).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?').downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
-    url_old = URI.unescape(url_old.to_s).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?').downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
+    url_new = CGI.unescape(url_new.to_s).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?').downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
+    url_old = CGI.unescape(url_old.to_s).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?').downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
     url_new = html_decode(url_new).sub('/?', '?')
     url_old = html_decode(url_old).sub('/?', '?')
     return true if url_new == url_old
-    return true if "http://#{url_new}" == url_old
-    return true if "http://#{url_old}" == url_new
-    return true if "https://#{url_new}" == url_old
-    return true if "https://#{url_old}" == url_new
+    return true if url_old == "http://#{url_new}"
+    return true if url_new == "http://#{url_old}"
+    return true if url_old == "https://#{url_new}"
+    return true if url_new == "https://#{url_old}"
     false
   end
 

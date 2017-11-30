@@ -1,4 +1,4 @@
-# encoding: utf-8
+# rubocop:disable Lint/InterpolationCheck
 require 'test_helper'
 
 class NotificationFactoryRendererTest < ActiveSupport::TestCase

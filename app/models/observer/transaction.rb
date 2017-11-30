@@ -33,14 +33,14 @@ class Observer::Transaction < ActiveRecord::Observer
     sync_backends = []
     Setting.where(area: 'Transaction::Backend::Sync').order(:name).each do |setting|
       backend = Setting.get(setting.name)
-      next if params[:disable] && params[:disable].include?(backend)
+      next if params[:disable]&.include?(backend)
       sync_backends.push Kernel.const_get(backend)
     end
 
     # get uniq objects
     list_objects = get_uniq_changes(list)
-    list_objects.each do |_object, objects|
-      objects.each do |_id, item|
+    list_objects.each_value do |objects|
+      objects.each_value do |item|
 
         # execute sync backends
         sync_backends.each do |backend|
@@ -215,7 +215,7 @@ class Observer::Transaction < ActiveRecord::Observer
     end
 
     # do not send anything if nothing has changed
-    return true if real_changes.empty?
+    return true if real_changes.blank?
 
     changed_by_id = nil
     changed_by_id = if record.respond_to?('updated_by_id')

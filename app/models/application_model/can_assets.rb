@@ -33,7 +33,7 @@ returns
 
     return data if !self['created_by_id'] && !self['updated_by_id']
     app_model_user = User.to_app_model
-    %w(created_by_id updated_by_id).each do |local_user_id|
+    %w[created_by_id updated_by_id].each do |local_user_id|
       next if !self[ local_user_id ]
       next if data[ app_model_user ] && data[ app_model_user ][ self[ local_user_id ] ]
       user = User.lookup(id: self[ local_user_id ])
@@ -75,12 +75,12 @@ get assets and record_ids of selector
       attribute_ref_class = models[attribute_class][:reflections][reflection].klass
       if content['value'].instance_of?(Array)
         content['value'].each do |item_id|
-          attribute_object = attribute_ref_class.find_by(id: item_id)
-          if attribute_object
-            assets = attribute_object.assets(assets)
-          end
+          next if item_id.blank?
+          attribute_object = attribute_ref_class.lookup(id: item_id)
+          next if !attribute_object
+          assets = attribute_object.assets(assets)
         end
-      else
+      elsif content['value'].present?
         attribute_object = attribute_ref_class.find_by(id: content['value'])
         if attribute_object
           assets = attribute_object.assets(assets)
@@ -138,11 +138,11 @@ get assets of object list
         require item['object'].to_filename
         record = Kernel.const_get(item['object']).find(item['o_id'])
         assets = record.assets(assets)
-        if item['created_by_id']
+        if item['created_by_id'].present?
           user = User.find(item['created_by_id'])
           assets = user.assets(assets)
         end
-        if item['updated_by_id']
+        if item['updated_by_id'].present?
           user = User.find(item['updated_by_id'])
           assets = user.assets(assets)
         end

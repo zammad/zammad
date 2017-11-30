@@ -387,15 +387,17 @@ set new attributes of model (remove already available attributes)
         =>
           return if _.isEmpty(@SUBSCRIPTION_COLLECTION)
           App.Log.debug('Model', "server notify collection change #{@className}")
-          @fetchFull(
-            ->
-            clear: true
-          )
+          callback = =>
+            @fetchFull(
+              ->
+              clear: true
+            )
+          App.Delay.set(callback, 200, "full-#{@className}")
 
         "Collection::Subscribe::#{@className}"
       )
 
-    key = @className + '-' + Math.floor( Math.random() * 99999 )
+    key = "#{@className}-#{Math.floor(Math.random() * 99999)}"
     @SUBSCRIPTION_COLLECTION[key] = callback
 
     # fetch init collection

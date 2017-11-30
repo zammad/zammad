@@ -55,15 +55,14 @@ returns
     FileUtils.mv(path_tmp, path)
 
     # send update to browser
-    if session && session['id']
-      send(
-        client_id,
-        {
-          event: 'ws:login',
-          data: { success: true },
-        }
-      )
-    end
+    return if !session || session['id'].blank?
+    send(
+      client_id,
+      {
+        event: 'ws:login',
+        data: { success: true },
+      }
+    )
   end
 
 =begin
@@ -656,9 +655,10 @@ returns
       # restart job again
       if try_run_max > try_count
         thread_client(client_id, try_count, try_run_time)
-      else
-        raise "STOP thread_client for client #{client_id} after #{try_run_max} tries"
+        return
       end
+
+      raise "STOP thread_client for client #{client_id} after #{try_run_max} tries"
     end
     log('debug', "/LOOP #{client_id} - #{try_count}")
   end

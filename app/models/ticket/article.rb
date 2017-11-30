@@ -148,7 +148,7 @@ get body as text
 
   def body_as_text
     return '' if !body
-    return body if !content_type || content_type.empty? || content_type =~ %r{text/plain}i
+    return body if content_type.blank? || content_type =~ %r{text/plain}i
     body.html2text
   end
 
@@ -290,15 +290,12 @@ returns
     return true if body.blank?
     limit = 1_500_000
     current_length = body.length
-    if body.length > limit
-      if ApplicationHandleInfo.current.present? && ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
-        logger.warn "WARNING: cut string because of database length #{self.class}.body(#{limit} but is #{current_length})"
-        self.body = body[0, limit]
-      else
-        raise Exceptions::UnprocessableEntity, "body if article is to large, #{current_length} chars - only #{limit} allowed"
-      end
-    end
-    true
+    return true if body.length <= limit
+
+    raise Exceptions::UnprocessableEntity, "body if article is to large, #{current_length} chars - only #{limit} allowed" if !ApplicationHandleInfo.postmaster?
+
+    logger.warn "WARNING: cut string because of database length #{self.class}.body(#{limit} but is #{current_length})"
+    self.body = body[0, limit]
   end
 
   def history_log_attributes

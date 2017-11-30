@@ -17,7 +17,7 @@ returns
   def self.get
 
     begin
-      version = File.read("#{Rails.root}/VERSION")
+      version = File.read(Rails.root.join('VERSION'))
       version.strip!
     rescue => e
       message = e.to_s

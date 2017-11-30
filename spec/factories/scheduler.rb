@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :test_scheduler_name do |n|
     "Testscheduler#{n}"
   end
 end
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :scheduler do
     name          { generate(:test_scheduler_name) }

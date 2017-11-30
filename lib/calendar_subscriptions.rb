@@ -15,14 +15,13 @@ class CalendarSubscriptions
       @preferences[ object_name ] = calendar_subscription.state_current[:value]
     end
 
-    return if !@user.preferences[:calendar_subscriptions]
-    return if @user.preferences[:calendar_subscriptions].empty?
+    return if @user.preferences[:calendar_subscriptions].blank?
     @preferences = @preferences.merge(@user.preferences[:calendar_subscriptions])
   end
 
   def all
     events_data = []
-    @preferences.each do |object_name, _sub_structure|
+    @preferences.each_key do |object_name|
       result      = generic_call(object_name)
       events_data = events_data + result
     end
@@ -39,7 +38,7 @@ class CalendarSubscriptions
     method_name ||= 'all'
 
     events_data = []
-    if @preferences[ object_name ] && !@preferences[ object_name ].empty?
+    if @preferences[ object_name ].present?
       sub_class_name = object_name.to_s.capitalize
       object         = Object.const_get("CalendarSubscriptions::#{sub_class_name}")
       instance       = object.new(@user, @preferences[ object_name ])

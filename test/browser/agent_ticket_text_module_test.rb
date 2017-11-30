@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'browser_test_helper'
 
 class AgentTicketTextModuleTest < TestCase
@@ -101,7 +101,7 @@ class AgentTicketTextModuleTest < TestCase
       data: {
         name: 'some name' + random,
         keywords: random,
-        content: 'some content #{ticket.customer.lastname}' + random,
+        content: "some content \#{ticket.customer.lastname}#{random}",
       },
     )
 

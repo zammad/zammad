@@ -34,7 +34,7 @@ Trigger.create_or_update(
 <br/>
 <div><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></div>',
       'recipient' => 'article_last_sender',
-      'subject' => 'Thanks for your inquiry (#{ticket.title})',
+      'subject' => 'Thanks for your inquiry (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
     },
   },
   active: true,
@@ -73,7 +73,7 @@ Trigger.create_or_update(
 <br/>
 <div><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></div>',
       'recipient' => 'article_last_sender',
-      'subject' => 'Thanks for your follow up (#{ticket.title})',
+      'subject' => 'Thanks for your follow up (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
     },
   },
   active: false,
@@ -101,7 +101,7 @@ Trigger.create_or_update(
 <br/>
 <p><i><a href="https://zammad.com">Zammad</a>, your customer support system</i></p>',
       'recipient' => 'ticket_customer',
-      'subject' => 'Owner has changed (#{ticket.title})',
+      'subject' => 'Owner has changed (#{ticket.title})', # rubocop:disable Lint/InterpolationCheck
     },
   },
   active: false,

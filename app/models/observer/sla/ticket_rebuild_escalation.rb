@@ -33,9 +33,9 @@ class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
     changed = false
     fields_to_check = nil
     fields_to_check = if record.class == Sla
-                        %w(condition calendar_id first_response_time update_time solution_time)
+                        %w[condition calendar_id first_response_time update_time solution_time]
                       else
-                        %w(timezone business_hours default ical_url public_holidays)
+                        %w[timezone business_hours default ical_url public_holidays]
                       end
     fields_to_check.each do |item|
       next if !record.saved_change_to_attribute(item)

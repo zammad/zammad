@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 # inital data set as extention to db/seeds.rb
 
 Trigger.destroy_all
@@ -30,7 +30,7 @@ User.create_or_update(
   email: 'admin@example.com',
   password: 'adminpw',
   active: true,
-  roles: Role.where(name: %w(Admin)),
+  roles: Role.where(name: %w[Admin]),
   updated_by_id: 1,
   created_by_id: 1,
 )

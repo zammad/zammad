@@ -71,7 +71,7 @@ class TwitterReply
             exclude = true
 
           # exclude own screen_name
-          if recipientScreenName is "@#{@ticket.preferences.channel_screen_name}".toLowerCase()
+          if recipientScreenName is "@#{ticket.preferences.channel_screen_name}".toLowerCase()
             exclude = true
 
           if exclude is false

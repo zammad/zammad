@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class MonitoringControllerTest < ActionDispatch::IntegrationTest
@@ -12,7 +12,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     Setting.set('monitoring_token', @token)
 
     # create agent
-    roles  = Role.where(name: %w(Admin Agent))
+    roles  = Role.where(name: %w[Admin Agent])
     groups = Group.all
 
     # channel cleanup
@@ -24,7 +24,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
       channel.last_log_out = nil
       channel.save!
     end
-    dir = "#{Rails.root}/tmp/unprocessable_mail"
+    dir = Rails.root.join('tmp', 'unprocessable_mail')
     Dir.glob("#{dir}/*.eml") do |entry|
       File.delete(entry)
     end
@@ -374,7 +374,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal(false, result['healthy'])
     assert_equal('Channel: Email::Notification out  ;scheduler not running', result['message'])
 
-    dir = "#{Rails.root}/tmp/unprocessable_mail"
+    dir = Rails.root.join('tmp', 'unprocessable_mail')
     FileUtils.mkdir_p(dir)
     FileUtils.touch("#{dir}/test.eml")
 

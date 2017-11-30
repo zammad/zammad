@@ -271,7 +271,9 @@ returns
       if proxy =~ /^(.+?):(.+?)$/
         proxy_host = $1
         proxy_port = $2
-      else
+      end
+
+      if proxy_host.blank? || proxy_port.blank?
         raise "Invalid proxy address: #{proxy} - expect e.g. proxy.example.com:3128"
       end
 
@@ -292,7 +294,7 @@ returns
     http.open_timeout = options[:open_timeout] || 4
     http.read_timeout = options[:read_timeout] || 10
 
-    if uri.scheme =~ /https/i
+    if uri.scheme.match?(/https/i)
       http.use_ssl = true
       # @TODO verify_mode should be configurable
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -313,10 +315,10 @@ returns
   def self.set_params(request, params, options)
     if options[:json]
       request.add_field('Content-Type', 'application/json')
-      if !params.empty?
+      if params.present?
         request.body = params.to_json
       end
-    elsif !params.empty?
+    elsif params.present?
       request.set_form_data(params)
     end
     request

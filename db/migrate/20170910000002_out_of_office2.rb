@@ -15,7 +15,7 @@ class OutOfOffice2 < ActiveRecord::Migration[4.2]
       add_column :users, :out_of_office_end_at, :date, null: true
       add_column :users, :out_of_office_replacement_id, :integer, null: true
 
-      add_index :users, [:out_of_office, :out_of_office_start_at, :out_of_office_end_at], name: 'index_out_of_office'
+      add_index :users, %i[out_of_office out_of_office_start_at out_of_office_end_at], name: 'index_out_of_office'
       add_index :users, [:out_of_office_replacement_id]
       add_foreign_key :users, :users, column: :out_of_office_replacement_id
       User.reset_column_information
@@ -44,9 +44,9 @@ class OutOfOffice2 < ActiveRecord::Migration[4.2]
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer group owner escalation_at),
-        s: %w(title customer group owner escalation_at),
-        m: %w(number title customer group owner escalation_at),
+        d: %w[title customer group owner escalation_at],
+        s: %w[title customer group owner escalation_at],
+        m: %w[number title customer group owner escalation_at],
         view_mode_default: 's',
       },
       updated_by_id: 1,
