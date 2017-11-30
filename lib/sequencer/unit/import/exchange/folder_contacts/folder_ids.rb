@@ -3,19 +3,14 @@ class Sequencer
     module Import
       module Exchange
         module FolderContacts
-          class FolderIds < Sequencer::Unit::Base
-            include ::Sequencer::Unit::Exchange::Folders::Mixin::Folder
+          class FolderIds < Sequencer::Unit::Common::FallbackProvider
 
             provides :ews_folder_ids
 
-            def process
-              # check if ids are already processed
-              return if state.provided?(:ews_folder_ids)
+            private
 
-              state.provide(:ews_folder_ids) do
-                config = ::Import::Exchange.config
-                config[:folders]
-              end
+            def fallback
+              ::Import::Exchange.config[:folders]
             end
           end
         end

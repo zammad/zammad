@@ -1,26 +1,21 @@
 class Sequencer
   class Unit
     module Exchange
-      class Connection < Sequencer::Unit::Base
+      class Connection < Sequencer::Unit::Common::FallbackProvider
 
         uses :ews_config
         provides :ews_connection
 
-        def process
-          # check if EWS connection is already given (sub sequence)
-          return if state.provided?(:ews_connection)
-
-          state.provide(:ews_connection) do
-            Viewpoint::EWSClient.new(
-              config[:endpoint],
-              config[:user],
-              config[:password],
-              additional_opts
-            )
-          end
-        end
-
         private
+
+        def fallback
+          Viewpoint::EWSClient.new(
+            config[:endpoint],
+            config[:user],
+            config[:password],
+            additional_opts
+          )
+        end
 
         def config
           @config ||= begin

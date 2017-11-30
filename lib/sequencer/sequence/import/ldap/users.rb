@@ -9,6 +9,7 @@ class Sequencer
               'Import::Ldap::Users::StaticAttributes',
               'Import::Ldap::Users::DryRun::Flag',
               'Import::Ldap::Users::DryRun::Payload',
+              'Ldap::Config',
               'Ldap::Connection',
               'Import::Ldap::Users::UserRoles',
               'Import::Ldap::Users::Sum',
