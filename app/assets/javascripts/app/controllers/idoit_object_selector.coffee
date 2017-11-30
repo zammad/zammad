@@ -44,6 +44,8 @@ class App.IdoitObjectSelector extends App.ControllerModal
     ''
 
   search: (filter) =>
+    if _.isEmpty(filter.type)
+      delete filter.type
     if _.isEmpty(filter.title)
       delete filter.title
     else
