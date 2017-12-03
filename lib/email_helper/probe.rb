@@ -336,6 +336,7 @@ returns on fail
         if !subject
           white_map = {
             'Recipient address rejected' => true,
+            'Sender address rejected: Domain not found' => true,
           }
           white_map.each do |key, _message|
 
