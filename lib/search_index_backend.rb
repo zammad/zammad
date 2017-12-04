@@ -12,6 +12,7 @@ info about used search index machine
 
   def self.info
     url = Setting.get('es_url').to_s
+    return if url.blank?
     Rails.logger.info "# curl -X GET \"#{url}\""
     response = UserAgent.get(
       url,
