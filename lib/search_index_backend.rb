@@ -4,6 +4,102 @@ class SearchIndexBackend
 
 =begin
 
+info about used search index machine
+
+  SearchIndexBackend.info
+
+=end
+
+  def self.info
+    url = Setting.get('es_url').to_s
+    Rails.logger.info "# curl -X GET \"#{url}\""
+    response = UserAgent.get(
+      url,
+      {},
+      {
+        json: true,
+        open_timeout: 8,
+        read_timeout: 12,
+        user: Setting.get('es_user'),
+        password: Setting.get('es_password'),
+      }
+    )
+    Rails.logger.info "# #{response.code}"
+    raise "Unable to process GET at #{url}\n#{response.inspect}" if !response.success?
+    response.data
+  end
+
+=begin
+
+update processors
+
+  SearchIndexBackend.processors(
+    _ingest/pipeline/attachment: {
+      description: 'Extract attachment information from arrays',
+      processors: [
+        {
+          foreach: {
+            field: 'ticket.articles.attachments',
+            processor: {
+              attachment: {
+                target_field: '_ingest._value.attachment',
+                field: '_ingest._value.data'
+              }
+            }
+          }
+        }
+      ]
+    }
+  )
+
+=end
+
+  def self.processors(data)
+    data.each do |key, items|
+      url = "#{Setting.get('es_url')}/#{key}"
+
+      items.each do |item|
+        if item[:action] == 'delete'
+          #Rails.logger.info "# curl -X DELETE \"#{url}\""
+          #response = UserAgent.delete(
+          #  url,
+          #  {
+          #    json: true,
+          #    open_timeout: 8,
+          #    read_timeout: 12,
+          #    user: Setting.get('es_user'),
+          #    password: Setting.get('es_password'),
+          #  }
+          #)
+          #Rails.logger.info "# #{response.code}"
+          #next if response.success?
+          #raise "Unable to process DELETE at #{url}\n#{response.inspect}"
+          next
+        end
+        Rails.logger.info "# curl -X PUT \"#{url}\" \\"
+        Rails.logger.debug "-d '#{data.to_json}'"
+        item.delete(:action)
+        response = UserAgent.put(
+          url,
+          item,
+          {
+            json: true,
+            open_timeout: 8,
+            read_timeout: 12,
+            user: Setting.get('es_user'),
+            password: Setting.get('es_password'),
+          }
+        )
+        Rails.logger.info "# #{response.code}"
+        next if response.success?
+        raise "Unable to process PUT at #{url}\n#{response.inspect}"
+      end
+    end
+    true
+  end
+
+=begin
+
 create/update/delete index
 
   SearchIndexBackend.index(
@@ -51,8 +147,8 @@ create/update/delete index
       data[:data],
       {
         json: true,
-        open_timeout: 5,
-        read_timeout: 20,
+        open_timeout: 8,
+        read_timeout: 12,
         user: Setting.get('es_user'),
         password: Setting.get('es_password'),
       }
@@ -83,8 +179,8 @@ add new object to search index
       data,
       {
         json: true,
-        open_timeout: 5,
-        read_timeout: 20,
+        open_timeout: 8,
+        read_timeout: 16,
         user: Setting.get('es_user'),
         password: Setting.get('es_password'),
       }
@@ -113,8 +209,8 @@ remove whole data from index
     response = UserAgent.delete(
       url,
       {
-        open_timeout: 5,
-        read_timeout: 14,
+        open_timeout: 8,
+        read_timeout: 16,
         user: Setting.get('es_user'),
         password: Setting.get('es_password'),
       }
@@ -166,7 +262,7 @@ return search result
   def self.search_by_index(query, limit = 10, index = nil, query_extention = {})
     return [] if !query
 
-    url = build_url()
+    url = build_url
     return if !url
     url += if index
              if index.class == Array
@@ -201,7 +297,7 @@ return search result
     # add * on simple query like "somephrase23" or "attribute: somephrase23"
     if query.present?
       query.strip!
-      if query =~ /^([[:alpha:],0-9]+|[[:alpha:],0-9]+\:\s+[[:alpha:],0-9]+)$/
+      if query.match?(/^([[:alpha:],0-9]+|[[:alpha:],0-9]+\:\s+[[:alpha:],0-9]+)$/)
         query += '*'
       end
     end
@@ -294,7 +390,7 @@ get count of tickets and tickets which match on selector
   def self.selectors(index = nil, selectors = nil, limit = 10, current_user = nil, aggs_interval = nil)
     raise 'no selectors given' if !selectors
 
-    url = build_url()
+    url = build_url
     return if !url
     url += if index
              if index.class == Array
@@ -345,7 +441,7 @@ get count of tickets and tickets which match on selector
   def self.selector2query(selector, _current_user, aggs_interval, limit)
     query_must = []
     query_must_not = []
-    if selector && !selector.empty?
+    if selector.present?
       selector.each do |key, data|
         key_tmp = key.sub(/^.+?\./, '')
         t = {}
@@ -439,10 +535,14 @@ return true if backend is configured
     index = "#{Setting.get('es_index')}_#{Rails.env}"
     url   = Setting.get('es_url')
     url = if type
+            url_pipline = Setting.get('es_pipeline')
+            if url_pipline.present?
+              url_pipline = "?pipeline=#{url_pipline}"
+            end
             if o_id
-              "#{url}/#{index}/#{type}/#{o_id}"
+              "#{url}/#{index}/#{type}/#{o_id}#{url_pipline}"
             else
-              "#{url}/#{index}/#{type}"
+              "#{url}/#{index}/#{type}#{url_pipline}"
             end
           else
             "#{url}/#{index}"

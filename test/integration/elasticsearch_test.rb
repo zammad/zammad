@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'integration_test_helper'
 require 'rake'
 
@@ -168,7 +168,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: IO.binread("#{Rails.root}/test/fixtures/es-normal.txt"),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-normal.txt')),
       filename: 'es-normal.txt',
       preferences: {},
       created_by_id: 1,
@@ -194,9 +194,9 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert(attributes['article'][0]['attachment'][0])
     assert_not(attributes['article'][0]['attachment'][1])
     assert_equal('es-normal.txt', attributes['article'][0]['attachment'][0]['_name'])
-    assert_equal("c29tZSBub3JtYWwgdGV4dDY2Cg==\n", attributes['article'][0]['attachment'][0]['_content'])
+    assert_equal('c29tZSBub3JtYWwgdGV4dDY2Cg==', attributes['article'][0]['attachment'][0]['_content'])
 
-    ticket1.destroy
+    ticket1.destroy!
 
     # execute background jobs
     Scheduler.worker(true)
@@ -229,7 +229,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: IO.binread("#{Rails.root}/test/fixtures/es-normal.txt"),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-normal.txt')),
       filename: 'es-normal.txt',
       preferences: {},
       created_by_id: 1,
@@ -240,7 +240,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: IO.binread("#{Rails.root}/test/fixtures/es-pdf1.pdf"),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-pdf1.pdf')),
       filename: 'es-pdf1.pdf',
       preferences: {},
       created_by_id: 1,
@@ -251,7 +251,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: IO.binread("#{Rails.root}/test/fixtures/es-box1.box"),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-box1.box')),
       filename: 'mail1.box',
       preferences: {},
       created_by_id: 1,
@@ -262,7 +262,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: IO.binread("#{Rails.root}/test/fixtures/es-too-big.txt"),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-too-big.txt')),
       filename: 'es-too-big.txt',
       preferences: {},
       created_by_id: 1,
