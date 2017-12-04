@@ -60,21 +60,20 @@ update processors
 
       items.each do |item|
         if item[:action] == 'delete'
-          #Rails.logger.info "# curl -X DELETE \"#{url}\""
-          #response = UserAgent.delete(
-          #  url,
-          #  {
-          #    json: true,
-          #    open_timeout: 8,
-          #    read_timeout: 12,
-          #    user: Setting.get('es_user'),
-          #    password: Setting.get('es_password'),
-          #  }
-          #)
-          #Rails.logger.info "# #{response.code}"
-          #next if response.success?
-          #raise "Unable to process DELETE at #{url}\n#{response.inspect}"
-          next
+          Rails.logger.info "# curl -X DELETE \"#{url}\""
+          response = UserAgent.delete(
+            url,
+            {
+              json: true,
+              open_timeout: 8,
+              read_timeout: 12,
+              user: Setting.get('es_user'),
+              password: Setting.get('es_password'),
+            }
+          )
+          Rails.logger.info "# #{response.code}"
+          next if response.success?
+          raise "Unable to process DELETE at #{url}\n#{response.inspect}"
         end
         Rails.logger.info "# curl -X PUT \"#{url}\" \\"
         Rails.logger.debug "-d '#{data.to_json}'"
