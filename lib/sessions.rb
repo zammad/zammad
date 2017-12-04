@@ -109,8 +109,11 @@ returns
 =end
 
   def self.session_exists?(client_id)
-    client_ids = sessions
-    client_ids.include? client_id.to_s
+    session_dir = "#{@path}/#{client_id}"
+    return false if !File.exist?(session_dir)
+    session_file = "#{session_dir}/session"
+    return false if !File.exist?(session_file)
+    true
   end
 
 =begin
@@ -247,14 +250,14 @@ returns
     data         = nil
 
     # if no session dir exists, session got destoried
-    if !File.exist? session_dir
+    if !File.exist?(session_dir)
       destroy(client_id)
-      log('debug', "missing session directory for '#{client_id}', remove session.")
+      log('debug', "missing session directory #{session_dir} for '#{client_id}', remove session.")
       return
     end
 
     # if only session file is missing, then it's an error behavior
-    if !File.exist? session_file
+    if !File.exist?(session_file)
       destroy(client_id)
       log('error', "missing session file for '#{client_id}', remove session.")
       return
@@ -558,16 +561,47 @@ remove all session and spool messages
     data
   end
 
-  def self.jobs
+  def self.jobs(node_id = nil)
 
     # just make sure that spool path exists
     if !File.exist?(@path)
       FileUtils.mkpath @path
     end
 
+    # dispatch sessions
+    if node_id && node_id.zero?
+      loop do
+
+        # nodes
+        nodes_stats = Sessions::Node.stats
+
+        client_ids = sessions
+        client_ids.each do |client_id|
+
+          # ask nodes for nodes
+          next if nodes_stats[client_id]
+
+          # assigne to node
+          Sessions::Node.session_assigne(client_id)
+        end
+        sleep 1
+      end
+    end
+
     Thread.abort_on_exception = true
     loop do
-      client_ids = sessions
+
+      if node_id
+
+        # register node
+        Sessions::Node.register(node_id)
+
+        # watch for assigned sessions
+        client_ids = Sessions::Node.sessions_by(node_id)
+      else
+        client_ids = sessions
+      end
+
       client_ids.each do |client_id|
 
         # connection already open, ignore
@@ -586,7 +620,7 @@ remove all session and spool messages
 
         @@client_threads[client_id] = true
         @@client_threads[client_id] = Thread.new do
-          thread_client(client_id)
+          thread_client(client_id, 0, Time.now.utc, node_id)
           @@client_threads[client_id] = nil
           log('debug', "close client (#{client_id}) thread")
           if ActiveRecord::Base.connection.owner == Thread.current
@@ -629,10 +663,10 @@ returns
 
 =end
 
-  def self.thread_client(client_id, try_count = 0, try_run_time = Time.now.utc)
-    log('debug', "LOOP #{client_id} - #{try_count}")
+  def self.thread_client(client_id, try_count = 0, try_run_time = Time.now.utc, node_id)
+    log('debug', "LOOP #{node_id}.#{client_id} - #{try_count}")
     begin
-      Sessions::Client.new(client_id)
+      Sessions::Client.new(client_id, node_id)
     rescue => e
       log('error', "thread_client #{client_id} exited with error #{e.inspect}")
       log('error', e.backtrace.join("\n  ") )
@@ -654,13 +688,11 @@ returns
 
       # restart job again
       if try_run_max > try_count
-        thread_client(client_id, try_count, try_run_time)
-        return
+        thread_client(client_id, try_count, try_run_time, node_id)
       end
-
-      raise "STOP thread_client for client #{client_id} after #{try_run_max} tries"
+      raise "STOP thread_client for client #{node_id}.#{client_id} after #{try_run_max} tries"
     end
-    log('debug', "/LOOP #{client_id} - #{try_count}")
+    log('debug', "/LOOP #{node_id}.#{client_id} - #{try_count}")
   end
 
   def self.symbolize_keys(hash)
