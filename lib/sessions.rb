@@ -569,7 +569,7 @@ remove all session and spool messages
     end
 
     # dispatch sessions
-    if node_id && node_id.zero?
+    if node_id&.zero?
       loop do
 
         # nodes
