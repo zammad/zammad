@@ -132,7 +132,20 @@
 
   <p><%- @T('You need to add the following Javascript code snippet to your web page') %>:</p>
 
-  <pre><code class="language-html js-paramsBlock">&lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
+  <pre class="js-modal"><code class="language-html js-code js-paramsBlock">&lt;button id="feedback-form"&gt;Feedback&lt;/button&gt;
+
+&lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+$(function() {
+  $('#feedback-form').ZammadForm({
+<span class="js-modal-params"></span>
+  });
+});
+&lt;/script&gt;</code></pre>
+</div>
+
+  <pre class="js-inlineForm"><code class="language-html js-code js-paramsBlock">&lt;div id="feedback-form"&gt;form will be placed in here&lt;/div&gt;
 
 &lt;script id="zammad_form_script" src="<%= @baseurl %>/assets/form/form.js"&gt;&lt;/script&gt;
 
