@@ -496,10 +496,10 @@ get count of tickets and tickets which match on selector
       data[:query][:bool] = {}
     end
 
-    if !query_must.empty?
+    if query_must.present?
       data[:query][:bool][:must] = query_must
     end
-    if !query_must_not.empty?
+    if query_must_not.present?
       data[:query][:bool][:must_not] = query_must_not
     end
 

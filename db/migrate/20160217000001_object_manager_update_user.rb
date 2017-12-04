@@ -1,3 +1,4 @@
+# rubocop:disable Lint/BooleanSymbol
 class ObjectManagerUpdateUser < ActiveRecord::Migration[4.2]
   def up
 

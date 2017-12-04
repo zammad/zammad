@@ -82,10 +82,8 @@ returns
     end
 
     # set Settings
-    if auto_wizard_hash['Settings']
-      auto_wizard_hash['Settings'].each do |setting_data|
-        Setting.set(setting_data['name'], setting_data['value'])
-      end
+    auto_wizard_hash['Settings']&.each do |setting_data|
+      Setting.set(setting_data['name'], setting_data['value'])
     end
 
     # create Permissions/Organization
@@ -103,31 +101,29 @@ returns
     end
 
     # create Users
-    if auto_wizard_hash['Users']
-      auto_wizard_hash['Users'].each do |user_data|
-        user_data.symbolize_keys!
+    auto_wizard_hash['Users']&.each do |user_data|
+      user_data.symbolize_keys!
 
-        if admin_user.id == 1
-          if !user_data[:roles] && !user_data[:role_ids]
-            user_data[:roles] = Role.where(name: %w(Agent Admin))
-          end
-          if !user_data[:groups] && !user_data[:group_ids]
-            user_data[:groups] = Group.all
-          end
+      if admin_user.id == 1
+        if !user_data[:roles] && !user_data[:role_ids]
+          user_data[:roles] = Role.where(name: %w[Agent Admin])
         end
-
-        created_user = User.create_or_update_with_ref(user_data)
-
-        # use first created user as admin
-        next if admin_user.id != 1
-
-        admin_user = created_user
-        UserInfo.current_user_id = admin_user.id
-
-        # fetch org logo
-        if admin_user.email.present?
-          Service::Image.organization_suggest(admin_user.email)
+        if !user_data[:groups] && !user_data[:group_ids]
+          user_data[:groups] = Group.all
         end
+      end
+
+      created_user = User.create_or_update_with_ref(user_data)
+
+      # use first created user as admin
+      next if admin_user.id != 1
+
+      admin_user = created_user
+      UserInfo.current_user_id = admin_user.id
+
+      # fetch org logo
+      if admin_user.email.present?
+        Service::Image.organization_suggest(admin_user.email)
       end
     end
 
@@ -158,7 +154,7 @@ returns
 
   def self.file_location
     auto_wizard_file_name     = 'auto_wizard.json'
-    auto_wizard_file_location = "#{Rails.root}/#{auto_wizard_file_name}"
+    auto_wizard_file_location = Rails.root.join(auto_wizard_file_name)
     auto_wizard_file_location
   end
   private_class_method :file_location

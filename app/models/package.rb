@@ -166,7 +166,7 @@ link files + execute migration up
       file = file.sub(%r{^/}, '')
 
       # ignore files
-      if file =~ /^README/
+      if file.match?(/^README/)
         logger.info "NOTICE: Ignore #{file}"
         next
       end
@@ -185,10 +185,9 @@ link files + execute migration up
         backup_file = dest.to_s + '.link_backup'
         if File.exist?(backup_file)
           raise "Can't link #{entry} -> #{dest}, destination and .link_backup already exists!"
-        else
-          logger.info "Create backup file of #{dest} -> #{backup_file}."
-          File.rename(dest.to_s, backup_file)
         end
+        logger.info "Create backup file of #{dest} -> #{backup_file}."
+        File.rename(dest.to_s, backup_file)
       end
 
       if File.file?(entry)
@@ -528,21 +527,18 @@ execute all pending package migrations at once
         end
 
         # down
+        done = Package::Migration.find_by(name: package.underscore, version: version)
         if direction == 'reverse'
-          done = Package::Migration.find_by(name: package.underscore, version: version)
           next if !done
           logger.info "NOTICE: down package migration '#{migration}'"
           load "#{location}/#{migration}"
           classname = name.camelcase
           classname.constantize.down
           record = Package::Migration.find_by(name: package.underscore, version: version)
-          if record
-            record.destroy
-          end
+          record&.destroy
 
           # up
         else
-          done = Package::Migration.find_by(name: package.underscore, version: version)
           next if done
           logger.info "NOTICE: up package migration '#{migration}'"
           load "#{location}/#{migration}"

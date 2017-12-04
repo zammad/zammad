@@ -37,7 +37,7 @@ class String
 
   def word_wrap(*args)
     options = args.extract_options!
-    unless args.blank?
+    if args.present?
       options[:line_width] = args[0] || 82
     end
     options.reverse_merge!(line_width: 82)
@@ -135,26 +135,26 @@ class String
         text.gsub!(/\<.+?\>/, '')
 
         link_compare = link.dup
-        if !link_compare.empty?
+        if link_compare.present?
           link.strip!
           link_compare.strip!
           link_compare.downcase!
           link_compare.sub!(%r{/$}, '')
         end
         text_compare = text.dup
-        if !text_compare.empty?
+        if text_compare.present?
           text.strip!
           text_compare.strip!
           text_compare.downcase!
           text_compare.sub!(%r{/$}, '')
         end
-        placeholder = if !link_compare.empty? && text_compare.empty?
+        placeholder = if link_compare.present? && text_compare.blank?
                         link
-                      elsif link_compare.empty? && !text_compare.empty?
+                      elsif link_compare.blank? && text_compare.present?
                         text
                       elsif link_compare && link_compare =~ /^mailto/i
                         text
-                      elsif !link_compare.empty? && !text_compare.empty? && (link_compare == text_compare || link_compare == "mailto:#{text}".downcase || link_compare == "http://#{text}".downcase)
+                      elsif link_compare.present? && text_compare.present? && (link_compare == text_compare || link_compare == "mailto:#{text}".downcase || link_compare == "http://#{text}".downcase)
                         "######LINKEXT:#{link}/TEXT:#{text}######"
                       elsif text !~ /^http/
                         "#{text} (######LINKRAW:#{link}######)"
@@ -223,7 +223,7 @@ class String
         pre = $1
         content = $2
         post = $5
-        if content =~ /^www/i
+        if content.match?(/^www/i)
           content = "http://#{content}"
         end
         placeholder = if content =~ /^(http|https|ftp|tel)/i
@@ -239,7 +239,6 @@ class String
       coder = HTMLEntities.new
       string = coder.decode(string)
     rescue
-
       # strip all &amp; &lt; &gt; &quot;
       string.gsub!('&amp;', '&')
       string.gsub!('&lt;', '<')
@@ -439,7 +438,7 @@ class String
     # edv hotline schrieb:
     #map['word-en-de'] = "[^#{marker}].{1,250}\s(wrote|schrieb):"
 
-    map.each do |_key, regexp|
+    map.each_value do |regexp|
       begin
         string.sub!(/#{regexp}/) do |placeholder|
           placeholder = "#{marker}#{placeholder}"

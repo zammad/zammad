@@ -87,7 +87,7 @@ module Import
 
       def dynamic_fields(ticket)
         result = {}
-        ticket.keys.each do |key|
+        ticket.each_key do |key|
 
           key_string = key.to_s
 
@@ -144,7 +144,7 @@ module Import
         user_id = nil
         articles.each do |article|
           next if article['SenderType'] != 'customer'
-          next if article['From'].empty?
+          next if article['From'].blank?
           user = Import::OTRS::ArticleCustomer.find(article)
           break if !user
           user_id = user.id
@@ -171,7 +171,7 @@ module Import
       def fix_close_time(ticket)
         return if ticket['StateType'] != 'closed'
         return if ticket['Closed']
-        return if !ticket['Closed'].empty?
+        return if ticket['Closed'].present?
         ticket['Closed'] = ticket['Created']
       end
     end

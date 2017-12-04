@@ -211,7 +211,7 @@ RSpec.describe Import::Ldap::UserFactory do
       # activate skipping
       config[:unassigned_users] = 'skip_sync'
       config[:group_role_map]   = {
-        'dummy' => %w(1 2),
+        'dummy' => %w[1 2],
       }
 
       # group user role mapping
@@ -518,7 +518,7 @@ RSpec.describe Import::Ldap::UserFactory do
       config = {
         group_filter:   '(objectClass=group)',
         group_role_map: {
-          group_dn => %w(1 2),
+          group_dn => %w[1 2],
         }
       }
 

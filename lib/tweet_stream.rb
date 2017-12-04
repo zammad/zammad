@@ -17,7 +17,7 @@ class TweetStream < TweetBase
   end
 
   def disconnect
-    if @client && @client.custom_connection_handle
+    if @client&.custom_connection_handle
       @client.custom_connection_handle.close
     end
 

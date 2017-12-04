@@ -18,7 +18,7 @@ module ApplicationController::Authenticates
       raise Exceptions::NotAuthorized, 'Not authorized (token)!'
     end
 
-    return false if current_user && current_user.permissions?(key)
+    return false if current_user&.permissions?(key)
     raise Exceptions::NotAuthorized, 'Not authorized (user)!'
   end
 

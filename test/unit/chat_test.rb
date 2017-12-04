@@ -1,11 +1,11 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class ChatTest < ActiveSupport::TestCase
 
   setup do
     groups = Group.all
-    roles  = Role.where( name: %w(Agent) )
+    roles  = Role.where( name: %w[Agent] )
     @agent1 = User.create_or_update(
       login: 'ticket-chat-agent1@example.com',
       firstname: 'Notification',

@@ -1,7 +1,7 @@
 class Report
 
   def self.enabled?
-    !Setting.get('es_url').empty?
+    Setting.get('es_url').present?
   end
 
   def self.config

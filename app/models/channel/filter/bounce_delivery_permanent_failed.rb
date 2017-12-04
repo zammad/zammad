@@ -28,7 +28,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       # get recipient of origin article, if only one - mark this user to not sent notifications anymore
       recipients = []
       if article.sender.name == 'System' || article.sender.name == 'Agent'
-        %w(to cc).each do |line|
+        %w[to cc].each do |line|
           next if article[line].blank?
           recipients = []
           begin

@@ -24,7 +24,7 @@ module Import
       def booleanize_values(properties)
         properties.each do |key, value|
           if value.is_a?(String)
-            next if !%w(true false).include?(value)
+            next if !%w[true false].include?(value)
             properties[key] = value == 'true'
           elsif value.is_a?(Hash)
             properties[key] = booleanize_values(value)
@@ -89,7 +89,7 @@ module Import
 
           result_key = key
           if prefix
-            result_key = if %i(text id).include?(key) && ( !result[result_key] || result[result_key] == value )
+            result_key = if %i[text id].include?(key) && ( !result[result_key] || result[result_key] == value )
                            prefix
                          else
                            "#{prefix}.#{key}".to_sym

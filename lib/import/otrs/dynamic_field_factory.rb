@@ -42,12 +42,12 @@ module Import
       end
 
       def supported_field_types
-        %w(Text TextArea Checkbox DateTime Date Dropdown Multiselect)
+        %w[Text TextArea Checkbox DateTime Date Dropdown Multiselect]
       end
 
       def skip_fields
         return @skip_fields if @skip_fields
-        @skip_fields = %w(ProcessManagementProcessID ProcessManagementActivityID ZammadMigratorChanged ZammadMigratorChangedOld)
+        @skip_fields = %w[ProcessManagementProcessID ProcessManagementActivityID ZammadMigratorChanged ZammadMigratorChangedOld]
       end
     end
   end

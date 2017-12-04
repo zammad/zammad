@@ -1,4 +1,4 @@
-# encoding: utf-8
+# rubocop:disable Lint/BooleanSymbol
 require 'browser_test_helper'
 
 class AdminObjectManagerTest < TestCase

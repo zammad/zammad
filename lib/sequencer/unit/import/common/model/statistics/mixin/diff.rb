@@ -15,7 +15,7 @@ class Sequencer
                 private
 
                 def actions
-                  %i(skipped created updated unchanged failed deactivated)
+                  %i[skipped created updated unchanged failed deactivated]
                 end
 
                 def diff

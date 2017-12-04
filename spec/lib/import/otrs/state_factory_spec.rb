@@ -15,7 +15,7 @@ RSpec.describe Import::OTRS::StateFactory do
 
   it 'updates ObjectManager Ticket state_id and pending_time filter' do
 
-    states = %w(new open merged pending_reminder pending_auto_close_p pending_auto_close_n pending_auto_close_p closed_successful closed_unsuccessful closed_successful removed)
+    states = %w[new open merged pending_reminder pending_auto_close_p pending_auto_close_n pending_auto_close_p closed_successful closed_unsuccessful closed_successful removed]
 
     state_backend_param = []
     states.each do |state|
@@ -110,7 +110,7 @@ RSpec.describe Import::OTRS::StateFactory do
   context 'changing Ticket::State IDs' do
 
     let(:state_backend_param) do
-      states = %w(new open merged pending_reminder pending_auto_close_p pending_auto_close_n pending_auto_close_p closed_successful closed_unsuccessful closed_successful removed)
+      states = %w[new open merged pending_reminder pending_auto_close_p pending_auto_close_n pending_auto_close_p closed_successful closed_unsuccessful closed_successful removed]
 
       state_backend_param = []
       states.each do |state|

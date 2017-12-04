@@ -34,7 +34,7 @@ class Transaction::Trigger
                else
                  Trigger.where(active: true).order(:name)
                end
-    return if triggers.empty?
+    return if triggers.blank?
 
     ticket = Ticket.lookup(id: @item[:object_id])
     return if !ticket
@@ -51,7 +51,7 @@ class Transaction::Trigger
         # check if one article attribute is used
         one_has_changed_done = false
         article_selector = false
-        trigger.condition.each do |key, _value|
+        trigger.condition.each_key do |key|
           (object_name, attribute) = key.split('.', 2)
           next if object_name != 'article'
           next if attribute == 'id'
@@ -81,7 +81,7 @@ class Transaction::Trigger
         end
 
         # check if we have not matching "has changed" attributes
-        condition.each do |_key, value|
+        condition.each_value do |value|
           next if !value
           next if !value['operator']
           next if !value['operator']['has changed']
@@ -102,7 +102,7 @@ class Transaction::Trigger
         if @item[:type] == 'update'
 
           # verify if ticket condition exists
-          condition.each do |key, _value|
+          condition.each_key do |key|
             (object_name, attribute) = key.split('.', 2)
             next if object_name != 'ticket'
             one_has_changed_condition = true

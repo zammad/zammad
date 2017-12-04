@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class NotificationFactorySlackTemplateTest < ActiveSupport::TestCase
@@ -98,8 +98,8 @@ class NotificationFactorySlackTemplateTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     changes = {
-      state: %w(aaa bbb),
-      group: %w(xxx yyy),
+      state: %w[aaa bbb],
+      group: %w[xxx yyy],
     }
     result = NotificationFactory::Slack.template(
       template: 'ticket_update',

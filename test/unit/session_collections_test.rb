@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class SessionCollectionsTest < ActiveSupport::TestCase
@@ -8,7 +8,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     UserInfo.current_user_id = 1
 
     # create users
-    roles  = Role.where(name: %w(Agent Admin))
+    roles  = Role.where(name: %w[Agent Admin])
     groups = Group.all
 
     agent1 = User.create_or_update(
@@ -94,12 +94,12 @@ class SessionCollectionsTest < ActiveSupport::TestCase
 
     # next check should be empty
     result1 = collection_client1.push
-    assert(result1.empty?, 'check collections - recall')
+    assert(result1.blank?, 'check collections - recall')
     travel 0.4.seconds
     result2 = collection_client2.push
-    assert(result2.empty?, 'check collections - recall')
+    assert(result2.blank?, 'check collections - recall')
     result3 = collection_client3.push
-    assert(result3.empty?, 'check collections - recall')
+    assert(result3.blank?, 'check collections - recall')
 
     # change collection
     group = Group.first
@@ -123,11 +123,11 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     # next check should be empty
     travel 0.5.seconds
     result1 = collection_client1.push
-    assert(result1.empty?, 'check collections - recall')
+    assert(result1.blank?, 'check collections - recall')
     result2 = collection_client2.push
-    assert(result2.empty?, 'check collections - recall')
+    assert(result2.blank?, 'check collections - recall')
     result3 = collection_client3.push
-    assert(result3.empty?, 'check collections - recall')
+    assert(result3.blank?, 'check collections - recall')
 
     travel 10.seconds
     Sessions.destroy_idle_sessions(3)
@@ -171,7 +171,7 @@ class SessionCollectionsTest < ActiveSupport::TestCase
   end
 
   test 'b assets' do
-    roles  = Role.where(name: %w(Agent Admin))
+    roles  = Role.where(name: %w[Agent Admin])
     groups = Group.all.order(id: :asc)
 
     UserInfo.current_user_id = 2

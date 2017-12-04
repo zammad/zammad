@@ -237,12 +237,16 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
       params[:limit].to_i = 500
     end
 
+    query = params[:query]
+    if query.respond_to?(:permit!)
+      query = query.permit!.to_h
+    end
     query_params = {
-      query: params[:query],
+      query: query,
       limit: params[:limit],
       current_user: current_user,
     }
-    if params[:role_ids] && !params[:role_ids].empty?
+    if params[:role_ids].present?
       query_params[:role_ids] = params[:role_ids]
     end
 

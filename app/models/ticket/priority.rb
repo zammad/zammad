@@ -10,16 +10,16 @@ class Ticket::Priority < ApplicationModel
   attr_accessor :callback_loop
 
   def ensure_defaults
-    return if callback_loop
+    return true if callback_loop
     priorities_with_default = Ticket::Priority.where(default_create: true)
-    return if priorities_with_default.count == 1
+    return true if priorities_with_default.count == 1
 
     if priorities_with_default.count.zero?
       priority = Ticket::Priority.where(active: true).order(id: :asc).first
       priority.default_create = true
       priority.callback_loop = true
       priority.save!
-      return
+      return true
     end
 
     if priorities_with_default.count > 1
@@ -30,5 +30,6 @@ class Ticket::Priority < ApplicationModel
         local_priority.save!
       end
     end
+    true
   end
 end

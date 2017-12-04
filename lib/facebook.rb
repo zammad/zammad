@@ -142,9 +142,9 @@ result
 
       # ignore if value is already set
       map.each do |target, source|
-        next if user[target] && !user[target].empty?
+        next if user[target].present?
         new_value = tweet_user.send(source).to_s
-        next if !new_value || new_value.empty?
+        next if new_value.blank?
         user_data[target] = new_value
       end
       user.update!(user_data)
@@ -329,12 +329,11 @@ result
 
   def from_article(article)
     post = nil
-    if article[:type] == 'facebook feed comment'
-      Rails.logger.debug 'Create feed comment from article...'
-      post = @client.put_comment(article[:in_reply_to], article[:body])
-    else
+    if article[:type] != 'facebook feed comment'
       raise "Can't handle unknown facebook article type '#{article[:type]}'."
     end
+    Rails.logger.debug 'Create feed comment from article...'
+    post = @client.put_comment(article[:in_reply_to], article[:body])
     Rails.logger.debug post.inspect
     @client.get_object(post['id'])
   end
@@ -376,7 +375,7 @@ result
     Rails.logger.debug comments.inspect
 
     result = []
-    return result if comments.empty?
+    return result if comments.blank?
 
     comments.each do |comment|
       user = to_user(comment)

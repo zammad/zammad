@@ -28,7 +28,7 @@ class Sequencer
               private
 
               def actions
-                %i(created updated unchanged skipped failed)
+                %i[created updated unchanged skipped failed]
               end
             end
           end

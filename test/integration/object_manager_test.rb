@@ -1,4 +1,4 @@
-# encoding: utf-8
+# rubocop:disable Lint/BooleanSymbol
 require 'test_helper'
 
 class ObjectManagerTest < ActiveSupport::TestCase
@@ -7,10 +7,10 @@ class ObjectManagerTest < ActiveSupport::TestCase
   test 'a object manager' do
 
     list_objects = ObjectManager.list_objects
-    assert_equal(%w(Ticket TicketArticle User Organization Group), list_objects)
+    assert_equal(%w[Ticket TicketArticle User Organization Group], list_objects)
 
     list_objects = ObjectManager.list_frontend_objects
-    assert_equal(%w(Ticket User Organization Group), list_objects)
+    assert_equal(%w[Ticket User Organization Group], list_objects)
 
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 

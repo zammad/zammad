@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class OnlineNotificationTest < ActiveSupport::TestCase
@@ -347,11 +347,11 @@ class OnlineNotificationTest < ActiveSupport::TestCase
     Scheduler.worker(true)
 
     notifications = OnlineNotification.list_by_object('Ticket', tickets[0].id)
-    assert(!notifications.empty?, 'should have notifications')
+    assert(notifications.present?, 'should have notifications')
     assert(OnlineNotification.all_seen?('Ticket', tickets[0].id), 'still not seen notifications for merged ticket available')
 
     notifications = OnlineNotification.list_by_object('Ticket', tickets[1].id)
-    assert(!notifications.empty?, 'should have notifications')
+    assert(notifications.present?, 'should have notifications')
     assert(!OnlineNotification.all_seen?('Ticket', tickets[1].id), 'no notifications for master ticket available')
 
     # delete tickets
@@ -364,7 +364,7 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       # check if notifications for ticket still exist
       Scheduler.worker(true)
       notifications = OnlineNotification.list_by_object('Ticket', ticket_id)
-      assert(notifications.empty?, 'still notifications for destroyed ticket available')
+      assert(notifications.blank?, 'still notifications for destroyed ticket available')
     end
   end
 

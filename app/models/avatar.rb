@@ -105,16 +105,16 @@ add avatar by url
 
     # fetch image based on http url
     if data[:url].present?
-      if data[:url] =~ /^http/
+      if data[:url].match?(/^http/)
 
         # check if source ist already updated within last 2 minutes
-        if avatar_already_exists && avatar_already_exists.source_url == data[:url]
+        if avatar_already_exists&.source_url == data[:url]
           return if avatar_already_exists.updated_at > 2.minutes.ago
         end
 
         # twitter workaround to get bigger avatar images
         # see also https://dev.twitter.com/overview/general/user-profile-images-and-banners
-        if data[:url] =~ %r{//pbs.twimg.com/}i
+        if data[:url].match?(%r{//pbs.twimg.com/}i)
           data[:url].sub!(/normal\.(png|jpg|gif)$/, 'bigger.\1')
         end
 
@@ -134,10 +134,10 @@ add avatar by url
         end
         logger.info "Fetchd image '#{data[:url]}', http code: #{response.code}"
         mime_type = 'image'
-        if data[:url] =~ /\.png/i
+        if data[:url].match?(/\.png/i)
           mime_type = 'image/png'
         end
-        if data[:url] =~ /\.(jpg|jpeg)/i
+        if data[:url].match?(/\.(jpg|jpeg)/i)
           mime_type = 'image/jpeg'
         end
         if !data[:resize]
@@ -150,10 +150,10 @@ add avatar by url
         data[:full][:mime_type] = mime_type
 
       # try zammad backend to find image based on email
-      elsif data[:url] =~ /@/
+      elsif data[:url].match?(/@/)
 
         # check if source ist already updated within last 3 minutes
-        if avatar_already_exists && avatar_already_exists.source_url == data[:url]
+        if avatar_already_exists&.source_url == data[:url]
           return if avatar_already_exists.updated_at > 2.minutes.ago
         end
 
@@ -170,8 +170,8 @@ add avatar by url
     # check if avatar need to be updated
     if data[:resize].present? && data[:resize][:content].present?
       record[:store_hash] = Digest::MD5.hexdigest(data[:resize][:content])
-      if avatar_already_exists && avatar_already_exists.store_hash == record[:store_hash]
-        avatar_already_exists.touch
+      if avatar_already_exists&.store_hash == record[:store_hash]
+        avatar_already_exists.touch # rubocop:disable Rails/SkipsModelValidations
         return avatar_already_exists
       end
     end

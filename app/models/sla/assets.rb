@@ -42,7 +42,7 @@ returns
           end
         end
       end
-      %w(created_by_id updated_by_id).each do |local_user_id|
+      %w[created_by_id updated_by_id].each do |local_user_id|
         next if !self[ local_user_id ]
         next if data[ app_model_user ][ self[ local_user_id ] ]
         user = User.lookup(id: self[ local_user_id ])

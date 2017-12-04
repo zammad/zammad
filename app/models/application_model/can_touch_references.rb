@@ -21,7 +21,7 @@ touch references by params
       object_class = Kernel.const_get(data[:object])
       object = object_class.lookup(id: data[:o_id])
       return if !object
-      object.touch
+      object.touch # rubocop:disable Rails/SkipsModelValidations
     rescue => e
       logger.error e
     end

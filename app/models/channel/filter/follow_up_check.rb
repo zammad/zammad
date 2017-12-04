@@ -104,5 +104,6 @@ module Channel::Filter::FollowUpCheck
       end
     end
 
+    true
   end
 end

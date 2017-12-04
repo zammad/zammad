@@ -1,11 +1,11 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
 
     # create agent
-    roles  = Role.where(name: %w(Admin Agent))
+    roles  = Role.where(name: %w[Admin Agent])
     groups = Group.all
 
     UserInfo.current_user_id = 1

@@ -21,7 +21,7 @@ module Import
       private
 
       def direct_settings
-        %w(HttpType SystemID Organization TicketHook)
+        %w[HttpType SystemID Organization TicketHook]
       end
 
       def direct_copy?(setting)
@@ -55,7 +55,7 @@ module Import
 
       def postmaster_default?(setting)
 
-        relevant_configs = %w(PostmasterDefaultPriority PostmasterDefaultState PostmasterFollowUpState)
+        relevant_configs = %w[PostmasterDefaultPriority PostmasterDefaultState PostmasterFollowUpState]
         return false if !relevant_configs.include?(setting['Key'])
 
         map = {

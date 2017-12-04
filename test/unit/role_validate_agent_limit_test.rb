@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class RoleValidateAgentLimit < ActiveSupport::TestCase
@@ -101,7 +101,7 @@ class RoleValidateAgentLimit < ActiveSupport::TestCase
       active:    true,
     )
 
-    user1.roles = Role.where(name: %w(Admin Agent))
+    user1.roles = Role.where(name: %w[Admin Agent])
 
     user1.role_ids = [Role.find_by(name: 'Agent').id]
 

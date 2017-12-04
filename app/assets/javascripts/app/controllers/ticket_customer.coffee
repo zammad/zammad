@@ -18,8 +18,19 @@ class App.TicketCustomer extends App.ControllerModal
   onSubmit: (e) =>
     params = @formParam(e.target)
 
-    @customer_id = params['customer_id']
+    ticket = App.Ticket.find(@ticket_id)
+    ticket.customer_id = params['customer_id']
+    errors = ticket.validate()
 
+    if !_.isEmpty(errors)
+      @log 'error', errors
+      @formValidate(
+        form:   e.target
+        errors: errors
+      )
+      return
+
+    @customer_id = params['customer_id']
     callback = =>
 
       # close modal

@@ -1,10 +1,10 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class ActivityStreamTest < ActiveSupport::TestCase
 
   setup do
-    roles = Role.where(name: %w(Admin Agent))
+    roles = Role.where(name: %w[Admin Agent])
     groups = Group.where(name: 'Users')
     @admin_user = User.create_or_update(
       login: 'admin',
@@ -83,7 +83,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     assert_not(stream[3])
 
     stream = @current_user.activity_stream(4)
-    assert(stream.empty?)
+    assert(stream.blank?)
 
     # cleanup
     ticket.destroy!
@@ -122,7 +122,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     assert_not(stream[2])
 
     stream = @current_user.activity_stream(4)
-    assert(stream.empty?)
+    assert(stream.blank?)
 
     # cleanup
     organization.destroy!
@@ -154,7 +154,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     assert_not(stream[1])
 
     stream = @current_user.activity_stream(4)
-    assert(stream.empty?)
+    assert(stream.blank?)
 
     # cleanup
     user.destroy!
@@ -201,7 +201,7 @@ class ActivityStreamTest < ActiveSupport::TestCase
     assert_not(stream[2])
 
     stream = @current_user.activity_stream(4)
-    assert(stream.empty?)
+    assert(stream.blank?)
 
     # cleanup
     user.destroy!

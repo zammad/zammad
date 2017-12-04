@@ -42,7 +42,7 @@ class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
 
       # check from and to keys which hold the instances
       preferences = {}
-      %w(from to).each do |direction|
+      %w[from to].each do |direction|
         next if item.preferences[direction].blank?
 
         # loop over all instances and covert them
@@ -57,7 +57,7 @@ class CtiLogPreferencesMigration < ActiveRecord::Migration[5.0]
       end
 
       # update entry
-      item.update_column(:preferences, preferences)
+      item.update_column(:preferences, preferences) # rubocop:disable Rails/SkipsModelValidations
     end
   end
 end

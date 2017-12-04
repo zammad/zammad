@@ -10,7 +10,7 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
 
     # only do fill of from if article got created via application_server (e. g. not
     # if article and sender type is set via *.postmaster)
-    return true if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
+    return if ApplicationHandleInfo.postmaster?
 
     # set from on all article types excluding email|twitter status|twitter direct-message|facebook feed post|facebook feed comment
     return true if !record.type_id

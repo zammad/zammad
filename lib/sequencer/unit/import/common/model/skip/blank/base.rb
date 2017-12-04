@@ -31,7 +31,7 @@ class Sequencer
                 end
 
                 def relevant_blank?
-                  !attribute_value.except(*ignore).values.any?(&:present?)
+                  attribute_value.except(*ignore).values.none?(&:present?)
                 end
               end
             end

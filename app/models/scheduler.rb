@@ -69,7 +69,7 @@ class Scheduler < ApplicationModel
   # return [nil]
   def self.cleanup(force: false)
 
-    if !force && caller_locations.first.label != 'threads'
+    if !force && caller_locations(1..1).first.label != 'threads'
       raise 'This method should only get called when Scheduler.threads are initialized. Use `force: true` to start anyway.'
     end
 
@@ -175,7 +175,7 @@ class Scheduler < ApplicationModel
     )
 
     logger.info "execute #{job.method} (try_count #{try_count})..."
-    eval job.method() # rubocop:disable Lint/Eval
+    eval job.method() # rubocop:disable Security/Eval
   rescue => e
     logger.error "execute #{job.method} (try_count #{try_count}) exited with error #{e.inspect}"
 

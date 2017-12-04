@@ -90,7 +90,7 @@ class Authorization < ApplicationModel
 
   def delete_user_cache
     return if !user
-    user.touch
+    user.touch # rubocop:disable Rails/SkipsModelValidations
   end
 
 end

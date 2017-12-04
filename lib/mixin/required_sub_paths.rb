@@ -2,7 +2,7 @@ module Mixin
   module RequiredSubPaths
 
     def self.included(_base)
-      path     = caller_locations.first.path
+      path     = caller_locations(1..1).first.path
       sub_path = File.join(File.dirname(path), File.basename(path, '.rb'))
       eager_load_recursive(sub_path)
     end

@@ -14,7 +14,7 @@ class UserAccessTokenController < ApplicationController
     end
     local_permissions = current_user.permissions
     local_permissions_new = {}
-    local_permissions.each do |key, _value|
+    local_permissions.each_key do |key|
       keys = Object.const_get('Permission').with_parents(key)
       keys.each do |local_key|
         next if local_permissions_new.key?([local_key])

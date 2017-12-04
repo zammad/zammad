@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class EmailProcessFollowUpTest < ActiveSupport::TestCase
@@ -88,7 +88,7 @@ References: <DA918CD1-BE9A-4262-ACF6-5001E59291B6@znuny.com> <20150830145601.30.
 no reference "
 
     setting_orig = Setting.get('postmaster_follow_up_search_in')
-    Setting.set('postmaster_follow_up_search_in', %w(body attachment references))
+    Setting.set('postmaster_follow_up_search_in', %w[body attachment references])
 
     travel 1.second
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string_subject)
@@ -251,7 +251,7 @@ Some Text"
   test 'process with follow up check with two external reference headers' do
 
     setting_orig = Setting.get('postmaster_follow_up_search_in')
-    Setting.set('postmaster_follow_up_search_in', %w(body attachment references))
+    Setting.set('postmaster_follow_up_search_in', %w[body attachment references])
 
     data1 = "From: me@example.com
 To: z@example.com

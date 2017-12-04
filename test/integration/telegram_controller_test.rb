@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 require 'rexml/document'
 require 'webmock/minitest'

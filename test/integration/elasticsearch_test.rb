@@ -332,7 +332,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
 
-    assert(!result.empty?, 'result exists not')
+    assert(result.present?, 'result exists not')
     assert(result[0], 'record 1')
     assert(!result[1], 'record 2')
     assert_equal(result[0].id, ticket2.id)
@@ -344,7 +344,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
 
-    assert(!result.empty?, 'result exists not')
+    assert(result.present?, 'result exists not')
     assert(result[0], 'record 1')
     assert(!result[1], 'record 2')
     assert_equal(result[0].id, ticket2.id)
@@ -387,7 +387,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       query: 'kindergarden',
       limit: 15,
     )
-    assert(result.empty?, 'result should be empty')
+    assert(result.blank?, 'result should be empty')
     assert(!result[0], 'record 1')
 
     # search as @customer1
@@ -397,7 +397,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
 
-    assert(!result.empty?, 'result exists not')
+    assert(result.present?, 'result exists not')
     assert(result[0], 'record 1')
     assert(result[1], 'record 2')
     assert(!result[2], 'record 3')
@@ -411,7 +411,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
 
-    assert(!result.empty?, 'result exists not')
+    assert(result.present?, 'result exists not')
     assert(result[0], 'record 1')
     assert(result[1], 'record 2')
     assert(!result[2], 'record 3')
@@ -425,7 +425,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
 
-    assert(!result.empty?, 'result exists not')
+    assert(result.present?, 'result exists not')
     assert(result[0], 'record 1')
     assert(!result[1], 'record 2')
     assert_equal(result[0].id, ticket3.id)
@@ -523,7 +523,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       query: 'customer1',
       limit: 15,
     )
-    assert(!result.empty?, 'result should not be empty')
+    assert(result.present?, 'result should not be empty')
     assert(result[0], 'record 1')
     assert(!result[1], 'record 2')
     assert_equal(result[0].id, @customer1.id)
@@ -534,7 +534,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       query: 'customer1',
       limit: 15,
     )
-    assert(result.empty?, 'result should be empty')
+    assert(result.blank?, 'result should be empty')
     assert(!result[0], 'record 1')
 
     # cleanup

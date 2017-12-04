@@ -69,7 +69,7 @@ module Channel::EmailBuild
     end
 
     # build email without any attachments
-    if !html_alternative && ( !attr[:attachments] || attr[:attachments].empty? )
+    if !html_alternative && attr[:attachments].blank?
       mail.content_type 'text/plain; charset=UTF-8'
       mail.body attr[:body]
       return mail
@@ -84,19 +84,17 @@ module Channel::EmailBuild
       html_container.add_part html_alternative
 
       # place to add inline attachments related to html alternative
-      if attr[:attachments]
-        attr[:attachments].each do |attachment|
-          next if attachment.class == Hash
-          next if attachment.preferences['Content-ID'].empty?
-          attachment = Mail::Part.new do
-            content_type attachment.preferences['Content-Type']
-            content_id "<#{attachment.preferences['Content-ID']}>"
-            content_disposition attachment.preferences['Content-Disposition'] || 'inline'
-            content_transfer_encoding 'binary'
-            body attachment.content.force_encoding('BINARY')
-          end
-          html_container.add_part attachment
+      attr[:attachments]&.each do |attachment|
+        next if attachment.class == Hash
+        next if attachment.preferences['Content-ID'].blank?
+        attachment = Mail::Part.new do
+          content_type attachment.preferences['Content-Type']
+          content_id "<#{attachment.preferences['Content-ID']}>"
+          content_disposition attachment.preferences['Content-Disposition'] || 'inline'
+          content_transfer_encoding 'binary'
+          body attachment.content.force_encoding('BINARY')
         end
+        html_container.add_part attachment
       end
       alternative_bodies.add_part html_container
     end
@@ -104,23 +102,21 @@ module Channel::EmailBuild
     mail.add_part alternative_bodies
 
     # add attachments
-    if attr[:attachments]
-      attr[:attachments].each do |attachment|
-        if attachment.class == Hash
-          attachment['content-id'] = nil
-          mail.attachments[ attachment[:filename] ] = attachment
-        else
-          next if !attachment.preferences['Content-ID'].empty?
-          filename = attachment.filename
-          encoded_filename = Mail::Encodings.decode_encode filename, :encode
-          disposition = attachment.preferences['Content-Disposition'] || 'attachment'
-          content_type = attachment.preferences['Content-Type'] || 'application/octet-stream'
-          mail.attachments[attachment.filename] = {
-            content_disposition: "#{disposition}; filename=\"#{encoded_filename}\"",
-            content_type: "#{content_type}; filename=\"#{encoded_filename}\"",
-            content: attachment.content
-          }
-        end
+    attr[:attachments]&.each do |attachment|
+      if attachment.class == Hash
+        attachment['content-id'] = nil
+        mail.attachments[ attachment[:filename] ] = attachment
+      else
+        next if attachment.preferences['Content-ID'].present?
+        filename = attachment.filename
+        encoded_filename = Mail::Encodings.decode_encode filename, :encode
+        disposition = attachment.preferences['Content-Disposition'] || 'attachment'
+        content_type = attachment.preferences['Content-Type'] || 'application/octet-stream'
+        mail.attachments[attachment.filename] = {
+          content_disposition: "#{disposition}; filename=\"#{encoded_filename}\"",
+          content_type: "#{content_type}; filename=\"#{encoded_filename}\"",
+          content: attachment.content
+        }
       end
     end
     mail
@@ -137,7 +133,7 @@ returns
 =end
 
   def self.recipient_line(realname, email)
-    return "#{realname} <#{email}>" if realname =~ /^[A-z]+$/i
+    return "#{realname} <#{email}>" if realname.match?(/^[A-z]+$/i)
     "\"#{realname.gsub('"', '\"')}\" <#{email}>"
   end
 
@@ -154,7 +150,7 @@ Check if string is a complete html document. If not, add head and css styles.
     # apply mail client fixes
     html = Channel::EmailBuild.html_mail_client_fixes(html)
 
-    return html if html =~ /<html>/i
+    return html if html.match?(/<html>/i)
 
     # use block form because variable html could contain backslashes and e. g. '\1' that
     # must not be handled as back-references for regular expressions

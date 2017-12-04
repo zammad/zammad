@@ -25,7 +25,7 @@ module Channel::Filter::AutoResponseCheck
     message_id = mail[ 'message_id'.to_sym ]
     if message_id
       fqdn = Setting.get('fqdn')
-      return if message_id =~ /@#{Regexp.quote(fqdn)}/i
+      return if message_id.match?(/@#{Regexp.quote(fqdn)}/i)
     end
 
     mail[ 'x-zammad-send-auto-response'.to_sym ] = true

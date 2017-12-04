@@ -29,7 +29,7 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
         # featrue used for different propose, do not touch references
         if User.where(organization_id: organization_id_changed[0]).count < 100
           organization = Organization.find(organization_id_changed[0])
-          organization.touch
+          organization.touch # rubocop:disable Rails/SkipsModelValidations
           member_ids = organization.member_ids
         end
       end
@@ -40,7 +40,7 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
 
       # featrue used for different propose, do not touch references
       if User.where(organization_id: record.organization_id).count < 100
-        record.organization.touch
+        record.organization.touch # rubocop:disable Rails/SkipsModelValidations
         member_ids += record.organization.member_ids
       end
     end
@@ -48,7 +48,7 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
     # touch old/current customer
     member_ids.uniq.each do |user_id|
       next if user_id == record.id
-      User.find(user_id).touch
+      User.find(user_id).touch # rubocop:disable Rails/SkipsModelValidations
     end
     true
   end

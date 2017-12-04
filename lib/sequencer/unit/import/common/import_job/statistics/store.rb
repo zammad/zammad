@@ -23,8 +23,12 @@ class Sequencer
 
               def store?
                 return true if import_job.updated_at.blank?
+                next_update_at < Time.zone.now
+              end
+
+              def next_update_at
                 # update every 10 seconds to reduce DB load
-                import_job.updated_at > Time.zone.now + 10.seconds
+                import_job.updated_at + 10.seconds
               end
             end
           end

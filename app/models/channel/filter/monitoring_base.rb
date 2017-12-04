@@ -36,9 +36,7 @@ class Channel::Filter::MonitoringBase
         key = key.downcase
       end
       value = $2
-      if value
-        value.strip!
-      end
+      value&.strip!
       result[key] = value
     end
 
@@ -70,9 +68,9 @@ class Channel::Filter::MonitoringBase
 
     # possible event types https://mmonit.com/monit/documentation/#Setting-an-event-filter
     if result['state'].blank?
-      result['state'] = if mail[:body] =~ /\s(done|recovery|succeeded|bytes\sok|packets\sok)\s/
+      result['state'] = if mail[:body].match?(/\s(done|recovery|succeeded|bytes\sok|packets\sok)\s/)
                           'OK'
-                        elsif mail[:body] =~ /(instance\schanged\snot|Link\sup|Exists|Saturation\sok|Speed\sok)/
+                        elsif mail[:body].match?(/(instance\schanged\snot|Link\sup|Exists|Saturation\sok|Speed\sok)/)
                           'OK'
                         else
                           'CRITICAL'
@@ -132,5 +130,6 @@ class Channel::Filter::MonitoringBase
       return true
     end
 
+    true
   end
 end

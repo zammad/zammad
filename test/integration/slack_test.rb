@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'integration_test_helper'
 require 'slack'
 
@@ -34,7 +34,7 @@ class SlackTest < ActiveSupport::TestCase
     items = [
       {
         group_ids: [slack_group.id],
-        types: %w(create update reminder_reached),
+        types: %w[create update reminder_reached],
         webhook: webhook,
         channel: channel,
         username: 'zammad bot',
@@ -300,7 +300,7 @@ class SlackTest < ActiveSupport::TestCase
     message_count = 0
     channel_history['messages'].each do |message|
       next if !message['text']
-      if message['text'] =~ /#{search_for}/i
+      if message['text'].match?(/#{search_for}/i)
         message_count += 1
         p "SUCCESS: message with #{search_for} found #{message_count} time(s)!"
       end

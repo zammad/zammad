@@ -1,5 +1,5 @@
 ENV['RAILS_ENV'] = 'test'
-# rubocop:disable HandleExceptions, ClassVars, NonLocalExitFromIterator
+# rubocop:disable HandleExceptions, ClassVars, NonLocalExitFromIterator, Style/GuardClause
 require File.expand_path('../../config/environment', __FILE__)
 require 'selenium-webdriver'
 
@@ -33,7 +33,7 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_support_cookies
-    if browser =~ /(internet_explorer|ie)/i
+    if browser.match?(/(internet_explorer|ie)/i)
       return false
     end
     true
@@ -47,7 +47,7 @@ class TestCase < Test::Unit::TestCase
     if !@browsers
       @browsers = {}
     end
-    if !ENV['REMOTE_URL'] || ENV['REMOTE_URL'].empty?
+    if ENV['REMOTE_URL'].blank?
       local_browser = Selenium::WebDriver.for(browser.to_sym, profile: profile)
       @browsers[local_browser.hash] = local_browser
       browser_instance_preferences(local_browser)
@@ -116,7 +116,7 @@ class TestCase < Test::Unit::TestCase
 
   def teardown
     return if !@browsers
-    @browsers.each do |_hash, local_browser|
+    @browsers.each_value do |local_browser|
       screenshot(browser: local_browser, comment: 'teardown')
       browser_instance_close(local_browser)
     end
@@ -874,14 +874,12 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     element  = instance.find_elements(css: params[:css])[0]
 
-    if params[:css] =~ /select/
+    if params[:css].match?(/select/)
       dropdown = Selenium::WebDriver::Support::Select.new(element)
       success  = false
-      if dropdown.selected_options
-        dropdown.selected_options.each do |option|
-          if option.text == params[:value]
-            success = true
-          end
+      dropdown.selected_options&.each do |option|
+        if option.text == params[:value]
+          success = true
         end
       end
       if params[:should_not_match]
@@ -901,13 +899,12 @@ class TestCase < Test::Unit::TestCase
     begin
       text = if params[:attribute]
                element.attribute(params[:attribute])
-             elsif params[:css] =~ /(input|textarea)/i
+             elsif params[:css].match?(/(input|textarea)/i)
                element.attribute('value')
              else
                element.text
              end
     rescue => e
-
       # just try again
       if !fallback
         return match(params, true)
@@ -928,7 +925,7 @@ class TestCase < Test::Unit::TestCase
       if text =~ /#{params[:value]}/i
         match = $1 || true
       end
-    elsif text =~ /#{Regexp.quote(params[:value])}/i
+    elsif text.match?(/#{Regexp.quote(params[:value])}/i)
       match = true
     end
 
@@ -1020,7 +1017,6 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
 
     cookies = instance.manage.all_cookies
     cookies.each do |cookie|
-      #puts "CCC #{cookie.inspect}"
       # :name=>"_zammad_session_c25832f4de2", :value=>"adc31cd21615cb0a7ab269184ec8b76f", :path=>"/", :domain=>"localhost", :expires=>nil, :secure=>false}
       next if cookie[:name] !~ /#{params[:name]}/i
 
@@ -1062,7 +1058,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     instance = params[:browser] || @browser
 
     title = instance.title
-    if title =~ /#{params[:value]}/i
+    if title.match?(/#{params[:value]}/i)
       assert(true, "matching '#{params[:value]}' in title '#{title}'")
     else
       raise "not matching '#{params[:value]}' in title '#{title}'"
@@ -1091,11 +1087,10 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     sleep 1
 
     begin
-
       # verify title
       if data[:title]
         title = instance.find_elements(css: '.tasks .is-active')[0].text.strip
-        if title =~ /#{data[:title]}/i
+        if title.match?(/#{data[:title]}/i)
           assert(true, "matching '#{data[:title]}' in title '#{title}'")
         else
           screenshot(browser: instance, comment: 'verify_task_failed')
@@ -1135,7 +1130,6 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
         end
       end
     rescue => e
-
       # just try again
       if !fallback
         verify_task(params, true)
@@ -1228,7 +1222,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     instance = params[:browser] || @browser
 
     params[:files].each do |file|
-      instance.find_elements(css: params[:css])[0].send_keys "#{Rails.root}/#{file}"
+      instance.find_elements(css: params[:css])[0].send_keys(Rails.root.join(file))
     end
     sleep 2 * params[:files].count
   end
@@ -1261,23 +1255,22 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
       element = instance.find_elements(css: params[:css])[0]
       if element #&& element.displayed?
         begin
-
           # watch for selector
           if !params[:attribute] && !params[:value]
             assert(true, "'#{params[:css]}' found")
             sleep 0.5
             return true
 
-          # match pn attribute
+          # match an attribute
           else
             text = if params[:attribute]
                      element.attribute(params[:attribute])
-                   elsif params[:css] =~ /(input|textarea)/i
+                   elsif params[:css].match?(/(input|textarea)/i)
                      element.attribute('value')
                    else
                      element.text
                    end
-            if text =~ /#{params[:value]}/i
+            if text.match?(/#{params[:value]}/i)
               assert(true, "'#{params[:value]}' found in '#{text}'")
               sleep 0.5
               return true
@@ -1499,9 +1492,7 @@ wait untill text in selector disabppears
           instance.mouse.move_to(instance.find_elements(css: '.js-notificationsContainer .js-item:first-child')[0])
           sleep 0.1
           click_element = instance.find_elements(css: '.js-notificationsContainer .js-item:first-child .js-remove')[0]
-          if click_element
-            click_element.click
-          end
+          click_element&.click
         else
           break
         end
@@ -1530,7 +1521,6 @@ wait untill text in selector disabppears
     begin
       instance.find_elements(css: '.search .js-emptySearch')[0].click
     rescue
-
       # in issues with ff & selenium, sometimes exeption appears
       # "Element is not currently visible and so may not be interacted with"
       log('empty_search via js')
@@ -1636,23 +1626,21 @@ wait untill text in selector disabppears
       end
     end
 
-    if data[:selector]
-      data[:selector].each do |key, value|
-        select(
-          browser:  instance,
-          css:      '.modal .ticket_selector .js-attributeSelector select',
-          value:    key,
-          mute_log: true,
-        )
-        sleep 0.5
-        select(
-          browser:      instance,
-          css:          '.modal .ticket_selector .js-value select',
-          value:        value,
-          deselect_all: true,
-          mute_log:     true,
-        )
-      end
+    data[:selector]&.each do |key, value|
+      select(
+        browser:  instance,
+        css:      '.modal .ticket_selector .js-attributeSelector select',
+        value:    key,
+        mute_log: true,
+      )
+      sleep 0.5
+      select(
+        browser:      instance,
+        css:          '.modal .ticket_selector .js-value select',
+        value:        value,
+        deselect_all: true,
+        mute_log:     true,
+      )
     end
 
     if data['order::direction']
@@ -1669,7 +1657,7 @@ wait untill text in selector disabppears
     11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
-      if text =~ /#{Regexp.quote(data[:name])}/
+      if text.match?(/#{Regexp.quote(data[:name])}/)
         assert(true, 'overview created')
         overview = {
           name: name,
@@ -1742,23 +1730,21 @@ wait untill text in selector disabppears
       end
     end
 
-    if data[:selector]
-      data[:selector].each do |key, value|
-        select(
-          browser:  instance,
-          css:      '.modal .ticket_selector .js-attributeSelector select',
-          value:    key,
-          mute_log: true,
-        )
-        sleep 0.5
-        select(
-          browser:      instance,
-          css:          '.modal .ticket_selector .js-value select',
-          value:        value,
-          deselect_all: true,
-          mute_log:     true,
-        )
-      end
+    data[:selector]&.each do |key, value|
+      select(
+        browser:  instance,
+        css:      '.modal .ticket_selector .js-attributeSelector select',
+        value:    key,
+        mute_log: true,
+      )
+      sleep 0.5
+      select(
+        browser:      instance,
+        css:          '.modal .ticket_selector .js-value select',
+        value:        value,
+        deselect_all: true,
+        mute_log:     true,
+      )
     end
 
     if data['order::direction']
@@ -1775,7 +1761,7 @@ wait untill text in selector disabppears
     11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
-      if text =~ /#{Regexp.quote(data[:name])}/
+      if text.match?(/#{Regexp.quote(data[:name])}/)
         assert(true, 'overview updated')
         overview = {
           name: name,
@@ -1963,24 +1949,20 @@ wait untill text in selector disabppears
       end
     end
 
-    if params[:custom_data_select]
-      params[:custom_data_select].each do |local_key, local_value|
-        select(
-          browser: instance,
-          css:     ".content.active .newTicket select[name=\"#{local_key}\"]",
-          value:   local_value,
-        )
-      end
+    params[:custom_data_select]&.each do |local_key, local_value|
+      select(
+        browser: instance,
+        css:     ".content.active .newTicket select[name=\"#{local_key}\"]",
+        value:   local_value,
+      )
     end
-    if params[:custom_data_input]
-      params[:custom_data_input].each do |local_key, local_value|
-        set(
-          browser: instance,
-          css:     ".content.active .newTicket input[name=\"#{local_key}\"]",
-          value:   local_value,
-          clear:   true,
-        )
-      end
+    params[:custom_data_input]&.each do |local_key, local_value|
+      set(
+        browser: instance,
+        css:     ".content.active .newTicket input[name=\"#{local_key}\"]",
+        value:   local_value,
+        clear:   true,
+      )
     end
 
     if data[:attachment]
@@ -2005,7 +1987,7 @@ wait untill text in selector disabppears
 
     sleep 1
     9.times do
-      if instance.current_url =~ /#{Regexp.quote('#ticket/zoom/')}/
+      if instance.current_url.match?(/#{Regexp.quote('#ticket/zoom/')}/)
         assert(true, 'ticket created')
         sleep 2.5
         id = instance.current_url
@@ -2197,27 +2179,23 @@ wait untill text in selector disabppears
       )
     end
 
-    if params[:custom_data_select]
-      params[:custom_data_select].each do |local_key, local_value|
-        select(
-          browser: instance,
-          css:     ".active .sidebar select[name=\"#{local_key}\"]",
-          value:   local_value,
-        )
-      end
+    params[:custom_data_select]&.each do |local_key, local_value|
+      select(
+        browser: instance,
+        css:     ".active .sidebar select[name=\"#{local_key}\"]",
+        value:   local_value,
+      )
     end
-    if params[:custom_data_input]
-      params[:custom_data_input].each do |local_key, local_value|
-        set(
-          browser: instance,
-          css:     ".active .sidebar input[name=\"#{local_key}\"]",
-          value:   local_value,
-          clear:   true,
-        )
-      end
+    params[:custom_data_input]&.each do |local_key, local_value|
+      set(
+        browser: instance,
+        css:     ".active .sidebar input[name=\"#{local_key}\"]",
+        value:   local_value,
+        clear:   true,
+      )
     end
 
-    if data[:state] || data[:group] || data[:body] || !params[:custom_data_select].empty? || !params[:custom_data_input].empty?
+    if data[:state] || data[:group] || data[:body] || params[:custom_data_select].present? || params[:custom_data_input].present?
       found = nil
       9.times do
 
@@ -2225,7 +2203,7 @@ wait untill text in selector disabppears
 
         begin
           text = instance.find_elements(css: '.content.active .js-reset')[0].text
-          if text =~ /(Discard your unsaved changes.|Verwerfen der)/
+          if text.match?(/(Discard your unsaved changes.|Verwerfen der)/)
             found = true
           end
         rescue
@@ -2304,7 +2282,7 @@ wait untill text in selector disabppears
 
     if data[:title]
       title = instance.find_elements(css: '.content.active .ticketZoom-header .js-objectTitle').first.text.strip
-      if title =~ /#{data[:title]}/i
+      if title.match?(/#{data[:title]}/i)
         assert(true, "matching '#{data[:title]}' in title '#{title}'")
       else
         raise "not matching '#{data[:title]}' in title '#{title}'"
@@ -2313,33 +2291,29 @@ wait untill text in selector disabppears
 
     if data[:body]
       body = instance.find_elements(css: '.content.active [data-name="body"]').first.text.strip
-      if body =~ /#{data[:body]}/i
+      if body.match?(/#{data[:body]}/i)
         assert(true, "matching '#{data[:body]}' in body '#{body}'")
       else
         raise "not matching '#{data[:body]}' in body '#{body}'"
       end
     end
 
-    if params[:custom_data_select]
-      params[:custom_data_select].each do |local_key, local_value|
-        element = instance.find_elements(css: ".active .sidebar select[name=\"#{local_key}\"] option[selected]").first
-        value = element.text.strip
-        if value =~ /#{local_value}/i
-          assert(true, "matching '#{value}' in #{local_key} '#{local_value}'")
-        else
-          raise "not matching '#{value}' in #{local_key} '#{local_value}'"
-        end
+    params[:custom_data_select]&.each do |local_key, local_value|
+      element = instance.find_elements(css: ".active .sidebar select[name=\"#{local_key}\"] option[selected]").first
+      value = element.text.strip
+      if value.match?(/#{local_value}/i)
+        assert(true, "matching '#{value}' in #{local_key} '#{local_value}'")
+      else
+        raise "not matching '#{value}' in #{local_key} '#{local_value}'"
       end
     end
-    if params[:custom_data_input]
-      params[:custom_data_input].each do |local_key, local_value|
-        element = instance.find_elements(css: ".active .sidebar input[name=\"#{local_key}\"]").first
-        value = element.text.strip
-        if value =~ /#{local_value}/i
-          assert(true, "matching '#{value}' in #{local_key} '#{local_value}'")
-        else
-          raise "not matching '#{value}' in #{local_key} '#{local_value}'"
-        end
+    params[:custom_data_input]&.each do |local_key, local_value|
+      element = instance.find_elements(css: ".active .sidebar input[name=\"#{local_key}\"]").first
+      value = element.text.strip
+      if value.match?(/#{local_value}/i)
+        assert(true, "matching '#{value}' in #{local_key} '#{local_value}'")
+      else
+        raise "not matching '#{value}' in #{local_key} '#{local_value}'"
       end
     end
 
@@ -2528,7 +2502,7 @@ wait untill text in selector disabppears
       #puts url.inspect
       #puts element.inspect
     end
-    overviews.each do |url, _value|
+    overviews.each_key do |url|
       count          = instance.find_elements(css: ".content.active .sidebar a[href=\"#{url}\"] .badge")[0].text
       overviews[url] = count.to_i
     end
@@ -2735,7 +2709,7 @@ wait untill text in selector disabppears
     7.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
-      if text =~ /#{Regexp.quote(data[:name])}/
+      if text.match?(/#{Regexp.quote(data[:name])}/)
         assert(true, 'sla created')
         sleep 1
         return true
@@ -2802,7 +2776,7 @@ wait untill text in selector disabppears
     7.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
-      if text =~ /#{Regexp.quote(data[:name])}/
+      if text.match?(/#{Regexp.quote(data[:name])}/)
         assert(true, 'text module created')
         sleep 1
         return true
@@ -2869,7 +2843,7 @@ wait untill text in selector disabppears
     11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
-      if text =~ /#{Regexp.quote(data[:name])}/
+      if text.match?(/#{Regexp.quote(data[:name])}/)
         assert(true, 'signature created')
         sleep 1
         return true
@@ -2938,30 +2912,28 @@ wait untill text in selector disabppears
     11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
-      if text =~ /#{Regexp.quote(data[:name])}/
+      if text.match?(/#{Regexp.quote(data[:name])}/)
         assert(true, 'group created')
         modal_disappear(browser: instance) # wait until modal has gone
 
         # add member
-        if data[:member]
-          data[:member].each do |member|
-            instance.find_elements(css: 'a[href="#manage"]')[0].click
-            sleep 1
-            instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
-            sleep 3
-            element = instance.find_elements(css: '.content.active [name="search"]')[0]
-            element.clear
-            element.send_keys(member[:login])
-            sleep 3
-            #instance.find_elements(:css => '.content.active table [data-id]')[0].click
-            instance.execute_script('$(".content.active  table [data-id] td").first().click()')
-            modal_ready(browser: instance)
-            #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
-            instance.execute_script('$(".js-groupList tr:contains(\"' + data[:name] + '\") .js-groupListItem[value=' + member[:access] + ']").prop("checked", true)')
-            screenshot(browser: instance, comment: 'group_create_member')
-            instance.find_elements(css: '.modal button.js-submit')[0].click
-            modal_disappear(browser: instance)
-          end
+        data[:member]&.each do |member|
+          instance.find_elements(css: 'a[href="#manage"]')[0].click
+          sleep 1
+          instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
+          sleep 3
+          element = instance.find_elements(css: '.content.active [name="search"]')[0]
+          element.clear
+          element.send_keys(member[:login])
+          sleep 3
+          #instance.find_elements(:css => '.content.active table [data-id]')[0].click
+          instance.execute_script('$(".content.active  table [data-id] td").first().click()')
+          modal_ready(browser: instance)
+          #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
+          instance.execute_script('$(".js-groupList tr:contains(\"' + data[:name] + '\") .js-groupListItem[value=' + member[:access] + ']").prop("checked", true)')
+          screenshot(browser: instance, comment: 'group_create_member')
+          instance.find_elements(css: '.modal button.js-submit')[0].click
+          modal_disappear(browser: instance)
         end
       end
       sleep 1
@@ -3048,29 +3020,27 @@ wait untill text in selector disabppears
     11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
-      if text =~ /#{Regexp.quote(data[:name])}/
+      if text.match?(/#{Regexp.quote(data[:name])}/)
         assert(true, 'role created')
         modal_disappear(browser: instance) # wait until modal has gone
 
         # add member
-        if data[:member]
-          data[:member].each do |login|
-            instance.find_elements(css: 'a[href="#manage"]')[0].click
-            sleep 1
-            instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
-            sleep 3
-            element = instance.find_elements(css: '.content.active  [name="search"]')[0]
-            element.clear
-            element.send_keys(login)
-            sleep 3
-            #instance.find_elements(:css => '.content.active table [data-id]')[0].click
-            instance.execute_script('$(".content.active table [data-id] td").first().click()')
-            sleep 3
-            #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
-            instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
-            instance.find_elements(css: '.modal button.js-submit')[0].click
-            modal_disappear(browser: instance)
-          end
+        data[:member]&.each do |login|
+          instance.find_elements(css: 'a[href="#manage"]')[0].click
+          sleep 1
+          instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
+          sleep 3
+          element = instance.find_elements(css: '.content.active  [name="search"]')[0]
+          element.clear
+          element.send_keys(login)
+          sleep 3
+          #instance.find_elements(:css => '.content.active table [data-id]')[0].click
+          instance.execute_script('$(".content.active table [data-id] td").first().click()')
+          sleep 3
+          #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
+          instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
+          instance.find_elements(css: '.modal button.js-submit')[0].click
+          modal_disappear(browser: instance)
         end
       end
       sleep 1
@@ -3164,29 +3134,27 @@ wait untill text in selector disabppears
     11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
-      if text =~ /#{Regexp.quote(data[:name])}/
+      if text.match?(/#{Regexp.quote(data[:name])}/)
         assert(true, 'role created')
         modal_disappear(browser: instance) # wait until modal has gone
 
         # add member
-        if data[:member]
-          data[:member].each do |login|
-            instance.find_elements(css: 'a[href="#manage"]')[0].click
-            sleep 1
-            instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
-            sleep 3
-            element = instance.find_elements(css: '.content.active [name="search"]')[0]
-            element.clear
-            element.send_keys(login)
-            sleep 3
-            #instance.find_elements(:css => '.content.active table [data-id]')[0].click
-            instance.execute_script('$(".content.active table [data-id] td").first().click()')
-            sleep 3
-            #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
-            instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
-            instance.find_elements(css: '.modal button.js-submit')[0].click
-            modal_disappear(browser: instance)
-          end
+        data[:member]&.each do |login|
+          instance.find_elements(css: 'a[href="#manage"]')[0].click
+          sleep 1
+          instance.find_elements(css: '.content.active a[href="#manage/users"]')[0].click
+          sleep 3
+          element = instance.find_elements(css: '.content.active [name="search"]')[0]
+          element.clear
+          element.send_keys(login)
+          sleep 3
+          #instance.find_elements(:css => '.content.active table [data-id]')[0].click
+          instance.execute_script('$(".content.active table [data-id] td").first().click()')
+          sleep 3
+          #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
+          instance.execute_script('$(\'label:contains(" ' + data[:name] + '")\').first().click()')
+          instance.find_elements(css: '.modal button.js-submit')[0].click
+          modal_disappear(browser: instance)
         end
       end
       sleep 1
@@ -3332,12 +3300,14 @@ wait untill text in selector disabppears
     if data[:data_option]
       if data[:data_option][:options]
         if data[:data_type] == 'Boolean'
+          # rubocop:disable Lint/BooleanSymbol
           element = instance.find_elements(css: '.modal .js-valueTrue').first
           element.clear
           element.send_keys(data[:data_option][:options][:true])
           element = instance.find_elements(css: '.modal .js-valueFalse').first
           element.clear
           element.send_keys(data[:data_option][:options][:false])
+          # rubocop:enable Lint/BooleanSymbol
         else
           data[:data_option][:options].each do |key, value|
             element = instance.find_elements(css: '.modal .js-Table .js-key').last
@@ -3352,14 +3322,14 @@ wait untill text in selector disabppears
         end
       end
 
-      [:default, :min, :max, :diff].each do |key|
+      %i[default min max diff].each do |key|
         next if !data[:data_option].key?(key)
         element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
         element.clear
         element.send_keys(data[:data_option][key])
       end
 
-      [:future, :past].each do |key|
+      %i[future past].each do |key|
         next if !data[:data_option].key?(key)
         select(
           browser:  instance,
@@ -3388,7 +3358,7 @@ wait untill text in selector disabppears
     11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
-      if text =~ /#{Regexp.quote(data[:name])}/
+      if text.match?(/#{Regexp.quote(data[:name])}/)
         assert(true, 'object manager attribute created')
         sleep 1
         return true
@@ -3454,12 +3424,14 @@ wait untill text in selector disabppears
     if data[:data_option]
       if data[:data_option][:options]
         if data[:data_type] == 'Boolean'
+          # rubocop:disable Lint/BooleanSymbol
           element = instance.find_elements(css: '.modal .js-valueTrue').first
           element.clear
           element.send_keys(data[:data_option][:options][:true])
           element = instance.find_elements(css: '.modal .js-valueFalse').first
           element.clear
           element.send_keys(data[:data_option][:options][:false])
+          # rubocop:enable Lint/BooleanSymbol
         else
           data[:data_option][:options].each do |key, value|
             element = instance.find_elements(css: '.modal .js-Table .js-key').last
@@ -3474,14 +3446,14 @@ wait untill text in selector disabppears
         end
       end
 
-      [:default, :min, :max, :diff].each do |key|
+      %i[default min max diff].each do |key|
         next if !data[:data_option].key?(key)
         element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
         element.clear
         element.send_keys(data[:data_option][key])
       end
 
-      [:future, :past].each do |key|
+      %i[future past].each do |key|
         next if !data[:data_option].key?(key)
         select(
           browser:  instance,
@@ -3510,7 +3482,7 @@ wait untill text in selector disabppears
     11.times do
       element = instance.find_elements(css: 'body')[0]
       text = element.text
-      if text =~ /#{Regexp.quote(data[:name])}/
+      if text.match?(/#{Regexp.quote(data[:name])}/)
         assert(true, 'object manager attribute updated')
         sleep 1
         return true
@@ -3617,7 +3589,7 @@ wait untill text in selector disabppears
     assert(tags[0])
 
     tags_found = {}
-    params[:tags].each do |key, _value|
+    params[:tags].each_key do |key|
       tags_found[key] = false
     end
 

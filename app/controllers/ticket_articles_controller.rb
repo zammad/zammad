@@ -266,7 +266,7 @@ class TicketArticlesController < ApplicationController
 
   def sanitized_disposition
     disposition = params.fetch(:disposition, 'inline')
-    valid_disposition = %w(inline attachment)
+    valid_disposition = %w[inline attachment]
     return disposition if valid_disposition.include?(disposition)
     raise Exceptions::NotAuthorized, "Invalid disposition #{disposition} requested. Only #{valid_disposition.join(', ')} are valid."
   end

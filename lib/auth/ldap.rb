@@ -13,7 +13,7 @@ class Auth
       # get from config or fallback to login
       # for a list of user attributes which should
       # be used for logging in
-      login_attributes = @config[:login_attributes] || %w(login)
+      login_attributes = @config[:login_attributes] || %w[login]
 
       authed = login_attributes.any? do |attribute|
         ldap_user.valid?(user[attribute], password)

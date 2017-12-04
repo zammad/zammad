@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class TicketSlaTest < ActiveSupport::TestCase
@@ -141,7 +141,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       condition: {
         'ticket.priority_id' => {
           operator: 'is',
-          value: %w(1 2 3),
+          value: %w[1 2 3],
         },
       },
       calendar_id: calendar2.id,
@@ -551,7 +551,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       condition: {
         'ticket.priority_id' => {
           operator: 'is',
-          value: %w(2),
+          value: %w[2],
         },
       },
       first_response_time: 60,
@@ -676,7 +676,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       condition: {
         'ticket.priority_id' => {
           operator: 'is not',
-          value: %w(1 2 3),
+          value: %w[1 2 3],
         },
       },
       calendar_id: calendar.id,
@@ -1640,7 +1640,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       condition: {
         'ticket.priority_id' => {
           operator: 'is',
-          value: %w(1 2 3),
+          value: %w[1 2 3],
         },
         'article.subject' => {
           operator: 'contains',
@@ -1670,7 +1670,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       condition: {
         'ticket.priority_id' => {
           operator: 'is',
-          value: %w(1 2 3),
+          value: %w[1 2 3],
         },
         'ticket.title' => {
           operator: 'contains',
@@ -1700,7 +1700,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       condition: {
         'ticket.priority_id' => {
           operator: 'is',
-          value: %w(1 2 3),
+          value: %w[1 2 3],
         },
         'ticket.title' => {
           operator: 'contains',

@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class SessionsController < ApplicationController
-  prepend_before_action :authentication_check, only: [:switch_to_user, :list, :delete]
-  skip_before_action :verify_csrf_token, only: [:create, :show, :destroy, :create_omniauth, :create_sso]
+  prepend_before_action :authentication_check, only: %i[switch_to_user list delete]
+  skip_before_action :verify_csrf_token, only: %i[create show destroy create_omniauth create_sso]
 
   # "Create" a login, aka "log the user in"
   def create

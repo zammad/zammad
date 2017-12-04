@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Observer::Chat::Leave::BackgroundJob
   def initialize(chat_session_id, client_id, session)
     @chat_session_id = chat_session_id

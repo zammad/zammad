@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class TicketNotificationTest < ActiveSupport::TestCase
@@ -25,6 +25,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
       },
       perform: {
         'notification.email' => {
+          # rubocop:disable Lint/InterpolationCheck
           'body' => '<p>Your request (Ticket##{ticket.number}) has been received and will be reviewed by our support staff.<p>
 <br/>
 <p>To provide additional information, please reply to this email or click on the following link:
@@ -34,6 +35,7 @@ class TicketNotificationTest < ActiveSupport::TestCase
 <p><i><a href="http://zammad.com">Zammad</a>, your customer support system</i></p>',
           'recipient' => 'ticket_customer',
           'subject' => 'Thanks for your inquiry (#{ticket.title})',
+          # rubocop:enable Lint/InterpolationCheck
         },
       },
       disable_notification: true,

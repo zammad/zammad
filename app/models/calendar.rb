@@ -83,11 +83,11 @@ returns
 =end
 
   def self.ical_feeds
-    data = YAML.load_file(Rails.root.join('config/holiday_calendars.yml'))
+    data = YAML.load_file(Rails.root.join('config', 'holiday_calendars.yml'))
     url  = data['url']
 
     data['countries'].map do |country, domain|
-      [(url % { domain: domain }), country]
+      [format(url, domain: domain), country]
     end.to_h
   end
 
@@ -210,7 +210,7 @@ returns
   end
 
   def self.fetch_parse(location)
-    if location =~ /^http/i
+    if location.match?(/^http/i)
       result = UserAgent.get(location)
       if !result.success?
         raise result.error
@@ -257,7 +257,7 @@ returns
     end
 
     # ignore daylight saving time entries
-    return if comment =~ /(daylight saving|sommerzeit|summertime)/i
+    return if comment.match?(/(daylight saving|sommerzeit|summertime)/i)
     [day, comment]
   end
 

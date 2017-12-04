@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 require 'rake'
 
@@ -12,7 +12,7 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
 
     # create agent
-    roles  = Role.where(name: %w(Admin Agent))
+    roles  = Role.where(name: %w[Admin Agent])
     groups = Group.all
 
     @admin = User.create_or_update(
@@ -195,21 +195,21 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
-    assert_not(result.empty?)
+    assert_not(result.blank?)
     assert_equal('authentication failed', result['error'])
 
     post '/api/v1/search/user', params: params.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
-    assert_not(result.empty?)
+    assert_not(result.blank?)
     assert_equal('authentication failed', result['error'])
 
     post '/api/v1/search', params: params.to_json, headers: @headers
     assert_response(401)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
-    assert_not(result.empty?)
+    assert_not(result.blank?)
     assert_equal('authentication failed', result['error'])
   end
 

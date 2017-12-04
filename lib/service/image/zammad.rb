@@ -13,7 +13,7 @@ class Service::Image::Zammad
 
     email.downcase!
 
-    return if email =~ /@example.com$/
+    return if email.match?(/@example.com$/)
 
     # fetch image
     response = UserAgent.post(

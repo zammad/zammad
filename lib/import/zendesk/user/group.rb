@@ -14,7 +14,7 @@ module Import
 
         def for(user)
           groups = []
-          return groups if mapping[user.id].empty?
+          return groups if mapping[user.id].blank?
 
           mapping[user.id].each do |zendesk_group_id|
 

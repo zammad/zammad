@@ -9,7 +9,7 @@ class Chat < ApplicationModel
 
     # reconnect
     if session_id
-      chat_session = Chat::Session.find_by(session_id: session_id, state: %w(waiting running))
+      chat_session = Chat::Session.find_by(session_id: session_id, state: %w[waiting running])
 
       if chat_session
         if chat_session.state == 'running'
@@ -126,7 +126,7 @@ class Chat < ApplicationModel
   end
 
   def self.active_chat_count
-    Chat::Session.where(state: %w(waiting running)).count
+    Chat::Session.where(state: %w[waiting running]).count
   end
 
   def self.available_agents(diff = 2.minutes)
@@ -153,7 +153,7 @@ class Chat < ApplicationModel
 
   def self.seads_total(diff = 2.minutes)
     total = 0
-    available_agents(diff).each do |_user_id, concurrent|
+    available_agents(diff).each_value do |concurrent|
       total += concurrent
     end
     total

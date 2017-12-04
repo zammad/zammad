@@ -4,7 +4,7 @@ Zammad::Application.routes.draw do
   # reports
   match api_path + '/reports/config',              to: 'reports#reporting_config', via: :get
   match api_path + '/reports/generate',            to: 'reports#generate',        via: :post
-  match api_path + '/reports/sets',                to: 'reports#sets',            via: [:post, :get]
+  match api_path + '/reports/sets',                to: 'reports#sets',            via: %i[post get]
 
   # report_profiles
   match api_path + '/report_profiles',             to: 'report_profiles#index',   via: :get

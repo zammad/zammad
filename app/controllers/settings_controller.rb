@@ -93,11 +93,11 @@ class SettingsController < ApplicationController
 
   def keep_certain_attributes
     setting = Setting.find(params[:id])
-    [:name, :area, :state_initial, :frontend, :options].each do |key|
+    %i[name area state_initial frontend options].each do |key|
       params.delete(key)
     end
-    if !params[:preferences].empty?
-      [:online_service_disable, :permission, :render].each do |key|
+    if params[:preferences].present?
+      %i[online_service_disable permission render].each do |key|
         params[:preferences].delete(key)
       end
       params[:preferences].merge!(setting.preferences)

@@ -107,7 +107,6 @@ class Sessions::Event::Base
     # rubocop:enable Rails/Output
   end
 
-  def destroy
-  end
+  def destroy; end
 
 end

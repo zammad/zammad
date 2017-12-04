@@ -148,24 +148,26 @@ class App.ControllerGenericIndex extends App.Controller
         return item
       )
 
-    # show description button, only if content exists
-    showDescription = false
-    if App[ @genericObject ].description && !_.isEmpty(objects)
-      showDescription = true
+    if !@table
 
-    @html App.view('generic/admin/index')(
-      head:            @pageData.objects
-      notes:           @pageData.notes
-      buttons:         @pageData.buttons
-      menus:           @pageData.menus
-      showDescription: showDescription
-    )
+      # show description button, only if content exists
+      showDescription = false
+      if App[ @genericObject ].description && !_.isEmpty(objects)
+        showDescription = true
 
-    # show description in content if no no content exists
-    if _.isEmpty(objects) && App[ @genericObject ].description
-      description = marked(App[ @genericObject ].description)
-      @$('.table-overview').html(description)
-      return
+      @html App.view('generic/admin/index')(
+        head:            @pageData.objects
+        notes:           @pageData.notes
+        buttons:         @pageData.buttons
+        menus:           @pageData.menus
+        showDescription: showDescription
+      )
+
+      # show description in content if no no content exists
+      if _.isEmpty(objects) && App[ @genericObject ].description
+        description = marked(App[ @genericObject ].description)
+        @$('.table-overview').html(description)
+        return
 
     # append content table
     params = _.extend(
@@ -184,7 +186,10 @@ class App.ControllerGenericIndex extends App.Controller
       },
       @pageData.tableExtend
     )
-    new App.ControllerTable(params)
+    if !@table
+      @table = new App.ControllerTable(params)
+    else
+      @table.update(objects: objects)
 
   edit: (id, e) =>
     e.preventDefault()
@@ -1170,7 +1175,6 @@ class App.ObserverController extends App.Controller
     if @globalRerender
       @bind('ui:rerender', =>
         @lastAttributres = undefined
-        console.log('aaaa', @model, @template)
         @maybeRender(App[@model].fullLocal(@object_id))
       )
 

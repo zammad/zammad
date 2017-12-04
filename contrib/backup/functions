@@ -41,16 +41,19 @@ function backup_dir_create () {
 function backup_files () {
   echo "creating file backup..."
   tar -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_DIR}
+  ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${BACKUP_DIR}/latest_zammad_files.tar.gz
 }
 
 function backup_db () {
   if [ "${DB_ADAPTER}" == "mysql2" ]; then
     echo "creating mysql backup..."
     mysqldump --opt --single-transaction -u${DB_USER} -p${DB_PASS} ${DB_NAME} | gzip > ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz
+    ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.mysql.gz ${BACKUP_DIR}/latest_zammad_db.mysql.gz
   elif [ "${DB_ADAPTER}" == "postgresql" ]; then
     echo "creating postgresql backup..."
     su -c "pg_dump -c ${DB_NAME} | gzip > /tmp/${TIMESTAMP}_zammad_db.psql.gz" postgres
     mv /tmp/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}
+    ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_db.psql.gz ${BACKUP_DIR}/latest_zammad_db.psql.gz
   else
     echo "DB ADAPTER not found. if its sqlite backup is already saved in the filebackup"
   fi

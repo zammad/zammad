@@ -35,12 +35,11 @@ log object update activity stream, if configured - will be executed automaticall
     return true if !saved_changes?
 
     ignored_attributes  = self.class.instance_variable_get(:@activity_stream_attributes_ignored) || []
-    ignored_attributes += %i(created_at updated_at created_by_id updated_by_id)
+    ignored_attributes += %i[created_at updated_at created_by_id updated_by_id]
 
     log = false
-    saved_changes.each do |key, _value|
+    saved_changes.each_key do |key|
       next if ignored_attributes.include?(key.to_sym)
-
       log = true
     end
     return true if !log
