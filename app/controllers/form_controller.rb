@@ -241,7 +241,7 @@ class FormController < ApplicationController
 
   def enabled?
     return true if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
-    return true if Setting.get('form_ticket_create') && Setting.get('customer_ticket_create')
+    return true if Setting.get('form_ticket_create')
     response_access_deny
     false
   end
