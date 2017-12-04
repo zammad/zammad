@@ -13,13 +13,13 @@ namespace :searchindex do
   end
 
   task :create, [:opts] => :environment do |_t, _args|
+    puts 'create indexes...'
 
     # es with mapper-attachments plugin
     number = SearchIndexBackend.info['version']['number'].to_s
     if number =~ /^[2-4]\./ || number =~ /^5\.[0-5]\./
 
       # create indexes
-      puts 'create indexes...'
       SearchIndexBackend.index(
         action: 'create',
         data: {
@@ -47,7 +47,6 @@ namespace :searchindex do
     else
 
       # create indexes
-      puts 'create indexes...'
       SearchIndexBackend.index(
         action: 'create',
         data: {
