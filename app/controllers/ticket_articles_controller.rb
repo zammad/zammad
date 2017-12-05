@@ -150,13 +150,16 @@ class TicketArticlesController < ApplicationController
 
   # DELETE /ticket_attachment_upload
   def ticket_attachment_upload_delete
-    if params[:store_id]
-      Store.remove_item(params[:store_id])
+
+    if params[:id].present?
+      Store.remove_item(params[:id])
       render json: {
         success: true,
       }
       return
-    elsif params[:form_id]
+    end
+
+    if params[:form_id].present?
       Store.remove(
         object: 'UploadCache',
         o_id:   params[:form_id],
@@ -167,7 +170,7 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    render json: { message: 'No such store_id or form_id!' }, status: :unprocessable_entity
+    render json: { message: 'No such id or form_id!' }, status: :unprocessable_entity
   end
 
   # POST /ticket_attachment_upload
@@ -198,7 +201,7 @@ class TicketArticlesController < ApplicationController
     render json: {
       success: true,
       data: {
-        store_id: store.id,
+        id: store.id,
         filename: file.original_filename,
         size: store.size,
       }
