@@ -208,6 +208,43 @@ class TicketArticlesController < ApplicationController
     }
   end
 
+  # POST /ticket_attachment_upload_clone_by_article
+  def ticket_attachment_upload_clone_by_article
+
+    article = Ticket::Article.find(params[:article_id])
+    access!(article.ticket, 'read')
+
+    raise Exceptions::NotAuthorized, 'Need form_id to attach attachmeints.' if params[:form_id].blank?
+
+    existing_attachments = Store.list(
+      object: 'UploadCache',
+      o_id: params[:form_id],
+    ).to_a
+    new_attachments = []
+    article.attachments.each do |new_attachment|
+      next if new_attachment.preferences['Content-ID'].present?
+      already_added = false
+      existing_attachments.each do |local_attachment|
+        next if local_attachment.filename != new_attachment.filename || local_attachment.size != new_attachment.size
+        already_added = true
+        break
+      end
+      next if already_added == true
+      file = Store.add(
+        object: 'UploadCache',
+        o_id: params[:form_id],
+        data: new_attachment.content,
+        filename: new_attachment.filename,
+        preferences: new_attachment.preferences,
+      )
+      new_attachments.push file
+    end
+
+    render json: {
+      attachments: new_attachments,
+    }
+  end
+
   # GET /ticket_attachment/:ticket_id/:article_id/:id
   def attachment
     ticket = Ticket.lookup(id: params[:ticket_id])

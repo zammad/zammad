@@ -20,6 +20,7 @@ class App.TicketZoomArticleView extends App.Controller
           el:         el
           ui:         @ui
           highligher: @highligher
+          form_id:    @form_id
         )
         if !@ticketArticleInsertByIndex(index, el)
           all.push el
@@ -193,6 +194,7 @@ class ArticleViewItem extends App.ObserverController
       ticket:          @ticket
       article:         article
       lastAttributres: @lastAttributres
+      form_id:         @form_id
     )
 
     # set see more

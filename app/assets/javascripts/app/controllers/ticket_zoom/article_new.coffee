@@ -70,6 +70,14 @@ class App.TicketZoomArticleNew extends App.Controller
       @textarea.focus()
     )
 
+    # add article attachment
+    @bind('ui::ticket::addArticleAttachent', (data) =>
+      return if data.ticket.id.toString() isnt @ticket_id.toString()
+      return if _.isEmpty(data.attachments)
+      for file in data.attachments
+        @renderAttachment(file)
+    )
+
     # reset new article screen
     @bind('ui::ticket::taskReset', (data) =>
       return if data.ticket_id.toString() isnt @ticket_id.toString()
