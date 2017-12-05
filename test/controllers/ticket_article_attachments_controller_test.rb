@@ -148,7 +148,7 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
-    get "/api/v1/ticket_split", params: { form_id: '1234-2', ticket_id: ticket_p.id, article_id: article_p.id }, headers: headers.merge('Authorization' => credentials)
+    get '/api/v1/ticket_split', params: { form_id: '1234-2', ticket_id: ticket_p.id, article_id: article_p.id }, headers: headers.merge('Authorization' => credentials)
     assert_response(200)
     result = JSON.parse(@response.body)
     assert(result['assets'])
