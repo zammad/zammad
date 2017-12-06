@@ -240,6 +240,9 @@ class Admin extends App.WizardFullScreen
 
   relogin: (data, status, xhr) =>
     @log 'notice', 'relogin:success', data
+    callback = ->
+      App.Setting.set('locale_default', App.i18n.detectBrowserLocale())
+    App.Setting.fetchFull(callback)
     App.Event.trigger 'notify:removeall'
     @navigate 'getting_started/base'
 

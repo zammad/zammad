@@ -156,6 +156,26 @@ Setting.create_if_not_exists(
   },
   frontend: true
 )
+Setting.create_if_not_exists(
+  title: 'Locale',
+  name: 'locale_default',
+  area: 'System::Branding',
+  description: 'Defines the system default language.',
+  options: {
+    form: [
+      {
+        name: 'locale_default',
+      }
+    ],
+  },
+  state: 'en-us',
+  preferences: {
+    prio: 8,
+    controller: 'SettingsAreaItemDefaultLocale',
+    permission: ['admin.system'],
+  },
+  frontend: true
+)
 Setting.create_or_update(
   title: 'Pretty Date',
   name: 'pretty_date_format',
@@ -181,25 +201,6 @@ Setting.create_or_update(
     permission: ['admin.branding'],
   },
   state: 'relative',
-  frontend: true
-)
-Setting.create_if_not_exists(
-  title: 'Locale',
-  name: 'locale_default',
-  area: 'System::Base',
-  description: 'Defines the system default language.',
-  options: {
-    form: [
-      {
-        name: 'locale_default',
-      }
-    ],
-  },
-  state: 'en-us',
-  preferences: {
-    controller: 'SettingsAreaItemDefaultLocale',
-    permission: ['admin.system'],
-  },
   frontend: true
 )
 options = {}
