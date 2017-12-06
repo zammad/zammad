@@ -54,8 +54,7 @@ class EmailReply extends App.Controller
       actions.push {
         name: 'forward'
         type: 'emailForward'
-        #icon: 'forward'
-        icon: 'line-right-arrow'
+        icon: 'forward'
         href: '#'
       }
 
@@ -69,8 +68,7 @@ class EmailReply extends App.Controller
       actions.push {
         name: 'forward'
         type: 'emailForward'
-        #icon: 'forward'
-        icon: 'line-right-arrow'
+        icon: 'forward'
         href: '#'
       }
     if article.sender.name is 'Agent' && article.type.name is 'phone'
@@ -83,8 +81,7 @@ class EmailReply extends App.Controller
       actions.push {
         name: 'forward'
         type: 'emailForward'
-        #icon: 'forward'
-        icon: 'line-right-arrow'
+        icon: 'forward'
         href: '#'
       }
 
