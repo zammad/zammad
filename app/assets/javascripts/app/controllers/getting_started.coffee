@@ -240,9 +240,6 @@ class Admin extends App.WizardFullScreen
 
   relogin: (data, status, xhr) =>
     @log 'notice', 'relogin:success', data
-    callback = ->
-      App.Setting.set('locale_default', App.i18n.detectBrowserLocale())
-    App.Setting.fetchFull(callback)
     App.Event.trigger 'notify:removeall'
     @navigate 'getting_started/base'
 
@@ -340,11 +337,9 @@ class Base extends App.WizardFullScreen
     @hideAlerts()
     @disable(e)
 
-    # get params
     @params = @formParam(e.target)
-
-    # add logo
     @params.logo = @logoPreview.attr('src')
+    @params.locale_default = App.i18n.detectBrowserLocale()
 
     store = (logoResizeDataUrl) =>
       @params.logo_resize = logoResizeDataUrl
@@ -357,7 +352,7 @@ class Base extends App.WizardFullScreen
         success:     (data, status, xhr) =>
           if data.result is 'ok'
             for key, value of data.settings
-              App.Config.set( key, value )
+              App.Config.set(key, value)
             if App.Config.get('system_online_service')
               @navigate 'getting_started/channel/email_pre_configured'
             else
