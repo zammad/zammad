@@ -1,7 +1,7 @@
 <div class="attachment">
-  <div class="attachment-name"><%= @fileName %></div>
-  <div class="attachment-size"><%= @fileSize %></div>
-  <div class="attachment-delete js-delete" data-id="<%= @store_id %>">
+  <div class="attachment-name"><%= @filename %></div>
+  <div class="attachment-size"><%= @humanFileSize(@size) %></div>
+  <div class="attachment-delete js-delete" data-id="<%= @id %>">
     <%- @Icon('diagonal-cross') %><%- @T('Delete File') %>
   </div>
 </div>

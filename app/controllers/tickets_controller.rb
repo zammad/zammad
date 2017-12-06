@@ -2,6 +2,7 @@
 
 class TicketsController < ApplicationController
   include CreatesTicketArticles
+  include ClonesTicketArticleAttachments
   include TicketStats
 
   prepend_before_action :authentication_check
@@ -353,12 +354,13 @@ class TicketsController < ApplicationController
     access!(ticket, 'read')
     assets = ticket.assets({})
 
-    # get related articles
     article = Ticket::Article.find(params[:article_id])
+    access!(article.ticket, 'read')
     assets = article.assets(assets)
 
     render json: {
-      assets: assets
+      assets: assets,
+      attachments: article_attachments_clone(article),
     }
   end
 

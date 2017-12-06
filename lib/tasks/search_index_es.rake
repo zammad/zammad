@@ -13,30 +13,91 @@ namespace :searchindex do
   end
 
   task :create, [:opts] => :environment do |_t, _args|
-
-    # create indexes
     puts 'create indexes...'
-    SearchIndexBackend.index(
-      action: 'create',
-      data: {
-        mappings: {
-          Ticket: {
-            _source: { excludes: [ 'article.attachment' ] },
-            properties: {
-              article: {
-                type: 'nested',
-                include_in_parent: true,
-                properties: {
-                  attachment: {
-                    type: 'attachment',
+
+    # es with mapper-attachments plugin
+    info = SearchIndexBackend.info
+    number = nil
+    if info.present?
+      number = info['version']['number'].to_s
+    end
+    if number.blank? || number =~ /^[2-4]\./ || number =~ /^5\.[0-5]\./
+
+      # create indexes
+      SearchIndexBackend.index(
+        action: 'create',
+        data: {
+          mappings: {
+            Ticket: {
+              _source: { excludes: [ 'article.attachment' ] },
+              properties: {
+                article: {
+                  type: 'nested',
+                  include_in_parent: true,
+                  properties: {
+                    attachment: {
+                      type: 'attachment',
+                    }
                   }
                 }
               }
             }
           }
         }
-      }
-    )
+      )
+      Setting.set('es_pipeline', '')
+
+    # es with ingest-attachment plugin
+    else
+
+      # create indexes
+      SearchIndexBackend.index(
+        action: 'create',
+        data: {
+          mappings: {
+            Ticket: {
+              _source: { excludes: [ 'article.attachment' ] },
+            }
+          }
+        }
+      )
+
+      # update processors
+      pipeline = 'zammad-attachment'
+      Setting.set('es_pipeline', pipeline)
+      SearchIndexBackend.processors(
+        "_ingest/pipeline/#{pipeline}": [
+          {
+            action: 'delete',
+          },
+          {
+            action: 'create',
+            description: 'Extract zammad-attachment information from arrays',
+            processors: [
+              {
+                foreach: {
+                  field: 'article',
+                  ignore_failure: true,
+                  processor: {
+                    foreach: {
+                      field: '_ingest._value.attachment',
+                      ignore_failure: true,
+                      processor: {
+                        attachment: {
+                          target_field: '_ingest._value',
+                          field: '_ingest._value._content',
+                          ignore_failure: true,
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      )
+    end
 
   end
 

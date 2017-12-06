@@ -50,11 +50,25 @@ class EmailReply extends App.Controller
           icon: 'reply-all'
           href: '#'
         }
+
+      actions.push {
+        name: 'forward'
+        type: 'emailForward'
+        icon: 'forward'
+        href: '#'
+      }
+
     if article.sender.name is 'Customer' && article.type.name is 'phone'
       actions.push {
         name: 'reply'
         type: 'emailReply'
         icon: 'reply'
+        href: '#'
+      }
+      actions.push {
+        name: 'forward'
+        type: 'emailForward'
+        icon: 'forward'
         href: '#'
       }
     if article.sender.name is 'Agent' && article.type.name is 'phone'
@@ -64,17 +78,26 @@ class EmailReply extends App.Controller
         icon: 'reply'
         href: '#'
       }
+      actions.push {
+        name: 'forward'
+        type: 'emailForward'
+        icon: 'forward'
+        href: '#'
+      }
 
     actions
 
   @perform: (articleContainer, type, ticket, article, ui) ->
-    return true if type isnt 'emailReply' && type isnt 'emailReplyAll'
+    return true if type isnt 'emailReply' && type isnt 'emailReplyAll' && type isnt 'emailForward'
 
-    if type isnt 'emailReply'
+    if type is 'emailReply'
+      @emailReply(false, ticket, article, ui)
+
+    else if type is 'emailReplyAll'
       @emailReply(true, ticket, article, ui)
 
-    else if type isnt 'emailReplyAll'
-      @emailReply(false, ticket, article, ui)
+    else if type is 'emailForward'
+      @emailForward(ticket, article, ui)
 
     true
 
@@ -129,6 +152,51 @@ class EmailReply extends App.Controller
       article: articleNew
       signaturePosition: signaturePosition
     })
+
+    true
+
+  @emailForward: (ticket, article, ui) ->
+
+    ui.scrollToCompose()
+
+    signaturePosition = 'top'
+    body = ''
+    if article.content_type.match('html')
+      body = App.Utils.textCleanup(article.body)
+    if article.content_type.match('plain')
+      body = App.Utils.textCleanup(article.body)
+      body = App.Utils.text2html(body)
+
+    body = "<br/><div>---Begin forwarded message:---<br/><br/></div><div><blockquote type=\"cite\">#{body}</blockquote></div><div><br></div>"
+
+    articleNew = {}
+    articleNew.body = body
+
+    type = App.TicketArticleType.findByAttribute(name:'email')
+
+    App.Event.trigger('ui::ticket::setArticleType', {
+      ticket: ticket
+      type: type
+      article: articleNew
+      signaturePosition: signaturePosition
+    })
+
+    # add attachments to form
+    App.Ajax.request(
+      id:    "ticket_attachment_clone#{ui.form_id}"
+      type:  'POST'
+      url:   "#{App.Config.get('api_path')}/ticket_attachment_upload_clone_by_article/#{article.id}"
+      data: JSON.stringify(form_id: ui.form_id)
+      processData: true
+      success: (data, status, xhr) ->
+        return if _.isEmpty(data.attachments)
+        App.Event.trigger('ui::ticket::addArticleAttachent', {
+          ticket: ticket
+          article: article
+          attachments: data.attachments
+          form_id: ui.form_id
+        })
+    )
 
     true
 

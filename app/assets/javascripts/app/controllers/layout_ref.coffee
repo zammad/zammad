@@ -349,7 +349,7 @@ class LayoutRefCommunicationReply extends App.ControllerContent
 
     file = @uploadQueue.shift()
     # console.log "working of", file, "from", @uploadQueue
-    @fakeUpload file.name, file.size, @workOfUploadQueue
+    @fakeUpload(file.name, file.size, @workOfUploadQueue)
 
   humanFileSize: (size) ->
     i = Math.floor( Math.log(size) / Math.log(1024) )
@@ -363,27 +363,27 @@ class LayoutRefCommunicationReply extends App.ControllerContent
       @attachmentPlaceholder.removeClass('hide')
       @attachmentUpload.addClass('hide')
 
-  fakeUpload: (fileName, fileSize, callback) ->
+  fakeUpload: (filename, size, callback) ->
     @attachmentPlaceholder.addClass('hide')
     @attachmentUpload.removeClass('hide')
 
     progress = 0
-    duration = fileSize / 1024
+    duration = size / 1024
 
     for i in [0..100]
       setTimeout @updateUploadProgress, i*duration/100 , i
 
     setTimeout (=>
       callback()
-      @renderAttachment(fileName, fileSize)
+      @renderAttachment(filename, size)
     ), duration
 
-  renderAttachment: (fileName, fileSize) =>
-    @attachments.push([fileName, fileSize])
-    @attachmentsHolder.append App.view('generic/attachment_item')
-      fileName: fileName
-      fileSize: @humanFileSize(fileSize)
-
+  renderAttachment: (filename, size) =>
+    @attachments.push([filename, size])
+    @attachmentsHolder.append(App.view('generic/attachment_item')
+      filename: filename
+      size: @humanFileSize(size)
+    )
 
 App.Config.set( 'layout_ref/communication_reply/:content', LayoutRefCommunicationReply, 'Routes' )
 

@@ -194,9 +194,9 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert(attributes['article'][0]['attachment'][0])
     assert_not(attributes['article'][0]['attachment'][1])
     assert_equal('es-normal.txt', attributes['article'][0]['attachment'][0]['_name'])
-    assert_equal("c29tZSBub3JtYWwgdGV4dDY2Cg==\n", attributes['article'][0]['attachment'][0]['_content'])
+    assert_equal('c29tZSBub3JtYWwgdGV4dDY2Cg==', attributes['article'][0]['attachment'][0]['_content'])
 
-    ticket1.destroy
+    ticket1.destroy!
 
     # execute background jobs
     Scheduler.worker(true)

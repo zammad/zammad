@@ -461,6 +461,7 @@ class App.TicketZoom extends App.Controller
         ui:                 @
         highligher:         @highligher
         ticket_article_ids: @ticket_article_ids
+        form_id:            @form_id
       )
 
       new App.TicketCustomerAvatar(

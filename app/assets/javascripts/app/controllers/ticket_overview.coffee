@@ -956,7 +956,6 @@ class Table extends App.Controller
     ticketListShow = []
     for ticket in tickets
       ticketListShow.push App.Ticket.find(ticket.id)
-    console.log('overview', overview)
     @overview = App.Overview.find(overview.id)
     @table.update(
       overviewAttributes: @overview.view.s

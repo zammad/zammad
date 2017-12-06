@@ -51,10 +51,8 @@ returns
       end
 
       # lookup attachments
+      article_attributes['attachment'] = []
       article.attachments.each do |attachment|
-        if !article_attributes['attachment']
-          article_attributes['attachment'] = []
-        end
 
         # check file size
         next if !attachment.content
@@ -70,7 +68,7 @@ returns
 
         data = {
           '_name'    => attachment.filename,
-          '_content' => Base64.encode64(attachment.content)
+          '_content' => Base64.encode64(attachment.content).delete("\n")
         }
         article_attributes['attachment'].push data
       end
