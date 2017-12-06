@@ -1,5 +1,28 @@
 # Change Log
 
+## [2.1.1](https://github.com/zammad/zammad/tree/2.1.1) (2017-12-06)
+[Full Changelog](https://github.com/zammad/zammad/compare/2.1.0...2.1.1)
+
+**Implemented enhancements:**
+- Improve i-doit filtering \(without type\) [\#1571](https://github.com/zammad/zammad/issues/1571) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Reset customer selection in ticket create screen if input field cleared [\#1670](https://github.com/zammad/zammad/issues/1670) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Add config option for intelligent customer selection of incoming emails of agents [\#1671](https://github.com/zammad/zammad/issues/1671) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Translation for form widget in Dutch [\#1623](https://github.com/zammad/zammad/issues/1623) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Twitter: Allow tweet articles to be 280 chars long [\#1628](https://github.com/zammad/zammad/issues/1628) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+- Chat language setting or behaviour in dutch [\#1618](https://github.com/zammad/zammad/issues/1618) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
+
+
+**Fixed bugs:**
+- Webform isn´t available | 401 Unauthorized [\#1604](https://github.com/zammad/zammad/issues/1604) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to re-order overviews in admin interface with over 100 overviews [\#1681](https://github.com/zammad/zammad/issues/1681) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- TimeAccounting ticket condition prevents submit of Zoom [\#1513](https://github.com/zammad/zammad/issues/1513) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to open trigger in admin interface [\#1666](https://github.com/zammad/zammad/issues/1666) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Users mail\_delivery\_failed is not removed after changing the email address [\#1661](https://github.com/zammad/zammad/issues/1661) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Tickets are deleted but database is still the same size [\#1649](https://github.com/zammad/zammad/issues/1649) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Ignore Twitter search key with only \# [\#1606](https://github.com/zammad/zammad/issues/1606) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to sort overview by priority  [\#1595](https://github.com/zammad/zammad/issues/1595) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
+
 ## [2.1.0](https://github.com/zammad/zammad/tree/2.1.0) (2017-10-25)
 [Full Changelog](https://github.com/zammad/zammad/compare/2.0.0...2.1.0)
 
