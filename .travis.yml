@@ -62,3 +62,4 @@ script:
 after_success:
   - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger-docker-build.sh; fi
   - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger-docker-compose-build.sh; fi
+  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger-docker-univention-build.sh; fi
