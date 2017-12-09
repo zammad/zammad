@@ -227,22 +227,38 @@ function create_webserver_config () {
 
 function setup_elasticsearch () {
   echo "# Configuring Elasticsearch..."
-  yes | /usr/share/elasticsearch/bin/elasticsearch-plugin install mapper-attachments
+
+  if [ -n "$(/usr/share/elasticsearch/bin/elasticsearch-plugin list | grep mapper-attachments)" ]; then
+    REBUILD_ES_SEARCHINDEX="yes"
+    yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s remove mapper-attachments
+  elif [ -n "$(/usr/share/elasticsearch/bin/elasticsearch-plugin list | grep ingest-attachment)" ]; then
+    yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s remove ingest-attachment
+  fi
+
+  yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-attachment
+
   ${INIT_CMD} restart elasticsearch
-  zammad run rails r "Setting.set('es_url', \"${ES_CONNECTION:-http://127.0.0.1:9200}\")"
 }
 
 function elasticsearch_searchindex_rebuild () {
-  echo "# (Re)building Elasticsearch searchindex..."
-  zammad run rake searchindex:rebuild
+  if [ "${REBUILD_ES_SEARCHINDEX}" == "yes" ]; then
+    echo "# (Re)building Elasticsearch searchindex..."
+
+    zammad run rails r "Setting.set('es_url', \"${ES_CONNECTION:-http://127.0.0.1:9200}\")"
+
+    zammad run rake searchindex:rebuild
+  fi
 }
 
 function update_or_install () {
+  setup_elasticsearch
+
   if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     update_database
 
     update_translations
   else
+    REBUILD_ES_SEARCHINDEX="yes"
     create_database_password
 
     if [ "${ADAPTER}" == "postgresql" ]; then
@@ -255,12 +271,10 @@ function update_or_install () {
 
     update_database_yml
 
-    setup_elasticsearch
-
     initialise_database
-
-    elasticsearch_searchindex_rebuild
   fi
+  
+  elasticsearch_searchindex_rebuild
 }
 
 function set_env_vars () {
