@@ -241,12 +241,12 @@ function setup_elasticsearch () {
 }
 
 function elasticsearch_searchindex_rebuild () {
+  zammad run rails r "Setting.set('es_url', \"${ES_CONNECTION:-http://127.0.0.1:9200}\")"
+
   if [ "${REBUILD_ES_SEARCHINDEX}" == "yes" ]; then
     echo "# (Re)building Elasticsearch searchindex..."
 
-    zammad run rails r "Setting.set('es_url', \"${ES_CONNECTION:-http://127.0.0.1:9200}\")"
-
-    zammad run rake searchindex:rebuild
+    nohup zammad run rake searchindex:rebuild &> ${ZAMMAD_DIR}/log/searchindex-rebuild.log &
   fi
 }
 
@@ -273,7 +273,7 @@ function update_or_install () {
 
     initialise_database
   fi
-  
+
   elasticsearch_searchindex_rebuild
 }
 
