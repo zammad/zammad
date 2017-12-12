@@ -20,8 +20,9 @@ class Edit extends App.ObserverController
       handlers:  [
         @ticketFormChanges
       ]
-      filter:    @formMeta.filter
-      params:    defaults
+      filter:     @formMeta.filter
+      params:     defaults
+      isDisabled: !ticket.editable()
       #bookmarkable: true
     )
 
