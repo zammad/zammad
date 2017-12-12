@@ -133,6 +133,8 @@ class App.ControllerTable extends App.Controller
   customOrderDirection: undefined
   customOrderBy: undefined
 
+  frontendTimeUpdateExecute: true
+
   bindCol: {}
   bindRow: {}
 
@@ -269,6 +271,7 @@ class App.ControllerTable extends App.Controller
           @currentRows = newCurrentRows
           @log 'debug', 'table.fullRender.contentRemoved', removePositions, addPositions
           @renderPager(@el, true)
+          @frontendTimeUpdateElement(@el) if @frontendTimeUpdateExecute is true
           return ['fullRender.contentRemoved', removePositions, addPositions]
 
       if newRows.length isnt @currentRows.length
@@ -304,6 +307,7 @@ class App.ControllerTable extends App.Controller
     else
       @currentRows = clone(rows)
     container.find('.js-tableBody').html(rows)
+    @frontendTimeUpdateElement(container) if @frontendTimeUpdateExecute is true
 
     @renderPager(container)
 

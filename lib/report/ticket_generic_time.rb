@@ -135,8 +135,8 @@ returns
       field: params[:params][:field],
     }
 
-    limit = 1000
-    if !params[:sheet]
+    limit = 6000
+    if params[:sheet].blank?
       limit = 100
     end
 
@@ -146,6 +146,7 @@ returns
     end
 
     result = SearchIndexBackend.selectors(['Ticket'], selector, limit, nil, aggs_interval)
+    return result if params[:sheet].present?
     assets = {}
     result[:ticket_ids].each do |ticket_id|
       ticket_full = Ticket.find(ticket_id)

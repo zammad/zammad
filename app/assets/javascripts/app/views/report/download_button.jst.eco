@@ -1,0 +1,1 @@
+<a class="btn btn--action" href="<%- @downloadUrl %>" target="_blank" data-type="attachment"><%- @Icon('download') %><span><%- @T('Download %s record(s)', @count) %></span></a>

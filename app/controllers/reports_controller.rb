@@ -211,22 +211,26 @@ class ReportsController < ApplicationController
 
     row = 2
     result[:ticket_ids].each do |ticket_id|
-      ticket = Ticket.lookup(id: ticket_id)
-      row += 1
-      worksheet.write(row, 0, ticket.number)
-      worksheet.write(row, 1, ticket.title)
-      worksheet.write(row, 2, ticket.state.name)
-      worksheet.write(row, 3, ticket.priority.name)
-      worksheet.write(row, 4, ticket.group.name)
-      worksheet.write(row, 5, ticket.owner.fullname)
-      worksheet.write(row, 6, ticket.customer.fullname)
-      worksheet.write(row, 7, ticket.try(:organization).try(:name))
-      worksheet.write(row, 8, ticket.create_article_type.name)
-      worksheet.write(row, 9, ticket.create_article_sender.name)
-      worksheet.write(row, 10, ticket.tag_list.join(','))
-      worksheet.write(row, 11, ticket.created_at)
-      worksheet.write(row, 12, ticket.updated_at)
-      worksheet.write(row, 13, ticket.close_at)
+      begin
+        ticket = Ticket.lookup(id: ticket_id)
+        row += 1
+        worksheet.write(row, 0, ticket.number)
+        worksheet.write(row, 1, ticket.title)
+        worksheet.write(row, 2, ticket.state.name)
+        worksheet.write(row, 3, ticket.priority.name)
+        worksheet.write(row, 4, ticket.group.name)
+        worksheet.write(row, 5, ticket.owner.fullname)
+        worksheet.write(row, 6, ticket.customer.fullname)
+        worksheet.write(row, 7, ticket.try(:organization).try(:name))
+        worksheet.write(row, 8, ticket.create_article_type.name)
+        worksheet.write(row, 9, ticket.create_article_sender.name)
+        worksheet.write(row, 10, ticket.tag_list.join(','))
+        worksheet.write(row, 11, ticket.created_at)
+        worksheet.write(row, 12, ticket.updated_at)
+        worksheet.write(row, 13, ticket.close_at)
+      rescue => e
+        Rails.logger.error "SKIP: #{e.message}"
+      end
     end
 
     workbook.close
