@@ -105,22 +105,41 @@ add avatar by url
 
     # fetch image based on http url
     if data[:url].present?
-      if data[:url].match?(/^http/)
+      if data[:url].class == Tempfile
+        logger.info "Reading image from tempfile '#{data[:url].inspect}'"
+        content = data[:url].read
+        filename = data[:url].path
+        mime_type = 'image'
+        if filename.match?(/\.png/i)
+          mime_type = 'image/png'
+        end
+        if filename.match?(/\.(jpg|jpeg)/i)
+          mime_type = 'image/jpeg'
+        end
+        data[:resize] ||= {}
+        data[:resize][:content] = content
+        data[:resize][:mime_type] = mime_type
+        data[:full] ||= {}
+        data[:full][:content] = content
+        data[:full][:mime_type] = mime_type
+
+      elsif data[:url].to_s.match?(/^http/)
+        url = data[:url].to_s
 
         # check if source ist already updated within last 2 minutes
-        if avatar_already_exists&.source_url == data[:url]
+        if avatar_already_exists&.source_url == url
           return if avatar_already_exists.updated_at > 2.minutes.ago
         end
 
         # twitter workaround to get bigger avatar images
         # see also https://dev.twitter.com/overview/general/user-profile-images-and-banners
-        if data[:url].match?(%r{//pbs.twimg.com/}i)
-          data[:url].sub!(/normal\.(png|jpg|gif)$/, 'bigger.\1')
+        if url.match?(%r{//pbs.twimg.com/}i)
+          url.sub!(/normal\.(png|jpg|gif)$/, 'bigger.\1')
         end
 
         # fetch image
         response = UserAgent.get(
-          data[:url],
+          url,
           {},
           {
             open_timeout: 4,
@@ -129,20 +148,19 @@ add avatar by url
           },
         )
         if !response.success?
-          logger.info "Can't fetch '#{data[:url]}' (maybe no avatar available), http code: #{response.code}"
+          logger.info "Can't fetch '#{url}' (maybe no avatar available), http code: #{response.code}"
           return
         end
-        logger.info "Fetchd image '#{data[:url]}', http code: #{response.code}"
+        logger.info "Fetchd image '#{url}', http code: #{response.code}"
         mime_type = 'image'
-        if data[:url].match?(/\.png/i)
+        if url.match?(/\.png/i)
           mime_type = 'image/png'
         end
-        if data[:url].match?(/\.(jpg|jpeg)/i)
+        if url.match?(/\.(jpg|jpeg)/i)
           mime_type = 'image/jpeg'
         end
-        if !data[:resize]
-          data[:resize] = {}
-        end
+
+        data[:resize] ||= {}
         data[:resize][:content] = response.body
         data[:resize][:mime_type] = mime_type
         data[:full] ||= {}
@@ -150,15 +168,16 @@ add avatar by url
         data[:full][:mime_type] = mime_type
 
       # try zammad backend to find image based on email
-      elsif data[:url].match?(/@/)
+      elsif data[:url].to_s.match?(/@/)
+        url = data[:url].to_s
 
         # check if source ist already updated within last 3 minutes
-        if avatar_already_exists&.source_url == data[:url]
+        if avatar_already_exists&.source_url == url
           return if avatar_already_exists.updated_at > 2.minutes.ago
         end
 
         # fetch image
-        image = Service::Image.user(data[:url])
+        image = Service::Image.user(url)
         return if !image
         data[:resize] ||= {}
         data[:resize] = image
@@ -337,7 +356,7 @@ returns:
       store_hash: hash,
     )
     return if !avatar
-    file = Store.find(avatar.store_resize_id)
+    Store.find(avatar.store_resize_id)
   end
 
 =begin

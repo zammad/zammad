@@ -201,7 +201,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :authorizations do |t|
       t.string :provider,             limit: 250, null: false
       t.string :uid,                  limit: 250, null: false
-      t.string :token,                limit: 250, null: true
+      t.string :token,                limit: 2500, null: true
       t.string :secret,               limit: 250, null: true
       t.string :username,             limit: 250, null: true
       t.references :user, null: false
