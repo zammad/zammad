@@ -1018,7 +1018,7 @@ raise 'Minimum one user need to have admin permissions'
 
   def last_admin_check_admin_count
     admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'], active: true }, roles: { active: true }).pluck(:id)
-    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).count - 1
+    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).distinct().count - 1
   end
 
   def validate_agent_limit_by_attributes
@@ -1027,7 +1027,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if active != true
     return true if !permissions?('ticket.agent')
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
-    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).count + 1
+    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count + 1
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
     true
   end
@@ -1038,7 +1038,7 @@ raise 'Minimum one user need to have admin permissions'
     return true if role.active != true
     return true if !role.with_permission?('ticket.agent')
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
-    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).count
+    count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count
 
     # if new added role is a ticket.agent role
     if ticket_agent_role_ids.include?(role.id)
