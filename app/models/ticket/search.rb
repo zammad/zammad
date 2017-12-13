@@ -99,7 +99,7 @@ returns
     end
 
     # try search index backend
-    if !condition && SearchIndexBackend.enabled?
+    if condition.blank? && SearchIndexBackend.enabled?
       query_extention = {}
       query_extention['bool'] = {}
       query_extention['bool']['must'] = []
