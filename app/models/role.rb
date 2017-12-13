@@ -185,7 +185,7 @@ returns
 
   def last_admin_check_admin_count
     admin_role_ids = Role.joins(:permissions).where(permissions: { name: ['admin', 'admin.user'], active: true }, roles: { active: true }).where.not(id: id).pluck(:id)
-    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).count
+    User.joins(:roles).where(roles: { id: admin_role_ids }, users: { active: true }).distinct().count
   end
 
   def validate_agent_limit_by_attributes
@@ -194,8 +194,8 @@ returns
     return true if active != true
     return true if !with_permission?('ticket.agent')
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
-    currents = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).pluck(:id)
-    news = User.joins(:roles).where(roles: { id: id }, users: { active: true }).pluck(:id)
+    currents = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().pluck(:id)
+    news = User.joins(:roles).where(roles: { id: id }, users: { active: true }).distinct().pluck(:id)
     count = currents.concat(news).uniq.count
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
     true
@@ -208,7 +208,7 @@ returns
     return true if permission.name != 'ticket.agent'
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent' }, roles: { active: true }).pluck(:id)
     ticket_agent_role_ids.push(id)
-    count = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).count
+    count = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
     true
   end
