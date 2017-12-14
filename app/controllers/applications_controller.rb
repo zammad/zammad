@@ -5,7 +5,7 @@ class ApplicationsController < ApplicationController
 
   def index
     all = Doorkeeper::Application.all
-    if params[:full]
+    if response_full?
       assets = {}
       item_ids = []
       all.each do |item|

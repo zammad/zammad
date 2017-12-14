@@ -18,8 +18,13 @@ module ApplicationController::RendersModels
     # set relations
     generic_object.associations_from_param(params)
 
-    if params[:expand]
+    if response_expand?
       render json: generic_object.attributes_with_association_names, status: :created
+      return
+    end
+
+    if response_full?
+      render json: generic_object.class.full(generic_object.id), status: :created
       return
     end
 
@@ -47,8 +52,13 @@ module ApplicationController::RendersModels
       generic_object.associations_from_param(params)
     end
 
-    if params[:expand]
+    if response_expand?
       render json: generic_object.attributes_with_association_names, status: :ok
+      return
+    end
+
+    if response_full?
+      render json: generic_object.class.full(generic_object.id), status: :ok
       return
     end
 
@@ -71,20 +81,18 @@ module ApplicationController::RendersModels
 
   def model_show_render(object, params)
 
-    if params[:expand]
+    if response_expand?
       generic_object = object.find(params[:id])
       render json: generic_object.attributes_with_association_names, status: :ok
       return
     end
 
-    if params[:full]
-      generic_object_full = object.full(params[:id])
-      render json: generic_object_full, status: :ok
+    if response_full?
+      render json: object.full(params[:id]), status: :ok
       return
     end
 
-    generic_object = object.find(params[:id])
-    model_show_render_item(generic_object)
+    model_show_render_item(object.find(params[:id]))
   end
 
   def model_show_render_item(generic_object)
@@ -109,7 +117,7 @@ module ApplicationController::RendersModels
                         object.all.order(id: 'ASC').offset(offset).limit(limit)
                       end
 
-    if params[:expand]
+    if response_expand?
       list = []
       generic_objects.each do |generic_object|
         list.push generic_object.attributes_with_association_names
@@ -118,7 +126,7 @@ module ApplicationController::RendersModels
       return
     end
 
-    if params[:full]
+    if response_full?
       assets = {}
       item_ids = []
       generic_objects.each do |item|

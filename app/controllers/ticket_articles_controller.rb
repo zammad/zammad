@@ -17,13 +17,13 @@ class TicketArticlesController < ApplicationController
     article = Ticket::Article.find(params[:id])
     access!(article, 'read')
 
-    if params[:expand]
+    if response_expand?
       result = article.attributes_with_association_names
       render json: result, status: :ok
       return
     end
 
-    if params[:full]
+    if response_full?
       full = Ticket::Article.full(params[:id])
       render json: full
       return
@@ -39,7 +39,7 @@ class TicketArticlesController < ApplicationController
 
     articles = []
 
-    if params[:expand]
+    if response_expand?
       ticket.articles.each do |article|
 
         # ignore internal article if customer is requesting
@@ -52,7 +52,7 @@ class TicketArticlesController < ApplicationController
       return
     end
 
-    if params[:full]
+    if response_full?
       assets = {}
       record_ids = []
       ticket.articles.each do |article|
@@ -66,7 +66,7 @@ class TicketArticlesController < ApplicationController
       render json: {
         record_ids: record_ids,
         assets: assets,
-      }
+      }, status: :ok
       return
     end
 
@@ -76,7 +76,7 @@ class TicketArticlesController < ApplicationController
       next if article.internal == true && current_user.permissions?('ticket.customer')
       articles.push article.attributes_with_association_names
     end
-    render json: articles
+    render json: articles, status: :ok
   end
 
   # POST /articles
@@ -85,13 +85,13 @@ class TicketArticlesController < ApplicationController
     access!(ticket, 'create')
     article = article_create(ticket, params)
 
-    if params[:expand]
+    if response_expand?
       result = article.attributes_with_association_names
       render json: result, status: :created
       return
     end
 
-    if params[:full]
+    if response_full?
       full = Ticket::Article.full(params[:id])
       render json: full, status: :created
       return
@@ -114,13 +114,13 @@ class TicketArticlesController < ApplicationController
 
     article.update!(clean_params)
 
-    if params[:expand]
+    if response_expand?
       result = article.attributes_with_association_names
       render json: result, status: :ok
       return
     end
 
-    if params[:full]
+    if response_full?
       full = Ticket::Article.full(params[:id])
       render json: full, status: :ok
       return

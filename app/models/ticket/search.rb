@@ -94,7 +94,7 @@ returns
     limit        = params[:limit] || 12
     current_user = params[:current_user]
     full         = false
-    if params[:full] || !params.key?(:full)
+    if params[:full] == true || params[:full] == 'true' || !params.key?(:full)
       full = true
     end
 

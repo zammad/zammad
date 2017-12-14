@@ -24,7 +24,7 @@ class TicketsController < ApplicationController
     access_condition = Ticket.access_condition(current_user, 'read')
     tickets = Ticket.where(access_condition).order(id: 'ASC').offset(offset).limit(per_page)
 
-    if params[:expand]
+    if response_expand?
       list = []
       tickets.each do |ticket|
         list.push ticket.attributes_with_association_names
@@ -33,7 +33,7 @@ class TicketsController < ApplicationController
       return
     end
 
-    if params[:full]
+    if response_full?
       assets = {}
       item_ids = []
       tickets.each do |item|
@@ -55,19 +55,19 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:id])
     access!(ticket, 'read')
 
-    if params[:expand]
+    if response_expand?
       result = ticket.attributes_with_association_names
       render json: result, status: :ok
       return
     end
 
-    if params[:full]
+    if response_full?
       full = Ticket.full(params[:id])
       render json: full
       return
     end
 
-    if params[:all]
+    if response_all?
       render json: ticket_all(ticket)
       return
     end
@@ -163,18 +163,24 @@ class TicketsController < ApplicationController
       end
     end
 
-    if params[:expand]
+    if response_expand?
       result = ticket.reload.attributes_with_association_names
       render json: result, status: :created
       return
     end
 
-    if params[:all]
-      render json: ticket_all(ticket.reload)
+    if response_full?
+      full = Ticket.full(ticket.id)
+      render json: full, status: :created
       return
     end
 
-    render json: ticket.reload, status: :created
+    if response_all?
+      render json: ticket_all(ticket.reload), status: :created
+      return
+    end
+
+    render json: ticket.reload.attributes_with_association_ids, status: :created
   end
 
   # PUT /api/v1/tickets/1
@@ -199,18 +205,24 @@ class TicketsController < ApplicationController
       end
     end
 
-    if params[:expand]
+    if response_expand?
       result = ticket.reload.attributes_with_association_names
       render json: result, status: :ok
       return
     end
 
-    if params[:all]
-      render json: ticket_all(ticket.reload)
+    if response_full?
+      full = Ticket.full(params[:id])
+      render json: full, status: :ok
       return
     end
 
-    render json: ticket.reload, status: :ok
+    if response_all?
+      render json: ticket_all(ticket.reload), status: :ok
+      return
+    end
+
+    render json: ticket.reload.attributes_with_association_ids, status: :ok
   end
 
   # DELETE /api/v1/tickets/1
@@ -410,7 +422,7 @@ class TicketsController < ApplicationController
       tickets = tickets[offset, params[:per_page].to_i] || []
     end
 
-    if params[:expand]
+    if response_expand?
       list = []
       tickets.each do |ticket|
         list.push ticket.attributes_with_association_names
