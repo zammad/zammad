@@ -72,8 +72,7 @@ class User < ApplicationModel
                                   :image,
                                   :image_source,
                                   :source,
-                                  :login_failed,
-                                  :preferences
+                                  :login_failed
 
   def ignore_search_indexing?(_action)
     # ignore internal user
