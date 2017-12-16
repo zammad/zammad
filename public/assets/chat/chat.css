@@ -71,8 +71,11 @@
   height: 100%;
   width: 3.4em;
   text-align: center;
-  line-height: 3.5em;
+  line-height: 3.4em;
   cursor: pointer; }
+  .zammad-chat-header-icon:before {
+    content: "";
+    display: inline-block; }
 
 .zammad-chat-header-icon-open,
 .zammad-chat-header-icon-close {
@@ -107,7 +110,7 @@
   font-weight: bold; }
 
 .zammad-chat-agent-status {
-  margin: 0 1em;
+  margin: 0.25em 1em;
   display: inline-block;
   line-height: 2em;
   padding: 0 .7em;
