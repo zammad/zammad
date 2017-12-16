@@ -30,7 +30,7 @@ returns
     }
 
     selector = params[:selector].clone
-    if params[:params] && params[:params][:selector]
+    if params[:params].present? && params[:params][:selector].present?
       selector = selector.merge(params[:params][:selector])
     end
 

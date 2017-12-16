@@ -74,6 +74,7 @@ update processors
           )
           Rails.logger.info "# #{response.code}"
           next if response.success?
+          next if response.code.to_s == '404'
           raise "Unable to process DELETE at #{url}\n#{response.inspect}"
         end
         Rails.logger.info "# curl -X PUT \"#{url}\" \\"
@@ -133,7 +134,7 @@ create/update/delete index
   def self.index(data)
 
     url = build_url(data[:name])
-    return if !url
+    return if url.blank?
 
     if data[:action] && data[:action] == 'delete'
       return SearchIndexBackend.remove(data[:name])
@@ -169,7 +170,7 @@ add new object to search index
   def self.add(type, data)
 
     url = build_url(type, data['id'])
-    return if !url
+    return if url.blank?
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
     Rails.logger.debug "-d '#{data.to_json}'"
@@ -202,7 +203,7 @@ remove whole data from index
 
   def self.remove(type, o_id = nil)
     url = build_url(type, o_id)
-    return if !url
+    return if url.blank?
 
     Rails.logger.info "# curl -X DELETE \"#{url}\""
 
@@ -217,7 +218,8 @@ remove whole data from index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    #Rails.logger.info "NOTICE: can't delete index #{url}: " + response.inspect
+    return true if response.code.to_s == '400'
+    Rails.logger.info "NOTICE: can't delete index #{url}: " + response.inspect
     false
   end
 
@@ -247,7 +249,7 @@ return search result
 =end
 
   def self.search(query, limit = 10, index = nil, query_extention = {})
-    return [] if !query
+    return [] if query.blank?
     if index.class == Array
       ids = []
       index.each do |local_index|
@@ -260,10 +262,10 @@ return search result
   end
 
   def self.search_by_index(query, limit = 10, index = nil, query_extention = {})
-    return [] if !query
+    return [] if query.blank?
 
     url = build_url
-    return if !url
+    return if url.blank?
     url += if index
              if index.class == Array
                "/#{index.join(',')}/_search"
@@ -287,12 +289,8 @@ return search result
       ]
 
     data['query'] = query_extention || {}
-    if !data['query']['bool']
-      data['query']['bool'] = {}
-    end
-    if !data['query']['bool']['must']
-      data['query']['bool']['must'] = []
-    end
+    data['query']['bool'] ||= {}
+    data['query']['bool']['must'] ||= []
 
     # add * on simple query like "somephrase23" or "attribute: somephrase23"
     if query.present?
@@ -391,7 +389,7 @@ get count of tickets and tickets which match on selector
     raise 'no selectors given' if !selectors
 
     url = build_url
-    return if !url
+    return if url.blank?
     url += if index
              if index.class == Array
                "/#{index.join(',')}/_search"
@@ -425,7 +423,7 @@ get count of tickets and tickets which match on selector
     end
     Rails.logger.debug response.data.to_json
 
-    if !aggs_interval || !aggs_interval[:interval]
+    if aggs_interval.blank? || aggs_interval[:interval].blank?
       ticket_ids = []
       response.data['hits']['hits'].each do |item|
         ticket_ids.push item['_id']
@@ -471,8 +469,8 @@ get count of tickets and tickets which match on selector
     }
 
     # add aggs to filter
-    if aggs_interval
-      if aggs_interval[:interval]
+    if aggs_interval.present?
+      if aggs_interval[:interval].present?
         data[:size] = 0
         data[:aggs] = {
           time_buckets: {
@@ -492,9 +490,7 @@ get count of tickets and tickets which match on selector
       query_must.push r
     end
 
-    if !data[:query][:bool]
-      data[:query][:bool] = {}
-    end
+    data[:query][:bool] ||= {}
 
     if query_must.present?
       data[:query][:bool][:must] = query_must
@@ -504,7 +500,7 @@ get count of tickets and tickets which match on selector
     end
 
     # add sort
-    if aggs_interval && aggs_interval[:field] && !aggs_interval[:interval]
+    if aggs_interval.present? && aggs_interval[:field].present? && aggs_interval[:interval].blank?
       sort = []
       sort[0] = {}
       sort[0][aggs_interval[:field]] = {
