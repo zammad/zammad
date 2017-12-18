@@ -441,7 +441,8 @@ class ChatWindow extends App.Controller
         tags: params.tags
     )
 
-    @metaName.text(params.name)
+    if !_.isEmpty(params.name)
+      @metaName.text(params.name)
 
   render: ->
     @html App.view('customer_chat/chat_window')(
