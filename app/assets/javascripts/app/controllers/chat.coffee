@@ -35,7 +35,7 @@ class App.CustomerChat extends App.Controller
       active_agent_ids: []
 
     @render()
-    @on 'layout-has-changed', @propagateLayoutChange
+    @on('layout-has-changed', @propagateLayoutChange)
 
     # update navbar on new status
     @bind('chat_status_agent', (data) =>
@@ -163,6 +163,11 @@ class App.CustomerChat extends App.Controller
     @title 'Customer Chat', true
     @navupdate '#customer_chat'
 
+    if params.session_id && App.ChatSession.exists(params.session_id)
+      session = App.ChatSession.find(params.session_id)
+      @addChat(session)
+      @navigate '#customer_chat'
+
   active: (state) =>
     return @shown if state is undefined
     @shown = state
@@ -264,10 +269,11 @@ class App.CustomerChat extends App.Controller
 
   addChat: (session) ->
     return if @chatWindows[session.session_id]
-    chat = new ChatWindow
+    chat = new ChatWindow(
       session: session
       removeCallback: @removeChat
       messageCallback: @updateNavMenu
+    )
 
     @workspace.append chat.el
     chat.render()
@@ -289,7 +295,7 @@ class App.CustomerChat extends App.Controller
   propagateLayoutChange: (event) =>
     # adjust scroll position on layoutChange
     for session_id, chat of @chatWindows
-      chat.trigger 'layout-changed'
+      chat.trigger('layout-changed')
 
   acceptChat: =>
     return if @windowCount() >= @maxChatWindows
@@ -324,19 +330,6 @@ class App.CustomerChat extends App.Controller
   currentPosition: =>
     @$('.main').scrollTop()
 
-class CustomerChatRouter extends App.ControllerPermanent
-  requiredPermission: 'chat.agent'
-  constructor: (params) ->
-    super
-
-    App.TaskManager.execute(
-      key:        'CustomerChat'
-      controller: 'CustomerChat'
-      params:     {}
-      show:       true
-      persistent: true
-    )
-
 class ChatWindow extends App.Controller
   className: 'chat-window'
 
@@ -348,6 +341,8 @@ class ChatWindow extends App.Controller
     'click .js-close':               'close'
     'click .js-disconnect':          'disconnect'
     'click .js-scrollHint':          'onScrollHintClick'
+    'click .js-info':                'toggleMeta'
+    'submit .js-metaForm':           'sendMetaForm'
 
   elements:
     '.js-customerChatInput':         'input'
@@ -355,8 +350,11 @@ class ChatWindow extends App.Controller
     '.js-close':                     'closeButton'
     '.js-disconnect':                'disconnectButton'
     '.js-body':                      'body'
+    '.js-meta':                      'meta'
+    '.js-name':                      'metaName'
     '.js-scrollHolder':              'scrollHolder'
     '.js-scrollHint':                'scrollHint'
+    '.js-metaForm':                  'metaForm'
 
   sounds:
     message: new Audio('assets/sounds/chat_message.mp3')
@@ -374,9 +372,11 @@ class ChatWindow extends App.Controller
     @scrollSnapTolerance = 10 # pixels
 
     @chat = App.Chat.find(@session.chat_id)
-    @name = "#{@chat.displayName()} ##{@session.id}"
+    @name = @chat.displayName()
+    if @session && !_.isEmpty(@session.name)
+      @name = @session.name
 
-    @on 'layout-change', @onLayoutChange
+    @on('layout-change', @onLayoutChange)
 
     @bind('chat_session_typing', (data) =>
       return if data.session_id isnt @session.session_id
@@ -413,12 +413,44 @@ class ChatWindow extends App.Controller
   onLayoutChange: =>
     @scrollToBottom()
 
-  render: ->
-    @html App.view('customer_chat/chat_window')
-      name: @name
+  toggleMeta: =>
+    if @meta.hasClass('hidden')
+      @showMeta()
+    else
+      @hideMeta()
 
-    @el.one 'transitionend', @onTransitionend
-    @scrollHolder.scroll @detectScrolledtoBottom
+  hideMeta: =>
+    @body.removeClass('hidden')
+    @meta.addClass('hidden')
+    @sendMetaForm()
+
+  showMeta: =>
+    @body.addClass('hidden')
+    @meta.removeClass('hidden')
+
+  sendMetaForm: (e) =>
+    if e
+      e.preventDefault()
+    params = @formParam(@metaForm)
+
+    App.WebSocket.send(
+      event:'chat_session_update'
+      data:
+        session_id: @session.session_id
+        name: params.name
+        tags: params.tags
+    )
+
+    @metaName.text(params.name)
+
+  render: ->
+    @html App.view('customer_chat/chat_window')(
+      name: @name
+      session: @session
+    )
+
+    @el.one('transitionend', @onTransitionend)
+    @scrollHolder.scroll(@detectScrolledtoBottom)
 
     # force repaint
     @el.prop('offsetHeight')
@@ -426,18 +458,24 @@ class ChatWindow extends App.Controller
 
     # @addMessage 'Hello. My name is Roger, how can I help you?', 'agent'
     if @session
+
+      # set chat to offline if state is already closed
+      activeChat = true
+      if @session.state is 'closed'
+        activeChat = false
+
       if @session && @session.preferences && @session.preferences.url
-        @addNoticeMessage(@session.preferences.url)
+        @addNoticeMessage(@session.preferences.url, undefined, activeChat)
 
       if @session.messages
         for message in @session.messages
           if message.created_by_id
-            @addMessage message.content, 'agent'
+            @addMessage(message.content, 'agent', false, activeChat)
           else
-            @addMessage message.content, 'customer'
+            @addMessage(message.content, 'customer', false, activeChat)
 
       # send init reply
-      if !@session.messages || _.isEmpty(@session.messages)
+      if activeChat && _.isEmpty(@session.messages)
         preferences = @Session.get('preferences')
         if preferences.chat && preferences.chat.phrase
           phrases = preferences.chat.phrase[@session.chat_id]
@@ -447,20 +485,9 @@ class ChatWindow extends App.Controller
             @input.html(phrase)
             @sendMessage(1600)
 
-    @$('.js-info').popover(
-      trigger:    'hover'
-      html:       true
-      animation:  false
-      delay:      0
-      placement:  'bottom'
-      container:  'body' # place in body do prevent it from animating
-      title: ->
-        App.i18n.translateContent('Details')
-      content: =>
-        App.view('customer_chat/chat_window_info')(
-          session: @session
-        )
-    )
+      # set chat to offline if state is already closed
+      if !activeChat
+        @goOffline()
 
     # show text module UI
     new App.WidgetTextModule(
@@ -468,6 +495,18 @@ class ChatWindow extends App.Controller
       data:
         user: App.Session.get()
         config: App.Config.all()
+    )
+
+    configureAttributesOutbound = [
+      { name: 'name', display: 'Name', tag: 'input', null: true, },
+      { name: 'tags', display: 'Tags', tag: 'tag', null: true, },
+    ]
+    new App.ControllerForm(
+      el:    @$('.js-metaForm')
+      model:
+        configure_attributes: configureAttributesOutbound
+        className: ''
+      params: @session
     )
 
   focus: =>
@@ -498,7 +537,8 @@ class ChatWindow extends App.Controller
     @goOffline()
 
   close: =>
-    @el.one 'transitionend', { callback: @release }, @onTransitionend
+    @sendMetaForm()
+    @el.one('transitionend', { callback: @release }, @onTransitionend)
     @el.removeClass('is-open')
     if @removeCallback
       @removeCallback(@session.session_id)
@@ -577,7 +617,8 @@ class ChatWindow extends App.Controller
       )
       @delay(send, delay)
 
-    @addMessage content, 'agent'
+    @hideMeta()
+    @addMessage(content, 'agent')
     @input.html('')
 
   updateModified: (state) =>
@@ -614,18 +655,19 @@ class ChatWindow extends App.Controller
       @messageCallback(@session.session_id)
     @unreadMessagesCounter = 0
 
-  addMessage: (message, sender, isNew) =>
-    @maybeAddTimestamp()
+  addMessage: (message, sender, isNew, useMaybeAddTimestamp = true) =>
+    @maybeAddTimestamp() if useMaybeAddTimestamp
 
     @lastAddedType = sender
 
-    @body.append App.view('customer_chat/chat_message')
+    @body.append App.view('customer_chat/chat_message')(
       message: message
       sender: sender
       isNew: isNew
       timestamp: Date.now()
+    )
 
-    @scrollToBottom showHint: true
+    @scrollToBottom(showHint: true)
 
   showWritingLoader: =>
     if !@isTyping
@@ -667,33 +709,37 @@ class ChatWindow extends App.Controller
         @lastAddedType = 'timestamp'
 
   addTimestamp: (label, time) =>
-    @body.append App.view('customer_chat/chat_timestamp')
+    @body.append App.view('customer_chat/chat_timestamp')(
       label: label
       time: time
+    )
 
   updateLastTimestamp: (label, time) ->
     @body
       .find('.js-timestamp')
       .last()
-      .replaceWith App.view('customer_chat/chat_timestamp')
+      .replaceWith App.view('customer_chat/chat_timestamp')(
         label: label
         time: time
+      )
 
-  addStatusMessage: (message, args) ->
-    @maybeAddTimestamp()
+  addStatusMessage: (message, args, useMaybeAddTimestamp = true) ->
+    @maybeAddTimestamp() if useMaybeAddTimestamp
 
-    @body.append App.view('customer_chat/chat_status_message')
+    @body.append App.view('customer_chat/chat_status_message')(
       message: message
       args: args
+    )
 
     @scrollToBottom()
 
-  addNoticeMessage: (message, args) ->
-    @maybeAddTimestamp()
+  addNoticeMessage: (message, args, useMaybeAddTimestamp = true) ->
+    @maybeAddTimestamp() if useMaybeAddTimestamp
 
-    @body.append App.view('customer_chat/chat_notice_message')
+    @body.append App.view('customer_chat/chat_notice_message')(
       message: message
       args: args
+    )
 
     @scrollToBottom()
 
@@ -784,6 +830,24 @@ class Setting extends App.ControllerModal
       msg:  App.i18n.translateContent(data.message)
     )
 
+class CustomerChatRouter extends App.ControllerPermanent
+  requiredPermission: 'chat.agent'
+  constructor: (params) ->
+    super
+
+    # cleanup params
+    clean_params =
+      session_id: params.session_id
+
+    App.TaskManager.execute(
+      key:        'CustomerChat'
+      controller: 'CustomerChat'
+      params:     clean_params
+      show:       true
+      persistent: true
+    )
+
 App.Config.set('customer_chat', CustomerChatRouter, 'Routes')
+App.Config.set('customer_chat/session/:session_id', CustomerChatRouter, 'Routes')
 App.Config.set('CustomerChat', { controller: 'CustomerChat', permission: ['chat.agent'] }, 'permanentTask')
 App.Config.set('CustomerChat', { prio: 1200, parent: '', name: 'Customer Chat', target: '#customer_chat', key: 'CustomerChat', shown: false, permission: ['chat.agent'], class: 'chat' }, 'NavBar')

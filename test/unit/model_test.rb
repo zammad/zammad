@@ -243,8 +243,8 @@ class ModelTest < ActiveSupport::TestCase
     assert(searchable.include?(Ticket))
     assert(searchable.include?(User))
     assert(searchable.include?(Organization))
-    assert_equal(3, searchable.count)
-
+    assert(searchable.include?(Chat::Session))
+    assert_equal(4, searchable.count)
   end
 
 end
