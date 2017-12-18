@@ -1,4 +1,15 @@
 class Chat::Session < ApplicationModel
+  include HasSearchIndexBackend
+  include HasTags
+
+  extend Chat::Session::Search
+  load 'chat/session/search_index.rb'
+  include Chat::Session::SearchIndex
+  load 'chat/session/assets.rb'
+  include Chat::Session::Assets
+
+  has_many :messages,  class_name: 'Chat::Message', foreign_key: 'chat_session_id'
+
   before_create :generate_session_id
   store         :preferences
 
