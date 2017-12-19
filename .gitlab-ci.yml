@@ -344,7 +344,6 @@ test:integration:zendesk_mysql:
     - rake db:migrate
     - ruby -I test/ test/integration/zendesk_import_test.rb
     - rake db:drop
-  allow_failure: true
 
 test:integration:zendesk_postgresql:
   stage: test
@@ -357,7 +356,6 @@ test:integration:zendesk_postgresql:
     - rake db:migrate
     - ruby -I test/ test/integration/zendesk_import_test.rb
     - rake db:drop
-  allow_failure: true
 
 test:integration:otrs_5_mysql:
   stage: test
