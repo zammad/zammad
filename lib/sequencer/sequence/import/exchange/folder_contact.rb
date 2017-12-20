@@ -9,7 +9,7 @@ class Sequencer
               'Import::Exchange::FolderContact::RemoteId',
               'Import::Exchange::FolderContact::Mapping',
               'Import::Common::Model::Skip::Blank::Mapped',
-              'Import::Exchange::FolderContact::StaticAttributes',
+              'Common::ModelClass::User',
               'Import::Exchange::FolderContact::ExternalSyncSource',
               'Import::Common::Model::Lookup::ExternalSync',
               'Import::Common::Model::Associations::Extract',
