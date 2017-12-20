@@ -7,7 +7,7 @@ class Sequencer
           provides = self.class.provides
           raise 'Only one provide attribute possible' if provides.size != 1
 
-          attribute = provides.shift
+          attribute = provides.first
           return if state.provided?(attribute)
 
           result = fallback
