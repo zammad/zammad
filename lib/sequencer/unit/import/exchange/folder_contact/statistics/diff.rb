@@ -12,7 +12,7 @@ class Sequencer
               def process
                 state.provide(:statistics_diff) do
                   # remove :sum since it's already set via
-                  # the exchange item attribte
+                  # the exchange item attribute
                   result = diff.except(:sum)
 
                   # build structure for a general diff
