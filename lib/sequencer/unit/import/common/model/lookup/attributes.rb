@@ -25,7 +25,12 @@ class Sequencer
               def attribute
                 raise "Missing implementation of '#{__method__}' method for '#{self.class.name}'"
               end
-              alias attributes attribute
+
+              def attributes
+                # alias or alias_method won't work if attribute method
+                # is overwritten in inheriting sub-class
+                attribute
+              end
 
               def existing_instance
                 @existing_instance ||= begin
