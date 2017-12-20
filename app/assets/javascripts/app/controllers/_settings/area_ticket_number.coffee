@@ -42,7 +42,7 @@ class App.SettingsAreaTicketNumber extends App.Controller
         number     = "#{App.Config.get('ticket_hook')}#{App.Config.get('system_id')}"
         counter    = '1'
         if paramsItem.min_size
-          minSize = parseInt(paramsItem.min_size)
+          minSize = parseInt(paramsItem.min_size) - "#{App.Config.get('system_id')}".length
           if paramsItem.checksum
             minSize -= 1
           if minSize > 1
