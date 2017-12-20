@@ -3,13 +3,14 @@ require 'ldap'
 class Sequencer
   class Unit
     module Ldap
-      class Connection < Sequencer::Unit::Common::FallbackProvider
+      class Connection < Sequencer::Unit::Common::Provider::Fallback
+
         uses :ldap_config
         provides :ldap_connection
 
         private
 
-        def fallback
+        def ldap_connection
           ::Ldap.new(ldap_config)
         end
       end

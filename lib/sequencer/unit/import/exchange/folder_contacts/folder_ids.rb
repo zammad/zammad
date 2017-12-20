@@ -3,13 +3,13 @@ class Sequencer
     module Import
       module Exchange
         module FolderContacts
-          class FolderIds < Sequencer::Unit::Common::FallbackProvider
+          class FolderIds < Sequencer::Unit::Common::Provider::Fallback
 
             provides :ews_folder_ids
 
             private
 
-            def fallback
+            def ews_folder_ids
               ::Import::Exchange.config[:folders]
             end
           end

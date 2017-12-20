@@ -1,14 +1,14 @@
 class Sequencer
   class Unit
     module Exchange
-      class Connection < Sequencer::Unit::Common::FallbackProvider
+      class Connection < Sequencer::Unit::Common::Provider::Fallback
 
         uses :ews_config
         provides :ews_connection
 
         private
 
-        def fallback
+        def ews_connection
           Viewpoint::EWSClient.new(
             config[:endpoint],
             config[:user],
