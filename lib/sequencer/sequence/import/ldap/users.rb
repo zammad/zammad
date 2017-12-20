@@ -7,6 +7,7 @@ class Sequencer
           def self.sequence
             [
               'Import::Ldap::Users::StaticAttributes',
+              'Import::Ldap::Users::ExternalSyncSource',
               'Import::Common::ImportJob::DryRun',
               'Import::Ldap::Users::DryRun::Payload',
               'Ldap::Config',

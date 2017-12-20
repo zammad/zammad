@@ -3,12 +3,10 @@ class Sequencer
     module Import
       module Exchange
         module FolderContact
-          class StaticAttributes < Sequencer::Unit::Base
+          class ExternalSyncSource < Sequencer::Unit::Common::Provider::Named
 
-            provides :model_class
-
-            def process
-              state.provide(:model_class, ::User)
+            def external_sync_source
+              'Exchange::FolderContact'
             end
           end
         end
