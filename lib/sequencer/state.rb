@@ -13,7 +13,7 @@ class Sequencer
       @values       = {}
 
       initialize_attributes(sequence.units)
-      initialize_parameters(parameters.with_indifferent_access)
+      initialize_parameters(parameters)
       initialize_expectations(expecting || sequence.expecting)
     end
 
@@ -195,7 +195,7 @@ class Sequencer
     end
 
     def unprovideable_setter(attribute, value)
-      message = "Unprovideable attribute '#{attribute}' set with value (#{value.class.name}): '#{value}'"
+      message = "Unprovideable attribute '#{attribute}' set with value (#{value.class.name}): #{value.inspect}"
       logger.error(message)
       raise message
     end

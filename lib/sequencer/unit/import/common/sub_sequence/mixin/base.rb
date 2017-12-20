@@ -24,7 +24,7 @@ class Sequencer
               end
 
               def sequence_resource(resource)
-                sequence_parameter            = default_params.dup
+                sequence_parameter            = default_parameter.dup
                 sequence_parameter[:resource] = resource
 
                 sequence_parameter = yield(sequence_parameter) if block_given?
@@ -32,7 +32,7 @@ class Sequencer
                 sequence_parameter[:resource] = sequence_parameter[:resource].to_h.with_indifferent_access
 
                 ::Sequencer.process(sequence_name,
-                                    parameters: default_params.merge(sequence_parameter))
+                                    parameters: sequence_parameter)
               end
 
               def sequence_resources(resources, &block)
