@@ -90,7 +90,7 @@ returns
 
     filter[:group_id] = []
     groups = if params[:current_user].permissions?('ticket.agent')
-               params[:current_user].groups_access('create')
+               params[:current_user].groups_access(%w[create edit])
              else
                Group.where(active: true)
              end

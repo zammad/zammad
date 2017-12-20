@@ -10,7 +10,7 @@ class Report::Base
   # :selector
   def self.history_count(params)
 
-    history_object = History::Object.lookup( name: params[:object] )
+    history_object = History::Object.lookup(name: params[:object])
 
     query, bind_params, tables = Ticket.selector2sql(params[:selector])
 

@@ -79,6 +79,7 @@ class App.Search extends App.Controller
 
     @tabs = []
     for model in App.Config.get('models_searchable')
+      model = model.replace(/::/, '')
       tab =
         name: model
         model: model

@@ -49,7 +49,7 @@ class Sessions::Event::Base
     true
   end
 
-  def permission_check(key, event)
+  def current_user_id
     if !@session
       error = {
         event: "#{event}_error",
@@ -60,7 +60,7 @@ class Sessions::Event::Base
       Sessions.send(@client_id, error)
       return
     end
-    if !@session['id']
+    if @session['id'].blank?
       error = {
         event: "#{event}_error",
         data: {
@@ -70,7 +70,13 @@ class Sessions::Event::Base
       Sessions.send(@client_id, error)
       return
     end
-    user = User.lookup(id: @session['id'])
+    @session['id']
+  end
+
+  def current_user
+    user_id = current_user_id
+    return if !user_id
+    user = User.find_by(id: user_id)
     if !user
       error = {
         event: "#{event}_error",
@@ -81,6 +87,12 @@ class Sessions::Event::Base
       Sessions.send(@client_id, error)
       return
     end
+    user
+  end
+
+  def permission_check(key, event)
+    user = current_user
+    return if !user
     if !user.permissions?(key)
       error = {
         event: "#{event}_error",

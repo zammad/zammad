@@ -25,24 +25,26 @@ Note: We always do our best. Unfortunately, sometimes there are too many request
 
 ### Infos:
 
-* Used Zammad version: 
-* Used Zammad installation source: (source, package, ...)
-* Operating system: 
+* Used Zammad version:
+* Installation method (source, package, ..):
+* Operating system:
+* Database + version:
+* Elasticsearch version:
 * Browser + version: 
 
 
 ### Expected behavior:
 
-* 
+*
 
 
 ### Actual behavior:
 
-* 
+*
 
 
 ### Steps to reproduce the behavior:
 
-* 
+*
 
-Yes I'm sure this is a bug and no feature request or a general question. 
+Yes I'm sure this is a bug and no feature request or a general question.

@@ -47,7 +47,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
       active: true,
       roles: roles,
     )
-
+    UserInfo.current_user_id = nil
   end
 
   test '01.01 ticket create with agent - missing group' do
@@ -1105,6 +1105,355 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('Not authorized (admin permission required)!', result['error'])
+  end
+
+  test '04.01 ticket show and response format' do
+    title = "ticket testagent#{rand(999_999_999)}"
+    ticket = Ticket.create!(
+      title: title,
+      group: Group.lookup(name: 'Users'),
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: @agent.id,
+      created_by_id: @agent.id,
+    )
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    get "/api/v1/tickets/#{ticket.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['id'])
+    assert_equal(ticket.title, result['title'])
+    assert_not(result['group'])
+    assert_not(result['priority'])
+    assert_not(result['owner'])
+    assert_equal(ticket.customer_id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    get "/api/v1/tickets/#{ticket.id}?expand=true", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['id'])
+    assert_equal(ticket.title, result['title'])
+    assert_equal(ticket.customer_id, result['customer_id'])
+    assert_equal(ticket.group.name, result['group'])
+    assert_equal(ticket.priority.name, result['priority'])
+    assert_equal(ticket.owner.login, result['owner'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    get "/api/v1/tickets/#{ticket.id}?expand=false", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['id'])
+    assert_equal(ticket.title, result['title'])
+    assert_not(result['group'])
+    assert_not(result['priority'])
+    assert_not(result['owner'])
+    assert_equal(ticket.customer_id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    get "/api/v1/tickets/#{ticket.id}?full=true", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['id'])
+    assert(result['assets'])
+    assert(result['assets']['Ticket'])
+    assert(result['assets']['Ticket'][ticket.id.to_s])
+    assert_equal(ticket.id, result['assets']['Ticket'][ticket.id.to_s]['id'])
+    assert_equal(ticket.title, result['assets']['Ticket'][ticket.id.to_s]['title'])
+    assert_equal(ticket.customer_id, result['assets']['Ticket'][ticket.id.to_s]['customer_id'])
+
+    assert(result['assets']['User'])
+    assert(result['assets']['User'][@agent.id.to_s])
+    assert_equal(@agent.id, result['assets']['User'][@agent.id.to_s]['id'])
+    assert_equal(@agent.firstname, result['assets']['User'][@agent.id.to_s]['firstname'])
+    assert_equal(@agent.lastname, result['assets']['User'][@agent.id.to_s]['lastname'])
+
+    assert(result['assets']['User'])
+    assert(result['assets']['User'][@customer_without_org.id.to_s])
+    assert_equal(@customer_without_org.id, result['assets']['User'][@customer_without_org.id.to_s]['id'])
+    assert_equal(@customer_without_org.firstname, result['assets']['User'][@customer_without_org.id.to_s]['firstname'])
+    assert_equal(@customer_without_org.lastname, result['assets']['User'][@customer_without_org.id.to_s]['lastname'])
+
+    get "/api/v1/tickets/#{ticket.id}?full=false", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(ticket.id, result['id'])
+    assert_equal(ticket.title, result['title'])
+    assert_not(result['group'])
+    assert_not(result['priority'])
+    assert_not(result['owner'])
+    assert_equal(ticket.customer_id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+  end
+
+  test '04.02 ticket index and response format' do
+    title = "ticket testagent#{rand(999_999_999)}"
+    ticket = Ticket.create!(
+      title: title,
+      group: Group.lookup(name: 'Users'),
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: @agent.id,
+      created_by_id: @agent.id,
+    )
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    get '/api/v1/tickets', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+
+    assert_equal(Array, result.class)
+    assert_equal(Hash, result[0].class)
+    assert_equal(1, result[0]['id'])
+    assert_equal(ticket.id, result[1]['id'])
+    assert_equal(ticket.title, result[1]['title'])
+    assert_not(result[1]['group'])
+    assert_not(result[1]['priority'])
+    assert_not(result[1]['owner'])
+    assert_equal(ticket.customer_id, result[1]['customer_id'])
+    assert_equal(@agent.id, result[1]['updated_by_id'])
+    assert_equal(@agent.id, result[1]['created_by_id'])
+
+    get '/api/v1/tickets?expand=true', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(Hash, result[0].class)
+    assert_equal(1, result[0]['id'])
+    assert_equal(ticket.id, result[1]['id'])
+    assert_equal(ticket.title, result[1]['title'])
+    assert_equal(ticket.customer_id, result[1]['customer_id'])
+    assert_equal(ticket.group.name, result[1]['group'])
+    assert_equal(ticket.priority.name, result[1]['priority'])
+    assert_equal(ticket.owner.login, result[1]['owner'])
+    assert_equal(@agent.id, result[1]['updated_by_id'])
+    assert_equal(@agent.id, result[1]['created_by_id'])
+
+    get '/api/v1/tickets?expand=false', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(Hash, result[0].class)
+    assert_equal(1, result[0]['id'])
+    assert_equal(ticket.id, result[1]['id'])
+    assert_equal(ticket.title, result[1]['title'])
+    assert_not(result[1]['group'])
+    assert_not(result[1]['priority'])
+    assert_not(result[1]['owner'])
+    assert_equal(ticket.customer_id, result[1]['customer_id'])
+    assert_equal(@agent.id, result[1]['updated_by_id'])
+    assert_equal(@agent.id, result[1]['created_by_id'])
+
+    get '/api/v1/tickets?full=true', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+
+    assert_equal(Hash, result.class)
+    assert_equal(Array, result['record_ids'].class)
+    assert_equal(1, result['record_ids'][0])
+    assert_equal(ticket.id, result['record_ids'][1])
+    assert(result['assets'])
+    assert(result['assets']['Ticket'])
+    assert(result['assets']['Ticket'][ticket.id.to_s])
+    assert_equal(ticket.id, result['assets']['Ticket'][ticket.id.to_s]['id'])
+    assert_equal(ticket.title, result['assets']['Ticket'][ticket.id.to_s]['title'])
+    assert_equal(ticket.customer_id, result['assets']['Ticket'][ticket.id.to_s]['customer_id'])
+
+    assert(result['assets']['User'])
+    assert(result['assets']['User'][@agent.id.to_s])
+    assert_equal(@agent.id, result['assets']['User'][@agent.id.to_s]['id'])
+    assert_equal(@agent.firstname, result['assets']['User'][@agent.id.to_s]['firstname'])
+    assert_equal(@agent.lastname, result['assets']['User'][@agent.id.to_s]['lastname'])
+
+    assert(result['assets']['User'])
+    assert(result['assets']['User'][@customer_without_org.id.to_s])
+    assert_equal(@customer_without_org.id, result['assets']['User'][@customer_without_org.id.to_s]['id'])
+    assert_equal(@customer_without_org.firstname, result['assets']['User'][@customer_without_org.id.to_s]['firstname'])
+    assert_equal(@customer_without_org.lastname, result['assets']['User'][@customer_without_org.id.to_s]['lastname'])
+
+    get '/api/v1/tickets?full=false', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(Hash, result[0].class)
+    assert_equal(1, result[0]['id'])
+    assert_equal(ticket.id, result[1]['id'])
+    assert_equal(ticket.title, result[1]['title'])
+    assert_not(result[1]['group'])
+    assert_not(result[1]['priority'])
+    assert_not(result[1]['owner'])
+    assert_equal(ticket.customer_id, result[1]['customer_id'])
+    assert_equal(@agent.id, result[1]['updated_by_id'])
+    assert_equal(@agent.id, result[1]['created_by_id'])
+  end
+
+  test '04.03 ticket create and response format' do
+    title = "ticket testagent#{rand(999_999_999)}"
+    params = {
+      title: title,
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      state: 'new',
+      priority: '2 normal',
+      article: {
+        body: 'some test 123',
+      },
+    }
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    ticket = Ticket.find(result['id'])
+    assert_equal(ticket.state_id, result['state_id'])
+    assert_not(result['state'])
+    assert_equal(ticket.priority_id, result['priority_id'])
+    assert_not(result['priority'])
+    assert_equal(ticket.group_id, result['group_id'])
+    assert_not(result['group'])
+    assert_equal(title, result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    post '/api/v1/tickets?expand=true', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    ticket = Ticket.find(result['id'])
+    assert_equal(ticket.state_id, result['state_id'])
+    assert_equal(ticket.state.name, result['state'])
+    assert_equal(ticket.priority_id, result['priority_id'])
+    assert_equal(ticket.priority.name, result['priority'])
+    assert_equal(ticket.group_id, result['group_id'])
+    assert_equal(ticket.group.name, result['group'])
+    assert_equal(title, result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    post '/api/v1/tickets?full=true', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    ticket = Ticket.find(result['id'])
+    assert(result['assets'])
+    assert(result['assets']['Ticket'])
+    assert(result['assets']['Ticket'][ticket.id.to_s])
+    assert_equal(ticket.id, result['assets']['Ticket'][ticket.id.to_s]['id'])
+    assert_equal(title, result['assets']['Ticket'][ticket.id.to_s]['title'])
+    assert_equal(ticket.customer_id, result['assets']['Ticket'][ticket.id.to_s]['customer_id'])
+
+    assert(result['assets']['User'])
+    assert(result['assets']['User'][@agent.id.to_s])
+    assert_equal(@agent.id, result['assets']['User'][@agent.id.to_s]['id'])
+    assert_equal(@agent.firstname, result['assets']['User'][@agent.id.to_s]['firstname'])
+    assert_equal(@agent.lastname, result['assets']['User'][@agent.id.to_s]['lastname'])
+
+    assert(result['assets']['User'])
+    assert(result['assets']['User'][@customer_without_org.id.to_s])
+    assert_equal(@customer_without_org.id, result['assets']['User'][@customer_without_org.id.to_s]['id'])
+    assert_equal(@customer_without_org.firstname, result['assets']['User'][@customer_without_org.id.to_s]['firstname'])
+    assert_equal(@customer_without_org.lastname, result['assets']['User'][@customer_without_org.id.to_s]['lastname'])
+
+  end
+
+  test '04.04 ticket update and response formats' do
+    title = "ticket testagent#{rand(999_999_999)}"
+    ticket = Ticket.create!(
+      title: title,
+      group: Group.lookup(name: 'Users'),
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: @agent.id,
+      created_by_id: @agent.id,
+    )
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+
+    params = {
+      title: 'a update ticket #1',
+    }
+    put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    ticket = Ticket.find(result['id'])
+    assert_equal(ticket.state_id, result['state_id'])
+    assert_not(result['state'])
+    assert_equal(ticket.priority_id, result['priority_id'])
+    assert_not(result['priority'])
+    assert_equal(ticket.group_id, result['group_id'])
+    assert_not(result['group'])
+    assert_equal('a update ticket #1', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    params = {
+      title: 'a update ticket #2',
+    }
+    put "/api/v1/tickets/#{ticket.id}?expand=true", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    ticket = Ticket.find(result['id'])
+    assert_equal(ticket.state_id, result['state_id'])
+    assert_equal(ticket.state.name, result['state'])
+    assert_equal(ticket.priority_id, result['priority_id'])
+    assert_equal(ticket.priority.name, result['priority'])
+    assert_equal(ticket.group_id, result['group_id'])
+    assert_equal(ticket.group.name, result['group'])
+    assert_equal('a update ticket #2', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+
+    params = {
+      title: 'a update ticket #3',
+    }
+    put "/api/v1/tickets/#{ticket.id}?full=true", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    ticket = Ticket.find(result['id'])
+    assert(result['assets'])
+    assert(result['assets']['Ticket'])
+    assert(result['assets']['Ticket'][ticket.id.to_s])
+    assert_equal(ticket.id, result['assets']['Ticket'][ticket.id.to_s]['id'])
+    assert_equal('a update ticket #3', result['assets']['Ticket'][ticket.id.to_s]['title'])
+    assert_equal(ticket.customer_id, result['assets']['Ticket'][ticket.id.to_s]['customer_id'])
+
+    assert(result['assets']['User'])
+    assert(result['assets']['User'][@agent.id.to_s])
+    assert_equal(@agent.id, result['assets']['User'][@agent.id.to_s]['id'])
+    assert_equal(@agent.firstname, result['assets']['User'][@agent.id.to_s]['firstname'])
+    assert_equal(@agent.lastname, result['assets']['User'][@agent.id.to_s]['lastname'])
+
+    assert(result['assets']['User'])
+    assert(result['assets']['User'][@customer_without_org.id.to_s])
+    assert_equal(@customer_without_org.id, result['assets']['User'][@customer_without_org.id.to_s]['id'])
+    assert_equal(@customer_without_org.firstname, result['assets']['User'][@customer_without_org.id.to_s]['firstname'])
+    assert_equal(@customer_without_org.lastname, result['assets']['User'][@customer_without_org.id.to_s]['lastname'])
+
   end
 
 end

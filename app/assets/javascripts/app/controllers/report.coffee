@@ -108,32 +108,39 @@ class Graph extends App.ControllerContent
 
     @render()
 
-  render: =>
+  update: (data) =>
 
-    update = (data) =>
+    # show only selected lines
+    dataNew = {}
+    for key, value of data.data
+      if @params.backendSelected[key] is true
+        dataNew[key] = value
+      @ui.storeParams()
 
-      # show only selected lines
-      dataNew = {}
-      for key, value of data.data
-        if @params.backendSelected[key] is true
-          dataNew[key] = value
-        @ui.storeParams()
+    if !@lastNewData
+      @lastNewData = {}
 
-      if !@lastNewData
-        @lastNewData = {}
+    return if @lastNewData && JSON.stringify(dataNew) is JSON.stringify(@lastNewData)
+    @lastNewData = dataNew
 
-      return if @lastNewData && JSON.stringify(dataNew) is JSON.stringify(@lastNewData)
-      @lastNewData = dataNew
-
-      @draw(dataNew)
-      t = new Date
-      @el.find('#download-chart').html(t.toString())
-      new Download(
+    @draw(dataNew)
+    t = new Date
+    @el.find('#download-chart').html(t.toString())
+    if @downloadWidget
+      @downloadWidget.update(
+        config: @config
+        params: @params
+        ui:     @ui
+      )
+    else
+      @downloadWidget = new Download(
         el:     @el.find('.js-dataDownload')
         config: @config
         params: @params
         ui:     @ui
       )
+
+  render: =>
 
     url = "#{@apiPath}/reports/generate"
     interval = 5 * 60000
@@ -142,9 +149,9 @@ class Graph extends App.ControllerContent
     if @params.timeRange is 'month'
       interval = 60000
     if @params.timeRange is 'week'
-      interval = 40000
+      interval = 50000
     if @params.timeRange is 'day'
-      interval = 20000
+      interval = 30000
     if @params.timeRange is 'realtime'
       interval = 10000
 
@@ -164,7 +171,7 @@ class Graph extends App.ControllerContent
       )
       processData: true
       success: (data) =>
-        update(data)
+        @update(data)
         @delay(@render, interval, 'report-update', 'page')
     )
 
@@ -215,7 +222,7 @@ class Graph extends App.ControllerContent
 
 class Download extends App.Controller
   events:
-    'click .js-dataDownloadBackendSelector': 'tableUpdate'
+    'click .js-dataDownloadBackendSelector': 'selectBackend'
 
   constructor: (data) ->
 
@@ -225,7 +232,24 @@ class Download extends App.Controller
     super
     @render()
 
-  render: ->
+  selectBackend: (e) =>
+    e.preventDefault()
+    @el.find('.js-dataDownloadBackendSelector').parent().removeClass('active')
+    $(e.target).parent().addClass('active')
+    @profileSelectedId = $(e.target).data('profile-id')
+    @params.downloadBackendSelected = $(e.target).data('backend')
+    @ui.storeParams()
+    @table = false
+    @render()
+
+  update: =>
+    @render()
+
+  render: =>
+
+    if !@contentRendered
+      @contentRendered = true
+      @html(App.view('report/download_content')())
 
     reports = []
 
@@ -244,44 +268,84 @@ class Download extends App.Controller
           @profileSelectedId = key
         profiles.push App.ReportProfile.find(key)
 
-    @html App.view('report/download_header')(
+    downloadHeaderHtml = App.view('report/download_header')(
       reports:                 reports
       profiles:                profiles
       downloadBackendSelected: @params.downloadBackendSelected
       metric:                  @config.metric[@params.metric]
     )
+    if downloadHeaderHtml isnt @downloadHeaderHtml
+      @el.find('.js-dataDownloadHeader').html(downloadHeaderHtml)
+      @downloadHeaderHtml = downloadHeaderHtml
 
     @tableUpdate()
 
-  tableUpdate: (e) =>
-    if e
-      e.preventDefault()
-      @el.find('.js-dataDownloadBackendSelector').parent().removeClass('active')
-      $(e.target).parent().addClass('active')
-      @profileSelectedId       = $(e.target).data('profile-id')
-      @params.downloadBackendSelected = $(e.target).data('backend')
-      @ui.storeParams()
+  tableRender: (tickets, count) =>
+    if _.isEmpty(tickets)
+      @$('.js-dataDownloadButton').html('')
+      @$('.js-dataDownloadTable').html('')
+      return
 
-    table = (tickets, count) =>
-      url = '#ticket/zoom/'
-      if App.Config.get('import_mode')
-        url = App.Config.get('import_otrs_endpoint') + '/index.pl?Action=AgentTicketZoom;TicketID='
-      if _.isEmpty(tickets)
-        @el.find('.js-dataDownloadTable').html('')
-      else
-        profile_id = 0
-        for key, value of @params.profileSelected
-          if value
-            profile_id = key
-        downloadUrl = "#{@apiPath}/reports/sets?sheet=true;metric=#{@params.metric};year=#{@params.year};month=#{@params.month};week=#{@params.week};day=#{@params.day};timeRange=#{@params.timeRange};profile_id=#{profile_id};downloadBackendSelected=#{@params.downloadBackendSelected}"
-        html = App.view('report/download_list')(
-          tickets:  tickets
-          count:    count
-          url:      url
-          download: downloadUrl
-        )
-        @el.find('.js-dataDownloadTable').html(html)
+    profile_id = 0
+    for key, value of @params.profileSelected
+      if value
+        profile_id = key
+    downloadUrl = "#{@apiPath}/reports/sets?sheet=true;metric=#{@params.metric};year=#{@params.year};month=#{@params.month};week=#{@params.week};day=#{@params.day};timeRange=#{@params.timeRange};profile_id=#{profile_id};downloadBackendSelected=#{@params.downloadBackendSelected}"
+    @$('.js-dataDownloadButton').html(App.view('report/download_button')(
+      count: count
+      downloadUrl: downloadUrl
+    ))
 
+    openTicket = (id,e) =>
+      ticket = App.Ticket.findNative(id)
+      @navigate ticket.uiUrl()
+    callbackTicketTitleAdd = (value, object, attribute, attributes) ->
+      attribute.title = object.title
+      value
+    callbackLinkToTicket = (value, object, attribute, attributes) ->
+      attribute.link = object.uiUrl()
+      value
+    callbackIconHeader = (headers) ->
+      attribute =
+        name:        'icon'
+        display:     ''
+        translation: false
+        width:       '28px'
+        displayWidth:28
+        unresizable: true
+      headers.unshift(0)
+      headers[0] = attribute
+      headers
+    callbackIcon = (value, object, attribute, header) ->
+      value = ' '
+      attribute.class  = object.iconClass()
+      attribute.link   = ''
+      attribute.title  = object.iconTitle()
+      value
+
+    params =
+      el: @el.find('.js-dataDownloadTable')
+      model: App.Ticket
+      objects: tickets
+      overviewAttributes: ['number', 'title', 'state', 'group', 'created_at']
+      bindRow:
+        events:
+          'click': openTicket
+      callbackHeader: [ callbackIconHeader ]
+      callbackAttributes:
+        icon:
+          [ callbackIcon ]
+        title:
+          [ callbackLinkToTicket, callbackTicketTitleAdd ]
+        number:
+          [ callbackLinkToTicket, callbackTicketTitleAdd ]
+
+    if !@table
+      @table = new App.ControllerTable(params)
+    else
+      @table.update(objects: tickets)
+
+  tableUpdate: =>
     @ajax(
       id: 'report_download'
       type:  'POST'
@@ -298,15 +362,14 @@ class Download extends App.Controller
         downloadBackendSelected: @params.downloadBackendSelected
       )
       processData: true
-      success: (data) ->
+      success: (data) =>
         App.Collection.loadAssets(data.assets)
         ticket_collection = []
         if data.ticket_ids
           for record_id in data.ticket_ids
-            ticket = App.Ticket.fullLocal( record_id )
+            ticket = App.Ticket.fullLocal(record_id)
             ticket_collection.push ticket
-
-        table(ticket_collection, data.count)
+        @tableRender(ticket_collection, data.count)
     )
 
 class TimeRangePicker extends App.Controller

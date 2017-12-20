@@ -123,6 +123,7 @@ returns
     }
     local_params = defaults.merge(local_params)
     result = history(local_params)
+    return result if params[:sheet].present?
     assets = {}
     result[:ticket_ids].each do |ticket_id|
       ticket_full = Ticket.find(ticket_id)

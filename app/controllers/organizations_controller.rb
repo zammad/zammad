@@ -69,7 +69,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
       organizations = Organization.all.order(id: 'ASC').offset(offset).limit(per_page)
     end
 
-    if params[:expand]
+    if response_expand?
       list = []
       organizations.each do |organization|
         list.push organization.attributes_with_association_names
@@ -78,7 +78,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
       return
     end
 
-    if params[:full]
+    if response_full?
       assets = {}
       item_ids = []
       organizations.each do |item|
@@ -91,6 +91,7 @@ curl http://localhost/api/v1/organizations -v -u #{login}:#{password}
       }, status: :ok
       return
     end
+
     list = []
     organizations.each do |organization|
       list.push organization.attributes_with_association_ids
@@ -126,15 +127,15 @@ curl http://localhost/api/v1/organizations/#{id} -v -u #{login}:#{password}
       raise Exceptions::NotAuthorized if params[:id].to_i != current_user.organization_id
     end
 
-    if params[:expand]
+    if response_expand?
       organization = Organization.find(params[:id]).attributes_with_association_names
       render json: organization, status: :ok
       return
     end
 
-    if params[:full]
+    if response_full?
       full = Organization.full(params[:id])
-      render json: full
+      render json: full, status: :ok
       return
     end
 
@@ -259,7 +260,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
       organization_all = organization_all[offset, params[:per_page].to_i] || []
     end
 
-    if params[:expand]
+    if response_expand?
       list = []
       organization_all.each do |organization|
         list.push organization.attributes_with_association_names
@@ -281,7 +282,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
       return
     end
 
-    if params[:full]
+    if response_full?
       organization_ids = []
       assets = {}
       organization_all.each do |organization|

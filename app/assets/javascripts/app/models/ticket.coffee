@@ -244,3 +244,12 @@ class App.Ticket extends App.Model
           throw "Unknown operator: #{condition.operator}"
 
     result
+
+  editable: ->
+    group_ids = App.Session.get('group_ids')
+    if _.isEmpty(group_ids[@group_id])
+      return false
+    else if group_ids[@group_id] && !_.include(group_ids[@group_id], 'edit') && !_.include(group_ids[@group_id], 'full')
+      return false
+    true
+

@@ -114,6 +114,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal('E', attributes['firstname'])
     assert_equal('S', attributes['lastname'])
     assert_equal('es-agent@example.com', attributes['email'])
+    assert(attributes['preferences'])
     assert_not(attributes['password'])
     assert_not(attributes['organization'])
 
@@ -121,6 +122,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal('E', attributes['firstname'])
     assert_equal('S', attributes['lastname'])
     assert_equal('es-agent@example.com', attributes['email'])
+    assert(attributes['preferences'])
     assert_not(attributes['password'])
     assert_not(attributes['organization'])
 
@@ -128,6 +130,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal('ES', attributes['firstname'])
     assert_equal('Customer1', attributes['lastname'])
     assert_equal('es-customer1@example.com', attributes['email'])
+    assert(attributes['preferences'])
     assert_not(attributes['password'])
     assert_equal('Customer Organization Update', attributes['organization'])
 

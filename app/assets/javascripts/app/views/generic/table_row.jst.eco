@@ -21,7 +21,7 @@
   </td>
 <% end %>
 <% for header in @headers: %>
-  <% value = @P(@object, header.name, @attributes) %>
+  <% value = @P(@object, header.name, @attributes, true) %>
   <% if @callbacks: %>
   <%   for attribute, callbacksAll of @callbacks: %>
   <%     if attribute is header.name: %>

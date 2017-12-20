@@ -98,6 +98,7 @@ returns
       end: params[:range_end],
       selector: params[:selector]
     )
+    return result if params[:sheet].present?
     assets = {}
     result[:ticket_ids].each do |ticket_id|
       ticket_full = Ticket.find(ticket_id)

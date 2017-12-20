@@ -151,7 +151,7 @@ class App.TicketZoomArticleNew extends App.Controller
         icon:              'twitter'
         attributes:        []
         internal:          false,
-        features:          ['body:limit', 'body:initials']
+        features:          attributes
         maxTextLength:     280
         warningTextLength: 30
       }
@@ -164,7 +164,7 @@ class App.TicketZoomArticleNew extends App.Controller
         icon:              'twitter'
         attributes:        ['to']
         internal:          false,
-        features:          ['body:limit', 'body:initials']
+        features:          attributes
         maxTextLength:     10000
         warningTextLength: 500
       }

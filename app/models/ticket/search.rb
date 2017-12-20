@@ -94,12 +94,12 @@ returns
     limit        = params[:limit] || 12
     current_user = params[:current_user]
     full         = false
-    if params[:full] || !params.key?(:full)
+    if params[:full] == true || params[:full] == 'true' || !params.key?(:full)
       full = true
     end
 
     # try search index backend
-    if !condition && SearchIndexBackend.enabled?
+    if condition.blank? && SearchIndexBackend.enabled?
       query_extention = {}
       query_extention['bool'] = {}
       query_extention['bool']['must'] = []

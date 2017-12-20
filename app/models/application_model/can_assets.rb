@@ -109,7 +109,7 @@ return object and assets
       object = find(id)
       assets = object.assets({})
       {
-        id: id,
+        id: object.id,
         assets: assets,
       }
     end
