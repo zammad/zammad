@@ -204,6 +204,74 @@ Some Text",
         },
       },
       {
+        data: "From: sender@example.com
+To: some_new_customer423@example.com
+Cc: some recipient <some with invalid@example.com>, max <somebody_else@example.com>
+Subject: abc some subject2
+
+Some Text",
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'abc some subject2',
+          },
+          1 => {
+            body: 'Some Text',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'max',
+              lastname: '',
+              fullname: 'max',
+              email: 'somebody_else@example.com',
+            },
+            {
+              firstname: '',
+              lastname: '',
+              fullname: 'some_new_customer423@example.com',
+              email: 'some_new_customer423@example.com',
+            },
+          ],
+        },
+      },
+      {
+        data: "From: sender@example.com
+To: some_new_customer424@example.com
+Subject: abc some subject3
+Reply-To: some user <no-reply-with invalid-spaces@example.com>
+
+Some Text",
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'abc some subject3',
+          },
+          1 => {
+            body: 'Some Text',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: '',
+              lastname: '',
+              fullname: 'some_new_customer424@example.com',
+              email: 'some_new_customer424@example.com',
+            },
+          ],
+        },
+      },
+      {
         data: "From: me@example.com
 To: Alexander Ha <service-d1@example.com>,
  Alexander Re <re-mail@example.de>, Hauke Ko
@@ -2812,9 +2880,9 @@ Some Text',
             # verify if users are created
             if file[:verify][:users]
               file[:verify][:users].each { |user_result|
-                user = User.where(email: user_result[:email]).first
+                user = User.where(email: user_result[:email].downcase).first
                 if !user
-                  assert(false, "No user '#{user_result[:email]}' found!")
+                  assert(false, "No user '#{user_result[:email].downcase}' found!")
                   return
                 end
                 user_result.each { |key, value|

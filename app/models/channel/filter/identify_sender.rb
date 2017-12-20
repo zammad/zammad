@@ -95,16 +95,19 @@ module Channel::Filter::IdentifySender
     max_count = 40
     current_count = 0
     ['raw-to', 'raw-cc'].each do |item|
-      next if !mail[item.to_sym]
+      next if mail[item.to_sym].blank?
       begin
-        next if !mail[item.to_sym].addrs
         items = mail[item.to_sym].addrs
+        next if items.blank?
         items.each do |address_data|
-          next if address_data.address.blank?
+          email_address = address_data.address
+          next if email_address.blank?
+          next if email_address !~ /@/
+          next if email_address.match?(/\s/)
           user_create(
             firstname: address_data.display_name,
             lastname: '',
-            email: address_data.address,
+            email: email_address,
           )
           current_count += 1
           return false if current_count == max_count
@@ -126,6 +129,8 @@ module Channel::Filter::IdentifySender
             display_name = $1
           end
           next if address.blank?
+          next if address !~ /@/
+          next if address.match?(/\s/)
           user_create(
             firstname: display_name,
             lastname: '',
@@ -176,7 +181,7 @@ module Channel::Filter::IdentifySender
     data[:updated_by_id] = 1
     data[:created_by_id] = 1
 
-    user = User.create(data)
+    user = User.create!(data)
     user.update!(
       updated_by_id: user.id,
       created_by_id: user.id,
