@@ -9,16 +9,16 @@ class Sequencer
             module MissingMandatory
               class Base < Sequencer::Unit::Base
                 include ::Sequencer::Unit::Common::Mixin::DynamicAttribute
-                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::InstanceAction
+                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-                skip_any_instance_action
+                skip_any_action
 
-                provides :instance_action
+                provides :action
 
                 def process
                   return if !skip?
                   logger.debug("Skipping. Missing mandatory attributes for #{attribute}: #{attribute_value.inspect}")
-                  state.provide(:instance_action, :skipped)
+                  state.provide(:action, :skipped)
                 end
 
                 private

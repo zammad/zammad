@@ -6,9 +6,9 @@ class Sequencer
           module Attributes
             class Static < Sequencer::Unit::Base
               include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
-              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::InstanceAction
+              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-              skip_any_instance_action
+              skip_any_action
 
               def process
                 provide_mapped do

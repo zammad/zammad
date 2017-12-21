@@ -6,12 +6,12 @@ class Sequencer
           module Attributes
             module RoleIds
               class Unassigned < Sequencer::Unit::Base
-                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::InstanceAction
+                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-                skip_any_instance_action
+                skip_any_action
 
                 uses :resource, :dn_roles, :ldap_config, :mapped
-                provides :instance_action
+                provides :action
 
                 def process
                   # use signup/Zammad default roles
@@ -30,11 +30,11 @@ class Sequencer
                   if instance.present?
                     # deactivate instance if role assignment is lost
                     instance.update!(active: false)
-                    state.provide(:instance_action, :deactivated)
+                    state.provide(:action, :deactivated)
                   else
                     # skip instance creation if no existing
                     # instance was found yet
-                    state.provide(:instance_action, :skipped)
+                    state.provide(:action, :skipped)
                   end
                 end
               end

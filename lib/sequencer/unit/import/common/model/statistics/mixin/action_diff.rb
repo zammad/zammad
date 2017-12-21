@@ -7,26 +7,26 @@ class Sequencer
         module Model
           module Statistics
             module Mixin
-              module InstanceActionDiff
+              module ActionDiff
                 include Sequencer::Unit::Import::Common::Model::Statistics::Mixin::Common
 
                 def self.included(base)
-                  base.uses :instance_action
+                  base.uses :action
                   base.provides :statistics_diff
                 end
 
                 private
 
                 def diff
-                  raise "Unknown action '#{instance_action}'" if !possible?
+                  raise "Unknown action '#{action}'" if !possible?
                   empty_diff.merge(
-                    instance_action => 1,
+                    action => 1,
                     sum: 1,
                   )
                 end
 
                 def possible?
-                  possible_actions.include?(instance_action)
+                  possible_actions.include?(action)
                 end
               end
             end

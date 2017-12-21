@@ -5,7 +5,7 @@ class Sequencer
         module FolderContact
           module Statistics
             class Diff < Sequencer::Unit::Base
-              include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::InstanceActionDiff
+              include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::ActionDiff
 
               uses :ews_folder_name
 

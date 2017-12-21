@@ -5,9 +5,9 @@ class Sequencer
         module User
           module Email
             class CheckValidity < Sequencer::Unit::Base
-              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::InstanceAction
+              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-              skip_instance_action :skipped
+              skip_action :skipped
 
               uses :mapped
 

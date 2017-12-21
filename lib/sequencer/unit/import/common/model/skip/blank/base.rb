@@ -9,16 +9,16 @@ class Sequencer
             module Blank
               class Base < Sequencer::Unit::Base
                 include ::Sequencer::Unit::Common::Mixin::DynamicAttribute
-                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::InstanceAction
+                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-                skip_any_instance_action
+                skip_any_action
 
-                provides :instance_action
+                provides :action
 
                 def process
                   return if !skip?
                   logger.debug("Skipping. Blank #{attribute} found: #{attribute_value.inspect}")
-                  state.provide(:instance_action, :skipped)
+                  state.provide(:action, :skipped)
                 end
 
                 private

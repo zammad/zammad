@@ -7,13 +7,13 @@ class Sequencer
             module HandleFailure
 
               def self.included(base)
-                base.provides :exception, :instance_action
+                base.provides :exception, :action
               end
 
               def handle_failure(e)
                 logger.error(e)
                 state.provide(:exception, e)
-                state.provide(:instance_action, :failed)
+                state.provide(:action, :failed)
               end
             end
           end

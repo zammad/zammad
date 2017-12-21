@@ -1,4 +1,4 @@
-require 'sequencer/unit/import/common/model/statistics/mixin/instance_action_diff'
+require 'sequencer/unit/import/common/model/statistics/mixin/action_diff'
 
 class Sequencer
   class Unit
@@ -7,7 +7,7 @@ class Sequencer
         module User
           module Statistics
             class Diff < Sequencer::Unit::Base
-              include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::InstanceActionDiff
+              include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::ActionDiff
 
               uses :instance, :associations, :signup_role_ids
 
