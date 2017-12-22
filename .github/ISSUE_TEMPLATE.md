@@ -1,13 +1,15 @@
 <!--
 Hi there - thanks for filing an issue. Please ensure the following things before creating an issue - thank you! 🤓
 
-Since november 15th we handle all requests, except real bugs, at our community board.https://community.zammad.org/t/major-change-regarding-github-issues-community-board/21
+Since november 15th we handle all requests, except real bugs, at our community board.
+Full explanation: https://community.zammad.org/t/major-change-regarding-github-issues-community-board/21
+
 Please post:
 - Feature requests
 - Development questions
 - Technical questions
 
-on the board.
+on the board -> https://community.zammad.org !
 
 
 If you think you hit a bug, please continue:
@@ -30,7 +32,7 @@ Note: We always do our best. Unfortunately, sometimes there are too many request
 * Operating system:
 * Database + version:
 * Elasticsearch version:
-* Browser + version: 
+* Browser + version:
 
 
 ### Expected behavior:
