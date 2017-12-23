@@ -4,6 +4,7 @@ class Sequencer
       module Common
         module Model
           class ResetPrimaryKeySequence < Sequencer::Unit::Base
+            extend Forwardable
 
             uses :model_class
 
