@@ -120,11 +120,9 @@ end
 @clients = {}
 Rails.configuration.interface = 'websocket'
 EventMachine.run do
-
-  if /(\[(?:[:0-9A-Fa-f]+)\])/.match?(@options[:b]) # check if there is an IPv6 Address
-    @options[:b] = @options[:b].tr('[]', '') # remove square brackets
-  end
-  EventMachine::WebSocket.start(host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: tls_options) do |ws|
+ 
+  @options[:b] = IPAddr.new @options[:b]
+  EventMachine::WebSocket.start(host: @options[:b].to_s, port: @options[:p], secure: @options[:s], tls_options: tls_options) do |ws|
 
     # register client connection
     ws.onopen do |handshake|
