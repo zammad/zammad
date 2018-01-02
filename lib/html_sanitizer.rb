@@ -24,35 +24,6 @@ satinize html string based on whiltelist
 
     scrubber_link = Loofah::Scrubber.new do |node|
 
-      # check if href is different to text
-      if node.name == 'a' && !url_same?(node['href'], node.text)
-        if node['href'].blank?
-          node.replace node.children.to_s
-          Loofah::Scrubber::STOP
-        elsif ((node.children.blank? || node.children.first.class == Nokogiri::XML::Text) && node.text.present?) || (node.children.size == 1 && node.children.first.content == node.content && node.content.present?)
-          if node.text.downcase.start_with?('http', 'ftp', '//')
-            a = Nokogiri::XML::Node.new 'a', node.document
-            a['href'] = node['href']
-            a['rel'] = 'nofollow noreferrer noopener'
-            a['target'] = '_blank'
-            a.content = node['href']
-            node.add_previous_sibling(a)
-            text = Nokogiri::XML::Text.new(' (', node.document)
-            node.add_previous_sibling(text)
-            node['href'] = cleanup_target(node.text)
-          else
-            text = Nokogiri::XML::Text.new("#{node.text} (", node.document)
-            node.add_previous_sibling(text)
-            node.content = cleanup_target(node['href'])
-            node['href'] = cleanup_target(node['href'])
-          end
-          text = Nokogiri::XML::Text.new(')', node.document)
-          node.add_next_sibling(text)
-        else
-          node.content = cleanup_target(node['href'])
-        end
-      end
-
       # check if text has urls which need to be clickable
       if node&.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
         if node.class == Nokogiri::XML::Text
@@ -83,6 +54,18 @@ satinize html string based on whiltelist
         node.set_attribute('href', href)
         node.set_attribute('rel', 'nofollow noreferrer noopener')
         node.set_attribute('target', '_blank')
+      end
+
+      if node.name == 'a' && node['href'].blank?
+        node.replace node.children.to_s
+        Loofah::Scrubber::STOP
+      end
+
+      # check if href is different to text
+      if node.name == 'a' && !url_same?(node['href'], node.text)
+        if node['title'].blank?
+          node['title'] = node['href']
+        end
       end
     end
 

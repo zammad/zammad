@@ -246,6 +246,8 @@ class App.Ticket extends App.Model
     result
 
   editable: ->
+    user_id = App.Session.get('id')
+    return true if user_id is @customer_id
     group_ids = App.Session.get('group_ids')
     if _.isEmpty(group_ids[@group_id])
       return false

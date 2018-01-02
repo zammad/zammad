@@ -5,6 +5,8 @@ class App.Utils
     'TD': ['abbr', 'align', 'axis', 'colspan', 'headers', 'rowspan', 'valign', 'width', 'style']
     'TH': ['abbr', 'align', 'axis', 'colspan', 'headers', 'rowspan', 'scope', 'sorted', 'valign', 'width', 'style']
     'TR': ['width', 'style']
+    'A': ['href', 'hreflang', 'name', 'rel']
+    'IMG': ['align', 'alt', 'border', 'height', 'src', 'srcset', 'width', 'style']
 
   @mapCss:
     'TABLE': [
@@ -74,6 +76,9 @@ class App.Utils
       'border-right-color',
       'border-bottom-color',
       'border-left-color',
+    ]
+    'IMG': [
+      'width', 'height',
     ]
 
   # textCleand = App.Utils.textCleanup(rawText)
@@ -279,7 +284,7 @@ class App.Utils
     @_removeWordMarkup(html)
 
     # remove tags, keep content
-    html.find('a, font, small, time, form, label').replaceWith( ->
+    html.find('font, small, time, form, label').replaceWith( ->
       $(@).contents()
     )
 
@@ -303,7 +308,7 @@ class App.Utils
     )
 
     # remove tags & content
-    html.find('font, img, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
+    html.find('font, svg, input, select, button, style, applet, embed, noframes, canvas, script, frame, iframe, meta, link, title, head, fieldset').remove()
 
     # remove style and class
     @_cleanAttributes(html)

@@ -522,12 +522,12 @@ test("htmlCleanup", function() {
 
   var source = "<div><!--test comment--><a href=\"test\">test</a></div>"
   //var should = "<div>test</div>"
-  var should = "test"
+  var should = "<a href=\"test\">test</a>"
   var result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
   source = "<div><!--test comment--><a href=\"test\">test</a></div>"
-  should = "test"
+  should = "<a href=\"test\">test</a>"
   result = App.Utils.htmlCleanup(source)
   equal(result.html(), should, source)
 
@@ -543,6 +543,11 @@ test("htmlCleanup", function() {
 
   source = "<a href=\"some_link\">some link to somewhere</a>"
   should = "some link to somewhere"
+  result = App.Utils.htmlCleanup($(source))
+  equal(result.html(), should, source)
+
+  source = "<p><a href=\"some_link\">some link to somewhere</a><p>"
+  should = "<a href=\"some_link\">some link to somewhere</a>"
   result = App.Utils.htmlCleanup($(source))
   equal(result.html(), should, source)
 
