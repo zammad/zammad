@@ -2669,6 +2669,36 @@ Some Text',
           ],
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail64.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
+          },
+          1 => {
+            from: 'Martin Edenhofer <martin@example.de>',
+            sender: 'Customer',
+            type: 'email',
+            body: 'Enjoy!<div>
+<br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old programmers never die. They just branch to a new address.<br>
+</div>
+<br><div><img src="cid:485376C9-2486-4351-B932-E2010998F579@home" style="width:640px;height:425px;"></div>
+</div>',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Martin',
+              lastname: 'Edenhofer',
+              fullname: 'Martin Edenhofer',
+              email: 'martin@example.de',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end

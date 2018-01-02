@@ -381,7 +381,7 @@ class Channel::EmailParser
           filename = if mail_local[:subject].present?
                        "#{mail_local[:subject]}.eml"
                      elsif headers_store['Content-Description'].present?
-                       "#{headers_store['Content-Description']}.eml"
+                       "#{headers_store['Content-Description']}.eml".to_s.force_encoding('utf-8')
                      else
                        'Mail.eml'
                      end
@@ -415,7 +415,7 @@ class Channel::EmailParser
         map.each do |type, ext|
           next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
           filename = if headers_store['Content-Description'].present?
-                       "#{headers_store['Content-Description']}.#{ext[0]}"
+                       "#{headers_store['Content-Description']}.#{ext[0]}".to_s.force_encoding('utf-8')
                      else
                        "#{ext[1]}.#{ext[0]}"
                      end
@@ -661,11 +661,15 @@ returns
 
         # store attachments
         mail[:attachments]&.each do |attachment|
+          filename = attachment[:filename].force_encoding('utf-8')
+          if !filename.force_encoding('UTF-8').valid_encoding?
+            filename = filename.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+          end
           Store.add(
             object: 'Ticket::Article',
             o_id: article.id,
             data: attachment[:data],
-            filename: attachment[:filename],
+            filename: filename,
             preferences: attachment[:preferences]
           )
         end
