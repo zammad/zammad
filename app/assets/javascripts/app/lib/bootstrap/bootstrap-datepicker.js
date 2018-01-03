@@ -26,6 +26,7 @@
 		- allow custom template as options parameter
 		- fix that place method doesn't think that the container is the window, but rather the real window is the window
 		- added rerender method to show correct today if task is longer open the 24 hours
+		- scroll into view
  */
 
 (function(factory){
@@ -757,6 +758,16 @@
 					zIndex: zIndex
 				});
 			}
+
+			// adjust scroll of scrollParent
+			var scrollParent = this.picker.scrollParent();
+			var bottomEdge = offset.top + height + this.picker.outerHeight();
+			var scrollBottomEdge = scrollParent.scrollTop() + scrollParent.height();
+
+			if(bottomEdge > scrollBottomEdge){
+				scrollParent.scrollTop(scrollParent.scrollTop() + (bottomEdge - scrollBottomEdge) + 10);
+			}
+
 			return this;
 		},
 
