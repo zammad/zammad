@@ -1,0 +1,20 @@
+{
+  "update_id":30005,
+  "channel_post":{
+    "message_id":3368,
+    "chat":{
+      "title": "Zammad Bot",
+      "id":1111112,
+      "type": "channel"
+    },
+    "date":1487119496,
+    "voice":{
+      "duration":1,
+      "mime_type":"audio/ogg",
+      "file_id":"AwADAgADVQADCEIYSZwyOmSZK9iZAg",
+      "file_size":6030
+    },
+    "bid": "435791794",
+    "callback_token":"z5N_uxY_Fut81g"
+  }
+}

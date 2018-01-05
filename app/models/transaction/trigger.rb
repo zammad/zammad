@@ -30,9 +30,9 @@ class Transaction::Trigger
     return if @item[:object] != 'Ticket'
 
     triggers = if Rails.configuration.db_case_sensitive
-                 Trigger.where(active: true).order('LOWER(name)')
+                 ::Trigger.where(active: true).order('LOWER(name)')
                else
-                 Trigger.where(active: true).order(:name)
+                 ::Trigger.where(active: true).order(:name)
                end
     return if triggers.blank?
 

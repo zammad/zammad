@@ -105,6 +105,28 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Hello, I need your Help', ticket.articles.first.body)
     assert_equal('text/plain', ticket.articles.first.content_type)
 
+    # send channel message1
+    post callback_url, params: read_messaage('channel1_message_content1'), headers: @headers
+    assert_response(200)
+    assert_equal(1, Ticket.count)
+    ticket = Ticket.last
+    assert_equal('Hello, I need your Help', ticket.title)
+    assert_equal('new', ticket.state.name)
+    assert_equal(1, ticket.articles.count)
+    assert_equal('Hello, I need your Help', ticket.articles.first.body)
+    assert_equal('text/plain', ticket.articles.first.content_type)
+
+    # edit channel message1
+    post callback_url, params: read_messaage('channel2_message_content1'), headers: @headers
+    assert_response(200)
+    assert_equal(1, Ticket.count)
+    ticket = Ticket.last
+    assert_equal('Hello, I need your Help', ticket.title)
+    assert_equal('new', ticket.state.name)
+    assert_equal(1, ticket.articles.count)
+    assert_equal('Hello, I need your Help', ticket.articles.first.body)
+    assert_equal('text/plain', ticket.articles.first.content_type)
+
     # send same message again, ignore it
     post callback_url, params: read_messaage('personal1_message_content1'), headers: @headers
     assert_response(200)
@@ -193,6 +215,17 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_match(/<img style="width:360px;height:327px;"/i, ticket.articles.last.body)
     assert_equal('text/html', ticket.articles.last.content_type)
 
+    # send channel message 3
+    post callback_url, params: read_messaage('channel1_message_content3'), headers: @headers
+    assert_response(200)
+    assert_equal(3, Ticket.count)
+    ticket = Ticket.last
+    assert_equal('Can you help me with my feature?', ticket.title)
+    assert_equal('new', ticket.state.name)
+    assert_equal(2, ticket.articles.count)
+    assert_match(/<img style="width:360px;height:327px;"/i, ticket.articles.last.body)
+    assert_equal('text/html', ticket.articles.last.content_type)
+
     # send message3
     stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
       .with(body: { 'file_id' => 'AAQCABO0I4INAATATQAB5HWPq4XgxQACAg' })
@@ -204,6 +237,18 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123BQADAgADDgAD7x6ZSC_-1LMkOEmoAg","file_path":"abc123"}}', headers: {})
 
     post callback_url, params: read_messaage('personal3_message_content3'), headers: @headers
+    assert_response(200)
+    assert_equal(3, Ticket.count)
+    ticket = Ticket.last
+    assert_equal('Can you help me with my feature?', ticket.title)
+    assert_equal('new', ticket.state.name)
+    assert_equal(3, ticket.articles.count)
+    assert_match(/<img style="width:200px;height:200px;"/i, ticket.articles.last.body)
+    assert_equal('text/html', ticket.articles.last.content_type)
+    assert_equal(1, ticket.articles.last.attachments.count)
+
+    # isend channel message 2
+    post callback_url, params: read_messaage('channel1_message_content2'), headers: @headers
     assert_response(200)
     assert_equal(3, Ticket.count)
     ticket = Ticket.last
@@ -244,6 +289,17 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
     assert_equal('text/html', ticket.articles.last.content_type)
     assert_equal(1, ticket.articles.last.attachments.count)
 
+    # send channel message 4 with voice
+    post callback_url, params: read_messaage('channel1_message_content4'), headers: @headers
+    assert_response(200)
+    assert_equal(3, Ticket.count)
+    ticket = Ticket.last
+    assert_equal('Can you help me with my feature?', ticket.title)
+    assert_equal('new', ticket.state.name)
+    assert_equal(4, ticket.articles.count)
+    assert_equal('text/html', ticket.articles.last.content_type)
+    assert_equal(1, ticket.articles.last.attachments.count)
+
     # start communication #4 - with sticker
     stub_request(:post, "https://api.telegram.org/bot#{token}/getFile")
       .with(body: { 'file_id' => 'AAQDABO3-e4qAASs6ZOjJUT7tQ4lAAIC' })
@@ -253,6 +309,22 @@ class TelegramControllerTest < ActionDispatch::IntegrationTest
       .to_return(status: 200, body: '{"result":{"file_size":123,"file_id":"ABC-123BQADAwAD0QIAAqbJWAAB8OkQqgtDQe0C","file_path":"abc123"}}', headers: {})
 
     post callback_url, params: read_messaage('personal4_message_content1'), headers: @headers
+    assert_response(200)
+    assert_equal(4, Ticket.count)
+    ticket = Ticket.last
+    if Rails.application.config.db_4bytes_utf8
+      assert_equal('💻', ticket.title)
+    else
+      assert_equal('', ticket.title)
+    end
+    assert_equal('new', ticket.state.name)
+    assert_equal(1, ticket.articles.count)
+    assert_match(/<img style="/i, ticket.articles.last.body)
+    assert_equal('text/html', ticket.articles.last.content_type)
+    assert_equal(1, ticket.articles.last.attachments.count)
+
+    # send channel message #5 with sticker
+    post callback_url, params: read_messaage('channel1_message_content5'), headers: @headers
     assert_response(200)
     assert_equal(4, Ticket.count)
     ticket = Ticket.last

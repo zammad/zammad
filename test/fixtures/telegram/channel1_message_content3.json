@@ -1,0 +1,34 @@
+{
+  "update_id": 30002,
+  "channel_post": {
+    "message_id": 3366,
+    "chat": {
+      "title":"Zammad Bot",
+      "id":1111112,
+      "type": "channel"
+    },
+    "date": 1486036832,
+    "photo": [
+      {
+        "file_id": "ABC-123VabcOcv123w0ABBL_aoY-F849YYABC",
+        "file_size": 1016,
+        "width": 90,
+        "height": 82
+      },
+      {
+        "file_id": "ABC-123VabcOcv123w0ABPlhIiVSfO9TYoABC",
+        "file_size": 7378,
+        "width": 320,
+        "height": 291
+      },
+      {
+        "file_id": "ABC-123VabcOcv123w0ABHywrcPqfrbAYIABC",
+        "file_size": 16433,
+        "width": 720,
+        "height": 654
+      }
+    ],
+    "bid":"435791794",
+    "callback_token":"z5N_uxY_Fut81g"
+  }
+}
