@@ -357,24 +357,36 @@ test:integration:zendesk_postgresql:
     - ruby -I test/ test/integration/zendesk_import_test.rb
     - rake db:drop
 
-test:integration:otrs_5_mysql:
+test:integration:otrs_6_mysql:
   stage: test
   tags:
     - core
     - mysql
   script:
     - export RAILS_ENV=test
-    - export IMPORT_OTRS_ENDPOINT="http://vz1109.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+    - export IMPORT_OTRS_ENDPOINT="http://vz1185.test.znuny.com/otrs/public.pl?Action=ZammadMigrator"
     - rake db:create
     - rake db:migrate
     - ruby -I test/ test/integration/otrs_import_test.rb
     - rake db:drop
 
-test:integration:otrs_5_postgresql:
+test:integration:otrs_6_postgresql:
   stage: test
   tags:
     - core
     - postgresql
+  script:
+    - export RAILS_ENV=test
+    - export IMPORT_OTRS_ENDPOINT="http://vz1185.test.znuny.com/otrs/public.pl?Action=ZammadMigrator"
+    - rake db:create
+    - rake db:migrate
+    - ruby -I test/ test/integration/otrs_import_test.rb
+    - rake db:drop
+
+test:integration:otrs_5:
+  stage: test
+  tags:
+    - core
   script:
     - export RAILS_ENV=test
     - export IMPORT_OTRS_ENDPOINT="http://vz1109.demo.znuny.com/otrs/public.pl?Action=ZammadMigrator"
