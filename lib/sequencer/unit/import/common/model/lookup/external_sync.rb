@@ -3,10 +3,12 @@ class Sequencer
     module Import
       module Common
         module Model
-          module ExternalSync
-            class Lookup < Sequencer::Unit::Base
+          module Lookup
+            class ExternalSync < Sequencer::Unit::Base
               include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
-              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::SkipOnSkippedInstance
+              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::InstanceAction
+
+              skip_instance_action :skipped
 
               uses :remote_id, :model_class, :external_sync_source
               provides :instance

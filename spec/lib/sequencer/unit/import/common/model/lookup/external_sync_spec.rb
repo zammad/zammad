@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Sequencer::Unit::Import::Common::Model::ExternalSync::Lookup, sequencer: :unit do
+RSpec.describe Sequencer::Unit::Import::Common::Model::Lookup::ExternalSync, sequencer: :unit do
 
   it 'finds model_class instances by remote_id' do
     user                 = create(:user)
