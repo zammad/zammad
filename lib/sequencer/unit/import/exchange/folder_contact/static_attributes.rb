@@ -9,7 +9,7 @@ class Sequencer
 
             def process
               state.provide(:model_class, ::User)
-              state.provide(:external_sync_source, 'EWS::FolderContact')
+              state.provide(:external_sync_source, 'Exchange::FolderContact')
             end
           end
         end
