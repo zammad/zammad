@@ -13,7 +13,7 @@ class Sequencer
               'Ldap::Config',
               'Ldap::Connection',
               'Import::Ldap::Users::UserRoles',
-              'Import::Ldap::Users::Sum',
+              'Import::Ldap::Users::Total',
               'Import::Common::ImportJob::Statistics::Update',
               'Import::Common::ImportJob::Statistics::Store',
               'Import::Ldap::Users::SubSequence',

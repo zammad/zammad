@@ -5,7 +5,7 @@ class Sequencer
     module Import
       module Ldap
         module Users
-          class Sum < Sequencer::Unit::Base
+          class Total < Sequencer::Unit::Base
             include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::EmptyDiff
 
             uses :ldap_config, :ldap_connection, :dry_run
@@ -13,14 +13,14 @@ class Sequencer
             def process
               state.provide(:statistics_diff) do
                 diff.merge(
-                  sum: sum
+                  total: total
                 )
               end
             end
 
             private
 
-            def sum
+            def total
               if !dry_run
                 result = Cache.get(cache_key)
               end

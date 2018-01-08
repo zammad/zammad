@@ -9,7 +9,7 @@ class Sequencer
               'Import::Exchange::FolderContacts::DryRunPayload',
               'Exchange::Connection',
               'Import::Exchange::FolderContacts::FolderIds',
-              'Import::Exchange::FolderContacts::Sum',
+              'Import::Exchange::FolderContacts::Total',
               'Import::Common::ImportJob::Statistics::Update',
               'Import::Common::ImportJob::Statistics::Store',
               'Import::Exchange::FolderContacts::SubSequence',

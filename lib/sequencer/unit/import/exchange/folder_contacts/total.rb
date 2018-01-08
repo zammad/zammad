@@ -3,8 +3,9 @@ class Sequencer
     module Import
       module Exchange
         module FolderContacts
-          class Sum < Sequencer::Unit::Base
+          class Total < Sequencer::Unit::Base
             include ::Sequencer::Unit::Exchange::Folders::Mixin::Folder
+            include ::Sequencer::Unit::Import::Common::Model::Statistics::Mixin::Common
 
             uses :ews_folder_ids
             provides :statistics_diff
@@ -16,21 +17,22 @@ class Sequencer
             private
 
             def diff
-              result = {
-                sum: 0,
-              }
-              folder_sum_map.each do |display_path, sum|
+              result = empty_diff.merge(
+                folders: {},
+              )
 
-                result[display_path] = {
-                  sum: sum
-                }
+              folder_total_map.each do |display_path, total|
 
-                result[:sum] += sum
+                result[:folders][display_path] = empty_diff.merge(
+                  total: total
+                )
+
+                result[:total] += total
               end
               result
             end
 
-            def folder_sum_map
+            def folder_total_map
               ews_folder_ids.collect do |folder_id|
                 folder       = ews_folder.find(folder_id)
                 display_path = ews_folder.display_path(folder)

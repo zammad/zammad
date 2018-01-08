@@ -11,15 +11,11 @@ class Sequencer
 
               def process
                 state.provide(:statistics_diff) do
-                  # remove :sum since it's already set via
-                  # the exchange item attribute
-                  result = diff.except(:sum)
-
                   # build structure for a general diff
                   # and a folder specific sub structure
-                  result.merge(
+                  diff.merge(
                     folders: {
-                      ews_folder_name => result
+                      ews_folder_name => diff
                     }
                   )
                 end

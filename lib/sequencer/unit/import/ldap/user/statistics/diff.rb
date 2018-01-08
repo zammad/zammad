@@ -13,11 +13,7 @@ class Sequencer
 
               def process
                 state.provide(:statistics_diff) do
-                  # remove :sum since it's already set via
-                  # the outer count Unit
-                  statistics = diff.except(:sum)
-
-                  add_role_ids(statistics)
+                  add_role_ids(diff)
                 end
               end
 
