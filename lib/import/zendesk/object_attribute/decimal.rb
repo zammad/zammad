@@ -1,6 +1,6 @@
 module Import
-  module Zendesk
-    class ObjectAttribute
+  class Zendesk
+    module ObjectAttribute
       class Decimal < Import::Zendesk::ObjectAttribute::Text
       end
     end

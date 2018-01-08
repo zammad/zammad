@@ -74,7 +74,9 @@ class ImportZendeskController < ApplicationController
     Setting.set('import_zendesk_endpoint_username', params[:username])
     Setting.set('import_zendesk_endpoint_key', params[:token])
 
-    if !Import::Zendesk.connection_test
+    result = Sequencer.process('Import::Zendesk::ConnectionTest')
+
+    if !result[:connected]
 
       Setting.set('import_zendesk_endpoint_username', nil)
       Setting.set('import_zendesk_endpoint_key', nil)
@@ -96,8 +98,8 @@ class ImportZendeskController < ApplicationController
     Setting.set('import_mode', true)
     Setting.set('import_backend', 'zendesk')
 
-    # start migration
-    Import::Zendesk.delay.start_bg
+    job = ImportJob.create(name: 'Import::Zendesk')
+    job.delay.start
 
     render json: {
       result: 'ok',
@@ -105,11 +107,13 @@ class ImportZendeskController < ApplicationController
   end
 
   def import_status
-    result = Import::Zendesk.status_bg
-    if result[:result] == 'import_done'
+    job = ImportJob.find_by(name: 'Import::Zendesk')
+
+    if job.finished_at.present?
       Setting.reload
     end
-    render json: result
+
+    model_show_render_item(job)
   end
 
   private

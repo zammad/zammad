@@ -1,6 +1,6 @@
 module Import
-  module Zendesk
-    class ObjectAttribute
+  class Zendesk
+    module ObjectAttribute
       class Tagger < Import::Zendesk::ObjectAttribute::Select
       end
     end
