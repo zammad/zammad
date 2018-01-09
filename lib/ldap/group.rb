@@ -112,7 +112,7 @@ class Ldap
     #
     # @return [String, nil] The active or found filter or nil if none could be found.
     def filter
-      @filter ||= lookup_filter(['(objectClass=group)', '(objectClass=posixgroup)', '(objectClass=organization)'])
+      @filter ||= lookup_filter(['(objectClass=groupOfUniqueNames)', '(objectClass=group)', '(objectClass=posixgroup)', '(objectClass=organization)'])
     end
 
     # The active uid attribute of the instance. If none give on initialization an automatic lookup is performed.
