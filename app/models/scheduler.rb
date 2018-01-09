@@ -209,6 +209,13 @@ class Scheduler < ApplicationModel
         active: false,
       )
     end
+
+  # rescue any other Exceptions that are not StandardError or childs of it
+  # https://stackoverflow.com/questions/10048173/why-is-it-bad-style-to-rescue-exception-e-in-ruby
+  # http://rubylearning.com/satishtalim/ruby_exceptions.html
+  rescue Exception => e # rubocop:disable Lint/RescueException
+    logger.error "execute #{job.method} (try_count #{try_count}) exited with a non standard-error #{e.inspect}"
+    raise
   end
 
   def self.worker(foreground = false)
