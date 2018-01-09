@@ -126,3 +126,38 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     border-left-color
   ],
 }
+
+Rails.application.config.html_sanitizer_css_values_backlist = {
+  'table' => [
+    'font-size:0',
+    'font-size:0px',
+    'font-size:0em',
+    'font-size:0%',
+    'display:none',
+    'visibility:hidden',
+  ],
+  'th' => [
+    'font-size:0',
+    'font-size:0px',
+    'font-size:0em',
+    'font-size:0%',
+    'display:none',
+    'visibility:hidden',
+  ],
+  'tr' => [
+    'font-size:0',
+    'font-size:0px',
+    'font-size:0em',
+    'font-size:0%',
+    'display:none',
+    'visibility:hidden',
+  ],
+  'td' => [
+    'font-size:0',
+    'font-size:0px',
+    'font-size:0em',
+    'font-size:0%',
+    'display:none',
+    'visibility:hidden',
+  ],
+}

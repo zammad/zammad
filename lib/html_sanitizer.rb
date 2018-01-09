@@ -16,6 +16,7 @@ satinize html string based on whiltelist
     tags_whitelist = Rails.configuration.html_sanitizer_tags_whitelist
     attributes_whitelist = Rails.configuration.html_sanitizer_attributes_whitelist
     css_properties_whitelist = Rails.configuration.html_sanitizer_css_properties_whitelist
+    css_values_blacklist = Rails.application.config.html_sanitizer_css_values_backlist
     classes_whitelist = ['js-signatureMarker']
     attributes_2_css = %w[width height]
 
@@ -146,6 +147,7 @@ satinize html string based on whiltelist
           key = prop[0].strip
           next if !css_properties_whitelist.include?(node.name)
           next if !css_properties_whitelist[node.name].include?(key)
+          next if css_values_blacklist[node.name]&.include?(local_pear.gsub(/[[:space:]]/, '').strip)
           style += "#{local_pear};"
         end
         node['style'] = style

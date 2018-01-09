@@ -105,6 +105,14 @@ style="BORDER-LEFT: #000000 2px solid; PADDING-LEFT: 5px; PADDING-RIGHT: 0px; MA
 test 123
 <blockquote></blockquote>
 </div>')
+    assert_equal(HtmlSanitizer.strict('<table><tr style="font-size: 0"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
+    assert_equal(HtmlSanitizer.strict('<table><tr style="font-size: 0px"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
+    assert_equal(HtmlSanitizer.strict('<table><tr style="font-size:0"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
+    assert_equal(HtmlSanitizer.strict('<table><tr style="font-Size:0px"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
+    assert_equal(HtmlSanitizer.strict('<table><tr style="font-size:0em"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
+    assert_equal(HtmlSanitizer.strict('<table><tr style=" Font-size:0%"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
+    assert_equal(HtmlSanitizer.strict('<table><tr style="font-size:0%;display: none;"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
+    assert_equal(HtmlSanitizer.strict('<table><tr style="font-size:0%;visibility:hidden;"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
 
   end
 
