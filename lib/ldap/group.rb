@@ -136,8 +136,11 @@ class Ldap
 
     def group_user_dns(entry)
       return entry[:member] if entry[:member].present?
-      return if entry[:memberuid].blank?
+      return group_user_dns_memberuid(entry) if entry[:memberuid].present?
+      return entry[:uniquemember] if entry[:uniquemember].present?
+    end
 
+    def group_user_dns_memberuid(entry)
       entry[:memberuid].collect do |uid|
         dn = nil
         @ldap.search("(uid=#{uid})", attributes: %w[dn]) do |user|
