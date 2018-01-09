@@ -68,6 +68,7 @@ module Import
       def map(user)
         mapped = map_default(user)
         mapped[:email].downcase!
+        mapped[:login].downcase!
         mapped
       end
 
