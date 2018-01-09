@@ -44,6 +44,7 @@ class OverviewsControllerTest < ActionDispatch::IntegrationTest
     params = {
       name: 'Overview2',
       link: 'my_overview',
+      roles: Role.where(name: 'Agent').pluck(:name),
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -75,6 +76,7 @@ class OverviewsControllerTest < ActionDispatch::IntegrationTest
     params = {
       name: 'Overview2',
       link: 'my_overview',
+      roles: Role.where(name: 'Agent').pluck(:name),
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -109,9 +111,11 @@ class OverviewsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'set mass prio' do
+    roles = Role.where(name: 'Agent')
     overview1 = Overview.create!(
       name: 'Overview1',
       link: 'my_overview',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -135,6 +139,7 @@ class OverviewsControllerTest < ActionDispatch::IntegrationTest
     overview2 = Overview.create!(
       name: 'Overview2',
       link: 'my_overview',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',

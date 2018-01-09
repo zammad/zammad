@@ -12,11 +12,11 @@ module ApplicationController::RendersModels
     # create object
     generic_object = object.new(clean_params)
 
-    # save object
-    generic_object.save!
-
     # set relations
     generic_object.associations_from_param(params)
+
+    # save object
+    generic_object.save!
 
     if response_expand?
       render json: generic_object.attributes_with_association_names, status: :created
