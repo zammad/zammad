@@ -80,7 +80,7 @@ class Ldap
       filter ||= filter()
 
       result = {}
-      @ldap.search(filter, attributes: %w[dn member memberuid]) do |entry|
+      @ldap.search(filter, attributes: %w[dn member memberuid uniquemember]) do |entry|
 
         roles = mapping[entry.dn.downcase]
         next if roles.blank?
