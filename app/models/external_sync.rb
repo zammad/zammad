@@ -5,6 +5,10 @@ class ExternalSync < ApplicationModel
 
   class << self
 
+    def sanitized_source_id(source_id)
+      Digest::SHA2.hexdigest(source_id)
+    end
+
     def changed?(object:, previous_changes: {}, current_changes:)
       changed = false
       previous_changes ||= {}

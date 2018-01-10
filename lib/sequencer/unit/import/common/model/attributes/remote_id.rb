@@ -12,7 +12,7 @@ class Sequencer
 
               def process
                 state.provide(:remote_id) do
-                  resource.fetch(attribute).dup.to_s.downcase
+                  resource.fetch(attribute).dup.to_s
                 end
               rescue KeyError => e
                 handle_failure(e)

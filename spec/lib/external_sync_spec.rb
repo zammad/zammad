@@ -2,6 +2,27 @@ require 'rails_helper'
 
 RSpec.describe ExternalSync do
 
+  context '#sanitized_source_id' do
+
+    let(:source_id) { 'AbCdEfG124' }
+
+    it 'sanitizes source ids' do
+      sanitized_source_id = described_class.sanitized_source_id(source_id)
+      expect(sanitized_source_id).to_not eq(source_id)
+    end
+
+    it 'returns case insenstive value' do
+      sanitized_source_id = described_class.sanitized_source_id(source_id)
+      expect(sanitized_source_id).to eq(sanitized_source_id.downcase)
+    end
+
+    it 'avoids case sensitive collitions' do
+      sanitized_source_id           = described_class.sanitized_source_id(source_id)
+      sanitized_source_id_downcased = described_class.sanitized_source_id(source_id.downcase)
+      expect(sanitized_source_id).to_not eq(sanitized_source_id_downcased)
+    end
+  end
+
   context '#changed?' do
 
     it 'keeps ActiveRecord instance unchanged on local but no remote changes' do

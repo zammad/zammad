@@ -38,9 +38,10 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Attributes::RemoteId, seq
     provided = process(parameters)
 
     expect(provided).to include(remote_id: '1337')
+    expect(provided[:remote_id]).to be_a(String)
   end
 
-  it 'downcases the value to prevent case sensivity issues with the ORM' do
+  it 'does not change the value to prevent id collision issues' do
     parameters = {
       resource: {
         id: 'AbCdEfG',
@@ -49,7 +50,7 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Attributes::RemoteId, seq
 
     provided = process(parameters)
 
-    expect(provided[:remote_id]).to eq(parameters[:resource][:id].downcase)
+    expect(provided[:remote_id]).to eq(parameters[:resource][:id])
   end
 
   it 'duplicates the value to prevent attribute changes' do

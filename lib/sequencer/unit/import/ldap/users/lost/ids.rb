@@ -13,15 +13,15 @@ class Sequencer
               end
 
               def active_ids
-                ExternalSync.joins('INNER JOIN users ON (users.id = external_syncs.o_id)')
-                            .where(
-                              source: external_sync_source,
-                              object: model_class.name,
-                              users:  {
-                                active: true
-                              }
-                            )
-                            .pluck(:o_id)
+                ::ExternalSync.joins('INNER JOIN users ON (users.id = external_syncs.o_id)')
+                              .where(
+                                source: external_sync_source,
+                                object: model_class.name,
+                                users:  {
+                                  active: true
+                                }
+                              )
+                              .pluck(:o_id)
               end
             end
           end
