@@ -28,7 +28,7 @@ module HasGroups
       #   #=> [#<Group id: 1, access="full", ...>, ...]
       #
       # @example Groups for given access(es)es plus 'full'
-      #   user.groups.access('read', 'write')
+      #   user.groups.access('read', 'change')
       #   #=> [#<Group id: 1, access="full", ...>, ...]
       #
       # @return [ActiveRecord::AssociationRelation<[<Group]>] List of Groups with :through attributes
@@ -139,7 +139,7 @@ module HasGroups
   #
   # @example
   #   user.group_names_access_map
-  #   #=> {'Users' => 'full', 'Support' => ['read', 'write']}
+  #   #=> {'Users' => 'full', 'Support' => ['read', 'change']}
   #
   # @return [Hash<String=>String,Array<String>>] The map of Group name to access
   def group_names_access_map
@@ -149,8 +149,8 @@ module HasGroups
   # Stores a map of Group ID to access. Deletes all other relations.
   #
   # @example
-  #   user.group_names_access_map = {'Users' => 'full', 'Support' => ['read', 'write']}
-  #   #=> {'Users' => 'full', 'Support' => ['read', 'write']}
+  #   user.group_names_access_map = {'Users' => 'full', 'Support' => ['read', 'change']}
+  #   #=> {'Users' => 'full', 'Support' => ['read', 'change']}
   #
   # @return [Hash<String=>String,Array<String>>] The given map
   def group_names_access_map=(name_access_map)
@@ -163,7 +163,7 @@ module HasGroups
   #
   # @example
   #   user.group_ids_access_map
-  #   #=> {1 => 'full', 42 => ['read', 'write']}
+  #   #=> {1 => 'full', 42 => ['read', 'change']}
   #
   # @return [Hash<Integer=>String,Array<String>>] The map of Group ID to access
   def group_ids_access_map
@@ -173,8 +173,8 @@ module HasGroups
   # Stores a map of Group ID to access. Deletes all other relations.
   #
   # @example
-  #   user.group_ids_access_map = {1 => 'full', 42 => ['read', 'write']}
-  #   #=> {1 => 'full', 42 => ['read', 'write']}
+  #   user.group_ids_access_map = {1 => 'full', 42 => ['read', 'change']}
+  #   #=> {1 => 'full', 42 => ['read', 'change']}
   #
   # @return [Hash<Integer=>String,Array<String>>] The given map
   def group_ids_access_map=(id_access_map)

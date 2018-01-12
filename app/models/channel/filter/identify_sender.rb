@@ -143,7 +143,7 @@ module Channel::Filter::IdentifySender
     end
   end
 
-  def self.user_create(data)
+  def self.user_create(data, role_ids = nil)
     if data[:email] !~ /@/
       data[:email] += '@local'
     end
@@ -166,7 +166,7 @@ module Channel::Filter::IdentifySender
     end
 
     # create new user
-    role_ids = Role.signup_role_ids
+    role_ids ||= Role.signup_role_ids
 
     # fillup
     %w[firstname lastname].each do |item|
