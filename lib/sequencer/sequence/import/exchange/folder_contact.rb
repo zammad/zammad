@@ -7,6 +7,7 @@ class Sequencer
           def self.sequence
             [
               'Import::Exchange::FolderContact::RemoteId',
+              'Import::Common::RemoteId::CaseSensitive',
               'Import::Exchange::FolderContact::Mapping',
               'Import::Common::Model::Skip::Blank::Mapped',
               'Common::ModelClass::User',
@@ -15,6 +16,7 @@ class Sequencer
               'Import::Common::Model::Associations::Extract',
               'Import::Common::User::Attributes::Downcase',
               'Import::Common::User::Email::CheckValidity',
+              'Import::Ldap::User::Lookup::Attributes',
               'Import::Common::Model::Attributes::AddByIds',
               'Import::Common::Model::Update',
               'Import::Common::Model::Create',

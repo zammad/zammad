@@ -19,8 +19,8 @@ class Sequencer
 
               def up_to_date?
                 return false if entry.blank?
-                return true if entry.source_id == sanitized_remote_id
-                entry.update!(source_id: sanitized_remote_id)
+                return true if entry.source_id == remote_id
+                entry.update!(source_id: remote_id)
                 true
               end
 
@@ -37,14 +37,10 @@ class Sequencer
               def create
                 ::ExternalSync.create(
                   source:    external_sync_source,
-                  source_id: sanitized_remote_id,
+                  source_id: remote_id,
                   object:    model_class.name,
                   o_id:      instance.id
                 )
-              end
-
-              def sanitized_remote_id
-                @sanitized_remote_id ||= ::ExternalSync.sanitized_source_id(remote_id)
               end
             end
           end
