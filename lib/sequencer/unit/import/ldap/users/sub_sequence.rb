@@ -49,6 +49,8 @@ class Sequencer
               # those which are needed to improve the performance
               attributes = ldap_config[:user_attributes].keys
               attributes.push('dn')
+              attributes.push(ldap_config[:user_uid])
+              attributes.uniq
             end
           end
         end

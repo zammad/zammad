@@ -26,7 +26,6 @@ class Ldap
       usercertificate
       objectclass
       objectcategory
-      objectguid
       objectsid
       primarygroupid
       pwdlastset
@@ -61,7 +60,7 @@ class Ldap
     # @return [String] The uid attribute.
     def self.uid_attribute(attributes)
       result = nil
-      %i[samaccountname userprincipalname uid dn].each do |attribute|
+      %i[objectguid entryuuid samaccountname userprincipalname uid dn].each do |attribute|
         next if attributes[attribute].blank?
         result = attribute.to_s
         break
