@@ -16,15 +16,9 @@ class App.Utils
       'text-align',
       'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
 
-      'border-top-width',
-      'border-right-width',
-      'border-bottom-width',
-      'border-left-width',
-
-      'border-top-color',
-      'border-right-color',
-      'border-bottom-color',
-      'border-left-color',
+      'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width',
+      'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color',
+      'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style',
     ]
     'TH': [
       'background', 'background-color', 'color', 'font-size', 'vertical-align',
@@ -33,15 +27,10 @@ class App.Utils
       'text-align',
       'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
 
-      'border-top-width',
-      'border-right-width',
-      'border-bottom-width',
-      'border-left-width',
+      'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width',
+      'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color',
+      'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style',
 
-      'border-top-color',
-      'border-right-color',
-      'border-bottom-color',
-      'border-left-color',
     ]
     'TR': [
       'background', 'background-color', 'color', 'font-size', 'vertical-align',
@@ -50,15 +39,10 @@ class App.Utils
       'text-align',
       'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
 
-      'border-top-width',
-      'border-right-width',
-      'border-bottom-width',
-      'border-left-width',
+      'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width',
+      'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color',
+      'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style',
 
-      'border-top-color',
-      'border-right-color',
-      'border-bottom-color',
-      'border-left-color',
     ]
     'TD': [
       'background', 'background-color', 'color', 'font-size', 'vertical-align',
@@ -67,15 +51,10 @@ class App.Utils
       'text-align',
       'border', 'border-top', 'border-right', 'border-bottom', 'border-left', 'border-collapse', 'border-style', 'border-spacing',
 
-      'border-top-width',
-      'border-right-width',
-      'border-bottom-width',
-      'border-left-width',
+      'border-top-width', 'border-right-width', 'border-bottom-width', 'border-left-width',
+      'border-top-color', 'border-right-color', 'border-bottom-color', 'border-left-color',
+      'border-top-style', 'border-right-style', 'border-bottom-style', 'border-left-style',
 
-      'border-top-color',
-      'border-right-color',
-      'border-bottom-color',
-      'border-left-color',
     ]
     'IMG': [
       'width', 'height',
@@ -235,7 +214,7 @@ class App.Utils
     # remove comments
     @_removeComments(html)
 
-    # remove work markup
+    # remove word markup
     @_removeWordMarkup(html)
 
     # remove tags, keep content
@@ -256,7 +235,7 @@ class App.Utils
     # remove comments
     @_removeComments(html)
 
-    # remove work markup
+    # remove word markup
     @_removeWordMarkup(html)
 
     # remove tags, keep content
@@ -280,7 +259,7 @@ class App.Utils
     # remove comments
     @_removeComments(html)
 
-    # remove work markup
+    # remove word markup
     @_removeWordMarkup(html)
 
     # remove tags, keep content

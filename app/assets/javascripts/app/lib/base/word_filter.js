@@ -74,8 +74,9 @@ window.word_filter = function(editor){
         }
     })
 
-    $('[style]', editor).removeAttr('style');
-    $('[align]', editor).removeAttr('align');
+    // style and align is handled by utils.coffee it self, don't clean it here
+    //$('[style]', editor).removeAttr('style');
+    //$('[align]', editor).removeAttr('align');
     $('span', editor).replaceWith(function() {return $(this).contents();});
     $('span:empty', editor).remove();
     $("[class^='Mso']", editor).removeAttr('class');
