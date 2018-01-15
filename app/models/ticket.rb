@@ -711,10 +711,8 @@ condition example
                       tag_objects.name = 'Ticket' AND
                       tag_items.id = tags.tag_item_id AND
                       tag_items.name IN (?)
-                  ) BETWEEN ? AND ?"
+                  ) BETWEEN 0 AND 0"
         bind_params.push selector['value']
-        bind_params.push selector['value'].count - 1
-        bind_params.push selector['value'].count
       elsif selector['operator'] == 'before (absolute)'
         query += "#{attribute} <= ?"
         bind_params.push selector['value']

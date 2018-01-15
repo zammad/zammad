@@ -3905,4 +3905,200 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   end
 
+  test 'change owner' do
+    roles = Role.where(name: 'Agent')
+    agent1 = User.create_or_update(
+      login: 'agent-has-changed@example.com',
+      firstname: 'Has Changed',
+      lastname: 'Agent1',
+      email: 'agent-has-changed@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    agent2 = User.create_or_update(
+      login: 'agent-has-changed2@example.com',
+      firstname: 'Has Changed',
+      lastname: 'Agent2',
+      email: 'agent-has-changed2@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    # multi tag trigger with changed owner
+    trigger1 = Trigger.create_or_update(
+      name: 'change owner',
+      condition: {
+        'ticket.owner_id' => {
+          'operator' => 'has changed',
+        },
+        'ticket.tags' => {
+          'operator' => 'contains one not',
+          'value' => 'nosendmail test123'
+        }
+      },
+      perform: {
+        'ticket.tags' => {
+          'operator' => 'add',
+          'value' => '123'
+        },
+        'notification.email' => {
+          'body' => 'some lala',
+          'recipient' => 'ticket_customer',
+          'subject' => 'Thanks for your inquiry - 1234 check (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    # single tag trigger with changed owner
+    trigger2 = Trigger.create_or_update(
+      name: 'change owner',
+      condition: {
+        'ticket.owner_id' => {
+          'operator' => 'has changed',
+        },
+        'ticket.tags' => {
+          'operator' => 'contains one not',
+          'value' => 'nosendmail2',
+        }
+      },
+      perform: {
+        'ticket.tags' => {
+          'operator' => 'add',
+          'value' => '123'
+        },
+        'notification.email' => {
+          'body' => 'some lala',
+          'recipient' => 'ticket_customer',
+          'subject' => 'Thanks for your inquiry - 1234 check (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    ticket1 = Ticket.create!(
+      title: "some title\n äöüß",
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(0, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal('agent-has-changed@example.com', agent1.login, 'verify agent')
+    assert_equal([], ticket1.tag_list, 'ticket1.tag_list')
+
+    ticket2 = Ticket.create!(
+      title: "some title\n äöüß",
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert_equal('some title  äöüß', ticket2.title, 'ticket1.title verify')
+    assert_equal('Users', ticket2.group.name, 'ticket2.group verify')
+    assert_equal('new', ticket2.state.name, 'ticket2.state verify')
+    assert_equal('2 normal', ticket2.priority.name, 'ticket2.priority verify')
+    assert_equal(0, ticket2.articles.count, 'ticket2.articles verify')
+    assert_equal('agent-has-changed@example.com', agent1.login, 'verify agent')
+    assert_equal([], ticket1.tag_list, 'ticket2.tag_list')
+
+    # control test - should pass
+    # create common object tag
+    tag_object = Tag::Object.create_or_update(name: 'Ticket')
+
+    # add tag
+    ticket1.tag_add('thisisthebestjob', agent1.id)
+
+    # change owner
+    ticket1.owner_id = agent1.id
+    ticket1.save!
+
+    Observer::Transaction.commit
+
+    # this will add a tag by trigger
+    ticket1.reload
+    assert_equal('some title  äöüß', ticket1.title, 'ticket2.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket2.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket2.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket2.priority verify')
+    assert_equal(1, ticket1.articles.count, 'ticket2.articles verify') # articles.count must be 1 if the tag is added
+    assert_equal('agent-has-changed@example.com', agent1.login, 'verify agent')
+    assert_equal(%w[thisisthebestjob 123], ticket1.tag_list, 'ticket2.tag_list')
+
+    # add tag nosendmail (to test the bug)
+    ticket1.tag_add('nosendmail', agent2.id)
+
+    # change owner
+    ticket1.owner_id = agent2.id
+    ticket1.save!
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify') # articles.count must be 0 if adding tag is skipped
+    assert_equal('agent-has-changed2@example.com', agent2.login, 'verify agent')
+    assert_equal(%w[thisisthebestjob 123 nosendmail], ticket1.tag_list, 'ticket1.tag_list')
+
+    # add tag (to test the bug)
+    ticket1.tag_add('test123', agent2.id)
+
+    # change owner
+    ticket1.owner_id = agent1.id
+    ticket1.save!
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('some title  äöüß', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(3, ticket1.articles.count, 'ticket1.articles verify') # articles.count must be 0 if adding tag is skipped
+    assert_equal('agent-has-changed@example.com', agent1.login, 'verify agent')
+    assert_equal(%w[thisisthebestjob 123 nosendmail test123], ticket1.tag_list, 'ticket1.tag_list')
+
+    # add tag single tag 'nosendmail2' (to test the bug)
+    ticket2.tag_add('nosendmail2', agent1.id)
+
+    # change owner
+    ticket2.owner_id = agent1.id
+    ticket2.save!
+
+    Observer::Transaction.commit
+
+    ticket2.reload
+    assert_equal('some title  äöüß', ticket2.title, 'ticket2.title verify')
+    assert_equal('Users', ticket2.group.name, 'ticket2.group verify')
+    assert_equal('new', ticket2.state.name, 'ticket2.state verify')
+    assert_equal('2 normal', ticket2.priority.name, 'ticket2.priority verify')
+    assert_equal(0, ticket2.articles.count, 'ticket2.articles verify') # articles.count must be 0 if adding tag is skipped
+    assert_equal('agent-has-changed@example.com', agent1.login, 'verify agent')
+    assert_equal(['nosendmail2'], ticket2.tag_list, 'ticket2.tag_list')
+  end
+
 end
