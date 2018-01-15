@@ -11,7 +11,8 @@ class Sequencer
           def self.sequence
             [
               'Import::Ldap::User::NormalizeEntry',
-              'Import::Ldap::User::RemoteId',
+              'Import::Ldap::User::RemoteId::FromEntry',
+              'Import::Ldap::User::RemoteId::Unhex',
               'Import::Ldap::User::Mapping',
               'Import::Ldap::User::Skip::MissingMandatory',
               'Import::Ldap::User::Skip::Blank',

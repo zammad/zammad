@@ -12,7 +12,6 @@ class Sequencer
             provides :found_ids
 
             def process
-              found_ids = []
               ldap_connection.search(ldap_config[:user_filter], attributes: relevant_attributes) do |entry|
 
                 result = sequence_resource(entry)
@@ -26,13 +25,18 @@ class Sequencer
 
             private
 
+            def found_ids
+              @found_ids ||= []
+            end
+
             def default_params
               super.merge(
                 dn_roles:             dn_roles,
                 ldap_config:          ldap_config,
                 model_class:          model_class,
                 external_sync_source: external_sync_source,
-                signup_role_ids:      signup_role_ids
+                signup_role_ids:      signup_role_ids,
+                found_ids:            found_ids,
               )
             end
 
@@ -49,6 +53,8 @@ class Sequencer
               # those which are needed to improve the performance
               attributes = ldap_config[:user_attributes].keys
               attributes.push('dn')
+              attributes.push(ldap_config[:user_uid])
+              attributes.uniq
             end
           end
         end
