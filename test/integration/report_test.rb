@@ -136,8 +136,8 @@ class ReportTest < ActiveSupport::TestCase
       state: Ticket::State.lookup(name: 'closed'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
       close_at: '2015-10-28 11:30:00 UTC',
-      created_at: '2015-10-28 10:30:00 UTC',
-      updated_at: '2015-10-28 10:30:00 UTC',
+      created_at: '2015-10-28 10:30:01 UTC',
+      updated_at: '2015-10-28 10:30:01 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -151,8 +151,8 @@ class ReportTest < ActiveSupport::TestCase
       internal: false,
       sender: Ticket::Article::Sender.where(name: 'Customer').first,
       type: Ticket::Article::Type.where(name: 'email').first,
-      created_at: '2015-10-28 10:30:00 UTC',
-      updated_at: '2015-10-28 10:30:00 UTC',
+      created_at: '2015-10-28 10:30:01 UTC',
+      updated_at: '2015-10-28 10:30:01 UTC',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -940,11 +940,62 @@ class ReportTest < ActiveSupport::TestCase
       params:      { field: 'created_at' },
     )
     assert(result)
+    assert_equal(@ticket8.id, result[:ticket_ids][0].to_i)
+    assert_equal(@ticket7.id, result[:ticket_ids][1].to_i)
+    assert_equal(@ticket6.id, result[:ticket_ids][2].to_i)
+    assert_equal(@ticket5.id, result[:ticket_ids][3].to_i)
+    assert_equal(@ticket4.id, result[:ticket_ids][4].to_i)
+    assert_equal(@ticket3.id, result[:ticket_ids][5].to_i)
+    assert_equal(@ticket2.id, result[:ticket_ids][6].to_i)
+    assert_equal(@ticket1.id, result[:ticket_ids][7].to_i)
+    assert_nil(result[:ticket_ids][8])
+
+    # create at - selector with merge
+    result = Report::TicketGenericTime.aggs(
+      range_start: '2015-01-01T00:00:00Z',
+      range_end:   '2015-12-31T23:59:59Z',
+      interval:    'month', # year, quarter, month, week, day, hour, minute, second
+      selector: {
+        'state' => {
+          'operator' => 'is not',
+          'value' => 'merged'
+        }
+      }, # ticket selector to get only a collection of tickets
+      params:      { field: 'created_at' },
+    )
+    assert(result)
+    assert_equal(0, result[0])
+    assert_equal(0, result[1])
+    assert_equal(0, result[2])
+    assert_equal(0, result[3])
+    assert_equal(0, result[4])
+    assert_equal(0, result[5])
+    assert_equal(0, result[6])
+    assert_equal(0, result[7])
+    assert_equal(0, result[8])
+    assert_equal(6, result[9])
+    assert_equal(1, result[10])
+    assert_equal(0, result[11])
+    assert_nil(result[12])
+
+    result = Report::TicketGenericTime.items(
+      range_start: '2015-01-01T00:00:00Z',
+      range_end:   '2015-12-31T23:59:59Z',
+      selector: {
+        'state' => {
+          'operator' => 'is not',
+          'value' => 'merged'
+        }
+      }, # ticket selector to get only a collection of tickets
+      params:      { field: 'created_at' },
+    )
+
+    assert(result)
     assert_equal(@ticket7.id, result[:ticket_ids][0].to_i)
     assert_equal(@ticket6.id, result[:ticket_ids][1].to_i)
     assert_equal(@ticket5.id, result[:ticket_ids][2].to_i)
-    assert_equal(@ticket3.id, result[:ticket_ids][3].to_i)
-    assert_equal(@ticket4.id, result[:ticket_ids][4].to_i)
+    assert_equal(@ticket4.id, result[:ticket_ids][3].to_i)
+    assert_equal(@ticket3.id, result[:ticket_ids][4].to_i)
     assert_equal(@ticket2.id, result[:ticket_ids][5].to_i)
     assert_equal(@ticket1.id, result[:ticket_ids][6].to_i)
     assert_nil(result[:ticket_ids][7])
