@@ -2669,6 +2669,38 @@ Some Text',
           ],
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail65.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'aaäöüßad asd',
+          },
+          1 => {
+            from: '=?iso-8859-1?Q?B=FCrling, =20Andreas?= <smith@example.com>',
+            sender: 'Customer',
+            type: 'email',
+            body: 'äöüß ad asd
+
+-Martin
+
+--
+Old programmers never die. They just branch to a new address.
+',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: '=20Andreas?=',
+              lastname: '',
+              fullname: '=20Andreas?=',
+              email: 'smith@example.com',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end
