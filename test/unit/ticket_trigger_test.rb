@@ -4099,6 +4099,122 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(0, ticket2.articles.count, 'ticket2.articles verify') # articles.count must be 0 if adding tag is skipped
     assert_equal('agent-has-changed@example.com', agent1.login, 'verify agent')
     assert_equal(['nosendmail2'], ticket2.tag_list, 'ticket2.tag_list')
+
+  end
+
+  test 'trigger auto reply with umlaut in form' do
+    trigger1 = Trigger.create_or_update(
+      name: 'auto reply',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+        },
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
+          'recipient' => 'article_last_sender',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    ticket1 = Ticket.create!(
+      title: 'test 1',
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    Ticket::Article.create!(
+      ticket_id: ticket1.id,
+      from: 'Sabine Schütz <some_sender@example.com>',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message <b>note</b> hello ',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket1.reload
+    assert_equal('test 1', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal('Sabine Schütz <some_sender@example.com>', ticket1.articles.first.from, 'ticket1.articles.first.from verify')
+    assert_equal([], ticket1.tag_list)
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('test 1', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    article1 = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', article1.from)
+    assert_match('some_sender@example.com', article1.to)
+    assert_match('Thanks for your inquiry (test 1)!', article1.subject)
+    assert_match('some message', article1.body)
+    assert_match('&gt; some message &lt;b&gt;note&lt;/b&gt; hello', article1.body)
+    assert_equal('text/html', article1.content_type)
+
+  end
+
+  test 'trigger auto reply with 2 sender addresses in form' do
+    trigger1 = Trigger.create_or_update(
+      name: 'auto reply',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+        },
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}',
+          'recipient' => 'article_last_sender',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, IO.binread('test/fixtures/mail65.box'))
+
+    assert_equal('aaäöüßad asd', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    article1 = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', article1.from)
+    assert_match('smith@example.com', article1.to)
+    assert_match('Thanks for your inquiry (aaäöüßad asd)!', article1.subject)
+    assert_match('some text<br><br>aaäöüßad asd', article1.body)
+    assert_equal('text/html', article1.content_type)
+
   end
 
 end

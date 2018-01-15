@@ -882,14 +882,25 @@ perform changes on ticket
           next if skip_user
 
           # send notifications only to email adresses
-          next if !recipient_email
+          next if recipient_email.blank?
           next if recipient_email !~ /@/
 
           # check if address is valid
           begin
-            recipient_email = Mail::Address.new(recipient_email).address
+            Mail::AddressList.new(recipient_email).addresses.each do |address|
+              recipient_email = address.address
+              break if recipient_email.present? && recipient_email =~ /@/ && !recipient_email.match?(/\s/)
+            end
           rescue
-            next # because unable to parse
+            if recipient_email.present?
+              if recipient_email !~ /^(.+?)<(.+?)@(.+?)>$/
+                next # no usable format found
+              end
+              recipient_email = "#{$2}@#{$3}"
+            end
+            next if recipient_email.blank?
+            next if recipient_email !~ /@/
+            next if recipient_email.match?(/\s/)
           end
 
           # do not sent notifications to this recipients
