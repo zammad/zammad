@@ -1,0 +1,3 @@
+guard :symlink, {ignore: ['README.md', '.rubocop.yml']} do
+  watch(%r{.*})
+end
