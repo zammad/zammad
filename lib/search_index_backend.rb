@@ -459,7 +459,7 @@ get count of tickets and tickets which match on selector
         elsif data['operator'] == 'contains not'
           query_must_not.push t
         else
-          raise "unknown operator '#{data['operator']}'"
+          raise "unknown operator '#{data['operator']}' for #{key}"
         end
       end
     end

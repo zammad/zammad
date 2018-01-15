@@ -528,6 +528,9 @@ condition example
       elsif selector[0] == 'article'
         tables += ', ticket_articles articles'
         query += 'tickets.id = articles.ticket_id'
+      elsif selector[0] == 'ticket_state'
+        tables += ', ticket_states'
+        query += 'tickets.state_id = ticket_states.id'
       else
         raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
       end
