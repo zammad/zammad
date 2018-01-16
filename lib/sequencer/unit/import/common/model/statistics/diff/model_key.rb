@@ -20,6 +20,8 @@ class Sequencer
                   end
                 end
 
+                private
+
                 def model_key
                   model_class.name.pluralize.to_sym
                 end
