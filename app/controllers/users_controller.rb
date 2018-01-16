@@ -360,7 +360,7 @@ class UsersController < ApplicationController
     end
 
     if params[:limit] && params[:limit].to_i > 500
-      params[:limit].to_i = 500
+      params[:limit] = 500
     end
 
     query = params[:query]

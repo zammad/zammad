@@ -234,7 +234,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     end
 
     if params[:limit] && params[:limit].to_i > 500
-      params[:limit].to_i = 500
+      params[:limit] = 500
     end
 
     query = params[:query]
