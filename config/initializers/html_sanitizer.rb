@@ -64,15 +64,9 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     text-align
     border border-top border-right border-bottom border-left border-collapse border-style border-spacing
 
-    border-top-width
-    border-right-width
-    border-bottom-width
-    border-left-width
-
-    border-top-color
-    border-right-color
-    border-bottom-color
-    border-left-color
+    border-top-width border-right-width border-bottom-width border-left-width
+    border-top-color border-right-color border-bottom-color border-left-color
+    border-top-style border-right-style border-bottom-style border-left-style
   ],
   'th' => %w[
     background background-color color font-size vertical-align
@@ -81,15 +75,9 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     text-align
     border border-top border-right border-bottom border-left border-collapse border-style border-spacing
 
-    border-top-width
-    border-right-width
-    border-bottom-width
-    border-left-width
-
-    border-top-color
-    border-right-color
-    border-bottom-color
-    border-left-color
+    border-top-width border-right-width border-bottom-width border-left-width
+    border-top-color border-right-color border-bottom-color border-left-color
+    border-top-style border-right-style border-bottom-style border-left-style
   ],
   'tr' => %w[
     background background-color color font-size vertical-align
@@ -98,15 +86,9 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     text-align
     border border-top border-right border-bottom border-left border-collapse border-style border-spacing
 
-    border-top-width
-    border-right-width
-    border-bottom-width
-    border-left-width
-
-    border-top-color
-    border-right-color
-    border-bottom-color
-    border-left-color
+    border-top-width border-right-width border-bottom-width border-left-width
+    border-top-color border-right-color border-bottom-color border-left-color
+    border-top-style border-right-style border-bottom-style border-left-style
   ],
   'td' => %w[
     background background-color color font-size vertical-align
@@ -115,15 +97,9 @@ Rails.application.config.html_sanitizer_css_properties_whitelist = {
     text-align
     border border-top border-right border-bottom border-left border-collapse border-style border-spacing
 
-    border-top-width
-    border-right-width
-    border-bottom-width
-    border-left-width
-
-    border-top-color
-    border-right-color
-    border-bottom-color
-    border-left-color
+    border-top-width border-right-width border-bottom-width border-left-width
+    border-top-color border-right-color border-bottom-color border-left-color
+    border-top-style border-right-style border-bottom-style border-left-style
   ],
 }
 
