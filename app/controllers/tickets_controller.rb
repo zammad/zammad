@@ -400,7 +400,7 @@ class TicketsController < ApplicationController
     end
 
     if params[:limit] && params[:limit].to_i > 100
-      params[:limit].to_i = 100
+      params[:limit] = 100
     end
 
     query = params[:query]
