@@ -58,6 +58,33 @@ class TicketNumberTest < ActiveSupport::TestCase
 
   end
 
+  test 'number check' do
+    Setting.set('ticket_number_increment', { checksum: false, min_size: 5 })
+    ticket = Ticket.create!(
+      title: 'test 1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    subject = ticket.subject_build(ticket.title)
+
+    ticket_check = Ticket::Number.check(subject)
+    assert_equal(ticket.id, ticket_check.id)
+
+    Setting.set('system_id', 999)
+
+    ticket_check = Ticket::Number.check(subject)
+    assert_not(ticket_check)
+
+    Setting.set('ticket_number_ignore_system_id', true)
+
+    ticket_check = Ticket::Number.check(subject)
+    assert_equal(ticket.id, ticket_check.id)
+  end
+
   test 'date' do
     Setting.set('ticket_number', 'Ticket::Number::Date')
     Setting.set('ticket_number_date', { checksum: false })
@@ -101,6 +128,35 @@ class TicketNumberTest < ActiveSupport::TestCase
       assert_equal(number.to_s.length, 15)
     end
 
+  end
+
+  test 'date check' do
+    Setting.set('ticket_number', 'Ticket::Number::Date')
+    Setting.set('ticket_number_date', { checksum: false })
+
+    ticket = Ticket.create!(
+      title: 'test 1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    subject = ticket.subject_build(ticket.title)
+
+    ticket_check = Ticket::Number.check(subject)
+    assert_equal(ticket.id, ticket_check.id)
+
+    Setting.set('system_id', 999)
+
+    ticket_check = Ticket::Number.check(subject)
+    assert_not(ticket_check)
+
+    Setting.set('ticket_number_ignore_system_id', true)
+
+    ticket_check = Ticket::Number.check(subject)
+    assert_equal(ticket.id, ticket_check.id)
   end
 
 end

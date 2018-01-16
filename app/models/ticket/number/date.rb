@@ -81,6 +81,10 @@ module Ticket::Number::Date
     ticket_hook_divider = Setting.get('ticket_hook_divider') || ''
     ticket              = nil
 
+    if Setting.get('ticket_number_ignore_system_id') == true
+      system_id = ''
+    end
+
     # probe format
     string.scan(/#{Regexp.quote(ticket_hook)}#{Regexp.quote(ticket_hook_divider)}(\d{4,10}#{system_id}\d{2,40})/i) do
       ticket = Ticket.find_by(number: $1)
