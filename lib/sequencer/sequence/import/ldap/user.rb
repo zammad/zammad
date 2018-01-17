@@ -22,6 +22,7 @@ class Sequencer
               'Import::Ldap::User::Lookup::Attributes',
               'Import::Ldap::User::Attributes::RoleIds::Dn',
               'Import::Ldap::User::Attributes::RoleIds::Unassigned',
+              'Import::Ldap::User::Attributes::RoleIds::Signup',
               'Import::Common::Model::Associations::Extract',
               'Import::Ldap::User::Attributes::Static',
               'Import::Common::Model::Attributes::AddByIds',
