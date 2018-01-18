@@ -752,7 +752,7 @@ returns
     end
 
     # do extra decoding because we needed to use field.value
-    data[:from_display_name] = Mail::Field.new('X-From', data[:from_display_name]).to_s
+    data[:from_display_name] = Mail::Field.new('X-From', Encode.conv('utf8', data[:from_display_name])).to_s
     data[:from_display_name].delete!('"')
     data[:from_display_name].strip!
     data[:from_display_name].gsub!(/^'/, '')

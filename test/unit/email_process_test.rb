@@ -2700,7 +2700,23 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail65.box'),
+        data: 'From: =?iso-8859-1?Q?B=FCrling,=20Andreas?= <smith@example.com>
+Content-Type: text/plain;
+  charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
+Subject: =?iso-8859-1?Q?aa=E4=F6=FC=DFad_asd?=
+X-Universally-Unique-Identifier: d12c15d2-e6d6-4ccd-86c7-abc2c3d0a2a2
+Date: Fri, 4 May 2012 14:01:03 +0200
+Message-Id: <BC182994-03FA-4DC5-8202-98CBFACA0887@example.com>
+To: metest@znuny.com
+Mime-Version: 1.0 (Apple Message framework v1257)
+
+=E4=F6=FC=DF ad asd
+
+-Martin
+
+--
+Old programmers never die. They just branch to a new address.',
         success: true,
         result: {
           0 => {
@@ -2716,8 +2732,7 @@ Some Text',
 -Martin
 
 --
-Old programmers never die. They just branch to a new address.
-',
+Old programmers never die. They just branch to a new address.',
           },
         },
         verify: {
@@ -2727,6 +2742,36 @@ Old programmers never die. They just branch to a new address.
               lastname: '',
               fullname: '=20Andreas?=',
               email: 'smith@example.com',
+            },
+          ],
+        },
+      },
+      {
+        data: 'From: =?windows-1258?B?VmFuZHJvbW1lLCBGculk6XJpYw==?= <fvandromme@example.com>
+To: Example <info@example.com>
+Subject: some subject 3
+
+Some Text',
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'some subject 3',
+          },
+          1 => {
+            from: '=?windows-1258?B?VmFuZHJvbW1lLCBGculk6XJpYw==?= <fvandromme@example.com>',
+            sender: 'Customer',
+            type: 'email',
+            body: 'Some Text',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Frédéric',
+              lastname: 'Vandromme',
+              fullname: 'Frédéric Vandromme',
+              email: 'fvandromme@example.com',
             },
           ],
         },
