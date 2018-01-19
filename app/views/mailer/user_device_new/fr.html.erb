@@ -1,0 +1,19 @@
+Connexion #{config.product_name} détectée à partir d'un nouvel appareil
+
+<div>Bonjour #{user.firstname},</div>
+<br>
+<div>Il semble que vous vous soyez connecté à votre compte <b>à l'aide d'un nouvel appareil</b> le "#{user_device.created_at}":</div>
+<br>
+<div>
+Votre appareil: #{user_device.name}<br>
+Votre localisation (relative): #{user_device.location}<br>
+Votre IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Votre appareil a été ajouté à votre liste d'appareils connus, que vous pouvez consulter ici:</div>
+<br>
+<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
+<br>
+<div>Si ce n'était pas vous, supprimez l'appareil, modifiez le mot de passe de votre compte et contactez votre administrateur. Quelqu'un a peut-être obtenu un accès non autorisé à votre compte.</div>
+<br>
+<div>Votre équipe #{config.product_name}</div>
