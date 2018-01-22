@@ -382,7 +382,7 @@ class TimeAccountingsController < ApplicationController
     worksheet.set_row(0, 0, header.count)
 
     # Write a formatted and unformatted string, row and column notation.
-    worksheet.write(0, 0, title, format)
+    worksheet.write_string(0, 0, title, format)
 
     format_header = workbook.add_format  # Add a format
     format_header.set_italic
@@ -393,7 +393,7 @@ class TimeAccountingsController < ApplicationController
       if item[:width]
         worksheet.set_column(count, count, item[:width])
       end
-      worksheet.write(2, count, item[:name], format_header)
+      worksheet.write_string(2, count, item[:name], format_header)
       count += 1
     }
 
@@ -403,6 +403,11 @@ class TimeAccountingsController < ApplicationController
       row_item_count = 0
       row.each { |item|
         worksheet.write(row_count, row_item_count, item)
+        if item.acts_like?(:date)
+          worksheet.write_date_time(row_count, row_item_count, item.to_time.iso8601)
+        else
+          worksheet.write_string(row_count, row_item_count, item)
+        end
         row_item_count += 1
       }
     }
