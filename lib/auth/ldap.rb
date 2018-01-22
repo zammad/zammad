@@ -22,8 +22,9 @@ class Auth
       log_auth_result(user, authed)
       authed
     rescue => e
-      message = "Can't connect to ldap backend, #{e}"
+      message = "Can't connect to ldap backend #{e}"
       Rails.logger.info message
+      Rails.logger.info e
       log(
         user:     user,
         status:   'failed',

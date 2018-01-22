@@ -82,9 +82,10 @@ class Ldap
     #
     # @return [nil]
     def initialize(config = nil, ldap: nil)
-      @ldap = ldap || ::Ldap.new(config)
+      @config = config || Setting.get('ldap_config')
+      @ldap   = ldap || ::Ldap.new(@config)
 
-      handle_config(config)
+      handle_config
     end
 
     # Checks if given username and password combination is valid for the connected LDAP.
@@ -100,12 +101,12 @@ class Ldap
     def valid?(username, password)
       bind_success = @ldap.connection.bind_as(
         base: @ldap.base_dn,
-        filter: "(#{uid_attribute}=#{username})",
+        filter: "(#{login_attribute}=#{username})",
         password: password
       )
 
       message = bind_success ? 'successful' : 'failed'
-      Rails.logger.info "ldap authentication for user '#{username}' (#{uid_attribute}) #{message}!"
+      Rails.logger.info "ldap authentication for user '#{username}' (#{login_attribute}) #{message}!"
       bind_success.present?
     end
 
@@ -177,7 +178,13 @@ class Ldap
 
     private
 
-    def handle_config(config)
+    attr_reader :config
+
+    def login_attribute
+      @login_attribute ||= config[:user_attributes]&.key('login') || uid_attribute
+    end
+
+    def handle_config
       return if config.blank?
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
