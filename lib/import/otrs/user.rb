@@ -96,6 +96,7 @@ module Import
         queues.each do |queue|
 
           permissions = user['GroupIDs'][ queue['GroupID'] ]
+          permissions ||= user['GroupIDs'][ queue['GroupID'].to_s ]
 
           next if !permissions
           next if !permissions.include?('rw')
