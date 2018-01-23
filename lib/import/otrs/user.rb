@@ -144,6 +144,7 @@ module Import
 
       def groups_from_otrs_group(role_object, group)
         result = []
+        return result if role_object.blank?
         return result if role_object['GroupIDs'].blank?
         permissions = role_object['GroupIDs'][ group['ID'] ]
 
@@ -165,7 +166,7 @@ module Import
         roles  = Import::OTRS::Requester.load('Role')
         roles.each do |role|
           next if !user['RoleIDs'].include?(role['ID'])
-          result += groups_from_otrs_groups(role['GroupIDs'])
+          result += groups_from_otrs_groups(role)
         end
         result
       end
