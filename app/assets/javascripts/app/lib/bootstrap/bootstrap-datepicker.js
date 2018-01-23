@@ -516,7 +516,9 @@
 				)
 			)
 				this.setValue();
-			this._trigger('hide');
+			// 2018-01-22 trigger locale hide event - conflicts with modal hide
+			//this._trigger('hide');
+			this._trigger('hide.bs.datepicker');
 			return this;
 		},
 

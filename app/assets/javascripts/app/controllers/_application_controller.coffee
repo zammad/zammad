@@ -700,6 +700,8 @@ class App.ControllerModal extends App.Controller
   headPrefix: ''
   shown: true
   closeOnAnyClick: false
+  initalFormParams: {}
+  initalFormParamsIgnore: false
 
   events:
     'submit form':                        'submit'
@@ -746,10 +748,10 @@ class App.ControllerModal extends App.Controller
       centerButtons:     @centerButtons
       leftButtons:       @leftButtons
     )
-    modal.find('.modal-body').html content
+    modal.find('.modal-body').html(content)
     if !@initRenderingDone
       @initRenderingDone = true
-      @html modal
+      @html(modal)
     else
       @$('.modal-dialog').replaceWith(modal)
     @post()
@@ -761,6 +763,8 @@ class App.ControllerModal extends App.Controller
     @el
 
   render: =>
+    @initalFormParamsIgnore = false
+
     if @buttonSubmit is true
       @buttonSubmit = 'Submit'
     if @buttonCancel is true
@@ -775,19 +779,18 @@ class App.ControllerModal extends App.Controller
     if @small
       @el.addClass('modal--small')
 
-    @el.modal
+    @el.modal(
       keyboard:  @keyboard
       show:      true
       backdrop:  @backdrop
       container: @container
-    .on
-      'show.bs.modal':   @onShow
-      'shown.bs.modal':  @onShown
-      'hide.bs.modal':   @onClose
-      'hidden.bs.modal': =>
-        @onClosed()
-        $('.modal').remove()
-      'dismiss.bs.modal': @onCancel
+    ).on(
+      'show.bs.modal':   @localOnShow
+      'shown.bs.modal':  @localOnShown
+      'hide.bs.modal':   @localOnClose
+      'hidden.bs.modal': @localOnClosed
+      'dismiss.bs.modal': @localOnCancel
+    )
 
     if @closeOnAnyClick
       @el.on('click', =>
@@ -797,6 +800,7 @@ class App.ControllerModal extends App.Controller
   close: (e) =>
     if e
       e.preventDefault()
+    @initalFormParamsIgnore = true
     @el.modal('hide')
 
   formParams: =>
@@ -804,27 +808,49 @@ class App.ControllerModal extends App.Controller
       return @formParam(@container.find('.modal form'))
     return @formParam(@$('.modal form'))
 
-  onShow: ->
+  localOnShow: (e) =>
+    @onShow(e)
+
+  onShow: (e) ->
     # do nothing
 
-  onShown: =>
+  localOnShown: (e) =>
+    @onShown(e)
+
+  onShown: (e) =>
     @$('input:not([disabled]):not([type="hidden"]):not(".btn"), textarea').first().focus()
+    @initalFormParams = @formParams()
+
+  localOnClose: (e) =>
+    diff = difference(@initalFormParams, @formParams())
+    if @initalFormParamsIgnore is false && !_.isEmpty(diff)
+      if !confirm(App.i18n.translateContent('The form content has been changed, discarded changes?'))
+        e.preventDefault()
+        return
+    @onClose(e)
 
   onClose: ->
     # do nothing
 
-  onClosed: ->
+  localOnClosed: (e) =>
+    @onClosed(e)
+    $('.modal').remove()
+
+  onClosed: (e) ->
     # do nothing
 
-  onSubmit: ->
-    # do nothing
+  localOnCancel: (e) =>
+    @onCancel(e)
 
-  onCancel: ->
+  onCancel: (e) ->
     # do nothing
 
   cancel: (e) =>
     @close(e)
     @onCancel(e)
+
+  onSubmit: (e) ->
+    # do nothing
 
   submit: (e) =>
     e.stopPropagation()
