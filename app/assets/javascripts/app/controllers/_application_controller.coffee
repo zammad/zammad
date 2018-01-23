@@ -824,7 +824,7 @@ class App.ControllerModal extends App.Controller
   localOnClose: (e) =>
     diff = difference(@initalFormParams, @formParams())
     if @initalFormParamsIgnore is false && !_.isEmpty(diff)
-      if !confirm(App.i18n.translateContent('The form content has been changed, discarded changes?'))
+      if !confirm(App.i18n.translateContent('The form content has been changed. Do you want to close it and lose your changes?'))
         e.preventDefault()
         return
     @onClose(e)
