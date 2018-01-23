@@ -110,7 +110,7 @@ RSpec.describe Import::OTRS::User do
         updated_by_id: 1,
         active: true,
         source: 'OTRS Import',
-        role_ids: [2],
+        role_ids: [2, 1],
         group_ids: [],
         password: '{sha2}9edb001ad7900daea0622d89225c9ca729749fd12ae5ea044f072d1b7c56c8cc',
         updated_at: '2014-11-14 00:53:20',
