@@ -25,34 +25,37 @@ returns
 =end
 
   def self.all
-    all = {}
-    dir = Rails.root.join('app', 'models').to_s
-    Dir.glob("#{dir}/**/*.rb" ) do |entry|
-      next if entry.match?(/application_model/i)
-      next if entry.match?(%r{channel/}i)
-      next if entry.match?(%r{observer/}i)
-      next if entry.match?(%r{store/provider/}i)
-      next if entry.match?(%r{models/concerns/}i)
+    @all ||= begin
+      all    = {}
+      dir    = Rails.root.join('app', 'models').to_s
+      tables = ActiveRecord::Base.connection.tables
+      Dir.glob("#{dir}/**/*.rb") do |entry|
+        next if entry.match?(/application_model/i)
+        next if entry.match?(%r{channel/}i)
+        next if entry.match?(%r{observer/}i)
+        next if entry.match?(%r{store/provider/}i)
+        next if entry.match?(%r{models/concerns/}i)
 
-      entry.gsub!(dir, '')
-      entry = entry.to_classname
-      model_class = load_adapter(entry)
-      next if !model_class
-      next if !model_class.respond_to? :new
-      next if !model_class.respond_to? :table_name
-      table_name = model_class.table_name # handle models where not table exists, pending migrations
-      next if !ActiveRecord::Base.connection.tables.include?(table_name)
-      model_object = model_class.new
-      next if !model_object.respond_to? :attributes
-      all[model_class] = {}
-      all[model_class][:attributes] = model_class.attribute_names
-      all[model_class][:reflections] = model_class.reflections
-      all[model_class][:table] = model_class.table_name
-      #puts model_class
-      #puts "rrrr #{all[model_class][:attributes]}"
-      #puts " #{model_class.attribute_names.inspect}"
+        entry.gsub!(dir, '')
+        entry = entry.to_classname
+        model_class = load_adapter(entry)
+        next if !model_class
+        next if !model_class.respond_to? :new
+        next if !model_class.respond_to? :table_name
+        table_name = model_class.table_name # handle models where not table exists, pending migrations
+        next if !tables.include?(table_name)
+        model_object = model_class.new
+        next if !model_object.respond_to? :attributes
+        all[model_class] = {}
+        all[model_class][:attributes] = model_class.attribute_names
+        all[model_class][:reflections] = model_class.reflections
+        all[model_class][:table] = model_class.table_name
+        #puts model_class
+        #puts "rrrr #{all[model_class][:attributes]}"
+        #puts " #{model_class.attribute_names.inspect}"
+      end
+      all
     end
-    all
   end
 
 =begin
