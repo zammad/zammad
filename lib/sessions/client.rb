@@ -62,9 +62,9 @@ class Sessions::Client
 
       # start faster in the beginnig
       if loop_count < 20
-        sleep 0.6
-      else
         sleep 1
+      else
+        sleep 2.2
       end
     end
   end
