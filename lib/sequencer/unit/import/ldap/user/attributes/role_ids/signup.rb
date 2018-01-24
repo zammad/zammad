@@ -11,11 +11,16 @@ class Sequencer
 
                 skip_any_action
 
-                uses :mapped
+                uses :mapped, :ldap_config
 
                 def process
                   # return if a mapping entry was found
                   return if mapped[:role_ids].present?
+
+                  # return if no general mapping is configured
+                  # to let Zammad be the leading source of
+                  # Role assignments
+                  return if ldap_config[:group_role_map].blank?
 
                   # LDAP is the leading source if
                   # a mapping entry is present
