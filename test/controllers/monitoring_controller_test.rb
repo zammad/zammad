@@ -389,6 +389,29 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal(false, result['healthy'])
     assert_equal('Channel: Email::Notification out  ;unprocessable mails: 1;scheduler not running', result['message'])
 
+    Setting.set('ldap_integration', true)
+
+    ImportJob.create(
+      name:        'Import::Ldap',
+      started_at:  Time.zone.now,
+      finished_at: Time.zone.now,
+      result:      {
+        error: 'Some bad error'
+      }
+    )
+
+    # health_check
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['message'])
+    assert(result['issues'])
+    assert_equal(false, result['healthy'])
+    assert_equal("Channel: Email::Notification out  ;unprocessable mails: 1;scheduler not running;Failed to run import backend 'Import::Ldap'. Cause: Some bad error", result['message'])
+
+    Setting.set('ldap_integration', false)
   end
 
   test '09 check restart_failed_jobs' do

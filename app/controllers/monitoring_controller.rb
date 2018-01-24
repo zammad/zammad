@@ -87,6 +87,30 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       actions.add(:restart_failed_jobs)
     end
 
+    Setting.get('import_backends')&.each do |backend|
+
+      if !ImportJob.backend_valid?(backend)
+        logger.error "Invalid import backend '#{backend}'"
+        next
+      end
+
+      # skip deactivated backends
+      next if !backend.constantize.active?
+
+      job = ImportJob.where(
+        name:    backend,
+        dry_run: false,
+      ).where('finished_at >= ?', 5.minutes.ago).limit(1).first
+
+      next if job.blank?
+      next if !job.result.is_a?(Hash)
+
+      error_message = job.result[:error]
+      next if error_message.blank?
+
+      issues.push "Failed to run import backend '#{backend}'. Cause: #{error_message}"
+    end
+
     token = Setting.get('monitoring_token')
 
     if issues.blank?
