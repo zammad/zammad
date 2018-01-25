@@ -188,4 +188,12 @@ RSpec.describe User do
       }
     end
   end
+
+  context 'admin' do
+    it "does not allow admin user to be deactivated" do
+      user = create(:user)
+      user.roles = Role.where(name: 'Admin')
+      expect{user.update!(active: false)}.to raise_error(Exceptions::UnprocessableEntity, 'Admin user cannot be deactivated.')
+    end
+  end
 end

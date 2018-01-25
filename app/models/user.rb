@@ -40,7 +40,7 @@ class User < ApplicationModel
 
   before_validation :check_name, :check_email, :check_login, :check_mail_delivery_failed, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_create   :check_preferences_default, :validate_ooo, :domain_based_assignment, :set_locale
-  before_update   :check_preferences_default, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
+  before_update   :check_preferences_default, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute, :check_admin_active
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   after_destroy   :avatar_destroy, :user_device_destroy
@@ -987,6 +987,23 @@ returns
     raise Exceptions::UnprocessableEntity, 'out of office end is before start' if out_of_office_start_at > out_of_office_end_at
     raise Exceptions::UnprocessableEntity, 'out of office replacement user is required' if out_of_office_replacement_id.blank?
     raise Exceptions::UnprocessableEntity, 'out of office no such replacement user' if !User.find_by(id: out_of_office_replacement_id)
+    true
+  end
+
+=begin
+
+checks if the user is admin before disabling the user. if the user is admin, raise error.
+
+Raises
+
+raise 'Admin user cannot be deactivated'
+
+=end
+
+  def check_admin_active
+    return true if !will_save_change_to_attribute?('active')
+    return true if active != false
+    raise Exceptions::UnprocessableEntity, 'Admin user cannot be deactivated.' if permissions?(['admin', 'admin.user'])
     true
   end
 
