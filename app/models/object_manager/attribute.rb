@@ -281,9 +281,11 @@ possible types
       if !force
         %i[name display data_type position active].each do |key|
           next if record[key] == data[key]
+          record[:data_option_new] = data[:data_option] if data[:data_option] # bring the data options over as well, when there are changes to the fields above
           data[:to_config] = true
           break
         end
+
         if record[:data_option] != data[:data_option]
 
           # do we need a database migration?

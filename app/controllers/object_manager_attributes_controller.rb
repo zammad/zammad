@@ -32,7 +32,6 @@ class ObjectManagerAttributesController < ApplicationController
     raise Exceptions::UnprocessableEntity, 'already exists' if exists
 
     local_params = params.permit!.to_h
-    local_params[:data_option][:null] = true # set data option which can be null
     begin
       object_manager_attribute = ObjectManager::Attribute.add(
         object: local_params[:object],
@@ -123,11 +122,9 @@ class ObjectManagerAttributesController < ApplicationController
       if params[:data_option][:null].nil?
         params[:data_option][:null] = true
       end
-
       if params[:data_option][:options].nil?
         params[:data_option][:options] = ''
       end
-
       if params[:data_option][:relation].nil?
         params[:data_option][:relation] = ''
       end
@@ -139,5 +136,6 @@ class ObjectManagerAttributesController < ApplicationController
         null:     true
       }
     end
+
   end
 end
