@@ -10,12 +10,12 @@ class Role < ApplicationModel
   include Role::Assets
 
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
-  has_and_belongs_to_many :permissions, after_add: :cache_update, after_remove: :cache_update, before_add: :validate_agent_limit_by_permission, before_remove: :last_admin_check_by_permission
+  has_and_belongs_to_many :permissions, after_add: :cache_update, after_remove: :cache_update, before_update: :cache_update, after_update: :cache_update, before_add: :validate_agent_limit_by_permission, before_remove: :last_admin_check_by_permission
   validates               :name,  presence: true
   store                   :preferences
 
-  before_create  :validate_permissions
-  before_update  :validate_permissions, :last_admin_check_by_attribute, :validate_agent_limit_by_attributes
+  before_create  :validate_permissions, :check_default_at_signup_permissions
+  before_update  :validate_permissions, :last_admin_check_by_attribute, :validate_agent_limit_by_attributes, :check_default_at_signup_permissions
 
   association_attributes_ignored :users
 
@@ -153,6 +153,7 @@ returns
   private
 
   def validate_permissions
+    Rails.logger.debug "self permission: #{self.permission_ids}"
     return true if !self.permission_ids
     permission_ids.each do |permission_id|
       permission = Permission.lookup(id: permission_id)
@@ -211,6 +212,15 @@ returns
     count = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
     true
+  end
+
+  def check_default_at_signup_permissions
+    all_permissions = Permission.all.pluck(:id)
+    admin_permissions = Permission.where('name LIKE ? OR name = ?', 'admin%', 'ticket.agent').pluck(:id) # admin.*/ticket.agent permissions
+    normal_permissions = (all_permissions - admin_permissions) | (admin_permissions - all_permissions) # all other permissions besides admin.*/ticket.agent
+    return true if default_at_signup != true # means if default_at_signup = false, no need further checks
+    return true if self.permission_ids.all? { |i| normal_permissions.include? i } # allow user to choose only normal permissions
+    raise Exceptions::UnprocessableEntity, 'Cannot set default at signup when role has admin and ticket agent properties'
   end
 
 end

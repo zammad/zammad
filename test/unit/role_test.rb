@@ -138,4 +138,87 @@ class RoleTest < ActiveSupport::TestCase
     assert(role.with_permission?(['test-with-permission2', 'some_other_permission']))
   end
 
+  test 'default_at_signup' do
+
+    agent_role = Role.find_by(name: 'Agent')
+    assert_raises(Exceptions::UnprocessableEntity) do
+      agent_role.default_at_signup = true
+      agent_role.save!
+    end
+
+    admin_role = Role.find_by(name: 'Admin')
+    assert_raises(Exceptions::UnprocessableEntity) do
+      admin_role.default_at_signup = true
+      admin_role.save!
+    end
+
+    assert_raises(Exceptions::UnprocessableEntity) do
+      Role.create!(
+        name: 'Test1',
+        note: 'Test1 Role.',
+        default_at_signup: true,
+        permissions: [Permission.find_by(name: 'admin')],
+        updated_by_id: 1,
+        created_by_id: 1
+      )
+    end
+
+    role = Role.create!(
+      name: 'Test1',
+      note: 'Test1 Role.',
+      default_at_signup: false,
+      permissions: [Permission.find_by(name: 'admin')],
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    assert(role)
+
+    permissions = Permission.where('name LIKE ? OR name = ?', 'admin%', 'ticket.agent').pluck(:name) # get all administrative permissions
+    permissions.each do |type|
+
+      assert_raises(Exceptions::UnprocessableEntity) do
+        Role.create!(
+          name: "Test1_#{type}",
+          note: 'Test1 Role.',
+          default_at_signup: true,
+          permissions: [Permission.find_by(name: type)],
+          updated_by_id: 1,
+          created_by_id: 1
+        )
+      end
+
+      role = Role.create!(
+        name: "Test1_#{type}",
+        note: 'Test1 Role.',
+        default_at_signup: false,
+        permissions: [Permission.find_by(name: type)],
+        updated_by_id: 1,
+        created_by_id: 1
+      )
+      assert(role)
+    end
+
+    assert_raises(Exceptions::UnprocessableEntity) do
+      Role.create!(
+        name: 'Test2',
+        note: 'Test2 Role.',
+        default_at_signup: true,
+        permissions: [Permission.find_by(name: 'ticket.agent')],
+        updated_by_id: 1,
+        created_by_id: 1
+      )
+    end
+
+    role = Role.create!(
+      name: 'Test2',
+      note: 'Test2 Role.',
+      default_at_signup: false,
+      permissions: [Permission.find_by(name: 'ticket.agent')],
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+    assert(role)
+
+  end
+
 end
