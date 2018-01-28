@@ -698,6 +698,20 @@ Setting.create_if_not_exists(
   },
   frontend: true
 )
+Setting.create_if_not_exists(
+  title: 'Set notes for ticket create types.',
+  name: 'ui_ticket_create_notes',
+  area: 'UI::TicketCreate',
+  description: 'Set notes for ticket create types by selecting type.',
+  options: {},
+  state: {
+    #'email-out' => 'Attention: When creating a ticket an e-mail is sent.',
+  },
+  preferences: {
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
 
 Setting.create_if_not_exists(
   title: 'New User Accounts',
