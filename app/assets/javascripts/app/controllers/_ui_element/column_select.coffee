@@ -6,24 +6,24 @@ class App.UiElement.column_select extends App.UiElement.ApplicationUiElement
     attribute.multiple = 'multiple'
 
     # build options list based on config
-    @getConfigOptionList( attribute, params )
+    @getConfigOptionList(attribute, params)
 
     # build options list based on relation
-    @getRelationOptionList( attribute, params )
+    @getRelationOptionList(attribute, params)
 
     # add null selection if needed
-    @addNullOption( attribute, params )
+    @addNullOption(attribute, params)
 
     # sort attribute.options
-    @sortOptions( attribute, params )
+    @sortOptions(attribute, params)
 
     # find selected/checked item of list
-    @selectedOptions( attribute, params )
+    @selectedOptions(attribute, params)
 
     # disable item of list
-    @disabledOptions( attribute, params )
+    @disabledOptions(attribute, params)
 
     # filter attributes
-    @filterOption( attribute, params )
+    @filterOption(attribute, params)
 
-    new App.ColumnSelect( attribute: attribute ).element()
+    new App.ColumnSelect(attribute: attribute).element()

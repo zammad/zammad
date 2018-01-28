@@ -264,4 +264,46 @@ optional you can put the max oldest chat sessions as argument
     true
   end
 
+=begin
+
+check if ip address is blocked for chat
+
+  chat = Chat.find(123)
+  chat.blocked_ip?(ip)
+
+=end
+
+  def blocked_ip?(ip)
+    return false if ip.blank?
+    return false if block_ip.blank?
+    ips = block_ip.split(';')
+    ips.each do |local_ip|
+      return true if ip == local_ip.strip
+      return true if ip.match?(/#{local_ip.strip.gsub(/\*/, '.+?')}/)
+    end
+    false
+  end
+
+=begin
+
+check if country is blocked for chat
+
+  chat = Chat.find(123)
+  chat.blocked_country?(ip)
+
+=end
+
+  def blocked_country?(ip)
+    return false if ip.blank?
+    retunn false if block_country.blank?
+    geo_ip = Service::GeoIp.location(ip)
+    return false if geo_ip.blank?
+    return false if geo_ip['country_code'].blank?
+    countries = block_country.split(';')
+    countries.each do |local_country|
+      return true if geo_ip['country_code'] == local_country
+    end
+    false
+  end
+
 end

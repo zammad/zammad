@@ -39,14 +39,27 @@ class App.ColumnSelect extends Spine.Controller
       )
 
   render: ->
+    if !_.isEmpty(@attribute.seperator)
+      values = []
+      if @attribute.value
+        values = @attribute.value.split(';')
+      else if @attribute.default
+        values = @attribute.default.split(';')
+
+      for value in values
+        for option in @options.attribute.options
+          if option.value is value
+            option.selected = true
+
     @values = []
     _.each @options.attribute.options, (option) =>
       if option.selected
         @values.push option.value.toString()
 
-    @html App.view('generic/column_select')
+    @html App.view('generic/column_select')(
       attribute: @options.attribute
       values: @values
+    )
 
     # keep inital height
     # disabled for now since controls in modals get rendered hidden
@@ -60,13 +73,17 @@ class App.ColumnSelect extends Spine.Controller
     @throttledSelect()
 
   select: (value) ->
-    @selected.find("[data-value='#{value}']").removeClass 'is-hidden'
-    @pool.find("[data-value='#{value}']").addClass 'is-hidden'
+    @selected.find("[data-value='#{value}']").removeClass('is-hidden')
+    @pool.find("[data-value='#{value}']").addClass('is-hidden')
     @values.push(value)
-    @shadow.val(@values)
-    @shadow.trigger('change')
 
-    @placeholder.addClass 'is-hidden'
+    if !_.isEmpty(@attribute.seperator)
+      @shadow.val(@values.join(';'))
+    else
+      @shadow.val(@values)
+      @shadow.trigger('change')
+
+    @placeholder.addClass('is-hidden')
 
     if @search.val() and @poolOptions.not('.is-filtered').not('.is-hidden').size() is 0
       @clear()
@@ -76,14 +93,17 @@ class App.ColumnSelect extends Spine.Controller
     @throttledRemove()
 
   remove: (value) ->
-    @pool.find("[data-value='#{value}']").removeClass 'is-hidden'
-    @selected.find("[data-value='#{value}']").addClass 'is-hidden'
+    @pool.find("[data-value='#{value}']").removeClass('is-hidden')
+    @selected.find("[data-value='#{value}']").addClass('is-hidden')
     @values.splice(@values.indexOf(value), 1)
-    @shadow.val(@values)
-    @shadow.trigger('change')
+    if !_.isEmpty(@attribute.seperator)
+      @shadow.val(@values.join(';'))
+    else
+      @shadow.val(@values)
+      @shadow.trigger('change')
 
     if !@values.length
-      @placeholder.removeClass 'is-hidden'
+      @placeholder.removeClass('is-hidden')
 
   filter: (event) ->
     filter = $(event.currentTarget).val()
@@ -92,16 +112,16 @@ class App.ColumnSelect extends Spine.Controller
       return if $(el).hasClass('is-hidden')
 
       if $(el).text().toLowerCase().indexOf(filter.toLowerCase()) > -1
-        $(el).removeClass 'is-filtered'
+        $(el).removeClass('is-filtered')
       else
-        $(el).addClass 'is-filtered'
+        $(el).addClass('is-filtered')
 
     @clearButton.toggleClass 'is-hidden', filter.length is 0
 
   clear: ->
     @search.val('')
-    @poolOptions.removeClass 'is-filtered'
-    @clearButton.addClass 'is-hidden'
+    @poolOptions.removeClass('is-filtered')
+    @clearButton.addClass('is-hidden')
 
   onFilterKeydown: (event) ->
     return if event.keyCode != 13

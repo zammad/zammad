@@ -5,7 +5,7 @@ class ChatTest < ActiveSupport::TestCase
 
   setup do
     groups = Group.all
-    roles  = Role.where( name: %w[Agent] )
+    roles  = Role.where(name: %w[Agent])
     @agent1 = User.create_or_update(
       login: 'ticket-chat-agent1@example.com',
       firstname: 'Notification',
@@ -350,6 +350,40 @@ class ChatTest < ActiveSupport::TestCase
     assert_equal(4, agent_state[:seads_total])
     assert_equal(false, agent_state[:active])
     travel_back
+  end
+
+  test 'blocked ip test' do
+    chat = Chat.create!(
+      name: 'ip test',
+      max_queue: 5,
+      note: '',
+      block_ip: '127.0.0.1;127.0.0.2;127.1.0.*',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert_not(chat.blocked_ip?('128.0.0.1'))
+    assert_not(chat.blocked_ip?('127.0.0.30'))
+    assert(chat.blocked_ip?('127.0.0.1'))
+    assert(chat.blocked_ip?('127.0.0.2'))
+    assert(chat.blocked_ip?('127.1.0.1'))
+    assert(chat.blocked_ip?('127.1.0.100'))
+  end
+
+  test 'blocked country test' do
+    chat = Chat.create!(
+      name: 'country test',
+      max_queue: 5,
+      note: '',
+      block_country: 'AU;CH',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert_not(chat.blocked_country?('127.0.0.1'))
+    assert(chat.blocked_country?('1.1.1.8'))
   end
 
 end
