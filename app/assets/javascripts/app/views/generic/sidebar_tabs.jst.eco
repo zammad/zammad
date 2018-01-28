@@ -14,6 +14,9 @@
 <div class="tabsSidebar-tabs" style="<%- if @dir is 'rtl' then 'margin-right' else 'margin-left' %>: -<%- @scrollbarWidth %>px">
 <% for item in @items: %>
   <div class="tabsSidebar-tab" data-tab="<%= item.name %>">
+    <% if item.counterPossible is true: %>
+      <div class="tabsSidebar-tab-count js-tabCounter <% if !item.counter || item.counter is 0: %>hide<% end %>"><%= item.counter %></div>
+    <% end %>
     <%- @Icon(item.icon) %>
   </div>
 <% end %>

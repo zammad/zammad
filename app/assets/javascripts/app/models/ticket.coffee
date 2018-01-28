@@ -251,7 +251,7 @@ class App.Ticket extends App.Model
     group_ids = App.Session.get('group_ids')
     if _.isEmpty(group_ids[@group_id])
       return false
-    else if group_ids[@group_id] && !_.include(group_ids[@group_id], 'edit') && !_.include(group_ids[@group_id], 'full')
+    else if group_ids[@group_id] && !_.include(group_ids[@group_id], 'change') && !_.include(group_ids[@group_id], 'full')
       return false
     true
 

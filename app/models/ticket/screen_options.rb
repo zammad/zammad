@@ -86,7 +86,7 @@ returns
         types.push 'email'
       end
       types.each do |type_name|
-        type = Ticket::Article::Type.lookup( name: type_name )
+        type = Ticket::Article::Type.lookup(name: type_name)
         next if type.blank?
         type_ids.push type.id
       end
@@ -99,7 +99,7 @@ returns
     filter[:group_id] = []
     groups = if params[:current_user].permissions?('ticket.agent')
                if params[:ticket].present?
-                 params[:current_user].groups_access(%w[edit])
+                 params[:current_user].groups_access(%w[change])
                else
                  params[:current_user].groups_access(%w[create])
                end
