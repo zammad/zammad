@@ -1,5 +1,20 @@
 # Change Log
 
+## [2.2.1](https://github.com/zammad/zammad/tree/2.2.0) (2018-01-30)
+[Full Changelog](https://github.com/zammad/zammad/compare/2.2.0...2.2.1)
+
+**Fixed bugs:**
+- Generated excel report fails to create for special strings in ticket titles \(also: CSV formula injection possible\) [\#1756](https://github.com/zammad/zammad/issues/1756) [[bug](https://github.com/zammad/zammad/labels/bug)] [[reporting](https://github.com/zammad/zammad/labels/reporting)]
+- Need data\_option\[:null\] - Ticket Object Manager [\#1742](https://github.com/zammad/zammad/issues/1742) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Ticket search fails for limit exceeding 100 with internal server error [\#1753](https://github.com/zammad/zammad/issues/1753) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to send auto reply if from contains 2 or more senders with invalid email address [\#1749](https://github.com/zammad/zammad/issues/1749) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Report for Created tickets should not have "merged" tickets [\#1741](https://github.com/zammad/zammad/issues/1741) [[bug](https://github.com/zammad/zammad/labels/bug)] [[reporting](https://github.com/zammad/zammad/labels/reporting)]
+- Wrong ticket number count in preview [\#1723](https://github.com/zammad/zammad/issues/1723) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Zammad Api for idoit.object\_ids broken [\#1711](https://github.com/zammad/zammad/issues/1711) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Unable to login with Office365 [\#1710](https://github.com/zammad/zammad/issues/1710) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- No user preference for out-of-office available [\#1699](https://github.com/zammad/zammad/issues/1699) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- SipgateController - undefined method `each' for nil:NilClass \(NoMethodError\) [\#1698](https://github.com/zammad/zammad/issues/1698) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
 ## [2.2.0](https://github.com/zammad/zammad/tree/2.2.0) (2017-12-06)
 [Full Changelog](https://github.com/zammad/zammad/compare/2.1.0...2.2.0)
 
