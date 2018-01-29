@@ -269,6 +269,16 @@ test("linkify", function() {
   result = App.Utils.linkify(source)
   equal(result, should, source)
 
+  source = "test@example.com some text"
+  should = 'test@example.com some text'
+  result = App.Utils.linkify(source)
+  equal(result, should, source)
+
+  source = "abc test@example.com some text"
+  should = 'abc test@example.com some text'
+  result = App.Utils.linkify(source)
+  equal(result, should, source)
+
   /*
   source = "<b>example.com</b>"
   should = '<b><a href="http://example.com" title="http://example.com" target="_blank">http://example.com</a></b>'
