@@ -211,7 +211,7 @@ class App.TicketCreate extends App.Controller
   render: (template = {}) ->
 
     # get params
-    params = {}
+    params = @prefilledParams || {}
     if template && !_.isEmpty(template.options)
       params = template.options
     else if App.TaskManager.get(@task_key) && !_.isEmpty(App.TaskManager.get(@task_key).state)
