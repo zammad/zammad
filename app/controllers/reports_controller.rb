@@ -187,47 +187,47 @@ class ReportsController < ApplicationController
     worksheet.set_row(0, 0, 6)
 
     # Write a formatted and unformatted string, row and column notation.
-    worksheet.write(0, 0, "Tickets: #{profile.name} (#{title})", format)
+    worksheet.write_string(0, 0, "Tickets: #{profile.name} (#{title})", format)
 
     format_header = workbook.add_format
     format_header.set_italic
     format_header.set_bg_color('gray')
     format_header.set_color('white')
 
-    worksheet.write(2, 0, '#', format_header)
-    worksheet.write(2, 1, 'Title', format_header)
-    worksheet.write(2, 2, 'State', format_header)
-    worksheet.write(2, 3, 'Priority', format_header)
-    worksheet.write(2, 4, 'Group', format_header)
-    worksheet.write(2, 5, 'Owner', format_header)
-    worksheet.write(2, 6, 'Customer', format_header)
-    worksheet.write(2, 7, 'Organization', format_header)
-    worksheet.write(2, 8, 'Create Channel', format_header)
-    worksheet.write(2, 9, 'Sender', format_header)
-    worksheet.write(2, 10, 'Tags', format_header)
-    worksheet.write(2, 11, 'Created at', format_header)
-    worksheet.write(2, 12, 'Updated at', format_header)
-    worksheet.write(2, 13, 'Closed at', format_header)
+    worksheet.write_string(2, 0, '#', format_header)
+    worksheet.write_string(2, 1, 'Title', format_header)
+    worksheet.write_string(2, 2, 'State', format_header)
+    worksheet.write_string(2, 3, 'Priority', format_header)
+    worksheet.write_string(2, 4, 'Group', format_header)
+    worksheet.write_string(2, 5, 'Owner', format_header)
+    worksheet.write_string(2, 6, 'Customer', format_header)
+    worksheet.write_string(2, 7, 'Organization', format_header)
+    worksheet.write_string(2, 8, 'Create Channel', format_header)
+    worksheet.write_string(2, 9, 'Sender', format_header)
+    worksheet.write_string(2, 10, 'Tags', format_header)
+    worksheet.write_string(2, 11, 'Created at', format_header)
+    worksheet.write_string(2, 12, 'Updated at', format_header)
+    worksheet.write_string(2, 13, 'Closed at', format_header)
 
     row = 2
     result[:ticket_ids].each do |ticket_id|
       begin
         ticket = Ticket.lookup(id: ticket_id)
         row += 1
-        worksheet.write(row, 0, ticket.number)
-        worksheet.write(row, 1, ticket.title)
-        worksheet.write(row, 2, ticket.state.name)
-        worksheet.write(row, 3, ticket.priority.name)
-        worksheet.write(row, 4, ticket.group.name)
-        worksheet.write(row, 5, ticket.owner.fullname)
-        worksheet.write(row, 6, ticket.customer.fullname)
-        worksheet.write(row, 7, ticket.try(:organization).try(:name))
-        worksheet.write(row, 8, ticket.create_article_type.name)
-        worksheet.write(row, 9, ticket.create_article_sender.name)
-        worksheet.write(row, 10, ticket.tag_list.join(','))
-        worksheet.write(row, 11, ticket.created_at)
-        worksheet.write(row, 12, ticket.updated_at)
-        worksheet.write(row, 13, ticket.close_at)
+        worksheet.write_string(row, 0, ticket.number)
+        worksheet.write_string(row, 1, ticket.title)
+        worksheet.write_string(row, 2, ticket.state.name)
+        worksheet.write_string(row, 3, ticket.priority.name)
+        worksheet.write_string(row, 4, ticket.group.name)
+        worksheet.write_string(row, 5, ticket.owner.fullname)
+        worksheet.write_string(row, 6, ticket.customer.fullname)
+        worksheet.write_string(row, 7, ticket.try(:organization).try(:name))
+        worksheet.write_string(row, 8, ticket.create_article_type.name)
+        worksheet.write_string(row, 9, ticket.create_article_sender.name)
+        worksheet.write_string(row, 10, ticket.tag_list.join(','))
+        worksheet.write_date_time(row, 11, ticket.created_at.to_time.iso8601)
+        worksheet.write_date_time(row, 12, ticket.updated_at.to_time.iso8601)
+        worksheet.write_date_time(row, 13, ticket.close_at.to_time.iso8601)
       rescue => e
         Rails.logger.error "SKIP: #{e.message}"
       end

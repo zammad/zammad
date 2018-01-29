@@ -5,19 +5,17 @@
 <table class="table">
   <thead>
     <th style="width: 30px"></th>
-    <th style="width: 50px"><%- @T('ID') %></th>
+    <th style="width: 100px"><%- @T('ID') %></th>
     <th><%- @T('Name') %></th>
-    <th><%- @T('Status') %></th>
-    <th><%- @T('Link') %></th>
+    <th style="width: 100px;"><%- @T('Status') %></th>
   </thead>
   <tbody>
   <% for item in @items: %>
     <tr>
       <td><input type="checkbox" name="object_id" value="<%= item.id %>"/></td>
-      <td><%= item.id %></td>
-      <td><%= item.title %></td>
+      <td title="<%= item.id %>"><%= item.id %></td>
+      <td title="<%= item.title %>"><a href="<%- item.link %>" target="_blank"><%= item.title %></a></td>
       <td><%= item.cmdb_status_title %></td>
-      <td><a href="<%- item.link %>" target="_blank">i-doit</td>
     </tr>
   <% end %>
   </tbody>

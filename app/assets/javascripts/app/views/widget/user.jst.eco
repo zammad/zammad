@@ -1,15 +1,17 @@
 <div class="sidebar-block">
   <%- @user.avatar("50", "", "userInfo-avatar") %>
-  <h3 title="<%- @Ti( 'Name') %>"><%= @user.displayName() %></h3>
+  <h3 title="<%- @Ti('Name') %>"><%= @user.displayName() %></h3>
 </div>
 <% for row in @userData: %>
   <% if @user[row.name] || row.name is 'note': %>
     <div class="sidebar-block">
+    <label><%- @T(row.display) %></label>
     <% if row.tag isnt 'richtext': %>
-      <label><%- @T(row.display) %></label>
-      <%- @P(@user, row.name) %>
+      <% if row.link: %><a href="<%- row.link %><%= @user[row.name] %>" target="_blank"><%- @P(@user, row.name) %></a>
     <% else: %>
-      <label><%- @T(row.display) %></label>
+      <%- @P(@user, row.name) %>
+    <% end %>
+    <% else: %>
       <div contenteditable="true" data-name="<%= row.name %>" data-type="update" data-placeholder="<%- @Ti('Add a Note') %>"><%- @user[row.name] %></div>
     <% end %>
     </div>
@@ -17,7 +19,7 @@
 <% end %>
 <% if !_.isEmpty(@user['accounts']): %>
   <div class="sidebar-block">
-    <label><%- @T( 'Linked Accounts' ) %></label>
+    <label><%- @T('Linked Accounts') %></label>
   <% for account of @user['accounts']: %>
     <a href="<%= @user['accounts'][account]['link'] %>" target="_blank"><%= account %></a>
   <% end %>
@@ -26,7 +28,7 @@
 <% if !_.isEmpty(@user['links']): %>
   <% for link in @user['links']: %>
   <div class="sidebar-block">
-    <label><%- @T( link['title'] ) %></label>
+    <label><%- @T(link['title']) %></label>
 <% for item in link['items']: %>
   <% if item['url']: %>
     <a href="<%= item['url'] %>" title="<%- @Ti( item['title'] ) %>" style="<%= item['style'] %>" data-type="<%= item['data'] %>" class="<%= item['class'] %>" <% if link.new_window: %>target="_blank"<% end %>>

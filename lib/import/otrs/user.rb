@@ -68,6 +68,7 @@ module Import
       def map(user)
         mapped = map_default(user)
         mapped[:email].downcase!
+        mapped[:login].downcase!
         mapped
       end
 
@@ -95,6 +96,7 @@ module Import
         queues.each do |queue|
 
           permissions = user['GroupIDs'][ queue['GroupID'] ]
+          permissions ||= user['GroupIDs'][ queue['GroupID'].to_s ]
 
           next if !permissions
           next if !permissions.include?('rw')
@@ -143,6 +145,7 @@ module Import
 
       def groups_from_otrs_group(role_object, group)
         result = []
+        return result if role_object.blank?
         return result if role_object['GroupIDs'].blank?
         permissions = role_object['GroupIDs'][ group['ID'] ]
 
@@ -164,7 +167,7 @@ module Import
         roles  = Import::OTRS::Requester.load('Role')
         roles.each do |role|
           next if !user['RoleIDs'].include?(role['ID'])
-          result += groups_from_otrs_groups(role['GroupIDs'])
+          result += groups_from_otrs_groups(role)
         end
         result
       end

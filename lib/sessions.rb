@@ -583,6 +583,7 @@ remove all session and spool messages
 
           # assigne to node
           Sessions::Node.session_assigne(client_id)
+          sleep 1
         end
         sleep 1
       end
@@ -609,14 +610,14 @@ remove all session and spool messages
 
         # get current user
         session_data = Sessions.get(client_id)
-        next if !session_data
-        next if !session_data[:user]
-        next if !session_data[:user]['id']
+        next if session_data.blank?
+        next if session_data[:user].blank?
+        next if session_data[:user]['id'].blank?
         user = User.lookup(id: session_data[:user]['id'])
-        next if !user
+        next if user.blank?
 
         # start client thread
-        next if @@client_threads[client_id]
+        next if @@client_threads[client_id].present?
 
         @@client_threads[client_id] = true
         @@client_threads[client_id] = Thread.new do
@@ -627,11 +628,10 @@ remove all session and spool messages
             ActiveRecord::Base.connection.close
           end
         end
-        sleep 0.5
+        sleep 1
       end
 
-      # system settings
-      sleep 0.5
+      sleep 1
     end
   end
 

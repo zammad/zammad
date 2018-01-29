@@ -1,0 +1,30 @@
+{
+  "update_id":40000,
+  "channel_post":{
+    "message_id":273,
+    "chat":{
+      "id":3310000,
+      "type":"channel",
+      "title":"Zammad Bot"
+    },
+    "date":1487161566,
+    "sticker":{
+      "width":512,
+      "height":512,
+      "emoji":"💻",
+      "set_name": "ChristmasGoose",
+      "thumb":{
+        "file_id":"AAQDABO3-e4qAASs6ZOjJUT7tQ4lAAIC",
+        "file_size":4584,
+        "width":128,
+        "height":128,
+        "file_path": "thumbnails/file57.jpg"
+      },
+      "file_id":"BQADAwAD0QIAAqbJWAAB8OkQqgtDQe0C",
+      "file_size":25974,
+      "file_path": "stickers/file_58.webp"
+    },
+    "callback_token":"z5N_uxY_Fut81g",
+    "bid":"435791794"
+  }
+}

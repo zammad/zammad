@@ -478,7 +478,6 @@ class App.ChannelEmailEdit extends App.ControllerModal
 class App.ChannelEmailAccountWizard extends App.WizardModal
   elements:
     '.modal-body': 'body'
-
   events:
     'submit .js-intro':                   'probeBasedOnIntro'
     'submit .js-inbound':                 'probeInbound'
@@ -487,6 +486,9 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     'click  .js-goToSlide':               'goToSlide'
     'click  .js-expert':                  'probeBasedOnIntro'
     'click  .js-close':                   'hide'
+  inboundPassword: ''
+  outboundPassword: ''
+  passwordPlaceholder: '{{{{{{{{{{{{SECRTE_PASSWORD}}}}}}}}}}}}'
 
   constructor: ->
     super
@@ -503,9 +505,17 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
 
     if @channel
       @account =
-        inbound: @channel.options.inbound
-        outbound: @channel.options.outbound
-        meta:     {}
+        inbound: clone(@channel.options.inbound)
+        outbound: clone(@channel.options.outbound)
+        meta: {}
+
+      # remember passwords, do not show in ui
+      if @account.inbound.options && @account.inbound.options.password
+        @inboundPassword = @account.inbound.options.password
+        @account.inbound.options.password = @passwordPlaceholder
+      if @account.outbound.options && @account.outbound.options.password
+        @outboundPassword = @account.outbound.options.password
+        @account.outbound.options.password = @passwordPlaceholder
 
     if @container
       @el.addClass('modal--local')
@@ -515,17 +525,17 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     if @channel
       @$('.js-goToSlide[data-slide=js-intro]').addClass('hidden')
 
-    @el.modal
+    @el.modal(
       keyboard:  true
       show:      true
       backdrop:  true
       container: @container
-    .on
+    ).on(
       'hidden.bs.modal': =>
         if @callback
           @callback()
         @el.remove()
-
+    )
     if @slide
       @showSlide(@slide)
 
@@ -712,6 +722,9 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     # get params
     params = @formParam(e.target)
 
+    if params.options.password is @passwordPlaceholder
+      params.options.password = @inboundPassword
+
     # let backend know about the channel
     if @channel
       params.channel_id = @channel.id
@@ -770,6 +783,9 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     # get params
     params          = @formParam(e.target)
     params['email'] = @account['meta']['email']
+
+    if params.options.password is @passwordPlaceholder
+      params.options.password = @outboundPassword
 
     if !params['email'] && @channel
       email_addresses = App.EmailAddress.search(filter: { channel_id: @channel.id })
@@ -867,11 +883,13 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
 class App.ChannelEmailNotificationWizard extends App.WizardModal
   elements:
     '.modal-body': 'body'
-
   events:
     'change .js-outbound [name=adapter]': 'toggleOutboundAdapter'
     'submit .js-outbound':                'probleOutbound'
     'click  .js-close':                   'hide'
+  inboundPassword: ''
+  outboundPassword: ''
+  passwordPlaceholder: '{{{{{{{{{{{{SECRTE_PASSWORD}}}}}}}}}}}}'
 
   constructor: ->
     super
@@ -888,27 +906,35 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
 
     if @channel
       @account =
-        inbound: @channel.options.inbound
-        outbound: @channel.options.outbound
+        inbound: clone(@channel.options.inbound)
+        outbound: clone(@channel.options.outbound)
+
+      # remember passwords, do not show in ui
+      if @account.inbound && @account.inbound.options && @account.inbound.options.password
+        @inboundPassword = @account.inbound.options.password
+        @account.inbound.options.password = @passwordPlaceholder
+      if @account.outbound && @account.outbound.options && @account.outbound.options.password
+        @outboundPassword = @account.outbound.options.password
+        @account.outbound.options.password = @passwordPlaceholder
 
     if @container
       @el.addClass('modal--local')
 
     @render()
 
-    @el.modal
+    @el.modal(
       keyboard:  true
       show:      true
       backdrop:  true
       container: @container
-    .on
+    ).on(
       'show.bs.modal':   @onShow
       'shown.bs.modal':  @onShown
       'hidden.bs.modal': =>
         if @callback
           @callback()
         @el.remove()
-
+    )
     if @slide
       @showSlide(@slide)
 
@@ -955,6 +981,9 @@ class App.ChannelEmailNotificationWizard extends App.WizardModal
 
     # get params
     params = @formParam(e.target)
+
+    if params.options && params.options.password is @passwordPlaceholder
+      params.options.password = @outboundPassword
 
     # let backend know about the channel
     params.channel_id = @channel.id

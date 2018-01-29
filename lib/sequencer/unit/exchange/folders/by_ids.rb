@@ -1,11 +1,9 @@
-require 'sequencer/mixin/exchange/folder'
-
 class Sequencer
   class Unit
     module Exchange
       module Folders
         class ByIds < Sequencer::Unit::Base
-          include ::Sequencer::Mixin::Exchange::Folder
+          include ::Sequencer::Unit::Exchange::Folders::Mixin::Folder
 
           uses :ews_folder_ids
           provides :ews_folders

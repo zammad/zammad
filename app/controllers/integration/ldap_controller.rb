@@ -9,57 +9,50 @@ class Integration::LdapController < ApplicationController
   prepend_before_action { authentication_check(permission: 'admin.integration.ldap') }
 
   def discover
-    ldap = ::Ldap.new(params)
+    answer_with do
+      begin
+        ldap = ::Ldap.new(params)
 
-    render json: {
-      result:     'ok',
-      attributes: ldap.preferences,
-    }
-  rescue => e
-    # workaround for issue #1114
-    if e.message.end_with?(', 48, Inappropriate Authentication')
-      result = {
-        result:     'ok',
-        attributes: {},
-      }
-    else
-      logger.error e
-      result = {
-        result:  'failed',
-        message: e.message,
-      }
+        {
+          attributes: ldap.preferences
+        }
+      rescue => e
+        # workaround for issue #1114
+        raise if !e.message.end_with?(', 48, Inappropriate Authentication')
+        # return empty result
+        {}
+      end
     end
-
-    render json: result
   end
 
   def bind
-    # create single instance so
-    # User and Group don't have to
-    # open new connections
-    ldap  = ::Ldap.new(params)
-    user  = ::Ldap::User.new(params, ldap: ldap)
-    group = ::Ldap::Group.new(params, ldap: ldap)
+    answer_with do
+      # create single instance so
+      # User and Group don't have to
+      # open new connections
+      ldap  = ::Ldap.new(params)
+      user  = ::Ldap::User.new(params, ldap: ldap)
+      group = ::Ldap::Group.new(params, ldap: ldap)
 
-    render json: {
-      result: 'ok',
+      {
+        # the order of these calls is relevant!
+        user_filter:     user.filter,
+        user_attributes: user.attributes,
+        user_uid:        user.uid_attribute,
 
-      # the order of these calls is relevant!
-      user_filter:     user.filter,
-      user_attributes: user.attributes,
-      user_uid:        user.uid_attribute,
+        # the order of these calls is relevant!
+        group_filter: group.filter,
+        groups:       group.list,
+        group_uid:    group.uid_attribute,
+      }
+    end
+  end
 
-      # the order of these calls is relevant!
-      group_filter: group.filter,
-      groups:       group.list,
-      group_uid:    group.uid_attribute,
-    }
-  rescue => e
-    logger.error e
+  private
 
-    render json: {
-      result:  'failed',
-      message: e.message,
+  def payload_dry_run
+    {
+      ldap_config: super
     }
   end
 end

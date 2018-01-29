@@ -289,15 +289,16 @@
             var result = e.target.result
             var img = document.createElement('img')
             img.src = result
+            maxWidth = _this.$element.width() || 500
+            scaleFactor = 2
+            //scaleFactor = 1
+            //if (window.isRetina && window.isRetina()) {
+            //  scaleFactor = 2
+            //}
 
-            insert = function(dataUrl, width, height, isRetina) {
+            insert = function(dataUrl, width, height, isResized) {
               //console.log('dataUrl', dataUrl)
-
-              // adapt image if we are on retina devices
-              if (!isRetina && window.isRetina && window.isRetina()) {
-                width = width / 2
-                height = height / 2
-              }
+              //console.log('scaleFactor', scaleFactor, isResized, maxWidth, width, height)
               _this.log('image inserted')
               result = dataUrl
               if (_this.options.imageWidth == 'absolute') {
@@ -310,7 +311,7 @@
             }
 
             // resize if to big
-            App.ImageService.resize(img.src, 460, 'auto', 2, 'image/jpeg', 'auto', insert)
+            App.ImageService.resize(img.src, maxWidth, 'auto', scaleFactor, 'image/jpeg', 'auto', insert)
           }
           reader.readAsDataURL(imageFile)
           imageInserted = true
@@ -416,17 +417,18 @@
           var result = e.target.result
           var img = document.createElement('img')
           img.src = result
+          maxWidth = _this.$element.width() || 500
+          scaleFactor = 2
+          //scaleFactor = 1
+          //if (window.isRetina && window.isRetina()) {
+          //  scaleFactor = 2
+          //}
 
           //Insert the image at the carat
-          insert = function(dataUrl, width, height, isRetina) {
-
-            // adapt image if we are on retina devices
-            if (!isRetina && window.isRetina && window.isRetina()) {
-              width = width / 2
-              height = height / 2
-            }
+          insert = function(dataUrl, width, height, isResized) {
 
             //console.log('dataUrl', dataUrl)
+            //console.log('scaleFactor', scaleFactor, isResized, maxWidth, width, height)
             _this.log('image inserted')
             result = dataUrl
             if (_this.options.imageWidth == 'absolute') {
@@ -454,7 +456,7 @@
           }
 
           // resize if to big
-          App.ImageService.resize(img.src, 460, 'auto', 2, 'image/jpeg', 'auto', insert)
+          App.ImageService.resize(img.src, maxWidth, 'auto', scaleFactor, 'image/jpeg', 'auto', insert)
         })
         reader.readAsDataURL(file)
       }

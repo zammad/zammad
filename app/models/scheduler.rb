@@ -40,18 +40,65 @@ class Scheduler < ApplicationModel
       jobs.each do |job|
 
         # ignore job is still running
-        next if @@jobs_started[ job.id ]
+        next if skip_job?(job)
 
         # check job.last_run
         next if job.last_run && job.period && job.last_run > (Time.zone.now - job.period)
 
         # run job as own thread
-        @@jobs_started[ job.id ] = true
-        start_job(job)
+        @@jobs_started[ job.id ] = start_job(job)
         sleep 10
       end
       sleep 60
     end
+  end
+
+  # Checks if a Scheduler Job should get started or not.
+  # The decision is based on if there is a running thread or not.
+  # Invalid threads get canceled and new threads can get started.
+  #
+  # @param [Scheduler] job The job that should get checked for running threads.
+  #
+  # @example
+  #   Scheduler.skip_job(job)
+  #
+  # return [Boolean]
+  def self.skip_job?(job)
+    thread = @@jobs_started[ job.id ]
+    return false if thread.blank?
+
+    # check for validity of thread instance
+    if !thread.respond_to?(:status)
+      logger.error "Invalid thread stored for job '#{job.name}' (#{job.method}): #{thread.inspect}. Deleting and resting job."
+      @@jobs_started.delete(job.id)
+      return false
+    end
+
+    # check thread state:
+    # http://devdocs.io/ruby~2.4/thread#method-i-status
+    status = thread.status
+
+    # non falsly state means it has some literal running state
+    if status.present?
+      logger.info "Running job thread for '#{job.name}' (#{job.method}) status is: #{status}"
+      return true
+    end
+
+    # the following cases should not happen since the
+    # @@jobs_started cleanup is performed inside of the
+    # thread itself
+    # therefore we have to log an error and remove it
+    # from our threadpool @@jobs_started
+    how = 'unknownly'
+    if status.nil?
+      how = 'via an exception'
+    elsif status == false
+      how = 'normally'
+    end
+
+    logger.error "Job thread terminated #{how} found for '#{job.name}' (#{job.method}). This should not happen. Please report."
+    @@jobs_started.delete(job.id)
+    false
   end
 
   # Checks all delayed jobs that are locked and cleans them up.
@@ -130,13 +177,14 @@ class Scheduler < ApplicationModel
 
   def self.start_job(job)
 
+    # start job and return thread handle
     Thread.new do
       ApplicationHandleInfo.current = 'scheduler'
 
       logger.info "Started job thread for '#{job.name}' (#{job.method})..."
 
-      # start loop for periods under 5 minutes
-      if job.period && job.period <= 300
+      # start loop for periods equal or under 5 minutes
+      if job.period && job.period <= 5.minutes
         loop do
           _start_job(job)
           job = Scheduler.lookup(id: job.id)
@@ -161,8 +209,8 @@ class Scheduler < ApplicationModel
       logger.info " ...stopped thread for '#{job.method}'"
       ActiveRecord::Base.connection.close
 
-      # release thread lock
-      @@jobs_started[ job.id ] = false
+      # release thread lock and remove thread handle
+      @@jobs_started.delete(job.id)
     end
   end
 
@@ -199,7 +247,8 @@ class Scheduler < ApplicationModel
     if try_run_max > try_count
       _start_job(job, try_count, try_run_time)
     else
-      @@jobs_started[ job.id ] = false
+      # release thread lock and remove thread handle
+      @@jobs_started.delete(job.id)
       error = "Failed to run #{job.method} after #{try_count} tries #{e.inspect}"
       logger.error error
 
@@ -209,6 +258,13 @@ class Scheduler < ApplicationModel
         active: false,
       )
     end
+
+  # rescue any other Exceptions that are not StandardError or childs of it
+  # https://stackoverflow.com/questions/10048173/why-is-it-bad-style-to-rescue-exception-e-in-ruby
+  # http://rubylearning.com/satishtalim/ruby_exceptions.html
+  rescue Exception => e # rubocop:disable Lint/RescueException
+    logger.error "execute #{job.method} (try_count #{try_count}) exited with a non standard-error #{e.inspect}"
+    raise
   end
 
   def self.worker(foreground = false)

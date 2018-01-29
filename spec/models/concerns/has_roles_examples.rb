@@ -165,7 +165,7 @@ RSpec.shared_examples 'HasRoles' do
           end
 
           it "doesn't list for no access" do
-            result = group_access_instance.group_ids_access('write')
+            result = group_access_instance.group_ids_access('change')
             expect(result).not_to include(group_role.id)
           end
 
@@ -182,12 +182,12 @@ RSpec.shared_examples 'HasRoles' do
         context 'access list' do
 
           it 'lists access Group IDs' do
-            result = group_access_instance.group_ids_access(%w[read write])
+            result = group_access_instance.group_ids_access(%w[read change])
             expect(result).to include(group_role.id)
           end
 
           it "doesn't list for no access" do
-            result = group_access_instance.group_ids_access(%w[write create])
+            result = group_access_instance.group_ids_access(%w[change create])
             expect(result).not_to include(group_role.id)
           end
 
@@ -230,18 +230,18 @@ RSpec.shared_examples '#role_access? call' do
     end
 
     it 'checks negative' do
-      expect(group_access_instance.role_access?(group_parameter, 'write')).to be false
+      expect(group_access_instance.role_access?(group_parameter, 'change')).to be false
     end
   end
 
   context 'access list' do
 
     it 'checks positive' do
-      expect(group_access_instance.role_access?(group_parameter, %w[read write])).to be true
+      expect(group_access_instance.role_access?(group_parameter, %w[read change])).to be true
     end
 
     it 'checks negative' do
-      expect(group_access_instance.role_access?(group_parameter, %w[write create])).to be false
+      expect(group_access_instance.role_access?(group_parameter, %w[change create])).to be false
     end
   end
 end
@@ -254,18 +254,18 @@ RSpec.shared_examples '.role_access_ids call' do
     end
 
     it 'excludes non access IDs' do
-      expect(described_class.role_access_ids(group_parameter, 'write')).not_to include(group_access_instance.id)
+      expect(described_class.role_access_ids(group_parameter, 'change')).not_to include(group_access_instance.id)
     end
   end
 
   context 'access list' do
 
     it 'lists access IDs' do
-      expect(described_class.role_access_ids(group_parameter, %w[read write])).to include(group_access_instance.id)
+      expect(described_class.role_access_ids(group_parameter, %w[read change])).to include(group_access_instance.id)
     end
 
     it 'excludes non access IDs' do
-      expect(described_class.role_access_ids(group_parameter, %w[write create])).not_to include(group_access_instance.id)
+      expect(described_class.role_access_ids(group_parameter, %w[change create])).not_to include(group_access_instance.id)
     end
   end
 end

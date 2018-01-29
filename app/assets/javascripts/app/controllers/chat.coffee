@@ -163,9 +163,10 @@ class App.CustomerChat extends App.Controller
     @title 'Customer Chat', true
     @navupdate '#customer_chat'
 
-    if params.session_id && App.ChatSession.exists(params.session_id)
-      session = App.ChatSession.find(params.session_id)
-      @addChat(session)
+    if params.session_id
+      callback = (session) =>
+        @addChat(session)
+      App.ChatSession.full(params.session_id, callback)
       @navigate '#customer_chat'
 
   active: (state) =>
@@ -342,6 +343,7 @@ class ChatWindow extends App.Controller
     'click .js-disconnect':          'disconnect'
     'click .js-scrollHint':          'onScrollHintClick'
     'click .js-info':                'toggleMeta'
+    'click .js-createTicket':        'ticketCreate'
     'submit .js-metaForm':           'sendMetaForm'
 
   elements:
@@ -763,6 +765,28 @@ class ChatWindow extends App.Controller
       @scrollHolder.scrollTop(@scrollHolder.prop('scrollHeight'))
     else if showHint
       @showScrollHint()
+
+  ticketCreate: (e) =>
+    e.preventDefault()
+
+    id = Math.floor( Math.random() * 99999 )
+    @navigate "#ticket/create/id/#{id}"
+
+    # cleanup params
+    fqdn      = App.Config.get('fqdn')
+    http_type = App.Config.get('http_type')
+    clean_params =
+      id: id
+      prefilledParams:
+        body: "#{http_type}://#{fqdn}#{@session.uiUrl()}"
+        title: 'Chat'
+
+    App.TaskManager.execute(
+      key:        "TicketCreateScreen-#{id}"
+      controller: 'TicketCreate'
+      params:     clean_params
+      show:       true
+    )
 
 class Setting extends App.ControllerModal
   buttonClose: true

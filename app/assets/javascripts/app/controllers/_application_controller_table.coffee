@@ -97,6 +97,7 @@ class App.ControllerTable extends App.Controller
   checkBoxColWidth: 40
   radioColWidth: 22
   sortableColWidth: 36
+  destroyColWidth: 70
 
   elements:
     '.js-tableHead': 'tableHead'
@@ -510,6 +511,7 @@ class App.ControllerTable extends App.Controller
 
     # get header data
     @headers = []
+    availableWidth = @availableWidth
     for item in @overviewAttributes
       headerFound = false
       for attributeName, attribute of @attributesList
@@ -524,7 +526,7 @@ class App.ControllerTable extends App.Controller
             # e.g. column: owner
             headerFound = true
             if @headerWidth[attribute.name]
-              attribute.displayWidth = @headerWidth[attribute.name] * @availableWidth
+              attribute.displayWidth = @headerWidth[attribute.name] * availableWidth
             else if !attribute.width
               attribute.displayWidth = @baseColWidth
             else
@@ -533,7 +535,7 @@ class App.ControllerTable extends App.Controller
               unit = attribute.width.match(/[px|%]+/)[0]
 
               if unit is '%'
-                attribute.displayWidth = value / 100 * @el.width()
+                attribute.displayWidth = value / 100 * availableWidth
               else
                 attribute.displayWidth = value
             @headers.push attribute
@@ -542,7 +544,7 @@ class App.ControllerTable extends App.Controller
             if attributeName is "#{item}_id" || attributeName is "#{item}_ids"
               headerFound = true
               if @headerWidth[attribute.name]
-                attribute.displayWidth = @headerWidth[attribute.name] * @availableWidth
+                attribute.displayWidth = @headerWidth[attribute.name] * availableWidth
               else if !attribute.width
                 attribute.displayWidth = @baseColWidth
               else
@@ -551,7 +553,7 @@ class App.ControllerTable extends App.Controller
                 unit = attribute.width.match(/[px|%]+/)[0]
 
                 if unit is '%'
-                  attribute.displayWidth = value / 100 * @el.width()
+                  attribute.displayWidth = value / 100 * availableWidth
                 else
                   attribute.displayWidth = value
               @headers.push attribute
@@ -745,8 +747,10 @@ class App.ControllerTable extends App.Controller
     if @availableWidth is 0
       @availableWidth = @minTableWidth
 
+    availableWidth = @availableWidth
+
     widths = @getHeaderWidths()
-    shrinkBy = Math.ceil (widths - @availableWidth) / @getShrinkableHeadersCount()
+    shrinkBy = Math.ceil (widths - availableWidth) / @getShrinkableHeadersCount()
 
     # make all cols evenly smaller
     @headers = _.map @headers, (col) =>
@@ -755,7 +759,8 @@ class App.ControllerTable extends App.Controller
       return col
 
     # give left-over space from rounding to last column to get to 100%
-    roundingLeftOver = @availableWidth - @getHeaderWidths()
+    roundingLeftOver = availableWidth - @getHeaderWidths()
+
     # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
     if roundingLeftOver > 0
       @headers[@headers.length - 1].displayWidth = @headers[@headers.length - 1].displayWidth + roundingLeftOver
@@ -780,6 +785,9 @@ class App.ControllerTable extends App.Controller
 
     if @dndCallback
       widths += @sortableColWidth
+
+    if @destroy
+      widths += @destroyColWidth
 
     widths
 

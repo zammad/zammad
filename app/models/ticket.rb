@@ -528,6 +528,9 @@ condition example
       elsif selector[0] == 'article'
         tables += ', ticket_articles articles'
         query += 'tickets.id = articles.ticket_id'
+      elsif selector[0] == 'ticket_state'
+        tables += ', ticket_states'
+        query += 'tickets.state_id = ticket_states.id'
       else
         raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
       end
@@ -708,10 +711,8 @@ condition example
                       tag_objects.name = 'Ticket' AND
                       tag_items.id = tags.tag_item_id AND
                       tag_items.name IN (?)
-                  ) BETWEEN ? AND ?"
+                  ) BETWEEN 0 AND 0"
         bind_params.push selector['value']
-        bind_params.push selector['value'].count - 1
-        bind_params.push selector['value'].count
       elsif selector['operator'] == 'before (absolute)'
         query += "#{attribute} <= ?"
         bind_params.push selector['value']
@@ -881,14 +882,25 @@ perform changes on ticket
           next if skip_user
 
           # send notifications only to email adresses
-          next if !recipient_email
+          next if recipient_email.blank?
           next if recipient_email !~ /@/
 
           # check if address is valid
           begin
-            recipient_email = Mail::Address.new(recipient_email).address
+            Mail::AddressList.new(recipient_email).addresses.each do |address|
+              recipient_email = address.address
+              break if recipient_email.present? && recipient_email =~ /@/ && !recipient_email.match?(/\s/)
+            end
           rescue
-            next # because unable to parse
+            if recipient_email.present?
+              if recipient_email !~ /^(.+?)<(.+?)@(.+?)>$/
+                next # no usable format found
+              end
+              recipient_email = "#{$2}@#{$3}"
+            end
+            next if recipient_email.blank?
+            next if recipient_email !~ /@/
+            next if recipient_email.match?(/\s/)
           end
 
           # do not sent notifications to this recipients

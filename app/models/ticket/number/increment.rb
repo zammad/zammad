@@ -78,6 +78,10 @@ module Ticket::Number::Increment
     ticket_hook_divider = Setting.get('ticket_hook_divider') || ''
     ticket              = nil
 
+    if Setting.get('ticket_number_ignore_system_id') == true
+      system_id = ''
+    end
+
     # probe format
     string.scan(/#{Regexp.quote(ticket_hook)}#{Regexp.quote(ticket_hook_divider)}(#{system_id}\d{2,48})/i) do
       ticket = Ticket.find_by(number: $1)

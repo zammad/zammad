@@ -25,6 +25,7 @@ class App.UiElement.ticket_selector
       '^radio$': ['is', 'is not']
       '^select$': ['is', 'is not']
       '^input$': ['contains', 'contains not']
+      '^richtext$': ['contains', 'contains not']
       '^textarea$': ['contains', 'contains not']
       '^tag$': ['contains all', 'contains one', 'contains all not', 'contains one not']
 
@@ -37,6 +38,7 @@ class App.UiElement.ticket_selector
         '^radio$': ['is', 'is not', 'has changed']
         '^select$': ['is', 'is not', 'has changed']
         '^input$': ['contains', 'contains not', 'has changed']
+        '^richtext$': ['contains', 'contains not', 'has changed']
         '^textarea$': ['contains', 'contains not', 'has changed']
         '^tag$': ['contains all', 'contains one', 'contains all not', 'contains one not']
 

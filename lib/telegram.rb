@@ -470,7 +470,7 @@ returns
         object: 'Ticket::Article',
         o_id: article.id,
         data: document_result.body,
-        filename: params[:message][:voice][:file_path] || 'audio',
+        filename: params[:message][:voice][:file_path] || "audio-#{params[:message][:voice][:file_id]}.ogg",
         preferences: {
           'Mime-Type' => params[:message][:voice][:mime_type],
         },
@@ -489,7 +489,7 @@ returns
         if !result.success? || !result.body
           raise "Unable for download image from telegram: #{result.code}"
         end
-        body = "<img style=\"width:#{width}px;height:#{height}px;\" src=\"data:image/png;base64,#{Base64.strict_encode64(result.body)}\">"
+        body = "<img style=\"width:#{width}px;height:#{height}px;\" src=\"data:image/webp;base64,#{Base64.strict_encode64(result.body)}\">"
         article.content_type = 'text/html'
       elsif emoji
         article.content_type = 'text/plain'
@@ -508,9 +508,9 @@ returns
           object: 'Ticket::Article',
           o_id: article.id,
           data: document_result.body,
-          filename: params[:message][:sticker][:file_name] || 'sticker',
+          filename: params[:message][:sticker][:file_name] || "#{params[:message][:sticker][:set_name]}.webp",
           preferences: {
-            'Mime-Type' => params[:message][:sticker][:mime_type],
+            'Mime-Type' => 'image/webp', # mime type is not given from Telegram API but this is actually WebP
           },
         )
       end
@@ -528,7 +528,92 @@ returns
   end
 
   def to_group(params, group_id, channel)
+    # begin import
     Rails.logger.debug 'import message'
+
+    # map channel_post params to message
+    if params[:channel_post]
+      return if params[:channel_post][:new_chat_title] # happens when channel title is renamed, we use [:chat][:title] already, safely ignore this.
+      # note: used .blank? which is a rails method. empty? does not work on integers (values like date, width, height)  to check.
+      # need delete_if to remove any empty hashes, .compact only removes keys with nil values.
+      params[:message] = {
+        document: {
+          file_name: params.dig(:channel_post, :document, :file_name),
+          mime_type: params.dig(:channel_post, :document, :mime_type),
+          file_id: params.dig(:channel_post, :document, :file_id),
+          file_size: params.dig(:channel_post, :document, :filesize),
+          thumb: {
+            file_id: params.dig(:channel_post, :document, :thumb, :file_id),
+            file_size: params.dig(:channel_post, :document, :thumb, :file_size),
+            width: params.dig(:channel_post, :document, :thumb, :width),
+            height: params.dig(:channel_post, :document, :thumb, :height)
+          }.compact
+        }.delete_if { |_, v| v.blank? },
+        voice: {
+          duration: params.dig(:channel_post, :voice, :duration),
+          mime_type: params.dig(:channel_post, :voice, :mime_type),
+          file_id: params.dig(:channel_post, :voice, :file_id),
+          file_size: params.dig(:channel_post, :voice, :file_size)
+        }.compact,
+        sticker: {
+          width: params.dig(:channel_post, :sticker, :width),
+          height: params.dig(:channel_post, :sticker, :height),
+          emoji: params.dig(:channel_post, :sticker, :emoji),
+          set_name: params.dig(:channel_post, :sticker, :set_name),
+          file_id: params.dig(:channel_post, :sticker, :file_id),
+          file_path: params.dig(:channel_post, :sticker, :file_path),
+          thumb: {
+            file_id: params.dig(:channel_post, :sticker, :thumb, :file_id),
+            file_size: params.dig(:channel_post, :sticker, :thumb, :file_size),
+            width: params.dig(:channel_post, :sticker, :thumb, :width),
+            height: params.dig(:channel_post, :sticker, :thumb, :file_id),
+            file_path: params.dig(:channel_post, :sticker, :thumb, :file_path)
+          }.compact
+        }.delete_if { |_, v| v.blank? },
+        chat: {
+          id: params.dig(:channel_post, :chat, :id),
+          first_name: params.dig(:channel_post, :chat, :title),
+          last_name: 'Channel',
+          username: "channel#{params.dig(:channel_post, :chat, :id)}"
+        },
+        from: {
+          id: params.dig(:channel_post, :chat, :id),
+          first_name: params.dig(:channel_post, :chat, :title),
+          last_name: 'Channel',
+          username: "channel#{params.dig(:channel_post, :chat, :id)}"
+        },
+        caption: (params.dig(:channel_post, :caption) ? params.dig(:channel_post, :caption) : {}),
+        date: params.dig(:channel_post, :date),
+        message_id: params.dig(:channel_post, :message_id),
+        text: params.dig(:channel_post, :text),
+        photo: (params[:channel_post][:photo].map { |photo| { file_id: photo[:file_id], file_size: photo[:file_size], width: photo[:width], height: photo[:height] } } if params.dig(:channel_post, :photo))
+      }.delete_if { |_, v| v.blank? }
+      params.delete(:channel_post) # discard unused :channel_post hash
+    end
+
+    # checks if the channel post is being edited, and map it when it is
+    if params[:edited_channel_post]
+      # updates on telegram can only be on messages, no attachments
+      params[:edited_message] = {
+        chat: {
+          id: params.dig(:edited_channel_post, :chat, :id),
+          first_name: params.dig(:edited_channel_post, :chat, :title),
+          last_name: 'Channel',
+          username:  "channel#{params.dig(:edited_channel_post, :chat, :id)}"
+        },
+        from: {
+          id: params.dig(:edited_channel_post, :chat, :id),
+          first_name: params.dig(:edited_channel_post, :chat, :title),
+          last_name: 'Channel',
+          username:  "channel#{params.dig(:edited_channel_post, :chat, :id)}"
+        },
+        date: params.dig(:edited_channel_post, :date),
+        edit_date: params.dig(:edited_channel_post, :edit_date),
+        message_id: params.dig(:edited_channel_post, :message_id),
+        text: params.dig(:edited_channel_post, :text)
+      }
+      params.delete(:edited_channel_post) # discard unused :edited_channel_post hash
+    end
 
     # prevent multible update
     if !params[:edited_message]

@@ -5,7 +5,9 @@ class Sequencer
         module User
           module Attributes
             class Downcase < Sequencer::Unit::Base
-              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::SkipOnSkippedInstance
+              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+              skip_action :skipped
 
               uses :mapped
 

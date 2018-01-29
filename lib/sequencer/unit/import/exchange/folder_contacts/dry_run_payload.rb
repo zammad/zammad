@@ -3,7 +3,7 @@ class Sequencer
     module Import
       module Exchange
         module FolderContacts
-          class DryRunPayload < Sequencer::Unit::Import::Common::ImportJob::Payload::ToState
+          class DryRunPayload < Sequencer::Unit::Import::Common::ImportJob::Payload::ToAttribute
 
             provides :ews_config, :ews_folder_ids
           end

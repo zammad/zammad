@@ -3,27 +3,30 @@
     <div class="newTicket">
       <div class="box box--newTicket">
         <div class="page-header">
-          <h1><%- @T( @head ) %></h1>
+          <h1><%- @T(@head) %></h1>
         </div>
 
         <div class="page-content">
           <ul class="tabs type-tabs">
-
             <li class="tab u-textTruncate" data-type="phone-in">
               <%- @Icon('received-calls', 'tab-icon') %>
               <%- @T('Received Call') %>
             </li>
-
             <li class="tab u-textTruncate" data-type="phone-out">
               <%- @Icon('outbound-calls', 'tab-icon') %>
               <%- @T('Outbound Call') %>
             </li>
-
-           <li class="tab u-textTruncate" data-type="email-out">
+            <li class="tab u-textTruncate" data-type="email-out">
               <%- @Icon('email', 'tab-icon') %>
               <%- @T('Send Email') %>
             </li>
           </ul>
+
+          <% if !_.isEmpty(@C('ui_ticket_create_notes')): %>
+            <% for type, note of @C('ui_ticket_create_notes'): %>
+              <div class="alert alert--warning js-note" role="alert" data-type="<%= type %>"><%- @T(note) %></div>
+            <% end %>
+          <% end %>
 
           <form role="form" class="ticket-create">
             <input type="hidden" name="formSenderType"/>
@@ -46,7 +49,6 @@
       </div>
     </div>
   </div>
-
   <div class="tabsSidebar vertical"></div>
 </div>
 <!--

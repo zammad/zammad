@@ -20,37 +20,53 @@ class App.ImageService
       imageWidth  = imageObject.width
       imageHeight = imageObject.height
       console.log('ImageService', 'current size', imageWidth, imageHeight)
+      console.log('ImageService', 'sizeFactor', sizeFactor)
       if y is 'auto' && x is 'auto'
         x = imageWidth
         y = imageHeight
 
+      # set max x/y
+      if x isnt 'auto' && x > imageWidth
+        x = imageWidth
+
+      if y isnt 'auto' && y > imageHeight
+        y = imageHeight
+
       # get auto dimensions
-      if y is 'auto'
+      if y is 'auto'# && (y * factor) >= imageHeight
         factor = imageWidth / x
         y = imageHeight / factor
 
-      if x is 'auto'
+      if x is 'auto'# && (y * factor) >= imageWidth
         factor = imageWidth / y
         x = imageHeight / factor
 
+      canvas = document.createElement('canvas')
+
       # check if resize is needed
       resize = false
-      if x < imageWidth || y < imageHeight
+      if (x < imageWidth && (x * sizeFactor < imageWidth)) || (y < imageHeight && (y * sizeFactor < imageHeight))
         resize = true
         x = x * sizeFactor
         y = y * sizeFactor
+
+        # set dimensions
+        canvas.width  = x
+        canvas.height = y
+
+        # draw image on canvas and set image dimensions
+        context = canvas.getContext('2d')
+        context.drawImage(imageObject, 0, 0, x, y)
+
       else
-        x = imageWidth
-        y = imageHeight
 
-      # create canvas and set dimensions
-      canvas        = document.createElement('canvas')
-      canvas.width  = x
-      canvas.height = y
+        # set dimensions
+        canvas.width  = imageWidth
+        canvas.height = imageHeight
 
-      # draw image on canvas and set image dimensions
-      context = canvas.getContext('2d')
-      context.drawImage(imageObject, 0, 0, x, y)
+        # draw image on canvas and set image dimensions
+        context = canvas.getContext('2d')
+        context.drawImage(imageObject, 0, 0, imageWidth, imageHeight)
 
       # set quallity based on image size
       if quallity == 'auto'

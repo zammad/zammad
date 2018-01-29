@@ -10,11 +10,12 @@ class Overview < ApplicationModel
   include Overview::Assets
 
   has_and_belongs_to_many :roles, after_add: :cache_update, after_remove: :cache_update, class_name: 'Role'
-  has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update
+  has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update, class_name: 'User'
   store     :condition
   store     :order
   store     :view
   validates :name, presence: true
+  validates :roles, presence: true
 
   before_create :fill_link_on_create, :fill_prio
   before_update :fill_link_on_update, :rearrangement

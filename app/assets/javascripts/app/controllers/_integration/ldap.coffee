@@ -132,13 +132,12 @@ class Form extends App.Controller
     if _.isEmpty(job)
       @lastImport.html('')
       return
-    countDone = job.result.created + job.result.updated + job.result.unchanged + job.result.skipped + job.result.failed
     if !job.result.roles
       job.result.roles = {}
     for role_id, statistic of job.result.role_ids
       role = App.Role.find(role_id)
       job.result.roles[role.displayName()] = statistic
-    el = $(App.view('integration/ldap_last_import')(job: job, countDone: countDone))
+    el = $(App.view('integration/ldap_last_import')(job: job))
     @lastImport.html(el)
 
   activeDryRun: =>
@@ -419,7 +418,7 @@ class ConnectionWizard extends App.WizardModal
       if !_.isArray(user_attributes[key])
         user_attributes[key] = [user_attributes[key]]
     user_attributes_local =
-      "#{@wizardConfig['user_uid']}": 'login'
+      'samaccountname': 'login'
     length = user_attributes.source.length-1
     for count in [0..length]
       if user_attributes.source[count] && user_attributes.dest[count]
@@ -450,7 +449,7 @@ class ConnectionWizard extends App.WizardModal
   buildRowsUserMap: (user_attribute_map) =>
 
     # show static login row
-    userUidDisplayValue = @wizardConfig.wizardData.backend_user_attributes[ @wizardConfig['user_uid'] ]
+    userUidDisplayValue = @wizardConfig.wizardData.backend_user_attributes['samaccountname']
 
     el = [
       $(App.view('integration/ldap_user_attribute_row_read_only')(
@@ -459,7 +458,7 @@ class ConnectionWizard extends App.WizardModal
       ))
     ]
     for source, dest of user_attribute_map
-      continue if source == @wizardConfig['user_uid']
+      continue if source == 'samaccountname'
       continue if !(source of @wizardConfig.wizardData.backend_user_attributes)
       el.push @buildRowUserAttribute(source, dest)
     el
@@ -539,22 +538,12 @@ class ConnectionWizard extends App.WizardModal
           @showAlert('js-error', (job.result.error || job.result.info))
           return
 
-        if job.result && job.result.sum
+        if job.result && job.result.total
           @$('.js-preprogress').addClass('hide')
           @$('.js-analyzing').removeClass('hide')
-          total = 0
-          if job.result.created
-            total += job.result.created
-          if job.result.failed
-            total += job.result.failed
-          if job.result.skipped
-            total += job.result.skipped
-          if job.result.unchanged
-            total += job.result.unchanged
-          if job.result.updated
-            total += job.result.updated
-          @$('.js-progress progress').attr('value', total)
-          @$('.js-progress progress').attr('max', job.result.sum)
+
+          @$('.js-progress progress').attr('value', job.result.sum)
+          @$('.js-progress progress').attr('max', job.result.total)
         if job.finished_at
           # reset initial state in case the back button is used
           @$('.js-preprogress').removeClass('hide')
@@ -574,9 +563,8 @@ class ConnectionWizard extends App.WizardModal
     for role_id, statistic of job.result.role_ids
       role = App.Role.find(role_id)
       job.result.roles[role.displayName()] = statistic
-    countDone = job.result.created + job.result.updated + job.result.unchanged + job.result.skipped
     @showSlide('js-try')
-    el = $(App.view('integration/ldap_summary')(job: job, countDone: countDone))
+    el = $(App.view('integration/ldap_summary')(job: job))
     @el.find('.js-summary').html(el)
 
 App.Config.set(

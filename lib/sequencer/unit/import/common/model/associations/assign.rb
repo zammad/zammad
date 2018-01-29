@@ -9,8 +9,8 @@ class Sequencer
             class Assign < Sequencer::Unit::Base
               include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
 
-              uses :instance, :associations, :instance_action, :dry_run
-              provides :instance_action
+              uses :instance, :associations, :action, :dry_run
+              provides :action
 
               def process
                 return if dry_run
@@ -19,9 +19,9 @@ class Sequencer
                 instance.assign_attributes(associations)
 
                 # execute associations check only if needed for performance reasons
-                return if instance_action != :unchanged
+                return if action != :unchanged
                 return if !changed?
-                state.provide(:instance_action, :changed)
+                state.provide(:action, :changed)
               rescue => e
                 handle_failure(e)
               end
@@ -47,7 +47,7 @@ class Sequencer
 
               def compareable(value)
                 return nil if value.blank?
-                return value.sort if value.respond_to(:sort)
+                return value.sort if value.respond_to?(:sort)
                 value
               end
             end

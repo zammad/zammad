@@ -1,3 +1,6 @@
+<% if @attribute.seperator: %>
+<input class="js-shadow hide" id="<%= @attribute.id %>" name="<%= @attribute.name %>" value="<%= @attribute.value %>">
+<% else: %>
 <select
   class="columnSelect-shadow js-shadow"
   id="<%= @attribute.id %>"
@@ -11,6 +14,7 @@
   <option value="<%= option.value %>" <%= ' selected' if option.selected %>><%= option.name %></option>
   <% end %>
 </select>
+<% end %>
 <div class="columnSelect-column columnSelect-column--selected js-selected" data-name="<%= @attribute.name %>">
   <div class="u-placeholder u-unselectable js-placeholder<%= ' is-hidden' if @values.length %>"><%- @T('Nothing selected') %></div>
   <% for option in @attribute.options: %>

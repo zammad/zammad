@@ -12,8 +12,13 @@ module ClonesTicketArticleAttachments
     )
     attachments = []
     article.attachments.each do |new_attachment|
-      next if new_attachment.preferences['Content-ID'].present?
       next if new_attachment.preferences['content-alternative'] == true
+      if article.content_type.present? && article.content_type =~ %r{text/html}i
+        next if new_attachment.preferences['content_disposition'].present? && new_attachment.preferences['content_disposition'] !~ /inline/
+        if new_attachment.preferences['Content-ID'].present? && article.body.present?
+          next if article.body.match?(/#{Regexp.quote(new_attachment.preferences['Content-ID'])}/i)
+        end
+      end
       already_added = false
       existing_attachments.each do |existing_attachment|
         next if existing_attachment.filename != new_attachment.filename || existing_attachment.size != new_attachment.size

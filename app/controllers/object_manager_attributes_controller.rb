@@ -110,12 +110,32 @@ class ObjectManagerAttributesController < ApplicationController
         # rubocop:enable Lint/BooleanSymbol
       end
     end
-    if params[:data_option] && !params[:data_option].key?(:default)
-      params[:data_option][:default] = if params[:data_type].match?(/^(input|select|tree_select)$/)
-                                         ''
-                                       end
+
+    if params[:data_option]
+
+      if !params[:data_option].key?(:default)
+        params[:data_option][:default] = if params[:data_type].match?(/^(input|select|tree_select)$/)
+                                           ''
+                                         end
+      end
+
+      if params[:data_option][:null].nil?
+        params[:data_option][:null] = true
+      end
+      if params[:data_option][:options].nil?
+        params[:data_option][:options] = ''
+      end
+      if params[:data_option][:relation].nil?
+        params[:data_option][:relation] = ''
+      end
+    else
+      params[:data_option] = {
+        default:  '',
+        options:  '',
+        relation: '',
+        null:     true
+      }
     end
-    return if !params[:data_option][:null].nil?
-    params[:data_option][:null] = true
+
   end
 end

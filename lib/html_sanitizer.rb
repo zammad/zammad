@@ -16,6 +16,7 @@ satinize html string based on whiltelist
     tags_whitelist = Rails.configuration.html_sanitizer_tags_whitelist
     attributes_whitelist = Rails.configuration.html_sanitizer_attributes_whitelist
     css_properties_whitelist = Rails.configuration.html_sanitizer_css_properties_whitelist
+    css_values_blacklist = Rails.application.config.html_sanitizer_css_values_backlist
     classes_whitelist = ['js-signatureMarker']
     attributes_2_css = %w[width height]
 
@@ -23,35 +24,6 @@ satinize html string based on whiltelist
     string.gsub!(/<!--.+?-->/m, '')
 
     scrubber_link = Loofah::Scrubber.new do |node|
-
-      # check if href is different to text
-      if node.name == 'a' && !url_same?(node['href'], node.text)
-        if node['href'].blank?
-          node.replace node.children.to_s
-          Loofah::Scrubber::STOP
-        elsif ((node.children.blank? || node.children.first.class == Nokogiri::XML::Text) && node.text.present?) || (node.children.size == 1 && node.children.first.content == node.content && node.content.present?)
-          if node.text.downcase.start_with?('http', 'ftp', '//')
-            a = Nokogiri::XML::Node.new 'a', node.document
-            a['href'] = node['href']
-            a['rel'] = 'nofollow noreferrer noopener'
-            a['target'] = '_blank'
-            a.content = node['href']
-            node.add_previous_sibling(a)
-            text = Nokogiri::XML::Text.new(' (', node.document)
-            node.add_previous_sibling(text)
-            node['href'] = cleanup_target(node.text)
-          else
-            text = Nokogiri::XML::Text.new("#{node.text} (", node.document)
-            node.add_previous_sibling(text)
-            node.content = cleanup_target(node['href'])
-            node['href'] = cleanup_target(node['href'])
-          end
-          text = Nokogiri::XML::Text.new(')', node.document)
-          node.add_next_sibling(text)
-        else
-          node.content = cleanup_target(node['href'])
-        end
-      end
 
       # check if text has urls which need to be clickable
       if node&.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
@@ -83,6 +55,18 @@ satinize html string based on whiltelist
         node.set_attribute('href', href)
         node.set_attribute('rel', 'nofollow noreferrer noopener')
         node.set_attribute('target', '_blank')
+      end
+
+      if node.name == 'a' && node['href'].blank?
+        node.replace node.children.to_s
+        Loofah::Scrubber::STOP
+      end
+
+      # check if href is different to text
+      if node.name == 'a' && !url_same?(node['href'], node.text)
+        if node['title'].blank?
+          node['title'] = node['href']
+        end
       end
     end
 
@@ -163,6 +147,7 @@ satinize html string based on whiltelist
           key = prop[0].strip
           next if !css_properties_whitelist.include?(node.name)
           next if !css_properties_whitelist[node.name].include?(key)
+          next if css_values_blacklist[node.name]&.include?(local_pear.gsub(/[[:space:]]/, '').strip)
           style += "#{local_pear};"
         end
         node['style'] = style

@@ -94,6 +94,10 @@ class App.TicketCreate extends App.Controller
     else
       @$('[name="cc"]').closest('.form-group').addClass('hide')
 
+    # show notice
+    @$('.js-note').addClass('hide')
+    @$(".js-note[data-type='#{type}']").removeClass('hide')
+
     App.TaskManager.touch(@task_key)
 
   meta: =>
@@ -207,7 +211,7 @@ class App.TicketCreate extends App.Controller
   render: (template = {}) ->
 
     # get params
-    params = {}
+    params = @prefilledParams || {}
     if template && !_.isEmpty(template.options)
       params = template.options
     else if App.TaskManager.get(@task_key) && !_.isEmpty(App.TaskManager.get(@task_key).state)

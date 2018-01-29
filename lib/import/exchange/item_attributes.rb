@@ -33,8 +33,7 @@ module Import
       end
 
       def normalize(properties)
-        result = {}
-        properties.each do |key, value|
+        properties.each_with_object({}) do |(key, value), result|
 
           next if key == :body
 
@@ -46,20 +45,16 @@ module Import
             result[key] = sub_elems(value[:elems])
           end
         end
-
-        result
       end
 
       def sub_elems(elems)
-        result = {}
-        elems.each do |elem|
+        elems.each_with_object({}) do |elem, result|
           if elem[:entry]
             result.merge!( sub_elem_entry( elem[:entry] ) )
           else
             result.merge!( normalize(elem) )
           end
         end
-        result
       end
 
       def sub_elem_entry(entry)
@@ -83,9 +78,7 @@ module Import
       end
 
       def flatten(properties, prefix: nil)
-
-        result = {}
-        properties.each do |key, value|
+        properties.each_with_object({}) do |(key, value), result|
 
           result_key = key
           if prefix
@@ -104,7 +97,6 @@ module Import
             result[result_key] = value.to_s
           end
         end
-        result
       end
     end
   end

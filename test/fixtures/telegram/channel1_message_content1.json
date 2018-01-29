@@ -1,0 +1,22 @@
+{
+  "update_id":10001,
+  "channel_post":{
+    "date":1441645532,
+    "chat":{
+       "last_name":"Test Lastname",
+       "id":1111111,
+       "type":"channel",
+       "username":"Testusername"
+    },
+    "message_id":1365,
+    "text":"Hello, I need your Help",
+    "bid":"12345678",
+    "callback_token":"AbcDefG",
+    "entities": [
+      {"offset": 0,
+       "length": 6,
+       "type": "bot_command"      
+      }
+    ]
+  }
+}

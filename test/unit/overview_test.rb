@@ -5,8 +5,11 @@ class OverviewTest < ActiveSupport::TestCase
 
   test 'overview link' do
     UserInfo.current_user_id = 1
+    roles = Role.where(name: 'Agent')
+
     overview = Overview.create!(
       name: 'Not Shown Admin 2',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -29,6 +32,7 @@ class OverviewTest < ActiveSupport::TestCase
 
     overview = Overview.create!(
       name: 'My assigned Tickets 2',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -51,6 +55,7 @@ class OverviewTest < ActiveSupport::TestCase
 
     overview = Overview.create!(
       name: 'Übersicht',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -73,6 +78,7 @@ class OverviewTest < ActiveSupport::TestCase
 
     overview = Overview.create!(
       name: "   Übersicht   \n",
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -95,6 +101,7 @@ class OverviewTest < ActiveSupport::TestCase
 
     overview1 = Overview.create!(
       name: 'Meine Übersicht',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -115,6 +122,7 @@ class OverviewTest < ActiveSupport::TestCase
     assert_equal(overview1.link, 'meine_ubersicht')
     overview2 = Overview.create!(
       name: 'Meine Übersicht',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -139,6 +147,7 @@ class OverviewTest < ActiveSupport::TestCase
 
     overview = Overview.create!(
       name: 'Д дФ ф',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -161,6 +170,7 @@ class OverviewTest < ActiveSupport::TestCase
 
     overview = Overview.create!(
       name: ' Д дФ ф abc ',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -184,6 +194,7 @@ class OverviewTest < ActiveSupport::TestCase
     overview = Overview.create!(
       name: 'Übersicht',
       link: 'my_overview',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -215,8 +226,11 @@ class OverviewTest < ActiveSupport::TestCase
   test 'same url' do
     UserInfo.current_user_id = 1
 
+    roles = Role.where(name: 'Agent')
+
     overview1 = Overview.create!(
       name: 'My own assigned Tickets',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -238,6 +252,7 @@ class OverviewTest < ActiveSupport::TestCase
 
     overview2 = Overview.create!(
       name: 'My own assigned Tickets',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -259,6 +274,7 @@ class OverviewTest < ActiveSupport::TestCase
 
     overview3 = Overview.create!(
       name: 'My own assigned Tickets',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -286,9 +302,12 @@ class OverviewTest < ActiveSupport::TestCase
   test 'priority rearrangement' do
     UserInfo.current_user_id = 1
 
+    roles = Role.where(name: 'Agent')
+
     overview1 = Overview.create!(
       name: 'Overview1',
       link: 'my_overview',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -311,6 +330,7 @@ class OverviewTest < ActiveSupport::TestCase
     overview2 = Overview.create!(
       name: 'Overview2',
       link: 'my_overview',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',
@@ -333,6 +353,7 @@ class OverviewTest < ActiveSupport::TestCase
     overview3 = Overview.create!(
       name: 'Overview3',
       link: 'my_overview',
+      roles: roles,
       condition: {
         'ticket.state_id' => {
           operator: 'is',

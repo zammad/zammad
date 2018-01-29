@@ -55,7 +55,7 @@ class Sequencer
   #
   # @return [Hash{Symbol => Object}] the final result state attributes and values
   def process
-    log_start_finish(:info, "Sequence '#{@sequence.name}'") do
+    log_start_finish(:info, "Sequence '#{sequence.name}'") do
 
       sequence.units.each_with_index do |unit, index|
 
@@ -69,7 +69,7 @@ class Sequencer
     end
 
     state.to_h.tap do |result|
-      logger.debug("Returning Sequence '#{@sequence.name}' result: #{result.inspect}")
+      logger.debug("Returning Sequence '#{sequence.name}' result: #{result.inspect}")
     end
   end
 
