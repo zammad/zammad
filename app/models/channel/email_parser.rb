@@ -825,6 +825,26 @@ returns
     end
   end
 
+=begin
+
+process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
+
+  Channel::EmailParser.process_unprocessable_mails
+
+=end
+
+  def self.process_unprocessable_mails(params = {})
+    path = Rails.root.join('tmp', 'unprocessable_mail')
+    files = []
+    Dir.glob("#{path}/*.eml") do |entry|
+      ticket, article, user, mail = Channel::EmailParser.new.process(params, IO.binread(entry))
+      next if ticket.blank?
+      files.push entry
+      File.delete(entry)
+    end
+    files
+  end
+
 end
 
 module Mail
