@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.1.2](https://github.com/zammad/zammad/tree/2.1.2) (2018-01-30)
+[Full Changelog](https://github.com/zammad/zammad/compare/2.1.1...2.1.2)
+- Generated excel report fails to create for special strings in ticket titles \(also: CSV formula injection possible\) [\#1756](https://github.com/zammad/zammad/issues/1756) [[bug](https://github.com/zammad/zammad/labels/bug)] [[reporting](https://github.com/zammad/zammad/labels/reporting)]
+
 ## [2.1.1](https://github.com/zammad/zammad/tree/2.1.1) (2017-12-06)
 [Full Changelog](https://github.com/zammad/zammad/compare/2.1.0...2.1.1)
 
