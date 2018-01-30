@@ -247,4 +247,94 @@ class ModelTest < ActiveSupport::TestCase
     assert_equal(4, searchable.count)
   end
 
+  test 'param_cleanup test' do
+    params = {
+      id: 123,
+      abc: true,
+      firstname: '123',
+      created_by_id: 1,
+      created_at: Time.zone.now,
+      updated_by_id: 1,
+      updated_at: Time.zone.now,
+      action: 'some action',
+      controller: 'some controller',
+    }
+    result = User.param_cleanup(params, true)
+    assert_not(result.key?(:id))
+    assert_not(result.key?(:abc))
+    assert_equal('123', result[:firstname])
+    assert_not(result.key?(:created_by_id))
+    assert_not(result.key?(:created_at))
+    assert_not(result.key?(:updated_by_id))
+    assert_not(result.key?(:updated_at))
+    assert_not(result.key?(:action))
+    assert_not(result.key?(:controller))
+
+    params = {
+      id: 123,
+      abc: true,
+      firstname: '123',
+      created_by_id: 1,
+      created_at: Time.zone.now,
+      updated_by_id: 1,
+      updated_at: Time.zone.now,
+      action: 'some action',
+      controller: 'some controller',
+    }
+    result = User.param_cleanup(params)
+    assert_equal(123, result[:id])
+    assert_not(result.key?(:abc))
+    assert_equal('123', result[:firstname])
+    assert_not(result.key?(:created_by_id))
+    assert_not(result.key?(:created_at))
+    assert_not(result.key?(:updated_by_id))
+    assert_not(result.key?(:updated_at))
+    assert_not(result.key?(:action))
+    assert_not(result.key?(:controller))
+
+    Setting.set('import_mode', true)
+
+    params = {
+      id: 123,
+      abc: true,
+      firstname: '123',
+      created_by_id: 1,
+      created_at: Time.zone.now,
+      updated_by_id: 1,
+      updated_at: Time.zone.now,
+      action: 'some action',
+      controller: 'some controller',
+    }
+    result = User.param_cleanup(params, true)
+    assert_not(result.key?(:abc))
+    assert_equal('123', result[:firstname])
+    assert_equal(1, result[:created_by_id])
+    assert(result[:created_at])
+    assert_equal(1, result[:updated_by_id])
+    assert(result[:updated_at])
+    assert_not(result.key?(:action))
+    assert_not(result.key?(:controller))
+
+    params = {
+      id: 123,
+      abc: true,
+      firstname: '123',
+      created_by_id: 1,
+      created_at: Time.zone.now,
+      updated_by_id: 1,
+      updated_at: Time.zone.now,
+      action: 'some action',
+      controller: 'some controller',
+    }
+    result = User.param_cleanup(params)
+    assert_equal(123, result[:id])
+    assert_equal('123', result[:firstname])
+    assert_equal(1, result[:created_by_id])
+    assert(result[:created_at])
+    assert_equal(1, result[:updated_by_id])
+    assert(result[:updated_at])
+    assert_not(result.key?(:action))
+    assert_not(result.key?(:controller))
+  end
+
 end

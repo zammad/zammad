@@ -69,6 +69,8 @@ returns
 
 remove all not used params of object (per default :updated_at, :created_at, :updated_by_id and :created_by_id)
 
+if import mode is enabled, just do not used :action and :controller
+
   result = Model.filter_unused_params(params)
 
 returns
@@ -78,12 +80,13 @@ returns
 =end
 
     def filter_unused_params(data)
-
-      # we do want to set this via database
-      %i[action controller updated_at created_at updated_by_id created_by_id updated_by created_by].each do |key|
+      params = %i[action controller updated_at created_at updated_by_id created_by_id updated_by created_by]
+      if Setting.get('import_mode') == true
+        params = %i[action controller]
+      end
+      params.each do |key|
         data.delete(key)
       end
-
       data
     end
   end
