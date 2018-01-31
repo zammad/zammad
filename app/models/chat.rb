@@ -295,7 +295,7 @@ check if country is blocked for chat
 
   def blocked_country?(ip)
     return false if ip.blank?
-    retunn false if block_country.blank?
+    return false if block_country.blank?
     geo_ip = Service::GeoIp.location(ip)
     return false if geo_ip.blank?
     return false if geo_ip['country_code'].blank?
