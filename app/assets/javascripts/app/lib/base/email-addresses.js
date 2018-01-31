@@ -1,6 +1,6 @@
 
 // email-addresses.js - RFC 5322 email address parser
-// v 2.0.1
+// v 3.0.1
 //
 // http://tools.ietf.org/html/rfc5322
 //
@@ -186,27 +186,7 @@ function parse5322(opts) {
     // "First Last" -> "First Last"
     // "First   Last" -> "First Last"
     function collapseWhitespace(s) {
-        function isWhitespace(c) {
-            return c === ' ' ||
-                   c === '\t' ||
-                   c === '\r' ||
-                   c === '\n';
-        }
-        var i, str;
-        str = "";
-        for (i = 0; i < s.length; i += 1) {
-            if (!isWhitespace(s[i]) || !isWhitespace(s[i + 1])) {
-                str += s[i];
-            }
-        }
-
-        if (isWhitespace(str[0])) {
-            str = str.substring(1);
-        }
-        if (isWhitespace(str[str.length - 1])) {
-            str = str.substring(0, str.length - 1);
-        }
-        return str;
+        return s.replace(/([ \t]|\r\n)+/g, ' ').replace(/^\s*/, '').replace(/\s*$/, '');
     }
 
     // UTF-8 pseudo-production (RFC 6532)
@@ -597,9 +577,13 @@ function parse5322(opts) {
         return wrap('domain', function domainCheckTLD() {
             var result = or(obsDomain, dotAtom, domainLiteral)();
             if (opts.rejectTLD) {
-                if (result.semantic.indexOf('.') < 0) {
+                if (result && result.semantic && result.semantic.indexOf('.') < 0) {
                     return null;
                 }
+            }
+            // strip all whitespace from domains
+            if (result) {
+                result.semantic = result.semantic.replace(/\s+/g, '');
             }
             return result;
         }());
@@ -610,6 +594,36 @@ function parse5322(opts) {
         return wrap('addr-spec', and(
             localPart, literal('@'), domain
         )());
+    }
+
+    // 3.6.2 Originator Fields
+    // Below we only parse the field body, not the name of the field
+    // like "From:", "Sender:", or "Reply-To:". Other libraries that
+    // parse email headers can parse those and defer to these productions
+    // for the "RFC 5322" part.
+
+    // RFC 6854 2.1. Replacement of RFC 5322, Section 3.6.2. Originator Fields
+    // from = "From:" (mailbox-list / address-list) CRLF
+    function fromSpec() {
+        return wrap('from', or(
+            mailboxList,
+            addressList
+        )());
+    }
+
+    // RFC 6854 2.1. Replacement of RFC 5322, Section 3.6.2. Originator Fields
+    // sender = "Sender:" (mailbox / address) CRLF
+    function senderSpec() {
+        return wrap('sender', or(
+            mailbox,
+            address
+        )());
+    }
+
+    // RFC 6854 2.1. Replacement of RFC 5322, Section 3.6.2. Originator Fields
+    // reply-to = "Reply-To:" address-list CRLF
+    function replyToSpec() {
+        return wrap('reply-to', addressList());
     }
 
     // 4.1. Miscellaneous Obsolete Tokens
@@ -766,92 +780,186 @@ function parse5322(opts) {
     // ast analysis
 
     function findNode(name, root) {
-        var i, queue, node;
+        var i, stack, node;
         if (root === null || root === undefined) { return null; }
-        queue = [root];
-        while (queue.length > 0) {
-            node = queue.shift();
+        stack = [root];
+        while (stack.length > 0) {
+            node = stack.pop();
             if (node.name === name) {
                 return node;
             }
-            for (i = 0; i < node.children.length; i += 1) {
-                queue.push(node.children[i]);
+            for (i = node.children.length - 1; i >= 0; i -= 1) {
+                stack.push(node.children[i]);
             }
         }
         return null;
     }
 
     function findAllNodes(name, root) {
-        var i, queue, node, result;
+        var i, stack, node, result;
         if (root === null || root === undefined) { return null; }
-        queue = [root];
+        stack = [root];
         result = [];
-        while (queue.length > 0) {
-            node = queue.shift();
+        while (stack.length > 0) {
+            node = stack.pop();
             if (node.name === name) {
                 result.push(node);
             }
-            for (i = 0; i < node.children.length; i += 1) {
-                queue.push(node.children[i]);
+            for (i = node.children.length - 1; i >= 0; i -= 1) {
+                stack.push(node.children[i]);
+            }
+        }
+        return result;
+    }
+
+    function findAllNodesNoChildren(names, root) {
+        var i, stack, node, result, namesLookup;
+        if (root === null || root === undefined) { return null; }
+        stack = [root];
+        result = [];
+        namesLookup = {};
+        for (i = 0; i < names.length; i += 1) {
+            namesLookup[names[i]] = true;
+        }
+
+        while (stack.length > 0) {
+            node = stack.pop();
+            if (node.name in namesLookup) {
+                result.push(node);
+                // don't look at children (hence findAllNodesNoChildren)
+            } else {
+                for (i = node.children.length - 1; i >= 0; i -= 1) {
+                    stack.push(node.children[i]);
+                }
             }
         }
         return result;
     }
 
     function giveResult(ast) {
-        function grabSemantic(n) {
-            return n !== null ? n.semantic : null;
-        }
-        var i, ret, addresses, addr, name, aspec, local, domain;
+        var addresses, groupsAndMailboxes, i, groupOrMailbox, result;
         if (ast === null) {
             return null;
         }
-        ret = { ast: ast };
-        addresses = findAllNodes('address', ast);
-        ret.addresses = [];
-        for (i = 0; i < addresses.length; i += 1) {
-            addr = addresses[i];
-            name = findNode('display-name', addr);
-            aspec = findNode('addr-spec', addr);
-            local = findNode('local-part', aspec);
-            domain = findNode('domain', aspec);
-            ret.addresses.push({
-                node: addr,
-                parts: {
-                    name: name,
-                    address: aspec,
-                    local: local,
-                    domain: domain
-                },
-                name: grabSemantic(name),
-                address: grabSemantic(aspec),
-                local: grabSemantic(local),
-                domain: grabSemantic(domain)
-            });
-        }
+        addresses = [];
 
-        if (opts.simple) {
-            ret = ret.addresses;
-            for (i = 0; i < ret.length; i += 1) {
-                delete ret[i].node;
+        // An address is a 'group' (i.e. a list of mailboxes) or a 'mailbox'.
+        groupsAndMailboxes = findAllNodesNoChildren(['group', 'mailbox'], ast);
+        for (i = 0; i <  groupsAndMailboxes.length; i += 1) {
+            groupOrMailbox = groupsAndMailboxes[i];
+            if (groupOrMailbox.name === 'group') {
+                addresses.push(giveResultGroup(groupOrMailbox));
+            } else if (groupOrMailbox.name === 'mailbox') {
+                addresses.push(giveResultMailbox(groupOrMailbox));
             }
         }
-        return ret;
+
+        result = {
+            ast: ast,
+            addresses: addresses,
+        };
+        if (opts.simple) {
+            result = simplifyResult(result);
+        }
+        if (opts.oneResult) {
+            return oneResult(result);
+        }
+        if (opts.simple) {
+            return result && result.addresses;
+        } else {
+            return result;
+        }
+    }
+
+    function giveResultGroup(group) {
+        var i;
+        var groupName = findNode('display-name', group);
+        var groupResultMailboxes = [];
+        var mailboxes = findAllNodesNoChildren(['mailbox'], group);
+        for (i = 0; i < mailboxes.length; i += 1) {
+            groupResultMailboxes.push(giveResultMailbox(mailboxes[i]));
+        }
+        return {
+            node: group,
+            parts: {
+                name: groupName,
+            },
+            type: group.name, // 'group'
+            name: grabSemantic(groupName),
+            addresses: groupResultMailboxes,
+        };
+    }
+
+    function giveResultMailbox(mailbox) {
+        var name = findNode('display-name', mailbox);
+        var aspec = findNode('addr-spec', mailbox);
+        var comments = findAllNodes('cfws', mailbox);
+
+        var local = findNode('local-part', aspec);
+        var domain = findNode('domain', aspec);
+        return {
+            node: mailbox,
+            parts: {
+                name: name,
+                address: aspec,
+                local: local,
+                domain: domain,
+                comments: comments
+            },
+            type: mailbox.name, // 'mailbox'
+            name: grabSemantic(name),
+            address: grabSemantic(aspec),
+            local: grabSemantic(local),
+            domain: grabSemantic(domain),
+            groupName: grabSemantic(mailbox.groupName),
+        };
+    }
+
+    function grabSemantic(n) {
+        return n !== null && n !== undefined ? n.semantic : null;
+    }
+
+    function simplifyResult(result) {
+        var i;
+        if (result && result.addresses) {
+            for (i = 0; i < result.addresses.length; i += 1) {
+                delete result.addresses[i].node;
+            }
+        }
+        return result;
+    }
+
+    function oneResult(result) {
+        if (!result) { return null; }
+        if (!opts.partial && result.addresses.length > 1) { return null; }
+        return result.addresses && result.addresses[0];
     }
 
     /////////////////////////////////////////////////////
 
-    var parseString, pos, len, parsed;
+    var parseString, pos, len, parsed, startProduction;
 
     opts = handleOpts(opts, {});
     if (opts === null) { return null; }
 
     parseString = opts.input;
 
+    startProduction = {
+        'address': address,
+        'address-list': addressList,
+        'angle-addr': angleAddr,
+        'from': fromSpec,
+        'group': group,
+        'mailbox': mailbox,
+        'mailbox-list': mailboxList,
+        'reply-to': replyToSpec,
+        'sender': senderSpec,
+    }[opts.startAt] || addressList;
+
     if (!opts.strict) {
         initialize();
         opts.strict = true;
-        parsed = addressList(parseString);
+        parsed = startProduction(parseString);
         if (opts.partial || !inStr()) {
             return giveResult(parsed);
         }
@@ -859,46 +967,51 @@ function parse5322(opts) {
     }
 
     initialize();
-    parsed = addressList(parseString);
+    parsed = startProduction(parseString);
     if (!opts.partial && inStr()) { return null; }
     return giveResult(parsed);
 }
 
 function parseOneAddressSimple(opts) {
-    var result;
-
-    opts = handleOpts(opts, {
+    return parse5322(handleOpts(opts, {
+        oneResult: true,
         rfc6532: true,
-        simple: true
-    });
-    if (opts === null) { return null; }
-
-    result = parse5322(opts);
-
-    if ((!result) ||
-        (!opts.partial &&
-            (opts.simple && result.length > 1) ||
-            (!opts.simple && result.addresses.length > 1))) {
-        return null;
-    }
-
-    return opts.simple ?
-        result && result[0] :
-        result && result.addresses && result.addresses[0];
+        simple: true,
+        startAt: 'address-list',
+    }));
 }
 
 function parseAddressListSimple(opts) {
-    var result;
-
-    opts = handleOpts(opts, {
+    return parse5322(handleOpts(opts, {
         rfc6532: true,
-        simple: true
-    });
-    if (opts === null) { return null; }
+        simple: true,
+        startAt: 'address-list',
+    }));
+}
 
-    result = parse5322(opts);
+function parseFromSimple(opts) {
+    return parse5322(handleOpts(opts, {
+        rfc6532: true,
+        simple: true,
+        startAt: 'from',
+    }));
+}
 
-    return opts.simple ? result : result.addresses;
+function parseSenderSimple(opts) {
+    return parse5322(handleOpts(opts, {
+        oneResult: true,
+        rfc6532: true,
+        simple: true,
+        startAt: 'sender',
+    }));
+}
+
+function parseReplyToSimple(opts) {
+    return parse5322(handleOpts(opts, {
+        rfc6532: true,
+        simple: true,
+        startAt: 'reply-to',
+    }));
 }
 
 function handleOpts(opts, defs) {
@@ -926,24 +1039,28 @@ function handleOpts(opts, defs) {
     if (!defs) { return null; }
 
     defaults = {
-        rfc6532: false,
+        oneResult: false,
         partial: false,
+        rejectTLD: false,
+        rfc6532: false,
         simple: false,
+        startAt: 'address-list',
         strict: false,
-        rejectTLD: false
     };
 
     for (o in defaults) {
         if (isNullUndef(opts[o])) {
             opts[o] = !isNullUndef(defs[o]) ? defs[o] : defaults[o];
         }
-        opts[o] = !!opts[o];
     }
     return opts;
 }
 
 parse5322.parseOneAddress = parseOneAddressSimple;
 parse5322.parseAddressList = parseAddressListSimple;
+parse5322.parseFrom = parseFromSimple;
+parse5322.parseSender = parseSenderSimple;
+parse5322.parseReplyTo = parseReplyToSimple;
 
 // in Zammad context, go back to non CommonJS
 // if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {

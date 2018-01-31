@@ -1982,34 +1982,106 @@ test('check getRecipientArticle format', function() {
     lastname: 'lastname',
     email: 'customer@example.com',
   }
-  agent = {
-    login: 'login',
-    firstname: 'firstname',
-    lastname: 'lastname',
-    email: 'agent@example.com',
-  }
   ticket = {
     customer: customer,
   }
   article = {
     message_id: 'message_id7',
-    created_by: agent,
     type: {
       name: 'email',
     },
     sender: {
-      name: 'Agent',
+      name: 'Customer',
     },
-    from: 'customer2@example.com',
-    to: 'customer@example.com',
+    from: 'some other invalid part, ' + customer.email,
+    to: 'some group',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    }
   }
   result = {
-    to:          'customer2@example.com',
+    to:          'customer@example.com',
     cc:          '',
     body:        '',
     in_reply_to: 'message_id7',
   }
   verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  console.log(verify)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id7.1',
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Customer',
+    },
+    from: 'some other invalid part, Some Realname ' + customer.email,
+    to: 'some group',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    }
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id7.1',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  console.log(verify)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id7.2',
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Customer',
+    },
+    from: 'some other invalid part, Some Realname ' + customer.email + ' , abc',
+    to: 'some group',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    }
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id7.2',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  console.log(verify)
   deepEqual(verify, result)
 
   customer = {
@@ -2036,11 +2108,11 @@ test('check getRecipientArticle format', function() {
     sender: {
       name: 'Agent',
     },
-    from: 'agent@example.com',
+    from: 'customer2@example.com',
     to: 'customer@example.com',
   }
   result = {
-    to:          'customer@example.com',
+    to:          'customer2@example.com',
     cc:          '',
     body:        '',
     in_reply_to: 'message_id8',
@@ -2072,9 +2144,8 @@ test('check getRecipientArticle format', function() {
     sender: {
       name: 'Agent',
     },
-    from: 'Agent@Example.com',
+    from: 'agent@example.com',
     to: 'customer@example.com',
-    cc: 'zammad@example.com',
   }
   result = {
     to:          'customer@example.com',
@@ -2110,16 +2181,16 @@ test('check getRecipientArticle format', function() {
       name: 'Agent',
     },
     from: 'Agent@Example.com',
-    to: 'customer@example.com, agent@example.com',
+    to: 'customer@example.com',
     cc: 'zammad@example.com',
   }
   result = {
-    to:          'customer@example.com, agent@example.com',
-    cc:          'zammad@example.com',
+    to:          'customer@example.com',
+    cc:          '',
     body:        '',
     in_reply_to: 'message_id10',
   }
-  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type, [], true)
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
   deepEqual(verify, result)
 
   customer = {
@@ -2147,8 +2218,8 @@ test('check getRecipientArticle format', function() {
       name: 'Agent',
     },
     from: 'Agent@Example.com',
-    to: 'customeR@EXAMPLE.com, agent@example.com',
-    cc: 'zammad@example.com, customer@example.com',
+    to: 'customer@example.com, agent@example.com',
+    cc: 'zammad@example.com',
   }
   result = {
     to:          'customer@example.com, agent@example.com',
@@ -2156,7 +2227,7 @@ test('check getRecipientArticle format', function() {
     body:        '',
     in_reply_to: 'message_id11',
   }
-  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, [], true)
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type, [], true)
   deepEqual(verify, result)
 
   customer = {
@@ -2184,24 +2255,16 @@ test('check getRecipientArticle format', function() {
       name: 'Agent',
     },
     from: 'Agent@Example.com',
-    to: 'customeR@EXAMPLE.com, agent@example.com, zammad2@EXAMPLE.com',
-    cc: 'zammad@example.com, customer2@example.com',
+    to: 'customeR@EXAMPLE.com, agent@example.com',
+    cc: 'zammad@example.com, customer@example.com',
   }
   result = {
     to:          'customer@example.com, agent@example.com',
-    cc:          'customer2@example.com',
+    cc:          'zammad@example.com',
     body:        '',
     in_reply_to: 'message_id12',
   }
-  email_addresses = [
-    {
-      email: 'zammad@example.com',
-    },
-    {
-      email: 'zammad2@example.com',
-    }
-  ]
-  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, true)
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, [], true)
   deepEqual(verify, result)
 
   customer = {
@@ -2214,7 +2277,7 @@ test('check getRecipientArticle format', function() {
     login: 'login',
     firstname: 'firstname',
     lastname: 'lastname',
-    email: 'AGENT@example.com',
+    email: 'agent@example.com',
   }
   ticket = {
     customer: customer,
@@ -2253,21 +2316,27 @@ test('check getRecipientArticle format', function() {
     login: 'login',
     firstname: 'firstname',
     lastname: 'lastname',
-    email: 'zammad@example.com',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'AGENT@example.com',
   }
   ticket = {
     customer: customer,
   }
   article = {
     message_id: 'message_id14',
-    created_by: customer,
+    created_by: agent,
     type: {
       name: 'email',
     },
     sender: {
       name: 'Agent',
     },
-    from: 'zammad@EXAMPLE.com',
+    from: 'Agent@Example.com',
     to: 'customeR@EXAMPLE.com, agent@example.com, zammad2@EXAMPLE.com',
     cc: 'zammad@example.com, customer2@example.com',
   }
@@ -2292,7 +2361,7 @@ test('check getRecipientArticle format', function() {
     login: 'login',
     firstname: 'firstname',
     lastname: 'lastname',
-    email: 'customer@example.com',
+    email: 'zammad@example.com',
   }
   ticket = {
     customer: customer,
@@ -2306,13 +2375,13 @@ test('check getRecipientArticle format', function() {
     sender: {
       name: 'Agent',
     },
-    from: 'customer@example.com',
-    to: 'customer1@example.com, customer2@example.com, zammad@example.com',
-    cc: '',
+    from: 'zammad@EXAMPLE.com',
+    to: 'customeR@EXAMPLE.com, agent@example.com, zammad2@EXAMPLE.com',
+    cc: 'zammad@example.com, customer2@example.com',
   }
   result = {
-    to:          'customer1@example.com, customer2@example.com, customer@example.com',
-    cc:          '',
+    to:          'customer@example.com, agent@example.com',
+    cc:          'customer2@example.com',
     body:        '',
     in_reply_to: 'message_id15',
   }
@@ -2346,11 +2415,11 @@ test('check getRecipientArticle format', function() {
       name: 'Agent',
     },
     from: 'customer@example.com',
-    to: 'customer1@example.com, customer2@example.com, zammad@example.com, customer2+2@example.com',
+    to: 'customer1@example.com, customer2@example.com, zammad@example.com',
     cc: '',
   }
   result = {
-    to:          'customer1@example.com, customer2@example.com, customer2+2@example.com, customer@example.com',
+    to:          'customer1@example.com, customer2@example.com, customer@example.com',
     cc:          '',
     body:        '',
     in_reply_to: 'message_id16',
@@ -2372,30 +2441,24 @@ test('check getRecipientArticle format', function() {
     lastname: 'lastname',
     email: 'customer@example.com',
   }
-  agent = {
-    login: 'login',
-    firstname: 'firstname',
-    lastname: 'lastname',
-    email: 'zammad@example.com',
-  }
   ticket = {
     customer: customer,
   }
   article = {
     message_id: 'message_id17',
-    created_by: agent,
+    created_by: customer,
     type: {
       name: 'email',
     },
     sender: {
       name: 'Agent',
     },
-    from: 'zammad@example.com',
-    to: 'customer@example.com',
+    from: 'customer@example.com',
+    to: 'customer1@example.com, customer2@example.com, zammad@example.com, customer2+2@example.com',
     cc: '',
   }
   result = {
-    to:          'customer@example.com',
+    to:          'customer1@example.com, customer2@example.com, customer2+2@example.com, customer@example.com',
     cc:          '',
     body:        '',
     in_reply_to: 'message_id17',
@@ -2435,6 +2498,51 @@ test('check getRecipientArticle format', function() {
     sender: {
       name: 'Agent',
     },
+    from: 'zammad@example.com',
+    to: 'customer@example.com',
+    cc: '',
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id18',
+  }
+  email_addresses = [
+    {
+      email: 'zammad@example.com',
+    },
+    {
+      email: 'zammad2@example.com',
+    }
+  ]
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, true)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'customer@example.com',
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'zammad@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id19',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
     from: 'Sender <zammad@example.com>',
     to: 'Customer <customer@example.com>',
     cc: '',
@@ -2443,7 +2551,7 @@ test('check getRecipientArticle format', function() {
     to:          'customer@example.com',
     cc:          '',
     body:        '',
-    in_reply_to: 'message_id18',
+    in_reply_to: 'message_id19',
   }
   email_addresses = [
     {
@@ -2466,7 +2574,7 @@ test('check getRecipientArticle format', function() {
     customer: agent,
   }
   article = {
-    message_id: 'message_id19',
+    message_id: 'message_id20',
     created_by: agent,
     type: {
       name: 'email',
@@ -2482,7 +2590,7 @@ test('check getRecipientArticle format', function() {
     to:          'agent@example.com',
     cc:          '',
     body:        '',
-    in_reply_to: 'message_id19',
+    in_reply_to: 'message_id20',
   }
   email_addresses = [
     {
