@@ -250,7 +250,7 @@ class App.Chat extends App.Model
     { name: 'note',           display: 'Note',            tag: 'textarea',    limit: 250, null: true },
     { name: 'max_queue',      display: 'Max. clients in waitlist', tag: 'input',   default: 2 },
     { name: 'block_ip',       display: 'Blocked IPs (separated by ;)', tag: 'input', default: '', null: true },
-    { name: 'block_country',  display: 'Blocked contries',  tag: 'column_select', multiple: true, null: true, default: '', options: @countries, seperator: ';' },
+    { name: 'block_country',  display: 'Blocked countries', tag: 'column_select', multiple: true, null: true, default: '', options: @countries, seperator: ';' },
     { name: 'active',         display: 'Active',          tag: 'active',      default: true },
     { name: 'created_by_id',  display: 'Created by',      relation: 'User',   readonly: 1 },
     { name: 'created_at',     display: 'Created',         tag: 'datetime',    readonly: 1 },
