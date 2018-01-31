@@ -775,10 +775,19 @@ class ChatWindow extends App.Controller
     # cleanup params
     fqdn      = App.Config.get('fqdn')
     http_type = App.Config.get('http_type')
+    url       = ''
+    session   = @session
+
+    # in case we do not have a model, create one
+    if session && !session.uiUrl
+      session = new App.ChatSession(session)
+    if session && session.uiUrl
+      url = session.uiUrl()
+
     clean_params =
       id: id
       prefilledParams:
-        body: "#{http_type}://#{fqdn}#{@session.uiUrl()}"
+        body: "#{http_type}://#{fqdn}/#{url}"
         title: 'Chat'
 
     App.TaskManager.execute(
