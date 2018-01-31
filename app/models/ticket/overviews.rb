@@ -118,7 +118,7 @@ returns
                             .where(query_condition, *bind_condition)
                             .joins(tables)
                             .order(order_by)
-                            .limit(500)
+                            .limit(1000)
                             .pluck(:id, :updated_at)
 
       tickets = []
