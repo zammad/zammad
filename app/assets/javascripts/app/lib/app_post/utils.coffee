@@ -890,6 +890,29 @@ class App.Utils
     text = text.replace(/http(s|):\/\/[-A-Za-z0-9+&@#\/%?=~_\|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]/img, placeholder)
     text.length
 
+  @parseAddressListLocal: (line) ->
+    recipients = emailAddresses.parseAddressList(line)
+    result = []
+    if !_.isEmpty(recipients)
+      for recipient in recipients
+        if recipient && recipient.address
+          result.push recipient.address
+      return result
+
+    # workaround for email-addresses.js issue with this kind of
+    # mail headers "From: invalid sender, realname <sender@example.com>"
+    # email-addresses.js is returning null because it can't parse the
+    # whole header
+    if _.isEmpty(recipients) && line.match('@')
+      recipients = line.split(',')
+      re = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/
+      for recipient in recipients
+        if recipient && recipient.match('@')
+          localResult = recipient.match(re)
+          if localResult && localResult[0]
+            result.push localResult[0]
+    result
+
   @getRecipientArticle: (ticket, article, article_created_by, type, email_addresses = [], all) ->
 
     # empty form
@@ -938,16 +961,18 @@ class App.Utils
       # check if article sender is local
       senderIsLocal = false
       if !_.isEmpty(article.from)
-        senders = emailAddresses.parseAddressList(article.from)
-        if senders && senders[0] && senders[0].address
-          senderIsLocal = isLocalAddress(senders[0].address)
+        senders = App.Utils.parseAddressListLocal(article.from)
+        if senders
+          for sender in senders
+            if sender && sender.address && sender.address.match('@')
+              senderIsLocal = isLocalAddress(sender.address)
 
       # check if article recipient is local
       recipientIsLocal = false
       if !_.isEmpty(article.to)
-        recipients = emailAddresses.parseAddressList(article.to)
-        if recipients && recipients[0] && recipients[0].address
-          recipientIsLocal = isLocalAddress(recipients[0].address)
+        recipients = App.Utils.parseAddressListLocal(article.to)
+        if recipients && recipients[0]
+          recipientIsLocal = isLocalAddress(recipients[0])
 
       # sender is local
       if senderIsLocal
@@ -971,14 +996,14 @@ class App.Utils
 
       # filter for uniq recipients
       recipientAddresses = {}
-
       addAddresses = (addressLine, line) ->
         lineNew = ''
-        recipients = emailAddresses.parseAddressList(addressLine)
+        recipients = App.Utils.parseAddressListLocal(addressLine)
+
         if !_.isEmpty(recipients)
           for recipient in recipients
-            if !_.isEmpty(recipient.address)
-              localRecipientAddress = recipient.address.toString().toLowerCase()
+            if !_.isEmpty(recipient)
+              localRecipientAddress = recipient.toString().toLowerCase()
 
               # check if address is not local
               if !isLocalAddress(localRecipientAddress)
