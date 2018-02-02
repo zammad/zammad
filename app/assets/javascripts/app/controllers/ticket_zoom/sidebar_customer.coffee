@@ -1,32 +1,54 @@
 class SidebarCustomer extends App.Controller
   sidebarItem: =>
     return if !@permissionCheck('ticket.agent')
-    counter = ''
-    if App.User.exists(@ticket.customer_id)
-      user = App.User.find(@ticket.customer_id)
-      counter = @sidebarItemCounter(user)
-    items = {
-      head:    'Customer'
-      name:    'customer'
-      icon:    'person'
-      counter: counter
-      counterPossible: true
-      actions: [
+    @item = {
+      name: 'customer'
+      badgeCallback: @badgeRender
+      sidebarHead: 'Customer'
+      sidebarCallback: @showCustomer
+      sidebarActions: [
         {
           title:    'Change Customer'
           name:     'customer-change'
           callback: @changeCustomer
         },
       ]
-      callback: @showCustomer
     }
-    return items if @ticket && @ticket.customer_id == 1
-    items.actions.push {
+    return @item if @ticket && @ticket.customer_id == 1
+    @item.sidebarActions.push {
       title:    'Edit Customer'
       name:     'customer-edit'
       callback: @editCustomer
     }
-    items
+    @item
+
+  metaBadge: (user) =>
+    counter = ''
+    cssClass = ''
+    counter = @sidebarItemCounter(user)
+
+    if @Config.get('ui_sidebar_open_ticket_indicator_colored') is true
+      if counter == 1
+        cssClass = 'tabsSidebar-tab-count--warning'
+      if counter > 1
+        cssClass = 'tabsSidebar-tab-count--danger'
+
+    {
+      name: 'customer'
+      icon: 'person'
+      counterPossible: true
+      counter: counter
+      cssClass: cssClass
+    }
+
+  badgeRender: (el) =>
+    @badgeEl = el
+    if App.User.exists(@ticket.customer_id)
+      user = App.User.find(@ticket.customer_id)
+      @badgeRenderLocal(user)
+
+  badgeRenderLocal: (user) =>
+    @badgeEl.html(App.view('generic/sidebar_tabs_item')(@metaBadge(user)))
 
   sidebarItemCounter: (user) ->
     counter = ''
@@ -34,21 +56,12 @@ class SidebarCustomer extends App.Controller
       counter = user.preferences.tickets_open
     counter
 
-  sidebarItemUpdate: (user) =>
-    counter = @sidebarItemCounter(user)
-    element = @el.closest('.tabsSidebar-holder').find('.tabsSidebar .tabsSidebar-tabs .tabsSidebar-tab[data-tab=customer] .js-tabCounter')
-    if !counter || counter is 0
-      element.addClass('hide')
-    else
-      element.removeClass('hide')
-    element.text(counter)
-
   showCustomer: (el) =>
-    @el = el
+    @elSidebar = el
     new App.WidgetUser(
-      el:       @el
+      el:       @elSidebar
       user_id:  @ticket.customer_id
-      callback: @sidebarItemUpdate
+      callback: @badgeRenderLocal
     )
 
   editCustomer: =>
@@ -60,13 +73,13 @@ class SidebarCustomer extends App.Controller
         title:   'Users'
         object:  'User'
         objects: 'Users'
-      container: @el.closest('.content')
+      container: @elSidebar.closest('.content')
     )
 
   changeCustomer: =>
     new App.TicketCustomer(
       ticket_id: @ticket.id
-      container: @el.closest('.content')
+      container: @elSidebar.closest('.content')
     )
 
 App.Config.set('200-Customer', SidebarCustomer, 'TicketZoomSidebar')

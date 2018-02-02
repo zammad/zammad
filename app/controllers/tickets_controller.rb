@@ -3,6 +3,7 @@
 class TicketsController < ApplicationController
   include CreatesTicketArticles
   include ClonesTicketArticleAttachments
+  include ChecksUserAttributesByCurrentUserPermission
   include TicketStats
 
   prepend_before_action :authentication_check
@@ -77,6 +78,12 @@ class TicketsController < ApplicationController
 
   # POST /api/v1/tickets
   def create
+    customer = {}
+    if params[:customer].class == ActionController::Parameters
+      customer = params[:customer]
+      params.delete(:customer)
+    end
+
     clean_params = Ticket.association_name_to_id_convert(params)
 
     # overwrite params
@@ -88,16 +95,16 @@ class TicketsController < ApplicationController
     end
 
     # try to create customer if needed
-    if clean_params[:customer_id] && clean_params[:customer_id] =~ /^guess:(.+?)$/
+    if clean_params[:customer_id].present? && clean_params[:customer_id] =~ /^guess:(.+?)$/
       email = $1
       if email !~ /@/ || email =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s)/
         render json: { error: 'Invalid email of customer' }, status: :unprocessable_entity
         return
       end
-      customer = User.find_by(email: email.downcase)
-      if !customer
+      local_customer = User.find_by(email: email.downcase)
+      if !local_customer
         role_ids = Role.signup_role_ids
-        customer = User.create(
+        local_customer = User.create(
           firstname: '',
           lastname: '',
           email: email,
@@ -106,7 +113,30 @@ class TicketsController < ApplicationController
           role_ids: role_ids,
         )
       end
-      clean_params[:customer_id] = customer.id
+      clean_params[:customer_id] = local_customer.id
+    end
+
+    # try to create customer if needed
+    if clean_params[:customer_id].blank? && customer.present?
+      check_attributes_by_current_user_permission(customer)
+      clean_customer = User.association_name_to_id_convert(customer)
+      local_customer = nil
+      if !local_customer && clean_customer[:id].present?
+        local_customer = User.find_by(id: clean_customer[:id])
+      end
+      if !local_customer && clean_customer[:email].present?
+        local_customer = User.find_by(email: clean_customer[:email].downcase)
+      end
+      if !local_customer && clean_customer[:login].present?
+        local_customer = User.find_by(login: clean_customer[:login].downcase)
+      end
+      if !local_customer
+        role_ids = Role.signup_role_ids
+        local_customer = User.new(clean_customer)
+        local_customer.role_ids = role_ids
+        local_customer.save!
+      end
+      clean_params[:customer_id] = local_customer.id
     end
 
     clean_params = Ticket.param_cleanup(clean_params, true)

@@ -37,14 +37,14 @@ class Edit extends App.ObserverController
 
 class SidebarTicket extends App.Controller
   sidebarItem: =>
-    sidebarItem = {
-      head:     'Ticket'
-      name:     'ticket'
-      icon:     'message'
-      callback: @editTicket
+    @item = {
+      name: 'ticket'
+      badgeIcon: 'message'
+      sidebarHead: 'Ticket'
+      sidebarCallback: @editTicket
     }
     if @permissionCheck('ticket.agent')
-      sidebarItem['actions'] = [
+      @item.sidebarActions = [
         {
           title:    'History'
           name:     'ticket-history'
@@ -61,7 +61,7 @@ class SidebarTicket extends App.Controller
           callback: @changeCustomer
         },
       ]
-    sidebarItem
+    @item
 
   reload: (args) =>
 
@@ -80,7 +80,7 @@ class SidebarTicket extends App.Controller
 
   editTicket: (el) =>
     @el = el
-    localEl = $( App.view('ticket_zoom/sidebar_ticket')() )
+    localEl = $(App.view('ticket_zoom/sidebar_ticket')())
 
     @edit = new Edit(
       object_id: @ticket.id

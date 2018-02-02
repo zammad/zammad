@@ -714,6 +714,33 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Open ticket indicator',
+  name: 'ui_sidebar_open_ticket_indicator_colored',
+  area: 'UI::Sidebar',
+  description: 'Color representation of the open ticket indicator in the sidebar.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_sidebar_open_ticket_indicator_colored',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+
+Setting.create_if_not_exists(
   title: 'New User Accounts',
   name: 'user_create_account',
   area: 'Security::Base',

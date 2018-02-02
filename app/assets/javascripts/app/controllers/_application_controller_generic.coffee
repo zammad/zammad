@@ -656,7 +656,7 @@ class App.Sidebar extends App.Controller
     '.sidebar':         'sidebars'
 
   events:
-    'click .tabsSidebar-tab':   'toggleTab'
+    'click .tabsSidebar-tab': 'toggleTab'
     'click .tabsSidebar-close': 'toggleSidebar'
     'click .sidebar-header .js-headline': 'toggleDropdown'
 
@@ -680,25 +680,47 @@ class App.Sidebar extends App.Controller
     @toggleTabAction(name)
 
   render: =>
+    itemsLocal = []
+    for item in @items
+      itemLocal = item.sidebarItem()
+      if itemLocal
+        itemsLocal.push itemLocal
+
+    # container
     localEl = $(App.view('generic/sidebar_tabs')(
-      items:          @items
+      items:          itemsLocal
       scrollbarWidth: App.Utils.getScrollBarWidth()
       dir:            App.i18n.dir()
     ))
 
-    # init content callback
-    for item in @items
-      area = localEl.filter('.sidebar[data-tab="' + item.name + '"]')
-      if item.callback
-        item.callback(area.find('.sidebar-content'))
-      if !_.isEmpty(item.actions)
-        new App.ActionRow(
-          el:    area.find('.js-actions')
-          items: item.actions
-          type:  'small'
-        )
+    # init sidebar badget
+    for item in itemsLocal
+      el = localEl.find('.tabsSidebar-tab[data-tab="' + item.name + '"]')
+      if item.badgeCallback
+        item.badgeCallback(el)
+      else
+        @badgeRender(el, item)
+
+    # init sidebar content
+    for item in itemsLocal
+      if item.sidebarCallback
+        el = localEl.filter('.sidebar[data-tab="' + item.name + '"]')
+        item.sidebarCallback(el.find('.sidebar-content'))
+        if !_.isEmpty(item.sidebarActions)
+          new App.ActionRow(
+            el:    el.find('.js-actions')
+            items: item.sidebarActions
+            type:  'small'
+          )
 
     @html localEl
+
+  badgeRender: (el, item) =>
+    @badgeEl = el
+    @badgeRenderLocal(item)
+
+  badgeRenderLocal: (item) =>
+    @badgeEl.html(App.view('generic/sidebar_tabs_item')(icon: item.badgeIcon))
 
   toggleDropdown: (e) ->
     e.stopPropagation()
