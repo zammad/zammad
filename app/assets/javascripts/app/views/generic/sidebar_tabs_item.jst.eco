@@ -1,0 +1,4 @@
+<% if @counterPossible is true: %>
+  <div class="tabsSidebar-tab-count js-tabCounter <% if !@counter || @counter is 0: %>hide<% end %><% if @cssClass: %><%= @cssClass %><% end %>"><%= @counter %></div>
+<% end %>
+<%- @Icon(@icon) %>

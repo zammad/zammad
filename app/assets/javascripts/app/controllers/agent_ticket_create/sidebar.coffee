@@ -32,9 +32,7 @@ class App.TicketCreateSidebar extends App.Controller
           params:  @params
           query:   @query
         )
-      item = @sidebarBackends[key].sidebarItem()
-      if item
-        @sidebarItems.push item
+      @sidebarItems.push @sidebarBackends[key]
 
     new App.Sidebar(
       el:           @el
