@@ -1,5 +1,5 @@
 <div class="js-pager"></div>
-<table class="table table-hover<%- " #{@class}" if @class %>">
+<table class="table table-hover<% if @class: %> <%= @class %><% end %>">
   <thead>
     <tr>
     <% if @sortable: %>
@@ -19,14 +19,10 @@
       <th style="width: 40px" class="table-radio"></th>
     <% end %>
     <% for header, i in @headers: %>
-      <th class="js-tableHead<%= " #{ header.className }" if header.className %><%= " align-#{ header.align }" if header.align %>" style="<% if header.displayWidth: %>width:<%= header.displayWidth %>px<% end %>" data-column-key="<%= header.name %>">
+      <th class="js-tableHead<% if header.className: %> <%= header.className %><% end %><% if header.align: %> align-<%= header.align %><% end %>" style="<% if header.displayWidth: %>width:<%= header.displayWidth %>px<% end %>" data-column-key="<%= header.name %>">
         <div class="table-column-head<%= ' js-sort' if @tableId %>">
           <div class="table-column-title"><%- @T(header.display) %></div>
-          <div class="table-column-sortIcon">
-          <% if header.sortOrderIcon: %>
-            <%- @Icon(header.sortOrderIcon[0], header.sortOrderIcon[1]) %>
-          <% end %>
-          </div>
+          <div class="table-column-sortIcon"><% if header.sortOrderIcon: %><%- @Icon(header.sortOrderIcon[0], header.sortOrderIcon[1]) %><% end %></div>
         </div>
         <% if @tableId && !header.unresizable && i < @headers.length - 1: %>
           <div class="table-col-resize js-col-resize"></div>
