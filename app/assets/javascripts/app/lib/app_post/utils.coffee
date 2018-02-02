@@ -964,8 +964,8 @@ class App.Utils
         senders = App.Utils.parseAddressListLocal(article.from)
         if senders
           for sender in senders
-            if sender && sender.address && sender.address.match('@')
-              senderIsLocal = isLocalAddress(sender.address)
+            if sender && sender.match('@')
+              senderIsLocal = isLocalAddress(sender)
 
       # check if article recipient is local
       recipientIsLocal = false
