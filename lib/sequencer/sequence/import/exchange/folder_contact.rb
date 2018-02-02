@@ -16,7 +16,7 @@ class Sequencer
               'Import::Common::Model::Associations::Extract',
               'Import::Common::User::Attributes::Downcase',
               'Import::Common::User::Email::CheckValidity',
-              'Import::Ldap::User::Lookup::Attributes',
+              'Import::Common::Model::FindBy::UserAttributes',
               'Import::Common::Model::Attributes::AddByIds',
               'Import::Common::Model::Update',
               'Import::Common::Model::Create',
