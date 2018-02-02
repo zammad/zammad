@@ -124,7 +124,7 @@ class TicketsController < ApplicationController
       if !local_customer && clean_customer[:id].present?
         local_customer = User.find_by(id: clean_customer[:id])
       end
-      if clean_customer[:email].present?
+      if !local_customer && clean_customer[:email].present?
         local_customer = User.find_by(email: clean_customer[:email].downcase)
       end
       if !local_customer && clean_customer[:login].present?
