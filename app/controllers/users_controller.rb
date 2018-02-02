@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class UsersController < ApplicationController
+  include ChecksUserAttributesByCurrentUserPermission
+
   prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image]
   prepend_before_action :authentication_check_only, only: [:create]
 
@@ -175,7 +177,7 @@ class UsersController < ApplicationController
     else
 
       # permission check
-      permission_check_by_permission(params)
+      check_attributes_by_current_user_permission(params)
 
       user = User.new(clean_params)
       user.associations_from_param(params)
@@ -259,13 +261,13 @@ class UsersController < ApplicationController
   # @response_message 200 [User] Updated User record.
   # @response_message 401        Invalid session.
   def update
-    permission_check_by_permission(params)
+    check_attributes_by_current_user_permission(params)
 
     user = User.find(params[:id])
     access!(user, 'change')
 
     # permission check
-    permission_check_by_permission(params)
+    check_attributes_by_current_user_permission(params)
     user.with_lock do
       clean_params = User.association_name_to_id_convert(params)
       clean_params = User.param_cleanup(clean_params, true)
@@ -1074,35 +1076,4 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     true
   end
 
-  def permission_check_by_permission(params)
-    return true if current_user.permissions?('admin.user')
-
-    %i[role_ids roles].each do |key|
-      next if !params[key]
-      if current_user.permissions?('ticket.agent')
-        params.delete(key)
-      else
-        logger.info "Role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{params[key].inspect}"
-        raise Exceptions::NotAuthorized, 'This role assignment is only allowed by admin!'
-      end
-    end
-    if current_user.permissions?('ticket.agent') && !params[:role_ids] && !params[:roles] && params[:id].blank?
-      params[:role_ids] = Role.signup_role_ids
-    end
-
-    %i[group_ids groups].each do |key|
-      next if !params[key]
-      if current_user.permissions?('ticket.agent')
-        params.delete(key)
-      else
-        logger.info "Group relation assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{params[key].inspect}"
-        raise Exceptions::NotAuthorized, 'Group relation is only allowed by admin!'
-      end
-    end
-
-    return true if current_user.permissions?('ticket.agent')
-
-    response_access_deny
-    false
-  end
 end

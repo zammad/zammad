@@ -127,7 +127,30 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(@agent.id, result['created_by_id'])
   end
 
-  test '01.04 ticket create with agent - wrong owner_id - 0' do
+  test '01.04 ticket create with agent - minimal article and customer.email' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #3',
+      group: 'Users',
+      priority: '2 normal',
+      state: 'new',
+      customer: @customer_without_org.email,
+      article: {
+        body: 'some test 123',
+      },
+    }
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #3', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+  end
+
+  test '01.05 ticket create with agent - wrong owner_id - 0' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #4',
@@ -147,7 +170,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Invalid value for param \'owner_id\': 0', result['error'])
   end
 
-  test '01.05 ticket create with agent - wrong owner_id - ""' do
+  test '01.06 ticket create with agent - wrong owner_id - ""' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #5',
@@ -175,7 +198,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(@agent.id, result['created_by_id'])
   end
 
-  test '01.06 ticket create with agent - wrong owner_id - 99999' do
+  test '01.07 ticket create with agent - wrong owner_id - 99999' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #6',
@@ -195,7 +218,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Invalid value for param \'owner_id\': 99999', result['error'])
   end
 
-  test '01.07 ticket create with agent - wrong owner_id - nil' do
+  test '01.08 ticket create with agent - wrong owner_id - nil' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #7',
@@ -219,7 +242,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(@agent.id, result['created_by_id'])
   end
 
-  test '01.08 ticket create with agent - minimal article with guess customer' do
+  test '01.09 ticket create with agent - minimal article with guess customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #8',
@@ -242,7 +265,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(@agent.id, result['created_by_id'])
   end
 
-  test '01.09 ticket create with agent - minimal article with guess customer' do
+  test '01.10 ticket create with agent - minimal article with guess customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #9',
@@ -263,7 +286,32 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(@agent.id, result['created_by_id'])
   end
 
-  test '01.10 ticket create with agent - minimal article with missing body - with customer' do
+  test '01.11 ticket create with agent - minimal article with customer hash' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #9',
+      group: 'Users',
+      customer: {
+        firstname: 'some firstname',
+        lastname: 'some lastname',
+        email: 'some_new_customer@example.com',
+      },
+      article: {
+        body: 'some test 123',
+      },
+    }
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #9', result['title'])
+    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+  end
+
+  test '01.12 ticket create with agent - minimal article with missing body - with customer.id' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #10',
@@ -280,7 +328,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Need at least article: { body: "some text" }', result['error'])
   end
 
-  test '01.11 ticket create with agent - minimal article and attachment with customer' do
+  test '01.13 ticket create with agent - minimal article and attachment with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #11',
@@ -316,7 +364,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_not(file.preferences['Content-ID'])
   end
 
-  test '01.12 ticket create with agent - minimal article and attachment with customer' do
+  test '01.14 ticket create with agent - minimal article and attachment with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #12',
@@ -359,7 +407,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_not(file.preferences['Content-ID'])
   end
 
-  test '01.13 ticket create with agent - minimal article and attachment missing mine-type with customer' do
+  test '01.15 ticket create with agent - minimal article and attachment missing mine-type with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #13',
@@ -382,7 +430,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Invalid base64 for attachment with index \'0\'', result['error'])
   end
 
-  test '01.14 ticket create with agent - minimal article and attachment invalid base64 with customer' do
+  test '01.16 ticket create with agent - minimal article and attachment invalid base64 with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #14',
@@ -404,7 +452,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal('Attachment needs \'mime-type\' param for attachment with index \'0\'', result['error'])
   end
 
-  test '01.15 ticket create with agent - minimal article and inline attachments with customer' do
+  test '01.17 ticket create with agent - minimal article and inline attachments with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #15',
@@ -444,7 +492,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert(file.preferences['Content-ID'])
   end
 
-  test '01.16 ticket create with agent - minimal article and inline attachments with customer' do
+  test '01.18 ticket create with agent - minimal article and inline attachments with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #16',
@@ -925,7 +973,36 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(@customer_without_org.id, result['created_by_id'])
   end
 
-  test '03.03 ticket with wrong ticket id' do
+  test '03.03 ticket create with customer with wrong customer hash' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-customer1@example.com', 'customer1pw')
+    params = {
+      title: 'a new ticket #c2',
+      state: 'new',
+      priority: '2 normal',
+      group: 'Users',
+      customer: {
+        firstname: @agent.firstname,
+        lastname: @agent.lastname,
+        email: @agent.email,
+      },
+      article: {
+        content_type: 'text/plain', # or text/html
+        body: 'some body',
+        sender: 'System',
+      },
+    }
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #c2', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@customer_without_org.id, result['updated_by_id'])
+    assert_equal(@customer_without_org.id, result['created_by_id'])
+  end
+
+  test '03.04 ticket with wrong ticket id' do
     ticket = Ticket.create!(
       title: 'ticket with wrong ticket id',
       group: Group.lookup(name: 'Users'),
@@ -958,7 +1035,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal('Not authorized', result['error'])
   end
 
-  test '03.04 ticket with correct ticket id' do
+  test '03.05 ticket with correct ticket id' do
     title = "ticket with corret ticket id testme#{rand(999_999_999)}"
     ticket = Ticket.create!(
       title: title,
