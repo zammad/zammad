@@ -6,24 +6,25 @@ class SidebarOrganization extends App.Controller
     customer = App.User.find(@params.customer_id)
     @organization_id = customer.organization_id
     return if !@organization_id
-    {
-      head: 'Organization'
+    @item = {
       name: 'organization'
-      icon: 'group'
-      actions: [
+      badgeIcon: 'group'
+      sidebarHead: 'Organization'
+      sidebarCallback: @showOrganization
+      sidebarActions: [
         {
           title:    'Edit Organization'
           name:     'organization-edit'
           callback: @editOrganization
         },
       ]
-      callback: @showOrganization
     }
+    @item
 
   showOrganization: (el) =>
-    @el = el
+    @elSidebar = el
     new App.WidgetOrganization(
-      el:              @el
+      el:              @elSidebar
       organization_id: @organization_id
     )
 
@@ -35,7 +36,7 @@ class SidebarOrganization extends App.Controller
         title:   'Organizations'
         object:  'Organization'
         objects: 'Organizations'
-      container: @el.closest('.content')
+      container: @elSidebar.closest('.content')
     )
 
 App.Config.set('300-Organization', SidebarOrganization, 'TicketCreateSidebar')

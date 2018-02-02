@@ -1,19 +1,20 @@
 class SidebarIdoit extends App.Controller
   sidebarItem: =>
     return if !@Config.get('idoit_integration')
-    {
-      head:     'i-doit'
-      name:     'idoit'
-      icon:     'printer'
-      actions: [
+    @item = {
+      name: 'idoit'
+      badgeIcon: 'printer'
+      sidebarHead: 'i-doit'
+      sidebarCallback: @showObjects
+      sidebarActions: [
         {
           title:    'Change Objects'
           name:     'objects-change'
           callback: @changeObjects
         },
       ]
-      callback: @showObjects
     }
+    @item
 
   changeObjects: =>
     new App.IdoitObjectSelector(
