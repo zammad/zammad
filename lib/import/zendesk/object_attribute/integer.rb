@@ -1,12 +1,13 @@
 # this require is required (hehe) because of Rails autoloading
 # which causes strange behavior not inheriting correctly
 # from Import::OTRS::DynamicField
-require 'import/zendesk/object_attribute'
+require 'import/zendesk/object_attribute/base'
 
 module Import
-  module Zendesk
-    class ObjectAttribute
-      class Integer < Import::Zendesk::ObjectAttribute
+  class Zendesk
+    module ObjectAttribute
+      class Integer < Import::Zendesk::ObjectAttribute::Base
+
         def init_callback(_object_attribte)
           @data_option.merge!(
             min: 0,

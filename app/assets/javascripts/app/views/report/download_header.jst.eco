@@ -1,14 +1,9 @@
-<div>
-
-  <ul class="nav nav-tabs">
-    <% for profile in @profiles: %>
-      <% for backend in @metric.backend: %>
-        <% if backend.dataDownload: %>
-        <li <% if backend.name is @downloadBackendSelected: %>class="is-active active"<% end %>><a href="#" class="js-dataDownloadBackendSelector" data-toggle="tab" data-profile-id="<%= profile.id %>" data-backend="<%= backend.name %>"><%- @T(backend.display) %></a></li>
-        <% end %>
+<ul class="nav nav-tabs">
+  <% for profile in @profiles: %>
+    <% for backend in @metric.backend: %>
+      <% if backend.dataDownload: %>
+      <li <% if backend.name is @downloadBackendSelected: %>class="is-active active"<% end %>><a href="#" class="js-dataDownloadBackendSelector" data-toggle="tab" data-profile-id="<%= profile.id %>" data-backend="<%= backend.name %>"><%- @T(backend.display) %></a></li>
       <% end %>
     <% end %>
-  </ul>
-
-  <div class="js-dataDownloadTable"></div>
-</div>
+  <% end %>
+</ul>

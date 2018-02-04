@@ -5,7 +5,7 @@ class Chat::Agent < ApplicationModel
   end
 
   def active_chat_count
-    Chat::Session.where(state: %w(waiting running), user_id: updated_by_id).count
+    Chat::Session.where(state: %w[waiting running], user_id: updated_by_id).count
   end
 
   def self.state(user_id, state = nil)

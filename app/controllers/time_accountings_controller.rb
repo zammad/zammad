@@ -164,7 +164,7 @@ class TimeAccountingsController < ApplicationController
       ]
       result = []
       results.each do |row|
-        row[:ticket].keys.each do |field|
+        row[:ticket].each_key do |field|
           next if row[:ticket][field].blank?
           next if !row[:ticket][field].is_a?(ActiveSupport::TimeWithZone)
 
@@ -250,7 +250,7 @@ class TimeAccountingsController < ApplicationController
       customers[ticket.customer_id][:time_unit] += local_time_unit[:time_unit]
     end
     results = []
-    customers.each do |_customer_id, content|
+    customers.each_value do |content|
       results.push content
     end
 
@@ -326,7 +326,7 @@ class TimeAccountingsController < ApplicationController
       organizations[ticket.organization_id][:time_unit] += local_time_unit[:time_unit]
     end
     results = []
-    organizations.each do |_customer_id, content|
+    organizations.each_value do |content|
       results.push content
     end
 
@@ -382,7 +382,7 @@ class TimeAccountingsController < ApplicationController
     worksheet.set_row(0, 0, header.count)
 
     # Write a formatted and unformatted string, row and column notation.
-    worksheet.write(0, 0, title, format)
+    worksheet.write_string(0, 0, title, format)
 
     format_header = workbook.add_format  # Add a format
     format_header.set_italic
@@ -393,7 +393,7 @@ class TimeAccountingsController < ApplicationController
       if item[:width]
         worksheet.set_column(count, count, item[:width])
       end
-      worksheet.write(2, count, item[:name], format_header)
+      worksheet.write_string(2, count, item[:name], format_header)
       count += 1
     end
 
@@ -402,7 +402,11 @@ class TimeAccountingsController < ApplicationController
       row_count += 1
       row_item_count = 0
       row.each do |item|
-        worksheet.write(row_count, row_item_count, item)
+        if item.acts_like?(:date)
+          worksheet.write_date_time(row_count, row_item_count, item.to_time.iso8601)
+        else
+          worksheet.write_string(row_count, row_item_count, item)
+        end
         row_item_count += 1
       end
     end

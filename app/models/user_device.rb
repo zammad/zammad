@@ -48,7 +48,7 @@ store new device for user if device not already known
 
     # for basic_auth|token_auth search for user agent
     device_exists_by_user_agent = false
-    if type == 'basic_auth' || type == 'token_auth'
+    if %w[basic_auth token_auth].include?(type)
       user_devices = UserDevice.where(
         user_id: user_id,
         user_agent: user_agent,

@@ -2,7 +2,7 @@ Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
   # tickets
-  match api_path + '/tickets/search',                                to: 'tickets#search',            via: [:get, :post]
+  match api_path + '/tickets/search',                                to: 'tickets#search',            via: %i[get post]
   match api_path + '/tickets/selector',                              to: 'tickets#selector',          via: :post
   match api_path + '/tickets',                                       to: 'tickets#index',             via: :get
   match api_path + '/tickets/:id',                                   to: 'tickets#show',              via: :get
@@ -44,6 +44,7 @@ Zammad::Application.routes.draw do
   match api_path + '/ticket_attachment/:ticket_id/:article_id/:id',  to: 'ticket_articles#attachment',      via: :get
   match api_path + '/ticket_attachment_upload',                      to: 'ticket_articles#ticket_attachment_upload_add', via: :post
   match api_path + '/ticket_attachment_upload',                      to: 'ticket_articles#ticket_attachment_upload_delete', via: :delete
+  match api_path + '/ticket_attachment_upload_clone_by_article/:article_id', to: 'ticket_articles#ticket_attachment_upload_clone_by_article', via: :post
   match api_path + '/ticket_article_plain/:id',                      to: 'ticket_articles#article_plain',   via: :get
 
 end

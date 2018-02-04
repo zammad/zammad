@@ -14,6 +14,7 @@ module Channel::Filter::ReplyToBasedSender
     result = Channel::EmailParser.sender_properties(reply_to)
 
     if setting == 'as_sender_of_email'
+      mail['raw-from'.to_sym]  = mail['raw-reply-to'.to_sym]
       mail[:from]              = reply_to
       mail[:from_email]        = result[:from_email]
       mail[:from_local]        = result[:from_local]
@@ -23,10 +24,11 @@ module Channel::Filter::ReplyToBasedSender
     end
 
     if setting == 'as_sender_of_email_use_from_realname'
-      mail[:from]        = reply_to
-      mail[:from_email]  = result[:from_email]
-      mail[:from_local]  = result[:from_local]
-      mail[:from_domain] = result[:from_domain]
+      mail['raw-from'.to_sym] = mail['raw-reply-to'.to_sym]
+      mail[:from]             = reply_to
+      mail[:from_email]       = result[:from_email]
+      mail[:from_local]       = result[:from_local]
+      mail[:from_domain]      = result[:from_domain]
       return
     end
 

@@ -119,8 +119,8 @@ returns
   end
 
   def disconnect
-    @stream_client.disconnect if @stream_client
-    @rest_client.disconnect if @rest_client
+    @stream_client&.disconnect
+    @rest_client&.disconnect
   end
 
 =begin
@@ -203,12 +203,11 @@ returns
         stream_start
       rescue Twitter::Error::Unauthorized => e
         Rails.logger.info "Unable to stream, try #{loop_count}, error #{e.inspect}"
-        if loop_count < 2
-          Rails.logger.info "wait for #{sleep_on_unauthorized} sec. and try it again"
-          sleep sleep_on_unauthorized
-        else
+        if loop_count >= 2
           raise "Unable to stream, try #{loop_count}, error #{e.inspect}"
         end
+        Rails.logger.info "wait for #{sleep_on_unauthorized} sec. and try it again"
+        sleep sleep_on_unauthorized
       end
     end
   end
@@ -233,7 +232,7 @@ returns
       filter[:replies] = 'all'
     end
 
-    return if filter.empty?
+    return if filter.blank?
 
     @stream_client.client.user(filter) do |tweet|
       next if tweet.class != Twitter::Tweet && tweet.class != Twitter::DirectMessage
@@ -258,11 +257,9 @@ returns
       # check if it's mention
       if sync['mentions'] && sync['mentions']['group_id'].present?
         hit = false
-        if tweet.user_mentions
-          tweet.user_mentions.each do |user|
-            if user.id.to_s == @channel.options['user']['id'].to_s
-              hit = true
-            end
+        tweet.user_mentions&.each do |user|
+          if user.id.to_s == @channel.options['user']['id'].to_s
+            hit = true
           end
         end
         if hit
@@ -299,7 +296,7 @@ returns
           next if item['term'].blank?
           next if item['term'] == '#'
           next if item['group_id'].blank?
-          if body =~ /#{item['term']}/
+          if body.match?(/#{item['term']}/)
             hit = item
           end
         end

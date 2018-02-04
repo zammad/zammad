@@ -7,9 +7,7 @@
     </div>
   </div>
   <div class="chat-name">
-    <%= @name %> <div class="status-badge js-info">
-      <div class="info-badge"><%- @Icon('info') %></div>
-    </div>
+    <span class="js-name js-info u-clickable"><%= @name %><span> #<%= @session.id %>
   </div>
   <div class="chat-disconnect js-disconnect">
     <div class="btn btn--action btn--small"><%- @T('disconnect') %></div>
@@ -24,6 +22,25 @@
 </div>
 <div class="chat-body-holder js-scrollHolder">
   <div class="chat-body js-body"></div>
+  <div class="chat-body js-meta hidden">
+    <% if @session: %>
+    <ul>
+      <li><%- @T('Created at') %>: <%- @Ttimestamp(@session.created_at) %></li>
+      <% if @session && @session.preferences: %>
+        <% if @session.preferences.geo_ip: %>
+          <li>GeoIP: <%= @session.preferences.geo_ip.country_name %> <%= @session.preferences.geo_ip.city_name %></li>
+        <% end %>
+        <% if @session.preferences.remote_ip: %>
+          <li>IP: <%= @session.preferences.remote_ip %></li>
+        <% end %>
+        <% if @session.preferences.dns_name: %>
+          <li>DNS: <%= @session.preferences.dns_name %></li>
+        <% end %>
+      <% end %>
+    </ul>
+    <% end %>
+    <form class="js-metaForm" style="max-width: 200px; width: 100%;"></form>
+  </div>
 </div>
 <div class="chat-controls">
   <div class="chat-input">

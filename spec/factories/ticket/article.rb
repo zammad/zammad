@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :ticket_article, class: Ticket::Article do
     from 'factory-customer-1@example.com'
     to 'factory-customer-1@example.com'

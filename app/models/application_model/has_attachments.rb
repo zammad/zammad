@@ -37,7 +37,7 @@ store attachments for this object
     self.attachments_buffer = attachments
 
     # update if object already exists
-    return if !(id && id.nonzero?)
+    return if !(id&.nonzero?)
 
     attachments_buffer_check
   end

@@ -70,6 +70,7 @@ class App.TicketStats extends App.Controller
   render: (data) =>
     if !data
       data = @data
+    return if !data
 
     user_total = 0
     if data.user.open_ids && data.user.closed_ids

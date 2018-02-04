@@ -5,15 +5,17 @@ class Sequencer
         module Model
           module Attributes
             class CheckMandatory < Sequencer::Unit::Base
-              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::SkipOnProvidedInstanceAction
+              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+              skip_any_action
 
               uses :mapped
-              provides :instance_action
+              provides :action
 
               def process
                 mandatory.each do |mapped_attribute|
                   next if mapped[mapped_attribute].present?
-                  state.provide(:instance_action, :skipped)
+                  state.provide(:action, :skipped)
                   break
                 end
               end

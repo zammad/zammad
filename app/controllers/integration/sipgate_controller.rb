@@ -43,8 +43,13 @@ class Integration::SipgateController < ApplicationController
 
   # set caller id of outbound call
   def out
-    config_outbound = config_integration[:outbound][:routing_table]
-    default_caller_id = config_integration[:outbound][:default_caller_id]
+    config_outbound = config_integration[:outbound]
+    routing_table = nil
+    default_caller_id = nil
+    if config_outbound.present?
+      routing_table = config_outbound[:routing_table]
+      default_caller_id = config_outbound[:default_caller_id]
+    end
 
     xml = Builder::XmlMarkup.new(indent: 2)
     xml.instruct!
@@ -53,8 +58,8 @@ class Integration::SipgateController < ApplicationController
     content = nil
     to      = params[:to]
     from    = nil
-    if to
-      config_outbound.each do |row|
+    if to && routing_table.present?
+      routing_table.each do |row|
         dest = row[:dest].gsub(/\*/, '.+?')
         next if to !~ /^#{dest}$/
         from = row[:caller_id]
@@ -63,7 +68,7 @@ class Integration::SipgateController < ApplicationController
         end
         break
       end
-      if !content && default_caller_id
+      if !content && default_caller_id.present?
         from = default_caller_id
         content = xml.Response(onHangup: url, onAnswer: url) do
           xml.Dial(callerId: default_caller_id) { xml.Number(params[:to]) }
@@ -73,8 +78,8 @@ class Integration::SipgateController < ApplicationController
       content = xml.Response(onHangup: url, onAnswer: url)
     end
 
-    send_data content, type: 'application/xml; charset=UTF-8;'
-    if from
+    send_data(content, type: 'application/xml; charset=UTF-8;')
+    if from.present?
       params['from'] = from
     end
     Cti::Log.process(params)
@@ -89,10 +94,12 @@ class Integration::SipgateController < ApplicationController
       xml_error('Feature is disable, please contact your admin to enable it!')
       return
     end
-    if !config_integration || !config_integration[:inbound] || !config_integration[:outbound]
+    if config_integration.blank? || config_integration[:inbound].blank? || config_integration[:outbound].blank?
       xml_error('Feature not configured, please contact your admin!')
       return
     end
+
+    true
   end
 
   def config_integration

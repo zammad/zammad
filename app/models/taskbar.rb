@@ -14,9 +14,9 @@ class Taskbar < ApplicationModel
 
   def state_changed?
     return false if state.blank?
-    state.each do |_key, value|
+    state.each_value do |value|
       if value.is_a? Hash
-        value.each do |_key1, value1|
+        value.each_value do |value1|
           next if value1.blank?
           return true
         end
@@ -32,10 +32,10 @@ class Taskbar < ApplicationModel
 
   def update_last_contact
     return true if local_update
-    return true if changes.empty?
+    return true if changes.blank?
     if changes['notify']
       count = 0
-      changes.each do |attribute, _value|
+      changes.each_key do |attribute|
         next if attribute == 'updated_at'
         next if attribute == 'created_at'
         count += 1

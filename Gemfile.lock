@@ -65,22 +65,22 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
-    argon2 (1.1.3)
+    argon2 (1.1.4)
       ffi (~> 1.9)
       ffi-compiler (~> 0.1)
     ast (2.3.0)
-    autoprefixer-rails (7.1.3)
+    autoprefixer-rails (7.1.6)
       execjs
     biz (1.7.0)
       clavius (~> 1.0)
       tzinfo
-    browser (2.5.1)
+    browser (2.5.2)
     buftok (0.2.0)
     builder (3.2.3)
-    childprocess (0.7.1)
+    childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
     clavius (1.0.3)
-    clearbit (0.2.7)
+    clearbit (0.2.8)
       nestful (~> 1.1.0)
     coderay (1.1.2)
     coffee-rails (4.2.2)
@@ -90,22 +90,24 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    coffeelint (1.16.0)
+    coffeelint (1.16.1)
       coffee-script
       execjs
       json
-    composite_primary_keys (10.0.0)
+    composite_primary_keys (10.0.1)
       activerecord (~> 5.1.0)
     concurrent-ruby (1.0.5)
-    coveralls (0.8.21)
-      json (>= 1.8, < 3)
-      simplecov (~> 0.14.1)
-      term-ansicolor (~> 1.3)
-      thor (~> 0.19.4)
-      tins (~> 1.6)
+    coveralls (0.7.1)
+      multi_json (~> 1.3)
+      rest-client
+      simplecov (>= 0.7)
+      term-ansicolor
+      thor
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    daemons (1.2.4)
+    crass (1.0.3)
+    daemons (1.2.5)
+    dalli (2.7.6)
     delayed_job (4.1.3)
       activesupport (>= 3.0, < 5.2)
     delayed_job_active_record (4.1.2)
@@ -127,15 +129,15 @@ GEM
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
     equalizer (0.0.11)
-    erubi (1.6.1)
+    erubi (1.7.0)
     eventmachine (1.2.5)
     execjs (2.7.0)
-    factory_girl (4.8.0)
+    factory_bot (4.8.2)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.8.0)
-      factory_girl (~> 4.8.0)
+    factory_bot_rails (4.8.2)
+      factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    faraday (0.11.0)
+    faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     faraday-http-cache (2.0.0)
       faraday (~> 0.8)
@@ -154,7 +156,7 @@ GEM
       rainbow (>= 2.1)
       rake (>= 10.0)
       retriable (~> 2.1)
-    globalid (0.4.0)
+    globalid (0.4.1)
       activesupport (>= 4.2.0)
     guard (2.14.1)
       formatador (>= 0.2.4)
@@ -174,20 +176,21 @@ GEM
     guard-symlink (0.1.1)
       guard
       guard-compat (~> 1.1)
-    hashdiff (0.3.6)
+    hashdiff (0.3.7)
     hashie (3.5.6)
     htmlentities (4.3.4)
-    http (2.2.2)
+    http (3.0.0)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
-      http-form_data (~> 1.0.1)
+      http-form_data (>= 2.0.0.pre.pre2, < 3)
       http_parser.rb (~> 0.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    http-form_data (1.0.3)
+    http-form_data (2.0.0)
     http_parser.rb (0.6.0)
     httpclient (2.8.3)
-    i18n (0.8.6)
+    i18n (0.9.1)
+      concurrent-ruby (~> 1.0)
     icalendar (2.4.1)
     icalendar-recurrence (1.1.2)
       icalendar (~> 2.0)
@@ -210,25 +213,26 @@ GEM
     logging (2.2.2)
       little-plugger (~> 1.1)
       multi_json (~> 1.10)
-    loofah (2.0.3)
+    loofah (2.1.1)
+      crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.12)
     mail (2.6.6)
       mime-types (>= 1.16, < 4)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
-    method_source (0.8.2)
+    method_source (0.9.0)
     mime-types (2.99.3)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     multi_json (1.12.2)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
-    mysql2 (0.4.9)
+    mysql2 (0.4.10)
     naught (1.1.0)
     nenv (0.3.0)
-    nestful (1.1.1)
-    net-ldap (0.16.0)
+    nestful (1.1.3)
+    net-ldap (0.16.1)
     netrc (0.11.0)
     nio4r (2.1.0)
     nokogiri (1.8.1)
@@ -246,7 +250,7 @@ GEM
       rack (>= 1.2, < 3)
     octokit (4.7.0)
       sawyer (~> 0.8.0, >= 0.5.3)
-    omniauth (1.6.1)
+    omniauth (1.7.1)
       hashie (>= 3.4.6, < 3.6.0)
       rack (>= 1.6.2, < 3)
     omniauth-facebook (4.0.0)
@@ -280,24 +284,24 @@ GEM
     omniauth-weibo-oauth2 (0.4.5)
       omniauth (~> 1.5)
       omniauth-oauth2 (>= 1.4.0)
-    parser (2.4.0.0)
-      ast (~> 2.2)
+    parallel (1.12.0)
+    parser (2.4.0.2)
+      ast (~> 2.3)
     pg (0.21.0)
     pluginator (1.5.0)
-    power_assert (1.1.0)
+    power_assert (1.1.1)
     powerpack (0.1.1)
-    pre-commit (0.35.0)
+    pre-commit (0.37.0)
       pluginator (~> 1.5)
-    pry (0.10.4)
+    pry (0.11.3)
       coderay (~> 1.1.0)
-      method_source (~> 0.8.1)
-      slop (~> 3.4)
-    public_suffix (3.0.0)
-    puma (3.10.0)
+      method_source (~> 0.9.0)
+    public_suffix (3.0.1)
+    puma (3.11.0)
     rack (2.0.3)
     rack-livereload (0.3.16)
       rack
-    rack-test (0.7.0)
+    rack-test (0.8.2)
       rack (>= 1.0, < 3)
     rails (5.1.4)
       actioncable (= 5.1.4)
@@ -327,7 +331,7 @@ GEM
     rainbow (2.2.2)
       rake
     raindrops (0.19.0)
-    rake (12.1.0)
+    rake (12.3.0)
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
@@ -337,39 +341,40 @@ GEM
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     retriable (2.1.0)
-    rspec-core (3.6.0)
-      rspec-support (~> 3.6.0)
-    rspec-expectations (3.6.0)
+    rspec-core (3.7.0)
+      rspec-support (~> 3.7.0)
+    rspec-expectations (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.6.0)
-    rspec-mocks (3.6.0)
+      rspec-support (~> 3.7.0)
+    rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.6.0)
-    rspec-rails (3.6.1)
+      rspec-support (~> 3.7.0)
+    rspec-rails (3.7.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec-core (~> 3.6.0)
-      rspec-expectations (~> 3.6.0)
-      rspec-mocks (~> 3.6.0)
-      rspec-support (~> 3.6.0)
-    rspec-support (3.6.0)
-    rubocop (0.42.0)
-      parser (>= 2.3.1.1, < 3.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
+      rspec-support (~> 3.7.0)
+    rspec-support (3.7.0)
+    rubocop (0.51.0)
+      parallel (~> 1.10)
+      parser (>= 2.3.3.1, < 3.0)
       powerpack (~> 0.1)
-      rainbow (>= 1.99.1, < 3.0)
+      rainbow (>= 2.2.2, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    ruby-progressbar (1.8.1)
+    ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
-    sass (3.5.1)
+    sass (3.5.3)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (5.0.6)
+    sass-rails (5.0.7)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
@@ -383,9 +388,8 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     shellany (0.0.1)
-    simple-rss (1.3.1)
     simple_oauth (0.3.1)
-    simplecov (0.14.1)
+    simplecov (0.15.1)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
@@ -393,11 +397,6 @@ GEM
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
     slack-notifier (2.3.1)
-    slop (3.6.0)
-    spring (2.0.2)
-      activesupport (>= 4.2)
-    spring-commands-rspec (1.0.4)
-      spring (>= 0.9.1)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -410,26 +409,27 @@ GEM
       rest-client (~> 1.7, >= 1.7.3)
     term-ansicolor (1.6.0)
       tins (~> 1.0)
-    test-unit (3.2.5)
+    test-unit (3.2.6)
       power_assert
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
-    thor (0.19.4)
+    thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    tins (1.15.0)
-    twitter (6.1.0)
-      addressable (~> 2.5)
+    tins (1.15.1)
+    twitter (6.2.0)
+      addressable (~> 2.3)
       buftok (~> 0.2.0)
-      equalizer (= 0.0.11)
-      faraday (~> 0.11.0)
-      http (~> 2.1)
+      equalizer (~> 0.0.11)
+      http (~> 3.0)
+      http-form_data (~> 2.0)
       http_parser.rb (~> 0.6.0)
-      memoizable (~> 0.4.2)
-      naught (~> 1.1)
-      simple_oauth (~> 0.3.1)
-    tzinfo (1.2.3)
+      memoizable (~> 0.4.0)
+      multipart-post (~> 2.0)
+      naught (~> 1.0)
+      simple_oauth (~> 0.3.0)
+    tzinfo (1.2.4)
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
@@ -437,10 +437,10 @@ GEM
       unf_ext
     unf_ext (0.0.7.4)
     unicode-display_width (1.3.0)
-    unicorn (5.3.0)
+    unicorn (5.3.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    valid_email2 (2.0.1)
+    valid_email2 (2.1.0)
       activemodel (>= 3.2)
       mail (~> 2.5)
     viewpoint (1.1.0)
@@ -448,16 +448,16 @@ GEM
       logging
       nokogiri
       rubyntlm
-    webmock (3.0.1)
+    webmock (3.1.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    websocket (1.2.4)
+    websocket (1.2.5)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.2)
+    websocket-extensions (0.1.3)
     writeexcel (1.0.5)
-    zendesk_api (1.14.4)
+    zendesk_api (1.16.0)
       faraday (~> 0.9)
       hashie (>= 3.5.2, < 4.0.0)
       inflection
@@ -482,6 +482,7 @@ DEPENDENCIES
   composite_primary_keys
   coveralls
   daemons
+  dalli
   delayed_job_active_record
   diffy
   doorkeeper
@@ -489,7 +490,7 @@ DEPENDENCIES
   em-websocket
   eventmachine
   execjs
-  factory_girl_rails
+  factory_bot_rails
   figaro
   github_changelog_generator
   guard
@@ -501,7 +502,7 @@ DEPENDENCIES
   json
   koala
   libv8
-  mail
+  mail (= 2.6.6)
   mime-types
   mysql2
   net-ldap
@@ -528,12 +529,9 @@ DEPENDENCIES
   rubyntlm!
   sass-rails
   selenium-webdriver (= 2.53.4)
-  simple-rss
   simplecov
   simplecov-rcov
   slack-notifier
-  spring
-  spring-commands-rspec
   sprockets
   sqlite3
   telegramAPI
@@ -549,7 +547,7 @@ DEPENDENCIES
   zendesk_api
 
 RUBY VERSION
-   ruby 2.4.1p111
+   ruby 2.4.2p198
 
 BUNDLED WITH
-   1.15.4
+   1.16.0

@@ -16,6 +16,9 @@ class SearchController < ApplicationController
 
     # get params
     query = params[:query]
+    if query.respond_to?(:permit!)
+      query = query.permit!.to_h
+    end
     limit = params[:limit] || 10
 
     # convert objects string into array of class names
@@ -30,9 +33,10 @@ class SearchController < ApplicationController
     objects_in_order = []
     objects_in_order_hash = {}
     objects.each do |object|
-      preferences = object.constantize.search_preferences(current_user)
+      local_class = object.constantize
+      preferences = local_class.search_preferences(current_user)
       next if !preferences
-      objects_in_order_hash[preferences[:prio]] = object
+      objects_in_order_hash[preferences[:prio]] = local_class
     end
     objects_in_order_hash.keys.sort.reverse_each do |prio|
       objects_in_order.push objects_in_order_hash[prio]
@@ -61,16 +65,18 @@ class SearchController < ApplicationController
         items = SearchIndexBackend.search(query, limit, objects_with_direct_search_index)
         items.each do |item|
           require item[:type].to_filename
-          record = Kernel.const_get(item[:type]).lookup(id: item[:id])
+          local_class = Kernel.const_get(item[:type])
+          record = local_class.lookup(id: item[:id])
           next if !record
           assets = record.assets(assets)
+          item[:type] = local_class.to_app_model.to_s
           result.push item
         end
       end
 
       # e. g. do ticket query by Ticket class to handle ticket permissions
       objects_without_direct_search_index.each do |object|
-        object_result = search_generic_backend(object, query, limit, current_user, assets)
+        object_result = search_generic_backend(object.constantize, query, limit, current_user, assets)
         if object_result.present?
           result = result.concat(object_result)
         end
@@ -80,7 +86,7 @@ class SearchController < ApplicationController
       result_in_order = []
       objects_in_order.each do |object|
         result.each do |item|
-          next if item[:type] != object
+          next if item[:type] != object.to_app_model.to_s
           item[:id] = item[:id].to_i
           result_in_order.push item
         end
@@ -107,7 +113,7 @@ class SearchController < ApplicationController
   private
 
   def search_generic_backend(object, query, limit, current_user, assets)
-    found_objects = object.constantize.search(
+    found_objects = object.search(
       query:        query,
       limit:        limit,
       current_user: current_user,
@@ -116,7 +122,7 @@ class SearchController < ApplicationController
     found_objects.each do |found_object|
       item = {
         id:   found_object.id,
-        type: found_object.class.to_s
+        type: found_object.class.to_app_model.to_s
       }
       result.push item
       assets = found_object.assets(assets)

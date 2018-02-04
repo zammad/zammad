@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class EmailBuildTest < ActiveSupport::TestCase
@@ -73,21 +73,19 @@ class EmailBuildTest < ActiveSupport::TestCase
     assert_equal(2, data[:attachments].length)
 
     # check attachments
-    if data[:attachments]
-      data[:attachments].each do |attachment|
-        if attachment[:filename] == 'message.html'
-          assert_nil(attachment[:preferences]['Content-ID'])
-          assert_equal(true, attachment[:preferences]['content-alternative'])
-          assert_equal('text/html', attachment[:preferences]['Mime-Type'])
-          assert_equal('UTF-8', attachment[:preferences]['Charset'])
-        elsif attachment[:filename] == 'somename.png'
-          assert_nil(attachment[:preferences]['Content-ID'])
-          assert_nil(attachment[:preferences]['content-alternative'])
-          assert_equal('image/png', attachment[:preferences]['Mime-Type'])
-          assert_equal('UTF-8', attachment[:preferences]['Charset'])
-        else
-          assert(false, "invalid attachment, should not be there, #{attachment.inspect}")
-        end
+    data[:attachments]&.each do |attachment|
+      if attachment[:filename] == 'message.html'
+        assert_nil(attachment[:preferences]['Content-ID'])
+        assert_equal(true, attachment[:preferences]['content-alternative'])
+        assert_equal('text/html', attachment[:preferences]['Mime-Type'])
+        assert_equal('UTF-8', attachment[:preferences]['Charset'])
+      elsif attachment[:filename] == 'somename.png'
+        assert_nil(attachment[:preferences]['Content-ID'])
+        assert_nil(attachment[:preferences]['content-alternative'])
+        assert_equal('image/png', attachment[:preferences]['Mime-Type'])
+        assert_equal('UTF-8', attachment[:preferences]['Charset'])
+      else
+        assert(false, "invalid attachment, should not be there, #{attachment.inspect}")
       end
     end
   end
@@ -127,16 +125,14 @@ class EmailBuildTest < ActiveSupport::TestCase
     assert_equal(1, data[:attachments].length)
 
     # check attachments
-    if data[:attachments]
-      data[:attachments].each do |attachment|
-        if attachment[:filename] == 'somename.png'
-          assert_nil(attachment[:preferences]['Content-ID'])
-          assert_nil(attachment[:preferences]['content-alternative'])
-          assert_equal('image/png', attachment[:preferences]['Mime-Type'])
-          assert_equal('UTF-8', attachment[:preferences]['Charset'])
-        else
-          assert(false, "invalid attachment, should not be there, #{attachment.inspect}")
-        end
+    data[:attachments]&.each do |attachment|
+      if attachment[:filename] == 'somename.png'
+        assert_nil(attachment[:preferences]['Content-ID'])
+        assert_nil(attachment[:preferences]['content-alternative'])
+        assert_equal('image/png', attachment[:preferences]['Mime-Type'])
+        assert_equal('UTF-8', attachment[:preferences]['Charset'])
+      else
+        assert(false, "invalid attachment, should not be there, #{attachment.inspect}")
       end
     end
   end

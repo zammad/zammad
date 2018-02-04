@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 require 'webmock/minitest'
 
@@ -20,7 +20,7 @@ class IdoitControllerTest < ActionDispatch::IntegrationTest
                   client_id: '',
                 })
     groups = Group.where(name: 'Users')
-    roles  = Role.where(name: %w(Agent))
+    roles  = Role.where(name: %w[Agent])
     agent  = User.create_or_update(
       login: 'idoit-agent@example.com',
       firstname: 'E',
@@ -33,7 +33,7 @@ class IdoitControllerTest < ActionDispatch::IntegrationTest
       updated_by_id: 1,
       created_by_id: 1,
     )
-    roles  = Role.where(name: %w(Agent Admin))
+    roles  = Role.where(name: %w[Agent Admin])
     admin  = User.create_or_update(
       login: 'idoit-admin@example.com',
       firstname: 'E',

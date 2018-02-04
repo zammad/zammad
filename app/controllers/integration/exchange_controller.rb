@@ -48,17 +48,12 @@ class Integration::ExchangeController < ApplicationController
 
   private
 
-  # currently a workaround till LDAP is migrated to Sequencer
   def payload_dry_run
     {
       ews_attributes: params[:attributes].permit!.to_h,
       ews_folder_ids: params[:folders],
       ews_config:     ews_config
     }
-  end
-
-  def payload_import
-    nil
   end
 
   def ews_config

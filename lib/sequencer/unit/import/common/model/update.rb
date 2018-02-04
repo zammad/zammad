@@ -5,10 +5,12 @@ class Sequencer
         module Model
           class Update < Sequencer::Unit::Base
             include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
-            prepend ::Sequencer::Unit::Import::Common::Model::Mixin::SkipOnProvidedInstanceAction
+            prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+            skip_any_action
 
             uses :instance, :mapped
-            provides :instance_action
+            provides :action
 
             def process
               # check if no instance is given - so we can't update it
@@ -24,7 +26,7 @@ class Sequencer
                 instance.assign_attributes(mapped)
 
                 action = changed? ? :updated : :unchanged
-                state.provide(:instance_action, action)
+                state.provide(:action, action)
               end
             rescue => e
               handle_failure(e)

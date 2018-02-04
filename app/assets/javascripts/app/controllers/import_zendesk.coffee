@@ -154,35 +154,35 @@ class Index extends App.ControllerContent
       processData: true
       success:     (data, status, xhr) =>
 
-        if data.result is 'import_done'
-          window.location.reload()
-          return
-
-        if data.result is 'error'
-          @$('.js-error').removeClass('hide')
-          @$('.js-error').html(App.i18n.translateContent(data.message))
-        else
-          @$('.js-error').addClass('hide')
-
-        if data.message is 'not running' && @updateMigrationDisplayLoop > 16
+        if _.isEmpty(data.result) && @updateMigrationDisplayLoop > 16
           @$('.js-error').removeClass('hide')
           @$('.js-error').html(App.i18n.translateContent('Background process did not start or has not finished! Please contact your support.'))
           return
 
-        if data.result is 'in_progress'
-          for key, item of data.data
-            if item.done > item.total
-              item.done = item.total
+        if !_.isEmpty(data.result['error'])
+          @$('.js-error').removeClass('hide')
+          @$('.js-error').html(App.i18n.translateContent(data.result['error']))
+        else
+          @$('.js-error').addClass('hide')
 
-            if key == 'Ticket' && item.total >= 1000
+        if !_.isEmpty(data.finished_at) && _.isEmpty(data.result['error'])
+          window.location.reload()
+          return
+
+        if !_.isEmpty(data.result)
+          for model, stats of data.result
+            if stats.sum > stats.total
+              stats.sum = stats.total
+
+            if model == 'Ticket' && stats.total >= 1000
               @ticketCountInfo.removeClass('hide')
 
-            element = @$('.js-' + key.toLowerCase() )
-            element.find('.js-done').text(item.done)
-            element.find('.js-total').text(item.total)
-            element.find('progress').attr('max', item.total )
-            element.find('progress').attr('value', item.done )
-            if item.total <= item.done
+            element = @$('.js-' + model.toLowerCase() )
+            element.find('.js-done').text(stats.sum)
+            element.find('.js-total').text(stats.total)
+            element.find('progress').attr('max', stats.total )
+            element.find('progress').attr('value', stats.sum )
+            if stats.total <= stats.sum
               element.addClass('is-done')
             else
               element.removeClass('is-done')

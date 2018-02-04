@@ -17,11 +17,9 @@ module Import
       raise 'Missing import method implementation for this factory'
     end
 
-    def pre_import_hook(_records, *args)
-    end
+    def pre_import_hook(_records, *args); end
 
-    def post_import_hook(_record, _backend_instance, *args)
-    end
+    def post_import_hook(_record, _backend_instance, *args); end
 
     def backend_class(_record, *_args)
       "Import::#{module_name}".constantize

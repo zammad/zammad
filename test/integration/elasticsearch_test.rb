@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'integration_test_helper'
 require 'rake'
 
@@ -114,6 +114,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal('E', attributes['firstname'])
     assert_equal('S', attributes['lastname'])
     assert_equal('es-agent@example.com', attributes['email'])
+    assert(attributes['preferences'])
     assert_not(attributes['password'])
     assert_not(attributes['organization'])
 
@@ -121,6 +122,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal('E', attributes['firstname'])
     assert_equal('S', attributes['lastname'])
     assert_equal('es-agent@example.com', attributes['email'])
+    assert(attributes['preferences'])
     assert_not(attributes['password'])
     assert_not(attributes['organization'])
 
@@ -128,6 +130,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert_equal('ES', attributes['firstname'])
     assert_equal('Customer1', attributes['lastname'])
     assert_equal('es-customer1@example.com', attributes['email'])
+    assert(attributes['preferences'])
     assert_not(attributes['password'])
     assert_equal('Customer Organization Update', attributes['organization'])
 
@@ -168,7 +171,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: IO.binread("#{Rails.root}/test/fixtures/es-normal.txt"),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-normal.txt')),
       filename: 'es-normal.txt',
       preferences: {},
       created_by_id: 1,
@@ -194,9 +197,9 @@ class ElasticsearchTest < ActiveSupport::TestCase
     assert(attributes['article'][0]['attachment'][0])
     assert_not(attributes['article'][0]['attachment'][1])
     assert_equal('es-normal.txt', attributes['article'][0]['attachment'][0]['_name'])
-    assert_equal("c29tZSBub3JtYWwgdGV4dDY2Cg==\n", attributes['article'][0]['attachment'][0]['_content'])
+    assert_equal('c29tZSBub3JtYWwgdGV4dDY2Cg==', attributes['article'][0]['attachment'][0]['_content'])
 
-    ticket1.destroy
+    ticket1.destroy!
 
     # execute background jobs
     Scheduler.worker(true)
@@ -229,7 +232,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: IO.binread("#{Rails.root}/test/fixtures/es-normal.txt"),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-normal.txt')),
       filename: 'es-normal.txt',
       preferences: {},
       created_by_id: 1,
@@ -240,7 +243,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: IO.binread("#{Rails.root}/test/fixtures/es-pdf1.pdf"),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-pdf1.pdf')),
       filename: 'es-pdf1.pdf',
       preferences: {},
       created_by_id: 1,
@@ -251,7 +254,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: IO.binread("#{Rails.root}/test/fixtures/es-box1.box"),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-box1.box')),
       filename: 'mail1.box',
       preferences: {},
       created_by_id: 1,
@@ -262,7 +265,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     Store.add(
       object: 'Ticket::Article',
       o_id: article1.id,
-      data: IO.binread("#{Rails.root}/test/fixtures/es-too-big.txt"),
+      data: IO.binread(Rails.root.join('test', 'fixtures', 'es-too-big.txt')),
       filename: 'es-too-big.txt',
       preferences: {},
       created_by_id: 1,
@@ -332,7 +335,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
 
-    assert(!result.empty?, 'result exists not')
+    assert(result.present?, 'result exists not')
     assert(result[0], 'record 1')
     assert(!result[1], 'record 2')
     assert_equal(result[0].id, ticket2.id)
@@ -344,7 +347,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
 
-    assert(!result.empty?, 'result exists not')
+    assert(result.present?, 'result exists not')
     assert(result[0], 'record 1')
     assert(!result[1], 'record 2')
     assert_equal(result[0].id, ticket2.id)
@@ -387,7 +390,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       query: 'kindergarden',
       limit: 15,
     )
-    assert(result.empty?, 'result should be empty')
+    assert(result.blank?, 'result should be empty')
     assert(!result[0], 'record 1')
 
     # search as @customer1
@@ -397,7 +400,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
 
-    assert(!result.empty?, 'result exists not')
+    assert(result.present?, 'result exists not')
     assert(result[0], 'record 1')
     assert(result[1], 'record 2')
     assert(!result[2], 'record 3')
@@ -411,7 +414,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
 
-    assert(!result.empty?, 'result exists not')
+    assert(result.present?, 'result exists not')
     assert(result[0], 'record 1')
     assert(result[1], 'record 2')
     assert(!result[2], 'record 3')
@@ -425,7 +428,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       limit: 15,
     )
 
-    assert(!result.empty?, 'result exists not')
+    assert(result.present?, 'result exists not')
     assert(result[0], 'record 1')
     assert(!result[1], 'record 2')
     assert_equal(result[0].id, ticket3.id)
@@ -523,7 +526,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       query: 'customer1',
       limit: 15,
     )
-    assert(!result.empty?, 'result should not be empty')
+    assert(result.present?, 'result should not be empty')
     assert(result[0], 'record 1')
     assert(!result[1], 'record 2')
     assert_equal(result[0].id, @customer1.id)
@@ -534,7 +537,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
       query: 'customer1',
       limit: 15,
     )
-    assert(result.empty?, 'result should be empty')
+    assert(result.blank?, 'result should be empty')
     assert(!result[0], 'record 1')
 
     # cleanup

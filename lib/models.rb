@@ -25,34 +25,37 @@ returns
 =end
 
   def self.all
-    all = {}
-    dir = "#{Rails.root}/app/models/"
-    Dir.glob( "#{dir}**/*.rb" ) do |entry|
-      next if entry =~ /application_model/i
-      next if entry =~ %r{channel/}i
-      next if entry =~ %r{observer/}i
-      next if entry =~ %r{store/provider/}i
-      next if entry =~ %r{models/concerns/}i
+    @all ||= begin
+      all    = {}
+      dir    = Rails.root.join('app', 'models').to_s
+      tables = ActiveRecord::Base.connection.tables
+      Dir.glob("#{dir}/**/*.rb") do |entry|
+        next if entry.match?(/application_model/i)
+        next if entry.match?(%r{channel/}i)
+        next if entry.match?(%r{observer/}i)
+        next if entry.match?(%r{store/provider/}i)
+        next if entry.match?(%r{models/concerns/}i)
 
-      entry.gsub!(dir, '')
-      entry = entry.to_classname
-      model_class = load_adapter(entry)
-      next if !model_class
-      next if !model_class.respond_to? :new
-      next if !model_class.respond_to? :table_name
-      table_name = model_class.table_name # handle models where not table exists, pending migrations
-      next if !ActiveRecord::Base.connection.tables.include?(table_name)
-      model_object = model_class.new
-      next if !model_object.respond_to? :attributes
-      all[model_class] = {}
-      all[model_class][:attributes] = model_class.attribute_names
-      all[model_class][:reflections] = model_class.reflections
-      all[model_class][:table] = model_class.table_name
-      #puts model_class
-      #puts "rrrr #{all[model_class][:attributes]}"
-      #puts " #{model_class.attribute_names.inspect}"
+        entry.gsub!(dir, '')
+        entry = entry.to_classname
+        model_class = load_adapter(entry)
+        next if !model_class
+        next if !model_class.respond_to? :new
+        next if !model_class.respond_to? :table_name
+        table_name = model_class.table_name # handle models where not table exists, pending migrations
+        next if !tables.include?(table_name)
+        model_object = model_class.new
+        next if !model_object.respond_to? :attributes
+        all[model_class] = {}
+        all[model_class][:attributes] = model_class.attribute_names
+        all[model_class][:reflections] = model_class.reflections
+        all[model_class][:table] = model_class.table_name
+        #puts model_class
+        #puts "rrrr #{all[model_class][:attributes]}"
+        #puts " #{model_class.attribute_names.inspect}"
+      end
+      all
     end
-    all
   end
 
 =begin
@@ -69,7 +72,7 @@ returns
 
   def self.searchable
     models = []
-    all.each do |model_class, _options|
+    all.each_key do |model_class|
       next if !model_class
       next if !model_class.respond_to? :search_preferences
       models.push model_class
@@ -139,7 +142,7 @@ returns
     # find relations via reflections
     list.each do |model_class, model_attributes|
       next if !model_attributes[:reflections]
-      model_attributes[:reflections].each do |_reflection_key, reflection_value|
+      model_attributes[:reflections].each_value do |reflection_value|
 
         next if reflection_value.macro != :belongs_to
         col_name = "#{reflection_value.name}_id"
@@ -170,7 +173,7 @@ returns
 
     # cleanup, remove models with empty references
     references.each do |k, v|
-      next if !v.empty?
+      next if v.present?
       references.delete(k)
     end
 
@@ -192,8 +195,8 @@ returns
   def self.references_total(object_name, object_id)
     references = references(object_name, object_id)
     total = 0
-    references.each do |_model, model_references|
-      model_references.each do |_col, count|
+    references.each_value do |model_references|
+      model_references.each_value do |count|
         total += count
       end
     end
@@ -229,7 +232,7 @@ returns
 
       # collect items and attributes to update
       items_to_update = {}
-      attributes.each do |attribute, _count|
+      attributes.each_key do |attribute|
         Rails.logger.debug "#{object_name}: #{model}.#{attribute}->#{object_id_to_merge}->#{object_id_primary}"
         model_object.where("#{attribute} = ?", object_id_to_merge).each do |item|
           if !items_to_update[item.id]
@@ -241,9 +244,7 @@ returns
 
       # update items
       ActiveRecord::Base.transaction do
-        items_to_update.each do |_id, item|
-          item.save!
-        end
+        items_to_update.each_value(&:save!)
       end
     end
     true

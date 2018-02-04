@@ -34,19 +34,15 @@ returns
       end
       if !data[ app_model_overview ][ id ]
         data[ app_model_overview ][ id ] = attributes_with_association_ids
-        if user_ids
-          user_ids.each do |local_user_id|
-            next if data[ app_model_user ][ local_user_id ]
-            user = User.lookup(id: local_user_id)
-            next if !user
-            data = user.assets(data)
-          end
+        user_ids&.each do |local_user_id|
+          next if data[ app_model_user ][ local_user_id ]
+          user = User.lookup(id: local_user_id)
+          next if !user
+          data = user.assets(data)
         end
-
         data = assets_of_selector('condition', data)
-
       end
-      %w(created_by_id updated_by_id).each do |local_user_id|
+      %w[created_by_id updated_by_id].each do |local_user_id|
         next if !self[ local_user_id ]
         next if data[ app_model_user ][ self[ local_user_id ] ]
         user = User.lookup(id: self[ local_user_id ])

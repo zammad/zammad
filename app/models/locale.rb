@@ -24,7 +24,7 @@ returns
 
     # read used locales based on env, e. g. export Z_LOCALES='en-us:de-de'
     if ENV['Z_LOCALES']
-      locales = Locale.where(active: true, locale: ENV['Z_LOCALES'].split(':') )
+      locales = Locale.where(active: true, locale: ENV['Z_LOCALES'].split(':'))
     end
     locales
   end
@@ -71,7 +71,7 @@ all:
 
   def self.load_from_file
     version = Version.get
-    file = Rails.root.join("config/locales-#{version}.yml")
+    file = Rails.root.join('config', "locales-#{version}.yml")
     return false if !File.exist?(file)
     data = YAML.load_file(file)
     to_database(data)
@@ -107,7 +107,7 @@ all:
     raise "Can't load locales from #{url}" if !result
     raise "Can't load locales from #{url}: #{result.error}" if !result.success?
 
-    file = Rails.root.join("config/locales-#{version}.yml")
+    file = Rails.root.join('config', "locales-#{version}.yml")
     File.open(file, 'w') do |out|
       YAML.dump(result.data, out)
     end

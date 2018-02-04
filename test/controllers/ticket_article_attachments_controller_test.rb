@@ -1,11 +1,11 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
   setup do
 
     # create agent
-    roles  = Role.where(name: %w(Admin Agent))
+    roles  = Role.where(name: %w[Admin Agent])
     groups = Group.all
 
     UserInfo.current_user_id = 1
@@ -139,6 +139,59 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
     assert_response(401)
     assert_match(/401: Unauthorized/, @response.body)
 
+  end
+
+  test '01.02 test attachments for split' do
+    headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+
+    email_raw_string = IO.binread('test/fixtures/mail24.box')
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    get '/api/v1/ticket_split', params: { form_id: '1234-2', ticket_id: ticket_p.id, article_id: article_p.id }, headers: headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert(result['assets'])
+    assert_equal(result['attachments'].class, Array)
+    assert_equal(result['attachments'].count, 1)
+    assert_equal(result['attachments'][0]['filename'], 'rulesets-report.csv')
+
+  end
+
+  test '01.03 test attachments for forward' do
+    headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+
+    email_raw_string = IO.binread('test/fixtures/mail8.box')
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: {}, headers: headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Hash)
+    assert(result['error'], 'Need form_id to attach attachments to new form')
+
+    post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-1' }.to_json, headers: headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result['attachments'].class, Array)
+    assert(result['attachments'].blank?)
+
+    email_raw_string = IO.binread('test/fixtures/mail24.box')
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
+
+    post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-2' }.to_json, headers: headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result['attachments'].class, Array)
+    assert_equal(result['attachments'].count, 1)
+    assert_equal(result['attachments'][0]['filename'], 'rulesets-report.csv')
+
+    post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-2' }.to_json, headers: headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result['attachments'].class, Array)
+    assert(result['attachments'].blank?)
   end
 
 end

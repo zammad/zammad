@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class SessionBasicTest < ActiveSupport::TestCase
@@ -50,7 +50,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'c session create / update' do
 
     # create users
-    roles  = Role.where(name: %w(Agent))
+    roles  = Role.where(name: %w[Agent])
     groups = Group.all
 
     agent1 = User.create_or_update(
@@ -124,10 +124,10 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # get whole collections
     result1 = collection_client1.push
-    assert(!result1.empty?, 'check collections')
+    assert(result1.present?, 'check collections')
     sleep 0.6
     result2 = collection_client2.push
-    assert(!result2.empty?, 'check collections')
+    assert(result2.present?, 'check collections')
     assert_equal(result1, result2, 'check collections')
 
     # next check should be empty
@@ -145,10 +145,10 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # get whole collections
     result1 = collection_client1.push
-    assert(!result1.empty?, 'check collections - after touch')
+    assert(result1.present?, 'check collections - after touch')
 
     result2 = collection_client2.push
-    assert(!result2.empty?, 'check collections - after touch')
+    assert(result2.present?, 'check collections - after touch')
     assert_equal(result1, result2, 'check collections')
 
     # check again after touch
@@ -168,9 +168,9 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # get whole collections
     result1 = collection_client1.push
-    assert(!result1.empty?, 'check collections - after create')
+    assert(result1.present?, 'check collections - after create')
     result2 = collection_client2.push
-    assert(!result2.empty?, 'check collections - after create')
+    assert(result2.present?, 'check collections - after create')
     assert_equal(result1, result2, 'check collections')
 
     # check again after create
@@ -186,9 +186,9 @@ class SessionBasicTest < ActiveSupport::TestCase
 
     # get whole collections
     result1 = collection_client1.push
-    assert(!result1.empty?, 'check collections - after destroy')
+    assert(result1.present?, 'check collections - after destroy')
     result2 = collection_client2.push
-    assert(!result2.empty?, 'check collections - after destroy')
+    assert(result2.present?, 'check collections - after destroy')
     assert_equal(result1, result2, 'check collections')
 
     # check again after destroy
@@ -203,7 +203,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'c activity stream' do
 
     # create users
-    roles  = Role.where(name: %w(Agent Admin))
+    roles  = Role.where(name: %w[Agent Admin])
     groups = Group.all
 
     agent1 = User.create_or_update(
@@ -265,7 +265,7 @@ class SessionBasicTest < ActiveSupport::TestCase
   test 'c ticket_create' do
 
     # create users
-    roles  = Role.where(name: %w(Agent Admin))
+    roles  = Role.where(name: %w[Agent Admin])
     groups = Group.all
 
     agent1 = User.create_or_update(

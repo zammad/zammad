@@ -19,7 +19,7 @@ services:
   - mysql
 language: ruby
 rvm:
-  - 2.4.1
+  - 2.4.2
 before_install:
   - git fetch --unshallow
   - sudo apt-get -qq update
@@ -62,3 +62,4 @@ script:
 after_success:
   - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger-docker-build.sh; fi
   - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger-docker-compose-build.sh; fi
+  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger-docker-univention-build.sh; fi

@@ -26,8 +26,7 @@ module ApplicationController::HandlesDevices
     if user_device_updated_at
       # check if entry exists / only if write action
       diff = Time.zone.now - 10.minutes
-      method = request.method
-      if method == 'GET' || method == 'OPTIONS' || method == 'HEAD'
+      if %w[GET OPTIONS HEAD].include?(request.method)
         diff = Time.zone.now - 30.minutes
       end
 

@@ -3843,6 +3843,7 @@ footer {
 }
 
 .sidebar {
+  position: relative;
   width: 280px;
   padding: 20px;
   color: hsl(60,1%,34%);
@@ -4985,6 +4986,18 @@ footer {
       fill: currentColor;
     }
 
+    .article-action-name {
+      @media screen and (max-width: 1080px) {
+        display: none;
+      }
+
+      @media screen and (max-width: 1358px) {
+        .main:not(.is-closed) & {
+          display: none;
+        }
+      }
+    }
+
 .article-add {
   position: relative;
   z-index: 1; // fixed chrome 49 + flex issue, not shown article
@@ -5543,8 +5556,125 @@ footer {
     fill: hsl(197,19%,78%);
   }
 
-  .tabsSidebar-tab.active .icon {
-    fill: hsl(206,7%,37%);
+  .tabsSidebar-tab.active {
+    .tabsSidebar-tab-count {
+      background: hsl(206,7%,37%);
+
+      &:after {
+        border-right-color: hsl(206,7%,37%);
+      }
+
+      &.tabsSidebar-tab-count--info {
+        background: hsl(203,65%,55%);
+        opacity: 1;
+
+        &:after {
+          border-right-color: hsl(203,65%,55%);
+        }
+      }
+
+      &.tabsSidebar-tab-count--success {
+        background: hsl(145,51%,45%);
+        opacity: 1;
+
+        &:after {
+          border-right-color: hsl(145,51%,45%);
+        }
+      }
+
+      &.tabsSidebar-tab-count--warning {
+        background: hsl(45,98%,63%);
+        opacity: 1;
+
+        &:after {
+          border-right-color: hsl(45,98%,63%);
+        }
+      }
+
+      &.tabsSidebar-tab-count--danger {
+        background: hsl(11,85%,48%);
+        opacity: 1;
+
+        &:after {
+          border-right-color: hsl(11,85%,48%);
+        }
+      }
+    }
+
+    .icon {
+      fill: hsl(206,7%,37%);
+    }
+  }
+
+  .tabsSidebar-tab-count {
+    position: absolute;
+    left: 9px;
+    top: 5px;
+    background: hsl(197,19%,78%);
+    width: 16px;
+    height: 13px;
+    text-align: center;
+    border-radius: 2px;
+    font-size: 9px;
+    line-height: 14px;
+    color: hsl(197,20%,93%);
+
+    [data-tab="organization"] & {
+      left: 7px;
+
+      + .icon {
+        margin-left: 3px;
+      }
+    }
+
+    + .icon {
+      margin-top: 6px;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      right: 20%;
+      border-bottom: 3px solid transparent;
+      border-right: 5px solid hsl(197,19%,78%);
+    }
+
+    &.tabsSidebar-tab-count--info {
+      background: hsl(203,65%,55%);
+      opacity: .5;
+
+      &:after {
+        border-right-color: hsl(203,65%,55%);
+      }
+    }
+
+    &.tabsSidebar-tab-count--success {
+      background: hsl(145,51%,45%);
+      opacity: .5;
+
+      &:after {
+        border-right-color: hsl(145,51%,45%);
+      }
+    }
+
+    &.tabsSidebar-tab-count--warning {
+      background: hsl(45,98%,63%);
+      opacity: .5;
+
+      &:after {
+        border-right-color: hsl(45,98%,63%);
+      }
+    }
+
+    &.tabsSidebar-tab-count--danger {
+      background: hsl(11,85%,48%);
+      opacity: .5;
+
+      &:after {
+        border-right-color: hsl(11,85%,48%);
+      }
+    }
   }
 
   .sidebar .text-muted {

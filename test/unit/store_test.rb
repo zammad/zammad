@@ -1,11 +1,11 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class StoreTest < ActiveSupport::TestCase
   test 'store fs - get_location' do
     sha = 'ed7002b439e9ac845f22357d822bac1444730fbdb6016d3ec9432297b9ec9f73'
     location = Store::Provider::File.get_location(sha)
-    assert_equal("#{Rails.root}/storage/fs/ed70/02b4/39e9a/c845f/22357d8/22bac14/44730fbdb6016d3ec9432297b9ec9f73", location)
+    assert_equal(Rails.root.join('storage', 'fs', 'ed70', '02b4', '39e9a', 'c845f', '22357d8', '22bac14', '44730fbdb6016d3ec9432297b9ec9f73').to_s, location)
   end
 
   test 'store fs - empty dir remove' do
@@ -19,17 +19,17 @@ class StoreTest < ActiveSupport::TestCase
     result = Store::Provider::File.delete(sha)
     exists = File.exist?(location)
     assert(!exists)
-    exists = File.exist?("#{Rails.root}/storage/fs/ed70/02b4")
+    exists = File.exist?(Rails.root.join('storage', 'fs', 'ed70', '02b4'))
     assert(!exists)
-    exists = File.exist?("#{Rails.root}/storage/fs/ed70/")
+    exists = File.exist?(Rails.root.join('storage', 'fs', 'ed70'))
     assert(!exists)
-    exists = File.exist?("#{Rails.root}/storage/fs/")
+    exists = File.exist?(Rails.root.join('storage', 'fs'))
     assert(exists)
-    exists = File.exist?("#{Rails.root}/storage/")
+    exists = File.exist?(Rails.root.join('storage'))
     assert(exists)
   end
 
-  test 'store attachment' do
+  test 'store attachment and move it between backends' do
     files = [
       {
         data: 'hello world',
@@ -54,7 +54,7 @@ class StoreTest < ActiveSupport::TestCase
     ]
 
     files.each do |file|
-      sha = Digest::SHA256.hexdigest( file[:data] )
+      sha = Digest::SHA256.hexdigest(file[:data])
 
       # add attachments
       store = Store.add(
@@ -75,23 +75,23 @@ class StoreTest < ActiveSupport::TestCase
       assert attachments
 
       # sha check
-      sha_new = Digest::SHA256.hexdigest( attachments[0].content )
-      assert_equal( sha, sha_new,  "check file #{file[:filename]}")
+      sha_new = Digest::SHA256.hexdigest(attachments[0].content)
+      assert_equal(sha, sha_new,  "check file #{file[:filename]}")
 
       # filename check
-      assert_equal( file[:filename], attachments[0].filename )
+      assert_equal(file[:filename], attachments[0].filename)
 
       # provider check
-      assert_equal( 'DB', attachments[0].provider )
+      assert_equal('DB', attachments[0].provider)
     end
 
     success = Store::File.verify
     assert success, 'verify ok'
 
-    Store::File.move( 'DB', 'File' )
+    Store::File.move('DB', 'File')
 
     files.each do |file|
-      sha = Digest::SHA256.hexdigest( file[:data] )
+      sha = Digest::SHA256.hexdigest(file[:data])
 
       # get list of attachments
       attachments = Store.list(
@@ -101,54 +101,55 @@ class StoreTest < ActiveSupport::TestCase
       assert attachments
 
       # sha check
-      sha_new = Digest::SHA256.hexdigest( attachments[0].content )
-      assert_equal( sha, sha_new,  "check file #{file[:filename]}")
+      sha_new = Digest::SHA256.hexdigest(attachments[0].content)
+      assert_equal(sha, sha_new,  "check file #{file[:filename]}")
 
       # filename check
-      assert_equal( file[:filename], attachments[0].filename )
+      assert_equal(file[:filename], attachments[0].filename)
 
       # provider check
-      assert_equal( 'File', attachments[0].provider )
+      assert_equal('File', attachments[0].provider)
     end
 
     success = Store::File.verify
     assert success, 'verify ok'
 
-    Store::File.move( 'File', 'DB' )
+    Store::File.move('File', 'DB')
 
     files.each do |file|
-      sha = Digest::SHA256.hexdigest( file[:data] )
+      sha = Digest::SHA256.hexdigest(file[:data])
 
       # get list of attachments
       attachments = Store.list(
         object: 'Test',
         o_id: file[:o_id],
       )
-      assert attachments
+      assert(attachments)
+      assert_equal(attachments.count, 1)
 
       # sha check
-      sha_new = Digest::SHA256.hexdigest( attachments[0].content )
-      assert_equal( sha, sha_new,  "check file #{file[:filename]}")
+      sha_new = Digest::SHA256.hexdigest(attachments[0].content)
+      assert_equal(sha, sha_new,  "check file #{file[:filename]}")
 
       # filename check
-      assert_equal( file[:filename], attachments[0].filename )
+      assert_equal(file[:filename], attachments[0].filename)
 
       # provider check
-      assert_equal( 'DB', attachments[0].provider )
+      assert_equal('DB', attachments[0].provider)
 
       # delete attachments
       success = Store.remove(
         object: 'Test',
         o_id: file[:o_id],
       )
-      assert success
+      assert(success)
 
       # check attachments again
       attachments = Store.list(
         object: 'Test',
         o_id: file[:o_id],
       )
-      assert !attachments[0]
+      assert_not(attachments[0])
     end
   end
 end

@@ -10,7 +10,7 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
 
     # only do fill of email from if article got created via application_server (e. g. not
     # if article and sender type is set via *.postmaster)
-    return true if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
+    return if ApplicationHandleInfo.postmaster?
 
     # if sender is customer, do not change anything
     return true if !record.sender_id

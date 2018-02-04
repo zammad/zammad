@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class TicketArticlesControllerTest < ActionDispatch::IntegrationTest
@@ -8,7 +8,7 @@ class TicketArticlesControllerTest < ActionDispatch::IntegrationTest
     @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
 
     # create agent
-    roles  = Role.where(name: %w(Admin Agent))
+    roles  = Role.where(name: %w[Admin Agent])
     groups = Group.all
 
     UserInfo.current_user_id = 1
@@ -325,4 +325,194 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     article = Ticket::Article.find_by( ticket_id: result['id'] )
     assert_nil(article.origin_by_id)
   end
+
+  test '04.01 ticket split with html - check attachments' do
+    ticket = Ticket.create!(
+      title: 'some title',
+      group: Group.lookup(name: 'Users'),
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: @agent.id,
+      created_by_id: @agent.id,
+    )
+    article = Ticket::Article.create!(
+      type: Ticket::Article::Type.lookup(name: 'note'),
+      sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+      from: 'sender',
+      subject: 'subject',
+      body: '<b>test</b> <img src="cid:15.274327094.140938@ZAMMAD.example.com"/> test <img src="cid:15.274327094.140938.3@ZAMMAD.example.com"/>',
+      content_type: 'text/html',
+      ticket_id: ticket.id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Store.add(
+      object: 'Ticket::Article',
+      o_id: article.id,
+      data: 'content_file1_normally_should_be_an_image',
+      filename: 'some_file1.jpg',
+      preferences: {
+        'Content-Type'        => 'image/jpeg',
+        'Mime-Type'           => 'image/jpeg',
+        'Content-ID'          => '15.274327094.140938@zammad.example.com',
+        'Content-Disposition' => 'inline',
+      },
+      created_by_id: 1,
+    )
+    Store.add(
+      object: 'Ticket::Article',
+      o_id: article.id,
+      data: 'content_file2_normally_should_be_an_image',
+      filename: 'some_file2.jpg',
+      preferences: {
+        'Content-Type'        => 'image/jpeg',
+        'Mime-Type'           => 'image/jpeg',
+        'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
+        'Content-Disposition' => 'inline',
+      },
+      created_by_id: 1,
+    )
+    Store.add(
+      object: 'Ticket::Article',
+      o_id: article.id,
+      data: 'content_file3_normally_should_be_an_image',
+      filename: 'some_file3.jpg',
+      preferences: {
+        'Content-Type'        => 'image/jpeg',
+        'Mime-Type'           => 'image/jpeg',
+        'Content-ID'          => '15.274327094.140938.3@zammad.example.com',
+      },
+      created_by_id: 1,
+    )
+    Store.add(
+      object: 'Ticket::Article',
+      o_id: article.id,
+      data: 'content_file4_normally_should_be_an_image',
+      filename: 'some_file4.jpg',
+      preferences: {
+        'Content-Type'        => 'image/jpeg',
+        'Mime-Type'           => 'image/jpeg',
+        'Content-ID'          => '15.274327094.140938.4@zammad.example.com',
+      },
+      created_by_id: 1,
+    )
+    Store.add(
+      object: 'Ticket::Article',
+      o_id: article.id,
+      data: 'content_file1_normally_should_be_an_pdf',
+      filename: 'Rechnung_RE-2018-200.pdf',
+      preferences: {
+        'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
+        'Mime-Type'           => 'application/octet-stream',
+        'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
+        'Content-Description' => 'Rechnung_RE-2018-200.pdf',
+        'Content-Disposition' => 'attachment',
+      },
+      created_by_id: 1,
+    )
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+
+    params = {
+      form_id: 'new_form_id123',
+    }
+    post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['attachments'])
+    assert_equal(result['attachments'].count, 3)
+
+    post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['attachments'])
+    assert_equal(result['attachments'].count, 0)
+  end
+
+  test '04.02 ticket split with plain - check attachments' do
+    ticket = Ticket.create!(
+      title: 'some title',
+      group: Group.lookup(name: 'Users'),
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: @agent.id,
+      created_by_id: @agent.id,
+    )
+    article = Ticket::Article.create!(
+      type: Ticket::Article::Type.lookup(name: 'note'),
+      sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+      from: 'sender',
+      subject: 'subject',
+      body: '<b>test</b> <img src="cid:15.274327094.140938@zammad.example.com"/>',
+      content_type: 'text/plain',
+      ticket_id: ticket.id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Store.add(
+      object: 'Ticket::Article',
+      o_id: article.id,
+      data: 'content_file1_normally_should_be_an_image',
+      filename: 'some_file1.jpg',
+      preferences: {
+        'Content-Type'        => 'image/jpeg',
+        'Mime-Type'           => 'image/jpeg',
+        'Content-ID'          => '15.274327094.140938@zammad.example.com',
+        'Content-Disposition' => 'inline',
+      },
+      created_by_id: 1,
+    )
+    Store.add(
+      object: 'Ticket::Article',
+      o_id: article.id,
+      data: 'content_file1_normally_should_be_an_image',
+      filename: 'some_file2.jpg',
+      preferences: {
+        'Content-Type'        => 'image/jpeg',
+        'Mime-Type'           => 'image/jpeg',
+        'Content-ID'          => '15.274327094.140938.2@zammad.example.com',
+        'Content-Disposition' => 'inline',
+      },
+      created_by_id: 1,
+    )
+    Store.add(
+      object: 'Ticket::Article',
+      o_id: article.id,
+      data: 'content_file1_normally_should_be_an_pdf',
+      filename: 'Rechnung_RE-2018-200.pdf',
+      preferences: {
+        'Content-Type'        => 'application/octet-stream; name="Rechnung_RE-2018-200.pdf"',
+        'Mime-Type'           => 'application/octet-stream',
+        'Content-ID'          => '8AB0BEC88984EE4EBEF643C79C8E0346@zammad.example.com',
+        'Content-Description' => 'Rechnung_RE-2018-200.pdf',
+        'Content-Disposition' => 'attachment',
+      },
+      created_by_id: 1,
+    )
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+
+    params = {
+      form_id: 'new_form_id123',
+    }
+    post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['attachments'])
+    assert_equal(result['attachments'].count, 3)
+
+    post "/api/v1/ticket_attachment_upload_clone_by_article/#{article.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['attachments'])
+    assert_equal(result['attachments'].count, 0)
+
+  end
+
 end

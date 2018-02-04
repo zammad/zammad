@@ -18,7 +18,7 @@ class LongPollingController < ApplicationController
       params['data'] = {}
     end
     session_data = {}
-    if current_user && current_user.id
+    if current_user&.id
       session_data = { 'id' => current_user.id }
     end
 
@@ -61,13 +61,12 @@ class LongPollingController < ApplicationController
 
     # check queue to send
     begin
-
       # update last ping
       4.times do
         sleep 0.25
       end
       #sleep 1
-      Sessions.touch(client_id)
+      Sessions.touch(client_id) # rubocop:disable Rails/SkipsModelValidations
 
       # set max loop time to 24 sec. because of 30 sec. timeout of mod_proxy
       count = 3

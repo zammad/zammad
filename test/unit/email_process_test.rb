@@ -1,4 +1,3 @@
-# encoding: utf-8
 # rubocop:disable all
 require 'test_helper'
 
@@ -205,6 +204,74 @@ Some Text",
         },
       },
       {
+        data: "From: sender@example.com
+To: some_new_customer423@example.com
+Cc: some recipient <some with invalid@example.com>, max <somebody_else@example.com>
+Subject: abc some subject2
+
+Some Text",
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'abc some subject2',
+          },
+          1 => {
+            body: 'Some Text',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'max',
+              lastname: '',
+              fullname: 'max',
+              email: 'somebody_else@example.com',
+            },
+            {
+              firstname: '',
+              lastname: '',
+              fullname: 'some_new_customer423@example.com',
+              email: 'some_new_customer423@example.com',
+            },
+          ],
+        },
+      },
+      {
+        data: "From: sender@example.com
+To: some_new_customer424@example.com
+Subject: abc some subject3
+Reply-To: some user <no-reply-with invalid-spaces@example.com>
+
+Some Text",
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'abc some subject3',
+          },
+          1 => {
+            body: 'Some Text',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: '',
+              lastname: '',
+              fullname: 'some_new_customer424@example.com',
+              email: 'some_new_customer424@example.com',
+            },
+          ],
+        },
+      },
+      {
         data: "From: me@example.com
 To: Alexander Ha <service-d1@example.com>,
  Alexander Re <re-mail@example.de>, Hauke Ko
@@ -355,7 +422,7 @@ Some Text",
 <td colspan=\"2\">9õh<span style=\"color:#f18246;\">H</span>3ÿo<span style=\"color:#f18246;\">I</span>Úõ´<span style=\"color:#f18246;\">G</span>Ã¿i<span style=\"color:#f18246;\">H</span>±6u<span style=\"color:#f18246;\">-</span>û◊N<span style=\"color:#f18246;\">Q</span>4ùä<span style=\"color:#f18246;\">U</span>¹aw<span style=\"color:#f18246;\">A</span>q¹J<span style=\"color:#f18246;\">L</span>ZμÒ<span style=\"color:#f18246;\">I</span>icg<span style=\"color:#f18246;\">T</span>1ζ2<span style=\"color:#f18246;\">Y</span>7⊆t<span style=\"color:#f18246;\"> </span>63‘<span style=\"color:#f18246;\">M</span>ñ36<span style=\"color:#f18246;\">E</span>ßÝ→<span style=\"color:#f18246;\">D</span>Aå†<span style=\"color:#f18246;\">I</span>048<span style=\"color:#f18246;\">C</span>vJ9<span style=\"color:#f18246;\">A</span>↑3i<span style=\"color:#f18246;\">T</span>c4É<span style=\"color:#f18246;\">I</span>ΥvX<span style=\"color:#f18246;\">O</span>50ñ<span style=\"color:#f18246;\">N</span>ÁFJ<span style=\"color:#f18246;\">S</span>ð­r<span style=\"color:#f18246;\"> </span>154<span style=\"color:#f18246;\">F</span>1HP<span style=\"color:#f18246;\">O</span>À£C<span style=\"color:#f18246;\">R</span>xZp<span style=\"color:#f18246;\"> </span>tLî<span style=\"color:#f18246;\">T</span>9öX<span style=\"color:#f18246;\">H</span>1b3<span style=\"color:#f18246;\">E</span>s±W<span style=\"color:#f18246;\"> </span>mNà<span style=\"color:#f18246;\">B</span>g3õ<span style=\"color:#f18246;\">E</span>bPŒ<span style=\"color:#f18246;\">S</span>úfτ<span style=\"color:#f18246;\">T</span>óY4<span style=\"color:#f18246;\"> </span>sUÖ<span style=\"color:#f18246;\">P</span>ÒζΔ<span style=\"color:#f18246;\">R</span>Fkc<span style=\"color:#f18246;\">I</span>Õ1™<span style=\"color:#f18246;\">C</span>ÓZ3<span style=\"color:#f18246;\">E</span>ΛRq<span style=\"color:#f18246;\">!</span>Cass is good to ask what that</td>
 </tr>
 <tr>
-<td align=\"center\" colspan=\"2\">86Ë<span style=\"color:#18136c;\">ÏuÕC L I C K H E R E28M (<a href=\"http://piufup.medicatingsafemart.ru\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://piufup.medicatingsafemart.ru</a>)</span>Luke had been thinking about that.<br>Shannon said nothing in fact they. Matt placed the sofa with amy smiled. Since the past him with more. Maybe he checked the phone. Neither did her name only. Ryan then went inside matt.<br>Maybe we can have anything you sure.</td>
+<td align=\"center\" colspan=\"2\">86Ë<span style=\"color:#18136c;\"><a href=\"http://piufup.medicatingsafemart.ru\" rel=\"nofollow noreferrer noopener\" title=\"http://piufup.medicatingsafemart.ru\" target=\"_blank\"><b><span style=\"color:#f5e5b3;\">ÏuÕ</span>C L I C K H E R E<span style=\"color:#fae8b3;\">28M</span></b></a></span>Luke had been thinking about that.<br>Shannon said nothing in fact they. Matt placed the sofa with amy smiled. Since the past him with more. Maybe he checked the phone. Neither did her name only. Ryan then went inside matt.<br>Maybe we can have anything you sure.</td>
 </tr>
 <tr>
 <td colspan=\"2\">á•X<span style=\"color:#18136c;\">M</span>YÍÅ<span style=\"color:#18136c;\">E</span>E£Ó<span style=\"color:#18136c;\">N</span>°kP<span style=\"color:#18136c;\">'</span>dÄÅ<span style=\"color:#18136c;\">S</span>4⌉d<span style=\"color:#18136c;\"> </span>√p¨<span style=\"color:#18136c;\">H</span>Σ&gt;j<span style=\"color:#18136c;\">E</span>4y4<span style=\"color:#18136c;\">A</span>Cüû<span style=\"color:#18136c;\">L</span>ì“v<span style=\"color:#18136c;\">T</span>∧4t<span style=\"color:#18136c;\">H</span>XÆX<span style=\"color:#18136c;\">:</span>
@@ -431,10 +498,10 @@ Some Text",
 <table style=\"border-collapse:collapse;border:none;\">
 <tr>
 <td style=\"border:none;padding:0px 15px 0px 8px;\">
-<a href=\"http://www.avast.com/\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://www.avast.com/</a>
+<a href=\"http://www.avast.com/\" rel=\"nofollow noreferrer noopener\" title=\"http://www.avast.com/\" target=\"_blank\"> </a>
 </td>
 <td>
-<p> ?????? ?????????????????? ???????????????? ???? ?????????????? ?? ???????????????????????? ???? ?????????????????? avast! Antivirus (<a href=\"http://www.avast.com/\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://www.avast.com/</a>) ???????????? ??????????????. </p>
+<p> ?????? ?????????????????? ???????????????? ???? ?????????????? ?? ???????????????????????? ???? ?????????????????? <a href=\"http://www.avast.com/\" rel=\"nofollow noreferrer noopener\" title=\"http://www.avast.com/\" target=\"_blank\">avast! Antivirus</a> ???????????? ??????????????. </p>
 </td>
 </tr>
 </table>",
@@ -2602,6 +2669,113 @@ Some Text',
           ],
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail64.box'),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'AW: OTRS / Anfrage OTRS Einführung/Präsentation [Ticket#11545]',
+          },
+          1 => {
+            from: 'Martin Edenhofer <martin@example.de>',
+            sender: 'Customer',
+            type: 'email',
+            body: 'Enjoy!<div>
+<br><div>-Martin<br><span class="js-signatureMarker"></span><br>--<br>Old programmers never die. They just branch to a new address.<br>
+</div>
+<br><div><img src="cid:485376C9-2486-4351-B932-E2010998F579@home" style="width:640px;height:425px;"></div>
+</div>',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Martin',
+              lastname: 'Edenhofer',
+              fullname: 'Martin Edenhofer',
+              email: 'martin@example.de',
+            },
+          ],
+        },
+      },
+      {
+        data: 'From: =?iso-8859-1?Q?B=FCrling,=20Andreas?= <smith@example.com>
+Content-Type: text/plain;
+  charset=iso-8859-1
+Content-Transfer-Encoding: quoted-printable
+Subject: =?iso-8859-1?Q?aa=E4=F6=FC=DFad_asd?=
+X-Universally-Unique-Identifier: d12c15d2-e6d6-4ccd-86c7-abc2c3d0a2a2
+Date: Fri, 4 May 2012 14:01:03 +0200
+Message-Id: <BC182994-03FA-4DC5-8202-98CBFACA0887@example.com>
+To: metest@znuny.com
+Mime-Version: 1.0 (Apple Message framework v1257)
+
+=E4=F6=FC=DF ad asd
+
+-Martin
+
+--
+Old programmers never die. They just branch to a new address.',
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'aaäöüßad asd',
+          },
+          1 => {
+            from: '=?iso-8859-1?Q?B=FCrling, =20Andreas?= <smith@example.com>',
+            sender: 'Customer',
+            type: 'email',
+            body: 'äöüß ad asd
+
+-Martin
+
+--
+Old programmers never die. They just branch to a new address.',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: '=20Andreas?=',
+              lastname: '',
+              fullname: '=20Andreas?=',
+              email: 'smith@example.com',
+            },
+          ],
+        },
+      },
+      {
+        data: 'From: =?windows-1258?B?VmFuZHJvbW1lLCBGculk6XJpYw==?= <fvandromme@example.com>
+To: Example <info@example.com>
+Subject: some subject 3
+
+Some Text',
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'some subject 3',
+          },
+          1 => {
+            from: '=?windows-1258?B?VmFuZHJvbW1lLCBGculk6XJpYw==?= <fvandromme@example.com>',
+            sender: 'Customer',
+            type: 'email',
+            body: 'Some Text',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Frédéric',
+              lastname: 'Vandromme',
+              fullname: 'Frédéric Vandromme',
+              email: 'fvandromme@example.com',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end
@@ -2813,9 +2987,9 @@ Some Text',
             # verify if users are created
             if file[:verify][:users]
               file[:verify][:users].each { |user_result|
-                user = User.where(email: user_result[:email]).first
+                user = User.where(email: user_result[:email].downcase).first
                 if !user
-                  assert(false, "No user '#{user_result[:email]}' found!")
+                  assert(false, "No user '#{user_result[:email].downcase}' found!")
                   return
                 end
                 user_result.each { |key, value|

@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'browser_test_helper'
 
 class ZendeskImportBrowserTest < TestCase
@@ -79,32 +79,27 @@ class ZendeskImportBrowserTest < TestCase
     click(css: '.js-migration-start')
 
     watch_for(
-      css:     '.js-group .js-done',
+      css:     '.js-groups .js-done',
       value:   '2',
       timeout: 120,
     )
 
     watch_for(
-      css:     '.js-organization .js-done',
+      css:     '.js-organizations .js-done',
       value:   '1',
       timeout: 120,
     )
 
     watch_for(
-      css:   '.js-user .js-done',
+      css:   '.js-users .js-done',
       value: '141',
       timeout: 120,
     )
 
     watch_for(
-      css:     '.js-ticket .js-done',
-      value:   '143',
-      timeout: 800,
-    )
-
-    watch_for(
       css: 'body',
       value: 'login',
+      timeout: 800,
     )
   end
 end

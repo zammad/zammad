@@ -148,24 +148,26 @@ class App.ControllerGenericIndex extends App.Controller
         return item
       )
 
-    # show description button, only if content exists
-    showDescription = false
-    if App[ @genericObject ].description && !_.isEmpty(objects)
-      showDescription = true
+    if !@table
 
-    @html App.view('generic/admin/index')(
-      head:            @pageData.objects
-      notes:           @pageData.notes
-      buttons:         @pageData.buttons
-      menus:           @pageData.menus
-      showDescription: showDescription
-    )
+      # show description button, only if content exists
+      showDescription = false
+      if App[ @genericObject ].description && !_.isEmpty(objects)
+        showDescription = true
 
-    # show description in content if no no content exists
-    if _.isEmpty(objects) && App[ @genericObject ].description
-      description = marked(App[ @genericObject ].description)
-      @$('.table-overview').html(description)
-      return
+      @html App.view('generic/admin/index')(
+        head:            @pageData.objects
+        notes:           @pageData.notes
+        buttons:         @pageData.buttons
+        menus:           @pageData.menus
+        showDescription: showDescription
+      )
+
+      # show description in content if no no content exists
+      if _.isEmpty(objects) && App[ @genericObject ].description
+        description = marked(App[ @genericObject ].description)
+        @$('.table-overview').html(description)
+        return
 
     # append content table
     params = _.extend(
@@ -184,7 +186,10 @@ class App.ControllerGenericIndex extends App.Controller
       },
       @pageData.tableExtend
     )
-    new App.ControllerTable(params)
+    if !@table
+      @table = new App.ControllerTable(params)
+    else
+      @table.update(objects: objects)
 
   edit: (id, e) =>
     e.preventDefault()
@@ -651,7 +656,7 @@ class App.Sidebar extends App.Controller
     '.sidebar':         'sidebars'
 
   events:
-    'click .tabsSidebar-tab':   'toggleTab'
+    'click .tabsSidebar-tab': 'toggleTab'
     'click .tabsSidebar-close': 'toggleSidebar'
     'click .sidebar-header .js-headline': 'toggleDropdown'
 
@@ -675,25 +680,47 @@ class App.Sidebar extends App.Controller
     @toggleTabAction(name)
 
   render: =>
+    itemsLocal = []
+    for item in @items
+      itemLocal = item.sidebarItem()
+      if itemLocal
+        itemsLocal.push itemLocal
+
+    # container
     localEl = $(App.view('generic/sidebar_tabs')(
-      items:          @items
+      items:          itemsLocal
       scrollbarWidth: App.Utils.getScrollBarWidth()
       dir:            App.i18n.dir()
     ))
 
-    # init content callback
-    for item in @items
-      area = localEl.filter('.sidebar[data-tab="' + item.name + '"]')
-      if item.callback
-        item.callback( area.find('.sidebar-content') )
-      if item.actions
-        new App.ActionRow(
-          el:    area.find('.js-actions')
-          items: item.actions
-          type:  'small'
-        )
+    # init sidebar badget
+    for item in itemsLocal
+      el = localEl.find('.tabsSidebar-tab[data-tab="' + item.name + '"]')
+      if item.badgeCallback
+        item.badgeCallback(el)
+      else
+        @badgeRender(el, item)
+
+    # init sidebar content
+    for item in itemsLocal
+      if item.sidebarCallback
+        el = localEl.filter('.sidebar[data-tab="' + item.name + '"]')
+        item.sidebarCallback(el.find('.sidebar-content'))
+        if !_.isEmpty(item.sidebarActions)
+          new App.ActionRow(
+            el:    el.find('.js-actions')
+            items: item.sidebarActions
+            type:  'small'
+          )
 
     @html localEl
+
+  badgeRender: (el, item) =>
+    @badgeEl = el
+    @badgeRenderLocal(item)
+
+  badgeRenderLocal: (item) =>
+    @badgeEl.html(App.view('generic/sidebar_tabs_item')(icon: item.badgeIcon))
 
   toggleDropdown: (e) ->
     e.stopPropagation()
@@ -1170,7 +1197,6 @@ class App.ObserverController extends App.Controller
     if @globalRerender
       @bind('ui:rerender', =>
         @lastAttributres = undefined
-        console.log('aaaa', @model, @template)
         @maybeRender(App[@model].fullLocal(@object_id))
       )
 

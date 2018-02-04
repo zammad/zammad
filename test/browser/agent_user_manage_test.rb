@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'browser_test_helper'
 
 class AgentUserManageTest < TestCase
@@ -19,17 +19,17 @@ class AgentUserManageTest < TestCase
     sleep 1
 
     # create customer
-    click( css: 'a[href="#new"]' )
-    click( css: 'a[href="#ticket/create"]' )
-    click( css: '.active .newTicket [name="customer_id_completion"]' )
+    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#ticket/create"]')
+    click(css: '.active .newTicket [name="customer_id_completion"]')
 
     # check if pulldown is open, it's not working stable via selenium
     @browser.execute_script( "$('.active .newTicket .js-recipientDropdown').addClass('open')" )
 
     sleep 1
-    sendkey( value: :arrow_down )
+    sendkey(value: :arrow_down)
     sleep 0.5
-    click( css: '.active .newTicket .recipientList-entry.js-objectNew' )
+    click(css: '.active .newTicket .recipientList-entry.js-objectNew')
     sleep 1
 
     set(
@@ -45,7 +45,7 @@ class AgentUserManageTest < TestCase
       value: customer_user_email,
     )
 
-    click( css: '.modal button.js-submit' )
+    click(css: '.modal button.js-submit')
     sleep 4
 
     # check is used to check selected
@@ -75,8 +75,8 @@ class AgentUserManageTest < TestCase
     # call new ticket screen again
     tasks_close_all()
 
-    click( css: 'a[href="#new"]' )
-    click( css: 'a[href="#ticket/create"]' )
+    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#ticket/create"]')
     sleep 2
 
     match(
@@ -93,7 +93,7 @@ class AgentUserManageTest < TestCase
     )
     sleep 3
 
-    click( css: '.active .newTicket .recipientList-entry.js-object.is-active' )
+    click(css: '.active .newTicket .recipientList-entry.js-object.is-active')
     sleep 1
 
     # check is used to check selected

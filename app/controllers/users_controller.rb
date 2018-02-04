@@ -1,7 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class UsersController < ApplicationController
-  prepend_before_action :authentication_check, except: [:create, :password_reset_send, :password_reset_verify, :image]
+  include ChecksUserAttributesByCurrentUserPermission
+
+  prepend_before_action :authentication_check, except: %i[create password_reset_send password_reset_verify image]
   prepend_before_action :authentication_check_only, only: [:create]
 
   # @path       [GET] /users
@@ -32,7 +34,7 @@ class UsersController < ApplicationController
               User.all.order(id: 'ASC').offset(offset).limit(per_page)
             end
 
-    if params[:expand]
+    if response_expand?
       list = []
       users.each do |user|
         list.push user.attributes_with_association_names
@@ -41,7 +43,7 @@ class UsersController < ApplicationController
       return
     end
 
-    if params[:full]
+    if response_full?
       assets = {}
       item_ids = []
       users.each do |item|
@@ -78,18 +80,24 @@ class UsersController < ApplicationController
     user = User.find(params[:id])
     access!(user, 'read')
 
-    if params[:expand]
+    if response_expand?
       result = user.attributes_with_association_names
-    elsif params[:full]
-      result = {
-        id:     params[:id],
-        assets: user.assets({}),
-      }
-    else
-      result = user.attributes_with_association_ids
       result.delete('password')
+      render json: result
+      return
     end
 
+    if response_full?
+      result = {
+        id:     user.id,
+        assets: user.assets({}),
+      }
+      render json: result
+      return
+    end
+
+    result = user.attributes_with_association_ids
+    result.delete('password')
     render json: result
   end
 
@@ -145,7 +153,7 @@ class UsersController < ApplicationController
       group_ids = []
       role_ids  = []
       if count <= 2
-        Role.where(name: %w(Admin Agent)).each do |role|
+        Role.where(name: %w[Admin Agent]).each do |role|
           role_ids.push role.id
         end
         Group.all().each do |group|
@@ -169,7 +177,7 @@ class UsersController < ApplicationController
     else
 
       # permission check
-      permission_check_by_permission(params)
+      check_attributes_by_current_user_permission(params)
 
       user = User.new(clean_params)
       user.associations_from_param(params)
@@ -198,7 +206,7 @@ class UsersController < ApplicationController
     end
 
     # send inviteation if needed / only if session exists
-    if params[:invite] && current_user
+    if params[:invite].present? && current_user
       token = Token.create(action: 'PasswordReset', user_id: user.id)
       NotificationFactory::Mailer.notification(
         template: 'user_invite',
@@ -212,7 +220,7 @@ class UsersController < ApplicationController
     end
 
     # send email verify
-    if params[:signup] && !current_user
+    if params[:signup].present? && !current_user
       result = User.signup_new_token(user)
       NotificationFactory::Mailer.notification(
         template: 'signup',
@@ -221,15 +229,25 @@ class UsersController < ApplicationController
       )
     end
 
-    if params[:expand]
-      user = User.find(user.id).attributes_with_association_names
+    if response_expand?
+      user = user.reload.attributes_with_association_names
+      user.delete('password')
       render json: user, status: :created
       return
     end
 
-    user_new = User.find(user.id).attributes_with_association_ids
-    user_new.delete('password')
-    render json: user_new, status: :created
+    if response_full?
+      result = {
+        id:     user.id,
+        assets: user.assets({}),
+      }
+      render json: result, status: :created
+      return
+    end
+
+    user = user.reload.attributes_with_association_ids
+    user.delete('password')
+    render json: user, status: :created
   end
 
   # @path       [PUT] /users/{id}
@@ -243,13 +261,13 @@ class UsersController < ApplicationController
   # @response_message 200 [User] Updated User record.
   # @response_message 401        Invalid session.
   def update
-    permission_check_by_permission(params)
+    check_attributes_by_current_user_permission(params)
 
     user = User.find(params[:id])
     access!(user, 'change')
 
     # permission check
-    permission_check_by_permission(params)
+    check_attributes_by_current_user_permission(params)
     user.with_lock do
       clean_params = User.association_name_to_id_convert(params)
       clean_params = User.param_cleanup(clean_params, true)
@@ -269,18 +287,27 @@ class UsersController < ApplicationController
       if current_user.permissions?(['admin.user', 'ticket.agent']) && (params[:organization_ids] || params[:organizations])
         user.associations_from_param(organization_ids: params[:organization_ids], organizations: params[:organizations])
       end
-
-      if params[:expand]
-        user = User.find(user.id).attributes_with_association_names
-        render json: user, status: :ok
-        return
-      end
     end
 
-    # get new data
-    user_new = User.find(user.id).attributes_with_association_ids
-    user_new.delete('password')
-    render json: user_new, status: :ok
+    if response_expand?
+      user = user.reload.attributes_with_association_names
+      user.delete('password')
+      render json: user, status: :ok
+      return
+    end
+
+    if response_full?
+      result = {
+        id:     user.id,
+        assets: user.assets({}),
+      }
+      render json: result, status: :ok
+      return
+    end
+
+    user = user.reload.attributes_with_association_ids
+    user.delete('password')
+    render json: user, status: :ok
   end
 
   # @path    [DELETE] /users/{id}
@@ -311,13 +338,14 @@ class UsersController < ApplicationController
   # @response_message 401        Invalid session.
   def me
 
-    if params[:expand]
+    if response_expand?
       user = current_user.attributes_with_association_names
+      user.delete('password')
       render json: user, status: :ok
       return
     end
 
-    if params[:full]
+    if response_full?
       full = User.full(current_user.id)
       render json: full
       return
@@ -360,15 +388,20 @@ class UsersController < ApplicationController
     end
 
     if params[:limit] && params[:limit].to_i > 500
-      params[:limit].to_i = 500
+      params[:limit] = 500
+    end
+
+    query = params[:query]
+    if query.respond_to?(:permit!)
+      query = query.permit!.to_h
     end
 
     query_params = {
-      query: params[:query],
+      query: query,
       limit: params[:limit],
       current_user: current_user,
     }
-    [:role_ids, :permissions].each do |key|
+    %i[role_ids permissions].each do |key|
       next if params[key].blank?
       query_params[key] = params[key]
     end
@@ -382,7 +415,7 @@ class UsersController < ApplicationController
       user_all = user_all[offset, params[:per_page].to_i] || []
     end
 
-    if params[:expand]
+    if response_expand?
       list = []
       user_all.each do |user|
         list.push user.attributes_with_association_names
@@ -408,7 +441,7 @@ class UsersController < ApplicationController
       return
     end
 
-    if params[:full]
+    if response_full?
       user_ids = []
       assets   = {}
       user_all.each do |user|
@@ -462,7 +495,7 @@ class UsersController < ApplicationController
                end
 
     # build result list
-    if !params[:full]
+    if !response_full?
       users = []
       user_all.each do |user|
         realname = user.firstname.to_s + ' ' + user.lastname.to_s
@@ -1043,35 +1076,4 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     true
   end
 
-  def permission_check_by_permission(params)
-    return true if current_user.permissions?('admin.user')
-
-    %i(role_ids roles).each do |key|
-      next if !params[key]
-      if current_user.permissions?('ticket.agent')
-        params.delete(key)
-      else
-        logger.info "Role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{params[key].inspect}"
-        raise Exceptions::NotAuthorized, 'This role assignment is only allowed by admin!'
-      end
-    end
-    if current_user.permissions?('ticket.agent') && !params[:role_ids] && !params[:roles] && params[:id].blank?
-      params[:role_ids] = Role.signup_role_ids
-    end
-
-    %i(group_ids groups).each do |key|
-      next if !params[key]
-      if current_user.permissions?('ticket.agent')
-        params.delete(key)
-      else
-        logger.info "Group relation assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{params[key].inspect}"
-        raise Exceptions::NotAuthorized, 'Group relation is only allowed by admin!'
-      end
-    end
-
-    return true if current_user.permissions?('ticket.agent')
-
-    response_access_deny
-    false
-  end
 end

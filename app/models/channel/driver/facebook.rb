@@ -60,8 +60,7 @@ class Channel::Driver::Facebook
     true
   end
 
-  def disconnect
-  end
+  def disconnect; end
 
 =begin
 

@@ -1,13 +1,15 @@
 class SidebarTemplate extends App.Controller
   sidebarItem: =>
     return if !@permissionCheck('ticket.agent')
-    {
-      head:    'Templates'
-      name:    'template'
-      icon:    'templates'
-      actions: []
-      callback: @showTemplates
+    @item = {
+      name: 'template'
+      badgeIcon: 'templates'
+      badgeCallback: @badgeRender
+      sidebarHead: 'Templates'
+      sidebarActions: []
+      sidebarCallback: @showTemplates
     }
+    @item
 
   showTemplates: (el) =>
     @el = el

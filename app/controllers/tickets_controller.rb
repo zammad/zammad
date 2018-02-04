@@ -2,6 +2,8 @@
 
 class TicketsController < ApplicationController
   include CreatesTicketArticles
+  include ClonesTicketArticleAttachments
+  include ChecksUserAttributesByCurrentUserPermission
   include TicketStats
 
   prepend_before_action :authentication_check
@@ -23,7 +25,7 @@ class TicketsController < ApplicationController
     access_condition = Ticket.access_condition(current_user, 'read')
     tickets = Ticket.where(access_condition).order(id: 'ASC').offset(offset).limit(per_page)
 
-    if params[:expand]
+    if response_expand?
       list = []
       tickets.each do |ticket|
         list.push ticket.attributes_with_association_names
@@ -32,7 +34,7 @@ class TicketsController < ApplicationController
       return
     end
 
-    if params[:full]
+    if response_full?
       assets = {}
       item_ids = []
       tickets.each do |item|
@@ -54,19 +56,19 @@ class TicketsController < ApplicationController
     ticket = Ticket.find(params[:id])
     access!(ticket, 'read')
 
-    if params[:expand]
+    if response_expand?
       result = ticket.attributes_with_association_names
       render json: result, status: :ok
       return
     end
 
-    if params[:full]
+    if response_full?
       full = Ticket.full(params[:id])
       render json: full
       return
     end
 
-    if params[:all]
+    if response_all?
       render json: ticket_all(ticket)
       return
     end
@@ -76,27 +78,33 @@ class TicketsController < ApplicationController
 
   # POST /api/v1/tickets
   def create
+    customer = {}
+    if params[:customer].class == ActionController::Parameters
+      customer = params[:customer]
+      params.delete(:customer)
+    end
+
     clean_params = Ticket.association_name_to_id_convert(params)
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
-      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each do |key|
+      %i[owner owner_id customer customer_id organization organization_id preferences].each do |key|
         clean_params.delete(key)
       end
       clean_params[:customer_id] = current_user.id
     end
 
     # try to create customer if needed
-    if clean_params[:customer_id] && clean_params[:customer_id] =~ /^guess:(.+?)$/
+    if clean_params[:customer_id].present? && clean_params[:customer_id] =~ /^guess:(.+?)$/
       email = $1
       if email !~ /@/ || email =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s)/
         render json: { error: 'Invalid email of customer' }, status: :unprocessable_entity
         return
       end
-      customer = User.find_by(email: email.downcase)
-      if !customer
+      local_customer = User.find_by(email: email.downcase)
+      if !local_customer
         role_ids = Role.signup_role_ids
-        customer = User.create(
+        local_customer = User.create(
           firstname: '',
           lastname: '',
           email: email,
@@ -105,7 +113,30 @@ class TicketsController < ApplicationController
           role_ids: role_ids,
         )
       end
-      clean_params[:customer_id] = customer.id
+      clean_params[:customer_id] = local_customer.id
+    end
+
+    # try to create customer if needed
+    if clean_params[:customer_id].blank? && customer.present?
+      check_attributes_by_current_user_permission(customer)
+      clean_customer = User.association_name_to_id_convert(customer)
+      local_customer = nil
+      if !local_customer && clean_customer[:id].present?
+        local_customer = User.find_by(id: clean_customer[:id])
+      end
+      if !local_customer && clean_customer[:email].present?
+        local_customer = User.find_by(email: clean_customer[:email].downcase)
+      end
+      if !local_customer && clean_customer[:login].present?
+        local_customer = User.find_by(login: clean_customer[:login].downcase)
+      end
+      if !local_customer
+        role_ids = Role.signup_role_ids
+        local_customer = User.new(clean_customer)
+        local_customer.role_ids = role_ids
+        local_customer.save!
+      end
+      clean_params[:customer_id] = local_customer.id
     end
 
     clean_params = Ticket.param_cleanup(clean_params, true)
@@ -162,18 +193,24 @@ class TicketsController < ApplicationController
       end
     end
 
-    if params[:expand]
+    if response_expand?
       result = ticket.reload.attributes_with_association_names
       render json: result, status: :created
       return
     end
 
-    if params[:all]
-      render json: ticket_all(ticket.reload)
+    if response_full?
+      full = Ticket.full(ticket.id)
+      render json: full, status: :created
       return
     end
 
-    render json: ticket.reload, status: :created
+    if response_all?
+      render json: ticket_all(ticket.reload), status: :created
+      return
+    end
+
+    render json: ticket.reload.attributes_with_association_ids, status: :created
   end
 
   # PUT /api/v1/tickets/1
@@ -186,7 +223,7 @@ class TicketsController < ApplicationController
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
-      [:owner, :owner_id, :customer, :customer_id, :organization, :organization_id, :preferences].each do |key|
+      %i[owner owner_id customer customer_id organization organization_id preferences].each do |key|
         clean_params.delete(key)
       end
     end
@@ -198,18 +235,24 @@ class TicketsController < ApplicationController
       end
     end
 
-    if params[:expand]
+    if response_expand?
       result = ticket.reload.attributes_with_association_names
       render json: result, status: :ok
       return
     end
 
-    if params[:all]
-      render json: ticket_all(ticket.reload)
+    if response_full?
+      full = Ticket.full(params[:id])
+      render json: full, status: :ok
       return
     end
 
-    render json: ticket.reload, status: :ok
+    if response_all?
+      render json: ticket_all(ticket.reload), status: :ok
+      return
+    end
+
+    render json: ticket.reload.attributes_with_association_ids, status: :ok
   end
 
   # DELETE /api/v1/tickets/1
@@ -270,7 +313,7 @@ class TicketsController < ApplicationController
                    .limit(6)
 
     # if we do not have open related tickets, search for any tickets
-    if ticket_lists.empty?
+    if ticket_lists.blank?
       ticket_lists = Ticket
                      .where(
                        customer_id: ticket.customer_id,
@@ -353,12 +396,13 @@ class TicketsController < ApplicationController
     access!(ticket, 'read')
     assets = ticket.assets({})
 
-    # get related articles
     article = Ticket::Article.find(params[:article_id])
+    access!(article.ticket, 'read')
     assets = article.assets(assets)
 
     render json: {
-      assets: assets
+      assets: assets,
+      attachments: article_attachments_clone(article),
     }
   end
 
@@ -386,14 +430,19 @@ class TicketsController < ApplicationController
     end
 
     if params[:limit] && params[:limit].to_i > 100
-      params[:limit].to_i = 100
+      params[:limit] = 100
+    end
+
+    query = params[:query]
+    if query.respond_to?(:permit!)
+      query = query.permit!.to_h
     end
 
     # build result list
     tickets = Ticket.search(
+      query: query,
+      condition: params[:condition].to_h,
       limit: params[:limit],
-      query: params[:query],
-      condition: params[:condition],
       current_user: current_user,
     )
 
@@ -403,7 +452,7 @@ class TicketsController < ApplicationController
       tickets = tickets[offset, params[:per_page].to_i] || []
     end
 
-    if params[:expand]
+    if response_expand?
       list = []
       tickets.each do |ticket|
         list.push ticket.attributes_with_association_names
@@ -435,11 +484,9 @@ class TicketsController < ApplicationController
 
     assets = {}
     ticket_ids = []
-    if tickets
-      tickets.each do |ticket|
-        ticket_ids.push ticket.id
-        assets = ticket.assets(assets)
-      end
+    tickets&.each do |ticket|
+      ticket_ids.push ticket.id
+      assets = ticket.assets(assets)
     end
 
     # return result
@@ -504,7 +551,7 @@ class TicketsController < ApplicationController
 
     # lookup open org tickets
     org_tickets = {}
-    if params[:organization_id] && !params[:organization_id].empty?
+    if params[:organization_id].present?
       organization = Organization.lookup(id: params[:organization_id])
       if !organization
         raise "No such organization with id #{params[:organization_id]}"

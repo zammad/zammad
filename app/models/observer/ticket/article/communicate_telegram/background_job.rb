@@ -30,6 +30,7 @@ class Observer::Ticket::Article::CommunicateTelegram::BackgroundJob
       api = TelegramAPI.new(channel.options[:api_token])
       chat_id = ticket.preferences[:telegram][:chat_id]
       result = api.sendMessage(chat_id, article.body)
+      me = api.getMe()
       article.attachments.each do |file|
         parts = file.filename.split(/^(.*)(\..+?)$/)
         t = Tempfile.new([parts[1], parts[2]])
@@ -43,16 +44,32 @@ class Observer::Ticket::Article::CommunicateTelegram::BackgroundJob
       return
     end
 
-    # fill article with message info
-    article.from = "@#{result['from']['username']}"
-    article.to = "@#{result['chat']['username']}"
+    Rails.logger.debug "result info: #{result}"
 
-    article.preferences['telegram'] = {
-      date: result['date'],
-      from_id: result['from']['id'],
-      chat_id: result['chat']['id'],
-      message_id: result['message_id']
-    }
+    # only private, group messages. channel messages do not have from key
+    if result['from'] && result['chat']
+      # fill article with message info
+      article.from = "@#{result['from']['username']}"
+      article.to = "@#{result['chat']['username']}"
+
+      article.preferences['telegram'] = {
+        date: result['date'],
+        from_id: result['from']['id'],
+        chat_id: result['chat']['id'],
+        message_id: result['message_id']
+      }
+    else
+      # fill article with message info (telegram channel)
+      article.from = "@#{me['username']}"
+      article.to = "#{result['chat']['title']} Channel"
+
+      article.preferences['telegram'] = {
+        date: result['date'],
+        from_id: me['id'],
+        chat_id: result['chat']['id'],
+        message_id: result['message_id']
+      }
+    end
 
     # set delivery status
     article.preferences['delivery_status_message'] = nil

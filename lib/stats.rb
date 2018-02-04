@@ -44,7 +44,7 @@ returns
 
     # calculate average
     backend_average_sum = {}
-    user_result.each do |_user_id, data|
+    user_result.each_value do |data|
       data.each do |backend_model, backend_result|
         next if !backend_result.key?(:used_for_average)
         if !backend_average_sum[backend_model]

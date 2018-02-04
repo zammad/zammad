@@ -99,7 +99,7 @@ return all activity entries of an user
     permission_ids = user.permissions_with_child_ids
     group_ids = user.group_ids_access('read')
 
-    stream = if group_ids.empty?
+    stream = if group_ids.blank?
                ActivityStream.where('(permission_id IN (?) AND group_id is NULL)', permission_ids)
                              .order('created_at DESC, id DESC')
                              .limit(limit)

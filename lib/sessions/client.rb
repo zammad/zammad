@@ -1,7 +1,8 @@
 class Sessions::Client
 
-  def initialize(client_id)
+  def initialize(client_id, node_id)
     @client_id = client_id
+    @node_id = node_id
     log '---client start ws connection---'
     fetch
     log '---client exiting ws connection---'
@@ -21,6 +22,9 @@ class Sessions::Client
     user_id_last_run = nil
     loop_count = 0
     loop do
+
+      # check if session still exists
+      return if !Sessions.session_exists?(@client_id)
 
       # get connection user
       session_data = Sessions.get(@client_id)
@@ -58,9 +62,9 @@ class Sessions::Client
 
       # start faster in the beginnig
       if loop_count < 20
-        sleep 0.6
-      else
         sleep 1
+      else
+        sleep 2.2
       end
     end
   end
@@ -71,6 +75,6 @@ class Sessions::Client
   end
 
   def log(msg)
-    Rails.logger.debug "client(#{@client_id}) #{msg}"
+    Rails.logger.debug "client(#{@node_id}.#{@client_id}) #{msg}"
   end
 end

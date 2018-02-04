@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'lib/import/import_job_backend_examples'
 
-RSpec.describe Import::Ldap do
+RSpec.describe Import::Ldap, sequencer: :caller do
   it_behaves_like 'ImportJob backend'
 
   describe '.queueable?' do
@@ -32,7 +32,8 @@ RSpec.describe Import::Ldap do
 
       allow(Setting).to receive(:get).with('ldap_integration').and_return(true)
       allow(Setting).to receive(:get).with('ldap_config').and_return(true)
-      expect(Import::Ldap::UserFactory).to receive(:import)
+
+      expect_sequence
 
       instance.start
     end
@@ -43,7 +44,7 @@ RSpec.describe Import::Ldap do
         import_job = create(:import_job, dry_run: true)
         instance   = described_class.new(import_job)
 
-        expect(Import::Ldap::UserFactory).to receive(:import)
+        expect_sequence
 
         instance.start
       end
@@ -54,7 +55,7 @@ RSpec.describe Import::Ldap do
 
         allow(Setting).to receive(:get).with('ldap_integration').and_return(false)
 
-        expect(Import::Ldap::UserFactory).not_to receive(:import)
+        expect_no_sequence
 
         expect do
           instance.start
@@ -73,7 +74,7 @@ RSpec.describe Import::Ldap do
         allow(Setting).to receive(:get).with('ldap_integration').and_return(true)
         allow(Setting).to receive(:get).with('ldap_config').and_return({})
 
-        expect(Import::Ldap::UserFactory).not_to receive(:import)
+        expect_no_sequence
 
         expect do
           instance.start

@@ -2,15 +2,15 @@ Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
   # omniauth
-  match '/auth/:provider/callback',         to: 'sessions#create_omniauth',      via: [:post, :get, :puts, :delete]
+  match '/auth/:provider/callback',         to: 'sessions#create_omniauth',      via: %i[post get puts delete]
 
   # sso
-  match '/auth/sso',                        to: 'sessions#create_sso',           via: [:post, :get]
+  match '/auth/sso',                        to: 'sessions#create_sso',           via: %i[post get]
 
   # sessions
   match api_path + '/signin',               to: 'sessions#create',               via: :post
-  match api_path + '/signshow',             to: 'sessions#show',                 via: [:get, :post]
-  match api_path + '/signout',              to: 'sessions#destroy',              via: [:get, :delete]
+  match api_path + '/signshow',             to: 'sessions#show',                 via: %i[get post]
+  match api_path + '/signout',              to: 'sessions#destroy',              via: %i[get delete]
 
   match api_path + '/available',            to: 'sessions#available',            via: :get
 

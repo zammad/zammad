@@ -1,3 +1,4 @@
+# rubocop:disable Lint/BooleanSymbol
 class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
   def up
 
@@ -337,7 +338,10 @@ class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
       display: 'Visibility',
       data_type: 'select',
       data_option: {
-        options: { true: 'internal', false: 'public' },
+        options: {
+          true:  'internal',
+          false: 'public'
+        },
         nulloption: false,
         multiple: false,
         null: true,

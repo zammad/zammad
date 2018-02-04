@@ -65,7 +65,7 @@ push translations to online
       end
     end
 
-    return true if translations_to_push.empty?
+    return true if translations_to_push.blank?
 
     url = 'https://i18n.zammad.com/api/v1/translations/thanks_for_your_support'
 
@@ -108,7 +108,7 @@ reset translations to origin
     # only push changed translations
     translations = Translation.where(locale: locale)
     translations.each do |translation|
-      if !translation.target_initial || translation.target_initial.empty?
+      if translation.target_initial.blank?
         translation.destroy
       elsif translation.target != translation.target_initial
         translation.target = translation.target_initial
@@ -168,7 +168,7 @@ get list of translations
 
     # add presorted on top
     presorted_list = []
-    %w(yes no or Year Years Month Months Day Days Hour Hours Minute Minutes Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec January February March April May June July August September October November December Mon Tue Wed Thu Fri Sat Sun Monday Tuesday Wednesday Thursday Friday Saturday Sunday).each do |presort|
+    %w[yes no or Year Years Month Months Day Days Hour Hours Minute Minutes Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec January February March April May June July August September October November December Mon Tue Wed Thu Fri Sat Sun Monday Tuesday Wednesday Thursday Friday Saturday Sunday].each do |presort|
       list.each do |item|
         next if item[1] != presort
         presorted_list.push item
@@ -227,9 +227,9 @@ all:
 
   def self.load_from_file(dedicated_locale = nil)
     version = Version.get
-    directory = Rails.root.join('config/translations')
+    directory = Rails.root.join('config', 'translations')
     locals_to_sync(dedicated_locale).each do |locale|
-      file = Rails.root.join("#{directory}/#{locale}-#{version}.yml")
+      file = Rails.root.join(directory, "#{locale}-#{version}.yml")
       return false if !File.exist?(file)
       data = YAML.load_file(file)
       to_database(locale, data)
@@ -271,11 +271,11 @@ all:
       )
       raise "Can't load translations from #{url}: #{result.error}" if !result.success?
 
-      directory = Rails.root.join('config/translations')
+      directory = Rails.root.join('config', 'translations')
       if !File.directory?(directory)
         Dir.mkdir(directory, 0o755)
       end
-      file = Rails.root.join("#{directory}/#{locale}-#{version}.yml")
+      file = Rails.root.join(directory, "#{locale}-#{version}.yml")
       File.open(file, 'w') do |out|
         YAML.dump(result.data, out)
       end
@@ -359,7 +359,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
 
           # verify if update is needed
           update_needed = false
-          translation_raw.each do |key, _value|
+          translation_raw.each_key do |key|
 
             # if translation target has changes
             next unless translation_raw[key] != translation.target

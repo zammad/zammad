@@ -1,11 +1,11 @@
 <div class="signup fullscreen">
   <div class="fullscreen-center">
     <div class="hero-unit fullscreen-body">
-      <h1><%- @T( 'Join' ) %> <%= @C( 'product_name' ) %></h1>
+      <h1><%- @T('Join %s', @C('product_name')) %></h1>
       <form>
         <div class="form-controls">
-          <a class="btn btn--text btn--subtle js-cancel" href="#login"><%- @T( 'Cancel & Go Back' ) %></a>
-          <button class="btn btn--primary js-submit align-right"><%- @T( 'Create my account' ) %></button>
+          <a class="btn btn--text btn--subtle js-cancel" href="#login"><%- @T('Cancel & Go Back') %></a>
+          <button class="btn btn--primary js-submit align-right"><%- @T('Create my account') %></button>
         </div>
       </form>
     </div>

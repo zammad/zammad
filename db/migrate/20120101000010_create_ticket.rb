@@ -127,8 +127,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :created_by_id,  :integer,            null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :ticket_flags, [:ticket_id, :created_by_id]
-    add_index :ticket_flags, [:ticket_id, :key]
+    add_index :ticket_flags, %i[ticket_id created_by_id]
+    add_index :ticket_flags, %i[ticket_id key]
     add_index :ticket_flags, [:ticket_id]
     add_index :ticket_flags, [:created_by_id]
     add_foreign_key :ticket_flags, :tickets, column: :ticket_id
@@ -182,7 +182,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     end
     add_index :ticket_articles, [:ticket_id]
     add_index :ticket_articles, [:message_id_md5]
-    add_index :ticket_articles, [:message_id_md5, :type_id], name: 'index_ticket_articles_message_id_md5_type_id'
+    add_index :ticket_articles, %i[message_id_md5 type_id], name: 'index_ticket_articles_message_id_md5_type_id'
     add_index :ticket_articles, [:created_by_id]
     add_index :ticket_articles, [:created_at]
     add_index :ticket_articles, [:internal]
@@ -202,8 +202,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :created_by_id,       :integer,           null: false
       t.timestamps limit: 3,  null: false
     end
-    add_index :ticket_article_flags, [:ticket_article_id, :created_by_id], name: 'index_ticket_article_flags_on_articles_id_and_created_by_id'
-    add_index :ticket_article_flags, [:ticket_article_id, :key]
+    add_index :ticket_article_flags, %i[ticket_article_id created_by_id], name: 'index_ticket_article_flags_on_articles_id_and_created_by_id'
+    add_index :ticket_article_flags, %i[ticket_article_id key]
     add_index :ticket_article_flags, [:ticket_article_id]
     add_index :ticket_article_flags, [:created_by_id]
     add_foreign_key :ticket_article_flags, :ticket_articles, column: :ticket_article_id
@@ -346,7 +346,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :link_object_target_value,     :integer,   null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :links, [:link_object_source_id, :link_object_source_value, :link_object_target_id, :link_object_target_value, :link_type_id], unique: true, name: 'links_uniq_total'
+    add_index :links, %i[link_object_source_id link_object_source_value link_object_target_id link_object_target_value link_type_id], unique: true, name: 'links_uniq_total'
     add_foreign_key :links, :link_types
 
     create_table :postmaster_filters do |t|
@@ -467,6 +467,8 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.string  :note,                   limit: 250,  null: true
       t.boolean :active,                              null: false, default: true
       t.boolean :public,                              null: false, default: false
+      t.string  :block_ip,               limit: 5000, null: true
+      t.string  :block_country,          limit: 5000, null: true
       t.string  :preferences,            limit: 5000, null: true
       t.integer :updated_by_id,                       null: false
       t.integer :created_by_id,                       null: false
@@ -572,7 +574,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     end
     add_index :karma_activity_logs, [:user_id]
     add_index :karma_activity_logs, [:created_at]
-    add_index :karma_activity_logs, [:o_id, :object_lookup_id]
+    add_index :karma_activity_logs, %i[o_id object_lookup_id]
     add_foreign_key :karma_activity_logs, :users
     add_foreign_key :karma_activity_logs, :karma_activities, column: :activity_id
   end

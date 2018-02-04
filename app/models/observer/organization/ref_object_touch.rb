@@ -27,7 +27,7 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
     Ticket.select('id').where(organization_id: record.id).pluck(:id).each do |ticket_id|
       ticket = Ticket.find(ticket_id)
       ticket.with_lock do
-        ticket.touch
+        ticket.touch # rubocop:disable Rails/SkipsModelValidations
       end
     end
 
@@ -35,7 +35,7 @@ class Observer::Organization::RefObjectTouch < ActiveRecord::Observer
     User.select('id').where(organization_id: record.id).pluck(:id).each do |user_id|
       user = User.find(user_id)
       user.with_lock do
-        user.touch
+        user.touch # rubocop:disable Rails/SkipsModelValidations
       end
     end
     true

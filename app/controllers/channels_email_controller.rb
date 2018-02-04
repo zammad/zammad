@@ -226,7 +226,7 @@ class ChannelsEmailController < ApplicationController
 
       Channel.where(area: 'Email::Notification').each do |channel|
         active = false
-        if adapter =~ /^#{channel.options[:outbound][:adapter]}$/i
+        if adapter.match?(/^#{channel.options[:outbound][:adapter]}$/i)
           active = true
           channel.options = {
             outbound: {

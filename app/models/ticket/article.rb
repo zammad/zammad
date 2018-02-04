@@ -18,6 +18,7 @@ class Ticket::Article < ApplicationModel
   store         :preferences
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5
+  after_destroy :store_delete
 
   sanitized_html :body
 
@@ -147,7 +148,7 @@ get body as text
 
   def body_as_text
     return '' if !body
-    return body if !content_type || content_type.empty? || content_type =~ %r{text/plain}i
+    return body if content_type.blank? || content_type =~ %r{text/plain}i
     body.html2text
   end
 
@@ -289,15 +290,12 @@ returns
     return true if body.blank?
     limit = 1_500_000
     current_length = body.length
-    if body.length > limit
-      if ApplicationHandleInfo.current.present? && ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
-        logger.warn "WARNING: cut string because of database length #{self.class}.body(#{limit} but is #{current_length})"
-        self.body = body[0, limit]
-      else
-        raise Exceptions::UnprocessableEntity, "body if article is to large, #{current_length} chars - only #{limit} allowed"
-      end
-    end
-    true
+    return true if body.length <= limit
+
+    raise Exceptions::UnprocessableEntity, "body if article is to large, #{current_length} chars - only #{limit} allowed" if !ApplicationHandleInfo.postmaster?
+
+    logger.warn "WARNING: cut string because of database length #{self.class}.body(#{limit} but is #{current_length})"
+    self.body = body[0, limit]
   end
 
   def history_log_attributes
@@ -314,6 +312,18 @@ returns
     {
       group_id: Ticket.find(ticket_id).group_id,
     }
+  end
+
+  # delete attachments and mails of article
+  def store_delete
+    Store.remove(
+      object: 'Ticket::Article',
+      o_id:   id,
+    )
+    Store.remove(
+      object: 'Ticket::Article::Mail',
+      o_id:   id,
+    )
   end
 
   class Flag < ApplicationModel

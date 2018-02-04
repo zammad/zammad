@@ -18,7 +18,7 @@ load text modules from online
 =end
 
   def self.load(locale, overwrite_existing_item = false)
-    raise 'Got no locale' if locale.empty?
+    raise 'Got no locale' if locale.blank?
     locale = locale.split(',').first.downcase # in case of accept_language header is given
     url = "https://i18n.zammad.com/api/v1/text_modules/#{locale}"
 
@@ -67,7 +67,7 @@ push text_modules to online
       text_modules_to_push.push text_module
     end
 
-    return true if text_modules_to_push.empty?
+    return true if text_modules_to_push.blank?
 
     url = 'https://i18n.zammad.com/api/v1/text_modules/thanks_for_your_support'
 

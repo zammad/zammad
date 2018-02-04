@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 require 'rake'
 
@@ -245,8 +245,8 @@ class FormControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '06 - customer_ticket_create false disables form' do
-    Setting.set('form_ticket_create', true)
-    Setting.set('customer_ticket_create', false)
+    Setting.set('form_ticket_create', false)
+    Setting.set('customer_ticket_create', true)
 
     fingerprint = SecureRandom.hex(40)
 

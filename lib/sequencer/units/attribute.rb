@@ -1,5 +1,5 @@
 class Sequencer
-  class Units
+  class Units < SimpleDelegator
     class Attribute
 
       attr_accessor :from, :to

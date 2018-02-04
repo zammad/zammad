@@ -62,7 +62,7 @@ returns
       selected_group_ids = user.preferences['notification_config']['group_ids']
       if selected_group_ids.is_a?(Array)
         hit = nil
-        if selected_group_ids.empty?
+        if selected_group_ids.blank?
           hit = true
         elsif selected_group_ids[0] == '-' && selected_group_ids.count == 1
           hit = true
@@ -264,7 +264,7 @@ returns
     end
 
     template = NotificationFactory.template_read(
-      locale: data[:locale] || 'en',
+      locale: data[:locale] || Setting.get('locale_default') || 'en-us',
       template: data[:template],
       format: 'html',
       type: 'mailer',

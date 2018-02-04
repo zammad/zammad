@@ -24,7 +24,7 @@ module Import
       def booleanize_values(properties)
         properties.each do |key, value|
           if value.is_a?(String)
-            next if !%w(true false).include?(value)
+            next if !%w[true false].include?(value)
             properties[key] = value == 'true'
           elsif value.is_a?(Hash)
             properties[key] = booleanize_values(value)
@@ -33,8 +33,7 @@ module Import
       end
 
       def normalize(properties)
-        result = {}
-        properties.each do |key, value|
+        properties.each_with_object({}) do |(key, value), result|
 
           next if key == :body
 
@@ -46,20 +45,16 @@ module Import
             result[key] = sub_elems(value[:elems])
           end
         end
-
-        result
       end
 
       def sub_elems(elems)
-        result = {}
-        elems.each do |elem|
+        elems.each_with_object({}) do |elem, result|
           if elem[:entry]
             result.merge!( sub_elem_entry( elem[:entry] ) )
           else
             result.merge!( normalize(elem) )
           end
         end
-        result
       end
 
       def sub_elem_entry(entry)
@@ -83,13 +78,11 @@ module Import
       end
 
       def flatten(properties, prefix: nil)
-
-        result = {}
-        properties.each do |key, value|
+        properties.each_with_object({}) do |(key, value), result|
 
           result_key = key
           if prefix
-            result_key = if %i(text id).include?(key) && ( !result[result_key] || result[result_key] == value )
+            result_key = if %i[text id].include?(key) && ( !result[result_key] || result[result_key] == value )
                            prefix
                          else
                            "#{prefix}.#{key}".to_sym
@@ -104,7 +97,6 @@ module Import
             result[result_key] = value.to_s
           end
         end
-        result
       end
     end
   end

@@ -38,7 +38,7 @@ module Import
         return false if !@local_user
 
         # only update roles if different (reduce sql statements)
-        if user[:role_ids] && user[:role_ids].sort == @local_user.role_ids.sort
+        if user[:role_ids]&.sort == @local_user.role_ids.sort
           user.delete(:role_ids)
         end
 
@@ -68,6 +68,7 @@ module Import
       def map(user)
         mapped = map_default(user)
         mapped[:email].downcase!
+        mapped[:login].downcase!
         mapped
       end
 
@@ -95,6 +96,7 @@ module Import
         queues.each do |queue|
 
           permissions = user['GroupIDs'][ queue['GroupID'] ]
+          permissions ||= user['GroupIDs'][ queue['GroupID'].to_s ]
 
           next if !permissions
           next if !permissions.include?('rw')
@@ -143,7 +145,8 @@ module Import
 
       def groups_from_otrs_group(role_object, group)
         result = []
-        return result if role_object['GroupIDs'].empty?
+        return result if role_object.blank?
+        return result if role_object['GroupIDs'].blank?
         permissions = role_object['GroupIDs'][ group['ID'] ]
 
         return result if !permissions
@@ -164,7 +167,7 @@ module Import
         roles  = Import::OTRS::Requester.load('Role')
         roles.each do |role|
           next if !user['RoleIDs'].include?(role['ID'])
-          result += groups_from_otrs_groups(role['GroupIDs'])
+          result += groups_from_otrs_groups(role)
         end
         result
       end

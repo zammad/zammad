@@ -12,14 +12,19 @@ module ApplicationController::RendersModels
     # create object
     generic_object = object.new(clean_params)
 
-    # save object
-    generic_object.save!
-
     # set relations
     generic_object.associations_from_param(params)
 
-    if params[:expand]
+    # save object
+    generic_object.save!
+
+    if response_expand?
       render json: generic_object.attributes_with_association_names, status: :created
+      return
+    end
+
+    if response_full?
+      render json: generic_object.class.full(generic_object.id), status: :created
       return
     end
 
@@ -40,15 +45,21 @@ module ApplicationController::RendersModels
 
     generic_object.with_lock do
 
+      # set relations
+      generic_object.associations_from_param(params)
+
       # set attributes
       generic_object.update!(clean_params)
 
-      # set relations
-      generic_object.associations_from_param(params)
     end
 
-    if params[:expand]
+    if response_expand?
       render json: generic_object.attributes_with_association_names, status: :ok
+      return
+    end
+
+    if response_full?
+      render json: generic_object.class.full(generic_object.id), status: :ok
       return
     end
 
@@ -71,20 +82,18 @@ module ApplicationController::RendersModels
 
   def model_show_render(object, params)
 
-    if params[:expand]
+    if response_expand?
       generic_object = object.find(params[:id])
       render json: generic_object.attributes_with_association_names, status: :ok
       return
     end
 
-    if params[:full]
-      generic_object_full = object.full(params[:id])
-      render json: generic_object_full, status: :ok
+    if response_full?
+      render json: object.full(params[:id]), status: :ok
       return
     end
 
-    generic_object = object.find(params[:id])
-    model_show_render_item(generic_object)
+    model_show_render_item(object.find(params[:id]))
   end
 
   def model_show_render_item(generic_object)
@@ -109,7 +118,7 @@ module ApplicationController::RendersModels
                         object.all.order(id: 'ASC').offset(offset).limit(limit)
                       end
 
-    if params[:expand]
+    if response_expand?
       list = []
       generic_objects.each do |generic_object|
         list.push generic_object.attributes_with_association_names
@@ -118,7 +127,7 @@ module ApplicationController::RendersModels
       return
     end
 
-    if params[:full]
+    if response_full?
       assets = {}
       item_ids = []
       generic_objects.each do |item|
@@ -146,7 +155,7 @@ module ApplicationController::RendersModels
   def model_references_check(object, params)
     generic_object = object.find(params[:id])
     result = Models.references(object, generic_object.id)
-    return false if result.empty?
+    return false if result.blank?
     raise Exceptions::UnprocessableEntity, 'Can\'t delete, object has references.'
   rescue => e
     raise Exceptions::UnprocessableEntity, e

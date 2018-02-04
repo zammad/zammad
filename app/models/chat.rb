@@ -9,7 +9,7 @@ class Chat < ApplicationModel
 
     # reconnect
     if session_id
-      chat_session = Chat::Session.find_by(session_id: session_id, state: %w(waiting running))
+      chat_session = Chat::Session.find_by(session_id: session_id, state: %w[waiting running])
 
       if chat_session
         if chat_session.state == 'running'
@@ -126,7 +126,7 @@ class Chat < ApplicationModel
   end
 
   def self.active_chat_count
-    Chat::Session.where(state: %w(waiting running)).count
+    Chat::Session.where(state: %w[waiting running]).count
   end
 
   def self.available_agents(diff = 2.minutes)
@@ -153,7 +153,7 @@ class Chat < ApplicationModel
 
   def self.seads_total(diff = 2.minutes)
     total = 0
-    available_agents(diff).each do |_user_id, concurrent|
+    available_agents(diff).each_value do |concurrent|
       total += concurrent
     end
     total
@@ -262,6 +262,48 @@ optional you can put the max oldest chat sessions as argument
       chat_session.send_to_recipients(message)
     end
     true
+  end
+
+=begin
+
+check if ip address is blocked for chat
+
+  chat = Chat.find(123)
+  chat.blocked_ip?(ip)
+
+=end
+
+  def blocked_ip?(ip)
+    return false if ip.blank?
+    return false if block_ip.blank?
+    ips = block_ip.split(';')
+    ips.each do |local_ip|
+      return true if ip == local_ip.strip
+      return true if ip.match?(/#{local_ip.strip.gsub(/\*/, '.+?')}/)
+    end
+    false
+  end
+
+=begin
+
+check if country is blocked for chat
+
+  chat = Chat.find(123)
+  chat.blocked_country?(ip)
+
+=end
+
+  def blocked_country?(ip)
+    return false if ip.blank?
+    return false if block_country.blank?
+    geo_ip = Service::GeoIp.location(ip)
+    return false if geo_ip.blank?
+    return false if geo_ip['country_code'].blank?
+    countries = block_country.split(';')
+    countries.each do |local_country|
+      return true if geo_ip['country_code'] == local_country
+    end
+    false
   end
 
 end

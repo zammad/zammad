@@ -1,4 +1,4 @@
-require 'sequencer/unit/mixin/dynamic_attribute'
+require 'sequencer/unit/common/mixin/dynamic_attribute'
 
 class Sequencer
   class Unit
@@ -8,15 +8,17 @@ class Sequencer
           module Skip
             module MissingMandatory
               class Base < Sequencer::Unit::Base
-                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::SkipOnProvidedInstanceAction
-                include ::Sequencer::Unit::Mixin::DynamicAttribute
+                include ::Sequencer::Unit::Common::Mixin::DynamicAttribute
+                prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-                provides :instance_action
+                skip_any_action
+
+                provides :action
 
                 def process
                   return if !skip?
                   logger.debug("Skipping. Missing mandatory attributes for #{attribute}: #{attribute_value.inspect}")
-                  state.provide(:instance_action, :skipped)
+                  state.provide(:action, :skipped)
                 end
 
                 private
@@ -32,7 +34,7 @@ class Sequencer
 
                 def mandatory_missing?
                   values = attribute_value.fetch_values(*mandatory)
-                  !values.any?(&:present?)
+                  values.none?(&:present?)
                 rescue KeyError => e
                   false
                 end

@@ -21,6 +21,7 @@ class ImportJob < ApplicationModel
     instance = name.constantize.new(self)
     instance.start
   rescue => e
+    Rails.logger.error "ImportJob '#{name}' failed: #{e.message}"
     Rails.logger.error e
 
     # rubocop:disable Style/RedundantSelf

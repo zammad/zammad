@@ -25,7 +25,7 @@ Role.create_if_not_exists(
   name: 'Customer',
   note: 'People who create Tickets ask for help.',
   preferences: {
-    not: %w(Agent Admin),
+    not: %w[Agent Admin],
   },
   default_at_signup: true,
   updated_by_id: 1,

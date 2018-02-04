@@ -1,7 +1,7 @@
 <div class="article-content article-actions horizontal stretch">
   <% for action in @actions: %>
-    <a href="<%= action.href %>" data-type="<%= action.type %>" class="article-action u-clickable<% if action.class: %> <%= action.class %><% end %>">
-      <%- @Icon(action.icon, 'article-action-icon') %><%- @T( action.name ) %>
+    <a href="<%= action.href %>" data-type="<%= action.type %>" class="article-action js-ArticleAction u-clickable<% if action.class: %> <%= action.class %><% end %>">
+      <%- @Icon(action.icon, 'article-action-icon') %><span class="article-action-name"><%- @T(action.name) %></span>
     </a>
   <% end %>
 </div>

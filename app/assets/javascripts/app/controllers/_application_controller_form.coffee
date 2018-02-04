@@ -86,6 +86,9 @@ class App.ControllerForm extends App.Controller
     for attribute in @attributes
       attribute_count = attribute_count + 1
 
+      if @isDisabled == true
+        attribute.disabled = true
+
       # add item
       item = @formGenItem(attribute, className, fieldset, attribute_count)
       item.appendTo(fieldset)

@@ -28,8 +28,8 @@ class ActiveSupport::TestCase
   Cache.clear
 
   # load seeds
-  load "#{Rails.root}/db/seeds.rb"
-  load "#{Rails.root}/test/fixtures/seeds.rb"
+  load Rails.root.join('db', 'seeds.rb')
+  load Rails.root.join('test', 'fixtures', 'seeds.rb')
 
   # set system mode to done / to activate
   Setting.set('system_init_done', true)
@@ -67,14 +67,14 @@ class ActiveSupport::TestCase
   def email_notification_count(type, recipient)
 
     # read config file and count type & recipients
-    file = "#{Rails.root}/log/#{Rails.env}.log"
+    file = Rails.root.join('log', "#{Rails.env}.log")
     lines = []
     IO.foreach(file) do |line|
       lines.push line
     end
     count = 0
     lines.reverse.each do |line|
-      break if line =~ /\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/
+      break if line.match?(/\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/)
       next if line !~ /Send notification \(#{type}\)/
       next if line !~ /to:\s#{recipient}/
       count += 1
@@ -85,14 +85,14 @@ class ActiveSupport::TestCase
   def email_count(recipient)
 
     # read config file and count & recipients
-    file = "#{Rails.root}/log/#{Rails.env}.log"
+    file = Rails.root.join('log', "#{Rails.env}.log")
     lines = []
     IO.foreach(file) do |line|
       lines.push line
     end
     count = 0
     lines.reverse.each do |line|
-      break if line =~ /\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/
+      break if line.match?(/\+\+\+\+NEW\+\+\+\+TEST\+\+\+\+/)
       next if line !~ /Send email to:/
       next if line !~ /to:\s'#{recipient}'/
       count += 1

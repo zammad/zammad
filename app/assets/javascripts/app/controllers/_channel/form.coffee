@@ -67,11 +67,15 @@ class App.ChannelForm extends App.ControllerSubContent
     # rebuild preview
     params.test = true
     if params.modal
+      @$('.js-modal').removeClass('hide')
+      @$('.js-inlineForm').addClass('hide')
       @$('.js-formInline').addClass('hide')
       @$('.js-formBtn').removeClass('hide')
       @$('.js-formBtn').ZammadForm(params)
       @$('.js-formBtn').text('Feedback')
     else
+      @$('.js-modal').addClass('hide')
+      @$('.js-inlineForm').removeClass('hide')
       @$('.js-formBtn').addClass('hide')
       @$('.js-formInline').removeClass('hide')
       @$('.js-formInline').ZammadForm(params)

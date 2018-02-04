@@ -28,7 +28,7 @@ module Import
 
       def all
         # request folders only if neccessary and store the result
-        @all ||= children(%i(root msgfolderroot publicfoldersroot))
+        @all ||= children(%i[root msgfolderroot publicfoldersroot])
       end
 
       def children(parent_identifiers)

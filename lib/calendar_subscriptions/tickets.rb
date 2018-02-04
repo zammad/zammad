@@ -11,7 +11,7 @@ class CalendarSubscriptions::Tickets
   def all
 
     events_data = []
-    return events_data if @preferences.empty?
+    return events_data if @preferences.blank?
 
     events_data += new_open
     events_data += pending
@@ -24,7 +24,7 @@ class CalendarSubscriptions::Tickets
 
     alarm = false
 
-    return alarm if @preferences.empty?
+    return alarm if @preferences.blank?
     return alarm if !@preferences[:alarm]
 
     @preferences[:alarm]
@@ -34,11 +34,11 @@ class CalendarSubscriptions::Tickets
 
     owner_ids = []
 
-    return owner_ids if @preferences.empty?
-    return owner_ids if !@preferences[ method ]
-    return owner_ids if @preferences[ method ].empty?
+    return owner_ids if @preferences.blank?
+    return owner_ids if !@preferences[method]
+    return owner_ids if @preferences[method].blank?
 
-    preferences = @preferences[ method ]
+    preferences = @preferences[method]
 
     if preferences[:own]
       owner_ids = [ @user.id ]
@@ -54,7 +54,7 @@ class CalendarSubscriptions::Tickets
 
     events_data = []
     owner_ids   = owner_ids(:new_open)
-    return events_data if owner_ids.empty?
+    return events_data if owner_ids.blank?
 
     condition = {
       'ticket.owner_id' => {
@@ -65,7 +65,7 @@ class CalendarSubscriptions::Tickets
         operator: 'is',
         value: Ticket::State.where(
           state_type_id: Ticket::StateType.where(
-            name: %w(new open),
+            name: %w[new open],
           ),
         ).map(&:id),
       },
@@ -76,7 +76,7 @@ class CalendarSubscriptions::Tickets
       condition: condition,
     )
 
-    user_locale       = @user.preferences['locale'] || 'en'
+    user_locale       = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
     translated_ticket = Translation.translate(user_locale, 'ticket')
 
     events_data = []
@@ -101,7 +101,7 @@ class CalendarSubscriptions::Tickets
 
     events_data = []
     owner_ids   = owner_ids(:pending)
-    return events_data if owner_ids.empty?
+    return events_data if owner_ids.blank?
 
     condition = {
       'ticket.owner_id' => {
@@ -126,7 +126,7 @@ class CalendarSubscriptions::Tickets
       condition: condition,
     )
 
-    user_locale       = @user.preferences['locale'] || 'en'
+    user_locale       = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
     translated_ticket = Translation.translate(user_locale, 'ticket')
     customer          = Translation.translate(user_locale, 'customer')
 
@@ -165,7 +165,7 @@ class CalendarSubscriptions::Tickets
 
     events_data = []
     owner_ids   = owner_ids(:escalation)
-    return events_data if owner_ids.empty?
+    return events_data if owner_ids.blank?
 
     condition = {
       'ticket.owner_id' => {
@@ -183,7 +183,7 @@ class CalendarSubscriptions::Tickets
       condition: condition,
     )
 
-    user_locale                  = @user.preferences['locale'] || 'en'
+    user_locale                  = @user.preferences['locale'] || Setting.get('locale_default') || 'en-us'
     translated_ticket_escalation = Translation.translate(user_locale, 'ticket escalation')
     customer                     = Translation.translate(user_locale, 'customer')
 

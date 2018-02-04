@@ -84,7 +84,7 @@ returns
 
   def search_index_data
     attributes = {}
-    %w(name note).each do |key|
+    %w[name note].each do |key|
       next if !self[key]
       next if self[key].respond_to?('blank?') && self[key].blank?
       attributes[key] = self[key]

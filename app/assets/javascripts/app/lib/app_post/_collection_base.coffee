@@ -77,7 +77,7 @@ class App._CollectionSingletonBase
 
   callback: (data) =>
     for counter, attr of @callbacks
-      callback = ->
+      callback = =>
         attr.callback(data)
         if attr.one
           delete @callbacks[counter]

@@ -145,7 +145,7 @@ class Index extends App.ControllerSubContent
         query: @query
         limit: 140
         role_ids: role_ids
-        full:  1
+        full:  true
       processData: true,
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
@@ -167,7 +167,7 @@ class Index extends App.ControllerSubContent
       data:
         limit: 50
         role_ids: role_ids
-        full: 1
+        full: true
       processData: true
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)

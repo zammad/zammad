@@ -200,6 +200,26 @@ class App.Ticket extends App.Model
           result = true if objectValue.toString().match(contains_regex)
         else if condition.operator == 'contains not'
           result = true if !objectValue.toString().match(contains_regex)
+        else if condition.operator == 'contains all'
+          result = true
+          for loopConditionValue in conditionValue
+            if !_.contains(objectValue, loopConditionValue)
+              result = false
+        else if condition.operator == 'contains one'
+          result = false
+          for loopConditionValue in conditionValue
+            if _.contains(objectValue, loopConditionValue)
+              result = true
+        else if condition.operator == 'contains all not'
+          result = true
+          for loopObjectValue in objectValue
+            if _.contains(conditionValue, loopObjectValue)
+              result = false
+        else if condition.operator == 'contains one not'
+          result = false
+          for loopObjectValue in objectValue
+            if !_.contains(conditionValue, loopObjectValue)
+              result = true
         else if condition.operator == 'is'
           result = true if objectValue.toString().trim().toLowerCase() is loopConditionValue.toString().trim().toLowerCase()
         else if condition.operator == 'is not'
@@ -224,3 +244,19 @@ class App.Ticket extends App.Model
           throw "Unknown operator: #{condition.operator}"
 
     result
+
+  editable: (permission = 'change') ->
+    user_id = App.Session.get('id')
+    return true if user_id is @customer_id
+    group_ids = App.Session.get('group_ids')
+    if group_ids
+      return true if group_ids[@group_id] && (_.include(group_ids[@group_id], permission) || _.include(group_ids[@group_id], 'full'))
+    role_ids = App.Session.get('role_ids')
+    if role_ids
+      for role_id in role_ids
+        if App.Role.exists(role_id)
+          role = App.Role.find(role_id)
+          if role.group_ids
+            return true if role.group_ids[@group_id] && (_.include(role.group_ids[@group_id], permission) || _.include(role.group_ids[@group_id], 'full'))
+    false
+

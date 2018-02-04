@@ -1,7 +1,7 @@
 class UpdateTimestamps < ActiveRecord::Migration[4.2]
   def up
     # get all models
-    Models.all.each do |_model, value|
+    Models.all.each_value do |value|
       next if !value
       next if !value[:attributes]
       if value[:attributes].include?('changed_at')

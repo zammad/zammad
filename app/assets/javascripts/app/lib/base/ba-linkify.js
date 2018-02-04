@@ -161,7 +161,14 @@ window.linkify = (function(){
       }
       
       // Push massaged link onto the array
-      parts.push([ link, href ]);
+      // 2018-10-30: me only link urls, not mailto link
+      //parts.push([ link, href ]);
+      if ( href && href.substr && href.substr(0,7) != 'mailto:') {
+        parts.push([ link, href ]);
+      }
+      else {
+        parts.push([ link, undefined ]);
+      }
     };
     
     // Push remaining non-link text onto the array.

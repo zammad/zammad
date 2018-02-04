@@ -68,13 +68,13 @@ returns on fail
       # get mx records, try to find provider based on mx records
       mx_records = EmailHelper.mx_records(domain)
       domains = domains.concat(mx_records)
-      provider_map.each do |_provider, settings|
+      provider_map.each_value do |settings|
         domains.each do |domain_to_check|
 
           next if domain_to_check !~ /#{settings[:domain]}/i
 
           # add folder to config if needed
-          if !params[:folder].empty? && settings[:inbound] && settings[:inbound][:options]
+          if params[:folder].present? && settings[:inbound] && settings[:inbound][:options]
             settings[:inbound][:options][:folder] = params[:folder]
           end
 
@@ -112,7 +112,7 @@ returns on fail
       inbound_map.each do |config|
 
         # add folder to config if needed
-        if !params[:folder].empty? && config[:options]
+        if params[:folder].present? && config[:options]
           config[:options][:folder] = params[:folder]
         end
 
@@ -221,13 +221,11 @@ returns on fail
       # connection test
       result_inbound = {}
       begin
-
         require "channel/driver/#{adapter.to_filename}"
 
         driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
         driver_instance = driver_class.new
         result_inbound  = driver_instance.fetch(params[:options], nil, 'check')
-
       rescue => e
         return {
           result: 'invalid',
@@ -321,7 +319,6 @@ returns on fail
 
       # test connection
       begin
-
         require "channel/driver/#{adapter.to_filename}"
 
         driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
@@ -331,13 +328,13 @@ returns on fail
           mail,
         )
       rescue => e
-
         # check if sending email was ok, but mailserver rejected
         if !subject
           white_map = {
             'Recipient address rejected' => true,
+            'Sender address rejected: Domain not found' => true,
           }
-          white_map.each do |key, _message|
+          white_map.each_key do |key|
 
             next if e.message !~ /#{Regexp.escape(key)}/i
 
@@ -363,7 +360,7 @@ returns on fail
 
     def self.invalid_field(message_backend)
       invalid_fields.each do |key, fields|
-        return fields if message_backend =~ /#{Regexp.escape(key)}/i
+        return fields if message_backend.match?(/#{Regexp.escape(key)}/i)
       end
       {}
     end
@@ -388,7 +385,7 @@ returns on fail
 
     def self.translation(message_backend)
       translations.each do |key, message_human|
-        return message_human if message_backend =~ /#{Regexp.escape(key)}/i
+        return message_human if message_backend.match?(/#{Regexp.escape(key)}/i)
       end
       nil
     end

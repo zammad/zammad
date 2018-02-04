@@ -14,6 +14,8 @@ class App.TicketCreate extends App.Controller
     # define default type
     @default_type = 'phone-in'
 
+    @formId = App.ControllerForm.formId()
+
     # remember split info if exists
     @split = ''
     if @ticket_id && @article_id
@@ -92,6 +94,10 @@ class App.TicketCreate extends App.Controller
     else
       @$('[name="cc"]').closest('.form-group').addClass('hide')
 
+    # show notice
+    @$('.js-note').addClass('hide')
+    @$(".js-note[data-type='#{type}']").removeClass('hide')
+
     App.TaskManager.touch(@task_key)
 
   meta: =>
@@ -158,7 +164,7 @@ class App.TicketCreate extends App.Controller
   # get data / in case also ticket data for split
   buildScreen: (params) =>
 
-    if !params.ticket_id && !params.article_id
+    if _.isEmpty(params.ticket_id) && _.isEmpty(params.article_id)
       if !_.isEmpty(params.customer_id)
         @render(options: { customer_id: params.customer_id })
         return
@@ -173,6 +179,7 @@ class App.TicketCreate extends App.Controller
       data:
         ticket_id: params.ticket_id
         article_id: params.article_id
+        form_id: @formId
       processData: true
       success: (data, status, xhr) =>
 
@@ -194,6 +201,9 @@ class App.TicketCreate extends App.Controller
         else
           t.body  = App.Utils.text2html(a.body)
 
+        # add attachments
+        t.attachments = data.attachments
+
         # render page
         @render(options: t)
     )
@@ -201,23 +211,20 @@ class App.TicketCreate extends App.Controller
   render: (template = {}) ->
 
     # get params
-    params = {}
+    params = @prefilledParams || {}
     if template && !_.isEmpty(template.options)
       params = template.options
     else if App.TaskManager.get(@task_key) && !_.isEmpty(App.TaskManager.get(@task_key).state)
       params = App.TaskManager.get(@task_key).state
+      if !_.isEmpty(params['form_id'])
+        @formId = params['form_id']
 
-    if params['form_id']
-      @form_id = params['form_id']
-    else
-      @form_id = App.ControllerForm.formId()
-
-    @html App.view('agent_ticket_create')(
+    @html(App.view('agent_ticket_create')(
       head:    'New Ticket'
       agent:   @permissionCheck('ticket.agent')
       admin:   @permissionCheck('admin')
-      form_id: @form_id
-    )
+      form_id: @formId
+    ))
 
     signatureChanges = (params, attribute, attributes, classname, form, ui) =>
       if attribute && attribute.name is 'group_id'
@@ -272,7 +279,7 @@ class App.TicketCreate extends App.Controller
     }
     new App.ControllerForm(
       el:       @$('.ticket-form-top')
-      form_id:  @form_id
+      form_id:  @formId
       model:    App.Ticket
       screen:   'create_top'
       events:
@@ -288,14 +295,14 @@ class App.TicketCreate extends App.Controller
 
     new App.ControllerForm(
       el:      @$('.article-form-top')
-      form_id: @form_id
+      form_id: @formId
       model:   App.TicketArticle
       screen:  'create_top'
       params:  params
     )
     new App.ControllerForm(
       el:      @$('.ticket-form-middle')
-      form_id: @form_id
+      form_id: @formId
       model:   App.Ticket
       screen:  'create_middle'
       events:
@@ -310,7 +317,7 @@ class App.TicketCreate extends App.Controller
     )
     new App.ControllerForm(
       el:       @$('.ticket-form-bottom')
-      form_id:  @form_id
+      form_id:  @formId
       model:    App.Ticket
       screen:   'create_bottom'
       events:
@@ -420,7 +427,7 @@ class App.TicketCreate extends App.Controller
         body:         params.body
         type_id:      type.id
         sender_id:    sender.id
-        form_id:      @form_id
+        form_id:      @formId
         content_type: 'text/html'
       }
     else
@@ -432,7 +439,7 @@ class App.TicketCreate extends App.Controller
         body:         params.body
         type_id:      type.id
         sender_id:    sender.id
-        form_id:      @form_id
+        form_id:      @formId
         content_type: 'text/html'
       }
 

@@ -5,7 +5,7 @@ class Sequencer
         module Model
           class HttpLog < Sequencer::Unit::Base
 
-            uses :dry_run, :instance_action, :remote_id, :mapped, :exception
+            uses :dry_run, :action, :remote_id, :mapped, :exception
 
             def process
               return if dry_run
@@ -13,7 +13,7 @@ class Sequencer
                 direction: 'out',
                 facility:  facility,
                 method:    'tcp',
-                url:       "#{instance_action} -> #{remote_id}",
+                url:       "#{action} -> #{remote_id}",
                 status:    status,
                 ip:        nil,
                 request:   {
@@ -31,7 +31,7 @@ class Sequencer
 
             def status
               @status ||= begin
-                instance_action == :failed ? :failed : :success
+                action == :failed ? :failed : :success
               end
             end
 

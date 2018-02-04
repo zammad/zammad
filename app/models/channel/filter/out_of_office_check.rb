@@ -18,12 +18,12 @@ module Channel::Filter::OutOfOfficeCheck
     if mail[ 'auto-submitted'.to_sym ]
 
       # check zimbra out of office characteristics
-      if mail[ 'auto-submitted'.to_sym ] =~ /vacation/i
+      if mail[ 'auto-submitted'.to_sym ].match?(/vacation/i)
         mail[ 'x-zammad-out-of-office'.to_sym ] = true
       end
 
       # check cloud out of office characteristics
-      if mail[ 'auto-submitted'.to_sym ] =~ /auto-replied;\sowner-email=/i
+      if mail[ 'auto-submitted'.to_sym ].match?(/auto-replied;\sowner-email=/i)
         mail[ 'x-zammad-out-of-office'.to_sym ] = true
       end
 
@@ -35,6 +35,7 @@ module Channel::Filter::OutOfOfficeCheck
       return
     end
 
+    true
   end
 
 end

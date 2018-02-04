@@ -3,6 +3,7 @@ class App.IdoitObjectSelector extends App.ControllerModal
   buttonCancel: true
   buttonSubmit: true
   head: 'i-doit'
+  lastSearchTermEmpty: false
 
   content: ->
     @ajax(
@@ -44,16 +45,24 @@ class App.IdoitObjectSelector extends App.ControllerModal
     ''
 
   search: (filter) =>
+    if _.isEmpty(filter.type) && _.isEmpty(filter.title)
+      @lastSearchTermEmpty = true
+      @renderResult()
+      return
+    if _.isEmpty(filter.type)
+      delete filter.type
     if _.isEmpty(filter.title)
       delete filter.title
     else
       filter.title = "%#{filter.title}%"
+    @lastSearchTermEmpty = false
     @ajax(
       id:    'idoit-object-selector'
       type:  'POST'
       url:   "#{@apiPath}/integration/idoit"
       data:  JSON.stringify(method: 'cmdb.objects', filter: filter)
       success: (data, status, xhr) =>
+        return if @lastSearchTermEmpty
         @renderResult(data.response.result)
 
       error: (xhr, status, error) =>

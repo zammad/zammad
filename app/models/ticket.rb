@@ -300,7 +300,7 @@ returns
       Ticket::Article.where(ticket_id: id).each(&:touch)
 
       # quiet update of reassign of articles
-      Ticket::Article.where(ticket_id: id).update_all(['ticket_id = ?', data[:ticket_id]])
+      Ticket::Article.where(ticket_id: id).update_all(['ticket_id = ?', data[:ticket_id]]) # rubocop:disable Rails/SkipsModelValidations
 
       # update history
 
@@ -318,6 +318,7 @@ returns
       # add history to both
 
       # reassign links to the new ticket
+      # rubocop:disable Rails/SkipsModelValidations
       Link.where(
         link_object_source_id: Link::Object.find_by(name: 'Ticket').id,
         link_object_source_value: id,
@@ -326,6 +327,7 @@ returns
         link_object_target_id: Link::Object.find_by(name: 'Ticket').id,
         link_object_target_value: id,
       ).update_all(link_object_target_value: data[:ticket_id])
+      # rubocop:enable Rails/SkipsModelValidations
 
       # link tickets
       Link.add(
@@ -346,7 +348,7 @@ returns
       save!
 
       # touch new ticket (to broadcast change)
-      target_ticket.touch
+      target_ticket.touch # rubocop:disable Rails/SkipsModelValidations
     end
     true
   end
@@ -500,9 +502,13 @@ condition example
     bind_params = []
     like = Rails.application.config.db_like
 
+    if selectors.respond_to?(:permit!)
+      selectors = selectors.permit!.to_h
+    end
+
     # get tables to join
     tables = ''
-    selectors.each do |attribute, selector|
+    selectors.each_key do |attribute|
       selector = attribute.split(/\./)
       next if !selector[1]
       next if selector[0] == 'ticket'
@@ -522,6 +528,9 @@ condition example
       elsif selector[0] == 'article'
         tables += ', ticket_articles articles'
         query += 'tickets.id = articles.ticket_id'
+      elsif selector[0] == 'ticket_state'
+        tables += ', ticket_states'
+        query += 'tickets.state_id = ticket_states.id'
       else
         raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
       end
@@ -537,7 +546,7 @@ condition example
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
 
       # validate value / allow blank but only if pre_condition exists and is not specific
-      if !selector.key?('value') || ((selector['value'].class == String || selector['value'].class == Array) && (selector['value'].respond_to?(:empty?) && selector['value'].empty?))
+      if !selector.key?('value') || ((selector['value'].class == String || selector['value'].class == Array) && (selector['value'].respond_to?(:blank?) && selector['value'].blank?))
         return nil if selector['pre_condition'].nil?
         return nil if selector['pre_condition'].respond_to?(:blank?) && selector['pre_condition'].blank?
         return nil if selector['pre_condition'] == 'specific'
@@ -565,7 +574,7 @@ condition example
 
       if selector['operator'] == 'is'
         if selector['pre_condition'] == 'not_set'
-          if attributes[1] =~ /^(created_by|updated_by|owner|customer|user)_id/
+          if attributes[1].match?(/^(created_by|updated_by|owner|customer|user)_id/)
             query += "#{attribute} IN (?)"
             bind_params.push 1
           else
@@ -573,11 +582,10 @@ condition example
           end
         elsif selector['pre_condition'] == 'current_user.id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
+          query += "#{attribute} IN (?)"
           if attributes[1] == 'out_of_office_replacement_id'
-            query += "#{attribute} IN (?)"
             bind_params.push User.find(current_user_id).out_of_office_agent_of.pluck(:id)
           else
-            query += "#{attribute} IN (?)"
             bind_params.push current_user_id
           end
         elsif selector['pre_condition'] == 'current_user.organization_id'
@@ -590,11 +598,10 @@ condition example
           if selector['value'].nil?
             query += "#{attribute} IS NULL"
           else
+            query += "#{attribute} IN (?)"
             if attributes[1] == 'out_of_office_replacement_id'
-              query += "#{attribute} IN (?)"
               bind_params.push User.find(selector['value']).out_of_office_agent_of.pluck(:id)
             else
-              query += "#{attribute} IN (?)"
               bind_params.push selector['value']
             end
           end
@@ -602,18 +609,17 @@ condition example
         end
       elsif selector['operator'] == 'is not'
         if selector['pre_condition'] == 'not_set'
-          if attributes[1] =~ /^(created_by|updated_by|owner|customer|user)_id/
+          if attributes[1].match?(/^(created_by|updated_by|owner|customer|user)_id/)
             query += "#{attribute} NOT IN (?)"
             bind_params.push 1
           else
             query += "#{attribute} IS NOT NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
+          query += "#{attribute} NOT IN (?)"
           if attributes[1] == 'out_of_office_replacement_id'
-            query += "#{attribute} NOT IN (?)"
             bind_params.push User.find(current_user_id).out_of_office_agent_of.pluck(:id)
           else
-            query += "#{attribute} NOT IN (?)"
             bind_params.push current_user_id
           end
         elsif selector['pre_condition'] == 'current_user.organization_id'
@@ -625,11 +631,10 @@ condition example
           if selector['value'].nil?
             query += "#{attribute} IS NOT NULL"
           else
+            query += "#{attribute} NOT IN (?)"
             if attributes[1] == 'out_of_office_replacement_id'
-              query += "#{attribute} NOT IN (?)"
               bind_params.push User.find(selector['value']).out_of_office_agent_of.pluck(:id)
             else
-              query += "#{attribute} NOT IN (?)"
               bind_params.push selector['value']
             end
           end
@@ -706,10 +711,8 @@ condition example
                       tag_objects.name = 'Ticket' AND
                       tag_items.id = tags.tag_item_id AND
                       tag_items.name IN (?)
-                  ) BETWEEN ? AND ?"
+                  ) BETWEEN 0 AND 0"
         bind_params.push selector['value']
-        bind_params.push selector['value'].count - 1
-        bind_params.push selector['value'].count
       elsif selector['operator'] == 'before (absolute)'
         query += "#{attribute} <= ?"
         bind_params.push selector['value']
@@ -806,7 +809,7 @@ perform changes on ticket
     # if the configuration contains the deletion of the ticket then
     # we skip all other ticket changes because they does not matter
     if perform['ticket.action'].present? && perform['ticket.action']['value'] == 'delete'
-      perform.each do |key, _value|
+      perform.each_key do |key|
         (object_name, attribute) = key.split('.', 2)
         next if object_name != 'ticket'
         next if attribute == 'action'
@@ -879,30 +882,41 @@ perform changes on ticket
           next if skip_user
 
           # send notifications only to email adresses
-          next if !recipient_email
+          next if recipient_email.blank?
           next if recipient_email !~ /@/
 
           # check if address is valid
           begin
-            recipient_email = Mail::Address.new(recipient_email).address
+            Mail::AddressList.new(recipient_email).addresses.each do |address|
+              recipient_email = address.address
+              break if recipient_email.present? && recipient_email =~ /@/ && !recipient_email.match?(/\s/)
+            end
           rescue
-            next # because unable to parse
+            if recipient_email.present?
+              if recipient_email !~ /^(.+?)<(.+?)@(.+?)>$/
+                next # no usable format found
+              end
+              recipient_email = "#{$2}@#{$3}"
+            end
+            next if recipient_email.blank?
+            next if recipient_email !~ /@/
+            next if recipient_email.match?(/\s/)
           end
 
           # do not sent notifications to this recipients
           send_no_auto_response_reg_exp = Setting.get('send_no_auto_response_reg_exp')
           begin
-            next if recipient_email =~ /#{send_no_auto_response_reg_exp}/i
+            next if recipient_email.match?(/#{send_no_auto_response_reg_exp}/i)
           rescue => e
             logger.error "ERROR: Invalid regex '#{send_no_auto_response_reg_exp}' in setting send_no_auto_response_reg_exp"
             logger.error 'ERROR: ' + e.inspect
-            next if recipient_email =~ /(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?/i
+            next if recipient_email.match?(/(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?/i)
           end
 
           # check if notification should be send because of customer emails
           if item && item[:article_id]
             article = Ticket::Article.lookup(id: item[:article_id])
-            if article && article.preferences['is-auto-response'] == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
+            if article&.preferences&.fetch('is-auto-response', false) == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
               logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
               next
             end
@@ -1031,17 +1045,15 @@ perform changes on ticket
       if key == 'ticket.action'
         next if value['value'].blank?
         next if value['value'] != 'delete'
-
-        destroy
-
+        destroy!
         next
       end
 
       # lookup pre_condition
       if value['pre_condition']
-        if value['pre_condition'] =~ /^not_set/
+        if value['pre_condition'].match?(/^not_set/)
           value['value'] = 1
-        elsif value['pre_condition'] =~ /^current_user\./
+        elsif value['pre_condition'].match?(/^current_user\./)
           raise 'Unable to use current_user, got no current_user_id for ticket.perform_changes' if !current_user_id
           value['value'] = current_user_id
         end
@@ -1081,11 +1093,10 @@ result
   def get_references(ignore = [])
     references = []
     Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).each do |article|
-      if !article.in_reply_to.empty?
+      if article.in_reply_to.present?
         references.push article.in_reply_to
       end
-      next if !article.message_id
-      next if article.message_id.empty?
+      next if article.message_id.blank?
       references.push article.message_id
     end
     ignore.each do |item|
@@ -1171,7 +1182,7 @@ result
     current_state_type = Ticket::StateType.lookup(id: current_state.state_type_id)
 
     # in case, set pending_time to nil
-    return true if current_state_type.name =~ /^pending/i
+    return true if current_state_type.name.match?(/^pending/i)
     self.pending_time = nil
     true
   end

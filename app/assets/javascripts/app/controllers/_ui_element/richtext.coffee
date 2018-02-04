@@ -1,8 +1,7 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.richtext
-  @render: (attribute) ->
-
-    item = $( App.view('generic/richtext')( attribute: attribute ) )
+  @render: (attribute, params) ->
+    item = $( App.view('generic/richtext')(attribute: attribute) )
     item.find('[contenteditable]').ce(
       mode:      attribute.type
       maxlength: attribute.maxlength
@@ -15,42 +14,42 @@ class App.UiElement.richtext
         new App[plugin.controller](params)
 
     if attribute.upload
-      item.append( $( App.view('generic/attachment')( attribute: attribute ) ) )
+      @attachments = []
+      item.append( $( App.view('generic/attachment')(attribute: attribute) ) )
 
-      renderAttachment = (file) =>
-        item.find('.attachments').append( App.view('generic/attachment_item')(
-          fileName: file.filename
-          fileSize: App.Utils.humanFileSize(file.size)
-          store_id: file.store_id
-        ))
-        item.on(
-          'click'
-          "[data-id=#{file.store_id}]", (e) =>
-            @attachments = _.filter(
-              @attachments,
-              (item) ->
-                return if item.id isnt file.store_id
-                item
-            )
-            store_id = $(e.currentTarget).data('id')
+      renderFile = (file) =>
+        item.find('.attachments').append(App.view('generic/attachment_item')(file))
+        @attachments.push file
 
-            # delete attachment from storage
-            App.Ajax.request(
-              type:        'DELETE'
-              url:         "#{App.Config.get('api_path')}/ticket_attachment_upload"
-              data:        JSON.stringify(store_id: store_id),
-              processData: false
-            )
+      if params && params.attachments
+        for file in params.attachments
+          renderFile(file)
 
-            # remove attachment from dom
-            element = $(e.currentTarget).closest('.attachments')
-            $(e.currentTarget).closest('.attachment').remove()
-            # empty .attachment (remove spaces) to keep css working, thanks @mrflix :-o
-            if element.find('.attachment').length == 0
-              element.empty()
+      # remove items
+      item.find('.attachments').on('click', '.js-delete', (e) =>
+        id = $(e.currentTarget).data('id')
+        @attachments = _.filter(
+          @attachments,
+          (item) ->
+            return if item.id.toString() is id.toString()
+            item
         )
 
-      @attachments           = []
+        # delete attachment from storage
+        App.Ajax.request(
+          type:        'DELETE'
+          url:         "#{App.Config.get('api_path')}/ticket_attachment_upload"
+          data:        JSON.stringify(id: id),
+          processData: false
+        )
+
+        # remove attachment from dom
+        element = $(e.currentTarget).closest('.attachments')
+        $(e.currentTarget).closest('.attachment').remove()
+        if element.find('.attachment').length == 0
+          element.empty()
+      )
+
       @progressBar           = item.find('.attachmentUpload-progressBar')
       @progressText          = item.find('.js-percentage')
       @attachmentPlaceholder = item.find('.attachmentPlaceholder')
@@ -84,7 +83,6 @@ class App.UiElement.richtext
             # Called after received response from the server
             onCompleted: (response) =>
               response = JSON.parse(response)
-              @attachments.push response.data
 
               @attachmentPlaceholder.removeClass('hide')
               @attachmentUpload.addClass('hide')
@@ -93,7 +91,7 @@ class App.UiElement.richtext
               @progressBar.width(parseInt(0) + '%')
               @progressText.text('')
 
-              renderAttachment(response.data)
+              renderFile(response.data)
               item.find('input').val('')
 
               App.Log.debug 'UiElement.richtext', 'upload complete', response.data
@@ -111,4 +109,5 @@ class App.UiElement.richtext
           )
       )
       App.Delay.set(u, 100, undefined, 'form_upload')
+
     item

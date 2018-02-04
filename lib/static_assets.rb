@@ -121,12 +121,12 @@ returns
     end
 
     # store hash in config
-    if list && list[0]
-      file = Store.find(list[0].id)
-      filelocation = filename(file)
-      Setting.set('product_logo', filelocation)
-      return file
-    end
+    return  if !list || !list[0]
+
+    file = Store.find(list[0].id)
+    filelocation = filename(file)
+    Setting.set('product_logo', filelocation)
+    file
   end
 
 =begin
@@ -140,13 +140,13 @@ generate filename based on Store model
   def self.filename(file)
     hash = Digest::MD5.hexdigest(file.content)
     extention = ''
-    if file.preferences['Content-Type'] =~ /jpg|jpeg/i
+    if file.preferences['Content-Type'].match?(/jpg|jpeg/i)
       extention = '.jpg'
-    elsif file.preferences['Content-Type'] =~ /png/i
+    elsif file.preferences['Content-Type'].match?(/png/i)
       extention = '.png'
-    elsif file.preferences['Content-Type'] =~ /gif/i
+    elsif file.preferences['Content-Type'].match?(/gif/i)
       extention = '.gif'
-    elsif file.preferences['Content-Type'] =~ /svg/i
+    elsif file.preferences['Content-Type'].match?(/svg/i)
       extention = '.svg'
     end
     "#{hash}#{extention}"
@@ -163,8 +163,8 @@ sync image to fs (public/assets/images/hash.png)
   def self.sync
     file = read
     return if !file
-    path = "#{Rails.root}/public/assets/images/#{filename(file)}"
-    File.open( path, 'wb' ) do |f|
+    path = Rails.root.join('public', 'assets', 'images', filename(file))
+    File.open(path, 'wb') do |f|
       f.puts file.content
     end
   end

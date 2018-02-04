@@ -5,7 +5,7 @@ module Ticket::Overviews
 
 all overviews by user
 
-  result = Ticket::Overviews.all(current_user: User.find(123))
+  result = Ticket::Overviews.all(current_user: User.find(3))
 
 returns
 
@@ -23,14 +23,8 @@ returns
       if current_user.organization_id && current_user.organization.shared
         overview_filter.delete(:organization_shared)
       end
-      overviews = Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: overview_filter).distinct('overview.id').order(:prio)
-      overviews_list = []
-      overviews.each do |overview|
-        user_ids = overview.user_ids
-        next if !user_ids.empty? && !user_ids.include?(current_user.id)
-        overviews_list.push overview
-      end
-      return overviews_list
+      overviews = Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: nil }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: current_user.id }, overviews: overview_filter)).distinct('overview.id').order(:prio)
+      return overviews
     end
 
     # get agent overviews
@@ -40,14 +34,7 @@ returns
     if User.where('out_of_office = ? AND out_of_office_start_at <= ? AND out_of_office_end_at >= ? AND out_of_office_replacement_id = ? AND active = ?', true, Time.zone.today, Time.zone.today, current_user.id, true).count.positive?
       overview_filter_not = {}
     end
-    overviews = Overview.joins(:roles).where(overviews_roles: { role_id: role_ids }, overviews: overview_filter).where.not(overview_filter_not).distinct('overview.id').order(:prio)
-    overviews_list = []
-    overviews.each do |overview|
-      user_ids = overview.user_ids
-      next if user_ids.present? && !user_ids.include?(current_user.id)
-      overviews_list.push overview
-    end
-    overviews_list
+    Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: nil }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: current_user.id }, overviews: overview_filter)).where.not(overview_filter_not).distinct('overview.id').order(:prio)
   end
 
 =begin
@@ -114,7 +101,7 @@ returns
       order_by = "tickets.#{order_by} #{overview.order[:direction]}"
 
       # check if group by exists
-      if overview.group_by && !overview.group_by.empty?
+      if overview.group_by.present?
         group_by = overview.group_by
         if !ticket_attributes.key?(group_by)
           group_by = if ticket_attributes.key?("#{group_by}_id")
@@ -131,7 +118,7 @@ returns
                             .where(query_condition, *bind_condition)
                             .joins(tables)
                             .order(order_by)
-                            .limit(500)
+                            .limit(1000)
                             .pluck(:id, :updated_at)
 
       tickets = []

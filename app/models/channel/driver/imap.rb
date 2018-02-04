@@ -104,7 +104,7 @@ example
     # sort messages by date on server (if not supported), if not fetch messages via search (first in, first out)
     filter = ['ALL']
     if keep_on_server && check_type != 'check' && check_type != 'verify'
-      filter = %w(NOT SEEN)
+      filter = %w[NOT SEEN]
     end
     begin
       message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
@@ -254,7 +254,7 @@ returns
 
     # verify if message is already imported via same channel, if not, import it again
     ticket = article.ticket
-    if ticket && ticket.preferences && ticket.preferences[:channel_id].present? && channel.present?
+    if ticket&.preferences && ticket.preferences[:channel_id].present? && channel.present?
       return false if ticket.preferences[:channel_id] != channel[:id]
     end
 

@@ -70,6 +70,14 @@ class App.TicketZoomArticleNew extends App.Controller
       @textarea.focus()
     )
 
+    # add article attachment
+    @bind('ui::ticket::addArticleAttachent', (data) =>
+      return if data.ticket.id.toString() isnt @ticket_id.toString()
+      return if _.isEmpty(data.attachments)
+      for file in data.attachments
+        @renderAttachment(file)
+    )
+
     # reset new article screen
     @bind('ui::ticket::taskReset', (data) =>
       return if data.ticket_id.toString() isnt @ticket_id.toString()
@@ -143,8 +151,8 @@ class App.TicketZoomArticleNew extends App.Controller
         icon:              'twitter'
         attributes:        []
         internal:          false,
-        features:          ['body:limit', 'body:initials']
-        maxTextLength:     140
+        features:          attributes
+        maxTextLength:     280
         warningTextLength: 30
       }
     if possibleArticleType['twitter direct-message']
@@ -156,7 +164,7 @@ class App.TicketZoomArticleNew extends App.Controller
         icon:              'twitter'
         attributes:        ['to']
         internal:          false,
-        features:          ['body:limit', 'body:initials']
+        features:          attributes
         maxTextLength:     10000
         warningTextLength: 500
       }
@@ -245,7 +253,7 @@ class App.TicketZoomArticleNew extends App.Controller
     controller = new App.ControllerForm(
       el: @$('.recipients')
       model:
-        configure_attributes: configure_attributes,
+        configure_attributes: configure_attributes
     )
 
     @$('[data-name="body"]').ce({
@@ -255,12 +263,13 @@ class App.TicketZoomArticleNew extends App.Controller
     })
 
     html5Upload.initialize(
-      uploadUrl:              App.Config.get('api_path') + '/ticket_attachment_upload',
-      dropContainer:          @$('.article-add').get(0),
-      cancelContainer:        @cancelContainer,
-      inputField:             @$('.article-attachment input').get(0),
-      key:                    'File',
-      data:                   { form_id: @form_id },
+      uploadUrl:       App.Config.get('api_path') + '/ticket_attachment_upload'
+      dropContainer:   @$('.article-add').get(0)
+      cancelContainer: @cancelContainer
+      inputField:      @$('.article-attachment input').get(0)
+      key:             'File'
+      data:
+        form_id: @form_id
       maxSimultaneousUploads: 1,
       onFileAdded:            (file) =>
 
@@ -302,6 +311,8 @@ class App.TicketZoomArticleNew extends App.Controller
               @cancelContainer.addClass('hide')
         )
     )
+
+    @bindAttachmentDelete()
 
     # show text module UI
     if !@permissionCheck('ticket.customer')
@@ -737,33 +748,29 @@ class App.TicketZoomArticleNew extends App.Controller
     @articleNewEdit.parent().removeClass('is-dropTarget') if @dragEventCounter is 0
 
   renderAttachment: (file) =>
-    @attachmentsHolder.append App.view('generic/attachment_item')
-      fileName: file.filename
-      fileSize: @humanFileSize( file.size )
-      store_id: file.store_id
-    @attachmentsHolder.on(
-      'click'
-      "[data-id=#{file.store_id}]", (e) =>
-        @attachments = _.filter(
-          @attachments,
-          (item) ->
-            return if item.id isnt file.store_id
-            item
-        )
-        store_id = $(e.currentTarget).data('id')
+    @attachmentsHolder.append(App.view('generic/attachment_item')(file))
 
-        # delete attachment from storage
-        App.Ajax.request(
-          type:  'DELETE'
-          url:   App.Config.get('api_path') + '/ticket_attachment_upload'
-          data:  JSON.stringify(store_id: store_id)
-          processData: false
-        )
+  bindAttachmentDelete: =>
+    @attachmentsHolder.on('click', '.js-delete', (e) =>
+      id = $(e.currentTarget).data('id')
+      @attachments = _.filter(
+        @attachments,
+        (item) ->
+          return if item.id.toString() is id.toString()
+          item
+      )
 
-        # remove attachment from dom
-        element = $(e.currentTarget).closest('.attachments')
-        $(e.currentTarget).closest('.attachment').remove()
-        # empty .attachment (remove spaces) to keep css working, thanks @mrflix :-o
-        if element.find('.attachment').length == 0
-          element.empty()
+      # delete attachment from storage
+      App.Ajax.request(
+        type:  'DELETE'
+        url:   App.Config.get('api_path') + '/ticket_attachment_upload'
+        data:  JSON.stringify(id: id)
+        processData: false
+      )
+
+      # remove attachment from dom
+      element = $(e.currentTarget).closest('.attachments')
+      $(e.currentTarget).closest('.attachment').remove()
+      if element.find('.attachment').length == 0
+        element.empty()
     )

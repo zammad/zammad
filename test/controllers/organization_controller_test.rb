@@ -1,0 +1,513 @@
+
+require 'test_helper'
+require 'rake'
+
+class OrganizationControllerTest < ActionDispatch::IntegrationTest
+  setup do
+
+    # set accept header
+    @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
+
+    # create agent
+    roles  = Role.where(name: %w[Admin Agent])
+    groups = Group.all
+
+    UserInfo.current_user_id = 1
+
+    @backup_admin = User.create_or_update(
+      login: 'backup-admin',
+      firstname: 'Backup',
+      lastname: 'Agent',
+      email: 'backup-admin@example.com',
+      password: 'adminpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+    )
+
+    @admin = User.create_or_update(
+      login: 'rest-admin',
+      firstname: 'Rest',
+      lastname: 'Agent',
+      email: 'rest-admin@example.com',
+      password: 'adminpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+    )
+
+    # create agent
+    roles = Role.where(name: 'Agent')
+    @agent = User.create_or_update(
+      login: 'rest-agent@example.com',
+      firstname: 'Rest',
+      lastname: 'Agent',
+      email: 'rest-agent@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: groups,
+    )
+
+    # create customer without org
+    roles = Role.where(name: 'Customer')
+    @customer_without_org = User.create_or_update(
+      login: 'rest-customer1@example.com',
+      firstname: 'Rest',
+      lastname: 'Customer1',
+      email: 'rest-customer1@example.com',
+      password: 'customer1pw',
+      active: true,
+      roles: roles,
+    )
+
+    # create orgs
+    @organization = Organization.create_or_update(
+      name: 'Rest Org',
+    )
+    @organization2 = Organization.create_or_update(
+      name: 'Rest Org #2',
+    )
+    @organization3 = Organization.create_or_update(
+      name: 'Rest Org #3',
+    )
+
+    # create customer with org
+    @customer_with_org = User.create_or_update(
+      login: 'rest-customer2@example.com',
+      firstname: 'Rest',
+      lastname: 'Customer2',
+      email: 'rest-customer2@example.com',
+      password: 'customer2pw',
+      active: true,
+      roles: roles,
+      organization_id: @organization.id,
+    )
+
+    # configure es
+    if ENV['ES_URL'].present?
+      #fail "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
+      Setting.set('es_url', ENV['ES_URL'])
+
+      # Setting.set('es_url', 'http://127.0.0.1:9200')
+      # Setting.set('es_index', 'estest.local_zammad')
+      # Setting.set('es_user', 'elasticsearch')
+      # Setting.set('es_password', 'zammad')
+
+      if ENV['ES_INDEX_RAND'].present?
+        ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
+      end
+      if ENV['ES_INDEX'].blank?
+        raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
+      end
+      Setting.set('es_index', ENV['ES_INDEX'])
+
+      travel 1.minute
+
+      # drop/create indexes
+      Rake::Task.clear
+      Zammad::Application.load_tasks
+      #Rake::Task["searchindex:drop"].execute
+      #Rake::Task["searchindex:create"].execute
+      Rake::Task['searchindex:rebuild'].execute
+
+      # execute background jobs
+      Scheduler.worker(true)
+
+      sleep 6
+    end
+
+    UserInfo.current_user_id = nil
+  end
+
+  test 'organization index with agent' do
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-agent@example.com', 'agentpw')
+
+    # index
+    get '/api/v1/organizations', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Array)
+    assert_equal(result[0]['member_ids'].class, Array)
+    assert(result.length >= 3)
+
+    get '/api/v1/organizations?limit=40&page=1&per_page=2', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    organizations = Organization.order(:id).limit(2)
+    assert_equal(organizations[0].id, result[0]['id'])
+    assert_equal(organizations[0].member_ids, result[0]['member_ids'])
+    assert_equal(organizations[1].id, result[1]['id'])
+    assert_equal(organizations[1].member_ids, result[1]['member_ids'])
+    assert_equal(2, result.count)
+
+    get '/api/v1/organizations?limit=40&page=2&per_page=2', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    organizations = Organization.order(:id).limit(4)
+    assert_equal(organizations[2].id, result[0]['id'])
+    assert_equal(organizations[2].member_ids, result[0]['member_ids'])
+    assert_equal(organizations[3].id, result[1]['id'])
+    assert_equal(organizations[3].member_ids, result[1]['member_ids'])
+
+    assert_equal(2, result.count)
+
+    # show/:id
+    get "/api/v1/organizations/#{@organization.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Hash)
+    assert_equal(result['member_ids'].class, Array)
+    assert_not(result['members'])
+    assert_equal(result['name'], 'Rest Org')
+
+    get "/api/v1/organizations/#{@organization2.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Hash)
+    assert_equal(result['member_ids'].class, Array)
+    assert_not(result['members'])
+    assert_equal(result['name'], 'Rest Org #2')
+
+    # search as agent
+    Scheduler.worker(true)
+    get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal('Zammad Foundation', result[0]['name'])
+    assert(result[0]['member_ids'])
+    assert_not(result[0]['members'])
+
+    get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&expand=true", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal('Zammad Foundation', result[0]['name'])
+    assert(result[0]['member_ids'])
+    assert(result[0]['members'])
+
+    get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}&label=true", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal('Zammad Foundation', result[0]['label'])
+    assert_equal('Zammad Foundation', result[0]['value'])
+    assert_not(result[0]['member_ids'])
+    assert_not(result[0]['members'])
+  end
+
+  test 'organization index with customer1' do
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-customer1@example.com', 'customer1pw')
+
+    # index
+    get '/api/v1/organizations', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Array)
+    assert_equal(result.length, 0)
+
+    # show/:id
+    get "/api/v1/organizations/#{@organization.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Hash)
+    assert_nil(result['name'])
+
+    get "/api/v1/organizations/#{@organization2.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Hash)
+    assert_nil(result['name'])
+
+    # search
+    Scheduler.worker(true)
+    get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(401)
+  end
+
+  test 'organization index with customer2' do
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-customer2@example.com', 'customer2pw')
+
+    # index
+    get '/api/v1/organizations', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Array)
+    assert_equal(result.length, 1)
+
+    # show/:id
+    get "/api/v1/organizations/#{@organization.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Hash)
+    assert_equal(result['name'], 'Rest Org')
+
+    get "/api/v1/organizations/#{@organization2.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Hash)
+    assert_nil(result['name'])
+
+    # search
+    Scheduler.worker(true)
+    get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(401)
+  end
+
+  test '04.01 organization show and response format' do
+    organization = Organization.create_or_update(
+      name: 'Rest Org NEW',
+      members: [@customer_without_org],
+      updated_by_id: @admin.id,
+      created_by_id: @admin.id,
+    )
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
+    get "/api/v1/organizations/#{organization.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(organization.id, result['id'])
+    assert_equal(organization.name, result['name'])
+    assert_not(result['members'])
+    assert_equal([@customer_without_org.id], result['member_ids'])
+    assert_equal(@admin.id, result['updated_by_id'])
+    assert_equal(@admin.id, result['created_by_id'])
+
+    get "/api/v1/organizations/#{organization.id}?expand=true", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(organization.id, result['id'])
+    assert_equal(organization.name, result['name'])
+    assert(result['members'])
+    assert_equal([@customer_without_org.id], result['member_ids'])
+    assert_equal(@admin.id, result['updated_by_id'])
+    assert_equal(@admin.id, result['created_by_id'])
+
+    get "/api/v1/organizations/#{organization.id}?expand=false", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(organization.id, result['id'])
+    assert_equal(organization.name, result['name'])
+    assert_not(result['members'])
+    assert_equal([@customer_without_org.id], result['member_ids'])
+    assert_equal(@admin.id, result['updated_by_id'])
+    assert_equal(@admin.id, result['created_by_id'])
+
+    get "/api/v1/organizations/#{organization.id}?full=true", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+
+    assert_equal(Hash, result.class)
+    assert_equal(organization.id, result['id'])
+    assert(result['assets'])
+    assert(result['assets']['Organization'])
+    assert(result['assets']['Organization'][organization.id.to_s])
+    assert_equal(organization.id, result['assets']['Organization'][organization.id.to_s]['id'])
+    assert_equal(organization.name, result['assets']['Organization'][organization.id.to_s]['name'])
+    assert_equal(organization.member_ids, result['assets']['Organization'][organization.id.to_s]['member_ids'])
+    assert_not(result['assets']['Organization'][organization.id.to_s]['members'])
+
+    get "/api/v1/organizations/#{organization.id}?full=false", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(organization.id, result['id'])
+    assert_equal(organization.name, result['name'])
+    assert_not(result['members'])
+    assert_equal([@customer_without_org.id], result['member_ids'])
+    assert_equal(@admin.id, result['updated_by_id'])
+    assert_equal(@admin.id, result['created_by_id'])
+  end
+
+  test '04.02 organization index and response format' do
+    organization = Organization.create_or_update(
+      name: 'Rest Org NEW',
+      members: [@customer_without_org],
+      updated_by_id: @admin.id,
+      created_by_id: @admin.id,
+    )
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
+    get '/api/v1/organizations', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(Hash, result[0].class)
+    assert_equal(organization.id, result.last['id'])
+    assert_equal(organization.name, result.last['name'])
+    assert_not(result.last['members'])
+    assert_equal(organization.member_ids, result.last['member_ids'])
+    assert_equal(@admin.id, result.last['updated_by_id'])
+    assert_equal(@admin.id, result.last['created_by_id'])
+
+    get '/api/v1/organizations?expand=true', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(Hash, result[0].class)
+    assert_equal(organization.id, result.last['id'])
+    assert_equal(organization.name, result.last['name'])
+    assert_equal(organization.member_ids, result.last['member_ids'])
+    assert_equal(organization.members.pluck(:login), [@customer_without_org.login])
+    assert_equal(@admin.id, result.last['updated_by_id'])
+    assert_equal(@admin.id, result.last['created_by_id'])
+
+    get '/api/v1/organizations?expand=false', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(Hash, result[0].class)
+    assert_equal(organization.id, result.last['id'])
+    assert_equal(organization.name, result.last['name'])
+    assert_not(result.last['members'])
+    assert_equal(organization.member_ids, result.last['member_ids'])
+    assert_equal(@admin.id, result.last['updated_by_id'])
+    assert_equal(@admin.id, result.last['created_by_id'])
+
+    get '/api/v1/organizations?full=true', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+
+    assert_equal(Hash, result.class)
+    assert_equal(Array, result['record_ids'].class)
+    assert_equal(1, result['record_ids'][0])
+    assert_equal(organization.id, result['record_ids'].last)
+    assert(result['assets'])
+    assert(result['assets']['Organization'])
+    assert(result['assets']['Organization'][organization.id.to_s])
+    assert_equal(organization.id, result['assets']['Organization'][organization.id.to_s]['id'])
+    assert_equal(organization.name, result['assets']['Organization'][organization.id.to_s]['name'])
+    assert_equal(organization.member_ids, result['assets']['Organization'][organization.id.to_s]['member_ids'])
+    assert_not(result['assets']['Organization'][organization.id.to_s]['members'])
+
+    get '/api/v1/organizations?full=false', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(Hash, result[0].class)
+    assert_equal(organization.id, result.last['id'])
+    assert_equal(organization.name, result.last['name'])
+    assert_not(result.last['members'])
+    assert_equal(organization.member_ids, result.last['member_ids'])
+    assert_equal(@admin.id, result.last['updated_by_id'])
+    assert_equal(@admin.id, result.last['created_by_id'])
+  end
+
+  test '04.03 ticket create and response format' do
+    params = {
+      name: 'Rest Org NEW',
+      members: [@customer_without_org.login],
+    }
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
+
+    post '/api/v1/organizations', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    organization = Organization.find(result['id'])
+    assert_equal(organization.name, result['name'])
+    assert_equal(organization.member_ids, result['member_ids'])
+    assert_not(result['members'])
+    assert_equal(@admin.id, result['updated_by_id'])
+    assert_equal(@admin.id, result['created_by_id'])
+
+    params[:name] = 'Rest Org NEW #2'
+    post '/api/v1/organizations?expand=true', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    organization = Organization.find(result['id'])
+    assert_equal(organization.name, result['name'])
+    assert_equal(organization.member_ids, result['member_ids'])
+    assert_equal(organization.members.pluck(:login), result['members'])
+    assert_equal(@admin.id, result['updated_by_id'])
+    assert_equal(@admin.id, result['created_by_id'])
+
+    params[:name] = 'Rest Org NEW #3'
+    post '/api/v1/organizations?full=true', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    organization = Organization.find(result['id'])
+    assert(result['assets'])
+    assert(result['assets']['Organization'])
+    assert(result['assets']['Organization'][organization.id.to_s])
+    assert_equal(organization.id, result['assets']['Organization'][organization.id.to_s]['id'])
+    assert_equal(organization.name, result['assets']['Organization'][organization.id.to_s]['name'])
+    assert_equal(organization.member_ids, result['assets']['Organization'][organization.id.to_s]['member_ids'])
+    assert_not(result['assets']['Organization'][organization.id.to_s]['members'])
+
+  end
+
+  test '04.04 ticket update and response formats' do
+    organization = Organization.create_or_update(
+      name: 'Rest Org NEW',
+      members: [@customer_without_org],
+      updated_by_id: @admin.id,
+      created_by_id: @admin.id,
+    )
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
+
+    params = {
+      name: 'a update name #1',
+    }
+    put "/api/v1/organizations/#{organization.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    organization = Organization.find(result['id'])
+    assert_equal(params[:name], result['name'])
+    assert_equal(organization.member_ids, result['member_ids'])
+    assert_not(result['members'])
+    assert_equal(@admin.id, result['updated_by_id'])
+    assert_equal(@admin.id, result['created_by_id'])
+
+    params = {
+      name: 'a update name #2',
+    }
+    put "/api/v1/organizations/#{organization.id}?expand=true", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    organization = Organization.find(result['id'])
+    assert_equal(params[:name], result['name'])
+    assert_equal(organization.member_ids, result['member_ids'])
+    assert_equal(organization.members.pluck(:login), [@customer_without_org.login])
+    assert_equal(@admin.id, result['updated_by_id'])
+    assert_equal(@admin.id, result['created_by_id'])
+
+    params = {
+      name: 'a update name #3',
+    }
+    put "/api/v1/organizations/#{organization.id}?full=true", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    organization = Organization.find(result['id'])
+    assert(result['assets'])
+    assert(result['assets']['Organization'])
+    assert(result['assets']['Organization'][organization.id.to_s])
+    assert_equal(organization.id, result['assets']['Organization'][organization.id.to_s]['id'])
+    assert_equal(params[:name], result['assets']['Organization'][organization.id.to_s]['name'])
+    assert_equal(organization.member_ids, result['assets']['Organization'][organization.id.to_s]['member_ids'])
+    assert_not(result['assets']['Organization'][organization.id.to_s]['members'])
+
+  end
+
+end

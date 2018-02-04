@@ -12,8 +12,8 @@ class App extends Spine.Controller
   helper =
 
     # define print name helper
-    P: (object, attributeName, attributes) ->
-      App.viewPrint(object, attributeName, attributes)
+    P: (object, attributeName, attributes, table = false) ->
+      App.viewPrint(object, attributeName, attributes, table)
 
     # define date format helper
     date: (time) ->
@@ -136,7 +136,7 @@ class App extends Spine.Controller
         return marked(string)
       App.i18n.translateContent(string)
 
-  @viewPrint: (object, attributeName, attributes) ->
+  @viewPrint: (object, attributeName, attributes, table) ->
     if !attributes
       attributes = {}
       if object.constructor.attributesGet
@@ -172,10 +172,10 @@ class App extends Spine.Controller
         if object[attributeNameWithoutRef]
           valueRef = object[attributeNameWithoutRef]
 
-    @viewPrintItem(value, attributeConfig, valueRef)
+    @viewPrintItem(value, attributeConfig, valueRef, table)
 
   # define print name helper
-  @viewPrintItem: (item, attributeConfig = {}, valueRef) ->
+  @viewPrintItem: (item, attributeConfig = {}, valueRef, table) ->
     return '-' if item is undefined
     return '-' if item is ''
     return item if item is null
@@ -238,7 +238,7 @@ class App extends Spine.Controller
       # transform date
       if attributeConfig.tag is 'date'
         isHtmlEscape = true
-        resultLocal       = App.i18n.translateDate(resultLocal)
+        resultLocal = App.i18n.translateDate(resultLocal)
 
       # transform input tel|url to make it clickable
       if attributeConfig.tag is 'input'
@@ -258,8 +258,10 @@ class App extends Spine.Controller
         cssClass = attributeConfig.class || ''
         if cssClass.match 'escalation'
           escalation = true
-        humanTime = App.PrettyDate.humanTime(resultLocal, escalation)
-        resultLocal    = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{resultLocal}\" title=\"#{timestamp}\">#{humanTime}</time>"
+        humanTime = ''
+        if !table
+          humanTime = App.PrettyDate.humanTime(resultLocal, escalation)
+        resultLocal = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{resultLocal}\" title=\"#{timestamp}\">#{humanTime}</time>"
 
       if !isHtmlEscape && typeof resultLocal is 'string'
         resultLocal = App.Utils.htmlEscape(resultLocal)

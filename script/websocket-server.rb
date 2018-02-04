@@ -169,7 +169,7 @@ EventMachine.run do
       # check if connection not already exists
       next if !@clients[client_id]
 
-      Sessions.touch(client_id)
+      Sessions.touch(client_id) # rubocop:disable Rails/SkipsModelValidations
       @clients[client_id][:last_ping] = Time.now.utc.to_i
 
       # spool messages for new connects
@@ -211,14 +211,14 @@ EventMachine.run do
 
     # websocket
     log 'notice', "Status: websocket clients: #{@clients.size}"
-    @clients.each do |client_id, _client|
+    @clients.each_key do |client_id|
       log 'notice', 'working...', client_id
     end
 
     # ajax
     client_list = Sessions.list
     clients = 0
-    client_list.each do |_client_id, client|
+    client_list.each_value do |client|
       next if client[:meta][:type] == 'websocket'
       clients = clients + 1
     end
@@ -242,7 +242,6 @@ EventMachine.run do
         log 'notice', 'send data to client', client_id
         websocket_send(client_id, queue)
       rescue => e
-
         log 'error', 'problem:' + e.inspect, client_id
 
         # disconnect client

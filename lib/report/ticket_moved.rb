@@ -123,6 +123,7 @@ returns
     }
     local_params = defaults.merge(local_params)
     result = history(local_params)
+    return result if params[:sheet].present?
     assets = {}
     result[:ticket_ids].each do |ticket_id|
       ticket_full = Ticket.find(ticket_id)
@@ -133,8 +134,8 @@ returns
   end
 
   def self.group_attributes(selector, params)
+    group_id = selector['value']
     if selector['operator'] == 'is'
-      group_id = selector['value']
       if params[:params][:type] == 'in'
         return {
           id_not_from: group_id,
@@ -146,8 +147,7 @@ returns
           id_not_to: group_id,
         }
       end
-    else
-      group_id = selector['value']
+    elsif selector['operator'] == 'is not'
       if params[:params][:type] == 'in'
         return {
           id_from: group_id,

@@ -10,7 +10,7 @@ class Observer::Ticket::Article::CommunicateEmail < ActiveRecord::Observer
 
     # only do send email if article got created via application_server (e. g. not
     # if article and sender type is set via *.postmaster)
-    return if ApplicationHandleInfo.current.split('.')[1] == 'postmaster'
+    return if ApplicationHandleInfo.postmaster?
 
     # if sender is customer, do not communicate
     return if !record.sender_id

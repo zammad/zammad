@@ -30,11 +30,11 @@ class Transaction::Trigger
     return if @item[:object] != 'Ticket'
 
     triggers = if Rails.configuration.db_case_sensitive
-                 Trigger.where(active: true).order('LOWER(name)')
+                 ::Trigger.where(active: true).order('LOWER(name)')
                else
-                 Trigger.where(active: true).order(:name)
+                 ::Trigger.where(active: true).order(:name)
                end
-    return if triggers.empty?
+    return if triggers.blank?
 
     ticket = Ticket.lookup(id: @item[:object_id])
     return if !ticket
@@ -51,7 +51,7 @@ class Transaction::Trigger
         # check if one article attribute is used
         one_has_changed_done = false
         article_selector = false
-        trigger.condition.each do |key, _value|
+        trigger.condition.each_key do |key|
           (object_name, attribute) = key.split('.', 2)
           next if object_name != 'article'
           next if attribute == 'id'
@@ -67,23 +67,23 @@ class Transaction::Trigger
         # check ticket "has changed" options
         has_changed_done = true
         condition.each do |key, value|
-          next if !value
-          next if !value['operator']
+          next if value.blank?
+          next if value['operator'].blank?
           next if !value['operator']['has changed']
 
           # remove condition item, because it has changed
           (object_name, attribute) = key.split('.', 2)
           next if object_name != 'ticket'
-          next if !@item[:changes]
+          next if @item[:changes].blank?
           next if !@item[:changes].key?(attribute)
           condition.delete(key)
           one_has_changed_done = true
         end
 
         # check if we have not matching "has changed" attributes
-        condition.each do |_key, value|
-          next if !value
-          next if !value['operator']
+        condition.each_value do |value|
+          next if value.blank?
+          next if value['operator'].blank?
           next if !value['operator']['has changed']
           has_changed_done = false
           break
@@ -102,11 +102,12 @@ class Transaction::Trigger
         if @item[:type] == 'update'
 
           # verify if ticket condition exists
-          condition.each do |key, _value|
+          condition.each_key do |key|
             (object_name, attribute) = key.split('.', 2)
             next if object_name != 'ticket'
             one_has_changed_condition = true
-            next if !@item[:changes] || !@item[:changes].key?(attribute)
+            next if @item[:changes].blank?
+            next if !@item[:changes].key?(attribute)
             one_has_changed_done = true
             break
           end

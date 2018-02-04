@@ -43,15 +43,15 @@ class Transaction::Slack
 
       # ignore notifications
       sender = Ticket::Article::Sender.lookup(id: article.sender_id)
-      if sender && sender.name == 'System'
-        return if @item[:changes].empty?
+      if sender&.name == 'System'
+        return if @item[:changes].blank?
         article = nil
       end
     end
 
     # ignore if no changes has been done
     changes = human_changes(ticket)
-    return if @item[:type] == 'update' && !article && (!changes || changes.empty?)
+    return if @item[:type] == 'update' && !article && changes.blank?
 
     # get user based notification template
     # if create, send create message / block update messages
@@ -101,14 +101,14 @@ class Transaction::Slack
       if ticket.pending_time && ticket.pending_time < Time.zone.now
         color = '#faab00'
       end
-    elsif ticket_state_type =~ /^(new|open)$/
+    elsif ticket_state_type.match?(/^(new|open)$/)
       color = '#faab00'
     elsif ticket_state_type == 'closed'
       color = '#38ad69'
     end
 
     config['items'].each do |local_config|
-      next if local_config['webhook'].empty?
+      next if local_config['webhook'].blank?
 
       # check if reminder_reached/escalation/escalation_warning is already sent today
       md5_webhook = Digest::MD5.hexdigest(local_config['webhook'])
@@ -155,7 +155,7 @@ class Transaction::Slack
       end
 
       logo_url = 'https://zammad.com/assets/images/logo-200x200.png'
-      if !local_config['logo_url'].empty?
+      if local_config['logo_url'].present?
         logo_url = local_config['logo_url']
       end
 
@@ -197,7 +197,7 @@ class Transaction::Slack
 
     return {} if !@item[:changes]
     user = User.find(1)
-    locale = user.preferences[:locale] || 'en-us'
+    locale = user.preferences[:locale] || Setting.get('locale_default') || 'en-us'
 
     # only show allowed attributes
     attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
@@ -206,7 +206,7 @@ class Transaction::Slack
     @item[:changes].each do |key, value|
 
       # if no config exists, use all attributes
-      if !attribute_list || attribute_list.empty?
+      if attribute_list.blank?
         user_related_changes[key] = value
 
       # if config exists, just use existing attributes for user

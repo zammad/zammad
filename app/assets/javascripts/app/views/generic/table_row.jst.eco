@@ -21,7 +21,7 @@
   </td>
 <% end %>
 <% for header in @headers: %>
-  <% value = @P(@object, header.name, @attributes) %>
+  <% value = @P(@object, header.name, @attributes, true) %>
   <% if @callbacks: %>
   <%   for attribute, callbacksAll of @callbacks: %>
   <%     if attribute is header.name: %>
@@ -31,7 +31,7 @@
   <%     end %>
   <%   end %>
   <% end %>
-  <td<%- " class='#{ header.parentClass }'" if header.parentClass %><%- " title='#{ header.title }'" if header.title %><%- " style='text-align:#{ header.align }'" if header.align %>>
+  <td<% if header.parentClass: %> class="<%= header.parentClass %>"<% end %><% if header.title: %> title="<%= header.title %>"<% end %><% if header.align: %> style="text-align:<%= header.align %>"<% end %>>
     <% if header.name is 'icon': %>
       <%- @Icon('task-state', header.class) %>
     <% else if header.icon: %>

@@ -13,8 +13,8 @@ module Zammad
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib)
-    config.eager_load_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W[#{config.root}/lib]
+    config.eager_load_paths += %W[#{config.root}/lib]
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
@@ -47,7 +47,7 @@ module Zammad
     config.api_path = '/api/v1'
 
     # define cache store
-    config.cache_store = :file_store, "#{Rails.root}/tmp/cache_file_store_#{Rails.env}"
+    config.cache_store = :file_store, Rails.root.join('tmp', "cache_file_store_#{Rails.env}")
 
     # default preferences by permission
     config.preferences_default_by_permission = {

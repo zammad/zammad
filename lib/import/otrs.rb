@@ -140,7 +140,7 @@ module Import
 
     def import_action(remote_object, args = {})
       records = Import::OTRS::Requester.load(remote_object, limit: args[:limit], offset: args[:offset], diff: args[:diff])
-      if !records || records.empty?
+      if records.blank?
         log '... no more work.'
         return false
       end

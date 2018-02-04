@@ -283,6 +283,14 @@ Permission.create_if_not_exists(
     required: ['ticket.agent'],
   },
 )
+Permission.create_if_not_exists(
+  name: 'user_preferences.out_of_office',
+  note: 'Change %s',
+  preferences: {
+    translations: ['Out of Office'],
+    required: ['ticket.agent'],
+  },
+)
 
 Permission.create_if_not_exists(
   name: 'report',

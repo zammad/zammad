@@ -1,11 +1,9 @@
-require 'sequencer/mixin/exchange/folder'
-
 class Sequencer
   class Unit
     module Exchange
       module Folders
         class IdPathMap < Sequencer::Unit::Base
-          include ::Sequencer::Mixin::Exchange::Folder
+          include ::Sequencer::Unit::Exchange::Folders::Mixin::Folder
 
           provides :ews_folder_id_path_map
 

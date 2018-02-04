@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'browser_test_helper'
 
 class AaaGettingStartedTest < TestCase
@@ -211,7 +211,7 @@ class AaaGettingStartedTest < TestCase
       }
       accounts.push account
     end
-    if accounts.empty?
+    if accounts.blank?
       #raise "Need min. MAILBOX_AUTO1 as ENV variable like export MAILBOX_AUTO1='nicole.braun2015@gmail.com:somepass'"
       puts "NOTICE: Need min. MAILBOX_AUTO1 as ENV variable like export MAILBOX_AUTO1='nicole.braun2015@gmail.com:somepass'"
       return
@@ -282,7 +282,7 @@ class AaaGettingStartedTest < TestCase
       }
       accounts.push account
     end
-    if accounts.empty?
+    if accounts.blank?
       #raise "Need min. MAILBOX_MANUAL1 as ENV variable like export MAILBOX_MANUAL1='nicole.bauer2015@yahoo.de:somepass:imap.mail.yahoo.com:smtp.mail.yahoo.com'"
       puts "NOTICE: Need min. MAILBOX_MANUAL1 as ENV variable like export MAILBOX_MANUAL1='nicole.bauer2015@yahoo.de:somepass:imap.mail.yahoo.com:smtp.mail.yahoo.com'"
       return

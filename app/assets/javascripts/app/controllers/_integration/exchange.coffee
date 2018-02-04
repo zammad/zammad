@@ -131,13 +131,12 @@ class Form extends App.Controller
     if _.isEmpty(job)
       @lastImport.html('')
       return
-    countDone = job.result.created + job.result.updated + job.result.unchanged + job.result.skipped + job.result.failed
     if !job.result.roles
       job.result.roles = {}
     for role_id, statistic of job.result.role_ids
       role = App.Role.find(role_id)
       job.result.roles[role.displayName()] = statistic
-    el = $(App.view('integration/exchange_last_import')(job: job, countDone: countDone))
+    el = $(App.view('integration/exchange_last_import')(job: job))
     @lastImport.html(el)
 
   activeDryRun: =>
@@ -540,34 +539,26 @@ class ConnectionWizard extends App.WizardModal
           @showAlert('js-error', (job.result.error || job.result.info))
           return
 
-        total = 0
         if job.result && _.keys(job.result).length > 0
           @$('.js-preprogress').addClass('hide')
           @$('.js-analyzing').removeClass('hide')
 
-          analized = 0
-          total    = job.result.sum
-          for action, sum of job.result
-            continue if action == 'folders'
-            continue if action == 'sum'
-            analized += sum
-
-          @$('.js-progress progress').attr('value', analized)
-          @$('.js-progress progress').attr('max', total)
+          @$('.js-progress progress').attr('value', job.result.sum)
+          @$('.js-progress progress').attr('max', job.result.total)
 
         if job.finished_at
           # reset initial state in case the back button is used
           @$('.js-preprogress').removeClass('hide')
           @$('.js-analyzing').addClass('hide')
 
-          @tryResult(job, total)
+          @tryResult(job)
         else
           @delay(@tryLoop, 4000)
     )
 
-  tryResult: (job, total) =>
+  tryResult: (job) =>
     @showSlide('js-try')
-    el = $(App.view('integration/exchange_summary')(job: job, countDone: total))
+    el = $(App.view('integration/exchange_summary')(job: job))
     @el.find('.js-summary').html(el)
 
 App.Config.set(

@@ -13,7 +13,7 @@ class Sequencer
       @values       = {}
 
       initialize_attributes(sequence.units)
-      initialize_parameters(parameters.with_indifferent_access)
+      initialize_parameters(parameters)
       initialize_expectations(expecting || sequence.expecting)
     end
 
@@ -195,7 +195,7 @@ class Sequencer
     end
 
     def unprovideable_setter(attribute, value)
-      message = "Unprovideable attribute '#{attribute}' set with value (#{value.class.name}): '#{value}'"
+      message = "Unprovideable attribute '#{attribute}' set with value (#{value.class.name}): #{value.inspect}"
       logger.error(message)
       raise message
     end
@@ -262,7 +262,7 @@ class Sequencer
           remove = !attribute.will_be_used?
           remove ||= attribute.to <= @index
           if remove && attribute.will_be_used?
-            logger.debug("Removing unneeded attribute '#{identifier}': #{@values[identifier]}")
+            logger.debug("Removing unneeded attribute '#{identifier}': #{@values[identifier].inspect}")
           end
           remove
         end

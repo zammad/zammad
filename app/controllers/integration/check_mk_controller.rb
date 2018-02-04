@@ -133,6 +133,8 @@ UserAgent: #{request.env['HTTP_USER_AGENT']}
     if Setting.get('check_mk_token') != params[:token]
       raise Exceptions::UnprocessableEntity, 'Invalid token!'
     end
+
+    true
   end
 
 end

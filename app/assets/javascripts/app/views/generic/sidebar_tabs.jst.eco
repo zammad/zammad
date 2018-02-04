@@ -1,7 +1,7 @@
 <% for item in @items: %>
 <div class="sidebar bottom-form-shadow flex hide" data-tab="<%= item.name %>">
   <div class="sidebar-header">
-    <h2 class="sidebar-header-headline js-headline"><%- @T(item.head) %></h2>
+    <h2 class="sidebar-header-headline js-headline"><%- @T(item.sidebarHead) %></h2>
     <div class="sidebar-header-actions js-actions"></div>
     <div class="tabsSidebar-close">
       <%- @Icon('long-arrow-right') %>
@@ -13,8 +13,6 @@
 <% end %>
 <div class="tabsSidebar-tabs" style="<%- if @dir is 'rtl' then 'margin-right' else 'margin-left' %>: -<%- @scrollbarWidth %>px">
 <% for item in @items: %>
-  <div class="tabsSidebar-tab" data-tab="<%= item.name %>">
-    <%- @Icon(item.icon) %>
-  </div>
+  <div class="tabsSidebar-tab" data-tab="<%= item.name %>"></div>
 <% end %>
 </div>

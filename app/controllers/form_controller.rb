@@ -44,7 +44,7 @@ class FormController < ApplicationController
       errors['email'] = 'required'
     elsif params[:email] !~ /@/
       errors['email'] = 'invalid'
-    elsif params[:email] =~ /(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s|\.\.)/
+    elsif params[:email].match?(/(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s|\.\.)/)
       errors['email'] = 'invalid'
     end
     if params[:title].blank?
@@ -126,19 +126,16 @@ class FormController < ApplicationController
       internal: false,
     )
 
-    if params[:file]
-
-      params[:file].each do |file|
-        Store.add(
-          object: 'Ticket::Article',
-          o_id: article.id,
-          data: file.read,
-          filename: file.original_filename,
-          preferences: {
-            'Mime-Type' => file.content_type,
-          }
-        )
-      end
+    params[:file]&.each do |file|
+      Store.add(
+        object: 'Ticket::Article',
+        o_id: article.id,
+        data: file.read,
+        filename: file.original_filename,
+        preferences: {
+          'Mime-Type' => file.content_type,
+        }
+      )
     end
 
     UserInfo.current_user_id = 1
@@ -241,7 +238,7 @@ class FormController < ApplicationController
 
   def enabled?
     return true if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
-    return true if Setting.get('form_ticket_create') && Setting.get('customer_ticket_create')
+    return true if Setting.get('form_ticket_create')
     response_access_deny
     false
   end

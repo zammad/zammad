@@ -156,6 +156,26 @@ Setting.create_if_not_exists(
   },
   frontend: true
 )
+Setting.create_if_not_exists(
+  title: 'Locale',
+  name: 'locale_default',
+  area: 'System::Branding',
+  description: 'Defines the system default language.',
+  options: {
+    form: [
+      {
+        name: 'locale_default',
+      }
+    ],
+  },
+  state: 'en-us',
+  preferences: {
+    prio: 8,
+    controller: 'SettingsAreaItemDefaultLocale',
+    permission: ['admin.system'],
+  },
+  frontend: true
+)
 Setting.create_or_update(
   title: 'Pretty Date',
   name: 'pretty_date_format',
@@ -217,7 +237,7 @@ Setting.create_if_not_exists(
   title: 'Fully Qualified Domain Name',
   name: 'fqdn',
   area: 'System::Base',
-  description: 'Defines the fully qualified domain name of the system. This setting is used as a variable, #{setting.fqdn} which is found in all forms of messaging used by the application, to build links to the tickets within your system.',
+  description: 'Defines the fully qualified domain name of the system. This setting is used as a variable, #{setting.fqdn} which is found in all forms of messaging used by the application, to build links to the tickets within your system.', # rubocop:disable Lint/InterpolationCheck
   options: {
     form: [
       {
@@ -678,6 +698,47 @@ Setting.create_if_not_exists(
   },
   frontend: true
 )
+Setting.create_if_not_exists(
+  title: 'Set notes for ticket create types.',
+  name: 'ui_ticket_create_notes',
+  area: 'UI::TicketCreate',
+  description: 'Set notes for ticket create types by selecting type.',
+  options: {},
+  state: {
+    #'email-out' => 'Attention: When creating a ticket an e-mail is sent.',
+  },
+  preferences: {
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+
+Setting.create_if_not_exists(
+  title: 'Open ticket indicator',
+  name: 'ui_sidebar_open_ticket_indicator_colored',
+  area: 'UI::Sidebar',
+  description: 'Color representation of the open ticket indicator in the sidebar.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_sidebar_open_ticket_indicator_colored',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
 
 Setting.create_if_not_exists(
   title: 'New User Accounts',
@@ -773,7 +834,7 @@ Setting.create_if_not_exists(
     uid: 'mail',
     base: 'dc=example,dc=org',
     always_filter: '',
-    always_roles: %w(Admin Agent),
+    always_roles: %w[Admin Agent],
     always_groups: ['Users'],
     sync_params: {
       firstname: 'sn',
@@ -1561,7 +1622,7 @@ Setting.create_if_not_exists(
   },
   state: 'Ticket::Number::Increment',
   preferences: {
-    settings_included: %w(ticket_number_increment ticket_number_date),
+    settings_included: %w[ticket_number_increment ticket_number_date],
     controller: 'SettingsAreaTicketNumber',
     permission: ['admin.ticket'],
   },
@@ -1645,6 +1706,34 @@ Setting.create_if_not_exists(
   },
   state: {
     checksum: false
+  },
+  preferences: {
+    permission: ['admin.ticket'],
+    hidden: true,
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Ticket Number ignore system_id',
+  name: 'ticket_number_ignore_system_id',
+  area: 'Ticket::Core',
+  description: '-',
+  options: {
+    form: [
+      {
+        display: 'Ignore system_id',
+        null: true,
+        name: 'ticket_number_ignore_system_id',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: {
+    ticket_number_ignore_system_id: false
   },
   preferences: {
     permission: ['admin.ticket'],
@@ -2023,6 +2112,32 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Customer selection based on sender and receiver list',
+  name: 'postmaster_sender_is_agent_search_for_customer',
+  area: 'Email::Base',
+  description: 'If the sender is an agent, set the first user in the recipient list as a customer.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'postmaster_sender_is_agent_search_for_customer',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: true,
+  preferences: {
+    permission: ['admin.channel_email'],
+  },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
   title: 'Notification Sender',
   name: 'notification_sender',
   area: 'Email::Base',
@@ -2037,7 +2152,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: 'Notification Master <noreply@#{config.fqdn}>',
+  state: 'Notification Master <noreply@#{config.fqdn}>', # rubocop:disable Lint/InterpolationCheck
   preferences: {
     online_service_disable: true,
     permission: ['admin.channel_email'],
@@ -2264,6 +2379,15 @@ Setting.create_if_not_exists(
   area: 'SearchIndex::Elasticsearch',
   description: 'Define max. attachment size for Elasticsearch.',
   state: 50,
+  preferences: { online_service_disable: true },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Elasticsearch Pipeline Name',
+  name: 'es_pipeline',
+  area: 'SearchIndex::Elasticsearch',
+  description: 'Define pipeline name for Elasticsearch.',
+  state: '',
   preferences: { online_service_disable: true },
   frontend: false
 )

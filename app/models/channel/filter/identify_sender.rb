@@ -22,15 +22,15 @@ module Channel::Filter::IdentifySender
     if !customer_user && mail[ 'x-zammad-customer-email'.to_sym ].present?
       customer_user = User.find_by(email: mail[ 'x-zammad-customer-email'.to_sym ])
     end
-    if !customer_user
 
-      # get correct customer
+    # get correct customer
+    if !customer_user && Setting.get('postmaster_sender_is_agent_search_for_customer') == true
       if mail[ 'x-zammad-ticket-create-article-sender'.to_sym ] == 'Agent'
 
         # get first recipient and set customer
         begin
           to = 'raw-to'.to_sym
-          if mail[to] && mail[to].addrs
+          if mail[to]&.addrs
             items = mail[to].addrs
             items.each do |item|
 
@@ -46,18 +46,21 @@ module Channel::Filter::IdentifySender
             end
           end
         rescue => e
-          Rails.logger.error 'ERROR: SenderIsSystemAddress: ' + e.inspect
+          Rails.logger.error "SenderIsSystemAddress: ##{e.inspect}"
         end
       end
-      if !customer_user
-        customer_user = user_create(
-          login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-          firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
-          lastname: mail[ 'x-zammad-customer-lastname'.to_sym ],
-          email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
-        )
-      end
     end
+
+    # take regular from as customer
+    if !customer_user
+      customer_user = user_create(
+        login: mail[ 'x-zammad-customer-login'.to_sym ] || mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+        firstname: mail[ 'x-zammad-customer-firstname'.to_sym ] || mail[:from_display_name],
+        lastname: mail[ 'x-zammad-customer-lastname'.to_sym ],
+        email: mail[ 'x-zammad-customer-email'.to_sym ] || mail[:from_email],
+      )
+    end
+
     create_recipients(mail)
     mail[ 'x-zammad-ticket-customer_id'.to_sym ] = customer_user.id
 
@@ -83,6 +86,8 @@ module Channel::Filter::IdentifySender
     if session_user
       mail[ 'x-zammad-session-user-id'.to_sym ] = session_user.id
     end
+
+    true
   end
 
   # create to and cc user
@@ -90,16 +95,19 @@ module Channel::Filter::IdentifySender
     max_count = 40
     current_count = 0
     ['raw-to', 'raw-cc'].each do |item|
-      next if !mail[item.to_sym]
+      next if mail[item.to_sym].blank?
       begin
-        next if !mail[item.to_sym].addrs
         items = mail[item.to_sym].addrs
+        next if items.blank?
         items.each do |address_data|
-          next if address_data.address.blank?
+          email_address = address_data.address
+          next if email_address.blank?
+          next if email_address !~ /@/
+          next if email_address.match?(/\s/)
           user_create(
             firstname: address_data.display_name,
             lastname: '',
-            email: address_data.address,
+            email: email_address,
           )
           current_count += 1
           return false if current_count == max_count
@@ -121,6 +129,8 @@ module Channel::Filter::IdentifySender
             display_name = $1
           end
           next if address.blank?
+          next if address !~ /@/
+          next if address.match?(/\s/)
           user_create(
             firstname: display_name,
             lastname: '',
@@ -133,7 +143,7 @@ module Channel::Filter::IdentifySender
     end
   end
 
-  def self.user_create(data)
+  def self.user_create(data, role_ids = nil)
     if data[:email] !~ /@/
       data[:email] += '@local'
     end
@@ -156,10 +166,10 @@ module Channel::Filter::IdentifySender
     end
 
     # create new user
-    role_ids = Role.signup_role_ids
+    role_ids ||= Role.signup_role_ids
 
     # fillup
-    %w(firstname lastname).each do |item|
+    %w[firstname lastname].each do |item|
       if data[item.to_sym].nil?
         data[item.to_sym] = ''
       end
@@ -171,7 +181,7 @@ module Channel::Filter::IdentifySender
     data[:updated_by_id] = 1
     data[:created_by_id] = 1
 
-    user = User.create(data)
+    user = User.create!(data)
     user.update!(
       updated_by_id: user.id,
       created_by_id: user.id,

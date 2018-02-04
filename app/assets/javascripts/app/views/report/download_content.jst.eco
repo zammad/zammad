@@ -1,0 +1,6 @@
+<div>
+  <div class="js-dataDownloadHeader"></div>
+  <div class="js-dataDownloadButton"></div>
+  <div class="spacer"></div>
+  <div class="js-dataDownloadTable"></div>
+</div>

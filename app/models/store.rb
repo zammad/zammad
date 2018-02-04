@@ -47,7 +47,7 @@ returns
     data.delete('object')
 
     # store meta data
-    store = Store.create(data)
+    store = Store.create!(data)
 
     store
   end
@@ -123,17 +123,18 @@ remove one attachment from storage
 =end
 
   def self.remove_item(store_id)
-
     store   = Store.find(store_id)
     file_id = store.store_file_id
-    store.destroy
 
     # check backend for references
     files = Store.where(store_file_id: file_id)
-    return if files.count != 1
-    return if files.first.id != store.id
+    if files.count > 1 || files.first.id != store.id
+      store.destroy!
+      return true
+    end
 
-    Store::File.find(file_id).destroy
+    store.destroy!
+    Store::File.find(file_id).destroy!
   end
 
 =begin
@@ -177,7 +178,7 @@ returns
       raise "No such file #{store_file_id}!"
     end
     if !path
-      path = "#{Rails.root}/tmp/#{filename}"
+      path = Rails.root.join('tmp', filename)
     end
     ::File.open(path, 'wb') do |handle|
       handle.write file.content

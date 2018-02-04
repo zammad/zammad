@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class MonitoringController < ApplicationController
-  prepend_before_action -> { authentication_check(permission: 'admin.monitoring') }, except: [:health_check, :status]
+  prepend_before_action -> { authentication_check(permission: 'admin.monitoring') }, except: %i[health_check status]
   skip_before_action :verify_csrf_token
 
 =begin
@@ -39,8 +39,8 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       # inbound channel
       if channel.status_in == 'error'
         message = "Channel: #{channel.area} in "
-        %w(host user uid).each do |key|
-          next if !channel.options[key] || channel.options[key].empty?
+        %w[host user uid].each do |key|
+          next if channel.options[key].blank?
           message += "key:#{channel.options[key]};"
         end
         issues.push "#{message} #{channel.last_log_in}"
@@ -52,15 +52,15 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       # outbound channel
       next if channel.status_out != 'error'
       message = "Channel: #{channel.area} out "
-      %w(host user uid).each do |key|
-        next if !channel.options[key] || channel.options[key].empty?
+      %w[host user uid].each do |key|
+        next if channel.options[key].blank?
         message += "key:#{channel.options[key]};"
       end
       issues.push "#{message} #{channel.last_log_out}"
     end
 
     # unprocessable mail check
-    directory = "#{Rails.root}/tmp/unprocessable_mail"
+    directory = Rails.root.join('tmp', 'unprocessable_mail').to_s
     if File.exist?(directory)
       count = 0
       Dir.glob("#{directory}/*.eml") do |_entry|
@@ -87,9 +87,33 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       actions.add(:restart_failed_jobs)
     end
 
+    Setting.get('import_backends')&.each do |backend|
+
+      if !ImportJob.backend_valid?(backend)
+        logger.error "Invalid import backend '#{backend}'"
+        next
+      end
+
+      # skip deactivated backends
+      next if !backend.constantize.active?
+
+      job = ImportJob.where(
+        name:    backend,
+        dry_run: false,
+      ).where('finished_at >= ?', 5.minutes.ago).limit(1).first
+
+      next if job.blank?
+      next if !job.result.is_a?(Hash)
+
+      error_message = job.result[:error]
+      next if error_message.blank?
+
+      issues.push "Failed to run import backend '#{backend}'. Cause: #{error_message}"
+    end
+
     token = Setting.get('monitoring_token')
 
-    if issues.empty?
+    if issues.blank?
       result = {
         healthy: true,
         message: 'success',
@@ -161,9 +185,7 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
     map.each do |key, class_name|
       status[:counts][key] = class_name.count
       last = class_name.last
-      status[:last_created_at][key] = if last
-                                        last.created_at
-                                      end
+      status[:last_created_at][key] = last&.created_at
     end
 
     render json: status

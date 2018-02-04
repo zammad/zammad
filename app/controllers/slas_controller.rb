@@ -48,7 +48,7 @@ curl http://localhost/api/v1/slas.json -v -u #{login}:#{password}
 
   def index
 
-    if params[:full]
+    if response_full?
 
       # calendars
       assets = {}

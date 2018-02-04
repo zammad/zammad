@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 require 'test_helper'
 
 class TicketOverviewTest < ActiveSupport::TestCase
@@ -106,9 +106,9 @@ class TicketOverviewTest < ActiveSupport::TestCase
         direction: 'ASC',
       },
       view: {
-        d: %w(title customer group created_at),
-        s: %w(title customer group created_at),
-        m: %w(number title customer group created_at),
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
@@ -133,9 +133,9 @@ class TicketOverviewTest < ActiveSupport::TestCase
         direction: 'ASC',
       },
       view: {
-        d: %w(title customer group created_at),
-        s: %w(title customer group created_at),
-        m: %w(number title customer group created_at),
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
@@ -160,9 +160,9 @@ class TicketOverviewTest < ActiveSupport::TestCase
         direction: 'ASC',
       },
       view: {
-        d: %w(title customer group created_at),
-        s: %w(title customer group created_at),
-        m: %w(number title customer group created_at),
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
@@ -187,9 +187,9 @@ class TicketOverviewTest < ActiveSupport::TestCase
         direction: 'ASC',
       },
       view: {
-        d: %w(title customer group created_at),
-        s: %w(title customer group created_at),
-        m: %w(number title customer group created_at),
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
         view_mode_default: 's',
       },
     )
@@ -215,9 +215,9 @@ class TicketOverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title state created_at),
-        m: %w(number title state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title state created_at],
+        m: %w[number title state created_at],
         view_mode_default: 's',
       },
     )
@@ -242,9 +242,9 @@ class TicketOverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
@@ -270,9 +270,9 @@ class TicketOverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
@@ -294,19 +294,20 @@ class TicketOverviewTest < ActiveSupport::TestCase
         direction: 'DESC',
       },
       view: {
-        d: %w(title customer state created_at),
-        s: %w(number title customer state created_at),
-        m: %w(number title customer state created_at),
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
         view_mode_default: 's',
       },
     )
   end
 
-  test 'bbb overview index' do
+  test 'overview index' do
 
     result = Ticket::Overviews.all(
       current_user: @agent1,
     )
+
     assert_equal(3, result.count)
     assert_equal('My assigned Tickets', result[0].name)
     assert_equal('Unassigned & Open', result[1].name)
@@ -343,7 +344,42 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
   end
 
-  test 'ccc overview content' do
+  test 'missing role' do
+    Ticket.destroy_all
+
+    assert_raises(Exception) do
+      Overview.create!(
+        name: 'new overview',
+        link: 'new_overview',
+        prio: 1200,
+        user_ids: [@customer2.id],
+        organization_shared: true,
+        condition: {
+          'ticket.state_id' => {
+            operator: 'is',
+            value: [1, 2, 3],
+          },
+          'ticket.organization_id' => {
+            operator: 'is',
+            pre_condition: 'current_user.organization_id',
+          },
+        },
+        order: {
+          by: 'created_at',
+          direction: 'DESC',
+        },
+        view: {
+          d: %w[title customer state created_at],
+          s: %w[number title customer state created_at],
+          m: %w[number title customer state created_at],
+          view_mode_default: 's',
+        },
+      )
+    end
+
+  end
+
+  test 'overview content' do
 
     Ticket.destroy_all
 

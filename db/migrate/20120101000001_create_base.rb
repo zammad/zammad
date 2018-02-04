@@ -58,7 +58,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :users, [:phone]
     add_index :users, [:fax]
     add_index :users, [:mobile]
-    add_index :users, [:out_of_office, :out_of_office_start_at, :out_of_office_end_at], name: 'index_out_of_office'
+    add_index :users, %i[out_of_office out_of_office_start_at out_of_office_end_at], name: 'index_out_of_office'
     add_index :users, [:out_of_office_replacement_id]
     add_index :users, [:source]
     add_index :users, [:created_by_id]
@@ -201,13 +201,13 @@ class CreateBase < ActiveRecord::Migration[4.2]
     create_table :authorizations do |t|
       t.string :provider,             limit: 250, null: false
       t.string :uid,                  limit: 250, null: false
-      t.string :token,                limit: 250, null: true
+      t.string :token,                limit: 2500, null: true
       t.string :secret,               limit: 250, null: true
       t.string :username,             limit: 250, null: true
       t.references :user, null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :authorizations, [:uid, :provider]
+    add_index :authorizations, %i[uid provider]
     add_index :authorizations, [:user_id]
     add_index :authorizations, [:username]
     add_foreign_key :authorizations, :users
@@ -262,7 +262,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
     add_index :tokens, :user_id
-    add_index :tokens, [:name, :action], unique: true
+    add_index :tokens, %i[name action], unique: true
     add_index :tokens, :created_at
     add_index :tokens, :persistent
     add_foreign_key :tokens, :users
@@ -454,7 +454,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.integer :created_by_id,                 null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :stores, [:store_object_id, :o_id]
+    add_index :stores, %i[store_object_id o_id]
     add_foreign_key :stores, :store_objects
     add_foreign_key :stores, :store_files
     add_foreign_key :stores, :users, column: :created_by_id
@@ -481,7 +481,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.integer :created_by_id,                 null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :avatars, [:o_id, :object_lookup_id]
+    add_index :avatars, %i[o_id object_lookup_id]
     add_index :avatars, [:store_hash]
     add_index :avatars, [:source]
     add_index :avatars, [:default]
@@ -556,7 +556,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
     add_index :user_devices, [:user_id]
-    add_index :user_devices, [:os, :browser, :location]
+    add_index :user_devices, %i[os browser location]
     add_index :user_devices, [:fingerprint]
     add_index :user_devices, [:updated_at]
     add_index :user_devices, [:created_at]
@@ -587,7 +587,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.integer :updated_by_id,                             null: false
       t.timestamps limit: 3, null: false
     end
-    add_index :object_manager_attributes, [:object_lookup_id, :name],   unique: true
+    add_index :object_manager_attributes, %i[object_lookup_id name],   unique: true
     add_index :object_manager_attributes, [:object_lookup_id]
     add_foreign_key :object_manager_attributes, :object_lookups
     add_foreign_key :object_manager_attributes, :users, column: :created_by_id
@@ -606,7 +606,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
 
-    add_index :delayed_jobs, [:priority, :run_at], name: 'delayed_jobs_priority'
+    add_index :delayed_jobs, %i[priority run_at], name: 'delayed_jobs_priority'
 
     create_table :external_syncs do |t|
       t.string  :source,                 limit: 100,  null: false
@@ -616,9 +616,9 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.text    :last_payload,           limit: 500.kilobytes + 1, null: true
       t.timestamps limit: 3, null: false
     end
-    add_index :external_syncs, [:source, :source_id], unique: true
-    add_index :external_syncs, [:source, :source_id, :object, :o_id], name: 'index_external_syncs_on_source_and_source_id_and_object_o_id'
-    add_index :external_syncs, [:object, :o_id]
+    add_index :external_syncs, %i[source source_id], unique: true
+    add_index :external_syncs, %i[source source_id object o_id], name: 'index_external_syncs_on_source_and_source_id_and_object_o_id'
+    add_index :external_syncs, %i[object o_id]
 
     create_table :import_jobs do |t|
       t.string :name, limit: 250, null: false
@@ -664,9 +664,9 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.timestamps limit: 3, null: false
     end
     add_index :cti_caller_ids, [:caller_id]
-    add_index :cti_caller_ids, [:caller_id, :level]
-    add_index :cti_caller_ids, [:caller_id, :user_id]
-    add_index :cti_caller_ids, [:object, :o_id]
+    add_index :cti_caller_ids, %i[caller_id level]
+    add_index :cti_caller_ids, %i[caller_id user_id]
+    add_index :cti_caller_ids, %i[object o_id]
     add_foreign_key :cti_caller_ids, :users
 
     create_table :stats_stores do |t|

@@ -13,10 +13,10 @@ RSpec.describe Ldap::User do
 
     it 'returns uid attribute string from given attribute strucutre' do
       attributes = {
-        samaccountname: 'TEST',
-        custom:         'value',
+        objectguid: 'TEST',
+        custom:     'value',
       }
-      expect(described_class.uid_attribute(attributes)).to eq('samaccountname')
+      expect(described_class.uid_attribute(attributes)).to eq('objectguid')
     end
 
     it 'returns nil if no attribute could be found' do
@@ -54,7 +54,7 @@ RSpec.describe Ldap::User do
 
     it 'takes optional uid_attribute' do
 
-      uid_attribute = 'samaccountname'
+      uid_attribute = 'objectguid'
       config = {
         uid_attribute: uid_attribute
       }
@@ -74,7 +74,7 @@ RSpec.describe Ldap::User do
 
     let(:initialization_config) do
       {
-        uid_attribute: 'samaccountname',
+        uid_attribute: 'objectguid',
         filter:        '(objectClass=user)',
       }
     end
@@ -147,7 +147,7 @@ RSpec.describe Ldap::User do
 
       let(:initialization_config) do
         {
-          uid_attribute: 'samaccountname',
+          uid_attribute: 'objectguid',
         }
       end
 
@@ -182,7 +182,7 @@ RSpec.describe Ldap::User do
         ldap_entry = build(:ldap_entry)
 
         # selectable attribute
-        ldap_entry['samaccountname'] = 'test@example.com'
+        ldap_entry['objectguid'] = 'f742b361-32c6-4a92-baaa-eaae7df657ee'
 
         expect(mocked_ldap).to receive(:search).and_yield(ldap_entry)
 
