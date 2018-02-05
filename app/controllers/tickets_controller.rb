@@ -7,6 +7,7 @@ class TicketsController < ApplicationController
   include TicketStats
 
   prepend_before_action :authentication_check
+  before_action :follow_up_possible_check, only: :update
 
   # GET /api/v1/tickets
   def index
@@ -124,7 +125,7 @@ class TicketsController < ApplicationController
       if !local_customer && clean_customer[:id].present?
         local_customer = User.find_by(id: clean_customer[:id])
       end
-      if clean_customer[:email].present?
+      if !local_customer && clean_customer[:email].present?
         local_customer = User.find_by(email: clean_customer[:email].downcase)
       end
       if !local_customer && clean_customer[:login].present?
@@ -598,6 +599,14 @@ class TicketsController < ApplicationController
   end
 
   private
+
+  def follow_up_possible_check
+    ticket = Ticket.find(params[:id])
+
+    return true if ticket.group.follow_up_possible != 'new_ticket' # check if the setting for follow_up_possible is disabled
+    return true if ticket.state.name != 'closed' # check if the ticket state is already closed
+    raise Exceptions::UnprocessableEntity, 'Cannot follow up on a closed ticket. Please create a new ticket.'
+  end
 
   def ticket_all(ticket)
 

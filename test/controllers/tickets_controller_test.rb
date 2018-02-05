@@ -48,6 +48,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
       roles: roles,
     )
     UserInfo.current_user_id = nil
+
   end
 
   test '01.01 ticket create with agent - missing group' do
@@ -1731,6 +1732,78 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert(result['attachments'])
     assert_equal(result['attachments'].count, 0)
 
+  end
+
+  test '06.01 - ticket with follow up possible set to new_ticket' do
+    group = Group.create_or_update(
+      name: "GroupWithNoFollowUp-#{rand(9_999_999_999)}",
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+      follow_up_possible: 'new_ticket' # disable follow up possible
+    )
+
+    ticket = Ticket.create!(
+      title: 'ticket with wrong ticket id',
+      group_id: group.id,
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'closed'), # set the ticket to closed
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    state = Ticket::State.find_by(name: 'open') # try to open a ticket from a closed state
+
+    # customer
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-customer1@example.com', 'customer1pw')
+    params = {
+      state_id: state.id, # set the state id
+    }
+
+    put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Cannot follow up on a closed ticket. Please create a new ticket.', result['error'])
+
+    ticket = Ticket.create!(
+      title: 'ticket with wrong ticket id',
+      group_id: group.id,
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'closed'), # set the ticket to closed
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    # admin
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin@example.com', 'adminpw')
+
+    put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Cannot follow up on a closed ticket. Please create a new ticket.', result['error'])
+
+    ticket = Ticket.create!(
+      title: 'ticket with wrong ticket id',
+      group_id: group.id,
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'closed'), # set the ticket to closed
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    # agent
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+
+    put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Cannot follow up on a closed ticket. Please create a new ticket.', result['error'])
   end
 
 end

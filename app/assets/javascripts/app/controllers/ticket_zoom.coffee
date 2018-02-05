@@ -848,7 +848,7 @@ class App.TicketZoom extends App.Controller
       error: (settings, details) =>
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to update!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || settings.responseJSON.error || 'Unable to update!')
           timeout: 2000
         }
         @autosaveStart()
