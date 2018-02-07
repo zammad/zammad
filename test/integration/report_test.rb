@@ -304,7 +304,7 @@ class ReportTest < ActiveSupport::TestCase
     assert_equal(0, result[7])
     assert_equal(0, result[8])
     assert_equal(2, result[9])
-    assert_equal(2, result[10])
+    assert_equal(1, result[10])
     assert_equal(0, result[11])
     assert_nil(result[12])
 
@@ -317,8 +317,7 @@ class ReportTest < ActiveSupport::TestCase
     assert_equal(@ticket5.id, result[:ticket_ids][0])
     assert_equal(@ticket6.id, result[:ticket_ids][1])
     assert_equal(@ticket7.id, result[:ticket_ids][2])
-    assert_equal(@ticket8.id, result[:ticket_ids][3])
-    assert_nil(result[:ticket_ids][4])
+    assert_nil(result[:ticket_ids][3])
 
     # month - with selector #1
     result = Report::TicketFirstSolution.aggs(
@@ -425,7 +424,7 @@ class ReportTest < ActiveSupport::TestCase
     assert_equal(0, result[7])
     assert_equal(0, result[8])
     assert_equal(1, result[9])
-    assert_equal(2, result[10])
+    assert_equal(1, result[10])
     assert_equal(0, result[11])
     assert_nil(result[12])
 
@@ -442,8 +441,7 @@ class ReportTest < ActiveSupport::TestCase
     assert(result)
     assert_equal(@ticket6.id, result[:ticket_ids][0])
     assert_equal(@ticket7.id, result[:ticket_ids][1])
-    assert_equal(@ticket8.id, result[:ticket_ids][2])
-    assert_nil(result[:ticket_ids][3])
+    assert_nil(result[:ticket_ids][2])
 
     # week
     result = Report::TicketFirstSolution.aggs(
@@ -929,7 +927,7 @@ class ReportTest < ActiveSupport::TestCase
     assert_equal(0, result[7])
     assert_equal(0, result[8])
     assert_equal(6, result[9])
-    assert_equal(2, result[10])
+    assert_equal(1, result[10])
     assert_equal(0, result[11])
     assert_nil(result[12])
 
@@ -940,15 +938,14 @@ class ReportTest < ActiveSupport::TestCase
       params:      { field: 'created_at' },
     )
     assert(result)
-    assert_equal(@ticket8.id, result[:ticket_ids][0].to_i)
-    assert_equal(@ticket7.id, result[:ticket_ids][1].to_i)
-    assert_equal(@ticket6.id, result[:ticket_ids][2].to_i)
-    assert_equal(@ticket5.id, result[:ticket_ids][3].to_i)
-    assert_equal(@ticket4.id, result[:ticket_ids][4].to_i)
-    assert_equal(@ticket3.id, result[:ticket_ids][5].to_i)
-    assert_equal(@ticket2.id, result[:ticket_ids][6].to_i)
-    assert_equal(@ticket1.id, result[:ticket_ids][7].to_i)
-    assert_nil(result[:ticket_ids][8])
+    assert_equal(@ticket7.id, result[:ticket_ids][0].to_i)
+    assert_equal(@ticket6.id, result[:ticket_ids][1].to_i)
+    assert_equal(@ticket5.id, result[:ticket_ids][2].to_i)
+    assert_equal(@ticket4.id, result[:ticket_ids][3].to_i)
+    assert_equal(@ticket3.id, result[:ticket_ids][4].to_i)
+    assert_equal(@ticket2.id, result[:ticket_ids][5].to_i)
+    assert_equal(@ticket1.id, result[:ticket_ids][6].to_i)
+    assert_nil(result[:ticket_ids][7])
 
     # create at - selector with merge
     result = Report::TicketGenericTime.aggs(
