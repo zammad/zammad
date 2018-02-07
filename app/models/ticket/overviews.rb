@@ -113,10 +113,11 @@ returns
         end
       end
 
-      ticket_result = Ticket.select('id, updated_at')
+      ticket_result = Ticket.select('tickets.id, tickets.updated_at')
                             .where(access_condition)
                             .where(query_condition, *bind_condition)
                             .joins(tables)
+                            .group('tickets.id')
                             .order(order_by)
                             .limit(1000)
                             .pluck(:id, :updated_at)
@@ -129,7 +130,7 @@ returns
         }
         tickets.push ticket_item
       end
-      count = Ticket.where(access_condition).where(query_condition, *bind_condition).joins(tables).count()
+      count = Ticket.where(access_condition).where(query_condition, *bind_condition).joins(tables).group('tickets.id').count()
       item = {
         overview: {
           name: overview.name,
