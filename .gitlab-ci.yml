@@ -259,6 +259,7 @@ test:integration:clearbit:
     - rake db:migrate
     - ruby -I test test/integration/clearbit_test.rb
     - rake db:drop
+  allow_failure: true
 
 test:integration:sipgate:
   stage: test
