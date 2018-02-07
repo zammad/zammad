@@ -52,6 +52,14 @@ returns
       elsif params[:interval] == 'minute'
         stop = start + 1.minute
       end
+
+      without_merged_tickets = {
+        'ticket_state.name' => {
+          'operator' => 'is not',
+          'value'    => 'merged'
+        }
+      }
+      params[:selector].merge!(without_merged_tickets) # do not show merged tickets in reports
       count = history_count(
         object: 'Ticket',
         type: 'updated',
