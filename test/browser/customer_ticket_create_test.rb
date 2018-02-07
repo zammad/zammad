@@ -64,5 +64,92 @@ class CustomerTicketCreateTest < TestCase
       css: '.content.active div.ticket-article',
       value: 'some body 1234 äöüß',
     )
+
+    # now we want to verify the default followup state
+    # for this case we close the ticket first and then
+    # write a new article. If the content is written
+    # then the state should change initially to open
+
+    # close the ticket
+    select(
+      css: '.content.active [name="state_id"]',
+      value: 'closed',
+    )
+
+    set(
+      css: '.content.active [data-name="body"]',
+      value: 'close #1',
+      no_click: true,
+    )
+
+    click(css: '.content.active .js-submit')
+    watch_for(
+      css: '.content.active div.ticket-article',
+      value: 'close #1',
+    )
+
+    # check if the ticket is closed
+    match(
+      css: '.content.active .sidebar [name="state_id"]',
+      value: 'closed',
+    )
+
+    # type in new content into rte to trigger the default follow up state
+    set(
+      css: '.content.active [data-name="body"]',
+      value: 'some body blublub default followup for reopen check',
+      no_click: true,
+    )
+
+    # verify if the state has changed to open
+    watch_for(
+      css: '.content.active .sidebar [name="state_id"]',
+      value: 'open',
+    )
+
+    # no we verify the reverse way:
+    # if the body get changed to empty again then
+    # the default follow up state should get unset and
+    # will change to the the default ticket state.
+
+    # remove content from rte
+    set(
+      css: '.content.active [data-name="body"]',
+      value: '',
+      no_click: true,
+    )
+
+    # check if state changed to closed again
+    watch_for(
+      css: '.content.active .sidebar [name="state_id"]',
+      value: 'closed',
+    )
+
+    # type in new content into rte to trigger the default follow up state
+    set(
+      css: '.content.active [data-name="body"]',
+      value: 'some body blublub default followup for reopen check',
+      no_click: true,
+    )
+
+    # verify if the state has changed to open
+    watch_for(
+      css: '.content.active .sidebar [name="state_id"]',
+      value: 'open',
+    )
+
+    # submit and reload to check if the new state is set
+    click(css: '.content.active .js-submit')
+
+    watch_for(
+      css: '.content.active div.ticket-article',
+      value: 'some body blublub default followup for reopen check',
+    )
+
+    # verify if the state has changed to open
+    match(
+      css: '.content.active .sidebar [name="state_id"]',
+      value: 'open',
+    )
   end
 end
