@@ -1088,6 +1088,7 @@ raise 'Minimum one user need to have admin permissions'
   end
 
   def avatar_for_email_check
+    return true if Setting.get('import_mode')
     return true if email.blank?
     return true if email !~ /@/
     return true if !saved_change_to_attribute?('email') && updated_at > Time.zone.now - 10.days
