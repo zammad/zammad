@@ -253,7 +253,7 @@ class TicketArticlesController < ApplicationController
     send_data(
       file.content,
       filename: file.filename,
-      type: file.preferences['Content-Type'] || file.preferences['Mime-Type'],
+      type: file.preferences['Content-Type'] || file.preferences['Mime-Type'] || 'application/octet-stream',
       disposition: disposition
     )
   end
