@@ -37,8 +37,11 @@ class UserNew extends App.ControllerModal
 
     # find role_id
     if !params.role_ids || _.isEmpty(params.role_ids)
-      role = App.Role.findByAttribute('name', 'Customer')
-      params.role_ids = role.id
+      role_ids = []
+      for role of App.Role.all()
+        if role && role.active is true && role.default_at_signup is true
+          role_ids.push role.id
+      params.role_ids = role_ids
     @log 'notice', 'updateAttributes', params
 
     user = new App.User
