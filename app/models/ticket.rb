@@ -424,14 +424,14 @@ get count of tickets and tickets which match on selector
     ActiveRecord::Base.transaction(requires_new: true) do
       begin
         if !current_user
-          ticket_count = Ticket.where(query, *bind_params).joins(tables).count
-          tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
+          ticket_count = Ticket.distinct.where(query, *bind_params).joins(tables).count
+          tickets = Ticket.distinct.where(query, *bind_params).joins(tables).limit(limit)
           return [ticket_count, tickets]
         end
 
         access_condition = Ticket.access_condition(current_user, access)
-        ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
-        tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
+        ticket_count = Ticket.distinct.where(access_condition).where(query, *bind_params).joins(tables).count
+        tickets = Ticket.distinct.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
 
         return [ticket_count, tickets]
       rescue ActiveRecord::StatementInvalid => e

@@ -113,23 +113,21 @@ returns
         end
       end
 
-      ticket_result = Ticket.select('id, updated_at')
+      ticket_result = Ticket.distinct
                             .where(access_condition)
                             .where(query_condition, *bind_condition)
                             .joins(tables)
                             .order(order_by)
                             .limit(1000)
-                            .pluck(:id, :updated_at)
 
-      tickets = []
-      ticket_result.each do |ticket|
-        ticket_item = {
-          id: ticket[0],
-          updated_at: ticket[1],
+      tickets = ticket_result.map do |ticket|
+        {
+          id: ticket[:id],
+          updated_at: ticket[:updated_at],
         }
-        tickets.push ticket_item
       end
-      count = Ticket.where(access_condition).where(query_condition, *bind_condition).joins(tables).count()
+
+      count = Ticket.distinct.where(access_condition).where(query_condition, *bind_condition).joins(tables).count()
       item = {
         overview: {
           name: overview.name,
