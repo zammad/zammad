@@ -877,6 +877,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent1 = User.create_or_update(
       login: 'agent-has-changed@example.com',
@@ -886,6 +887,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_at: '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
@@ -1190,6 +1192,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+    groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent = User.create_or_update(
       login: 'agent@example.com',
@@ -1199,6 +1202,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1325,6 +1329,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+    groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent = User.create_or_update(
       login: 'agent@example.com',
@@ -1334,6 +1339,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1438,6 +1444,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
     roles = Role.where(name: 'Agent')
+    groups = Group.where(name: 'Users')
     agent = User.create_or_update(
       login: 'agent@example.com',
       firstname: 'Trigger',
@@ -1446,6 +1453,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1548,6 +1556,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+    groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent = User.create_or_update(
       login: 'agent@example.com',
@@ -1557,6 +1566,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1663,6 +1673,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+    groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent1 = User.create_or_update(
       login: 'agent@example.com',
@@ -1672,6 +1683,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1683,6 +1695,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1855,6 +1868,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+    groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent = User.create_or_update(
       login: 'agent@example.com',
@@ -1864,6 +1878,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -1989,6 +2004,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+    groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent = User.create_or_update(
       login: 'agent@example.com',
@@ -1998,6 +2014,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -2129,6 +2146,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+    groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent1 = User.create_or_update(
       login: 'agent1@example.com',
@@ -2138,6 +2156,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -2149,6 +2168,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -2261,6 +2281,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+    groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent = User.create_or_update(
       login: 'agent@example.com',
@@ -2270,6 +2291,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -2544,6 +2566,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
+    groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent = User.create_or_update(
       login: 'agent@example.com',
@@ -2553,6 +2576,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -2972,6 +2996,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'adminpw',
       active: true,
       roles: Role.where(name: %w[Admin Agent]),
+      groups: Group.where(name: 'Users'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -3907,6 +3932,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   test 'change owner' do
     roles = Role.where(name: 'Agent')
+    groups = Group.where(name: 'Users')
     agent1 = User.create_or_update(
       login: 'agent-has-changed@example.com',
       firstname: 'Has Changed',
@@ -3915,6 +3941,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_at: '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
@@ -3928,6 +3955,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       password: 'agentpw',
       active: true,
       roles: roles,
+      groups: groups,
       updated_at: '2015-02-05 16:37:00',
       updated_by_id: 1,
       created_by_id: 1,
