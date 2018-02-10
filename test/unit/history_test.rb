@@ -122,7 +122,7 @@ class HistoryTest < ActiveSupport::TestCase
             value_to: 'Unit Test 2 (äöüß) - update!',
           },
           {
-            result: true,
+            result: false,
             history_object: 'Ticket',
             history_type: 'updated',
             history_attribute: 'owner',

@@ -23,7 +23,7 @@ class Ticket < ApplicationModel
   store          :preferences
   before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority
   after_create   :check_escalation_update
-  before_update  :check_defaults, :check_title, :reset_pending_time
+  before_update  :check_defaults, :check_title, :reset_pending_time, :check_owner_active
   after_update   :check_escalation_update
 
   validates :group_id, presence: true
@@ -1205,6 +1205,13 @@ result
     default_ticket_priority = Ticket::Priority.find_by(default_create: true)
     return true if !default_ticket_priority
     self.priority_id = default_ticket_priority.id
+    true
+  end
+
+  def check_owner_active
+    return true if owner.login == '-' # return when ticket is unassigned
+    return true if owner.groups.any?(&:active?) && owner.active? # return if user in any groups assigned is active and user account is active
+    self.owner = User.find_by(login: '-') # else set the owner of the ticket to the default user as unassigned
     true
   end
 end
