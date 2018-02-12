@@ -13,14 +13,14 @@
         <td class="settings-list-control-cell">
           <input class="form-control form-control--small js-valueTrue" type="text" value="<% if @params.data_option && @params.data_option.options: %><%= @params.data_option.options[true] %><% end %>" name="data_option::options::true" placeholder="<%- @T('yes') %>" required/>
         <td class="settings-list-row-control">
-          <input class="js-selected js-boolean" type="radio" name="data_option::default" value="true" <% if @params.data_option && @params.data_option.default is true: %>checked<% end %>/>
+          <input class="js-selected js-boolean" type="radio" name="data_option::default" value="true" <% if @params.data_option && @params.data_option.default is 'true': %>checked<% end %>/>
       <tr>
         <td class="settings-list-control-cell">
           false
         <td class="settings-list-control-cell">
           <input class="form-control form-control--small js-valueFalse" type="text" value="<% if @params.data_option && @params.data_option.options: %><%= @params.data_option.options[false] %><% end %>" name="data_option::options::false" placeholder="<%- @T('no') %>" required/>
         <td class="settings-list-row-control">
-          <input class="js-selected js-boolean" type="radio" name="data_option::default" value="false" <% if @params.data_option && @params.data_option.default is false: %>checked<% end %>/>
+          <input class="js-selected js-boolean" type="radio" name="data_option::default" value="false" <% if @params.data_option && @params.data_option.default is 'false': %>checked<% end %>/>
     </tbody>
   </table>
 </div>
