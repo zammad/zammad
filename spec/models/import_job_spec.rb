@@ -176,6 +176,35 @@ RSpec.describe ImportJob do
     end
   end
 
+  describe '#backends' do
+
+    it 'returns list of backend namespaces' do
+      expect(Setting).to receive(:get).with('import_backends').and_return(['Import::Ldap'])
+      expect(Import::Ldap).to receive(:active?).and_return(true)
+
+      backends = described_class.backends
+
+      expect(backends).to be_a(Array)
+      expect(backends).not_to be_blank
+    end
+
+    it 'returns blank array if none are found' do
+      expect(Setting).to receive(:get).with('import_backends')
+      expect(described_class.backends).to eq([])
+    end
+
+    it "doesn't return invalid backends" do
+      expect(Setting).to receive(:get).with('import_backends').and_return(['Import::InvalidBackend'])
+      expect(described_class.backends).to eq([])
+    end
+
+    it "doesn't return inactive backends" do
+      expect(Setting).to receive(:get).with('import_backends').and_return(['Import::Ldap'])
+      expect(Import::Ldap).to receive(:active?).and_return(false)
+      expect(described_class.backends).to eq([])
+    end
+  end
+
   describe '.start' do
 
     it 'runs import backend and updates started_at and finished_at' do
