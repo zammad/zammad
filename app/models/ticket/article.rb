@@ -15,6 +15,7 @@ class Ticket::Article < ApplicationModel
   belongs_to    :sender,      class_name: 'Ticket::Article::Sender'
   belongs_to    :created_by,  class_name: 'User'
   belongs_to    :updated_by,  class_name: 'User'
+  belongs_to    :origin_by,   class_name: 'User'
   store         :preferences
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5

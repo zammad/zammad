@@ -246,31 +246,10 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
   test '01.09 ticket create with agent - minimal article with guess customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
-      title: 'a new ticket #8',
+      title: 'a new ticket #9',
       group: 'Users',
       priority: '2 normal',
       state: 'new',
-      customer_id: 'guess:some_new_customer@example.com',
-      article: {
-        body: 'some test 123',
-      },
-    }
-    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
-    assert_response(201)
-    result = JSON.parse(@response.body)
-    assert_equal(Hash, result.class)
-    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
-    assert_equal('a new ticket #8', result['title'])
-    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, result['customer_id'])
-    assert_equal(@agent.id, result['updated_by_id'])
-    assert_equal(@agent.id, result['created_by_id'])
-  end
-
-  test '01.10 ticket create with agent - minimal article with guess customer' do
-    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
-    params = {
-      title: 'a new ticket #9',
-      group: 'Users',
       customer_id: 'guess:some_new_customer@example.com',
       article: {
         body: 'some test 123',
@@ -287,10 +266,31 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(@agent.id, result['created_by_id'])
   end
 
+  test '01.10 ticket create with agent - minimal article with guess customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #10',
+      group: 'Users',
+      customer_id: 'guess:some_new_customer@example.com',
+      article: {
+        body: 'some test 123',
+      },
+    }
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #10', result['title'])
+    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+  end
+
   test '01.11 ticket create with agent - minimal article with customer hash' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
-      title: 'a new ticket #9',
+      title: 'a new ticket #11',
       group: 'Users',
       customer: {
         firstname: 'some firstname',
@@ -306,16 +306,159 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
-    assert_equal('a new ticket #9', result['title'])
+    assert_equal('a new ticket #11', result['title'])
     assert_equal(User.lookup(email: 'some_new_customer@example.com').id, result['customer_id'])
     assert_equal(@agent.id, result['updated_by_id'])
     assert_equal(@agent.id, result['created_by_id'])
   end
 
+  test '01.11.1 ticket create with agent - minimal article with customer hash with article.origin_by' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #11.1',
+      group: 'Users',
+      customer: {
+        firstname: 'some firstname',
+        lastname: 'some lastname',
+        email: 'some_new_customer@example.com',
+      },
+      article: {
+        body: 'some test 123',
+        origin_by: 'some_new_customer@example.com',
+      },
+    }
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #11.1', result['title'])
+    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+    ticket = Ticket.find(result['id'])
+    article = ticket.articles.first
+    assert_equal(@agent.id, article.updated_by_id)
+    assert_equal(@agent.id, article.created_by_id)
+    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, article.origin_by_id)
+    assert_equal('Customer', article.sender.name)
+    assert_equal('note', article.type.name)
+    assert_equal('some firstname some lastname', article.from)
+  end
+
+  test '01.11.2 ticket create with agent - minimal article with customer hash with article.origin_by' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #11.2',
+      group: 'Users',
+      customer: {
+        firstname: 'some firstname',
+        lastname: 'some lastname',
+        email: 'some_new_customer@example.com',
+      },
+      article: {
+        sender: 'Customer',
+        body: 'some test 123',
+        origin_by: 'some_new_customer@example.com',
+      },
+    }
+
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #11.2', result['title'])
+    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+    ticket = Ticket.find(result['id'])
+    article = ticket.articles.first
+    assert_equal(@agent.id, article.updated_by_id)
+    assert_equal(@agent.id, article.created_by_id)
+    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, article.origin_by_id)
+    assert_equal('Customer', article.sender.name)
+    assert_equal('note', article.type.name)
+    assert_equal('some firstname some lastname', article.from)
+  end
+
+  test '01.11.3 ticket create with agent - minimal article with customer hash with article.origin_by' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #11.3',
+      group: 'Users',
+      customer: {
+        firstname: 'some firstname',
+        lastname: 'some lastname',
+        email: 'some_new_customer@example.com',
+      },
+      article: {
+        sender: 'Agent',
+        from: 'somebody',
+        body: 'some test 123',
+        origin_by: 'some_new_customer@example.com',
+      },
+    }
+
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #11.3', result['title'])
+    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+    ticket = Ticket.find(result['id'])
+    article = ticket.articles.first
+    assert_equal(@agent.id, article.updated_by_id)
+    assert_equal(@agent.id, article.created_by_id)
+    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, article.origin_by_id)
+    assert_equal('Customer', article.sender.name)
+    assert_equal('note', article.type.name)
+    assert_equal('some firstname some lastname', article.from)
+  end
+
+  test '01.11.4 ticket create with agent - minimal article with customer hash with article.origin_by' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #11.4',
+      group: 'Users',
+      customer: {
+        firstname: 'some firstname',
+        lastname: 'some lastname',
+        email: 'some_new_customer@example.com',
+      },
+      article: {
+        sender: 'Customer',
+        body: 'some test 123',
+        origin_by: @customer_without_org.login,
+      },
+    }
+
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #11.4', result['title'])
+    assert_equal(User.lookup(email: 'some_new_customer@example.com').id, result['customer_id'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+    ticket = Ticket.find(result['id'])
+    article = ticket.articles.first
+    assert_equal(@agent.id, article.updated_by_id)
+    assert_equal(@agent.id, article.created_by_id)
+    assert_equal(@customer_without_org.id, article.origin_by_id)
+    assert_equal('Customer', article.sender.name)
+    assert_equal('note', article.type.name)
+    assert_equal('Tickets Customer1', article.from)
+  end
+
   test '01.12 ticket create with agent - minimal article with missing body - with customer.id' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
-      title: 'a new ticket #10',
+      title: 'a new ticket #12',
       group: 'Users',
       customer_id: @customer_without_org.id,
       article: {
@@ -332,7 +475,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
   test '01.13 ticket create with agent - minimal article and attachment with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
-      title: 'a new ticket #11',
+      title: 'a new ticket #13',
       group: 'Users',
       customer_id: @customer_without_org.id,
       article: {
@@ -350,7 +493,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
-    assert_equal('a new ticket #11', result['title'])
+    assert_equal('a new ticket #13', result['title'])
     assert_equal(@customer_without_org.id, result['customer_id'])
     assert_equal(@agent.id, result['updated_by_id'])
     assert_equal(@agent.id, result['created_by_id'])
@@ -368,7 +511,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
   test '01.14 ticket create with agent - minimal article and attachment with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
-      title: 'a new ticket #12',
+      title: 'a new ticket #14',
       group: 'Users',
       customer_id: @customer_without_org.id,
       article: {
@@ -393,7 +536,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
-    assert_equal('a new ticket #12', result['title'])
+    assert_equal('a new ticket #14', result['title'])
     assert_equal(@customer_without_org.id, result['customer_id'])
     assert_equal(@agent.id, result['updated_by_id'])
     assert_equal(@agent.id, result['created_by_id'])
@@ -411,7 +554,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
   test '01.15 ticket create with agent - minimal article and attachment missing mine-type with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
-      title: 'a new ticket #13',
+      title: 'a new ticket #15',
       group: 'Users',
       customer_id: @customer_without_org.id,
       article: {
@@ -434,7 +577,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
   test '01.16 ticket create with agent - minimal article and attachment invalid base64 with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
-      title: 'a new ticket #14',
+      title: 'a new ticket #16',
       group: 'Users',
       customer_id: @customer_without_org.id,
       article: {
@@ -456,7 +599,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
   test '01.17 ticket create with agent - minimal article and inline attachments with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
-      title: 'a new ticket #15',
+      title: 'a new ticket #17',
       group: 'Users',
       customer_id: @customer_without_org.id,
       article: {
@@ -473,7 +616,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
-    assert_equal('a new ticket #15', result['title'])
+    assert_equal('a new ticket #17', result['title'])
     assert_equal(@customer_without_org.id, result['customer_id'])
     assert_equal(@agent.id, result['updated_by_id'])
     assert_equal(@agent.id, result['created_by_id'])
@@ -496,7 +639,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   test '01.18 ticket create with agent - minimal article and inline attachments with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
-      title: 'a new ticket #16',
+      title: 'a new ticket #18',
       group: 'Users',
       customer_id: @customer_without_org.id,
       article: {
@@ -517,7 +660,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
-    assert_equal('a new ticket #16', result['title'])
+    assert_equal('a new ticket #18', result['title'])
     assert_equal(@customer_without_org.id, result['customer_id'])
     assert_equal(@agent.id, result['updated_by_id'])
     assert_equal(@agent.id, result['created_by_id'])
@@ -1183,6 +1326,77 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('Not authorized (admin permission required)!', result['error'])
+  end
+
+  test '03.6 ticket create with agent - minimal article with customer hash with article.origin_by' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-customer1@example.com', 'customer1pw')
+    params = {
+      title: 'a new ticket #3.6',
+      group: 'Users',
+      customer: {
+        firstname: 'some firstname',
+        lastname: 'some lastname',
+        email: 'some_new_customer@example.com',
+      },
+      article: {
+        body: 'some test 123',
+        origin_by: @agent.login,
+      },
+    }
+
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #3.6', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@customer_without_org.id, result['updated_by_id'])
+    assert_equal(@customer_without_org.id, result['created_by_id'])
+    ticket = Ticket.find(result['id'])
+    article = ticket.articles.first
+    assert_equal(@customer_without_org.id, article.updated_by_id)
+    assert_equal(@customer_without_org.id, article.created_by_id)
+    assert_equal(@customer_without_org.id, article.origin_by_id)
+    assert_equal('Customer', article.sender.name)
+    assert_equal('note', article.type.name)
+    assert_equal('Tickets Customer1', article.from)
+  end
+
+  test '03.6.1 ticket create with agent - minimal article with customer hash with article.origin_by' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-customer1@example.com', 'customer1pw')
+    params = {
+      title: 'a new ticket #3.6.1',
+      group: 'Users',
+      customer: {
+        firstname: 'some firstname',
+        lastname: 'some lastname',
+        email: 'some_new_customer@example.com',
+      },
+      article: {
+        sender: 'Agent',
+        body: 'some test 123',
+        origin_by_id: @agent.id,
+      },
+    }
+
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal(Ticket::State.lookup(name: 'new').id, result['state_id'])
+    assert_equal('a new ticket #3.6.1', result['title'])
+    assert_equal(@customer_without_org.id, result['customer_id'])
+    assert_equal(@customer_without_org.id, result['updated_by_id'])
+    assert_equal(@customer_without_org.id, result['created_by_id'])
+    ticket = Ticket.find(result['id'])
+    article = ticket.articles.first
+    assert_equal(@customer_without_org.id, article.updated_by_id)
+    assert_equal(@customer_without_org.id, article.created_by_id)
+    assert_equal(@customer_without_org.id, article.origin_by_id)
+    assert_equal('Customer', article.sender.name)
+    assert_equal('note', article.type.name)
+    assert_equal('Tickets Customer1', article.from)
   end
 
   test '04.01 ticket show and response format' do

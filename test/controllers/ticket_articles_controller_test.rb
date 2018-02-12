@@ -298,7 +298,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    article = Ticket::Article.find_by( ticket_id: result['id'] )
+    article = Ticket::Article.find_by(ticket_id: result['id'])
     assert_equal(@customer_without_org.id, article.origin_by_id)
     assert_equal('Tickets Customer1 <tickets-customer1@example.com>', article.from)
   end
@@ -322,8 +322,8 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    article = Ticket::Article.find_by( ticket_id: result['id'] )
-    assert_nil(article.origin_by_id)
+    article = Ticket::Article.find_by(ticket_id: result['id'])
+    assert_equal(@customer_without_org.id, article.origin_by_id)
   end
 
   test '04.01 ticket split with html - check attachments' do
