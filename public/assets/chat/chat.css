@@ -116,7 +116,8 @@
   padding: 0 .7em;
   border-radius: 1em;
   background: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset; }
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+  float: right; }
 
 .zammad-chat-agent-status:before {
   content: "";

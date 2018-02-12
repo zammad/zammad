@@ -44,8 +44,8 @@
       <div class="chat-demo-animationHolder">
         <div class="js-chat zammad-chat zammad-chat-is-open zammad-chat-is-loaded zammad-chat-is-shown is-open">
           <div class="zammad-chat-header js-toggle-chat js-backgroundColor js-chatHeader">
+            <span class="zammad-chat-agent-status" data-status="online"><%- @T('Online') %></span>
             <div class="zammad-chat-header-controls">
-              <span class="zammad-chat-agent-status" data-status="online"><%- @T('Online') %></span>
               <span class="zammad-chat-header-icon">
                 <svg class="zammad-chat-header-icon-open" viewBox="0 0 13 7"><path d="M10.807 7l1.4-1.428-5-4.9L6.5-.02l-.7.7-4.9 4.9 1.414 1.413L6.5 2.886 10.807 7z" fill-rule="evenodd"></path></svg>
                 <svg class="zammad-chat-header-icon-close" viewBox="0 0 13 13"><path d="m2.241.12l-2.121 2.121 4.243 4.243-4.243 4.243 2.121 2.121 4.243-4.243 4.243 4.243 2.121-2.121-4.243-4.243 4.243-4.243-2.121-2.121-4.243 4.243-4.243-4.243" fill-rule="evenodd"></path></svg>
