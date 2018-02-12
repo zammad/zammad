@@ -332,10 +332,10 @@ class App.TicketCreate extends App.Controller
     App.Ticket.configure_attributes.pop()
 
     # set type selector
-    @setFormTypeInUi( params['formSenderType'] )
+    @setFormTypeInUi(params['formSenderType'])
 
     # remember form params of init load
-    @formDefault = @formParam( @$('.ticket-create') )
+    @formDefault = @formParam(@$('.ticket-create'))
 
     # show text module UI
     @textModule = new App.WidgetTextModule(
@@ -510,11 +510,9 @@ class App.TicketCreate extends App.Controller
           ui.sidebarWidget.commit(ticket_id: @id)
 
         # access to group
-        for group_id, access of App.Session.get('group_ids')
-          if @group_id.toString() is group_id.toString()
-            if _.contains(access, 'read') || _.contains(access, 'full')
-              ui.navigate "#ticket/zoom/#{@id}"
-              return
+        if @editable('change')
+          ui.navigate "#ticket/zoom/#{@id}"
+          return
 
         # if not, show start screen
         ui.navigate '#'

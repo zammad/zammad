@@ -483,6 +483,16 @@ class App.TicketZoom extends App.Controller
         links:        @links
       )
 
+      # check if autolock is needed
+      if @Config.get('ticket_auto_assignment') is true
+        if @ticket.owner_id is 1 && @permissionCheck('ticket.agent') && @ticket.editable('full')
+          ticket_auto_assignment_selector = @Config.get('ticket_auto_assignment_selector')
+          if App.Ticket.selector(@ticket, ticket_auto_assignment_selector['condition'])
+            assign = =>
+              @ticket.owner_id = App.Session.get('id')
+              @ticket.save()
+            @delay(assign, 800, "ticket-auto-assign-#{@ticket.id}")
+
     # render init content
     if elLocal
       @html elLocal

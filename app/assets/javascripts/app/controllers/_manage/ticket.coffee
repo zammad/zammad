@@ -4,10 +4,11 @@ class Ticket extends App.ControllerTabs
   constructor: ->
     super
 
-    @title 'Ticket', true
+    @title('Ticket', true)
     @tabs = [
-      { name: 'Base',   'target': 'base',   controller: App.SettingsArea, params: { area: 'Ticket::Base' } }
-      { name: 'Number', 'target': 'number', controller: App.SettingsArea, params: { area: 'Ticket::Number' } }
+      { name: 'Base',            'target': 'base',            controller: App.SettingsArea, params: { area: 'Ticket::Base' } }
+      { name: 'Number',          'target': 'number',          controller: App.SettingsArea, params: { area: 'Ticket::Number' } }
+      { name: 'Auto Assignment', 'target': 'auto_assignment', controller: App.SettingTicketAutoAssignment }
     ]
     @render()
 

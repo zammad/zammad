@@ -1713,6 +1713,51 @@ Setting.create_if_not_exists(
   },
   frontend: false
 )
+
+Setting.create_if_not_exists(
+  title: 'Auto Assigment',
+  name: 'ticket_auto_assignment',
+  area: 'Web::Base',
+  description: 'Enable ticket auto assignment.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ticket_auto_assignment',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission: ['admin.ticket_auto_assignment'],
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Time Accounting Selector',
+  name: 'ticket_auto_assignment_selector',
+  area: 'Web::Base',
+  description: 'Enable auto assignment for following matching tickets.',
+  options: {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission: ['admin.ticket_auto_assignment'],
+  },
+  state: { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } },
+  frontend: true
+)
+
 Setting.create_if_not_exists(
   title: 'Ticket Number ignore system_id',
   name: 'ticket_number_ignore_system_id',
