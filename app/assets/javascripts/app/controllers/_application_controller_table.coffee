@@ -192,8 +192,8 @@ class App.ControllerTable extends App.Controller
         el.filter('.js-pager').html('')
       return
     pager = App.view('generic/table_pager')(
-      page:    @shownPage
-      pages:   pages
+      page:  @shownPage
+      pages: pages
     )
     if find
       el.find('.js-pager').html(pager)
@@ -839,13 +839,21 @@ class App.ControllerTable extends App.Controller
     # update store and runtime @headerWidth
     @preferencesStore('headerWidth', leftColumnKey, leftWidth)
     @headerWidth[leftColumnKey] = leftWidth
-    _.find(@headers, (column) -> column.name is leftColumnKey).displayWidth = leftWidth
+
+    # set header at runtime
+    for header in @headers
+      if header.name is leftColumnKey
+        header.displayWidth = @resizeTargetLeft.outerWidth()
 
     # update store and runtime @headerWidth
     if rightColumnKey
       @preferencesStore('headerWidth', rightColumnKey, rightWidth)
       @headerWidth[rightColumnKey] = rightWidth
-      _.find(@headers, (column) -> column.name is rightColumnKey).displayWidth = rightWidth
+
+      # set header at runtime
+      for header in @headers
+        if header.name is rightColumnKey
+          header.displayWidth = @resizeTargetRight.outerWidth()
 
   sortByColumn: (event) =>
     column = $(event.currentTarget).closest('[data-column-key]').attr('data-column-key')
