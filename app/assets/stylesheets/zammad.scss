@@ -127,6 +127,14 @@ strong {
   position: absolute !important;
 }
 
+[data-dir="ltr"] {
+  direction: ltr;
+}
+
+[data-dir="rtl"] {
+  direction: rtl;
+}
+
 a {
   outline: none !important;
   @extend .u-highlight;
