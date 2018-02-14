@@ -200,21 +200,30 @@
   // set height of widget
   Plugin.prototype.movePosition = function() {
     if (!this._position) return
-    var height       = this.$element.outerHeight() + 2
-    var widgetHeight = this.$widget.find('ul').height() //+ 60 // + height
-    var top          = -( widgetHeight + height ) + this._position.top
-    var left = this._position.left - 6
+    var height         = this.$element.outerHeight() + 2
+    var widgetHeight   = this.$widget.find('ul').height() //+ 60 // + height
+    var rtl            = document.dir == 'rtl'
+    var top            = -( widgetHeight + height ) + this._position.top
+    var start          = this._position.left - 6
+    var availableWidth = this.$element.innerWidth()
 
-    // position the element further left if it would break out of the textarea width
-    if (left + this._width > this.$element.innerWidth()) {
-      left = this.$element.innerWidth() - this._width
+    if(rtl){
+      start = availableWidth - start
     }
 
-    this.$widget.css({
+    // position the element further left if it would break out of the textarea width
+    if (start + this._width > availableWidth) {
+      start = this.$element.innerWidth() - this._width
+    }
+
+    var css = {
       top: top,
-      left: left,
       width: this._width
-    })
+    }
+
+    css[rtl ? 'right' : 'left'] = start
+
+    this.$widget.css(css)
   }
 
   // set position of widget
