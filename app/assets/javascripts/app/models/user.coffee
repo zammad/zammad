@@ -86,20 +86,20 @@ class App.User extends App.Model
 
     # generate uniq avatar
     if !@image || @image is 'none' || unique
-      width  = 300
-      height = 226
+      width  = 300 * size/baseSize
+      height = 226 * size/baseSize
 
       rng = new Math.seedrandom(@id)
-      x   = rng() * (width - size)
-      y   = rng() * (height - size)
+      x   = 0.5 * (width - size)
+      y   = 0.5 * (height - size)
 
       return App.view('avatar_unique')
         data: data
         cssClass: cssClass
         placement: placement
         vip: vip
-        x: x * size/baseSize
-        y: y * size/baseSize
+        x: x
+        y: y
         initials: @initials()
 
     # generate image based avatar
