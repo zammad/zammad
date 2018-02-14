@@ -3394,7 +3394,7 @@ footer {
 
   .empty-search {
     position: absolute;
-    right: 0;
+    @include bidi-style(right, 0, left, auto);
     top: 0;
     height: 30px;
     width: 40px;
