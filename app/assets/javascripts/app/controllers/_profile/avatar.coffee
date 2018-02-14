@@ -105,8 +105,7 @@ class Index extends App.ControllerSubContent
     new Camera
       callback: @storeImage
 
-  storeImage: (src) =>
-
+  storeImage: (src, type) =>
     # store avatar globally
     @oldDataUrl = src
 
@@ -128,16 +127,19 @@ class Index extends App.ControllerSubContent
       )
 
     # add resized image
-    App.ImageService.resizeForAvatar(src, 'auto', 160, store)
+    App.ImageService.resizeForAvatar(src, 'auto', 160, type, store)
 
   onUpload: (event) =>
+    file = event.target.files[0]
     callback = @storeImage
-    EXIF.getData event.target.files[0], ->
+
+    EXIF.getData file, ->
       orientation   = @exifdata.Orientation
       reader        = new FileReader()
       reader.onload = (e) ->
         new ImageCropper
           imageSource: e.target.result
+          type:        file.type
           callback:    callback
           orientation: orientation
 
@@ -182,7 +184,7 @@ class ImageCropper extends App.ControllerModal
         @image.attr src: dataUrl
 
     # resize if to big
-    App.ImageService.resize(@imageSource, 600, 'auto', 2, 'image/jpeg', 0.9, show)
+    App.ImageService.resize(@imageSource, 600, 'auto', 2, @type, 0.9, show)
 
   orientateImage: (e) =>
     image  = e.currentTarget
@@ -220,7 +222,7 @@ class ImageCropper extends App.ControllerModal
 
   onSubmit: (e) =>
     @formDisable(e)
-    @callback( @image.cropper('getCroppedCanvas').toDataURL() )
+    @callback( @image.cropper('getCroppedCanvas').toDataURL(), @type )
     @image.cropper('destroy')
     @close()
 
