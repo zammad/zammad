@@ -6317,6 +6317,7 @@ footer {
   box-shadow: none;
   overflow: hidden;
   @include rtl(text-align, right);
+  overscroll-behavior: contain;
 }
 
   .dropdown-menu kbd {
