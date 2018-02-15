@@ -529,12 +529,12 @@ returns
     Setting.where(area: 'Postmaster::PreFilter').order(:name).each do |setting|
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     end
-    filters.each_value do |backend|
-      Rails.logger.debug "run postmaster pre filter #{backend}"
+    filters.each do |key, backend|
+      Rails.logger.debug "run postmaster pre filter #{key}: #{backend}"
       begin
         backend.run(channel, mail)
       rescue => e
-        Rails.logger.error "can't run postmaster pre filter #{backend}"
+        Rails.logger.error "can't run postmaster pre filter #{key}: #{backend}"
         Rails.logger.error e.inspect
         raise e
       end
