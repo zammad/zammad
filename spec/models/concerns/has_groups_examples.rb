@@ -169,12 +169,12 @@ RSpec.shared_examples 'HasGroups' do
       context 'access list' do
 
         it 'lists access Group IDs' do
-          result = group_access_instance.group_ids_access(%w[read edit])
+          result = group_access_instance.group_ids_access(%w[read change])
           expect(result).to include(group_read.id)
         end
 
         it "doesn't list for no access" do
-          result = group_access_instance.group_ids_access(%w[edit create])
+          result = group_access_instance.group_ids_access(%w[change create])
           expect(result).not_to include(group_read.id)
         end
       end
@@ -223,7 +223,7 @@ RSpec.shared_examples 'HasGroups' do
           expect do
             group_access_instance.group_names_access_map = {
               group_full.name => 'full',
-              group_read.name => %w[read edit],
+              group_read.name => %w[read change],
             }
           end.to change {
             described_class.group_through.klass.count
@@ -309,7 +309,7 @@ RSpec.shared_examples 'HasGroups' do
           expect do
             group_access_instance.group_ids_access_map = {
               group_full.id => 'full',
-              group_read.id => %w[read edit],
+              group_read.id => %w[read change],
             }
           end.to change {
             described_class.group_through.klass.count
@@ -523,11 +523,11 @@ RSpec.shared_examples '#group_access? call' do
   context 'access list' do
 
     it 'checks positive' do
-      expect(group_access_instance.group_access?(group_parameter, %w[read edit])).to be true
+      expect(group_access_instance.group_access?(group_parameter, %w[read change])).to be true
     end
 
     it 'checks negative' do
-      expect(group_access_instance.group_access?(group_parameter, %w[edit create])).to be false
+      expect(group_access_instance.group_access?(group_parameter, %w[change create])).to be false
     end
   end
 end
@@ -547,11 +547,11 @@ RSpec.shared_examples '.group_access call' do
   context 'access list' do
 
     it 'lists access IDs' do
-      expect(described_class.group_access(group_parameter, %w[read edit])).to include(group_access_instance)
+      expect(described_class.group_access(group_parameter, %w[read change])).to include(group_access_instance)
     end
 
     it 'excludes non access IDs' do
-      expect(described_class.group_access(group_parameter, %w[edit create])).not_to include(group_access_instance)
+      expect(described_class.group_access(group_parameter, %w[change create])).not_to include(group_access_instance)
     end
   end
 end
