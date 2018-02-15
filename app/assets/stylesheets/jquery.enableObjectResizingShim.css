@@ -1,0 +1,77 @@
+.enableObjectResizingShim {
+  box-shadow: 0 0 0 1px black;
+  position: relative;
+  display: inline-block !important;
+  vertical-align: top;
+}
+
+.enableObjectResizingShim-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin: -10px;
+  left: 0;
+  top: 0;
+  cursor: nwse-resize;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.enableObjectResizingShim-handle:after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border: 1px solid black;
+}
+
+.enableObjectResizingShim-handle:hover:after {
+  background: black;
+}
+
+.enableObjectResizingShim-handle:nth-child(2) {
+  left: 100%;
+  cursor: nesw-resize;
+}
+
+.enableObjectResizingShim-handle:nth-child(3) {
+  left: 100%;
+  top: 100%;
+}
+
+.enableObjectResizingShim-handle:nth-child(4) {
+  top: 100%;
+  cursor: nesw-resize;
+}
+
+.enableObjectResizingShim-clone {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  opacity: 0.5;
+  border: 1px dashed black;
+}
+
+.enableObjectResizingShim-clone--0 {
+  right: 0;
+  bottom: 0;
+}
+
+.enableObjectResizingShim-clone--1 {
+  left: 0;
+  bottom: 0;
+}
+
+.enableObjectResizingShim-clone--2 {
+  left: 0;
+  top: 0;
+}
+
+.enableObjectResizingShim-clone--3 {
+  top: 0;
+  right: 0;
+}

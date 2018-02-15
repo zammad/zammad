@@ -72,6 +72,7 @@
 
   Plugin.prototype.init = function () {
     this.bindEvents()
+    this.$element.enableObjectResizingShim()
   }
 
   Plugin.prototype.bindEvents = function () {
@@ -291,7 +292,7 @@
         var imageFile = item.getAsFile()
         var reader = new FileReader()
 
-        reader.onload = function (e) {
+        reader.onload = $.proxy(function (e) {
           var result = e.target.result
           var img = document.createElement('img')
           img.src = result
@@ -302,23 +303,24 @@
           //  scaleFactor = 2
           //}
 
-          insert = function(dataUrl, width, height, isResized) {
+          insert = $.proxy(function(dataUrl, width, height, isResized) {
             //console.log('dataUrl', dataUrl)
             //console.log('scaleFactor', scaleFactor, isResized, maxWidth, width, height)
             this.log('image inserted')
             result = dataUrl
             if (this.options.imageWidth == 'absolute') {
-              img = "<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
+              img = "<img tabindex=\"0\" style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
             }
             else {
-              img = "<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">"
+              img = "<img tabindex=\"0\" style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">"
             }
             this.paste(img)
-          }
+          }, this)
 
           // resize if to big
           App.ImageService.resize(img.src, maxWidth, 'auto', scaleFactor, 'image/jpeg', 'auto', insert)
-        }
+        }, this)
+
         reader.readAsDataURL(imageFile)
         imageInserted = true
       }
@@ -438,10 +440,10 @@
           this.log('image inserted')
           result = dataUrl
           if (this.options.imageWidth == 'absolute') {
-            img = $("<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">")
+            img = $("<img tabindex=\"0\" style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">")
           }
           else {
-            img = $("<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">")
+            img = $("<img tabindex=\"0\" style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">")
           }
           img = img.get(0)
 
