@@ -7424,12 +7424,6 @@ label + .wizard-buttonList {
     border-top: none;
   }
 
-  .horizontal-filter-body {
-    display: flex;
-    align-items: center;
-    flex: 1;
-  }
-
   .controls,
   input {
     @include bidi-style(margin-right, 5px, margin-left, 0);
@@ -7449,6 +7443,21 @@ label + .wizard-buttonList {
 
   input[type=text] {
     width: auto;
+  }
+}
+
+.horizontal-filter-body {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.horizontal-filter-value {
+  flex-shrink: 0;
+  
+  // lower the min-width of url input fields (normally 400px) so that it fits in
+  input[type=url] {
+    min-width: 200px;
   }
 }
 
