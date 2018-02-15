@@ -66,402 +66,406 @@
     this.browserMagicKey = App.Browser.magicKey()
     this.browserHotkeys = App.Browser.hotkeys()
 
-    this.init();
+    this.init()
   }
 
 
   Plugin.prototype.init = function () {
-    var _this = this
+    this.bindEvents()
+  }
 
-    this.toggleBlock = function(tag) {
-      sel = window.getSelection()
-      node = $(sel.anchorNode)
-      if (node.is(tag) || node.parent().is(tag) || node.parent().parent().is(tag)) {
-        document.execCommand('formatBlock', false, 'div')
-        //document.execCommand('RemoveFormat')
+  Plugin.prototype.bindEvents = function () {
+    this.$element.on('keydown', this.onKeydown.bind(this))
+    this.$element.on('paste', this.onPaste.bind(this))
+    this.$element.on('dragover', this.onDragover.bind(this))
+    this.$element.on('drop', this.onDrop.bind(this))
+  }
+
+  Plugin.prototype.toggleBlock = function(tag) {
+    sel = window.getSelection()
+    node = $(sel.anchorNode)
+    if (node.is(tag) || node.parent().is(tag) || node.parent().parent().is(tag)) {
+      document.execCommand('formatBlock', false, 'div')
+      //document.execCommand('RemoveFormat')
+    }
+    else {
+      document.execCommand('formatBlock', false, tag)
+    }
+  }
+
+  Plugin.prototype.onKeydown = function (e) {
+    this.log('keydown', e.keyCode)
+    if (this.preventInput) {
+      this.log('preventInput', this.preventInput)
+      return
+    }
+
+    // strap the return key being pressed
+    if (e.keyCode === 13) {
+
+      // disbale multi line
+      if (!this.options.multiline) {
+        e.preventDefault()
+        return
       }
-      else {
-        document.execCommand('formatBlock', false, tag)
+
+      // break <blockquote> after enter on empty line
+      sel = window.getSelection()
+      if (sel) {
+        node = $(sel.anchorNode)
+        if (node && node.parent() && node.parent().is('blockquote')) {
+          e.preventDefault()
+          document.execCommand('Insertparagraph')
+          document.execCommand('Outdent')
+          return
+        }
+      }
+
+      // behavior to enter new line on alt+enter
+      //  on alt + enter not realy newline is fired, to make
+      //  it compat. to other systems, do it here
+      if (!e.shiftKey && e.altKey && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault()
+        this.paste('<br><br>')
+        return
       }
     }
 
-    // handle enter
-    this.$element.on('keydown', function (e) {
-      _this.log('keydown', e.keyCode)
-      if (_this.preventInput) {
-        this.log('preventInput', _this.preventInput)
-        return
+    // on zammad magicKey + i/b/u/s
+    //  hotkeys + u -> Toggles the current selection between underlined and not underlined
+    //  hotkeys + b -> Toggles the current selection between bold and non-bold
+    //  hotkeys + i -> Toggles the current selection between italic and non-italic
+    //  hotkeys + v -> Toggles the current selection between strike and non-strike
+    //  hotkeys + f -> Removes the formatting tags from the current selection
+    //  hotkeys + y -> Removes the formatting from while textarea
+    //  hotkeys + z -> Inserts a Horizontal Rule
+    //  hotkeys + l -> Toggles the text selection between an unordered list and a normal block
+    //  hotkeys + k -> Toggles the text selection between an ordered list and a normal block
+    //  hotkeys + o -> Draws a line through the middle of the current selection
+    //  hotkeys + w -> Removes any hyperlink from the current selection
+    var richtTextControl = false
+    if (this.browserMagicKey == 'cmd') {
+      if (!e.altKey && !e.ctrlKey && e.metaKey) {
+        richtTextControl = true
       }
-
-      // strap the return key being pressed
-      if (e.keyCode === 13) {
-
-        // disbale multi line
-        if (!_this.options.multiline) {
-          e.preventDefault()
-          return
-        }
-
-        // break <blockquote> after enter on empty line
-        sel = window.getSelection()
-        if (sel) {
-          node = $(sel.anchorNode)
-          if (node && node.parent() && node.parent().is('blockquote')) {
-            e.preventDefault()
-            document.execCommand('Insertparagraph')
-            document.execCommand('Outdent')
-            return
-          }
-        }
-
-        // behavior to enter new line on alt+enter
-        //  on alt + enter not realy newline is fired, to make
-        //  it compat. to other systems, do it here
-        if (!e.shiftKey && e.altKey && !e.ctrlKey && !e.metaKey) {
-          e.preventDefault()
-          _this.paste('<br><br>')
-          return
-        }
+    }
+    else {
+      if (!e.altKey && e.ctrlKey && !e.metaKey) {
+        richtTextControl = true
       }
-
-      // on zammad magicKey + i/b/u/s
-      //  hotkeys + u -> Toggles the current selection between underlined and not underlined
-      //  hotkeys + b -> Toggles the current selection between bold and non-bold
-      //  hotkeys + i -> Toggles the current selection between italic and non-italic
-      //  hotkeys + v -> Toggles the current selection between strike and non-strike
-      //  hotkeys + f -> Removes the formatting tags from the current selection
-      //  hotkeys + y -> Removes the formatting from while textarea
-      //  hotkeys + z -> Inserts a Horizontal Rule
-      //  hotkeys + l -> Toggles the text selection between an unordered list and a normal block
-      //  hotkeys + k -> Toggles the text selection between an ordered list and a normal block
-      //  hotkeys + o -> Draws a line through the middle of the current selection
-      //  hotkeys + w -> Removes any hyperlink from the current selection
-      var richtTextControl = false
-      if (_this.browserMagicKey == 'cmd') {
-        if (!e.altKey && !e.ctrlKey && e.metaKey) {
-          richtTextControl = true
-        }
-      }
-      else {
-        if (!e.altKey && e.ctrlKey && !e.metaKey) {
-          richtTextControl = true
-        }
-      }
-      if (richtTextControl && _this.options.richTextFormatKey[ e.keyCode ]) {
-        e.preventDefault()
-        if (e.keyCode == 66) {
-          document.execCommand('bold')
-          return true
-        }
-        if (e.keyCode == 73) {
-          document.execCommand('italic')
-          return true
-        }
-        if (e.keyCode == 85) {
-          document.execCommand('underline')
-          return true
-        }
-        if (e.keyCode == 83) {
-          document.execCommand('strikeThrough')
-          return true
-        }
-      }
-
-      var hotkeys = false
-      if (_this.browserHotkeys == 'ctrl+shift') {
-        if (!e.altKey && e.ctrlKey && !e.metaKey && e.shiftKey) {
-          hotkeys = true
-        }
-      }
-      else {
-        if (e.altKey && e.ctrlKey && !e.metaKey) {
-          hotkeys = true
-        }
-      }
-
-      if (hotkeys && (_this.options.richTextFormatKey[ e.keyCode ]
-        || e.keyCode == 49
-        || e.keyCode == 50
-        || e.keyCode == 51
-        || e.keyCode == 66
-        || e.keyCode == 70
-        || e.keyCode == 90
-        || e.keyCode == 70
-        || e.keyCode == 73
-        || e.keyCode == 75
-        || e.keyCode == 76
-        || e.keyCode == 85
-        || e.keyCode == 86
-        || e.keyCode == 88
-        || e.keyCode == 90
-        || e.keyCode == 89)) {
-        e.preventDefault()
-
-        // disable rich text b/u/i
-        if ( _this.options.mode === 'textonly' ) {
-          return
-        }
-
-        if (e.keyCode == 49) {
-          _this.toggleBlock('h1')
-        }
-        if (e.keyCode == 50) {
-          _this.toggleBlock('h2')
-        }
-        if (e.keyCode == 51) {
-          _this.toggleBlock('h3')
-        }
-        if (e.keyCode == 66) {
-          document.execCommand('bold')
-        }
-        if (e.keyCode == 70) {
-          document.execCommand('removeFormat')
-        }
-        if (e.keyCode == 73) {
-          document.execCommand('italic')
-        }
-        if (e.keyCode == 75) {
-          document.execCommand('insertOrderedList')
-        }
-        if (e.keyCode == 76) {
-          document.execCommand('insertUnorderedList')
-        }
-        if (e.keyCode == 85) {
-          document.execCommand('underline')
-        }
-        if (e.keyCode == 86) {
-          document.execCommand('strikeThrough')
-        }
-        if (e.keyCode == 88) {
-          document.execCommand('unlink')
-        }
-        if (e.keyCode == 89) {
-          var cleanHtml = App.Utils.htmlRemoveRichtext(_this.$element.html())
-          _this.$element.html(cleanHtml)
-        }
-        if (e.keyCode == 90) {
-          document.execCommand('insertHorizontalRule')
-        }
-        _this.log('content editable richtext key', e.keyCode)
+    }
+    if (richtTextControl && this.options.richTextFormatKey[ e.keyCode ]) {
+      e.preventDefault()
+      if (e.keyCode == 66) {
+        document.execCommand('bold')
         return true
       }
-
-      // limit check
-      if ( !_this.allowKey(e) ) {
-        if ( !_this.maxLengthOk(1) ) {
-          e.preventDefault()
-          return
-        }
+      if (e.keyCode == 73) {
+        document.execCommand('italic')
+        return true
       }
-    })
+      if (e.keyCode == 85) {
+        document.execCommand('underline')
+        return true
+      }
+      if (e.keyCode == 83) {
+        document.execCommand('strikeThrough')
+        return true
+      }
+    }
 
-    // just paste text
-    this.$element.on('paste', function (e) {
+    var hotkeys = false
+    if (this.browserHotkeys == 'ctrl+shift') {
+      if (!e.altKey && e.ctrlKey && !e.metaKey && e.shiftKey) {
+        hotkeys = true
+      }
+    }
+    else {
+      if (e.altKey && e.ctrlKey && !e.metaKey) {
+        hotkeys = true
+      }
+    }
+
+    if (hotkeys && (this.options.richTextFormatKey[ e.keyCode ]
+      || e.keyCode == 49
+      || e.keyCode == 50
+      || e.keyCode == 51
+      || e.keyCode == 66
+      || e.keyCode == 70
+      || e.keyCode == 90
+      || e.keyCode == 70
+      || e.keyCode == 73
+      || e.keyCode == 75
+      || e.keyCode == 76
+      || e.keyCode == 85
+      || e.keyCode == 86
+      || e.keyCode == 88
+      || e.keyCode == 90
+      || e.keyCode == 89)) {
       e.preventDefault()
-      _this.log('paste')
 
-      // insert and in case, resize images
-      var clipboardData
-      if (e.clipboardData) { // ie
-        clipboardData = e.clipboardData
-      }
-      else if (window.clipboardData) { // ie
-        clipboardData = window.clipboardData
-      }
-      else if (e.originalEvent.clipboardData) { // other browsers
-        clipboardData = e.originalEvent.clipboardData
-      }
-      else {
-        throw "No clipboardData support"
-      }
-
-      if (clipboardData && clipboardData.items && clipboardData.items[0]) {
-        var imageInserted = false
-        var item = clipboardData.items[0]
-        if (item.kind == 'file' && (item.type == 'image/png' || item.type == 'image/jpeg')) {
-          _this.log('paste image', item)
-          console.log(item)
-
-          var imageFile = item.getAsFile()
-          var reader = new FileReader()
-
-          reader.onload = function (e) {
-            var result = e.target.result
-            var img = document.createElement('img')
-            img.src = result
-            maxWidth = _this.$element.width() || 500
-            scaleFactor = 2
-            //scaleFactor = 1
-            //if (window.isRetina && window.isRetina()) {
-            //  scaleFactor = 2
-            //}
-
-            insert = function(dataUrl, width, height, isResized) {
-              //console.log('dataUrl', dataUrl)
-              //console.log('scaleFactor', scaleFactor, isResized, maxWidth, width, height)
-              _this.log('image inserted')
-              result = dataUrl
-              if (_this.options.imageWidth == 'absolute') {
-                img = "<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
-              }
-              else {
-                img = "<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">"
-              }
-              _this.paste(img)
-            }
-
-            // resize if to big
-            App.ImageService.resize(img.src, maxWidth, 'auto', scaleFactor, 'image/jpeg', 'auto', insert)
-          }
-          reader.readAsDataURL(imageFile)
-          imageInserted = true
-        }
-      }
-      if (imageInserted) {
+      // disable rich text b/u/i
+      if ( this.options.mode === 'textonly' ) {
         return
       }
 
-      // check existing + paste text for limit
-      var text, docType
-      try {
-        text = clipboardData.getData('text/html')
-        docType = 'html'
-        if (!text || text.length === 0) {
-            docType = 'text'
-            text = clipboardData.getData('text/plain')
-        }
-        if (!text || text.length === 0) {
-            docType = 'text2'
-            text = clipboardData.getData('text')
-        }
+      if (e.keyCode == 49) {
+        this.toggleBlock('h1')
       }
-      catch (e) {
-        console.log('Sorry, can\'t insert markup because browser is not supporting it.')
-        docType = 'text3'
-        text = clipboardData.getData('text')
+      if (e.keyCode == 50) {
+        this.toggleBlock('h2')
       }
-      _this.log('paste', docType, text)
-
-      if (docType == 'html') {
-        if (_this.options.mode === 'textonly') {
-          if (!_this.options.multiline) {
-            text = App.Utils.htmlRemoveTags(text)
-            _this.log('htmlRemoveTags', text)
-          }
-          else {
-            _this.log('htmlRemoveRichtext', text)
-            text = App.Utils.htmlRemoveRichtext(text)
-          }
-        }
-        else {
-          _this.log('htmlCleanup', text)
-          text = App.Utils.htmlCleanup(text)
-        }
-        text = text.html()
-        _this.log('text.html()', text)
-
-        // as fallback, take text
-        if (!text) {
-          text = App.Utils.text2html(text.text())
-          _this.log('text2html', text)
-        }
+      if (e.keyCode == 51) {
+        this.toggleBlock('h3')
       }
-      else {
-        text = App.Utils.text2html(text)
-        _this.log('text2html', text)
+      if (e.keyCode == 66) {
+        document.execCommand('bold')
       }
-
-      if (!_this.maxLengthOk(text.length)) {
-        return
+      if (e.keyCode == 70) {
+        document.execCommand('removeFormat')
       }
-
-      // cleanup
-      text = App.Utils.removeEmptyLines(text)
-      _this.log('insert', text)
-
-      _this.paste(text)
+      if (e.keyCode == 73) {
+        document.execCommand('italic')
+      }
+      if (e.keyCode == 75) {
+        document.execCommand('insertOrderedList')
+      }
+      if (e.keyCode == 76) {
+        document.execCommand('insertUnorderedList')
+      }
+      if (e.keyCode == 85) {
+        document.execCommand('underline')
+      }
+      if (e.keyCode == 86) {
+        document.execCommand('strikeThrough')
+      }
+      if (e.keyCode == 88) {
+        document.execCommand('unlink')
+      }
+      if (e.keyCode == 89) {
+        var cleanHtml = App.Utils.htmlRemoveRichtext(this.$element.html())
+        this.$element.html(cleanHtml)
+      }
+      if (e.keyCode == 90) {
+        document.execCommand('insertHorizontalRule')
+      }
+      this.log('content editable richtext key', e.keyCode)
       return true
-    })
+    }
 
-    this.$element.on('dragover', function (e) {
-      e.stopPropagation()
-      e.preventDefault()
-      _this.log('dragover')
-    })
-
-    this.$element.on('drop', function (e) {
-      e.stopPropagation();
-      e.preventDefault();
-      _this.log('drop')
-
-      var dataTransfer
-      if (window.dataTransfer) { // ie
-        dataTransfer = window.dataTransfer
+    // limit check
+    if ( !this.allowKey(e) ) {
+      if ( !this.maxLengthOk(1) ) {
+        e.preventDefault()
+        return
       }
-      else if (e.originalEvent.dataTransfer) { // other browsers
-        dataTransfer = e.originalEvent.dataTransfer
-      }
-      else {
-        throw "No clipboardData support"
-      }
+    }
+  }
 
-      // x and y coordinates of dropped item
-      x = e.clientX
-      y = e.clientY
-      var file = dataTransfer.files[0]
+  Plugin.prototype.onPaste = function (e) {
+    e.preventDefault()
+    this.log('paste')
 
-      // look for images
-      if (file.type.match('image.*')) {
+    // insert and in case, resize images
+    var clipboardData
+    if (e.clipboardData) { // ie
+      clipboardData = e.clipboardData
+    }
+    else if (window.clipboardData) { // ie
+      clipboardData = window.clipboardData
+    }
+    else if (e.originalEvent.clipboardData) { // other browsers
+      clipboardData = e.originalEvent.clipboardData
+    }
+    else {
+      throw "No clipboardData support"
+    }
+
+    if (clipboardData && clipboardData.items && clipboardData.items[0]) {
+      var imageInserted = false
+      var item = clipboardData.items[0]
+      if (item.kind == 'file' && (item.type == 'image/png' || item.type == 'image/jpeg')) {
+        this.log('paste image', item)
+        console.log(item)
+
+        var imageFile = item.getAsFile()
         var reader = new FileReader()
-        reader.onload = (function(e) {
+
+        reader.onload = function (e) {
           var result = e.target.result
           var img = document.createElement('img')
           img.src = result
-          maxWidth = _this.$element.width() || 500
+          maxWidth = this.$element.width() || 500
           scaleFactor = 2
           //scaleFactor = 1
           //if (window.isRetina && window.isRetina()) {
           //  scaleFactor = 2
           //}
 
-          //Insert the image at the carat
           insert = function(dataUrl, width, height, isResized) {
-
             //console.log('dataUrl', dataUrl)
             //console.log('scaleFactor', scaleFactor, isResized, maxWidth, width, height)
-            _this.log('image inserted')
+            this.log('image inserted')
             result = dataUrl
-            if (_this.options.imageWidth == 'absolute') {
-              img = $("<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">")
+            if (this.options.imageWidth == 'absolute') {
+              img = "<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">"
             }
             else {
-              img = $("<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">")
+              img = "<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">"
             }
-            img = img.get(0)
-
-            if (document.caretPositionFromPoint) {
-              var pos = document.caretPositionFromPoint(x, y)
-              range = document.createRange();
-              range.setStart(pos.offsetNode, pos.offset)
-              range.collapse()
-              range.insertNode(img)
-            }
-            else if (document.caretRangeFromPoint) {
-              range = document.caretRangeFromPoint(x, y)
-              range.insertNode(img)
-            }
-            else {
-              console.log('could not find carat')
-            }
+            this.paste(img)
           }
 
           // resize if to big
           App.ImageService.resize(img.src, maxWidth, 'auto', scaleFactor, 'image/jpeg', 'auto', insert)
-        })
-        reader.readAsDataURL(file)
+        }
+        reader.readAsDataURL(imageFile)
+        imageInserted = true
       }
-    })
+    }
+    if (imageInserted) {
+      return
+    }
 
+    // check existing + paste text for limit
+    var text, docType
+    try {
+      text = clipboardData.getData('text/html')
+      docType = 'html'
+      if (!text || text.length === 0) {
+          docType = 'text'
+          text = clipboardData.getData('text/plain')
+      }
+      if (!text || text.length === 0) {
+          docType = 'text2'
+          text = clipboardData.getData('text')
+      }
+    }
+    catch (e) {
+      console.log('Sorry, can\'t insert markup because browser is not supporting it.')
+      docType = 'text3'
+      text = clipboardData.getData('text')
+    }
+    this.log('paste', docType, text)
+
+    if (docType == 'html') {
+      if (this.options.mode === 'textonly') {
+        if (!this.options.multiline) {
+          text = App.Utils.htmlRemoveTags(text)
+          this.log('htmlRemoveTags', text)
+        }
+        else {
+          this.log('htmlRemoveRichtext', text)
+          text = App.Utils.htmlRemoveRichtext(text)
+        }
+      }
+      else {
+        this.log('htmlCleanup', text)
+        text = App.Utils.htmlCleanup(text)
+      }
+      text = text.html()
+      this.log('text.html()', text)
+
+      // as fallback, take text
+      if (!text) {
+        text = App.Utils.text2html(text.text())
+        this.log('text2html', text)
+      }
+    }
+    else {
+      text = App.Utils.text2html(text)
+      this.log('text2html', text)
+    }
+
+    if (!this.maxLengthOk(text.length)) {
+      return
+    }
+
+    // cleanup
+    text = App.Utils.removeEmptyLines(text)
+    this.log('insert', text)
+
+    this.paste(text)
+    return true
+  }
+
+  Plugin.prototype.onDragover = function (e) {
+    e.stopPropagation()
+    e.preventDefault()
+    this.log('dragover')
+  }
+
+  Plugin.prototype.onDrop = function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.log('drop')
+
+    var dataTransfer
+    if (window.dataTransfer) { // ie
+      dataTransfer = window.dataTransfer
+    }
+    else if (e.originalEvent.dataTransfer) { // other browsers
+      dataTransfer = e.originalEvent.dataTransfer
+    }
+    else {
+      throw "No clipboardData support"
+    }
+
+    // x and y coordinates of dropped item
+    x = e.clientX
+    y = e.clientY
+    var file = dataTransfer.files[0]
+
+    // look for images
+    if (file.type.match('image.*')) {
+      var reader = new FileReader()
+      reader.onload = (function(e) {
+        var result = e.target.result
+        var img = document.createElement('img')
+        img.src = result
+        maxWidth = this.$element.width() || 500
+        scaleFactor = 2
+        //scaleFactor = 1
+        //if (window.isRetina && window.isRetina()) {
+        //  scaleFactor = 2
+        //}
+
+        //Insert the image at the carat
+        insert = function(dataUrl, width, height, isResized) {
+
+          //console.log('dataUrl', dataUrl)
+          //console.log('scaleFactor', scaleFactor, isResized, maxWidth, width, height)
+          this.log('image inserted')
+          result = dataUrl
+          if (this.options.imageWidth == 'absolute') {
+            img = $("<img style=\"width: " + width + "px; height: " + height + "px\" src=\"" + result + "\">")
+          }
+          else {
+            img = $("<img style=\"width: 100%; max-width: " + width + "px;\" src=\"" + result + "\">")
+          }
+          img = img.get(0)
+
+          if (document.caretPositionFromPoint) {
+            var pos = document.caretPositionFromPoint(x, y)
+            range = document.createRange();
+            range.setStart(pos.offsetNode, pos.offset)
+            range.collapse()
+            range.insertNode(img)
+          }
+          else if (document.caretRangeFromPoint) {
+            range = document.caretRangeFromPoint(x, y)
+            range.insertNode(img)
+          }
+          else {
+            console.log('could not find carat')
+          }
+        }
+
+        // resize if to big
+        App.ImageService.resize(img.src, maxWidth, 'auto', scaleFactor, 'image/jpeg', 'auto', insert)
+      })
+      reader.readAsDataURL(file)
+    }
   }
 
   // check if key is allowed, even if length limit is reached
