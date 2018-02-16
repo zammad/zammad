@@ -459,7 +459,7 @@ class App.ControllerForm extends App.Controller
     lookupForm.find('input[type=checkbox]').each( (index) ->
       checked = $(@).attr('checked')
       name = $(@).attr('name')
-      if !checked && !param[name] || param[name] is ''
+      if name && !checked && (!(name of param) || param[name] is '')
         if uncheckParam[name] is ''
           uncheckParam[name] = []
         else
@@ -468,11 +468,12 @@ class App.ControllerForm extends App.Controller
     lookupForm.find('input[type=radio]').each( (index) ->
       checked = $(@).attr('checked')
       name = $(@).attr('name')
-      if !checked && !param[name] || param[name] is ''
+      if name && !checked && !(name of param)
         uncheckParam[name] = ''
     )
     for key, value of uncheckParam
-      param[key] = value
+      if !(key of param)
+        param[key] = value
 
     # data type conversion
     for key of param
