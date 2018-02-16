@@ -1209,9 +1209,16 @@ result
   end
 
   def check_owner_active
-    return true if owner.login == '-' # return when ticket is unassigned
-    return true if owner.groups.any?(&:active?) && owner.active? # return if user in any groups assigned is active and user account is active
-    self.owner = User.find_by(login: '-') # else set the owner of the ticket to the default user as unassigned
+
+    # return when ticket is unassigned
+    return true if owner_id.blank?
+    return true if owner_id == 1
+
+    # return if owner is active, is agent and has access to group of ticket
+    return true if owner.active? && owner.permissions?('ticket.agent') && owner.group_access?(group_id, 'full')
+
+    # else set the owner of the ticket to the default user as unassigned
+    self.owner_id = 1
     true
   end
 end

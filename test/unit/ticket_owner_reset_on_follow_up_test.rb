@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TicketUpdateTest < ActiveSupport::TestCase
+class TicketOwnerResetOnFollowUpTest < ActiveSupport::TestCase
 
   setup do
     UserInfo.current_user_id = 1
@@ -173,6 +173,46 @@ Some Text"
     )
 
     @agent1.active = false
+    @agent1.save!
+
+    email_raw = "From: me@example.com
+To: customer@example.com
+Subject: #{ticket.subject_build('some new subject')}
+
+Some Text"
+
+    ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw)
+    assert_equal(ticket.id, ticket_p.id)
+
+    assert_equal('open', ticket_p.state.name)
+    assert_equal('-', ticket_p.owner.login)
+  end
+
+  test 'check if ticket is unassigned on follow up via email if current owner is customer now' do
+
+    ticket = Ticket.create!(
+      title: 'follow up check for invalid owner is customer now',
+      group: Group.lookup(name: 'Users'),
+      customer: @customer1,
+      owner: @agent1,
+      state: Ticket::State.lookup(name: 'closed'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article = Ticket::Article.create!(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'follow up check',
+      body: 'some message article',
+      internal: false,
+      sender: Ticket::Article::Sender.lookup(name: 'Agent'),
+      type: Ticket::Article::Type.lookup(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    @agent1.roles = Role.where(name: 'Customer')
     @agent1.save!
 
     email_raw = "From: me@example.com
