@@ -143,9 +143,9 @@ test("form params check", function() {
     active1:   true,
     active2:   false,
     checkbox1: [],
-    checkbox2: '',
+    checkbox2: undefined,
     checkbox3: 'd',
-    radiobox1: '',
+    radiobox1: undefined,
     radiobox2: 'a',
   }
   new App.ControllerForm({
@@ -291,10 +291,10 @@ test("form params check", function() {
     active1: true,
     active2: false,
     checkbox1: [],
-    checkbox2: '',
+    checkbox2: undefined,
     checkbox3: 'd',
     checkbox4: [],
-    radiobox1: '',
+    radiobox1: undefined,
     radiobox2: 'a',
   }
   deepEqual(params, test_params, 'form param check')

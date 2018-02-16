@@ -460,16 +460,16 @@ class App.ControllerForm extends App.Controller
       checked = $(@).attr('checked')
       name = $(@).attr('name')
       if name && !checked && (!(name of param) || param[name] is '')
-        if uncheckParam[name] is ''
-          uncheckParam[name] = []
+        if !(name of uncheckParam)
+          uncheckParam[name] = undefined
         else
-          uncheckParam[name] = ''
+          uncheckParam[name] = []
     )
     lookupForm.find('input[type=radio]').each( (index) ->
       checked = $(@).attr('checked')
       name = $(@).attr('name')
       if name && !checked && !(name of param)
-        uncheckParam[name] = ''
+        uncheckParam[name] = undefined
     )
     for key, value of uncheckParam
       if !(key of param)
