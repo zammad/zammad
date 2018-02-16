@@ -24,6 +24,8 @@ test("form elements check", function() {
     selectmultioption2: [ false, true ],
     richtext2: 'lalu <l> lalu',
     datetime1: Date.parse('2015-01-11T12:40:00Z'),
+    checkbox1: [],
+    checkbox2: '1',
   }
   new App.ControllerForm({
     el:        el,
@@ -33,18 +35,20 @@ test("form elements check", function() {
         { name: 'input2', display: 'Input2', tag: 'input', type: 'text', limit: 100, null: false, default: defaults['input2'] },
         { name: 'password1', display: 'Password1', tag: 'input', type: 'password', limit: 100, null: true, default: defaults['password1'] },
         { name: 'password2', display: 'Password2', tag: 'input', type: 'password', limit: 100, null: false, default: defaults['password2'] },
-        { name: 'textarea1', display: 'Textarea1', tag: 'textarea', rows: 6, limit: 100, null: true, upload: true, default: defaults['textarea1']  },
-        { name: 'textarea2', display: 'Textarea2', tag: 'textarea', rows: 6, limit: 100, null: false, upload: true, default: defaults['textarea2']  },
+        { name: 'textarea1', display: 'Textarea1', tag: 'textarea', rows: 6, limit: 100, null: true, upload: true, default: defaults['textarea1'] },
+        { name: 'textarea2', display: 'Textarea2', tag: 'textarea', rows: 6, limit: 100, null: false, upload: true, default: defaults['textarea2'] },
         { name: 'select1', display: 'Select1', tag: 'select', null: true, options: { true: 'internal', false: 'public' }, default: defaults['select1'] },
         { name: 'select2', display: 'Select2', tag: 'select', null: false, options: { true: 'internal', false: 'public' }, default: defaults['select2'] },
         { name: 'selectmulti1', display: 'SelectMulti1', tag: 'select', null: true, multiple: true, options: { true: 'internal', false: 'public' }, default: defaults['selectmulti1'] },
         { name: 'selectmulti2', display: 'SelectMulti2', tag: 'select', null: false, multiple: true, options: { true: 'internal', false: 'public' }, default: defaults['selectmulti2'] },
         { name: 'selectmultioption1', display: 'SelectMultiOption1', tag: 'select', null: true, multiple: true, options: [{ value: true, name: 'internal' }, { value: false, name: 'public' }], default: defaults['selectmultioption1'] },
         { name: 'selectmultioption2', display: 'SelectMultiOption2', tag: 'select', null: false, multiple: true, options: [{ value: true, name: 'A' }, { value: 1, name: 'B'}, { value: false, name: 'C' }], default: defaults['selectmultioption2'] },
-        { name: 'richtext1', display: 'Richtext1', tag: 'richtext', limit: 100, null: true, upload: true, default: defaults['richtext1']  },
-        { name: 'richtext2', display: 'Richtext2', tag: 'richtext', limit: 100, null: true, upload: true, default: defaults['richtext2']  },
-        { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: true, default: defaults['datetime1']  },
-        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: false, default: defaults['datetime2']  },
+        { name: 'richtext1', display: 'Richtext1', tag: 'richtext', limit: 100, null: true, upload: true, default: defaults['richtext1'] },
+        { name: 'richtext2', display: 'Richtext2', tag: 'richtext', limit: 100, null: true, upload: true, default: defaults['richtext2'] },
+        { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: true, default: defaults['datetime1'] },
+        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: false, default: defaults['datetime2'] },
+        { name: 'checkbox1', display: 'Checkbox1', tag: 'checkbox', null: false, default: defaults['checkbox1'], options: { a: 'AA', b: 'BB' } },
+        { name: 'checkbox2', display: 'Checkbox2', tag: 'checkbox', null: false, default: defaults['checkbox2'], options: { 1: '11' } },
       ]
     },
     autofocus: true
@@ -100,6 +104,10 @@ test("form elements check", function() {
   //equal(el.find('[name="richtext2"]').prop('required'), true, 'check textarea2 required')
   equal(el.find('[name="richtext2"]').is(":focus"), false, 'check textarea2 focus')
 
+  equal(el.find('[name="checkbox1"]').first().is(":checked"), false)
+  equal(el.find('[name="checkbox1"]').last().is(":checked"), false)
+  equal(el.find('[name="checkbox2"]').is(":checked"), true)
+
 });
 
 test("form params check", function() {
@@ -134,6 +142,11 @@ test("form params check", function() {
     date3:     '2015-01-11',
     active1:   true,
     active2:   false,
+    checkbox1: [],
+    checkbox2: '',
+    checkbox3: 'd',
+    radiobox1: '',
+    radiobox2: 'a',
   }
   new App.ControllerForm({
     el:        el,
@@ -155,24 +168,30 @@ test("form params check", function() {
         { name: 'selectmultioption2', display: 'SelectMultiOption2', tag: 'select', null: false, multiple: true, options: [{ value: true, name: 'A' }, { value: 1, name: 'B'}, { value: false, name: 'C' }] },
         { name: 'autocompletion1', display: 'AutoCompletion1', tag: 'autocompletion', null: false, options: { true: 'internal', false: 'public' }, source: [ { label: "Choice1", value: "value1", id: "id1" }, { label: "Choice2", value: "value2", id: "id2" }, ], minLength: 1 },
         { name: 'autocompletion2', display: 'AutoCompletion2', tag: 'autocompletion', null: false, options: { true: 'internal', false: 'public' }, source: [ { label: "Choice1", value: "value1", id: "id1" }, { label: "Choice2", value: "value2", id: "id2" }, ], minLength: 1 },
-        { name: 'richtext1', display: 'Richtext1', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: true, upload: true, default: defaults['richtext1']  },
-        { name: 'richtext2', display: 'Richtext2', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: true, upload: true, default: defaults['richtext2']  },
-        { name: 'richtext3', display: 'Richtext3', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: false, default: defaults['richtext3']  },
-        { name: 'richtext4', display: 'Richtext4', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: false, default: defaults['richtext4']  },
-        { name: 'richtext5', display: 'Richtext5', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: true, upload: true, default: defaults['richtext5']  },
-        { name: 'richtext6', display: 'Richtext6', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: true, upload: true, default: defaults['richtext6']  },
-        { name: 'richtext7', display: 'Richtext7', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: false, default: defaults['richtext7']  },
-        { name: 'richtext8', display: 'Richtext8', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: false, default: defaults['richtext8']  },
-        { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: true, default: defaults['datetime1']  },
-        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: true, default: defaults['datetime2']  },
-        { name: 'datetime3', display: 'Datetime3', tag: 'datetime', null: false, default: defaults['datetime3']  },
-        { name: 'datetime4', display: 'Datetime4', tag: 'datetime', null: false, default: defaults['datetime4']  },
-        { name: 'date1',     display: 'Date1',     tag: 'date', null: true, default: defaults['date1']  },
-        { name: 'date2',     display: 'Date2',     tag: 'date', null: true, default: defaults['date2']  },
-        { name: 'date3',     display: 'Date3',     tag: 'date', null: false, default: defaults['date3']  },
-        { name: 'date4',     display: 'Date4',     tag: 'date', null: false, default: defaults['date4']  },
+        { name: 'richtext1', display: 'Richtext1', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: true, upload: true, default: defaults['richtext1'] },
+        { name: 'richtext2', display: 'Richtext2', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: true, upload: true, default: defaults['richtext2'] },
+        { name: 'richtext3', display: 'Richtext3', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: false, default: defaults['richtext3'] },
+        { name: 'richtext4', display: 'Richtext4', tag: 'richtext', maxlength: 100, null: true, type: 'richtext', multiline: false, default: defaults['richtext4'] },
+        { name: 'richtext5', display: 'Richtext5', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: true, upload: true, default: defaults['richtext5'] },
+        { name: 'richtext6', display: 'Richtext6', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: true, upload: true, default: defaults['richtext6'] },
+        { name: 'richtext7', display: 'Richtext7', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: false, default: defaults['richtext7'] },
+        { name: 'richtext8', display: 'Richtext8', tag: 'richtext', maxlength: 100, null: true, type: 'textonly', multiline: false, default: defaults['richtext8'] },
+        { name: 'datetime1', display: 'Datetime1', tag: 'datetime', null: true, default: defaults['datetime1'] },
+        { name: 'datetime2', display: 'Datetime2', tag: 'datetime', null: true, default: defaults['datetime2'] },
+        { name: 'datetime3', display: 'Datetime3', tag: 'datetime', null: false, default: defaults['datetime3'] },
+        { name: 'datetime4', display: 'Datetime4', tag: 'datetime', null: false, default: defaults['datetime4'] },
+        { name: 'date1',     display: 'Date1',     tag: 'date', null: true, default: defaults['date1'] },
+        { name: 'date2',     display: 'Date2',     tag: 'date', null: true, default: defaults['date2'] },
+        { name: 'date3',     display: 'Date3',     tag: 'date', null: false, default: defaults['date3'] },
+        { name: 'date4',     display: 'Date4',     tag: 'date', null: false, default: defaults['date4'] },
         { name: 'active1',   display: 'Active1',   tag: 'active', default: defaults['active1'] },
         { name: 'active2',   display: 'Active2',   tag: 'active', default: defaults['active2'] },
+        { name: 'checkbox1', display: 'Checkbox1', tag: 'checkbox', null: false, default: defaults['checkbox1'], options: { a: 'AA', b: 'BB' } },
+        { name: 'checkbox2', display: 'Checkbox2', tag: 'checkbox', null: false, default: defaults['checkbox2'], options: { 1: '11' } },
+        { name: 'checkbox3', display: 'Checkbox3', tag: 'checkbox', null: false, default: defaults['checkbox3'], options: { c: 'CC', d: 'DD' } },
+        { name: 'checkbox4', display: 'Checkbox4', tag: 'checkbox', null: false, default: defaults['checkbox4'], options: { aa: 'AA', bb: 'BB' } },
+        { name: 'radiobox1', display: 'Radiobox1', tag: 'radio', null: false, default: defaults['radiobox1'], options: { a: 'AA', b: 'BB' } },
+        { name: 'radiobox2', display: 'Radiobox2', tag: 'radio', null: false, default: defaults['radiobox2'], options: { a: '11' } },
       ],
     },
     params: defaults,
@@ -271,6 +290,12 @@ test("form params check", function() {
     date4: undefined,
     active1: true,
     active2: false,
+    checkbox1: [],
+    checkbox2: '',
+    checkbox3: 'd',
+    checkbox4: [],
+    radiobox1: '',
+    radiobox2: 'a',
   }
   deepEqual(params, test_params, 'form param check')
 
