@@ -23,76 +23,126 @@
     this._defaults  = defaults
     this._name      = pluginName
 
-    this.isActive    = false
-
     // only run if needed
     if (!document.queryCommandSupported('enableObjectResizing')) {
-      this.init()
+      this.bindEvents()
     }
-  }
-
-  Plugin.prototype.init = function () {
-    this.bindEvents()
   }
 
   Plugin.prototype.bindEvents = function () {
-    this.$element.on('focus', 'img', this.addResizeHandles.bind(this))
-    this.$element.on('blur', 'img', this.removeResizeHandles.bind(this))
-    this.$element.on('mousedown', '.enableObjectResizingShim-handle', this.startResize.bind(this))
+    this.$element.on('click', 'img', this.createEditor.bind(this))
+    this.$element.on('click', this.destroyEditors.bind(this))
   }
 
-  Plugin.prototype.addResizeHandles = function (event) {
-    if(this.isActive) return
+  Plugin.prototype.createEditor = function (event) {
+    event.stopPropagation()
+    this.destroyEditors()
     var $img = $(event.currentTarget)
-    var $holder = $('<div class="enableObjectResizingShim" contenteditable="false"></div>')
-    $img.wrap($holder)
+
+    if (!$img.hasClass('objectResizingEditorActive')) {
+      new Editor($img)
+    }
+  }
+
+  Plugin.prototype.destroyEditors = function () {
+    this.$element.find('img.objectResizingEditorActive').each(function(i, img){
+      editor = $(img).data('objectResizingEditor')
+      if(editor){
+        editor.destroy()
+      }
+    })
+  }
+
+
+
+  /*
+
+    Resize Editor
+
+  */
+
+  function Editor($element) {
+    this.$element = $element
+    this.isResizing = false
+
+    this.$element.data('objectResizingEditor', this)
+    this.$element.addClass('objectResizingEditorActive')
+    this.$element.wrap('<div class="enableObjectResizingShim" contenteditable="false"></div>')
 
     for (var i=0; i<4; i++) {
-      $img.before('<div class="enableObjectResizingShim-handle"></div>')
+      this.$element.before('<div class="enableObjectResizingShim-handle"></div>')
     }
 
-    this.isActive = true
+    $(document).one('click.objectResizingEditor', this.destroy.bind(this))
+    $(document).one('keydown.objectResizingEditor', this.onKeydown.bind(this))
+    this.$element.on('click.objectResizingEditor', this.stopPropagation.bind(this))
+    this.$element.parent().find('.enableObjectResizingShim-handle').on('mousedown', this.startResize.bind(this))
   }
 
-  Plugin.prototype.removeResizeHandles = function (event) {
-    console.log("removeResizeHandles")
+  Editor.prototype.onKeydown = function (event) {
+    this.destroy()
+
+    switch (event.keyCode) {
+      case 8: // backspace
+        this.$element.remove()
+        break
+      default:
+        event.stopPropagation()
+        break
+    }
+  }
+
+  Editor.prototype.stopPropagation = function (event) {
+    event.stopPropagation()
+  }
+
+  Editor.prototype.destroy = function (event) {
     if(this.isResizing) return
-    var $img = this.$element.find('.enableObjectResizingShim img')
-    $img.siblings().remove()
-    $img.unwrap()
-    this.isActive = false
+    this.$element.off('click.objectResizingEditor')
+    $(document).off('click.objectResizingEditor')
+    $(document).off('keydown.objectResizingEditor')
+    this.$element.removeClass('objectResizingEditorActive')
+    this.$element.siblings().remove()
+    this.$element.unwrap()
   }
 
-  Plugin.prototype.startResize = function (event) {
-    $(document).on('mousemove.enableObjectResizing', this.resize.bind(this))
-    $(document).on('mouseup.enableObjectResizing', this.resizeEnd.bind(this))
+  Editor.prototype.startResize = function (event) {
     var $handle = $(event.currentTarget)
     this.resizeCorner = $handle.index()
-    this.$img = this.$element.find('.enableObjectResizingShim img')
+    this.resizeDir = this.resizeCorner == 0 || this.resizeCorner == 3 ? -1 : 1
     this.startX = event.pageX
-    this.startWidth = this.$img.width()
-    this.$clone = this.$img.clone().css({width: '', height: ''}).addClass('enableObjectResizingShim-clone enableObjectResizingShim-clone--'+ this.resizeCorner)
-    this.$img.after(this.$clone)
+    this.startWidth = this.$element.width()
+    this.$clone = this.$element.clone().css({width: '', height: ''}).addClass('enableObjectResizingShim-clone enableObjectResizingShim-clone--'+ this.resizeCorner)
+    this.$element.after(this.$clone)
     this.isResizing = true
+    $(document).on('mousemove.enableObjectResizing', this.resize.bind(this))
+    $(document).on('mouseup.enableObjectResizing', this.resizeEnd.bind(this))
   }
 
-  Plugin.prototype.resize = function (event) {
+  Editor.prototype.resize = function (event) {
     event.preventDefault()
     var dx = event.pageX - this.startX
-    this.$clone.css('width', this.startWidth + dx)
+    this.$clone.css('width', this.startWidth + (this.resizeDir * dx))
   }
 
-  Plugin.prototype.resizeEnd = function (event) {
+  Editor.prototype.resizeEnd = function (event) {
     $(document).off('mousemove.enableObjectResizing')
     $(document).off('mouseup.enableObjectResizing')
 
-    this.$img.css({
+    this.$element.css({
       width: this.$clone.width(),
       height: this.$clone.height()
     })
     this.$clone.remove()
-    this.isResizing = false
+
+    // reset isResizing with a delay to prevent a mouseup in the editor to trigger a editor-destroy
+    setTimeout(function(){
+      this.isResizing = false
+    }.bind(this))
   }
+
+
+
 
   $.fn[pluginName] = function (options) {
     return this.each(function () {
