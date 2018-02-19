@@ -1209,6 +1209,7 @@ result
   end
 
   def check_owner_active
+    return true if Setting.get('import_mode')
 
     # return when ticket is unassigned
     return true if owner_id.blank?
