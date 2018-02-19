@@ -3,7 +3,7 @@ class App.TicketMerge extends App.ControllerModal
   buttonCancel: true
   buttonSubmit: true
   head: 'Merge'
-  large: true
+  veryLarge: true
   shown: false
 
   constructor: ->

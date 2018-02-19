@@ -6208,6 +6208,9 @@ footer {
     margin: 35px auto;
   }
 }
+.modal--veryLarge .modal-dialog {
+  max-width: 990px;
+}
 .modal--large .modal-dialog {
   max-width: 740px;
 }
@@ -6286,7 +6289,7 @@ footer {
 
 .modal.modal--local {
   display: block;
-  @include bidi-style(padding-left, 40px, padding-right, 0);
+  padding: 0 40px;
 
   .modal-backdrop {
     background: hsla(210,17%,93%,.55);

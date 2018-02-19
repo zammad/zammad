@@ -774,6 +774,8 @@ class App.ControllerModal extends App.Controller
 
     if @container
       @el.addClass('modal--local')
+    if @veryLarge
+      @el.addClass('modal--veryLarge')
     if @large
       @el.addClass('modal--large')
     if @small

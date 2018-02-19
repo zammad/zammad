@@ -4,6 +4,13 @@ require 'lib/import/import_job_backend_examples'
 RSpec.describe Import::Base do
   it_behaves_like 'ImportJob backend'
 
+  describe '#active?' do
+
+    it 'returns true by default' do
+      expect(described_class.active?).to be true
+    end
+  end
+
   describe '#queueable?' do
 
     it 'returns true by default' do
