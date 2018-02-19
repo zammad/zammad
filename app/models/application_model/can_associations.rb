@@ -23,7 +23,6 @@ returns
       group_ids: :group_ids_access_map=
     }.each do |param, setter|
       map = params[param]
-      next if map.blank?
       next if !respond_to?(setter)
       send(setter, map)
     end
