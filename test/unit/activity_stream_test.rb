@@ -85,6 +85,28 @@ class ActivityStreamTest < ActiveSupport::TestCase
     stream = @current_user.activity_stream(4)
     assert(stream.blank?)
 
+    # delete article and check if entry has gone
+    article.destroy!
+
+    # check activity_stream
+    stream = @admin_user.activity_stream(4)
+    assert_equal(stream[0]['group_id'], ticket.group_id)
+    assert_equal(stream[0]['o_id'], ticket.id)
+    assert_equal(stream[0]['created_by_id'], @current_user.id)
+    assert_equal(stream[0]['created_at'].to_s, updated_at.to_s)
+    assert_equal(stream[0]['object'], 'Ticket')
+    assert_equal(stream[0]['type'], 'update')
+    assert_equal(stream[1]['group_id'], ticket.group_id)
+    assert_equal(stream[1]['o_id'], ticket.id)
+    assert_equal(stream[1]['created_by_id'], @current_user.id)
+    assert_equal(stream[1]['created_at'].to_s, ticket.created_at.to_s)
+    assert_equal(stream[1]['object'], 'Ticket')
+    assert_equal(stream[1]['type'], 'create')
+    assert_not(stream[2])
+
+    stream = @current_user.activity_stream(4)
+    assert(stream.blank?)
+
     # cleanup
     ticket.destroy!
     travel_back
