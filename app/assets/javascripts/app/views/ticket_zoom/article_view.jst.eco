@@ -56,10 +56,27 @@
             <%- @Icon('paperclip') %>
             <div class="attachments-title"><%- @article.attachments.length %> <%- @T('Attached Files') %></div>
             <% for attachment in @article.attachments: %>
-              <div class="attachment">
-                <a class="attachment-name u-highlight" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>?disposition=attachment" target="_blank" data-type="attachment"><%= attachment.filename %></a>
-                <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
-              </div>
+              <% if !@C('ui_ticket_zoom_attachments_preview'): %>
+                <div class="attachment">
+                  <a class="attachment-name u-highlight" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>?disposition=attachment" target="_blank" data-type="attachment"><%= attachment.filename %></a>
+                </div>
+              <% else: %>
+                <a class="attachment attachment--preview" title="<%- attachment.preferences['Content-Type'] %>" target="_blank" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>?disposition=attachment" data-type="attachment"<% if @canDownload(attachment.preferences['Content-Type']): %> download<% end %>>
+                  <div class="attachment-icon">
+                  <% if attachment.preferences && attachment.preferences['Content-Type'] && @ContentTypeIcon(attachment.preferences['Content-Type']): %>
+                    <% if attachment.preferences['Content-Type'].match(/image\/(png|jpg|jpeg)/i): %>
+                    <img src="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>">
+                    <% else: %>
+                    <%- @Icon( @ContentTypeIcon(attachment.preferences['Content-Type']) ) %>
+                    <% end %>
+                  <% else: %>
+                    <%- @Icon('file-unknown') %>
+                  <% end %>
+                  </div>
+                  <span class="attachment-name u-highlight"><%= attachment.filename %></span>
+                  <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
+                </a>
+              <% end %>
             <% end %>
           </div>
         <% end %>

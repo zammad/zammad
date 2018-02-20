@@ -4957,16 +4957,33 @@ footer {
     .attachments.attachments--list .attachments-title {
       font-size: 13px;
       color: hsl(60,1%,34%);
-      font-weight: bold;
+      font-weight: 500;
+      text-transform: uppercase;
       padding: 0 7px;
-      margin: 0 0 4px;
     }
 
     .attachments .icon-paperclip {
       position: absolute;
       left: 33px;
       top: 27px;
+      fill: hsl(240,1%,84%);
     }
+
+  .attachments-block {
+    margin-bottom: 12px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &-headline {
+      font-size: 13px;
+      color: hsl(60,1%,34%);
+      font-weight: 500;
+      text-transform: uppercase;
+      margin: 0 7px;
+    }
+  }
 
   .ticket-article-item .task-subline {
     margin-top: 12px;
@@ -5281,11 +5298,7 @@ footer {
       border: none;
       outline: none;
       resize: none;
-    }
-
-    .articleNewEdit-body {
       height: auto;
-      min-height: 38px;
     }
 
     .article-new .bubble-arrow:after {
@@ -5312,28 +5325,53 @@ footer {
     }
 
     .attachment {
+      display: block;
       font-size: 13px;
       padding: 1px 10px 1px 7px;
-      @include rtl(padding, 1px 7px 1px 10px);
-      cursor: default;
       position: relative;
-      display: flex;
+      min-height: 42px;
+      color: inherit;
+      align-items: center;
+      border-bottom: 1px solid hsl(0,0%,96%);
+      
+      &:last-child {
+        border-bottom: none;
+      }
     }
 
-    .attachment:hover {
-      background: hsl(200,20%,97%);
-    }
+      .attachment--preview {
+        padding: 9px 4px 9px 43px;
+      }
+
+      .attachment-icon {
+        position: absolute;
+        left: 0;
+        top: 9px;
+        width: 38px;
+        text-align: center;
+        
+        svg {
+          vertical-align: bottom;
+        }
+        
+        img {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+        }
+      }
 
       .attachment-name {
-        @include bidi-style(margin-right, 5px, margin-left, 0);
         min-width: 0;
+        display: block;
         @extend .u-highlight;
+        word-break: break-all;
       }
 
       .attachment-size {
         white-space: nowrap;
-        float: right;
-        @include bidi-style(margin-right, 10px, margin-left, 0);
+        font-size: 11px;
+        color: hsl(200,8%,77%);
       }
 
       .attachment-delete {

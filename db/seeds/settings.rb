@@ -699,6 +699,61 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
+  title: 'Sidebar Attachments',
+  name: 'ui_ticket_zoom_attachments_preview',
+  area: 'UI::TicketZoom::Preview',
+  description: 'Enables preview of attachments.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_attachments_preview',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 400,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Sidebar Attachments',
+  name: 'ui_ticket_zoom_sidebar_article_attachments',
+  area: 'UI::TicketZoom::Preview',
+  description: 'Enables a sidebar to show an overview of all attachments.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_sidebar_article_attachments',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 500,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+
+Setting.create_if_not_exists(
   title: 'Set notes for ticket create types.',
   name: 'ui_ticket_create_notes',
   area: 'UI::TicketCreate',
