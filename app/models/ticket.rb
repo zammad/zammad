@@ -4,6 +4,7 @@ class Ticket < ApplicationModel
   include HasActivityStreamLog
   include ChecksClientNotification
   include ChecksLatestChangeObserved
+  include CanCsvImport
   include HasHistory
   include HasTags
   include HasSearchIndexBackend

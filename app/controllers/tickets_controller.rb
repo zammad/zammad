@@ -598,6 +598,52 @@ class TicketsController < ApplicationController
     }
   end
 
+  # @path    [GET] /tickets/import_example
+  #
+  # @summary          Download of example CSV file.
+  # @notes            The requester have 'admin' permissions to be able to download it.
+  # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/tickets/import_example
+  #
+  # @response_message 200 File download.
+  # @response_message 401 Invalid session.
+  def import_example
+    permission_check('admin')
+    csv_string = Ticket.csv_example(
+      col_sep: ',',
+    )
+    send_data(
+      csv_string,
+      filename: 'example.csv',
+      type: 'text/csv',
+      disposition: 'attachment'
+    )
+
+  end
+
+  # @path    [POST] /tickets/import
+  #
+  # @summary          Starts import.
+  # @notes            The requester have 'admin' permissions to be create a new import.
+  # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/tickets.csv' 'https://your.zammad/api/v1/tickets/import?try=true'
+  # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/tickets.csv' 'https://your.zammad/api/v1/tickets/import'
+  #
+  # @response_message 201 Import started.
+  # @response_message 401 Invalid session.
+  def import_start
+    permission_check('admin')
+    if Setting.get('import_mode') != true
+      raise 'Only can import tickets if system is in import mode.'
+    end
+    result = Ticket.csv_import(
+      string: params[:file].read.force_encoding('utf-8'),
+      parse_params: {
+        col_sep: ';',
+      },
+      try: params[:try],
+    )
+    render json: result, status: :ok
+  end
+
   private
 
   def follow_up_possible_check

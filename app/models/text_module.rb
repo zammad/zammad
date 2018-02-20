@@ -3,9 +3,13 @@
 class TextModule < ApplicationModel
   include ChecksClientNotification
   include ChecksHtmlSanitized
+  include CanCsvImport
 
   validates :name,    presence: true
   validates :content, presence: true
+
+  before_create  :validate_content
+  before_update  :validate_content
 
   sanitized_html :content
 
@@ -94,6 +98,16 @@ push text_modules to online
       translator_key = Setting.set('translator_key', result.data['translator_key'])
     end
 
+    true
+  end
+
+  private
+
+  def validate_content
+    return true if content.blank?
+    return true if content.match?(/<.+?>/)
+    content.gsub!(/(\r\n|\n\r|\r)/, "\n")
+    self.content = content.text2html
     true
   end
 

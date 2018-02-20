@@ -39,10 +39,9 @@ returns
                     where(name: data[:name])
                   end
         records.each do |loop_record|
-          if loop_record.name == data[:name]
-            cache_set(data[:name], loop_record)
-            return loop_record
-          end
+          next if loop_record.name != data[:name]
+          cache_set(data[:name], loop_record)
+          return loop_record
         end
         return
       elsif data[:login]
@@ -56,10 +55,9 @@ returns
                     where(login: data[:login])
                   end
         records.each do |loop_record|
-          if loop_record.login == data[:login]
-            cache_set(data[:login], loop_record)
-            return loop_record
-          end
+          next if loop_record.login != data[:login]
+          cache_set(data[:login], loop_record)
+          return loop_record
         end
         return
       elsif data[:email]
@@ -73,15 +71,27 @@ returns
                     where(email: data[:email])
                   end
         records.each do |loop_record|
-          if loop_record.email == data[:email]
-            cache_set(data[:email], loop_record)
-            return loop_record
-          end
+          next if loop_record.email != data[:email]
+          cache_set(data[:email], loop_record)
+          return loop_record
+        end
+        return
+      elsif data[:number]
+
+        # do lookup with == to handle case insensitive databases
+        records = if Rails.application.config.db_case_sensitive
+                    where('LOWER(number) = LOWER(?)',  data[:number])
+                  else
+                    where(number: data[:number])
+                  end
+        records.each do |loop_record|
+          next if loop_record.number != data[:number]
+          return loop_record
         end
         return
       end
 
-      raise ArgumentError, 'Need name, id, login or email for lookup()'
+      raise ArgumentError, 'Need name, id, number, login or email for lookup()'
     end
   end
 end

@@ -63,6 +63,9 @@ returns
       real_values = real_values.to_sym
       next if !respond_to?(real_values)
       next if !params[real_values]
+      if params[real_values].instance_of?(String) || params[real_values].instance_of?(Integer) || params[real_values].instance_of?(Float)
+        params[real_values] = [params[real_values]]
+      end
       next if !params[real_values].instance_of?(Array)
       list = []
       class_object = assoc.klass

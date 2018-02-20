@@ -14,17 +14,6 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
 
-    @backup_admin = User.create_or_update(
-      login: 'backup-admin',
-      firstname: 'Backup',
-      lastname: 'Agent',
-      email: 'backup-admin@example.com',
-      password: 'adminpw',
-      active: true,
-      roles: roles,
-      groups: groups,
-    )
-
     @admin = User.create_or_update(
       login: 'rest-admin',
       firstname: 'Rest',
@@ -507,6 +496,112 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal(params[:name], result['assets']['Organization'][organization.id.to_s]['name'])
     assert_equal(organization.member_ids, result['assets']['Organization'][organization.id.to_s]['member_ids'])
     assert_not(result['assets']['Organization'][organization.id.to_s]['members'])
+
+  end
+
+  test '05.01 csv example - customer no access' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-customer1@example.com', 'customer1pw')
+
+    get '/api/v1/organizations/import_example', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('Not authorized (user)!', result['error'])
+  end
+
+  test '05.02 csv example - admin access' do
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
+
+    get '/api/v1/organizations/import_example', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+
+    rows = CSV.parse(@response.body)
+    header = rows.shift
+
+    assert_equal('id', header[0])
+    assert_equal('name', header[1])
+    assert_equal('shared', header[2])
+    assert_equal('domain', header[3])
+    assert_equal('domain_assignment', header[4])
+    assert_equal('active', header[5])
+    assert_equal('note', header[6])
+    assert(header.include?('members'))
+  end
+
+  test '05.03 csv import - admin access' do
+
+    UserInfo.current_user_id = 1
+    customer1 = User.create_or_update(
+      login: 'customer1-members@example.com',
+      firstname: 'Member',
+      lastname: 'Customer',
+      email: 'customer1-members@example.com',
+      password: 'customerpw',
+      active: true,
+    )
+    customer2 = User.create_or_update(
+      login: 'customer2-members@example.com',
+      firstname: 'Member',
+      lastname: 'Customer',
+      email: 'customer2-members@example.com',
+      password: 'customerpw',
+      active: true,
+    )
+    UserInfo.current_user_id = nil
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
+
+    # invalid file
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple_col_not_existing.csv'), 'text/csv')
+    post '/api/v1/organizations/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    assert_equal('true', result['try'])
+    assert_equal(2, result['records'].count)
+    assert_equal('failed', result['result'])
+    assert_equal(2, result['errors'].count)
+    assert_equal("Line 1: unknown attribute 'name2' for Organization.", result['errors'][0])
+    assert_equal("Line 2: unknown attribute 'name2' for Organization.", result['errors'][1])
+
+    # valid file try
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
+    post '/api/v1/organizations/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    assert_equal('true', result['try'])
+    assert_equal(2, result['records'].count)
+    assert_equal('success', result['result'])
+
+    assert_nil(Organization.find_by(name: 'organization-member-import1'))
+    assert_nil(Organization.find_by(name: 'organization-member-import2'))
+
+    # valid file
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
+    post '/api/v1/organizations/import', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    assert_nil(result['try'])
+    assert_equal(2, result['records'].count)
+    assert_equal('success', result['result'])
+
+    organization1 = Organization.find_by(name: 'organization-member-import1')
+    assert(organization1)
+    assert_equal(organization1.name, 'organization-member-import1')
+    assert_equal(organization1.members.count, 1)
+    assert_equal(organization1.members.first.login, customer1.login)
+    assert_equal(organization1.active, true)
+    organization2 = Organization.find_by(name: 'organization-member-import2')
+    assert(organization2)
+    assert_equal(organization2.name, 'organization-member-import2')
+    assert_equal(organization2.members.count, 1)
+    assert_equal(organization2.members.first.login, customer2.login)
+    assert_equal(organization2.active, false)
 
   end
 

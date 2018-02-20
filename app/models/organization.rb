@@ -6,6 +6,7 @@ class Organization < ApplicationModel
   include ChecksLatestChangeObserved
   include HasHistory
   include HasSearchIndexBackend
+  include CanCsvImport
   include Organization::ChecksAccess
 
   load 'organization/assets.rb'

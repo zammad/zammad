@@ -28,6 +28,7 @@ class User < ApplicationModel
   include ChecksClientNotification
   include HasHistory
   include HasSearchIndexBackend
+  include CanCsvImport
   include HasGroups
   include HasRoles
   include User::ChecksAccess
@@ -73,6 +74,18 @@ class User < ApplicationModel
                                   :image_source,
                                   :source,
                                   :login_failed
+
+  csv_object_ids_ignored 1
+
+  csv_attributes_ignored :password,
+                         :login_failed,
+                         :source,
+                         :image_source,
+                         :image,
+                         :authorizations,
+                         :organizations,
+                         :groups,
+                         :user_groups
 
   def ignore_search_indexing?(_action)
     # ignore internal user

@@ -4,6 +4,7 @@ class Ticket::Article < ApplicationModel
   include ChecksClientNotification
   include HasHistory
   include ChecksHtmlSanitized
+  include CanCsvImport
   include Ticket::Article::ChecksAccess
 
   load 'ticket/article/assets.rb'
