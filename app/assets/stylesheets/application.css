@@ -10,6 +10,7 @@
  *= require ./font.css
  *= require ./svg-dimensions.css
  *= require ./highlighter-github.css
+ *= require ./jquery.enableObjectResizingShim.css
  *= require ./zammad.scss
  *
  *= require_tree ./custom/
