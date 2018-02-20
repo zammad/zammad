@@ -591,6 +591,33 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
+  title: 'User Organization Selector - email',
+  name: 'ui_user_organization_selector_with_email',
+  area: 'UI::UserOrganizatiomSelector',
+  description: 'Display of the e-mail in the result of the user/organization widget.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_user_organization_selector_with_email',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 100,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
   title: 'Note - default visibility',
   name: 'ui_ticket_zoom_article_note_new_internal',
   area: 'UI::TicketZoom',

@@ -13,6 +13,17 @@ class App.UserOrganizationAutocompletion extends App.ObjectOrganizationAutocompl
       container: @el.closest('.content')
     )
 
+  buildObjectItem: (object) =>
+    realname = object.displayName()
+    if @Config.get('ui_user_organization_selector_with_email') && !_.isEmpty(object.email)
+      realname += " <#{object.email}>"
+
+    App.view(@templateObjectItem)(
+      realname: realname
+      object: object
+      icon: @objectIcon
+    )
+
 class UserNew extends App.ControllerModal
   buttonClose: true
   buttonCancel: true

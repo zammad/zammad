@@ -3,7 +3,11 @@
     <%- @Icon(@icon, 'recipientList-icon') %>
   </div>
   <div class="recipientList-name">
-    <%= @object.displayName() %>
+    <% if @realname: %>
+      <%= @realname %>
+    <% else: %>
+      <%= @object.displayName() %>
+    <% end %>
     <% if @object.organization: %>
       <span class="recipientList-detail">- <%= @object.organization.displayName() %></span>
     <% end %>
