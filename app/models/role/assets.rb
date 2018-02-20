@@ -36,6 +36,7 @@ returns
         data[ app_model ][ id ] = local_attributes
 
         local_attributes['group_ids'].each_key do |group_id|
+          next if data[:Group] && data[:Group][group_id]
           group = Group.lookup(id: group_id)
           next if !group
           data = group.assets(data)
