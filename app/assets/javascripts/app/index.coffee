@@ -143,6 +143,7 @@ class App extends Spine.Controller
         'image/jpg': 'file-image'
         'image/png': 'file-image'
         'image/svg': 'file-image'
+        'image/gif': 'file-image'
         # documents
         'application/pdf': 'file-pdf'
         'application/msword': 'file-word' # .doc, .dot
@@ -172,6 +173,11 @@ class App extends Spine.Controller
 
     canDownload: (contentType) ->
       contentType != 'text/html'
+
+    canPreview: (contentType) ->
+      return false if _.isEmpty(contentType)
+      return true if contentType.match(/image\/(png|jpg|jpeg|gif)/i)
+      false
 
   @viewPrint: (object, attributeName, attributes, table) ->
     if !attributes
