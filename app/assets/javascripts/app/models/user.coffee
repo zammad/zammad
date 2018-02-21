@@ -90,8 +90,8 @@ class App.User extends App.Model
       height = 226 * size/baseSize
 
       rng = new Math.seedrandom(@id)
-      x   = 0.5 * (width - size)
-      y   = 0.5 * (height - size)
+      x   = rng * (width - size)
+      y   = rng * (height - size)
 
       return App.view('avatar_unique')
         data: data
