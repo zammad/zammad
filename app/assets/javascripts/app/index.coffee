@@ -137,6 +137,7 @@ class App extends Spine.Controller
       App.i18n.translateContent(string)
 
     ContentTypeIcon: (contentType) ->
+      contentType = App.Utils.contentTypeCleanup(contentType)
       icons =
         # image
         'image/jpeg': 'file-image'
@@ -172,6 +173,7 @@ class App extends Spine.Controller
       return icons[contentType]
 
     canDownload: (contentType) ->
+      contentType = App.Utils.contentTypeCleanup(contentType)
       contentType != 'text/html'
 
     canPreview: (contentType) ->

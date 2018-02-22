@@ -7206,6 +7206,11 @@ label + .wizard-buttonList {
   opacity: 0;
 }
 
+.imagePreview img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .imageCropper p {
   margin: 0;
 }

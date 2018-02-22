@@ -913,6 +913,11 @@ class App.Utils
             result.push localResult[0]
     result
 
+  @contentTypeCleanup: (contentType) ->
+    return contentType if !contentType
+    contentType = contentType.replace(/^(.+?\/.+?)(\b|\s).+?$/, '$1')
+    contentType
+
   @getRecipientArticle: (ticket, article, article_created_by, type, email_addresses = [], all) ->
 
     # empty form
