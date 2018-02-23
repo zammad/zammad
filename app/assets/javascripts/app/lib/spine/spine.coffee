@@ -422,7 +422,7 @@ class Model extends Module
     if !@constructor.irecords[@id]
       model     = @constructor.className
       atts_json = JSON.stringify(atts)
-      console.notice "Can't refresh not exisint %s instance with ID %s and attributes %s. Possible race condition?", model, @id, atts_json
+      console.log "Can't refresh not exisint %s instance with ID %s and attributes %s. Possible race condition?", model, @id, atts_json
       # prevent exception
       return
 
