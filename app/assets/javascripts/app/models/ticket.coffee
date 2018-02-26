@@ -248,15 +248,10 @@ class App.Ticket extends App.Model
   editable: (permission = 'change') ->
     user_id = App.Session.get('id')
     return true if user_id is @customer_id
-    group_ids = App.Session.get('group_ids')
-    if group_ids
-      return true if group_ids[@group_id] && (_.include(group_ids[@group_id], permission) || _.include(group_ids[@group_id], 'full'))
-    role_ids = App.Session.get('role_ids')
-    if role_ids
-      for role_id in role_ids
-        if App.Role.exists(role_id)
-          role = App.Role.find(role_id)
-          if role.group_ids
-            return true if role.group_ids[@group_id] && (_.include(role.group_ids[@group_id], permission) || _.include(role.group_ids[@group_id], 'full'))
+    return false if !App.User.exists(user_id)
+    group_ids = App.User.find(user_id).all_group_ids(permission)
+    for local_group_id in group_ids
+      if local_group_id.toString() is @group_id.toString()
+        return true
     false
 

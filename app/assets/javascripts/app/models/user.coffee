@@ -258,6 +258,25 @@ class App.User extends App.Model
       return access if access
     false
 
+  all_group_ids: (permission = 'full') ->
+    group_ids = []
+    user_group_ids = App.Session.get('group_ids')
+    if user_group_ids
+      for local_group_id, local_permission of user_group_ids
+        if _.include(local_permission, permission) || _.include(local_permission, 'full')
+          group_ids.push local_group_id
+
+    user_role_ids = App.Session.get('role_ids')
+    if user_role_ids
+      for role_id in user_role_ids
+        if App.Role.exists(role_id)
+          role = App.Role.find(role_id)
+          if role.group_ids
+            for local_group_id, local_permission of role.group_ids
+              if _.include(local_permission, permission) || _.include(local_permission, 'full')
+                group_ids.push local_group_id
+    _.uniq(group_ids)
+
   @outOfOfficeTextPlaceholder: ->
     today = new Date()
     outOfOfficeText = 'Christmas holiday'
