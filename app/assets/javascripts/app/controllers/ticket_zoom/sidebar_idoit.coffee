@@ -22,7 +22,12 @@ class SidebarIdoit extends App.Controller
       container: @el.closest('.content')
       callback: (objectIds, objectSelectorUi) =>
         if @ticket && @ticket.id
-          @updateTicket(@ticket.id, objectIds, =>
+
+          # add new objectIds to list of all @objectIds
+          # and transfer the complete list to the backend
+          @objectIds = @objectIds.concat(objectIds)
+
+          @updateTicket(@ticket.id, @objectIds, =>
             objectSelectorUi.close()
             @showObjectsContent(objectIds)
           )
