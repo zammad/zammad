@@ -49,7 +49,7 @@ class Transaction::Notification
     recipients_reason = {}
 
     # loop through all users
-    possible_recipients = User.group_access(ticket.group_id, 'read').sort_by(&:login)
+    possible_recipients = User.group_access(ticket.group_id, 'full').sort_by(&:login)
 
     # apply owner
     if ticket.owner_id != 1
