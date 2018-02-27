@@ -25,6 +25,7 @@ class App.TicketZoomSidebar extends App.ObserverController
           ticket:   ticket
           query:    @query
           taskGet:  @taskGet
+          taskKey:  @taskKey
           formMeta: @formMeta
           markForm: @markForm
           tags:     @tags

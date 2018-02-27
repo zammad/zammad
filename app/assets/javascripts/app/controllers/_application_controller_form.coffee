@@ -6,6 +6,12 @@ class App.ControllerForm extends App.Controller
 
     if !@handlers
       @handlers = []
+
+    if @handlersConfig
+      for key, value of @handlersConfig
+        if value && value.run
+          @handlers.push value.run
+
     @handlers.push @showHideToggle
     @handlers.push @requiredMandantoryToggle
 

@@ -55,7 +55,7 @@ class App.UserProfile extends App.Controller
     new Object(
       el:        elLocal.find('.js-object-container')
       object_id: user.id
-      task_key:  @task_key
+      taskKey:  @taskKey
     )
 
     new ActionRow(
@@ -153,7 +153,7 @@ class Object extends App.ObserverController
   render: (user) =>
 
     # update taskbar with new meta data
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@taskKey)
 
     # get display data
     userData = []

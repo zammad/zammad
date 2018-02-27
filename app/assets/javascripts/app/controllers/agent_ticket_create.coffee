@@ -28,9 +28,17 @@ class App.TicketCreate extends App.Controller
     @bindId = App.TicketCreateCollection.one(load)
 
     # rerender view, e. g. on langauge change
-    @bind 'ui:rerender', =>
+    @bind('ui:rerender', =>
       return if !@authenticateCheck()
       @render()
+    )
+
+    # listen to rerender sidebars
+    @bind('ui::ticket::sidebarRerender', (data) =>
+      return if data.taskKey isnt @taskKey
+      return if !@sidebarWidget
+      @sidebarWidget.render(@params())
+    )
 
   release: =>
     App.TicketCreateCollection.unbindById(@bindId)
@@ -98,7 +106,7 @@ class App.TicketCreate extends App.Controller
     @$('.js-note').addClass('hide')
     @$(".js-note[data-type='#{type}']").removeClass('hide')
 
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@taskKey)
 
   meta: =>
     text = ''
@@ -138,7 +146,7 @@ class App.TicketCreate extends App.Controller
 
   autosaveStart: =>
     if !@autosaveLast
-      task = App.TaskManager.get(@task_key)
+      task = App.TaskManager.get(@taskKey)
       if task && !task.state
         task.state = {}
       @autosaveLast = task.state || {}
@@ -149,12 +157,12 @@ class App.TicketCreate extends App.Controller
       if _.isEmpty(@autosaveLast) || !_.isEmpty(diff)
         @autosaveLast = data
         @log 'debug', 'form hash changed', diff, data
-        App.TaskManager.update(@task_key, { 'state': data })
+        App.TaskManager.update(@taskKey, { 'state': data })
 
         # check it task title in task need to be updated
         if @latestTitle isnt data.title
           @latestTitle = data.title
-          App.TaskManager.touch(@task_key)
+          App.TaskManager.touch(@taskKey)
 
     @el.on('change.local blur.local keyup.local paste.local input.local', 'form, .js-textarea', (e) =>
       @delay(update, 250, 'ticket-create-form-update')
@@ -173,7 +181,7 @@ class App.TicketCreate extends App.Controller
 
     # fetch split ticket data
     @ajax(
-      id:    "ticket_split#{@task_key}"
+      id:    "ticket_split#{@taskKey}"
       type:  'GET'
       url:   "#{@apiPath}/ticket_split"
       data:
@@ -214,8 +222,8 @@ class App.TicketCreate extends App.Controller
     params = @prefilledParams || {}
     if template && !_.isEmpty(template.options)
       params = template.options
-    else if App.TaskManager.get(@task_key) && !_.isEmpty(App.TaskManager.get(@task_key).state)
-      params = App.TaskManager.get(@task_key).state
+    else if App.TaskManager.get(@taskKey) && !_.isEmpty(App.TaskManager.get(@taskKey).state)
+      params = App.TaskManager.get(@taskKey).state
       if !_.isEmpty(params['form_id'])
         @formId = params['form_id']
 
@@ -225,40 +233,6 @@ class App.TicketCreate extends App.Controller
       admin:   @permissionCheck('admin')
       form_id: @formId
     ))
-
-    signatureChanges = (params, attribute, attributes, classname, form, ui) =>
-      if attribute && attribute.name is 'group_id'
-        signature = undefined
-        if params['group_id']
-          group = App.Group.find(params['group_id'])
-          if group && group.signature_id
-            signature = App.Signature.find(group.signature_id)
-
-        # check if signature need to be added
-        type = @$('[name="formSenderType"]').val()
-
-        if signature isnt undefined &&  signature.body && type is 'email-out'
-          signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), config: App.Config.all() })
-
-          body = @$('[data-name=body]')
-          if App.Utils.signatureCheck(body.html() || '', signatureFinished)
-
-            # if signature has changed, in case remove old signature
-            signature_id = @$('[data-signature=true]').data('signature-id')
-            if signature_id && signature_id.toString() isnt signature.id.toString()
-
-              @$('[data-signature="true"]').remove()
-
-            if !App.Utils.htmlLastLineEmpty(body)
-              body.append('<br><br>')
-            signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
-            App.Utils.htmlStrip(signature)
-            body.append(signature)
-            @$('[data-name=body]').replaceWith(body)
-
-        # remove old signature
-        else
-          @$('[data-name="body"]').find('[data-signature=true]').remove()
 
     App.Ticket.configure_attributes.push {
       name: 'cc'
@@ -277,20 +251,22 @@ class App.TicketCreate extends App.Controller
         edit: {}
       }
     }
+
+    handlers = @Config.get('TicketCreateFormHandler')
+
     new App.ControllerForm(
-      el:       @$('.ticket-form-top')
-      form_id:  @formId
-      model:    App.Ticket
-      screen:   'create_top'
+      el:             @$('.ticket-form-top')
+      form_id:        @formId
+      model:          App.Ticket
+      screen:         'create_top'
       events:
         'change [name=customer_id]': @localUserInfo
-      handlers: [
-        @ticketFormChanges,
-        signatureChanges,
-      ]
-      filter:    @formMeta.filter
-      autofocus: true
-      params:    params
+      handlersConfig: handlers
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      autofocus:      true
+      params:         params
+      taskKey:        @taskKey
     )
 
     new App.ControllerForm(
@@ -299,35 +275,34 @@ class App.TicketCreate extends App.Controller
       model:   App.TicketArticle
       screen:  'create_top'
       params:  params
+      taskKey: @taskKey
     )
     new App.ControllerForm(
-      el:      @$('.ticket-form-middle')
-      form_id: @formId
-      model:   App.Ticket
-      screen:  'create_middle'
+      el:             @$('.ticket-form-middle')
+      form_id:        @formId
+      model:          App.Ticket
+      screen:         'create_middle'
       events:
         'change [name=customer_id]': @localUserInfo
-      handlers: [
-        @ticketFormChanges,
-        signatureChanges,
-      ]
-      filter:     @formMeta.filter
-      params:     params
-      noFieldset: true
+      handlersConfig: handlers
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      params:         params
+      noFieldset:     true
+      taskKey:        @taskKey
     )
     new App.ControllerForm(
-      el:       @$('.ticket-form-bottom')
-      form_id:  @formId
-      model:    App.Ticket
-      screen:   'create_bottom'
+      el:             @$('.ticket-form-bottom')
+      form_id:        @formId
+      model:          App.Ticket
+      screen:         'create_bottom'
       events:
         'change [name=customer_id]': @localUserInfo
-      handlers: [
-        @ticketFormChanges,
-        signatureChanges,
-      ]
-      filter:   @formMeta.filter
-      params:   params
+      handlersConfig: handlers
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      params:         params
+      taskKey:        @taskKey
     )
     App.Ticket.configure_attributes.pop()
 
@@ -351,7 +326,7 @@ class App.TicketCreate extends App.Controller
       el:           @sidebar
       params:       @formDefault
       sidebarState: @sidebarState
-      task_key:     @task_key
+      taskKey:      @taskKey
       query:        @query
     )
 
@@ -361,7 +336,7 @@ class App.TicketCreate extends App.Controller
       App.User.full(@formDefault.customer_id, callback)
 
     # update taskbar with new meta data
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@taskKey)
 
   localUserInfo: (e) =>
     return if !@sidebarWidget
@@ -387,11 +362,14 @@ class App.TicketCreate extends App.Controller
     e.preventDefault()
     @navigate '#'
 
+  params: =>
+    params = @formParam(@$('.main form'))
+
   submit: (e) =>
     e.preventDefault()
 
     # get params
-    params = @formParam(e.target)
+    params = @params()
 
     # fillup params
     if !params.title
@@ -500,7 +478,7 @@ class App.TicketCreate extends App.Controller
           timeout: 4000
 
         # close ticket create task
-        App.TaskManager.remove(ui.task_key)
+        App.TaskManager.remove(ui.taskKey)
 
         # scroll to top
         ui.scrollTo()

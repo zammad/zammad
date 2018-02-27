@@ -59,6 +59,13 @@ class App.TicketZoom extends App.Controller
       @initSpoolSent = true
     )
 
+    # listen to rerender sidebars
+    @bind('ui::ticket::sidebarRerender', (data) =>
+      return if data.taskKey isnt @taskKey
+      return if !@sidebarWidget
+      @sidebarWidget.render(@formCurrent())
+    )
+
   fetchMayBe: (data) =>
     if @ticketUpdatedAtLastCall
       if new Date(data.updated_at).getTime() is new Date(@ticketUpdatedAtLastCall).getTime()
@@ -155,7 +162,7 @@ class App.TicketZoom extends App.Controller
     # notify if ticket changed not by my self
     if @initFetched
       if newTicketRaw.updated_by_id isnt @Session.get('id')
-        App.TaskManager.notify(@task_key)
+        App.TaskManager.notify(@taskKey)
     @initFetched = true
 
     if !@doNotLog
@@ -304,7 +311,7 @@ class App.TicketZoom extends App.Controller
     @positionPageHeaderStop()
 
   muteTask: =>
-    App.TaskManager.mute(@task_key)
+    App.TaskManager.mute(@taskKey)
 
   shortcutNavigationStart: =>
     @articlePager =
@@ -391,7 +398,7 @@ class App.TicketZoom extends App.Controller
   render: (local) =>
 
     # update taskbar with new meta data
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@taskKey)
 
     if !@renderDone
       @renderDone = true
@@ -414,7 +421,7 @@ class App.TicketZoom extends App.Controller
         object_id:   @ticket_id
         overview_id: @overview_id
         el:          elLocal.find('.js-ticketTitleContainer')
-        task_key:    @task_key
+        taskKey:    @taskKey
       )
 
       new App.TicketZoomMeta(
@@ -427,7 +434,7 @@ class App.TicketZoom extends App.Controller
         el:          elLocal.find('.js-attributeBar')
         overview_id: @overview_id
         callback:    @submit
-        task_key:    @task_key
+        taskKey:    @taskKey
       )
       #if @shown
       #  @attributeBar.start()
@@ -441,7 +448,7 @@ class App.TicketZoom extends App.Controller
         formMeta:  @formMeta
         form_id:   @form_id
         defaults:  @taskGet('article')
-        task_key:  @task_key
+        taskKey:  @taskKey
         ui:        @
       )
 
@@ -469,14 +476,14 @@ class App.TicketZoom extends App.Controller
         el:        elLocal.find('.ticketZoom-header')
       )
 
-      @sidebar = new App.TicketZoomSidebar(
+      @sidebarWidget = new App.TicketZoomSidebar(
         el:           elLocal
         sidebarState: @sidebarState
         object_id:    @ticket_id
         model:        'Ticket'
         query:        @query
         taskGet:      @taskGet
-        task_key:     @task_key
+        taskKey:      @taskKey
         formMeta:     @formMeta
         markForm:     @markForm
         tags:         @tags
@@ -486,12 +493,20 @@ class App.TicketZoom extends App.Controller
       # check if autolock is needed
       if @Config.get('ticket_auto_assignment') is true
         if @ticket.owner_id is 1 && @permissionCheck('ticket.agent') && @ticket.editable('full')
-          ticket_auto_assignment_selector = @Config.get('ticket_auto_assignment_selector')
-          if App.Ticket.selector(@ticket, ticket_auto_assignment_selector['condition'])
-            assign = =>
-              @ticket.owner_id = App.Session.get('id')
-              @ticket.save()
-            @delay(assign, 800, "ticket-auto-assign-#{@ticket.id}")
+          userIdsIgnore = @Config.get('ticket_auto_assignment_user_ids_ignore') || []
+          userIgnored = false
+          currentUserId = App.Session.get('id')
+          for userIdIgnore in userIdsIgnore
+            if userIdIgnore.toString() is currentUserId.toString()
+              userIgnored = true
+              break
+          if userIgnored is false
+            ticket_auto_assignment_selector = @Config.get('ticket_auto_assignment_selector')
+            if App.Ticket.selector(@ticket, ticket_auto_assignment_selector['condition'])
+              assign = =>
+                @ticket.owner_id = App.Session.get('id')
+                @ticket.save()
+              @delay(assign, 800, "ticket-auto-assign-#{@ticket.id}")
 
     # render init content
     if elLocal
@@ -503,8 +518,8 @@ class App.TicketZoom extends App.Controller
         ticket_article_ids: @ticket_article_ids
       )
 
-    if @sidebar
-      @sidebar.reload(
+    if @sidebarWidget
+      @sidebarWidget.reload(
         tags: @tags
         links: @links
       )
@@ -747,13 +762,13 @@ class App.TicketZoom extends App.Controller
       ticket: ticket
       callback:
         tagAdd: (tag) =>
-          return if !@sidebar
-          return if !@sidebar.reload
-          @sidebar.reload(tagAdd: tag, source: 'macro')
+          return if !@sidebarWidget
+          return if !@sidebarWidget.reload
+          @sidebarWidget.reload(tagAdd: tag, source: 'macro')
         tagRemove: (tag) =>
-          return if !@sidebar
-          return if !@sidebar.reload
-          @sidebar.reload(tagRemove: tag)
+          return if !@sidebarWidget
+          return if !@sidebarWidget.reload
+          @sidebarWidget.reload(tagRemove: tag)
     )
 
     # set defaults
@@ -854,8 +869,8 @@ class App.TicketZoom extends App.Controller
         # reset form after save
         @reset()
 
-        if @sidebar
-          @sidebar.commit()
+        if @sidebarWidget
+          @sidebarWidget.commit()
 
         if taskAction is 'closeNextInOverview'
           if @overview_id
@@ -868,7 +883,7 @@ class App.TicketZoom extends App.Controller
                 next = list.tickets[current_position]
                 if next
                   # close task
-                  App.TaskManager.remove(@task_key)
+                  App.TaskManager.remove(@taskKey)
 
                   # open task via task manager to get overview information
                   App.TaskManager.execute(
@@ -886,7 +901,7 @@ class App.TicketZoom extends App.Controller
           taskAction = 'closeTab'
 
         if taskAction is 'closeTab'
-          App.TaskManager.remove(@task_key)
+          App.TaskManager.remove(@taskKey)
           nextTaskUrl = App.TaskManager.nextTaskUrl()
           if nextTaskUrl
             @navigate nextTaskUrl
@@ -943,8 +958,8 @@ class App.TicketZoom extends App.Controller
     @$('.tabsSidebar-tab[data-tab="ticket"]').removeClass('is-changed')
 
   taskGet: (area) =>
-    return {} if !App.TaskManager.get(@task_key)
-    @localTaskData = App.TaskManager.get(@task_key).state || {}
+    return {} if !App.TaskManager.get(@taskKey)
+    @localTaskData = App.TaskManager.get(@taskKey).state || {}
     if area
       if !@localTaskData[area]
         @localTaskData[area] = {}
@@ -955,18 +970,18 @@ class App.TicketZoom extends App.Controller
 
   taskUpdate: (area, data) =>
     @localTaskData[area] = data
-    App.TaskManager.update(@task_key, { 'state': @localTaskData })
+    App.TaskManager.update(@taskKey, { 'state': @localTaskData })
 
   taskUpdateAll: (data) =>
     @localTaskData = data
-    App.TaskManager.update(@task_key, { 'state': @localTaskData })
+    App.TaskManager.update(@taskKey, { 'state': @localTaskData })
 
   # reset task state
   taskReset: =>
     @localTaskData =
       ticket:  {}
       article: {}
-    App.TaskManager.update(@task_key, { 'state': @localTaskData })
+    App.TaskManager.update(@taskKey, { 'state': @localTaskData })
 
 class TicketZoomRouter extends App.ControllerPermanent
   requiredPermission: ['ticket.agent', 'ticket.customer']

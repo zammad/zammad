@@ -24,6 +24,7 @@ class Index extends App.ControllerContent
 
     # set defaults
     defaults = template['options'] || {}
+    handlers = @Config.get('TicketCreateFormHandler')
 
     groupFilter = App.Config.get('customer_ticket_create_group_ids')
     if groupFilter
@@ -37,48 +38,48 @@ class Index extends App.ControllerContent
     )
 
     new App.ControllerForm(
-      el:       @el.find('.ticket-form-top')
-      form_id:  @form_id
-      model:    App.Ticket
-      screen:   'create_top'
-      handlers: [
-        @ticketFormChanges
-      ]
-      filter:    @formMeta.filter
-      autofocus: true
-      params:    defaults
+      el:             @el.find('.ticket-form-top')
+      form_id:        @form_id
+      model:          App.Ticket
+      screen:         'create_top'
+      handlersConfig: handlers
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      autofocus:      true
+      params:         defaults
     )
 
     new App.ControllerForm(
-      el:       @el.find('.article-form-top')
-      form_id:  @form_id
-      model:    App.TicketArticle
-      screen:   'create_top'
-      params:   defaults
+      el:             @el.find('.article-form-top')
+      form_id:        @form_id
+      model:          App.TicketArticle
+      screen:         'create_top'
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      params:         defaults
+      handlersConfig: handlers
     )
     new App.ControllerForm(
-      el:       @el.find('.ticket-form-middle')
-      form_id:  @form_id
-      model:    App.Ticket
-      screen:   'create_middle'
-      handlers: [
-        @ticketFormChanges
-      ]
-      filter:     @formMeta.filter
-      params:     defaults
-      noFieldset: true
+      el:             @el.find('.ticket-form-middle')
+      form_id:        @form_id
+      model:          App.Ticket
+      screen:         'create_middle'
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      params:         defaults
+      noFieldset:     true
+      handlersConfig: handlers
     )
     if !_.isEmpty(App.Ticket.attributesGet('create_bottom', false, true))
       new App.ControllerForm(
-        el:       @el.find('.ticket-form-bottom')
-        form_id:  @form_id
-        model:    App.Ticket
-        screen:   'create_bottom'
-        handlers: [
-          @ticketFormChanges
-        ]
-        filter:    @formMeta.filter
-        params:    defaults
+        el:             @el.find('.ticket-form-bottom')
+        form_id:        @form_id
+        model:          App.Ticket
+        screen:         'create_bottom'
+        handlersConfig: handlers
+        filter:         @formMeta.filter
+        formMeta:       @formMeta
+        params:         defaults
       )
 
     new App.ControllerDrox(

@@ -45,8 +45,8 @@ class App.TaskbarWidget extends App.CollectionController
       @queue.push ['destroy', tasks]
       @uIRunner()
     )
-    @bind('taskCollectionOrderSet', (task_keys) =>
-      @collectionOrderSet(task_keys)
+    @bind('taskCollectionOrderSet', (taskKeys) =>
+      @collectionOrderSet(taskKeys)
     )
 
   itemGet: (key) ->

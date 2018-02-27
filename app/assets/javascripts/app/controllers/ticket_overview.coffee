@@ -1249,15 +1249,15 @@ class BulkForm extends App.Controller
 
     @html App.view('agent_ticket_view/bulk')()
 
+    handlers = @Config.get('TicketZoomFormHandler')
+
     new App.ControllerForm(
       el: @$('#form-ticket-bulk')
       model:
         configure_attributes: @configure_attributes_ticket
         className:            'create'
         labelClass:           'input-group-addon'
-      handlers: [
-        @ticketFormChanges
-      ]
+      handlersConfig: handlers
       params:     {}
       filter:     @formMeta.filter
       noFieldset: true

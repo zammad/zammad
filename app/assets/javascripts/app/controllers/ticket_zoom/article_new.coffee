@@ -519,7 +519,7 @@ class App.TicketZoomArticleNew extends App.Controller
     # detect current signature (use current group_id, if not set, use ticket.group_id)
     ticketCurrent = App.Ticket.fullLocal(@ticket_id)
     group_id = ticketCurrent.group_id
-    task = App.TaskManager.get(@task_key)
+    task = App.TaskManager.get(@taskKey)
     if task && task.state && task.state.ticket && task.state.ticket.group_id
       group_id = task.state.ticket.group_id
     group = App.Group.find(group_id)

@@ -18,7 +18,7 @@ class SidebarIdoit extends App.Controller
 
   changeObjects: =>
     new App.IdoitObjectSelector(
-      task_key: @task_key
+      taskKey: @taskKey
       container: @el.closest('.content')
       callback: (objectIds, objectSelectorUi) =>
         if @ticket && @ticket.id
@@ -54,7 +54,7 @@ class SidebarIdoit extends App.Controller
 
     # ajax call to show items
     @ajax(
-      id:    "idoit-#{@task_key}"
+      id:    "idoit-#{@taskKey}"
       type:  'POST'
       url:   "#{@apiPath}/integration/idoit"
       data:  JSON.stringify(method: 'cmdb.objects', filter: ids: @objectIds)

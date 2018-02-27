@@ -12,6 +12,7 @@ class Edit extends App.ObserverController
     ticketState = App.TicketState.find(defaults.state_id).name
 
     taskState = @taskGet('ticket')
+    handlers = @Config.get('TicketZoomFormHandler')
 
     if !_.isEmpty(taskState)
       defaults = _.extend(defaults, taskState)
@@ -20,29 +21,27 @@ class Edit extends App.ObserverController
        followUpPossible != 'new_ticket' ||
        @permissionCheck('admin') || @permissionCheck('ticket.agent')
       new App.ControllerForm(
-        elReplace: @el
-        model:     App.Ticket
-        screen:    'edit'
-        handlers:  [
-          @ticketFormChanges
-        ]
-        filter:     @formMeta.filter
-        params:     defaults
-        isDisabled: !ticket.editable()
-        #bookmarkable: true
+        elReplace:      @el
+        model:          App.Ticket
+        screen:         'edit'
+        handlersConfig: handlers
+        filter:         @formMeta.filter
+        formMeta:       @formMeta
+        params:         defaults
+        isDisabled:     !ticket.editable()
+        #bookmarkable:  true
       )
     else
       new App.ControllerForm(
-        elReplace: @el
-        model:     App.Ticket
-        screen:    'edit'
-        handlers:  [
-          @ticketFormChanges
-        ]
-        filter:     @formMeta.filter
-        params:     defaults
-        isDisabled: ticket.editable()
-        #bookmarkable: true
+        elReplace:      @el
+        model:          App.Ticket
+        screen:         'edit'
+        handlersConfig: handlers
+        filter:         @formMeta.filter
+        formMeta:       @formMeta
+        params:         defaults
+        isDisabled:     ticket.editable()
+        #bookmarkable:  true
       )
 
     @markForm(true)
@@ -137,7 +136,7 @@ class SidebarTicket extends App.Controller
   showTicketMerge: =>
     new App.TicketMerge(
       ticket:    @ticket
-      task_key:  @task_key
+      taskKey:   @taskKey
       container: @el.closest('.content')
     )
 

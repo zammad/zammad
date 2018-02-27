@@ -281,6 +281,7 @@ class _taskManagerSingleton extends App.Controller
       @domStore[domKey] = { el: el }
     params_app['el'] = el
     params_app['task_key'] = params.key
+    params_app['taskKey'] = params.key
     if !params.show
       params_app['doNotLog'] = 1
 
@@ -555,18 +556,19 @@ class _taskManagerSingleton extends App.Controller
         @tasksToUpdate[task.key] = 'inProgress'
         taskUpdate = App.Taskbar.findByAttribute('key', task.key)
         if !taskUpdate
-          taskUpdate = new App.Taskbar
+          delete ui.tasksToUpdate[@key]
+          continue
         taskUpdate.load(task)
         if taskUpdate.isOnline()
           ui = @
           taskUpdate.save(
             done: ->
-              if ui.tasksToUpdate[ @key ] is 'inProgress'
-                delete ui.tasksToUpdate[ @key ]
+              if ui.tasksToUpdate[@key] is 'inProgress'
+                delete ui.tasksToUpdate[@key]
             fail: ->
               ui.log 'error', "can't update task", @
-              if ui.tasksToUpdate[ @key ] is 'inProgress'
-                delete ui.tasksToUpdate[ @key ]
+              if ui.tasksToUpdate[@key] is 'inProgress'
+                delete ui.tasksToUpdate[@key]
           )
 
   taskDestroy: (task) ->
@@ -584,12 +586,12 @@ class _taskManagerSingleton extends App.Controller
 
     # destroy task in backend
     delete @tasksToUpdate[task.key]
+    delete @tasksPreferences[task.key]
 
     # if task isnt already stored on backend
     return if !task.id
+    return if !App.Taskbar.exists(task.id)
     App.Taskbar.destroy(task.id)
-
-    delete @tasksPreferences[task.key]
 
   tasksAutoCleanupDelay: =>
     delay = =>

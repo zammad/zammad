@@ -48,7 +48,7 @@ class App.OrganizationProfile extends App.Controller
     new Object(
       el:        elLocal.find('.js-object-container')
       object_id: organization.id
-      task_key:  @task_key
+      taskKey:  @taskKey
     )
 
     new ActionRow(
@@ -135,7 +135,7 @@ class Object extends App.ObserverController
   render: (organization) =>
 
     # update taskbar with new meta data
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@taskKey)
 
     # get display data
     organizationData = []

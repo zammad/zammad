@@ -227,7 +227,7 @@ class App.Controller extends Spine.Controller
       App.Config.set('requested_url', location)
 
     if closeTab
-      App.TaskManager.remove(@task_key)
+      App.TaskManager.remove(@taskKey)
 
     # redirect to login
     @navigate '#login'
@@ -547,32 +547,6 @@ class App.Controller extends Spine.Controller
     item.created_by = App.User.findNative(item.created_by_id)
     item
 
-  # central method, is getting called on every ticket form change
-  ticketFormChanges: (params, attribute, attributes, classname, form, ui) =>
-    if @formMeta.dependencies && @formMeta.dependencies[attribute.name]
-      dependency = @formMeta.dependencies[attribute.name][ parseInt(params[attribute.name]) ]
-      if !dependency
-        dependency = @formMeta.dependencies[attribute.name][ params[attribute.name] ]
-      if dependency
-        for fieldNameToChange of dependency
-          filter = []
-          if dependency[fieldNameToChange]
-            filter = dependency[fieldNameToChange]
-
-          # find element to replace
-          for item in attributes
-            if item.name is fieldNameToChange
-              item['filter'] = {}
-              item['filter'][ fieldNameToChange ] = filter
-              item.default = params[item.name]
-              #if !item.default
-              #  delete item['default']
-              newElement = ui.formGenItem(item, classname, form)
-
-          # replace new option list
-          if newElement
-            form.find('[name="' + fieldNameToChange + '"]').closest('.form-group').replaceWith(newElement)
-
   stopPropagation: (e) ->
     e.stopPropagation()
 
@@ -592,19 +566,19 @@ class App.Controller extends Spine.Controller
     @clearDelay(@initLoadingDoneDelay)
 
   renderScreenSuccess: (data) ->
-    App.TaskManager.touch(@task_key) if @task_key
+    App.TaskManager.touch(@taskKey) if @taskKey
     (data.el || @).html App.view('generic/error/success')(data)
 
   renderScreenError: (data) ->
-    App.TaskManager.touch(@task_key) if @task_key
+    App.TaskManager.touch(@taskKey) if @taskKey
     (data.el || @).html App.view('generic/error/generic')(data)
 
   renderScreenNotFound: (data) ->
-    App.TaskManager.touch(@task_key) if @task_key
+    App.TaskManager.touch(@taskKey) if @taskKey
     (data.el || @).html App.view('generic/error/not_found')(data)
 
   renderScreenUnauthorized: (data) ->
-    App.TaskManager.touch(@task_key) if @task_key
+    App.TaskManager.touch(@taskKey) if @taskKey
     (data.el || @).html App.view('generic/error/unauthorized')(data)
 
   locationVerify: (e) =>
@@ -901,7 +875,7 @@ class App.UpdateTastbar extends App.Controller
   update: (genericObject) =>
 
     # update taskbar with new meta data
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@taskKey)
 
 class App.ControllerWidgetPermanent extends App.Controller
   constructor: (params) ->
