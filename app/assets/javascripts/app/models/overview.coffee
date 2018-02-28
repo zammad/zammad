@@ -74,3 +74,11 @@ Sie können auch individuelle Übersichten für einzelne Agenten oder agenten Gr
 
   uiUrl: ->
     "#ticket/view/#{@link}"
+
+  @groupByAttributes: ->
+    groupByAttributes = {}
+    for key, attribute of App.Ticket.attributesGet()
+      if !key.match(/(_at|_no)$/) && attribute.tag isnt 'datetime' && key isnt 'number' && key isnt 'tags'
+        key = key.replace(/_(id|ids)$/, '')
+        groupByAttributes[key] = attribute.display
+    groupByAttributes

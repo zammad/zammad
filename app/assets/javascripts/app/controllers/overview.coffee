@@ -4,6 +4,11 @@ class Index extends App.ControllerSubContent
   constructor: ->
     super
 
+    # update group by with current attributes
+    for attribute in App.Overview.configure_attributes
+      if attribute.name is 'group_by'
+        attribute.options = App.Overview.groupByAttributes()
+
     new App.ControllerGenericIndex(
       el: @el
       id: @id

@@ -1430,49 +1430,43 @@ class App.OverviewSettings extends App.ControllerModal
       })
 
     @configure_attributes_article.push({
-      name:    "view::#{@view_mode}"
-      display: 'Attributes'
-      tag:     'checkboxTicketAttributes'
-      default: @overview.view[@view_mode]
-      null:    false
+      name:      "view::#{@view_mode}"
+      display:   'Attributes'
+      tag:       'checkboxTicketAttributes'
+      default:   @overview.view[@view_mode]
+      null:      false
       translate: true
-      sortBy:  null
+      sortBy:    null
     },
     {
-      name:    'order::by'
-      display: 'Order'
-      tag:     'selectTicketAttributes'
-      default: @overview.order.by
-      null:    false
+      name:      'order::by'
+      display:   'Order'
+      tag:       'selectTicketAttributes'
+      default:   @overview.order.by
+      null:      false
       translate: true
-      sortBy:  null
+      sortBy:    null
     },
     {
-      name:    'order::direction'
-      display: 'Direction'
-      tag:     'select'
-      default: @overview.order.direction
-      null:    false
+      name:      'order::direction'
+      display:   'Direction'
+      tag:       'select'
+      default:   @overview.order.direction
+      null:      false
       translate: true
       options:
         ASC:  'up'
         DESC: 'down'
     },
     {
-      name:    'group_by'
-      display: 'Group by'
-      tag:     'select'
-      default: @overview.group_by
-      null:    true
+      name:       'group_by'
+      display:    'Group by'
+      tag:        'select'
+      default:    @overview.group_by
+      null:       true
       nulloption: true
       translate:  true
-      options:
-        customer:       'Customer'
-        organization:   'Organization'
-        state:          'State'
-        priority:       'Priority'
-        group:          'Group'
-        owner:          'Owner'
+      options:    App.Overview.groupByAttributes()
     })
 
     controller = new App.ControllerForm(
