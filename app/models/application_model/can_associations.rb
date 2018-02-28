@@ -22,6 +22,7 @@ returns
       groups:    :group_names_access_map=,
       group_ids: :group_ids_access_map=
     }.each do |param, setter|
+      next if !params.key?(param)
       map = params[param]
       next if !respond_to?(setter)
       send(setter, map)
