@@ -229,6 +229,19 @@ RSpec.shared_examples 'HasGroups' do
             described_class.group_through.klass.count
           }.by(3)
         end
+
+        it 'allows empty Hash value' do
+          group_access_instance.group_names_access_map = {
+            group_full.name => 'full',
+            group_read.name => %w[read change],
+          }
+
+          expect do
+            group_access_instance.group_names_access_map = {}
+          end.to change {
+            described_class.group_through.klass.count
+          }.by(-3)
+        end
       end
 
       context 'new instance' do
@@ -255,6 +268,16 @@ RSpec.shared_examples 'HasGroups' do
           end.to change {
             described_class.group_through.klass.count
           }.by(2)
+        end
+
+        it 'allows empty Hash value' do
+          expect do
+            new_group_access_instance.group_names_access_map = {}
+
+            new_group_access_instance.save
+          end.not_to change {
+            described_class.group_through.klass.count
+          }
         end
       end
     end
@@ -284,6 +307,18 @@ RSpec.shared_examples 'HasGroups' do
 
         expect(group_access_instance_inactive.group_names_access_map).to be_empty
       end
+
+      it 'returns empty map if none is stored' do
+
+        group_access_instance.group_names_access_map = {
+          group_full.name => 'full',
+          group_read.name => 'read',
+        }
+
+        group_access_instance.group_names_access_map = {}
+
+        expect(group_access_instance.group_names_access_map).to be_blank
+      end
     end
 
     context '#group_ids_access_map=' do
@@ -305,7 +340,7 @@ RSpec.shared_examples 'HasGroups' do
           }.by(2)
         end
 
-        it 'stores Hash with String values' do
+        it 'stores Hash with Array<String> values' do
           expect do
             group_access_instance.group_ids_access_map = {
               group_full.id => 'full',
@@ -314,6 +349,19 @@ RSpec.shared_examples 'HasGroups' do
           end.to change {
             described_class.group_through.klass.count
           }.by(3)
+        end
+
+        it 'allows empty Hash value' do
+          group_access_instance.group_ids_access_map = {
+            group_full.id => 'full',
+            group_read.id => %w[read change],
+          }
+
+          expect do
+            group_access_instance.group_ids_access_map = {}
+          end.to change {
+            described_class.group_through.klass.count
+          }.by(-3)
         end
       end
 
@@ -342,6 +390,16 @@ RSpec.shared_examples 'HasGroups' do
             described_class.group_through.klass.count
           }.by(2)
         end
+
+        it 'allows empty Hash value' do
+          expect do
+            new_group_access_instance.group_ids_access_map = {}
+
+            new_group_access_instance.save
+          end.not_to change {
+            described_class.group_through.klass.count
+          }
+        end
       end
     end
 
@@ -369,6 +427,18 @@ RSpec.shared_examples 'HasGroups' do
         }
 
         expect(group_access_instance_inactive.group_ids_access_map).to be_empty
+      end
+
+      it 'returns empty map if none is stored' do
+
+        group_access_instance.group_ids_access_map = {
+          group_full.id => 'full',
+          group_read.id => 'read',
+        }
+
+        group_access_instance.group_ids_access_map = {}
+
+        expect(group_access_instance.group_ids_access_map).to be_blank
       end
     end
 

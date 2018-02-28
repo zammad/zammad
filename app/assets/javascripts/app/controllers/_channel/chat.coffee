@@ -348,7 +348,7 @@ class App.ChannelChat extends App.ControllerSubContent
         params[key] = value
     paramString = ''
     for key, value of params
-      if value != ''
+      if !_.isEmpty(value)
         if paramString != ''
           # coffeelint: disable=no_unnecessary_double_quotes
           paramString += ",\n"

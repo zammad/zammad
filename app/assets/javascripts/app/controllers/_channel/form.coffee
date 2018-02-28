@@ -55,7 +55,7 @@ class App.ChannelForm extends App.ControllerSubContent
     params = @formParam(@$('.js-paramsDesigner'))
     paramString = ''
     for key, value of params
-      if value != ''
+      if !_.isEmpty(value)
         if paramString != ''
           paramString += ",\n"
         if value == 'true' || value == 'false'

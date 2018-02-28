@@ -460,6 +460,31 @@ class App.ControllerForm extends App.Controller
       else
         param[item.name] = value
 
+    # verify if we have not checked checkboxes
+    uncheckParam = {}
+    lookupForm.find('input[type=checkbox]').each( (index) ->
+      checked = $(@).attr('checked')
+      name = $(@).attr('name')
+      if name && !checked && (!(name of param) || param[name] is '')
+        if !(name of uncheckParam)
+          uncheckParam[name] = undefined
+        else
+          uncheckParam[name] = []
+    )
+
+    # verify if we have not checked radios
+    lookupForm.find('input[type=radio]').each( (index) ->
+      checked = $(@).attr('checked')
+      name = $(@).attr('name')
+      if name && !checked && !(name of param)
+        uncheckParam[name] = undefined
+    )
+
+    # apply empty checkboxes & radio values to params
+    for key, value of uncheckParam
+      if !(key of param)
+        param[key] = value
+
     # data type conversion
     for key of param
 

@@ -7,8 +7,8 @@ module HasGroups
 
     attr_accessor :group_access_buffer
 
-    after_create :check_group_access_buffer
-    after_update :check_group_access_buffer
+    after_create :process_group_access_buffer
+    after_update :process_group_access_buffer
 
     association_attributes_ignored :groups, group_through_identifier
 
@@ -211,46 +211,58 @@ module HasGroups
   end
 
   def groups_access_map_store(map)
-    map.each do |group_identifier, accesses|
-      # use given key as identifier or look it up
-      # via the given block which returns the identifier
-      group_id = block_given? ? yield(group_identifier) : group_identifier
+    fill_group_access_buffer do
+      Hash(map).each do |group_identifier, accesses|
+        # use given key as identifier or look it up
+        # via the given block which returns the identifier
+        group_id = block_given? ? yield(group_identifier) : group_identifier
 
-      if !accesses.is_a?(Array)
-        accesses = [accesses]
-      end
-
-      accesses.each do |access|
-        push_group_access_buffer(
-          group_id: group_id,
-          access:   access
-        )
+        Array(accesses).each do |access|
+          push_group_access_buffer(
+            group_id: group_id,
+            access:   access
+          )
+        end
       end
     end
+  end
 
-    check_group_access_buffer if id
+  def fill_group_access_buffer
+    @group_access_buffer = []
+    yield
+    process_group_access_buffer if id
   end
 
   def push_group_access_buffer(entry)
-    @group_access_buffer ||= []
     @group_access_buffer.push(entry)
   end
 
-  def check_group_access_buffer
-    return if group_access_buffer.blank?
-    destroy_group_relations
+  def flush_group_access_buffer
+    # group_access_buffer is at least an empty Array
+    # if changes to the map were performed
+    # otherwise it's just an update of other attributes
+    return if group_access_buffer.nil?
+    yield
+    group_access_buffer = nil
+    cache_delete
+  end
 
-    foreign_key = group_through.foreign_key
-    entries     = group_access_buffer.collect do |entry|
-      entry[foreign_key] = id
-      entry
+  def process_group_access_buffer
+
+    flush_group_access_buffer do
+      destroy_group_relations
+
+      break if group_access_buffer.blank?
+
+      foreign_key = group_through.foreign_key
+      entries     = group_access_buffer.collect do |entry|
+        entry[foreign_key] = id
+        entry
+      end
+
+      group_through.klass.create!(entries)
     end
 
-    group_through.klass.create!(entries)
-
-    group_access_buffer = nil
-
-    cache_delete
     true
   end
 
