@@ -85,12 +85,13 @@ returns
     list = []
     overviews.each do |overview|
       query_condition, bind_condition, tables = Ticket.selector2sql(overview.condition, user)
+      direction = overview.order[:direction]
+      order_by = overview.order[:by]
 
       # validate direction
-      raise "Invalid order direction '#{overview.order[:direction]}'" if overview.order[:direction] && overview.order[:direction] !~ /^(ASC|DESC)$/i
+      raise "Invalid order direction '#{direction}'" if direction && direction !~ /^(ASC|DESC)$/i
 
       # check if order by exists
-      order_by = overview.order[:by]
       if !ticket_attributes.key?(order_by)
         order_by = if ticket_attributes.key?("#{order_by}_id")
                      "#{order_by}_id"
@@ -98,7 +99,7 @@ returns
                      'created_at'
                    end
       end
-      order_by = "tickets.#{order_by} #{overview.order[:direction]}"
+      order_by = "tickets.#{order_by}"
 
       # check if group by exists
       if overview.group_by.present?
@@ -117,13 +118,14 @@ returns
                             .where(access_condition)
                             .where(query_condition, *bind_condition)
                             .joins(tables)
-                            .order(order_by)
-                            .limit(1000)
+                            .order("#{order_by} #{direction}")
+                            .limit(2000)
+                            .pluck(:id, :updated_at, order_by)
 
       tickets = ticket_result.map do |ticket|
         {
-          id: ticket[:id],
-          updated_at: ticket[:updated_at],
+          id: ticket[0],
+          updated_at: ticket[1],
         }
       end
 
