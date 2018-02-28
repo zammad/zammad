@@ -4958,7 +4958,6 @@ footer {
       font-size: 13px;
       color: hsl(60,1%,34%);
       font-weight: 500;
-      text-transform: uppercase;
       padding: 0 7px;
     }
 
@@ -4971,7 +4970,7 @@ footer {
 
   .attachments-block {
     margin-bottom: 12px;
-    
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -5324,10 +5323,19 @@ footer {
       margin: 6px -12px 30px;
     }
 
-    .attachment {
-      display: block;
+    .attachment.attachment--row {
       font-size: 13px;
       padding: 1px 10px 1px 7px;
+      @include rtl(padding, 1px 7px 1px 10px);
+      cursor: default;
+      position: relative;
+      display: flex;
+    }
+
+    .attachment.attachment--preview {
+      display: block;
+      font-size: 13px;
+      padding: 9px 4px 9px 43px;
       position: relative;
       min-height: 42px;
       color: inherit;
@@ -5338,10 +5346,6 @@ footer {
         border-bottom: none;
       }
     }
-
-      .attachment--preview {
-        padding: 9px 4px 9px 43px;
-      }
 
       .attachment-icon {
         position: absolute;
@@ -5361,20 +5365,20 @@ footer {
         }
       }
 
-      .attachment-name {
+      .attachment--preview .attachment-name {
         min-width: 0;
         display: block;
         @extend .u-highlight;
         word-break: break-all;
       }
 
-      .attachment-size {
+      .attachment--preview .attachment-size {
         white-space: nowrap;
         font-size: 11px;
         color: hsl(200,8%,77%);
       }
 
-      .attachment-delete {
+      .attachment--preview .attachment-delete {
         color: hsl(198,19%,72%);
         text-decoration: underline;
         display: none;
@@ -5384,7 +5388,7 @@ footer {
         user-select: none;
       }
 
-      .attachment:hover .attachment-delete {
+      .attachment:hover .attachment--preview .attachment-delete {
         padding: 0 10px 0 30px;
         float: right;
         display: block;
@@ -5393,7 +5397,45 @@ footer {
         background: linear-gradient(to right, hsla(200,20%,97%,0), hsla(200,20%,97%,1) 20px);
       }
 
-        .attachment-delete .icon {
+        .attachment--preview .attachment-delete .icon {
+          fill: hsl(198,18%,72%);
+          width: 9px;
+          height: 9px;
+          @include bidi-style(margin-right, 5px, margin-left, 0);
+        }
+
+      .attachment--row .attachment-name {
+        @include bidi-style(margin-right, 5px, margin-left, 0);
+        min-width: 0;
+        @extend .u-highlight;
+      }
+
+      .attachment--row .attachment-size {
+        white-space: nowrap;
+        float: right;
+        @include bidi-style(margin-right, 10px, margin-left, 0);
+      }
+
+      .attachment--row .attachment-delete {
+        color: hsl(198,19%,72%);
+        text-decoration: underline;
+        display: none;
+        white-space: nowrap;
+        @include bidi-style(margin-left, auto, margin-right, 0);
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .attachment:hover.attachment--row .attachment-delete {
+        padding: 0 10px 0 30px;
+        float: right;
+        display: block;
+        position: absolute;
+        right: 0;
+        background: linear-gradient(to right, hsla(200,20%,97%,0), hsla(200,20%,97%,1) 20px);
+      }
+
+       .attachment--row .attachment-delete .icon {
           fill: hsl(198,18%,72%);
           width: 9px;
           height: 9px;

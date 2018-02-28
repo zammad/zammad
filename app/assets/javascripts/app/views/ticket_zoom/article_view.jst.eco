@@ -57,8 +57,9 @@
             <div class="attachments-title"><%- @article.attachments.length %> <%- @T('Attached Files') %></div>
             <% for attachment in @article.attachments: %>
               <% if !@C('ui_ticket_zoom_attachments_preview'): %>
-                <div class="attachment">
+                <div class="attachment attachment--row">
                   <a class="attachment-name u-highlight" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>?disposition=attachment" target="_blank" data-type="attachment"><%= attachment.filename %></a>
+                  <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
                 </div>
               <% else: %>
                 <a class="attachment attachment--preview" title="<%- attachment.preferences['Content-Type'] %>" target="_blank" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>?disposition=attachment" data-type="attachment"<% if @canDownload(attachment.preferences['Content-Type']): %> download<% end %>>
