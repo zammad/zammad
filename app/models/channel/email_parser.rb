@@ -515,7 +515,7 @@ returns
       file.write msg
     end
     return false if exception == false
-    raise e.inspect + e.backtrace.inspect
+    raise e.inspect + "\n" + e.backtrace.join("\n")
   end
 
   def _process(channel, msg)
