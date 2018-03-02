@@ -374,7 +374,7 @@ cleanup html string:
 
   def self.cleanup_target(string)
     string = CGI.unescape(string).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-    string.gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '')
+    string.gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '').delete("\u0000")
   end
 
   def self.url_same?(url_new, url_old)
