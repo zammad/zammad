@@ -364,7 +364,7 @@ class TicketsController < ApplicationController
       }
       return
     end
-    access!(ticket_master, 'full')
+    access!(ticket_master, 'change')
 
     # check slave ticket
     ticket_slave = Ticket.find_by(id: params[:slave_ticket_id])
@@ -375,7 +375,7 @@ class TicketsController < ApplicationController
       }
       return
     end
-    access!(ticket_slave, 'full')
+    access!(ticket_slave, 'change')
 
     # merge ticket
     ticket_slave.merge_to(

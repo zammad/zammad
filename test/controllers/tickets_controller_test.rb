@@ -2020,4 +2020,108 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal('Cannot follow up on a closed ticket. Please create a new ticket.', result['error'])
   end
 
+  test '07.01 ticket merge' do
+    group_no_permission = Group.create_or_update(
+      name: 'GroupWithNoPermission',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket1 = Ticket.create!(
+      title: 'ticket merge1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket2 = Ticket.create!(
+      title: 'ticket merge2',
+      group: Group.lookup(name: 'Users'),
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket3 = Ticket.create!(
+      title: 'ticket merge2',
+      group: group_no_permission,
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+
+    get "/api/v1/ticket_merge/#{ticket2.id}/#{ticket1.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('failed', result['result'])
+    assert_equal('No such master ticket number!', result['message'])
+
+    get "/api/v1/ticket_merge/#{ticket3.id}/#{ticket1.number}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Not authorized', result['error'])
+    assert_equal('Not authorized', result['error_human'])
+
+    get "/api/v1/ticket_merge/#{ticket1.id}/#{ticket3.number}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Not authorized', result['error'])
+    assert_equal('Not authorized', result['error_human'])
+
+    get "/api/v1/ticket_merge/#{ticket1.id}/#{ticket2.number}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    p @response.body
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('success', result['result'])
+    assert_equal(ticket2.id, result['master_ticket']['id'])
+  end
+
+  test '07.02 ticket merge - change permission' do
+    group_change_permission = Group.create_or_update(
+      name: 'GroupWithChangePermission',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket1 = Ticket.create!(
+      title: 'ticket merge1',
+      group: group_change_permission,
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket2 = Ticket.create!(
+      title: 'ticket merge2',
+      group: group_change_permission,
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    @agent.group_names_access_map = { group_change_permission.name => %w[read change] }
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+
+    get "/api/v1/ticket_merge/#{ticket1.id}/#{ticket2.number}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('success', result['result'])
+    assert_equal(ticket2.id, result['master_ticket']['id'])
+  end
+
 end
