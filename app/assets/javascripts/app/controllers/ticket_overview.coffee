@@ -1260,6 +1260,7 @@ class BulkForm extends App.Controller
       handlersConfig: handlers
       params:     {}
       filter:     @formMeta.filter
+      formMeta:   @formMeta
       noFieldset: true
     )
 
