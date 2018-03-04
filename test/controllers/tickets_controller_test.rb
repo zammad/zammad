@@ -2079,7 +2079,6 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
 
     get "/api/v1/ticket_merge/#{ticket1.id}/#{ticket2.number}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
-    p @response.body
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('success', result['result'])
