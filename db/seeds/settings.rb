@@ -3739,3 +3739,16 @@ Setting.create_if_not_exists(
   preferences: { online_service_disable: true },
   frontend: false
 )
+
+Setting.create_if_not_exists(
+  title: 'HTML Email CSS Font',
+  name: 'html_email_css_font',
+  area: 'Core',
+  description: 'Defines the CSS font information for HTML Emails.',
+  options: {},
+  state: "font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;",
+  preferences: {
+    permission: ['admin'],
+  },
+  frontend: false
+)
