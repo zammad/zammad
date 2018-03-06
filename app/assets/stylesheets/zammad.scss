@@ -426,6 +426,19 @@ pre code.hljs {
     .icon {
       vertical-align: middle;
       @include bidi-style(margin-right, 5px, margin-left, 0);
+      
+      &:only-child {
+        @include bidi-style(margin-right, 5px, margin-left, 0);
+      }
+    }
+
+    .btn-label {
+      margin-left: 0;
+    }
+
+    &.btn--text {
+      padding: 4px 9px;
+      margin: 5px 6px 0;
     }
   }
 
@@ -463,6 +476,10 @@ pre code.hljs {
     &.btn--slim {
       padding-left: 7px !important;
       padding-right: 7px !important;
+      
+      .btn-label {
+        @include bidi-style(margin-left, 0, margin-right, 0);
+      }
 
       &.btn--small {
         padding-left: 5px !important;
@@ -1050,9 +1067,12 @@ th.align-right {
   }
 }
 
-.table .icon-draggable,
-.table .icon-trash {
+.table .icon {
   vertical-align: middle;
+  fill: currentColor;
+}
+
+.table .icon-draggable {
   fill: hsl(240,1%,77%);
 }
 
@@ -6490,6 +6510,16 @@ footer {
       box-shadow: none;
     }
 
+  .dropdown-menu > li.danger:hover,
+  .dropdown-menu > li.danger.is-active {
+    background: hsl(0,65%,55%);
+  }
+
+  .dropdown-menu > li.create:hover,
+  .dropdown-menu > li.create.is-active {
+    background: hsl(145,51%,45%);
+  }
+
   .dropdown-menu > li > a {
     color: inherit;
     padding: 0 15px;
@@ -6499,7 +6529,7 @@ footer {
 
   .dropdown-menu > li > a:hover {
     color: inherit;
-    background: hsl(205,90%,60%);
+    background: none;
   }
 
   .dropdown-menu > li > a span {

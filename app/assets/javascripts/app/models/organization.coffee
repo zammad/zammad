@@ -10,6 +10,7 @@ class App.Organization extends App.Model
     { name: 'updated_by_id',  display: 'Updated by',    relation: 'User', readonly: 1, info: false },
     { name: 'updated_at',     display: 'Updated at',    tag: 'datetime',  readonly: 1, info: false },
   ]
+  @configure_clone = true
   @configure_overview = [
     'name',
     'shared',

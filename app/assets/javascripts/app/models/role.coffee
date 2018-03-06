@@ -13,6 +13,7 @@ class App.Role extends App.Model
     { name: 'updated_by_id',      display: 'Updated by',        relation: 'User', readonly: 1 },
     { name: 'updated_at',         display: 'Updated',           tag: 'datetime', readonly: 1 },
   ]
+  @configure_clone = true
   @configure_overview = [
     'name', 'default_at_signup',
   ]
