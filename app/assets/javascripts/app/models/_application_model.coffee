@@ -816,17 +816,16 @@ set new attributes of model (remove already available attributes)
     )
 
   @clearInMemory: ->
-    return if !@className
+    # reset callbacks to session based functions
+    @resetCallbacks()
 
     # reset attributes to prevent cached forms on relogin
-    if !_.isEmpty(App[@className].org_configure_attributes)
-      App[@className].configure_attributes = App[@className].org_configure_attributes
+    @resetAttributes()
 
     # reset cached values of model
-    App[@className].deleteAll()
+    @deleteAll()
 
   @updateAttributes: (attributes) ->
-    return if !@className
     if _.isEmpty(@org_configure_attributes)
 
       # use jquery instead of ._clone() because we need a deep copy of the obj
