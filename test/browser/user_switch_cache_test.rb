@@ -29,7 +29,7 @@ class UserSwitchCache < TestCase
       password: 'test',
       url: browser_url,
     )
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#customer_ticket_new"]')
     sleep 4
 
@@ -58,7 +58,7 @@ class UserSwitchCache < TestCase
       password: 'test',
       url: browser_url,
     )
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#customer_ticket_new"]')
     sleep 4
 

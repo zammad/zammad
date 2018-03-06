@@ -31,7 +31,7 @@ class AgentTicketTextModuleTest < TestCase
     )
 
     # try to use them
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]')
     sleep 2
 

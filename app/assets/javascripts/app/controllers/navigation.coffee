@@ -130,6 +130,12 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @recentViewNavbarItemsRebuild()
     items = @getItems(navbar: @Config.get('NavBarRight'))
 
+    # if only one child exists, use direct access
+    for item in items
+      if item && item.child && item.child.length is 1
+        item.target = item.child[0].target
+        delete item.child
+
     # get open tabs to repopen on rerender
     openTab = {}
     @$('.open').children('a').each( (i,d) ->

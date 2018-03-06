@@ -11,7 +11,7 @@ class CustomerTicketCreateTest < TestCase
     )
 
     # customer ticket create
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#customer_ticket_new"]')
     sleep 2
 
