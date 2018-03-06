@@ -180,6 +180,7 @@ class Channel::EmailParser
         filename = 'message.html'
         headers_store = {
           'content-alternative' => true,
+          'original-format' => true,
         }
         if mail.mime_type
           headers_store['Mime-Type'] = mail.html_part.mime_type
@@ -225,6 +226,7 @@ class Channel::EmailParser
       # add body as attachment
       headers_store = {
         'content-alternative' => true,
+        'original-format' => true,
       }
       if mail.mime_type
         headers_store['Mime-Type'] = mail.mime_type

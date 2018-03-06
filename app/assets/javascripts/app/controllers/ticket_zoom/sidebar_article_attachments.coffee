@@ -19,8 +19,9 @@ class SidebarArticleAttachments extends App.Controller
     html = ''
     for ticket_article_id, index in @ticket.article_ids
       article = App.TicketArticle.find(ticket_article_id)
-      if article && article.attachments && !_.isEmpty(article.attachments)
-        html = App.view('ticket_zoom/sidebar_article_attachment')(article: article) + html
+      attachments = App.TicketArticle.contentAttachments(article)
+      if !_.isEmpty(attachments)
+        html = App.view('ticket_zoom/sidebar_article_attachment')(article: article, attachments: attachments) + html
     @el.html(html)
     @el.delegate('.js-attachments img', 'click', (e) =>
       @imageView(e)

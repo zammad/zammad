@@ -47,3 +47,11 @@ class App.TicketArticle extends App.Model
     else if item.type is 'update'
       return App.i18n.translateContent('%s updated Article for |%s|', item.created_by.displayName(), item.title)
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
+
+  @contentAttachments: (article) ->
+    return [] if !article.attachments
+    attachments = []
+    for attachment in article.attachments
+      if attachment && (!attachment.preferences || attachment.preferences && attachment.preferences['original-format'] isnt true)
+        attachments.push attachment
+    attachments
