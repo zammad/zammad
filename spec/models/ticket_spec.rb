@@ -203,6 +203,35 @@ RSpec.describe Ticket do
 
   end
 
+  describe '#selectors' do
+
+    # https://github.com/zammad/zammad/issues/1769
+    it 'does not return multiple results for a single ticket' do
+      source_ticket = create(:ticket)
+      source_ticket2 = create(:ticket)
+
+      # create some articles
+      create(:ticket_article, ticket_id: source_ticket.id, from: 'asdf1@blubselector.de')
+      create(:ticket_article, ticket_id: source_ticket.id, from: 'asdf2@blubselector.de')
+      create(:ticket_article, ticket_id: source_ticket.id, from: 'asdf3@blubselector.de')
+      create(:ticket_article, ticket_id: source_ticket2.id, from: 'asdf4@blubselector.de')
+      create(:ticket_article, ticket_id: source_ticket2.id, from: 'asdf5@blubselector.de')
+      create(:ticket_article, ticket_id: source_ticket2.id, from: 'asdf6@blubselector.de')
+
+      condition = {
+        'article.from' => {
+          operator: 'contains',
+          value: 'blubselector.de',
+        },
+      }
+
+      ticket_count, tickets = Ticket.selectors(condition, 100, nil, 'full')
+
+      expect(ticket_count).to be == 2
+      expect(tickets.count).to be == 2
+    end
+  end
+
   context 'callbacks' do
 
     describe '#reset_pending_time' do

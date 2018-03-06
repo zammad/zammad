@@ -143,4 +143,26 @@ class ImportJob < ApplicationModel
   rescue NameError
     false
   end
+
+  # Returns a list of valid import backends.
+  #
+  # @example
+  #  ImportJob.backends
+  #  # => ['Import::Ldap', 'Import::Exchange', ...]
+  #
+  # return [Boolean]
+  def self.backends
+    Setting.get('import_backends')&.select do |backend|
+
+      if !backend_valid?(backend)
+        logger.error "Invalid import backend '#{backend}'"
+        next
+      end
+
+      # skip deactivated backends
+      next if !backend.constantize.active?
+
+      true
+    end || []
+  end
 end

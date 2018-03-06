@@ -28,9 +28,9 @@ class App.TicketZoomTitle extends App.ObserverController
 
     ticket.save()
 
-    App.TaskManager.mute(@task_key)
+    App.TaskManager.mute(@taskKey)
 
     # update taskbar with new meta data
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@taskKey)
 
     App.Event.trigger('overview:fetch')

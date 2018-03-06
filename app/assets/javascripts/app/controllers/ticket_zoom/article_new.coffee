@@ -92,112 +92,13 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
   setPossibleArticleTypes: =>
-    possibleArticleType =
-      note: true
-      phone: true
-    if @ticket && @ticket.create_article_type_id
-      articleTypeCreate = App.TicketArticleType.find(@ticket.create_article_type_id).name
-      if articleTypeCreate is 'twitter status'
-        possibleArticleType['twitter status'] = true
-      else if articleTypeCreate is 'twitter direct-message'
-        possibleArticleType['twitter direct-message'] = true
-      else if articleTypeCreate is 'email'
-        possibleArticleType['email'] = true
-      else if articleTypeCreate is 'facebook feed post'
-        possibleArticleType['facebook feed comment'] = true
-      else if articleTypeCreate is 'telegram personal-message'
-        possibleArticleType['telegram personal-message'] = true
-    if @ticket && @ticket.customer_id
-      customer = App.User.find(@ticket.customer_id)
-      if customer.email
-        possibleArticleType['email'] = true
-
-    # gets referenced in @setArticleType
+    actionConfig = App.Config.get('TicketZoomArticleAction')
+    keys = _.keys(actionConfig).sort()
     @articleTypes = []
-    if possibleArticleType.note
-      internal = @Config.get('ui_ticket_zoom_article_note_new_internal')
-      @articleTypes.push {
-        name:       'note'
-        icon:       'note'
-        attributes: []
-        internal:   internal,
-        features:   ['attachment']
-      }
-    if possibleArticleType.email
-      attributes = ['to', 'cc', 'subject']
-      if !@Config.get('ui_ticket_zoom_article_email_subject')
-        attributes = ['to', 'cc']
-      @articleTypes.push {
-        name:       'email'
-        icon:       'email'
-        attributes: attributes
-        internal:   false,
-        features:   ['attachment']
-      }
-    if possibleArticleType['facebook feed comment']
-      @articleTypes.push {
-        name:       'facebook feed comment'
-        icon:       'facebook'
-        attributes: []
-        internal:   false,
-        features:   []
-      }
-    if possibleArticleType['twitter status']
-      attributes = ['body:limit', 'body:initials']
-      if !@Config.get('ui_ticket_zoom_article_twitter_initials')
-        attributes = ['body:limit']
-      @articleTypes.push {
-        name:              'twitter status'
-        icon:              'twitter'
-        attributes:        []
-        internal:          false,
-        features:          attributes
-        maxTextLength:     280
-        warningTextLength: 30
-      }
-    if possibleArticleType['twitter direct-message']
-      attributes = ['body:limit', 'body:initials']
-      if !@Config.get('ui_ticket_zoom_article_twitter_initials')
-        attributes = ['body:limit']
-      @articleTypes.push {
-        name:              'twitter direct-message'
-        icon:              'twitter'
-        attributes:        ['to']
-        internal:          false,
-        features:          attributes
-        maxTextLength:     10000
-        warningTextLength: 500
-      }
-    if possibleArticleType.phone
-      @articleTypes.push {
-        name:       'phone'
-        icon:       'phone'
-        attributes: []
-        internal:   false,
-        features:   ['attachment']
-      }
-    if possibleArticleType['telegram personal-message']
-      @articleTypes.push {
-        name:              'telegram personal-message'
-        icon:              'telegram'
-        attributes:        []
-        internal:          false,
-        features:          ['attachment']
-        maxTextLength:     10000
-        warningTextLength: 5000
-      }
-
-    if @permissionCheck('ticket.customer')
-      @type = 'note'
-      @articleTypes = [
-        {
-          name:       'note'
-          icon:       'note'
-          attributes: []
-          internal:   false,
-          features:   ['attachment']
-        },
-      ]
+    for key in keys
+      config = actionConfig[key]
+      if config && config.articleTypes
+        @articleTypes = config.articleTypes(@articleTypes, @ticket, @)
 
   placeCaretAtEnd: (el) ->
     el.focus()
@@ -356,25 +257,13 @@ class App.TicketZoomArticleNew extends App.Controller
     else
       params.internal = false
 
-    if params.type is 'twitter status'
-      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
-      params.content_type = 'text/plain'
-      params.body = App.Utils.html2text(params.body, true)
-
-    if params.type is 'twitter direct-message'
-      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
-      params.content_type = 'text/plain'
-      params.body = App.Utils.html2text(params.body, true)
-
-    if params.type is 'facebook feed comment'
-      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
-      params.content_type = 'text/plain'
-      params.body = App.Utils.html2text(params.body, true)
-
-    if params.type is 'telegram personal-message'
-      App.Utils.htmlRemoveRichtext(@$('[data-name=body]'), false)
-      params.content_type = 'text/plain'
-      params.body = App.Utils.html2text(params.body, true)
+    # backend based validation
+    actionConfig = App.Config.get('TicketZoomArticleAction')
+    keys = _.keys(actionConfig).sort()
+    for key in keys
+      config = actionConfig[key]
+      if config && config.params
+        params = config.params(params.type, params, @)
 
     # add initals?
     for articleType in @articleTypes
@@ -406,37 +295,6 @@ class App.TicketZoomArticleNew extends App.Controller
       )
       return false
 
-    # validate email params
-    if params.type is 'email'
-
-      # check if recipient exists
-      if !params.to && !params.cc
-        new App.ControllerModal(
-          head: 'Text missing'
-          buttonCancel: 'Cancel'
-          buttonCancelClass: 'btn--danger'
-          buttonSubmit: false
-          message: 'Need recipient in "To" or "Cc".'
-          shown: true
-          small: true
-          container: @el.closest('.content')
-        )
-        return false
-
-      # check if message exists
-      if !params.body
-        new App.ControllerModal(
-          head: 'Text missing'
-          buttonCancel: 'Cancel'
-          buttonCancelClass: 'btn--danger'
-          buttonSubmit: false
-          message: 'Text needed'
-          shown: true
-          small: true
-          container: @el.closest('.content')
-        )
-        return false
-
     # check attachment
     if params.body && attachmentCount < 1
       matchingWord = App.Utils.checkAttachmentReference(params.body)
@@ -444,13 +302,13 @@ class App.TicketZoomArticleNew extends App.Controller
         if !confirm(App.i18n.translateContent('You use %s in text but no attachment is attached. Do you want to continue?', matchingWord))
           return false
 
-    if params.type is 'twitter status'
-      textLength = @maxTextLength - App.Utils.textLengthWithUrl(params.body)
-      return false if textLength < 0
-
-    if params.type is 'twitter direct-message'
-      textLength = @maxTextLength - App.Utils.textLengthWithUrl(params.body)
-      return false if textLength < 0
+    # backend based validation
+    actionConfig = App.Config.get('TicketZoomArticleAction')
+    keys = _.keys(actionConfig).sort()
+    for key in keys
+      config = actionConfig[key]
+      if config && config.validation
+        return false if !config.validation(params.type, params, @)
 
     true
 
@@ -516,50 +374,12 @@ class App.TicketZoomArticleNew extends App.Controller
       else
         @setArticleInternal(false)
 
-    # detect current signature (use current group_id, if not set, use ticket.group_id)
-    ticketCurrent = App.Ticket.fullLocal(@ticket_id)
-    group_id = ticketCurrent.group_id
-    task = App.TaskManager.get(@task_key)
-    if task && task.state && task.state.ticket && task.state.ticket.group_id
-      group_id = task.state.ticket.group_id
-    group = App.Group.find(group_id)
-    signature = undefined
-    if group && group.signature_id
-      signature = App.Signature.find(group.signature_id)
-
-    # add/replace signature
-    if signature && signature.body && @type is 'email'
-
-      # if signature has changed, remove it
-      signature_id = @$('[data-signature=true]').data('signature-id')
-      if signature_id && signature_id.toString() isnt signature.id.toString()
-        @$('[data-name=body] [data-signature="true"]').remove()
-
-      # apply new signature
-      signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), ticket: ticketCurrent, config: App.Config.all() })
-
-      body = @$('[data-name=body]')
-      if App.Utils.signatureCheck(body.html() || '', signatureFinished)
-        if !App.Utils.htmlLastLineEmpty(body)
-          body.append('<br><br>')
-        signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
-        App.Utils.htmlStrip(signature)
-        if signaturePosition is 'top'
-          body.prepend(signature)
-        else
-          body.append(signature)
-        @$('[data-name=body]').replaceWith(body)
-
-    # remove old signature
-    else
-      @$('[data-name=body] [data-signature=true]').remove()
-
-    # remove richtext
-    if @type is 'twitter status' || @type is 'twitter direct-message' || @type is 'telegram personal-message'
-      rawHTML = @$('[data-name=body]').html()
-      cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
-      if cleanHTML && cleanHTML.html() != rawHTML
-        @$('[data-name=body]').html(cleanHTML)
+    actionConfig = App.Config.get('TicketZoomArticleAction')
+    keys = _.keys(actionConfig).sort()
+    for key in keys
+      localConfig = actionConfig[key]
+      if localConfig && localConfig.setArticleType
+        localConfig.setArticleType(@type, @ticket, @, signaturePosition)
 
     # show/hide attributes/features
     @maxTextLength = undefined

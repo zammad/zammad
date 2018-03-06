@@ -82,6 +82,7 @@ class ArticleViewItem extends App.ObserverController
     'click .textBubble a':         'stopPropagation'
     'click .js-toggleFold':        'toggleFold'
     'click .richtext-content img': 'imageView'
+    'click .attachments img':      'imageView'
 
   constructor: ->
     super
@@ -178,9 +179,9 @@ class ArticleViewItem extends App.ObserverController
       )
       return
     @html App.view('ticket_zoom/article_view')(
-      ticket:     @ticket
-      article:    article
-      isCustomer: @permissionCheck('ticket.customer')
+      ticket:                @ticket
+      article:               article
+      isCustomer:            @permissionCheck('ticket.customer')
     )
 
     new App.WidgetAvatar(

@@ -50,8 +50,8 @@ class App.TicketZoomAttributeBar extends App.Controller
 
     if @permissionCheck('ticket.agent')
       @taskbarWatcher = new App.TaskbarWatcher(
-        task_key: @task_key
-        el:       localeEl.filter('.js-avatars')
+        taskKey: @taskKey
+        el:      localeEl.filter('.js-avatars')
       )
 
     @html localeEl

@@ -11,7 +11,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     )
     tasks_close_all()
 
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]')
     sleep 2
 
@@ -92,7 +92,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     )
     tasks_close_all()
 
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]')
     sleep 2
 

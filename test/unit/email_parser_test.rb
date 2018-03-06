@@ -1285,6 +1285,35 @@ delete your own text from the attached returned message.
 ",
         },
       },
+      {
+        data: IO.binread('test/fixtures/mail66.box'),
+        body_md5: '346effdbc86ef1f5ea263102fba2e542',
+        attachments: [
+          {
+            md5: '9e56d72f98bbc339c180329e61e21bdf',
+            filename: 'message.html',
+          },
+          {
+            md5: 'ddbdf67aa2f5c60c294008a54d57082b',
+            filename: 'FF_Geburtstagsmail.jpg',
+          },
+          {
+            md5: 'a618d671348735744d4c9a4005b56799',
+            filename: 'team.jpg',
+          },
+        ],
+        params: {
+          from: 'ABC GmbH <info@example.com>',
+          from_email: 'info@example.com',
+          from_display_name: 'ABC GmbH',
+          subject: 'ABC gratuliert!',
+          content_type: 'text/html',
+          body: 'Glückwunschkarte <p>Wenn diese Mail nicht richtig dargestellt wird, dann klicken Sie bitte <a href="http://www.example.com/wlabel/geburtstag/?id=0umjv6klh0skcp4j57kl3ro8jymo4c134rcbh31ezc3bk1wv&amp;xz=d???NvnDNoP???!??a?qH@&gt;+?DI?&amp;nv=1337" rel="nofollow noreferrer noopener" target="_blank" title="http://www.example.com/wlabel/geburtstag/?id=0umjv6klh0skcp4j57kl3ro8jymo4c134rcbh31ezc3bk1wv&amp;xz=d???NvnDNoP???!??a?qH@&gt;+?DI?&amp;nv=1337"><u>hier</u></a>.</p><table border="0" cellpadding="0" cellspacing="0" align="center" style="border:2px solid #ebebeb;"> <tr style="background-color:#ffffff;"> <td> <img src="FF_Geburtstagsmail.jpg" alt="Herzlichen Glückwunsch !"> </td> </tr> <tr> <td style="background-color:#ffffff; padding:30px 30px 0 30px;"> <h1>Sehr geehrte Damen und Herren,</h1> <p>zu Ihrem Geburtstag schicken wir Ihnen ein großes Paket mit guten Wünschen:<br> Viel Erfolg, Energie und ein gutes Gespür für die richtigen Entscheidungen!</p><p>Ihr Ehrentag ist ein guter Anlass zurückzublicken und sich an Erreichtem zu erfreuen. Doch er ist auch Anlass, den Blick nach vorne zu richten. Sich kurz zu orientieren und neue Ziele zu stecken. Unsere besten Wünsche begleiten Sie auf Ihrem zukünftigen Weg und wir freuen uns darauf, Ihnen auch dabei zur Seite zu stehen!</p><p>Heute wünschen wir Ihnen einen schönen Tag im Kreise Ihrer Freunde und Familie.</p><p>Herzliche Grüße</p><p>Ihre ABC</p></td> </tr> <tr> <td style="background-color:#ffffff; padding-left: 30px; font-size: 0.75em;"> <br>
+<br> ABC GmbH<br> Einestraße 23<br> 99999 München<br>
+<br> Telefon.: +49 (0)11 11 11 11-1<br> Fax: +49 (0)11 11 11 11-1<br> <br> <a href="https://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a><br> <p>&nbsp;</p>Geschäftszeiten: Mo-Do 08:00-18:00 Uhr Fr 08:00-17:00 Uhr<br> Sitz der Gesellschaft: München<br> Registergericht: Amtsgericht München, HRB AAAA<br> Geschäftsführer: AAAA, BBBB<br><br></td> </tr>
+</table>',
+        },
+      },
     ]
 
     count = 0

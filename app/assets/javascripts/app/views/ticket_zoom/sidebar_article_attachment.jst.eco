@@ -1,0 +1,20 @@
+<div class="attachments-block js-attachments">
+  <div class="attachments-block-headline"><%- @humanTime(@article.created_at) %></div>
+  <% for attachment in @article.attachments: %>
+    <a class="attachment attachment--preview" title="<%- attachment.preferences['Content-Type'] %>" target="_blank" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>?disposition=attachment" data-type="attachment"<% if @canDownload(attachment.preferences['Content-Type']): %> download<% end %>>
+      <div class="attachment-icon">
+      <% if attachment.preferences && attachment.preferences['Content-Type'] && @ContentTypeIcon(attachment.preferences['Content-Type']): %>
+        <% if @canPreview(attachment.preferences['Content-Type']): %>
+          <img src="<%= App.Config.get('api_path') %>/ticket_attachment/<%= @article.ticket_id %>/<%= @article.id %>/<%= attachment.id %>">
+        <% else: %>
+          <%- @Icon( @ContentTypeIcon(attachment.preferences['Content-Type']) ) %>
+        <% end %>
+      <% else: %>
+        <%- @Icon('file-unknown') %>
+      <% end %>
+      </div>
+      <span class="attachment-name u-highlight"><%= attachment.filename %></span>
+      <div class="attachment-size"><%- @humanFileSize(attachment.size) %></div>
+    </a>
+  <% end %>
+</div>

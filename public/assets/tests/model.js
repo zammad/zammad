@@ -407,4 +407,35 @@ App.Delay.set( function() {
   1400
 );
 
+test("updateAttributes will change existing attributes and add new ones", function() {
+  App.Ticket.resetAttributes();
+
+  var attributesBefore = _.clone(App.Ticket.configure_attributes);
+  var updateAttribute  = _.clone(attributesBefore[0]);
+
+  updateAttribute['new_option_1239393'] = 1;
+
+  App.Ticket.updateAttributes([
+    updateAttribute,
+    {
+      name: 'new_attribute_1010101',
+      display: 'New Attribute',
+      tag: 'input',
+      readonly: 1,
+    },
+  ]);
+
+  var attributesAfterUpdate = _.clone(App.Ticket.configure_attributes);
+
+  equal(attributesAfterUpdate.length, attributesBefore.length + 1, 'new attributes list contains 1 more elements')
+  equal(attributesAfterUpdate[attributesAfterUpdate.length - 1]['name'], 'new_attribute_1010101', 'new attributes list contains the new element')
+  equal(attributesAfterUpdate[0]['new_option_1239393'], 1, 'first element of the new attributes got updated with the new option')
+
+  App.Ticket.resetAttributes();
+  var attributesAfterReset = _.clone(App.Ticket.configure_attributes);
+
+  equal(attributesAfterReset.length, attributesBefore.length, 'new attributes list has the same elements after reset')
+  equal(attributesAfterReset[0]['new_option_1239393'], undefined, 'first element of the new attributes has no attribute new_option_1239393')
+});
+
 }

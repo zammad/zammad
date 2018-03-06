@@ -107,6 +107,11 @@ class ObjectManagerAttributesController < ApplicationController
         if params[:data_option][:options][:true]
           params[:data_option][:options][true] = params[:data_option][:options].delete(:true)
         end
+        if params[:data_option][:default] == 'true'
+          params[:data_option][:default] = true
+        elsif params[:data_option][:default] == 'false'
+          params[:data_option][:default] = false
+        end
         # rubocop:enable Lint/BooleanSymbol
       end
     end

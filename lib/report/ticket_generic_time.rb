@@ -29,10 +29,18 @@ returns
       field: params[:params][:field],
     }
 
+    without_merged_tickets = {
+      'state' => {
+        'operator' => 'is not',
+        'value' => 'merged'
+      }
+    }
+
     selector = params[:selector].clone
     if params[:params].present? && params[:params][:selector].present?
       selector = selector.merge(params[:params][:selector])
     end
+    selector.merge!(without_merged_tickets) # do not show merged tickets in reports
 
     result_es = SearchIndexBackend.selectors(['Ticket'], selector, nil, nil, aggs_interval)
 
@@ -140,10 +148,18 @@ returns
       limit = 100
     end
 
+    without_merged_tickets = {
+      'state' => {
+        'operator' => 'is not',
+        'value' => 'merged'
+      }
+    }
+
     selector = params[:selector].clone
     if params[:params] && params[:params][:selector]
       selector = selector.merge(params[:params][:selector])
     end
+    selector.merge!(without_merged_tickets) # do not show merged tickets in reports
 
     result = SearchIndexBackend.selectors(['Ticket'], selector, limit, nil, aggs_interval)
     return result if params[:sheet].present?

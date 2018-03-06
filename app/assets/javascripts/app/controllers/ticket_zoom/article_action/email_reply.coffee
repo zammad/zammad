@@ -1,15 +1,18 @@
 class EmailReply extends App.Controller
   @action: (actions, ticket, article, ui) ->
-    return actions if ui.permissionCheck('ticket.customer')
-
+    return actions if !ui.permissionCheck('ticket.agent')
     group = ticket.group
-    if group.email_address_id && (article.type.name is 'email' || article.type.name is 'web')
+    return actions if !group.email_address_id
+
+    if article.type.name is 'email' || article.type.name is 'web'
       actions.push {
         name: 'reply'
         type: 'emailReply'
         icon: 'reply'
         href: '#'
       }
+
+      # check if reply all need to be shown
       recipients = []
       if article.sender.name is 'Customer'
         if article.from
@@ -51,6 +54,7 @@ class EmailReply extends App.Controller
           href: '#'
         }
 
+      # always show forward
       actions.push {
         name: 'forward'
         type: 'emailForward'
@@ -113,6 +117,12 @@ class EmailReply extends App.Controller
     # empty form
     articleNew = App.Utils.getRecipientArticle(ticket, article, article_created_by, type, email_addresses, all)
 
+    if ui.Config.get('ui_ticket_zoom_article_email_subject')
+      if _.isEmpty(article.subject)
+        articleNew.subject = ticket.title
+      else
+        articleNew.subject = article.subject
+
     # get current body
     body = ui.el.closest('.ticketZoom').find('.article-add [data-name="body"]').html() || ''
 
@@ -172,6 +182,12 @@ class EmailReply extends App.Controller
     articleNew = {}
     articleNew.body = body
 
+    if ui.Config.get('ui_ticket_zoom_article_email_subject')
+      if _.isEmpty(article.subject)
+        articleNew.subject = "FW: #{ticket.title}"
+      else
+        articleNew.subject = "FW: #{article.subject}"
+
     type = App.TicketArticleType.findByAttribute(name:'email')
 
     App.Event.trigger('ui::ticket::setArticleType', {
@@ -197,6 +213,102 @@ class EmailReply extends App.Controller
           form_id: ui.form_id
         })
     )
+
+    true
+
+  @articleTypes: (articleTypes, ticket, ui) ->
+    return articleTypes if !ui.permissionCheck('ticket.agent')
+    group = ticket.group
+    return articleTypes if !group.email_address_id
+
+    attributes = ['to', 'cc', 'subject']
+    if !ui.Config.get('ui_ticket_zoom_article_email_subject')
+      attributes = ['to', 'cc']
+    articleTypes.push {
+      name:       'email'
+      icon:       'email'
+      attributes: attributes
+      internal:   false,
+      features:   ['attachment']
+    }
+
+    articleTypes
+
+  @setArticleType: (type, ticket, ui, signaturePosition) ->
+
+    # detect current signature (use current group_id, if not set, use ticket.group_id)
+    ticketCurrent = App.Ticket.fullLocal(ticket.id)
+    group_id = ticketCurrent.group_id
+    task = App.TaskManager.get(ui.taskKey)
+    if task && task.state && task.state.ticket && task.state.ticket.group_id
+      group_id = task.state.ticket.group_id
+    group = App.Group.find(group_id)
+    signature = undefined
+    if group && group.signature_id
+      signature = App.Signature.find(group.signature_id)
+
+    # add/replace signature
+    if signature && signature.body && type is 'email'
+
+      # if signature has changed, remove it
+      signature_id = ui.$('[data-signature=true]').data('signature-id')
+      if signature_id && signature_id.toString() isnt signature.id.toString()
+        ui.$('[data-name=body] [data-signature="true"]').remove()
+
+      # apply new signature
+      signatureFinished = App.Utils.replaceTags(signature.body, { user: App.Session.get(), ticket: ticketCurrent, config: App.Config.all() })
+
+      body = ui.$('[data-name=body]')
+      if App.Utils.signatureCheck(body.html() || '', signatureFinished)
+        if !App.Utils.htmlLastLineEmpty(body)
+          body.append('<br><br>')
+        signature = $("<div data-signature=\"true\" data-signature-id=\"#{signature.id}\">#{signatureFinished}</div>")
+        App.Utils.htmlStrip(signature)
+        if signaturePosition is 'top'
+          body.prepend(signature)
+        else
+          body.append(signature)
+        ui.$('[data-name=body]').replaceWith(body)
+
+    # remove old signature
+    else
+      ui.$('[data-name=body] [data-signature=true]').remove()
+
+    if type isnt 'email'
+      ui.$('[name=to]').val('')
+      ui.$('[name=cc]').val('')
+      ui.$('[name=subject]').val('')
+
+  @validation: (type, params, ui) ->
+    return true if type isnt 'email'
+
+    # check if recipient exists
+    if _.isEmpty(params.to) && _.isEmpty(params.cc)
+      new App.ControllerModal(
+        head: 'Text missing'
+        buttonCancel: 'Cancel'
+        buttonCancelClass: 'btn--danger'
+        buttonSubmit: false
+        message: 'Need recipient in "To" or "Cc".'
+        shown: true
+        small: true
+        container: ui.el.closest('.content')
+      )
+      return false
+
+    # check if message exists
+    if _.isEmpty(params.body)
+      new App.ControllerModal(
+        head: 'Text missing'
+        buttonCancel: 'Cancel'
+        buttonCancelClass: 'btn--danger'
+        buttonSubmit: false
+        message: 'Text needed'
+        shown: true
+        small: true
+        container: ui.el.closest('.content')
+      )
+      return false
 
     true
 

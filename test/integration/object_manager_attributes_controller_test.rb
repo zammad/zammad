@@ -3,6 +3,8 @@ require 'test_helper'
 require 'rake'
 
 class ObjectManagerAttributesControllerTest < ActionDispatch::IntegrationTest
+  self.use_transactional_tests = false
+
   setup do
 
     # set accept header
@@ -444,6 +446,112 @@ class ObjectManagerAttributesControllerTest < ActionDispatch::IntegrationTest
     assert(result['data_option']['options'])
     assert_equal(result['name'], 'test7')
     assert_equal(result['display'], 'Test 7')
+  end
+
+  test '01 converts string to boolean for default value for boolean data type with true' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin@example.com', 'adminpw')
+
+    params = {
+      'name': "customerdescription#{rand(999_999_999)}",
+      'object': 'Ticket',
+      'display': "custom description#{rand(999_999_999)}",
+      'active': true,
+      'data_type': 'boolean',
+      'data_option': {
+        'options': {
+          'true': '',
+          'false': '',
+        },
+        'default': 'true',
+        'screens': {
+          'create_middle': {
+            'ticket.customer': {
+              'shown': true,
+              'item_class': 'column'
+            },
+            'ticket.agent': {
+              'shown': true,
+              'item_class': 'column'
+            }
+          },
+          'edit': {
+            'ticket.customer': {
+              'shown': true
+            },
+            'ticket.agent': {
+              'shown': true
+            }
+          }
+        }
+      },
+      'id': 'c-201'
+    }
+
+    post '/api/v1/object_manager_attributes', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert_equal(migration, true)
+
+    assert_response(201) # created
+    result = JSON.parse(@response.body)
+
+    assert(result)
+    assert(result['data_option']['default'])
+    assert_equal(result['data_option']['default'], true)
+    assert_equal(result['data_type'], 'boolean')
+  end
+
+  test '02 converts string to boolean for default value for boolean data type with false' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin@example.com', 'adminpw')
+
+    params = {
+      'name': "customerdescription_#{rand(999_999_999)}",
+      'object': 'Ticket',
+      'display': "custom description #{rand(999_999_999)}",
+      'active': true,
+      'data_type': 'boolean',
+      'data_option': {
+        'options': {
+          'true': '',
+          'false': '',
+        },
+        'default': 'false',
+        'screens': {
+          'create_middle': {
+            'ticket.customer': {
+              'shown': true,
+              'item_class': 'column'
+            },
+            'ticket.agent': {
+              'shown': true,
+              'item_class': 'column'
+            }
+          },
+          'edit': {
+            'ticket.customer': {
+              'shown': true
+            },
+            'ticket.agent': {
+              'shown': true
+            }
+          }
+        }
+      },
+      'id': 'c-202'
+    }
+
+    post '/api/v1/object_manager_attributes', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert_equal(migration, true)
+
+    assert_response(201) # created
+    result = JSON.parse(@response.body)
+
+    assert(result)
+    assert_not(result['data_option']['default'])
+    assert_equal(result['data_option']['default'], false)
+    assert_equal(result['data_type'], 'boolean')
   end
 
 end

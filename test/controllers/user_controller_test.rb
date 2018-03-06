@@ -957,4 +957,93 @@ class UserControllerTest < ActionDispatch::IntegrationTest
 
   end
 
+  test '05.01 csv example - customer no access' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-customer1@example.com', 'customer1pw')
+
+    get '/api/v1/users/import_example', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(401)
+    result = JSON.parse(@response.body)
+    assert_equal('Not authorized (user)!', result['error'])
+  end
+
+  test '05.02 csv example - admin access' do
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
+
+    get '/api/v1/users/import_example', params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+
+    rows = CSV.parse(@response.body)
+    header = rows.shift
+
+    assert_equal('id', header[0])
+    assert_equal('login', header[1])
+    assert_equal('firstname', header[2])
+    assert_equal('lastname', header[3])
+    assert_equal('email', header[4])
+    assert(header.include?('organization'))
+  end
+
+  test '05.03 csv import - admin access' do
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
+
+    # invalid file
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'user_simple_col_not_existing.csv'), 'text/csv')
+    post '/api/v1/users/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    assert_equal('true', result['try'])
+    assert_equal(2, result['records'].count)
+    assert_equal('failed', result['result'])
+    assert_equal(2, result['errors'].count)
+    assert_equal("Line 1: unknown attribute 'firstname2' for User.", result['errors'][0])
+    assert_equal("Line 2: unknown attribute 'firstname2' for User.", result['errors'][1])
+
+    # valid file try
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'user_simple.csv'), 'text/csv')
+    post '/api/v1/users/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    assert_equal('true', result['try'])
+    assert_equal(2, result['records'].count)
+    assert_equal('success', result['result'])
+
+    assert_nil(User.find_by(login: 'user-simple-import1'))
+    assert_nil(User.find_by(login: 'user-simple-import2'))
+
+    # valid file
+    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'user_simple.csv'), 'text/csv')
+    post '/api/v1/users/import', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+
+    assert_nil(result['try'])
+    assert_equal(2, result['records'].count)
+    assert_equal('success', result['result'])
+
+    user1 = User.find_by(login: 'user-simple-import1')
+    assert(user1)
+    assert_equal(user1.login, 'user-simple-import1')
+    assert_equal(user1.firstname, 'firstname-simple-import1')
+    assert_equal(user1.lastname, 'lastname-simple-import1')
+    assert_equal(user1.email, 'user-simple-import1@example.com')
+    assert_equal(user1.active, true)
+    user2 = User.find_by(login: 'user-simple-import2')
+    assert(user2)
+    assert_equal(user2.login, 'user-simple-import2')
+    assert_equal(user2.firstname, 'firstname-simple-import2')
+    assert_equal(user2.lastname, 'lastname-simple-import2')
+    assert_equal(user2.email, 'user-simple-import2@example.com')
+    assert_equal(user2.active, false)
+
+    user1.destroy!
+    user2.destroy!
+  end
+
 end

@@ -12,7 +12,7 @@ class App.TicketZoomArticleImageView extends App.ControllerModal
     'click .js-close':  'cancel'
 
   content: ->
-    "<div class=\"centered\">#{@image}</div>"
+    "<div class=\"centered imagePreview\">#{@image}</div>"
 
   onSubmit: =>
     url = "#{$(@image).attr('src')}?disposition=attachment"

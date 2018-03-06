@@ -19,7 +19,7 @@ class AgentUserManageTest < TestCase
     sleep 1
 
     # create customer
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]')
     click(css: '.active .newTicket [name="customer_id_completion"]')
 
@@ -75,7 +75,7 @@ class AgentUserManageTest < TestCase
     # call new ticket screen again
     tasks_close_all()
 
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]')
     sleep 2
 

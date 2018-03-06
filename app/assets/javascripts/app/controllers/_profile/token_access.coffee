@@ -127,7 +127,7 @@ class Create extends App.ControllerModal
         App.view('profile/token_access_created')(
           name: ui.newToken.name
         )
-      post: ->
+      onShown: ->
         @$('.js-select').on('click', ui.selectAll)
       onCancel: ->
         @close()

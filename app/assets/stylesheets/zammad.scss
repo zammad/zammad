@@ -127,6 +127,14 @@ strong {
   position: absolute !important;
 }
 
+[data-dir="ltr"] {
+  direction: ltr;
+}
+
+[data-dir="rtl"] {
+  direction: rtl;
+}
+
 a {
   outline: none !important;
   @extend .u-highlight;
@@ -3394,7 +3402,7 @@ footer {
 
   .empty-search {
     position: absolute;
-    right: 0;
+    @include bidi-style(right, 0, left, auto);
     top: 0;
     height: 30px;
     width: 40px;
@@ -4949,16 +4957,32 @@ footer {
     .attachments.attachments--list .attachments-title {
       font-size: 13px;
       color: hsl(60,1%,34%);
-      font-weight: bold;
+      font-weight: 500;
       padding: 0 7px;
-      margin: 0 0 4px;
     }
 
     .attachments .icon-paperclip {
       position: absolute;
       left: 33px;
       top: 27px;
+      fill: hsl(240,1%,84%);
     }
+
+  .attachments-block {
+    margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &-headline {
+      font-size: 13px;
+      color: hsl(60,1%,34%);
+      font-weight: 500;
+      text-transform: uppercase;
+      margin: 0 7px;
+    }
+  }
 
   .ticket-article-item .task-subline {
     margin-top: 12px;
@@ -5036,6 +5060,7 @@ footer {
 .shortcut .dropdown-menu {
   overflow: auto;
   position: absolute;
+  max-width: 100%;
 }
 
 .editControls {
@@ -5272,11 +5297,7 @@ footer {
       border: none;
       outline: none;
       resize: none;
-    }
-
-    .articleNewEdit-body {
       height: auto;
-      min-height: 38px;
     }
 
     .article-new .bubble-arrow:after {
@@ -5302,7 +5323,7 @@ footer {
       margin: 6px -12px 30px;
     }
 
-    .attachment {
+    .attachment.attachment--row {
       font-size: 13px;
       padding: 1px 10px 1px 7px;
       @include rtl(padding, 1px 7px 1px 10px);
@@ -5311,23 +5332,53 @@ footer {
       display: flex;
     }
 
-    .attachment:hover {
-      background: hsl(200,20%,97%);
+    .attachment.attachment--preview {
+      display: block;
+      font-size: 13px;
+      padding: 9px 4px 9px 43px;
+      position: relative;
+      min-height: 42px;
+      color: inherit;
+      align-items: center;
+      border-bottom: 1px solid hsl(0,0%,96%);
+      
+      &:last-child {
+        border-bottom: none;
+      }
     }
 
-      .attachment-name {
-        @include bidi-style(margin-right, 5px, margin-left, 0);
+      .attachment-icon {
+        position: absolute;
+        left: 0;
+        top: 9px;
+        width: 38px;
+        text-align: center;
+        
+        svg {
+          vertical-align: bottom;
+        }
+        
+        img {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+        }
+      }
+
+      .attachment--preview .attachment-name {
         min-width: 0;
+        display: block;
         @extend .u-highlight;
+        word-break: break-all;
       }
 
-      .attachment-size {
+      .attachment--preview .attachment-size {
         white-space: nowrap;
-        float: right;
-        @include bidi-style(margin-right, 10px, margin-left, 0);
+        font-size: 11px;
+        color: hsl(200,8%,77%);
       }
 
-      .attachment-delete {
+      .attachment--preview .attachment-delete {
         color: hsl(198,19%,72%);
         text-decoration: underline;
         display: none;
@@ -5337,7 +5388,7 @@ footer {
         user-select: none;
       }
 
-      .attachment:hover .attachment-delete {
+      .attachment:hover .attachment--preview .attachment-delete {
         padding: 0 10px 0 30px;
         float: right;
         display: block;
@@ -5346,7 +5397,45 @@ footer {
         background: linear-gradient(to right, hsla(200,20%,97%,0), hsla(200,20%,97%,1) 20px);
       }
 
-        .attachment-delete .icon {
+        .attachment--preview .attachment-delete .icon {
+          fill: hsl(198,18%,72%);
+          width: 9px;
+          height: 9px;
+          @include bidi-style(margin-right, 5px, margin-left, 0);
+        }
+
+      .attachment--row .attachment-name {
+        @include bidi-style(margin-right, 5px, margin-left, 0);
+        min-width: 0;
+        @extend .u-highlight;
+      }
+
+      .attachment--row .attachment-size {
+        white-space: nowrap;
+        float: right;
+        @include bidi-style(margin-right, 10px, margin-left, 0);
+      }
+
+      .attachment--row .attachment-delete {
+        color: hsl(198,19%,72%);
+        text-decoration: underline;
+        display: none;
+        white-space: nowrap;
+        @include bidi-style(margin-left, auto, margin-right, 0);
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .attachment:hover.attachment--row .attachment-delete {
+        padding: 0 10px 0 30px;
+        float: right;
+        display: block;
+        position: absolute;
+        right: 0;
+        background: linear-gradient(to right, hsla(200,20%,97%,0), hsla(200,20%,97%,1) 20px);
+      }
+
+       .attachment--row .attachment-delete .icon {
           fill: hsl(198,18%,72%);
           width: 9px;
           height: 9px;
@@ -6199,6 +6288,9 @@ footer {
     margin: 35px auto;
   }
 }
+.modal--veryLarge .modal-dialog {
+  max-width: 990px;
+}
 .modal--large .modal-dialog {
   max-width: 740px;
 }
@@ -6277,7 +6369,7 @@ footer {
 
 .modal.modal--local {
   display: block;
-  @include bidi-style(padding-left, 40px, padding-right, 0);
+  padding: 0 40px;
 
   .modal-backdrop {
     background: hsla(210,17%,93%,.55);
@@ -6316,6 +6408,7 @@ footer {
   box-shadow: none;
   overflow: hidden;
   @include rtl(text-align, right);
+  overscroll-behavior: contain;
 }
 
   .dropdown-menu kbd {
@@ -7155,6 +7248,11 @@ label + .wizard-buttonList {
   opacity: 0;
 }
 
+.imagePreview img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .imageCropper p {
   margin: 0;
 }
@@ -7414,12 +7512,6 @@ label + .wizard-buttonList {
     border-top: none;
   }
 
-  .horizontal-filter-body {
-    display: flex;
-    align-items: center;
-    flex: 1;
-  }
-
   .controls,
   input {
     @include bidi-style(margin-right, 5px, margin-left, 0);
@@ -7439,6 +7531,21 @@ label + .wizard-buttonList {
 
   input[type=text] {
     width: auto;
+  }
+}
+
+.horizontal-filter-body {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.horizontal-filter-value {
+  flex-shrink: 0;
+  
+  // lower the min-width of url input fields (normally 400px) so that it fits in
+  input[type=url] {
+    min-width: 200px;
   }
 }
 

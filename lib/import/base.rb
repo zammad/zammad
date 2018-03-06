@@ -3,6 +3,17 @@
 module Import
   class Base
 
+    # Checks if the backend is active.
+    #
+    # @example
+    #  Import::ExampleBackend.active?
+    #  #=> true
+    #
+    # return [Boolean]
+    def self.active?
+      true
+    end
+
     # Checks if the backend is able to get queued by the Scheduler.
     #
     # @example

@@ -570,7 +570,6 @@ class UserTest < ActiveSupport::TestCase
 
   test 'ensure roles' do
     name = rand(999_999_999)
-
     admin = User.create_or_update(
       login: "admin-role#{name}@example.com",
       firstname: 'Role',

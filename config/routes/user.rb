@@ -2,7 +2,7 @@ Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
   # users
-  match api_path + '/users/search',                to: 'users#search',                via: %i[get post]
+  match api_path + '/users/search',                to: 'users#search',                via: %i[get post option]
   match api_path + '/users/recent',                to: 'users#recent',                via: %i[get post]
   match api_path + '/users/password_reset',        to: 'users#password_reset_send',   via: :post
   match api_path + '/users/password_reset_verify', to: 'users#password_reset_verify', via: :post
@@ -10,6 +10,9 @@ Zammad::Application.routes.draw do
   match api_path + '/users/preferences',           to: 'users#preferences',           via: :put
   match api_path + '/users/out_of_office',         to: 'users#out_of_office',         via: :put
   match api_path + '/users/account',               to: 'users#account_remove',        via: :delete
+
+  match api_path + '/users/import_example',        to: 'users#import_example',        via: :get
+  match api_path + '/users/import',                to: 'users#import_start',          via: :post
 
   match api_path + '/users/avatar',                to: 'users#avatar_new',            via: :post
   match api_path + '/users/avatar',                to: 'users#avatar_list',           via: :get

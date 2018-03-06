@@ -1,0 +1,3 @@
+id;name2;shared;domain;domain_assignment;active;note
+;org-simple-import1;true;org-simple-import1.example.com;false;true;some note1
+;org-simple-import2;true;org-simple-import2.example.com;false;false;some note2

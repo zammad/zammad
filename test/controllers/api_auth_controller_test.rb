@@ -440,5 +440,4 @@ class ApiAuthControllerTest < ActionDispatch::IntegrationTest
     assert_equal(Hash, result.class)
     assert(result)
   end
-
 end

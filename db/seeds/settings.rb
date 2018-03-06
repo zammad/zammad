@@ -591,6 +591,33 @@ Setting.create_if_not_exists(
   frontend: true
 )
 Setting.create_if_not_exists(
+  title: 'User Organization Selector - email',
+  name: 'ui_user_organization_selector_with_email',
+  area: 'UI::UserOrganizatiomSelector',
+  description: 'Display of the e-mail in the result of the user/organization widget.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_user_organization_selector_with_email',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 100,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
   title: 'Note - default visibility',
   name: 'ui_ticket_zoom_article_note_new_internal',
   area: 'UI::TicketZoom',
@@ -698,6 +725,61 @@ Setting.create_if_not_exists(
   },
   frontend: true
 )
+Setting.create_if_not_exists(
+  title: 'Sidebar Attachments',
+  name: 'ui_ticket_zoom_attachments_preview',
+  area: 'UI::TicketZoom::Preview',
+  description: 'Enables preview of attachments.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_attachments_preview',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 400,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Sidebar Attachments',
+  name: 'ui_ticket_zoom_sidebar_article_attachments',
+  area: 'UI::TicketZoom::Preview',
+  description: 'Enables a sidebar to show an overview of all attachments.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_ticket_zoom_sidebar_article_attachments',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 500,
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+
 Setting.create_if_not_exists(
   title: 'Set notes for ticket create types.',
   name: 'ui_ticket_create_notes',
@@ -1713,6 +1795,51 @@ Setting.create_if_not_exists(
   },
   frontend: false
 )
+
+Setting.create_if_not_exists(
+  title: 'Auto Assigment',
+  name: 'ticket_auto_assignment',
+  area: 'Web::Base',
+  description: 'Enable ticket auto assignment.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ticket_auto_assignment',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission: ['admin.ticket_auto_assignment'],
+  },
+  state: false,
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'Time Accounting Selector',
+  name: 'ticket_auto_assignment_selector',
+  area: 'Web::Base',
+  description: 'Enable auto assignment for following matching tickets.',
+  options: {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission: ['admin.ticket_auto_assignment'],
+  },
+  state: { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } },
+  frontend: true
+)
+
 Setting.create_if_not_exists(
   title: 'Ticket Number ignore system_id',
   name: 'ticket_number_ignore_system_id',

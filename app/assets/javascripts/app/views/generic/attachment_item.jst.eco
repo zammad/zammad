@@ -1,4 +1,4 @@
-<div class="attachment">
+<div class="attachment attachment--row">
   <div class="attachment-name"><%= @filename %></div>
   <div class="attachment-size"><%= @humanFileSize(@size) %></div>
   <div class="attachment-delete js-delete" data-id="<%= @id %>">

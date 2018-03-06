@@ -152,4 +152,48 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
     permission_check('admin.text_module')
     model_destroy_render(TextModule, params)
   end
+
+  # @path    [GET] /text_modules/import_example
+  #
+  # @summary          Download of example CSV file.
+  # @notes            The requester have 'admin.text_module' permissions to be able to download it.
+  # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/text_modules/import_example
+  #
+  # @response_message 200 File download.
+  # @response_message 401 Invalid session.
+  def import_example
+    permission_check('admin.text_module')
+    csv_string = TextModule.csv_example(
+      col_sep: ',',
+    )
+    send_data(
+      csv_string,
+      filename: 'example.csv',
+      type: 'text/csv',
+      disposition: 'attachment'
+    )
+
+  end
+
+  # @path    [POST] /text_modules/import
+  #
+  # @summary          Starts import.
+  # @notes            The requester have 'admin.text_module' permissions to be create a new import.
+  # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/Textbausteine_final2.csv' 'https://your.zammad/api/v1/text_modules/import?try=true'
+  # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/Textbausteine_final2.csv' 'https://your.zammad/api/v1/text_modules/import'
+  #
+  # @response_message 201 Import started.
+  # @response_message 401 Invalid session.
+  def import_start
+    permission_check('admin.text_module')
+    result = TextModule.csv_import(
+      string: params[:file].read.force_encoding('utf-8'),
+      parse_params: {
+        col_sep: ';',
+      },
+      try: params[:try],
+    )
+    render json: result, status: :ok
+  end
+
 end

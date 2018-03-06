@@ -23,9 +23,10 @@ class App.TicketCreateSidebar extends App.Controller
     for key in keys
       if !@sidebarBackends[key] || !@sidebarBackends[key].reload
         @sidebarBackends[key] = new sidebarBackends[key](
-          params:  @params
-          query:   @query
-          taskGet: @taskGet
+          params:   @params
+          query:    @query
+          taskGet:  @taskGet
+          taskKey:  @taskKey
         )
       else
         @sidebarBackends[key].reload(

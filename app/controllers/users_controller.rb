@@ -1061,6 +1061,45 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     render json: { avatars: result }, status: :ok
   end
 
+  # @path    [GET] /users/import_example
+  #
+  # @summary          Download of example CSV file.
+  # @notes            The requester have 'admin.user' permissions to be able to download it.
+  # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/users/import_example
+  #
+  # @response_message 200 File download.
+  # @response_message 401 Invalid session.
+  def import_example
+    permission_check('admin.user')
+    send_data(
+      User.csv_example,
+      filename: 'user-example.csv',
+      type: 'text/csv',
+      disposition: 'attachment'
+    )
+  end
+
+  # @path    [POST] /users/import
+  #
+  # @summary          Starts import.
+  # @notes            The requester have 'admin.text_module' permissions to be create a new import.
+  # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/users.csv' 'https://your.zammad/api/v1/users/import?try=true'
+  # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/users.csv' 'https://your.zammad/api/v1/users/import'
+  #
+  # @response_message 201 Import started.
+  # @response_message 401 Invalid session.
+  def import_start
+    permission_check('admin.user')
+    result = User.csv_import(
+      string: params[:file].read.force_encoding('utf-8'),
+      parse_params: {
+        col_sep: ';',
+      },
+      try: params[:try],
+    )
+    render json: result, status: :ok
+  end
+
   private
 
   def password_policy(password)

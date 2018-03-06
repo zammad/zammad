@@ -28,6 +28,7 @@ class User < ApplicationModel
   include ChecksClientNotification
   include HasHistory
   include HasSearchIndexBackend
+  include CanCsvImport
   include HasGroups
   include HasRoles
   include User::ChecksAccess
@@ -73,6 +74,18 @@ class User < ApplicationModel
                                   :image_source,
                                   :source,
                                   :login_failed
+
+  csv_object_ids_ignored 1
+
+  csv_attributes_ignored :password,
+                         :login_failed,
+                         :source,
+                         :image_source,
+                         :image,
+                         :authorizations,
+                         :organizations,
+                         :groups,
+                         :user_groups
 
   def ignore_search_indexing?(_action)
     # ignore internal user
@@ -1088,6 +1101,7 @@ raise 'Minimum one user need to have admin permissions'
   end
 
   def avatar_for_email_check
+    return true if Setting.get('import_mode')
     return true if email.blank?
     return true if email !~ /@/
     return true if !saved_change_to_attribute?('email') && updated_at > Time.zone.now - 10.days

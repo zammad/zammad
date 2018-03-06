@@ -358,7 +358,6 @@ class ConnectionWizard extends App.WizardModal
         # remember payload
         user_attributes = {}
         for key, value of App.User.attributesGet()
-          continue if key == 'login'
           if (value.tag is 'input' || value.tag is 'richtext' || value.tag is 'textarea')  && value.type isnt 'password'
             user_attributes[key] = value.display || key
         roles = {}
@@ -394,6 +393,7 @@ class ConnectionWizard extends App.WizardModal
         givenname: 'firstname'
         sn: 'lastname'
         mail: 'email'
+        samaccountname: 'login'
         telephonenumber: 'phone'
 
     @userMappingForm.find('tbody tr.js-entry').remove()
@@ -417,13 +417,22 @@ class ConnectionWizard extends App.WizardModal
     for key in ['source', 'dest']
       if !_.isArray(user_attributes[key])
         user_attributes[key] = [user_attributes[key]]
-    user_attributes_local =
-      'samaccountname': 'login'
+    user_attributes_local = {}
     length = user_attributes.source.length-1
     for count in [0..length]
       if user_attributes.source[count] && user_attributes.dest[count]
         user_attributes_local[user_attributes.source[count]] = user_attributes.dest[count]
+
+    requiredAttribute = Object.keys(user_attributes_local).some( (local_attribute) ->
+      return user_attributes_local[local_attribute] == 'login'
+    )
+
     @wizardConfig.user_attributes = user_attributes_local
+
+    if !requiredAttribute
+      @showSlide('js-mapping')
+      @showAlert('js-mapping', App.i18n.translatePlain("Attribute '%s' is required in the mapping", 'login'))
+      return
 
     # group role map
     group_role_map = @formParam(@groupRoleForm)
@@ -448,17 +457,8 @@ class ConnectionWizard extends App.WizardModal
 
   buildRowsUserMap: (user_attribute_map) =>
 
-    # show static login row
-    userUidDisplayValue = @wizardConfig.wizardData.backend_user_attributes['samaccountname']
-
-    el = [
-      $(App.view('integration/ldap_user_attribute_row_read_only')(
-        key:   userUidDisplayValue,
-        value: 'Login'
-      ))
-    ]
+    el = []
     for source, dest of user_attribute_map
-      continue if source == 'samaccountname'
       continue if !(source of @wizardConfig.wizardData.backend_user_attributes)
       el.push @buildRowUserAttribute(source, dest)
     el

@@ -2606,3 +2606,41 @@ test('check getRecipientArticle format', function() {
 });
 
 }
+
+test("contentTypeCleanup", function() {
+
+  var source = "image/png"
+  var should = "image/png"
+  var result = App.Utils.contentTypeCleanup(source)
+  equal(result, should, source)
+
+  source = "image/png; some.file"
+  should = "image/png"
+  result = App.Utils.contentTypeCleanup(source)
+  equal(result, should, source)
+
+  source = "image/png;some.file"
+  should = "image/png"
+  result = App.Utils.contentTypeCleanup(source)
+  equal(result, should, source)
+
+  source = "image/jpeg;some.file"
+  should = "image/jpeg"
+  result = App.Utils.contentTypeCleanup(source)
+  equal(result, should, source)
+
+  source = "image/jpg;some.file"
+  should = "image/jpg"
+  result = App.Utils.contentTypeCleanup(source)
+  equal(result, should, source)
+
+  source = "image/gif;some.file"
+  should = "image/gif"
+  result = App.Utils.contentTypeCleanup(source)
+  equal(result, should, source)
+
+  source = "image/gif\n;some.file"
+  should = "image/gif"
+  result = App.Utils.contentTypeCleanup(source)
+  equal(result, should, source)
+});

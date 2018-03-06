@@ -12,7 +12,7 @@ class TaskbarTaskTest < TestCase
     tasks_close_all()
 
     # persistant task
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]', wait: 0.8)
     set(
       css: '.active .newTicket input[name="title"]',
@@ -52,7 +52,7 @@ class TaskbarTaskTest < TestCase
     )
     tasks_close_all()
 
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]', wait: 0.8)
     set(
       css: '.active .newTicket input[name="title"]',
@@ -64,7 +64,7 @@ class TaskbarTaskTest < TestCase
     )
     sleep 2
 
-    click(css: 'a[href="#new"]')
+    click(css: 'a[href="#new"]', only_if_exists: true)
     click(css: 'a[href="#ticket/create"]', wait: 0.8)
     set(
       css: '.active .newTicket input[name="title"]',

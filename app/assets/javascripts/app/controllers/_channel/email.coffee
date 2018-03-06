@@ -722,7 +722,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     # get params
     params = @formParam(e.target)
 
-    if params.options.password is @passwordPlaceholder
+    if params.options && params.options.password is @passwordPlaceholder
       params.options.password = @inboundPassword
 
     # let backend know about the channel
@@ -784,7 +784,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
     params          = @formParam(e.target)
     params['email'] = @account['meta']['email']
 
-    if params.options.password is @passwordPlaceholder
+    if params.options && params.options.password is @passwordPlaceholder
       params.options.password = @outboundPassword
 
     if !params['email'] && @channel

@@ -40,8 +40,7 @@ class Integration::IdoitController < ApplicationController
     ticket = Ticket.find(params[:ticket_id])
     access!(ticket, 'read')
     ticket.preferences[:idoit] ||= {}
-    ticket.preferences[:idoit][:object_ids] ||= []
-    ticket.preferences[:idoit][:object_ids].concat(params[:object_ids])
+    ticket.preferences[:idoit][:object_ids] = Array(params[:object_ids]).uniq
     ticket.save!
 
     render json: {

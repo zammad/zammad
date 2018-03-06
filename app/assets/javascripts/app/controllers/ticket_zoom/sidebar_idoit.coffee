@@ -18,11 +18,16 @@ class SidebarIdoit extends App.Controller
 
   changeObjects: =>
     new App.IdoitObjectSelector(
-      task_key: @task_key
+      taskKey: @taskKey
       container: @el.closest('.content')
       callback: (objectIds, objectSelectorUi) =>
         if @ticket && @ticket.id
-          @updateTicket(@ticket.id, objectIds, =>
+
+          # add new objectIds to list of all @objectIds
+          # and transfer the complete list to the backend
+          @objectIds = @objectIds.concat(objectIds)
+
+          @updateTicket(@ticket.id, @objectIds, =>
             objectSelectorUi.close()
             @showObjectsContent(objectIds)
           )
@@ -54,7 +59,7 @@ class SidebarIdoit extends App.Controller
 
     # ajax call to show items
     @ajax(
-      id:    "idoit-#{@task_key}"
+      id:    "idoit-#{@taskKey}"
       type:  'POST'
       url:   "#{@apiPath}/integration/idoit"
       data:  JSON.stringify(method: 'cmdb.objects', filter: ids: @objectIds)

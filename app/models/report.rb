@@ -21,13 +21,7 @@ class Report
         selected: true,
         dataDownload: true,
         adapter: Report::TicketGenericTime,
-        params: { field: 'created_at' },
-        condition: {
-          'state' => {
-            'operator' => 'is not',
-            'value'    => 'merged'
-          }
-        }
+        params: { field: 'created_at' }
       },
       {
         name: 'closed',
@@ -35,52 +29,28 @@ class Report
         selected: true,
         dataDownload: true,
         adapter: Report::TicketGenericTime,
-        params: { field: 'close_at' },
-        condition: {
-          'state' => {
-            'operator' => 'is not',
-            'value'    => 'merged'
-          }
-        }
+        params: { field: 'close_at' }
       },
       {
         name: 'backlog',
         display: 'Backlog',
         selected: true,
         dataDownload: false,
-        adapter: Report::TicketBacklog,
-        condition: {
-          'state' => {
-            'operator' => 'is not',
-            'value'    => 'merged'
-          }
-        }
+        adapter: Report::TicketBacklog
       },
       {
         name: 'first_solution',
         display: 'First Solution',
         selected: false,
         dataDownload: true,
-        adapter: Report::TicketFirstSolution,
-        condition: {
-          'ticket_state.name' => {
-            'operator' => 'is not',
-            'value'    => 'merged'
-          }
-        }
+        adapter: Report::TicketFirstSolution
       },
       {
         name: 'reopened',
         display: 'Reopened',
         selected: false,
         dataDownload: true,
-        adapter: Report::TicketReopened,
-        condition: {
-          'ticket_state.name' => {
-            'operator' => 'is not',
-            'value'    => 'merged'
-          }
-        }
+        adapter: Report::TicketReopened
       },
       {
         name: 'movedin',
@@ -88,13 +58,7 @@ class Report
         selected: false,
         dataDownload: true,
         adapter: Report::TicketMoved,
-        params: { type: 'in' },
-        condition: {
-          'ticket_state.name' => {
-            'operator' => 'is not',
-            'value'    => 'merged'
-          }
-        }
+        params: { type: 'in' }
       },
       {
         name: 'movedout',
@@ -102,13 +66,7 @@ class Report
         selected: false,
         dataDownload: true,
         adapter: Report::TicketMoved,
-        params: { type: 'out' },
-        condition: {
-          'ticket_state.name' => {
-            'operator' => 'is not',
-            'value'    => 'merged'
-          }
-        }
+        params: { type: 'out' }
       },
     ]
     config[:metric][:count][:backend] = backend

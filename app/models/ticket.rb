@@ -4,6 +4,7 @@ class Ticket < ApplicationModel
   include HasActivityStreamLog
   include ChecksClientNotification
   include ChecksLatestChangeObserved
+  include CanCsvImport
   include HasHistory
   include HasTags
   include HasSearchIndexBackend
@@ -23,7 +24,7 @@ class Ticket < ApplicationModel
   store          :preferences
   before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority
   after_create   :check_escalation_update
-  before_update  :check_defaults, :check_title, :reset_pending_time
+  before_update  :check_defaults, :check_title, :reset_pending_time, :check_owner_active
   after_update   :check_escalation_update
 
   validates :group_id, presence: true
@@ -424,14 +425,14 @@ get count of tickets and tickets which match on selector
     ActiveRecord::Base.transaction(requires_new: true) do
       begin
         if !current_user
-          ticket_count = Ticket.where(query, *bind_params).joins(tables).count
-          tickets = Ticket.where(query, *bind_params).joins(tables).limit(limit)
+          ticket_count = Ticket.distinct.where(query, *bind_params).joins(tables).count
+          tickets = Ticket.distinct.where(query, *bind_params).joins(tables).limit(limit)
           return [ticket_count, tickets]
         end
 
         access_condition = Ticket.access_condition(current_user, access)
-        ticket_count = Ticket.where(access_condition).where(query, *bind_params).joins(tables).count
-        tickets = Ticket.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
+        ticket_count = Ticket.distinct.where(access_condition).where(query, *bind_params).joins(tables).count
+        tickets = Ticket.distinct.where(access_condition).where(query, *bind_params).joins(tables).limit(limit)
 
         return [ticket_count, tickets]
       rescue ActiveRecord::StatementInvalid => e
@@ -1205,6 +1206,21 @@ result
     default_ticket_priority = Ticket::Priority.find_by(default_create: true)
     return true if !default_ticket_priority
     self.priority_id = default_ticket_priority.id
+    true
+  end
+
+  def check_owner_active
+    return true if Setting.get('import_mode')
+
+    # return when ticket is unassigned
+    return true if owner_id.blank?
+    return true if owner_id == 1
+
+    # return if owner is active, is agent and has access to group of ticket
+    return true if owner.active? && owner.permissions?('ticket.agent') && owner.group_access?(group_id, 'full')
+
+    # else set the owner of the ticket to the default user as unassigned
+    self.owner_id = 1
     true
   end
 end

@@ -420,6 +420,7 @@ class TestCase < Test::Unit::TestCase
 
       begin
         element = instance.find_elements(css: params[:css])[0]
+        return  if !element && params[:only_if_exists] == true
         #if element
         #  instance.mouse.move_to(element)
         #end
@@ -430,6 +431,7 @@ class TestCase < Test::Unit::TestCase
         # just try again
         log('click', { rescure: true })
         element = instance.find_elements(css: params[:css])[0]
+        return  if !element && params[:only_if_exists] == true
         #if element
         #  instance.mouse.move_to(element)
         #end
@@ -1829,6 +1831,7 @@ wait untill text in selector disabppears
       browser: instance,
       css: 'a[href="#new"]',
       mute_log: true,
+      only_if_exists: true,
     )
     click(
       browser: instance,

@@ -1,8 +1,8 @@
 class App.TaskbarWatcher extends App.Controller
   constructor: ->
     super
-    @subscribeId = App.TaskManager.preferencesSubscribe(@task_key, @render)
-    App.TaskManager.preferencesTrigger(@task_key)
+    @subscribeId = App.TaskManager.preferencesSubscribe(@taskKey, @render)
+    App.TaskManager.preferencesTrigger(@taskKey)
 
   release: =>
     return if !@subscribeId
@@ -53,7 +53,7 @@ class App.TaskbarWatcher extends App.Controller
   start: =>
     @intervalId = @interval(
       =>
-        App.TaskManager.preferencesTrigger(@task_key)
+        App.TaskManager.preferencesTrigger(@taskKey)
       5 * 60000
       'ticket-watcher-interval'
     )

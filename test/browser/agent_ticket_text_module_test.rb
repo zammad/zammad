@@ -31,8 +31,8 @@ class AgentTicketTextModuleTest < TestCase
     )
 
     # try to use them
-    click( css: 'a[href="#new"]' )
-    click( css: 'a[href="#ticket/create"]' )
+    click(css: 'a[href="#new"]', only_if_exists: true)
+    click(css: 'a[href="#ticket/create"]')
     sleep 2
 
     set(
@@ -47,7 +47,7 @@ class AgentTicketTextModuleTest < TestCase
       value: :arrow_down,
       slow: true,
     )
-    click( css: '.active .shortcut > ul> li' )
+    click(css: '.active .shortcut > ul> li')
 
     watch_for(
       css: '.active div[data-name=body]',

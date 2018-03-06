@@ -1,0 +1,3 @@
+login;firstname;lastname;email;active;
+user-simple-import1;firstname-simple-import1;lastname-simple-import1;user-simple-import1@example.com;true
+user-simple-import2;firstname-simple-import2;lastname-simple-import2;user-simple-import2@example.com;false

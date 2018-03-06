@@ -10,10 +10,6 @@ class App.User extends App.Model
     { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'organization_id',  display: 'Organization',  tag: 'select',   multiple: false, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true },
-    { name: 'password',         display: 'Password',      tag: 'input',    type: 'password', limit: 50,  null: true, autocomplete: 'new-password', signup: true, },
-    { name: 'note',             display: 'Note',          tag: 'textarea', note: 'Notes are visible to agents only, never to customers.', limit: 250, null: true, info: true, invite_customer: true },
-    { name: 'role_ids',         display: 'Permissions',   tag: 'user_permission', null: false, invite_agent: true, invite_customer: true, item_class: 'checkbox' },
-    { name: 'active',           display: 'Active',        tag: 'active',   default: true },
     { name: 'created_by_id',    display: 'Created by',    relation: 'User', readonly: 1 },
     { name: 'created_at',       display: 'Created at',    tag: 'datetime',  readonly: 1 },
     { name: 'updated_by_id',    display: 'Updated by',    relation: 'User', readonly: 1 },
@@ -86,8 +82,8 @@ class App.User extends App.Model
 
     # generate uniq avatar
     if !@image || @image is 'none' || unique
-      width  = 300
-      height = 226
+      width  = 300 * size/baseSize
+      height = 226 * size/baseSize
 
       rng = new Math.seedrandom(@id)
       x   = rng() * (width - size)
@@ -98,8 +94,8 @@ class App.User extends App.Model
         cssClass: cssClass
         placement: placement
         vip: vip
-        x: x * size/baseSize
-        y: y * size/baseSize
+        x: x
+        y: y
         initials: @initials()
 
     # generate image based avatar
@@ -257,6 +253,25 @@ class App.User extends App.Model
           break
       return access if access
     false
+
+  all_group_ids: (permission = 'full') ->
+    group_ids = []
+    user_group_ids = App.Session.get('group_ids')
+    if user_group_ids
+      for local_group_id, local_permission of user_group_ids
+        if _.include(local_permission, permission) || _.include(local_permission, 'full')
+          group_ids.push local_group_id
+
+    user_role_ids = App.Session.get('role_ids')
+    if user_role_ids
+      for role_id in user_role_ids
+        if App.Role.exists(role_id)
+          role = App.Role.find(role_id)
+          if role.group_ids
+            for local_group_id, local_permission of role.group_ids
+              if _.include(local_permission, permission) || _.include(local_permission, 'full')
+                group_ids.push local_group_id
+    _.uniq(group_ids)
 
   @outOfOfficeTextPlaceholder: ->
     today = new Date()

@@ -8,18 +8,17 @@ class Observer::Ticket::Article::FillupFromOriginById < ActiveRecord::Observer
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    # only do fill of from if article got created via application_server (e. g. not
+    # only do fill origin_by_id if article got created via application_server (e. g. not
     # if article and sender type is set via *.postmaster)
     return if ApplicationHandleInfo.postmaster?
 
     # check if origin_by_id exists
     return if record.origin_by_id.present?
-    return if !record.ticket.customer_id
+    return if record.ticket.customer_id.blank?
     return if record.sender.name != 'Customer'
-    return if record.type.name != 'phone'
+    type_name = record.type.name
+    return if type_name != 'phone' && type_name != 'note' && type_name != 'web'
 
     record.origin_by_id = record.ticket.customer_id
-    user                = User.find(record.origin_by_id)
-    record.from         = "#{user.firstname} #{user.lastname} <#{user.email}>"
   end
 end

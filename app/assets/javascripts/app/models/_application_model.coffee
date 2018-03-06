@@ -828,14 +828,29 @@ set new attributes of model (remove already available attributes)
   @updateAttributes: (attributes) ->
     return if !@className
     if _.isEmpty(@org_configure_attributes)
-      @org_configure_attributes = clone(@configure_attributes)
+
+      # use jquery instead of ._clone() because we need a deep copy of the obj
+      @org_configure_attributes = $.extend(true, [], @configure_attributes)
     for attribute in attributes
       @attributes.push attribute.name
-      @configure_attributes.push attribute
+
+      found = false
+      for attribute_model, index in @configure_attributes
+        continue if attribute_model.name != attribute.name
+
+        @configure_attributes[index] = _.extend(attribute_model, attribute)
+
+        found = true
+        break
+
+      if !found
+        @configure_attributes.push attribute
 
   @resetAttributes: ->
     return if _.isEmpty(@org_configure_attributes)
-    @configure_attributes = @org_configure_attributes
+
+    # use jquery instead of ._clone() because we need a deep copy of the obj
+    @configure_attributes = $.extend(true, [], @org_configure_attributes)
 
   @resetCallbacks: ->
     @SUBSCRIPTION_ITEM = {}

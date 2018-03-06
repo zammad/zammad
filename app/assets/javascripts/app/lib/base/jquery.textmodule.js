@@ -34,160 +34,163 @@
       this.ce = $.data(element, 'plugin_ce')
     }
 
-    this.init();
+    this.init()
   }
 
   Plugin.prototype.init = function () {
     this.renderBase()
-    var _this = this
+    this.bindEvents()
+  }
 
-    this.$element.on('keydown', function (e) {
+  Plugin.prototype.bindEvents = function () {
+    this.$element.on('keydown', this.onKeydown.bind(this))
+    this.$element.on('keypress', this.onKeypress.bind(this))
+    this.$element.on('focus', this.onFocus.bind(this))
+  }
 
-      // navigate through item
-      if (_this.isActive()) {
+  Plugin.prototype.onFocus = function (e) {
+    this.close()
+  }
 
-        // esc
-        if (e.keyCode === 27) {
-          e.preventDefault()
-          e.stopPropagation()
-          _this.close()
-          return
-        }
-
-        // enter
-        if (e.keyCode === 13) {
-          e.preventDefault()
-          e.stopPropagation()
-          var id = _this.$widget.find('.dropdown-menu li.is-active').data('id')
-
-          // as fallback use hovered element
-          if (!id) {
-            id = _this.$widget.find('.dropdown-menu li:hover').data('id')
-          }
-
-          // as fallback first element
-          if (!id) {
-            id = _this.$widget.find('.dropdown-menu li:first-child').data('id')
-          }
-          _this.take(id)
-          return
-        }
-
-        // arrow keys left/right
-        if (e.keyCode === 37 || e.keyCode === 39) {
-          e.preventDefault()
-          e.stopPropagation()
-          return
-        }
-
-        // up or down
-        if (e.keyCode === 38 || e.keyCode === 40) {
-          e.preventDefault()
-          e.stopPropagation()
-          var active = _this.$widget.find('.dropdown-menu li.is-active')
-          active.removeClass('is-active')
-
-          if (e.keyCode == 38 && active.prev().size()) {
-            active = active.prev()
-          }
-          else if (e.keyCode == 40 && active.next().size()) {
-            active = active.next()
-          }
-
-          active.addClass('is-active')
-
-          var menu = _this.$widget.find('.dropdown-menu')
-
-          if (!active.get(0)) {
-            return
-          }
-          if (active.position().top < 0) {
-            // scroll up
-            menu.scrollTop( menu.scrollTop() + active.position().top )
-          }
-          else if ( active.position().top + active.height() > menu.height() ) {
-            // scroll down
-            var invisibleHeight = active.position().top + active.height() - menu.height()
-            menu.scrollTop( menu.scrollTop() + invisibleHeight )
-          }
-        }
-      }
+  Plugin.prototype.onKeydown = function (e) {
+    console.log("onKeydown", this.isActive())
+    // navigate through item
+    if (this.isActive()) {
 
       // esc
       if (e.keyCode === 27) {
-        _this.close()
+        e.preventDefault()
+        e.stopPropagation()
+        this.close()
+        return
       }
-    })
-
-    // reduce buffer, in case close it
-    this.$element.on('keydown', function (e) {
-
-      // backspace
-      if (e.keyCode === 8 && _this.buffer) {
-
-        // backspace + buffer === :: -> close textmodule
-        if (_this.buffer === '::') {
-          _this.close(true)
-          e.preventDefault()
-          return
-        }
-
-        // reduce buffer and show new result
-        var length   = _this.buffer.length
-        _this.buffer = _this.buffer.substr(0, length-1)
-        _this.log('BS backspace', _this.buffer)
-        _this.result(_this.buffer.substr(2, length-1))
-      }
-    })
-
-    // build buffer
-    this.$element.on('keypress', function (e) {
-      _this.log('BUFF', _this.buffer, e.keyCode, String.fromCharCode(e.which))
-
-      // shift
-      if (e.keyCode === 16) return
 
       // enter
-      if (e.keyCode === 13) return
+      if (e.keyCode === 13) {
+        e.preventDefault()
+        e.stopPropagation()
+        var id = this.$widget.find('.dropdown-menu li.is-active').data('id')
 
-      // arrow keys
-      if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) return
-
-      // observer other second key
-      if (_this.buffer === ':' && String.fromCharCode(e.which) !== ':') {
-        _this.buffer = ''
-      }
-
-      // oberserve second :
-      if (_this.buffer === ':' && String.fromCharCode(e.which) === ':') {
-        _this.buffer = _this.buffer + ':'
-      }
-
-      // oberserve first :
-      if (!_this.buffer && String.fromCharCode(e.which) === ':') {
-        _this.buffer = _this.buffer + ':'
-      }
-
-      if (_this.buffer && _this.buffer.substr(0,2) === '::') {
-
-        var sign = String.fromCharCode(e.which)
-        if ( sign && sign !== ':' && e.which != 8 ) { // 8 == backspace
-          _this.buffer = _this.buffer + sign
-          //_this.log('BUFF ADD', sign, this.buffer, sign.length, e.which)
-        }
-        _this.log('BUFF HINT', _this.buffer, _this.buffer.length, e.which, String.fromCharCode(e.which))
-
-        if (!_this.isActive()) {
-          _this.open()
+        // as fallback use hovered element
+        if (!id) {
+          id = this.$widget.find('.dropdown-menu li:hover').data('id')
         }
 
-        _this.result(_this.buffer.substr(2, _this.buffer.length))
+        // as fallback first element
+        if (!id) {
+          id = this.$widget.find('.dropdown-menu li:first-child').data('id')
+        }
+        this.take(id)
+        return
       }
 
-    }).on('focus', function (e) {
-      _this.close()
-    })
-  };
+      // arrow keys left/right
+      if (e.keyCode === 37 || e.keyCode === 39) {
+        e.preventDefault()
+        e.stopPropagation()
+        return
+      }
+
+      // up or down
+      if (e.keyCode === 38 || e.keyCode === 40) {
+        e.preventDefault()
+        e.stopPropagation()
+        var active = this.$widget.find('.dropdown-menu li.is-active')
+        active.removeClass('is-active')
+
+        if (e.keyCode == 38 && active.prev().size()) {
+          active = active.prev()
+        }
+        else if (e.keyCode == 40 && active.next().size()) {
+          active = active.next()
+        }
+
+        active.addClass('is-active')
+
+        var menu = this.$widget.find('.dropdown-menu')
+
+        if (!active.get(0)) {
+          return
+        }
+        if (active.position().top < 0) {
+          // scroll up
+          menu.scrollTop( menu.scrollTop() + active.position().top )
+        }
+        else if ( active.position().top + active.height() > menu.height() ) {
+          // scroll down
+          var invisibleHeight = active.position().top + active.height() - menu.height()
+          menu.scrollTop( menu.scrollTop() + invisibleHeight )
+        }
+      }
+    }
+
+    // esc
+    if (e.keyCode === 27) {
+      this.close()
+    }
+
+    // reduce buffer, in case close it
+    // backspace
+    if (e.keyCode === 8 && this.buffer) {
+
+      // backspace + buffer === :: -> close textmodule
+      if (this.buffer === '::') {
+        this.close(true)
+        e.preventDefault()
+        return
+      }
+
+      // reduce buffer and show new result
+      var length   = this.buffer.length
+      this.buffer = this.buffer.substr(0, length-1)
+      this.log('BS backspace', this.buffer)
+      this.result(this.buffer.substr(2, length-1))
+    }
+  }
+
+  Plugin.prototype.onKeypress = function (e) {
+    this.log('BUFF', this.buffer, e.keyCode, String.fromCharCode(e.which))
+
+    // shift
+    if (e.keyCode === 16) return
+
+    // enter
+    if (e.keyCode === 13) return
+
+    // arrow keys
+    if (e.keyCode === 37 || e.keyCode === 38 || e.keyCode === 39 || e.keyCode === 40) return
+
+    // observer other second key
+    if (this.buffer === ':' && String.fromCharCode(e.which) !== ':') {
+      this.buffer = ''
+    }
+
+    // oberserve second :
+    if (this.buffer === ':' && String.fromCharCode(e.which) === ':') {
+      this.buffer = this.buffer + ':'
+    }
+
+    // oberserve first :
+    if (!this.buffer && String.fromCharCode(e.which) === ':') {
+      this.buffer = this.buffer + ':'
+    }
+
+    if (this.buffer && this.buffer.substr(0,2) === '::') {
+
+      var sign = String.fromCharCode(e.which)
+      if ( sign && sign !== ':' && e.which != 8 ) { // 8 == backspace
+        this.buffer = this.buffer + sign
+        //this.log('BUFF ADD', sign, this.buffer, sign.length, e.which)
+      }
+      this.log('BUFF HINT', this.buffer, this.buffer.length, e.which, String.fromCharCode(e.which))
+
+      if (!this.isActive()) {
+        this.open()
+      }
+
+      this.result(this.buffer.substr(2, this.buffer.length))
+    }
+  }
 
   // create base template
   Plugin.prototype.renderBase = function() {
@@ -200,21 +203,30 @@
   // set height of widget
   Plugin.prototype.movePosition = function() {
     if (!this._position) return
-    var height       = this.$element.outerHeight() + 2
-    var widgetHeight = this.$widget.find('ul').height() //+ 60 // + height
-    var top          = -( widgetHeight + height ) + this._position.top
-    var left = this._position.left - 6
+    var height         = this.$element.outerHeight() + 2
+    var widgetHeight   = this.$widget.find('ul').height() //+ 60 // + height
+    var rtl            = document.dir == 'rtl'
+    var top            = -( widgetHeight + height ) + this._position.top
+    var start          = this._position.left - 6
+    var availableWidth = this.$element.innerWidth()
 
-    // position the element further left if it would break out of the textarea width
-    if (left + this._width > this.$element.innerWidth()) {
-      left = this.$element.innerWidth() - this._width
+    if(rtl){
+      start = availableWidth - start
     }
 
-    this.$widget.css({
+    // position the element further left if it would break out of the textarea width
+    if (start + this._width > availableWidth) {
+      start = this.$element.innerWidth() - this._width
+    }
+
+    var css = {
       top: top,
-      left: left,
       width: this._width
-    })
+    }
+
+    css[rtl ? 'right' : 'left'] = start
+
+    this.$widget.css(css)
   }
 
   // set position of widget

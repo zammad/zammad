@@ -1,0 +1,19 @@
+<div class="page-header">
+  <div class="page-header-title">
+      <div class="zammad-switch zammad-switch--small js-ticketAutoAssignment">
+         <input name="ticket_auto_assignment" type="checkbox" id="ticket_auto_assignment" <% if @C('ticket_auto_assignment'): %>checked<% end %>>
+         <label for="ticket_auto_assignment"></label>
+      </div>
+    <h1><%- @T('Auto Assignment') %><small></small></h1>
+  </div>
+</div>
+<div class="page-content">
+  <div class="settings-entry">
+    <p><%- @T('Enable automatic assignment the first time an agent opens a ticket.') %></p>
+    <p><%- @T('Tickets are only assigned automatically if they do not already have an owner.') %></p>
+    <div class="js-selector"></div>
+    <button type="submit" class="btn btn--primary js-timeAccountingFilter"><%- @T('Save') %></button>
+    <button type="submit" class="btn btn--danger js-timeAccountingFilterReset"><%- @T('Reset') %></button>
+  </div>
+  <div class="settings-entry">
+</div>

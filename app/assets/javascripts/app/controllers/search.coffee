@@ -15,12 +15,12 @@ class App.Search extends App.Controller
     # check authentication
     @authenticateCheckRedirect()
 
-    current = App.TaskManager.get(@task_key).state
+    current = App.TaskManager.get(@taskKey).state
     if current && current.query
       @query = current.query
 
     # update taskbar with new meta data
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.touch(@taskKey)
 
     @throttledSearch = _.throttle @search, 200
 
@@ -66,7 +66,7 @@ class App.Search extends App.Controller
     # nothing
 
   render: ->
-    currentState = App.TaskManager.get(@task_key).state
+    currentState = App.TaskManager.get(@taskKey).state
     if !@query
       if currentState && currentState.query
         @query = currentState.query
@@ -179,12 +179,12 @@ class App.Search extends App.Controller
       )
 
   updateTask: =>
-    current = App.TaskManager.get(@task_key).state
+    current = App.TaskManager.get(@taskKey).state
     return if !current
     current.query = @query
     current.model = @model
-    App.TaskManager.update(@task_key, { state: current })
-    App.TaskManager.touch(@task_key)
+    App.TaskManager.update(@taskKey, { state: current })
+    App.TaskManager.touch(@taskKey)
 
   updateFilledClass: ->
     @searchInput.toggleClass 'is-empty', !@searchInput.val()
