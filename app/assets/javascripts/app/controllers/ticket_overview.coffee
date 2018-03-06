@@ -993,7 +993,7 @@ class Table extends App.Controller
     # render init page
     checkbox = true
     edit     = false
-    if @permissionCheck('admin')
+    if @permissionCheck('admin.overview')
       edit = true
     if @permissionCheck('ticket.customer')
       checkbox = false
