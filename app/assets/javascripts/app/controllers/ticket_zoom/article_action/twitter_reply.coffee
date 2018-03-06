@@ -125,4 +125,70 @@ class TwitterReply
       article: articleNew
     })
 
+  @articleTypes: (articleTypes, ticket, ui) ->
+    return articleTypes if !ui.permissionCheck('ticket.agent')
+
+    return articleTypes if !ticket || !ticket.create_article_type_id
+
+    articleTypeCreate = App.TicketArticleType.find(ticket.create_article_type_id).name
+    if articleTypeCreate is 'twitter status'
+      attributes = ['body:limit', 'body:initials']
+      if !ui.Config.get('ui_ticket_zoom_article_twitter_initials')
+        attributes = ['body:limit']
+      articleTypes.push {
+        name:              'twitter status'
+        icon:              'twitter'
+        attributes:        []
+        internal:          false,
+        features:          attributes
+        maxTextLength:     280
+        warningTextLength: 30
+      }
+    else if articleTypeCreate is 'twitter direct-message'
+      attributes = ['body:limit', 'body:initials']
+      if !ui.Config.get('ui_ticket_zoom_article_twitter_initials')
+        attributes = ['body:limit']
+      articleTypes.push {
+        name:              'twitter direct-message'
+        icon:              'twitter'
+        attributes:        ['to']
+        internal:          false,
+        features:          attributes
+        maxTextLength:     10000
+        warningTextLength: 500
+      }
+
+    articleTypes
+
+  @validation: (type, params, ui) ->
+    if type is 'twitter status'
+      textLength = ui.maxTextLength - App.Utils.textLengthWithUrl(params.body)
+      return false if textLength < 0
+
+    if params.type is 'twitter direct-message'
+      textLength = ui.maxTextLength - App.Utils.textLengthWithUrl(params.body)
+      return false if textLength < 0
+
+    true
+
+  @setArticleType: (type, ticket, ui) ->
+    return if type isnt 'twitter status' && type isnt 'twitter direct-message'
+    rawHTML = ui.$('[data-name=body]').html()
+    cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
+    if cleanHTML && cleanHTML.html() != rawHTML
+      ui.$('[data-name=body]').html(cleanHTML)
+
+  @params: (type, params, ui) ->
+    if type is 'twitter status'
+      App.Utils.htmlRemoveRichtext(ui.$('[data-name=body]'), false)
+      params.content_type = 'text/plain'
+      params.body = App.Utils.html2text(params.body, true)
+
+    if type is 'twitter direct-message'
+      App.Utils.htmlRemoveRichtext(ui.$('[data-name=body]'), false)
+      params.content_type = 'text/plain'
+      params.body = App.Utils.html2text(params.body, true)
+
+    params
+
 App.Config.set('300-TwitterReply', TwitterReply, 'TicketZoomArticleAction')

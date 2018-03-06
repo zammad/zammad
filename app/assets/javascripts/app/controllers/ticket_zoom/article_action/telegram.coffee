@@ -42,4 +42,38 @@ class TelegramReply
 
     true
 
+  @articleTypes: (articleTypes, ticket, ui) ->
+    return articleTypes if !ui.permissionCheck('ticket.agent')
+
+    return articleTypes if !ticket || !ticket.create_article_type_id
+
+    articleTypeCreate = App.TicketArticleType.find(ticket.create_article_type_id).name
+
+    return articleTypes if articleTypeCreate isnt 'telegram personal-message'
+    articleTypes.push {
+      name:              'telegram personal-message'
+      icon:              'telegram'
+      attributes:        []
+      internal:          false,
+      features:          ['attachment']
+      maxTextLength:     10000
+      warningTextLength: 5000
+    }
+    articleTypes
+
+  @setArticleType: (type, ticket, ui) ->
+    return if type isnt 'telegram personal-message'
+    rawHTML = ui.$('[data-name=body]').html()
+    cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
+    if cleanHTML && cleanHTML.html() != rawHTML
+      ui.$('[data-name=body]').html(cleanHTML)
+
+  @params: (type, params, ui) ->
+    if type is 'telegram personal-message'
+      App.Utils.htmlRemoveRichtext(ui.$('[data-name=body]'), false)
+      params.content_type = 'text/plain'
+      params.body = App.Utils.html2text(params.body, true)
+
+    params
+
 App.Config.set('300-TelegramReply', TelegramReply, 'TicketZoomArticleAction')

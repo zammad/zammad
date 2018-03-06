@@ -34,4 +34,28 @@ class FacebookReply
 
     true
 
+  @articleTypes: (articleTypes, ticket, ui) ->
+    return articleTypes if !ui.permissionCheck('ticket.agent')
+
+    return articleTypes if !ticket || !ticket.create_article_type_id
+
+    articleTypeCreate = App.TicketArticleType.find(ticket.create_article_type_id).name
+    if articleTypeCreate is 'facebook feed post'
+      articleTypes.push {
+        name:       'facebook feed comment'
+        icon:       'facebook'
+        attributes: []
+        internal:   false,
+        features:   []
+      }
+    articleTypes
+
+  @params: (type, params, ui) ->
+    if type is 'facebook feed comment'
+      App.Utils.htmlRemoveRichtext(ui.$('[data-name=body]'), false)
+      params.content_type = 'text/plain'
+      params.body = App.Utils.html2text(params.body, true)
+
+    params
+
 App.Config.set('300-FacebookReply', FacebookReply, 'TicketZoomArticleAction')
