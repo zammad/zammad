@@ -1,13 +1,11 @@
-
 require 'browser_test_helper'
 
 class CustomerTicketCreateFieldsTest < TestCase
-  def test_customer_ticket_create
+  def test_customer_ticket_create_fields
     @browser = browser_instance
 
     # create agent session and fetch object attributes
     login(
-      browser:  browser,
       username: 'master@example.com',
       password: 'test',
       url:      browser_url,
@@ -17,7 +15,6 @@ class CustomerTicketCreateFieldsTest < TestCase
 
     # re-create agent session and fetch object attributes
     login(
-      browser:  browser,
       username: 'master@example.com',
       password: 'test',
       url:      browser_url,
