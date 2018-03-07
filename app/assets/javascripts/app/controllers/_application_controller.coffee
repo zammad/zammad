@@ -676,6 +676,8 @@ class App.ControllerModal extends App.Controller
   closeOnAnyClick: false
   initalFormParams: {}
   initalFormParamsIgnore: false
+  showTryMax: 10
+  showTrydelay: 1000
 
   events:
     'submit form':                        'submit'
@@ -687,6 +689,7 @@ class App.ControllerModal extends App.Controller
 
   constructor: ->
     super
+    @showTryCount = 0
 
     if @authenticateRequired
       return if !@authenticateCheckRedirect()
@@ -698,6 +701,16 @@ class App.ControllerModal extends App.Controller
     )
     if @shown
       @render()
+
+  showDelayed: =>
+    delay = =>
+      @showTryCount += 1
+      @render()
+    @delay(delay, @showTrydelay)
+
+  modalAlreadyExists: ->
+    return true if $('.modal').length > 0
+    false
 
   content: ->
     'You need to implement a one @content()!'
@@ -737,6 +750,10 @@ class App.ControllerModal extends App.Controller
     @el
 
   render: =>
+    if @modalAlreadyExists() && @showTryCount <= @showTryMax
+      @showDelayed()
+      return
+
     @initalFormParamsIgnore = false
 
     if @buttonSubmit is true
