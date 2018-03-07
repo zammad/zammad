@@ -128,7 +128,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
 
   renderPersonal: =>
     @recentViewNavbarItemsRebuild()
-    items = @getItems(navbar: @Config.get('NavBarRight'))
+    items = clone(@getItems(navbar: @Config.get('NavBarRight')), true)
 
     # if only one child exists, use direct access
     for item in items

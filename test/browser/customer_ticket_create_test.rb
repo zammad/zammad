@@ -152,4 +152,65 @@ class CustomerTicketCreateTest < TestCase
       value: 'open',
     )
   end
+
+  def test_customer_ticket_create_relogin_with_agent_ticket_crearte
+    @browser = browser_instance
+    login(
+      username: 'nicole.braun@zammad.org',
+      password: 'test',
+      url: browser_url,
+    )
+
+    # customer ticket create
+    click(css: 'a[href="#new"]', only_if_exists: true)
+    click(css: 'a[href="#customer_ticket_new"]')
+    sleep 2
+
+    select(
+      css: '.newTicket select[name="group_id"]',
+      value: 'Users',
+    )
+
+    set(
+      css: '.newTicket input[name="title"]',
+      value: 'relogin - customer - agent - test 1',
+    )
+    set(
+      css: '.newTicket [data-name="body"]',
+      value: 'relogin - customer - agent - test 1',
+    )
+
+    click(css: '.newTicket button.js-submit')
+    sleep 5
+
+    # check if ticket is shown
+    location_check(url: '#ticket/zoom/')
+
+    match(
+      css: '.active div.ticket-article',
+      value: 'relogin - customer - agent - test 1',
+      no_quote: true,
+    )
+
+    logout()
+
+    # verify if we still can create new tickets as agent
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    ticket1 = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'relogin - customer - agent - test 2',
+        body: 'relogin - customer - agent - test 2',
+        state: 'closed',
+      },
+    )
+  end
+
 end
