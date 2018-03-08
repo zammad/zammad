@@ -5,8 +5,8 @@ require 'models/concerns/has_groups_permissions_examples'
 
 RSpec.describe User do
 
-  let(:group_access_instance) { create(:user, roles: [Role.find_by(name: 'Agent')]) }
-  let(:new_group_access_instance) { build(:user, roles: [Role.find_by(name: 'Agent')]) }
+  let(:group_access_instance) { create(:agent_user) }
+  let(:new_group_access_instance) { build(:agent_user) }
   let(:group_access_no_permission_instance) { build(:user) }
 
   include_examples 'HasGroups'
@@ -18,7 +18,10 @@ RSpec.describe User do
   context 'password' do
 
     it 'resets login_failed on password change' do
-      user = create(:user_login_failed)
+
+      failed_logins = (Setting.get('password_max_login_failed').to_i || 10) + 1
+      user          = create(:user, login_failed: failed_logins)
+
       expect do
         user.password = new_password
         user.save

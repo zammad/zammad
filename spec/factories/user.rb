@@ -22,7 +22,11 @@ FactoryBot.define do
     role_ids { Role.signup_role_ids.sort }
   end
 
-  factory :user_login_failed, parent: :user do
-    login_failed { (Setting.get('password_max_login_failed').to_i || 10) + 1 }
+  factory :agent_user, parent: :user do
+    roles { Role.where(name: 'Agent') }
+  end
+
+  factory :admin_user, parent: :user do
+    roles { Role.where(name: %w[Admin Agent]) }
   end
 end
