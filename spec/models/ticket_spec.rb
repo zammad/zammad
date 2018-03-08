@@ -255,4 +255,79 @@ RSpec.describe Ticket do
 
     end
   end
+
+  describe '#access?' do
+
+    context 'agent' do
+
+      it 'allows owner access' do
+
+        owner  = create(:agent_user)
+        ticket = create(:ticket, owner: owner)
+
+        expect( ticket.access?(owner, 'full') ).to be(true)
+      end
+
+      it 'allows group access' do
+
+        agent  = create(:agent_user)
+        group  = create(:group)
+        ticket = create(:ticket, group: group)
+
+        agent.group_names_access_map = {
+          group.name => 'full',
+        }
+
+        expect( ticket.access?(agent, 'full') ).to be(true)
+      end
+
+      it 'prevents unauthorized access' do
+        agent  = create(:agent_user)
+        ticket = create(:ticket)
+
+        expect( ticket.access?(agent, 'read') ).to be(false)
+      end
+    end
+
+    context 'customer' do
+
+      it 'allows assigned access' do
+
+        customer = create(:customer_user)
+        ticket   = create(:ticket, customer: customer)
+
+        expect( ticket.access?(customer, 'full') ).to be(true)
+      end
+
+      context 'organization' do
+
+        it 'allows access for shared' do
+
+          organization = create(:organization)
+          assigned     = create(:customer_user, organization: organization)
+          collegue     = create(:customer_user, organization: organization)
+          ticket       = create(:ticket, customer: assigned)
+
+          expect( ticket.access?(collegue, 'full') ).to be(true)
+        end
+
+        it 'prevents unshared access' do
+
+          organization = create(:organization, shared: false)
+          assigned     = create(:customer_user, organization: organization)
+          collegue     = create(:customer_user, organization: organization)
+          ticket       = create(:ticket, customer: assigned)
+
+          expect( ticket.access?(collegue, 'full') ).to be(false)
+        end
+      end
+
+      it 'prevents unauthorized access' do
+        customer = create(:customer_user)
+        ticket   = create(:ticket)
+
+        expect( ticket.access?(customer, 'read') ).to be(false)
+      end
+    end
+  end
 end
