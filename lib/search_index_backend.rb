@@ -26,7 +26,13 @@ info about used search index machine
       }
     )
     Rails.logger.info "# #{response.code}"
-    return response.data if response.success?
+    if response.success?
+      installed_version = response.data.dig('version', 'number')
+      raise "Unable to get elasticsearch version from response: #{response.inspect}" if installed_version.blank?
+      version_supported = Gem::Version.new(installed_version) < Gem::Version.new('5.7')
+      raise "Version #{installed_version} of configured elasticsearch is not supported" if !version_supported
+      return response.data
+    end
 
     raise humanized_error(
       verb:     'GET',
