@@ -21,13 +21,11 @@ class Ticket
         # access ok if its own ticket
         return true if customer_id == user.id
 
-        # access ok if its organization ticket
-        if user.organization_id && organization_id
-          return true if organization_id == user.organization_id
-        end
-
-        # no access
-        return false
+        # check organization ticket access
+        return false if organization_id.blank?
+        return false if user.organization_id.blank?
+        return false if organization_id != user.organization_id
+        return organization.shared?
       end
 
       # check agent
