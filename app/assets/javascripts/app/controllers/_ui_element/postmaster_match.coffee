@@ -96,6 +96,10 @@ class App.UiElement.postmaster_match
             name:     'Mailing-List'
           },
           {
+            value:    'message-id'
+            name:     'Message-Id'
+          },
+          {
             value:    'auto-submitted'
             name:     'Auto-Submitted'
           },
