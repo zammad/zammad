@@ -1,0 +1,39 @@
+require 'spec_helper'
+require 'timeout'
+
+describe 'websocket-server' do
+  # Why not Rails.root.join here?
+  # Because it's not avaialable in this spec (no 'rails_helper' = faster start-up)
+  let(:app_root)   { File.expand_path('../..', __dir__) }
+  let(:ws_server)  { File.expand_path('script/websocket-server.rb', app_root) }
+  let(:pidfile)    { File.expand_path('tmp/pids/websocket.pid', app_root) }
+  let(:output_log) { File.expand_path('log/websocket-server_out.log', app_root) }
+  let(:error_log)  { File.expand_path('log/websocket-server_err.log', app_root) }
+
+  context 'with IPv6 bind address (via -b option)' do
+    # This error is raised for invalid bind addresses
+    let(:error_msg) { "`start_tcp_server': no acceptor" }
+    let(:ipv6_addr) { '::1/128' }
+
+    # Flush logs
+    before do
+      File.write(output_log, '')
+      File.write(error_log, '')
+    end
+
+    it 'starts up successfully' do
+      begin
+        system("#{ws_server} start -db #{ipv6_addr} >/dev/null 2>&1")
+
+        # Wait for daemon to start
+        Timeout.timeout(20, Timeout::Error, 'WebSocket Server startup timed out') do
+          loop { break if File.size(output_log) + File.size(error_log) > 0 }
+        end
+
+        expect(File.read(error_log)).not_to include(error_msg)
+      ensure
+        system("#{ws_server} stop >/dev/null 2>&1") if File.exist?(pidfile)
+      end
+    end
+  end
+end
