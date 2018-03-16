@@ -82,7 +82,7 @@ returns
 =end
 
   def self.signup_role_ids
-    Role.where(active: true, default_at_signup: true).map(&:id)
+    signup_roles.map(&:id)
   end
 
 =begin
