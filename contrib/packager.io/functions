@@ -232,7 +232,7 @@ function setup_elasticsearch () {
     REBUILD_ES_SEARCHINDEX="yes"
 
     echo "# Deleting old zammad_production elasticsearch index..."
-    curl -XDELETE '127.0.0.1:9200/zammad_production'
+    curl -XDELETE "${ES_CONNECTION:-http://127.0.0.1:9200}/zammad_production"
 
     yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s remove mapper-attachments
 
