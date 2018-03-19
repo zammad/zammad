@@ -86,10 +86,34 @@ class App.TicketZoomArticleNew extends App.Controller
       @render()
     )
 
+    # set expand of text area only once
+    @bind('ui::ticket::shown', (data) =>
+      return if data.ticket_id.toString() isnt @ticket.id.toString()
+      console.log('SHOW, ui::ticket::shown', data.ticket_id)
+      @tokanice()
+    )
+
     # rerender, e. g. on language change
     @bind('ui:rerender', =>
       @render()
     )
+
+  tokanice: ->
+    source = "#{App.Config.get('api_path')}/users/search"
+    a = ->
+      $('.content.active .js-to, .js-cc, js-bcc').tokenfield(
+        createTokensOnBlur: true
+        autocomplete: {
+          source: source
+          minLength: 2
+        },
+      ).on('tokenfield:createtoken', (e) ->
+        if !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
+          e.preventDefault()
+          return false
+        true
+      )
+    App.Delay.set(a, 500, undefined, 'tags')
 
   setPossibleArticleTypes: =>
     actionConfig = App.Config.get('TicketZoomArticleAction')
@@ -147,15 +171,7 @@ class App.TicketZoomArticleNew extends App.Controller
       position:  'right'
     )
 
-    configure_attributes = [
-      { name: 'customer_id', display: 'Recipients', tag: 'user_autocompletion', null: false, placeholder: 'Enter Person or Organization/Company', minLengt: 2, disableCreateObject: false },
-    ]
-
-    controller = new App.ControllerForm(
-      el: @$('.recipients')
-      model:
-        configure_attributes: configure_attributes
-    )
+    @tokanice()
 
     @$('[data-name="body"]').ce({
       mode:      'richtext'
@@ -334,6 +350,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @hideSelectableArticleType()
 
     $(window).off 'click.ticket-zoom-select-type'
+    @tokanice()
 
   hideSelectableArticleType: =>
     @el.find('.js-articleTypes').addClass('is-hidden')

@@ -41,19 +41,19 @@
         <div class="formGroup-label">
           <label for=""><%- @T('To') %></label>
         </div>
-        <div class="controls"><input type="text" name="to" value="<%= @article.to %>" class="form-control js-mail-inputs" required="required"></div>
+        <div class="controls"><input type="text" name="to" value="<%= @article.to %>" class="form-control js-mail-inputs js-to" required="required"></div>
       </div>
       <div class="input form-group">
         <div class="formGroup-label">
           <label for=""><%- @T('Cc') %></label>
         </div>
-        <div class="controls"><input type="text" name="cc" value="<%= @article.cc %>" class="form-control js-mail-inputs"></div>
+        <div class="controls"><input type="text" name="cc" value="<%= @article.cc %>" class="form-control js-mail-inputs js-cc"></div>
       </div>
       <div class="input form-group">
         <div class="formGroup-label">
           <label for=""><%- @T('Subject') %></label>
         </div>
-        <div class="controls"><input type="text" name="subject" value="<%= @article.subject %>" class="form-control js-mail-inputs2"></div>
+        <div class="controls"><input type="text" name="subject" value="<%= @article.subject %>" class="form-control js-mail-inputs2 js-subject"></div>
       </div>
 
       <div class="textBubble js-writeArea">

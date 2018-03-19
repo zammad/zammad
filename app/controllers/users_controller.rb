@@ -391,7 +391,7 @@ class UsersController < ApplicationController
       params[:limit] = 500
     end
 
-    query = params[:query]
+    query = params[:query] || params[:term]
     if query.respond_to?(:permit!)
       query = query.permit!.to_h
     end
@@ -425,14 +425,14 @@ class UsersController < ApplicationController
     end
 
     # build result list
-    if params[:label]
+    if params[:label] || params[:term]
       users = []
       user_all.each do |user|
         realname = user.firstname.to_s + ' ' + user.lastname.to_s
         if user.email && user.email.to_s != ''
-          realname = realname + ' <' + user.email.to_s + '>'
+          realname = "#{realname} <#{user.email}>"
         end
-        a = { id: user.id, label: realname, value: realname }
+        a = { id: user.id, label: realname, value: user.email }
         users.push a
       end
 

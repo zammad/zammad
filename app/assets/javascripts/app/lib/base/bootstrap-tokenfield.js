@@ -2,6 +2,10 @@
  * bootstrap-tokenfield
  * https://github.com/sliptree/bootstrap-tokenfield
  * Copyright 2013-2014 Sliptree and other contributors; Licensed MIT
+ *
+ * Edit: Felix
+ * - remove maxTokenWidth
+ *
  */
 
 (function (factory) {
@@ -250,25 +254,6 @@
       var $tokenLabel = $token.find('.token-label')
         , $closeButton = $token.find('.close')
 
-      // Determine maximum possible token label width
-      if (!this.maxTokenWidth) {
-        this.maxTokenWidth =
-          this.$wrapper.width() - $closeButton.outerWidth() -
-          parseInt($closeButton.css('margin-left'), 10) -
-          parseInt($closeButton.css('margin-right'), 10) -
-          parseInt($token.css('border-left-width'), 10) -
-          parseInt($token.css('border-right-width'), 10) -
-          parseInt($token.css('padding-left'), 10) -
-          parseInt($token.css('padding-right'), 10)
-          parseInt($tokenLabel.css('border-left-width'), 10) -
-          parseInt($tokenLabel.css('border-right-width'), 10) -
-          parseInt($tokenLabel.css('padding-left'), 10) -
-          parseInt($tokenLabel.css('padding-right'), 10)
-          parseInt($tokenLabel.css('margin-left'), 10) -
-          parseInt($tokenLabel.css('margin-right'), 10)
-      }
-
-      $tokenLabel.css('max-width', this.maxTokenWidth)
       if (this.options.html)
         $tokenLabel.html(attrs.label)
       else

@@ -6097,6 +6097,16 @@ footer {
   display: inline-flex;
   align-items: center;
   cursor: default;
+  max-width: 100%;
+
+  &.active {
+    background: $highlight-color;
+
+    .close,
+    .token-close {
+      opacity: .5;
+    }
+  }
 }
 
   /*
@@ -6126,6 +6136,9 @@ footer {
 
   .token-label {
     padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .tokenfield.form-control {
@@ -6138,7 +6151,7 @@ footer {
   .token .close,
   .token-close {
     margin: 0;
-    padding: 0 9px 0 12px;
+    padding: 0 9px 0 6px;
     font-family: inherit;
     font-weight: 100;
     font-size: 28px;
@@ -6160,6 +6173,34 @@ footer {
 .ui-autocomplete.ui-widget-content {
   @extend .zIndex-9;
   position: absolute;
+}
+
+.ui-menu {
+  background: hsl(240,9%,19%);
+  border: none;
+  color: white;
+  font-family: inherit;
+  font-size: inherit;
+  
+  .ui-menu-item {
+    padding: 9px 15px;
+    list-style-image: none;
+    
+    &:not(:first-child) {
+      box-shadow: 0 1px rgba(255,255,255,.13) inset;
+    }
+
+    &.ui-state-focus {
+      margin: 0;
+      border: none;
+      background: hsl(205,90%,60%);
+      color: inherit;
+
+      + li {
+        box-shadow: none;
+      }
+    }
+  }
 }
 
 .drox {
