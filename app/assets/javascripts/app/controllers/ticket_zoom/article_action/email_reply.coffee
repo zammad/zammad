@@ -195,6 +195,7 @@ class EmailReply extends App.Controller
       type: type
       article: articleNew
       signaturePosition: signaturePosition
+      focus: 'to'
     })
 
     # add attachments to form

@@ -527,6 +527,16 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     assert_not(result[0]['role_ids'])
     assert_not(result[0]['roles'])
 
+    get "/api/v1/users/search?term=#{CGI.escape("Customer#{firstname}")}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    assert_equal(result_user1['id'], result[0]['id'])
+    assert_equal("Customer#{firstname} Customer Last <new_customer_by_agent@example.com>", result[0]['label'])
+    assert_equal('new_customer_by_agent@example.com', result[0]['value'])
+    assert_not(result[0]['role_ids'])
+    assert_not(result[0]['roles'])
+
     role = Role.find_by(name: 'Agent')
     get "/api/v1/users/search?query=#{CGI.escape("Customer#{firstname}")}&role_ids=#{role.id}&label=true", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)

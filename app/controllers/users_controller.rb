@@ -428,11 +428,15 @@ class UsersController < ApplicationController
     if params[:label] || params[:term]
       users = []
       user_all.each do |user|
-        realname = user.firstname.to_s + ' ' + user.lastname.to_s
-        if user.email && user.email.to_s != ''
+        realname = user.fullname
+        if user.email.present? && realname != user.email
           realname = "#{realname} <#{user.email}>"
         end
-        a = { id: user.id, label: realname, value: user.email }
+        a = if params[:term]
+              { id: user.id, label: realname, value: user.email }
+            else
+              { id: user.id, label: realname, value: realname }
+            end
         users.push a
       end
 
