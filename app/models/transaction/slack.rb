@@ -181,7 +181,7 @@ class Transaction::Slack
         result = notifier.ping result[:subject],
                                attachments: [attachment]
       end
-      if !result.success?
+      if !result.empty? && !result[0].success?
         if sent_value
           Cache.delete(cache_key)
         end
