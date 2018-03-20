@@ -11,11 +11,15 @@ module ExtraCollection
       assets = item.assets(assets)
     end
 
-    collections[ OnlineNotification.to_app_model ] = OnlineNotification.list(user, 200)
-    assets = ApplicationModel.assets_of_object_list(collections[ OnlineNotification.to_app_model ], assets)
+    collections[ OnlineNotification.to_app_model ] = []
+    OnlineNotification.list(user, 200).each do |item|
+      assets = item.assets(assets)
+    end
 
-    collections[ RecentView.to_app_model ] = RecentView.list(user, 10)
-    assets = RecentView.assets_of_object_list(collections[ RecentView.to_app_model ], assets)
+    collections[ RecentView.to_app_model ] = []
+    RecentView.list(user, 10).each do |item|
+      assets = item.assets(assets)
+    end
 
     collections[ Permission.to_app_model ] = []
     Permission.all.each do |item|

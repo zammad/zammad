@@ -1,9 +1,12 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class ActivityStream < ApplicationModel
+  load 'activity_stream/assets.rb'
+  include ActivityStream::Assets
+
   self.table_name = 'activity_streams'
-  belongs_to :activity_stream_type,     class_name: 'TypeLookup'
-  belongs_to :activity_stream_object,   class_name: 'ObjectLookup'
+  belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'activity_stream_object_id'
+  belongs_to :type,   class_name: 'TypeLookup', foreign_key: 'activity_stream_type_id'
 
 =begin
 
@@ -108,16 +111,7 @@ return all activity entries of an user
                              .order('created_at DESC, id DESC')
                              .limit(limit)
              end
-    list = []
-    stream.each do |item|
-      data           = item.attributes
-      data['object'] = ObjectLookup.by_id( data['activity_stream_object_id'] )
-      data['type']   = TypeLookup.by_id( data['activity_stream_type_id'] )
-      data.delete('activity_stream_object_id')
-      data.delete('activity_stream_type_id')
-      list.push data
-    end
-    list
+    stream
   end
 
 =begin

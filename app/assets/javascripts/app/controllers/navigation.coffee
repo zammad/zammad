@@ -448,10 +448,9 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @Config.set('NavBarRight', NavBarRight)
 
   fetchRecentView: =>
-    load = (data) =>
-      App.RecentView.refresh(data.stream, clear: true)
+    load = =>
       @renderPersonal()
-    App.RecentView.fetchFull(load)
+    App.RecentView.fetchFull(load, clear: true)
 
   toggleNotifications: (e) ->
     e.stopPropagation()

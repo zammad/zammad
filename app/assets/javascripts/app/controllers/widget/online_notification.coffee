@@ -20,16 +20,17 @@ class App.OnlineNotificationWidget extends App.Controller
     super
 
     # at runtime if a online notifiction has changed
-    @bind 'OnlineNotification::changed', =>
+    @bind('OnlineNotification::changed', =>
       @delay(
         => @fetch()
         2200
         'online-notification-changed'
       )
+    )
 
     # after new websocket connection has been established
     @ignoreInitLogin = false
-    @bind 'ws:login', =>
+    @bind('ws:login', =>
       if @ignoreInitLogin
         @delay(
           => @fetch()
@@ -37,15 +38,17 @@ class App.OnlineNotificationWidget extends App.Controller
           'online-notification-changed'
         )
       @ignoreInitLogin = true
+    )
 
     # rebuild widget on auth
-    @bind 'auth', (user) =>
+    @bind('auth', (user) =>
       if !user
         @counterUpdate(0)
         return
       if !@access()
         @counterUpdate(0)
         return
+    )
 
     $(window).on 'click.notifications', @hide
 
@@ -150,10 +153,9 @@ class App.OnlineNotificationWidget extends App.Controller
     )
 
   fetch: =>
-    load = (data) =>
+    load = =>
       @fetchedData = true
-      App.OnlineNotification.refresh(data.stream, clear: true)
-    App.OnlineNotification.fetchFull(load)
+    App.OnlineNotification.fetchFull(load, clear: true)
 
   toggle: =>
     if @shown

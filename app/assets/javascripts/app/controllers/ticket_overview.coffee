@@ -574,11 +574,12 @@ class App.TicketOverview extends App.Controller
       @activeFocus = 'nav'
     )
 
-    @bind 'overview:fetch', =>
+    @bind('overview:fetch', =>
       return if !@view
       update = =>
         App.OverviewListCollection.fetch(@view)
       @delay(update, 2800, 'overview:fetch')
+    )
 
   renderBatchOverlay: (elLocal) =>
     if elLocal

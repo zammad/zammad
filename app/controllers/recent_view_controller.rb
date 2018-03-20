@@ -19,10 +19,36 @@ curl http://localhost/api/v1/recent_view -v -u #{login}:#{password} -H "Content-
 =end
 
   def index
-    recent_viewed = RecentView.list_full(current_user, 10)
+    recent_viewed = RecentView.list(current_user, 10)
 
-    # return result
-    render json: recent_viewed
+    if response_expand?
+      list = []
+      recent_viewed.each do |item|
+        list.push item.attributes_with_association_names
+      end
+      render json: list, status: :ok
+      return
+    end
+
+    if response_full?
+      assets = {}
+      item_ids = []
+      recent_viewed.each do |item|
+        item_ids.push item.id
+        assets = item.assets(assets)
+      end
+      render json: {
+        record_ids: item_ids,
+        assets: assets,
+      }, status: :ok
+      return
+    end
+
+    all = []
+    recent_viewed.each do |item|
+      all.push item.attributes_with_association_ids
+    end
+    render json: all, status: :ok
   end
 
 =begin

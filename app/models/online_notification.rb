@@ -1,8 +1,11 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class OnlineNotification < ApplicationModel
-  belongs_to :type_lookup,     class_name: 'TypeLookup'
-  belongs_to :object_lookup,   class_name: 'ObjectLookup'
+  load 'online_notification/assets.rb'
+  include OnlineNotification::Assets
+
+  belongs_to :type,     class_name: 'TypeLookup', foreign_key: 'type_lookup_id'
+  belongs_to :object,   class_name: 'ObjectLookup', foreign_key: 'object_lookup_id'
   belongs_to :user
 
   after_create    :notify_clients_after_change
@@ -49,7 +52,7 @@ add a new online notification for this user
       updated_at: data[:updated_at] || Time.zone.now,
     }
 
-    OnlineNotification.create(record)
+    OnlineNotification.create!(record)
   end
 
 =begin
@@ -92,9 +95,9 @@ remove whole online notifications of an object by type
 
 =end
 
-  def self.remove_by_type(object_name, o_id, type, user)
+  def self.remove_by_type(object_name, o_id, type_name, user)
     object_id = ObjectLookup.by_name(object_name)
-    type_id = TypeLookup.by_name(type)
+    type_id = TypeLookup.by_name(type_name)
     OnlineNotification.where(
       object_lookup_id: object_id,
       type_lookup_id: type_id,
@@ -112,20 +115,9 @@ return all online notifications of an user
 =end
 
   def self.list(user, limit)
-
-    notifications = OnlineNotification.where(user_id: user.id)
-                                      .order('created_at DESC, id DESC')
-                                      .limit(limit)
-    list = []
-    notifications.each do |item|
-      data           = item.attributes
-      data['object'] = ObjectLookup.by_id(data['object_lookup_id'])
-      data['type']   = TypeLookup.by_id(data['type_lookup_id'])
-      data.delete('object_lookup_id')
-      data.delete('type_lookup_id')
-      list.push data
-    end
-    list
+    OnlineNotification.where(user_id: user.id)
+                      .order('created_at DESC, id DESC')
+                      .limit(limit)
   end
 
 =begin
@@ -169,31 +161,6 @@ mark online notification as seen by object
     true
   end
 
-=begin
-
-return all online notifications of an user with assets
-
-  OnlineNotification.list_full(user)
-
-returns:
-
-  list = {
-    stream: notifications,
-    assets: assets,
-  }
-
-=end
-
-  def self.list_full(user, limit)
-
-    notifications = OnlineNotification.list(user, limit)
-    assets = ApplicationModel.assets_of_object_list(notifications)
-    {
-      stream: notifications,
-      assets: assets
-    }
-  end
-
   def notify_clients_after_change
     Sessions.send_to(
       user_id,
@@ -216,8 +183,8 @@ returns:
 
 =end
 
-  def self.all_seen?(object, o_id)
-    notifications = OnlineNotification.list_by_object(object, o_id)
+  def self.all_seen?(object_name, o_id)
+    notifications = OnlineNotification.list_by_object(object_name, o_id)
     notifications.each do |onine_notification|
       return false if !onine_notification['seen']
     end
@@ -237,15 +204,17 @@ returns:
 =end
 
   # rubocop:disable Metrics/ParameterLists
-  def self.exists?(user, object, o_id, type, created_by_user, seen)
+  def self.exists?(user, object_name, o_id, type_name, created_by_user, seen)
     # rubocop:enable Metrics/ParameterLists
+    object_id     = ObjectLookup.by_name(object_name)
+    type_id       = TypeLookup.by_name(type_name)
     notifications = OnlineNotification.list(user, 10)
     notifications.each do |notification|
-      next if notification['o_id'] != o_id
-      next if notification['object'] != object
-      next if notification['type'] != type
-      next if notification['created_by_id'] != created_by_user.id
-      next if notification['seen'] != seen
+      next if notification.o_id != o_id
+      next if notification.object_lookup_id != object_id
+      next if notification.type_lookup_id != type_id
+      next if notification.created_by_id != created_by_user.id
+      next if notification.seen != seen
       return true
     end
     false

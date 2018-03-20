@@ -27,7 +27,7 @@ class App.DashboardActivityStream extends App.CollectionController
       @ajax(
         id:    'dashoard_activity_stream'
         type:  'GET'
-        url:   "#{@apiPath}/activity_stream"
+        url:   "#{@apiPath}/activity_stream?full=true"
         data:
           limit: @limit || 8
         processData: true
@@ -37,8 +37,9 @@ class App.DashboardActivityStream extends App.CollectionController
 
   load: (data) =>
     App.SessionStorage.set('activity_stream', data)
-    @items = data.activity_stream
+    App.ActivityStream.refresh([], clear: true)
     App.Collection.loadAssets(data.assets)
+    @items = App.ActivityStream.search(sortBy: 'created_at', order: 'DESC')
     @collectionSync(@items)
 
   itemGet: (key) =>
@@ -49,7 +50,7 @@ class App.DashboardActivityStream extends App.CollectionController
     # nothing
 
   itemsAll: =>
-    @items
+    @items || []
 
   onRenderEnd: =>
     return if _.isEmpty(@items)
