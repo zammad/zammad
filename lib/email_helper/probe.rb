@@ -79,15 +79,15 @@ returns on fail
           end
 
           # probe inbound
-          Rails.logger.debug "INBOUND PROBE PROVIDER: #{settings[:inbound].inspect}"
+          Rails.logger.debug { "INBOUND PROBE PROVIDER: #{settings[:inbound].inspect}" }
           result_inbound = EmailHelper::Probe.inbound(settings[:inbound])
-          Rails.logger.debug "INBOUND RESULT PROVIDER: #{result_inbound.inspect}"
+          Rails.logger.debug { "INBOUND RESULT PROVIDER: #{result_inbound.inspect}" }
           next if result_inbound[:result] != 'ok'
 
           # probe outbound
-          Rails.logger.debug "OUTBOUND PROBE PROVIDER: #{settings[:outbound].inspect}"
+          Rails.logger.debug { "OUTBOUND PROBE PROVIDER: #{settings[:outbound].inspect}" }
           result_outbound = EmailHelper::Probe.outbound(settings[:outbound], params[:email])
-          Rails.logger.debug "OUTBOUND RESULT PROVIDER: #{result_outbound.inspect}"
+          Rails.logger.debug { "OUTBOUND RESULT PROVIDER: #{result_outbound.inspect}" }
           next if result_outbound[:result] != 'ok'
 
           return {
@@ -116,9 +116,9 @@ returns on fail
           config[:options][:folder] = params[:folder]
         end
 
-        Rails.logger.debug "INBOUND PROBE GUESS: #{config.inspect}"
+        Rails.logger.debug { "INBOUND PROBE GUESS: #{config.inspect}" }
         result_inbound = EmailHelper::Probe.inbound(config)
-        Rails.logger.debug "INBOUND RESULT GUESS: #{result_inbound.inspect}"
+        Rails.logger.debug { "INBOUND RESULT GUESS: #{result_inbound.inspect}" }
 
         next if result_inbound[:result] != 'ok'
 
@@ -144,9 +144,9 @@ returns on fail
 
       success = false
       outbound_map.each do |config|
-        Rails.logger.debug "OUTBOUND PROBE GUESS: #{config.inspect}"
+        Rails.logger.debug { "OUTBOUND PROBE GUESS: #{config.inspect}" }
         result_outbound = EmailHelper::Probe.outbound(config, params[:email])
-        Rails.logger.debug "OUTBOUND RESULT GUESS: #{result_outbound.inspect}"
+        Rails.logger.debug { "OUTBOUND RESULT GUESS: #{result_outbound.inspect}" }
 
         next if result_outbound[:result] != 'ok'
 

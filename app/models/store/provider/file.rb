@@ -8,7 +8,7 @@ class Store::Provider::File
     location = get_location(sha)
     permission = '600'
     if !File.exist?(location)
-      Rails.logger.debug "storge write '#{location}' (#{permission})"
+      Rails.logger.debug { "storge write '#{location}' (#{permission})" }
       file = File.new(location, 'wb')
       file.write(data)
       file.close
@@ -27,7 +27,7 @@ class Store::Provider::File
   # read file from fs
   def self.get(sha)
     location = get_location(sha)
-    Rails.logger.debug "read from fs #{location}"
+    Rails.logger.debug { "read from fs #{location}" }
     if !File.exist?(location)
       raise "ERROR: No such file #{location}"
     end

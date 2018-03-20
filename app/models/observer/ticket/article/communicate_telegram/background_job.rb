@@ -44,7 +44,7 @@ class Observer::Ticket::Article::CommunicateTelegram::BackgroundJob
       return
     end
 
-    Rails.logger.debug "result info: #{result}"
+    Rails.logger.debug { "result info: #{result}" }
 
     # only private, group messages. channel messages do not have from key
     if result['from'] && result['chat']

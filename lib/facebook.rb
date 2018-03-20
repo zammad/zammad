@@ -121,8 +121,8 @@ result
   end
 
   def to_user(item)
-    Rails.logger.debug 'Create user from item...'
-    Rails.logger.debug item.inspect
+    Rails.logger.debug { 'Create user from item...' }
+    Rails.logger.debug { item.inspect }
 
     # do item_user lookup
     item_user = user(item)
@@ -196,9 +196,9 @@ result
 
   def to_ticket(post, group_id, channel, page)
 
-    Rails.logger.debug 'Create ticket from post...'
-    Rails.logger.debug post.inspect
-    Rails.logger.debug group_id.inspect
+    Rails.logger.debug { 'Create ticket from post...' }
+    Rails.logger.debug { post.inspect }
+    Rails.logger.debug { group_id.inspect }
 
     user = to_user(post)
     return if !user
@@ -228,9 +228,9 @@ result
 
   def to_article(post, ticket, page)
 
-    Rails.logger.debug 'Create article from post...'
-    Rails.logger.debug post.inspect
-    Rails.logger.debug ticket.inspect
+    Rails.logger.debug { 'Create article from post...' }
+    Rails.logger.debug { post.inspect }
+    Rails.logger.debug { ticket.inspect }
 
     user = to_user(post)
     return if !user
@@ -309,7 +309,7 @@ result
   end
 
   def to_group(post, group_id, channel, page)
-    Rails.logger.debug 'import post'
+    Rails.logger.debug { 'import post' }
     return if !post['message']
     ticket = nil
 
@@ -332,9 +332,9 @@ result
     if article[:type] != 'facebook feed comment'
       raise "Can't handle unknown facebook article type '#{article[:type]}'."
     end
-    Rails.logger.debug 'Create feed comment from article...'
+    Rails.logger.debug { 'Create feed comment from article...' }
     post = @client.put_comment(article[:in_reply_to], article[:body])
-    Rails.logger.debug post.inspect
+    Rails.logger.debug { post.inspect }
     @client.get_object(post['id'])
   end
 
@@ -371,8 +371,8 @@ result
 
   def nested_comments(comments, in_reply_to)
 
-    Rails.logger.debug 'Fetching nested comments...'
-    Rails.logger.debug comments.inspect
+    Rails.logger.debug { 'Fetching nested comments...' }
+    Rails.logger.debug { comments.inspect }
 
     result = []
     return result if comments.blank?

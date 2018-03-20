@@ -13,17 +13,17 @@ class Sequencer
                 state.provide(:associations) do
                   associations.collect do |association|
 
-                    logger.debug("Checking association '#{association}'")
+                    logger.debug { "Checking association '#{association}'" }
                     next if !mapped.key?(association)
 
                     # remove from the mapped values if it's an association
                     value = mapped.delete(association)
-                    logger.debug("Extracted association '#{association}' value '#{value.inspect}'")
+                    logger.debug { "Extracted association '#{association}' value '#{value.inspect}'" }
 
                     # skip if we don't track them
                     next if tracked_associations.exclude?(association)
 
-                    logger.debug("Using value of association '#{association}'")
+                    logger.debug { "Using value of association '#{association}'" }
                     [association, value]
                   end.compact.to_h
                 end

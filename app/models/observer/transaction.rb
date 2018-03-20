@@ -54,7 +54,7 @@ class Observer::Transaction < ActiveRecord::Observer
   end
 
   def self.execute_singel_backend(backend, item, params)
-    Rails.logger.debug "Execute singel backend #{backend}"
+    Rails.logger.debug { "Execute singel backend #{backend}" }
     begin
       UserInfo.current_user_id = nil
       integration = backend.new(item, params)

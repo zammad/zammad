@@ -136,7 +136,7 @@ stream all accounts
     last_channels = []
 
     loop do
-      logger.debug 'stream controll loop'
+      logger.debug { 'stream controll loop' }
 
       current_channels = []
       channels = Channel.where('active = ? AND area LIKE ?', true, '%::Account')

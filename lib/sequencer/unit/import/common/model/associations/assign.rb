@@ -29,7 +29,7 @@ class Sequencer
               private
 
               def changed?
-                logger.debug("Changed instance associations: #{changes.inspect}")
+                logger.debug { "Changed instance associations: #{changes.inspect}" }
                 changes.present?
               end
 

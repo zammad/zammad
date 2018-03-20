@@ -805,7 +805,7 @@ perform changes on ticket
 =end
 
   def perform_changes(perform, perform_origin, item = nil, current_user_id = nil)
-    logger.debug "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})"
+    logger.debug { "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})" }
 
     # if the configuration contains the deletion of the ticket then
     # we skip all other ticket changes because they does not matter
@@ -1065,7 +1065,7 @@ perform changes on ticket
       changed = true
 
       self[attribute] = value['value']
-      logger.debug "set #{object_name}.#{attribute} = #{value['value'].inspect}"
+      logger.debug { "set #{object_name}.#{attribute} = #{value['value'].inspect}" }
     end
     return if !changed
     save

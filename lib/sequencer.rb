@@ -69,7 +69,7 @@ class Sequencer
     end
 
     state.to_h.tap do |result|
-      logger.debug("Returning Sequence '#{sequence.name}' result: #{result.inspect}")
+      logger.debug { "Returning Sequence '#{sequence.name}' result: #{result.inspect}" }
     end
   end
 

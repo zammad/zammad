@@ -153,7 +153,7 @@ returns
   private
 
   def validate_permissions
-    Rails.logger.debug "self permission: #{self.permission_ids}"
+    Rails.logger.debug { "self permission: #{self.permission_ids}" }
     return true if !self.permission_ids
     permission_ids.each do |permission_id|
       permission = Permission.lookup(id: permission_id)

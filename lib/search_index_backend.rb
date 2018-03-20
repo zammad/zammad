@@ -94,7 +94,7 @@ update processors
           )
         end
         Rails.logger.info "# curl -X PUT \"#{url}\" \\"
-        Rails.logger.debug "-d '#{data.to_json}'"
+        Rails.logger.debug { "-d '#{data.to_json}'" }
         item.delete(:action)
         response = UserAgent.put(
           url,
@@ -163,7 +163,7 @@ create/update/delete index
     end
 
     Rails.logger.info "# curl -X PUT \"#{url}\" \\"
-    Rails.logger.debug "-d '#{data[:data].to_json}'"
+    Rails.logger.debug { "-d '#{data[:data].to_json}'" }
 
     response = UserAgent.put(
       url,
@@ -201,7 +201,7 @@ add new object to search index
     return if url.blank?
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    Rails.logger.debug "-d '#{data.to_json}'"
+    Rails.logger.debug { "-d '#{data.to_json}'" }
 
     response = UserAgent.post(
       url,
@@ -350,7 +350,7 @@ return search result
     data['query']['bool']['must'].push condition
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    Rails.logger.debug " -d'#{data.to_json}'"
+    Rails.logger.debug { " -d'#{data.to_json}'" }
 
     response = UserAgent.get(
       url,
@@ -448,7 +448,7 @@ get count of tickets and tickets which match on selector
     data = selector2query(selectors, current_user, aggs_interval, limit)
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    Rails.logger.debug " -d'#{data.to_json}'"
+    Rails.logger.debug { " -d'#{data.to_json}'" }
 
     response = UserAgent.get(
       url,
@@ -471,7 +471,7 @@ get count of tickets and tickets which match on selector
         response: response,
       )
     end
-    Rails.logger.debug response.data.to_json
+    Rails.logger.debug { response.data.to_json }
 
     if aggs_interval.blank? || aggs_interval[:interval].blank?
       ticket_ids = []
