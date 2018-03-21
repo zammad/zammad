@@ -35,12 +35,7 @@ Style/IfUnlessModifier:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#if-as-a-modifier'
   Enabled: false
 
-Style/TrailingCommaInArrayLiteral:
-  Description: 'Checks for trailing comma in array and hash literals.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
-  Enabled: false
-
-Style/TrailingCommaInHashLiteral:
+Style/TrailingCommaInLiteral:
   Description: 'Checks for trailing comma in array and hash literals.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
   Enabled: false
@@ -204,7 +199,7 @@ Metrics/ModuleLength:
 Metrics/BlockLength:
   Enabled: false
 
-Style/RescueStandardError:
+Lint/RescueWithoutErrorClass:
   Enabled: false
 
 Rails/ApplicationRecord:
