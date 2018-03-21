@@ -33,6 +33,7 @@ $(function() {
         name: 'email',
         tag: 'input',
         type: 'email',
+        required: true,
         placeholder: 'Your Email',
         defaultValue: function () {return User.email;},
       },
@@ -40,6 +41,7 @@ $(function() {
         display: 'Message',
         name: 'body',
         tag: 'textarea',
+        required: true,
         placeholder: 'Your Message...',
         defaultValue: '',
         rows: 7,
@@ -76,6 +78,7 @@ $(function() {
         name: 'name',
         tag: 'input',
         type: 'text',
+        required: true,
         placeholder: 'Your Name',
         defaultValue: '',
       },
@@ -84,6 +87,7 @@ $(function() {
         name: 'email',
         tag: 'input',
         type: 'email',
+        required: true,
         placeholder: 'Your Email',
         defaultValue: '',
       },
@@ -91,6 +95,7 @@ $(function() {
         display: 'Message',
         name: 'body',
         tag: 'textarea',
+        required: true,
         placeholder: 'Your Message...',
         defaultValue: '',
         rows: 7,
@@ -397,10 +402,10 @@ $(function() {
       var defaultValue = (typeof value.defaultValue === 'function') ? value.defaultValue() : value.defaultValue;
       for (var i=0; i < (value.repeat ? value.repeat : 1); i++) {
         if (value.tag == 'input') {
-          item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '">')
+          item.append('<input class="form-control" name="' + value.name + '" type="' + value.type + '" placeholder="' + _this.T(value.placeholder) + '" value="' + (defaultValue || '') + '"' + (value.required === true ? ' required' : '') + '>')
         }
         else if (value.tag == 'textarea') {
-          item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '">' + (defaultValue || '') + '</textarea>')
+          item.append('<textarea class="form-control" name="' + value.name + '" placeholder="' + _this.T(value.placeholder) + '" rows="' + value.rows + '"' + (value.required === true ? ' required' : '') + '>' + (defaultValue || '') + '</textarea>')
         }
       }
       $form.append(item)
