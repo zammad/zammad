@@ -302,7 +302,7 @@ set new attributes of model (remove already available attributes)
         url:   url
         processData: true,
         success: (data, status, xhr) =>
-          @FULL_FETCH[ data.id ] = false
+          @FULL_FETCH[id] = false
 
           App.Log.debug('Model', "got #{@className}.find(#{id}) from server", data)
 
@@ -315,15 +315,15 @@ set new attributes of model (remove already available attributes)
             App[@className].refresh(data)
 
           # execute callbacks
-          if @FULL_CALLBACK[ data.id ]
-            for key, callback of @FULL_CALLBACK[ data.id ]
+          if @FULL_CALLBACK[data.id]
+            for key, callback of @FULL_CALLBACK[data.id]
               callback( @_fillUp( App[@className].find(data.id) ) )
-              delete @FULL_CALLBACK[ data.id ][ key ]
-            if _.isEmpty @FULL_CALLBACK[ data.id ]
-              delete @FULL_CALLBACK[ data.id ]
+              delete @FULL_CALLBACK[data.id][key]
+            if _.isEmpty @FULL_CALLBACK[data.id]
+              delete @FULL_CALLBACK[data.id]
 
         error: (xhr, statusText, error) =>
-          @FULL_FETCH[ data.id ] = false
+          @FULL_FETCH[id] = false
           App.Log.error('Model', statusText, error, url)
       )
     subscribeId

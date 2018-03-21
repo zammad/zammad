@@ -155,7 +155,7 @@ class App.OnlineNotificationWidget extends App.Controller
   fetch: =>
     load = =>
       @fetchedData = true
-    App.OnlineNotification.fetchFull(load, clear: true)
+    App.OnlineNotification.fetchFull(load, clear: true, force: true)
 
   toggle: =>
     if @shown
