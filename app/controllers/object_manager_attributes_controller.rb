@@ -22,55 +22,51 @@ class ObjectManagerAttributesController < ApplicationController
 
   # POST /object_manager_attributes
   def create
-    check_params
-
     # check if attribute already exists
     exists = ObjectManager::Attribute.get(
-      object: params[:object],
-      name: params[:name],
+      object: permitted_params[:object],
+      name: permitted_params[:name],
     )
     raise Exceptions::UnprocessableEntity, 'already exists' if exists
 
-    local_params = params.permit!.to_h
     begin
       object_manager_attribute = ObjectManager::Attribute.add(
-        object: local_params[:object],
-        name: local_params[:name],
-        display: local_params[:display],
-        data_type: local_params[:data_type],
-        data_option: local_params[:data_option],
-        active: local_params[:active],
-        screens: local_params[:screens],
+        object: permitted_params[:object],
+        name: permitted_params[:name],
+        display: permitted_params[:display],
+        data_type: permitted_params[:data_type],
+        data_option: permitted_params[:data_option],
+        active: permitted_params[:active],
+        screens: permitted_params[:screens],
         position: 1550,
         editable: true,
       )
       render json: object_manager_attribute.attributes_with_association_ids, status: :created
     rescue => e
+      logger.error e
       raise Exceptions::UnprocessableEntity, e
     end
   end
 
   # PUT /object_manager_attributes/1
   def update
-    check_params
 
-    local_params = params.permit!.to_h
-    begin
-      object_manager_attribute = ObjectManager::Attribute.add(
-        object: local_params[:object],
-        name: local_params[:name],
-        display: local_params[:display],
-        data_type: local_params[:data_type],
-        data_option: local_params[:data_option],
-        active: local_params[:active],
-        screens: local_params[:screens],
-        position: 1550,
-        editable: true,
-      )
-      render json: object_manager_attribute.attributes_with_association_ids, status: :ok
-    rescue => e
-      raise Exceptions::UnprocessableEntity, e
-    end
+    object_manager_attribute = ObjectManager::Attribute.add(
+      object: permitted_params[:object],
+      name: permitted_params[:name],
+      display: permitted_params[:display],
+      data_type: permitted_params[:data_type],
+      data_option: permitted_params[:data_option],
+      active: permitted_params[:active],
+      screens: permitted_params[:screens],
+      position: 1550,
+      editable: true,
+    )
+    render json: object_manager_attribute.attributes_with_association_ids, status: :ok
+  rescue => e
+    logger.error e
+    raise Exceptions::UnprocessableEntity, e
+
   end
 
   # DELETE /object_manager_attributes/1
@@ -97,50 +93,57 @@ class ObjectManagerAttributesController < ApplicationController
 
   private
 
-  def check_params
-    if params[:data_type].match?(/^(boolean)$/)
-      if params[:data_option][:options]
-        # rubocop:disable Lint/BooleanSymbol
-        if params[:data_option][:options][:false]
-          params[:data_option][:options][false] = params[:data_option][:options].delete(:false)
+  def permitted_params
+    @permitted_params ||= begin
+      permitted = params.permit!.to_h
+
+      if permitted[:data_type].match?(/^(boolean)$/)
+        if permitted[:data_option][:options]
+          # rubocop:disable Lint/BooleanSymbol
+          if permitted[:data_option][:options][:false]
+            permitted[:data_option][:options][false] = permitted[:data_option][:options].delete(:false)
+          end
+          if permitted[:data_option][:options][:true]
+            permitted[:data_option][:options][true] = permitted[:data_option][:options].delete(:true)
+          end
+          if permitted[:data_option][:default] == 'true'
+            permitted[:data_option][:default] = true
+          elsif permitted[:data_option][:default] == 'false'
+            permitted[:data_option][:default] = false
+          end
+          # rubocop:enable Lint/BooleanSymbol
         end
-        if params[:data_option][:options][:true]
-          params[:data_option][:options][true] = params[:data_option][:options].delete(:true)
-        end
-        if params[:data_option][:default] == 'true'
-          params[:data_option][:default] = true
-        elsif params[:data_option][:default] == 'false'
-          params[:data_option][:default] = false
-        end
-        # rubocop:enable Lint/BooleanSymbol
       end
+
+      if permitted[:data_option]
+
+        if !permitted[:data_option].key?(:default)
+          permitted[:data_option][:default] = if permitted[:data_type].match?(/^(input|select|tree_select)$/)
+                                                ''
+                                              end
+        end
+
+        if permitted[:data_option][:null].nil?
+          permitted[:data_option][:null] = true
+        end
+
+        if !permitted[:data_option][:options].is_a?(Hash)
+          permitted[:data_option][:options] = {}
+        end
+
+        if !permitted[:data_option][:relation].is_a?(String)
+          permitted[:data_option][:relation] = ''
+        end
+      else
+        permitted[:data_option] = {
+          default:  '',
+          options:  {},
+          relation: '',
+          null:     true
+        }
+      end
+
+      permitted
     end
-
-    if params[:data_option]
-
-      if !params[:data_option].key?(:default)
-        params[:data_option][:default] = if params[:data_type].match?(/^(input|select|tree_select)$/)
-                                           ''
-                                         end
-      end
-
-      if params[:data_option][:null].nil?
-        params[:data_option][:null] = true
-      end
-      if params[:data_option][:options].nil?
-        params[:data_option][:options] = ''
-      end
-      if params[:data_option][:relation].nil?
-        params[:data_option][:relation] = ''
-      end
-    else
-      params[:data_option] = {
-        default:  '',
-        options:  '',
-        relation: '',
-        null:     true
-      }
-    end
-
   end
 end
