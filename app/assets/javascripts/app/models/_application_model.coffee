@@ -582,8 +582,8 @@ set new attributes of model (remove already available attributes)
         callback(App[@className].all())
       App.QueueManager.add(queueManagerName, localCallback)
 
-    return if @fetchFullActive is true
-    @fetchFullActive = true
+    return if @fetchFullActive && @fetchFullActive > new Date().getTime() - 500
+    @fetchFullActive = new Date().getTime()
     App.Ajax.request(
       type:  'GET'
       url:   url
@@ -599,7 +599,7 @@ set new attributes of model (remove already available attributes)
 
         # full / load assets
         if data.assets
-          App.Collection.loadAssets(data.assets)
+          App.Collection.loadAssets(data.assets, targetModel: @className)
 
           # in case of no record_ids are there, no inital render is fired
           if data.record_ids && _.isEmpty(data.record_ids)

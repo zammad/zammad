@@ -1491,7 +1491,7 @@ wait untill text in selector disabppears
       sleep 0.5
       begin
         if instance.find_elements(css: '.js-notificationsContainer .js-item:first-child')[0]
-          instance.mouse.move_to(instance.find_elements(css: '.js-notificationsContainer .js-item:first-child')[0])
+          instance.action.move_to(instance.find_elements(css: '.js-notificationsContainer .js-item:first-child')[0])
           sleep 0.1
           click_element = instance.find_elements(css: '.js-notificationsContainer .js-item:first-child .js-remove')[0]
           click_element&.click
