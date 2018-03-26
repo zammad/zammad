@@ -1,7 +1,7 @@
-
 require 'test_helper'
 
 class MonitoringControllerTest < ActionDispatch::IntegrationTest
+  self.use_transactional_tests = false
   setup do
 
     # set accept header
@@ -439,4 +439,181 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_response(200)
   end
 
+  test '10 check failed delayed job' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('monitoring-admin@example.com', 'adminpw')
+
+    # disable elasticsearch
+    prev_es_config = Setting.get('es_url')
+    Setting.set('es_url', 'http://127.0.0.1:92001')
+
+    # add a new object
+    object = ObjectManager::Attribute.add(
+      name: 'test3',
+      object: 'Ticket',
+      display: 'Test 3',
+      active: true,
+      data_type: 'input',
+      data_option: {
+        default: 'test',
+        type: 'text',
+        maxlength: 120,
+        null: true
+      },
+      screens: {
+        create_middle: {
+          'ticket.customer' => {
+            shown: true,
+            item_class: 'column'
+          },
+          'ticket.agent' => {
+            shown: true,
+            item_class: 'column'
+          }
+        },
+        edit: {
+          'ticket.customer' => {
+            shown: true
+          },
+          'ticket.agent' => {
+            shown: true
+          }
+        }
+      },
+      position: 1550,
+      editable: true
+    )
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert_equal(migration, true)
+
+    post "/api/v1/object_manager_attributes/#{object.id}", params: {}, headers: @headers
+    token = @response.headers['CSRF-TOKEN']
+
+    # parameters for updating
+    params = {
+      'name': 'test4',
+      'object': 'Ticket',
+      'display': 'Test 4',
+      'active': true,
+      'data_type': 'input',
+      'data_option': {
+        'default': 'test',
+        'type': 'text',
+        'maxlength': 120
+      },
+      'screens': {
+        'create_middle': {
+          'ticket.customer': {
+            'shown': true,
+            'item_class': 'column'
+          },
+          'ticket.agent': {
+            'shown': true,
+            'item_class': 'column'
+          }
+        },
+        'edit': {
+          'ticket.customer': {
+            'shown': true
+          },
+          'ticket.agent': {
+            'shown': true
+          }
+        }
+      },
+      'id': 'c-196'
+    }
+
+    # update the object
+    put "/api/v1/object_manager_attributes/#{object.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert_equal(migration, true)
+
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert(result)
+    assert(result['data_option']['null'])
+    assert_equal(result['name'], 'test4')
+    assert_equal(result['display'], 'Test 4')
+
+    jobs = Delayed::Job.all
+
+    4.times do
+      jobs.each do |job|
+        Delayed::Worker.new.run(job)
+      end
+    end
+
+    # health_check
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['message'])
+    assert(result['issues'])
+    assert_equal(false, result['healthy'])
+    assert_equal("Failed to run background job #1 'BackgroundJobSearchIndex' 1 time(s) with 4 attempt(s).",  result['message'])
+
+    # add another job
+    manual_added = Delayed::Job.enqueue( BackgroundJobSearchIndex.new('Ticket', 1))
+    manual_added.update!(attempts: 10)
+
+    # health_check
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['message'])
+    assert(result['issues'])
+    assert_equal(false, result['healthy'])
+    assert_equal("Failed to run background job #1 'BackgroundJobSearchIndex' 2 time(s) with 14 attempt(s).",  result['message'])
+
+    # add another job
+    dummy_class = Class.new do
+
+      def perform
+        puts 'work work'
+      end
+    end
+
+    manual_added = Delayed::Job.enqueue( dummy_class.new )
+    manual_added.update!(attempts: 5)
+
+    # health_check
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['message'])
+    assert(result['issues'])
+    assert_equal(false, result['healthy'])
+    assert_equal("Failed to run background job #1 'BackgroundJobSearchIndex' 2 time(s) with 14 attempt(s).;Failed to run background job #2 'Object' 1 time(s) with 5 attempt(s).",  result['message'])
+
+    # reset settings
+    Setting.set('es_url', prev_es_config)
+
+    # add some more failing job
+    10.times do
+      manual_added = Delayed::Job.enqueue( dummy_class.new )
+      manual_added.update!(attempts: 5)
+    end
+
+    # health_check
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['message'])
+    assert(result['issues'])
+    assert_equal(false, result['healthy'])
+    assert_equal("13 failing background jobs.;Failed to run background job #1 'BackgroundJobSearchIndex' 2 time(s) with 14 attempt(s).;Failed to run background job #2 'Object' 8 time(s) with 40 attempt(s).",  result['message'])
+
+    # cleanup
+    Delayed::Job.delete_all
+  end
 end
