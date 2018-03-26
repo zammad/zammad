@@ -83,5 +83,5 @@ script:
   - rake db:drop
 after_success:
   - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger_docker_build.sh; fi
-  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger_docker-compose_build.sh; fi
-  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger_docker-univention_build.sh; fi
+  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger_docker_compose_build.sh; fi
+  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger_docker_univention_build.sh; fi
