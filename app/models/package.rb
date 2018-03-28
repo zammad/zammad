@@ -105,7 +105,7 @@ note: will not take down package migrations, use Package.unlink instead
     if package == false
       raise "Can't link package, '#{package_base_dir}' is no package source directory!"
     end
-    logger.debug package.inspect
+    logger.debug { package.inspect }
     package
   end
 
@@ -424,7 +424,7 @@ execute all pending package migrations at once
     if File.exist?(location)
       content_fs = _read_file(file)
       if content_fs == data
-        logger.debug "NOTICE: file '#{location}' already exists, skip install"
+        logger.debug { "NOTICE: file '#{location}' already exists, skip install" }
         return true
       end
       backup_location = location + '.save'

@@ -35,7 +35,7 @@ class Sequencer
             private
 
             def changed?
-              logger.debug("Changed instance attributes: #{changes.inspect}")
+              logger.debug { "Changed instance attributes: #{changes.inspect}" }
               changes.present?
             end
 

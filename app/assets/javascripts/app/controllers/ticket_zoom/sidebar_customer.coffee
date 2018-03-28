@@ -15,11 +15,15 @@ class SidebarCustomer extends App.Controller
       ]
     }
     return @item if @ticket && @ticket.customer_id == 1
-    @item.sidebarActions.push {
-      title:    'Edit Customer'
-      name:     'customer-edit'
-      callback: @editCustomer
-    }
+    currentUser = App.User.find(App.Session.get('id'))
+    if @ticket.customer_id && App.User.exists(@ticket.customer_id)
+      customer = App.User.find(@ticket.customer_id)
+      if customer.isAccessibleBy(currentUser, 'change')
+        @item.sidebarActions.push {
+          title:    'Edit Customer'
+          name:     'customer-edit'
+          callback: @editCustomer
+        }
     @item
 
   metaBadge: (user) =>

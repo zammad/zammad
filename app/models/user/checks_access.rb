@@ -13,19 +13,10 @@ class User
     #  #=> true
     #
     # @return [Boolean]
-    def access?(user, _access)
-
-      # check agent
-      return true if user.permissions?('admin.user')
-      return true if user.permissions?('ticket.agent')
-
-      # check customer
-      if user.permissions?('ticket.customer')
-        # access ok if its own user
-        return id == user.id
-      end
-
-      false
+    def access?(requester, access)
+      # full admins can do whatever they want
+      return true if requester.permissions?('admin')
+      send("#{access}able_by?".to_sym, requester)
     end
 
     # Checks the given access of a given user for another user and fails with an exception.
@@ -41,6 +32,38 @@ class User
     def access!(user, access)
       return if access?(user, access)
       raise Exceptions::NotAuthorized
+    end
+
+    private
+
+    def readable_by?(requester)
+      return true if own_account?(requester)
+      return true if requester.permissions?('admin.*')
+      return true if requester.permissions?('ticket.agent')
+      # check same organization for customers
+      return false if !requester.permissions?('ticket.customer')
+      same_organization?(requester)
+    end
+
+    def changeable_by?(requester)
+      return true if requester.permissions?('admin.user')
+      # allow agents to change customers
+      return false if !requester.permissions?('ticket.agent')
+      permissions?('ticket.customer')
+    end
+
+    def deleteable_by?(requester)
+      requester.permissions?('admin.user')
+    end
+
+    def own_account?(requester)
+      id == requester.id
+    end
+
+    def same_organization?(requester)
+      return false if organization_id.blank?
+      return false if requester.organization_id.blank?
+      organization_id == requester.organization_id
     end
   end
 end

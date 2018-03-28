@@ -226,8 +226,8 @@ returns
   end
 
   def to_user(params)
-    Rails.logger.debug 'Create user from message...'
-    Rails.logger.debug params.inspect
+    Rails.logger.debug { 'Create user from message...' }
+    Rails.logger.debug { params.inspect }
 
     # do message_user lookup
     message_user = user(params)
@@ -272,10 +272,10 @@ returns
   def to_ticket(params, user, group_id, channel)
     UserInfo.current_user_id = user.id
 
-    Rails.logger.debug 'Create ticket from message...'
-    Rails.logger.debug params.inspect
-    Rails.logger.debug user.inspect
-    Rails.logger.debug group_id.inspect
+    Rails.logger.debug { 'Create ticket from message...' }
+    Rails.logger.debug { params.inspect }
+    Rails.logger.debug { user.inspect }
+    Rails.logger.debug { group_id.inspect }
 
     # prepare title
     title = '-'
@@ -341,13 +341,13 @@ returns
   def to_article(params, user, ticket, channel, article = nil)
 
     if article
-      Rails.logger.debug 'Update article from message...'
+      Rails.logger.debug { 'Update article from message...' }
     else
-      Rails.logger.debug 'Create article from message...'
+      Rails.logger.debug { 'Create article from message...' }
     end
-    Rails.logger.debug params.inspect
-    Rails.logger.debug user.inspect
-    Rails.logger.debug ticket.inspect
+    Rails.logger.debug { params.inspect }
+    Rails.logger.debug { user.inspect }
+    Rails.logger.debug { ticket.inspect }
 
     UserInfo.current_user_id = user.id
 
@@ -529,7 +529,7 @@ returns
 
   def to_group(params, group_id, channel)
     # begin import
-    Rails.logger.debug 'import message'
+    Rails.logger.debug { 'import message' }
 
     # map channel_post params to message
     if params[:channel_post]
@@ -660,12 +660,12 @@ returns
   def from_article(article)
 
     message = nil
-    Rails.logger.debug "Create telegram personal message from article to '#{article[:to]}'..."
+    Rails.logger.debug { "Create telegram personal message from article to '#{article[:to]}'..." }
 
     message = {}
     # TODO: create telegram message here
 
-    Rails.logger.debug message.inspect
+    Rails.logger.debug { message.inspect }
     message
   end
 

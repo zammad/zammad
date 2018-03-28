@@ -80,57 +80,56 @@ class App.UserProfile extends App.Controller
   currentPosition: =>
     @$('.profile').scrollTop()
 
-class ActionRow extends App.ObserverController
+class ActionRow extends App.ObserverActionRow
   model: 'User'
   observe:
     organization_id: true
 
-  render: (user) =>
+  showHistory: (user) =>
+    new App.UserHistory(
+      user_id: user.id
+      container: @el.closest('.content')
+    )
 
-    # start action controller
-    showHistory = =>
-      new App.UserHistory(
-        user_id: user.id
-        container: @el.closest('.content')
-      )
+  editUser: (user) =>
+    new App.ControllerGenericEdit(
+      id: user.id
+      genericObject: 'User'
+      screen: 'edit'
+      pageData:
+        title: 'Users'
+        object: 'User'
+        objects: 'Users'
+      container: @el.closest('.content')
+    )
 
-    editUser = =>
-      new App.ControllerGenericEdit(
-        id: user.id
-        genericObject: 'User'
-        screen: 'edit'
-        pageData:
-          title: 'Users'
-          object: 'User'
-          objects: 'Users'
-        container: @el.closest('.content')
-      )
+  newTicket: (user) =>
+    @navigate("ticket/create/customer/#{user.id}")
 
-    newTicket = =>
-      @navigate("ticket/create/customer/#{user.id}")
+  actions: (user) =>
+    currentUser = App.User.find(App.Session.get('id'))
 
     actions = [
       {
-        name:     'edit'
-        title:    'Edit'
-        callback: editUser
-      }
-      {
         name:     'history'
         title:    'History'
-        callback: showHistory
+        callback: @showHistory
       }
       {
         name:     'ticket'
         title:    'New Ticket'
-        callback: newTicket
+        callback: @newTicket
       }
     ]
 
-    new App.ActionRow(
-      el:    @el
-      items: actions
-    )
+    if user.isAccessibleBy(currentUser, 'change')
+      actions.unshift {
+        name:     'edit'
+        title:    'Edit'
+        callback: @editUser
+      }
+
+    actions
 
 class Object extends App.ObserverController
   model: 'User'

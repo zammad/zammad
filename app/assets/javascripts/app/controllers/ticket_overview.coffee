@@ -574,11 +574,12 @@ class App.TicketOverview extends App.Controller
       @activeFocus = 'nav'
     )
 
-    @bind 'overview:fetch', =>
+    @bind('overview:fetch', =>
       return if !@view
       update = =>
         App.OverviewListCollection.fetch(@view)
       @delay(update, 2800, 'overview:fetch')
+    )
 
   renderBatchOverlay: (elLocal) =>
     if elLocal
@@ -993,7 +994,7 @@ class Table extends App.Controller
     # render init page
     checkbox = true
     edit     = false
-    if @permissionCheck('admin')
+    if @permissionCheck('admin.overview')
       edit = true
     if @permissionCheck('ticket.customer')
       checkbox = false

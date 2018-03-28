@@ -175,7 +175,10 @@ class _taskManagerSingleton extends App.Controller
     @queueRunning = true
     loop
       param = @queue.shift()
-      @executeSingel(param)
+      try
+        @executeSingel(param)
+      catch e
+        @log 'error', 'executeSingel task:', param.key, e
       if !@queue[0]
         @queueRunning = false
         break

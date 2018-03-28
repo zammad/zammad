@@ -301,7 +301,7 @@ class Scheduler < ApplicationModel
         result = nil
 
         realtime = Benchmark.realtime do
-          logger.debug "*** worker thread, #{Delayed::Job.all.count} in queue"
+          logger.debug { "*** worker thread, #{Delayed::Job.all.count} in queue" }
           result = Delayed::Worker.new.work_off
         end
 
@@ -309,7 +309,7 @@ class Scheduler < ApplicationModel
 
         if count.zero?
           sleep wait
-          logger.debug '*** worker thread loop'
+          logger.debug { '*** worker thread loop' }
         else
           format "*** #{count} jobs processed at %.4f j/s, %d failed ...\n", count / realtime, result.last
         end

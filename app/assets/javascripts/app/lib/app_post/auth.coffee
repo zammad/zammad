@@ -150,10 +150,6 @@ class App.Auth
 
     # clear all in-memory data of all App.Model's
     for model_key, model_object of App
-      if _.isFunction(model_object.resetCallbacks)
-        model_object.resetCallbacks()
-      if _.isFunction(model_object.resetAttributes)
-        model_object.resetAttributes()
       if _.isFunction(model_object.clearInMemory)
         model_object.clearInMemory()
 

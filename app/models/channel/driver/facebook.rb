@@ -16,12 +16,12 @@ class Channel::Driver::Facebook
     @sync     = options['sync']
     @pages    = options['pages']
 
-    Rails.logger.debug 'facebook fetch started'
+    Rails.logger.debug { 'facebook fetch started' }
 
     fetch_feed
     disconnect
 
-    Rails.logger.debug 'facebook fetch completed'
+    Rails.logger.debug { 'facebook fetch completed' }
     notice = ''
     {
       result: 'ok',
@@ -104,7 +104,7 @@ returns
         # ignore older messages
         if (@channel.created_at - 15.days) > Time.zone.parse(post['created_time']) || older_import >= older_import_max
           older_import += 1
-          Rails.logger.debug "post to old: #{post['id']}/#{post['created_time']}"
+          Rails.logger.debug { "post to old: #{post['id']}/#{post['created_time']}" }
           next
         end
 

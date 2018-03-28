@@ -20,7 +20,8 @@ class SwitchToUserTest < TestCase
     )
     sleep 3
 
-    @browser.mouse.move_to(@browser.find_elements({ css: '.content.active .table-overview tbody tr:first-child' } )[0])
+    @browser.action.move_to(@browser.find_elements({ css: '.content.active .table-overview tbody tr:first-child' } )[0]).release.perform
+
     sleep 0.5
     click(
       css: '.content.active .icon-switchView',

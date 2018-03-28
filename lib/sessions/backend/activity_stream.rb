@@ -26,7 +26,17 @@ class Sessions::Backend::ActivityStream
       @last_change = activity_stream.first['created_at']
     end
 
-    @user.activity_stream(25, true)
+    assets = {}
+    item_ids = []
+    activity_stream.each do |item|
+      item_ids.push item.id
+      assets = item.assets(assets)
+    end
+
+    {
+      record_ids: item_ids,
+      assets: assets,
+    }
   end
 
   def client_key

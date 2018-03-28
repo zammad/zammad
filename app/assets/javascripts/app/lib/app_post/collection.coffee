@@ -9,10 +9,10 @@ class App.Collection
       _instance ?= new _collectionSingleton
     _instance.load(args)
 
-  @loadAssets: (args) ->
+  @loadAssets: (args, params) ->
     if _instance == undefined
       _instance ?= new _collectionSingleton
-    _instance.loadAssets(args)
+    _instance.loadAssets(args, params)
 
   @reset: (args) ->
     if _instance == undefined
@@ -63,19 +63,25 @@ class _collectionSingleton extends Spine.Module
     # reset in-memory
     appObject.refresh(params.data, clear: true)
 
-  loadAssets: (assets) ->
+  loadAssets: (assets, params = {}) ->
     return if _.isEmpty(assets)
 
     # process not existing assets first / to avoid not exising ref errors
     loadAssetsLater = {}
     for type, collections of assets
-      later = @load(type: type, data: collections, later: true)
-      if !_.isEmpty(later)
-        loadAssetsLater[type] = later
+      if !params.targetModel || params.targetModel isnt type
+        later = @load(type: type, data: collections, later: true)
+        if !_.isEmpty(later)
+          loadAssetsLater[type] = later
 
-    # process existing assets
-    for type, collections of loadAssetsLater
-      App[type].refresh(collections)
+      # process existing assets
+      for type, collections of loadAssetsLater
+        App[type].refresh(collections)
+
+    if params.targetModel
+      for type, collections of assets
+        if params.targetModel is type
+          @load(type: type, data: collections)
 
   load: (params) ->
 

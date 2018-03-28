@@ -134,7 +134,7 @@ returns
         if !references[model_class.to_s][item]
           references[model_class.to_s][item] = 0
         end
-        Rails.logger.debug "FOUND (by id) #{model_class}->#{item} #{count}!"
+        Rails.logger.debug { "FOUND (by id) #{model_class}->#{item} #{count}!" }
         references[model_class.to_s][item] += count
       end
     end
@@ -154,7 +154,7 @@ returns
           if !references[model_class.to_s][col_name]
             references[model_class.to_s][col_name] = 0
           end
-          Rails.logger.debug "FOUND (by ref without class) #{model_class}->#{col_name} #{count}!"
+          Rails.logger.debug { "FOUND (by ref without class) #{model_class}->#{col_name} #{count}!" }
           references[model_class.to_s][col_name] += count
         end
 
@@ -166,7 +166,7 @@ returns
         if !references[model_class.to_s][col_name]
           references[model_class.to_s][col_name] = 0
         end
-        Rails.logger.debug "FOUND (by ref with class) #{model_class}->#{col_name} #{count}!"
+        Rails.logger.debug { "FOUND (by ref with class) #{model_class}->#{col_name} #{count}!" }
         references[model_class.to_s][col_name] += count
       end
     end
@@ -233,7 +233,7 @@ returns
       # collect items and attributes to update
       items_to_update = {}
       attributes.each_key do |attribute|
-        Rails.logger.debug "#{object_name}: #{model}.#{attribute}->#{object_id_to_merge}->#{object_id_primary}"
+        Rails.logger.debug { "#{object_name}: #{model}.#{attribute}->#{object_id_to_merge}->#{object_id_primary}" }
         model_object.where("#{attribute} = ?", object_id_to_merge).each do |item|
           if !items_to_update[item.id]
             items_to_update[item.id] = item

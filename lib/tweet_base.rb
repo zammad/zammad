@@ -10,12 +10,12 @@ class TweetBase
   def user(tweet)
 
     if tweet.class == Twitter::DirectMessage
-      Rails.logger.debug "Twitter sender for dm (#{tweet.id}): found"
-      Rails.logger.debug tweet.sender.inspect
+      Rails.logger.debug { "Twitter sender for dm (#{tweet.id}): found" }
+      Rails.logger.debug { tweet.sender.inspect }
       tweet.sender
     elsif tweet.class == Twitter::Tweet
-      Rails.logger.debug "Twitter sender for tweet (#{tweet.id}): found"
-      Rails.logger.debug tweet.user.inspect
+      Rails.logger.debug { "Twitter sender for tweet (#{tweet.id}): found" }
+      Rails.logger.debug { tweet.user.inspect }
       tweet.user
     else
       raise "Unknown tweet type '#{tweet.class}'"
@@ -25,8 +25,8 @@ class TweetBase
 
   def to_user(tweet)
 
-    Rails.logger.debug 'Create user from tweet...'
-    Rails.logger.debug tweet.inspect
+    Rails.logger.debug { 'Create user from tweet...' }
+    Rails.logger.debug { tweet.inspect }
 
     # do tweet_user lookup
     tweet_user = user(tweet)
@@ -102,10 +102,10 @@ class TweetBase
   def to_ticket(tweet, user, group_id, channel)
     UserInfo.current_user_id = user.id
 
-    Rails.logger.debug 'Create ticket from tweet...'
-    Rails.logger.debug tweet.inspect
-    Rails.logger.debug user.inspect
-    Rails.logger.debug group_id.inspect
+    Rails.logger.debug { 'Create ticket from tweet...' }
+    Rails.logger.debug { tweet.inspect }
+    Rails.logger.debug { user.inspect }
+    Rails.logger.debug { group_id.inspect }
 
     if tweet.class == Twitter::DirectMessage
       ticket = Ticket.find_by(
@@ -143,10 +143,10 @@ class TweetBase
 
   def to_article(tweet, user, ticket, channel)
 
-    Rails.logger.debug 'Create article from tweet...'
-    Rails.logger.debug tweet.inspect
-    Rails.logger.debug user.inspect
-    Rails.logger.debug ticket.inspect
+    Rails.logger.debug { 'Create article from tweet...' }
+    Rails.logger.debug { tweet.inspect }
+    Rails.logger.debug { user.inspect }
+    Rails.logger.debug { ticket.inspect }
 
     # import tweet
     to = nil
@@ -233,7 +233,7 @@ class TweetBase
 
   def to_group(tweet, group_id, channel)
 
-    Rails.logger.debug 'import tweet'
+    Rails.logger.debug { 'import tweet' }
 
     # use transaction
     if @connection_type == 'stream'
@@ -289,7 +289,7 @@ class TweetBase
     tweet = nil
     if article[:type] == 'twitter direct-message'
 
-      Rails.logger.debug "Create twitter direct message from article to '#{article[:to]}'..."
+      Rails.logger.debug { "Create twitter direct message from article to '#{article[:to]}'..." }
 
       tweet = @client.create_direct_message(
         article[:to],
@@ -298,7 +298,7 @@ class TweetBase
       )
     elsif article[:type] == 'twitter status'
 
-      Rails.logger.debug 'Create tweet from article...'
+      Rails.logger.debug { 'Create tweet from article...' }
 
       tweet = @client.update(
         article[:body],
@@ -310,7 +310,7 @@ class TweetBase
       raise "Can't handle unknown twitter article type '#{article[:type]}'."
     end
 
-    Rails.logger.debug tweet.inspect
+    Rails.logger.debug { tweet.inspect }
     tweet
   end
 
@@ -392,7 +392,7 @@ class TweetBase
       next if !local_channel.options[:user]
       next if !local_channel.options[:user][:id]
       next if local_channel.options[:user][:id].to_s != tweet_user.id.to_s
-      Rails.logger.debug "Tweet is sent by local account with user id #{tweet_user.id} and tweet.id #{tweet.id}"
+      Rails.logger.debug { "Tweet is sent by local account with user id #{tweet_user.id} and tweet.id #{tweet.id}" }
       return true
     end
     false

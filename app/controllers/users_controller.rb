@@ -116,7 +116,7 @@ class UsersController < ApplicationController
 
     # check if it's first user, the admin user
     # inital admin account
-    count = User.all.count()
+    count = User.all.count
     admin_account_exists = true
     if count <= 2
       admin_account_exists = false
@@ -156,7 +156,7 @@ class UsersController < ApplicationController
         Role.where(name: %w[Admin Agent]).each do |role|
           role_ids.push role.id
         end
-        Group.all().each do |group|
+        Group.all.each do |group|
           group_ids.push group.id
         end
 
@@ -207,6 +207,7 @@ class UsersController < ApplicationController
 
     # send inviteation if needed / only if session exists
     if params[:invite].present? && current_user
+      sleep 5 if ENV['REMOTE_URL'].present?
       token = Token.create(action: 'PasswordReset', user_id: user.id)
       NotificationFactory::Mailer.notification(
         template: 'user_invite',
@@ -261,8 +262,6 @@ class UsersController < ApplicationController
   # @response_message 200 [User] Updated User record.
   # @response_message 401        Invalid session.
   def update
-    check_attributes_by_current_user_permission(params)
-
     user = User.find(params[:id])
     access!(user, 'change')
 
@@ -273,19 +272,11 @@ class UsersController < ApplicationController
       clean_params = User.param_cleanup(clean_params, true)
       user.update!(clean_params)
 
-      # only allow Admin's
-      if current_user.permissions?('admin.user') && (params[:role_ids] || params[:roles])
-        user.associations_from_param(role_ids: params[:role_ids], roles: params[:roles])
-      end
+      # presence and permissions were checked via `check_attributes_by_current_user_permission`
+      privileged_attributes = params.slice(:role_ids, :roles, :group_ids, :groups, :organization_ids, :organizations)
 
-      # only allow Admin's
-      if current_user.permissions?('admin.user') && (params[:group_ids] || params[:groups])
-        user.associations_from_param(group_ids: params[:group_ids], groups: params[:groups])
-      end
-
-      # only allow Admin's and Agent's
-      if current_user.permissions?(['admin.user', 'ticket.agent']) && (params[:organization_ids] || params[:organizations])
-        user.associations_from_param(organization_ids: params[:organization_ids], organizations: params[:organizations])
+      if privileged_attributes.present?
+        user.associations_from_param(privileged_attributes)
       end
     end
 
@@ -391,7 +382,7 @@ class UsersController < ApplicationController
       params[:limit] = 500
     end
 
-    query = params[:query]
+    query = params[:query] || params[:term]
     if query.respond_to?(:permit!)
       query = query.permit!.to_h
     end
@@ -425,14 +416,18 @@ class UsersController < ApplicationController
     end
 
     # build result list
-    if params[:label]
+    if params[:label] || params[:term]
       users = []
       user_all.each do |user|
-        realname = user.firstname.to_s + ' ' + user.lastname.to_s
-        if user.email && user.email.to_s != ''
-          realname = realname + ' <' + user.email.to_s + '>'
+        realname = user.fullname
+        if user.email.present? && realname != user.email
+          realname = "#{realname} <#{user.email}>"
         end
-        a = { id: user.id, label: realname, value: realname }
+        a = if params[:term]
+              { id: user.id, label: realname, value: user.email }
+            else
+              { id: user.id, label: realname, value: realname }
+            end
         users.push a
       end
 
@@ -1114,5 +1109,4 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     end
     true
   end
-
 end

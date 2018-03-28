@@ -368,8 +368,49 @@ Some Text'
     assert_equal('Customer', article.sender.name)
     assert_equal('email', article.type.name)
     assert_equal(false, article.internal)
+  end
 
-    PostmasterFilter.destroy_all
+  test 'process with postmaster filter - message-id as match condition' do
+    PostmasterFilter.create!(
+      name: 'used - message-id',
+      match: {
+        'message-id': {
+          operator: 'contains',
+          value: '@sombody.domain>',
+        },
+      },
+      perform: {
+        'X-Zammad-Ticket-priority_id' => {
+          value: '1',
+        },
+        'x-Zammad-Article-Internal' => {
+          value: true,
+        },
+      },
+      channel: 'email',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    data = 'From: Some Body <somebody@example.com>
+To: Bob <bod@example.com>
+Cc: any@example.com
+Subject: *me*
+Message-Id: <1520781034.17887@sombody.domain>
+
+Some Text'
+
+    parser = Channel::EmailParser.new
+    ticket, article, user = parser.process({}, data)
+
+    assert_equal('Users', ticket.group.name)
+    assert_equal('1 low', ticket.priority.name)
+    assert_equal('*me*', ticket.title)
+
+    assert_equal('Customer', article.sender.name)
+    assert_equal('email', article.type.name)
+    assert_equal(true, article.internal)
   end
 
   test 'process with postmaster filter' do
@@ -918,7 +959,6 @@ Some Text'
     assert_equal('Customer', article.sender.name)
     assert_equal('email', article.type.name)
     assert_equal(false, article.internal)
-
   end
 
 end

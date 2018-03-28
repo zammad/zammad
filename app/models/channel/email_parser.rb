@@ -180,6 +180,7 @@ class Channel::EmailParser
         filename = 'message.html'
         headers_store = {
           'content-alternative' => true,
+          'original-format' => true,
         }
         if mail.mime_type
           headers_store['Mime-Type'] = mail.html_part.mime_type
@@ -225,6 +226,7 @@ class Channel::EmailParser
       # add body as attachment
       headers_store = {
         'content-alternative' => true,
+        'original-format' => true,
       }
       if mail.mime_type
         headers_store['Mime-Type'] = mail.mime_type
@@ -347,7 +349,7 @@ class Channel::EmailParser
           filename = $1
         end
       rescue
-        Rails.logger.debug 'Unable to get filename'
+        Rails.logger.debug { 'Unable to get filename' }
       end
     end
 
@@ -530,7 +532,7 @@ returns
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     end
     filters.each do |key, backend|
-      Rails.logger.debug "run postmaster pre filter #{key}: #{backend}"
+      Rails.logger.debug { "run postmaster pre filter #{key}: #{backend}" }
       begin
         backend.run(channel, mail)
       rescue => e
@@ -682,7 +684,7 @@ returns
       filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
     end
     filters.each_value do |backend|
-      Rails.logger.debug "run postmaster post filter #{backend}"
+      Rails.logger.debug { "run postmaster post filter #{backend}" }
       begin
         backend.run(channel, mail, ticket, article, session_user)
       rescue => e

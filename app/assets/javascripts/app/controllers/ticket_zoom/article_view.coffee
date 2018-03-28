@@ -118,6 +118,26 @@ class ArticleViewItem extends App.ObserverController
     else
       @el.removeClass('is-internal')
 
+    # check if email link need to be updated
+    links = clone(article.preferences.links) || []
+    if article.type.name is 'email'
+      link =
+        name: 'Raw'
+        url: "#{@Config.get('api_path')}/ticket_article_plain/#{article.id}"
+        target: '_blank'
+      links.push link
+
+    # attachments prepare
+    attachments = App.TicketArticle.contentAttachments(article)
+    if article.attachments
+      for attachment in article.attachments
+        if attachment && attachment.preferences && attachment.preferences['original-format'] is true
+          link =
+              url: "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
+              name: 'Original Formatting'
+              target: '_blank'
+          links.push link
+
     # prepare html body
     if article.content_type is 'text/html'
       body = article.body
@@ -152,36 +172,28 @@ class ArticleViewItem extends App.ObserverController
           article['html'] = App.Utils.text2html(body)
           article['html'] = article['html'].replace(signatureDetected, '<span class="js-signatureMarker"></span>')
 
-    # check if email link need to be updated
-    if article.type.name is 'email'
-      if !article.preferences.links
-        article.preferences.links = [
-          {
-            name: 'Raw'
-            url: "#{@Config.get('api_path')}/ticket_article_plain/#{article.id}"
-            target: '_blank'
-          }
-        ]
-
     if article.preferences.delivery_message
       @html App.view('ticket_zoom/article_view_delivery_failed')(
-        ticket:     @ticket
-        article:    article
-        isCustomer: @permissionCheck('ticket.customer')
+        ticket:      @ticket
+        article:     article
+        attachments: attachments
+        links:       links
       )
       return
     if article.sender.name is 'System'
     #if article.sender.name is 'System' && article.preferences.perform_origin is 'trigger'
       @html App.view('ticket_zoom/article_view_system')(
-        ticket:     @ticket
-        article:    article
-        isCustomer: @permissionCheck('ticket.customer')
+        ticket:      @ticket
+        article:     article
+        attachments: attachments
+        links:       links
       )
       return
     @html App.view('ticket_zoom/article_view')(
-      ticket:                @ticket
-      article:               article
-      isCustomer:            @permissionCheck('ticket.customer')
+      ticket:      @ticket
+      article:     article
+      attachments: attachments
+      links:       links
     )
 
     new App.WidgetAvatar(

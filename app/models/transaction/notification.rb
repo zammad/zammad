@@ -153,7 +153,7 @@ class Transaction::Notification
           created_by_id: created_by_id,
           user_id: user.id,
         )
-        Rails.logger.debug "sent ticket online notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})"
+        Rails.logger.debug { "sent ticket online notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
       end
 
       # ignore email channel notificaiton and empty emails
@@ -207,7 +207,7 @@ class Transaction::Notification
         main_object: ticket,
         attachments: attachments,
       )
-      Rails.logger.debug "sent ticket email notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})"
+      Rails.logger.debug { "sent ticket email notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
     end
 
   end

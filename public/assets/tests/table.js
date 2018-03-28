@@ -357,11 +357,11 @@ test('table test', function() {
   equal(el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').val(), '1', 'check row 5')
 });
 
-test('table test 2', function() {
+test('table test 2.1', function() {
   App.i18n.set('de-de')
 
-  $('#table').append('<hr><h1>table with hash</h1><div id="table-hash1"></div>')
-  var el = $('#table-hash1')
+  $('#table').append('<hr><h1>table with hash</h1><div id="table-hash2_1"></div>')
+  var el = $('#table-hash2_1')
   App.Group.refresh( [
     {
       id:         5,
@@ -372,6 +372,7 @@ test('table test 2', function() {
   ])
 
   App.Channel.configure_delete = true
+  App.Channel.configure_clone = false
   App.Channel.configure_attributes = [
     { name: 'adapter',            display: 'Type',     tag: 'select',   multiple: false, null: false, options: { IMAP: 'IMAP', POP3: 'POP3' } },
     { name: 'options::host',      display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false },
@@ -418,22 +419,190 @@ test('table test 2', function() {
   equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Host', 'check header')
   equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Benutzer', 'check header')
   equal(el.find('table > thead > tr > th:nth-child(4)').text().trim(), 'Aktiv', 'check header')
-  equal(el.find('table > thead > tr > th:nth-child(5)').text().trim(), 'Löschen', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(5)').text().trim(), 'Aktion', 'check header')
   equal(el.find('tbody > tr:nth-child(1) > td').length, 5, 'check row 1')
   equal(el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), 'adapter1', 'check row 1')
   equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), 'host1', 'check row 1')
   equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'user1', 'check row 1')
   equal(el.find('tbody > tr:nth-child(1) > td:nth-child(4)').text().trim(), 'ja', 'check row 1')
   equal(el.find('tbody > tr:nth-child(1) > td:nth-child(5)').text().trim(), '', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(5) .dropdown.dropdown--actions').length, 0, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(5) .js-delete').length, 1, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(5) .js-clone').length, 0, 'check row 1')
   equal(el.find('tbody > tr:nth-child(2) > td').length, 5, 'check row 2')
   equal(el.find('tbody > tr:nth-child(2) > td:nth-child(1)').text().trim(), 'adapter2', 'check row 2')
   equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), 'host2', 'check row 2')
   equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'user2', 'check row 2')
   equal(el.find('tbody > tr:nth-child(2) > td:nth-child(4)').text().trim(), 'ja', 'check row 2')
   equal(el.find('tbody > tr:nth-child(2) > td:nth-child(5)').text().trim(), '', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(5) .dropdown.dropdown--actions').length, 0, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(5) .js-delete').length, 1, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(5) .js-clone').length, 0, 'check row 1')
+});
+
+test('table test 2.2', function() {
+  App.i18n.set('de-de')
+
+  $('#table').append('<hr><h1>table with hash</h1><div id="table-hash2_2"></div>')
+  var el = $('#table-hash2_2')
+  App.Group.refresh( [
+    {
+      id:         5,
+      name:       'group 5',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+  ])
+
+  App.Channel.configure_delete = false
+  App.Channel.configure_clone = true
+  App.Channel.configure_attributes = [
+    { name: 'adapter',            display: 'Type',     tag: 'select',   multiple: false, null: false, options: { IMAP: 'IMAP', POP3: 'POP3' } },
+    { name: 'options::host',      display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false },
+    { name: 'options::user',      display: 'User',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false },
+    { name: 'options::password',  display: 'Password', tag: 'input',    type: 'password', limit: 120, null: true, autocapitalize: false },
+    { name: 'options::ssl',       display: 'SSL',      tag: 'select',   multiple: false, null: true, options: { true: 'yes', false: 'no' }, translate: true, default: true},
+    { name: 'options::folder',    display: 'Folder',   tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false },
+    { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: false, nulloption: true, relation: 'Group'  },
+    { name: 'active',             display: 'Active',   tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' }, translate: true, default: true },
+  ]
+
+  App.Channel.refresh( [
+    {
+      id:      1,
+      adapter: 'adapter1',
+      options: {
+        host: 'host1',
+        user: 'user1',
+      },
+      group_id:   5,
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+    {
+      id:      2,
+      adapter: 'adapter2',
+      options: {
+        host: 'host2',
+        user: 'user2',
+      },
+      group_id:   5,
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+  ] )
+  new App.ControllerTable({
+    el:       el,
+    overview: ['adapter', 'options::host', 'options::user', 'active'],
+    model:    App.Channel,
+    objects:  App.Channel.search({sortBy:'adapter', order: 'ASC'}),
+  })
+  equal(el.find('table > thead > tr').length, 1, 'row count')
+  equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Typ', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Host', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Benutzer', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(4)').text().trim(), 'Aktiv', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(5)').text().trim(), 'Aktion', 'check header')
+  equal(el.find('tbody > tr:nth-child(1) > td').length, 5, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), 'adapter1', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), 'host1', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'user1', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(4)').text().trim(), 'ja', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(5)').text().trim(), '', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(5) .dropdown.dropdown--actions').length, 0, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(5) .js-delete').length, 0, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(5) .js-clone').length, 1, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td').length, 5, 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(1)').text().trim(), 'adapter2', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), 'host2', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'user2', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(4)').text().trim(), 'ja', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(5)').text().trim(), '', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(5) .dropdown.dropdown--actions').length, 0, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(5) .js-delete').length, 0, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(5) .js-clone').length, 1, 'check row 1')
 });
 
 test('table test 3', function() {
+  App.i18n.set('de-de')
+
+  $('#table').append('<hr><h1>table with hash</h1><div id="table-hash2"></div>')
+  var el = $('#table-hash2')
+  App.Group.refresh( [
+    {
+      id:         5,
+      name:       'group 5',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+  ])
+
+  App.Channel.configure_delete = true
+  App.Channel.configure_clone = true
+  App.Channel.configure_attributes = [
+    { name: 'adapter',            display: 'Type',     tag: 'select',   multiple: false, null: false, options: { IMAP: 'IMAP', POP3: 'POP3' } },
+    { name: 'options::host',      display: 'Host',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false },
+    { name: 'options::user',      display: 'User',     tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false },
+    { name: 'options::password',  display: 'Password', tag: 'input',    type: 'password', limit: 120, null: true, autocapitalize: false },
+    { name: 'options::ssl',       display: 'SSL',      tag: 'select',   multiple: false, null: true, options: { true: 'yes', false: 'no' }, translate: true, default: true},
+    { name: 'options::folder',    display: 'Folder',   tag: 'input',    type: 'text', limit: 120, null: true, autocapitalize: false },
+    { name: 'group_id',           display: 'Group',    tag: 'select',   multiple: false, null: false, nulloption: true, relation: 'Group'  },
+    { name: 'active',             display: 'Active',   tag: 'select',   multiple: false, null: false, options: { true: 'yes', false: 'no' }, translate: true, default: true },
+  ]
+
+  App.Channel.refresh( [
+    {
+      id:      1,
+      adapter: 'adapter1',
+      options: {
+        host: 'host1',
+        user: 'user1',
+      },
+      group_id:   5,
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+    {
+      id:      2,
+      adapter: 'adapter2',
+      options: {
+        host: 'host2',
+        user: 'user2',
+      },
+      group_id:   5,
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
+    },
+  ] )
+  new App.ControllerTable({
+    el:       el,
+    overview: ['adapter', 'options::host', 'options::user', 'active'],
+    model:    App.Channel,
+    objects:  App.Channel.search({sortBy:'adapter', order: 'ASC'}),
+  })
+  equal(el.find('table > thead > tr').length, 1, 'row count')
+  equal(el.find('table > thead > tr > th:nth-child(1)').text().trim(), 'Typ', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(2)').text().trim(), 'Host', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(3)').text().trim(), 'Benutzer', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(4)').text().trim(), 'Aktiv', 'check header')
+  equal(el.find('table > thead > tr > th:nth-child(5)').text().trim(), 'Aktion', 'check header')
+  equal(el.find('tbody > tr:nth-child(1) > td').length, 5, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), 'adapter1', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(2)').text().trim(), 'host1', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(3)').text().trim(), 'user1', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(4)').text().trim(), 'ja', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(5) .dropdown.dropdown--actions .js-delete').length, 1, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(5) .dropdown.dropdown--actions .js-clone').length, 1, 'check row 1')
+  equal(el.find('tbody > tr:nth-child(2) > td').length, 5, 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(1)').text().trim(), 'adapter2', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(2)').text().trim(), 'host2', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(3)').text().trim(), 'user2', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(4)').text().trim(), 'ja', 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(5) .dropdown.dropdown--actions .js-delete').length, 1, 'check row 2')
+  equal(el.find('tbody > tr:nth-child(2) > td:nth-child(5) .dropdown.dropdown--actions .js-clone').length, 1, 'check row 2')
+});
+
+test('table test 4', function() {
   App.i18n.set('de-de')
 
   $('#table').append('<hr><h1>table with link</h1><div id="table-link1"></div>')
@@ -532,7 +701,7 @@ test('table test 3', function() {
 
 });
 
-test('table test 4', function() {
+test('table test 5', function() {
   App.i18n.set('de-de')
 
   $('#table').append('<hr><h1>table with data</h1><div id="table-data1"></div>')

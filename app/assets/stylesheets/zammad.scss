@@ -426,6 +426,19 @@ pre code.hljs {
     .icon {
       vertical-align: middle;
       @include bidi-style(margin-right, 5px, margin-left, 0);
+      
+      &:only-child {
+        @include bidi-style(margin-right, 5px, margin-left, 0);
+      }
+    }
+
+    .btn-label {
+      margin-left: 0;
+    }
+
+    &.btn--text {
+      padding: 4px 9px;
+      margin: 5px 6px 0;
     }
   }
 
@@ -463,6 +476,10 @@ pre code.hljs {
     &.btn--slim {
       padding-left: 7px !important;
       padding-right: 7px !important;
+      
+      .btn-label {
+        @include bidi-style(margin-left, 0, margin-right, 0);
+      }
 
       &.btn--small {
         padding-left: 5px !important;
@@ -1050,9 +1067,11 @@ th.align-right {
   }
 }
 
-.table .icon-draggable,
-.table .icon-trash {
+.table .icon {
   vertical-align: middle;
+}
+
+.table .icon-draggable {
   fill: hsl(240,1%,77%);
 }
 
@@ -6078,6 +6097,16 @@ footer {
   display: inline-flex;
   align-items: center;
   cursor: default;
+  max-width: 100%;
+
+  &.active {
+    background: $highlight-color;
+
+    .close,
+    .token-close {
+      opacity: .5;
+    }
+  }
 }
 
   /*
@@ -6107,6 +6136,9 @@ footer {
 
   .token-label {
     padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .tokenfield.form-control {
@@ -6119,7 +6151,7 @@ footer {
   .token .close,
   .token-close {
     margin: 0;
-    padding: 0 9px 0 12px;
+    padding: 0 9px 0 6px;
     font-family: inherit;
     font-weight: 100;
     font-size: 28px;
@@ -6141,6 +6173,34 @@ footer {
 .ui-autocomplete.ui-widget-content {
   @extend .zIndex-9;
   position: absolute;
+}
+
+.ui-menu {
+  background: hsl(240,9%,19%);
+  border: none;
+  color: white;
+  font-family: inherit;
+  font-size: inherit;
+  
+  .ui-menu-item {
+    padding: 9px 15px;
+    list-style-image: none;
+    
+    &:not(:first-child) {
+      box-shadow: 0 1px rgba(255,255,255,.13) inset;
+    }
+
+    &.ui-state-focus {
+      margin: 0;
+      border: none;
+      background: hsl(205,90%,60%);
+      color: inherit;
+
+      + li {
+        box-shadow: none;
+      }
+    }
+  }
 }
 
 .drox {
@@ -6490,6 +6550,16 @@ footer {
       box-shadow: none;
     }
 
+  .dropdown-menu > li.danger:hover,
+  .dropdown-menu > li.danger.is-active {
+    background: hsl(0,65%,55%);
+  }
+
+  .dropdown-menu > li.create:hover,
+  .dropdown-menu > li.create.is-active {
+    background: hsl(145,51%,45%);
+  }
+
   .dropdown-menu > li > a {
     color: inherit;
     padding: 0 15px;
@@ -6499,7 +6569,7 @@ footer {
 
   .dropdown-menu > li > a:hover {
     color: inherit;
-    background: hsl(205,90%,60%);
+    background: none;
   }
 
   .dropdown-menu > li > a span {

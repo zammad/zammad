@@ -73,49 +73,42 @@ class App.OrganizationProfile extends App.Controller
   currentPosition: =>
     @$('.profile').scrollTop()
 
-class ActionRow extends App.ObserverController
+class ActionRow extends App.ObserverActionRow
   model: 'Organization'
   observe:
     member_ids: true
 
-  render: (organization) =>
+  showHistory: (organization) =>
+    new App.OrganizationHistory(
+      organization_id: organization.id
+      container: @el.closest('.content')
+    )
 
-    # start action controller
-    showHistory = =>
-      new App.OrganizationHistory(
-        organization_id: organization.id
-        container: @el.closest('.content')
-      )
+  editOrganization: (organization) =>
+    new App.ControllerGenericEdit(
+      id: organization.id
+      genericObject: 'Organization'
+      screen: 'edit'
+      pageData:
+        title: 'Organizations'
+        object: 'Organization'
+        objects: 'Organizations'
+      container: @el.closest('.content')
+    )
 
-    editOrganization = =>
-      new App.ControllerGenericEdit(
-        id: organization.id
-        genericObject: 'Organization'
-        screen: 'edit'
-        pageData:
-          title: 'Organizations'
-          object: 'Organization'
-          objects: 'Organizations'
-        container: @el.closest('.content')
-      )
-
+  actions: =>
     actions = [
       {
         name:     'edit'
         title:    'Edit'
-        callback: editOrganization
+        callback: @editOrganization
       }
       {
         name:     'history'
         title:    'History'
-        callback: showHistory
+        callback: @showHistory
       }
     ]
-
-    new App.ActionRow(
-      el:    @el
-      items: actions
-    )
 
 class Object extends App.ObserverController
   model: 'Organization'

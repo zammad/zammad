@@ -128,7 +128,7 @@ group :development, :test do
   gem 'simplecov-rcov'
 
   # UI tests w/ Selenium
-  gem 'selenium-webdriver', '2.53.4'
+  gem 'selenium-webdriver'
 
   # livereload on template changes (html, js, css)
   gem 'guard',             require: false

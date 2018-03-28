@@ -82,7 +82,7 @@ returns
 =end
 
   def self.signup_role_ids
-    Role.where(active: true, default_at_signup: true).map(&:id)
+    signup_roles.map(&:id)
   end
 
 =begin
@@ -136,24 +136,19 @@ returns
   private_class_method
 
   def self.permission_ids_by_name(keys)
-    if keys.class != Array
-      keys = [keys]
-    end
-    permission_ids = []
-    keys.each do |key|
+    Array(keys).each_with_object([]) do |key, result|
       ::Permission.with_parents(key).each do |local_key|
         permission = ::Permission.lookup(name: local_key)
         next if !permission
-        permission_ids.push permission.id
+        result.push permission.id
       end
     end
-    permission_ids
   end
 
   private
 
   def validate_permissions
-    Rails.logger.debug "self permission: #{self.permission_ids}"
+    Rails.logger.debug { "self permission: #{self.permission_ids}" }
     return true if !self.permission_ids
     permission_ids.each do |permission_id|
       permission = Permission.lookup(id: permission_id)

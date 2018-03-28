@@ -40,8 +40,9 @@ RSpec.describe Auth do
     end
 
     it 'authenticates users' do
-      user   = create(:user)
-      result = described_class.valid?(user, 'zammad')
+      password = 'zammad'
+      user     = create(:user, password: password)
+      result   = described_class.valid?(user, password)
       expect(result).to be true
     end
   end

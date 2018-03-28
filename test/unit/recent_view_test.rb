@@ -37,11 +37,11 @@ class RecentViewTest < ActiveSupport::TestCase
     RecentView.log(ticket1.class.to_s, ticket1.id, user1)
 
     list = RecentView.list(user1)
-    assert(list[0]['o_id'], ticket1.id)
-    assert(list[0]['object'], 'Ticket')
+    assert(list[0].o_id, ticket1.id)
+    assert(list[0].object.name, 'Ticket')
 
-    assert(list[1]['o_id'], ticket2.id)
-    assert(list[1]['object'], 'Ticket')
+    assert(list[1].o_id, ticket2.id)
+    assert(list[1].object.name, 'Ticket')
     assert_equal(2, list.count)
 
     ticket1.destroy
@@ -156,8 +156,8 @@ class RecentViewTest < ActiveSupport::TestCase
 
     # check if list is empty
     list = RecentView.list(customer)
-    assert(list[0]['o_id'], ticket1.id)
-    assert(list[0]['object'], 'Ticket')
+    assert(list[0].o_id, ticket1.id)
+    assert(list[0].object.name, 'Ticket')
     assert_not(list[1], 'check if recent view list is empty')
 
     # log entry
@@ -178,8 +178,8 @@ class RecentViewTest < ActiveSupport::TestCase
 
     # check if list is empty
     list = RecentView.list(agent)
-    assert(list[0]['o_id'], organization1.id)
-    assert(list[0]['object'], 'Organization')
+    assert(list[0].o_id, organization1.id)
+    assert(list[0].object.name, 'Organization')
     assert_not(list[1], 'check if recent view list is empty')
 
     organization2.destroy

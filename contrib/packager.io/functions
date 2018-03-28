@@ -230,7 +230,12 @@ function setup_elasticsearch () {
 
   if [ -n "$(/usr/share/elasticsearch/bin/elasticsearch-plugin list | grep mapper-attachments)" ]; then
     REBUILD_ES_SEARCHINDEX="yes"
+
+    echo "# Deleting old zammad_production elasticsearch index..."
+    curl -XDELETE "${ES_CONNECTION:-http://127.0.0.1:9200}/zammad_production"
+
     yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s remove mapper-attachments
+
   elif [ -n "$(/usr/share/elasticsearch/bin/elasticsearch-plugin list | grep ingest-attachment)" ]; then
     yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s remove ingest-attachment
   fi

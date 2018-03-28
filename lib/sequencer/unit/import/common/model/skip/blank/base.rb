@@ -17,7 +17,7 @@ class Sequencer
 
                 def process
                   return if !skip?
-                  logger.debug("Skipping. Blank #{attribute} found: #{attribute_value.inspect}")
+                  logger.debug { "Skipping. Blank #{attribute} found: #{attribute_value.inspect}" }
                   state.provide(:action, :skipped)
                 end
 

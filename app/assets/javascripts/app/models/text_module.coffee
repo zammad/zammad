@@ -27,6 +27,7 @@ class App.TextModule extends App.Model
     { name: 'active',     display: 'Active',  tag: 'active',   default: true },
   ]
   @configure_delete = true
+  @configure_clone = true
   @configure_overview = [
     'name',
     'keywords',

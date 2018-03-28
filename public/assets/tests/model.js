@@ -235,18 +235,18 @@ test( "model search tests", function() {
     },
   ] )
   priorities = App.TicketPriority.search({sortBy:'created_at', order: 'ASC'})
-  equal( '2 normal', priorities[0].name, 'check 1 entry')
-  equal( '3 high', priorities[1].name, 'check 2 entry')
-  equal( '4 very high', priorities[2].name, 'check 3 entry')
-  equal( '1 low', priorities[3].name, 'check 4 entry')
-  equal( undefined, priorities[4], 'check 5 entry')
+  equal('2 normal', priorities[0].name, 'check 1 entry')
+  equal('3 high', priorities[1].name, 'check 2 entry')
+  equal('4 very high', priorities[2].name, 'check 3 entry')
+  equal('1 low', priorities[3].name, 'check 4 entry')
+  equal(undefined, priorities[4], 'check 5 entry')
 
   priorities = App.TicketPriority.search({sortBy:'created_at', order: 'DESC'})
-  equal( '1 low', priorities[0].name, 'check 4 entry')
-  equal( '4 very high', priorities[1].name, 'check 3 entry')
-  equal( '3 high', priorities[2].name, 'check 2 entry')
-  equal( '2 normal', priorities[3].name, 'check 1 entry')
-  equal( undefined, priorities[4], 'check 5 entry')
+  equal('1 low', priorities[0].name, 'check 4 entry')
+  equal('4 very high', priorities[1].name, 'check 3 entry')
+  equal('3 high', priorities[2].name, 'check 2 entry')
+  equal('2 normal', priorities[3].name, 'check 1 entry')
+  equal(undefined, priorities[4], 'check 5 entry')
 
 });
 
@@ -255,12 +255,12 @@ test( "model loadAssets tests - 1", function() {
   window.refreshCounter1 = 0
   var callback1 = function(state, triggerType) {
     window.refreshCounter1 = window.refreshCounter1 + 1
-    equal( state.id, 9999, 'id check')
+    equal(state.id, 9999, 'id check')
     if (window.refreshCounter1 == 1) {
-      equal( 'full', triggerType, 'trigger type check')
+      equal('full', triggerType, 'trigger type check')
     }
     else {
-      equal( 'refresh', triggerType, 'trigger type check')
+      equal('refresh', triggerType, 'trigger type check')
     }
 
     if ( window.refreshCounter1 == 1 ) {
@@ -298,7 +298,7 @@ test( "model loadAssets tests - 1", function() {
 
 App.Delay.set( function() {
     test( "model loadAssets tests - 1 / check refresh counter", function() {
-      equal( window.refreshCounter1, 2, 'check refresh counter')
+      equal(window.refreshCounter1, 2, 'check refresh counter')
     });
   },
   1000
@@ -308,12 +308,12 @@ test( "model loadAssets tests - 2", function() {
   window.refreshCounter2 = 0
   var callback2 = function(state, triggerType) {
     window.refreshCounter2 = window.refreshCounter2 + 1
-    equal( state.id, 10000, 'id check')
+    equal(state.id, 10000, 'id check')
     if (window.refreshCounter2 == 1) {
-      equal( 'full', triggerType, 'trigger type check')
+      equal('full', triggerType, 'trigger type check')
     }
     else {
-      equal( 'refresh', triggerType, 'trigger type check')
+      equal('refresh', triggerType, 'trigger type check')
     }
     if ( window.refreshCounter2 == 1 ) {
       App.Collection.loadAssets({
@@ -349,7 +349,7 @@ test( "model loadAssets tests - 2", function() {
 
 App.Delay.set( function() {
     test( "model loadAssets tests - 2 / check refresh counter", function() {
-      equal( window.refreshCounter2, 2, 'check refresh counter')
+      equal(window.refreshCounter2, 2, 'check refresh counter')
     });
   },
   1200
@@ -359,12 +359,12 @@ test( "model loadAssets tests - 3", function() {
   window.refreshCounter3 = 0
   var callback3 = function(state, triggerType) {
     window.refreshCounter3 = window.refreshCounter3 + 1
-    equal( state.id, 10001, 'id check')
+    equal(state.id, 10001, 'id check')
     if (window.refreshCounter3 == 1) {
-      equal( 'full', triggerType, 'trigger type check')
+      equal('full', triggerType, 'trigger type check')
     }
     else {
-      equal( 'refresh', triggerType, 'trigger type check')
+      equal('refresh', triggerType, 'trigger type check')
     }
 
     if ( window.refreshCounter3 == 1 ) {
@@ -401,7 +401,7 @@ test( "model loadAssets tests - 3", function() {
 
 App.Delay.set( function() {
     test( "model loadAssets tests - 3 / check refresh counter", function() {
-      equal( window.refreshCounter3, 3, 'check refresh counter')
+      equal(window.refreshCounter3, 3, 'check refresh counter')
     });
   },
   1400

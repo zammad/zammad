@@ -4,35 +4,32 @@ module ChecksUserAttributesByCurrentUserPermission
   private
 
   def check_attributes_by_current_user_permission(params)
+    # admins can do whatever they want
     return true if current_user.permissions?('admin.user')
 
-    %i[role_ids roles].each do |key|
-      next if !params[key]
-      if current_user.permissions?('ticket.agent')
-        params.delete(key)
-      else
-        logger.info "Role assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{params[key].inspect}"
-        raise Exceptions::NotAuthorized, 'This role assignment is only allowed by admin!'
-      end
-    end
-    if current_user.permissions?('ticket.agent') && !params[:role_ids] && !params[:roles] && params[:id].blank?
-      params[:role_ids] = Role.signup_role_ids
-    end
+    # non-agents (customers) can't set anything
+    response_access_deny if !current_user.permissions?('ticket.agent')
 
-    %i[group_ids groups].each do |key|
-      next if !params[key]
-      if current_user.permissions?('ticket.agent')
-        params.delete(key)
-      else
-        logger.info "Group relation assignment is only allowed by admin! current_user_id: #{current_user.id} assigned to #{params[key].inspect}"
-        raise Exceptions::NotAuthorized, 'Group relation is only allowed by admin!'
+    # regular agents are not allowed to set Groups and Roles
+    %w[Role Group].each do |model|
+
+      %w[_ids s].each do |suffix|
+        attribute = "#{model.downcase}#{suffix}"
+        values    = params[attribute]
+
+        next if values.nil?
+
+        logger.warn "#{model} assignment is only allowed by admin! User with ID #{current_user.id} tried to assign #{values.inspect}"
+        params.delete(attribute)
       end
     end
 
-    return true if current_user.permissions?('ticket.agent')
-
-    response_access_deny
-    false
+    # check for create requests and set
+    # signup roles if no other roles are given
+    return true if params[:id].present?
+    return true if params[:role_ids]
+    return true if params[:roles]
+    params[:role_ids] = Role.signup_role_ids
+    true
   end
-
 end

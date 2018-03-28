@@ -445,7 +445,7 @@ class String
         end
       rescue
         # regexp was not possible because of some string encoding issue, use next
-        Rails.logger.debug "Invalid string/charset combination with regexp #{regexp} in string"
+        Rails.logger.debug { "Invalid string/charset combination with regexp #{regexp} in string" }
       end
     end
 

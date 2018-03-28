@@ -47,7 +47,7 @@ job.run(true)
 =end
 
   def run(force = false, start_at = Time.zone.now)
-    logger.debug "Execute job #{inspect}"
+    logger.debug { "Execute job #{inspect}" }
 
     if !executable?(start_at) && force == false
       if next_run_at && next_run_at <= Time.zone.now
@@ -72,7 +72,7 @@ job.run(true)
     # find tickets to change
     ticket_count, tickets = Ticket.selectors(condition, 2_000)
 
-    logger.debug "Job #{name} with #{ticket_count} tickets"
+    logger.debug { "Job #{name} with #{ticket_count} tickets" }
 
     self.processed = ticket_count || 0
     self.running = true

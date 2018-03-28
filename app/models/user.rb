@@ -44,7 +44,7 @@ class User < ApplicationModel
   before_update   :check_preferences_default, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
-  after_destroy   :avatar_destroy, :user_device_destroy
+  before_destroy  :avatar_destroy, :user_device_destroy, :cit_caller_id_destroy, :task_destroy
 
   has_and_belongs_to_many :roles,           after_add: %i[cache_update check_notifications], after_remove: :cache_update, before_add: %i[validate_agent_limit_by_role validate_roles], before_remove: :last_admin_check_by_role, class_name: 'Role'
   has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
@@ -257,14 +257,17 @@ returns
 =end
 
   def activity_stream(limit, fulldata = false)
-    activity_stream = ActivityStream.list(self, limit)
-    return activity_stream if !fulldata
+    stream = ActivityStream.list(self, limit)
+    return stream if !fulldata
 
     # get related objects
-    assets = ApplicationModel.assets_of_object_list(activity_stream)
+    assets = {}
+    stream.each do |item|
+      assets = item.assets(assets)
+    end
 
     {
-      activity_stream: activity_stream,
+      stream: stream,
       assets: assets,
     }
   end
@@ -1130,6 +1133,14 @@ raise 'Minimum one user need to have admin permissions'
 
   def user_device_destroy
     UserDevice.remove(id)
+  end
+
+  def cit_caller_id_destroy
+    Cti::CallerId.where(user_id: id).destroy_all
+  end
+
+  def task_destroy
+    Taskbar.where(user_id: id).destroy_all
   end
 
   def ensure_password

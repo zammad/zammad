@@ -36,6 +36,29 @@
       <%- @Icon('task-state', header.class) %>
     <% else if header.icon: %>
       <%- @Icon(header.icon) %>
+    <% else if header.name is 'action': %>
+      <% if @actions.length > 1: %>
+        <div class="dropdown dropdown--actions">
+          <div class="btn btn--table btn--text btn--secondary js-action" id="tableActions" data-toggle="dropdown">
+            <%- @Icon('overflow-button') %>
+          </div>
+          <ul class="dropdown-menu dropdown-menu-right js-table-action-menu" role="menu" aria-labelledby="tableActions">
+            <% for action in @actions: %>
+            <li role="presentation" class="<%= action.class %>" data-table-action="<%= action.name %>">
+              <a role="menuitem" tabindex="-1">
+                <span class="dropdown-iconSpacer">
+                  <%- @Icon(action.icon) %>
+                </span>
+                <%- @T(action.display) %>
+              </a>
+            <% end %>
+          </ul>
+        </div>
+      <% else: %>
+        <div class="btn btn--table btn--text btn--secondary <%= @actions[0].class %>" title="<%= @actions[0].display %>" data-table-action="<%= @actions[0].name %>">
+          <%- @Icon(@actions[0].icon) %>
+        </div>
+      <% end %>
     <% else: %>
       <% if header.link: %>
         <a href="<%- header.link %>" <% if header.target: %>target="<%= header.target %>"<% end %>>

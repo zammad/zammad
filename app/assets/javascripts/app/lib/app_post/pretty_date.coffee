@@ -31,7 +31,7 @@ class App.PrettyDate
 
     if type is undefined && window.App && window.App.Config
       type = window.App.Config.get('pretty_date_format')
-    if type is 'absolute' && direction is 'past'
+    if type is 'absolute' && (direction is 'past' || direction is 'future')
       weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
       weekday = weekdays[created.getDay()]
 

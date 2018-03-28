@@ -1,6 +1,5 @@
 dist: trusty
-sudo: required
-group: deprecated
+sudo: false
 notifications:
   email:
     - me+tv@zammad.com
@@ -11,9 +10,34 @@ addons:
   postgresql: "9.4"
   apt:
     packages:
-    - mysql-server-5.6
-    - mysql-client-core-5.6
-    - mysql-client-5.6
+      - autoconf
+      - automake
+      - autotools-dev
+      - bison
+      - build-essential
+      - curl
+      - git-core
+      - libffi-dev
+      - libgdbm-dev
+      - libgmp-dev
+      - libmysqlclient-dev
+      - libncurses5-dev
+      - libreadline6-dev
+      - libsqlite3-dev
+      - libssl-dev
+      - libtool
+      - libxml2-dev
+      - libxslt1-dev
+      - libyaml-0-2
+      - libyaml-dev
+      - mysql-client-5.6
+      - mysql-client-core-5.6
+      - mysql-server-5.6
+      - patch
+      - pkg-config
+      - postfix
+      - sqlite3
+      - zlib1g-dev
 services:
   - postgresql
   - mysql
@@ -22,8 +46,6 @@ rvm:
   - 2.4.2
 before_install:
   - git fetch --unshallow
-  - sudo apt-get -qq update
-  - sudo apt-get install -y curl git-core patch build-essential bison zlib1g-dev libssl-dev libxml2-dev libxml2-dev sqlite3 libsqlite3-dev autotools-dev libxslt1-dev libyaml-0-2 autoconf automake libreadline6-dev libyaml-dev libtool libgmp-dev libgdbm-dev libncurses5-dev pkg-config libffi-dev libmysqlclient-dev postfix
   - if [ "${DB}" = "mysql" ]; then mysql -u root -e "CREATE USER 'some_user'@'localhost' IDENTIFIED BY 'some_pass';"; fi
   - if [ "${DB}" = "mysql" ]; then mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'some_user'@'localhost';"; fi
   - if [ "${DB}" = "mysql" ]; then cp config/database.yml.test-mysql config/database.yml; fi
@@ -60,6 +82,6 @@ script:
   - ruby -I test/ test/integration/sipgate_controller_test.rb
   - rake db:drop
 after_success:
-  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger-docker-build.sh; fi
-  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger-docker-compose-build.sh; fi
-  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger-docker-univention-build.sh; fi
+  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger_docker_image_build.sh; fi
+  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger_docker_image_compose_build.sh; fi
+  - if [ "${DB}" = "mysql" ]; then contrib/travis-ci.org/trigger_docker_image_univention_build.sh; fi

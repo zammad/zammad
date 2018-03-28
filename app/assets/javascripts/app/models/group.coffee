@@ -14,6 +14,7 @@ class App.Group extends App.Model
     { name: 'updated_at',           display: 'Updated',           tag: 'datetime', readonly: 1 },
     { name: 'active',               display: 'Active',            tag: 'active', default: true },
   ]
+  @configure_clone = true
   @configure_overview = [
     'name',
   ]

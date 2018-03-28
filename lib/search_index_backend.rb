@@ -26,8 +26,19 @@ info about used search index machine
       }
     )
     Rails.logger.info "# #{response.code}"
-    raise "Unable to process GET at #{url}\n#{response.inspect}" if !response.success?
-    response.data
+    if response.success?
+      installed_version = response.data.dig('version', 'number')
+      raise "Unable to get elasticsearch version from response: #{response.inspect}" if installed_version.blank?
+      version_supported = Gem::Version.new(installed_version) < Gem::Version.new('5.7')
+      raise "Version #{installed_version} of configured elasticsearch is not supported" if !version_supported
+      return response.data
+    end
+
+    raise humanized_error(
+      verb:     'GET',
+      url:      url,
+      response: response,
+    )
   end
 
 =begin
@@ -75,10 +86,15 @@ update processors
           Rails.logger.info "# #{response.code}"
           next if response.success?
           next if response.code.to_s == '404'
-          raise "Unable to process DELETE at #{url}\n#{response.inspect}"
+
+          raise humanized_error(
+            verb:     'DELETE',
+            url:      url,
+            response: response,
+          )
         end
         Rails.logger.info "# curl -X PUT \"#{url}\" \\"
-        Rails.logger.debug "-d '#{data.to_json}'"
+        Rails.logger.debug { "-d '#{data.to_json}'" }
         item.delete(:action)
         response = UserAgent.put(
           url,
@@ -93,7 +109,13 @@ update processors
         )
         Rails.logger.info "# #{response.code}"
         next if response.success?
-        raise "Unable to process PUT at #{url}\n#{response.inspect}"
+
+        raise humanized_error(
+          verb:     'PUT',
+          url:      url,
+          payload:  item,
+          response: response,
+        )
       end
     end
     true
@@ -141,7 +163,7 @@ create/update/delete index
     end
 
     Rails.logger.info "# curl -X PUT \"#{url}\" \\"
-    Rails.logger.debug "-d '#{data[:data].to_json}'"
+    Rails.logger.debug { "-d '#{data[:data].to_json}'" }
 
     response = UserAgent.put(
       url,
@@ -156,7 +178,13 @@ create/update/delete index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    raise "Unable to process PUT at #{url}\n#{response.inspect}"
+
+    raise humanized_error(
+      verb:     'PUT',
+      url:      url,
+      payload:  data[:data],
+      response: response,
+    )
   end
 
 =begin
@@ -173,7 +201,7 @@ add new object to search index
     return if url.blank?
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    Rails.logger.debug "-d '#{data.to_json}'"
+    Rails.logger.debug { "-d '#{data.to_json}'" }
 
     response = UserAgent.post(
       url,
@@ -188,7 +216,13 @@ add new object to search index
     )
     Rails.logger.info "# #{response.code}"
     return true if response.success?
-    raise "Unable to process POST at #{url} (size: #{data.to_json.bytesize / 1024 / 1024}M)\n#{response.inspect}"
+
+    raise humanized_error(
+      verb:     'POST',
+      url:      url,
+      payload:  data,
+      response: response,
+    )
   end
 
 =begin
@@ -219,7 +253,13 @@ remove whole data from index
     Rails.logger.info "# #{response.code}"
     return true if response.success?
     return true if response.code.to_s == '400'
-    Rails.logger.info "NOTICE: can't delete index #{url}: " + response.inspect
+
+    humanized_error = humanized_error(
+      verb:     'DELETE',
+      url:      url,
+      response: response,
+    )
+    Rails.logger.info "NOTICE: can't delete index: #{humanized_error}"
     false
   end
 
@@ -310,7 +350,7 @@ return search result
     data['query']['bool']['must'].push condition
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    Rails.logger.debug " -d'#{data.to_json}'"
+    Rails.logger.debug { " -d'#{data.to_json}'" }
 
     response = UserAgent.get(
       url,
@@ -326,7 +366,12 @@ return search result
 
     Rails.logger.info "# #{response.code}"
     if !response.success?
-      Rails.logger.error "ERROR: POST on #{url}\n#{response.inspect}"
+      Rails.logger.error humanized_error(
+        verb:     'GET',
+        url:      url,
+        payload:  data,
+        response: response,
+      )
       return []
     end
     data = response.data
@@ -403,7 +448,7 @@ get count of tickets and tickets which match on selector
     data = selector2query(selectors, current_user, aggs_interval, limit)
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    Rails.logger.debug " -d'#{data.to_json}'"
+    Rails.logger.debug { " -d'#{data.to_json}'" }
 
     response = UserAgent.get(
       url,
@@ -419,9 +464,14 @@ get count of tickets and tickets which match on selector
 
     Rails.logger.info "# #{response.code}"
     if !response.success?
-      raise "Unable to process POST at #{url}\n#{response.inspect}"
+      raise humanized_error(
+        verb:     'GET',
+        url:      url,
+        payload:  data,
+        response: response,
+      )
     end
-    Rails.logger.debug response.data.to_json
+    Rails.logger.debug { response.data.to_json }
 
     if aggs_interval.blank? || aggs_interval[:interval].blank?
       ticket_ids = []
@@ -546,4 +596,22 @@ return true if backend is configured
     url
   end
 
+  def self.humanized_error(verb:, url:, payload: nil, response:)
+    prefix = "Unable to process #{verb} request to elasticsearch URL '#{url}'."
+    suffix = "\n\nResponse:\n#{response.inspect}\n\nPayload:\n#{payload.inspect}"
+
+    if payload.respond_to?(:to_json)
+      suffix += "\n\nPayload size: #{payload.to_json.bytesize / 1024 / 1024}M"
+    end
+
+    message = if response&.error&.match?('Connection refused')
+                "Elasticsearch is not reachable, probably because it's not running or even installed."
+              elsif url.end_with?('pipeline/zammad-attachment') && response.code == 400
+                'The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (5.6 => ingest-attachment, 2.4 - 5.5 => mapper-attachments).'
+              else
+                'Check the response and payload for detailed information: '
+              end
+
+    "#{prefix}#{message}#{suffix}"
+  end
 end

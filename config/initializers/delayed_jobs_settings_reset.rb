@@ -5,7 +5,7 @@ class ResetSettingsPlugin < Delayed::Plugin
   callbacks do |lifecycle|
     lifecycle.before(:invoke_job) do |*_args|
 
-      Rails.logger.debug 'Resetting Settings before Job execution'
+      Rails.logger.debug { 'Resetting Settings before Job execution' }
 
       # reload all settings before starting a job
       # otherwise it might be that changed settings

@@ -16,6 +16,8 @@ class App.TicketCreate extends App.Controller
 
     @formId = App.ControllerForm.formId()
 
+    @queueKey = "TicketCreate#{@taskKey}"
+
     # remember split info if exists
     @split = ''
     if @ticket_id && @article_id
@@ -30,7 +32,7 @@ class App.TicketCreate extends App.Controller
     # rerender view, e. g. on langauge change
     @bind('ui:rerender', =>
       return if !@authenticateCheck()
-      @render()
+      @renderQueue()
     )
 
     # listen to rerender sidebars
@@ -126,13 +128,13 @@ class App.TicketCreate extends App.Controller
     "#ticket/create/id/#{@id}"
 
   show: =>
-    @navupdate "#ticket/create/id/#{@id}#{@split}", type: 'menu'
+    @navupdate("#ticket/create/id/#{@id}#{@split}", type: 'menu')
     @autosaveStart()
-    @bind('ticket_create_rerender', (template) => @render(template))
+    @bind('ticket_create_rerender', (template) => @renderQueue(template))
 
   hide: =>
     @autosaveStop()
-    @unbind('ticket_create_rerender', (template) => @render(template))
+    @unbind('ticket_create_rerender', (template) => @renderQueue(template))
 
   changed: =>
     formCurrent = @formParam( @$('.ticket-create') )
@@ -174,9 +176,9 @@ class App.TicketCreate extends App.Controller
 
     if _.isEmpty(params.ticket_id) && _.isEmpty(params.article_id)
       if !_.isEmpty(params.customer_id)
-        @render(options: { customer_id: params.customer_id })
+        @renderQueue(options: { customer_id: params.customer_id })
         return
-      @render()
+      @renderQueue()
       return
 
     # fetch split ticket data
@@ -213,11 +215,19 @@ class App.TicketCreate extends App.Controller
         t.attachments = data.attachments
 
         # render page
-        @render(options: t)
+        @renderQueue(options: t)
     )
 
-  render: (template = {}) ->
+  renderQueue: (template = {}) =>
+    localeRender = =>
+      @render(options: template)
+      @render()
+    App.QueueManager.add(@queueKey, localeRender)
+    return if !@formMeta
+    App.QueueManager.run(@queueKey)
 
+  render: (template = {}) ->
+    return if !@formMeta
     # get params
     params = @prefilledParams || {}
     if template && !_.isEmpty(template.options)

@@ -39,7 +39,7 @@ class Sequencer
                   }
                 }
 
-                logger.debug "Fetching and processing #{per_page} items (page: #{page}, offset: #{offset}) from Exchange folder '#{display_path}' (total: #{total})"
+                logger.debug { "Fetching and processing #{per_page} items (page: #{page}, offset: #{offset}) from Exchange folder '#{display_path}' (total: #{total})" }
 
                 folder.items(opts).each do |item|
 
@@ -47,7 +47,7 @@ class Sequencer
 
                     item = parameters[:resource]
 
-                    logger.debug "Extracting attributes from Exchange item: #{item.get_all_properties!.inspect}"
+                    logger.debug { "Extracting attributes from Exchange item: #{item.get_all_properties!.inspect}" }
 
                     parameters.merge(
                       resource:        ::Import::Exchange::ItemAttributes.extract(item),

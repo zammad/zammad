@@ -420,9 +420,9 @@ class TestCase < Test::Unit::TestCase
 
       begin
         element = instance.find_elements(css: params[:css])[0]
-        return  if !element && params[:only_if_exists] == true
+        return if !element && params[:only_if_exists] == true
         #if element
-        #  instance.mouse.move_to(element)
+        #  instance.action.move_to(element).release.perform
         #end
         element.click
       rescue => e
@@ -431,10 +431,11 @@ class TestCase < Test::Unit::TestCase
         # just try again
         log('click', { rescure: true })
         element = instance.find_elements(css: params[:css])[0]
-        return  if !element && params[:only_if_exists] == true
+        return if !element && params[:only_if_exists] == true
         #if element
-        #  instance.mouse.move_to(element)
+        #  instance.action.move_to(element).release.perform
         #end
+        raise "No such element '#{params[:css]}'" if !element
         element.click
       end
 
@@ -447,7 +448,9 @@ class TestCase < Test::Unit::TestCase
 
         # just try again
         log('click', { rescure: true })
-        instance.find_elements(partial_link_text: params[:text])[0].click
+        element = instance.find_elements(partial_link_text: params[:text])[0]
+        raise "No such element '#{params[:text]}'" if !element
+        element.click
       end
     end
     sleep 0.2 if !params[:fast]
@@ -632,26 +635,38 @@ class TestCase < Test::Unit::TestCase
     end
     element.clear
 
-    if !params[:slow]
-      element.send_keys(params[:value])
-    else
-      element.send_keys('')
-      keys = params[:value].to_s.split('')
-      keys.each do |key|
-        instance.action.send_keys(key).perform
+    begin
+      if !params[:slow]
+        element.send_keys(params[:value])
+      else
+        element.send_keys('')
+        keys = params[:value].to_s.split('')
+        keys.each do |key|
+          instance.action.send_keys(key).perform
+        end
+      end
+    rescue => e
+      sleep 0.5
+
+      # just try again
+      log('set', { rescure: true })
+      element = instance.find_elements(css: params[:css])[0]
+      raise "No such element '#{params[:css]}'" if !element
+      if !params[:slow]
+        element.send_keys(params[:value])
+      else
+        element.send_keys('')
+        keys = params[:value].to_s.split('')
+        keys.each do |key|
+          instance.action.send_keys(key).perform
+        end
       end
     end
 
     # it's not working stable with ff via selenium, use js
     if browser =~ /firefox/i && params[:css] =~ /\[data-name=/
-      log('set_ff_check', params)
-      value = instance.find_elements(css: params[:css])[0].text
-      if value != params[:value]
-        log('set_ff_check_failed_use_js', params)
-        value_quoted = quote(params[:value])
-        puts "DEBUG $('#{params[:css]}').html('#{value_quoted}').trigger('focusout')"
-        instance.execute_script("$('#{params[:css]}').html('#{value_quoted}').trigger('focusout')")
-      end
+      log('set_ff_trigger_workaround', params)
+      instance.execute_script("$('#{params[:css]}').trigger('focusout')")
     end
 
     if params[:blur]
@@ -1159,12 +1174,15 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    element = instance.find_elements(partial_link_text: data[:title])[0]
+    element = instance.find_element(css: '#navigation').find_element(partial_link_text: data[:title])
     if !element
       screenshot(browser: instance, comment: 'open_task_failed')
       raise "no task with title '#{data[:title]}' found"
     end
-    element.click
+    # firefix/marionette issue with Selenium::WebDriver::Error::ElementNotInteractableError: could not be scrolled into view
+    # use js workaround instead of native click
+    instance.execute_script("$('#navigation .tasks .task:contains(\"#{data[:title]}\") .nav-tab-name').click()")
+    #element.click
     true
   end
 
@@ -1187,15 +1205,15 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     instance = params[:browser] || @browser
     data     = params[:data]
 
-    element = instance.find_elements(partial_link_text: data[:title])[0]
+    element = instance.find_element(css: '#navigation').find_element(partial_link_text: data[:title])
     if !element
       screenshot(browser: instance, comment: 'close_task_failed')
       raise "no task with title '#{data[:title]}' found"
     end
 
-    instance.mouse.move_to(element)
+    instance.action.move_to(element).release.perform
     sleep 0.1
-    instance.execute_script("$('.navigation .tasks .task:contains(\"#{data[:title]}\") .js-close').click()")
+    instance.execute_script("$('#navigation .tasks .task:contains(\"#{data[:title]}\") .js-close').click()")
 
     # accept task close warning
     if params[:discard_changes]
@@ -1405,10 +1423,9 @@ wait untill text in selector disabppears
     99.times do
       #sleep 0.5
       begin
-        if instance.find_elements(css: '.navigation .tasks .task:first-child')[0]
-          instance.mouse.move_to(instance.find_elements(css: '.navigation .tasks .task:first-child')[0])
-          sleep 0.1
-          click_element = instance.find_elements(css: '.navigation .tasks .task:first-child .js-close')[0]
+        if instance.find_elements(css: '#navigation .tasks .task:first-child')[0]
+          instance.action.move_to(instance.find_elements(css: '#navigation .tasks .task:first-child')[0]).release.perform
+          click_element = instance.find_elements(css: '#navigation .tasks .task:first-child .js-close')[0]
           if click_element
             click_element.click
 
@@ -1453,7 +1470,7 @@ wait untill text in selector disabppears
         screenshot(browser: instance, comment: 'close_online_notitifcation')
         raise "no online notification with title '#{data[:title]}' found"
       end
-      instance.mouse.move_to(element)
+      instance.action.move_to(element).release.perform
       sleep 0.1
       instance.execute_script("$('.js-notificationsContainer .js-items .js-item .activity-text:contains(\"#{data[:title]}\") .js-remove').first().click()")
 
@@ -1465,7 +1482,7 @@ wait untill text in selector disabppears
         raise "no online notification with postion '#{css}' found"
       end
 
-      instance.mouse.move_to(element)
+      instance.action.move_to(element).release.perform
       sleep 0.1
       instance.find_elements(css: "#{css} .js-remove")[0].click
     end
@@ -1491,7 +1508,7 @@ wait untill text in selector disabppears
       sleep 0.5
       begin
         if instance.find_elements(css: '.js-notificationsContainer .js-item:first-child')[0]
-          instance.mouse.move_to(instance.find_elements(css: '.js-notificationsContainer .js-item:first-child')[0])
+          instance.action.move_to(instance.find_elements(css: '.js-notificationsContainer .js-item:first-child')[0]).perform
           sleep 0.1
           click_element = instance.find_elements(css: '.js-notificationsContainer .js-item:first-child .js-remove')[0]
           click_element&.click
@@ -2361,7 +2378,7 @@ wait untill text in selector disabppears
     )
     screenshot(browser: instance, comment: 'ticket_open_by_overview_search')
     if params[:title]
-      element = instance.find_elements(partial_link_text: params[:title])[0]
+      element = instance.find_element(css: '.content.active').find_element(partial_link_text: params[:title])
       if !element
         screenshot(browser: instance, comment: 'ticket_open_by_overview_no_ticket_failed')
         raise "unable to find ticket #{params[:title]} in overview #{params[:link]}!"

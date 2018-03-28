@@ -22,9 +22,9 @@ class Sequencer
                   end
 
                   def skip_action?(action)
-                    logger.debug("Checking if skip is necessary for action #{action.inspect}.")
+                    logger.debug { "Checking if skip is necessary for action #{action.inspect}." }
                     return false if action.blank?
-                    logger.debug("Checking if skip is necessary for skip_actions #{skip_actions.inspect}.")
+                    logger.debug { "Checking if skip is necessary for skip_actions #{skip_actions.inspect}." }
                     return false if skip_actions.blank?
                     return true if skip_actions.include?(action)
                     return true if skip_actions.include?(:any)
@@ -39,9 +39,9 @@ class Sequencer
                 def process
                   action = state.optional(:action)
                   if self.class.skip_action?(action)
-                    logger.debug("Skipping due to provided action #{action.inspect}.")
+                    logger.debug { "Skipping due to provided action #{action.inspect}." }
                   else
-                    logger.debug("Nope. Won't skip action #{action.inspect}.")
+                    logger.debug { "Nope. Won't skip action #{action.inspect}." }
                     super
                   end
                 end

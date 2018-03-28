@@ -116,7 +116,7 @@ class Transaction::Slack
       if sent_value
         value = Cache.get(cache_key)
         if value == sent_value
-          Rails.logger.debug "did not send webhook, already sent (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})"
+          Rails.logger.debug { "did not send webhook, already sent (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
           next
         end
         Cache.write(
@@ -159,7 +159,7 @@ class Transaction::Slack
         logo_url = local_config['logo_url']
       end
 
-      Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})"
+      Rails.logger.debug { "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
 
       notifier = Slack::Notifier.new(
         local_config['webhook'],
@@ -188,7 +188,7 @@ class Transaction::Slack
         Rails.logger.error "Unable to post webhook: #{local_config['webhook']}: #{result.inspect}"
         next
       end
-      Rails.logger.debug "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})"
+      Rails.logger.debug { "sent webhook (#{@item[:type]}/#{ticket.id}/#{local_config['webhook']})" }
     end
 
   end

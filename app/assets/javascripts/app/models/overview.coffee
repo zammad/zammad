@@ -60,6 +60,7 @@ class App.Overview extends App.Model
     { name: 'updated_at',     display: 'Updated',     tag: 'datetime', readonly: 1 },
   ]
   @configure_delete = true
+  @configure_clone = true
   @configure_overview = [
     'name',
     'link',

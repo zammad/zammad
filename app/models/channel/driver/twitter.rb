@@ -53,7 +53,7 @@ returns
     @sync        = options[:sync]
     @channel     = channel
 
-    Rails.logger.debug 'twitter fetch started'
+    Rails.logger.debug { 'twitter fetch started' }
 
     fetch_mentions
     fetch_search
@@ -61,7 +61,7 @@ returns
 
     disconnect
 
-    Rails.logger.debug 'twitter fetch completed'
+    Rails.logger.debug { 'twitter fetch completed' }
 
     {
       result: 'ok',
@@ -317,7 +317,7 @@ returns
       next if search[:term] == '#'
       next if search[:group_id].blank?
       result_type = search[:type] || 'mixed'
-      Rails.logger.debug " - searching for '#{search[:term]}'"
+      Rails.logger.debug { " - searching for '#{search[:term]}'" }
       older_import = 0
       older_import_max = 20
       @rest_client.client.search(search[:term], result_type: result_type).collect do |tweet|
@@ -326,7 +326,7 @@ returns
         # ignore older messages
         if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
           older_import += 1
-          Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
+          Rails.logger.debug { "tweet to old: #{tweet.id}/#{tweet.created_at}" }
           next
         end
 
@@ -341,7 +341,7 @@ returns
   def fetch_mentions
     return if @sync[:mentions].blank?
     return if @sync[:mentions][:group_id].blank?
-    Rails.logger.debug ' - searching for mentions'
+    Rails.logger.debug { ' - searching for mentions' }
     older_import = 0
     older_import_max = 20
     @rest_client.client.mentions_timeline.each do |tweet|
@@ -350,7 +350,7 @@ returns
       # ignore older messages
       if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
         older_import += 1
-        Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
+        Rails.logger.debug { "tweet to old: #{tweet.id}/#{tweet.created_at}" }
         next
       end
       next if Ticket::Article.find_by(message_id: tweet.id)
@@ -362,7 +362,7 @@ returns
   def fetch_direct_messages
     return if @sync[:direct_messages].blank?
     return if @sync[:direct_messages][:group_id].blank?
-    Rails.logger.debug ' - searching for direct_messages'
+    Rails.logger.debug { ' - searching for direct_messages' }
     older_import = 0
     older_import_max = 20
     @rest_client.client.direct_messages(full_text: 'true').each do |tweet|
@@ -370,7 +370,7 @@ returns
       # ignore older messages
       if (@channel.created_at - 15.days) > tweet.created_at.dup.utc || older_import >= older_import_max
         older_import += 1
-        Rails.logger.debug "tweet to old: #{tweet.id}/#{tweet.created_at}"
+        Rails.logger.debug { "tweet to old: #{tweet.id}/#{tweet.created_at}" }
         next
       end
       next if Ticket::Article.find_by(message_id: tweet.id)
@@ -398,19 +398,19 @@ returns
     sleep 4
     12.times do |loop_count|
       if Ticket::Article.find_by(message_id: tweet.id)
-        Rails.logger.debug "Own tweet already imported, skipping tweet #{tweet.id}"
+        Rails.logger.debug { "Own tweet already imported, skipping tweet #{tweet.id}" }
         return true
       end
       count = Delayed::Job.where('created_at < ?', event_time).count
       break if count.zero?
       sleep_time = 2 * count
       sleep_time = 5 if sleep_time > 5
-      Rails.logger.debug "Delay importing own tweets - sleep #{sleep_time} (loop #{loop_count})"
+      Rails.logger.debug { "Delay importing own tweets - sleep #{sleep_time} (loop #{loop_count})" }
       sleep sleep_time
     end
 
     if Ticket::Article.find_by(message_id: tweet.id)
-      Rails.logger.debug "Own tweet already imported, skipping tweet #{tweet.id}"
+      Rails.logger.debug { "Own tweet already imported, skipping tweet #{tweet.id}" }
       return true
     end
     false

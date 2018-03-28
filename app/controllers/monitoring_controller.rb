@@ -87,6 +87,23 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       actions.add(:restart_failed_jobs)
     end
 
+    # failed jobs check
+    failed_jobs       = Delayed::Job.where('attempts > 0')
+    count_failed_jobs = failed_jobs.count
+
+    if count_failed_jobs > 10
+      issues.push "#{count_failed_jobs} failing background jobs."
+    end
+
+    listed_failed_jobs = failed_jobs.select(:handler, :attempts).limit(10)
+    listed_failed_jobs.group_by(&:name).each_with_index do |(name, jobs), index|
+
+      attempts = jobs.map(&:attempts).sum
+
+      issues.push "Failed to run background job ##{index += 1} '#{name}' #{jobs.count} time(s) with #{attempts} attempt(s)."
+    end
+
+    # import jobs
     import_backends = ImportJob.backends
 
     # failed import jobs

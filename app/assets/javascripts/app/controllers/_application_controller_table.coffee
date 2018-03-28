@@ -98,6 +98,7 @@ class App.ControllerTable extends App.Controller
   radioColWidth: 22
   sortableColWidth: 36
   destroyColWidth: 70
+  cloneColWidth: 70
 
   elements:
     '.js-tableHead': 'tableHead'
@@ -148,6 +149,7 @@ class App.ControllerTable extends App.Controller
     @attributesListRaw ||= @attribute_list || @model.configure_attributes || {}
     @attributesList = App.Model.attributesGet(false, @attributesListRaw)
     @destroy = @model.configure_delete
+    @clone = @model.configure_clone
 
     throw 'overviewAttributes needed' if _.isEmpty(@overviewAttributes)
     throw 'attributesList needed' if _.isEmpty(@attributesList)
@@ -343,7 +345,7 @@ class App.ControllerTable extends App.Controller
                   (e) ->
                     e.stopPropagation()
                     id = $(e.target).parents('tr').data('id')
-                    callback(id, e)
+                    callback(id, e, e.currentTarget)
                 )
 
     # bind row
@@ -494,6 +496,7 @@ class App.ControllerTable extends App.Controller
       sortable:   @dndCallback
       position:   position
       object:     object
+      actions:    @actions
     )
 
   tableHeadersHasChanged: =>
@@ -511,6 +514,7 @@ class App.ControllerTable extends App.Controller
 
     # get header data
     @headers = []
+    @actions = []
     availableWidth = @availableWidth
     for item in @overviewAttributes
       headerFound = false
@@ -564,25 +568,54 @@ class App.ControllerTable extends App.Controller
       for callback in @callbackHeader
         @headers = callback(@headers)
 
-    if @tableId
-      @calculateHeaderWidths()
-
     throw 'no headers found' if _.isEmpty(@headers)
 
-    # add destroy header and col binding
-    if @destroy
-      @headers.push
-        name: 'destroy'
-        display: 'Delete'
-        width: '70px'
-        displayWidth: 70
-        unresizable: true
-        parentClass: 'js-delete'
-        icon: 'trash'
+    if @clone
+      @actions.push
+        name: 'clone'
+        display: 'Clone'
+        icon: 'clipboard'
+        class: 'create  js-clone'
+        callback: (id) =>
+          item = @model.find(id)
+          item.name = "Clone: #{item.name}"
+          new App.ControllerGenericNew
+            item: item
+            pageData:
+              object: item.constructor.name
+            callback: =>
+              @renderTableFull()
+            genericObject: item.constructor.name
+            container:     @container
 
-      @bindCol['destroy'] =
+    if @destroy
+      @actions.push
+        name: 'delete'
+        display: 'Delete'
+        icon: 'trash'
+        class: 'danger js-delete'
+        callback: (id) =>
+          item = @model.find(id)
+          new App.ControllerGenericDestroyConfirm
+            item:      item
+            container: @container
+
+    if @actions.length
+      @headers.push
+        name: 'action'
+        display: 'Action'
+        width: '38px'
+        displayWidth: 38
+        unresizeable: true
+        align: 'right'
+        parentClass: 'noTruncate no-padding'
+
+      @bindCol['action'] =
         events:
-          click: @deleteRow
+          click: @toggleActionDropdown
+
+    if @tableId
+      @calculateHeaderWidths()
 
     @columnsLength = @headers.length
     if @checkbox || @radio
@@ -732,14 +765,30 @@ class App.ControllerTable extends App.Controller
     @objects = localObjects
     @lastSortedobjects = localObjects
 
-  # bind on delete dialog
-  deleteRow: (id, e) =>
+  onActionButtonClicked: (e) =>
+    id = $(e.currentTarget).parents('tr').data('id')
+    name = e.currentTarget.getAttribute('data-table-action')
+    @runAction(name, id)
+    console.log 'onActionButtonClicked'
+
+  runAction: (name, id) =>
+    action = _.findWhere @actions, name: name
+    action.callback(id)
+
+  toggleActionDropdown: (id, e, td) =>
     e.stopPropagation()
-    e.preventDefault()
-    item = @model.find(id)
-    new App.ControllerGenericDestroyConfirm
-      item:      item
-      container: @container
+    $dropdown = $(td).find('.js-table-action-menu')
+    if $dropdown.length
+      # open dropdown
+      $dropdown.dropdown('toggle')
+      # bind on click now that the dropdown is open
+      $dropdown.one('click.dropdown', '[data-table-action]', @onActionButtonClicked)
+      # unbind after dropdown is closed
+      $dropdown.parent().one('hide.bs.dropdown', -> $dropdown.off('click.dropdown'))
+    else
+      # only one action - directly fire that action
+      name = $(td).find('[data-table-action]').attr('data-table-action')
+      @runAction(name, id)
 
   calculateHeaderWidths: ->
     return if !@headers
@@ -788,6 +837,9 @@ class App.ControllerTable extends App.Controller
 
     if @destroy
       widths += @destroyColWidth
+
+    if @clone
+      widths += @cloneColWidth
 
     widths
 
