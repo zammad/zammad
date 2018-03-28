@@ -579,14 +579,15 @@ class App.ControllerTable extends App.Controller
         callback: (id) =>
           item = @model.find(id)
           item.name = "Clone: #{item.name}"
-          new App.ControllerGenericNew
+          new App.ControllerGenericNew(
             item: item
             pageData:
-              object: item.constructor.name
+              object: item.constructor.className
             callback: =>
               @renderTableFull()
-            genericObject: item.constructor.name
+            genericObject: item.constructor.className
             container:     @container
+          )
 
     if @destroy
       @actions.push

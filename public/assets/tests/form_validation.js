@@ -111,7 +111,7 @@ test('datetime validation check', function() {
   // check params
   params = App.ControllerForm.params(el)
   test_params = {
-    datetime1: undefined,
+    datetime1: null,
   }
   deepEqual(params, test_params, 'params check')
 
@@ -191,7 +191,7 @@ test('date validation check', function() {
   // check params
   params = App.ControllerForm.params(el)
   test_params = {
-    date2: undefined,
+    date2: null,
   }
   deepEqual(params, test_params, 'params check')
 
@@ -234,7 +234,7 @@ test('date validation check', function() {
   // check params
   params = App.ControllerForm.params(el)
   test_params = {
-    date2: undefined,
+    date2: null,
   }
   deepEqual(params, test_params, 'params check')
 
@@ -269,7 +269,7 @@ test( "datetime selector check", function() {
   // check params
   params = App.ControllerForm.params(el)
   test_params = {
-    datetime1: undefined,
+    datetime1: null,
   }
   deepEqual(params, test_params, 'params check')
 
@@ -330,7 +330,7 @@ test( "date selector check", function() {
   // check params
   params = App.ControllerForm.params(el)
   test_params = {
-    date3: undefined,
+    date3: null,
   }
   deepEqual(params, test_params, 'params check')
 

@@ -1832,6 +1832,9 @@ wait untill text in selector disabppears
     custom_data_input: {
       key1: 'some value',
     },
+    custom_data_date: {
+      key!: '02/28/2018',
+    }
     disable_group_check: true,
   )
 
@@ -1984,6 +1987,14 @@ wait untill text in selector disabppears
         clear:   true,
       )
     end
+    params[:custom_data_date]&.each do |local_key, local_value|
+      set(
+        browser: instance,
+        css:     ".content.active .newTicket div[data-name=\"#{local_key}\"] input[data-item=\"date\"]",
+        value:   local_value,
+        clear:   true,
+      )
+    end
 
     if data[:attachment]
       file_upload(
@@ -2063,6 +2074,9 @@ wait untill text in selector disabppears
     },
     custom_data_input: {
       key1: 'some value',
+    },
+    custom_data_date: {
+      key1: '02/21/2018',
     },
     do_not_submit: true,
     task_type: 'stayOnTab', # default: stayOnTab / possible: closeTab, closeNextInOverview, stayOnTab
@@ -2212,6 +2226,26 @@ wait untill text in selector disabppears
         css:     ".active .sidebar input[name=\"#{local_key}\"]",
         value:   local_value,
         clear:   true,
+      )
+    end
+    params[:custom_data_date]&.each do |local_key, local_value|
+      click(
+        browser:  instance,
+        css:      ".active .sidebar div[data-name=\"#{local_key}\"] input[data-item=\"date\"]",
+        mute_log: true,
+      )
+      # weird bug where you cannot "clear" for date/time input
+      # this is specific chrome problem, chrome bug report: https://bugs.chromium.org/p/chromedriver/issues/detail?id=1319#c2
+      # indirect issue: https://github.com/angular/protractor/issues/562#issuecomment-47745263
+      11.times do
+        sendkey(
+          value: :backspace,
+        )
+      end
+      set(
+        browser: instance,
+        css:     ".active .sidebar div[data-name=\"#{local_key}\"] input[data-item=\"date\"]",
+        value:   local_value,
       )
     end
 
