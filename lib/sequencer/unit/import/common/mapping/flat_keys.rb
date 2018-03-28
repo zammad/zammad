@@ -7,7 +7,6 @@ class Sequencer
             include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
 
             uses :resource
-            provides :mapped
 
             def process
               provide_mapped do
