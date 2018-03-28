@@ -454,9 +454,9 @@ class ConnectionWizard extends App.WizardModal
     for key in ['source', 'dest']
       if !_.isArray(attributes[key])
         attributes[key] = [attributes[key]]
-    attributes_local =
-      item_id: 'login'
-    length = attributes.source.length-1
+
+    attributes_local = {}
+    length           = attributes.source.length-1
     for count in [0..length]
       if attributes.source[count] && attributes.dest[count]
         attributes_local[attributes.source[count]] = attributes.dest[count]
@@ -465,18 +465,8 @@ class ConnectionWizard extends App.WizardModal
     @tryShow()
 
   buildRowsUserMap: (user_attribute_map) =>
-
-    # show static login row
-    userUidDisplayValue = @wizardConfig.wizardData.backend_attributes['item_id']
-    el = [
-      $(App.view('integration/ldap_user_attribute_row_read_only')(
-        key:   userUidDisplayValue,
-        value: 'Login'
-      ))
-    ]
-
+    el = []
     for source, dest of user_attribute_map
-      continue if source == 'item_id'
       continue if !(source of @wizardConfig.wizardData.backend_attributes)
       el.push @buildRowUserAttribute(source, dest)
     el
