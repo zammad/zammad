@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.2.2](https://github.com/zammad/zammad/tree/2.2.2) (2018-03-29)
+[Full Changelog](https://github.com/zammad/zammad/compare/2.2.1...2.2.2)
+
+**Fixed bugs:**
+- The column widths of a table are shifted after manual change and use of pagination. [\#1829](https://github.com/zammad/zammad/issues/1829) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- XSS issue in ticket overview [\#1869](https://github.com/zammad/zammad/issues/1869) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
 ## [2.2.1](https://github.com/zammad/zammad/tree/2.2.0) (2018-01-30)
 [Full Changelog](https://github.com/zammad/zammad/compare/2.2.0...2.2.1)
 
