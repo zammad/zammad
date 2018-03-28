@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CheckForObjectAttributes, type: :db_migration do
 
-  it 'performs no action for new systems' do
-    system_init_done(false)
-
+  it 'performs no action for new systems', system_init_done: false do
     migrate do |instance|
       expect(instance).not_to receive(:attributes)
     end
@@ -13,8 +11,6 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
   context 'valid [:data_option]' do
 
     it 'does not change converted text attribute' do
-      system_init_done
-
       attribute = create(:object_manager_attribute_text)
 
       expect do
@@ -25,8 +21,6 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
     end
 
     it 'does not change select attribute' do
-      system_init_done
-
       attribute = create(:object_manager_attribute_select)
 
       expect do
@@ -37,8 +31,6 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
     end
 
     it 'does not change tree_select attribute' do
-      system_init_done
-
       attribute = create(:object_manager_attribute_tree_select)
 
       expect do
@@ -52,8 +44,6 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
   context '[:data_option]' do
 
     it 'ensures an empty Hash' do
-      system_init_done
-
       attribute = create(:object_manager_attribute_text, data_option: nil)
       migrate
       attribute.reload
@@ -65,8 +55,6 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
   context '[:data_option][:options]' do
 
     it 'ensures an empty Hash' do
-      system_init_done
-
       attribute = create(:object_manager_attribute_text, data_option: {})
       migrate
       attribute.reload
@@ -75,8 +63,6 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
     end
 
     it 'converts String to Hash' do
-      system_init_done
-
       wrong = {
         default:  '',
         options:  '',
@@ -96,8 +82,6 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
   context '[:data_option][:relation]' do
 
     it 'ensures an empty String' do
-      system_init_done
-
       wrong = {
         default: '',
         options: {},
@@ -112,8 +96,6 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
     end
 
     it 'converts Hash to String' do
-      system_init_done
-
       wrong = {
         default:  '',
         options:  {},
