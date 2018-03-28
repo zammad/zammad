@@ -1,5 +1,20 @@
 # Change Log
 
+## [2.3.1](https://github.com/zammad/zammad/tree/2.3.1) (2018-03-29)
+[Full Changelog](https://github.com/zammad/zammad/compare/2.3.0...2.3.1)
+
+**Fixed bugs:**
+- Direct access to organization tickets possible even though shared is deactivated [\#1857](https://github.com/zammad/zammad/issues/1857) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Can't create email-account with local MTA as outgoing server  [\#1852](https://github.com/zammad/zammad/issues/1852) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Issues in the rights-management  [\#1810](https://github.com/zammad/zammad/issues/1810) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Reporting: profile condition is ignored [\#1809](https://github.com/zammad/zammad/issues/1809) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Taskbar item race condition causes JS exception [\#1841](https://github.com/zammad/zammad/issues/1841) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- The column widths of a table are shifted after manual change and use of pagination. [\#1829](https://github.com/zammad/zammad/issues/1829) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- JS error on creating new customer [\#1813](https://github.com/zammad/zammad/issues/1813) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- Customer response via note does not trigger escalation [\#1322](https://github.com/zammad/zammad/issues/1322) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- LDAP authentication doen't work in 2.3.x [\#1795](https://github.com/zammad/zammad/issues/1795) [[bug](https://github.com/zammad/zammad/labels/bug)]
+- XSS issue in ticket overview [\#1869](https://github.com/zammad/zammad/issues/1869) [[bug](https://github.com/zammad/zammad/labels/bug)]
+
 ## [2.3.0](https://github.com/zammad/zammad/tree/2.3.0) (2018-01-30)
 [Full Changelog](https://github.com/zammad/zammad/compare/2.2.0...2.3.0)
 
@@ -9,7 +24,6 @@
 - Added support to search and reopen already finised chat sessions.
 - LDAP User uid attribute is not reliable [\#1709](https://github.com/zammad/zammad/issues/1709) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
 - Add article.body support for triggers [\#1745](https://github.com/zammad/zammad/issues/1745) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
-
 
 **Fixed bugs:**
 - Do not allow roles as default signup with admin, admin.\* and ticket.agent permissions [\#1758](https://github.com/zammad/zammad/issues/1758) [[enhancement](https://github.com/zammad/zammad/labels/enhancement)]
