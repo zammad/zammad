@@ -285,3 +285,51 @@ class App.User extends App.Model
   outOfOfficeText: ->
     return @preferences.out_of_office_text if !_.isEmpty(@preferences.out_of_office_text)
     App.User.outOfOfficeTextPlaceholder()
+
+  ###
+
+    Checks if requester has given access level on requested.
+    Possible access levels are: read, update and delete
+    See backend method User#access?
+
+    requester = App.User.find(1)
+    requested = App.User.find(3)
+    result    = requested.isAccessibleBy(requester, 'read')
+
+  returns
+
+    true|false
+
+  ###
+
+  isAccessibleBy: (requester, access) ->
+    return true if requester.permission('admin')
+
+    capitalized  = access.charAt(0).toUpperCase() + access.slice(1)
+    accessMethod = 'is' + capitalized + 'ableBy'
+    @[accessMethod](requester)
+
+  isReadableBy: (requester) ->
+    return true if @ownAccount(requester)
+    return true if requester.permission('admin.*')
+    return true if requester.permission('ticket.agent')
+    # check same organization for customers
+    return false if !requester.permission('ticket.customer')
+    @sameOrganization?(requester)
+
+  isChangeableBy: (requester) ->
+    return true if requester.permission('admin.user')
+    # allow agents to change customers
+    return false if !requester.permission('ticket.agent')
+    @permission('ticket.customer')
+
+  isDeleteableBy: (requester) ->
+    requester.permission('admin.user')
+
+  ownAccount: (requester) ->
+    @id is requester.id
+
+  sameOrganization: (requester) ->
+    return false if @organization_id is null
+    return false if requester.organization_id is null
+    @organization_id == requester.organization_id

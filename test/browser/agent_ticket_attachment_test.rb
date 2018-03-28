@@ -38,6 +38,10 @@ class AgentTicketAttachmentTest < TestCase
     #alert.accept()
     #alert = alert.text
 
+    # since selenium webdriver with firefox is not able to upload files, skipp here
+    # https://github.com/w3c/webdriver/issues/1230
+    return if browser == 'firefox'
+
     # add attachment, attachment check should quiet
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
@@ -112,7 +116,7 @@ class AgentTicketAttachmentTest < TestCase
     )
 
     # check content and edit screen in instance 1
-    match(
+    watch_for(
       css: '.content.active div.ticket-article',
       value: 'test 6 - ticket 1-1',
     )

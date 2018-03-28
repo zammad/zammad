@@ -182,7 +182,7 @@ class App.TicketZoom extends App.Controller
     @formMeta = data.form_meta
 
     # load assets
-    App.Collection.loadAssets(data.assets)
+    App.Collection.loadAssets(data.assets, targetModel: 'Ticket')
 
     # get data
     @ticket = App.Ticket.fullLocal(@ticket_id)

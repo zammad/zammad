@@ -11,7 +11,7 @@ FactoryBot.define do
     firstname     'Nicole'
     lastname      'Braun'
     email         { generate(:email) }
-    password      'zammad'
+    password      nil
     active        true
     login_failed  0
     updated_by_id 1

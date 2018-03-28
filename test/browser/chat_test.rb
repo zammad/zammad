@@ -138,7 +138,7 @@ class ChatTest < TestCase
     # init chat
     click(
       browser: customer,
-      css: '.js-chat-open',
+      css: '.zammad-chat .js-chat-open',
     )
     exists(
       browser: customer,
@@ -156,7 +156,7 @@ class ChatTest < TestCase
     )
     click(
       browser: customer,
-      css: '.js-chat-toggle',
+      css: '.zammad-chat .js-chat-toggle .zammad-chat-header-icon',
     )
     watch_for_disappear(
       browser: customer,
@@ -274,7 +274,7 @@ class ChatTest < TestCase
     )
     click(
       browser: customer,
-      css: '.js-chat-toggle',
+      css: '.js-chat-toggle .zammad-chat-header-icon',
     )
     watch_for(
       browser: agent,
@@ -401,7 +401,7 @@ class ChatTest < TestCase
     )
     click(
       browser: customer,
-      css: '.zammad-chat .js-chat-toggle',
+      css: '.zammad-chat .js-chat-toggle .zammad-chat-header-icon',
     )
     watch_for_disappear(
       browser: customer,
@@ -412,7 +412,7 @@ class ChatTest < TestCase
     sleep 2
     click(
       browser: customer,
-      css: '.js-chat-open',
+      css: '.zammad-chat .js-chat-open',
     )
     exists(
       browser: customer,
@@ -581,7 +581,7 @@ class ChatTest < TestCase
     )
     click(
       browser: customer,
-      css: '.js-chat-toggle',
+      css: '.zammad-chat .js-chat-toggle .zammad-chat-header-icon',
     )
     watch_for(
       browser: agent,

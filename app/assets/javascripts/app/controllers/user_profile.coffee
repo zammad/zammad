@@ -106,13 +106,10 @@ class ActionRow extends App.ObserverActionRow
   newTicket: (user) =>
     @navigate("ticket/create/customer/#{user.id}")
 
-  actions: =>
-    [
-      {
-        name:     'edit'
-        title:    'Edit'
-        callback: @editUser
-      }
+  actions: (user) =>
+    currentUser = App.User.find(App.Session.get('id'))
+
+    actions = [
       {
         name:     'history'
         title:    'History'
@@ -124,6 +121,15 @@ class ActionRow extends App.ObserverActionRow
         callback: @newTicket
       }
     ]
+
+    if user.isAccessibleBy(currentUser, 'change')
+      actions.unshift {
+        name:     'edit'
+        title:    'Edit'
+        callback: @editUser
+      }
+
+    actions
 
 class Object extends App.ObserverController
   model: 'User'

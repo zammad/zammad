@@ -1258,7 +1258,7 @@ class App.ObserverActionRow extends App.ObserverController
 
   render: (object) =>
     return if _.isEmpty(object)
-    actions = @actions()
+    actions = @actions(object)
     @html App.view('generic/actions')(
       items: actions
       type:  @type

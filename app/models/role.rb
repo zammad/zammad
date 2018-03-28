@@ -136,18 +136,13 @@ returns
   private_class_method
 
   def self.permission_ids_by_name(keys)
-    if keys.class != Array
-      keys = [keys]
-    end
-    permission_ids = []
-    keys.each do |key|
+    Array(keys).each_with_object([]) do |key, result|
       ::Permission.with_parents(key).each do |local_key|
         permission = ::Permission.lookup(name: local_key)
         next if !permission
-        permission_ids.push permission.id
+        result.push permission.id
       end
     end
-    permission_ids
   end
 
   private

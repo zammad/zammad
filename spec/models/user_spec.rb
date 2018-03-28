@@ -95,8 +95,9 @@ RSpec.describe User do
   context '.authenticate' do
 
     it 'authenticates by username and password' do
-      user   = create(:user)
-      result = described_class.authenticate(user.login, 'zammad')
+      password = 'zammad'
+      user     = create(:user, password: password)
+      result   = described_class.authenticate(user.login, password)
       expect(result).to be_an(User)
     end
 
@@ -158,7 +159,7 @@ RSpec.describe User do
     end
   end
 
-  context '.password_reset_via_token' do
+  context '#password_reset_via_token' do
 
     it 'changes the password of the token user and destroys the token' do
       token = create(:token_password_reset)
@@ -189,6 +190,344 @@ RSpec.describe User do
       end.to_not change {
         user.password
       }
+    end
+  end
+
+  context '.access?' do
+
+    let(:role_with_admin_user_permissions) do
+      create(:role).tap do |role|
+        role.permission_grant('admin.user')
+      end
+    end
+    let(:admin_with_admin_user_permissions) { create(:user, roles: [role_with_admin_user_permissions]) }
+
+    let(:role_without_admin_user_permissions) do
+      create(:role).tap do |role|
+        role.permission_grant('admin.tag')
+      end
+    end
+    let(:admin_without_admin_user_permissions) { create(:user, roles: [role_without_admin_user_permissions]) }
+
+    context 'read' do
+
+      context 'admin' do
+
+        let(:requested) { create(:admin_user) }
+
+        it 'is possible for admin.user' do
+          requester = admin_with_admin_user_permissions
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(true)
+        end
+
+        it 'is possible for sub admin without admin.user' do
+          requester = admin_without_admin_user_permissions
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(true)
+        end
+
+        it 'is possible for agent' do
+          requester = create(:agent_user)
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(true)
+        end
+
+        it 'is not possible for customer' do
+          requester = create(:customer_user)
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(false)
+        end
+      end
+
+      context 'agent' do
+
+        let(:requested) { create(:agent_user) }
+
+        it 'is possible for admin.user' do
+          requester = admin_with_admin_user_permissions
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(true)
+        end
+
+        it 'is possible for sub admin without admin.user' do
+          requester = admin_without_admin_user_permissions
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(true)
+        end
+
+        it 'is possible for agent' do
+          requester = create(:agent_user)
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(true)
+        end
+
+        it 'is not possible for customer' do
+          requester = create(:customer_user)
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(false)
+        end
+      end
+
+      context 'customer' do
+
+        let(:requested) { create(:customer_user) }
+
+        it 'is possible for admin.user' do
+          requester = admin_with_admin_user_permissions
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(true)
+        end
+
+        it 'is possible for sub admin without admin.user' do
+          requester = admin_without_admin_user_permissions
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(true)
+        end
+
+        it 'is possible for agent' do
+          requester = create(:agent_user)
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(true)
+
+        end
+
+        it 'is possible for same customer' do
+          access = requested.access?(requested, 'read')
+          expect(access).to be(true)
+        end
+
+        it 'is possible for same organization' do
+          organization = create(:organization)
+          requester    = create(:customer_user, organization: organization)
+          requested.update!(organization: organization)
+          access = requested.access?(requester, 'read')
+          expect(access).to be(true)
+        end
+
+        it 'is not possible for different customer' do
+          requester = create(:customer_user)
+          access    = requested.access?(requester, 'read')
+          expect(access).to be(false)
+        end
+      end
+    end
+
+    context 'change' do
+
+      context 'admin' do
+
+        let(:requested) { create(:admin_user) }
+
+        it 'is possible for admin.user' do
+          requester = admin_with_admin_user_permissions
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(true)
+        end
+
+        it 'is not possible for sub admin without admin.user' do
+          requester = admin_without_admin_user_permissions
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for same for sub admin without admin.user' do
+          access = admin_without_admin_user_permissions.access?(admin_without_admin_user_permissions, 'change')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for agent' do
+          requester = create(:agent_user)
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for customer' do
+          requester = create(:customer_user)
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(false)
+        end
+      end
+
+      context 'agent' do
+
+        let(:requested) { create(:agent_user) }
+
+        it 'is possible for admin.user' do
+          requester = admin_with_admin_user_permissions
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(true)
+        end
+
+        it 'is not possible for sub admin without admin.user' do
+          requester = admin_without_admin_user_permissions
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for same agent' do
+          access = requested.access?(requested, 'change')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for other agent' do
+          requester = create(:agent_user)
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for customer' do
+          requester = create(:customer_user)
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(false)
+        end
+      end
+
+      context 'customer' do
+
+        let(:requested) { create(:customer_user) }
+
+        it 'is possible for admin.user' do
+          requester = admin_with_admin_user_permissions
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(true)
+        end
+
+        it 'is not possible for sub admin without admin.user' do
+          requester = admin_without_admin_user_permissions
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(false)
+        end
+
+        it 'is possible for agent' do
+          requester = create(:agent_user)
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(true)
+
+        end
+
+        it 'is not possible for same customer' do
+          access = requested.access?(requested, 'change')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for same organization' do
+          organization = create(:organization)
+          requester    = create(:customer_user, organization: organization)
+          requested.update!(organization: organization)
+          access = requested.access?(requester, 'change')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for different customer' do
+          requester = create(:customer_user)
+          access    = requested.access?(requester, 'change')
+          expect(access).to be(false)
+        end
+      end
+    end
+
+    context 'delete' do
+
+      context 'admin' do
+
+        let(:requested) { create(:admin_user) }
+
+        it 'is possible for admin.user' do
+          requester = admin_with_admin_user_permissions
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(true)
+        end
+
+        it 'is not possible for sub admin without admin.user' do
+          requester = admin_without_admin_user_permissions
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for agent' do
+          requester = create(:agent_user)
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for customer' do
+          requester = create(:customer_user)
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(false)
+        end
+      end
+
+      context 'agent' do
+
+        let(:requested) { create(:agent_user) }
+
+        it 'is possible for admin.user' do
+          requester = admin_with_admin_user_permissions
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(true)
+        end
+
+        it 'is not possible for sub admin without admin.user' do
+          requester = admin_without_admin_user_permissions
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for agent' do
+          requester = create(:agent_user)
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for customer' do
+          requester = create(:customer_user)
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(false)
+        end
+      end
+
+      context 'customer' do
+
+        let(:requested) { create(:customer_user) }
+
+        it 'is possible for admin.user' do
+          requester = admin_with_admin_user_permissions
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(true)
+        end
+
+        it 'is not possible for sub admin without admin.user' do
+          requester = admin_without_admin_user_permissions
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for agent' do
+          requester = create(:agent_user)
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for same customer' do
+          access = requested.access?(requested, 'delete')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for same organization' do
+          organization = create(:organization)
+          requester    = create(:customer_user, organization: organization)
+          requested.update!(organization: organization)
+          access = requested.access?(requester, 'delete')
+          expect(access).to be(false)
+        end
+
+        it 'is not possible for different customer' do
+          requester = create(:customer_user)
+          access    = requested.access?(requester, 'delete')
+          expect(access).to be(false)
+        end
+      end
     end
   end
 end

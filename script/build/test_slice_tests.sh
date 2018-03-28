@@ -19,6 +19,7 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/admin_overview_test.rb
   rm test/browser/admin_role_test.rb
   # test/browser/agent_navigation_and_title_test.rb
+  # test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_ticket_attachment_test.rb
   rm test/browser/agent_ticket_auto_assignment_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
@@ -63,6 +64,7 @@ if [ "$LEVEL" == '1' ]; then
   # test/browser/taskbar_session_test.rb
   # test/browser/taskbar_task_test.rb
   # test/browser/translation_test.rb
+  rm test/browser/user_access_permissions_test.rb
   rm test/browser/user_switch_cache_test.rb
 
 elif [ "$LEVEL" == '2' ]; then
@@ -124,7 +126,8 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/translation_test.rb
-  #rm test/browser/user_switch_cache_test.rb
+  # test/browser/user_access_permissions_test.rb
+  # test/browser/user_switch_cache_test.rb
 
 elif [ "$LEVEL" == '3' ]; then
   echo "slicing level 3"
@@ -185,6 +188,7 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/translation_test.rb
+  rm test/browser/user_access_permissions_test.rb
   rm test/browser/user_switch_cache_test.rb
 
 elif [ "$LEVEL" == '4' ]; then
@@ -246,6 +250,7 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/translation_test.rb
+  rm test/browser/user_access_permissions_test.rb
   rm test/browser/user_switch_cache_test.rb
 
 elif [ "$LEVEL" == '5' ]; then
@@ -261,7 +266,7 @@ elif [ "$LEVEL" == '5' ]; then
   # test/browser/admin_overview_test.rb
   rm test/browser/admin_role_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
-  # test/browser/agent_organization_profile_test.rb
+  rm test/browser/agent_organization_profile_test.rb
   rm test/browser/agent_ticket_attachment_test.rb
   rm test/browser/agent_ticket_auto_assignment_test.rb
   rm test/browser/agent_ticket_create_reset_customer_selection_test.rb
@@ -306,6 +311,7 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/translation_test.rb
+  rm test/browser/user_access_permissions_test.rb
   rm test/browser/user_switch_cache_test.rb
 
 elif [ "$LEVEL" == '6' ]; then
@@ -369,6 +375,7 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/taskbar_session_test.rb
   rm test/browser/taskbar_task_test.rb
   rm test/browser/translation_test.rb
+  rm test/browser/user_access_permissions_test.rb
   rm test/browser/user_switch_cache_test.rb
 
 else

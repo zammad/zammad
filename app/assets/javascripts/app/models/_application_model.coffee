@@ -308,7 +308,7 @@ set new attributes of model (remove already available attributes)
 
           # full / load assets
           if data.assets
-            App.Collection.loadAssets(data.assets)
+            App.Collection.loadAssets(data.assets, targetModel: @className)
 
           # find / load object
           else
