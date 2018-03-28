@@ -507,7 +507,7 @@ class App.ControllerForm extends App.Controller
             param[newKey] = "invalid #{param[key]}"
             console.log('ERR', err)
         else
-          param[newKey] = undefined
+          param[newKey] = null
         delete param[key]
 
       # get {datetime}
@@ -525,7 +525,7 @@ class App.ControllerForm extends App.Controller
             param[newKey] = "invalid #{param[key]}"
             console.log('ERR', err)
         else
-          param[newKey] = undefined
+          param[newKey] = null
         delete param[key]
 
     # split :: fields, build objects

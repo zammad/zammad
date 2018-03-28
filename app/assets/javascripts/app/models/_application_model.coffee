@@ -124,13 +124,13 @@ class App.Model extends Spine.Model
           if parts[0] && !parts[1]
 
             # key exists not in hash || value is '' || value is undefined
-            if !( attributeName of data['params'] ) || data['params'][attributeName] is '' || data['params'][attributeName] is undefined
+            if !( attributeName of data['params'] ) || data['params'][attributeName] is '' || data['params'][attributeName] is undefined || data['params'][attributeName] is null
               errors[attributeName] = 'is required'
 
           else if parts[0] && parts[1] && !parts[2]
 
             # key exists not in hash || value is '' || value is undefined
-            if !data.params[parts[0]] || !( parts[1] of data.params[parts[0]] ) || data.params[parts[0]][parts[1]] is '' || data.params[parts[0]][parts[1]] is undefined
+            if !data.params[parts[0]] || !( parts[1] of data.params[parts[0]] ) || data.params[parts[0]][parts[1]] is '' || data.params[parts[0]][parts[1]] is undefined || data.params[parts[0]][parts[1]] is null
               errors[attributeName] = 'is required'
 
           else
