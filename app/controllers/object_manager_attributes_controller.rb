@@ -127,7 +127,7 @@ class ObjectManagerAttributesController < ApplicationController
           permitted[:data_option][:null] = true
         end
 
-        if !permitted[:data_option][:options].is_a?(Hash)
+        if !permitted[:data_option][:options].is_a?(Hash) && !permitted[:data_option][:options].is_a?(Array)
           permitted[:data_option][:options] = {}
         end
 
