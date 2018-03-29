@@ -35,6 +35,18 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
         attribute.reload.data_option
       }
     end
+
+    it 'does not change tree_select attribute' do
+      system_init_done
+
+      attribute = create(:object_manager_attribute_tree_select)
+
+      expect do
+        migrate
+      end.not_to change {
+        attribute.reload.data_option
+      }
+    end
   end
 
   context '[:data_option]' do
