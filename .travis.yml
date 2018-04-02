@@ -43,7 +43,7 @@ services:
   - mysql
 language: ruby
 rvm:
-  - 2.4.2
+  - 2.4.4
 before_install:
   - git fetch --unshallow
   - if [ "${DB}" = "mysql" ]; then mysql -u root -e "CREATE USER 'some_user'@'localhost' IDENTIFIED BY 'some_pass';"; fi
