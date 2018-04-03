@@ -220,8 +220,7 @@ class App.TicketCreate extends App.Controller
 
   renderQueue: (template = {}) =>
     localeRender = =>
-      @render(options: template)
-      @render()
+      @render(template)
     App.QueueManager.add(@queueKey, localeRender)
     return if !@formMeta
     App.QueueManager.run(@queueKey)
