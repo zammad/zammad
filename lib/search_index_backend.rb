@@ -606,12 +606,12 @@ return true if backend is configured
 
     message = if response&.error&.match?('Connection refused')
                 "Elasticsearch is not reachable, probably because it's not running or even installed."
-              elsif url.end_with?('pipeline/zammad-attachment') && response.code == 400
+              elsif url.end_with?('pipeline/zammad-attachment', 'pipeline=zammad-attachment') && response.code == 400
                 'The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (5.6 => ingest-attachment, 2.4 - 5.5 => mapper-attachments).'
               else
                 'Check the response and payload for detailed information: '
               end
 
-    "#{prefix}#{message}#{suffix}"
+    "#{prefix} #{message}#{suffix}"
   end
 end
