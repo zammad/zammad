@@ -3362,6 +3362,11 @@ wait untill text in selector disabppears
           element.clear
           element.send_keys(data[:data_option][:options][:false])
           # rubocop:enable Lint/BooleanSymbol
+        elsif data[:data_type] == 'Tree Select'
+          add_tree_options(
+            instance: instance,
+            options:  data[:data_option][:options],
+          )
         else
           data[:data_option][:options].each do |key, value|
             element = instance.find_elements(css: '.modal .js-Table .js-key').last
@@ -3694,5 +3699,68 @@ wait untill text in selector disabppears
     return if !@@debug
     return if params[:mute_log]
     puts "#{Time.zone.now}/#{method}: #{params.inspect}"
+  end
+
+  private
+
+  def add_tree_options(instance:, options:)
+
+    # first level entries have to get added in regular order
+    options.each_key.with_index do |option, index|
+
+      if index != 0
+        element = instance.find_elements(css: '.modal .js-treeTable .js-addRow')[index - 1]
+        element.click
+      end
+
+      element = instance.find_elements(css: '.modal .js-treeTable .js-key')[index]
+      element.clear
+      element.send_keys(option)
+    end
+
+    add_sub_tree_recursion(
+      instance: instance,
+      options: options,
+    )
+  end
+
+  def add_sub_tree_recursion(instance:, options:, offset: 0)
+    options.each_value.inject(offset) do |child_offset, children|
+
+      child_offset += 1
+
+      # put your recursion glasses on 8-)
+      add_sub_tree_options(
+        instance: instance,
+        options:  children,
+        offset:   child_offset,
+      )
+    end
+  end
+
+  def add_sub_tree_options(instance:, options:, offset:)
+
+    # sub level entries have to get added in reversed order
+    level_options = options.to_a.reverse.to_h.keys
+
+    level_options.each do |option|
+
+      # sub level entries have to get added via 'add child row' link
+      click_index = offset - 1
+
+      element = instance.find_elements(css: '.modal .js-treeTable .js-addChild')[click_index]
+      element.click
+
+      element = instance.find_elements(css: '.modal .js-treeTable .js-key')[offset]
+      element.clear
+      element.send_keys(option)
+      sleep 0.25
+    end
+
+    add_sub_tree_recursion(
+      instance: instance,
+      options:  options,
+      offset:   offset,
+    )
   end
 end
