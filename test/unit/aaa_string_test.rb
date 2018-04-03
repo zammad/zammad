@@ -648,7 +648,7 @@ Men-----------------------'
     assert_equal(result, html.html2html_strict)
 
     html   = '<a href="http://example.com %22test%22">http://what-different.example.com</a>'
-    result = "<a href=\"http://example.com%22test%22\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title='http://example.com\"test\"'>http://what-different.example.com</a>"
+    result = "<a href=\"http://example.com%20%22test%22\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title='http://example.com \"test\"'>http://what-different.example.com</a>"
     assert_equal(result, html.html2html_strict)
 
     html   = '<a href="http://example.com">http://EXAMPLE.com</a>'

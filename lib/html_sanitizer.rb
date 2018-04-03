@@ -46,12 +46,15 @@ satinize html string based on whiltelist
 
       # prepare links
       if node['href']
-        href = cleanup_target(node['href'])
-        if external && href.present? && !href.downcase.start_with?('//') && href.downcase !~ %r{^.{1,6}://.+?}
-          node['href'] = "http://#{node['href']}"
-          href = node['href']
+        href                = cleanup_target(node['href'], keep_spaces: true)
+        href_without_spaces = href.gsub(/[[:space:]]/, '')
+        if external && href_without_spaces.present? && !href_without_spaces.downcase.start_with?('//') && href_without_spaces.downcase !~ %r{^.{1,6}://.+?}
+          node['href']        = "http://#{node['href']}"
+          href                = node['href']
+          href_without_spaces = href.gsub(/[[:space:]]/, '')
         end
-        next if !href.downcase.start_with?('http', 'ftp', '//')
+
+        next if !href_without_spaces.downcase.start_with?('http', 'ftp', '//')
         node.set_attribute('href', href)
         node.set_attribute('rel', 'nofollow noreferrer noopener')
         node.set_attribute('target', '_blank')
@@ -372,9 +375,14 @@ cleanup html string:
     string.gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>').gsub('&quot;', '"').gsub('&nbsp;', ' ')
   end
 
-  def self.cleanup_target(string)
+  def self.cleanup_target(string, keep_spaces: false)
     string = CGI.unescape(string).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-    string.gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '').delete("\u0000")
+    blank_regex = if keep_spaces
+                    /\t|\n|\r/
+                  else
+                    /[[:space:]]|\t|\n|\r/
+                  end
+    string.strip.gsub(blank_regex, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '').delete("\u0000")
   end
 
   def self.url_same?(url_new, url_old)
