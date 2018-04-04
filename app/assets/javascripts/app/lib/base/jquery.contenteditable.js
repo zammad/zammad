@@ -540,7 +540,7 @@
 
     // for validation, do not retrun empty content by empty tags
     text_plain = this.$element.text().trim()
-    if ( !text_plain || text_plain == '' ) {
+    if ( (!text_plain || text_plain == '') && !this.$element.find('img').get(0) ) {
       return text_plain
     }
     return this.$element.html().trim()
