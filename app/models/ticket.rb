@@ -23,9 +23,7 @@ class Ticket < ApplicationModel
 
   store          :preferences
   before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority
-  after_create   :check_escalation_update
   before_update  :check_defaults, :check_title, :reset_pending_time, :check_owner_active
-  after_update   :check_escalation_update
 
   validates :group_id, presence: true
 
@@ -1185,11 +1183,6 @@ result
     # in case, set pending_time to nil
     return true if current_state_type.name.match?(/^pending/i)
     self.pending_time = nil
-    true
-  end
-
-  def check_escalation_update
-    escalation_calculation
     true
   end
 
