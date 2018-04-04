@@ -789,11 +789,11 @@ ObjectManager::Attribute.add(
 ObjectManager::Attribute.add(
   force: true,
   object: 'User',
-  name: 'organization_id',
+  name: 'organization_ids',
   display: 'Organization',
   data_type: 'autocompletion_ajax',
   data_option: {
-    multiple: false,
+    multiple: true,
     nulloption: true,
     null: true,
     relation: 'Organization',

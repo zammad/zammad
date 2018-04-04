@@ -81,7 +81,7 @@ class LongPollingController < ApplicationController
           render json: queue
           return
         end
-        8.times do
+        28.times do
           sleep 0.25
         end
         #sleep 2

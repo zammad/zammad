@@ -4,6 +4,7 @@ class App.ControllerForm extends App.Controller
     for key, value of params
       @[key] = value
 
+    console.log('Form',params)
     if !@handlers
       @handlers = []
 
@@ -14,7 +15,7 @@ class App.ControllerForm extends App.Controller
 
     @handlers.push @showHideToggle
     @handlers.push @requiredMandantoryToggle
-
+    console.log('model', @model)
     if !@model
       @model = {}
     if !@attributes
@@ -64,16 +65,18 @@ class App.ControllerForm extends App.Controller
       fieldset = @el
     else
       fieldset = $('<fieldset></fieldset>')
-
     return fieldset if _.isEmpty(@model)
-
+    console.log(this.model.configure_attributes)
     # collect form attributes
     @attributes = []
     if @model.attributesGet
+      console.log('Attr yes', @model)
       attributesClean = @model.attributesGet(@screen)
     else
+      console.log('Attr no')
       attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes)
 
+    console.log('Screen', @screen)
     for attributeName, attribute of attributesClean
 
       # ignore read only attributes

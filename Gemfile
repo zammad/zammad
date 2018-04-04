@@ -114,7 +114,7 @@ gem 'viewpoint'
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do
-
+  gem 'byebug'
   # test frameworks
   gem 'rspec-rails'
   gem 'test-unit'

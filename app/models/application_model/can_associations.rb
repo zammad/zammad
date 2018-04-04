@@ -106,9 +106,13 @@ returns
 =end
 
   def attributes_with_association_ids
-
+    logger = Logger.new(STDOUT)
     key = "#{self.class}::aws::#{id}"
     cache = Cache.get(key)
+    logger.info "key"
+    logger.info key
+    logger.info "cache"
+    logger.info cache
     return cache if cache
 
     attributes = self.attributes
