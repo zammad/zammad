@@ -2,14 +2,8 @@
 // form
 test('form checks', function() {
 
+  // use unsorted order to check if the frontend is sorting correctly
   App.TicketPriority.refresh([
-    {
-      id:         1,
-      name:       '1 low',
-      note:       'some note 1',
-      active:     true,
-      created_at: '2014-06-10T11:17:34.000Z',
-    },
     {
       id:         2,
       name:       '2 normal',
@@ -37,6 +31,13 @@ test('form checks', function() {
       note:       'some note 5',
       active:     false,
       created_at: '2014-06-10T10:17:56.000Z',
+    },
+    {
+      id:         1,
+      name:       '1 low',
+      note:       'some note 1',
+      active:     true,
+      created_at: '2014-06-10T11:17:34.000Z',
     },
   ])
 
@@ -145,8 +146,8 @@ test('form checks', function() {
     el:        el,
     model:     {
       configure_attributes: [
-        { name: 'priority1_id', display: 'Priroity1', tag: 'select', relation: 'TicketPriority', null: true },
-        { name: 'priority2_id', display: 'Priroity2', tag: 'select', multiple: true, relation: 'TicketPriority', null: true },
+        { name: 'priority1_id', display: 'Priroity1', tag: 'select', relation: 'TicketPriority', null: true, options: {} },
+        { name: 'priority2_id', display: 'Priroity2', tag: 'select', multiple: true, relation: 'TicketPriority', null: true, options: {} },
         { name: 'priority3_id', display: 'Priroity3', tag: 'select', relation: 'TicketPriority', null: true },
         { name: 'escalation_times', display: 'Times', tag: 'sla_times', null: true },
         { name: 'working_hours',    display: 'Hours', tag: 'business_hours', null: true },

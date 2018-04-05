@@ -6,7 +6,7 @@ class App.UiElement.ApplicationUiElement
     # skip sorting if it is disabled by config
     return if attribute.sortBy == null
 
-    return if !attribute.options
+    return if _.isEmpty(attribute.options)
 
     # arrays can only get ordered
     if _.isArray(attribute.options)
@@ -43,7 +43,7 @@ class App.UiElement.ApplicationUiElement
       attribute.options[''] = '-'
 
   @getConfigOptionList: (attribute) ->
-    return if !attribute.options
+    return if _.isEmpty(attribute.options)
     selection = attribute.options
     attribute.options = []
     if _.isArray(selection)
@@ -69,7 +69,7 @@ class App.UiElement.ApplicationUiElement
   @getRelationOptionList: (attribute, params) ->
 
     # build options list based on relation
-    return if !attribute.relation
+    return if _.isEmpty(attribute.relation)
     return if !App[attribute.relation]
 
     attribute.options = []
@@ -175,7 +175,7 @@ class App.UiElement.ApplicationUiElement
   # execute filter
   @filterOption: (attribute) ->
     return if !attribute.filter
-    return if !attribute.options
+    return if _.isEmpty(attribute.options)
 
     return if typeof attribute.filter isnt 'function'
     App.Log.debug 'ControllerForm', '_filterOption:filter-function'
