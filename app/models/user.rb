@@ -51,7 +51,7 @@ class User < ApplicationModel
   #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
   has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
   has_many                :authorizations,  after_add: :cache_update, after_remove: :cache_update
-  belongs_to              :organization,    class_name: 'Organization'
+  # belongs_to              :organization,    class_name: 'Organization'
 
   store                   :preferences
 

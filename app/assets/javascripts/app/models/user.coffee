@@ -9,7 +9,7 @@ class App.User extends App.Model
     { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'organization_ids',  display: 'Organization',  tag: 'select',   multiple: true, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true },
+    { name: 'organization_ids',  display: 'Organization',  tag: 'select',   multiple: true, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true, screen: {edit: {null: true}}},
     { name: 'created_by_id',    display: 'Created by',    relation: 'User', readonly: 1 },
     { name: 'created_at',       display: 'Created at',    tag: 'datetime',  readonly: 1 },
     { name: 'updated_by_id',    display: 'Updated by',    relation: 'User', readonly: 1 },
@@ -17,7 +17,7 @@ class App.User extends App.Model
   ]
   @configure_overview = [
 #    'login', 'firstname', 'lastname', 'email', 'updated_at',
-    'login', 'firstname', 'lastname', 'organization'
+    'login', 'firstname', 'lastname', 'organization_ids'
   ]
 
   uiUrl: ->
@@ -126,7 +126,6 @@ class App.User extends App.Model
     @constructor.apiPath + '/users/image/' + @image
 
   @_fillUp: (data) ->
-
     # set socal media links
     if data['accounts']
       for account of data['accounts']
@@ -135,8 +134,8 @@ class App.User extends App.Model
         if account == 'facebook'
           data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
 
-    if data.organization_id
-      data.organization = App.Organization.findNative(data.organization_id)
+#    if data.organization_id
+#      data.organization = App.Organization.findNative(data.organization_id)
 
     if data['role_ids']
       data['roles'] = []
@@ -144,6 +143,13 @@ class App.User extends App.Model
         if App.Role.exists(role_id)
           role = App.Role.findNative(role_id)
           data['roles'].push role
+
+    if data['organization_ids']
+      data['organizations'] = []
+      for organization_id in data['organization_ids']
+        if App.Role.exists(organization_id)
+          organization = App.Organization.findNative(organization_id)
+          data['organizations'].push organization
 
     if data['group_ids']
       data['groups'] = []
