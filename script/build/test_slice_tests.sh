@@ -40,6 +40,7 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/agent_ticket_update2_test.rb
   rm test/browser/agent_ticket_update3_test.rb
   rm test/browser/agent_ticket_update4_test.rb
+  rm test/browser/agent_ticket_update5_test.rb
   rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_user_profile_test.rb
@@ -104,6 +105,7 @@ elif [ "$LEVEL" == '2' ]; then
   # test/browser/agent_ticket_update2_test.rb
   # test/browser/agent_ticket_update3_test.rb
   # test/browser/agent_ticket_update4_test.rb
+  # rm test/browser/agent_ticket_update5_test.rb
   # test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_user_profile_test.rb
@@ -168,6 +170,7 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/agent_ticket_update2_test.rb
   rm test/browser/agent_ticket_update3_test.rb
   rm test/browser/agent_ticket_update4_test.rb
+  rm test/browser/agent_ticket_update5_test.rb
   rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_user_profile_test.rb
@@ -232,6 +235,7 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/agent_ticket_update2_test.rb
   rm test/browser/agent_ticket_update3_test.rb
   rm test/browser/agent_ticket_update4_test.rb
+  rm test/browser/agent_ticket_update5_test.rb
   rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_user_profile_test.rb
@@ -295,6 +299,7 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/agent_ticket_update2_test.rb
   rm test/browser/agent_ticket_update3_test.rb
   rm test/browser/agent_ticket_update4_test.rb
+  rm test/browser/agent_ticket_update5_test.rb
   rm test/browser/agent_ticket_update_and_reload_test.rb
   # test/browser/agent_user_manage_test.rb
   # test/browser/agent_user_profile_test.rb
@@ -361,6 +366,7 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/agent_ticket_update2_test.rb
   rm test/browser/agent_ticket_update3_test.rb
   rm test/browser/agent_ticket_update4_test.rb
+  rm test/browser/agent_ticket_update5_test.rb
   rm test/browser/agent_ticket_update_and_reload_test.rb
   rm test/browser/agent_user_manage_test.rb
   rm test/browser/agent_user_profile_test.rb

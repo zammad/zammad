@@ -259,6 +259,10 @@ class App.ControllerForm extends App.Controller
       if attribute.name of @params
         attribute.value = @params[attribute.name]
 
+    # set new value
+    if 'newValue' of attribute
+      attribute.value = attribute.newValue
+
     App.Log.debug 'ControllerForm', 'formGenItem-before', attribute
 
     if App.UiElement[attribute.tag]
