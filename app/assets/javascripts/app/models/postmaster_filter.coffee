@@ -20,3 +20,4 @@ class App.PostmasterFilter extends App.Model
   @configure_overview = [
     'name',
   ]
+  @configure_clone = true
