@@ -94,8 +94,8 @@ GEM
       coffee-script
       execjs
       json
-    composite_primary_keys (10.0.1)
-      activerecord (~> 5.1.0)
+    composite_primary_keys (10.0.3)
+      activerecord (~> 5.1.0, >= 5.1.5)
     concurrent-ruby (1.0.5)
     coveralls (0.7.1)
       multi_json (~> 1.3)
