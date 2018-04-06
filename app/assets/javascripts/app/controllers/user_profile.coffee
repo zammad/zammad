@@ -32,6 +32,7 @@ class App.UserProfile extends App.Controller
     false
 
   render: (user) =>
+    console.log('PROFILE')
 
     if !@doNotLog
       @doNotLog = 1
@@ -46,11 +47,12 @@ class App.UserProfile extends App.Controller
       el: elLocal.find('.js-name')
     )
 
-    if user.organization_id
-      new Organization(
-        object_id: user.organization_id
-        el: elLocal.find('.js-organization')
-      )
+    if user.organization_ids
+      for id in user.organization_ids
+        new Organization(
+          object_id: id
+          el: elLocal.find('.js-organization-' + id)
+        )
 
     new Object(
       el:        elLocal.find('.js-object-container')
