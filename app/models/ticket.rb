@@ -1004,7 +1004,9 @@ perform changes on ticket
           quote: true,
         )
 
-        Ticket::Article.create(
+        (body, attachments_inline) = HtmlSanitizer.replace_inline_images(body, id)
+
+        article = Ticket::Article.create(
           ticket_id: id,
           to: recipient_string,
           subject: subject,
@@ -1019,6 +1021,16 @@ perform changes on ticket
           updated_by_id: 1,
           created_by_id: 1,
         )
+
+        attachments_inline.each do |attachment|
+          Store.add(
+            object: 'Ticket::Article',
+            o_id: article.id,
+            data: attachment[:data],
+            filename: attachment[:filename],
+            preferences: attachment[:preferences],
+          )
+        end
         next
       end
 
