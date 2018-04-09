@@ -23,25 +23,28 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
     # touch old organization if changed
     member_ids = []
 
-    organization_id_changed = record.saved_changes['organization_id']
-    if organization_id_changed && organization_id_changed[0] != organization_id_changed[1]
-      if organization_id_changed[0]
+    if record.saved_changes['organization_id']
+      organization_id_changed = record.saved_changes['organization_id']
+      if organization_id_changed && organization_id_changed[0] != organization_id_changed[1]
+        if organization_id_changed[0]
 
-        # featrue used for different propose, do not touch references
-        if User.where(organization_id: organization_id_changed[0]).count < 100
-          organization = Organization.find(organization_id_changed[0])
-          organization.touch # rubocop:disable Rails/SkipsModelValidations
-          member_ids = organization.member_ids
+          # featrue used for different propose, do not touch references
+          if User.where(organization_id: organization_id_changed[0]).count < 100
+            organization = Organization.find(organization_id_changed[0])
+            organization.touch # rubocop:disable Rails/SkipsModelValidations
+            member_ids = organization.member_ids
+          end
         end
       end
     end
-
+    byebug
     # touch new/current organization
     if record.organizations
 
       # featrue used for different propose, do not touch references
       record.organizations.each do |org|
-        if User.where(organization_id: record.organization_id).count < 100
+        # if User.where(organization_id: record.organization_id).count < 100
+        if org.members.count < 100
           org.touch # rubocop:disable Rails/SkipsModelValidations
           member_ids += org.member_ids
         end

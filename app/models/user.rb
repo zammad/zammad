@@ -142,8 +142,8 @@ returns
 
   def longname
     name = fullname
-    if organization_id
-      organization = Organization.lookup(id: organization_id)
+    if organization_ids.any?
+      organization = Organization.lookup(id: organization_ids[0])
       if organization
         name += " (#{organization.name})"
       end
@@ -1077,13 +1077,13 @@ raise 'Minimum one user need to have admin permissions'
 
   def domain_based_assignment
     return true if !email
-    return true if organization_id
+    return true if organization_ids.any?
     begin
       domain = Mail::Address.new(email).domain
       return true if !domain
       organization = Organization.find_by(domain: domain.downcase, domain_assignment: true)
       return true if !organization
-      self.organization_id = organization.id
+      self.organization_ids = [organization.id]
     rescue
       return true
     end

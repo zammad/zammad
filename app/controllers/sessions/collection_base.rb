@@ -37,8 +37,8 @@ module ExtraCollection
     end
 
     collections[ Organization.to_app_model ] = []
-    if user.organization_id
-      Organization.where(id: user.organization_id).each do |item|
+    if user.organizations.any?
+      user.organizations.each do |item|
         assets = item.assets(assets)
       end
     end

@@ -77,9 +77,11 @@ returns
 
       # if only a few organizations are found, search for names of users
       if organizations.length <= 3
-        organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name').joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id').where(
-          'users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"
-        ).order('organizations.name').limit(limit)
+        organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name')
+                                    .joins(:members)
+                                    .where('users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%")
+                                    .order('organizations.name')
+                                    .limit(limit)
         organizations_by_user.each do |organization_by_user|
           organization_exists = false
           organizations.each do |organization|

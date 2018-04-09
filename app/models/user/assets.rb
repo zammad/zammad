@@ -82,11 +82,13 @@ returns
       end
 
       # add organization
-      if self.organization_id
-        if !data[:Organization] || !data[:Organization][self.organization_id]
-          organization = Organization.lookup(id: self.organization_id)
-          if organization
-            data = organization.assets(data)
+      if self.organization_ids.any?
+        self.organization_ids.each do |org|
+          if !data[:Organization] || !data[:Organization][org]
+            organization = Organization.lookup(id: org)
+            if organization
+              data = organization.assets(data)
+            end
           end
         end
       end
