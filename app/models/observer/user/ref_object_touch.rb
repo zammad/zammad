@@ -22,6 +22,7 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
 
     # touch old organization if changed
     member_ids = []
+
     organization_id_changed = record.saved_changes['organization_id']
     if organization_id_changed && organization_id_changed[0] != organization_id_changed[1]
       if organization_id_changed[0]
@@ -36,12 +37,14 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
     end
 
     # touch new/current organization
-    if record.organization
+    if record.organizations
 
       # featrue used for different propose, do not touch references
-      if User.where(organization_id: record.organization_id).count < 100
-        record.organization.touch # rubocop:disable Rails/SkipsModelValidations
-        member_ids += record.organization.member_ids
+      record.organizations.each do |org|
+        if User.where(organization_id: record.organization_id).count < 100
+          org.touch # rubocop:disable Rails/SkipsModelValidations
+          member_ids += org.member_ids
+        end
       end
     end
 
