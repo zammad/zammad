@@ -152,9 +152,13 @@ Check if string is a complete html document. If not, add head and css styles.
 
     return html if html.match?(/<html>/i)
 
+    html_email_body = File.read('app/views/mailer/application_wrapper.html.erb')
+
+    html_email_body.gsub!('###html_email_css_font###', Setting.get('html_email_css_font'))
+
     # use block form because variable html could contain backslashes and e. g. '\1' that
     # must not be handled as back-references for regular expressions
-    Rails.configuration.html_email_body.sub('###html###') { html }
+    html_email_body.sub('###html###') { html }
   end
 
 =begin
