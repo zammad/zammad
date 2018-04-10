@@ -89,10 +89,10 @@ returns
   def self.access_condition(user, access)
     if user.permissions?('ticket.agent')
       ['group_id IN (?)', user.group_ids_access(access)]
-    elsif !user.organization || ( !user.organization.shared || user.organization.shared == false )
+    elsif !user.organizations.any?
       ['tickets.customer_id = ?', user.id]
     else
-      ['(tickets.customer_id = ? OR tickets.organization_id = ?)', user.id, user.organization.id]
+      ['(tickets.customer_id = ? OR tickets.organization_id = ?', user.id, user.organizations.map { |org| org.id }]
     end
   end
 
@@ -1164,8 +1164,8 @@ result
     return true if !customer_id
     customer = User.find_by(id: customer_id)
     return true if !customer
-    return true if organization_id == customer.organization_id
-    self.organization_id = customer.organization_id
+    return true if customer.organization_ids.include? (organization_id)
+    self.organization_id = customer.organization_ids[0]
     true
   end
 

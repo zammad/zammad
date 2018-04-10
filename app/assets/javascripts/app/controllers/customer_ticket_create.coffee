@@ -70,6 +70,17 @@ class Index extends App.ControllerContent
       noFieldset:     true
       handlersConfig: handlers
     )
+    new App.ControllerForm(
+      el:             @el.find('.ticket-form-organization')
+      form_id:        @form_id
+      model:          App.Ticket
+      screen:         'create_middle_organization'
+      filter:         @formMeta.filter
+      formMeta:       @formMeta
+      params:         defaults
+      noFieldset:     true
+      handlersConfig: handlers
+    )
     if !_.isEmpty(App.Ticket.attributesGet('create_bottom', false, true))
       new App.ControllerForm(
         el:             @el.find('.ticket-form-bottom')

@@ -20,8 +20,10 @@ returns
     role_ids = User.joins(:roles).where(users: { id: current_user.id, active: true }, roles: { active: true }).pluck('roles.id')
     if current_user.permissions?('ticket.customer')
       overview_filter = { active: true, organization_shared: false }
-      if current_user.organization_id && current_user.organization.shared
-        overview_filter.delete(:organization_shared)
+      if current_user.organization_ids.any?
+        current_user.organizations.each do |org|
+          overview_filter.delete(:organization_shared) if org.shared
+        end
       end
       overviews = Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: nil }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: current_user.id }, overviews: overview_filter)).distinct('overview.id').order(:prio)
       return overviews
@@ -113,7 +115,6 @@ returns
           order_by = "tickets.#{group_by}, #{order_by}"
         end
       end
-
       ticket_result = Ticket.distinct
                             .where(access_condition)
                             .where(query_condition, *bind_condition)

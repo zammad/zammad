@@ -37,7 +37,7 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
         end
       end
     end
-    byebug
+
     # touch new/current organization
     if record.organizations
 
