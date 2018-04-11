@@ -9,7 +9,7 @@ class App.User extends App.Model
     { name: 'firstname',        display: 'Firstname',     tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'lastname',         display: 'Lastname',      tag: 'input',    type: 'text',     limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
     { name: 'email',            display: 'Email',         tag: 'input',    type: 'email',    limit: 100, null: false, signup: true, info: true, invite_agent: true, invite_customer: true },
-    { name: 'organization_ids',  display: 'Organization',  tag: 'select',   multiple: true, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true, screen: {edit: {null: true}}},
+    { name: 'organization_ids',  display: 'Alternative Organization',  tag: 'autocompletion_ajax',   multiple: true, nulloption: true, null: true, relation: 'Organization', signup: false, info: true, invite_customer: true, item_class: 'formGroup--halfSize', screen: {edit: {null: true}}},
     { name: 'created_by_id',    display: 'Created by',    relation: 'User', readonly: 1 },
     { name: 'created_at',       display: 'Created at',    tag: 'datetime',  readonly: 1 },
     { name: 'updated_by_id',    display: 'Updated by',    relation: 'User', readonly: 1 },

@@ -224,8 +224,19 @@ class App.SearchableSelect extends Spine.Controller
     return if !event.currentTarget.textContent
     @input.val event.currentTarget.textContent.trim()
     @input.trigger('change')
-    @shadowInput.val event.currentTarget.getAttribute('data-value')
-    @shadowInput.trigger('change')
+    if @shadowInput.attr('name') == 'organization_ids'
+      if @shadowInput.length == 0 || @shadowInput.val()
+        newInput = @shadowInput.parent()
+        @shadowInput = @shadowInput.clone().appendTo( newInput )
+      @shadowInput.val event.currentTarget.getAttribute('data-value')
+      @shadowInput.trigger('change')
+      @shadowInput.css('position','static')
+      $('.js-shadow').click ->
+        $(this).remove()
+    else
+      @shadowInput.val event.currentTarget.getAttribute('data-value')
+      @shadowInput.trigger('change')
+
 
   navigateIn: (event) ->
     event.stopPropagation()
