@@ -663,4 +663,87 @@ Comment: [] =
     assert_equal(ticket_count, Ticket.count)
   end
 
+  test 'icinga email autoclose' do
+    Setting.set('icinga_sender', 'zaihan@example.com')
+    email_raw_string = 'Return-Path: <support@example.com>
+Received: from 04747418efb9 ([175.137.28.47])
+        by smtp.example.com with ESMTPSA id r14sm6448824pfa.163.2018.04.03.10.10.59
+	for <support@example.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 Apr 2018 10:11:00 -0700 (PDT)
+From: "zaihan@example.com" <zaihan@example.com>
+X-Google-Original-From: "zaihan@example.com" <zaihan@example.com>
+Message-ID: <301139.467253478-sendEmail@04747418efb9>
+To: "support@example.com" <support@example.com>
+Subject: PROBLEM - Awesell -  is DOWN
+Date: Tue, 3 Apr 2018 17:11:04 +0000
+X-Mailer: sendEmail-1.56
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-587258.191387267"
+
+This is a multi-part message in MIME format. To properly display this message you need a MIME-Version 1.0 compliant Email program.
+
+------MIME delimiter for sendEmail-587258.191387267
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+
+***** Host Monitoring on 04747418efb9 *****
+
+Awesell is DOWN!
+
+Info:    PING CRITICAL - Packet loss = 100%
+
+When:    2018-04-03 17:11:04 +0000
+Host:    Awesell
+IPv4:	 192.168.1.8
+
+------MIME delimiter for sendEmail-587258.191387267--'
+    ticket_0, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_0.state.name)
+    assert(ticket_0.preferences)
+    assert(ticket_0.preferences['icinga'])
+    assert_equal('DOWN', ticket_0.preferences['icinga']['state'])
+
+    email_raw_string = 'Return-Path: <support@example.com>
+Received: from 04747418efb9 ([175.137.28.47])
+	by smtp.example.com with ESMTPSA id b73sm6127782pga.62.2018.04.03.10.31.00
+	for <support@example.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 Apr 2018 10:31:01 -0700 (PDT)
+From: "zaihan@example.com" <zaihan@example.com>
+X-Google-Original-From: "zaihan@example.com" <zaihan@example.com>
+Message-ID: <601339.882795827-sendEmail@04747418efb9>
+To: "support@example.com" <support@example.com>
+Subject: RECOVERY - Awesell -  is UP
+Date: Tue, 3 Apr 2018 17:31:05 +0000
+X-Mailer: sendEmail-1.56
+MIME-Version: 1.0
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-322998.239033954"
+
+This is a multi-part message in MIME format. To properly display this message you need a MIME-Version 1.0 compliant Email program.
+
+------MIME delimiter for sendEmail-322998.239033954
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+
+***** Host Monitoring on 04747418efb9 *****
+
+Awesell is UP!
+
+Info:    PING OK - Packet loss = 68%, RTA = 0.59 ms
+
+When:    2018-04-03 17:31:05 +0000
+Host:    Awesell
+IPv4:	 192.168.1.8
+
+------MIME delimiter for sendEmail-322998.239033954--
+    '
+    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('closed', ticket_1.state.name)
+    assert(ticket_1.preferences)
+    assert(ticket_1.preferences['icinga'])
+    assert_equal('DOWN', ticket_1.preferences['icinga']['state'])
+  end
 end
