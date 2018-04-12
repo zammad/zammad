@@ -1051,11 +1051,11 @@ th.align-right {
 }
 
 .table tr.is-inactive {
-  opacity: 0.5;
+  color: #bbb;
   text-decoration: line-through;
 
   a {
-    color: #bbb;
+    color: inherit;
   }
 }
 
@@ -6620,6 +6620,10 @@ footer {
       display: flex;
       flex: 1;
       padding: 0 18px;
+    }
+
+    .icon {
+      fill: currentColor;
     }
   }
 
