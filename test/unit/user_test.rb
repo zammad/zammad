@@ -169,8 +169,8 @@ class UserTest < ActiveSupport::TestCase
         update_verify: {
           firstname: 'Bob',
           lastname: 'Smith',
-          image: 'a6f7f7f9dac25b2c023d403ef998801c',
-          image_md5: 'a6f7f7f9dac25b2c023d403ef998801c',
+          image: 'a11ed3970e6d3a680527d6f3f075ff89',
+          image_md5: 'a11ed3970e6d3a680527d6f3f075ff89',
           email: 'unit-test1@znuny.com',
           login: 'login-4',
         }
@@ -188,8 +188,8 @@ class UserTest < ActiveSupport::TestCase
         create_verify: {
           firstname: 'Bob',
           lastname: 'Smith',
-          image: '8765a1ac93f54405d8dfdd856c48c31f',
-          image_md5: '8765a1ac93f54405d8dfdd856c48c31f',
+          image: 'd76099edb79f39624b35187873184e3c',
+          image_md5: 'd76099edb79f39624b35187873184e3c',
           email: 'unit-test2@znuny.com',
           login: 'login-5',
         },
@@ -199,8 +199,8 @@ class UserTest < ActiveSupport::TestCase
         update_verify: {
           firstname: 'Bob',
           lastname: 'Smith',
-          image: 'a6f7f7f9dac25b2c023d403ef998801c',
-          image_md5: 'a6f7f7f9dac25b2c023d403ef998801c',
+          image: 'a11ed3970e6d3a680527d6f3f075ff89',
+          image_md5: 'a11ed3970e6d3a680527d6f3f075ff89',
           email: 'unit-test1@znuny.com',
           login: 'login-5',
         }
