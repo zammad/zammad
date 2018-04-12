@@ -1051,11 +1051,11 @@ th.align-right {
 }
 
 .table tr.is-inactive {
-  opacity: 0.5;
+  color: #bbb;
   text-decoration: line-through;
 
   a {
-    color: #bbb;
+    color: inherit;
   }
 }
 
