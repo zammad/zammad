@@ -115,11 +115,23 @@ class TicketEscalationTest < ActiveSupport::TestCase
     ticket.save!
     assert_not(ticket.has_changes_to_save?)
     assert(ticket.escalation_at)
+    assert_equal(ticket_escalation_at.to_s, ticket.escalation_at.to_s)
+
+    ticket.title = 'some value 123-1'
+    ticket.save!
+    assert_not(ticket.has_changes_to_save?)
+
+    assert(ticket.escalation_at)
     assert_not_equal(ticket_escalation_at.to_s, ticket.escalation_at.to_s)
 
     sla.destroy!
     calendar.destroy!
 
+    ticket.save!
+    assert_not(ticket.has_changes_to_save?)
+    assert(ticket.escalation_at)
+
+    ticket.title = 'some value 123-2'
     ticket.save!
     assert_not(ticket.has_changes_to_save?)
     assert_not(ticket.escalation_at)

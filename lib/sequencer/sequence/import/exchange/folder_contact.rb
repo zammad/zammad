@@ -8,7 +8,8 @@ class Sequencer
             [
               'Import::Exchange::FolderContact::RemoteId',
               'Import::Common::RemoteId::CaseSensitive',
-              'Import::Exchange::FolderContact::Mapping',
+              'Import::Exchange::FolderContact::Mapping::FromConfig',
+              'Import::Exchange::FolderContact::Mapping::Login',
               'Import::Common::Model::Skip::Blank::Mapped',
               'Common::ModelClass::User',
               'Import::Exchange::FolderContact::ExternalSyncSource',

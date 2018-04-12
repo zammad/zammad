@@ -4245,4 +4245,45 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
   end
 
+  test 'make sure attachments should be attached with content id' do
+    trigger1 = Trigger.create_or_update(
+      name: 'auto reply',
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+        },
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'some text<br>#{ticket.customer.lastname}<br>#{ticket.title}<br>#{article.body}<br><img tabindex="0" style="width: 192px; height: 192px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCADAAMADAREAAhEBAxEB/8QAHgABAAICAwEBAQAAAAAAAAAAAAcICQoFBgsDAQT/xAA7EAAABwEAAQMCAgYJAgcAAAAAAQIDBAUGBwgJERITIQoUFRciMXa1FiMyNzg5QVF3JLIYGSc1QkVh/8QAHQEBAAICAwEBAAAAAAAAAAAAAAQFAwYCBwgBCf/EAEURAAICAgEDAgMEBAkLBAMAAAECAAMEEQUGEiETMQciQQgUMlEjYXF2FTM1QnJzgZGzFjY3OFJiobGytLUXGILBJTRD/9oADAMBAAIRAxEAPwDU/G4SPARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARARLM+HPi5uvNDyU5T4086cbiaXp+iTU/piTGflwM3TxYsiyv9PZx4xk+5WZ+nhzLSelk/qnGjLJslLNKT++Atjk6Wquy1z/uo">',
+          'recipient' => 'article_last_sender',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, IO.binread('test/fixtures/mail65.box'))
+
+    assert_equal('aaäöüßad asd', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    article1 = ticket1.articles.last
+    assert_match('Zammad <zammad@localhost>', article1.from)
+    assert_match('smith@example.com', article1.to)
+    assert_match('Thanks for your inquiry (aaäöüßad asd)!', article1.subject)
+    assert_match(/.+cid:.+?@zammad.example.com.+/, article1.body)
+    assert_equal(1, article1.attachments.count)
+    assert_equal('789', article1.attachments[0].size)
+    assert_equal('text/html', article1.content_type)
+  end
 end

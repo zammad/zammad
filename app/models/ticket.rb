@@ -23,9 +23,7 @@ class Ticket < ApplicationModel
 
   store          :preferences
   before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority
-  after_create   :check_escalation_update
   before_update  :check_defaults, :check_title, :reset_pending_time, :check_owner_active
-  after_update   :check_escalation_update
 
   validates :group_id, presence: true
 
@@ -1006,7 +1004,9 @@ perform changes on ticket
           quote: true,
         )
 
-        Ticket::Article.create(
+        (body, attachments_inline) = HtmlSanitizer.replace_inline_images(body, id)
+
+        article = Ticket::Article.create(
           ticket_id: id,
           to: recipient_string,
           subject: subject,
@@ -1021,6 +1021,16 @@ perform changes on ticket
           updated_by_id: 1,
           created_by_id: 1,
         )
+
+        attachments_inline.each do |attachment|
+          Store.add(
+            object: 'Ticket::Article',
+            o_id: article.id,
+            data: attachment[:data],
+            filename: attachment[:filename],
+            preferences: attachment[:preferences],
+          )
+        end
         next
       end
 
@@ -1185,11 +1195,6 @@ result
     # in case, set pending_time to nil
     return true if current_state_type.name.match?(/^pending/i)
     self.pending_time = nil
-    true
-  end
-
-  def check_escalation_update
-    escalation_calculation
     true
   end
 

@@ -525,6 +525,8 @@ returns
     # parse email
     mail = parse(msg)
 
+    Rails.logger.info "Process email with msgid '#{mail[:message_id]}'"
+
     # run postmaster pre filter
     UserInfo.current_user_id = 1
     filters = {}

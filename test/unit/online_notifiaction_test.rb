@@ -35,6 +35,57 @@ class OnlineNotificationTest < ActiveSupport::TestCase
       created_by_id: 1
     )
     @customer_user = User.lookup(email: 'nicole.braun@zammad.org')
+
+    calendar1 = Calendar.create_or_update(
+      name: 'EU 1 - test',
+      timezone: 'Europe/Berlin',
+      business_hours: {
+        mon: {
+          active: true,
+          timeframes: [ ['00:00', '23:59'] ]
+        },
+        tue: {
+          active: true,
+          timeframes: [ ['00:00', '23:59'] ]
+        },
+        wed: {
+          active: true,
+          timeframes: [ ['00:00', '23:59'] ]
+        },
+        thu: {
+          active: true,
+          timeframes: [ ['00:00', '23:59'] ]
+        },
+        fri: {
+          active: true,
+          timeframes: [ ['00:00', '23:59'] ]
+        },
+        sat: {
+          active: true,
+          timeframes: [ ['00:00', '23:59'] ]
+        },
+        sun: {
+          active: true,
+          timeframes: [ ['00:00', '23:59'] ]
+        },
+      },
+      default: true,
+      ical_url: nil,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    sla1 = Sla.create_or_update(
+      name: 'test sla 1',
+      condition: {},
+      first_response_time: 20,
+      update_time: 60,
+      solution_time: 120,
+      calendar_id: calendar1.id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
   end
 
   test 'ticket notification' do

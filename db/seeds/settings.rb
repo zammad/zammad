@@ -823,6 +823,33 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Open ticket indicator',
+  name: 'ui_table_group_by_show_count',
+  area: 'UI::Base',
+  description: 'Total display of the number of objects in a grouping.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ui_table_group_by_show_count',
+        tag: 'boolean',
+        translate: true,
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    permission: ['admin.ui'],
+  },
+  frontend: true
+)
+
+Setting.create_if_not_exists(
   title: 'New User Accounts',
   name: 'user_create_account',
   area: 'Security::Base',

@@ -27,6 +27,27 @@ module DbMigrationHelper
       instance.migrate(direction)
     end
   end
+
+  def self.included(base)
+
+    # Execute in RSpec class context
+    base.class_exec do
+
+      # This method simulates a system that is is already initialized
+      #  aka `Setting.exists?(name: 'system_init_done')`
+      #  It's possible to simulate a not yet initialized system by adding the
+      #  meta tag `system_init_done` to `false` to the needing example:
+      #
+      # @example
+      #  it 'does stuff in an unitialized system', system_init_done: false do
+      #
+      before(:each) do |example|
+        initialized = example.metadata.fetch(:system_init_done, true)
+        system_init_done(initialized)
+      end
+    end
+  end
+
 end
 
 RSpec.configure do |config|

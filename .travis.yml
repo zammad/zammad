@@ -43,8 +43,9 @@ services:
   - mysql
 language: ruby
 rvm:
-  - 2.4.2
+  - 2.4.4
 before_install:
+  - gem update --system # Due to: https://github.com/travis-ci/travis-ci/issues/8978
   - git fetch --unshallow
   - if [ "${DB}" = "mysql" ]; then mysql -u root -e "CREATE USER 'some_user'@'localhost' IDENTIFIED BY 'some_pass';"; fi
   - if [ "${DB}" = "mysql" ]; then mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'some_user'@'localhost';"; fi

@@ -279,7 +279,7 @@ class App.ControllerModalLoading extends App.Controller
 class App.ControllerGenericDestroyConfirm extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
-  buttonSubmit: 'yes'
+  buttonSubmit: 'delete'
   buttonClass: 'btn--danger'
   head: 'Confirm'
   small: true

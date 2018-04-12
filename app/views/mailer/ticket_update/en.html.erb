@@ -6,7 +6,7 @@ Updated Ticket (#{ticket.title})
 Ticket (#{ticket.title}) has been updated by "<b>#{current_user.longname}</b>".
 </div>
 <br>
-<% if @objects[:changes] && !@objects[:changes].empty? %>
+<% if @objects[:changes].present? %>
   <div>
   #{t('Changes')}:<br>
   <% @objects[:changes].each do |key, value| %>

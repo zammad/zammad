@@ -20,9 +20,9 @@ class App.Calendar extends App.Model
     "#{@name} - #{@timezone}"
 
   @description = '''
-Ein **Kalender** wird benötigt um Eskalationen oder Auswertungen anhand von Geschäftszeiten zu berechnen.
+A **calendar** is needed for calculation of escalation based on business hours and sending out escalation notifications..
 
-Definieren Sie einen **"Standard"-Kalender** welcher Systemweit gültig ist. Nur in den angegebenen Geschäftszeiten werden Eskalations-Benachrichtigungen an Agenten versendet.
+Define a **"standard"** calendar which is valid system-wide. Only in the defined business hours the escalation notifications will be sent to your agents.
 
-Haben Sie Kunden für welche Sie unterschiedliche Geschäftszeiten einhalten müssen, so können Sie mehrere Kalender anlegen. Die Zuweisung zu den Kunden-Tickets geschieht über die **SLAs**.
+Do you have customers with different business hours, you can create multiple calendars. Tickets are linked to calendars using **SLAs**.
 '''

@@ -63,3 +63,15 @@
 # see: https://github.com/laserlemon/figaro
 # Ignore application configuration
 /config/application.yml
+
+# ignore doorkeeper auto generated folder
+/public/assets/doorkeeper
+
+# ignore all automatically downloaded images except the default ones
+/public/assets/images
+!/public/assets/images/icons
+!/public/assets/images/avatar-bg.png
+!/public/assets/images/chat-demo-avatar.png
+!/public/assets/images/eyedropper.gif
+!/public/assets/images/icons.svg
+!/public/assets/images/logo.svg

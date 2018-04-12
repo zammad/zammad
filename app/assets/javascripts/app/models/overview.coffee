@@ -68,9 +68,9 @@ class App.Overview extends App.Model
   ]
 
   @description = '''
-Übersichten können Sie Ihren Agenten und Kunden bereitstellen. Sie dienen als eine Art Arbeitslisten von Aufgaben welche der Agent abarbeiten soll.
+You can create **overviews** for your agents and your customers. These could for instance serve as a sort of work list for items for which your agents would work.
 
-Sie können auch individuelle Übersichten für einzelne Agenten oder agenten Gruppen erstellen.
+You can also create overvies and limit them to specific agents or to groups of agents.
 '''
 
   uiUrl: ->

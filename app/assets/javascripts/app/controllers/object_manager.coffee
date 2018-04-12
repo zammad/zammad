@@ -1,9 +1,8 @@
 # coffeelint: disable=duplicate_key
 treeParams = (e, params) ->
   tree = []
-  lastLevel = 0
   lastLevels = []
-  valueLevels = []
+  previousValueLevels = []
 
   $(e.target).closest('.modal').find('.js-treeTable .js-key').each( ->
     $element = $(@)
@@ -19,20 +18,19 @@ treeParams = (e, params) ->
       lastLevels[level-1].children.push item
     else
       console.log('ERROR', item)
-    if level is 0
-      valueLevels = []
-    else if lastLevel is level
-      valueLevels.pop()
-    else if lastLevel > level
-      down = lastLevel - level
-      for count in [1..down]
-        valueLevels.pop()
-    if lastLevel <= level
-      valueLevels.push name
+
+    valueLevels = []
+    # add previous level values
+    if level > 0
+      for previousLevel in [0..level - 1]
+        valueLevels.push(previousValueLevels[previousLevel])
+
+    # add current level value
+    valueLevels.push(name)
 
     item.value = valueLevels.join('::')
     lastLevels[level] = item
-    lastLevel = level
+    previousValueLevels = valueLevels
 
   )
   if tree[0]

@@ -33,3 +33,4 @@ class App.Signature extends App.Model
   @configure_overview = [
     'name',
   ]
+  @configure_clone = true
