@@ -1,4 +1,3 @@
-# rubocop:disable Lint/BooleanSymbol
 class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
   def up
 
@@ -331,6 +330,7 @@ class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
       position: 100,
     )
 
+    # rubocop:disable Lint/BooleanSymbol
     ObjectManager::Attribute.add(
       force: true,
       object: 'TicketArticle',
@@ -363,6 +363,7 @@ class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
       to_delete: false,
       position: 200,
     )
+    # rubocop:enable Lint/BooleanSymbol
 
     ObjectManager::Attribute.add(
       force: true,
@@ -487,6 +488,7 @@ class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
       position: 1400,
     )
 
+    # rubocop:disable Lint/BooleanSymbol
     ObjectManager::Attribute.add(
       force: true,
       object: 'User',
@@ -523,6 +525,7 @@ class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
       to_delete: false,
       position: 1490,
     )
+    # rubocop:enable Lint/BooleanSymbol
 
     ObjectManager::Attribute.add(
       force: true,
@@ -597,6 +600,7 @@ class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
       position: 1800,
     )
 
+    # rubocop:disable Lint/BooleanSymbol
     ObjectManager::Attribute.add(
       force: true,
       object: 'Organization',
@@ -672,6 +676,7 @@ class FixedAdminUserPermission920 < ActiveRecord::Migration[4.2]
       to_delete: false,
       position: 1410,
     )
+    # rubocop:enable Lint/BooleanSymbol
 
     ObjectManager::Attribute.add(
       force: true,

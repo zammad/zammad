@@ -26,7 +26,6 @@ class ExternalCredentialsController < ApplicationController
   def app_verify
     attributes = ExternalCredential.app_verify(params)
     render json: { attributes: attributes }, status: :ok
-    return
   rescue => e
     render json: { error: e.message }, status: :ok
   end

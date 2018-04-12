@@ -1,0 +1,80 @@
+# 10.0
+
+Metrics/PerceivedComplexity:
+  Description: >-
+                 A complexity metric geared towards measuring complexity for a
+                 human reader.
+  Enabled: false
+
+Metrics/AbcSize:
+  Description: >-
+                 A calculated magnitude based on number of assignments,
+                 branches, and conditions.
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Description: >-
+                 A complexity metric that is strongly correlated to the number
+                 of test cases needed to validate a method.
+  Enabled: false
+
+Metrics/BlockNesting:
+  Description: 'Avoid excessive block nesting'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#three-is-the-number-thou-shalt-count'
+  Enabled: false
+
+Metrics/ModuleLength:
+  Description: 'Avoid modules longer than 100 lines of code.'
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/RescueStandardError:
+  Description: 'Avoid rescuing without specifying an error class.'
+  Enabled: false
+
+# TODO
+
+Rails/ApplicationRecord:
+  Description: 'Check that models subclass ApplicationRecord.'
+  Enabled: false
+
+Rails/CreateTableWithTimestamps:
+  Description: >-
+                  Checks the migration for which timestamps are not included
+                  when creating a new table.
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Description: 'Define the dependent option to the has_many and has_one associations.'
+  StyleGuide: 'https://github.com/bbatsov/rails-style-guide#has_many-has_one-dependent-option'
+  Enabled: false
+
+Style/DateTime:
+  Description: 'Use Date or Time over DateTime.'
+  StyleGuide: '#date--time'
+  Enabled: false
+
+Style/Documentation:
+  Description: 'Document classes and non-namespace modules.'
+  Enabled: false
+
+Lint/UselessAssignment:
+  Enabled: false
+
+Layout/ExtraSpacing:
+  Description: 'Do not use unnecessary spacing.'
+  Enabled: false
+
+# Broken!!!! Generates broken code since "String".downcase == "strinG".downcase is not equals "String".casecmp("strinG") but "String".casecmp("strinG") == 0 !!!
+Performance/Casecmp:
+  Description: 'Use `casecmp` rather than `downcase ==`.'
+  Reference: 'https://github.com/JuanitoFatas/fast-ruby#stringcasecmp-vs-stringdowncase---code'
+  Enabled: false
+
+# Can be removed after introduction of Sequencer for OTRS migration
+Lint/MissingCopEnableDirective:
+  Enabled: true
+  Exclude:
+    - "lib/import/**/*"

@@ -39,6 +39,12 @@ class User < ApplicationModel
   load 'user/search_index.rb'
   include User::SearchIndex
 
+  has_and_belongs_to_many :roles,          after_add: %i[cache_update check_notifications], after_remove: :cache_update, before_add: %i[validate_agent_limit_by_role validate_roles], before_remove: :last_admin_check_by_role, class_name: 'Role'
+  has_and_belongs_to_many :organizations,  after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
+  has_many                :tokens,         after_add: :cache_update, after_remove: :cache_update
+  has_many                :authorizations, after_add: :cache_update, after_remove: :cache_update
+  belongs_to              :organization,   inverse_of: :members
+
   before_validation :check_name, :check_email, :check_login, :check_mail_delivery_failed, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
   before_create   :check_preferences_default, :validate_ooo, :domain_based_assignment, :set_locale
   before_update   :check_preferences_default, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
@@ -46,14 +52,7 @@ class User < ApplicationModel
   after_update    :avatar_for_email_check
   before_destroy  :avatar_destroy, :user_device_destroy, :cit_caller_id_destroy, :task_destroy
 
-  has_and_belongs_to_many :roles,           after_add: %i[cache_update check_notifications], after_remove: :cache_update, before_add: %i[validate_agent_limit_by_role validate_roles], before_remove: :last_admin_check_by_role, class_name: 'Role'
-  has_and_belongs_to_many :organizations,   after_add: :cache_update, after_remove: :cache_update, class_name: 'Organization'
-  #has_many                :permissions,     class_name: 'Permission', through: :roles, class_name: 'Role'
-  has_many                :tokens,          after_add: :cache_update, after_remove: :cache_update
-  has_many                :authorizations,  after_add: :cache_update, after_remove: :cache_update
-  belongs_to              :organization,    class_name: 'Organization'
-
-  store                   :preferences
+  store :preferences
 
   activity_stream_permission 'admin.user'
 
@@ -804,12 +803,12 @@ returns
     true
   end
 
-  def check_notifications(o, should_save = true)
+  def check_notifications(other, should_save = true)
     default = Rails.configuration.preferences_default_by_permission
     return if !default
     default.deep_stringify_keys!
     has_changed = false
-    o.permissions.each do |permission|
+    other.permissions.each do |permission|
       next if !default[permission.name]
       default[permission.name].each do |key, value|
         next if preferences[key]
@@ -871,11 +870,7 @@ returns
     if (firstname.blank? && lastname.present?) || (firstname.present? && lastname.blank?)
 
       # "Lastname, Firstname"
-      used_name = if firstname.blank?
-                    lastname
-                  else
-                    firstname
-                  end
+      used_name = firstname.presence || lastname
       name = used_name.split(', ', 2)
       if name.count == 2
         if name[0].present?
@@ -948,7 +943,7 @@ returns
     check      = true
     while check
       exists = User.find_by(login: login)
-      if exists && exists.id != id # rubocop:disable Style/SafeNavigation
+      if exists && exists.id != id
         self.login = "#{login}#{rand(999)}"
       else
         check = false

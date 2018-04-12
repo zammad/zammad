@@ -1,4 +1,3 @@
-# rubocop:disable Lint/BooleanSymbol
 ObjectManager::Attribute.add(
   force: true,
   object: 'Ticket',

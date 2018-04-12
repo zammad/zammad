@@ -172,7 +172,7 @@ returns
     )
 
     # rebuild subject
-    if data[:main_object] && data[:main_object].respond_to?(:subject_build)
+    if data[:main_object].respond_to?(:subject_build)
       result[:subject] = data[:main_object].subject_build(result[:subject])
     end
 

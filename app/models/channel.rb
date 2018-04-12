@@ -4,7 +4,7 @@ class Channel < ApplicationModel
   load 'channel/assets.rb'
   include Channel::Assets
 
-  belongs_to :group,  class_name: 'Group'
+  belongs_to :group
 
   store :options
   store :preferences

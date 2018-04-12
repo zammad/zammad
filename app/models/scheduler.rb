@@ -311,7 +311,7 @@ class Scheduler < ApplicationModel
           sleep wait
           logger.debug { '*** worker thread loop' }
         else
-          format "*** #{count} jobs processed at %.4f j/s, %d failed ...\n", count / realtime, result.last
+          format "*** #{count} jobs processed at %<jps>.4f j/s, %<failed>d failed ...\n", jps: count / realtime, failed: result.last
         end
       end
 

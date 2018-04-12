@@ -168,7 +168,7 @@ satinize html string based on whiltelist
       end
 
       # remove attributes if not whitelisted
-      node.each do |attribute, _value| # rubocop:disable Performance/HashEachMethods
+      node.each do |attribute, _value|
         attribute_name = attribute.downcase
         next if attributes_whitelist[:all].include?(attribute_name) || (attributes_whitelist[node.name]&.include?(attribute_name))
         node.delete(attribute)

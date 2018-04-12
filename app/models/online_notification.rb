@@ -4,9 +4,11 @@ class OnlineNotification < ApplicationModel
   load 'online_notification/assets.rb'
   include OnlineNotification::Assets
 
-  belongs_to :type,     class_name: 'TypeLookup', foreign_key: 'type_lookup_id'
-  belongs_to :object,   class_name: 'ObjectLookup', foreign_key: 'object_lookup_id'
   belongs_to :user
+  # rubocop:disable Rails/InverseOf
+  belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'object_lookup_id'
+  belongs_to :type,   class_name: 'TypeLookup',   foreign_key: 'type_lookup_id'
+  # rubocop:enable Rails/InverseOf
 
   after_create    :notify_clients_after_change
   after_update    :notify_clients_after_change

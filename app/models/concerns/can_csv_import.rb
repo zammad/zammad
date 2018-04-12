@@ -173,7 +173,7 @@ returns
 
               record.with_lock do
                 record.associations_from_param(attributes)
-                record.update_attributes!(clean_params)
+                record.update!(clean_params)
               end
             rescue => e
               errors.push "Line #{line_count}: #{e.message}"

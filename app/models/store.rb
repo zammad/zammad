@@ -4,10 +4,14 @@ class Store < ApplicationModel
   load 'store/object.rb'
   load 'store/file.rb'
 
-  store       :preferences
-  belongs_to  :store_object,          class_name: 'Store::Object'
-  belongs_to  :store_file,            class_name: 'Store::File'
-  validates   :filename,              presence: true
+  # rubocop:disable Rails/InverseOf
+  belongs_to :store_object, class_name: 'Store::Object'
+  belongs_to :store_file,   class_name: 'Store::File'
+  # rubocop:enable Rails/InverseOf
+
+  validates :filename, presence: true
+
+  store :preferences
 
 =begin
 

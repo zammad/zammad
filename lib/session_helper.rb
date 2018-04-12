@@ -5,7 +5,7 @@ module SessionHelper
     default_collection = {}
 
     # load collections to deliver from external files
-    dir = File.expand_path('../../', __FILE__)
+    dir = File.expand_path('..', __dir__)
     files = Dir.glob( "#{dir}/app/controllers/sessions/collection_*.rb")
     files.each do |file|
       load file

@@ -1,10 +1,12 @@
 ENV['RAILS_ENV'] = 'test'
-# rubocop:disable HandleExceptions, ClassVars, NonLocalExitFromIterator, Style/GuardClause
-require File.expand_path('../../config/environment', __FILE__)
+# rubocop:disable HandleExceptions, NonLocalExitFromIterator, Style/GuardClause, Lint/MissingCopEnableDirective
+require File.expand_path('../config/environment', __dir__)
 require 'selenium-webdriver'
 
 class TestCase < Test::Unit::TestCase
-  @@debug = true
+
+  DEBUG = true
+
   def browser
     ENV['BROWSER'] || 'firefox'
   end
@@ -60,7 +62,7 @@ class TestCase < Test::Unit::TestCase
         local_browser = browser_instance_remote
         break
       rescue
-        wait_until_ready = rand(9) + 5
+        wait_until_ready = rand(5..13)
         sleep wait_until_ready
         log('browser_instance', { rescure: true, count: count, sleep: wait_until_ready })
       end
@@ -3696,7 +3698,7 @@ wait untill text in selector disabppears
     rescue
       # failed to get logs
     end
-    return if !@@debug
+    return if !DEBUG
     return if params[:mute_log]
     puts "#{Time.zone.now}/#{method}: #{params.inspect}"
   end

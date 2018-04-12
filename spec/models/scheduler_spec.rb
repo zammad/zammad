@@ -14,6 +14,7 @@ RSpec.describe Scheduler do
         def self.reschedule=(reschedule)
           @reschedule = reschedule
         end
+        # rubocop:enable Style/TrivialAccessors
 
         def self.reschedule?(_delayed_job)
           @reschedule || false

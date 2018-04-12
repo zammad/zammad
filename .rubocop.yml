@@ -1,7 +1,10 @@
 # Default enabled cops
 # https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
 
+inherit_from: .rubocop_todo.yml
+
 AllCops:
+  DisplayCopNames: true
   Exclude:
     - 'bin/rails'
     - 'bin/rake'
@@ -35,9 +38,13 @@ Style/IfUnlessModifier:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#if-as-a-modifier'
   Enabled: false
 
-Style/TrailingCommaInLiteral:
-  Description: 'Checks for trailing comma in array and hash literals.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
+Style/TrailingCommaInArrayLiteral:
+  Description: 'Checks for trailing comma in array literals.'
+  StyleGuide: '#no-trailing-array-commas'
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Description: 'Checks for trailing comma in hash literals.'
   Enabled: false
 
 Style/TrailingCommaInArguments:
@@ -67,9 +74,12 @@ Style/MethodCallWithoutArgsParentheses:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-args-no-parens'
   Enabled: false
 
-Layout/SpaceInsideBrackets:
-  Description: 'No spaces after [ or before ].'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-spaces-braces'
+Layout/SpaceInsideReferenceBrackets:
+  Description: 'Checks the spacing inside referential brackets.'
+  Enabled: false
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Description: 'Checks the spacing inside array literal brackets.'
   Enabled: false
 
 Style/DefWithParentheses:
@@ -167,68 +177,31 @@ Naming/VariableNumber:
   Description: 'Use the configured style when numbering variables.'
   Enabled: false
 
-# 2.0
-
-Metrics/PerceivedComplexity:
+Naming/UncommunicativeMethodParamName:
   Description: >-
-                 A complexity metric geared towards measuring complexity for a
-                 human reader.
-  Enabled: false
+                Checks for method parameter names that contain capital letters,
+                end in numbers, or do not meet a minimal length.
+  Enabled: true
+  AllowedNames: e, id, _, ip
 
-Metrics/AbcSize:
-  Description: >-
-                 A calculated magnitude based on number of assignments,
-                 branches, and conditions.
-  Enabled: false
+Lint/BooleanSymbol:
+  Description: 'Check for `:true` and `:false` symbols.'
+  Enabled: true
+  Exclude:
+    - "db/seeds/object_manager_attributes.rb"
+    - "test/integration/object_manager_attributes_controller_test.rb"
+    - "test/integration/object_manager_test.rb"
 
-Metrics/CyclomaticComplexity:
-  Description: >-
-                 A complexity metric that is strongly correlated to the number
-                 of test cases needed to validate a method.
-  Enabled: false
-
-Metrics/BlockNesting:
-  Description: 'Avoid excessive block nesting'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#three-is-the-number-thou-shalt-count'
-  Enabled: false
-
-Metrics/ModuleLength:
-  Description: 'Avoid modules longer than 100 lines of code.'
-  Enabled: false
-
-Metrics/BlockLength:
-  Enabled: false
-
-Lint/RescueWithoutErrorClass:
-  Enabled: false
-
-Rails/ApplicationRecord:
-  Enabled: false
-
-# TODO
-
-Rails/HasManyOrHasOneDependent:
-  Enabled: false
-
-Style/DateTime:
-  Enabled: false
-
-Style/Documentation:
-  Description: 'Document classes and non-namespace modules.'
-  Enabled: false
-
-Lint/UselessAssignment:
-  Enabled: false
-
-Layout/ExtraSpacing:
-  Description: 'Do not use unnecessary spacing.'
-  Enabled: false
-
-# Broken!!!! Generates broken code since "String".downcase == "strinG".downcase is not equals "String".casecmp("strinG") but "String".casecmp("strinG") == 0 !!!
-Performance/Casecmp:
-  Description: 'Use `casecmp` rather than `downcase ==`.'
-  Reference: 'https://github.com/JuanitoFatas/fast-ruby#stringcasecmp-vs-stringdowncase---code'
-  Enabled: false
+Lint/InterpolationCheck:
+  Description: 'Raise warning for interpolation in single q strs'
+  Enabled: true
+  Exclude:
+    - "test/unit/email_process_auto_response_test.rb"
+    - "test/unit/email_process_bounce_delivery_permanent_failed_test.rb"
+    - "test/unit/email_process_bounce_follow_test.rb"
+    - "test/unit/notification_factory_renderer_test.rb"
+    - "test/unit/notification_factory_template_test.rb"
+    - "test/unit/ticket_trigger_test.rb"
 
 # RSpec tests
 Style/NumericPredicate:
