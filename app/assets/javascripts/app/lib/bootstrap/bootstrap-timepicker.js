@@ -238,16 +238,29 @@
           this.update();
           break;
         case 8: // backspace - ignore
+          this.highlightedUnit = null;
+          break;
+        case 186: // colon
+          // value is "5" or "10" and a ":" was typed -> turn into 05:00 or 10:00 with 00 selected
+          if(this.$element.val().length <= 2){
+            this.setTime(this.$element.val(), undefined, true);
+            this.$element.val(this.getTime());
+            this.highlightMinute();
+            e.preventDefault();
+          }
+          if(this.highlightedUnit == 'hour'){
+            setTimeout($.proxy(this.highlightNextUnit, this), 0);
+            e.preventDefault();
+          }
           break;
         default:
           // all other keys
           // if cursor position is at the end of hour, jump to minute
           switch (this.getCursorPosition()) {
             case 1:
-              this.highlightMinute();
+              // highlight minutes but async because the newly typed character is not yet stored in the value (happens after this event)
+              setTimeout($.proxy(this.highlightMinute, this), 0);
               break;
-            case 3:
-
           }
       }
     },
