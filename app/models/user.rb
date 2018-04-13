@@ -40,8 +40,8 @@ class User < ApplicationModel
   include User::SearchIndex
 
   before_validation :check_name, :check_email, :check_login, :check_mail_delivery_failed, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
-  before_create   :check_preferences_default, :validate_ooo, :domain_based_assignment, :set_locale
-  before_update   :check_preferences_default, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
+  before_create   :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
+  before_update   :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
   before_destroy  :avatar_destroy, :user_device_destroy, :cit_caller_id_destroy, :task_destroy
@@ -1003,6 +1003,22 @@ returns
     raise Exceptions::UnprocessableEntity, 'out of office end is before start' if out_of_office_start_at > out_of_office_end_at
     raise Exceptions::UnprocessableEntity, 'out of office replacement user is required' if out_of_office_replacement_id.blank?
     raise Exceptions::UnprocessableEntity, 'out of office no such replacement user' if !User.find_by(id: out_of_office_replacement_id)
+    true
+  end
+
+  def validate_preferences
+    return true if !changes
+    return true if !changes['preferences']
+    return true if preferences.blank?
+    return true if !preferences[:notification_sound]
+    return true if !preferences[:notification_sound][:enabled]
+    if preferences[:notification_sound][:enabled] == 'true'
+      preferences[:notification_sound][:enabled] = true
+    elsif preferences[:notification_sound][:enabled] == 'false'
+      preferences[:notification_sound][:enabled] = false
+    end
+    class_name = preferences[:notification_sound][:enabled].class.to_s
+    raise Exceptions::UnprocessableEntity, "preferences.notification_sound.enabled need to be an boolean, but it was a #{class_name}" if class_name != 'TrueClass' && class_name != 'FalseClass'
     true
   end
 

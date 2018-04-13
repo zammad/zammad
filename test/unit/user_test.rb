@@ -1063,4 +1063,112 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(1, User.group_access(group.id, 'full').count)
   end
 
+  test 'preferences[:notification_sound][:enabled] value check' do
+    roles  = Role.where(name: 'Agent')
+    agent1 = User.create!(
+      login: "agent-default-preferences-1#{name}@example.com",
+      firstname: 'vaild_agent_group_permission-1',
+      lastname: "Agent#{name}",
+      email: "agent-default-preferences-1#{name}@example.com",
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      preferences: {
+        notification_sound: {
+          enabled: true,
+        }
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(true, agent1.preferences[:notification_sound][:enabled])
+
+    agent2 = User.create!(
+      login: "agent-default-preferences-2#{name}@example.com",
+      firstname: 'vaild_agent_group_permission-2',
+      lastname: "Agent#{name}",
+      email: "agent-default-preferences-2#{name}@example.com",
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      preferences: {
+        notification_sound: {
+          enabled: false,
+        }
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(false, agent2.preferences[:notification_sound][:enabled])
+
+    agent3 = User.create!(
+      login: "agent-default-preferences-3#{name}@example.com",
+      firstname: 'vaild_agent_group_permission-3',
+      lastname: "Agent#{name}",
+      email: "agent-default-preferences-3#{name}@example.com",
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      preferences: {
+        notification_sound: {
+          enabled: true,
+        }
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(true, agent3.preferences[:notification_sound][:enabled])
+    agent3.preferences[:notification_sound][:enabled] = 'false'
+    agent3.save!
+    agent3.reload
+    assert_equal(false, agent3.preferences[:notification_sound][:enabled])
+
+    agent4 = User.create!(
+      login: "agent-default-preferences-4#{name}@example.com",
+      firstname: 'vaild_agent_group_permission-4',
+      lastname: "Agent#{name}",
+      email: "agent-default-preferences-4#{name}@example.com",
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      preferences: {
+        notification_sound: {
+          enabled: false,
+        }
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert_equal(false, agent4.preferences[:notification_sound][:enabled])
+    agent4.preferences[:notification_sound][:enabled] = 'true'
+    agent4.save!
+    agent4.reload
+    assert_equal(true, agent4.preferences[:notification_sound][:enabled])
+
+    agent4.preferences[:notification_sound][:enabled] = 'invalid'
+    assert_raises(Exceptions::UnprocessableEntity) do
+      agent4.save!
+    end
+
+    assert_raises(Exceptions::UnprocessableEntity) do
+      User.create!(
+        login: "agent-default-preferences-5#{name}@example.com",
+        firstname: 'vaild_agent_group_permission-5',
+        lastname: "Agent#{name}",
+        email: "agent-default-preferences-5#{name}@example.com",
+        password: 'agentpw',
+        active: true,
+        roles: roles,
+        preferences: {
+          notification_sound: {
+            enabled: 'invalid string',
+          }
+        },
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+
+  end
+
 end
