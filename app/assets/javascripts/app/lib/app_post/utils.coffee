@@ -829,6 +829,8 @@ class App.Utils
     num
 
   @icon: (name, className = '') ->
+    return if !name
+
     # rtl support
     # ===========
     #
