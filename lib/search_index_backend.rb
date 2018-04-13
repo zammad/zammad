@@ -288,20 +288,20 @@ return search result
 
 =end
 
-  def self.search(query, limit = 10, index = nil, query_extention = {})
+  def self.search(query, limit = 10, index = nil, query_extention = {}, from = 0)
     return [] if query.blank?
     if index.class == Array
       ids = []
       index.each do |local_index|
-        local_ids = search_by_index(query, limit, local_index, query_extention)
+        local_ids = search_by_index(query, limit, local_index, query_extention, from)
         ids = ids.concat(local_ids)
       end
       return ids
     end
-    search_by_index(query, limit, index, query_extention)
+    search_by_index(query, limit, index, query_extention, from)
   end
 
-  def self.search_by_index(query, limit = 10, index = nil, query_extention = {})
+  def self.search_by_index(query, limit = 10, index = nil, query_extention = {}, from)
     return [] if query.blank?
 
     url = build_url
@@ -316,7 +316,7 @@ return search result
              '/_search'
            end
     data = {}
-    data['from'] = 0
+    data['from'] = from
     data['size'] = limit
     data['sort'] =
       [

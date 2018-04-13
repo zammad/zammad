@@ -35,6 +35,7 @@ search tickets via search index
     current_user: User.find(123),
     query:        'search something',
     limit:        15,
+    offset:       100,
   )
 
 returns
@@ -47,6 +48,7 @@ search tickets via search index
     current_user: User.find(123),
     query:        'search something',
     limit:        15,
+    offset:       100,
     full:         false,
   )
 
@@ -77,6 +79,7 @@ search tickets via database
       ),
     },
     limit: 15,
+    offset: 100,
     full: false,
   )
 
@@ -92,6 +95,7 @@ returns
     query        = params[:query]
     condition    = params[:condition]
     limit        = params[:limit] || 12
+    offset       = params[:offset] || 0
     current_user = params[:current_user]
     full         = false
     if params[:full] == true || params[:full] == 'true' || !params.key?(:full)
@@ -127,7 +131,7 @@ returns
 
       query_extention['bool']['must'].push access_condition
 
-      items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention)
+      items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention, offset)
       if !full
         ids = []
         items.each do |item|
@@ -156,6 +160,7 @@ returns
                           .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
                           .joins(:articles)
                           .order('tickets.created_at DESC')
+                          .offset(offset)
                           .limit(limit)
     else
       query_condition, bind_condition, tables = selector2sql(condition)
@@ -164,6 +169,7 @@ returns
                           .where(access_condition)
                           .where(query_condition, *bind_condition)
                           .order('tickets.created_at DESC')
+                          .offset(offset)
                           .limit(limit)
     end
 

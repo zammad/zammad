@@ -38,6 +38,7 @@ search organizations
     current_user: User.find(123),
     query: 'search something',
     limit: 15,
+    offset: 100,
   )
 
 returns
@@ -51,6 +52,7 @@ returns
       # get params
       query = params[:query]
       limit = params[:limit] || 10
+      offset = params[:offset] || 0
       current_user = params[:current_user]
 
       # enable search only for agents and admins
@@ -58,7 +60,7 @@ returns
 
       # try search index backend
       if SearchIndexBackend.enabled?
-        items = SearchIndexBackend.search(query, limit, 'Chat::Session')
+        items = SearchIndexBackend.search(query, limit, 'Chat::Session', {}, offset)
         chat_sessions = []
         items.each do |item|
           chat_session = Chat::Session.lookup(id: item[:id])
@@ -73,7 +75,7 @@ returns
       query.delete! '*'
       chat_sessions = Chat::Session.where(
         'name LIKE ?', "%#{query}%"
-      ).order('name').limit(limit).to_a
+      ).order('name').offset(offset).limit(limit).to_a
       chat_sessions
     end
   end

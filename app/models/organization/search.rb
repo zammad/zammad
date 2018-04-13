@@ -38,6 +38,7 @@ search organizations
     current_user: User.find(123),
     query: 'search something',
     limit: 15,
+    offset: 100,
   )
 
 returns
@@ -51,6 +52,7 @@ returns
       # get params
       query = params[:query]
       limit = params[:limit] || 10
+      offset = params[:offset] || 0
       current_user = params[:current_user]
 
       # enable search only for agents and admins
@@ -58,7 +60,7 @@ returns
 
       # try search index backend
       if SearchIndexBackend.enabled?
-        items = SearchIndexBackend.search(query, limit, 'Organization')
+        items = SearchIndexBackend.search(query, limit, 'Organization', {}, offset)
         organizations = []
         items.each do |item|
           organization = Organization.lookup(id: item[:id])
@@ -73,7 +75,7 @@ returns
       query.delete! '*'
       organizations = Organization.where(
         'name LIKE ? OR note LIKE ?', "%#{query}%", "%#{query}%"
-      ).order('name').limit(limit).to_a
+      ).order('name').offset(offset).limit(limit).to_a
 
       # if only a few organizations are found, search for names of users
       if organizations.length <= 3
