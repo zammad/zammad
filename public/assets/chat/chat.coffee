@@ -437,6 +437,7 @@ do($ = window.jQuery, window) ->
       # start bindings
       @el.find('.js-chat-open').click @open
       @el.find('.js-chat-toggle').click @toggle
+      @el.find('.js-chat-status').click @stopPropagation
       @el.find('.zammad-chat-controls').on 'submit', @onSubmit
       @el.find('.zammad-chat-body').on 'scroll', @detectScrolledtoBottom
       @el.find('.zammad-scroll-hint').click @onScrollHintClick
@@ -662,6 +663,9 @@ do($ = window.jQuery, window) ->
         @input.on
           focus: @onFocus
           focusout: @onFocusOut
+
+    stopPropagation: (event) ->
+      event.stopPropagation()
 
     checkForEnter: (event) =>
       if not event.shiftKey and event.keyCode is 13
