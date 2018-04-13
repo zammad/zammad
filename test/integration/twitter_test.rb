@@ -427,6 +427,75 @@ class TwitterTest < ActiveSupport::TestCase
     assert_equal('ok', channel.status_in)
   end
 
+  test 'c new by direct message outbound without required parameters' do
+
+    # cleanup direct messages of system
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = consumer_key
+      config.consumer_secret     = consumer_secret
+      config.access_token        = system_token
+      config.access_token_secret = system_token_secret
+    end
+    dms = client.direct_messages(count: 100)
+    dms.each do |dm|
+      client.destroy_direct_message(dm.id)
+    end
+    client = Twitter::REST::Client.new(
+      consumer_key:        consumer_key,
+      consumer_secret:     consumer_secret,
+      access_token:        customer_token,
+      access_token_secret: customer_token_secret
+    )
+    dms = client.direct_messages(count: 100)
+    dms.each do |dm|
+      client.destroy_direct_message(dm.id)
+    end
+    hash  = "#citheo44 #{hash_gen}"
+    text  = "How about #{rand_word} the details? #{hash} - #{'Long' * 50}"
+    dm = client.create_direct_message(
+      system_login_without_at,
+      text,
+    )
+    assert(dm, "dm with ##{hash} created")
+
+    # fetch check system account
+    sleep 15
+    article = nil
+    1.times do
+      Channel.fetch
+
+      # check if ticket and article has been created
+      article = Ticket::Article.find_by(message_id: dm.id)
+      break if article
+      sleep 10
+    end
+
+    assert(article, "inbound article '#{text}' created")
+    assert_equal(customer_login, article.from, 'ticket article from')
+    assert_equal(text, article.body, 'ticket article body')
+    ticket = article.ticket
+    assert(ticket, 'ticket of inbound article exists')
+    assert(ticket.articles, 'ticket.articles exists')
+    assert_equal(1, ticket.articles.count, 'ticket article inbound count')
+    assert_equal(ticket.state.name, 'closed')
+
+    # reply via ticket
+    reply = assert_raises(Exceptions::UnprocessableEntity) do
+      Ticket::Article.create!(
+        ticket_id:     ticket.id,
+        in_reply_to:   '123456789',
+        body:          "Will call you later #{rand_word}!",
+        type:          Ticket::Article::Type.find_by(name: 'twitter direct-message'),
+        sender:        Ticket::Article::Sender.find_by(name: 'Agent'),
+        internal:      false,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    end
+
+    assert_equal('twitter to: parameter is missing', reply.message)
+  end
+
   test 'd track_retweets enabled' do
 
     # enable track_retweets
@@ -538,6 +607,7 @@ class TwitterTest < ActiveSupport::TestCase
       ActiveRecord::Base.connection.query_cache.clear
       sleep 10
     end
+
     assert(article, "article from customer with text '#{text}' message_id '#{tweet.id}' created")
     assert_equal(customer_login, article.from, 'ticket article from')
     assert_nil(article.to, 'ticket article to')
@@ -768,6 +838,7 @@ class TwitterTest < ActiveSupport::TestCase
     )
     article = nil
     5.times do
+      Channel.fetch
       Scheduler.worker(true)
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
