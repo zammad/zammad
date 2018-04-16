@@ -466,9 +466,9 @@ class App.ControllerForm extends App.Controller
     uncheckParam = {}
     lookupForm.find('input[type=checkbox]').each( (index) ->
       type = $(@).data('field-type')
-      checked = $(@).attr('checked')
+      checked = $(@).prop('checked')
       name = $(@).attr('name')
-      if name && !checked && (!(name of param) || param[name] is '')
+      if name && !checked && !(name of param)
         if !(name of uncheckParam)
           if type is 'boolean'
             uncheckParam[name] = false
@@ -482,7 +482,7 @@ class App.ControllerForm extends App.Controller
     # verify if we have not checked radios
     lookupForm.find('input[type=radio]').each( (index) ->
       type = $(@).data('field-type')
-      checked = $(@).attr('checked')
+      checked = $(@).prop('checked')
       name = $(@).attr('name')
       if name && !checked && !(name of param)
         if type is 'boolean'
