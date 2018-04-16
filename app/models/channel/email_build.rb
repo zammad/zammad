@@ -105,13 +105,13 @@ module Channel::EmailBuild
     attr[:attachments]&.each do |attachment|
       if attachment.class == Hash
         attachment['content-id'] = nil
-        mail.attachments[ attachment[:filename] ] = attachment
+        mail.attachments[attachment[:filename]] = attachment
       else
         next if attachment.preferences['Content-ID'].present?
         filename = attachment.filename
         encoded_filename = Mail::Encodings.decode_encode filename, :encode
         disposition = attachment.preferences['Content-Disposition'] || 'attachment'
-        content_type = attachment.preferences['Content-Type'] || 'application/octet-stream'
+        content_type = attachment.preferences['Content-Type'] || attachment.preferences['Mime-Type'] || 'application/octet-stream'
         mail.attachments[attachment.filename] = {
           content_disposition: "#{disposition}; filename=\"#{encoded_filename}\"",
           content_type: "#{content_type}; filename=\"#{encoded_filename}\"",
