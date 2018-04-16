@@ -37,6 +37,7 @@
 
             <div class="formset-inset">
               <div class="ticket-form-middle horizontal two-columns"></div>
+              <div class="ticket-form-organization horizontal two-columns"></div>
               <div class="ticket-form-bottom"></div>
             </div>
 

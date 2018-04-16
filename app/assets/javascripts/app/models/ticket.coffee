@@ -6,7 +6,7 @@ class App.Ticket extends App.Model
       { name: 'number',                   display: '#',            tag: 'input',    type: 'text', limit: 100, null: true, readonly: 1, width: '68px' },
       { name: 'title',                    display: 'Title',        tag: 'input',    type: 'text', limit: 100, null: false },
       { name: 'customer_id',              display: 'Customer',     tag: 'input',    type: 'text', limit: 100, null: false, autocapitalize: false, relation: 'User' },
-      { name: 'organization_id',          display: 'Organization', tag: 'select',   relation: 'Organization', readonly: 1 },
+#      { name: 'organization_id',          display: 'Organization', tag: 'select',   relation: 'Organization', readonly: 1 },
       { name: 'group_id',                 display: 'Group',        tag: 'select',   multiple: false, limit: 100, null: false, relation: 'Group', width: '10%', edit: true },
       { name: 'owner_id',                 display: 'Owner',        tag: 'select',   multiple: false, limit: 100, null: true, relation: 'User', width: '12%', edit: true },
       { name: 'state_id',                 display: 'State',        tag: 'select',   multiple: false, null: false, relation: 'TicketState', default: 'new', width: '12%', edit: true, customer: true },

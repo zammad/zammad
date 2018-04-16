@@ -74,7 +74,7 @@ class Index extends App.ControllerContent
       el:             @el.find('.ticket-form-organization')
       form_id:        @form_id
       model:          App.Ticket
-      screen:         'create_middle_organization'
+      screen:         'create_middle_org'
       filter:         @formMeta.filter
       formMeta:       @formMeta
       params:         defaults
@@ -146,6 +146,7 @@ class Index extends App.ControllerContent
       sender_id:    sender.id
       form_id:      @form_id
       content_type: 'text/html'
+      organization_id: +params.organization_id
     }
 
     ticket.load(params)
