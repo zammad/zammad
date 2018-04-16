@@ -1176,3 +1176,92 @@ test("object manager form 2", function() {
   deepEqual(params, test_params, 'form param check')
 
 });
+
+test("object manager form 3", function() {
+
+  $('#forms').append('<hr><h1>object manager 3</h1><form id="form13"></form>')
+  var el = $('#form13')
+
+  var defaults = {}
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'data_type',  display: 'Format', tag: 'object_manager_attribute', null: false },
+      ],
+    },
+    params: $.extend(defaults, { object: 'Ticket' }),
+    autofocus: true
+  });
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    data_option: {
+      default: "",
+      maxlength: 120,
+      type: "text"
+    },
+    data_type: "input",
+    screens: {
+      create_middle: {
+        "ticket.agent": {
+          shown: true,
+          required: false,
+        },
+        "ticket.customer": {
+          shown: true,
+          required: false,
+        }
+      },
+      edit: {
+        "ticket.agent": {
+          shown: true,
+          required: false,
+        },
+        "ticket.customer": {
+          shown: true,
+          required: false,
+        }
+      }
+    }
+  }
+
+  deepEqual(params, test_params, 'form param check')
+
+  el.find('[name="screens::create_middle::ticket.customer::shown"]').click()
+  el.find('[name="screens::edit::ticket.customer::shown"]').click()
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    data_option: {
+      default: "",
+      maxlength: 120,
+      type: "text"
+    },
+    data_type: "input",
+    screens: {
+      create_middle: {
+        "ticket.agent": {
+          shown: true,
+          required: false,
+        },
+        "ticket.customer": {
+          shown: false,
+          required: false,
+        }
+      },
+      edit: {
+        "ticket.agent": {
+          shown: true,
+          required: false,
+        },
+        "ticket.customer": {
+          shown: false,
+          required: false,
+        }
+      }
+    }
+  }
+  deepEqual(params, test_params, 'form param check')
+
+});
