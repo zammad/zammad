@@ -386,7 +386,7 @@ returns
       next if local_url.blank?
       url = local_url
     end
-    create(
+    create!(
       login: hash['info']['nickname'] || hash['uid'],
       firstname: hash['info']['name'],
       email: hash['info']['email'],
