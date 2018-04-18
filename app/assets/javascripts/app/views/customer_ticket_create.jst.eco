@@ -14,8 +14,10 @@
             <div class="article-form-top"></div>
 
             <div class="formset-inset">
-              <div class="ticket-form-middle horizontal two-columns"></div>
-              <div class="ticket-form-organization horizontal two-columns"></div>
+              <div class="two-columns horizontal">
+                <div class="ticket-form-middle column"></div>
+                <div class="ticket-form-organization column"></div>
+              </div>
               <div class="ticket-form-bottom"></div>
             </div>
 

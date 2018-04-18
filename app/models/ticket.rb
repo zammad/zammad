@@ -1164,8 +1164,12 @@ result
     return true if !customer_id
     customer = User.find_by(id: customer_id)
     return true if !customer
-    return true if customer.organization_ids.include? (organization_id)
-    self.organization_id = customer.organization_ids[0]
+    return true if (customer.organization_ids.include?(organization_id) || customer.organization_id == organization_id)
+    if customer.organization_id
+      self.organization_id = customer.organization_id
+    else
+      customer.organization_ids[0]
+    end
     true
   end
 

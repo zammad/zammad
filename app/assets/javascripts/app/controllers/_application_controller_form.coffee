@@ -1,10 +1,16 @@
 class App.ControllerForm extends App.Controller
   constructor: (params) ->
     super
+    if params['screen'] == 'create_middle_org'
+      @user = App.User.find(App.Session.get('id'))
+      @organizations = []
+      if @user.organization_id
+        @organizations.push @user.organization_id
+      if @user.organization_ids
+        @organizations = @organizations.concat @user.organization_ids
+      params['filter']['organization_id'] = @organizations
     for key, value of params
       @[key] = value
-
-    console.log('Form',params)
     if !@handlers
       @handlers = []
 
@@ -15,7 +21,6 @@ class App.ControllerForm extends App.Controller
 
     @handlers.push @showHideToggle
     @handlers.push @requiredMandantoryToggle
-    console.log('model', @model)
     if !@model
       @model = {}
     if !@attributes
@@ -66,17 +71,13 @@ class App.ControllerForm extends App.Controller
     else
       fieldset = $('<fieldset></fieldset>')
     return fieldset if _.isEmpty(@model)
-    console.log(this.model.configure_attributes)
     # collect form attributes
     @attributes = []
     if @model.attributesGet
-      console.log('Attr yes', @model)
       attributesClean = @model.attributesGet(@screen)
     else
-      console.log('Attr no')
       attributesClean = App.Model.attributesGet(@screen, @model.configure_attributes)
 
-    console.log('Screen', @screen)
     for attributeName, attribute of attributesClean
 
       # ignore read only attributes
@@ -93,6 +94,8 @@ class App.ControllerForm extends App.Controller
     className       = @model.className + '_' + Math.floor( Math.random() * 999999 ).toString()
 
     for attribute in @attributes
+      if attribute['name'] == 'organization_id'
+        console.log("LOOK AT ME, SIR",attribute)
       attribute_count = attribute_count + 1
 
       if @isDisabled == true
