@@ -22,15 +22,17 @@ class AddInputToTicketCreate < ActiveRecord::Migration[5.1]
 
         screens: {
           create_middle_org: {
-              'ticket.agent' =>  {
-                null: false,
-                item_class: 'column'
-              },
+            'ticket.agent' =>  {
+              null: false,
+              default: 0,
+              item_class: 'column'
             },
-              'ticket.customer' => {
-                null: false,
-                item_class: 'column'
+            'ticket.customer' => {
+              null: false,
+              default: 0,
+              item_class: 'two-columns'
             },
+          },
         },
         to_create: false,
         to_migrate: false,
