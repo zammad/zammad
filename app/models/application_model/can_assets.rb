@@ -63,6 +63,7 @@ get assets and record_ids of selector
       begin
         attribute_class = attribute[0].to_classname.constantize
       rescue => e
+        next if attribute[0] == 'article'
         logger.error "Unable to get asset for '#{attribute[0]}': #{e.inspect}"
         next
       end
