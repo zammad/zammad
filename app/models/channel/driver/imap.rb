@@ -69,38 +69,21 @@ example
     if options[:keep_on_server] == true || options[:keep_on_server] == 'true'
       keep_on_server = true
     end
-    if options.key?(:ssl) && options[:ssl] == true
-      ssl = true
-    else
-      ssl = false
-    end
-    if options.key?(:port) && options[:port].present?
-      port = options[:port]
-    else
-      if ssl == true
-        port = 993
-      else
-        port = 143
-      end
-    end
+
+    ssl = options.key?(:ssl) && options[:ssl] == true
+
+    port = if options.key?(:port) && options[:port].present?
+             options[:port]
+           elsif ssl == true
+             993
+           else
+             143
+           end
 
     if ssl == true && port != 993
       ssl = false
       starttls = true
     end
-
-    #if options.key?(:ssl) && options[:ssl] == false
-    #  ssl  = false
-    #  port = 143
-    #end
-    #if options.key?(:port) && options[:port].present?
-    #  port = options[:port]
-
-    #  # disable ssl for non ssl ports
-    #  if port == 143 && !options.key?(:ssl)
-    #    ssl = false
-    #  end
-    #end
 
     if options[:folder].present?
       folder = options[:folder]
