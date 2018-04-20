@@ -196,7 +196,6 @@ ObjectManager::Attribute.add(
         filter: Ticket::State.by_category(:viewable_agent_new).pluck(:id),
       },
       'ticket.customer' => {
-        item_class: 'column',
         nulloption: false,
         null: true,
         filter: Ticket::State.by_category(:viewable_customer_new).pluck(:id),
@@ -321,6 +320,45 @@ ObjectManager::Attribute.add(
   to_migrate: false,
   to_delete: false,
   position: 900,
+)
+
+ObjectManager::Attribute.add(
+    force: true,
+    object: 'Ticket',
+    name: 'organization_id',
+    display: 'Organization',
+    data_type: 'select',
+    data_option: {
+        relation: 'Organization',
+        nulloption: false,
+        multiple: false,
+        null: false,
+        default: 0,
+        translate: true
+    },
+    editable: false,
+    active: true,
+
+    screens: {
+        create_middle_org: {
+            'ticket.agent' =>  {
+                null: false,
+                default: 0,
+                item_class: 'column'
+            },
+            'ticket.customer' => {
+                null: false,
+                default: 0,
+                item_class: 'two-columns'
+            },
+        },
+    },
+    to_create: false,
+    to_migrate: false,
+    to_delete: false,
+    position: 45,
+    updated_by_id: 1,
+    created_by_id: 1,
 )
 
 ObjectManager::Attribute.add(
