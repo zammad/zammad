@@ -77,24 +77,28 @@ returns
         'name LIKE ? OR note LIKE ?', "%#{query}%", "%#{query}%"
       ).order('name').offset(offset).limit(limit).to_a
 
-      # if only a few organizations are found, search for names of users
-      if organizations.length <= 3
-        organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name').joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id').where(
-          'users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"
-        ).order('organizations.name').limit(limit)
-        organizations_by_user.each do |organization_by_user|
-          organization_exists = false
-          organizations.each do |organization|
-            if organization.id == organization_by_user.id
-              organization_exists = true
-            end
-          end
+      # use result independent of size if an explicit offset is given
+      # this is the case for e.g. paginated searches
+      return organizations if params[:offset].present?
+      return organizations if organizations.length > 3
 
-          # get model with full data
-          if !organization_exists
-            organizations.push Organization.find(organization_by_user.id)
-          end
+      # if only a few organizations are found, search for names of users
+      organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name').joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id').where(
+        'users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"
+      ).order('organizations.name').limit(limit)
+
+      organizations_by_user.each do |organization_by_user|
+
+        organization_exists = false
+        organizations.each do |organization|
+          next if organization.id != organization_by_user.id
+          organization_exists = true
+          break
         end
+
+        # get model with full data
+        next if organization_exists
+        organizations.push Organization.find(organization_by_user.id)
       end
       organizations
     end
