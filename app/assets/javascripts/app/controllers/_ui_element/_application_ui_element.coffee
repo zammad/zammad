@@ -54,7 +54,7 @@ class App.UiElement.ApplicationUiElement
     else
       order = _.sortBy(
         _.keys(selection), (item) ->
-          selection[item].toString().toLowerCase()
+          selection[item].toString().collationString()
       )
       for key in order
         name_new = selection[key]

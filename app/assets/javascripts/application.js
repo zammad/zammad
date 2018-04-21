@@ -63,6 +63,16 @@ Date.prototype.getWeek = function() {
   return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
 }
 
+// turn ä into a, ß into SS, etc, for proper lexical sorting of tables
+String.prototype.collationString = function() {
+  if (typeof String.normalize === "function"){
+    //console.log("String.prototype.collationString:  typeof this " + typeof this);
+    //console.log("String.prototype.collationString:  stringify this " + JSON.stringify(this));
+    return this.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace("ß", "SS").toLowerCase();
+  }
+  return this;
+}
+
 function difference(object1, object2) {
   var changes = {};
   for (var name in object1) {

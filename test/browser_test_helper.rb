@@ -984,6 +984,34 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+      get_location(
+        browser: browser1,
+        css: '.some_class',
+      )
+
+=end
+
+  def get_location(params)
+    switch_window_focus(params)
+    log('exists', params)
+
+    instance = params[:browser] || @browser
+    if params[:css]
+      query = { css: params[:css] }
+    end
+    if params[:xpath]
+      query = { xpath: params[:xpath] }
+    end
+    if !instance.find_elements(query)[0]
+      screenshot(browser: instance, comment: 'exists_failed')
+      raise "#{query} dosn't exist, but should"
+    end
+
+    instance.find_elements(query)[0].location
+  end
+
+=begin
+
 set type of task (closeTab, closeNextInOverview, stayOnTab)
 
   task_type(
