@@ -55,8 +55,8 @@ class CalendarSubscriptions
     events_data.each do |event_data|
 
       cal.event do |e|
-        e.dtstart     = event_data[:dtstart]
-        e.dtend       = event_data[:dtend]
+        e.dtstart = Icalendar::Values::DateTime.new(event_data[:dtstart], 'tzid' => 'UTC')
+        e.dtend   = Icalendar::Values::DateTime.new(event_data[:dtend], 'tzid' => 'UTC')
         if event_data[:alarm]
           e.alarm do |a|
             a.action  = 'DISPLAY'
