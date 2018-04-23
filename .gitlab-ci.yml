@@ -254,17 +254,6 @@ test:integration:clearbit:
     - rake db:drop
   allow_failure: true
 
-test:integration:sipgate:
-  stage: test
-  tags:
-    - core
-  script:
-    - export RAILS_ENV=test
-    - rake db:create
-    - rake db:migrate
-    - ruby -I test test/integration/sipgate_controller_test.rb
-    - rake db:drop
-
 test:integration:telegram:
   stage: test
   tags:
