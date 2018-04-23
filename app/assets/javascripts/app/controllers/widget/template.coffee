@@ -1,9 +1,9 @@
 class App.WidgetTemplate extends App.Controller
   events:
-    'click [data-type=template_save]':   'create'
-    'click [data-type=template_select]': 'select'
-    'click [data-type=template_delete]': 'delete'
-    'click .templates-welcome .create':  'showManage'
+    'click .templates-manage .js-save':    'create'
+    'click .templates-manage .js-apply':   'select'
+    'click .templates-manage .js-delete':  'delete'
+    'click .templates-welcome .js-create': 'showManage'
 
   constructor: ->
     super
@@ -15,12 +15,12 @@ class App.WidgetTemplate extends App.Controller
 
   render: =>
     @configure_attributes = [
-      { name: 'template_id', display: '', tag: 'select', multiple: false, null: true, nulloption: true, relation: 'Template', default: @template_id },
+      { name: 'id', display: '', tag: 'select', multiple: false, null: true, nulloption: true, relation: 'Template', default: @id },
     ]
 
     template = {}
-    if @template_id && App.Template.exists(@template_id)
-      template = App.Template.find(@template_id)
+    if @id && App.Template.exists(@id)
+      template = App.Template.find(@id)
 
     # insert data
     @html App.view('widget/template')(
@@ -57,11 +57,11 @@ class App.WidgetTemplate extends App.Controller
     params = @formParam(e.target)
 
     # check if template is selected
-    return if !params['template_id']
+    return if !params['id']
 
-    template = App.Template.find(params['template_id'])
+    template = App.Template.find(params['id'])
     if confirm('Sure?')
-      @template_id = false
+      @id = false
       template.destroy()
 
   select: (e) =>
@@ -71,12 +71,12 @@ class App.WidgetTemplate extends App.Controller
     params = @formParam(e.target)
 
     # check if template is selected
-    return if !params['template_id']
+    return if !params['id']
 
     # remember template (to select it after rerender)
-    @template_id = params['template_id']
+    @id = params['id']
 
-    template = App.Template.find(params['template_id'])
+    template = App.Template.find(params['id'])
     App.Event.trigger 'ticket_create_rerender', template.attributes()
 
   create: (e) =>
@@ -85,7 +85,7 @@ class App.WidgetTemplate extends App.Controller
     # get params
     form   = @formParam($(e.target).closest('.content').find('.ticket-create'))
     params = @formParam(e.target)
-    name = params['template_name']
+    name = params['name']
     return if !name
 
     template = App.Template.findByAttribute('name', name)
@@ -93,7 +93,7 @@ class App.WidgetTemplate extends App.Controller
       template = new App.Template
 
     template.load(
-      name:    params['template_name']
+      name:    params['name']
       options: form
     )
 
@@ -107,7 +107,7 @@ class App.WidgetTemplate extends App.Controller
       ui = @
       template.save(
         done: ->
-          ui.template_id = @id
+          ui.id = @id
 
         fail: =>
           @log 'error', 'save failed!'
