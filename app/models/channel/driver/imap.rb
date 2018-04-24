@@ -73,7 +73,7 @@ example
     ssl = options.key?(:ssl) && options[:ssl] == true
 
     port = if options.key?(:port) && options[:port].present?
-             options[:port]
+             options[:port].to_i
            elsif ssl == true
              993
            else
