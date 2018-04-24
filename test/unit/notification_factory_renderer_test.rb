@@ -1,4 +1,3 @@
-# rubocop:disable Lint/InterpolationCheck
 require 'test_helper'
 
 class NotificationFactoryRendererTest < ActiveSupport::TestCase

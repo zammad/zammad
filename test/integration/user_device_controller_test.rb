@@ -41,6 +41,9 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     ENV['TEST_REMOTE_IP'] = '5.9.62.170' # de
     ENV['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:46.0) Gecko/20100101 Firefox/46.0'
+    ENV['SWITCHED_FROM_USER_ID'] = nil
+
+    UserDevice.destroy_all
   end
 
   test '01 - index with nobody' do
@@ -173,6 +176,15 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
   test '04 - login index with admin with fingerprint - II' do
 
+    UserDevice.create!(
+      user_id: @admin.id,
+      name: 'test 1',
+      location: 'some location',
+      user_agent: 'some user agent',
+      ip: '127.0.0.1',
+      fingerprint: 'fingerprintI',
+    )
+
     params = { fingerprint: 'my_finger_print_II', username: 'user-device-admin', password: 'adminpw' }
     post '/api/v1/signin', params: params.to_json, headers: @headers
     assert_response(201)
@@ -180,13 +192,13 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(3, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(2, UserDevice.where(user_id: @admin.id).count)
     assert_equal(1, email_notification_count('user_device_new', @admin.email))
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
     assert_equal(result.class, Hash)
     assert_not(result['error'])
     assert(result['config'])
-    assert('my_finger_print_II', controller.session[:user_device_fingerprint])
+    assert('my_finger_print_III', controller.session[:user_device_fingerprint])
 
     get '/api/v1/users', params: params.to_json, headers: @headers
     assert_response(200)
@@ -195,7 +207,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(3, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(2, UserDevice.where(user_id: @admin.id).count)
     assert_equal(1, email_notification_count('user_device_new', @admin.email))
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
 
@@ -210,7 +222,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(3, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(2, UserDevice.where(user_id: @admin.id).count)
     assert_equal(1, email_notification_count('user_device_new', @admin.email))
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
 
@@ -223,7 +235,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(4, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(3, UserDevice.where(user_id: @admin.id).count)
     assert_equal(1, email_notification_count('user_device_new', @admin.email))
     assert_equal(1, email_notification_count('user_device_new_location', @admin.email))
 
@@ -234,6 +246,16 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
   test '05 - login index with admin with fingerprint - II' do
 
+    UserDevice.add(
+      ENV['HTTP_USER_AGENT'],
+      ENV['TEST_REMOTE_IP'],
+      @admin.id,
+      'my_finger_print_II',
+      'session', # session|basic_auth|token_auth|sso
+    )
+
+    assert_equal(1, UserDevice.where(user_id: @admin.id).count)
+
     params = { fingerprint: 'my_finger_print_II', username: 'user-device-admin', password: 'adminpw' }
     post '/api/v1/signin', params: params.to_json, headers: @headers
     assert_response(201)
@@ -241,7 +263,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(4, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(1, UserDevice.where(user_id: @admin.id).count)
     assert_equal(0, email_notification_count('user_device_new', @admin.email))
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
     assert_equal(result.class, Hash)
@@ -252,9 +274,19 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
   test '06 - login index with admin with basic auth' do
 
-    ENV['HTTP_USER_AGENT'] = 'curl 1.2.3'
+    ENV['HTTP_USER_AGENT'] = 'curl 1.0.0'
+    UserDevice.add(
+      ENV['HTTP_USER_AGENT'],
+      '127.0.0.1',
+      @admin.id,
+      '',
+      'basic_auth', # session|basic_auth|token_auth|sso
+    )
+    assert_equal(1, UserDevice.where(user_id: @admin.id).count)
+
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('user-device-admin', 'adminpw')
 
+    ENV['HTTP_USER_AGENT'] = 'curl 1.2.3'
     params = {}
     get '/api/v1/users', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
@@ -262,7 +294,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(5, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(2, UserDevice.where(user_id: @admin.id).count)
     assert_equal(1, email_notification_count('user_device_new', @admin.email))
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
     assert_equal(result.class, Array)
@@ -276,7 +308,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(5, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(2, UserDevice.where(user_id: @admin.id).count)
     assert_equal(1, email_notification_count('user_device_new', @admin.email))
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
     assert_equal(result.class, Array)
@@ -294,7 +326,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(5, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(2, UserDevice.where(user_id: @admin.id).count)
     assert_equal(1, email_notification_count('user_device_new', @admin.email))
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
     assert_equal(result.class, Array)
@@ -307,6 +339,17 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
   test '07 - login index with admin with basic auth' do
 
     ENV['HTTP_USER_AGENT'] = 'curl 1.2.3'
+
+    UserDevice.add(
+      ENV['HTTP_USER_AGENT'],
+      ENV['TEST_REMOTE_IP'],
+      @admin.id,
+      '',
+      'basic_auth', # session|basic_auth|token_auth|sso
+    )
+
+    assert_equal(1, UserDevice.where(user_id: @admin.id).count)
+
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('user-device-admin', 'adminpw')
 
     params = {}
@@ -316,7 +359,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(5, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(1, UserDevice.where(user_id: @admin.id).count)
     assert_equal(0, email_notification_count('user_device_new', @admin.email))
     assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
     assert_equal(result.class, Array)
@@ -348,11 +391,20 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
   test '09 - login index with agent with basic auth' do
 
+    ENV['HTTP_USER_AGENT'] = 'curl 1.2.3'
+
+    UserDevice.add(
+      ENV['HTTP_USER_AGENT'],
+      ENV['TEST_REMOTE_IP'],
+      @agent.id,
+      '',
+      'basic_auth', # session|basic_auth|token_auth|sso
+    )
+
     assert_equal(1, UserDevice.where(user_id: @agent.id).count)
     assert_equal(0, email_notification_count('user_device_new', @agent.email))
     assert_equal(0, email_notification_count('user_device_new_location', @agent.email))
 
-    ENV['HTTP_USER_AGENT'] = 'curl 1.2.3'
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('user-device-agent', 'agentpw')
 
     params = {}
@@ -371,7 +423,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
   test '10 - login with switched_from_user_id' do
 
-    assert_equal(1, UserDevice.where(user_id: @agent.id).count)
+    assert_equal(0, UserDevice.where(user_id: @agent.id).count)
     assert_equal(0, email_notification_count('user_device_new', @agent.email))
     assert_equal(0, email_notification_count('user_device_new_location', @agent.email))
 
@@ -384,7 +436,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(1, UserDevice.where(user_id: @agent.id).count)
+    assert_equal(0, UserDevice.where(user_id: @agent.id).count)
     assert_equal(0, email_notification_count('user_device_new', @agent.email))
     assert_equal(0, email_notification_count('user_device_new_location', @agent.email))
     assert_equal(result.class, Hash)
@@ -394,7 +446,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(1, UserDevice.where(user_id: @agent.id).count)
+    assert_equal(0, UserDevice.where(user_id: @agent.id).count)
     assert_equal(0, email_notification_count('user_device_new', @agent.email))
     assert_equal(0, email_notification_count('user_device_new_location', @agent.email))
 
@@ -408,7 +460,7 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
     Scheduler.worker(true)
 
-    assert_equal(1, UserDevice.where(user_id: @agent.id).count)
+    assert_equal(0, UserDevice.where(user_id: @agent.id).count)
     assert_equal(0, email_notification_count('user_device_new', @agent.email))
     assert_equal(0, email_notification_count('user_device_new_location', @agent.email))
     ENV['USER_DEVICE_UPDATED_AT'] = nil
@@ -424,9 +476,64 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
     # ip reset
     ENV['TEST_REMOTE_IP'] = '5.9.62.170' # de
 
-    assert_equal(1, UserDevice.where(user_id: @agent.id).count)
+    assert_equal(0, UserDevice.where(user_id: @agent.id).count)
     assert_equal(0, email_notification_count('user_device_new', @agent.email))
     assert_equal(0, email_notification_count('user_device_new_location', @agent.email))
 
   end
+
+  test '11 - login with invalid fingerprint' do
+
+    assert_equal(0, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(0, email_notification_count('user_device_new', @admin.email))
+    assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
+
+    params = { fingerprint: 'to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890to_long_1234567890', username: 'user-device-admin', password: 'adminpw' }
+    post '/api/v1/signin', params: params.to_json, headers: @headers
+    assert_response(422)
+    result = JSON.parse(@response.body)
+
+    assert_equal(result.class, Hash)
+    assert_equal('fingerprint is 198 chars but can only be 160 chars!', result['error'])
+    assert_not(result['config'])
+    assert_not(controller.session[:user_device_fingerprint])
+
+    Scheduler.worker(true)
+
+    assert_equal(0, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(0, email_notification_count('user_device_new', @admin.email))
+    assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
+
+  end
+
+  test '12 - login form controller - check no user device logging' do
+
+    Setting.set('form_ticket_create', true)
+
+    assert_equal(0, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(0, email_notification_count('user_device_new', @admin.email))
+    assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('user-device-admin', 'adminpw')
+
+    params = {
+      fingerprint: 'long_1234567890long_1234567890long_1234567890long_1234567890long_1234567890long_1234567890long_1234567890long_1234567890long_1234567890long_1234567890long_1234567890'
+    }
+    post '/api/v1/form_config', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(result.class, Hash)
+    assert_not(result['error'])
+    assert(result['endpoint'])
+    assert_not(controller.session[:user_device_fingerprint])
+
+    Scheduler.worker(true)
+
+    assert_equal(0, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(0, email_notification_count('user_device_new', @admin.email))
+    assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
+
+  end
+
 end

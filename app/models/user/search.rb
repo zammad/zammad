@@ -37,6 +37,7 @@ search user
   result = User.search(
     query: 'some search term',
     limit: 15,
+    offset: 100,
     current_user: user_model,
   )
 
@@ -45,6 +46,7 @@ or with certain role_ids | permissions
   result = User.search(
     query: 'some search term',
     limit: 15,
+    offset: 100,
     current_user: user_model,
     role_ids: [1,2,3],
     permissions: ['ticket.agent']
@@ -61,6 +63,7 @@ returns
       # get params
       query = params[:query]
       limit = params[:limit] || 10
+      offset = params[:offset] || 0
       current_user = params[:current_user]
 
       # enable search only for agents and admins
@@ -87,7 +90,7 @@ returns
           }
           query_extention['bool']['must'].push access_condition
         end
-        items = SearchIndexBackend.search(query, limit, 'User', query_extention)
+        items = SearchIndexBackend.search(query, limit, 'User', query_extention, offset)
         users = []
         items.each do |item|
           user = User.lookup(id: item[:id])
@@ -103,11 +106,11 @@ returns
       users = if params[:role_ids]
                 User.joins(:roles).where('roles.id' => params[:role_ids]).where(
                   '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-                ).order('updated_at DESC').limit(limit)
+                ).order('updated_at DESC').offset(offset).limit(limit)
               else
                 User.where(
                   '(firstname LIKE ? OR lastname LIKE ? OR email LIKE ? OR login LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-                ).order('updated_at DESC').limit(limit)
+                ).order('updated_at DESC').offset(offset).limit(limit)
               end
       users
     end

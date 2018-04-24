@@ -11,9 +11,9 @@ module ApplicationModel::HasCache
     after_destroy :cache_delete
   end
 
-  def cache_update(o)
+  def cache_update(other)
     cache_delete if respond_to?('cache_delete')
-    o.cache_delete if o.respond_to?('cache_delete')
+    other.cache_delete if other.respond_to?('cache_delete')
     true
   end
 

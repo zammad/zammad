@@ -245,6 +245,7 @@ class Scheduler < ApplicationModel
 
     # restart job again
     if try_run_max > try_count
+      sleep(try_count) # wait between retries (see https://github.com/zammad/zammad/issues/1950)
       _start_job(job, try_count, try_run_time)
     else
       # release thread lock and remove thread handle
@@ -311,7 +312,7 @@ class Scheduler < ApplicationModel
           sleep wait
           logger.debug { '*** worker thread loop' }
         else
-          format "*** #{count} jobs processed at %.4f j/s, %d failed ...\n", count / realtime, result.last
+          format "*** #{count} jobs processed at %<jps>.4f j/s, %<failed>d failed ...\n", jps: count / realtime, failed: result.last
         end
       end
 

@@ -229,14 +229,14 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
       raise Exceptions::NotAuthorized
     end
 
-    # set limit for pagination if needed
-    if params[:page] && params[:per_page]
-      params[:limit] = params[:page].to_i * params[:per_page].to_i
+    per_page = params[:per_page] || params[:limit] || 100
+    per_page = per_page.to_i
+    if per_page > 500
+      per_page = 500
     end
-
-    if params[:limit] && params[:limit].to_i > 500
-      params[:limit] = 500
-    end
+    page = params[:page] || 1
+    page = page.to_i
+    offset = (page - 1) * per_page
 
     query = params[:query]
     if query.respond_to?(:permit!)
@@ -244,7 +244,8 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
     end
     query_params = {
       query: query,
-      limit: params[:limit],
+      limit: per_page,
+      offset: offset,
       current_user: current_user,
     }
     if params[:role_ids].present?
@@ -253,12 +254,6 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
     # do query
     organization_all = Organization.search(query_params)
-
-    # do pagination if needed
-    if params[:page] && params[:per_page]
-      offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      organization_all = organization_all[offset, params[:per_page].to_i] || []
-    end
 
     if response_expand?
       list = []

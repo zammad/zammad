@@ -1,8 +1,11 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Link < ApplicationModel
-  belongs_to :link_type,    class_name: 'Link::Type'
-  belongs_to :link_object,  class_name: 'Link::Object'
+
+  # rubocop:disable Rails/InverseOf
+  belongs_to :link_type,   class_name: 'Link::Type'
+  belongs_to :link_object, class_name: 'Link::Object'
+  # rubocop:enable Rails/InverseOf
 
   after_destroy :touch_link_references
 

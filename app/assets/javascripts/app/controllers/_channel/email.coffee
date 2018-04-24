@@ -578,7 +578,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
       { name: 'options::host',            display: 'Host',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false },
       { name: 'options::user',            display: 'User',     tag: 'input',  type: 'text', limit: 120, null: false, autocapitalize: false, autocomplete: 'off' },
       { name: 'options::password',        display: 'Password', tag: 'input',  type: 'password', limit: 120, null: false, autocapitalize: false, autocomplete: 'new-password', single: true },
-      { name: 'options::ssl',             display: 'SSL',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
+      { name: 'options::ssl',             display: 'SSL/STARTTLS',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
       { name: 'options::port',            display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
       { name: 'options::folder',          display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
       { name: 'options::keep_on_server',  display: 'Keep messages on server', tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
@@ -598,7 +598,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
       return if !params.options
       currentPort = @$('[name="options::port"]').val()
       if params.options.ssl is true
-        if !currentPort || currentPort is '143'
+        if !currentPort
           @$('[name="options::port"]').val('993')
         return
       if params.options.ssl is false

@@ -77,7 +77,7 @@ class Overview < ApplicationModel
     while check
       count += 1
       exists = Overview.find_by(link: local_lookup_link)
-      if exists && exists.id != id # rubocop:disable Style/SafeNavigation
+      if exists && exists.id != id
         local_lookup_link = "#{local_link}_#{count}"
       else
         check = false

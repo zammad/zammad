@@ -1,4 +1,3 @@
-# rubocop:disable Lint/BooleanSymbol
 require 'test_helper'
 
 class ObjectManagerTest < ActiveSupport::TestCase

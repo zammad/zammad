@@ -53,7 +53,7 @@
   }
 
   Plugin.prototype.onKeydown = function (e) {
-    console.log("onKeydown", this.isActive())
+    //console.log("onKeydown", this.isActive())
     // navigate through item
     if (this.isActive()) {
 

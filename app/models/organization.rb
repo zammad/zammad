@@ -15,11 +15,14 @@ class Organization < ApplicationModel
   load 'organization/search_index.rb'
   include Organization::SearchIndex
 
-  has_many                :members,  class_name: 'User'
-  validates               :name,     presence: true
+  # rubocop:disable Rails/InverseOf
+  has_many :members, class_name: 'User'
+  # rubocop:enable Rails/InverseOf
 
   before_create :domain_cleanup
   before_update :domain_cleanup
+
+  validates :name, presence: true
 
   activity_stream_permission 'admin.role'
 

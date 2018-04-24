@@ -38,6 +38,7 @@ search organizations
     current_user: User.find(123),
     query: 'search something',
     limit: 15,
+    offset: 100,
   )
 
 returns
@@ -51,6 +52,7 @@ returns
       # get params
       query = params[:query]
       limit = params[:limit] || 10
+      offset = params[:offset] || 0
       current_user = params[:current_user]
 
       # enable search only for agents and admins
@@ -58,7 +60,7 @@ returns
 
       # try search index backend
       if SearchIndexBackend.enabled?
-        items = SearchIndexBackend.search(query, limit, 'Organization')
+        items = SearchIndexBackend.search(query, limit, 'Organization', {}, offset)
         organizations = []
         items.each do |item|
           organization = Organization.lookup(id: item[:id])
@@ -73,26 +75,30 @@ returns
       query.delete! '*'
       organizations = Organization.where(
         'name LIKE ? OR note LIKE ?', "%#{query}%", "%#{query}%"
-      ).order('name').limit(limit).to_a
+      ).order('name').offset(offset).limit(limit).to_a
+
+      # use result independent of size if an explicit offset is given
+      # this is the case for e.g. paginated searches
+      return organizations if params[:offset].present?
+      return organizations if organizations.length > 3
 
       # if only a few organizations are found, search for names of users
-      if organizations.length <= 3
-        organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name').joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id').where(
-          'users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"
-        ).order('organizations.name').limit(limit)
-        organizations_by_user.each do |organization_by_user|
-          organization_exists = false
-          organizations.each do |organization|
-            if organization.id == organization_by_user.id
-              organization_exists = true
-            end
-          end
+      organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name').joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id').where(
+        'users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"
+      ).order('organizations.name').limit(limit)
 
-          # get model with full data
-          if !organization_exists
-            organizations.push Organization.find(organization_by_user.id)
-          end
+      organizations_by_user.each do |organization_by_user|
+
+        organization_exists = false
+        organizations.each do |organization|
+          next if organization.id != organization_by_user.id
+          organization_exists = true
+          break
         end
+
+        # get model with full data
+        next if organization_exists
+        organizations.push Organization.find(organization_by_user.id)
       end
       organizations
     end

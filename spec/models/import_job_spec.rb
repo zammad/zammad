@@ -57,7 +57,6 @@ RSpec.describe ImportJob do
           payload: {},
           delay:   false
         )
-
       end.not_to change {
         Delayed::Job.count
       }
@@ -72,7 +71,6 @@ RSpec.describe ImportJob do
           name:    test_backend_name,
           payload: {},
         )
-
       end.not_to change {
         Delayed::Job.count
       }

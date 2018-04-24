@@ -63,6 +63,12 @@ $highlight-color: hsl(205,90%,60%);
   }
 }
 
+%clickable {
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
 html {
   height: 100%;
 }
@@ -177,8 +183,7 @@ ol, ul {
 }
 
 .u-clickable {
-  cursor: pointer;
-  user-select: none;
+  @extend %clickable;
 }
 
 .u-unselectable {
@@ -379,13 +384,11 @@ pre code.hljs {
   background: white;
   border: 1px solid rgba(0,0,0,.1);
   outline: none !important;
-  touch-action: manipulation;
-  user-select: none;
-  cursor: pointer;
   border-radius: 4px;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
+  @extend %clickable;
 
   .icon {
     vertical-align: middle;
@@ -666,7 +669,7 @@ pre code.hljs {
       left: 0;
       top: 0;
       position: absolute;
-      cursor: pointer;
+      @extend %clickable;
     }
   }
 }
@@ -817,10 +820,10 @@ pre code.hljs {
   &.is-clickable {
     background: hsl(203,65%,55%);
     color: white;
-    cursor: pointer;
     border-color: hsl(203,65%,45%);
     box-shadow: 1px 0 hsl(203,65%,45%);
     position: relative;
+    @extend %clickable;
   }
 
   &.is-blinking {
@@ -994,8 +997,8 @@ table {
 }
 
 .table-column-head {
-  cursor: pointer;
   display: flex;
+  @extend %clickable;
 }
 
 .table-column-sortIcon {
@@ -1381,8 +1384,7 @@ table {
 
 .label-text {
   @include bidi-style(margin-left, 3px, margin-right, 0);
-  user-select: none;
-  cursor: pointer;
+  @extend %clickable;
 }
 
 .label-success,
@@ -1855,8 +1857,8 @@ input.has-error {
   & + label {
     font-size: 11px;
     color: #DBDBDB;
-    cursor: pointer;
     margin: 0;
+    @extend %clickable;
   }
 
   &:checked + label {
@@ -2757,7 +2759,7 @@ ol.tabs li {
 .color-swatch {
   padding: 2px;
   margin: -2px 0 -4px;
-  cursor: pointer;
+  @extend %clickable;
 
   /* :after technique for bigger click area */
   &:after {
@@ -3139,7 +3141,7 @@ footer {
     text-decoration: none;
     display: flex;
     align-items: center;
-    cursor: pointer;
+    @extend %clickable;
 
     &:hover {
       background: hsl(230,10%,13%);
@@ -3430,7 +3432,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    @extend %clickable;
   }
 
   .search .empty-search .icon-diagonal-cross {
@@ -4520,7 +4522,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    @extend %clickable;
     padding-left: 10px;
     padding-right: 27px;
     @include rtl(padding-left, 27px);
@@ -5403,8 +5405,7 @@ footer {
         display: none;
         white-space: nowrap;
         @include bidi-style(margin-left, auto, margin-right, 0);
-        cursor: pointer;
-        user-select: none;
+        @extend %clickable;
       }
 
       .attachment:hover .attachment--preview .attachment-delete {
@@ -5441,8 +5442,7 @@ footer {
         display: none;
         white-space: nowrap;
         @include bidi-style(margin-left, auto, margin-right, 0);
-        cursor: pointer;
-        user-select: none;
+        @extend %clickable;
       }
 
       .attachment:hover.attachment--row .attachment-delete {
@@ -6161,7 +6161,7 @@ footer {
     opacity: .3;
     outline: none;
     height: auto;
-    cursor: pointer;
+    @extend %clickable;
   }
 
   .token .close:hover,
@@ -6528,7 +6528,7 @@ footer {
     height: 39px;
     line-height: 39px;
     padding: 0 15px;
-    cursor: pointer;
+    @extend %clickable;
     white-space: nowrap;
 
     &:focus {
@@ -7318,7 +7318,7 @@ label + .wizard-buttonList {
   font-size: 118px;
   margin: 0;
   padding: 0;
-  cursor: pointer;
+  @extend %clickable;
   opacity: 0;
 }
 
@@ -7696,11 +7696,10 @@ output {
   height: 100%;
   border-radius: inherit;
   outline: none;
-  cursor: pointer;
   background: white;
   box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset;
-  user-select: none;
   transition: background 200ms;
+  @extend %clickable;
 
   &:after {
     content: "";
@@ -7766,7 +7765,7 @@ output {
   box-shadow: 0 0 0 1px hsl(198,19%,86%) inset;
   border-radius: 100%;
   background: white;
-  cursor: pointer;
+  @extend %clickable;
 
   &:hover:not(.is-disabled) {
     border-color: hsl(198,19%,83%);
@@ -8047,7 +8046,7 @@ output {
     box-shadow:
       1px 0 hsl(198,18%,86%) inset,
       0 1px hsl(198,18%,86%) inset;
-    cursor: pointer;
+    @extend %clickable;
 
     &.is-selected {
       background-color: $highlight-color;
@@ -8283,15 +8282,20 @@ output {
   min-width: 0;
   cursor: default;
 
+  &.datepicker-rtl {
+    left: auto;
+    right: 0;
+  }
+
   .datepicker-switch {
     padding: 12px 0;
     font-weight: bold;
     font-size: 15px;
     text-align: center;
-    cursor: pointer;
     letter-spacing: 0;
     line-height: 1.5;
     text-transform: none;
+    @extend %clickable;
 
     &:hover {
       background: hsl(240,10%,14%);
@@ -8308,10 +8312,10 @@ output {
 
   .next,
   .prev {
-    cursor: pointer;
     padding: 12px 9px 0;
     vertical-align: top;
     text-align: center;
+    @extend %clickable;
 
     .icon {
       margin-top: 4px;
@@ -8351,7 +8355,7 @@ output {
     font-size: 15px;
 
     &:not(.disabled) {
-      cursor: pointer;
+      @extend %clickable;
     }
 
     &.disabled,
@@ -8377,7 +8381,7 @@ output {
   .today {
     text-align: center;
     padding: 2px 0 0;
-    cursor: pointer;
+    @extend %clickable;
 
     &.hidden {
       display: none;
@@ -8568,7 +8572,7 @@ output {
 
 .chat-disconnect,
 .chat-close {
-  cursor: pointer;
+  @extend %clickable;
   padding: 10px;
 
   .btn {
@@ -8590,7 +8594,7 @@ output {
   border-top: none;
   padding: 7px 10px 6px;
   color: hsl(0,0%,60%);
-  cursor: pointer;
+  @extend %clickable;
 
   &.is-hidden {
     display: none;
@@ -8795,7 +8799,7 @@ output {
     align-items: center;
     justify-content: center;
     fill: hsl(202,8%,28%);
-    cursor: pointer;
+    @extend %clickable;
   }
 }
 
@@ -8955,8 +8959,7 @@ output {
   }
 
   .columnSelect-option {
-    cursor: pointer;
-    user-select: none;
+    @extend %clickable;
     padding: 0 5px;
     border-radius: 1px;
     overflow: hidden;
@@ -8992,7 +8995,7 @@ output {
     right: 0;
     top: 0;
     padding: 5px 7px;
-    cursor: pointer;
+    @extend %clickable;
     line-height: 1;
   }
 

@@ -1,4 +1,3 @@
-# rubocop:disable Lint/BooleanSymbol
 require 'browser_test_helper'
 
 class AdminObjectManagerTest < TestCase
@@ -248,6 +247,7 @@ class AdminObjectManagerTest < TestCase
       },
     )
 
+    # rubocop:disable Lint/BooleanSymbol
     object_manager_attribute_create(
       data: {
         name: 'browser_test7',
@@ -262,6 +262,7 @@ class AdminObjectManagerTest < TestCase
         },
       },
     )
+    # rubocop:enable Lint/BooleanSymbol
 
     watch_for(
       css: '.content.active',

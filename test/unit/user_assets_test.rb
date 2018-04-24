@@ -139,18 +139,18 @@ class UserAssetsTest < ActiveSupport::TestCase
     assert_not(Organization.find_by(id: org2.id))
   end
 
-  def diff(o1, o2)
-    return true if o1 == o2
+  def diff(object1, object2)
+    return true if object1 == object2
     %w[updated_at created_at].each do |item|
-      if o1[item]
-        o1[item] = o1[item].to_s
+      if object1[item]
+        object1[item] = object1[item].to_s
       end
-      if o2[item]
-        o2[item] = o2[item].to_s
+      if object2[item]
+        object2[item] = object2[item].to_s
       end
     end
-    return true if (o1.to_a - o2.to_a).blank?
-    #puts "ERROR: difference \n1: #{o1.inspect}\n2: #{o2.inspect}\ndiff: #{(o1.to_a - o2.to_a).inspect}"
+    return true if (object1.to_a - object2.to_a).blank?
+    #puts "ERROR: difference \n1: #{object1.inspect}\n2: #{object2.inspect}\ndiff: #{(object1.to_a - object2.to_a).inspect}"
     false
   end
 

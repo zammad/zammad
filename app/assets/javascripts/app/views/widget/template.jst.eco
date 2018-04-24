@@ -5,18 +5,18 @@
       <div id="form-template"></div>
     </div>
     <div class="horizontal">
-      <button type="submit" class="btn btn--action" data-type="template_delete"><%- @T('Delete') %></button>
-      <button type="submit" class="btn btn--action align-right" data-type="template_select"><%- @T('Apply') %></button>
+      <button type="submit" class="btn btn--action js-delete"><%- @T('Delete') %></button>
+      <button type="submit" class="btn btn--action align-right js-apply"><%- @T('Apply') %></button>
     </div>
   </form>
   <hr>
   <form>
     <div class="form-group">
       <label class="" for="template_name"><%- @T('Save as template') %></label>
-      <input type="text" name="template_name" id="template_name" class="form-control" value="<%= @template.name %>"/>
+      <input type="text" name="name" id="template_name" class="form-control js-name" value="<%= @template.name %>"/>
     </div>
     <div class="horizontal">
-      <button type="submit" class="btn btn--action align-right" data-type="template_save"><%- @T('Save') %></button>
+      <button type="submit" class="btn btn--action align-right js-save"><%- @T('Save') %></button>
     </div>
   </form>
 </div>
@@ -25,5 +25,5 @@
   <p><%- @T('No template created yet.') %></p>
   <p><%- @T('With templates you can pre-fill ticket attributes.') %></p>
   <p><%- @T('Choose attributes and then save them as a new template.') %></p>
-  <p><a class="create u-clickable"><%- @T('Save new template') %></a></p>
+  <p><a class="js-create u-clickable"><%- @T('Save new template') %></a></p>
 </div>

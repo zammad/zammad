@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   root to: 'init#index', via: :get
 
   # load routes from external files
-  dir = File.expand_path('../', __FILE__)
+  dir = File.expand_path(__dir__)
   files = Dir.glob( "#{dir}/routes/*.rb" )
   files.each do |file|
     if Rails.configuration.cache_classes

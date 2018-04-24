@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Avatar < ApplicationModel
-  belongs_to :object_lookup,   class_name: 'ObjectLookup'
+  belongs_to :object_lookup
 
 =begin
 

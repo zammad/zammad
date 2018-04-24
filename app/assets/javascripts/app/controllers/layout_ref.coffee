@@ -1516,6 +1516,7 @@ class InputsRef extends App.ControllerContent
       todayHighlight: true
       startDate: new Date()
       format: App.i18n.timeFormat().date
+      rtl: App.i18n.dir() is 'rtl'
       container: @$('.js-datepicker3').parent()
     )
 
@@ -1524,6 +1525,7 @@ class InputsRef extends App.ControllerContent
       todayHighlight: true
       startDate: new Date()
       format: App.i18n.timeFormat().date
+      rtl: App.i18n.dir() is 'rtl'
       container: @$('.js-datepicker4').parent()
     )
     @$('.js-timepicker4').timepicker()

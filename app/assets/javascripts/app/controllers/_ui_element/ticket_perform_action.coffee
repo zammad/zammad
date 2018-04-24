@@ -350,7 +350,7 @@ class App.UiElement.ticket_perform_action
     notificationElement.find('.js-body div[contenteditable="true"]').ce(
       mode: 'richtext'
       placeholder: 'message'
-      maxlength: 20000
+      maxlength: 200000
     )
     new App.WidgetPlaceholder(
       el: notificationElement.find('.js-body div[contenteditable="true"]').parent()

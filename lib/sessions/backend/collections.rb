@@ -28,7 +28,7 @@ class Sessions::Backend::Collections < Sessions::Backend::Base
     backends = []
 
     # load collections to deliver from external files
-    dir = File.expand_path('../../../../', __FILE__)
+    dir = File.expand_path('../../..', __dir__)
     files = Dir.glob("#{dir}/lib/sessions/backend/collections/*.rb")
     files.each do |file|
       file.gsub!("#{dir}/lib/", '')

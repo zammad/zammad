@@ -4,11 +4,13 @@ class ObjectManager::Attribute < ApplicationModel
 
   self.table_name = 'object_manager_attributes'
 
-  belongs_to :object_lookup,   class_name: 'ObjectLookup'
-  validates  :name, presence: true
-  store      :screens
-  store      :data_option
-  store      :data_option_new
+  belongs_to :object_lookup
+
+  validates :name, presence: true
+
+  store :screens
+  store :data_option
+  store :data_option_new
 
 =begin
 

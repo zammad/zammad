@@ -53,7 +53,7 @@ class Sequencer
       end
 
       def __setobj__(declarations)
-        @attributes ||= begin
+        @attributes ||= begin # rubocop:disable Naming/MemoizedInstanceVariableName
           attributes = Hash.new do |hash, key|
             hash[key] = Sequencer::Units::Attribute.new
           end

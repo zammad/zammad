@@ -1,8 +1,8 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 class Ticket::TimeAccounting < ApplicationModel
 
-  belongs_to    :ticket
-  belongs_to    :ticket_article, class_name: 'Ticket::Article'
+  belongs_to :ticket
+  belongs_to :ticket_article, class_name: 'Ticket::Article', inverse_of: :ticket_time_accounting
 
   after_create :ticket_time_unit_update
   after_update :ticket_time_unit_update

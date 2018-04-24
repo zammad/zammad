@@ -829,6 +829,23 @@ class App.Utils
     num
 
   @icon: (name, className = '') ->
+    return if !name
+
+    # rtl support
+    # ===========
+    #
+    # translates @Icon('arrow-{start}') to @Icon('arrow-left') on ltr and @Icon('arrow-right') on rtl
+    dictionary =
+      ltr:
+        start: 'left'
+        end: 'right'
+      rtl:
+        start: 'right'
+        end: 'left'
+    if name.indexOf('{') > 0 # only run through the dictionary when there is a {helper}
+      for key, value of dictionary[App.i18n.dir()]
+        name = name.replace("{#{key}}", value)
+
     #
     # reverse regex
     # =============

@@ -47,6 +47,7 @@ module ApplicationController::HandlesDevices
         raise Exceptions::UnprocessableEntity, 'Need fingerprint param!'
       end
       if params[:fingerprint]
+        UserDevice.fingerprint_validation(params[:fingerprint])
         session[:user_device_fingerprint] = params[:fingerprint]
       end
     end

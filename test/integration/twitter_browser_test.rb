@@ -3,36 +3,7 @@ require 'browser_test_helper'
 
 class TwitterBrowserTest < TestCase
   def test_add_config
-
-    # app config
-    if !ENV['TWITTER_BT_CONSUMER_KEY']
-      raise "ERROR: Need TWITTER_BT_CONSUMER_KEY - hint TWITTER_BT_CONSUMER_KEY='1234'"
-    end
-    consumer_key = ENV['TWITTER_BT_CONSUMER_KEY']
-    if !ENV['TWITTER_BT_CONSUMER_SECRET']
-      raise "ERROR: Need TWITTER_BT_CONSUMER_SECRET - hint TWITTER_BT_CONSUMER_SECRET='1234'"
-    end
-    consumer_secret = ENV['TWITTER_BT_CONSUMER_SECRET']
-
-    if !ENV['TWITTER_BT_USER_LOGIN']
-      raise "ERROR: Need TWITTER_BT_USER_LOGIN - hint TWITTER_BT_USER_LOGIN='1234'"
-    end
-    twitter_user_login = ENV['TWITTER_BT_USER_LOGIN']
-
-    if !ENV['TWITTER_BT_USER_PW']
-      raise "ERROR: Need TWITTER_BT_USER_PW - hint TWITTER_BT_USER_PW='1234'"
-    end
-    twitter_user_pw = ENV['TWITTER_BT_USER_PW']
-
-    if !ENV['TWITTER_BT_CUSTOMER_TOKEN']
-      raise "ERROR: Need TWITTER_BT_CUSTOMER_TOKEN - hint TWITTER_BT_CUSTOMER_TOKEN='1234'"
-    end
-    twitter_customer_token = ENV['TWITTER_BT_CUSTOMER_TOKEN']
-
-    if !ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
-      raise "ERROR: Need TWITTER_BT_CUSTOMER_TOKEN_SECRET - hint TWITTER_BT_CUSTOMER_TOKEN_SECRET='1234'"
-    end
-    twitter_customer_token_secret = ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
+    twitter_config
 
     hash = "#sweet#{hash_gen}"
 
@@ -51,7 +22,7 @@ class TwitterBrowserTest < TestCase
     sleep 2
     set(
       css: '.content.active .modal [name=consumer_key]',
-      value: consumer_key,
+      value: twitter_config[:consumer_key],
     )
     set(
       css: '.content.active .modal [name=consumer_secret]',
@@ -66,7 +37,7 @@ class TwitterBrowserTest < TestCase
 
     set(
       css: '.content.active .modal [name=consumer_secret]',
-      value: consumer_secret,
+      value: twitter_config[:consumer_secret],
     )
     click(css: '.content.active .modal .js-submit')
 
@@ -95,7 +66,7 @@ class TwitterBrowserTest < TestCase
 
     set(
       css: '.content.active .modal [name=consumer_secret]',
-      value: consumer_secret,
+      value: twitter_config[:consumer_secret],
     )
     click(css: '.content.active .modal .js-submit')
 
@@ -115,12 +86,12 @@ class TwitterBrowserTest < TestCase
 
     set(
       css: '#username_or_email',
-      value: twitter_user_login,
+      value: twitter_config[:twitter_user_login],
       no_click: true, # <label> other element would receive the click
     )
     set(
       css: '#password',
-      value: twitter_user_pw,
+      value: twitter_config[:twitter_user_pw],
       no_click: true, # <label> other element would receive the click
     )
     click(css: '#allow')
@@ -139,6 +110,7 @@ class TwitterBrowserTest < TestCase
     click(css: '.content.active .modal .js-searchTermAdd')
     set(css: '.content.active .modal [name="search::term"]', value: hash)
     select(css: '.content.active .modal [name="search::group_id"]', value: 'Users')
+    select(css: '.content.active .modal [name="direct_messages::group_id"]', value: 'Users')
     click(css: '.content.active .modal .js-submit')
     modal_disappear
 
@@ -148,7 +120,7 @@ class TwitterBrowserTest < TestCase
     )
     watch_for(
       css: '.content.active',
-      value: "@#{twitter_user_login}",
+      value: "@#{twitter_config[:twitter_user_login]}",
     )
     exists(
       css: '.content.active .main .action:nth-child(1)'
@@ -177,7 +149,7 @@ class TwitterBrowserTest < TestCase
     )
     watch_for(
       css: '.content.active',
-      value: "@#{twitter_user_login}",
+      value: "@#{twitter_config[:twitter_user_login]}",
     )
     exists(
       css: '.content.active .main .action:nth-child(1)'
@@ -191,10 +163,10 @@ class TwitterBrowserTest < TestCase
 
     # start tweet from customer
     client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = consumer_key
-      config.consumer_secret     = consumer_secret
-      config.access_token        = twitter_customer_token
-      config.access_token_secret = twitter_customer_token_secret
+      config.consumer_key        = twitter_config[:consumer_key]
+      config.consumer_secret     = twitter_config[:consumer_secret]
+      config.access_token        = twitter_config[:twitter_customer_token]
+      config.access_token_secret = twitter_config[:twitter_customer_token_secret]
     end
 
     text  = "Today #{rand_word}... #{hash} #{hash_gen}"
@@ -272,6 +244,100 @@ class TwitterBrowserTest < TestCase
 
   end
 
+  def reply_direct_message
+    twitter_config
+
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+      auto_wizard: true,
+    )
+    tasks_close_all()
+
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = twitter_config[:consumer_key]
+      config.consumer_secret     = twitter_config[:consumer_secret]
+      config.access_token        = twitter_config[:twitter_customer_token]
+      config.access_token_secret = twitter_config[:twitter_customer_token_secret]
+    end
+
+    text  = "Today #{rand_word}... #{hash} #{hash_gen}"
+    tweet = client.create_direct_message(
+      "@#{twitter_config[:twitter_user_login]}",
+      text,
+    )
+
+    # watch till tweet is in app
+    click(text: 'Overviews')
+
+    # enable full overviews
+    execute(
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
+
+    click(text: 'Unassigned & Open')
+
+    watch_for(
+      css: '.content.active',
+      value: hash,
+      timeout: 36,
+    )
+
+    ticket_open_by_title(
+      title: hash,
+    )
+
+    # reply via app
+    click(css: '.content.active [data-type="twitterStatusReply"]')
+
+    ticket_update(
+      data: {
+        body: '@dzucker6 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890',
+      },
+      do_not_submit: true,
+    )
+    click(
+      css: '.content.active .js-submit',
+    )
+    sleep 10
+    click(
+      css: '.content.active .js-reset',
+    )
+    sleep 2
+
+    match_not(
+      css: '.content.active',
+      value: '1234567890',
+    )
+
+    click(css: '.content.active [data-type="twitterStatusReply"]')
+    sleep 2
+
+    re_hash = "#{hash}re#{rand(99_999)}"
+
+    ticket_update(
+      data: {
+        body: "@dzucker6 #{rand_word} reply #{re_hash} #{rand(999_999)}",
+      },
+    )
+    sleep 20
+
+    match(
+      css: '.content.active .ticket-article',
+      value: re_hash,
+    )
+
+    # watch till tweet reached customer
+    sleep 10
+    text = nil
+    client.search(re_hash, result_type: 'mixed').collect do |local_tweet|
+      text = local_tweet.text
+    end
+    assert(text)
+  end
+
   def hash_gen
     (0...10).map { ('a'..'z').to_a[rand(26)] }.join + rand(999).to_s
   end
@@ -298,4 +364,44 @@ class TwitterBrowserTest < TestCase
     words[rand(words.length)]
   end
 
+  def twitter_config
+    # app config
+    if !ENV['TWITTER_BT_CONSUMER_KEY']
+      raise "ERROR: Need TWITTER_BT_CONSUMER_KEY - hint TWITTER_BT_CONSUMER_KEY='1234'"
+    end
+    consumer_key = ENV['TWITTER_BT_CONSUMER_KEY']
+    if !ENV['TWITTER_BT_CONSUMER_SECRET']
+      raise "ERROR: Need TWITTER_BT_CONSUMER_SECRET - hint TWITTER_BT_CONSUMER_SECRET='1234'"
+    end
+    consumer_secret = ENV['TWITTER_BT_CONSUMER_SECRET']
+
+    if !ENV['TWITTER_BT_USER_LOGIN']
+      raise "ERROR: Need TWITTER_BT_USER_LOGIN - hint TWITTER_BT_USER_LOGIN='1234'"
+    end
+    twitter_user_login = ENV['TWITTER_BT_USER_LOGIN']
+
+    if !ENV['TWITTER_BT_USER_PW']
+      raise "ERROR: Need TWITTER_BT_USER_PW - hint TWITTER_BT_USER_PW='1234'"
+    end
+    twitter_user_pw = ENV['TWITTER_BT_USER_PW']
+
+    if !ENV['TWITTER_BT_CUSTOMER_TOKEN']
+      raise "ERROR: Need TWITTER_BT_CUSTOMER_TOKEN - hint TWITTER_BT_CUSTOMER_TOKEN='1234'"
+    end
+    twitter_customer_token = ENV['TWITTER_BT_CUSTOMER_TOKEN']
+
+    if !ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
+      raise "ERROR: Need TWITTER_BT_CUSTOMER_TOKEN_SECRET - hint TWITTER_BT_CUSTOMER_TOKEN_SECRET='1234'"
+    end
+    twitter_customer_token_secret = ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
+
+    hash = {
+      consumer_key: consumer_key,
+      consumer_secret: consumer_secret,
+      twitter_user_login: twitter_user_login,
+      twitter_user_pw: twitter_user_pw,
+      twitter_customer_token: twitter_customer_token,
+      twitter_customer_token_secret: twitter_customer_token_secret
+    }
+  end
 end
