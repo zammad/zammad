@@ -294,7 +294,7 @@ class ConnectionWizard extends App.WizardModal
 
         option = ''
         options = {}
-        if !_.isEmpty data.attributes
+        if !_.isEmpty data.attributes && !_.isEmpty data.attributes.namingcontexts
           for dn in data.attributes.namingcontexts
             options[dn] = dn
             if option is ''
