@@ -711,7 +711,7 @@ class TicketsController < ApplicationController
         raise Exceptions::UnprocessableEntity, "Missing required attribute #{attribute.display}!"
       end
 
-      if attribute.data_type == 'datetime'
+      if attribute.data_type == 'datetime' # rubocop:disable Style/Next
         allow_past = attribute.data_option[:past]
         allow_future = attribute.data_option[:future]
         is_past = Time.zone.parse( params[attribute.name] ) < DateTime.current
