@@ -553,4 +553,192 @@ class ObjectManagerAttributesControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result['data_type'], 'boolean')
   end
 
+  test 'ticket creation and updates without required attributes will be correctly rejected' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
+
+    # add a required text attribute
+    object = ObjectManager::Attribute.add(
+      object: 'Ticket',
+      name: 'required_text',
+      display: 'Required Text Display Name',
+      data_type: 'input',
+      active: true,
+      data_option: {
+        default: 'test',
+        type: 'text',
+        maxlength: 120,
+        null: true
+      },
+      screens: {
+        create_middle: {
+          'ticket.customer' => {
+            shown: true,
+            required: true,
+            item_class: 'column'
+          },
+          'ticket.agent' => {
+            shown: true,
+            required: true,
+            item_class: 'column'
+          }
+        },
+        edit: {
+          'ticket.customer' => {
+            shown: true,
+            required: true
+          },
+          'ticket.agent' => {
+            shown: true,
+            required: true
+          }
+        }
+      },
+      position: 1500,
+      editable: true
+    )
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert migration
+
+    ticket_without_required_text = {
+      'title': 'Test ticket without required text',
+      'group': 'Users',
+      'article': {
+        'subject': 'some subject',
+        'body': 'some message',
+        'type': 'note',
+        'internal': false
+      },
+      'customer': 'nicole.braun@zammad.org',
+      'note': 'some note',
+    }
+
+    # confirm that a ticket without the required text will be correctly rejected with a 422: Unprocessable Entity
+    post '/api/v1/tickets', params: ticket_without_required_text.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    assert @response.body.include?('Required Text Display Name')
+
+    ticket_with_required_text = ticket_without_required_text.clone
+    ticket_with_required_text['required_text'] = 'Some required text'
+    ticket_with_required_text['title'] = 'Test ticket with required text'
+
+    # confirm that a ticket with the required text will be correctly created with a 201: Created
+    post '/api/v1/tickets', params: ticket_with_required_text.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert result
+    assert_equal result['title'], 'Test ticket with required text'
+    assert_equal result['required_text'], 'Some required text'
+    ticket_id = result['id']
+
+    # attempt to update the ticket without the required text field
+    update_without_required_text = {
+      'title': 'Updated ticket without required text',
+    }
+    put "/api/v1/tickets/#{ticket_id}", params: update_without_required_text.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    assert @response.body.include?('Required Text Display Name')
+
+    # attempt to update the ticket with the required text field
+    update_with_required_text = {
+      'title': 'Updated ticket required text',
+      'required_text': 'Some other required text'
+    }
+    put "/api/v1/tickets/#{ticket_id}", params: update_with_required_text.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert result
+    assert_equal result['title'], 'Updated ticket required text'
+    assert_equal result['required_text'], 'Some other required text'
+    assert_equal result['id'], ticket_id
+
+    # confirm that datetime attributes with allow_future/allow_past restrictions will correctly reject invalid inputs
+    object = ObjectManager::Attribute.add(
+      object: 'Ticket',
+      name: 'required_datetime',
+      display: 'Required Datetime Display Name',
+      data_type: 'datetime',
+      active: true,
+      data_option: {
+        'future' => true,
+        'past' => false,
+        'diff' => 24,
+        'default' => nil,
+        'null' => true,
+      },
+      screens: {
+        'create_middle' => {
+          'ticket.customer' => {
+            'shown' => true,
+            'required' => true,
+            'item_class' => 'column'
+          },
+          'ticket.agent' => {
+            'shown' => true,
+            'required' => true,
+            'item_class' => 'column'
+          }
+        },
+        'edit' => {
+          'ticket.customer' => {
+            'shown' => true,
+            'required' => true
+          },
+          'ticket.agent' => {
+            'shown' => true,
+            'required' => true
+          }
+        }
+      },
+      position: 1550,
+      editable: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert migration
+    new_datatime = ObjectManager::Attribute.all.select { |a| a.name == 'required_datetime' }
+    assert_equal new_datatime.length, 1
+
+    ticket_without_date = {
+      'title': 'Test ticket without required date',
+      'group': 'Users',
+      'article': {
+        'subject': 'some subject',
+        'body': 'some message',
+        'type': 'note',
+        'internal': false
+      },
+      'customer': 'nicole.braun@zammad.org',
+      'note': 'some note',
+      'required_text': 'Yet some other required text'
+    }
+
+    # confirm that a ticket without the required date will be correctly rejected with a 422: Unprocessable Entity
+    post '/api/v1/tickets', params: ticket_without_date.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    assert @response.body.include?('Required Datetime Display Name')
+
+    ticket_with_future_date = ticket_without_date.clone
+    required_datetime = Time.now.tomorrow.utc
+    ticket_with_future_date['required_datetime'] = required_datetime.to_s
+    ticket_with_future_date['title'] = 'Test ticket with required date'
+
+    # confirm that a ticket with the required date will be correctly accepted with a 201: Created
+    post '/api/v1/tickets', params: ticket_with_future_date.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert result
+    assert_equal result['title'], 'Test ticket with required date'
+    assert_in_delta Time.zone.parse(result['required_datetime']), required_datetime, 1.second
+
+    # confirm that a ticket with a past date will be correctly rejected with a 422: Unprocessable Entity
+    ticket_with_past_date = ticket_with_future_date.clone
+    ticket_with_past_date['required_datetime'] = Time.now.yesterday.utc.to_s
+    post '/api/v1/tickets', params: ticket_with_past_date.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    assert @response.body.include?('Required Datetime Display Name')
+    assert @response.body.include?('does not allow past dates')
+  end
 end

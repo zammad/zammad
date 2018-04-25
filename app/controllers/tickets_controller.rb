@@ -8,6 +8,7 @@ class TicketsController < ApplicationController
 
   prepend_before_action :authentication_check
   before_action :follow_up_possible_check, only: :update
+  before_action :validate_attributes, only: %i[create update]
 
   # GET /api/v1/tickets
   def index
@@ -700,4 +701,29 @@ class TicketsController < ApplicationController
     }
   end
 
+  # validate that all required attributes are supplied and that all attribute conditions are met
+  def validate_attributes
+    action = params[:action] == 'create' ? :create_middle : :edit
+    required_attributes = ObjectManager::Attribute.list_required(current_user, action)
+
+    required_attributes.each do |attribute|
+      if !params.include?(attribute.name)
+        raise Exceptions::UnprocessableEntity, "Missing required attribute #{attribute.display}!"
+      end
+
+      if attribute.data_type == 'datetime'
+        allow_past = attribute.data_option[:past]
+        allow_future = attribute.data_option[:future]
+        is_past = Time.zone.parse( params[attribute.name] ) < DateTime.current
+        # if we do not allow past dates and the supplied date is in the past, reject it
+        if !allow_past && is_past
+          raise Exceptions::UnprocessableEntity, "Attribute #{attribute.display} does not allow past dates!"
+        end
+        # if we do not allow future dates and the supplied date is in the future, reject it
+        if !allow_future && !is_past
+          raise Exceptions::UnprocessableEntity, "Attribute #{attribute.display} does not allow future dates!"
+        end
+      end
+    end
+  end
 end

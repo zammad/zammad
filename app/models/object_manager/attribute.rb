@@ -479,6 +479,46 @@ returns:
 
 =begin
 
+get a user-based list of required object attributes during ticket creation/update
+
+  required_attributes = ObjectManager::Attribute.get_required(User.find(1), :edit)
+
+returns:
+
+  [
+      #<ObjectManager::Attribute id: 48, object_lookup_id: 1, name: "required_text", ...
+      #<ObjectManager::Attribute id: 49, object_lookup_id: 1, name: "required_date", ...
+  ]
+
+=end
+
+  def self.list_required(user, action)
+    raise Exceptions::UnprocessableEntity, "Invalid action #{action}." if %i[create_middle edit].exclude?(action)
+
+    # collect user permissions
+    is_ticket_agent = user.permissions?('ticket.agent')
+    is_ticket_customer = user.permissions?('ticket.customer')
+
+    result = ObjectManager::Attribute.all.order('position ASC, name ASC')
+    required_for_agent = result.select do |attribute|
+      is_ticket_agent &&
+        attribute.screens.key?(action) &&
+        attribute.screens[action].key?('ticket.customer') &&
+        attribute.screens[action]['ticket.customer'][:required]
+    end
+    required_for_customer = result.select do |attribute|
+      is_ticket_customer &&
+        attribute.screens.key?(action) &&
+        attribute.screens[action].key?('ticket.customer') &&
+        attribute.screens[action]['ticket.customer'][:required]
+    end
+
+    # return the union of the two required sets
+    required_for_agent + required_for_customer
+  end
+
+=begin
+
 get user based list of object attributes as hash
 
   attribute_list = ObjectManager::Attribute.by_object_as_hash('Ticket', user)
