@@ -70,7 +70,10 @@ example
       keep_on_server = true
     end
 
-    ssl = options.key?(:ssl) && options[:ssl] == true
+    if options.key?(:ssl) && options[:ssl] == false
+      ssl  = false
+      port = 143
+    end
 
     port = if options.key?(:port) && options[:port].present?
              options[:port].to_i
