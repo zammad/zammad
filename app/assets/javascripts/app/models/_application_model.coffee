@@ -869,5 +869,7 @@ set new attributes of model (remove already available attributes)
     @configure_attributes = $.extend(true, [], @org_configure_attributes)
 
   @resetCallbacks: ->
-    @SUBSCRIPTION_ITEM = {}
-    @SUBSCRIPTION_COLLECTION = {}
+    if @SUBSCRIPTION_ITEM
+      @SUBSCRIPTION_ITEM = {}
+    if @SUBSCRIPTION_COLLECTION
+      @SUBSCRIPTION_COLLECTION = {}
