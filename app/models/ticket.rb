@@ -519,23 +519,24 @@ condition example
       if query != ''
         query += ' AND '
       end
-      if selector[0] == 'customer'
-        tables += ', users customers'
-        query += 'tickets.customer_id = customers.id'
-      elsif selector[0] == 'organization'
-        tables += ', organizations'
-        query += 'tickets.organization_id = organizations.id'
-      elsif selector[0] == 'owner'
-        tables += ', users owners'
-        query += 'tickets.owner_id = owners.id'
-      elsif selector[0] == 'article'
-        tables += ', ticket_articles articles'
-        query += 'tickets.id = articles.ticket_id'
-      elsif selector[0] == 'ticket_state'
-        tables += ', ticket_states'
-        query += 'tickets.state_id = ticket_states.id'
-      else
-        raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
+      case selector[0]
+        when 'customer'
+          tables += ', users customers'
+          query += 'tickets.customer_id = customers.id'
+        when 'organization'
+          tables += ', organizations'
+          query += 'tickets.organization_id = organizations.id'
+        when 'owner'
+          tables += ', users owners'
+          query += 'tickets.owner_id = owners.id'
+        when 'article'
+          tables += ', ticket_articles articles'
+          query += 'tickets.id = articles.ticket_id'
+        when 'ticket_state'
+          tables += ', ticket_states'
+          query += 'tickets.state_id = ticket_states.id'
+        else
+          raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
       end
     end
 
@@ -595,7 +596,10 @@ condition example
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
           query += "#{attribute} IN (?)"
           user = User.lookup(id: current_user_id)
-          bind_params.push user.organization_id
+          organizations = []
+          organizations.push user.organization_id if user.organization_id
+          organizations.concat user.organization_ids if user.organization_ids&.any?
+          bind_params.push organizations
         else
           # rubocop:disable Style/IfInsideElse
           if selector['value'].nil?
@@ -628,7 +632,10 @@ condition example
         elsif selector['pre_condition'] == 'current_user.organization_id'
           query += "#{attribute} NOT IN (?)"
           user = User.lookup(id: current_user_id)
-          bind_params.push user.organization_id
+          organizations = []
+          organizations.push user.organization_id if user.organization_id
+          organizations.concat user.organization_ids if user.organization_ids&.any?
+          bind_params.push organizations
         else
           # rubocop:disable Style/IfInsideElse
           if selector['value'].nil?
