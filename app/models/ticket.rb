@@ -15,11 +15,9 @@ class Ticket < ApplicationModel
 
   include Ticket::Escalation
   include Ticket::Subject
-  load 'ticket/assets.rb'
   include Ticket::Assets
-  load 'ticket/search_index.rb'
   include Ticket::SearchIndex
-  extend Ticket::Search
+  include Ticket::Search
 
   store          :preferences
   before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority

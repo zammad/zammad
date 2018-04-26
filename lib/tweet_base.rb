@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
 
-require 'twitter'
-load 'lib/http/uri.rb'
+require 'http/uri'
 
 class TweetBase
 

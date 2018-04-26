@@ -1,7 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
-require 'mail'
-
 module Channel::EmailBuild
 
 =begin

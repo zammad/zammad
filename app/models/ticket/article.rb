@@ -5,9 +5,8 @@ class Ticket::Article < ApplicationModel
   include HasHistory
   include ChecksHtmlSanitized
   include CanCsvImport
-  include Ticket::Article::ChecksAccess
 
-  load 'ticket/article/assets.rb'
+  include Ticket::Article::ChecksAccess
   include Ticket::Article::Assets
 
   belongs_to :ticket

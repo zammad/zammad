@@ -1,6 +1,3 @@
-require 'json'
-require 'session_helper'
-
 module Sessions
 
   # get application root directory

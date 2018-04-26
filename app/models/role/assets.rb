@@ -2,6 +2,7 @@
 
 class Role
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 
