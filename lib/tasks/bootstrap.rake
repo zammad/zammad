@@ -6,8 +6,8 @@ namespace :bs do
 
   desc 'Reset the application to its initial state'
   task :reset => %i[db:reset] do
-    flush_cache_and_logs
     run_auto_wizard
+    flush_cache_and_logs
   end
 end
 
