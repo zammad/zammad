@@ -109,9 +109,6 @@ Layout/EmptyLinesAroundModuleBody:
   Description: "Keeps track of empty lines around module bodies."
   Enabled: false
 
-Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: indented_relative_to_receiver
-
 Style/MultilineBlockChain:
   Description: 'Avoid multi-line chains of blocks.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#single-line-blocks'
