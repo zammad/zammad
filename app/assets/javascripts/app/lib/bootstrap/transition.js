@@ -38,6 +38,7 @@
     var $el = this
     $(this).one('bsTransitionEnd', function () { called = true })
     var callback = function () { if (!called) $($el).trigger($.support.transition.end) }
+    $('span.selected_organization').click(function () { $(this).closest('div').remove() })
     setTimeout(callback, duration)
     return this
   }

@@ -1,10 +1,17 @@
 # coffeelint: disable=camel_case_classes
 class App.UiElement.autocompletion_ajax
   @render: (attribute, params = {}) ->
-
-    if params[attribute.name] || attribute.value
-      object = App[attribute.relation].find(params[attribute.name] || attribute.value)
-      valueName = object.displayName()
+    id = attribute.value
+    if attribute.name == 'organization_ids'
+      if params[attribute.name]?.length > 0 || attribute.value?.length > 0
+        object = App[attribute.relation].find(params[attribute.name] || attribute.value)
+        valueName = 'Alternative Organizations'
+        id = params.organization_ids[0] || attribute.value
+    else
+      if params[attribute.name] || attribute.value
+        object = App[attribute.relation].find(params[attribute.name] || attribute.value)
+        valueName = object.displayName()
+        id = params.organization_id || attribute.value
 
     # selectable search
     searchableAjaxSelectObject = new App.SearchableAjaxSelect(

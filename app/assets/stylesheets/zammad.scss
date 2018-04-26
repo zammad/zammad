@@ -8064,6 +8064,11 @@ output {
 .searchableSelect {
   position: relative;
 
+  .selected_organization {
+    cursor: pointer;
+    padding-left: 10px;
+  }
+
   .form-control {
     padding-right: 37px;
     @include bidi-style(padding-right, 37px, padding-left, 12px);
@@ -8085,8 +8090,8 @@ output {
   }
 
   .dropdown-menu {
-    margin-top: -3px;
     max-width: 100%;
+    top: 39px;
   }
 
   &-option-text {
