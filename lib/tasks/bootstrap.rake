@@ -12,7 +12,7 @@ namespace :bs do
 end
 
 APP_CACHE   = Dir.glob(Rails.root.join('tmp', 'cache*'))
-SERVER_LOG  = Rails.root.join('log', Rails.env)
+SERVER_LOG  = Rails.root.join('log', "#{Rails.env}.log")
 AUTO_WIZARD = { source:      Rails.root.join('contrib', 'auto_wizard_test.json'),
                 destination: Rails.root.join('auto_wizard.json') }.freeze
 
