@@ -226,3 +226,9 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - "**/*_spec.rb"
     - "**/*_examples.rb"
+
+# Special exceptions
+
+Style/HashSyntax:
+  Exclude:
+    - "**/*.rake"

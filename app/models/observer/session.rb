@@ -1,7 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
-require 'history'
-
 class Observer::Session < ActiveRecord::Observer
   observe 'active_record::_session_store::_session'
 

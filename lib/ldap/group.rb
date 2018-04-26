@@ -6,8 +6,8 @@ class Ldap
   #  an ::Ldap instance.
   #
   # @example
-  #  require 'ldap'
-  #  require 'ldap/group'
+  #  require_dependency 'ldap'
+  #  require_dependency 'ldap/group'
   class Group
     include Ldap::FilterLookup
 
@@ -29,8 +29,8 @@ class Ldap
     # @param ldap [Ldap] An optional existing Ldap class instance. Default is a new connection with given configuration.
     #
     # @example
-    #  require 'ldap'
-    #  require 'ldap/group'
+    #  require_dependency 'ldap'
+    #  require_dependency 'ldap/group'
     #  ldap_group = Ldap::Group.new
     #
     # @return [nil]

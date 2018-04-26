@@ -1,13 +1,11 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
-require 'cache'
-
 class Service::GeoCalendar::Zammad
   def self.location(address)
 
     # check cache
     cache_key = "zammadgeocalendar::#{address}"
-    cache = Cache.get(cache_key)
+    cache = ::Cache.get(cache_key)
     return cache if cache
 
     # do lookup
@@ -35,10 +33,10 @@ class Service::GeoCalendar::Zammad
 
       data = response.data
 
-      Cache.write(cache_key, data, { expires_in: 30.minutes })
+      ::Cache.write(cache_key, data, { expires_in: 30.minutes })
     rescue => e
       Rails.logger.error "#{host}#{url}: #{e.inspect}"
-      Cache.write(cache_key, data, { expires_in: 1.minute })
+      ::Cache.write(cache_key, data, { expires_in: 1.minute })
     end
     data
   end

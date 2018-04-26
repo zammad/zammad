@@ -1,4 +1,4 @@
-require 'import/ldap'
+require_dependency 'import/ldap'
 
 class Sequencer
   class Unit

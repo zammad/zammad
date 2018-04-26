@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
 require 'net/imap'
 
 class Channel::Driver::Imap < Channel::EmailParser
@@ -101,7 +100,7 @@ example
     end
 
     Timeout.timeout(timeout) do
-      @imap = Net::IMAP.new(options[:host], port, ssl, nil, false)
+      @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, false)
       if starttls
         @imap.starttls()
       end

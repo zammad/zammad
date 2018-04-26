@@ -2,6 +2,7 @@
 
 class OnlineNotification
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

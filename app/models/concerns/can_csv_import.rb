@@ -1,4 +1,5 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+
 require 'csv'
 
 module CanCsvImport
@@ -58,7 +59,7 @@ returns
         raise Exceptions::UnprocessableEntity, 'Unable to parse empty file/string!'
       end
 
-      rows = CSV.parse(data[:string], data[:parse_params])
+      rows = ::CSV.parse(data[:string], data[:parse_params])
       header = rows.shift
       if header.blank?
         raise Exceptions::UnprocessableEntity, 'Unable to parse file/string without header!'
@@ -301,7 +302,7 @@ returns
         end
         rows_to_add = []
       end
-      CSV.generate(params) do |csv|
+      ::CSV.generate(params) do |csv|
         csv << header
         rows.each do |row|
           csv << row

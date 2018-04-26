@@ -1,6 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-require 'zendesk_api'
-
 class ImportZendeskController < ApplicationController
 
   def url_check

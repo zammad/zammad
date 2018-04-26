@@ -4,7 +4,6 @@ class Job < ApplicationModel
   include ChecksClientNotification
   include ChecksConditionValidation
 
-  load 'job/assets.rb'
   include Job::Assets
 
   store     :timeplan

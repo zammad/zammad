@@ -3,7 +3,6 @@
 require 'net/http'
 require 'net/https'
 require 'net/ftp'
-require 'tempfile'
 
 class UserAgent
 
