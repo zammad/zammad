@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Scheduler < ApplicationModel
+  extend ::Mixin::StartFinishLogger
 
   # rubocop:disable Style/ClassVars
   @@jobs_started = {}
@@ -120,8 +121,13 @@ class Scheduler < ApplicationModel
       raise 'This method should only get called when Scheduler.threads are initialized. Use `force: true` to start anyway.'
     end
 
-    Delayed::Job.all.each do |job|
-      cleanup_delayed(job)
+    log_start_finish(:info, 'Cleanup of left over locked delayed jobs') do
+
+      Delayed::Job.all.each do |job|
+        log_start_finish(:info, "Checking left over delayed job #{job.inspect}") do
+          cleanup_delayed(job)
+        end
+      end
     end
   end
 
@@ -172,7 +178,7 @@ class Scheduler < ApplicationModel
       job.destroy
     end
 
-    Rails.logger.warn "#{action} locked delayed job: #{job_name}"
+    logger.warn "#{action} locked delayed job: #{job_name}"
   end
 
   def self.start_job(job)
