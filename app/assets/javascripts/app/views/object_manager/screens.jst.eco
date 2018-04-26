@@ -2,7 +2,7 @@
   <table class="settings-list" style="width: 100%;">
     <thead>
       <tr>
-        <th><%- @T('Role') %>
+        <th><%- @T('Permissions') %>
         <th><%- @T('Screen') %>
         <th style="width: 50%;"><%- @T('Options') %>
     </thead>
@@ -24,7 +24,6 @@
             <% end %>
         <% end %>
       <% end %>
-
     </tbody>
   </table>
 </div>
