@@ -4,9 +4,12 @@
       <div class="align-right profile-action js-action"></div>
       <%- @user.avatar("80") %>
       <h1 class="js-name"></h1>
+      <% if @user.organization_id: %>
+        <div class="profile-organization js-organization"></div>
+      <% end %>
       <% for org in @user.organizations: %>
         <div class="profile-organization js-organization-<%= org.id %>"></div>
-      <%= end %>
+      <% end %>
     </div>
     <div class="profile-section js-object-container"></div>
     <div class="profile-section js-ticket-stats"></div>

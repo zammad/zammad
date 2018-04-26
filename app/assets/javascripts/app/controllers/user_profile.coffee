@@ -47,12 +47,20 @@ class App.UserProfile extends App.Controller
       el: elLocal.find('.js-name')
     )
 
+    if user.organization_id
+      new Organization(
+        object_id: user.organization_id
+        el: elLocal.find('.js-organization')
+      )
+
     if user.organization_ids
       for id in user.organization_ids
-        new Organization(
+        console.log(id)
+        a = new Organization(
           object_id: id
           el: elLocal.find('.js-organization-' + id)
         )
+        console.log(a)
 
     new Object(
       el:        elLocal.find('.js-object-container')
