@@ -39,12 +39,13 @@ class App.SearchableSelect extends Spine.Controller
     if @attribute.name == 'organization_ids'
       @attribute.valueName = ''
       organizations = ''
-      for value in @attribute.value
-        organizations += "<div>" +
-          "<span class='selected_organization'>#{value}</span>" +
-          "<input class='searchableSelect-shadow form-control js-shadow-ids' name='organization_ids' value='#{value}'>" +
-          "</div>"
-      @attribute.organizations = organizations
+      if @attribute.value
+        for value in @attribute.value
+          organizations += "<div>" +
+            "<span class='selected_organization'>#{App.Organization.findNative(value).name}</span>" +
+            "<input class='searchableSelect-shadow form-control js-shadow-ids' name='organization_ids' value='#{value}'>" +
+            "</div>"
+        @attribute.organizations = organizations
     else
       if firstSelected
         @attribute.valueName = firstSelected.name

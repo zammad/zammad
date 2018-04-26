@@ -78,6 +78,15 @@ returns
           data = organization.assets(data)
         end
 
+        if local_attributes['organization_id']
+          unless data[:Organization] || data[:Organization]&[local_attributes['organization_id']]
+            organization = Organization.lookup(id: local_attributes['organization_id'])
+            if organization
+              data = organization.assets(data)
+            end
+          end
+        end
+
         data[ app_model ][ id ] = local_attributes
       end
 

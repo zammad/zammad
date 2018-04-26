@@ -15,6 +15,7 @@ class Organization < ApplicationModel
   load 'organization/search_index.rb'
   include Organization::SearchIndex
 
+  has_many                :members,  class_name: 'User'
   has_and_belongs_to_many :members,   after_add: :cache_update, after_remove: :cache_update, class_name: 'User'
   validates               :name,     presence: true
 

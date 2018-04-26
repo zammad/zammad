@@ -94,8 +94,6 @@ class App.ControllerForm extends App.Controller
     className       = @model.className + '_' + Math.floor( Math.random() * 999999 ).toString()
 
     for attribute in @attributes
-      if attribute['name'] == 'organization_id'
-        console.log("LOOK AT ME, SIR",attribute)
       attribute_count = attribute_count + 1
 
       if @isDisabled == true
