@@ -24,4 +24,8 @@ end
 def run_auto_wizard
   FileUtils.ln(AUTO_WIZARD[:source], AUTO_WIZARD[:destination], force: true)
   AutoWizard.setup
+
+  # set system init to done
+  UserInfo.current_user_id = 1
+  Setting.set('system_init_done', true)
 end
