@@ -23,5 +23,5 @@ end
 
 def run_auto_wizard
   FileUtils.ln(AUTO_WIZARD[:source], AUTO_WIZARD[:destination], force: true)
-  system('rails runner "AutoWizard.setup"')
+  AutoWizard.setup
 end
