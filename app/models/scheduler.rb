@@ -251,7 +251,8 @@ class Scheduler < ApplicationModel
 
     # restart job again
     if try_run_max > try_count
-      sleep(try_count) # wait between retries (see https://github.com/zammad/zammad/issues/1950)
+      # wait between retries (see https://github.com/zammad/zammad/issues/1950)
+      sleep(try_count) if Rails.env.production?
       _start_job(job, try_count, try_run_time)
     else
       # release thread lock and remove thread handle
