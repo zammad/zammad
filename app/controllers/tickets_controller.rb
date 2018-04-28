@@ -8,6 +8,7 @@ class TicketsController < ApplicationController
 
   prepend_before_action :authentication_check
   before_action :follow_up_possible_check, only: :update
+  before_action :validate_attributes, only: %i[create update]
 
   # GET /api/v1/tickets
   def index
@@ -700,4 +701,90 @@ class TicketsController < ApplicationController
     }
   end
 
+  # validate that all required attributes are supplied and that all attribute conditions are met
+  def validate_attributes
+    all_attributes = ObjectManager::Attribute.all.order('position ASC, name ASC')
+    active_attributes = all_attributes.select(&:active)
+    inactive_attributes = all_attributes.reject(&:active)
+
+    required_attributes = required_attributes_for_current_user(active_attributes, 'ticket.agent')
+    required_attributes += required_attributes_for_current_user(active_attributes, 'ticket.customer')
+
+    requires_date_check = active_attributes.select do |attribute|
+      %w[date datetime].include?(attribute.data_type) &&
+        attribute.data_option &&
+        # if a date-related attribute does not allow future or past dates, then it needs to be checked
+        (!attribute.data_option[:future] || !attribute.data_option[:past])
+    end
+
+    # remove all parameters for inactive attributes
+    inactive_attributes.each do |attribute|
+      params.delete(attribute.name) if params.include?(attribute.name)
+    end
+    required_attributes.each do |attribute|
+      validate_required_attribute attribute
+    end
+    requires_date_check.each do |attribute|
+      validate_date_attribute attribute
+    end
+  end
+
+  def required_attributes_for_current_user(attributes, user_role)
+    action = params[:action] == 'create' ? :create_middle : :edit
+    attributes.select do |attribute|
+      current_user.permissions?(user_role) &&
+        attribute.screens.key?(action) &&
+        attribute.screens[action].key?(user_role) &&
+        attribute.screens[action][user_role][:required]
+    end
+  end
+
+  def validate_required_attribute(attribute)
+    if !params.include?(attribute.name)
+      raise Exceptions::UnprocessableEntity, "Missing required attribute #{attribute.display}!"
+    end
+
+    if params[attribute.name].blank?
+      raise Exceptions::UnprocessableEntity, "Required attribute #{attribute.display} cannot be blank!"
+    end
+
+    return if !%w[date datetime].include? attribute.data_type
+
+    begin
+      datetime = Time.zone.parse params[attribute.name]
+      raise ArgumentError if datetime.blank?
+    rescue ArgumentError => ex
+      raise Exceptions::UnprocessableEntity, "Invalid #{attribute.data_type} string for attribute #{attribute.display}!"
+    end
+  end
+
+  def validate_date_attribute(attribute)
+    return if %w[date datetime].exclude?(attribute.data_type) ||
+              !params.include?(attribute.name) ||
+              params[attribute.name].blank?
+
+    begin
+      datetime = Time.zone.parse params[attribute.name]
+      raise ArgumentError if datetime.blank?
+    rescue ArgumentError => ex
+      raise Exceptions::UnprocessableEntity, "Invalid #{attribute.data_type} string for attribute #{attribute.display}!"
+    end
+
+    if attribute.data_type == 'date'
+      is_past = datetime < Time.current.midnight
+      is_future = datetime > Time.current.midnight
+    else
+      is_past = datetime < Time.current
+      is_future = !is_past
+    end
+
+    # if we do not allow past dates and the supplied date is in the past, reject it
+    if !attribute.data_option[:past] && is_past
+      raise Exceptions::UnprocessableEntity, "Attribute #{attribute.display} does not allow past dates!"
+    end
+    # if we do not allow future dates and the supplied date is in the future, reject it
+    if !attribute.data_option[:future] && is_future # rubocop:disable Style/GuardClause
+      raise Exceptions::UnprocessableEntity, "Attribute #{attribute.display} does not allow future dates!"
+    end
+  end
 end
