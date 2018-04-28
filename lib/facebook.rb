@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
 
-require 'koala'
-
 class Facebook
 
   attr_accessor :client, :account

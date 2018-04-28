@@ -1,7 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
-require 'mail'
-
 module Channel::EmailBuild
 
 =begin
@@ -152,7 +149,7 @@ Check if string is a complete html document. If not, add head and css styles.
 
     return html if html.match?(/<html>/i)
 
-    html_email_body = File.read('app/views/mailer/application_wrapper.html.erb')
+    html_email_body = File.read(Rails.root.join('app', 'views', 'mailer', 'application_wrapper.html.erb').to_s)
 
     html_email_body.gsub!('###html_email_css_font###', Setting.get('html_email_css_font'))
 

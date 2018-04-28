@@ -1,6 +1,6 @@
 # file is based on Twitter::Streaming::Client, needed to get custom_connection_handle
 # to close connection after config has changed
-require 'twitter/streaming/connection_custom'
+require_dependency 'twitter/streaming/connection_custom'
 
 class Twitter::Streaming::ClientCustom < Twitter::Streaming::Client
 

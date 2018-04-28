@@ -1,4 +1,4 @@
-require 'sequencer/unit/import/common/model/mixin/handle_failure'
+require_dependency 'sequencer/unit/import/common/model/mixin/handle_failure'
 
 class Sequencer
   class Unit

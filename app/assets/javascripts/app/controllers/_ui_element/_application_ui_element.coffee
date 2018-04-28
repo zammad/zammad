@@ -54,6 +54,7 @@ class App.UiElement.ApplicationUiElement
     else
       order = _.sortBy(
         _.keys(selection), (item) ->
+          return '' if !selection[item] || !selection[item].toString
           selection[item].toString().collationString()
       )
       for key in order
@@ -218,10 +219,16 @@ class App.UiElement.ApplicationUiElement
     value = valueOrigin
     if value is null || value is undefined
       value = ''
+    recordValue = record.value
+    if recordValue is null || recordValue is undefined
+      recordValue = ''
+    recordName = record.name
+    if recordName is null || recordName is undefined
+      recordName = ''
     if typeof value is 'string' || typeof value is 'number' || typeof value is 'boolean'
-      if record.value.toString() is value.toString() || record.name.toString() is value.toString()
+      if recordValue.toString() is value.toString() || recordName.toString() is value.toString()
         return true
-    else if ( value && record.value && _.include(value, record.value) ) || ( value && record.name && _.include(value, record.name) )
+    else if ( value && recordValue && _.include(value, recordValue) ) || ( value && recordName && _.include(value, recordName) )
       return true
     false
 

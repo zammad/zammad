@@ -46,9 +46,7 @@ class TestCase < Test::Unit::TestCase
   end
 
   def browser_instance
-    if !@browsers
-      @browsers = {}
-    end
+    @browsers ||= {}
     if ENV['REMOTE_URL'].blank?
       local_browser = Selenium::WebDriver.for(browser.to_sym, profile: profile)
       @browsers[local_browser.hash] = local_browser
@@ -138,7 +136,7 @@ class TestCase < Test::Unit::TestCase
     browser:     browser1,
     username:    'someuser',
     password:    'somepassword',
-    url:         'some url', # optional
+    url:         'some url', # optional, in case of aleady opened brower a reload is done because url is called again
     remember_me: true, # optional
     auto_wizard: false, # optional, in case of auto wizard, skip login
     success:     false, #optional

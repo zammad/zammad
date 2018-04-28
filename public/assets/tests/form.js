@@ -1265,3 +1265,36 @@ test("object manager form 3", function() {
   deepEqual(params, test_params, 'form param check')
 
 });
+
+test("form select with empty option list", function() {
+
+  $('#forms').append('<hr><h1>form select with empty option list</h1><form id="form14"></form>')
+  var el = $('#form14')
+  var defaults = {}
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'select1', display: 'Select1', tag: 'select', null: true, default: '', options: {}, relation: '', maxlength: 255 },
+        { name: 'select2', display: 'Select2', tag: 'select', null: true, default: '', options: {}, relation: '', maxlength: 255, nulloption: true },
+        { name: 'select3', display: 'Select3', tag: 'select', null: true, default: '', options: { undefined: 'A', null: 'B'} },
+        { name: 'select4', display: 'Select4', tag: 'select', null: true, default: '', options: { 'A': undefined, 'B': null} },
+        { name: 'select5', display: 'Select5', tag: 'select', null: true, default: 'A', options: { 'A': undefined, 'B': null} },
+        { name: 'select6', display: 'Select6', tag: 'select', null: true, default: undefined, options: { 'A': undefined, 'B': null} },
+      ],
+    },
+    params: defaults,
+    autofocus: true
+  });
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    select2: '',
+    select3: 'undefined',
+    select4: 'B',
+    select5: 'A',
+    select6: 'B',
+  }
+  deepEqual(params, test_params)
+
+});

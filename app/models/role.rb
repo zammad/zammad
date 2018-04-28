@@ -6,7 +6,6 @@ class Role < ApplicationModel
   include ChecksLatestChangeObserved
   include HasGroups
 
-  load 'role/assets.rb'
   include Role::Assets
 
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update

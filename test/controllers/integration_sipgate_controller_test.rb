@@ -2,7 +2,7 @@
 require 'test_helper'
 require 'rexml/document'
 
-class SipgateControllerTest < ActionDispatch::IntegrationTest
+class IntegrationSipgateControllerTest < ActionDispatch::IntegrationTest
   setup do
 
     Cti::Log.destroy_all

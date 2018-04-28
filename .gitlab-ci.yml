@@ -103,17 +103,6 @@ test:unit:postgresql:
     - ruby -I test/ test/integration/monitoring_controller_test.rb
     - rake db:drop
 
-test:integration:autowizard:
-  stage: test
-  tags:
-    - core
-  script:
-    - export RAILS_ENV=test
-    - rake db:create
-    - rake db:migrate
-    - ruby -I test/ test/integration/auto_wizard_test.rb
-    - rake db:drop
-
 test:integration:email_helper:
   stage: test
   tags:
@@ -264,17 +253,6 @@ test:integration:clearbit:
     - ruby -I test test/integration/clearbit_test.rb
     - rake db:drop
   allow_failure: true
-
-test:integration:sipgate:
-  stage: test
-  tags:
-    - core
-  script:
-    - export RAILS_ENV=test
-    - rake db:create
-    - rake db:migrate
-    - ruby -I test test/integration/sipgate_controller_test.rb
-    - rake db:drop
 
 test:integration:telegram:
   stage: test

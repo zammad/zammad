@@ -2,6 +2,7 @@
 
 class User
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

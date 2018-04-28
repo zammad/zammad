@@ -2,6 +2,7 @@
 
 class RecentView
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

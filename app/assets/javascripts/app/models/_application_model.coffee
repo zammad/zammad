@@ -406,10 +406,12 @@ set new attributes of model (remove already available attributes)
       clear = true
       if param.clear is true || param.clear is false
         clear = param.clear
-      if !@initFetchActive
+      if !@initFetchActives && @count() is 0
         @initFetchActive = true
-        @one 'refresh', (collection) ->
+        @one('refresh', (collection) =>
+          @initFetchActive = false
           callback(collection)
+        )
         @fetchFull(
           ->
           clear: clear
@@ -867,5 +869,7 @@ set new attributes of model (remove already available attributes)
     @configure_attributes = $.extend(true, [], @org_configure_attributes)
 
   @resetCallbacks: ->
-    @SUBSCRIPTION_ITEM = {}
-    @SUBSCRIPTION_COLLECTION = {}
+    if @SUBSCRIPTION_ITEM
+      @SUBSCRIPTION_ITEM = {}
+    if @SUBSCRIPTION_COLLECTION
+      @SUBSCRIPTION_COLLECTION = {}

@@ -1,5 +1,6 @@
 <div class="js-data">
   <div class="js-dataType"></div>
   <div class="js-dataMap" style="padding: 30px 0 0 30px;"></div>
-  <div class="js-dataScreens" style="padding: 30px 0 0 30px;"></div>
+  <div class="" style="padding-bottom: 10px"><%- @T('Here you define which authorization has access to the attribute.') %></div>
+  <div class="js-dataScreens"></div>
 </div>

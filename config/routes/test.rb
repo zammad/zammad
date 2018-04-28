@@ -3,6 +3,7 @@ Zammad::Application.routes.draw do
   match '/tests_core',                    to: 'tests#core',                       via: :get
   match '/tests_ui',                      to: 'tests#ui',                         via: :get
   match '/tests_model',                   to: 'tests#model',                      via: :get
+  match '/tests_model_binding',           to: 'tests#model_binding',              via: :get
   match '/tests_model_ui',                to: 'tests#model_ui',                   via: :get
   match '/tests_form',                    to: 'tests#form',                       via: :get
   match '/tests_form_tree_select',        to: 'tests#form_tree_select',           via: :get

@@ -2,9 +2,6 @@
 
 # encoding: utf-8
 
-require 'mail'
-require 'encode'
-
 class Channel::EmailParser
 
 =begin

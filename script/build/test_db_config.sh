@@ -53,22 +53,22 @@ if [ "$RDB" == 'postgresql' ]; then
   echo "  pool: 50" >> $DBFILE
   echo "  timeout: 5000" >> $DBFILE
   echo "  encoding: utf8" >> $DBFILE
-  echo "  username: root" >> $DBFILE
-  echo "  password: pass" >> $DBFILE
+  echo "  username: gitlab-runner" >> $DBFILE
+  echo "  password:" >> $DBFILE
   echo "test:" >> $DBFILE
   echo "  adapter: postgresql" >> $DBFILE
   echo "  database: $DB_TEST" >> $DBFILE
   echo "  pool: 50" >> $DBFILE
   echo "  timeout: 5000" >> $DBFILE
   echo "  encoding: utf8" >> $DBFILE
-  echo "  username: root" >> $DBFILE
-  echo "  password: pass" >> $DBFILE
+  echo "  username: gitlab-runner" >> $DBFILE
+  echo "  password:" >> $DBFILE
   echo "development:" >> $DBFILE
   echo "  adapter: postgresql" >> $DBFILE
   echo "  database: $DB_DEVELOPMENT" >> $DBFILE
   echo "  pool: 50" >> $DBFILE
   echo "  timeout: 5000" >> $DBFILE
   echo "  encoding: utf8" >> $DBFILE
-  echo "  username: root" >> $DBFILE
-  echo "  password: pass" >> $DBFILE
+  echo "  username: gitlab-runner" >> $DBFILE
+  echo "  password:" >> $DBFILE
 fi

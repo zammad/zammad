@@ -2,6 +2,7 @@
 
 class Organization
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

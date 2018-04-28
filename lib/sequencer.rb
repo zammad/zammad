@@ -1,5 +1,5 @@
-require 'mixin/rails_logger'
-require 'mixin/start_finish_logger'
+require_dependency 'mixin/rails_logger'
+require_dependency 'mixin/start_finish_logger'
 
 class Sequencer
   include ::Mixin::RailsLogger
