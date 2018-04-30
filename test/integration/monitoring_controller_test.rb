@@ -428,7 +428,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result['message'])
     assert(result['issues'])
     assert_equal(false, result['healthy'])
-    assert_equal("Channel: Email::Notification out  ;unprocessable mails: 1;scheduler not running;Failed to run import backend 'Import::Ldap'. Cause: Some bad error;Stuck import backend 'Import::Ldap' detected. Last update: #{15.minutes.ago}", result['message'])
+    assert_equal("Channel: Email::Notification out  ;unprocessable mails: 1;scheduler not running;Failed to run import backend 'Import::Ldap'. Cause: Some bad error;Stuck import backend 'Import::Ldap' detected. Last update: #{stuck_updated_at_timestamp}", result['message'])
 
     Setting.set('ldap_integration', false)
   end
