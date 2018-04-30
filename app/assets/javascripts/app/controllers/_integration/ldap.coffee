@@ -372,7 +372,7 @@ class ConnectionWizard extends App.WizardModal
         @wizardConfig.wizardData.roles = roles
 
         for key in ['user_uid', 'user_filter', 'group_uid', 'group_filter']
-          @wizardConfig[key] = data[key]
+          @wizardConfig[key] ?= data[key]
 
         @mappingShow()
 
