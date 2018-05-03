@@ -480,7 +480,7 @@ test:browser:integration:api_client_ruby:
     - git clone git@github.com:zammad/zammad-api-client-ruby.git || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - cd zammad-api-client-ruby
     - bundle install --jobs 8
-    - export TEST_URL=http://$IP:$BROWSER_PORT
+    - export TEST_URL=http://$IP:$BROWSER_PORT/
     - rspec || (cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1)
     - cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
