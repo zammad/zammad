@@ -60,7 +60,8 @@ example
 
 =end
 
-  def fetch(options, channel, check_type = '', verify_string = '')
+
+  def connect(options, timeout=45)
     ssl            = true
     starttls       = false
     port           = 993
@@ -91,12 +92,6 @@ example
 
     Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server})"
 
-    # on check, reduce open_timeout to have faster probing
-    timeout = 45
-    if check_type == 'check'
-      timeout = 6
-    end
-
     Timeout.timeout(timeout) do
       @imap = Net::IMAP.new(options[:host], port, ssl, nil, false)
       if starttls
@@ -109,10 +104,42 @@ example
     # select folder
     @imap.select(folder)
 
+    @imap
+  end
+
+
+  def place(options, mail)
+
+    @imap = connect(options)
+
+    @imap.append("INBOX.Sent", mail.to_s)
+    
+    disconnect
+
+  end 
+  
+
+  def fetch(options, channel, check_type = '', verify_string = '')
+
+    # on check, reduce open_timeout to have faster probing
+    timeout = 45
+    if check_type == 'check'
+      timeout = 6
+    end
+
+    if options[:keep_on_server] == true || options[:keep_on_server] == 'true'
+      keep_on_server = true
+    end
+
+    @imap = connect(options, timeout)
+
     # sort messages by date on server (if not supported), if not fetch messages via search (first in, first out)
     filter = ['ALL']
     if keep_on_server && check_type != 'check' && check_type != 'verify'
-      filter = %w[NOT SEEN]
+      #filter = %w[NOT SEEN]
+      if channel.preferences && channel.preferences[:last_fetch]
+        filter = ['SINCE', Net::IMAP.format_date(channel.preferences[:last_fetch] - 2.days)]
+      end
     end
     begin
       message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
