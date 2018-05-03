@@ -47,6 +47,10 @@ class App.TicketZoomArticleNew extends App.Controller
     if @defaults.body or @isIE10()
       @openTextarea(null, true)
 
+    if _.isArray(@defaults.attachments)
+      for attachment in @defaults.attachments
+        @renderAttachment(attachment)
+
     # set article type and expand text area
     @bind('ui::ticket::setArticleType', (data) =>
       return if data.ticket.id.toString() isnt @ticket_id.toString()

@@ -439,7 +439,7 @@ class App.TicketZoom extends App.Controller
       #if @shown
       #  @attributeBar.start()
 
-      @form_id = App.ControllerForm.formId()
+      @form_id = @taskGet('article').form_id || App.ControllerForm.formId()
 
       @articleNew = new App.TicketZoomArticleNew(
         ticket:    @ticket
@@ -666,7 +666,6 @@ class App.TicketZoom extends App.Controller
     else
       delete currentParams.article.attachments
 
-    # remove not needed attributes
     delete currentParams.article.form_id
 
     if @permissionCheck('ticket.customer')
@@ -966,6 +965,10 @@ class App.TicketZoom extends App.Controller
   taskGet: (area) =>
     return {} if !App.TaskManager.get(@taskKey)
     @localTaskData = App.TaskManager.get(@taskKey).state || {}
+
+    if _.isObject(@localTaskData.article) && _.isArray(App.TaskManager.get(@taskKey).attachments)
+      @localTaskData.article['attachments'] = App.TaskManager.get(@taskKey).attachments
+
     if area
       if !@localTaskData[area]
         @localTaskData[area] = {}
@@ -980,10 +983,15 @@ class App.TicketZoom extends App.Controller
 
   taskUpdateAll: (data) =>
     @localTaskData = data
+    @localTaskData.article['form_id'] = @form_id
     App.TaskManager.update(@taskKey, { 'state': @localTaskData })
 
   # reset task state
   taskReset: =>
+    @form_id = App.ControllerForm.formId()
+    @articleNew.form_id = @form_id
+    @articleNew.render()
+
     @localTaskData =
       ticket:  {}
       article: {}

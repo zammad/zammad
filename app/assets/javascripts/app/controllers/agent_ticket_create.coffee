@@ -256,6 +256,8 @@ class App.TicketCreate extends App.Controller
       params = template.options
     else if App.TaskManager.get(@taskKey) && !_.isEmpty(App.TaskManager.get(@taskKey).state)
       params = App.TaskManager.get(@taskKey).state
+      params.attachments = App.TaskManager.get(@taskKey).attachments
+
       if !_.isEmpty(params['form_id'])
         @formId = params['form_id']
 
