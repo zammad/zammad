@@ -270,7 +270,7 @@ send via account
 
       driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
       driver_instance = driver_class.new
-      result = driver_instance.send(adapter_options, mail_params, notification)
+      result = driver_instance.send(adapter_options, mail_params, self, notification)
       self.status_out   = 'ok'
       self.last_log_out = ''
       save!

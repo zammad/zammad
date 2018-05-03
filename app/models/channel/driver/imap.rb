@@ -90,7 +90,7 @@ example
       folder = options[:folder]
     end
 
-    Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server})"
+    Rails.logger.info "connecting imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server})"
 
     Timeout.timeout(timeout) do
       @imap = Net::IMAP.new(options[:host], port, ssl, nil, false)
@@ -112,7 +112,7 @@ example
 
     @imap = connect(options)
 
-    @imap.append("INBOX.Sent", mail.to_s)
+    @imap.append("INBOX.Sent", mail.to_s, [:Seen])
     
     disconnect
 

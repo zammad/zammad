@@ -100,12 +100,13 @@ returns
       },
     },
     twitter_attributes,
+    channel,
     notification
   )
 
 =end
 
-  def send(options, article, _notification = false)
+  def send(options, article, _channel, _notification = false)
 
     # return if we run import mode
     return if Setting.get('import_mode')
