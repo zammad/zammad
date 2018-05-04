@@ -153,7 +153,7 @@ returns
       permission = Permission.lookup(id: permission_id)
       raise "Unable to find permission for id #{permission_id}" if !permission
       raise "Permission #{permission.name} is disabled" if permission.preferences[:disabled] == true
-      next unless permission.preferences[:not]
+      next if !permission.preferences[:not]
       permission.preferences[:not].each do |local_permission_name|
         local_permission = Permission.lookup(name: local_permission_name)
         next if !local_permission

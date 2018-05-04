@@ -13,7 +13,6 @@ class Organization < ApplicationModel
   include Organization::Search
   include Organization::SearchIndex
   has_many :members, class_name: 'User'
-  # rubocop:enable Rails/InverseOf
 
   before_create :domain_cleanup
   before_update :domain_cleanup

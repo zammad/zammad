@@ -134,9 +134,7 @@ satinize html string based on whiltelist
         value = node[key]
         node.delete(key)
         next if value.blank?
-        unless value.match?(/%|px|em/i)
-          value += 'px'
-        end
+        value += 'px' if !value.match?(/%|px|em/i)
         node['style'] += "#{key}:#{value}"
       end
 

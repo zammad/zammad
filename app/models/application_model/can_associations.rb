@@ -376,7 +376,7 @@ returns
         next if !assoc_name.to_s.end_with?('s')
         ref_names = "#{assoc_name.to_s.chomp('s')}_ids"
         generic_object_tmp = new
-        next unless generic_object_tmp.respond_to?(ref_names) # if we do have an _ids attribute
+        next if !generic_object_tmp.respond_to?(ref_names) # if we do have an _ids attribute
         next if data[ref_names.to_sym] # next if we have already the _ids filled
 
         # get association class and do lookup

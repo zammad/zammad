@@ -45,7 +45,7 @@ class SettingsController < ApplicationController
     end
 
     # validate image
-    unless clean_params[:logo].match?(/^data:image/i)
+    if !clean_params[:logo].match?(/^data:image/i)
       render json: {
         result: 'invalid',
         message: 'Invalid payload, need data:image in logo param',

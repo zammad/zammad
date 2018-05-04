@@ -25,7 +25,7 @@ def before_fork
   # remember open file handles
   @files_to_reopen = []
   ObjectSpace.each_object(File) do |file|
-    @files_to_reopen << file unless file.closed?
+    @files_to_reopen << file if !file.closed?
   end
 end
 

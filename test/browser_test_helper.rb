@@ -104,7 +104,7 @@ class TestCase < Test::Unit::TestCase
     browser_width = ENV['BROWSER_WIDTH'] || 1024
     browser_height = ENV['BROWSER_HEIGHT'] || 800
     local_browser.manage.window.resize_to(browser_width, browser_height)
-    unless ENV['REMOTE_URL']&.match?(/saucelabs|(grid|ci)\.(zammad\.org|znuny\.com)/i)
+    if !ENV['REMOTE_URL']&.match?(/saucelabs|(grid|ci)\.(zammad\.org|znuny\.com)/i)
       if @browsers.count == 1
         local_browser.manage.window.move_to(0, 0)
       else
@@ -362,7 +362,7 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     sleep 0.7
     current_url = instance.current_url
-    unless current_url.match?(/#{Regexp.quote(params[:url])}/)
+    if !current_url.match?(/#{Regexp.quote(params[:url])}/)
       screenshot(browser: instance, comment: 'location_check_failed')
       raise "url #{current_url} is not matching #{params[:url]}"
     end
@@ -1352,7 +1352,7 @@ wait untill text in selector disabppears
       if params[:value]
         begin
           text = instance.find_elements(css: params[:css])[0].text
-          unless text.match?(/#{params[:value]}/i)
+          if !text.match?(/#{params[:value]}/i)
             assert(true, "not matching '#{params[:value]}' in text '#{text}'")
             sleep 1
             return true
@@ -2427,7 +2427,7 @@ wait untill text in selector disabppears
     element.click
     sleep 1
     number = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0].text
-    unless number.match?(/#{params[:number]}/)
+    if !number.match?(/#{params[:number]}/)
       screenshot(browser: instance, comment: 'ticket_open_by_overview_open_failed_failed')
       raise "unable to open ticket #{params[:number]}!"
     end
@@ -2473,7 +2473,7 @@ wait untill text in selector disabppears
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:number]}') .nav-tab-icon\").first().click()")
     sleep 1
     number = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0].text
-    unless number.match?(/#{params[:number]}/)
+    if !number.match?(/#{params[:number]}/)
       screenshot(browser: instance, comment: 'ticket_open_by_search_failed')
       raise "unable to search/find ticket #{params[:number]}!"
     end
@@ -2509,7 +2509,7 @@ wait untill text in selector disabppears
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
     sleep 1
     title = instance.find_elements(css: '.content.active .ticketZoom-header .js-objectTitle')[0].text
-    unless title.match?(/#{params[:title]}/)
+    if !title.match?(/#{params[:title]}/)
       screenshot(browser: instance, comment: 'ticket_open_by_title_failed')
       raise "unable to search/find ticket #{params[:title]}!"
     end
@@ -2597,7 +2597,7 @@ wait untill text in selector disabppears
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
     name = instance.find_elements(css: '.content.active h1')[0].text
-    unless name.match?(/#{params[:value]}/)
+    if !name.match?(/#{params[:value]}/)
       screenshot(browser: instance, comment: 'organization_open_by_search_failed')
       raise "unable to search/find org #{params[:value]}!"
     end
@@ -2632,7 +2632,7 @@ wait untill text in selector disabppears
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
     name = instance.find_elements(css: '.content.active h1')[0].text
-    unless name.match?(/#{params[:value]}/)
+    if !name.match?(/#{params[:value]}/)
       screenshot(browser: instance, comment: 'user_open_by_search_failed')
       raise "unable to search/find user #{params[:value]}!"
     end

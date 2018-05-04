@@ -144,13 +144,9 @@ module Channel::Filter::IdentifySender
   end
 
   def self.user_create(data, role_ids = nil)
-    unless data[:email].match?(/@/)
-      data[:email] += '@local'
-    end
-    user = User.find_by(email: data[:email].downcase)
-    if !user
-      user = User.find_by(login: data[:email].downcase)
-    end
+    data[:email] += '@local' if !data[:email].match?(/@/)
+    user = User.find_by(email: data[:email].downcase) ||
+           User.find_by(login: data[:email].downcase)
 
     # check if firstname or lastname need to be updated
     if user

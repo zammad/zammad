@@ -7,7 +7,6 @@ class History < ApplicationModel
   belongs_to :history_type,      class_name: 'History::Type'
   belongs_to :history_object,    class_name: 'History::Object'
   belongs_to :history_attribute, class_name: 'History::Attribute'
-  # rubocop:enable Rails/InverseOf
 
   # the noop is needed since Layout/EmptyLines detects
   # the block commend below wrongly as the measurement of

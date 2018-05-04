@@ -394,7 +394,7 @@ returns
           last_width = file['width'].to_i
           last_height = file['height'].to_i
         end
-        next unless file['width'].to_i < max_width && last_width < file['width'].to_i
+        next if file['width'].to_i >= max_width || file['width'].to_i <= last_width
         photo = file
         last_width = file['width'].to_i
         last_height = file['height'].to_i

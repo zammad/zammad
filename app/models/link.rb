@@ -3,7 +3,6 @@
 class Link < ApplicationModel
   belongs_to :link_type,   class_name: 'Link::Type'
   belongs_to :link_object, class_name: 'Link::Object'
-  # rubocop:enable Rails/InverseOf
 
   after_destroy :touch_link_references
 

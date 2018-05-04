@@ -91,7 +91,7 @@ returns
         next if !mail
 
         # check how many content messages we have, for notice used
-        unless mail.match?(/x-zammad-ignore/i)
+        if !mail.match?(/x-zammad-ignore/i)
           content_messages += 1
           break if content_max_check < content_messages
         end

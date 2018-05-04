@@ -296,7 +296,7 @@ returns
           row.push record[key]
         end
         rows.push row
-        next unless rows_to_add.count.positive?
+        next if rows_to_add.count.zero?
         rows_to_add.each do |item|
           rows.push item
         end
