@@ -10,7 +10,7 @@ class Channel::Driver::Sendmail
     mail.delivery_method delivery_method
 
     instance = Channel::Driver::Imap.new
-    instance.place(channel.options[:inbound][:options], mail)
+    instance.place_reply(channel.options[:inbound][:options], mail)
 
     mail.deliver
   end

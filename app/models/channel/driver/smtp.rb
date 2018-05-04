@@ -76,7 +76,7 @@ class Channel::Driver::Smtp
     mail.delivery_method :smtp, smtp_params
     
     instance = Channel::Driver::Imap.new
-    insrance.place(channel.options[:inbound][:options], mail)
+    insrance.placei_reply(channel.options[:inbound][:options], mail)
   
     mail.deliver
   end

@@ -108,12 +108,26 @@ example
   end
 
 
-  def place(options, mail)
+  def place_reply(options, mail)
 
     @imap = connect(options)
 
     @imap.append("INBOX.Sent", mail.to_s, [:Seen])
-    
+
+    @imap.select("INBOX")
+
+    mail.header.fields.each do |field|
+      if field.name=='In-Reply-To'
+        search_message_id = field.value
+        replied_message_id = @imap.search(["HEADER", "Message-ID", search_message_id])[0]	
+        
+        if !replied_message_id.nil?
+          @imap.store(replied_message_id, '+FLAGS', [:Answered])
+        end
+        break
+      end
+    end
+
     disconnect
 
   end 
