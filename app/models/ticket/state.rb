@@ -3,7 +3,6 @@ class Ticket::State < ApplicationModel
   include ChecksLatestChangeObserved
 
   belongs_to :state_type, class_name: 'Ticket::StateType', inverse_of: :states
-  # rubocop:disable Rails/InverseOf
   belongs_to :next_state, class_name: 'Ticket::State'
   # rubocop:enable Rails/InverseOf
 

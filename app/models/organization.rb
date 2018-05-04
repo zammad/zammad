@@ -12,8 +12,6 @@ class Organization < ApplicationModel
   include Organization::Assets
   include Organization::Search
   include Organization::SearchIndex
-
-  # rubocop:disable Rails/InverseOf
   has_many :members, class_name: 'User'
   # rubocop:enable Rails/InverseOf
 

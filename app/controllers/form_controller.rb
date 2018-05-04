@@ -43,7 +43,7 @@ class FormController < ApplicationController
     end
     if params[:email].blank?
       errors['email'] = 'required'
-    elsif params[:email] !~ /@/
+    elsif !/@/.match?(params[:email])
       errors['email'] = 'invalid'
     elsif params[:email].match?(/(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s|\.\.)/)
       errors['email'] = 'invalid'
@@ -67,7 +67,7 @@ class FormController < ApplicationController
         Rails.logger.info "Can't verify email #{params[:email]}: #{message}"
 
         # ignore 450, graylistings
-        if message !~ /450/
+        unless message.match?(/450/)
           errors['email'] = message
         end
       end

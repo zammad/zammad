@@ -37,7 +37,7 @@ class AgentTicketTagTest < TestCase
       css: '.active .newTicket button.js-submit',
     )
     sleep 5
-    if @browser.current_url !~ /#{Regexp.quote('#ticket/zoom/')}/
+    unless @browser.current_url.match?(/#{Regexp.quote('#ticket/zoom/')}/)
       raise 'Unable to create ticket!'
     end
 
@@ -69,7 +69,7 @@ class AgentTicketTagTest < TestCase
     click(css: '#global-search')
     click(css: '.active .newTicket button.js-submit')
     sleep 5
-    if @browser.current_url !~ /#{Regexp.quote('#ticket/zoom/')}/
+    unless @browser.current_url.match?(/#{Regexp.quote('#ticket/zoom/')}/)
       raise 'Unable to create ticket!'
     end
 
@@ -428,7 +428,7 @@ class AgentTicketTagTest < TestCase
       css: '.active .newTicket button.js-submit',
     )
     sleep 5
-    if @browser.current_url !~ /#{Regexp.quote('#ticket/zoom/')}/
+    unless @browser.current_url.match?(/#{Regexp.quote('#ticket/zoom/')}/)
       raise 'Unable to create ticket!'
     end
 

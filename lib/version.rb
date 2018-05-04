@@ -18,6 +18,6 @@ returns
     File.read(Rails.root.join('VERSION')).strip
   rescue => e
     Rails.logger.error "VERSION file could not be read: #{e}"
-    return ''
+    ''
   end
 end

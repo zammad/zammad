@@ -144,7 +144,7 @@ module Channel::Filter::IdentifySender
   end
 
   def self.user_create(data, role_ids = nil)
-    if data[:email] !~ /@/
+    unless data[:email].match?(/@/)
       data[:email] += '@local'
     end
     user = User.find_by(email: data[:email].downcase)

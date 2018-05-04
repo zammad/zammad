@@ -57,8 +57,6 @@ class Ticket < ApplicationModel
   belongs_to    :organization
   has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update, dependent: :destroy, inverse_of: :ticket
   has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy, inverse_of: :ticket
-
-  # rubocop:disable Rails/InverseOf
   belongs_to    :state,                 class_name: 'Ticket::State'
   belongs_to    :priority,              class_name: 'Ticket::Priority'
   belongs_to    :owner,                 class_name: 'User'
