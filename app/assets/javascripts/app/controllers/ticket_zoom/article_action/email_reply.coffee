@@ -147,7 +147,18 @@ class EmailReply extends App.Controller
         selected = App.Utils.text2html(selected)
 
     if selected
-      selected = "<div><br><br/></div><div><blockquote type=\"cite\">#{selected}</blockquote></div><div><br></div>"
+      date_format = ((d) -> 
+			d = new Date(d); 
+			return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getMonth()]+" "+
+				d.getDate()+", "+
+				d.getFullYear()+", at "+
+				("0"+((d.getHours()+11)%12+1)).slice(-2)+":"+
+				("0"+d.getMinutes()).slice(-2)+" "+
+				(if d.getHours()>=12 then "PM" else "AM")
+			)
+
+      quote_header = "On #{date_format(article.updated_by.created_at)}, #{article.updated_by.firstname} #{article.updated_by.lastname} &lt;#{article.updated_by.email}&gt; wrote:"
+      selected = "<div><br><br/></div><div><blockquote type=\"cite\"><br>#{quote_header}<br><br>#{selected}<br></blockquote></div><div><br></div>"
 
       # add selected text to body
       body = selected + body
