@@ -4,8 +4,11 @@ require_dependency 'store/object'
 require_dependency 'store/file'
 
 class Store < ApplicationModel
+
+  # rubocop:disable Rails/InverseOf
   belongs_to :store_object, class_name: 'Store::Object'
   belongs_to :store_file,   class_name: 'Store::File'
+  # rubocop:enable Rails/InverseOf
 
   validates :filename, presence: true
 

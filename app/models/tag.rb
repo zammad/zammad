@@ -1,8 +1,11 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Tag < ApplicationModel
+
+  # rubocop:disable Rails/InverseOf
   belongs_to :tag_object, class_name: 'Tag::Object'
   belongs_to :tag_item,   class_name: 'Tag::Item'
+  # rubocop:enable Rails/InverseOf
 
   # the noop is needed since Layout/EmptyLines detects
   # the block commend below wrongly as the measurement of

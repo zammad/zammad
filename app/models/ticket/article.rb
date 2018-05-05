@@ -11,11 +11,14 @@ class Ticket::Article < ApplicationModel
 
   belongs_to :ticket
   has_one    :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', foreign_key: :ticket_article_id, dependent: :destroy, inverse_of: :ticket_article
+
+  # rubocop:disable Rails/InverseOf
   belongs_to :type,       class_name: 'Ticket::Article::Type'
   belongs_to :sender,     class_name: 'Ticket::Article::Sender'
   belongs_to :created_by, class_name: 'User'
   belongs_to :updated_by, class_name: 'User'
   belongs_to :origin_by,  class_name: 'User'
+  # rubocop:enable Rails/InverseOf
 
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5

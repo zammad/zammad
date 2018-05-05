@@ -4,9 +4,12 @@ class History < ApplicationModel
   include History::Assets
 
   self.table_name = 'histories'
+
+  # rubocop:disable Rails/InverseOf
   belongs_to :history_type,      class_name: 'History::Type'
   belongs_to :history_object,    class_name: 'History::Object'
   belongs_to :history_attribute, class_name: 'History::Attribute'
+  # rubocop:enable Rails/InverseOf
 
   # the noop is needed since Layout/EmptyLines detects
   # the block commend below wrongly as the measurement of
