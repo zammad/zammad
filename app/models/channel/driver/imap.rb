@@ -101,8 +101,8 @@ example
 
     @imap.login(options[:user], options[:password])
 
-    # select folder
-    @imap.select(folder)
+    # select folder in read only mode, when setting flags, the user must actually select the folder
+    @imap.examine(folder)
 
     @imap
   end
@@ -204,6 +204,7 @@ example
         next if !subject
         next if subject !~ /#{verify_string}/
         Rails.logger.info " - verify email #{verify_string} found"
+        @imap.select(options[:folder])
         @imap.store(message_id, '+FLAGS', [:Deleted])
         @imap.expunge()
         disconnect
