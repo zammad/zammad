@@ -28,6 +28,12 @@ targets:
       - elasticsearch
       - nginx|apache2
       - postgresql|mysql-server|mariadb-server|sqlite
+  ubuntu-18.04:
+    dependencies:
+      - curl
+      - elasticsearch
+      - nginx|apache2
+      - postgresql|mysql-server|mariadb-server|sqlite
   sles-12:
     dependencies:
       - curl
