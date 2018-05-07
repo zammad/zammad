@@ -994,7 +994,9 @@ class App.Utils
       if !_.isEmpty(article.to)
         recipients = App.Utils.parseAddressListLocal(article.to)
         if recipients && recipients[0]
-          recipientIsLocal = isLocalAddress(recipients[0])
+          for localRecipient in recipients
+            recipientIsLocal = isLocalAddress(localRecipient)
+            break if recipientIsLocal is true
 
       # sender is local
       if senderIsLocal
