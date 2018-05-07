@@ -29,7 +29,7 @@ class Channel::Driver::Facebook
     }
   end
 
-  def send(options, fb_object_id, article, _channel, _notification = false)
+  def send(options, fb_object_id, article, _channel = nil, _notification = false)
     access_token = nil
     options['pages'].each do |page|
       next if page['id'].to_s != fb_object_id.to_s

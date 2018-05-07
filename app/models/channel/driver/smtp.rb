@@ -22,7 +22,7 @@ class Channel::Driver::Smtp
 
 =end
 
-  def send(options, attr, channel, notification = false)
+  def send(options, attr, channel = nil, notification = false)
 
     # return if we run import mode
     return if Setting.get('import_mode')
@@ -75,9 +75,11 @@ class Channel::Driver::Smtp
     end
     mail.delivery_method :smtp, smtp_params
     
-    instance = Channel::Driver::Imap.new
-    insrance.placei_reply(channel.options[:inbound][:options], mail)
-  
+    if !channel.nil?
+        instance = Channel::Driver::Imap.new
+        instance.place_reply(channel.options[:inbound][:options], mail)
+    end
+
     mail.deliver
   end
 end

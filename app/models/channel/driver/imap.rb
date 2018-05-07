@@ -68,7 +68,9 @@ example
     keep_on_server = false
     folder         = 'INBOX'
     if options[:keep_on_server] == true || options[:keep_on_server] == 'true'
-      keep_on_server = true
+      keep_on_server = 1
+    elsif options[:keep_on_server] == 2 || options[:keep_on_server] == '2'
+      keep_on_server = 2
     end
 
     ssl = options.key?(:ssl) && options[:ssl] == true
@@ -101,7 +103,7 @@ example
 
     @imap.login(options[:user], options[:password])
 
-    # select folder in read only mode, when setting flags, the user must actually select the folder
+    # select folder in read only mode, when setting flags, the user must actually select the folder, this is safer
     @imap.examine(folder)
 
     @imap
@@ -110,12 +112,28 @@ example
 
   def place_reply(options, mail)
 
+    if options[:keep_on_server] == true || options[:keep_on_server] == 'true'
+      keep_on_server = 1
+    elsif options[:keep_on_server] == 2 || options[:keep_on_server] == '2'
+      keep_on_server = 2
+    end
+
+    return if !keep_on_server
+
+    return if options[:sent_folder].to_s.empty?
+    target_mailbox = options[:sent_folder]
+    
+    main_folder = "INBOX"
+    if options[:folder].present?
+      main_folder = options[:folder]
+    end
+
     @imap = connect(options)
 
-    @imap.append("INBOX.Sent", mail.to_s, [:Seen])
+    #@imap.create(target_mailbox) if !@imap.list('', target_mailbox)
+    @imap.append(target_mailbox, mail.to_s, [:Seen])
 
-    @imap.select("INBOX")
-
+    @imap.select(main_folder)
     mail.header.fields.each do |field|
       if field.name=='In-Reply-To'
         search_message_id = field.value
@@ -129,6 +147,7 @@ example
     end
 
     disconnect
+    return
 
   end 
   
@@ -142,25 +161,32 @@ example
     end
 
     if options[:keep_on_server] == true || options[:keep_on_server] == 'true'
-      keep_on_server = true
+      keep_on_server = 1
+    elsif options[:keep_on_server] == 2 || options[:keep_on_server] == '2'
+      keep_on_server = 2
+    end
+
+    main_folder = "INBOX"
+    if options[:folder].present?
+      main_folder = options[:folder]
+    end
+    
+    if options[:sent_folder].present?
+      sent_folder = options[:sent_folder]
     end
 
     @imap = connect(options, timeout)
 
     # sort messages by date on server (if not supported), if not fetch messages via search (first in, first out)
-    filter = ['ALL']
-    if keep_on_server && check_type != 'check' && check_type != 'verify'
-      #filter = %w[NOT SEEN]
-      if channel.preferences && channel.preferences[:last_fetch]
-        filter = ['SINCE', Net::IMAP.format_date(channel.preferences[:last_fetch] - 2.days)]
+    if check_type == 'check' || check_type == 'verify'
+      filter = ['ALL']
+      begin
+        message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
+      rescue
+        message_ids = @imap.search(filter)
       end
     end
-    begin
-      message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
-    rescue
-      message_ids = @imap.search(filter)
-    end
-
+    
     # check mode only
     if check_type == 'check'
       Rails.logger.info 'check only mode, fetch no emails'
@@ -204,7 +230,7 @@ example
         next if !subject
         next if subject !~ /#{verify_string}/
         Rails.logger.info " - verify email #{verify_string} found"
-        @imap.select(options[:folder])
+        @imap.select(main_folder)
         @imap.store(message_id, '+FLAGS', [:Deleted])
         @imap.expunge()
         disconnect
@@ -219,48 +245,75 @@ example
       }
     end
 
-    # fetch regular messages
-    count_all     = message_ids.count
-    count         = 0
+
+    # fetch regular messages from both folders if defined
+    
     count_fetched = 0
-    notice        = ''
-    message_ids.each do |message_id|
-      count += 1
-      Rails.logger.info " - message #{count}/#{count_all}"
+    notice = ''
 
-      message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'ENVELOPE', 'FLAGS', 'INTERNALDATE'])[0]
-
-      # ignore to big messages
-      info = too_big?(message_meta, count, count_all)
-      if info
-        notice += "#{info}\n"
-        next
-      end
-
-      # ignore deleted messages
-      next if deleted?(message_meta, count, count_all)
-
-      # ignore already imported
-      next if already_imported?(message_id, message_meta, count, count_all, keep_on_server, channel)
-
-      # delete email from server after article was created
-      msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
-      next if !msg
-      process(channel, msg, false)
-      if !keep_on_server
-        @imap.store(message_id, '+FLAGS', [:Deleted])
+    [main_folder, sent_folder].each do |folder|
+      
+      continue if folder.to_s.empty?
+      
+      if keep_on_server != 2
+        #@imap.select(folder)
+        @imap.examine(folder)
       else
-        @imap.store(message_id, '+FLAGS', [:Seen])
+        @imap.examine(folder)
       end
-      count_fetched += 1
+
+
+      filter = ['ALL']
+      if keep_on_server==1 
+        filter = %w[NOT SEEN]
+      elsif keep_on_server==2 && channel.preferences && channel.preferences[:last_fetch]
+        filter = ['SINCE', Net::IMAP.format_date(channel.preferences[:last_fetch] - 2.days)]
+      end
+
+      message_ids = @imap.search(filter)
+
+      count_all     = message_ids.count
+      count         = 0
+      
+      message_ids.each do |message_id|
+        count += 1
+        Rails.logger.info " - message #{count}/#{count_all} in #{folder}"
+
+        message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'ENVELOPE', 'FLAGS', 'INTERNALDATE'])[0]
+  
+        # ignore to big messages
+        info = too_big?(message_meta, count, count_all)
+        if info
+          notice += "#{info}\n"
+          next
+        end
+
+        # ignore deleted messages
+        next if deleted?(message_meta, count, count_all)
+
+        # ignore already imported
+        next if already_imported?(message_id, message_meta, count, count_all, keep_on_server,channel)
+
+        # delete email from server after article was created
+        msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
+        next if !msg
+        process(channel, msg, false)
+        if !keep_on_server
+          @imap.store(message_id, '+FLAGS', [:Deleted])
+        elsif keep_on_server == 1
+          @imap.store(message_id, '+FLAGS', [:Seen])
+        end
+        count_fetched += 1
+      end
+      if !keep_on_server
+        @imap.expunge()
+      end
+      if count.zero?
+        Rails.logger.info " - no messages in #{folder}"
+      end
     end
-    if !keep_on_server
-      @imap.expunge()
-    end
+
     disconnect
-    if count.zero?
-      Rails.logger.info ' - no message'
-    end
     Rails.logger.info 'done'
     {
       result: 'ok',
@@ -304,12 +357,15 @@ returns
 
     # verify if message is already imported via same channel, if not, import it again
     ticket = article.ticket
-    if ticket&.preferences && ticket.preferences[:channel_id].present? && channel.present?
-      return false if ticket.preferences[:channel_id] != channel[:id]
+    #if ticket&.preferences && ticket.preferences[:channel_id].present? && channel.present?
+    #  return false if ticket.preferences[:channel_id] != channel[:id]
+    #end
+
+    if keep_on_server == 1
+      @imap.store(message_id, '+FLAGS', [:Seen])
+      Rails.logger.info "  - ignore message #{count}/#{count_all} - because message message id already imported"
     end
 
-    @imap.store(message_id, '+FLAGS', [:Seen])
-    Rails.logger.info "  - ignore message #{count}/#{count_all} - because message message id already imported"
     true
   end
 

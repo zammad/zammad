@@ -581,16 +581,19 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
       { name: 'options::ssl',             display: 'SSL/STARTTLS',      tag: 'boolean', null: true, options: { true: 'yes', false: 'no'  }, default: true, translate: true, item_class: 'formGroup--halfSize' },
       { name: 'options::port',            display: 'Port',     tag: 'input',  type: 'text', limit: 6,   null: true, autocapitalize: false,  default: '993', item_class: 'formGroup--halfSize' },
       { name: 'options::folder',          display: 'Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
-      { name: 'options::keep_on_server',  display: 'Keep messages on server', tag: 'boolean', null: true, options: { true: 'yes', false: 'no' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
+      { name: 'options::sent_folder',     display: 'Sent Folder',   tag: 'input',  type: 'text', limit: 120, null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
+      { name: 'options::keep_on_server',  display: 'Keep messages on server', tag: 'boolean', null: true, options: { 2: 'yes (read only)',  true: 'yes (mark read)', false: 'no (delete)' }, translate: true, default: false, item_class: 'formGroup--halfSize' },
     ]
 
     showHideFolder = (params, attribute, attributes, classname, form, ui) ->
       return if !params
       if params.adapter is 'imap'
         ui.show('options::folder')
+        ui.show('options::sent_folder')
         ui.show('options::keep_on_server')
         return
       ui.hide('options::folder')
+      ui.hide('options::sent_folder')
       ui.hide('options::keep_on_server')
 
     handlePort = (params, attribute, attributes, classname, form, ui) ->
@@ -687,8 +690,8 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
           if data.setting
             for key, value of data.setting
               @account[key] = value
-
-          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
+          
+          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || (@account['inbound']['options']['keep_on_server'] isnt true && @account['inbound']['options']['keep_on_server'] isnt "2"))
             message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-intro')
@@ -744,8 +747,8 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
 
           # remember account settings
           @account.inbound = params
-
-          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || @account['inbound']['options']['keep_on_server'] isnt true)
+          
+          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || (@account['inbound']['options']['keep_on_server'] isnt true && @account['inbound']['options']['keep_on_server'] != "2"))
             message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
