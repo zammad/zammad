@@ -2603,6 +2603,45 @@ test('check getRecipientArticle format', function() {
   verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, false)
   deepEqual(verify, result)
 
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'agent@example.com',
+  }
+  ticket = {
+    customer: agent,
+  }
+  article = {
+    message_id: 'message_id20',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'Agent <Agent@Example.com>',
+    to: 'somebodyelse@example.com, Zammad <zammad@example.com>',
+    cc: '',
+  }
+  result = {
+    to:          'agent@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id20',
+  }
+  email_addresses = [
+    {
+      email: 'zammad@example.com',
+    },
+    {
+      email: 'zammad2@example.com',
+    }
+  ]
+  verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, false)
+  deepEqual(verify, result)
+
 });
 
 }
