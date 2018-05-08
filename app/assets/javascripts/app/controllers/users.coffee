@@ -67,7 +67,6 @@ class Index extends App.ControllerSubContent
       value
 
     switchTo = (id,e) =>
-
       e.preventDefault()
       e.stopPropagation()
       @disconnectClient()
@@ -87,7 +86,6 @@ class Index extends App.ControllerSubContent
       )
 
     edit = (id, e) =>
-
       e.preventDefault()
       item = App.User.find(id)
 
@@ -134,7 +132,6 @@ class Index extends App.ControllerSubContent
     )
 
   search: =>
-
     role_ids = []
     @$('.tab.active').each( (i,d) ->
       role_ids.push $(d).data('id')
@@ -158,7 +155,6 @@ class Index extends App.ControllerSubContent
     )
 
   recent: =>
-
     role_ids = []
     @$('.tab.active').each( (i,d) ->
       role_ids.push $(d).data('id')
@@ -182,7 +178,6 @@ class Index extends App.ControllerSubContent
     )
 
   new: (e) ->
-
     e.preventDefault()
     new App.ControllerGenericNew(
       pageData:

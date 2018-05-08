@@ -1,8 +1,6 @@
-# coffeelint: disable=camel_case_classes
-class App.UiElement.autocompletion_ajax
+class App.UiElement.autocompletion_multiple_ajax
   @render: (attribute, params = {}) ->
-
-    if params[attribute.name] || attribute.value
+    if params[attribute.name]?.length > 0 || attribute.value?.length > 0
       object = App[attribute.relation].find(params[attribute.name] || attribute.value)
       valueName = object.displayName()
 
@@ -12,7 +10,7 @@ class App.UiElement.autocompletion_ajax
         value:       params[attribute.name] || attribute.value
         valueName:   valueName
         name:        attribute.name
-        id:          params.organization_ids || attribute.value
+        id:          attribute.value
         placeholder: App.i18n.translateInline('Search...')
         limit:       40
         object:      attribute.relation

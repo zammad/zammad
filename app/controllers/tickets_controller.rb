@@ -89,7 +89,7 @@ class TicketsController < ApplicationController
 
     # overwrite params
     if !current_user.permissions?('ticket.agent')
-      %i[owner owner_id customer customer_id organization preferences].each do |key|
+      %i[owner owner_id customer customer_id organization organization_id preferences].each do |key|
         clean_params.delete(key)
       end
       clean_params[:customer_id] = current_user.id

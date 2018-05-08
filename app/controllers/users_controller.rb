@@ -113,6 +113,7 @@ class UsersController < ApplicationController
   def create
     clean_params = User.association_name_to_id_convert(params)
     clean_params = User.param_cleanup(clean_params, true)
+
     # check if it's first user, the admin user
     # inital admin account
     count = User.all.count
@@ -508,10 +509,10 @@ class UsersController < ApplicationController
     user_ids = []
     assets   = {}
     user_all.each do |user|
-      # byebug
       assets = user.assets(assets)
       user_ids.push user.id
     end
+
     # return result
     render json: {
       assets: assets,

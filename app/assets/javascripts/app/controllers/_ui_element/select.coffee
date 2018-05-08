@@ -20,9 +20,6 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
     # sort attribute.options
     @sortOptions(attribute, params)
 
-    if attribute['name'] == 'organization_id' && attribute['default'] == 0
-      attribute['default'] = attribute['filter'][0]
-
     # finde selected/checked item of list
     @selectedOptions(attribute, params)
 
