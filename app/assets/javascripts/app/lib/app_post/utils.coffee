@@ -1060,3 +1060,23 @@ class App.Utils
           articleNew.cc = addAddresses(article.cc, articleNew.cc)
 
     articleNew
+
+  # apply email token field with autocompletion
+  @tokaniceEmails: (selector) ->
+    source = "#{App.Config.get('api_path')}/users/search"
+    a = ->
+      $(selector).tokenfield(
+        createTokensOnBlur: true
+        autocomplete: {
+          source: source
+          minLength: 2
+        },
+      ).on('tokenfield:createtoken', (e) ->
+        if !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
+          e.preventDefault()
+          return false
+        e.attrs.label = e.attrs.value
+        true
+      )
+    App.Delay.set(a, 500, undefined, 'tags')
+
