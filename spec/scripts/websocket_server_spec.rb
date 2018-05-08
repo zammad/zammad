@@ -14,6 +14,8 @@ describe 'websocket-server' do
     # This error is raised for invalid bind addresses
     let(:error_msg) { "`start_tcp_server': no acceptor" }
     let(:ipv6_addr) { '::1/128' }
+    # Prevent port assignment conflicts during parallel test execution
+    let(:port)      { '60042' }
 
     # Flush logs
     before do
@@ -23,7 +25,7 @@ describe 'websocket-server' do
 
     it 'starts up successfully' do
       begin
-        system("#{ws_server} start -db #{ipv6_addr} >/dev/null 2>&1")
+        system("#{ws_server} start -db #{ipv6_addr} -p #{port} >/dev/null 2>&1")
 
         # Wait for daemon to start
         Timeout.timeout(20, Timeout::Error, 'WebSocket Server startup timed out') do
