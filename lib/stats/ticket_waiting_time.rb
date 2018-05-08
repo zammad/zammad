@@ -7,12 +7,14 @@ class Stats::TicketWaitingTime
     # get users groups
     group_ids = user.group_ids_access('full')
 
-    own_waiting = Ticket.where(
-      'owner_id = ? AND group_id IN (?) AND updated_at > ?', user.id, group_ids, Time.zone.today
-    )
-    all_waiting = Ticket.where(
-      'group_id IN (?) AND updated_at > ?', group_ids, Time.zone.today
-    )
+    own_waiting = []
+    all_waiting = []
+    Ticket.where('group_id IN (?) AND updated_at > ?', group_ids.sort, Time.zone.today).pluck(:id, :owner_id).each do |ticket|
+      all_waiting.push ticket[0]
+      if ticket[1] == user.id
+        own_waiting.push ticket[0]
+      end
+    end
 
     handling_time = calculate_average(own_waiting, Time.zone.today)
     if handling_time.positive?
@@ -51,20 +53,24 @@ class Stats::TicketWaitingTime
     result
   end
 
-  def self.calculate_average(tickets, start_time)
+  def self.calculate_average(ticket_ids, start_time)
     average_time   = 0
     count_articles = 0
+    last_ticket_id = nil
+    count_time     = nil
 
-    tickets.each do |ticket|
-      count_time = 0
-      ticket.articles.joins(:type).where('ticket_articles.created_at > ? AND ticket_articles.internal = ? AND ticket_article_types.communication = ?', start_time, false, true).each do |article|
-        if article.sender.name == 'Customer'
-          count_time = article.created_at.to_i
-        elsif count_time.positive?
-          average_time   += article.created_at.to_i - count_time
-          count_articles += 1
-          count_time      = 0
-        end
+    Ticket::Article.joins(:type).joins(:sender).where('ticket_articles.ticket_id IN (?) AND ticket_articles.created_at > ? AND ticket_articles.internal = ? AND ticket_article_types.communication = ?', ticket_ids, start_time, false, true).order(:ticket_id, :created_at).pluck(:created_at, :sender_id, :ticket_id, :id).each do |article|
+      if last_ticket_id != article[2]
+        last_ticket_id = article[2]
+        count_time = 0
+      end
+      sender = Ticket::Article::Sender.lookup(id: article[1])
+      if sender.name == 'Customer'
+        count_time = article[0].to_i
+      elsif count_time.positive?
+        average_time   += article[0].to_i - count_time
+        count_articles += 1
+        count_time      = 0
       end
     end
 
