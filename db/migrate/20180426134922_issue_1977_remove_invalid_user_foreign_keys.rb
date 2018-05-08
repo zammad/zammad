@@ -15,15 +15,12 @@ class Issue1977RemoveInvalidUserForeignKeys < ActiveRecord::Migration[5.1]
 
     Avatar.joins('LEFT OUTER JOIN users ON avatars.o_id = users.id')
           .where('users.id IS NULL')
-          .where(
-            object_lookup_id: ObjectLookup.by_name('User')
-          )
+          .where(object_lookup_id: ObjectLookup.by_name('User'))
           .destroy_all
 
     # add (possibly) missing foreign_key
     foreign_keys = [
       %i[online_notifications users],
-      [:recent_views, :users, column: :created_by_id]
     ]
 
     foreign_keys.each do |args|
