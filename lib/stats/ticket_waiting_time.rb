@@ -9,7 +9,7 @@ class Stats::TicketWaitingTime
 
     own_waiting = []
     all_waiting = []
-    Ticket.where('group_id IN (?) AND updated_at > ?', group_ids.sort, Time.zone.today).pluck(:id, :owner_id).each do |ticket|
+    Ticket.where('group_id IN (?) AND updated_at > ?', group_ids.sort, Time.zone.today).limit(20_000).pluck(:id, :owner_id).each do |ticket|
       all_waiting.push ticket[0]
       if ticket[1] == user.id
         own_waiting.push ticket[0]
