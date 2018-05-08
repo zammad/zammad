@@ -13,7 +13,7 @@ class Channel::Driver::Telegram
       },
     },
     telegram_attributes,
-    channel, 
+    channel,
     notification
   )
 

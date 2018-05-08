@@ -235,7 +235,7 @@ hello world
   end
 
   test 'message placed in sent' do
-  
+
     sent_folder = "#{@folder}_Sent"
     @channel.options[:inbound][:options][:keep_on_server] = 2
     @channel.options[:inbound][:options][:sent_folder] = sent_folder
@@ -279,14 +279,14 @@ hello world
 
     #send message via function
     @channel.deliver({
-                    "Subject": "hello1",
-                    "From": "shugo@example.com",
-                    "To": "shugo@example.com",
-                    "Message-ID": "<some3@example_keep_on_server>",
-                    "In-Reply-To": "<some1@example_keep_on_server>",
-                    "References": "<some1@example_keep_on_server>",
-                    "Body": "hello world"
-                 })
+                      'Subject': 'hello1',
+                      'From': 'shugo@example.com',
+                      'To': 'shugo@example.com',
+                      'Message-ID': '<some3@example_keep_on_server>',
+                      'In-Reply-To': '<some1@example_keep_on_server>',
+                      'References': '<some1@example_keep_on_server>',
+                      'Body': 'hello world'
+                     })
     
     #check if message in-reply-to now has answered flag
     message_meta = imap.fetch(1, ['RFC822.HEADER', 'FLAGS'])[0].attr
@@ -304,7 +304,7 @@ hello world
     # fetch messages and see if reply is created
     article_count = Ticket::Article.count
     @channel.fetch(true)
-    assert_equal(article_count+1, Ticket::Article.count)
+    assert_equal(article_count + 1, Ticket::Article.count)
 
     # verify if message is still on server
     sent_message_ids = imap.sort(['DATE'], ['ALL'], 'US-ASCII')
@@ -341,7 +341,7 @@ hello world
     imap.delete(@folder)
     imap.delete(sent_folder)
     @channel.destroy!
-  
+
   end
 
   test 'keep not on server' do

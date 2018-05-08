@@ -60,8 +60,7 @@ example
 
 =end
 
-
-  def connect(options, timeout=45)
+  def connect(options, timeout = 45)
     ssl            = true
     starttls       = false
     port           = 993
@@ -109,7 +108,6 @@ example
     @imap
   end
 
-
   def place_reply(options, mail)
 
     if options[:keep_on_server] == true || options[:keep_on_server] == 'true'
@@ -123,7 +121,7 @@ example
     return if options[:sent_folder].to_s.empty?
     target_mailbox = options[:sent_folder]
     
-    main_folder = "INBOX"
+    main_folder = 'INBOX'
     if options[:folder].present?
       main_folder = options[:folder]
     end
@@ -135,22 +133,20 @@ example
 
     @imap.select(main_folder)
     mail.header.fields.each do |field|
-      if field.name=='In-Reply-To'
-        search_message_id = field.value
-        replied_message_id = @imap.search(["HEADER", "Message-ID", search_message_id])[0]	
-        
-        if !replied_message_id.nil?
-          @imap.store(replied_message_id, '+FLAGS', [:Answered])
-        end
-        break
+      next if field.name != 'In-Reply-To'
+      
+      search_message_id = field.value
+      replied_message_id = @imap.search(['HEADER', 'Message-ID', search_message_id])[0]
+
+      if !replied_message_id.nil?
+        @imap.store(replied_message_id, '+FLAGS', [:Answered])
       end
+      break
     end
 
     disconnect
-    return
 
   end 
-  
 
   def fetch(options, channel, check_type = '', verify_string = '')
 
@@ -166,11 +162,11 @@ example
       keep_on_server = 2
     end
 
-    main_folder = "INBOX"
+    main_folder = 'INBOX'
     if options[:folder].present?
       main_folder = options[:folder]
     end
-    
+
     if options[:sent_folder].present?
       sent_folder = options[:sent_folder]
     end
@@ -186,7 +182,7 @@ example
         message_ids = @imap.search(filter)
       end
     end
-    
+ 
     # check mode only
     if check_type == 'check'
       Rails.logger.info 'check only mode, fetch no emails'
@@ -245,28 +241,24 @@ example
       }
     end
 
-
-    # fetch regular messages from both folders if defined
-    
+    # fetch regular messages from both folders if defined 
     count_fetched = 0
     notice = ''
 
     [main_folder, sent_folder].each do |folder|
-      
+
       continue if folder.to_s.empty?
-      
-      if keep_on_server != 2
-        #@imap.select(folder)
-        @imap.examine(folder)
+
+      if !keep_on_server  || keep_on_server == 1
+        @imap.select(folder)
       else
         @imap.examine(folder)
       end
 
-
       filter = ['ALL']
-      if keep_on_server==1 
+      if keep_on_server == 1 
         filter = %w[NOT SEEN]
-      elsif keep_on_server==2 && channel.preferences && channel.preferences[:last_fetch]
+      elsif keep_on_server == 2 && channel.preferences && channel.preferences[:last_fetch]
         filter = ['SINCE', Net::IMAP.format_date(channel.preferences[:last_fetch] - 2.days)]
       end
 
@@ -274,13 +266,13 @@ example
 
       count_all     = message_ids.count
       count         = 0
-      
+
       message_ids.each do |message_id|
         count += 1
         Rails.logger.info " - message #{count}/#{count_all} in #{folder}"
 
         message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'ENVELOPE', 'FLAGS', 'INTERNALDATE'])[0]
-  
+
         # ignore to big messages
         info = too_big?(message_meta, count, count_all)
         if info
@@ -292,7 +284,7 @@ example
         next if deleted?(message_meta, count, count_all)
 
         # ignore already imported
-        next if already_imported?(message_id, message_meta, count, count_all, keep_on_server,channel)
+        next if already_imported?(message_id, message_meta, count, count_all, keep_on_server, channel)
 
         # delete email from server after article was created
         msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
@@ -357,9 +349,9 @@ returns
 
     # verify if message is already imported via same channel, if not, import it again
     ticket = article.ticket
-    #if ticket&.preferences && ticket.preferences[:channel_id].present? && channel.present?
-    #  return false if ticket.preferences[:channel_id] != channel[:id]
-    #end
+    if ticket&.preferences && ticket.preferences[:channel_id].present? && channel.present?
+      return false if ticket.preferences[:channel_id] != channel[:id]
+    end
 
     if keep_on_server == 1
       @imap.store(message_id, '+FLAGS', [:Seen])
