@@ -8,7 +8,7 @@ class AddInputToTicketCreate < ActiveRecord::Migration[5.1]
         object: 'Ticket',
         name: 'organization_id',
         display: 'Organization',
-        data_type: 'select',
+        data_type: 'select_organization',
         data_option: {
             relation: 'Organization',
             nulloption: false,

@@ -327,7 +327,7 @@ ObjectManager::Attribute.add(
     object: 'Ticket',
     name: 'organization_id',
     display: 'Organization',
-    data_type: 'select',
+    data_type: 'select_organization',
     data_option: {
         relation: 'Organization',
         nulloption: false,
@@ -829,7 +829,7 @@ ObjectManager::Attribute.add(
   object: 'User',
   name: 'organization_ids',
   display: 'Alternative Organizations',
-  data_type: 'autocompletion_ajax',
+  data_type: 'autocompletion_multiple_ajax',
   data_option: {
     multiple: true,
     nulloption: true,

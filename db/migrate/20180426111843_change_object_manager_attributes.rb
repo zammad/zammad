@@ -49,7 +49,7 @@ class ChangeObjectManagerAttributes < ActiveRecord::Migration[5.1]
         object: 'User',
         name: 'organization_ids',
         display: 'Alternative Organizations',
-        data_type: 'autocompletion_ajax',
+        data_type: 'autocompletion_multiple_ajax',
         data_option: {
             multiple: true,
             nulloption: true,
