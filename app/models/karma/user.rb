@@ -14,7 +14,7 @@ class Karma::User < ApplicationModel
       record.save
       return record
     end
-    Karma::User.create(
+    Karma::User.create!(
       user_id: user.id,
       level: level,
       score: score,

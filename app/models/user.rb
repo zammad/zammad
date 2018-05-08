@@ -24,7 +24,7 @@ class User < ApplicationModel
   before_update   :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
-  before_destroy  :avatar_destroy, :user_device_destroy, :cit_caller_id_destroy, :task_destroy
+  before_destroy  :destroy_longer_required_objects
 
   store :preferences
 
@@ -1112,20 +1112,17 @@ raise 'Minimum one user need to have admin permissions'
     true
   end
 
-  def avatar_destroy
+  def destroy_longer_required_objects
+    Authorization.where(user_id: id).destroy_all
     Avatar.remove('User', id)
-  end
-
-  def user_device_destroy
-    UserDevice.remove(id)
-  end
-
-  def cit_caller_id_destroy
     Cti::CallerId.where(user_id: id).destroy_all
-  end
-
-  def task_destroy
     Taskbar.where(user_id: id).destroy_all
+    Karma::ActivityLog.where(user_id: id).destroy_all
+    Karma::User.where(user_id: id).destroy_all
+    OnlineNotification.where(user_id: id).destroy_all
+    RecentView.where(created_by_id: id).destroy_all
+    UserDevice.remove(id)
+    true
   end
 
   def ensure_password

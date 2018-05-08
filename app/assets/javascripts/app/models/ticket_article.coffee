@@ -49,6 +49,7 @@ class App.TicketArticle extends App.Model
     return "Unknow action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   @contentAttachments: (article) ->
+    return [] if !article
     return [] if !article.attachments
     attachments = []
     for attachment in article.attachments

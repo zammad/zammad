@@ -14,7 +14,7 @@ module DbMigrationHelper
   #
   # @example
   #  migrate
-
+  #
   # @example
   #  migrate(:down)
   #
@@ -25,6 +25,79 @@ module DbMigrationHelper
 
     instance.suppress_messages do
       instance.migrate(direction)
+    end
+  end
+
+  # Provides a helper method to remove foreign_keys if exist.
+  # Make sure to define type: :db_migration in your RSpec.describe call
+  # and add `self.use_transactional_tests = false` to your context.
+  #
+  # ATTENTION: We do not use the same arguments as the internally
+  #            used methods since giving a table name
+  #            as a second argument as e.g.
+  #            `remove_foreign_key(:online_notifications, :users)`
+  #            doesn't remove the index at first execution on at least MySQL
+  #
+  # @param [Symbol] from_table the name of the table with the foreign_key column
+  # @param [Symbol] column the name of the foreign_key column
+  #
+  # @example
+  #  witout_foreign_key(:online_notifications, column: :user_id)
+  #
+  # @return [nil]
+  def witout_foreign_key(from_table, column:)
+    suppress_messages do
+      break if !foreign_key_exists?(from_table, column: column)
+      remove_foreign_key(from_table, column: column)
+    end
+  end
+
+  # Enables the usage of `ActiveRecord::Migration` methods.
+  #
+  # @see ActiveRecord::Migration
+  #
+  # @example
+  #  remove_foreign_key(:online_notifications, :users)
+  #
+  # @return [nil]
+  def method_missing(method, *args, &blk)
+    ActiveRecord::Migration.send(method, *args, &blk)
+  rescue NoMethodError
+    super
+  end
+
+  # Enables the usage of `ActiveRecord::Migration` methods.
+  #
+  # @see ActiveRecord::Migration
+  #
+  # @example
+  #  remove_foreign_key(:online_notifications, :users)
+  #
+  # @return [nil]
+  def respond_to_missing?(*)
+    true
+  end
+
+  # Provides a helper method to check if migration class adds a foreign key.
+  # Make sure to define type: :db_migration in your RSpec.describe call
+  # and add `self.use_transactional_tests = false` to your context.
+  #
+  # @param [Symbol] from_table the name of the table with the foreign_key column
+  # @param [Symbol] column the name of the foreign_key column
+  #
+  # @example
+  #  adds_foreign_key(:online_notifications, column: :user_id)
+  #
+  # @return [nil]
+  def adds_foreign_key(from_table, column:)
+    witout_foreign_key(from_table, column: column)
+
+    suppress_messages do
+      expect do
+        migrate
+      end.to change {
+        foreign_key_exists?(from_table, column: column)
+      }
     end
   end
 
