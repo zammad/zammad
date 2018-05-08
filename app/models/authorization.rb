@@ -82,7 +82,7 @@ class Authorization < ApplicationModel
       end
     end
 
-    Authorization.create(
+    Authorization.create!(
       user: user,
       uid: hash['uid'],
       username: hash['info']['nickname'] || hash['info']['username'] || hash['info']['name'] || hash['info']['email'] || hash['username'],

@@ -1171,4 +1171,103 @@ class UserTest < ActiveSupport::TestCase
 
   end
 
+  test 'cleanup references on destroy' do
+    agent1 = User.create!(
+      login: "agent-cleanup_check-1#{name}@example.com",
+      firstname: 'vaild_agent_group_permission-1',
+      lastname: "Agent#{name}",
+      email: "agent-cleanup_check-1#{name}@example.com",
+      password: 'agentpw',
+      active: true,
+      roles: Role.where(name: 'Agent'),
+      groups: Group.all,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    agent1_id = agent1.id
+    assert_equal(1, Avatar.list('User', agent1_id).count)
+
+    UserDevice.add(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+      '91.115.248.231',
+      agent1_id,
+      'fingerprint1234',
+      'session',
+    )
+    assert_equal(1, UserDevice.where(user_id: agent1_id).count)
+
+    Karma::User.sync(agent1)
+    assert_equal(1, Karma::User.where(user_id: agent1_id).count)
+
+    OnlineNotification.add(
+      type:          'Assigned to you',
+      object:        'Ticket',
+      o_id:          1,
+      seen:          false,
+      user_id:       agent1_id,
+      created_by_id: 1,
+      updated_by_id: 1,
+      created_at:    Time.zone.now,
+      updated_at:    Time.zone.now,
+    )
+    assert_equal(1, OnlineNotification.where(user_id: agent1_id).count)
+
+    Authorization.create!(
+      user: agent1,
+      uid: '123',
+      username: '123',
+      provider: 'some',
+      token: 'token',
+      secret: 'secret',
+    )
+    assert_equal(1, Authorization.where(user_id: agent1_id).count)
+
+    Cti::CallerId.maybe_add(
+      caller_id: '49123456789',
+      comment: 'Hairdresser Bob Smith, San Francisco', #optional
+      level: 'maybe', # known|maybe
+      user_id: agent1_id, # optional
+      object: 'Ticket',
+      o_id: 1,
+    )
+    assert_equal(1, Cti::CallerId.where(user_id: agent1_id).count)
+
+    Taskbar.create!(
+      client_id: 123,
+      key: 'Ticket-1',
+      callback: 'TicketZoom',
+      params: {
+        id: 1,
+      },
+      state: {},
+      user_id: agent1_id,
+      prio: 1,
+      notify: false,
+    )
+    assert_equal(1, Taskbar.where(user_id: agent1_id).count)
+
+    ticket1 = Ticket.create!(
+      title: 'test 1234-1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      owner_id: 2,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    RecentView.log(ticket1.class.to_s, ticket1.id, agent1)
+    assert_equal(1, RecentView.where(created_by_id: agent1_id).count)
+
+    agent1.destroy!
+
+    assert_equal(0, UserDevice.where(user_id: agent1_id).count)
+    assert_equal(0, Avatar.list('User', agent1_id, false).count)
+    assert_equal(0, Karma::User.where(user_id: agent1_id).count)
+    assert_equal(0, OnlineNotification.where(user_id: agent1_id).count)
+    assert_equal(0, Authorization.where(user_id: agent1_id).count)
+    assert_equal(0, Cti::CallerId.where(user_id: agent1_id).count)
+    assert_equal(0, Taskbar.where(user_id: agent1_id).count)
+    assert_equal(0, RecentView.where(created_by_id: agent1_id).count)
+  end
+
 end
