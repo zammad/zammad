@@ -146,7 +146,7 @@ class Index extends App.ControllerContent
       sender_id:    sender.id
       form_id:      @form_id
       content_type: 'text/html'
-      organization_id: +params.organization_id
+      organization_id: params.organization_id
     }
 
     ticket.load(params)
