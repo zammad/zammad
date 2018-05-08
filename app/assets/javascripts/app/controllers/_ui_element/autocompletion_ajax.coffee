@@ -12,7 +12,7 @@ class App.UiElement.autocompletion_ajax
         value:       params[attribute.name] || attribute.value
         valueName:   valueName
         name:        attribute.name
-        id:          params.organization_ids || attribute.value
+        id:          params.organization_id || attribute.value
         placeholder: App.i18n.translateInline('Search...')
         limit:       40
         object:      attribute.relation
