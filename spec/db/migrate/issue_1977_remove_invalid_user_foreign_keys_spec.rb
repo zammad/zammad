@@ -70,12 +70,4 @@ RSpec.describe Issue1977RemoveInvalidUserForeignKeys, type: :db_migration do
     end
   end
 
-  context 'no recent_views foreign key' do
-    self.use_transactional_tests = false
-
-    it 'adds RecentView#created_by_id foreign key' do
-      adds_foreign_key(:recent_views, column: :created_by_id)
-    end
-  end
-
 end
