@@ -180,7 +180,7 @@ function update_database_yml () {
   sed -e "s/.*adapter:.*/  adapter: ${ADAPTER}/" \
     -e "s/.*username:.*/  username: ${DB_USER}/" \
     -e "s/.*password:.*/  password: ${DB_PASS}/" \
-    -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/config/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
+    -e "s/.*database:.*/  database: ${DB}/" < ${ZAMMAD_DIR}/contrib/database.yml.pkgr > ${ZAMMAD_DIR}/config/database.yml
 }
 
 function initialise_database () {
