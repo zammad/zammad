@@ -15,7 +15,7 @@ describe 'websocket-server' do
     let(:error_msg) { "`start_tcp_server': no acceptor" }
     let(:ipv6_addr) { '::1/128' }
     # Prevent port assignment conflicts during parallel test execution
-    let(:port)      { '60042' }
+    let(:port)      { rand(60_000..65_000) }
 
     # Flush logs
     before do
