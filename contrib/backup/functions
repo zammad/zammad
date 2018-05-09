@@ -40,14 +40,7 @@ function backup_dir_create () {
 
 function backup_files () {
   echo "creating file backup..."
-  SRC="${ZAMMAD_DIR}"
-  ARGS=""
-  # remove leading "/" to suppress the tar warning
-  if [[ "${ZAMMAD_DIR}" =~ ^/ ]]; then
-    SRC="${ZAMMAD_DIR:1}"
-    ARGS="-C /"
-  fi
-  tar ${ARGS} -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${SRC}
+  tar -C / -czf ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${ZAMMAD_DIR#/}
   ln -sfn ${BACKUP_DIR}/${TIMESTAMP}_zammad_files.tar.gz ${BACKUP_DIR}/latest_zammad_files.tar.gz
 }
 
