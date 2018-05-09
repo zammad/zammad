@@ -1,7 +1,8 @@
 require 'spec_helper'
+require 'support/script_helper'
 require 'timeout'
 
-describe 'websocket-server' do
+describe 'websocket-server', type: :script do
   # Why not Rails.root.join here?
   # Because it's not avaialable in this spec (no 'rails_helper' = faster start-up)
   let(:app_root)   { File.expand_path('../..', __dir__) }
@@ -10,7 +11,7 @@ describe 'websocket-server' do
   let(:output_log) { File.expand_path('log/websocket-server_out.log', app_root) }
   let(:error_log)  { File.expand_path('log/websocket-server_err.log', app_root) }
 
-  context 'with IPv6 bind address (via -b option)', if: File.exist?('/proc/net/if_inet6') do
+  context 'with IPv6 bind address (via -b option)', if: has_ipv6? do
     # This error is raised for invalid bind addresses
     let(:error_msg) { "`start_tcp_server': no acceptor" }
     let(:ipv6_addr) { '::1/128' }
