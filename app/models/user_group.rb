@@ -10,4 +10,16 @@ class UserGroup < ApplicationModel
   def self.ref_key
     :user_id
   end
+
+  def cache_update
+    group.cache_update(nil)
+    user.cache_update(nil)
+    super
+  end
+
+  def cache_delete
+    group.cache_update(nil)
+    user.cache_update(nil)
+    super
+  end
 end
