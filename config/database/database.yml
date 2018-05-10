@@ -1,5 +1,5 @@
 # this is a database config sample for zammad ready to use with a postgresql db
-# copy or symlink this file to zammads config/database.yml directory to use it
+# copy or symlink this file to config/database.yml to use it
 
 default: &default
   # For details on connection pooling, see Rails configuration guide
