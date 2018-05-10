@@ -1,22 +1,28 @@
+# this is a database config sample for zammad ready to use with a postgresql db
+# copy or symlink this file to zammads config/database.yml directory to use it
+
 default: &default
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: 50
   timeout: 5000
   encoding: utf8
-  # postgresql -----------------------------------------------------------------
+
+  ##### postgresql config #####
+
   adapter: postgresql
-  # username: <username>
-  # password: <password>
-  # mysql ----------------------------------------------------------------------
+  username: zammad
+  password:
+
+  #### mysql config #####
+
   # adapter: mysql2
-  # host: localhost
-  # username: <username>
-  # password: <password>
+  # username: zammad
+  # password: <Password>
 
 production:
   <<: *default
-  database: zammad_prod
+  database: zammad_production
 
 development:
   <<: *default

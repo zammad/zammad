@@ -8,7 +8,7 @@ if [ "$CI_BUILD_REF_NAME" != "$CI_BUILD_TAG" ]; then
 fi
 
 # cleanup
-contrib/cleanup.sh
+cleanup.sh
 
 ( find . -type d -name ".git" \
   && find . -name ".gitignore" \

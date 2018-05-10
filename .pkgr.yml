@@ -41,11 +41,7 @@ targets:
       - nginx
       - postgresql-server
 before:
-  - uname -a
-  - ruby -v
-  - env
-  - "cat Gemfile.lock"
-  - contrib/cleanup.sh
+  - contrib/packager.io/before.sh
 after:
   - contrib/packager.io/after.sh
 env:
