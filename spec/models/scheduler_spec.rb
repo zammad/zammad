@@ -98,56 +98,24 @@ RSpec.describe Scheduler do
       described_class.cleanup
     end
 
-    it 'keeps unlocked Delayed::Job-s' do
-      # meta :)
-      described_class.delay.cleanup
+    context 'Delayed::Job' do
 
-      expect do
-        simulate_threads_call
-      end.not_to change {
-        Delayed::Job.count
-      }
-    end
-
-    context 'locked Delayed::Job' do
-
-      it 'gets destroyed' do
+      it 'keeps unlocked' do
         # meta :)
         described_class.delay.cleanup
 
-        # lock job (simluates interrupted scheduler task)
-        locked_job = Delayed::Job.last
-        locked_job.update!(locked_at: Time.zone.now)
-
         expect do
           simulate_threads_call
-        end.to change {
+        end.not_to change {
           Delayed::Job.count
-        }.by(-1)
+        }
       end
 
-      context 'respond to reschedule?' do
+      context 'locked' do
 
-        it 'gets rescheduled for positive responses' do
-          SpecSpace::DelayedJobBackend.reschedule = true
-          SpecSpace::DelayedJobBackend.delay.start
-
-          # lock job (simluates interrupted scheduler task)
-          locked_job = Delayed::Job.last
-          locked_job.update!(locked_at: Time.zone.now)
-
-          expect do
-            simulate_threads_call
-          end.to not_change {
-            Delayed::Job.count
-          }.and change {
-            Delayed::Job.last.locked_at
-          }
-        end
-
-        it 'gets destroyed for negative responses' do
-          SpecSpace::DelayedJobBackend.reschedule = false
-          SpecSpace::DelayedJobBackend.delay.start
+        it 'gets destroyed' do
+          # meta :)
+          described_class.delay.cleanup
 
           # lock job (simluates interrupted scheduler task)
           locked_job = Delayed::Job.last
@@ -159,6 +127,78 @@ RSpec.describe Scheduler do
             Delayed::Job.count
           }.by(-1)
         end
+
+        context 'respond to reschedule?' do
+
+          it 'gets rescheduled for positive responses' do
+            SpecSpace::DelayedJobBackend.reschedule = true
+            SpecSpace::DelayedJobBackend.delay.start
+
+            # lock job (simluates interrupted scheduler task)
+            locked_job = Delayed::Job.last
+            locked_job.update!(locked_at: Time.zone.now)
+
+            expect do
+              simulate_threads_call
+            end.to not_change {
+              Delayed::Job.count
+            }.and change {
+              Delayed::Job.last.locked_at
+            }
+          end
+
+          it 'gets destroyed for negative responses' do
+            SpecSpace::DelayedJobBackend.reschedule = false
+            SpecSpace::DelayedJobBackend.delay.start
+
+            # lock job (simluates interrupted scheduler task)
+            locked_job = Delayed::Job.last
+            locked_job.update!(locked_at: Time.zone.now)
+
+            expect do
+              simulate_threads_call
+            end.to change {
+              Delayed::Job.count
+            }.by(-1)
+          end
+        end
+      end
+    end
+
+    context 'ImportJob' do
+
+      context 'affected job' do
+
+        let(:job) { create(:import_job, started_at: 5.minutes.ago) }
+
+        it 'finishes stuck jobs' do
+
+          expect do
+            simulate_threads_call
+          end.to change {
+            job.reload.finished_at
+          }
+        end
+
+        it 'adds an error message to the result' do
+
+          expect do
+            simulate_threads_call
+          end.to change {
+            job.reload.result[:error]
+          }
+        end
+      end
+
+      it "doesn't change jobs added after stop" do
+
+        job = create(:import_job)
+
+        expect do
+          simulate_threads_call
+        end.not_to change {
+          job.reload
+        }
       end
     end
   end
