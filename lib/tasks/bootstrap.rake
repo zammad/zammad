@@ -3,7 +3,7 @@ module BootstrapRakeHelper
   SERVER_LOG  = Rails.root.join('log', "#{Rails.env}.log")
   AUTO_WIZARD = { source: Rails.root.join('contrib', 'auto_wizard_test.json'),
                   dest:   Rails.root.join('auto_wizard.json') }.freeze
-  DB_CONFIG   = { source: Rails.root.join('contrib', 'database.yml'),
+  DB_CONFIG   = { source: Rails.root.join('config', 'database', 'database.yml'),
                   dest:   Rails.root.join('config', 'database.yml') }.freeze
 
   def flush_cache_and_logs
