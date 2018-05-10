@@ -5,6 +5,8 @@ class ImportJob < ApplicationModel
   store :payload
   store :result
 
+  scope :running, -> { where(finished_at: nil, dry_run: false).where.not(started_at: nil) }
+
   # Starts the import backend class based on the name attribute.
   # Import backend class is initialized with the current instance.
   # Logs the start and end time (if ended successfully) and logs
