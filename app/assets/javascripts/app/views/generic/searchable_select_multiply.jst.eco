@@ -20,5 +20,14 @@
   <%- @submenus %>
 </div>
 <div class="items">
-  <%- @attribute.organizations %>
+  <% if @attribute.value: %>
+    <% for value in @attribute.value: %>
+      <div>
+        <span class='selected_organization'>
+          <%- App.Organization.findNative(value).name %>
+        </span>
+        <input class='searchableSelect-shadow form-control js-shadow-ids' name='organization_ids' value='<%- value %>'>
+      </div>
+    <% end %>
+  <% end %>
 </div>

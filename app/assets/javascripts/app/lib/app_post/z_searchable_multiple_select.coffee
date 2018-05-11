@@ -2,13 +2,6 @@ class App.SearchableMultipleSelect extends App.SearchableAjaxSelect
 
   render: ->
     @attribute.valueName = ''
-    organizations = ''
-    if @attribute.value
-      for value in @attribute.value
-        organizations += "<div>" +
-          "<span class='selected_organization'>#{App.Organization.findNative(value).name}</span>" +
-          "<input class='searchableSelect-shadow form-control js-shadow-ids' name='organization_ids' value='#{value}'>"+"</div>"
-      @attribute.organizations = organizations
 
     @html App.view('generic/searchable_select_multiply')
       attribute: @attribute
