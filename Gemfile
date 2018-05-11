@@ -115,6 +115,10 @@ gem 'viewpoint'
 # in production environments by default.
 group :development, :test do
 
+  # debugging
+  gem 'pry-rails'
+  gem 'pry-remote'
+
   # test frameworks
   gem 'rspec-rails'
   gem 'test-unit'
