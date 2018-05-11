@@ -161,8 +161,10 @@ group :development, :test do
   gem 'webmock'
 end
 
-# load onw gems for development and testing purposes
-local_gemfile = File.join(File.dirname(__FILE__), 'Gemfile.local')
-if File.exist?(local_gemfile)
-  eval_gemfile local_gemfile
-end
+# Want to extend Zammad with additional gems?
+# ZAMMAD USERS: Specify them in Gemfile.local
+#               (That way, you can customize the Gemfile
+#               without having your changes overwritten during upgrades.)
+# ZAMMAD DEVS:  Consult the internal wiki
+#               (or else risk pushing unwanted changes to Gemfile.lock!)
+eval_gemfile 'Gemfile.local' if File.exist?('Gemfile.local')
