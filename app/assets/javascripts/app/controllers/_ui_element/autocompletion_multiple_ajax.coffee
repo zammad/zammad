@@ -5,7 +5,7 @@ class App.UiElement.autocompletion_multiple_ajax
       valueName = object.displayName()
 
     # selectable search
-    searchableAjaxSelectObject = new App.SearchableAjaxSelect(
+    searchableAjaxSelectObject = new App.SearchableMultipleSelect(
       attribute:
         value:       params[attribute.name] || attribute.value
         valueName:   valueName

@@ -1,13 +1,5 @@
 <div class="dropdown-toggle" data-toggle="dropdown">
   <input
-    class="searchableSelect-shadow form-control js-shadow"
-    id="<%= @attribute.id %>"
-    name="<%= @attribute.name %>"
-    <%= @attribute.required %>
-    <%= @attribute.autofocus %>
-    value="<%= @attribute.value %>"
-  >
-  <input
     class="searchableSelect-main form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
     placeholder="<%= @attribute.placeholder %>"
     value="<%= @attribute.valueName %>"
@@ -26,4 +18,7 @@
     <%- @options %>
   </ul>
   <%- @submenus %>
+</div>
+<div class="items">
+  <%- @attribute.organizations %>
 </div>

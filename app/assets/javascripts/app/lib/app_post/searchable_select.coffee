@@ -36,24 +36,15 @@ class App.SearchableSelect extends Spine.Controller
 
   render: ->
     firstSelected = _.find @attribute.options, (option) -> option.selected
-    if @attribute.name == 'organization_ids'
-      @attribute.valueName = ''
-      organizations = ''
-      if @attribute.value
-        for value in @attribute.value
-          organizations += "<div>" +
-            "<span class='selected_organization'>#{App.Organization.findNative(value).name}</span>" +
-            "<input class='searchableSelect-shadow form-control js-shadow-ids' name='organization_ids' value='#{value}'>" +
-            "</div>"
-        @attribute.organizations = organizations
-    else
-      if firstSelected
-        @attribute.valueName = firstSelected.name
-        @attribute.value = firstSelected.value
-      else if @attribute.unknown && @attribute.value
-        @attribute.valueName = @attribute.value
-      else if @hasSubmenu @attribute.options
-        @attribute.valueName = @getName @attribute.value, @attribute.options
+
+    if firstSelected
+      @attribute.valueName = firstSelected.name
+      @attribute.value = firstSelected.value
+    else if @attribute.unknown && @attribute.value
+      @attribute.valueName = @attribute.value
+    else if @hasSubmenu @attribute.options
+      @attribute.valueName = @getName @attribute.value, @attribute.options
+
     @html App.view('generic/searchable_select')
       attribute: @attribute
       options: @renderAllOptions '', @attribute.options, 0
@@ -233,30 +224,8 @@ class App.SearchableSelect extends Spine.Controller
     return if !event.currentTarget.textContent
     @input.val event.currentTarget.textContent.trim()
     @input.trigger('change')
-    data_value = event.currentTarget.getAttribute('data-value')
-    if @shadowInput.length == 0
-      @input.val ''
-      js_shadow_ids = $('.js-shadow-ids')
-      ids = []
-      if js_shadow_ids.length > 0
-        js_shadow_ids.each( -> ids.push $(this).val() )
-      if !ids.includes(data_value) && $(".js-shadow[name='organization_id']").val() != data_value
-        newInput = @input.closest('.searchableSelect').find('div.items')
-        input =  "<input class='searchableSelect-shadow form-control js-shadow-ids' name='organization_ids'>"
-        wrapper = $("<div></div>").appendTo(newInput)
-        @span = $("<span class='selected_organization'>#{event.currentTarget.getAttribute('title')}</span>").appendTo( wrapper )
-        @input = $(input).appendTo( wrapper )
-        @input.val data_value
-        @input.trigger('change')
-      $('span.selected_organization').click ->
-        $(this).closest('div').remove()
-    else
-      @shadowInput.val data_value
-      @shadowInput.trigger('change')
-      $(".js-shadow-ids").each( ->
-        if $(this).val() == data_value
-          $(this).closest('div').remove()
-      )
+    @shadowInput.val event.currentTarget.getAttribute('data-value')
+    @shadowInput.trigger('change')
 
 
   navigateIn: (event) ->
