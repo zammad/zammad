@@ -1266,10 +1266,98 @@ test("object manager form 3", function() {
 
 });
 
+test("time range form 1", function() {
+
+  $('#forms').append('<hr><h1>time range form 1</h1><form id="form14"></form>')
+  var el = $('#form14')
+
+  var defaults = {}
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'time_range',  display: 'Format', tag: 'time_range', null: false },
+      ],
+    },
+    params: $.extend(defaults, { object: 'Ticket' }),
+    autofocus: true
+  });
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    "time_range": {
+      "range": "minute",
+      "value": "1"
+    }
+  }
+
+  deepEqual(params, test_params, 'base form param range check')
+
+  el.find('.js-range').val('minute').trigger('change')
+  el.find('.js-valueRangeSelector .js-value').val('120').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    "time_range": {
+      "range": "minute",
+      "value": "120"
+    }
+  }
+  deepEqual(params, test_params, 'form param minute range check')
+
+  el.find('.js-range').val('hour').trigger('change')
+  el.find('.js-valueRangeSelector .js-value').val('48').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    "time_range": {
+      "range": "hour",
+      "value": "48"
+    }
+  }
+  deepEqual(params, test_params, 'form param hour range check')
+
+  el.find('.js-range').val('day').trigger('change')
+  el.find('.js-valueRangeSelector .js-value').val('31').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    "time_range": {
+      "range": "day",
+      "value": "31"
+    }
+  }
+  deepEqual(params, test_params, 'form param day range check')
+
+  el.find('.js-range').val('month').trigger('change')
+  el.find('.js-valueRangeSelector .js-value').val('12').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    "time_range": {
+      "range": "month",
+      "value": "12"
+    }
+  }
+  deepEqual(params, test_params, 'form param month range check')
+
+  el.find('.js-range').val('year').trigger('change')
+  el.find('.js-valueRangeSelector .js-value').val('20').trigger('change')
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    "time_range": {
+      "range": "year",
+      "value": "20"
+    }
+  }
+  deepEqual(params, test_params, 'form param year range check')
+});
+
 test("form select with empty option list", function() {
 
-  $('#forms').append('<hr><h1>form select with empty option list</h1><form id="form14"></form>')
-  var el = $('#form14')
+  $('#forms').append('<hr><h1>form select with empty option list</h1><form id="form15"></form>')
+  var el = $('#form15')
   var defaults = {}
   new App.ControllerForm({
     el:        el,
@@ -1296,5 +1384,4 @@ test("form select with empty option list", function() {
     select6: 'B',
   }
   deepEqual(params, test_params)
-
 });
