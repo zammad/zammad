@@ -3,24 +3,26 @@
 class CalendarsController < ApplicationController
   prepend_before_action { authentication_check(permission: 'admin.calendar') }
 
-  def index
-
-    # calendars
+  def init
     assets = {}
-    calendar_ids = []
+    record_ids = []
     Calendar.all.order(:name, :created_at).each do |calendar|
-      calendar_ids.push calendar.id
+      record_ids.push calendar.id
       assets = calendar.assets(assets)
     end
 
     ical_feeds = Calendar.ical_feeds
     timezones = Calendar.timezones
     render json: {
-      calendar_ids: calendar_ids,
+      record_ids: record_ids,
       ical_feeds: ical_feeds,
       timezones: timezones,
       assets: assets,
     }, status: :ok
+  end
+
+  def index
+    model_index_render(Calendar, params)
   end
 
   def show

@@ -487,6 +487,26 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
+  modal_close(
+    browser: browser1,
+  )
+
+=end
+
+  def modal_close(params = {})
+    switch_window_focus(params)
+    log('modal_close', params)
+
+    instance = params[:browser] || @browser
+
+    element = instance.find_elements(css: '.modal .js-close')[0]
+    raise "No such modal to close #{params.inspect}" if !element
+
+    element.click
+  end
+
+=begin
+
   modal_ready(
     browser: browser1,
   )
@@ -2717,10 +2737,70 @@ wait untill text in selector disabppears
 
 =begin
 
+  calendar_create(
+    browser: browser2,
+    data: {
+       name: 'some calendar' + random,
+       first_response_time_in_text: 61
+    },
+  )
+
+=end
+
+  def calendar_create(params = {})
+    switch_window_focus(params)
+    log('calendar_create', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  '.content.active a[href="#manage/calendars"]',
+      mute_log: true,
+    )
+    sleep 4
+    click(
+      browser: instance,
+      css:  '.content.active a.js-new',
+      mute_log: true,
+    )
+    modal_ready(browser: instance)
+    element = instance.find_elements(css: '.content.active .modal input[name=name]')[0]
+    element.clear
+    element.send_keys(data[:name])
+    element = instance.find_elements(css: '.content.active .modal .js-input')[0]
+    element.clear
+    element.send_keys(data[:timezone])
+    element.send_keys(:enter)
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
+    7.times do
+      element = instance.find_elements(css: 'body')[0]
+      text = element.text
+      if text.match?(/#{Regexp.quote(data[:name])}/)
+        assert(true, 'calendar created')
+        sleep 1
+        return true
+      end
+      sleep 1
+    end
+    screenshot(browser: instance, comment: 'calendar_create_failed')
+    raise 'calendar creation failed'
+  end
+
+=begin
+
   sla_create(
     browser: browser2,
     data: {
        name: 'some sla' + random,
+       calendar: 'some calendar name',
        first_response_time_in_text: 61
     },
   )
@@ -2753,6 +2833,11 @@ wait untill text in selector disabppears
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
+    if data[:calendar].present?
+      element = instance.find_elements(css: '.modal select[name="calendar_id"]')[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by(:text, data[:calendar])
+    end
     element = instance.find_elements(css: '.modal input[name=first_response_time_in_text]')[0]
     element.clear
     element.send_keys(data[:first_response_time_in_text])
