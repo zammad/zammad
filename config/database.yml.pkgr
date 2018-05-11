@@ -1,0 +1,8 @@
+production:
+  adapter: postgresql
+  database: zammad_production
+  pool: 50
+  timeout: 5000
+  encoding: utf8
+  username: zammad
+  password:
