@@ -612,6 +612,8 @@ return true if backend is configured
                 'Check the response and payload for detailed information: '
               end
 
-    "#{prefix} #{message}#{suffix}"
+    result = "#{prefix} #{message}#{suffix}"
+    Rails.logger.error result.first(40_000)
+    result
   end
 end
