@@ -12,15 +12,18 @@ class Index extends App.ControllerSubContent
     super
     @subscribeId = App.Calendar.subscribe(@render)
 
-    callback = (data) =>
-      App.Config.set('ical_feeds', data.ical_feeds)
-      App.Config.set('timezones', data.timezones)
-      @stopLoading()
-      @render()
     @startLoading()
-    App.Calendar.fetchFull(
-      callback
-      clear: true
+    @ajax(
+      id:   'calendar_index'
+      type: 'GET'
+      url:  @apiPath + '/calendars_init'
+      processData: true
+      success: (data, status, xhr) =>
+        App.Config.set('ical_feeds', data.ical_feeds)
+        App.Config.set('timezones', data.timezones)
+        App.Collection.loadAssets(data.assets)
+        @stopLoading()
+        @render()
     )
 
   render: =>
@@ -59,7 +62,7 @@ class Index extends App.ControllerSubContent
       if !_.isEmpty(calendars)
         showDescription = true
       else
-        description = marked(App[ @genericObject ].description)
+        description = marked(App.Calendar.description)
 
     @html App.view('calendar/index')(
       calendars:       calendars

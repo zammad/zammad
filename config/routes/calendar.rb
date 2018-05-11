@@ -2,6 +2,7 @@ Zammad::Application.routes.draw do
   api_path = Rails.configuration.api_path
 
   # calendars
+  match api_path + '/calendars_init',       to: 'calendars#init',   via: :get
   match api_path + '/calendars',            to: 'calendars#index',   via: :get
   match api_path + '/calendars/:id',        to: 'calendars#show',    via: :get
   match api_path + '/calendars',            to: 'calendars#create',  via: :post
