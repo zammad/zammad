@@ -1,7 +1,5 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
 class ActivityStream < ApplicationModel
-  load 'activity_stream/assets.rb'
   include ActivityStream::Assets
 
   self.table_name = 'activity_streams'

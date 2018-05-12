@@ -8,6 +8,10 @@ module Import
       end
 
       def process
+        # remove previous result information that may still be saved
+        # in case an import job was rescheduled
+        @import_job.update!(result: {})
+
         Sequencer.process(sequence_name,
                           parameters: {
                             import_job: @import_job

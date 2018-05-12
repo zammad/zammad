@@ -1,4 +1,4 @@
-require 'mixin/rails_logger'
+require_dependency 'mixin/rails_logger'
 
 class Sequencer
   class Unit

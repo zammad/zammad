@@ -224,5 +224,12 @@ Lint/AmbiguousBlockAssociation:
   StyleGuide: '#syntax'
   Enabled: true
   Exclude:
+    - "spec/support/*.rb"
     - "**/*_spec.rb"
     - "**/*_examples.rb"
+
+# Special exceptions
+
+Style/HashSyntax:
+  Exclude:
+    - "**/*.rake"

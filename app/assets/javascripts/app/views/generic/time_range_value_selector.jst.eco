@@ -1,0 +1,6 @@
+<select class="form-control js-value" name="<%= @attribute.name %>::value">
+  <% for key, value of @values: %>
+    <option value="<%= key %>" <% if @attribute.value && @attribute.value.value.toString() is key.toString(): %>selected<% end %>><%- value %></option>
+  <% end %>
+</select>
+<%- @Icon('arrow-down', 'dropdown-arrow') %>

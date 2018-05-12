@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
 require 'builder'
 
 class Integration::SipgateController < ApplicationController
@@ -14,7 +13,7 @@ class Integration::SipgateController < ApplicationController
 
       # check if call need to be blocked
       block_caller_ids.each do |item|
-        next unless item[:caller_id] == params['from']
+        next if item[:caller_id] != params['from']
         xml = Builder::XmlMarkup.new(indent: 2)
         xml.instruct!
         content = xml.Response(onHangup: url, onAnswer: url) do

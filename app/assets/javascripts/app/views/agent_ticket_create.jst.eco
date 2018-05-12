@@ -7,20 +7,16 @@
         </div>
 
         <div class="page-content">
-          <ul class="tabs type-tabs">
-            <li class="tab u-textTruncate" data-type="phone-in">
-              <%- @Icon('received-calls', 'tab-icon') %>
-              <%- @T('Received Call') %>
-            </li>
-            <li class="tab u-textTruncate" data-type="phone-out">
-              <%- @Icon('outbound-calls', 'tab-icon') %>
-              <%- @T('Outbound Call') %>
-            </li>
-            <li class="tab u-textTruncate" data-type="email-out">
-              <%- @Icon('email', 'tab-icon') %>
-              <%- @T('Send Email') %>
-            </li>
-          </ul>
+          <% if !_.isEmpty(@availableTypes) && @availableTypes.length > 1: %>
+            <ul class="tabs type-tabs">
+              <% for type in @availableTypes: %>
+                <li class="tab u-textTruncate" data-type="<%= type %>">
+                  <%- @Icon(@types[type]['icon'], 'tab-icon') %>
+                  <%- @T(@types[type]['label']) %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
 
           <% if !_.isEmpty(@C('ui_ticket_create_notes')): %>
             <% for type, note of @C('ui_ticket_create_notes'): %>

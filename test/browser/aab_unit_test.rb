@@ -28,6 +28,13 @@ class AAbUnitTest < TestCase
       value: '0',
     )
 
+    location(url: browser_url + '/tests_model_binding')
+    sleep 8
+    match(
+      css: '.result .failed',
+      value: '0',
+    )
+
     location(url: browser_url + '/tests_model_ui')
     sleep 8
     match(

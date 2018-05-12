@@ -20,6 +20,7 @@ class TicketZoomFormHanderDependencies
             item['filter'] = {}
             item['filter'][ fieldNameToChange ] = filter
             item.default = params[item.name]
+            item.newValue = params[item.name]
             #if !item.default
             #  delete item['default']
             newElement = ui.formGenItem(item, classname, form)

@@ -1,7 +1,7 @@
 <div class="dropdown-toggle" data-toggle="dropdown">
   <input
     class="searchableSelect-shadow form-control js-shadow"
-    id="<%= @attribute.id %>"
+    <% if @attribute.id: %>id="<%= @attribute.id %>"<% end %>
     name="<%= @attribute.name %>"
     <%= @attribute.required %>
     <%= @attribute.autofocus %>

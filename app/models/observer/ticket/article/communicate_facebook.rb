@@ -1,7 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
-require 'channel/driver/facebook'
-
 class Observer::Ticket::Article::CommunicateFacebook < ActiveRecord::Observer
   observe 'ticket::_article'
 

@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class OnlineNotification < ApplicationModel
-  load 'online_notification/assets.rb'
   include OnlineNotification::Assets
 
   belongs_to :user

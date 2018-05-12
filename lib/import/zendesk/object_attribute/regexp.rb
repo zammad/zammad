@@ -1,7 +1,7 @@
 # this require is required (hehe) because of Rails autoloading
 # which causes strange behavior not inheriting correctly
 # from Import::OTRS::DynamicField
-require 'import/zendesk/object_attribute/base'
+require_dependency 'import/zendesk/object_attribute/base'
 
 module Import
   class Zendesk

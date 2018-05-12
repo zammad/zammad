@@ -1,5 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 module Chat::Session::SearchIndex
+  extend ActiveSupport::Concern
+
+  # methods defined here are going to extend the class, not the instance of it
+  class_methods do
 
 =begin
 
@@ -14,23 +18,24 @@ returns
 
 =end
 
-  def search_index_attribute_lookup
-    attributes = super
-    return if !attributes
+    def search_index_attribute_lookup
+      attributes = super
+      return if !attributes
 
-    attributes[:tag] = tag_list
+      attributes[:tag] = tag_list
 
-    messages = Chat::Message.where(chat_session_id: id)
-    attributes['messages'] = []
-    messages.each do |message|
+      messages = Chat::Message.where(chat_session_id: id)
+      attributes['messages'] = []
+      messages.each do |message|
 
-      # lookup attributes of ref. objects (normally name and note)
-      message_attributes = message.search_index_attribute_lookup
+        # lookup attributes of ref. objects (normally name and note)
+        message_attributes = message.search_index_attribute_lookup
 
-      attributes['messages'].push message_attributes
+        attributes['messages'].push message_attributes
+      end
+
+      attributes
     end
-
-    attributes
   end
 
 end

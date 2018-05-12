@@ -2,6 +2,7 @@
 
 class Organization
   module SearchIndex
+    extend ActiveSupport::Concern
 
 =begin
 

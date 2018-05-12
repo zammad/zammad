@@ -1,4 +1,4 @@
-require 'sequencer/unit/import/common/model/statistics/mixin/common'
+require_dependency 'sequencer/unit/import/common/model/statistics/mixin/common'
 
 class Sequencer
   class Unit

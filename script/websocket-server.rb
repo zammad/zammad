@@ -5,7 +5,7 @@ $LOAD_PATH << './lib'
 require 'rubygems'
 
 # load rails env
-dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+dir = File.expand_path('..', __dir__)
 Dir.chdir dir
 RAILS_ENV = ENV['RAILS_ENV'] || 'development'
 
@@ -25,7 +25,7 @@ def before_fork
   # remember open file handles
   @files_to_reopen = []
   ObjectSpace.each_object(File) do |file|
-    @files_to_reopen << file unless file.closed?
+    @files_to_reopen << file if !file.closed?
   end
 end
 
@@ -38,8 +38,8 @@ def after_fork(dir)
     file.sync = true
   end
 
-  $stdout.reopen( "#{dir}/log/websocket-server_out.log", 'w')
-  $stderr.reopen( "#{dir}/log/websocket-server_err.log", 'w')
+  $stdout.reopen( "#{dir}/log/websocket-server_out.log", 'w').sync = true
+  $stderr.reopen( "#{dir}/log/websocket-server_err.log", 'w').sync = true
 end
 
 before_fork
@@ -70,7 +70,7 @@ OptionParser.new do |opts|
     @options[:p] = p
   end
   opts.on('-b', '--bind [OPT]', 'bind address') do |b|
-    @options[:b] = b
+    @options[:b] = IPAddr.new(b).to_s
   end
   opts.on('-s', '--secure', 'enable secure connections') do |s|
     @options[:s] = s
@@ -92,29 +92,29 @@ if ARGV[0] != 'start' && ARGV[0] != 'stop'
 end
 
 if ARGV[0] == 'stop'
-  puts "Stopping websocket server (pid:#{@options[:i]})"
+  pid = File.read(@options[:i]).to_i
+  puts "Stopping websocket server (pid: #{pid})"
 
-  # read pid
-  pid = File.open( @options[:i].to_s  ).read
-  pid.gsub!(/\r|\n/, '')
+  # IMPORTANT: Use SIGTERM (15), not SIGKILL (9)
+  # Daemons.rb cleans up the PID file automatically on termination;
+  # SIGKILL ends the process immediately and bypasses cleanup.
+  # See https://major.io/2010/03/18/sigterm-vs-sigkill/ for more.
+  Process.kill(:SIGTERM, pid)
 
-  # kill
-  Process.kill( 9, pid.to_i )
   exit
 end
 
 if ARGV[0] == 'start' && @options[:d]
-  puts "Starting websocket server on #{@options[:b]}:#{@options[:p]} (secure:#{@options[:s]},pid:#{@options[:i]})"
+  puts "Starting websocket server on #{@options[:b]}:#{@options[:p]} (secure: #{@options[:s]}, pidfile: #{@options[:i]})"
 
-  Daemons.daemonize
+  # Use Daemons.rb's built-in facility for generating PID files
+  Daemons.daemonize(
+    app_name: File.basename(@options[:i], '.pid'),
+    dir_mode: :normal,
+    dir: File.dirname(@options[:i])
+  )
 
   after_fork(dir)
-
-  # create pid file
-  daemon_pid = File.new(@options[:i].to_s, 'w')
-  daemon_pid.sync = true
-  daemon_pid.puts(Process.pid.to_s)
-  daemon_pid.close
 end
 
 @clients = {}

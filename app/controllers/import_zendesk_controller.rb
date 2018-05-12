@@ -1,6 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-require 'zendesk_api'
-
 class ImportZendeskController < ApplicationController
 
   def url_check
@@ -41,7 +39,7 @@ class ImportZendeskController < ApplicationController
     end
 
     # since 2016-10-15 a redirect to a marketing page has been implemented
-    if response.body !~ /#{params[:url]}/
+    if !response.body.match?(/#{params[:url]}/)
       render json: {
         result: 'invalid',
         message_human: 'Hostname not found!',

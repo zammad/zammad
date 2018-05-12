@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
-require 'ldap'
-require 'ldap/user'
+require_dependency 'ldap'
+require_dependency 'ldap/user'
 
 class Auth
   class Ldap < Auth::Base
