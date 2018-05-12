@@ -10,8 +10,8 @@ class Channel::Driver::Sendmail
     mail.delivery_method delivery_method
 
     if !notification && !channel.nil? && !channel.options.nil?
-        instance = Channel::Driver::Imap.new
-        instance.place_reply(channel.options[:inbound][:options], mail)
+      instance = Channel::Driver::Imap.new
+      instance.place_reply(channel.options[:inbound][:options], mail)
     end
 
     mail.deliver

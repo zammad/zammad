@@ -120,7 +120,7 @@ example
 
     return if options[:sent_folder].to_s.empty?
     target_mailbox = options[:sent_folder]
-    
+ 
     main_folder = 'INBOX'
     if options[:folder].present?
       main_folder = options[:folder]
@@ -134,7 +134,7 @@ example
     @imap.select(main_folder)
     mail.header.fields.each do |field|
       next if field.name != 'In-Reply-To'
-      
+
       search_message_id = field.value
       replied_message_id = @imap.search(['HEADER', 'Message-ID', search_message_id])[0]
 
@@ -146,7 +146,7 @@ example
 
     disconnect
 
-  end 
+  end
 
   def fetch(options, channel, check_type = '', verify_string = '')
 
@@ -174,7 +174,7 @@ example
     @imap = connect(options, timeout)
 
     # sort messages by date on server (if not supported), if not fetch messages via search (first in, first out)
-    if check_type == 'check' || check_type == 'verify'
+    if ['check', 'verify'].include?(check_type)
       filter = ['ALL']
       begin
         message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
@@ -182,7 +182,7 @@ example
         message_ids = @imap.search(filter)
       end
     end
- 
+
     # check mode only
     if check_type == 'check'
       Rails.logger.info 'check only mode, fetch no emails'
@@ -241,7 +241,7 @@ example
       }
     end
 
-    # fetch regular messages from both folders if defined 
+    # fetch regular messages from both folders if defined
     count_fetched = 0
     notice = ''
 
@@ -249,14 +249,14 @@ example
 
       continue if folder.to_s.empty?
 
-      if !keep_on_server  || keep_on_server == 1
+      if !keep_on_server || keep_on_server == 1
         @imap.select(folder)
       else
         @imap.examine(folder)
       end
 
       filter = ['ALL']
-      if keep_on_server == 1 
+      if keep_on_server == 1
         filter = %w[NOT SEEN]
       elsif keep_on_server == 2 && channel.preferences && channel.preferences[:last_fetch]
         filter = ['SINCE', Net::IMAP.format_date(channel.preferences[:last_fetch] - 2.days)]

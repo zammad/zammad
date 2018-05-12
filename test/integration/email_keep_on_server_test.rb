@@ -279,19 +279,19 @@ hello world
 
     #send message via function
     @channel.deliver({
-                      'Subject': 'hello1',
-                      'From': 'shugo@example.com',
-                      'To': 'shugo@example.com',
-                      'Message-ID': '<some3@example_keep_on_server>',
-                      'In-Reply-To': '<some1@example_keep_on_server>',
-                      'References': '<some1@example_keep_on_server>',
-                      'Body': 'hello world'
+                       'Subject': 'hello1',
+                       'From': 'shugo@example.com',
+                       'To': 'shugo@example.com',
+                       'Message-ID': '<some3@example_keep_on_server>',
+                       'In-Reply-To': '<some1@example_keep_on_server>',
+                       'References': '<some1@example_keep_on_server>',
+                       'Body': 'hello world'
                      })
-    
+
     #check if message in-reply-to now has answered flag
     message_meta = imap.fetch(1, ['RFC822.HEADER', 'FLAGS'])[0].attr
     assert(message_meta['FLAGS'].include?(:Answered))
-    
+
     #check if sent message in sent folder
     imap.select(sent_folder)
 
