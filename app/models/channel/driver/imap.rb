@@ -120,7 +120,7 @@ example
 
     return if options[:sent_folder].to_s.empty?
     target_mailbox = options[:sent_folder]
- 
+
     main_folder = 'INBOX'
     if options[:folder].present?
       main_folder = options[:folder]
@@ -174,7 +174,7 @@ example
     @imap = connect(options, timeout)
 
     # sort messages by date on server (if not supported), if not fetch messages via search (first in, first out)
-    if ['check', 'verify'].include?(check_type)
+    if %w[check verify].include?(check_type)
       filter = ['ALL']
       begin
         message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
