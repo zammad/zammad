@@ -69,6 +69,8 @@ returns
           items.each do |item|
             organization = Organization.lookup(id: item[:id])
             next if !organization
+            # select only active organizations if the active flag is set
+            next if params[:active] && !organization.active
             organizations.push organization
           end
           return organizations
@@ -80,6 +82,9 @@ returns
         organizations = Organization.where(
           'name LIKE ? OR note LIKE ?', "%#{query}%", "%#{query}%"
         ).order('name').offset(offset).limit(limit).to_a
+
+        # select only active organizations if the active flag is set
+        organizations = organizations.select(&:active) if params[:active]
 
         # use result independent of size if an explicit offset is given
         # this is the case for e.g. paginated searches

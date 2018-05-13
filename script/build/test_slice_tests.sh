@@ -18,6 +18,7 @@ if [ "$LEVEL" == '1' ]; then
   rm test/browser/admin_calendar_sla_test.rb
   rm test/browser/admin_object_manager_test.rb
   rm test/browser/admin_object_manager_tree_select_test.rb
+  rm test/browser/admin_organization_selection_test.rb
   rm test/browser/admin_overview_test.rb
   rm test/browser/admin_role_test.rb
   # test/browser/agent_navigation_and_title_test.rb
@@ -88,6 +89,7 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/admin_calendar_sla_test.rb
   rm test/browser/admin_object_manager_test.rb
   rm test/browser/admin_object_manager_tree_select_test.rb
+  rm test/browser/admin_organization_selection_test.rb
   rm test/browser/admin_overview_test.rb
   #rm test/browser/admin_role_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
@@ -158,6 +160,7 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/admin_calendar_sla_test.rb
   rm test/browser/admin_object_manager_test.rb
   rm test/browser/admin_object_manager_tree_select_test.rb
+  rm test/browser/admin_organization_selection_test.rb
   rm test/browser/admin_overview_test.rb
   rm test/browser/admin_role_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
@@ -228,6 +231,7 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/admin_calendar_sla_test.rb
   rm test/browser/admin_object_manager_test.rb
   rm test/browser/admin_object_manager_tree_select_test.rb
+  rm test/browser/admin_organization_selection_test.rb
   rm test/browser/admin_overview_test.rb
   rm test/browser/admin_role_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
@@ -297,6 +301,7 @@ elif [ "$LEVEL" == '5' ]; then
   # test/browser/admin_calendar_sla_test.rb
   # test/browser/admin_object_manager_test.rb
   # test/browser/admin_object_manager_tree_select_test.rb
+  # test/browser/admin_organization_selection_test.rb
   # test/browser/admin_overview_test.rb
   rm test/browser/admin_role_test.rb
   rm test/browser/agent_navigation_and_title_test.rb
@@ -369,6 +374,7 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/admin_calendar_sla_test.rb
   rm test/browser/admin_object_manager_test.rb
   rm test/browser/admin_object_manager_tree_select_test.rb
+  rm test/browser/admin_organization_selection_test.rb
   rm test/browser/admin_overview_test.rb
   rm test/browser/admin_role_test.rb
   rm test/browser/agent_navigation_and_title_test.rb

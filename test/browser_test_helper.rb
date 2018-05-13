@@ -2586,6 +2586,61 @@ wait untill text in selector disabppears
 
 =begin
 
+  organization_create(
+    browser: browser1,
+    data: {
+      name: 'Organization name',
+      active: true,
+    }
+  )
+
+=end
+
+  def organization_create(params)
+    switch_window_focus(params)
+    log('organization_create', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  '.content.active a[href="#manage/organizations"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  '.content.active a[data-type="new"]',
+      mute_log: true,
+    )
+    modal_ready(browser: instance)
+    if data[:name]
+      set(
+        browser:  instance,
+        css:      '.modal input[name=name]',
+        value:    data[:name],
+        mute_log: true,
+      )
+    end
+
+    select(
+      browser:  instance,
+      css:      '.modal select[name=active]',
+      value:    data[:active] ? 'active' : 'inactive',
+      mute_log: true,
+    )
+
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
+  end
+
+=begin
+
   organization_open_by_search(
     browser: browser2,
     value:   'some value',

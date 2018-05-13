@@ -117,6 +117,7 @@ class SearchController < ApplicationController
       query:        query,
       limit:        limit,
       current_user: current_user,
+      active:       params[:active],
     )
     result = []
     found_objects.each do |found_object|

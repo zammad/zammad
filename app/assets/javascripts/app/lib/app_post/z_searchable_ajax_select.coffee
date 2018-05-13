@@ -31,6 +31,7 @@ class App.SearchableAjaxSelect extends App.SearchableSelect
       data:
         query: @query
         limit: @options.attribute.limit
+        active: true
       processData: true
       success:     @onAjaxResponse
     )
