@@ -4366,4 +4366,74 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('Lorem ipsum dolor', autoreply.body)
     assert_equal('text/html', autoreply.content_type)
   end
+
+  test 'trigger when there is an article body contains matched values' do
+    trigger1 = Trigger.create_or_update(
+      name: 'detect message body',
+      condition: {
+        'article.body' => {
+          'operator' => 'contains',
+          'value' => 'some message',
+        },
+      },
+      perform: {
+        'ticket.tags' => {
+          'operator' => 'add',
+          'value' => 'tag1, tag2',
+        },
+        'notification.email' => {
+          'body' => 'some lala',
+          'recipient' => 'ticket_customer',
+          'subject' => 'Thanks for your inquiry - loop check (#{ticket.title})!',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    ticket1 = Ticket.create!(
+      title: "some <b>title</b>\n äöüß",
+      group: Group.lookup(name: 'Users'),
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    article1 = Ticket::Article.create!(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Agent'),
+      type: Ticket::Article::Type.find_by(name: 'note'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket1.reload
+    assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal([], ticket1.tag_list)
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal(%w[tag1 tag2], ticket1.tag_list)
+
+    assert_match('- ', article1.from)
+    assert_match('some_recipient@example.com', article1.to)
+    assert_match('some subject', article1.subject)
+    assert_match("some message <b>note</b>\nnew line", article1.body)
+    assert_equal('text/plain', article1.content_type)
+  end
 end
