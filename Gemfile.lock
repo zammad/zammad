@@ -296,6 +296,11 @@ GEM
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    pry-rails (0.3.6)
+      pry (>= 0.10.4)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     public_suffix (3.0.1)
     puma (3.11.0)
     rack (2.0.4)
@@ -395,6 +400,7 @@ GEM
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
     slack-notifier (2.3.1)
+    slop (3.6.0)
     sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -516,6 +522,8 @@ DEPENDENCIES
   omniauth-weibo-oauth2
   pg
   pre-commit
+  pry-rails
+  pry-remote
   puma
   rack-livereload
   rails (= 5.1.5)

@@ -35,6 +35,7 @@ write a cache
       Rails.cache.write(key.to_s, data, params)
     rescue => e
       Rails.logger.error "Can't write cache #{key}: #{e.inspect}"
+      Rails.logger.error e
     end
   end
 
