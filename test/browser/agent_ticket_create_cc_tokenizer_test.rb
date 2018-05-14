@@ -28,18 +28,6 @@ class AgentTicketCreateCcTokenizerTest < TestCase
 
     click(css: email_out_css)
 
-    watch_for(
-      css: '.content.active input[name=cc]',
-      displayed: true
-    )
-
-    elem = @browser.find_element(:name, 'cc')
-    elem.send_keys 'test@example.com'
-    elem.send_keys :enter
-
-    watch_for(
-      css: '.token-label',
-      value: 'test@example.com'
-    )
+    token_verify('.content.active input[name=cc]', 'test@example.com')
   end
 end

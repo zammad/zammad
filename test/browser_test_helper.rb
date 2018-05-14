@@ -1271,7 +1271,9 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
 
   watch_for(
     browser:   browser1,
-    css:       '#content .text-1',
+    container: element # optional, defaults to browser, must exist at the time of dispatch
+    css:       '#content .text-1', # xpath or css required
+    xpath:       '/content[contains(@class,".text-1")]', # xpath or css required
     value:     'some text',
     attribute: 'some_attribute' # optional
     timeout:   16, # in sec, default 16
@@ -1283,7 +1285,15 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     switch_window_focus(params)
     log('watch_for', params)
 
-    instance = params[:browser] || @browser
+    browser = params[:browser] || @browser
+    instance = params[:container] || browser
+
+    selector = params[:css] || params[:xpath]
+    selector_type = if params.key?(:css)
+                      :css
+                    elsif params.key?(:xpath)
+                      :xpath
+                    end
 
     timeout = 16
     if params[:timeout]
@@ -1292,12 +1302,12 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     loops = timeout.to_i * 2
     text = ''
     (1..loops).each do
-      element = instance.find_elements(css: params[:css])[0]
+      element = instance.find_elements(selector_type => selector)[0]
       if element #&& element.displayed?
         begin
           # watch for selector
           if !params[:attribute] && !params[:value]
-            assert(true, "'#{params[:css]}' found")
+            assert(true, "'#{selector}' found")
             sleep 0.5
             return true
 
@@ -1305,7 +1315,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
           else
             text = if params[:attribute]
                      element.attribute(params[:attribute])
-                   elsif params[:css].match?(/(input|textarea)/i)
+                   elsif selector.match?(/(input|textarea)/i)
                      element.attribute('value')
                    else
                      element.text
@@ -1322,9 +1332,9 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
       end
       sleep 0.5
     end
-    screenshot(browser: instance, comment: 'watch_for_failed')
+    screenshot(browser: browser, comment: 'watch_for_failed')
     if !params[:attribute] && !params[:value]
-      raise "'#{params[:css]}' not found"
+      raise "'#{selector}' not found"
     end
     raise "'#{params[:value]}' not found in '#{text}'"
   end
@@ -3846,6 +3856,19 @@ wait untill text in selector disabppears
       instance: instance,
       options:  options,
       offset:   offset,
+    )
+  end
+
+  def token_verify(css, value)
+    original_element = @browser.find_element(:css, css)
+    elem = original_element.find_element(xpath: '../input[contains(@class, "token-input")]')
+    elem.send_keys value
+    elem.send_keys :enter
+
+    watch_for(
+      xpath: '../*/span[contains(@class,"token-label")]',
+      value: value,
+      container: original_element
     )
   end
 end
