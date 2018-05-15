@@ -18,42 +18,33 @@ examples how to use
 
   def to_s
     strip_html
-
-    @template
   end
 
   def strip_html
     # some browsers start adding HTML tags
     # fixes https://github.com/zammad/zammad/issues/385
-    @template.gsub!(/\#\{\s*t\((.+?)\)\s*\}/m) do
-      content = $1
-      if content =~ /^'(.+?)'$/
-        "<%= t \"#{strip_content($1)}\", #{@escape} %>"
+    @template.gsub(/\#\{\s*t\((.+?)\)\s*\}/m) do
+      if $1 =~ /^'(.+?)'$/
+        %(<%= t "#{strip_content($1)}", #{@escape} %>)
       else
-        "<%= t d\"#{strip_variable(content)}\", #{@escape} %>"
+        %(<%= t d"#{strip_variable(strip_content($1))}", #{@escape} %>)
       end
-    end
-    @template.gsub!(/\#\{\s*config\.(.+?)\s*\}/m) do
-      "<%= c \"#{strip_variable($1)}\", #{@escape} %>"
-    end
-    @template.gsub!(/\#\{(.*?)\}/m) do
-      "<%= d \"#{strip_variable($1)}\", #{@escape} %>"
+    end.gsub(/\#\{\s*config\.(.+?)\s*\}/m) do
+      %(<%= c "#{strip_variable($1)}", #{@escape} %>)
+    end.gsub(/\#\{(.*?)\}/m) do
+      %(<%= d "#{strip_variable($1)}", #{@escape} %>)
     end
   end
 
   def strip_content(string)
-    return string if !string
-    string.gsub!(/\t|\r|\n/, '')
-    string.gsub!(/"/, '\"')
-    string
+    string&.gsub(/\t|\r|\n/, '')
+          &.gsub(/"/, '\"')
   end
 
   def strip_variable(string)
-    return string if !string
-    string.gsub!(/\t|\r|\n|"|'|§|;/, '')
-    string.gsub!(/\s*/, '')
-    string.gsub!(/<.+?>/, '')
-    string
+    string&.gsub(/\t|\r|\n|"|'|§|;/, '')
+          &.gsub(/\s*/, '')
+          &.gsub(/<.+?>/, '')
   end
 
 end
