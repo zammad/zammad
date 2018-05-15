@@ -415,7 +415,7 @@ class App.TicketOverview extends App.Controller
     group = App.Group.find(groupId)
     users = []
 
-    for user_id in group.user_ids
+    for user_id in _.uniq(group.user_ids)
       if App.User.exists(user_id)
         user = App.User.find(user_id)
         if user.active is true
@@ -620,7 +620,7 @@ class App.TicketOverview extends App.Controller
           users.push user
     for group in groups
       valid_user_ids = []
-      for user_id in group.user_ids
+      for user_id in _.uniq(group.user_ids)
         if App.User.exists(user_id)
           if App.User.find(user_id).active is true
             valid_user_ids.push user_id

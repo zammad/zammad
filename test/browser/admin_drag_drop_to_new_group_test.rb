@@ -43,13 +43,7 @@ class AdminDragDropToNewGroupTest < TestCase
 
     assert_not_nil(group)
 
-    checkbox = group.find_element(css: 'input[value=full]')
-
-    @browser
-      .action
-      .move_to(checkbox, 0, 10)
-      .click
-      .perform
+    %w[read create].each { |val| toggle_checkbox(group, val) }
 
     click(css: '.modal button.js-submit')
 
@@ -85,5 +79,27 @@ class AdminDragDropToNewGroupTest < TestCase
 
     group_description = new_group_container.find_element(css: '.batch-overlay-assign-entry-detail').text
     assert_equal('1 PEOPLE', group_description)
+
+    @browser
+      .action
+      .move_to(new_group_container)
+      .perform
+
+    sleep(1)
+
+    users_in_group = @browser.find_elements(css: '.js-batch-assign-group-inner .batch-overlay-assign-entry[data-action=user_assign]')
+    assert_equal(1, users_in_group.count)
+  end
+
+  private
+
+  def toggle_checkbox(scope, value)
+    checkbox = scope.find_element(css: "input[value=#{value}]")
+
+    @browser
+      .action
+      .move_to(checkbox, 0, 10)
+      .click
+      .perform
   end
 end
