@@ -22,4 +22,20 @@ class UserGroup < ApplicationModel
     user.cache_update(nil)
     super
   end
+
+  private
+
+  def validate_access
+    query = self.class.where(group: group, user: user)
+
+    query = if access == 'full'
+              query.where.not(access: 'full')
+            else
+              query.where(access: 'full')
+            end
+
+    errors.add(:access, 'User can have full or granular access to group') if query.exists?
+  end
+
+  validate :validate_access
 end

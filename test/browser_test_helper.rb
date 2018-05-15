@@ -3871,4 +3871,18 @@ wait untill text in selector disabppears
       container: original_element
     )
   end
+
+  def toggle_checkbox(scope, value)
+    checkbox = scope.find_element(css: "input[value=#{value}]")
+
+    @browser
+      .action
+      .move_to(checkbox)
+      .click
+      .perform
+  end
+
+  def checkbox_is_selected(scope, value)
+    scope.find_element(css: "input[value=#{value}]").property('checked')
+  end
 end

@@ -90,16 +90,4 @@ class AdminDragDropToNewGroupTest < TestCase
     users_in_group = @browser.find_elements(css: '.js-batch-assign-group-inner .batch-overlay-assign-entry[data-action=user_assign]')
     assert_equal(1, users_in_group.count)
   end
-
-  private
-
-  def toggle_checkbox(scope, value)
-    checkbox = scope.find_element(css: "input[value=#{value}]")
-
-    @browser
-      .action
-      .move_to(checkbox, 0, 10)
-      .click
-      .perform
-  end
 end
