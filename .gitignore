@@ -29,6 +29,9 @@
 /config/locales*.yml
 /config/translations/*.yml
 
+# Ignore generated documentation
+/doc
+
 # Ignore coverage stuff
 /coverage
 
