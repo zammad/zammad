@@ -175,7 +175,7 @@ RSpec.describe Ticket do
 
   describe '#perform_changes' do
 
-    it 'performes a ticket state change on a ticket' do
+    it 'performs a ticket state change on a ticket' do
       source_ticket = create(:ticket)
 
       changes = {
@@ -188,7 +188,7 @@ RSpec.describe Ticket do
       expect(source_ticket.state.name).to eq('closed')
     end
 
-    it 'performes a ticket deletion on a ticket' do
+    it 'performs a ticket deletion on a ticket' do
       source_ticket = create(:ticket)
 
       changes = {
@@ -199,6 +199,25 @@ RSpec.describe Ticket do
       source_ticket.perform_changes(changes, 'trigger', source_ticket, User.find(1))
       ticket_with_source_ids = Ticket.where(id: source_ticket.id)
       expect(ticket_with_source_ids).to match_array([])
+    end
+
+    # Regression test for https://github.com/zammad/zammad/issues/2001
+    it 'does not modify its arguments' do
+      trigger = Trigger.new(
+        perform: {
+          # rubocop:disable Lint/InterpolationCheck
+          'notification.email' => {
+            body: 'Hello #{ticket.customer.firstname} #{ticket.customer.lastname},',
+            recipient: %w[article_last_sender ticket_owner ticket_customer ticket_agents],
+            subject: 'Autoclose (#{ticket.title})'
+          }
+          # rubocop:enable Lint/InterpolationCheck
+        }
+      )
+
+      expect { Ticket.first.perform_changes(trigger.perform, 'trigger', {}, 1) }
+        .to not_change { trigger.perform['notification.email'][:body] }
+        .and not_change { trigger.perform['notification.email'][:subject] }
     end
 
   end
