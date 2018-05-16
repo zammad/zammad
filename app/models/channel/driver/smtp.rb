@@ -75,7 +75,7 @@ class Channel::Driver::Smtp
     end
     mail.delivery_method :smtp, smtp_params
 
-    if !notification && !channel.nil? && !channel.options.nil?
+    if !notification && !channel.nil? && !channel.options.nil? && channel.options[:inbound].present?
       instance = Channel::Driver::Imap.new
       instance.place_reply(channel.options[:inbound][:options], mail)
     end
