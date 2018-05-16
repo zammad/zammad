@@ -80,6 +80,21 @@ class App.UiElement.user_permission
       groupAccesses: App.Group.accesses()
     ) )
 
+    throttled = _.throttle( (e) ->
+      input = $(@).find('input')
+      upcoming_state = !input.prop('checked')
+      value = input.val()
+      console.log(upcoming_state)
+      console.log(value)
+
+      if value is 'full' and upcoming_state is true
+        $(@).closest('tr').find('input:not([value=full])').prop('checked', false)
+      else if value isnt 'full' and upcoming_state is true
+        $(@).closest('tr').find('input[value=full]').prop('checked', false)
+    , 300, { trailing: false })
+
+    item.on('click', '.checkbox-replacement', throttled)
+
     # if customer, remove admin and agent
     item.find('[name=role_ids]').bind('change', (e) ->
       element = $(e.currentTarget)

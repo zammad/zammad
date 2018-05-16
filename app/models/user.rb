@@ -817,8 +817,6 @@ returns
     true
   end
 
-  private
-
   def cache_delete
     super
 
@@ -830,6 +828,8 @@ returns
     key = "User::permissions?:local_key:::#{id}"
     Cache.delete(key)
   end
+
+  private
 
   def check_name
     if firstname.present?

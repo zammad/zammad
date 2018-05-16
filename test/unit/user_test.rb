@@ -1270,4 +1270,34 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(0, RecentView.where(created_by_id: agent1_id).count)
   end
 
+  test 'adding group drops cache' do
+    agent1 = User.create!(
+      login: "agent-cleanup_check-1#{name}@example.com",
+      firstname: 'vaild_agent_group_permission-1',
+      lastname: "Agent#{name}",
+      email: "agent-cleanup_check-1#{name}@example.com",
+      password: 'agentpw',
+      active: true,
+      roles: Role.where(name: 'Agent'),
+      groups: Group.all,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    group1 = Group.create_or_update(
+      name: "GroupWithoutPermission-#{rand(9_999_999_999)}",
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    differences = %w[
+      group1.attributes_with_association_ids['user_ids'].count
+      agent1.attributes_with_association_ids['group_ids'].keys.count
+    ]
+
+    assert_difference differences, 1 do
+      agent1.groups << group1
+    end
+  end
 end
