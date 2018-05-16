@@ -205,13 +205,11 @@ RSpec.describe Ticket do
     it 'does not modify its arguments' do
       trigger = Trigger.new(
         perform: {
-          # rubocop:disable Lint/InterpolationCheck
           'notification.email' => {
-            body: 'Hello #{ticket.customer.firstname} #{ticket.customer.lastname},',
+            body: "Hello \#{ticket.customer.firstname} \#{ticket.customer.lastname},",
             recipient: %w[article_last_sender ticket_owner ticket_customer ticket_agents],
-            subject: 'Autoclose (#{ticket.title})'
+            subject: "Autoclose (\#{ticket.title})"
           }
-          # rubocop:enable Lint/InterpolationCheck
         }
       )
 
