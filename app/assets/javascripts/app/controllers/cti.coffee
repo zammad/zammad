@@ -10,6 +10,7 @@ class App.CTI extends App.Controller
     active: false
     counter: 0
     state: {}
+  backendEnabled: false
 
   constructor: ->
     super
@@ -29,9 +30,9 @@ class App.CTI extends App.Controller
           @meta.counter += 1
           @updateNavMenu()
         if data.state is 'answer' || data.state is 'hangup'
-          return if !@meta.state[data.id]
-          delete @meta.state[data.id]
-          @meta.counter -= 1
+          if @meta.state[data.id]
+            delete @meta.state[data.id]
+            @meta.counter -= 1
           @updateNavMenu()
       'cti_event'
     )
@@ -82,6 +83,17 @@ class App.CTI extends App.Controller
           App.Collection.loadAssets(data.assets)
         if data.backends
           @backends = data.backends
+
+          # check if configured backends are changed
+          backendEnabled = false
+          for backend in @backends
+            if backend.enabled
+              backendEnabled = true
+          if backendEnabled isnt @backendEnabled
+            @renderDone = false
+          @backendEnabled = backendEnabled
+
+        # render new caller list
         if data.list
           @list = data.list
           if @renderDone
@@ -109,11 +121,7 @@ class App.CTI extends App.Controller
       return
 
     # check if min one backend is enabled
-    backendEnabled = false
-    for backend in @backends
-      if backend.enabled
-        backendEnabled = true
-    if !backendEnabled
+    if !@backendEnabled
       @html App.view('cti/not_configured')(
         backends: @backends
         isAdmin: @permissionCheck('admin.integration')
