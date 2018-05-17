@@ -21,6 +21,12 @@ class Index extends App.ControllerContent
     @bindId = App.TicketCreateCollection.one(load)
 
   render: (template = {}) ->
+    if !@Config.get('customer_ticket_create')
+      @renderScreenError(
+        detail:     'Your role cannot create new ticket. Please contact your administrator.'
+        objectName: 'Ticket'
+      )
+      return
 
     # set defaults
     defaults = template['options'] || {}
@@ -190,4 +196,4 @@ class Index extends App.ControllerContent
       )
 
 App.Config.set('customer_ticket_new', Index, 'Routes')
-App.Config.set('CustomerTicketNew', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#customer_ticket_new', permission: ['ticket.customer'], divider: true }, 'NavBarRight')
+App.Config.set('CustomerTicketNew', { prio: 8003, parent: '#new', name: 'New Ticket', translate: true, target: '#customer_ticket_new', permission: ['ticket.customer'], setting: ['customer_ticket_create'], divider: true }, 'NavBarRight')
