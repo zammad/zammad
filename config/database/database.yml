@@ -11,8 +11,8 @@ default: &default
   ##### postgresql config #####
 
   adapter: postgresql
-  username: zammad
-  password:
+  # username: zammad
+  # password:
 
   #### mysql config #####
 
