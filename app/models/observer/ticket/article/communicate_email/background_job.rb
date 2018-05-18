@@ -9,11 +9,10 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     # build subject
     ticket = Ticket.lookup(id: record.ticket_id)
     article_count = Ticket::Article.where(ticket_id: ticket.id).count
-    subject = if article_count > 1
-                ticket.subject_build(record.subject, true)
-              else
-                ticket.subject_build(record.subject)
-              end
+
+    subject_prefix_mode = record.preferences[:subtype]
+
+    subject = ticket.subject_build(record.subject,  subject_prefix_mode)
 
     # set retry count
     if !record.preferences['delivery_retry']

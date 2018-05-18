@@ -2,6 +2,7 @@
   <input type="hidden" name="type" value="<%= @article.type %>">
   <input type="hidden" name="internal" value="<%= @article.internal %>">
   <input type="hidden" name="form_id" value="<%= @form_id %>">
+  <input type="hidden" name="subtype" value="<%= @article.subtype %>">
   <input type="hidden" name="in_reply_to" value="<%= @article.in_reply_to %>">
   <div class="editControls">
     <div class="js-avatar"></div>

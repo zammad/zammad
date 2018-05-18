@@ -605,6 +605,7 @@ class App.TicketZoom extends App.Controller
         body:        ''
         internal:    internal
         in_reply_to: ''
+        subtype:     ''
 
     if @permissionCheck('ticket.customer')
       currentStore.article.internal = ''

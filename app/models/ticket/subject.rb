@@ -6,7 +6,8 @@ module Ticket::Subject
 build new subject with ticket number in there
 
   ticket = Ticket.find(123)
-  result = ticket.subject_build('some subject', is_reply_true_false)
+  prefix_mode = :reply # :forward, nil
+  result = ticket.subject_build('some subject', prefix_mode)
 
 returns
 
@@ -14,36 +15,25 @@ returns
 
 =end
 
-  def subject_build(subject, is_reply = false)
+  def subject_build(subject, prefix_mode = nil)
 
     # clena subject
-    subject = subject_clean(subject)
+    subject_parts = [subject_clean(subject)]
 
-    ticket_hook         = Setting.get('ticket_hook')
-    ticket_hook_divider = Setting.get('ticket_hook_divider')
-    ticket_subject_re   = Setting.get('ticket_subject_re')
-
-    # none position
-    if Setting.get('ticket_hook_position') == 'none'
-      if is_reply && ticket_subject_re.present?
-        subject = "#{ticket_subject_re}: #{subject}"
-      end
-      return subject
+    # add hook
+    case Setting.get('ticket_hook_position')
+    when 'left'
+      subject_parts.unshift subject_build_hook
+    when 'right'
+      subject_parts.push subject_build_hook
     end
 
-    # right position
-    if Setting.get('ticket_hook_position') == 'right'
-      if is_reply && ticket_subject_re.present?
-        subject = "#{ticket_subject_re}: #{subject}"
-      end
-      return "#{subject} [#{ticket_hook}#{ticket_hook_divider}#{number}]"
-    end
+    # add prefix
+    subject_parts
+      .unshift(subject_build_prefix(prefix_mode))
+      .compact!
 
-    # left position
-    if is_reply && ticket_subject_re.present?
-      return "#{ticket_subject_re}: [#{ticket_hook}#{ticket_hook_divider}#{number}] #{subject}"
-    end
-    "[#{ticket_hook}#{ticket_hook_divider}#{number}] #{subject}"
+    subject_parts.join ' '
   end
 
 =begin
@@ -84,5 +74,25 @@ returns
 
     subject.strip!
     subject
+  end
+
+  private
+
+  def subject_build_hook
+    ticket_hook         = Setting.get('ticket_hook')
+    ticket_hook_divider = Setting.get('ticket_hook_divider')
+
+    "[#{ticket_hook}#{ticket_hook_divider}#{number}]"
+  end
+
+  def subject_build_prefix(prefix_mode)
+    prefix = case prefix_mode
+             when 'reply'
+               Setting.get('ticket_subject_re')
+             when 'forward'
+               Setting.get('ticket_subject_fwd')
+             end
+
+    prefix.present? ? "#{prefix}:" : nil
   end
 end

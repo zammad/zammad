@@ -300,9 +300,10 @@ class TicketTest < ActiveSupport::TestCase
     )
     assert_equal('subject test 1', ticket.title)
     assert_equal("ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('ABC subject test 1'))
-    assert_equal("RE: ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('ABC subject test 1', true))
-    assert_equal("RE: ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('  ABC subject test 1', true))
-    assert_equal("RE: ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('ABC subject test 1  ', true))
+    assert_equal("RE: ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('ABC subject test 1', 'reply'))
+    assert_equal("RE: ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('  ABC subject test 1', 'reply'))
+    assert_equal("RE: ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('ABC subject test 1  ', 'reply'))
+    assert_equal("FWD: ABC subject test 1 [Ticket##{ticket.number}]", ticket.subject_build('ABC subject test 1  ', 'forward'))
     ticket.destroy
 
     Setting.set('ticket_hook_position', 'left')
@@ -318,9 +319,10 @@ class TicketTest < ActiveSupport::TestCase
     )
     assert_equal('subject test 1', ticket.title)
     assert_equal("[Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('ABC subject test 1'))
-    assert_equal("RE: [Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('ABC subject test 1', true))
-    assert_equal("RE: [Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('  ABC subject test 1', true))
-    assert_equal("RE: [Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('ABC subject test 1  ', true))
+    assert_equal("RE: [Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('ABC subject test 1', 'reply'))
+    assert_equal("RE: [Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('  ABC subject test 1', 'reply'))
+    assert_equal("RE: [Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('ABC subject test 1  ', 'reply'))
+    assert_equal("FWD: [Ticket##{ticket.number}] ABC subject test 1", ticket.subject_build('ABC subject test 1  ', 'forward'))
     ticket.destroy
 
     Setting.set('ticket_hook_position', 'none')
@@ -336,9 +338,10 @@ class TicketTest < ActiveSupport::TestCase
     )
     assert_equal('subject test 1', ticket.title)
     assert_equal('ABC subject test 1', ticket.subject_build('ABC subject test 1'))
-    assert_equal('RE: ABC subject test 1', ticket.subject_build('ABC subject test 1', true))
-    assert_equal('RE: ABC subject test 1', ticket.subject_build('  ABC subject test 1', true))
-    assert_equal('RE: ABC subject test 1', ticket.subject_build('ABC subject test 1  ', true))
+    assert_equal('RE: ABC subject test 1', ticket.subject_build('ABC subject test 1', 'reply'))
+    assert_equal('RE: ABC subject test 1', ticket.subject_build('  ABC subject test 1', 'reply'))
+    assert_equal('RE: ABC subject test 1', ticket.subject_build('ABC subject test 1  ', 'reply'))
+    assert_equal('FWD: ABC subject test 1', ticket.subject_build('ABC subject test 1  ', 'forward'))
     ticket.destroy
 
   end
