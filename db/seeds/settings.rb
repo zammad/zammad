@@ -3715,7 +3715,7 @@ Setting.create_if_not_exists(
   area: 'Integration::Sipgate',
   description: 'Defines the sipgate.io config.',
   options: {},
-  state: {},
+  state: { 'outbound' => { 'routing_table' => [], 'default_caller_id' => '' }, 'inbound' => { 'block_caller_ids' => [] } },
   preferences: {
     prio: 2,
     permission: ['admin.integration'],
