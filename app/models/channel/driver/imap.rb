@@ -130,7 +130,7 @@ example
 
     @imap = connect(options)
 
-    #@imap.create(target_mailbox) if !@imap.list('', target_mailbox)
+    @imap.create(target_mailbox) if !@imap.list('', target_mailbox)
     @imap.append(target_mailbox, mail.to_s, [:Seen])
 
     @imap.select(main_folder)

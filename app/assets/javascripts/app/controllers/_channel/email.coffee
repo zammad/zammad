@@ -748,7 +748,7 @@ class App.ChannelEmailAccountWizard extends App.WizardModal
           # remember account settings
           @account.inbound = params
           
-          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || (@account['inbound']['options']['keep_on_server'] isnt true && @account['inbound']['options']['keep_on_server'] != "2"))
+          if data.content_messages && data.content_messages > 0 && (!@account['inbound']['options'] || (@account['inbound']['options']['keep_on_server'] isnt true && @account['inbound']['options']['keep_on_server'] isnt "2"))
             message = App.i18n.translateContent('We have already found %s email(s) in your mailbox. Zammad will move it all from your mailbox into Zammad.', data.content_messages)
             @$('.js-inbound-acknowledge .js-message').html(message)
             @$('.js-inbound-acknowledge .js-back').attr('data-slide', 'js-inbound')
