@@ -55,7 +55,7 @@ class AutoWizardTest < ActiveSupport::TestCase
       assert_equal(local_user[:lastname], user.lastname)
       assert_equal(local_user[:email], user.email)
       assert_equal(local_user[:roles].count, user.role_ids.count)
-      next unless local_user[:roles]
+      next if !local_user[:roles]
       local_user[:roles].each do |local_role_name|
         local_role = Role.find_by(name: local_role_name)
         assert(user.role_ids.include?(local_role.id))
@@ -64,7 +64,7 @@ class AutoWizardTest < ActiveSupport::TestCase
     auto_wizard_data[:Groups].each do |local_group|
       group = Group.find_by(name: local_group[:name])
       assert_equal(local_group[:name], group.name)
-      next unless local_group[:users]
+      next if !local_group[:users]
       local_group[:users].each do |local_user_login|
         local_user = User.find_by(login: local_user_login)
         assert(group.user_ids.include?(local_user.id))
@@ -193,7 +193,7 @@ class AutoWizardTest < ActiveSupport::TestCase
       assert_equal(local_user[:firstname], user.firstname)
       assert_equal(local_user[:lastname], user.lastname)
       assert_equal(local_user[:email], user.email)
-      next unless local_user[:roles]
+      next if !local_user[:roles]
       assert_equal(local_user[:roles].count, user.role_ids.count)
       local_user[:roles].each do |local_role_name|
         local_role = Role.find_by(name: local_role_name)

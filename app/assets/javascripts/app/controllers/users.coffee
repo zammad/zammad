@@ -90,6 +90,7 @@ class Index extends App.ControllerSubContent
       item = App.User.find(id)
 
       rerender = =>
+        App.Group.fetch()
         @renderResult(user_ids)
 
       new App.ControllerGenericEdit(

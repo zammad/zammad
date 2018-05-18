@@ -1,4 +1,4 @@
-require 'sequencer/unit/import/common/sub_sequence/mixin/import_job'
+require_dependency 'sequencer/unit/import/common/sub_sequence/mixin/import_job'
 
 class Sequencer
   class Unit

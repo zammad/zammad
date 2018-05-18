@@ -8,7 +8,7 @@ class Sequencer
               include ::Sequencer::Unit::Import::Common::Model::Mixin::HandleFailure
               prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-              skip_action :skipped
+              skip_action :skipped, :failed
 
               uses :mapped, :model_class
               provides :instance

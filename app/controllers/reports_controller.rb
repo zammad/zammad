@@ -1,7 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
-require 'tempfile'
-
 class ReportsController < ApplicationController
   prepend_before_action { authentication_check(permission: 'report') }
 
@@ -93,6 +90,8 @@ class ReportsController < ApplicationController
         params:      backend[:params],
         sheet:       params[:sheet],
       )
+
+      result = { count: 0, ticket_ids: [] } if result.nil?
 
       # generate sheet
       next if !params[:sheet]
@@ -208,6 +207,18 @@ class ReportsController < ApplicationController
     worksheet.write_string(2, 11, 'Created at', format_header)
     worksheet.write_string(2, 12, 'Updated at', format_header)
     worksheet.write_string(2, 13, 'Closed at', format_header)
+    # ObjectManager attributes
+    header_column = 14
+    # needs to be skipped
+    objects = ObjectManager::Attribute.where(editable: true,
+                                             active: true,
+                                             object_lookup_id: ObjectLookup.lookup(name: 'Ticket').id)
+                                      .pluck(:name, :display, :data_type, :data_option)
+                                      .map { |name, display, data_type, data_option| { name: name, display: display, data_type: data_type, data_option: data_option } }
+    objects.each do |object|
+      worksheet.write_string(2, header_column, object[:display].capitalize, format_header)
+      header_column += 1
+    end
 
     row = 2
     result[:ticket_ids].each do |ticket_id|
@@ -227,7 +238,24 @@ class ReportsController < ApplicationController
         worksheet.write_string(row, 10, ticket.tag_list.join(','))
         worksheet.write_date_time(row, 11, ticket.created_at.to_time.iso8601)
         worksheet.write_date_time(row, 12, ticket.updated_at.to_time.iso8601)
-        worksheet.write_date_time(row, 13, ticket.close_at.to_time.iso8601)
+        worksheet.write_date_time(row, 13, ticket.close_at.to_time.iso8601) if ticket.close_at.present?
+        # Object Manager attributes
+        column = 14
+        # We already queried ObjectManager::Attributes, so we just use objects
+        objects.each do |object|
+          key = object[:name]
+          case object[:data_type]
+          when 'boolean', 'select'
+            value = object[:data_option]['options'][ticket.send(key.to_sym)]
+            worksheet.write_string(row, column, value)
+          when 'datetime', 'date'
+            worksheet.write_date_time(row, column, ticket.send(key.to_sym).to_time.iso8601) if ticket.send(key.to_sym).present?
+          else
+            # for text, integer and tree select
+            worksheet.write_string(row, column, ticket.send(key.to_sym))
+          end
+          column += 1
+        end
       rescue => e
         Rails.logger.error "SKIP: #{e.message}"
       end

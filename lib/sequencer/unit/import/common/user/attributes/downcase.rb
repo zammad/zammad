@@ -7,7 +7,7 @@ class Sequencer
             class Downcase < Sequencer::Unit::Base
               prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
 
-              skip_action :skipped
+              skip_action :skipped, :failed
 
               uses :mapped
 

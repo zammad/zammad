@@ -2,6 +2,7 @@
 
 class Sla
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

@@ -1,6 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-require 'signature_detection'
-
 class Transaction::SignatureDetection
 
 =begin
@@ -46,14 +44,14 @@ class Transaction::SignatureDetection
     return if type['name'] != 'email'
 
     # update current signature of user id
-    SignatureDetection.rebuild_user(article.created_by_id)
+    ::SignatureDetection.rebuild_user(article.created_by_id)
 
     # user
     user = User.lookup(id: article.created_by_id)
     return if !user
     return if !user.preferences
     return if !user.preferences[:signature_detection]
-    line = SignatureDetection.find_signature_line_by_article(
+    line = ::SignatureDetection.find_signature_line_by_article(
       user,
       article
     )

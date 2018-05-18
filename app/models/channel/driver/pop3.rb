@@ -62,7 +62,7 @@ returns
 
     Rails.logger.info "fetching pop3 (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl})"
 
-    @pop = Net::POP3.new(options[:host], port)
+    @pop = ::Net::POP3.new(options[:host], port)
     #@pop.set_debug_output $stderr
 
     # on check, reduce open_timeout to have faster probing
@@ -91,7 +91,7 @@ returns
         next if !mail
 
         # check how many content messages we have, for notice used
-        if mail !~ /x-zammad-ignore/i
+        if !mail.match?(/x-zammad-ignore/i)
           content_messages += 1
           break if content_max_check < content_messages
         end

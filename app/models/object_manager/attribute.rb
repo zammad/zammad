@@ -756,7 +756,7 @@ to send no browser reload event, pass false
     if !data_type
       raise 'Need data_type param'
     end
-    if data_type !~ /^(input|user_autocompletion|checkbox|select|tree_select|datetime|date|tag|richtext|textarea|integer|autocompletion_ajax|boolean|user_permission|active)$/
+    if !data_type.match?(/^(input|user_autocompletion|checkbox|select|tree_select|datetime|date|tag|richtext|textarea|integer|autocompletion_ajax|boolean|user_permission|active)$/)
       raise "Invalid data_type param '#{data_type}'"
     end
 
@@ -769,8 +769,8 @@ to send no browser reload event, pass false
 
     # validate data_option
     if data_type == 'input'
-      raise 'Need data_option[:type] param' if !data_option[:type]
-      raise "Invalid data_option[:type] param '#{data_option[:type]}'" if data_option[:type] !~ /^(text|password|tel|fax|email|url)$/
+      raise 'Need data_option[:type] param e. g. (text|password|tel|fax|email|url)' if !data_option[:type]
+      raise "Invalid data_option[:type] param '#{data_option[:type]}' (text|password|tel|fax|email|url)" if data_option[:type] !~ /^(text|password|tel|fax|email|url)$/
       raise 'Need data_option[:maxlength] param' if !data_option[:maxlength]
       raise "Invalid data_option[:maxlength] param #{data_option[:maxlength]}" if data_option[:maxlength].to_s !~ /^\d+?$/
     end

@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
-require 'ldap'
-require 'ldap/group'
+require_dependency 'ldap'
+require_dependency 'ldap/group'
 
 module Import
   class Ldap < Import::IntegrationBase

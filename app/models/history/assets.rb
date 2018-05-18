@@ -2,6 +2,7 @@
 
 class History
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

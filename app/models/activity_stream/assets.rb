@@ -2,6 +2,7 @@
 
 class ActivityStream
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

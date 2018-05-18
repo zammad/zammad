@@ -1,5 +1,5 @@
-require 'ldap'
-require 'ldap/user'
+require_dependency 'ldap'
+require_dependency 'ldap/user'
 
 module MigrationJob
   class LdapSamaccountnameToUid

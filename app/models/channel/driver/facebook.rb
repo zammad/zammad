@@ -1,7 +1,4 @@
 # Copyright (C) 2012-2015 Zammad Foundation, http://zammad-foundation.org/
-
-require 'facebook'
-
 class Channel::Driver::Facebook
 
 =begin
@@ -38,7 +35,7 @@ class Channel::Driver::Facebook
     if !access_token
       raise "No access_token found for fb_object_id: #{fb_object_id}"
     end
-    client = Facebook.new(access_token)
+    client = ::Facebook.new(access_token)
     client.from_article(article)
   end
 
@@ -96,7 +93,7 @@ returns
       page = get_page(page_to_sync_id)
       next if !page
       next if page_to_sync_params['group_id'].blank?
-      page_client = Facebook.new(page['access_token'])
+      page_client = ::Facebook.new(page['access_token'])
 
       posts = page_client.client.get_connection('me', 'feed', fields: 'id,from,to,message,created_time,permalink_url,comments{id,from,to,message,created_time}')
       posts.each do |post|

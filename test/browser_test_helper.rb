@@ -104,7 +104,7 @@ class TestCase < Test::Unit::TestCase
     browser_width = ENV['BROWSER_WIDTH'] || 1024
     browser_height = ENV['BROWSER_HEIGHT'] || 800
     local_browser.manage.window.resize_to(browser_width, browser_height)
-    if ENV['REMOTE_URL'] !~ /saucelabs|(grid|ci)\.(zammad\.org|znuny\.com)/i
+    if !ENV['REMOTE_URL']&.match?(/saucelabs|(grid|ci)\.(zammad\.org|znuny\.com)/i)
       if @browsers.count == 1
         local_browser.manage.window.move_to(0, 0)
       else
@@ -362,7 +362,7 @@ class TestCase < Test::Unit::TestCase
     instance = params[:browser] || @browser
     sleep 0.7
     current_url = instance.current_url
-    if current_url !~ /#{Regexp.quote(params[:url])}/
+    if !current_url.match?(/#{Regexp.quote(params[:url])}/)
       screenshot(browser: instance, comment: 'location_check_failed')
       raise "url #{current_url} is not matching #{params[:url]}"
     end
@@ -485,6 +485,26 @@ class TestCase < Test::Unit::TestCase
     )
     sleep 0.3
     screenshot(browser: instance, comment: 'scroll_to_after')
+  end
+
+=begin
+
+  modal_close(
+    browser: browser1,
+  )
+
+=end
+
+  def modal_close(params = {})
+    switch_window_focus(params)
+    log('modal_close', params)
+
+    instance = params[:browser] || @browser
+
+    element = instance.find_elements(css: '.modal .js-close')[0]
+    raise "No such modal to close #{params.inspect}" if !element
+
+    element.click
   end
 
 =begin
@@ -1251,7 +1271,9 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
 
   watch_for(
     browser:   browser1,
-    css:       '#content .text-1',
+    container: element # optional, defaults to browser, must exist at the time of dispatch
+    css:       '#content .text-1', # xpath or css required
+    xpath:       '/content[contains(@class,".text-1")]', # xpath or css required
     value:     'some text',
     attribute: 'some_attribute' # optional
     timeout:   16, # in sec, default 16
@@ -1263,7 +1285,15 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     switch_window_focus(params)
     log('watch_for', params)
 
-    instance = params[:browser] || @browser
+    browser = params[:browser] || @browser
+    instance = params[:container] || browser
+
+    selector = params[:css] || params[:xpath]
+    selector_type = if params.key?(:css)
+                      :css
+                    elsif params.key?(:xpath)
+                      :xpath
+                    end
 
     timeout = 16
     if params[:timeout]
@@ -1272,12 +1302,12 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     loops = timeout.to_i * 2
     text = ''
     (1..loops).each do
-      element = instance.find_elements(css: params[:css])[0]
+      element = instance.find_elements(selector_type => selector)[0]
       if element #&& element.displayed?
         begin
           # watch for selector
           if !params[:attribute] && !params[:value]
-            assert(true, "'#{params[:css]}' found")
+            assert(true, "'#{selector}' found")
             sleep 0.5
             return true
 
@@ -1285,7 +1315,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
           else
             text = if params[:attribute]
                      element.attribute(params[:attribute])
-                   elsif params[:css].match?(/(input|textarea)/i)
+                   elsif selector.match?(/(input|textarea)/i)
                      element.attribute('value')
                    else
                      element.text
@@ -1302,9 +1332,9 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
       end
       sleep 0.5
     end
-    screenshot(browser: instance, comment: 'watch_for_failed')
+    screenshot(browser: browser, comment: 'watch_for_failed')
     if !params[:attribute] && !params[:value]
-      raise "'#{params[:css]}' not found"
+      raise "'#{selector}' not found"
     end
     raise "'#{params[:value]}' not found in '#{text}'"
   end
@@ -1352,7 +1382,7 @@ wait untill text in selector disabppears
       if params[:value]
         begin
           text = instance.find_elements(css: params[:css])[0].text
-          if text !~ /#{params[:value]}/i
+          if !text.match?(/#{params[:value]}/i)
             assert(true, "not matching '#{params[:value]}' in text '#{text}'")
             sleep 1
             return true
@@ -2427,7 +2457,7 @@ wait untill text in selector disabppears
     element.click
     sleep 1
     number = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0].text
-    if number !~ /#{params[:number]}/
+    if !number.match?(/#{params[:number]}/)
       screenshot(browser: instance, comment: 'ticket_open_by_overview_open_failed_failed')
       raise "unable to open ticket #{params[:number]}!"
     end
@@ -2473,7 +2503,7 @@ wait untill text in selector disabppears
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:number]}') .nav-tab-icon\").first().click()")
     sleep 1
     number = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0].text
-    if number !~ /#{params[:number]}/
+    if !number.match?(/#{params[:number]}/)
       screenshot(browser: instance, comment: 'ticket_open_by_search_failed')
       raise "unable to search/find ticket #{params[:number]}!"
     end
@@ -2509,7 +2539,7 @@ wait untill text in selector disabppears
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
     sleep 1
     title = instance.find_elements(css: '.content.active .ticketZoom-header .js-objectTitle')[0].text
-    if title !~ /#{params[:title]}/
+    if !title.match?(/#{params[:title]}/)
       screenshot(browser: instance, comment: 'ticket_open_by_title_failed')
       raise "unable to search/find ticket #{params[:title]}!"
     end
@@ -2597,7 +2627,7 @@ wait untill text in selector disabppears
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
     name = instance.find_elements(css: '.content.active h1')[0].text
-    if name !~ /#{params[:value]}/
+    if !name.match?(/#{params[:value]}/)
       screenshot(browser: instance, comment: 'organization_open_by_search_failed')
       raise "unable to search/find org #{params[:value]}!"
     end
@@ -2632,7 +2662,7 @@ wait untill text in selector disabppears
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
     name = instance.find_elements(css: '.content.active h1')[0].text
-    if name !~ /#{params[:value]}/
+    if !name.match?(/#{params[:value]}/)
       screenshot(browser: instance, comment: 'user_open_by_search_failed')
       raise "unable to search/find user #{params[:value]}!"
     end
@@ -2719,10 +2749,70 @@ wait untill text in selector disabppears
 
 =begin
 
+  calendar_create(
+    browser: browser2,
+    data: {
+       name: 'some calendar' + random,
+       first_response_time_in_text: 61
+    },
+  )
+
+=end
+
+  def calendar_create(params = {})
+    switch_window_focus(params)
+    log('calendar_create', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  '.content.active a[href="#manage/calendars"]',
+      mute_log: true,
+    )
+    sleep 4
+    click(
+      browser: instance,
+      css:  '.content.active a.js-new',
+      mute_log: true,
+    )
+    modal_ready(browser: instance)
+    element = instance.find_elements(css: '.content.active .modal input[name=name]')[0]
+    element.clear
+    element.send_keys(data[:name])
+    element = instance.find_elements(css: '.content.active .modal .js-input')[0]
+    element.clear
+    element.send_keys(data[:timezone])
+    element.send_keys(:enter)
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(browser: instance)
+    7.times do
+      element = instance.find_elements(css: 'body')[0]
+      text = element.text
+      if text.match?(/#{Regexp.quote(data[:name])}/)
+        assert(true, 'calendar created')
+        sleep 1
+        return true
+      end
+      sleep 1
+    end
+    screenshot(browser: instance, comment: 'calendar_create_failed')
+    raise 'calendar creation failed'
+  end
+
+=begin
+
   sla_create(
     browser: browser2,
     data: {
        name: 'some sla' + random,
+       calendar: 'some calendar name',
        first_response_time_in_text: 61
     },
   )
@@ -2755,6 +2845,11 @@ wait untill text in selector disabppears
     element = instance.find_elements(css: '.modal input[name=name]')[0]
     element.clear
     element.send_keys(data[:name])
+    if data[:calendar].present?
+      element = instance.find_elements(css: '.modal select[name="calendar_id"]')[0]
+      dropdown = Selenium::WebDriver::Support::Select.new(element)
+      dropdown.select_by(:text, data[:calendar])
+    end
     element = instance.find_elements(css: '.modal input[name=first_response_time_in_text]')[0]
     element.clear
     element.send_keys(data[:first_response_time_in_text])
@@ -3762,5 +3857,32 @@ wait untill text in selector disabppears
       options:  options,
       offset:   offset,
     )
+  end
+
+  def token_verify(css, value)
+    original_element = @browser.find_element(:css, css)
+    elem = original_element.find_element(xpath: '../input[contains(@class, "token-input")]')
+    elem.send_keys value
+    elem.send_keys :enter
+
+    watch_for(
+      xpath: '../*/span[contains(@class,"token-label")]',
+      value: value,
+      container: original_element
+    )
+  end
+
+  def toggle_checkbox(scope, value)
+    checkbox = scope.find_element(css: "input[value=#{value}]")
+
+    @browser
+      .action
+      .move_to(checkbox)
+      .click
+      .perform
+  end
+
+  def checkbox_is_selected(scope, value)
+    scope.find_element(css: "input[value=#{value}]").property('checked')
   end
 end

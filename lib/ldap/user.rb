@@ -6,8 +6,8 @@ class Ldap
   #  an ::Ldap instance.
   #
   # @example
-  #  require 'ldap'
-  #  require 'ldap/user'
+  #  require_dependency 'ldap'
+  #  require_dependency 'ldap/user'
   class User
     include Ldap::FilterLookup
 
@@ -76,8 +76,8 @@ class Ldap
     # @param ldap [Ldap] An optional existing Ldap class instance. Default is a new connection with given configuration.
     #
     # @example
-    #  require 'ldap'
-    #  require 'ldap/user'
+    #  require_dependency 'ldap'
+    #  require_dependency 'ldap/user'
     #  ldap_user = Ldap::User.new
     #
     # @return [nil]

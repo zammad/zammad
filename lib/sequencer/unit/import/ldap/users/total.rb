@@ -1,4 +1,4 @@
-require 'sequencer/unit/import/common/model/statistics/mixin/empty_diff'
+require_dependency 'sequencer/unit/import/common/model/statistics/mixin/empty_diff'
 
 class Sequencer
   class Unit

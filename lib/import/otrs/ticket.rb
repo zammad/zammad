@@ -1,4 +1,4 @@
-require 'ticket'
+require_dependency 'ticket'
 
 module Import
   module OTRS

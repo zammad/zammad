@@ -1,8 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
+require_dependency 'store/object'
+require_dependency 'store/file'
+
 class Store < ApplicationModel
-  load 'store/object.rb'
-  load 'store/file.rb'
 
   # rubocop:disable Rails/InverseOf
   belongs_to :store_object, class_name: 'Store::Object'

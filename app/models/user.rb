@@ -1,28 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
-require 'digest/md5'
-
-# @model User
-#
-# @property id(required)    [Integer] The identifier for the User.
-# @property login(required) [String]  The login of the User used for authentication.
-# @property firstname       [String]  The firstname of the User.
-# @property lastname        [String]  The lastname of the User.
-# @property email           [String]  The email of the User.
-# @property image           [String]  The Image used as the User avatar (TODO: Image model?).
-# @property web             [String]  The website/URL of the User.
-# @property password        [String]  The password of the User.
-# @property phone           [String]  The phone number of the User.
-# @property fax             [String]  The fax number of the User.
-# @property mobile          [String]  The mobile number of the User.
-# @property department      [String]  The department the User is working at.
-# @property street          [String]  The street the User lives in.
-# @property zip             [Integer] The zip postal code of the User city.
-# @property city            [String]  The city the User lives in.
-# @property country         [String]  The country the User lives in.
-# @property verified        [Boolean] The flag that shows the verified state of the User.
-# @property active          [Boolean] The flag that shows the active state of the User.
-# @property note            [String]  The note or comment stored to the User.
 class User < ApplicationModel
   include HasActivityStreamLog
   include ChecksClientNotification
@@ -31,12 +7,10 @@ class User < ApplicationModel
   include CanCsvImport
   include HasGroups
   include HasRoles
-  include User::ChecksAccess
 
-  load 'user/assets.rb'
+  include User::ChecksAccess
   include User::Assets
-  extend User::Search
-  load 'user/search_index.rb'
+  include User::Search
   include User::SearchIndex
 
   has_and_belongs_to_many :roles,          after_add: %i[cache_update check_notifications], after_remove: :cache_update, before_add: %i[validate_agent_limit_by_role validate_roles], before_remove: :last_admin_check_by_role, class_name: 'Role'
@@ -50,7 +24,7 @@ class User < ApplicationModel
   before_update   :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
-  before_destroy  :avatar_destroy, :user_device_destroy, :cit_caller_id_destroy, :task_destroy
+  before_destroy  :destroy_longer_required_objects
 
   store :preferences
 
@@ -843,8 +817,6 @@ returns
     true
   end
 
-  private
-
   def cache_delete
     super
 
@@ -856,6 +828,8 @@ returns
     key = "User::permissions?:local_key:::#{id}"
     Cache.delete(key)
   end
+
+  private
 
   def check_name
     if firstname.present?
@@ -1138,20 +1112,17 @@ raise 'Minimum one user need to have admin permissions'
     true
   end
 
-  def avatar_destroy
+  def destroy_longer_required_objects
+    Authorization.where(user_id: id).destroy_all
     Avatar.remove('User', id)
-  end
-
-  def user_device_destroy
-    UserDevice.remove(id)
-  end
-
-  def cit_caller_id_destroy
     Cti::CallerId.where(user_id: id).destroy_all
-  end
-
-  def task_destroy
     Taskbar.where(user_id: id).destroy_all
+    Karma::ActivityLog.where(user_id: id).destroy_all
+    Karma::User.where(user_id: id).destroy_all
+    OnlineNotification.where(user_id: id).destroy_all
+    RecentView.where(created_by_id: id).destroy_all
+    UserDevice.remove(id)
+    true
   end
 
   def ensure_password

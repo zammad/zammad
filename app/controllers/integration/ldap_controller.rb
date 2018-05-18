@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-require 'ldap'
-require 'ldap/user'
-require 'ldap/group'
+require_dependency 'ldap'
+require_dependency 'ldap/user'
+require_dependency 'ldap/group'
 
 class Integration::LdapController < ApplicationController
   include Integration::ImportJobBase

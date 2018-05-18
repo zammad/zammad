@@ -1,4 +1,3 @@
-#require 'iconv'
 module Encode
   def self.conv (charset, string)
 

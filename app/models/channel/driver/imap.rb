@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
 require 'net/imap'
 
 class Channel::Driver::Imap < Channel::EmailParser
@@ -72,7 +71,10 @@ example
       keep_on_server = 2
     end
 
-    ssl = options.key?(:ssl) && options[:ssl] == true
+    if options.key?(:ssl) && options[:ssl] == false
+      ssl  = false
+      port = 143
+    end
 
     port = if options.key?(:port) && options[:port].present?
              options[:port].to_i
@@ -94,7 +96,7 @@ example
     Rails.logger.info "connecting imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server})"
 
     Timeout.timeout(timeout) do
-      @imap = Net::IMAP.new(options[:host], port, ssl, nil, false)
+      @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, false)
       if starttls
         @imap.starttls()
       end

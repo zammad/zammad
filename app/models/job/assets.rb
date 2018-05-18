@@ -2,6 +2,7 @@
 
 class Job
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

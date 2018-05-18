@@ -2,9 +2,6 @@
 
 # encoding: utf-8
 
-require 'mail'
-require 'encode'
-
 class Channel::EmailParser
 
 =begin
@@ -866,7 +863,7 @@ module Mail
   module Encodings
     def self.value_decode(str)
       # Optimization: If there's no encoded-words in the string, just return it
-      return str unless str.index('=?')
+      return str if !str.index('=?')
 
       str = str.gsub(/\?=(\s*)=\?/, '?==?') # Remove whitespaces between 'encoded-word's
 

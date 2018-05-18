@@ -1,7 +1,10 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
 class Chat::Session
   module Search
+    extend ActiveSupport::Concern
+
+    # methods defined here are going to extend the class, not the instance of it
+    class_methods do
 
 =begin
 
@@ -22,13 +25,13 @@ returns if user has no permissions to search
 
 =end
 
-    def search_preferences(current_user)
-      return false if Setting.get('chat') != true || !current_user.permissions?('chat.agent')
-      {
-        prio: 900,
-        direct_search_index: true,
-      }
-    end
+      def search_preferences(current_user)
+        return false if Setting.get('chat') != true || !current_user.permissions?('chat.agent')
+        {
+          prio: 900,
+          direct_search_index: true,
+        }
+      end
 
 =begin
 
@@ -47,36 +50,37 @@ returns
 
 =end
 
-    def search(params)
+      def search(params)
 
-      # get params
-      query = params[:query]
-      limit = params[:limit] || 10
-      offset = params[:offset] || 0
-      current_user = params[:current_user]
+        # get params
+        query = params[:query]
+        limit = params[:limit] || 10
+        offset = params[:offset] || 0
+        current_user = params[:current_user]
 
-      # enable search only for agents and admins
-      return [] if !search_preferences(current_user)
+        # enable search only for agents and admins
+        return [] if !search_preferences(current_user)
 
-      # try search index backend
-      if SearchIndexBackend.enabled?
-        items = SearchIndexBackend.search(query, limit, 'Chat::Session', {}, offset)
-        chat_sessions = []
-        items.each do |item|
-          chat_session = Chat::Session.lookup(id: item[:id])
-          next if !chat_session
-          chat_sessions.push chat_session
+        # try search index backend
+        if SearchIndexBackend.enabled?
+          items = SearchIndexBackend.search(query, limit, 'Chat::Session', {}, offset)
+          chat_sessions = []
+          items.each do |item|
+            chat_session = Chat::Session.lookup(id: item[:id])
+            next if !chat_session
+            chat_sessions.push chat_session
+          end
+          return chat_sessions
         end
-        return chat_sessions
-      end
 
-      # fallback do sql query
-      # - stip out * we already search for *query* -
-      query.delete! '*'
-      chat_sessions = Chat::Session.where(
-        'name LIKE ?', "%#{query}%"
-      ).order('name').offset(offset).limit(limit).to_a
-      chat_sessions
+        # fallback do sql query
+        # - stip out * we already search for *query* -
+        query.delete! '*'
+        chat_sessions = Chat::Session.where(
+          'name LIKE ?', "%#{query}%"
+        ).order('name').offset(offset).limit(limit).to_a
+        chat_sessions
+      end
     end
   end
 end
