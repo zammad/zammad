@@ -553,4 +553,326 @@ class ObjectManagerAttributesControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result['data_type'], 'boolean')
   end
 
+  test '03 ticket attributes cannot be removed when it is referenced by an overview' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin@example.com', 'adminpw')
+
+    # 1. create a new ticket attribute and execute migration
+    migration = ObjectManager::Attribute.migration_execute
+
+    params = {
+      'name': 'test_attribute_referenced_by_an_overview',
+      'object': 'Ticket',
+      'display': 'Test Attribute',
+      'active': true,
+      'data_type': 'input',
+      'data_option': {
+        'default': '',
+        'type': 'text',
+        'maxlength': 120,
+        'null': true,
+        'options': {},
+        'relation': ''
+      },
+      'screens': {
+        'create_middle': {
+          'ticket.customer': {
+            'shown': true,
+            'item_class': 'column'
+          },
+          'ticket.agent': {
+            'shown': true,
+            'item_class': 'column'
+          }
+        },
+        'edit': {
+          'ticket.customer': {
+            'shown': true
+          },
+          'ticket.agent': {
+            'shown': true
+          }
+        }
+      },
+      'id': 'c-202'
+    }
+
+    post '/api/v1/object_manager_attributes', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert_equal(migration, true)
+
+    # 2. create an overview that uses the attribute
+    params = {
+      name: 'test_overview',
+      roles: Role.where(name: 'Agent').pluck(:name),
+      condition: {
+        'ticket.test_attribute_referenced_by_an_overview': {
+          'operator': 'contains',
+          'value': 'DUMMY'
+        }
+      },
+      order: {
+        by: 'created_at',
+        direction: 'DESC',
+      },
+      view: {
+        d: %w[title customer state created_at],
+        s: %w[number title customer state created_at],
+        m: %w[number title customer state created_at],
+        view_mode_default: 's',
+      },
+      user_ids: [ '1' ],
+    }
+
+    if Overview.where('name like ?', '%test%').empty?
+      post '/api/v1/overviews', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+      assert_response(201)
+      result = JSON.parse(@response.body)
+      assert_equal(Hash, result.class)
+      assert_equal('test_overview', result['name'])
+    end
+
+    # 3. attempt to delete the ticket attribute
+    get '/api/v1/object_manager_attributes', headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    target_attribute = result.select { |x| x['name'] == 'test_attribute_referenced_by_an_overview' }
+    assert_equal target_attribute.size, 1
+    target_id = target_attribute[0]['id']
+
+    delete "/api/v1/object_manager_attributes/#{target_id}", headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    Rails.logger.info "XXX #{@response.body}"
+    Rails.logger.info "XXX @response.body.include?('Overview') #{@response.body.include?('Overview')}"
+    assert @response.body.include?('Overview')
+    assert @response.body.include?('test_overview')
+    assert @response.body.include?('cannot be deleted!')
+  end
+
+  test '04 ticket attributes cannot be removed when it is referenced by a trigger' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin@example.com', 'adminpw')
+
+    # 1. create a new ticket attribute and execute migration
+    migration = ObjectManager::Attribute.migration_execute
+
+    params = {
+      'name': 'test_attribute_referenced_by_a_trigger',
+      'object': 'Ticket',
+      'display': 'Test Attribute',
+      'active': true,
+      'data_type': 'input',
+      'data_option': {
+        'default': '',
+        'type': 'text',
+        'maxlength': 120,
+        'null': true,
+        'options': {},
+        'relation': ''
+      },
+      'screens': {
+        'create_middle': {
+          'ticket.customer': {
+            'shown': true,
+            'item_class': 'column'
+          },
+          'ticket.agent': {
+            'shown': true,
+            'item_class': 'column'
+          }
+        },
+        'edit': {
+          'ticket.customer': {
+            'shown': true
+          },
+          'ticket.agent': {
+            'shown': true
+          }
+        }
+      },
+      'id': 'c-202'
+    }
+
+    post '/api/v1/object_manager_attributes', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert_equal(migration, true)
+
+    # 2. create an trigger that uses the attribute
+    params = {
+      name: 'test_trigger',
+      condition: {
+        'ticket.test_attribute_referenced_by_a_trigger': {
+          'operator': 'contains',
+          'value': 'DUMMY'
+        }
+      },
+      'perform': {
+        'ticket.state_id': {
+          'value': '2'
+        }
+      },
+      'active': true,
+      'id': 'c-3'
+    }
+
+    if Trigger.where('name like ?', '%test%').empty?
+      post '/api/v1/triggers', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+      assert_response(201)
+      result = JSON.parse(@response.body)
+      assert_equal(Hash, result.class)
+      assert_equal('test_trigger', result['name'])
+    end
+
+    # 3. attempt to delete the ticket attribute
+    get '/api/v1/object_manager_attributes', headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    target_attribute = result.select { |x| x['name'] == 'test_attribute_referenced_by_a_trigger' }
+    assert_equal target_attribute.size, 1
+    target_id = target_attribute[0]['id']
+
+    delete "/api/v1/object_manager_attributes/#{target_id}", headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    Rails.logger.info "XXX #{@response.body}"
+    Rails.logger.info "XXX @response.body.include?('Trigger') #{@response.body.include?('Trigger')}"
+    assert @response.body.include?('Trigger')
+    assert @response.body.include?('test_trigger')
+    assert @response.body.include?('cannot be deleted!')
+  end
+
+  test '05 ticket attributes cannot be removed when it is referenced by a scheduler' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin@example.com', 'adminpw')
+
+    # 1. create a new ticket attribute and execute migration
+    migration = ObjectManager::Attribute.migration_execute
+
+    params = {
+      'name': 'test_attribute_referenced_by_a_scheduler',
+      'object': 'Ticket',
+      'display': 'Test Attribute',
+      'active': true,
+      'data_type': 'input',
+      'data_option': {
+        'default': '',
+        'type': 'text',
+        'maxlength': 120,
+        'null': true,
+        'options': {},
+        'relation': ''
+      },
+      'screens': {
+        'create_middle': {
+          'ticket.customer': {
+            'shown': true,
+            'item_class': 'column'
+          },
+          'ticket.agent': {
+            'shown': true,
+            'item_class': 'column'
+          }
+        },
+        'edit': {
+          'ticket.customer': {
+            'shown': true
+          },
+          'ticket.agent': {
+            'shown': true
+          }
+        }
+      },
+      'id': 'c-202'
+    }
+
+    post '/api/v1/object_manager_attributes', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert_equal(migration, true)
+
+    # 2. create a scheduler that uses the attribute
+    params = {
+      name: 'test_scheduler',
+      'timeplan': {
+        'days': {
+          'Mon': true,
+          'Tue': false,
+          'Wed': false,
+          'Thu': false,
+          'Fri': false,
+          'Sat': false,
+          'Sun': false
+        },
+        'hours': {
+          '0': true,
+          '1': false,
+          '2': false,
+          '3': false,
+          '4': false,
+          '5': false,
+          '6': false,
+          '7': false,
+          '8': false,
+          '9': false,
+          '10': false,
+          '11': false,
+          '12': false,
+          '13': false,
+          '14': false,
+          '15': false,
+          '16': false,
+          '17': false,
+          '18': false,
+          '19': false,
+          '20': false,
+          '21': false,
+          '22': false,
+          '23': false
+        },
+        'minutes': {
+          '0': true,
+          '10': false,
+          '20': false,
+          '30': false,
+          '40': false,
+          '50': false
+        }
+      },
+      'condition': {
+        'ticket.test_attribute_referenced_by_a_scheduler': {
+          'operator': 'contains',
+          'value': 'DUMMY'
+        }
+      },
+      'perform': {
+        'ticket.state_id': {
+          'value': '2'
+        }
+      },
+      'disable_notification': true,
+      'note': '',
+      'active': true,
+      'id': 'c-0'
+    }
+
+    if Job.where('name like ?', '%test%').empty?
+      post '/api/v1/jobs', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+      assert_response(201)
+      result = JSON.parse(@response.body)
+      assert_equal(Hash, result.class)
+      assert_equal('test_scheduler', result['name'])
+    end
+
+    # 3. attempt to delete the ticket attribute
+    get '/api/v1/object_manager_attributes', headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    target_attribute = result.select { |x| x['name'] == 'test_attribute_referenced_by_a_scheduler' }
+    assert_equal target_attribute.size, 1
+    target_id = target_attribute[0]['id']
+
+    delete "/api/v1/object_manager_attributes/#{target_id}", headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    assert @response.body.include?('Job')
+    assert @response.body.include?('test_scheduler')
+    assert @response.body.include?('cannot be deleted!')
+  end
 end

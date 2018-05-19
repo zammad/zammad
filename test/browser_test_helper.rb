@@ -1683,13 +1683,22 @@ wait untill text in selector disabppears
         mute_log: true,
       )
       sleep 0.5
-      select(
-        browser:      instance,
-        css:          '.modal .ticket_selector .js-value select',
-        value:        value,
-        deselect_all: true,
-        mute_log:     true,
-      )
+      if data.key?('text_input')
+        set(
+          browser:  instance,
+          css:      '.modal .ticket_selector .js-value input',
+          value:    value,
+          mute_log: true,
+        )
+      else
+        select(
+          browser:      instance,
+          css:          '.modal .ticket_selector .js-value select',
+          value:        value,
+          deselect_all: true,
+          mute_log:     true,
+        )
+      end
     end
 
     if data['order::direction']
