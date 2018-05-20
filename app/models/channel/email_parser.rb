@@ -626,6 +626,8 @@ returns
         ticket = Ticket.new(
           group_id: group.id,
           title: title,
+          created_at: mail[:date],
+          updated_at: mail[:date],
           preferences: preferences,
         )
         set_attributes_by_x_headers(ticket, 'ticket', mail)
@@ -647,6 +649,8 @@ returns
           to: mail[:to],
           cc: mail[:cc],
           subject: mail[:subject],
+          created_at: mail[:date],
+          updated_at: mail[:date],
           message_id: mail[:message_id],
           internal: false,
         )
