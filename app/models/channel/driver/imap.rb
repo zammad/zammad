@@ -249,7 +249,7 @@ example
 
     [main_folder, sent_folder].each do |folder|
 
-      continue if folder.to_s.empty?
+      next if folder.to_s.empty?
 
       if !keep_on_server || keep_on_server == 1
         @imap.select(folder)
