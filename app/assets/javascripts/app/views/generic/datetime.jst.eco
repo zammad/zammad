@@ -1,4 +1,4 @@
-<div class="horizontal u-positionOrigin" data-name="<%= @attribute.nameRaw %>">
+<div class="controls controls--datetime" data-name="<%= @attribute.nameRaw %>">
   <input type="hidden" value="<%= @attribute.value %>" name="<%= @attribute.name %>">
   <input type="text" value="" class="form-control flex-shrink-horizontal js-datepicker <%= @attribute.class %>" data-item="date">
   <div class="controls-label"><%- @T('at') %></div>

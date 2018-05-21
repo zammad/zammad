@@ -2,7 +2,7 @@
 require 'browser_test_helper'
 
 class AgentTicketOverviewLevel0Test < TestCase
-  def test_i
+  def test_bulk_close
     @browser = browser_instance
     login(
       username: 'master@example.com',
@@ -38,56 +38,63 @@ class AgentTicketOverviewLevel0Test < TestCase
     )
 
     click(text: 'Unassigned & Open')
-    sleep 8 # till overview is rendered
+    watch_for(
+      css: '.content.active',
+      value: 'overview count test #2',
+    )
 
     # select both via bulk action
     click(
-      css: '.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css: '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
 
     # scroll to reply - needed for chrome
     scroll_to(
       position: 'top',
-      css:      '.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css:      '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
     )
     click(
-      css: '.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      css: '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
       fast: true,
     )
 
     exists(
-      css: '.active table tr td input[value="' + ticket1[:id] + '"][type="checkbox"]:checked',
+      css: '.content.active table tr td input[value="' + ticket1[:id] + '"][type="checkbox"]:checked',
     )
     exists(
-      css: '.active table tr td input[value="' + ticket2[:id] + '"][type="checkbox"]:checked',
+      css: '.content.active table tr td input[value="' + ticket2[:id] + '"][type="checkbox"]:checked',
     )
 
     # select close state & submit
     select(
-      css: '.active .bulkAction [name="state_id"]',
+      css: '.content.active .bulkAction [name="state_id"]',
       value: 'closed',
     )
     click(
-      css: '.active .bulkAction .js-confirm',
+      css: '.content.active .bulkAction .js-confirm',
     )
     click(
-      css: '.active .bulkAction .js-submit',
+      css: '.content.active .bulkAction .js-submit',
     )
-    sleep 6
+
+    watch_for_disappear(
+      css:     '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+      timeout: 6,
+    )
 
     exists_not(
-      css: '.active table tr td input[value="' + ticket1[:id] + '"]',
+      css: '.content.active table tr td input[value="' + ticket1[:id] + '"]',
     )
     exists_not(
-      css: '.active table tr td input[value="' + ticket2[:id] + '"]',
+      css: '.content.active table tr td input[value="' + ticket2[:id] + '"]',
     )
 
     # remember current overview count
     overview_counter_before = overview_counter()
 
     # click options and enable number and article count
-    click(css: '.active [data-type="settings"]')
+    click(css: '.content.active [data-type="settings"]')
 
     watch_for(
       css: '.modal h1',
@@ -116,15 +123,15 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # check if number and article count is shown
     match(
-      css: '.active table th:nth-child(3)',
+      css: '.content.active table th:nth-child(3)',
       value: '#',
     )
     match(
-      css: '.active table th:nth-child(4)',
+      css: '.content.active table th:nth-child(4)',
       value: 'Title',
     )
     match(
-      css: '.active table th:nth-child(7)',
+      css: '.content.active table th:nth-child(7)',
       value: 'Article#',
     )
 
@@ -134,20 +141,20 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # check if number and article count is shown
     match(
-      css: '.active table th:nth-child(3)',
+      css: '.content.active table th:nth-child(3)',
       value: '#',
     )
     match(
-      css: '.active table th:nth-child(4)',
+      css: '.content.active table th:nth-child(4)',
       value: 'Title',
     )
     match(
-      css: '.active table th:nth-child(7)',
+      css: '.content.active table th:nth-child(7)',
       value: 'Article#',
     )
 
     # disable number and article count
-    click(css: '.active [data-type="settings"]')
+    click(css: '.content.active [data-type="settings"]')
 
     watch_for(
       css: '.modal h1',
@@ -164,15 +171,15 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     # check if number and article count is gone
     match_not(
-      css: '.active table th:nth-child(3)',
+      css: '.content.active table th:nth-child(3)',
       value: '#',
     )
     match(
-      css: '.active table th:nth-child(3)',
+      css: '.content.active table th:nth-child(3)',
       value: 'Title',
     )
     exists_not(
-      css: '.active table th:nth-child(8)',
+      css: '.content.active table th:nth-child(8)',
     )
 
     # create new ticket
@@ -207,6 +214,157 @@ class AgentTicketOverviewLevel0Test < TestCase
     # get current overview count
     overview_counter_after = overview_counter()
     assert_equal(overview_counter_before['#ticket/view/all_unassigned'], overview_counter_after['#ticket/view/all_unassigned'])
+
+    # cleanup
+    tasks_close_all()
+  end
+
+  def test_bulk_pending
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    # test bulk action
+
+    # create new ticket
+    ticket1 = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'overview count test #3',
+        body: 'overview count test #3',
+      }
+    )
+    ticket2 = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'overview count test #4',
+        body: 'overview count test #4',
+      }
+    )
+    click(text: 'Overviews')
+
+    # enable full overviews
+    execute(
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
+
+    click(text: 'Unassigned & Open')
+    watch_for(
+      css: '.content.active',
+      value: 'overview count test #4',
+      timeout: 8,
+    )
+
+    # remember current overview count
+    overview_counter_before = overview_counter()
+
+    # select both via bulk action
+    click(
+      css: '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
+      fast: true,
+    )
+
+    # scroll to reply - needed for chrome
+    scroll_to(
+      position: 'top',
+      css:      '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+    )
+    click(
+      css: '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      fast: true,
+    )
+
+    exists(
+      css: '.content.active table tr td input[value="' + ticket1[:id] + '"][type="checkbox"]:checked',
+    )
+    exists(
+      css: '.content.active table tr td input[value="' + ticket2[:id] + '"][type="checkbox"]:checked',
+    )
+
+    exists(
+      displayed: false,
+      css: '.content.active .bulkAction [data-name="pending_time"]',
+    )
+
+    select(
+      css: '.content.active .bulkAction [name="state_id"]',
+      value: 'pending close',
+    )
+
+    exists(
+      displayed: true,
+      css: '.content.active .bulkAction [data-name="pending_time"]',
+    )
+
+    set(
+      css: '.content.active .bulkAction [data-item="date"]',
+      value: '05/23/2088',
+    )
+
+    select(
+      css: '.content.active .bulkAction [name="group_id"]',
+      value: 'Users',
+    )
+
+    select(
+      css: '.content.active .bulkAction [name="owner_id"]',
+      value: 'Test Master Agent',
+    )
+
+    click(
+      css: '.content.active .bulkAction .js-confirm',
+    )
+    click(
+      css: '.content.active .bulkAction .js-submit',
+    )
+
+    watch_for_disappear(
+      css:     '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+      timeout: 12,
+    )
+
+    exists_not(
+      css: '.content.active table tr td input[value="' + ticket1[:id] + '"]',
+    )
+    exists_not(
+      css: '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+    )
+
+    # get new overview count
+    overview_counter_new = overview_counter()
+    assert_equal(overview_counter_before['#ticket/view/all_unassigned'] - 2, overview_counter_new['#ticket/view/all_unassigned'])
+
+    # open ticket by search
+    ticket_open_by_search(
+      number: ticket1[:number],
+    )
+    sleep 1
+
+    # close ticket
+    ticket_update(
+      data: {
+        state: 'closed',
+      }
+    )
+
+    # open ticket by search
+    ticket_open_by_search(
+      number: ticket2[:number],
+    )
+    sleep 1
+
+    # close ticket
+    ticket_update(
+      data: {
+        state: 'closed',
+      }
+    )
 
     # cleanup
     tasks_close_all()

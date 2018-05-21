@@ -1634,6 +1634,15 @@ fieldset > .form-group {
   position: relative;
 }
 
+.controls--datetime {
+  position: relative;
+  display: flex;
+}
+
+.controls--date {
+  position: relative;
+}
+
 .controls-label {
   margin: 11px 10px 0;
   flex-shrink: 0;
@@ -2978,6 +2987,11 @@ footer {
   .bulkAction-firstStep {
     display: flex;
     align-items: center;
+  }
+
+  .bulkAction-firstStep .has-error {
+    border-color: red !important;
+    border: 1px solid;
   }
 
   .bulkAction-secondStep {
@@ -4570,6 +4584,11 @@ footer {
     position: relative;
     height: 60px;
     flex: 1 1 auto;
+    
+    &.datetime {
+      min-width: 140px;
+      overflow: visible; // datepicker popup needs to be visible
+    }
   }
 
     .form-group.is-changed {
@@ -4638,15 +4657,44 @@ footer {
     left: 0;
     top: 0;
     position: absolute;
-    padding: 28px 18px 12px;
+    padding: 28px 5px 12px 20px;
     float: none;
     display: block;
     border-radius: 0;
     background: none;
   }
 
-  .form-inline .controls--select {
-    position: static;
+  .form-inline {
+    .controls--datetime,
+    .controls--date,
+    .controls--select {
+      position: static;
+    }
+
+    .controls--datetime {
+      position: absolute;
+      bottom: 12px;
+      left: 0;
+      padding: 0 5px 0 20px;
+      width: 100%;
+      
+      .controls-label {
+        display: none;
+      }
+      
+      .form-control {
+        width: 70px;
+        line-height: inherit;
+        position: static;
+        padding: 0;
+        height: auto;
+        
+        &.time {
+          margin-left: 5px;
+          width: 38px;
+        }
+      }
+    }
   }
 
   .bulkAction-secondStep .form-group {
