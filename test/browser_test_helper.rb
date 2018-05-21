@@ -186,8 +186,6 @@ class TestCase < Test::Unit::TestCase
       raise 'No login box found'
     end
 
-    screenshot(browser: instance, comment: 'login')
-
     element.clear
     element.send_keys(params[:username])
 
@@ -228,7 +226,6 @@ class TestCase < Test::Unit::TestCase
       optional: true,
     )
 
-    screenshot(browser: instance, comment: 'login_ok')
     assert(true, 'login ok')
     login
   end
@@ -263,7 +260,6 @@ class TestCase < Test::Unit::TestCase
       login = instance.find_elements(css: '#login')[0]
 
       next if !login
-      screenshot(browser: instance, comment: 'logout_ok')
       assert(true, 'logout ok')
       return
     end
@@ -343,7 +339,6 @@ class TestCase < Test::Unit::TestCase
     if !instance.find_elements(css: 'body')[0] || instance.find_elements(css: 'body')[0].text =~ /unavailable or too busy/i
       instance.navigate.refresh
     end
-    screenshot(browser: instance, comment: 'location')
   end
 
 =begin
@@ -382,7 +377,6 @@ class TestCase < Test::Unit::TestCase
     log('reload', params)
 
     instance = params[:browser] || @browser
-    screenshot(browser: instance, comment: 'reload_before')
     instance.navigate.refresh
 
     # check if reload was successfull
@@ -415,7 +409,6 @@ class TestCase < Test::Unit::TestCase
     log('click', params)
 
     instance = params[:browser] || @browser
-    screenshot(browser: instance, comment: 'click_before')
     if params[:css]
 
       begin
@@ -477,7 +470,6 @@ class TestCase < Test::Unit::TestCase
     if params[:position] == 'botton'
       position = 'false'
     end
-    screenshot(browser: instance, comment: 'scroll_to_before')
     execute(
       browser:  instance,
       js:       "\$('#{params[:css]}').get(0).scrollIntoView(#{position})",
@@ -520,10 +512,7 @@ class TestCase < Test::Unit::TestCase
     log('modal_ready', params)
 
     instance = params[:browser] || @browser
-
-    screenshot(browser: instance, comment: 'modal_ready_before')
     sleep 3
-    screenshot(browser: instance, comment: 'modal_ready_after')
   end
 
 =begin
@@ -541,13 +530,11 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    screenshot(browser: instance, comment: 'modal_disappear_before')
     watch_for_disappear(
       browser: instance,
       css:     '.modal',
       timeout: params[:timeout] || 8,
     )
-    screenshot(browser: instance, comment: 'modal_disappear_after')
   end
 
 =begin
@@ -647,7 +634,6 @@ class TestCase < Test::Unit::TestCase
     log('set', params)
 
     instance = params[:browser] || @browser
-    screenshot(browser: instance, comment: 'set_before')
 
     element = instance.find_elements(css: params[:css])[0]
     if !params[:no_click]
@@ -694,7 +680,6 @@ class TestCase < Test::Unit::TestCase
     end
 
     sleep 0.2
-    screenshot(browser: instance, comment: 'set_after')
   end
 
 =begin
@@ -713,7 +698,6 @@ class TestCase < Test::Unit::TestCase
     log('select', params)
 
     instance = params[:browser] || @browser
-    screenshot(browser: instance, comment: 'select_before')
 
     # searchable select
     element = instance.find_elements(css: "#{params[:css]}.js-shadow")[0]
@@ -721,7 +705,7 @@ class TestCase < Test::Unit::TestCase
       element = instance.find_elements(css: "#{params[:css]}.js-shadow + .js-input")[0]
       element.click
       element.clear
-      sleep 0.4
+      sleep 0.2
       element.send_keys(params[:value])
       sleep 0.2
       element.send_keys(:enter)
@@ -751,8 +735,6 @@ class TestCase < Test::Unit::TestCase
       dropdown.select_by(:text, params[:value])
       #puts "select2 - #{params.inspect}"
     end
-    sleep 0.4
-    screenshot(browser: instance, comment: 'select_after')
   end
 
 =begin
@@ -771,7 +753,6 @@ class TestCase < Test::Unit::TestCase
     log('switch', params)
 
     instance = params[:browser] || @browser
-    screenshot(browser: instance, comment: 'switch_before')
 
     element = instance.find_elements(css: "#{params[:css]} input[type=checkbox]")[0]
     checked = element.attribute('checked')
@@ -797,7 +778,6 @@ class TestCase < Test::Unit::TestCase
         raise 'Switch not off!' if checked
       end
     end
-    screenshot(browser: instance, comment: 'switch_after')
   end
 
 =begin
@@ -814,13 +794,11 @@ class TestCase < Test::Unit::TestCase
     log('check', params)
 
     instance = params[:browser] || @browser
-    screenshot(browser: instance, comment: 'check_before')
 
     instance.execute_script("if (!$('#{params[:css]}').prop('checked')) { $('#{params[:css]}').click() }")
     #element = instance.find_elements(css: params[:css])[0]
     #checked = element.attribute('checked')
     #element.click if !checked
-    screenshot(browser: instance, comment: 'check_after')
   end
 
 =begin
@@ -837,13 +815,11 @@ class TestCase < Test::Unit::TestCase
     log('uncheck', params)
 
     instance = params[:browser] || @browser
-    screenshot(browser: instance, comment: 'uncheck_before')
 
     instance.execute_script("if ($('#{params[:css]}').prop('checked')) { $('#{params[:css]}').click() }")
     #element = instance.find_elements(css: params[:css])[0]
     #checked = element.attribute('checked')
     #element.click if checked
-    screenshot(browser: instance, comment: 'uncheck_after')
   end
 
 =begin
@@ -865,7 +841,6 @@ class TestCase < Test::Unit::TestCase
     if params[:css]
       element = instance.find_elements(css: params[:css])[0]
     end
-    screenshot(browser: instance, comment: 'sendkey_before')
     if params[:value].class == Array
       params[:value].each do |key|
         if element
@@ -874,7 +849,6 @@ class TestCase < Test::Unit::TestCase
           instance.action.send_keys(key).perform
         end
       end
-      screenshot(browser: instance, comment: 'sendkey_after')
       return
     end
 
@@ -888,7 +862,6 @@ class TestCase < Test::Unit::TestCase
     else
       sleep 0.2
     end
-    screenshot(browser: instance, comment: 'sendkey_after')
   end
 
 =begin
@@ -1941,7 +1914,6 @@ wait untill text in selector disabppears
           value:    data[:group],
           mute_log: true,
         )
-        sleep 0.2
       end
     end
     if data[:priority]
@@ -1993,7 +1965,7 @@ wait untill text in selector disabppears
       sleep 2.5
 
       element.send_keys(:enter)
-      sleep 0.4
+      sleep 0.2
       # ff issue, sometimes enter event gets dropped
       # take user manually
       if instance.find_elements(css: '.content.active .newTicket .js-recipientDropdown.open')[0]
@@ -2038,7 +2010,7 @@ wait untill text in selector disabppears
       assert(true, 'ticket created without submit')
       return
     end
-    sleep 0.5
+
     #instance.execute_script('$(".content.active .newTicket form").submit();')
     click(
       browser: instance,
@@ -2050,7 +2022,7 @@ wait untill text in selector disabppears
     9.times do
       if instance.current_url.match?(/#{Regexp.quote('#ticket/zoom/')}/)
         assert(true, 'ticket created')
-        sleep 2.5
+        sleep 2
         id = instance.current_url
         id.gsub!(//,)
         id.gsub!(%r{^.+?/(\d+)$}, '\\1')
@@ -2064,7 +2036,6 @@ wait untill text in selector disabppears
             title: data[:title],
           }
           sleep 3 # wait until notify is gone
-          screenshot(browser: instance, comment: 'ticket_create_ok')
           return ticket
         end
       end
@@ -2316,7 +2287,6 @@ wait untill text in selector disabppears
     # do not stay on tab
     if params[:task_type] == 'closeTab' || params[:task_type] == 'closeNextInOverview'
       sleep 1
-      screenshot(browser: instance, comment: 'ticket_update')
       return
     end
 
@@ -2324,7 +2294,6 @@ wait untill text in selector disabppears
       begin
         text = instance.find_elements(css: '.content.active .js-reset')[0].text
         if text.blank?
-          screenshot(browser: instance, comment: 'ticket_update_ok')
           sleep 1
           return true
         end
@@ -2428,19 +2397,17 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
 
     instance.find_elements(css: '.js-overviewsMenuItem')[0].click
-    sleep 1
+    sleep 0.5
     execute(
       browser: instance,
       js: '$(".content.active .sidebar").css("display", "block")',
     )
-    screenshot(browser: instance, comment: 'ticket_open_by_overview')
     instance.find_elements(css: ".content.active .sidebar a[href=\"#{params[:link]}\"]")[0].click
-    sleep 1
+    sleep 0.5
     execute(
       browser: instance,
       js: '$(".content.active .sidebar").css("display", "none")',
     )
-    screenshot(browser: instance, comment: 'ticket_open_by_overview_search')
     if params[:title]
       element = instance.find_element(css: '.content.active').find_element(partial_link_text: params[:title])
       if !element
@@ -2461,7 +2428,6 @@ wait untill text in selector disabppears
       screenshot(browser: instance, comment: 'ticket_open_by_overview_open_failed_failed')
       raise "unable to open ticket #{params[:number]}!"
     end
-    sleep 1
     assert(true, "ticket #{params[:number]} found")
     true
   end
@@ -2498,7 +2464,6 @@ wait untill text in selector disabppears
     sleep 1
 
     # open ticket
-    screenshot(browser: instance, comment: 'ticket_open_by_search')
     #instance.find_element(partial_link_text: params[:number] } ).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:number]}') .nav-tab-icon\").first().click()")
     sleep 1
@@ -2507,7 +2472,6 @@ wait untill text in selector disabppears
       screenshot(browser: instance, comment: 'ticket_open_by_search_failed')
       raise "unable to search/find ticket #{params[:number]}!"
     end
-    sleep 1
     true
   end
 
@@ -2534,7 +2498,6 @@ wait untill text in selector disabppears
     sleep 3
 
     # open ticket
-    screenshot(browser: instance, comment: 'ticket_open_by_title_search')
     #instance.find_element(partial_link_text: params[:title] } ).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:title]}') .nav-tab-icon\").click()")
     sleep 1
@@ -2543,7 +2506,6 @@ wait untill text in selector disabppears
       screenshot(browser: instance, comment: 'ticket_open_by_title_failed')
       raise "unable to search/find ticket #{params[:title]}!"
     end
-    sleep 1
     true
   end
 
@@ -2632,7 +2594,6 @@ wait untill text in selector disabppears
       raise "unable to search/find org #{params[:value]}!"
     end
     assert(true, "org #{params[:value]} found")
-    sleep 2
     true
   end
 
@@ -2657,7 +2618,6 @@ wait untill text in selector disabppears
     element.send_keys(params[:value])
     sleep 3
 
-    screenshot(browser: instance, comment: 'user_open_by_search')
     #instance.find_element(partial_link_text: params[:value]).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
     sleep 1
@@ -2667,7 +2627,6 @@ wait untill text in selector disabppears
       raise "unable to search/find user #{params[:value]}!"
     end
     assert(true, "user #{params[:term]} found")
-    sleep 2
     true
   end
 
@@ -3080,7 +3039,6 @@ wait untill text in selector disabppears
           modal_ready(browser: instance)
           #instance.find_elements(:css => 'label:contains(" ' + action[:name] + '")')[0].click
           instance.execute_script('$(".js-groupList tr:contains(\"' + data[:name] + '\") .js-groupListItem[value=' + member[:access] + ']").prop("checked", true)')
-          screenshot(browser: instance, comment: 'group_create_member')
           instance.find_elements(css: '.modal button.js-submit')[0].click
           modal_disappear(browser: instance)
         end
