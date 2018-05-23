@@ -806,10 +806,6 @@ perform changes on ticket
   def perform_changes(perform, perform_origin, item = nil, current_user_id = nil)
     logger.debug { "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})" }
 
-    article = if item.try(:key?, :article_id)
-                Ticket::Article.lookup(id: item[:article_id])
-              end
-
     # if the configuration contains the deletion of the ticket then
     # we skip all other ticket changes because they does not matter
     if perform['ticket.action'].present? && perform['ticket.action']['value'] == 'delete'
@@ -839,7 +835,8 @@ perform changes on ticket
         recipients_raw = []
         value_recipient.each do |recipient|
           if recipient == 'article_last_sender'
-            if article.present?
+            if item && item[:article_id]
+              article = Ticket::Article.lookup(id: item[:article_id])
               if article.reply_to.present?
                 recipients_raw.push(article.reply_to)
               elsif article.from.present?
@@ -917,9 +914,12 @@ perform changes on ticket
           end
 
           # check if notification should be send because of customer emails
-          if article.present? && article.preferences.fetch('is-auto-response', false) == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
-            logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
-            next
+          if item && item[:article_id]
+            article = Ticket::Article.lookup(id: item[:article_id])
+            if article&.preferences&.fetch('is-auto-response', false) == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
+              logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
+              next
+            end
           end
 
           # loop protection / check if maximal count of trigger mail has reached
@@ -984,12 +984,9 @@ perform changes on ticket
           next
         end
 
-        # articles.last breaks (returns the wrong article)
-        # if another email notification trigger preceded this one
-        # (see https://github.com/zammad/zammad/issues/1543)
         objects = {
           ticket: self,
-          article: article || articles.last
+          article: articles.last,
         }
 
         # get subject
@@ -1010,7 +1007,7 @@ perform changes on ticket
 
         (body, attachments_inline) = HtmlSanitizer.replace_inline_images(body, id)
 
-        message = Ticket::Article.create(
+        article = Ticket::Article.create(
           ticket_id: id,
           to: recipient_string,
           subject: subject,
@@ -1029,7 +1026,7 @@ perform changes on ticket
         attachments_inline.each do |attachment|
           Store.add(
             object: 'Ticket::Article',
-            o_id: message.id,
+            o_id: article.id,
             data: attachment[:data],
             filename: attachment[:filename],
             preferences: attachment[:preferences],
