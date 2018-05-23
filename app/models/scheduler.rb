@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Scheduler < ApplicationModel
+  extend ::Mixin::StartFinishLogger
 
   # rubocop:disable Style/ClassVars
   @@jobs_started = {}
