@@ -36,7 +36,6 @@ class App.SearchableSelect extends Spine.Controller
 
   render: ->
     firstSelected = _.find @attribute.options, (option) -> option.selected
-
     if firstSelected
       @attribute.valueName = firstSelected.name
       @attribute.value = firstSelected.value
@@ -44,7 +43,6 @@ class App.SearchableSelect extends Spine.Controller
       @attribute.valueName = @attribute.value
     else if @hasSubmenu @attribute.options
       @attribute.valueName = @getName @attribute.value, @attribute.options
-
     @html App.view('generic/searchable_select')
       attribute: @attribute
       options: @renderAllOptions '', @attribute.options, 0
@@ -226,7 +224,6 @@ class App.SearchableSelect extends Spine.Controller
     @input.trigger('change')
     @shadowInput.val event.currentTarget.getAttribute('data-value')
     @shadowInput.trigger('change')
-
 
   navigateIn: (event) ->
     event.stopPropagation()

@@ -70,7 +70,7 @@ class Index extends App.ControllerContent
       noFieldset:     true
       handlersConfig: handlers
     )
-    new App.ControllerForm(
+    new App.ControllerFormOrganization(
       el:             @el.find('.ticket-form-organization')
       form_id:        @form_id
       model:          App.Ticket

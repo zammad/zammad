@@ -3,7 +3,7 @@ class App.SearchableMultipleSelect extends App.SearchableAjaxSelect
   render: ->
     @attribute.valueName = ''
 
-    @html App.view('generic/searchable_select_multiply')
+    @html App.view('generic/searchable_multiple_select')
       attribute: @attribute
       options: @renderAllOptions '', @attribute.options, 0
       submenus: @renderSubmenus @attribute.options

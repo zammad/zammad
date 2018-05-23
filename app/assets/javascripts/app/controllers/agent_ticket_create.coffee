@@ -301,7 +301,7 @@ class App.TicketCreate extends App.Controller
       noFieldset:     true
       taskKey:        @taskKey
     )
-    new App.ControllerForm(
+    new App.ControllerFormOrganization(
       el:             @$('.ticket-form-organization')
       form_id:        @formId
       model:          App.Ticket

@@ -16,7 +16,6 @@ class App.User extends App.Model
     { name: 'updated_at',       display: 'Updated at',    tag: 'datetime',  readonly: 1 },
   ]
   @configure_overview = [
-#    'login', 'firstname', 'lastname', 'email', 'updated_at',
     'login', 'firstname', 'lastname', 'organization_id', 'organization_ids'
   ]
 
@@ -133,9 +132,6 @@ class App.User extends App.Model
           data['accounts'][account]['link'] = 'https://twitter.com/' + data['accounts'][account]['username']
         if account == 'facebook'
           data['accounts'][account]['link'] = 'https://www.facebook.com/profile.php?id=' + data['accounts'][account]['uid']
-
-#    if data.organization_id
-#      data.organization = App.Organization.findNative(data.organization_id)
 
     if data['role_ids']
       data['roles'] = []
