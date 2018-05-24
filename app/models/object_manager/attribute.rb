@@ -799,8 +799,11 @@ to send no browser reload event, pass false
       if !data_option.key?(:maxlength)
         data_option[:maxlength] = 255
       end
-      if !data_option.key?(:nulloption) && data_option[:default].empty?
+      if !data_option.key?(:nulloption)
         data_option[:nulloption] = true
+      end
+      if data_type == 'select' && data_option[:default].present?
+        data_option[:nulloption] = false
       end
     end
 
