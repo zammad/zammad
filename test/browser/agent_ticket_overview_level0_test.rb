@@ -304,7 +304,7 @@ class AgentTicketOverviewLevel0Test < TestCase
 
     set(
       css: '.content.active .bulkAction [data-item="date"]',
-      value: '05/23/2088',
+      value: '05/23/2037',
     )
 
     select(

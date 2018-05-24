@@ -21,7 +21,7 @@ module BootstrapRakeHelper
   end
 
   def add_database_config
-    raise Errno::ENOENT, 'contrib/database.yml not found' unless File.exist?(DB_CONFIG[:source])
+    raise Errno::ENOENT, 'config/database.yml not found' unless File.exist?(DB_CONFIG[:source])
 
     if File.exist?(DB_CONFIG[:dest])
       return if FileUtils.identical?(DB_CONFIG[:source], DB_CONFIG[:dest])
