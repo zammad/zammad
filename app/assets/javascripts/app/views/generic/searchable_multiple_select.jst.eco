@@ -13,7 +13,7 @@
   <% if !@attribute.ajax: %><%- @Icon('arrow-down', 'dropdown-arrow') %><% end %>
   <div class="small loading icon"></div>
 </div>
-<div class="dropdown-menu dropdown-menu-left dropdown-menu--has-submenu js-dropdown">
+<div class="dropdown-menu dropdown-menu-left dropdown-menu--has-submenu dropdown-menu-multiple js-dropdown">
   <ul class="js-optionsList" role="menu">
     <%- @options %>
   </ul>

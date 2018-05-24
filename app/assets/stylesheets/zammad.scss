@@ -8090,7 +8090,11 @@ output {
   }
 
   .dropdown-menu {
+    margin-top: -3px;
     max-width: 100%;
+  }
+  .dropdown-menu-multiple {
+    margin-top: 0;
     top: 39px;
   }
 

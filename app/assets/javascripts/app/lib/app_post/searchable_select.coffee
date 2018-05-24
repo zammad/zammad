@@ -21,6 +21,7 @@ class App.SearchableSelect extends Spine.Controller
     '.js-input':                  'input'
     '.js-shadow':                 'shadowInput'
     '.js-optionsList':            'optionsList'
+    '.items':                     'itemList'
     '.js-optionsSubmenu':         'optionsSubmenu'
     '.js-autocomplete-invisible': 'invisiblePart'
     '.js-autocomplete-visible':   'visiblePart'
@@ -224,6 +225,7 @@ class App.SearchableSelect extends Spine.Controller
     @input.trigger('change')
     @shadowInput.val event.currentTarget.getAttribute('data-value')
     @shadowInput.trigger('change')
+    $(".js-shadow-ids[value=#{event.currentTarget.getAttribute('data-value')}]").closest('div').remove()
 
   navigateIn: (event) ->
     event.stopPropagation()
