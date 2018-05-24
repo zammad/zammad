@@ -600,6 +600,9 @@ to send no browser reload event, pass false
         attribute.data_option = attribute.data_option_new
         attribute.data_option_new = {}
         attribute.to_config = false
+        # remove old select attribute values from the database and replace them with defaults
+        migrate_attribute_values(attribute)
+        attribute.check_datatype
         attribute.save!
         next if !attribute.to_create && !attribute.to_migrate && !attribute.to_delete
       end
@@ -651,6 +654,8 @@ to send no browser reload event, pass false
         attribute.to_create = false
         attribute.to_migrate = false
         attribute.to_delete = false
+
+        attribute.check_datatype
         attribute.save!
         reset_database_info(model)
         execute_db_count += 1
@@ -698,6 +703,7 @@ to send no browser reload event, pass false
       attribute.to_create = false
       attribute.to_migrate = false
       attribute.to_delete = false
+      attribute.check_datatype
       attribute.save!
 
       reset_database_info(model)
@@ -793,7 +799,7 @@ to send no browser reload event, pass false
       if !data_option.key?(:maxlength)
         data_option[:maxlength] = 255
       end
-      if !data_option.key?(:nulloption)
+      if !data_option.key?(:nulloption) && data_option[:default].empty?
         data_option[:nulloption] = true
       end
     end
@@ -816,6 +822,18 @@ to send no browser reload event, pass false
     end
 
     true
+  end
+
+  # remove old select attribute values from the database and replace them with defaults
+  private_class_method def self.migrate_attribute_values(attribute)
+    return if attribute.data_type != 'select'
+
+    default = attribute[:data_option][:default]
+    default = nil if default.empty?
+    new_options = attribute.data_option[:options].keys
+
+    Ticket.where( Ticket.arel_table[attribute.name.to_sym].not_in(new_options) )
+          .update_all(attribute.name => default) #rubocop:disable Rails/SkipsModelValidations
   end
 
 end

@@ -553,4 +553,273 @@ class ObjectManagerAttributesControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result['data_type'], 'boolean')
   end
 
+  test 'when a select attribute option is deleted old values are replaced with nil when no default exists' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
+
+    # clean up tickets from previous runs
+    ObjectManager::Attribute.all.select { |o| o.name.include? 'test' }.each(&:delete)
+    Ticket.pluck(:id).each do |id|
+      delete "/api/v1/tickets/#{id}", headers: @headers.merge('Authorization' => credentials)
+    end
+
+    test_select_attribute_params = {
+      object: 'Ticket',
+      data_type: 'select',
+      name: 'test_select_attribute',
+      display: 'Test Select Attribute',
+      active: true,
+      data_option: {
+        options: {
+          to_be_deleted: 'To be deleted',
+          to_be_kept: 'To be kept',
+          to_be_kept2: 'To be kept 2',
+        },
+        null: true,
+        default: '',
+      },
+      id: 'c-204',
+      screens: {
+        create: {
+          'admin.user' => {
+            shown: true
+          },
+          'ticket.agent' => {
+            shown: true
+          },
+          'ticket.customer' => {
+            shown: true
+          }
+        },
+        edit: {
+          'admin.user' => {
+            shown: true
+          },
+          'ticket.agent' => {
+            shown: true
+          }
+        },
+        view: {
+          'admin.user' => {
+            shown: true
+          },
+          'ticket.agent' => {
+            shown: true
+          },
+          'ticket.customer' => {
+            shown: true
+          }
+        }
+      },
+      position: 1550,
+      editable: true
+    }
+    post '/api/v1/object_manager_attributes', params: test_select_attribute_params.to_json, headers: @headers.merge('Authorization' => credentials)
+    result = JSON.parse(@response.body)
+    test_select_attribute_id = result['id']
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert migration
+
+    # create two tickets, with the test attribute set to to_be_deleted, to_be_kept respectively
+    ticket_with_keep_option = {
+      'title': 'Test ticket with to_be_kept',
+      'group': 'Users',
+      'article': {
+        'subject': 'some subject',
+        'body': 'some message',
+        'type': 'note',
+        'internal': false
+      },
+      'customer': 'nicole.braun@zammad.org',
+      'note': 'some note',
+      'test_select_attribute': 'to_be_kept',
+    }
+
+    post '/api/v1/tickets', params: ticket_with_keep_option.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert result
+    assert_equal result['test_select_attribute'], 'to_be_kept'
+    ticket_with_keep_option_id = result['id']
+
+    # verify that ticket_with_keep_option_id's test attribute is to_be_kept
+    get "/api/v1/tickets/#{ticket_with_keep_option_id}", headers: @headers.merge('Authorization' => credentials)
+    result = JSON.parse(@response.body)
+    assert_equal 'to_be_kept', result['test_select_attribute']
+
+    ticket_with_delete_option = {
+      'title': 'Test ticket with to_be_deleted',
+      'group': 'Users',
+      'article': {
+        'subject': 'some subject',
+        'body': 'some message',
+        'type': 'note',
+        'internal': false
+      },
+      'customer': 'nicole.braun@zammad.org',
+      'note': 'some note',
+      'test_select_attribute': 'to_be_deleted',
+    }
+
+    post '/api/v1/tickets', params: ticket_with_delete_option.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert result
+    assert_equal 'to_be_deleted', result['test_select_attribute']
+    ticket_with_delete_option_id = result['id']
+
+    # now delete the to_be_deleted option and migrate the database
+    test_select_attribute_params[:data_option][:options].delete(:to_be_deleted)
+    put "/api/v1/object_manager_attributes/#{test_select_attribute_id}", params: test_select_attribute_params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert result['data_option']['nulloption']
+    assert_equal 3, result['data_option']['options'].size
+    assert_equal 2, result['data_option_new']['options'].size
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert migration
+
+    # verify that ticket_with_delete_option_id's test attribute has been set to nil
+    get "/api/v1/tickets/#{ticket_with_delete_option_id}", headers: @headers.merge('Authorization' => credentials)
+    result = JSON.parse(@response.body)
+    assert_nil result['test_select_attribute']
+
+    # verify that ticket_with_keep_option_id's test attribute is still to_be_kept
+    get "/api/v1/tickets/#{ticket_with_keep_option_id}", headers: @headers.merge('Authorization' => credentials)
+    result = JSON.parse(@response.body)
+    assert_equal 'to_be_kept', result['test_select_attribute']
+  end
+
+  test 'when a select attribute option is deleted old values are replaced with the default value' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
+
+    # clean up tickets from previous runs
+    ObjectManager::Attribute.all.select { |o| o.name.include? 'test' }.each(&:delete)
+    Ticket.pluck(:id).each do |id|
+      delete "/api/v1/tickets/#{id}", headers: @headers.merge('Authorization' => credentials)
+    end
+
+    test_select_attribute_params = {
+      object: 'Ticket',
+      data_type: 'select',
+      name: 'test_select_attribute',
+      display: 'Test Select Attribute',
+      active: true,
+      data_option: {
+        options: {
+          to_be_deleted: 'To be deleted',
+          to_be_kept: 'To be kept',
+          to_be_kept2: 'To be kept 2',
+        },
+        null: true,
+        default: 'to_be_kept',
+      },
+      id: 'c-204',
+      screens: {
+        create: {
+          'admin.user' => {
+            shown: true
+          },
+          'ticket.agent' => {
+            shown: true
+          },
+          'ticket.customer' => {
+            shown: true
+          }
+        },
+        edit: {
+          'admin.user' => {
+            shown: true
+          },
+          'ticket.agent' => {
+            shown: true
+          }
+        },
+        view: {
+          'admin.user' => {
+            shown: true
+          },
+          'ticket.agent' => {
+            shown: true
+          },
+          'ticket.customer' => {
+            shown: true
+          }
+        }
+      },
+      position: 1550,
+      editable: true
+    }
+    post '/api/v1/object_manager_attributes', params: test_select_attribute_params.to_json, headers: @headers.merge('Authorization' => credentials)
+    result = JSON.parse(@response.body)
+    test_select_attribute_id = result['id']
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert migration
+
+    # create two tickets, with the test attribute set to to_be_deleted, to_be_kept respectively
+    ticket_with_keep_option = {
+      'title': 'Test ticket with to_be_kept',
+      'group': 'Users',
+      'article': {
+        'subject': 'some subject',
+        'body': 'some message',
+        'type': 'note',
+        'internal': false
+      },
+      'customer': 'nicole.braun@zammad.org',
+      'note': 'some note',
+      'test_select_attribute': 'to_be_kept',
+    }
+
+    post '/api/v1/tickets', params: ticket_with_keep_option.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert result
+    assert_equal result['test_select_attribute'], 'to_be_kept'
+    ticket_with_keep_option_id = result['id']
+
+    ticket_with_delete_option = {
+      'title': 'Test ticket with to_be_deleted',
+      'group': 'Users',
+      'article': {
+        'subject': 'some subject',
+        'body': 'some message',
+        'type': 'note',
+        'internal': false
+      },
+      'customer': 'nicole.braun@zammad.org',
+      'note': 'some note',
+      'test_select_attribute': 'to_be_deleted',
+    }
+
+    post '/api/v1/tickets', params: ticket_with_delete_option.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert result
+    assert_equal 'to_be_deleted', result['test_select_attribute']
+    ticket_with_delete_option_id = result['id']
+
+    # now delete the to_be_deleted option and migrate the database
+    test_select_attribute_params[:data_option][:options].delete(:to_be_deleted)
+    put "/api/v1/object_manager_attributes/#{test_select_attribute_id}", params: test_select_attribute_params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal 3, result['data_option']['options'].size
+    assert_equal 2, result['data_option_new']['options'].size
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert migration
+
+    # verify that ticket_with_keep_option_id's test attribute is still to_be_kept
+    get "/api/v1/tickets/#{ticket_with_keep_option_id}", headers: @headers.merge('Authorization' => credentials)
+    result = JSON.parse(@response.body)
+    assert_equal 'to_be_kept', result['test_select_attribute']
+
+    # verify that ticket_with_delete_option_id's test attribute has been set to nil
+    get "/api/v1/tickets/#{ticket_with_delete_option_id}", headers: @headers.merge('Authorization' => credentials)
+    result = JSON.parse(@response.body)
+    assert_equal 'to_be_kept', result['test_select_attribute']
+  end
 end
