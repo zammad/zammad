@@ -120,7 +120,12 @@ end
 @clients = {}
 Rails.configuration.interface = 'websocket'
 EventMachine.run do
-  EventMachine::WebSocket.start( host: @options[:b], port: @options[:p], secure: @options[:s], tls_options: tls_options ) do |ws|
+  available_addr = Socket.ip_address_list.collect(&:ip_address) # fetch all available IPs on machine
+  available_addr += ['0.0.0.0', '::'] # add IP binding for all interfaces
+  @options[:b] = IPAddr.new @options[:b] # check if it is valid IPv4 or IPv6 address
+  raise Exceptions::UnprocessableEntity, 'IP address is not available on this machine.' if available_addr.exclude? @options[:b].to_s # raise if IP Address is not available
+
+  EventMachine::WebSocket.start(host: @options[:b].to_s, port: @options[:p], secure: @options[:s], tls_options: tls_options) do |ws|
 
     # register client connection
     ws.onopen do |handshake|
