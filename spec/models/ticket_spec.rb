@@ -330,4 +330,57 @@ RSpec.describe Ticket do
       end
     end
   end
+
+  describe '#check_defaults' do
+
+    it 'changes to correct owner_id' do
+      ticket = build(:ticket, owner_id: 2)
+      ticket.send(:check_defaults)
+      expect(ticket.owner_id).to be 2
+      ticket = build(:ticket)
+      ticket.send(:check_defaults)
+      expect(ticket.owner_id).to be 1
+    end
+    it 'searches for customer_id' do
+      ticket = build(:ticket, customer: nil)
+      ticket.send(:check_defaults)
+      expect(ticket.customer_id).to be nil
+    end
+    it 'checks for new customer' do
+      ticket = build(:ticket, customer_id: 999999)
+      ticket.send(:check_defaults)
+      expect(ticket.customer_id).to be 999999
+    end
+
+    it 'checks organization_id' do
+      ticket = build(:ticket)
+      ticket.send(:check_defaults)
+      expect(ticket.organization_id).to be nil
+    end
+
+    context 'fas' do
+
+      let(:organization) { create(:organization) }
+      let(:user) { create(:user, organization: organization) }
+
+      it 'checks for customer organizations' do
+        ticket = build(:ticket, customer: user, organization: organization)
+        ticket.send(:check_defaults)
+        expect(ticket.customer_id).to be user.id
+        expect(ticket.organization_id).to be organization.id
+      end
+
+      it 'returns organization_id when all condition skipped' do
+        ticket = build(:ticket, customer: user)
+        ticket.send(:check_defaults)
+        expect(ticket.organization_id).to be organization.id
+        another_user = create(:user, organization_ids: [organization.id])
+        expect(another_user.organization_ids[0]).to be organization.id
+        expect(another_user.organization_id).to be nil
+        another_ticket = build(:ticket, customer: another_user)
+        another_ticket.send(:check_defaults)
+        expect(another_ticket.organization_id).to be another_user.organization_ids[0]
+      end
+    end
+  end
 end
