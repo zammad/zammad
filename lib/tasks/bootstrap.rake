@@ -25,8 +25,8 @@ module BootstrapRakeHelper
 
     if File.exist?(DB_CONFIG[:dest])
       return if FileUtils.identical?(DB_CONFIG[:source], DB_CONFIG[:dest])
-      printf 'config/database.yml: File exists. Overwrite? [Y/n] '
-      return if STDIN.gets.chomp.downcase == 'n'
+      printf 'config/database.yml: File exists. Overwrite? [y/N] '
+      return if STDIN.gets.chomp.downcase != 'y'
     end
 
     FileUtils.cp(DB_CONFIG[:source], DB_CONFIG[:dest])
