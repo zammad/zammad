@@ -89,7 +89,7 @@ returns
   def self.access_condition(user, access)
     if user.permissions?('ticket.agent')
       ['group_id IN (?)', user.group_ids_access(access)]
-    elsif user.organization && user.organization.shared
+    elsif user.organization
       ['(tickets.customer_id = ? OR tickets.organization_id = ?)', user.id, user.organization.id]
     elsif user.organizations.any?
       ['(tickets.customer_id = ? OR tickets.organization_id IN (?))', user.id, user.organizations.map { |org| org.id }]
@@ -520,23 +520,23 @@ condition example
         query += ' AND '
       end
       case selector[0]
-        when 'customer'
-          tables += ', users customers'
-          query += 'tickets.customer_id = customers.id'
-        when 'organization'
-          tables += ', organizations'
-          query += 'tickets.organization_id = organizations.id'
-        when 'owner'
-          tables += ', users owners'
-          query += 'tickets.owner_id = owners.id'
-        when 'article'
-          tables += ', ticket_articles articles'
-          query += 'tickets.id = articles.ticket_id'
-        when 'ticket_state'
-          tables += ', ticket_states'
-          query += 'tickets.state_id = ticket_states.id'
-        else
-          raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
+      when 'customer'
+        tables += ', users customers'
+        query += 'tickets.customer_id = customers.id'
+      when 'organization'
+        tables += ', organizations'
+        query += 'tickets.organization_id = organizations.id'
+      when 'owner'
+        tables += ', users owners'
+        query += 'tickets.owner_id = owners.id'
+      when 'article'
+        tables += ', ticket_articles articles'
+        query += 'tickets.id = articles.ticket_id'
+      when 'ticket_state'
+        tables += ', ticket_states'
+        query += 'tickets.state_id = ticket_states.id'
+      else
+        raise "invalid selector #{attribute.inspect}->#{selector.inspect}"
       end
     end
 

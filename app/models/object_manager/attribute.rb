@@ -754,7 +754,7 @@ to send no browser reload event, pass false
     if !data_type
       raise 'Need data_type param'
     end
-    if data_type !~ /^(input|user_autocompletion|checkbox|select|tree_select|datetime|date|tag|richtext|textarea|integer|autocompletion_ajax|boolean|user_permission|active)$/
+    if data_type !~ /^(input|user_autocompletion|checkbox|select|tree_select|datetime|date|tag|richtext|textarea|integer|autocompletion_ajax|boolean|user_permission|active|select_organization|autocompletion_multiple_ajax)$/
       raise "Invalid data_type param '#{data_type}'"
     end
 
