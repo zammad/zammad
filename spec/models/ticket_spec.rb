@@ -331,6 +331,37 @@ RSpec.describe Ticket do
     end
   end
 
+  describe '#access_condition' do
+
+    it 'checks user permission' do
+      user = create(:agent_user)
+      expect(Ticket.access_condition(user, 'overview')[0]).to eq 'group_id IN (?)'
+      user = create(:customer_user)
+      expect(Ticket.access_condition(user, 'overview')[0]).not_to eq 'group_id IN (?)'
+    end
+
+    it 'checks user has Primary Organization' do
+      user = create(:customer_user)
+      expect(Ticket.access_condition(user, 'overview')[0]).not_to eq '(tickets.customer_id = ? OR tickets.organization_id = ?)'
+      organization = create(:organization)
+      user = create(:customer_user, organization: organization)
+      expect(Ticket.access_condition(user, 'overview')[0]).to eq '(tickets.customer_id = ? OR tickets.organization_id = ?)'
+    end
+
+    it 'checks user has Alternative Organizations' do
+      user = create(:customer_user)
+      expect(Ticket.access_condition(user, 'overview')[0]).not_to eq '(tickets.customer_id = ? OR tickets.organization_id IN (?))'
+      organization = create(:organization)
+      user = create(:customer_user, organizations: [organization])
+      expect(Ticket.access_condition(user, 'overview')[0]).to eq '(tickets.customer_id = ? OR tickets.organization_id IN (?))'
+    end
+
+    it 'returns if no organization or not agent' do
+      user = create(:customer_user)
+      expect(Ticket.access_condition(user, 'overview')[0]).to eq 'tickets.customer_id = ?'
+    end
+  end
+
   describe '#check_defaults' do
 
     it 'changes to correct owner_id' do
@@ -358,7 +389,7 @@ RSpec.describe Ticket do
       expect(ticket.organization_id).to be nil
     end
 
-    context 'fas' do
+    context 'with organizations' do
 
       let(:organization) { create(:organization) }
       let(:user) { create(:user, organization: organization) }
