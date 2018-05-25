@@ -3,6 +3,7 @@ class App.ControllerGenericNew extends App.ControllerModal
   buttonCancel: true
   buttonSubmit: true
   headPrefix: 'New'
+  showTrySupport: true
 
   content: =>
     @head = @pageData.head || @pageData.object
@@ -236,6 +237,7 @@ class App.ControllerGenericDescription extends App.ControllerModal
 
 class App.ControllerModalLoading extends App.Controller
   className: 'modal fade'
+  showTrySupport: true
 
   constructor: ->
     super
@@ -322,6 +324,7 @@ class App.ControllerErrorModal extends App.ControllerModal
   head: 'Error'
   #small: true
   #shown: true
+  showTrySupport: true
 
   content: ->
     @message

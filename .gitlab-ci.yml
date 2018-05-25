@@ -51,7 +51,7 @@ test:rspec:mysql:
     - rake db:create
     - rake db:migrate
     - rake db:seed
-    - rspec
+    - bundle exec rspec
     - rake db:drop
 
 test:rspec:postgresql:
@@ -64,7 +64,7 @@ test:rspec:postgresql:
     - rake db:create
     - rake db:migrate
     - rake db:seed
-    - rspec
+    - bundle exec rspec
     - rake db:drop
 
 test:unit:mysql:
@@ -481,7 +481,7 @@ test:browser:integration:api_client_ruby:
     - cd zammad-api-client-ruby
     - bundle install --jobs 8
     - export TEST_URL=http://$IP:$BROWSER_PORT/
-    - rspec || (cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1)
+    - bundle exec rspec || (cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1)
     - cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:integration:api_client_php:
