@@ -414,4 +414,57 @@ RSpec.describe Ticket do
       end
     end
   end
+
+  describe '#selector2sql' do
+
+    context '' do
+
+      it 'checks no organizations' do
+        user = create(:user)
+        condition = {
+          'ticket.organization_id' => {
+              operator: 'is',
+              pre_condition: 'current_user.organization_id',
+          }
+        }
+        organizations = []
+        organizations.push user.organization_id if user.organization_id
+        organizations.concat user.organization_ids if user.organization_ids&.any?
+        query, bind_params, tables = Ticket.selector2sql(condition, user)
+        expect(bind_params).to eq [organizations]
+      end
+      it 'checks Primary organization' do
+        organization = create(:organization)
+        user = create(:user, organization: organization)
+        condition = {
+          'ticket.organization_id' => {
+              operator: 'is',
+              pre_condition: 'current_user.organization_id',
+          }
+        }
+        organizations = []
+        organizations.push user.organization_id if user.organization_id
+        organizations.concat user.organization_ids if user.organization_ids&.any?
+        query, bind_params, tables = Ticket.selector2sql(condition, user)
+        expect(bind_params).to eq [organizations]
+      end
+      it 'checks Primary and Alternative organizations' do
+        organization = create(:organization)
+        organization2 = create(:organization)
+        user = create(:user, organization: organization, organizations: [organization2])
+        condition = {
+          'ticket.organization_id' => {
+              operator: 'is',
+              pre_condition: 'current_user.organization_id',
+          }
+        }
+        organizations = []
+        organizations.push user.organization_id if user.organization_id
+        organizations.concat user.organization_ids if user.organization_ids&.any?
+        query, bind_params, tables = Ticket.selector2sql(condition, user)
+        expect(bind_params).to eq [organizations]
+      end
+    end
+  end
+
 end
