@@ -1,9 +1,8 @@
 require 'browser_test_helper'
 
-# Regression test for #2017
-
-class IntegrationSipgateNotifyNotClearingOnLeftsideTest < TestCase
-  def test_notify_badge
+class IntegrationSipgateTest < TestCase
+  # Regression test for #2017
+  def test_nav_menu_notification_badge_clears
     id = rand(99_999_999)
 
     @browser = browser_instance
@@ -29,7 +28,6 @@ class IntegrationSipgateNotifyNotClearingOnLeftsideTest < TestCase
     click(css: 'a[href="#cti"]')
 
     # simulate sipgate callbacks
-
     url = URI.join(browser_url, 'api/v1/sipgate/in')
     params = { direction: 'in', from: '491715000002', to: '4930600000000', callId: "4991155921769858278-#{id}", cause: 'busy' }
     Net::HTTP.post_form(url, params.merge(event: 'newCall'))

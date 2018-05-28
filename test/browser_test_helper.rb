@@ -409,43 +409,40 @@ class TestCase < Test::Unit::TestCase
     log('click', params)
 
     instance = params[:browser] || @browser
-    if params[:css]
-
-      begin
-        element = instance.find_elements(css: params[:css])[0]
-        return if !element && params[:only_if_exists] == true
-        #if element
-        #  instance.action.move_to(element).release.perform
-        #end
-        element.click
-      rescue => e
-        sleep 0.5
-
-        # just try again
-        log('click', { rescure: true })
-        element = instance.find_elements(css: params[:css])[0]
-        return if !element && params[:only_if_exists] == true
-        #if element
-        #  instance.action.move_to(element).release.perform
-        #end
-        raise "No such element '#{params[:css]}'" if !element
-        element.click
-      end
-
+    if params.include?(:css)
+      param_key = :css
+      find_element_key = :css
     else
+      param_key = :text
+      find_element_key = :partial_link_text
       sleep 0.5
-      begin
-        instance.find_elements(partial_link_text: params[:text])[0].click
-      rescue => e
-        sleep 0.5
-
-        # just try again
-        log('click', { rescure: true })
-        element = instance.find_elements(partial_link_text: params[:text])[0]
-        raise "No such element '#{params[:text]}'" if !element
-        element.click
-      end
     end
+
+    begin
+      elements = instance.find_elements(find_element_key => params[param_key])
+                         .tap { |e| e.slice!(1..-1) unless params[:all] }
+
+      if elements.empty?
+        return if params[:only_if_exists] == true
+        raise "No such element '#{params[param_key]}'"
+      end
+
+      # a clumsy substitute for elements.each(&:click)
+      # (we need to refresh element references after each element.click
+      # because if clicks alter page content,
+      # subsequent element.clicks will raise a StaleElementReferenceError)
+      elements.length.times do |i|
+        instance.find_elements(find_element_key => params[param_key])[i].try(:click)
+      end
+    rescue => e
+      raise e if (fail_count ||= 0).positive?
+
+      fail_count += 1
+      log('click', { rescure: true })
+      sleep 0.5
+      retry
+    end
+
     sleep 0.2 if !params[:fast]
     sleep params[:wait] if params[:wait]
   end

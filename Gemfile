@@ -100,6 +100,9 @@ gem 'browser'
 gem 'icalendar'
 gem 'icalendar-recurrence'
 
+# feature - phone number formatting
+gem 'telephone_number'
+
 # integrations
 gem 'clearbit'
 gem 'net-ldap'

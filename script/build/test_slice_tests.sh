@@ -65,8 +65,8 @@ if [ "$LEVEL" == '1' ]; then
   # test/browser/maintenance_session_message_test.rb
   # test/browser/manage_test.rb
   # test/browser/monitoring_test.rb
-  rm test/browser/integration_sipgate_notify_not_clearing_on_leftside_test.rb
-  rm test/browser/integration_cti_notify_not_clearing_on_leftside_test.rb
+  rm test/browser/integration_sipgate_test.rb
+  rm test/browser/integration_cti_test.rb
   rm test/browser/preferences_language_test.rb
   rm test/browser/preferences_permission_check_test.rb
   rm test/browser/preferences_token_access_test.rb
@@ -139,8 +139,8 @@ elif [ "$LEVEL" == '2' ]; then
   rm test/browser/maintenance_session_message_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/monitoring_test.rb
-  rm test/browser/integration_sipgate_notify_not_clearing_on_leftside_test.rb
-  rm test/browser/integration_cti_notify_not_clearing_on_leftside_test.rb
+  rm test/browser/integration_sipgate_test.rb
+  rm test/browser/integration_cti_test.rb
   rm test/browser/preferences_language_test.rb
   rm test/browser/preferences_permission_check_test.rb
   rm test/browser/preferences_token_access_test.rb
@@ -213,8 +213,8 @@ elif [ "$LEVEL" == '3' ]; then
   rm test/browser/maintenance_session_message_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/monitoring_test.rb
-  rm test/browser/integration_sipgate_notify_not_clearing_on_leftside_test.rb
-  rm test/browser/integration_cti_notify_not_clearing_on_leftside_test.rb
+  rm test/browser/integration_sipgate_test.rb
+  rm test/browser/integration_cti_test.rb
   rm test/browser/preferences_language_test.rb
   rm test/browser/preferences_permission_check_test.rb
   rm test/browser/preferences_token_access_test.rb
@@ -287,8 +287,8 @@ elif [ "$LEVEL" == '4' ]; then
   rm test/browser/maintenance_session_message_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/monitoring_test.rb
-  rm test/browser/integration_sipgate_notify_not_clearing_on_leftside_test.rb
-  rm test/browser/integration_cti_notify_not_clearing_on_leftside_test.rb
+  rm test/browser/integration_sipgate_test.rb
+  rm test/browser/integration_cti_test.rb
   rm test/browser/preferences_language_test.rb
   rm test/browser/preferences_permission_check_test.rb
   rm test/browser/preferences_token_access_test.rb
@@ -360,8 +360,8 @@ elif [ "$LEVEL" == '5' ]; then
   rm test/browser/maintenance_session_message_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/monitoring_test.rb
-  rm test/browser/integration_sipgate_notify_not_clearing_on_leftside_test.rb
-  rm test/browser/integration_cti_notify_not_clearing_on_leftside_test.rb
+  rm test/browser/integration_sipgate_test.rb
+  rm test/browser/integration_cti_test.rb
   rm test/browser/preferences_language_test.rb
   rm test/browser/preferences_permission_check_test.rb
   rm test/browser/preferences_token_access_test.rb
@@ -436,8 +436,8 @@ elif [ "$LEVEL" == '6' ]; then
   rm test/browser/maintenance_session_message_test.rb
   rm test/browser/manage_test.rb
   rm test/browser/monitoring_test.rb
-  # rm test/browser/integration_sipgate_notify_not_clearing_on_leftside_test.rb
-  # rm test/browser/integration_cti_notify_not_clearing_on_leftside_test.rb
+  # rm test/browser/integration_sipgate_test.rb
+  # rm test/browser/integration_cti_test.rb
   # test/browser/preferences_language_test.rb
   # test/browser/preferences_permission_check_test.rb
   # test/browser/preferences_token_access_test.rb

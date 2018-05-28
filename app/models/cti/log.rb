@@ -246,19 +246,12 @@ returns
       list = Cti::Log.order('created_at DESC, id DESC').limit(60)
 
       # add assets
-      assets = {}
-      list.each do |item|
-        next if !item.preferences
-        %w[from to].each do |direction|
-          next if !item.preferences[direction]
-          item.preferences[direction].each do |caller_id|
-            next if !caller_id['user_id']
-            user = User.lookup(id: caller_id['user_id'])
-            next if !user
-            assets = user.assets(assets)
-          end
-        end
-      end
+      assets = list.map(&:preferences)
+                   .map { |p| p.slice(:from, :to) }
+                   .map(&:values).flatten
+                   .map { |caller_id| caller_id[:user_id] }.compact
+                   .map { |user_id| User.lookup(id: user_id) }.compact
+                   .each.with_object({}) { |user, a| user.assets(a) }
 
       {
         list: list,
@@ -392,5 +385,25 @@ optional you can put the max oldest chat entries as argument
       true
     end
 
+    # adds virtual attributes when rendering #to_json
+    # see http://api.rubyonrails.org/classes/ActiveModel/Serialization.html
+    def attributes
+      virtual_attributes = {
+        'from_pretty' => from_pretty,
+        'to_pretty' => to_pretty,
+      }
+
+      super.merge(virtual_attributes)
+    end
+
+    def from_pretty
+      parsed = TelephoneNumber.parse(from&.sub(/^\+?/, '+'))
+      parsed.send(parsed.valid? ? :international_number : :original_number)
+    end
+
+    def to_pretty
+      parsed = TelephoneNumber.parse(to&.sub(/^\+?/, '+'))
+      parsed.send(parsed.valid? ? :international_number : :original_number)
+    end
   end
 end
