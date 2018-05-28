@@ -1,0 +1,97 @@
+<form>
+
+  <h2><%- @T('Settings') %></h2>
+
+  <p><%- @T('You need to configure the Zammad endpoints in the %s', 'PBX') %>:<p>
+
+  <div class="settings-entry">
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="20%"><%- @T('Type') %>
+          <th width="80%"><%- @T('URL') %>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('Endpoint') %>
+          <td class="settings-list-control-cell"><input type="url" class="form-control form-control--small js-select" readonly value="<%- @C('http_type') %>://<%- @C('fqdn') %>/api/v1/cti/<%= @cti_token %>">
+      </tbody>
+    </table>
+  </div>
+
+  <h2><%- @T('Inbound') %></h2>
+
+  <p><%- @T('Blocked caller ids based on sender caller id.') %>
+
+  <div class="settings-entry">
+    <table class="settings-list js-inboundBlockCallerId" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="50%"><%- @T('Caller id to block') %>
+          <th width="40%"><%- @T('Note') %>
+          <th width="10%"><%- @T('Action') %>
+      </thead>
+      <tbody>
+<% for row in @config.inbound.block_caller_ids: %>
+        <tr class="js-row">
+          <td class="settings-list-control-cell"><input name="caller_id" value="<%= row.caller_id %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="note" value="<%= row.note %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text js-remove"><%- @Icon('trash') %> <%- @T('Remove') %></div>
+<% end %>
+        <tr>
+          <td class="settings-list-control-cell"><input name="caller_id" value="" placeholder="4930609854189" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="note" value="" placeholder="<%- @Ti('my onw note') %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text btn--create js-add"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
+      </tbody>
+    </table>
+  </div>
+
+  <h2><%- @T('Outbound') %></h2>
+
+  <p><%- @T('Set caller id of outbound calls based on destination caller id.') %>
+
+  <div class="settings-entry js-outboundRouting">
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="30%"><%- @T('Destination caller id') %>
+          <th width="30%"><%- @T('Set outbound caller id') %>
+          <th width="30%"><%- @T('Note') %>
+          <th width="10%"><%- @T('Action') %>
+      </thead>
+      <tbody>
+<% for row in @config.outbound.routing_table: %>
+        <tr class="js-row">
+          <td class="settings-list-control-cell"><input name="dest" value="<%= row.dest %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="caller_id" value="<%= row.caller_id %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="note" value="<%= row.note %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text js-remove"><%- @Icon('trash') %> <%- @T('Remove') %></div>
+<% end %>
+        <tr>
+          <td class="settings-list-control-cell"><input name="dest" value="" placeholder="49* or 3230123456789" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="caller_id" value="" placeholder="4930609854189" class="form-control form-control--small js-summary">
+          <td class="settings-list-control-cell"><input name="note" value="" placeholder="<%- @Ti('my onw note') %>" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><div class="btn btn--text btn--create js-add"><%- @Icon('plus-small') %> <%- @T('Add') %></div>
+      </tbody>
+    </table>
+  </div>
+
+  <p><%- @T('Default caller id.') %>
+
+  <div class="settings-entry">
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="50%"><%- @T('Default caller id') %>
+          <th width="50%"><%- @T('Note') %>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="settings-list-control-cell"><input name="default_caller_id" value="<%= @config.outbound.default_caller_id %>" placeholder="4930609854189" class="form-control form-control--small js-summary">
+          <td class="settings-list-row-control"><%- @T('Default caller id for outbound calls.') %>
+      </tbody>
+    </table>
+  </div>
+
+  <button type="submit" class="btn btn--primary js-submit"><%- @T('Save') %></button>
+</form>

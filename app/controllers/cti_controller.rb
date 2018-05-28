@@ -7,6 +7,11 @@ class CtiController < ApplicationController
   def index
     backends = [
       {
+        name: 'CTI (generic)',
+        enabled: Setting.get('cti_integration'),
+        url: '#system/integration/cti',
+      },
+      {
         name: 'sipgate.io',
         enabled: Setting.get('sipgate_integration'),
         url: '#system/integration/sipgate',

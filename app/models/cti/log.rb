@@ -276,7 +276,7 @@ Cti::Log.process(
   'user' => 'user 1',
   'from' => '4912347114711',
   'to' => '4930600000000',
-  'callId' => '4991155921769858278-1',
+  'callId' => '4991155921769858278-1', # or call_id
   'direction' => 'in',
 )
 
@@ -286,6 +286,7 @@ Cti::Log.process(
       comment = params['cause']
       event   = params['event']
       user    = params['user']
+      call_id = params['callId'] || params['call_id']
       if user.class == Array
         user = user.join(', ')
       end
@@ -309,14 +310,14 @@ Cti::Log.process(
           from_comment: from_comment,
           to: params['to'],
           to_comment: to_comment,
-          call_id: params['callId'],
+          call_id: call_id,
           comment: comment,
           state: event,
           preferences: preferences,
         )
       when 'answer'
-        log = find_by(call_id: params['callId'])
-        raise "No such call_id #{params['callId']}" if !log
+        log = find_by(call_id: call_id)
+        raise "No such call_id #{call_id}" if !log
         log.state = 'answer'
         log.start = Time.zone.now
         if user
@@ -325,8 +326,8 @@ Cti::Log.process(
         log.comment = comment
         log.save
       when 'hangup'
-        log = find_by(call_id: params['callId'])
-        raise "No such call_id #{params['callId']}" if !log
+        log = find_by(call_id: call_id)
+        raise "No such call_id #{call_id}" if !log
         if params['direction'] == 'in' && log.state == 'newCall'
           log.done = false
         end
