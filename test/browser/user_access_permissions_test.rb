@@ -11,7 +11,7 @@ class AgentProfilePermissionsTest < TestCase
     tasks_close_all()
 
     # search and open user
-    user_open_by_search(value: 'Braun')
+    user_open_by_search(value: 'Nicole')
 
     verify_task(
       data: {
@@ -140,8 +140,8 @@ class AgentProfilePermissionsTest < TestCase
       data: {
         customer: 'master',
         group: 'Users',
-        title: 'test_auto_assignment_1 - ticket 1',
-        body: 'test_auto_assignment_1 - ticket 1 - no auto assignment',
+        title: 'test_user_access_permissions_1 - ticket 1',
+        body: 'test_user_access_permissions_1 - ticket 1',
       },
     )
 
@@ -185,8 +185,8 @@ class AgentProfilePermissionsTest < TestCase
       data: {
         customer: 'nico',
         group: 'Users',
-        title: 'test_auto_assignment_2 - ticket 2',
-        body: 'test_auto_assignment_2 - ticket 2 - no auto assignment',
+        title: 'test_user_access_permissions_2 - ticket 2',
+        body: 'test_user_access_permissions_2 - ticket 2',
       },
     )
 
@@ -216,12 +216,20 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
 
-    watch_for(
-      css: '.content.active .sidebar[data-tab="customer"] .sidebar-block h3[title="Name"]',
-      value: 'Nicole B2',
+    # search and open user
+    user_open_by_search(value: 'Nicole')
+
+    verify_task(
+      data: {
+        title: 'Nicole B2',
+      }
     )
 
-    sleep 2
+    ticket_open_by_search(
+      number: ticket1[:number],
+    )
+    sleep 0.3
+
     # change lastname back
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions')
     click(css: 'li[data-type="customer-edit"]')
@@ -246,9 +254,13 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
 
-    watch_for(
-      css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [title="Name"]',
-      value: 'Nicole Braun',
+    # search and open user
+    user_open_by_search(value: 'Nicole')
+
+    verify_task(
+      data: {
+        title: 'Nicole Braun',
+      }
     )
   end
 
@@ -262,29 +274,25 @@ class AgentProfilePermissionsTest < TestCase
     )
     tasks_close_all()
 
+    # search and open user
+    user_open_by_search(value: 'Nicole')
+
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
         group: 'Users',
-        title: 'test_auto_assignment_2 - ticket 2',
-        body: 'test_auto_assignment_2 - ticket 2 - no auto assignment',
+        title: 'test_user_access_permissions_2 - ticket 2',
+        body: 'test_user_access_permissions_2 - ticket 2',
       },
     )
 
-    # open ticket#1
     ticket_open_by_search(
       number: ticket1[:number],
     )
 
-    exists(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
-    exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
-    exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
-
-    click(css: '.content.active .tabsSidebar-holder .js-avatar')
-
-    # check and change note again in edit screen
-    click(css: '.content.active .js-action .dropdown-toggle')
-    click(css: '.content.active .js-action [data-type="edit"]')
+    click(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
+    click(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    click(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
     watch_for(
       css: '.content.active .modal',
@@ -302,9 +310,14 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .modal button.js-submit')
 
     watch_for(
-      css: '.content.active .profile-window',
+      css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
       value: 'some note abc',
     )
+
+    tasks_close_all()
+
+    # search and open user
+    user_open_by_search(value: 'Nicole')
 
     verify_task(
       data: {
@@ -312,9 +325,14 @@ class AgentProfilePermissionsTest < TestCase
       }
     )
 
+    ticket_open_by_search(
+      number: ticket1[:number],
+    )
+
     # change lastname back
-    click(css: '.content.active .js-action .dropdown-toggle')
-    click(css: '.content.active .js-action [data-type="edit"]')
+    click(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
+    click(css: '.content.active .tabsSidebar .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    click(css: '.content.active .tabsSidebar .sidebar[data-tab="customer"] .js-actions li[data-type="customer-edit"]')
 
     watch_for(
       css: '.content.active .modal',
@@ -329,6 +347,9 @@ class AgentProfilePermissionsTest < TestCase
       value: 'note',
     )
     click(css: '.content.active .modal button.js-submit')
+
+    # search and open user
+    user_open_by_search(value: 'Nicole')
 
     verify_task(
       data: {
@@ -351,26 +372,20 @@ class AgentProfilePermissionsTest < TestCase
       data: {
         customer: 'master',
         group: 'Users',
-        title: 'test_auto_assignment_2 - ticket 2',
-        body: 'test_auto_assignment_2 - ticket 2 - no auto assignment',
+        title: 'test_user_access_permissions_2 - ticket 2',
+        body: 'test_user_access_permissions_2 - ticket 2',
       },
     )
 
-    # open ticket#1
     ticket_open_by_search(
       number: ticket1[:number],
     )
 
-    exists(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
-    exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
-    exists_not(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
+    click(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
+    click(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
 
-    click(css: '.content.active .tabsSidebar-holder .js-avatar')
-
-    # check and change note again in edit screen
-    click(css: '.content.active .js-action .icon-arrow-down', fast: true)
     exists_not(
-      css: '.content.active .js-action [data-type="edit"]'
+      css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]'
     )
   end
 end
