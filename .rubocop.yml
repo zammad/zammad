@@ -202,6 +202,7 @@ Lint/InterpolationCheck:
     - "test/unit/notification_factory_renderer_test.rb"
     - "test/unit/notification_factory_template_test.rb"
     - "test/unit/ticket_trigger_test.rb"
+    - "test/unit/ticket_trigger_recursive_disabled_test.rb"
 
 # RSpec tests
 Style/NumericPredicate:

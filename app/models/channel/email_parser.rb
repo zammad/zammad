@@ -677,6 +677,10 @@ returns
       end
     end
 
+    ticket.reload
+    article.reload
+    session_user.reload
+
     # run postmaster post filter
     filters = {}
     Setting.where(area: 'Postmaster::PostFilter').order(:name).each do |setting|
