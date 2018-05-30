@@ -4,11 +4,6 @@ require 'test_helper'
 class TicketSlaTest < ActiveSupport::TestCase
 
   test 'ticket sla' do
-
-    # cleanup
-    delete = Ticket.destroy_all
-    assert(delete, 'ticket destroy_all')
-
     ticket = Ticket.create!(
       title: 'some title äöüß',
       group: Group.lookup(name: 'Users'),
@@ -502,11 +497,6 @@ class TicketSlaTest < ActiveSupport::TestCase
   end
 
   test 'ticket sla + selector' do
-
-    # cleanup
-    delete = Ticket.destroy_all
-    assert(delete, 'ticket destroy_all')
-
     calendar1 = Calendar.create_or_update(
       name: 'EU 1',
       timezone: 'Europe/Berlin',
@@ -611,13 +601,6 @@ class TicketSlaTest < ActiveSupport::TestCase
   end
 
   test 'ticket sla + timezone + holiday' do
-
-    # cleanup
-    delete = Sla.destroy_all
-    assert(delete, 'sla destroy_all')
-    delete = Ticket.destroy_all
-    assert(delete, 'ticket destroy_all')
-
     ticket = Ticket.create!(
       title: 'some title äöüß',
       group: Group.lookup(name: 'Users'),
@@ -862,13 +845,6 @@ class TicketSlaTest < ActiveSupport::TestCase
   end
 
   test 'ticket escalation suspend close reopen bug' do
-
-    # cleanup
-    delete = Sla.destroy_all
-    assert(delete, 'sla destroy_all')
-    delete = Ticket.destroy_all
-    assert(delete, 'ticket destroy_all')
-
     ticket1 = Ticket.create!(
       title: 'some title äöüß3',
       group: Group.lookup(name: 'Users'),
@@ -1568,7 +1544,6 @@ class TicketSlaTest < ActiveSupport::TestCase
   end
 
   test 'ticket ticket.title and article.subject' do
-
     ticket = Ticket.create!(
       title: 'some title SLATEST1 for you',
       group: Group.lookup(name: 'Users'),
@@ -1735,13 +1710,6 @@ class TicketSlaTest < ActiveSupport::TestCase
   end
 
   test 'ticket sla + holiday 222' do
-
-    # cleanup
-    delete = Sla.destroy_all
-    assert(delete, 'sla destroy_all')
-    delete = Ticket.destroy_all
-    assert(delete, 'ticket destroy_all')
-
     ticket = Ticket.create!(
       title: 'some title 222',
       group: Group.lookup(name: 'Users'),
@@ -1961,13 +1929,6 @@ class TicketSlaTest < ActiveSupport::TestCase
   end
 
   test 'ticket sla + observer check' do
-
-    # cleanup
-    delete = Sla.destroy_all
-    assert(delete, 'sla destroy_all')
-    delete = Ticket.destroy_all
-    assert(delete, 'ticket destroy_all')
-
     ticket = Ticket.create!(
       title: 'some title observer#1',
       group: Group.lookup(name: 'Users'),
@@ -2141,6 +2102,116 @@ class TicketSlaTest < ActiveSupport::TestCase
     assert(delete, 'ticket destroy')
 
     calendar.destroy!
+  end
+
+  test 'update last_customer_contact_at when the agent does not reply' do
+
+    Setting.set('ticket_last_contact_behaviour', 'based_on_customer_reaction')
+
+    ticket = Ticket.create!(
+      title: 'test #1 last_contact_customer_at',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_at: '2018-05-01 13:56:21 UTC',
+      updated_at: '2018-05-01 13:56:21 UTC',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket, 'ticket created')
+
+    article1 = Ticket::Article.create!(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'phone').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2018-05-01 13:56:21 UTC',
+      updated_at: '2018-05-01 13:56:21 UTC',
+    )
+
+    ticket.reload
+    assert_equal(ticket.article_count, 1)
+    assert_equal(ticket.last_contact_at.to_s, article1.created_at.to_s)
+    assert_equal(ticket.last_contact_customer_at.to_s, article1.created_at.to_s)
+    assert_nil(ticket.last_contact_agent_at)
+    assert_nil(ticket.first_response_at)
+    assert_nil(ticket.close_at)
+
+    article2 = Ticket::Article.create!(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'phone').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2018-05-01 14:56:21 UTC',
+      updated_at: '2018-05-01 14:56:21 UTC',
+    )
+
+    ticket = Ticket.find(ticket.id)
+    assert_equal(ticket.article_count, 2)
+    assert_equal(ticket.last_contact_at.to_s, article2.created_at.to_s)
+    assert_equal(ticket.last_contact_customer_at.to_s, article2.created_at.to_s)
+    assert_nil(ticket.last_contact_agent_at)
+    assert_nil(ticket.first_response_at)
+    assert_nil(ticket.close_at)
+
+    article3 = Ticket::Article.create!(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      type: Ticket::Article::Type.where(name: 'phone').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2018-05-01 15:56:21 UTC',
+      updated_at: '2018-05-01 15:56:21 UTC',
+    )
+
+    ticket.reload
+    assert_equal(ticket.article_count, 3)
+    assert_equal(ticket.last_contact_at.to_s, article3.created_at.to_s)
+    assert_equal(ticket.last_contact_customer_at.to_s, article3.created_at.to_s)
+    assert_nil(ticket.last_contact_agent_at)
+    assert_nil(ticket.first_response_at)
+    assert_nil(ticket.close_at)
+
+    article4 = Ticket::Article.create!(
+      ticket_id: ticket.id,
+      from: 'some_sender@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: 'some message',
+      internal: false,
+      sender: Ticket::Article::Sender.where(name: 'Agent').first,
+      type: Ticket::Article::Type.where(name: 'phone').first,
+      updated_by_id: 1,
+      created_by_id: 1,
+      created_at: '2018-05-01 16:56:21 UTC',
+      updated_at: '2018-05-01 16:56:21 UTC',
+    )
+
+    ticket.reload
+    assert_equal(ticket.article_count, 4)
+    assert_equal(ticket.last_contact_at.to_s, article4.created_at.to_s)
+    assert_equal(ticket.last_contact_customer_at.to_s, article3.created_at.to_s)
+    assert_equal(ticket.last_contact_agent_at.to_s, article4.created_at.to_s)
+    assert_equal(ticket.first_response_at.to_s, article4.created_at.to_s)
+    assert_nil(ticket.close_at)
   end
 
 end
