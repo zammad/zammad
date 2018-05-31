@@ -396,7 +396,7 @@ Some Text",
         result: {
           0 => {
             priority: '2 normal',
-            title: '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
+            title: 'Subject: 【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
           },
           1 => {
             body: 'Some Text',
@@ -2759,7 +2759,7 @@ Some Text',
             title: 'some subject 3',
           },
           1 => {
-            from: '=?windows-1258?B?VmFuZHJvbW1lLCBGculk6XJpYw==?= <fvandromme@example.com>',
+            from: '"Vandromme, Frédéric" <fvandromme@example.com>',
             sender: 'Customer',
             type: 'email',
             body: 'Some Text',

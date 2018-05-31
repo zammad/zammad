@@ -217,14 +217,15 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.12)
-    mail (2.6.6)
-      mime-types (>= 1.16, < 4)
+    mail (2.7.1.rc1)
+      mini_mime (>= 0.1.1)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.9.0)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     multi_json (1.12.2)
@@ -341,6 +342,7 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    rchardet (1.8.0)
     ref (2.0.0)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
@@ -508,7 +510,7 @@ DEPENDENCIES
   json
   koala
   libv8
-  mail (= 2.6.6)
+  mail (>= 2.7.1.rc1)
   mime-types
   mysql2
   net-ldap
@@ -532,6 +534,7 @@ DEPENDENCIES
   rails (= 5.1.5)
   rails-observers
   rb-fsevent
+  rchardet (>= 1.8.0)
   rspec-rails
   rubocop
   rubyntlm!
