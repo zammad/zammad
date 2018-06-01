@@ -69,18 +69,14 @@ class Channel::EmailParser
   def parse(msg)
     data = {}
 
-    # Rectify invalid encodings
-    encoding = CharDet.detect(msg)['encoding']
-    msg.force_encoding(encoding) if !msg.valid_encoding?
-
-    mail = Mail.new(msg)
+    mail = Mail.new(msg.utf8_encode)
 
     # set all headers
     mail.header.fields.each do |field|
 
       # full line, encode, ready for storage
       begin
-        value = Encode.conv('utf8', field.to_s)
+        value = field.to_utf8
         if value.blank?
           value = field.raw_value
         end
@@ -150,24 +146,17 @@ class Channel::EmailParser
       # html attachment/body may exists and will be converted to strict html
       if mail.html_part&.body
         data[:body] = mail.html_part.body.to_s
-        data[:body] = Encode.conv(mail.html_part.charset.to_s, data[:body])
-        data[:body] = data[:body].html2html_strict.to_s.force_encoding('utf-8')
+        data[:body] = data[:body].utf8_encode(from: mail.html_part.charset, fallback: :read_as_sanitized_binary)
+        data[:body] = data[:body].html2html_strict
 
-        if !data[:body].force_encoding('UTF-8').valid_encoding?
-          data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-        end
         data[:content_type] = 'text/html'
       end
 
       # text attachment/body exists
       if data[:body].blank? && mail.text_part
         data[:body] = mail.text_part.body.decoded
-        data[:body] = Encode.conv(mail.text_part.charset, data[:body])
-        data[:body] = data[:body].to_s.force_encoding('utf-8')
+        data[:body] = data[:body].utf8_encode(from: mail.text_part.charset, fallback: :read_as_sanitized_binary)
 
-        if !data[:body].valid_encoding?
-          data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-        end
         data[:content_type] = 'text/plain'
       end
 
@@ -217,12 +206,9 @@ class Channel::EmailParser
     elsif mail.mime_type && mail.mime_type.to_s.casecmp('text/html').zero?
       filename = 'message.html'
       data[:body] = mail.body.decoded
-      data[:body] = Encode.conv(mail.charset, data[:body])
-      data[:body] = data[:body].html2html_strict.to_s.force_encoding('utf-8')
+      data[:body] = data[:body].utf8_encode(from: mail.charset, fallback: :read_as_sanitized_binary)
+      data[:body] = data[:body].html2html_strict
 
-      if !data[:body].valid_encoding?
-        data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-      end
       data[:content_type] = 'text/html'
 
       # add body as attachment
@@ -246,11 +232,8 @@ class Channel::EmailParser
     # text part only
     elsif !mail.mime_type || mail.mime_type.to_s == '' || mail.mime_type.to_s.casecmp('text/plain').zero?
       data[:body] = mail.body.decoded
-      data[:body] = Encode.conv(mail.charset, data[:body])
+      data[:body] = data[:body].utf8_encode(from: mail.charset, fallback: :read_as_sanitized_binary)
 
-      if !data[:body].force_encoding('UTF-8').valid_encoding?
-        data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-      end
       data[:content_type] = 'text/plain'
     else
       filename = '-no name-'
@@ -319,7 +302,7 @@ class Channel::EmailParser
 
       # full line, encode, ready for storage
       begin
-        value = Encode.conv('utf8', field.to_s)
+        value = field.to_utf8
         if value.blank?
           value = field.raw_value
         end
@@ -330,10 +313,7 @@ class Channel::EmailParser
     end
 
     # cleanup content id, <> will be added automatically later
-    if headers_store['Content-ID']
-      headers_store['Content-ID'].gsub!(/^</, '')
-      headers_store['Content-ID'].gsub!(/>$/, '')
-    end
+    headers_store['Content-ID']&.gsub!(/(^<|>$)/, '')
 
     # get filename from content-disposition
     filename = nil
@@ -669,7 +649,7 @@ returns
         mail[:attachments]&.each do |attachment|
           filename = attachment[:filename].force_encoding('utf-8')
           if !filename.force_encoding('UTF-8').valid_encoding?
-            filename = filename.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+            filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
           end
           Store.add(
             object: 'Ticket::Article',
@@ -762,7 +742,7 @@ returns
     end
 
     # do extra decoding because we needed to use field.value
-    data[:from_display_name] = Mail::Field.new('X-From', Encode.conv('utf8', data[:from_display_name])).to_s
+    data[:from_display_name] = Mail::Field.new('X-From', data[:from_display_name].to_utf8).to_s
     data[:from_display_name].delete!('"')
     data[:from_display_name].strip!
     data[:from_display_name].gsub!(/^'/, '')
@@ -862,7 +842,7 @@ module Mail
   # workaround to get content of no parseable headers - in most cases with non 7 bit ascii signs
   class Field
     def raw_value
-      value = Encode.conv('utf8', @raw_value)
+      value = @raw_value.try(:utf8_encode)
       return value if value.blank?
       value.sub(/^.+?:(\s|)/, '')
     end

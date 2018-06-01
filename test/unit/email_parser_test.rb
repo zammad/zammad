@@ -464,7 +464,7 @@ Managing Director: Martin Edenhofer
           # mutt c1abb5fb77a9d2ab2017749a7987c074
           {
             md5: '2ef81e47872d42efce7ef34bfa2de043',
-            filename: '¼¨Ð§¹ÜÀí,¾¿¾¹Ë­´íÁË.xls',
+            filename: '绩效管理,究竟谁错了.xls',
           },
         ],
         params: {
@@ -619,7 +619,7 @@ Managing Director: Martin Edenhofer
       {
         data: IO.read('test/fixtures/mail21.box'),
         source: 'test/fixtures/mail21.box',
-        body_md5: '7cb50fe6b37420fe9aea61eb5badc25a',
+        body_md5: 'dea7a8979172261f61fb799b6c83742e',
         params: {
           from: 'Viagra Super Force Online <pharmacy_affordable1@ertelecom.ru>',
           from_email: 'pharmacy_affordable1@ertelecom.ru',
@@ -631,20 +631,20 @@ Managing Director: Martin Edenhofer
       {
         data: IO.read('test/fixtures/mail22.box'),
         source: 'test/fixtures/mail22.box',
-        body_md5: '56223b1ea04a63269020cb64be7a70b0',
+        body_md5: '1af1f68f66713b63ce8ec4cc20c7887e',
         params: {
           from: 'Gilbertina Suthar <ireoniqla@lipetsk.ru>',
           from_email: 'ireoniqla@lipetsk.ru',
           from_display_name: 'Gilbertina Suthar',
           subject: 'P..E..N-I..S__-E N L A R-G E-M..E..N T-___P..I-L-L..S...Info.',
           to: 'Info <info@znuny.nix>',
-          body: 'Puzzled by judith bronte dave. Melvin will want her way through with.<br>Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.<br>Freemont and they talked with beppe.<br>Thinking of bed and whenever adam.<br>Mike was too tired man to hear.<br>I10PQSHEJl2Nwf&amp;tilde;2113S173 &amp;Icirc;1mEbb5N371L&amp;piv;C7AlFnR1&amp;diams;HG64B242&amp;brvbar;M2242zk&amp;Iota;N&amp;rceil;7&amp;rceil;TBN&amp;ETH; T2xPI&amp;ograve;gI2&amp;Atilde;lL2&amp;Otilde;ML&amp;perp;22Sa&amp;Psi;RBreathed adam gave the master bedroom door.<br>Better get charlie took the wall.<br>Charlotte clark smile he saw charlie.<br>Dave and leaned her tears adam.<br>Maybe we want any help me that.<br>Next morning charlie gazed at their father.<br>Well as though adam took out here. Melvin will be more money. Called him into this one last night.<br>Men joined the pickup truck pulled away. Chuck could make sure that.[1] &amp;dagger;p1C?L&amp;thinsp;I?C&amp;ensp;K?88&amp;ensp;5 E R?EEOD !Chuckled adam leaned forward and le? charlie.<br>Just then returned to believe it here.<br>Freemont and pulling out several minutes.<br><br>[1] &amp;#104;&amp;#116;&amp;#116;&amp;#112;&amp;#58;&amp;#47;&amp;#47;&amp;#1072;&amp;#1086;&amp;#1089;&amp;#1082;&amp;#46;&amp;#1088;&amp;#1092;?jmlfwnwe&amp;ucwkiyyc'
+          body: 'Puzzled by judith bronte dave. Melvin will want her way through with.<br>Continued adam helped charlie cried. Soon joined the master bathroom. Grinned adam rubbed his arms she nodded.<br>Freemont and they talked with beppe.<br>Thinking of bed and whenever adam.<br>Mike was too tired man to hear.<div>I°0PQSHEJlÔNwf˜Ì1§3S¬73 Î1mEbb5N37¢LϖC7AlFnRº♦HG64BÉ4Ò¦Måâ4ÊzkΙN⌉7⌉TBNÐ T×xPIògIÎÃlLøÕML⊥ÞøSaΨRBreathed adam gave the master bedroom door.<br>Better get charlie took the wall.<br>Charlotte clark smile he saw charlie.<br>Dave and leaned her tears adam.</div>Maybe we want any help me that.<br>Next morning charlie gazed at their father.<br>Well as though adam took out here. Melvin will be more money. Called him into this one last night.<br>Men joined the pickup truck pulled away. Chuck could make sure that.<a href="http://????????.?????jmlfwnwe&amp;ucwkiyyc" rel="nofollow noreferrer noopener" target="_blank" title="http://????????.?????jmlfwnwe&amp;ucwkiyyc"><b>†p­C L I C K Ȟ E R EEOD !</b></a>Chuckled adam leaned forward and leî charlie.<br>Just then returned to believe it here.<br>Freemont and pulling out several minutes.'
         },
       },
       {
         data: IO.read('test/fixtures/mail23.box'),
         source: 'test/fixtures/mail23.box',
-        body_md5: '545a1b067fd10ac636c20b44f5df8868',
+        body_md5: '23967dfbbc2e167332b2ecb78fb9e397',
         params: {
           from: 'marketingmanager@nthcpghana.com',
           from_email: 'marketingmanager@nthcpghana.com',
@@ -794,7 +794,7 @@ end
       {
         data: IO.read('test/fixtures/mail31.box'),
         source: 'test/fixtures/mail31.box',
-        body_md5: '10484f3b096e85e7001da387c18871d5',
+        body_md5: 'd5448d34bf7f5db0a525fc83735dc11b',
         params: {
           from: '"bertha　mou" <zhengkang@ha.chinamobile.com>',
           from_email: 'zhengkang@ha.chinamobile.com',
@@ -806,7 +806,7 @@ end
       {
         data: IO.read('test/fixtures/mail32.box'),
         source: 'test/fixtures/mail32.box',
-        body_md5: '6bed82e0d079e521f506e4e5d3529107',
+        body_md5: '9ccf94a31ace1c27e71138c3803ff178',
         params: {
           from: '"Dana.Qin" <Dana.Qin6e1@gmail.com>',
           from_email: 'Dana.Qin6e1@gmail.com',
@@ -1036,7 +1036,7 @@ end
       {
         data: IO.read('test/fixtures/mail44.box'),
         source: 'test/fixtures/mail44.box',
-        body_md5: '2f0f5a21e4393c174d4670a188fc5548',
+        body_md5: 'ee930244edd3b7c19494e688aa9cc41c',
         params: {
           from: '"Clement.Si" <Claudia.Shu@yahoo.com.>',
           from_email: 'Claudia.Shu@yahoo.com.',
@@ -1373,7 +1373,7 @@ delete your own text from the attached returned message.
     ]
 
     count = 0
-    files.each { |file|
+    files.each { |file, i|
       count += 1
       #p "Count: #{count}"
       parser = Channel::EmailParser.new

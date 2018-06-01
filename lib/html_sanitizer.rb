@@ -374,7 +374,7 @@ cleanup html string:
   end
 
   def self.cleanup_target(string, keep_spaces: false)
-    string = CGI.unescape(string).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+    string = CGI.unescape(string).utf8_encode(fallback: :read_as_sanitized_binary)
     blank_regex = if keep_spaces
                     /\t|\n|\r/
                   else
@@ -405,8 +405,8 @@ cleanup html string:
   end
 
   def self.url_same?(url_new, url_old)
-    url_new = CGI.unescape(url_new.to_s).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?').downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
-    url_old = CGI.unescape(url_old.to_s).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?').downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
+    url_new = CGI.unescape(url_new.to_s).utf8_encode(fallback: :read_as_sanitized_binary).downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
+    url_old = CGI.unescape(url_old.to_s).utf8_encode(fallback: :read_as_sanitized_binary).downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
     url_new = html_decode(url_new).sub('/?', '?')
     url_old = html_decode(url_old).sub('/?', '?')
     return true if url_new == url_old

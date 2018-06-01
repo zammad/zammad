@@ -1,3 +1,5 @@
+require 'rchardet'
+
 class String
   alias old_strip strip
   alias old_strip! strip!
@@ -8,7 +10,7 @@ class String
       sub!(/[[[:space:]]\u{200B}\u{FEFF}]+\Z/, '')
 
     # if incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string) (Encoding::CompatibilityError), use default
-    rescue
+    rescue Encoding::CompatibilityError
       old_strip!
     end
     self
@@ -20,7 +22,7 @@ class String
       new_string.sub!(/[[[:space:]]\u{200B}\u{FEFF}]+\Z/, '')
 
     # if incompatible encoding regexp match (UTF-8 regexp with ASCII-8BIT string) (Encoding::CompatibilityError), use default
-    rescue
+    rescue Encoding::CompatibilityError
       new_string = old_strip
     end
     new_string
@@ -450,5 +452,60 @@ class String
     end
 
     string
+  end
+
+  # Returns a copied string whose encoding is UTF-8.
+  # If both the provided and current encodings are invalid,
+  # an auto-detected encoding is tried.
+  #
+  # Supports some fallback strategies if a valid encoding cannot be found.
+  #
+  # Options:
+  #
+  #   * from: An encoding to try first.
+  #           Takes precedence over the current and auto-detected encodings.
+  #
+  #   * fallback: The strategy to follow if no valid encoding can be found.
+  #     * `:output_to_binary` returns an ASCII-8BIT-encoded string.
+  #     * `:read_as_sanitized_binary` returns a UTF-8-encoded string with all
+  #       invalid byte sequences replaced with "?" characters.
+  def utf8_encode(**options)
+    dup.utf8_encode!(options)
+  end
+
+  def utf8_encode!(**options)
+    return self if (encoding == Encoding::UTF_8) && valid_encoding?
+
+    input_encoding = viable_encodings(try_first: options[:from]).first
+    return encode!('utf-8', input_encoding) if input_encoding.present?
+
+    case options[:fallback]
+    when :output_to_binary
+      force_encoding('ascii-8bit')
+    when :read_as_sanitized_binary
+      encode!('utf-8', 'ascii-8bit', invalid: :replace, undef: :replace, replace: '?')
+    else
+      raise EncodingError, 'could not find a valid input encoding'
+    end
+  end
+
+  private
+
+  def viable_encodings(try_first: nil)
+    return dup.viable_encodings(try_first: try_first) if frozen?
+
+    provided = Encoding.find(try_first) if try_first.present?
+    original = encoding
+    detected = CharDet.detect(self)['encoding']
+
+    [provided, original, detected]
+      .compact
+      .reject { |e| Encoding.find(e) == Encoding::ASCII_8BIT }
+      .select { |e| force_encoding(e).valid_encoding? }
+      .tap { force_encoding(original) } # clean up changes from previous line
+
+  # if `try_first` is not a valid encoding, try_first again without it
+  rescue ArgumentError
+    try_first.present? ? viable_encodings : raise
   end
 end
