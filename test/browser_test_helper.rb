@@ -1671,6 +1671,15 @@ wait untill text in selector disabppears
       )
     end
 
+    if data[:group_by]
+      select(
+        browser:  instance,
+        css:      '.modal select[name="group_by"]',
+        value:    data[:group_by],
+        mute_log: true,
+      )
+    end
+
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
     11.times do
@@ -2680,6 +2689,17 @@ wait untill text in selector disabppears
     element = instance.find_elements(css: '.modal input[name=password_confirm]')[0]
     element.clear
     element.send_keys(data[:password])
+    if data[:organization]
+      element = instance.find_elements(css: '.modal input.searchableSelect-main')[0]
+      element.clear
+      element.send_keys(data[:organization])
+      target = nil
+      until target
+        sleep 0.5
+        target = instance.find_elements(css: ".modal li[title='#{data[:organization]}']")[0]
+      end
+      target.click()
+    end
     check(
       browser: instance,
       css:     '.modal input[name=role_ids][value=3]',
@@ -2701,6 +2721,56 @@ wait untill text in selector disabppears
     )
 
     assert(true, 'user created')
+  end
+
+=begin
+
+  organization_create(
+    browser: browser2,
+    data: {
+      name: 'Test Organization',
+    }
+  )
+
+=end
+
+  def organization_create(params = {})
+    switch_window_focus(params)
+    log('organization_create', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  '.content.active a[href="#manage/organizations"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  '.content.active a[data-type="new"]',
+      mute_log: true,
+    )
+    modal_ready(browser: instance)
+    element = instance.find_elements(css: '.modal input[name=name]')[0]
+    element.clear
+    element.send_keys(data[:name])
+
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+    modal_disappear(
+      browser: instance,
+      timeout: 5,
+    )
+    watch_for(
+      browser: instance,
+      css: 'body',
+      value: data[:name],
+    )
   end
 
 =begin
