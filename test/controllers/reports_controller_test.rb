@@ -1,7 +1,8 @@
 require 'test_helper'
-require 'rake'
 
 class ReportsControllerTest < ActionDispatch::IntegrationTest
+  include SearchindexHelper
+
   setup do
 
     # set accept header
@@ -69,41 +70,17 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
       updated_by_id: 1,
       created_by_id: 1,
     )
-    if ENV['ES_URL'].present?
-      #fail "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
-      Setting.set('es_url', ENV['ES_URL'])
 
-      # Setting.set('es_url', 'http://127.0.0.1:9200')
-      # Setting.set('es_index', 'estest.local_zammad')
-      # Setting.set('es_user', 'elasticsearch')
-      # Setting.set('es_password', 'zammad')
-
-      if ENV['ES_INDEX_RAND'].present?
-        ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
-      end
-      if ENV['ES_INDEX'].blank?
-        raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
-      end
-      Setting.set('es_index', ENV['ES_INDEX'])
+    configure_elasticsearch do
 
       travel 1.minute
 
-      # drop/create indexes
-      Rake::Task.clear
-      Zammad::Application.load_tasks
-      #Rake::Task["searchindex:drop"].execute
-      #Rake::Task["searchindex:create"].execute
-      Rake::Task['searchindex:rebuild'].execute
+      rebuild_searchindex
 
       # execute background jobs
       Scheduler.worker(true)
 
       sleep 6
-    end
-  end
-  teardown do
-    if ENV['ES_URL'].present?
-      Rake::Task['searchindex:drop'].execute
     end
   end
 
