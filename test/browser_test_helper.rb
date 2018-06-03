@@ -570,6 +570,8 @@ class TestCase < Test::Unit::TestCase
 =end
 
   def exists(params)
+    retries ||= 0
+
     switch_window_focus(params)
     log('exists', params)
 
@@ -589,6 +591,10 @@ class TestCase < Test::Unit::TestCase
     end
 
     true
+  rescue Selenium::WebDriver::Error::StaleElementReferenceError
+    sleep retries
+    retries += 1
+    retry if retries < 3
   end
 
 =begin
