@@ -22,18 +22,32 @@ class App.SettingTicketAutoAssignment extends App.ControllerSubContent
     @html(App.view('settings/ticket_auto_assignment')())
 
     configure_attributes = [
-      { name: 'condition',  display: 'Conditions for effected objects', tag: 'ticket_selector', null: false, preview: false, action: false, hasChanged: false },
+      { name: 'condition', display: 'Conditions for effected objects', tag: 'ticket_selector', null: false, preview: false, action: false, hasChanged: false },
     ]
 
-    filter_params = App.Setting.get('ticket_auto_assignment_selector')
+    ticket_auto_assignment_selector = App.Setting.get('ticket_auto_assignment_selector')
     @filter = new App.ControllerForm(
       el: @$('.js-selector')
       model:
         configure_attributes: configure_attributes,
-      params: filter_params
+      params:
+        condition: ticket_auto_assignment_selector.condition
       autofocus: true
     )
 
+    configure_attributes = [
+      { name: 'user_ids', display: 'Exception users', tag: 'column_select', multiple: true, null: true, relation: 'User', sortBy: 'firstname' },
+    ]
+
+    ticket_auto_assignment_user_ids_ignore = App.Setting.get('ticket_auto_assignment_user_ids_ignore')
+    @filter = new App.ControllerForm(
+      el: @$('.js-users')
+      model:
+        configure_attributes: configure_attributes,
+      params:
+        user_ids: ticket_auto_assignment_user_ids_ignore
+      autofocus: false
+    )
 
   setFilter: (e) =>
     e.preventDefault()
@@ -41,14 +55,16 @@ class App.SettingTicketAutoAssignment extends App.ControllerSubContent
     # get form data
     params = @formParam(@filter.form)
 
-    # save filter settings
-    App.Setting.set('ticket_auto_assignment_selector', params, notify: true)
+    # save settings
+    App.Setting.set('ticket_auto_assignment_selector', { condition: params.condition }, notify: true)
+    App.Setting.set('ticket_auto_assignment_user_ids_ignore', params.user_ids, notify: false)
 
   resetFilter: (e) ->
     e.preventDefault()
 
     # save filter settings
     App.Setting.set('ticket_auto_assignment_selector', {}, notify: true)
+    App.Setting.set('ticket_auto_assignment_user_ids_ignore', [], notify: false)
 
   setTicketAutoAssignment: (e) =>
     value = @ticketAutoAssignment.prop('checked')

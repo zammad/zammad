@@ -2032,7 +2032,7 @@ wait untill text in selector disabppears
             number: number,
             title: data[:title],
           }
-          sleep 3 # wait until notify is gone
+          sleep 2 # wait until notify is gone
           return ticket
         end
       end

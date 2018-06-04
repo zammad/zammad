@@ -35,6 +35,15 @@ class AgentTicketAutoAssignmentTest < TestCase
       },
     )
 
+    ticket3 = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'test_auto_assignment_3 - ticket 3',
+        body: 'test_auto_assignment_3 - ticket 3 - no auto assignment',
+      },
+    )
+
     tasks_close_all()
 
     logout()
@@ -101,6 +110,31 @@ class AgentTicketAutoAssignmentTest < TestCase
       css: '.content.active .sidebar select[name="owner_id"]',
       value: 'Test Master',
       timeout: 2,
+    )
+
+    # define auto assignment exception
+    click(css: 'a[href="#manage"]')
+    click(css: '.content.active a[href="#settings/ticket"]')
+    click(css: '.content.active a[href="#auto_assignment"]')
+    click(css: '.content.active .js-select.js-option[title="master@example.com"]')
+    click(css: '.content.active .js-timeAccountingFilter')
+
+    watch_for_disappear(
+      css: '.content.active .sidebar select[name="owner_id"]',
+      value: 'Test Master',
+      timeout: 10,
+    )
+
+    # open ticket#3
+    ticket_open_by_search(
+      number: ticket3[:number],
+    )
+
+    # verify if owner is not set
+    sleep 6
+    match(
+      css: '.content.active .sidebar select[name="owner_id"]',
+      value: '-',
     )
 
     tasks_close_all()

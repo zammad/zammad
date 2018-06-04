@@ -1974,7 +1974,23 @@ Setting.create_if_not_exists(
   state: { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } },
   frontend: true
 )
-
+Setting.create_or_update(
+  title: 'Time Accounting Selector',
+  name: 'ticket_auto_assignment_user_ids_ignore',
+  area: 'Web::Base',
+  description: 'Define an exception of "automatic assignment" for certain users (e.g. executives).',
+  options: {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission: ['admin.ticket_auto_assignment'],
+  },
+  state: [],
+  frontend: true
+)
 Setting.create_if_not_exists(
   title: 'Ticket Number ignore system_id',
   name: 'ticket_number_ignore_system_id',
