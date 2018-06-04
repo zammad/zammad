@@ -68,6 +68,11 @@ class Channel::EmailParser
 
   def parse(msg)
     data = {}
+
+    # Rectify invalid encodings
+    encoding = CharDet.detect(msg)['encoding']
+    msg.force_encoding(encoding) if !msg.valid_encoding?
+
     mail = Mail.new(msg)
 
     # set all headers
