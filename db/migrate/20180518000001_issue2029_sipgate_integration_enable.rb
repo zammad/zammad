@@ -4,7 +4,7 @@ class Issue2029SipgateIntegrationEnable < ActiveRecord::Migration[5.1]
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
 
-    return if Setting.get(name: 'sipgate_config').present?
+    return if Setting.get('sipgate_config').present?
 
     Setting.create_or_update(
       title: 'sipgate.io config',
