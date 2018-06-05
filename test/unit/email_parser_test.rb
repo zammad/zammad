@@ -5,8 +5,8 @@ class EmailParserTest < ActiveSupport::TestCase
   test 'parse' do
     files = [
       {
-        data: IO.read('test/fixtures/mail1.box'),
-        source: 'test/fixtures/mail1.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail001.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail001.box'),
         body_md5: 'e5cf748bf60cbbf324ee20314750fdf7',
         params: {
           from: 'John.Smith@example.com',
@@ -23,8 +23,8 @@ class EmailParserTest < ActiveSupport::TestCase
         },
       },
       {
-        data: IO.read('test/fixtures/mail2.box'),
-        source: 'test/fixtures/mail2.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail002.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail002.box'),
         body_md5: '154c7d3ae7b94f99589df62882841b08',
         params: {
           from: 'Martin Edenhofer <martin@example.com>',
@@ -43,8 +43,8 @@ Old programmers never die. They just branch to a new address.
         },
       },
       {
-        data: IO.read('test/fixtures/mail3.box'),
-        source: 'test/fixtures/mail3.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail003.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail003.box'),
         body_md5: '0b6eb998e8903ba69a3528dedb5a5476',
         params: {
           from: '"Günther John | Example GmbH" <k.guenther@example.com>',
@@ -74,8 +74,8 @@ Old programmers never die. They just branch to a new address.
         },
       },
       {
-        data: IO.read('test/fixtures/mail4.box'),
-        source: 'test/fixtures/mail4.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail004.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail004.box'),
         body_md5: '9fab9a0e8523011fde0f3ecd80f8d72c',
         params: {
           from: '"Günther Katja | Example GmbH" <k.guenther@example.com>',
@@ -107,8 +107,8 @@ Liebe Grüße!
         },
       },
       {
-        data: IO.read('test/fixtures/mail5.box'),
-        source: 'test/fixtures/mail5.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail005.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail005.box'),
         body_md5: 'f34033e9a34bb5367062dd5df21115df',
         params: {
           from: 'marc.smith@example.com (Marc Smith)',
@@ -119,8 +119,8 @@ Liebe Grüße!
         },
       },
       {
-        data: IO.read('test/fixtures/mail6.box'),
-        source: 'test/fixtures/mail6.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail006.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail006.box'),
         body_md5: '849105bdee623b4314b4c3daa2495471',
         params: {
           from: '"Hans BÄKOSchönland" <me@bogen.net>',
@@ -134,8 +134,8 @@ Liebe Grüße!
 #<span class="js-signatureMarker"></span><div><br>
 
       {
-        data: IO.read('test/fixtures/mail7.box'),
-        source: 'test/fixtures/mail7.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail007.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail007.box'),
         body_md5: 'b779b65c7d90aa5e350d37998a6c5fc6',
         params: {
           from: 'Eike.Ehringer@example.com',
@@ -195,8 +195,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail8.box'),
-        source: 'test/fixtures/mail8.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail008.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail008.box'),
         body_md5: 'd540b6f1a7b25468c1bc854ebc4c43fe',
         attachments: [
           {
@@ -278,8 +278,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail9.box'),
-        source: 'test/fixtures/mail9.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail009.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail009.box'),
         body_md5: '64675a479f80a674eb7c08e385c3622a',
         attachments: [
           {
@@ -304,8 +304,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail10.box'),
-        source: 'test/fixtures/mail10.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail010.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail010.box'),
         body_md5: '47d41fa38028d5fb02c7d041da60ba1f',
         attachments: [
           {
@@ -329,8 +329,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail11.box'),
-        source: 'test/fixtures/mail11.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail011.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail011.box'),
         body_md5: '260a815b0a7897e4219d210010008202',
         attachments: [
           {
@@ -380,8 +380,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail12.box'),
-        source: 'test/fixtures/mail12.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail012.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail012.box'),
         body_md5: 'dd7e002b6bb709effb56bdb6f2cc2e32',
         attachments: [
           {
@@ -411,8 +411,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail13.box'),
-        source: 'test/fixtures/mail13.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail013.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail013.box'),
         body_md5: 'c3b62f742eb702910d0074e438b34c72',
         attachments: [
           {
@@ -431,8 +431,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail14.box'),
-        source: 'test/fixtures/mail14.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail014.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail014.box'),
         body_md5: '154c7d3ae7b94f99589df62882841b08',
         attachments: [
           {
@@ -456,8 +456,8 @@ Managing Director: Martin Edenhofer
       },
       # spam email
       {
-        data: IO.read('test/fixtures/mail15.box'),
-        source: 'test/fixtures/mail15.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail015.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail015.box'),
         body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         attachments: [
           # :preferences=>{"Message-ID"=>"<temp@test>", "Content-Type"=>"application/octet-stream; name=\"\xBC\xA8\xD0\xA7\xB9\xDC\xC0\xED,\xBE\xBF\xBE\xB9\xCB\xAD\xB4\xED\xC1\xCB.xls\"", "Mime-Type"=>"application/octet-stream", "Charset"=>"UTF-8"}}
@@ -478,8 +478,8 @@ Managing Director: Martin Edenhofer
       },
       # spam email
       {
-        data: IO.read('test/fixtures/mail16.box'),
-        source: 'test/fixtures/mail16.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail016.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail016.box'),
         body_md5: 'c3ea8fde251062d56b7fc72b6d73d702',
         params: {
           from: nil,
@@ -491,8 +491,8 @@ Managing Director: Martin Edenhofer
       },
       # spam email
       {
-        data: IO.read('test/fixtures/mail17.box'),
-        source: 'test/fixtures/mail17.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail017.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail017.box'),
         body_md5: 'd78731371e3ec120896c51be3d0d3f8e',
         params: {
           from: '"都琹" <ghgbwum@185.com.cn>',
@@ -503,8 +503,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail18.box'),
-        source: 'test/fixtures/mail18.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail018.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail018.box'),
         body_md5: '66f20e8557095762ccad9a6cb6f59c3a',
         params: {
           from: 'postmaster@example.com',
@@ -515,8 +515,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail19.box'),
-        source: 'test/fixtures/mail19.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail019.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail019.box'),
         body_md5: '6021dd92d8e7844e6bb9b5bb7a4adfb8',
         params: {
           from: '"我" <>',
@@ -527,8 +527,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail20.box'),
-        source: 'test/fixtures/mail20.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail020.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail020.box'),
         body_md5: '56ad8d02f4c7641fd2bb8ebf484d36d7',
         params: {
           from: 'Health and Care-Mall <drugs-cheapest8@sicor.com>',
@@ -617,8 +617,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail21.box'),
-        source: 'test/fixtures/mail21.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail021.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail021.box'),
         body_md5: 'dea7a8979172261f61fb799b6c83742e',
         params: {
           from: 'Viagra Super Force Online <pharmacy_affordable1@ertelecom.ru>',
@@ -629,8 +629,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail22.box'),
-        source: 'test/fixtures/mail22.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail022.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail022.box'),
         body_md5: '1af1f68f66713b63ce8ec4cc20c7887e',
         params: {
           from: 'Gilbertina Suthar <ireoniqla@lipetsk.ru>',
@@ -642,8 +642,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail23.box'),
-        source: 'test/fixtures/mail23.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail023.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail023.box'),
         body_md5: '23967dfbbc2e167332b2ecb78fb9e397',
         params: {
           from: 'marketingmanager@nthcpghana.com',
@@ -654,8 +654,8 @@ Managing Director: Martin Edenhofer
         },
       },
       {
-        data: IO.read('test/fixtures/mail24.box'),
-        source: 'test/fixtures/mail24.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail024.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail024.box'),
         body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         params: {
           from: 'oracle@IG0-1-DB01.example.com',
@@ -676,8 +676,8 @@ Managing Director: Martin Edenhofer
         ],
       },
       {
-        data: IO.read('test/fixtures/mail25.box'),
-        source: 'test/fixtures/mail25.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail025.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail025.box'),
         body_md5: '436f71d8d8a4ffbd3f18fc9de7d7f767',
         params: {
           from: 'oracle@IG0-1-DB01.example.com',
@@ -695,8 +695,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail26.box'),
-        source: 'test/fixtures/mail26.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail026.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail026.box'),
         body_md5: '48c2843d219a7430bc84533d67719e95',
         params: {
           from: 'gate <team@support.gate.de>',
@@ -722,8 +722,8 @@ end
         ],
       },
       {
-        data: IO.read('test/fixtures/mail27.box'),
-        source: 'test/fixtures/mail27.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail027.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail027.box'),
         body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         params: {
           from: 'caoyaoewfzfw@21cn.com',
@@ -741,8 +741,8 @@ end
         ],
       },
       {
-        data: IO.read('test/fixtures/mail28.box'),
-        source: 'test/fixtures/mail28.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail028.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail028.box'),
         body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         params: {
           from: 'kontakt@example.de',
@@ -764,8 +764,8 @@ end
         ],
       },
       {
-        data: IO.read('test/fixtures/mail29.box'),
-        source: 'test/fixtures/mail29.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail029.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail029.box'),
         body_md5: '0637f48a0979e479efec07120a2bb700',
         params: {
           from: 'Example Sales <sales@example.com>',
@@ -779,8 +779,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail30.box'),
-        source: 'test/fixtures/mail30.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail030.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail030.box'),
         body_md5: '9ce35920f5702a871f227cfe7ddd3d65',
         params: {
           from: 'Manfred Haert <Manfred.Haert@example.com>',
@@ -792,8 +792,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail31.box'),
-        source: 'test/fixtures/mail31.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail031.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail031.box'),
         body_md5: 'd5448d34bf7f5db0a525fc83735dc11b',
         params: {
           from: '"bertha　mou" <zhengkang@ha.chinamobile.com>',
@@ -804,8 +804,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail32.box'),
-        source: 'test/fixtures/mail32.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail032.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail032.box'),
         body_md5: '9ccf94a31ace1c27e71138c3803ff178',
         params: {
           from: '"Dana.Qin" <Dana.Qin6e1@gmail.com>',
@@ -816,8 +816,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail34.box'),
-        source: 'test/fixtures/mail34.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail034.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail034.box'),
         body_md5: 'b855b615a2c9568ea7708f9dee6b6230',
         params: {
           from: 'Bay <memberbay+12345@members.somewhat>',
@@ -829,8 +829,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail36.box'),
-        source: 'test/fixtures/mail36.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail036.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail036.box'),
         body_md5: '3c58aeb003a55cafb0893d69676b4316',
         params: {
           from: 'Martin Smith <m.Smith@example.com>',
@@ -855,8 +855,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail37.box'),
-        source: 'test/fixtures/mail37.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail037.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail037.box'),
         body_md5: 'dd67e5037a740c053c2bf91f67be072f',
         params: {
           from: 'Example <info@example.com>',
@@ -869,8 +869,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail38.box'),
-        source: 'test/fixtures/mail38.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail038.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail038.box'),
         body_md5: 'dcd25707eed638ea568644b206a8596e',
         params: {
           from: 'Martin Edenhofer <me@example.com>',
@@ -889,8 +889,8 @@ end
         ],
       },
       {
-        data: IO.read('test/fixtures/mail39.box'),
-        source: 'test/fixtures/mail39.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail039.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail039.box'),
         body_md5: '92553234f01a918314f40973dfc2a303',
         params: {
           from: 'Martin Edenhofer <me@example.com>',
@@ -919,8 +919,8 @@ end
         ],
       },
       {
-        data: IO.read('test/fixtures/mail40.box'),
-        source: 'test/fixtures/mail40.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail040.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail040.box'),
         body_md5: '5db91cb79f889f80bbf8b47ad98efac9',
         params: {
           from: 'Martin Edenhofer <me@example.com>',
@@ -939,8 +939,8 @@ end
         ],
       },
       {
-        data: IO.read('test/fixtures/mail41.box'),
-        source: 'test/fixtures/mail41.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail041.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail041.box'),
         body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         params: {
           from: 'Martin Edenhofer <me@example.com>',
@@ -959,8 +959,8 @@ end
         ],
       },
       {
-        data: IO.read('test/fixtures/mail42.box'),
-        source: 'test/fixtures/mail42.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail042.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail042.box'),
         body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         params: {
           from: 'Martin Edenhofer <me@example.com>',
@@ -979,8 +979,8 @@ end
         ],
       },
       {
-        data: IO.read('test/fixtures/mail43.box'),
-        source: 'test/fixtures/mail43.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail043.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail043.box'),
         body_md5: 'a3b91a8969b54a67dd2154e70f74cc30',
         params: {
           from: 'Paula <databases.en@example.com>',
@@ -1034,8 +1034,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail44.box'),
-        source: 'test/fixtures/mail44.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail044.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail044.box'),
         body_md5: 'ee930244edd3b7c19494e688aa9cc41c',
         params: {
           from: '"Clement.Si" <Claudia.Shu@yahoo.com.>',
@@ -1047,8 +1047,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail45.box'),
-        source: 'test/fixtures/mail45.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail045.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail045.box'),
         body_md5: '1d847e3626145a9e886914ecf0d89368',
         params: {
           from: '"Ups Rémi" <r.ordonaud@example.com>',
@@ -1060,8 +1060,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail48.box'),
-        source: 'test/fixtures/mail48.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail048.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail048.box'),
         body_md5: '64675a479f80a674eb7c08e385c3622a',
         attachments: [
           {
@@ -1086,8 +1086,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail50.box'),
-        source: 'test/fixtures/mail50.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail050.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail050.box'),
         body_md5: '154c7d3ae7b94f99589df62882841b08',
         attachments: [],
         params: {
@@ -1095,8 +1095,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail51.box'),
-        source: 'test/fixtures/mail51.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail051.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail051.box'),
         body_md5: '64675a479f80a674eb7c08e385c3622a',
         attachments: [
           {
@@ -1117,8 +1117,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail52.box'),
-        source: 'test/fixtures/mail52.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail052.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail052.box'),
         body_md5: 'ad0c0727cd7d023ec9065daea03335f7',
         params: {
           from: 'MAILER-DAEMON@example.com (Mail Delivery System)',
@@ -1128,8 +1128,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail53.box'),
-        source: 'test/fixtures/mail53.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail053.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail053.box'),
         body_md5: '104da300f70d5683f007951c9780c83d',
         params: {
           from: 'MAILER-DAEMON (Mail Delivery System)',
@@ -1139,8 +1139,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail54.box'),
-        source: 'test/fixtures/mail54.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail054.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail054.box'),
         body_md5: '5872ddcdfdf6bfe40f36cd0408fca667',
         params: {
           from: '"Smith, Karoline, Example DE" <Karoline.Smith@example.com>',
@@ -1151,8 +1151,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail56.box'),
-        source: 'test/fixtures/mail56.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail056.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail056.box'),
         body_md5: 'ee40e852b9fa18652ea66e2eda1ecbd3',
         attachments: [
           {
@@ -1174,8 +1174,8 @@ end
         },
       },
       {
-        data: IO.read('test/fixtures/mail57.box'),
-        source: 'test/fixtures/mail57.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail057.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail057.box'),
         body_md5: '3c5e4cf2d2a9bc572f10cd6222556027',
         attachments: [
           {
@@ -1211,8 +1211,8 @@ Bob Smith
         },
       },
       {
-        data: IO.read('test/fixtures/mail58.box'),
-        source: 'test/fixtures/mail58.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail058.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail058.box'),
         body_md5: '548917e0bff0806f9b27c09bbf23bb38',
         params: {
           from: 'Yangzhou ABC Lighting Equipment <bob@example.com>, LTD <ly@example.com>',
@@ -1229,8 +1229,8 @@ Old programmers never die. They just branch to a new address."
         },
       },
       {
-        data: IO.read('test/fixtures/mail59.box'),
-        source: 'test/fixtures/mail59.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail059.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail059.box'),
         body_md5: '548917e0bff0806f9b27c09bbf23bb38',
         params: {
           from: '"Yangzhou ABC Lighting Equipment " <>, "LTD" <ly@example.com>',
@@ -1247,8 +1247,8 @@ Old programmers never die. They just branch to a new address."
         },
       },
       {
-        data: IO.read('test/fixtures/mail62.box'),
-        source: 'test/fixtures/mail62.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail062.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail062.box'),
         body_md5: '10e7158e65a12b5850163d4d4b8ca2f8',
         attachments: [
           {
@@ -1305,8 +1305,8 @@ Old programmers never die. They just branch to a new address."
         },
       },
       {
-        data: IO.read('test/fixtures/mail63.box'),
-        source: 'test/fixtures/mail63.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail063.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail063.box'),
         body_md5: 'dbed0b09656d17bf4e832b2c18381c24',
         attachments: [
           {
@@ -1341,8 +1341,8 @@ delete your own text from the attached returned message.
         },
       },
       {
-        data: IO.read('test/fixtures/mail66.box'),
-        source: 'test/fixtures/mail66.box',
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail066.box')),
+        source: Rails.root.join('test', 'data', 'mail', 'mail066.box'),
         body_md5: '346effdbc86ef1f5ea263102fba2e542',
         attachments: [
           {

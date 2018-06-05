@@ -978,7 +978,8 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
 
     # invalid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'user_simple_col_not_existing.csv'), 'text/csv')
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'user_simple_col_not_existing.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
     post '/api/v1/users/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -992,7 +993,8 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     assert_equal("Line 2: unknown attribute 'firstname2' for User.", result['errors'][1])
 
     # valid file try
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'user_simple.csv'), 'text/csv')
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'user_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
     post '/api/v1/users/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -1006,7 +1008,8 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     assert_nil(User.find_by(login: 'user-simple-import2'))
 
     # valid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'user_simple.csv'), 'text/csv')
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'user_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
     post '/api/v1/users/import', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)

@@ -100,7 +100,7 @@ class EmailProcessBounceDeliveryPermanentFailedTest < ActiveSupport::TestCase
     assert_equal(4, ticket.articles.count)
 
     travel 1.second
-    email_raw_string = IO.binread('test/fixtures/mail33-undelivered-mail-returned-to-sender.box')
+    email_raw_string = File.read(Rails.root.join('test', 'data', 'mail', 'mail033-undelivered-mail-returned-to-sender.box'))
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('open', ticket_p.state.name)
@@ -207,7 +207,7 @@ class EmailProcessBounceDeliveryPermanentFailedTest < ActiveSupport::TestCase
     assert_equal(4, ticket.articles.count)
 
     travel 1.second
-    email_raw_string = IO.binread('test/fixtures/mail55.box')
+    email_raw_string = File.read(Rails.root.join('test', 'data', 'mail', 'mail055.box'))
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('open', ticket_p.state.name)

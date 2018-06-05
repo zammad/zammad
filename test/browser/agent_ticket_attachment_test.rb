@@ -45,7 +45,8 @@ class AgentTicketAttachmentTest < TestCase
     # add attachment, attachment check should quiet
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: ['test/fixtures/upload2.jpg', 'test/fixtures/upload1.txt'],
+      files: [Rails.root.join('test', 'data', 'upload', 'upload1.txt'),
+              Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
     )
 
     # submit form
@@ -91,7 +92,7 @@ class AgentTicketAttachmentTest < TestCase
     # add attachment, attachment check should quiet
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: ['test/fixtures/upload1.txt'],
+      files: [Rails.root.join('test', 'data', 'upload', 'upload1.txt')],
     )
 
     # submit form
@@ -132,7 +133,8 @@ class AgentTicketAttachmentTest < TestCase
     # add attachment without body
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: ['test/fixtures/upload2.jpg', 'test/fixtures/upload1.txt'],
+      files: [Rails.root.join('test', 'data', 'upload', 'upload1.txt'),
+              Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
     )
 
     # submit form

@@ -111,7 +111,7 @@ class String
     string = "#{self}" # rubocop:disable Style/UnneededInterpolation
 
     # in case of invalid encoding, strip invalid chars
-    # see also test/fixtures/mail21.box
+    # see also test/data/mail/mail021.box
     # note: string.encode!('UTF-8', 'UTF-8', :invalid => :replace, :replace => '?') was not detecting invalid chars
     if !string.valid_encoding?
       string = string.chars.select(&:valid_encoding?).join

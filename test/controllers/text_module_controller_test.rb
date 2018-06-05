@@ -101,7 +101,8 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
 
     # invalid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'text_module_simple_col_not_existing.csv'), 'text/csv')
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'text_module_simple_col_not_existing.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
     post '/api/v1/text_modules/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -115,7 +116,8 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
     assert_equal("Line 2: unknown attribute 'keywords2' for TextModule.", result['errors'][1])
 
     # valid file try
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'text_module_simple.csv'), 'text/csv')
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'text_module_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
     post '/api/v1/text_modules/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
@@ -129,7 +131,8 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
     assert_nil(TextModule.find_by(name: 'some name2'))
 
     # valid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'text_module_simple.csv'), 'text/csv')
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'text_module_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
     post '/api/v1/text_modules/import', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)

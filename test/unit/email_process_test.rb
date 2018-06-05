@@ -406,7 +406,7 @@ Some Text",
         },
       },
       {
-        data: IO.binread('test/fixtures/mail21.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail021.box')),
         success: true,
         result: {
           0 => {
@@ -512,7 +512,7 @@ Some Text",
         },
       },
       {
-        data: IO.binread('test/fixtures/mail22.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail022.box')),
         success: true,
         result: {
           0 => {
@@ -529,7 +529,7 @@ Some Text",
         },
       },
       {
-        data: IO.binread('test/fixtures/mail23.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail023.box')),
         success: true,
         result: {
           0 => {
@@ -2303,7 +2303,7 @@ Some Text',
         }
       },
       {
-        data: IO.binread('test/fixtures/mail30.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail030.box')),
         success: true,
         result: {
           0 => {
@@ -2339,7 +2339,7 @@ Some Text',
         }
       },
       {
-        data: IO.binread('test/fixtures/mail31.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail031.box')),
         success: true,
         result: {
           0 => {
@@ -2363,7 +2363,7 @@ Some Text',
         }
       },
       {
-        data: IO.binread('test/fixtures/mail32.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail032.box')),
         success: true,
         result: {
           0 => {
@@ -2387,7 +2387,7 @@ Some Text',
         }
       },
       {
-        data: IO.binread('test/fixtures/mail35.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail035.box')),
         success: true,
         result: {
           0 => {
@@ -2411,7 +2411,7 @@ Some Text',
         }
       },
       {
-        data: IO.binread('test/fixtures/mail37.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail037.box')),
         success: true,
         result: {
           0 => {
@@ -2447,7 +2447,7 @@ Some Text',
         }
       },
       {
-        data: IO.binread('test/fixtures/mail41.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail041.box')),
         success: true,
         result: {
           0 => {
@@ -2461,7 +2461,7 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail42.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail042.box')),
         success: true,
         result: {
           0 => {
@@ -2475,7 +2475,7 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail43.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail043.box')),
         success: true,
         result: {
           0 => {
@@ -2489,7 +2489,7 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail44.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail044.box')),
         success: true,
         result: {
           0 => {
@@ -2519,7 +2519,7 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail46.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail046.box')),
         success: true,
         result: {
           0 => {
@@ -2544,7 +2544,7 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail47.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail047.box')),
         success: true,
         result: {
           0 => {
@@ -2569,7 +2569,7 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail49.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail049.box')),
         success: true,
         result: {
           0 => {
@@ -2594,7 +2594,7 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail52.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail052.box')),
         success: true,
         result: {
           0 => {
@@ -2619,7 +2619,7 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail53.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail053.box')),
         success: true,
         result: {
           0 => {
@@ -2644,7 +2644,7 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail60.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail060.box')),
         success: true,
         result: {
           0 => {
@@ -2670,7 +2670,7 @@ Some Text',
         },
       },
       {
-        data: IO.binread('test/fixtures/mail64.box'),
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail064.box')),
         success: true,
         result: {
           0 => {

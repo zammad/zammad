@@ -190,7 +190,7 @@ class Channel::EmailParser
       # get attachments
       mail.parts&.each do |part|
 
-        # protect process to work fine with spam emails, see test/fixtures/mail15.box
+        # protect process to work fine with spam emails, see test/data/mail/mail015.box
         begin
           attachs = _get_attachment(part, data[:attachments], mail)
           data[:attachments].concat(attachs)
@@ -848,7 +848,7 @@ module Mail
     end
   end
 
-  # workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/fixtures/mail9.box)
+  # workaround to parse subjects with 2 different encodings correctly (e. g. quoted-printable see test/data/mail/mail009.box)
   module Encodings
     def self.value_decode(str)
       # Optimization: If there's no encoded-words in the string, just return it
@@ -884,7 +884,7 @@ module Mail
     end
   end
 
-  # issue#348 - IMAP mail fetching stops because of broken spam email (e. g. broken Content-Transfer-Encoding value see test/fixtures/mail43.box)
+  # issue#348 - IMAP mail fetching stops because of broken spam email (e. g. broken Content-Transfer-Encoding value see test/data/mail/mail043.box)
   # https://github.com/zammad/zammad/issues/348
   class Body
     def decoded
