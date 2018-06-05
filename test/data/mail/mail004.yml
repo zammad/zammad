@@ -1,0 +1,27 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"Günther Katja | Example GmbH" <k.guenther@example.com>'
+from_email: k.guenther@example.com
+from_display_name: Günther Katja | Example GmbH
+subject: 'AW: Ticket Templates [Ticket#11168]'
+content_type: text/plain
+body: |+
+  Hallo Katja,
+
+  super! Ich freu mich!
+
+  Wir würden gerne die Präsentation/Einführung in die Ticket Templates per Screensharing oder zumindest per Telefon machen.
+
+  Mögliche Termine:
+  o Do, 10.05.2012 15:00-16:00
+  o Fr,  11.05.2012 13:00-14:00
+  o Di,  15.05.2012 17:00-18:00
+
+  Über Feedback würde ich mich freuen!
+
+  PS: Zur besseren Übersicht habe ich ein Ticket erstellt. :) Im Footer sind unsere geschäftlichen Kontaktdaten (falls diese irgendwann einmal benötigt werden sollten), mehr dazu in ein paar Tagen.
+
+  Liebe Grüße!
+
+   -Martin
+
+

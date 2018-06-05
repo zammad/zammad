@@ -1,0 +1,72 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Franz.Schaefer@example.com
+from_email: Franz.Schaefer@example.com
+from_display_name: ''
+subject: 'could not rename: ZZZAAuto'
+content_type: text/html
+body: |-
+  <img src="cid:_1_08FC9B5808FC7D5C004AD64FC1257A28">
+  <br>
+  <br>Gravierend?<br> <table>
+  <tr>
+  <td>Mit freundlichen Grüßen</td>
+  </tr>
+  </table>
+  <br>
+  <table>
+  <tr>
+  <td>
+  <b>Franz Schäfer</b>
+  </td>
+  </tr>
+  <tr>
+  <td>Manager Information Systems</td>
+  </tr>
+  </table>
+  <br>
+  <table>
+  <tr>
+  <td> Telefon </td>
+  <td> +49 000 000 8565 </td>
+  </tr>
+  <tr>
+  <td colspan="2">christian.schaefer@example.com</td>
+  </tr>
+  </table>
+  <br>
+  <table>
+  <tr>
+  <td>
+  <b>Example Stoff GmbH</b>
+  </td>
+  </tr>
+  <tr>
+  <td> Fakultaet </td>
+  </tr>
+  <tr>
+  <td> Düsseldorfer Landstraße 395 </td>
+  </tr>
+  <tr>
+  <td> D-00000 Hof </td>
+  </tr>
+  <tr>
+  <td><a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank"><u>www.example.com</u></a></td>
+  </tr>
+  </table>
+  <br>
+  <table>
+  <tr>
+  <td>
+  <hr>
+  </td>
+  </tr>
+  <tr>
+  <td> Geschäftsführung/Management Board: Jan Bauer (Vorsitzender/Chairman), Oliver Bauer, Heiko Bauer, Boudewijn Bauer </td>
+  </tr>
+  <tr>
+  <td> Sitz der Gesellschaft / Registered Office: Hof </td>
+  </tr>
+  <tr>
+  <td>Registergericht / Commercial Register of the Local Court: HRB 0000 AG Hof</td>
+  </tr>
+  </table>

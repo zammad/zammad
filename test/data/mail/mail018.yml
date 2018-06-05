@@ -1,0 +1,6 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: postmaster@example.com
+from_email: postmaster@example.com
+from_display_name: ''
+subject: "Benachrichtung  \tzum  \t=?unicode-1-1-utf-7?Q?+ANw-bermittlungsstatus  \t(Fehlgeschlagen)?="
+to: sales@znuny.org

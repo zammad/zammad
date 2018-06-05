@@ -67,7 +67,7 @@ class Channel::EmailParser
 =end
 
   def parse(msg)
-    data = {}
+    data = {}.with_indifferent_access
 
     mail = Mail.new(msg.utf8_encode)
 
