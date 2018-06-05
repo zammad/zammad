@@ -269,7 +269,15 @@ class AgentProfilePermissionsTest < TestCase
     exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
-    click(css: '.content.active .tabsSidebar-holder .js-avatar')
+    # scroll to the Avatar at the top of the zoom view and click it
+    # scrolling is needed because the browser might have scrolled down
+    # caused by a undeliverable email (of the created ticket)
+    zoom_top_avatar_selector = '.content.active .tabsSidebar-holder .js-avatar'
+    scroll_to(
+      position: 'botton',
+      css:      zoom_top_avatar_selector,
+    )
+    click(css: zoom_top_avatar_selector)
 
     # check and change note again in edit screen
     click(css: '.content.active .js-action .dropdown-toggle')
@@ -353,7 +361,15 @@ class AgentProfilePermissionsTest < TestCase
     exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     exists_not(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
-    click(css: '.content.active .tabsSidebar-holder .js-avatar')
+    # scroll to the Avatar at the top of the zoom view and click it
+    # scrolling is needed because the browser might have scrolled down
+    # caused by a undeliverable email (of the created ticket)
+    zoom_top_avatar_selector = '.content.active .tabsSidebar-holder .js-avatar'
+    scroll_to(
+      position: 'botton',
+      css:      zoom_top_avatar_selector,
+    )
+    click(css: zoom_top_avatar_selector)
 
     click(css: '.content.active .js-action .icon-arrow-down', fast: true)
     exists_not(css: '.content.active .js-action [data-type="edit"]')
