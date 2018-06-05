@@ -29,10 +29,10 @@ class Transaction::Trigger
 
     return if @item[:object] != 'Ticket'
 
-    ticket = Ticket.lookup(id: @item[:object_id])
+    ticket = Ticket.find_by(id: @item[:object_id])
     return if !ticket
     if @item[:article_id]
-      article = Ticket::Article.lookup(id: @item[:article_id])
+      article = Ticket::Article.find_by(id: @item[:article_id])
     end
 
     original_user_id = UserInfo.current_user_id

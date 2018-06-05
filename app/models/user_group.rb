@@ -19,7 +19,7 @@ class UserGroup < ApplicationModel
 
   def cache_delete
     group.cache_update(nil)
-    user.cache_update(nil)
+    user.cache_update(nil) if user.present?
     super
   end
 

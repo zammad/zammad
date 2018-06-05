@@ -591,7 +591,7 @@ condition example
         elsif selector['pre_condition'] == 'current_user.organization_id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
           query += "#{attribute} IN (?)"
-          user = User.lookup(id: current_user_id)
+          user = User.find_by(id: current_user_id)
           bind_params.push user.organization_id
         else
           # rubocop:disable Style/IfInsideElse
@@ -624,7 +624,7 @@ condition example
           end
         elsif selector['pre_condition'] == 'current_user.organization_id'
           query += "#{attribute} NOT IN (?)"
-          user = User.lookup(id: current_user_id)
+          user = User.find_by(id: current_user_id)
           bind_params.push user.organization_id
         else
           # rubocop:disable Style/IfInsideElse
@@ -807,7 +807,7 @@ perform changes on ticket
     logger.debug { "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})" }
 
     article = begin
-                Ticket::Article.lookup(id: item.try(:dig, :article_id))
+                Ticket::Article.find_by(id: item.try(:dig, :article_id))
               rescue ArgumentError
                 nil
               end
@@ -847,18 +847,18 @@ perform changes on ticket
               elsif article.from.present?
                 recipients_raw.push(article.from)
               elsif article.origin_by_id
-                email = User.lookup(id: article.origin_by_id).email
+                email = User.find_by(id: article.origin_by_id).email
                 recipients_raw.push(email)
               elsif article.created_by_id
-                email = User.lookup(id: article.created_by_id).email
+                email = User.find_by(id: article.created_by_id).email
                 recipients_raw.push(email)
               end
             end
           elsif recipient == 'ticket_customer'
-            email = User.lookup(id: customer_id).email
+            email = User.find_by(id: customer_id).email
             recipients_raw.push(email)
           elsif recipient == 'ticket_owner'
-            email = User.lookup(id: owner_id).email
+            email = User.find_by(id: owner_id).email
             recipients_raw.push(email)
           elsif recipient == 'ticket_agents'
             User.group_access(group_id, 'full').sort_by(&:login).each do |user|
