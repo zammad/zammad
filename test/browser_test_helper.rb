@@ -791,8 +791,7 @@ class TestCase < Test::Unit::TestCase
     log('check', params)
 
     instance = params[:browser] || @browser
-
-    instance.execute_script("if (!$('#{params[:css]}').prop('checked')) { $('#{params[:css]}').click() }")
+    instance.execute_script("$('#{params[:css]}:not(:checked)').click()")
     #element = instance.find_elements(css: params[:css])[0]
     #checked = element.attribute('checked')
     #element.click if !checked
@@ -813,7 +812,7 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
 
-    instance.execute_script("if ($('#{params[:css]}').prop('checked')) { $('#{params[:css]}').click() }")
+    instance.execute_script("$('#{params[:css]}:checked').click()")
     #element = instance.find_elements(css: params[:css])[0]
     #checked = element.attribute('checked')
     #element.click if checked

@@ -22,31 +22,43 @@ class IntegrationSipgateTest < TestCase
     )
 
     watch_for(
-      css: 'a[href="#cti"]'
+      css: 'a[href="#cti"]',
+      timeout: 4,
     )
 
     click(css: 'a[href="#cti"]')
 
-    # simulate sipgate callbacks
+    call_counter = @browser.find_elements(css: '.js-phoneMenuItem .counter')
+                           .first&.text.to_i
+
+    # simulate cti callbacks
     url = URI.join(browser_url, 'api/v1/sipgate/in')
-    params = { direction: 'in', from: '491715000002', to: '4930600000000', callId: "4991155921769858278-#{id}", cause: 'busy' }
+    params = {
+      direction: 'in',
+      from: '491715000003',
+      to: '4930600000004',
+      callId: "4991155921769858279-#{id}",
+      cause: 'busy'
+    }
     Net::HTTP.post_form(url, params.merge(event: 'newCall'))
     Net::HTTP.post_form(url, params.merge(event: 'hangup'))
 
     watch_for(
       css: '.js-phoneMenuItem .counter',
-      value: '1'
+      value: (call_counter + 1).to_s,
+      timeout: 4,
     )
 
-    click(css: '.content.active .table-checkbox label')
+    check(css: '.content.active .table-checkbox input')
 
     watch_for_disappear(
-      css: '.js-phoneMenuItem .counter'
+      css: '.js-phoneMenuItem .counter',
+      timeout: 6,
     )
 
     click(css: 'a[href="#manage"]')
     click(css: 'a[href="#system/integration"]')
-    click(css: 'a[href="#system/integration/cti"]')
+    click(css: 'a[href="#system/integration/sipgate"]')
 
     switch(
       css: '.content.active .js-switch',

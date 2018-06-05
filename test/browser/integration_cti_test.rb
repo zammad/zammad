@@ -28,7 +28,10 @@ class IntegrationCtiTest < TestCase
       type: 'on'
     )
 
-    watch_for(css: 'a[href="#cti"]')
+    watch_for(
+      css: 'a[href="#cti"]',
+      timeout: 4,
+    )
 
     click(css: 'a[href="#cti"]')
 
@@ -49,13 +52,15 @@ class IntegrationCtiTest < TestCase
 
     watch_for(
       css: '.js-phoneMenuItem .counter',
-      value: (call_counter + 1).to_s
+      value: (call_counter + 1).to_s,
+      timeout: 4,
     )
 
-    click(css: '.content.active .table-checkbox label', all: true)
+    check(css: '.content.active .table-checkbox input')
 
     watch_for_disappear(
-      css: '.js-phoneMenuItem .counter'
+      css: '.js-phoneMenuItem .counter',
+      timeout: 6,
     )
 
     click(css: 'a[href="#manage"]')
@@ -123,24 +128,25 @@ class IntegrationCtiTest < TestCase
     click(css: 'a[href="#cti"]')
 
     # assertion: private network numbers appear verbatim
-    match(
-      css: '.js-callerLog',
+    watch_for(
+      css: '.content.active .js-callerLog',
       value: '007',
+      timeout: 3,
     )
 
     match(
-      css: '.js-callerLog',
+      css: '.content.active .js-callerLog',
       value: '008',
     )
 
     # assertion: E164 numbers appear prettified
     match(
-      css: '.js-callerLog',
+      css: '.content.active .js-callerLog',
       value: '+49 30 609854180',
     )
 
     match(
-      css: '.js-callerLog',
+      css: '.content.active .js-callerLog',
       value: '+49 30 609811111',
     )
   end

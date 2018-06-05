@@ -19,35 +19,10 @@ class App.CTI extends App.Controller
     @meta.active = preferences.cti || false
 
     @load()
-
-    @bind('cti_event', (data) =>
-      if data.direction is 'in'
-        if data.state is 'newCall'
-          if @switch()
-            @notify(data)
-          return if @meta.state[data.id]
-          @meta.state[data.id] = true
-          @meta.counter += 1
-          @updateNavMenu()
-        if data.state is 'answer' || data.state is 'hangup'
-          if @meta.state[data.id]
-            delete @meta.state[data.id]
-            @meta.counter -= 1
-          @updateNavMenu()
-      'cti_event'
-    )
     @bind('cti_list_push', (data) =>
-      if data.assets
-        App.Collection.loadAssets(data.assets)
-      if data.backends
-        @backends = data.backends
-      if data.list
-        @list = data.list
-        if @renderDone
-          @renderCallerLog()
-          return
-        @render()
-
+      delay = =>
+        @load()
+      @delay(delay, 500, 'cti_list_push_render')
       'cti_list_push'
     )
     @bind('auth', (data) =>
@@ -132,7 +107,6 @@ class App.CTI extends App.Controller
 
     @html App.view('cti/index')()
     @renderCallerLog()
-    @updateNavMenu()
 
   renderCallerLog: ->
     format = (time) ->
@@ -181,6 +155,7 @@ class App.CTI extends App.Controller
     @userPopupsDestroy()
     @callerLog.html( App.view('cti/caller_log')(list: @list))
     @userPopups()
+    @updateNavMenu()
 
   done: (e) =>
     element = $(e.currentTarget)
