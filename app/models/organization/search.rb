@@ -77,9 +77,11 @@ returns
         # fallback do sql query
         # - stip out * we already search for *query* -
         query.delete! '*'
-        organizations = Organization.where(
-          'name LIKE ? OR note LIKE ?', "%#{query}%", "%#{query}%"
-        ).order('name').offset(offset).limit(limit).to_a
+        organizations = Organization.where_or_cis(%i[name note], "%#{query}%")
+                                    .order('name')
+                                    .offset(offset)
+                                    .limit(limit)
+                                    .to_a
 
         # use result independent of size if an explicit offset is given
         # this is the case for e.g. paginated searches
@@ -87,9 +89,11 @@ returns
         return organizations if organizations.length > 3
 
         # if only a few organizations are found, search for names of users
-        organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name').joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id').where(
-          'users.firstname LIKE ? or users.lastname LIKE ? or users.email LIKE ?', "%#{query}%", "%#{query}%", "%#{query}%"
-        ).order('organizations.name').limit(limit)
+        organizations_by_user = Organization.select('DISTINCT(organizations.id), organizations.name')
+                                            .joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id')
+                                            .where(User.or_cis(%i[firstname lastname email], "%#{query}%"))
+                                            .order('organizations.name')
+                                            .limit(limit)
 
         organizations_by_user.each do |organization_by_user|
 
