@@ -10,8 +10,7 @@ class AgentProfilePermissionsTest < TestCase
     )
     tasks_close_all()
 
-    # search and open user
-    user_open_by_search(value: 'Nicole')
+    user_open_by_search(value: 'Braun')
 
     verify_task(
       data: {
@@ -29,7 +28,6 @@ class AgentProfilePermissionsTest < TestCase
       value: 'email',
     )
 
-    # update note
     set(
       css: '.content.active [data-name="note"]',
       value: 'some note 123',
@@ -99,7 +97,6 @@ class AgentProfilePermissionsTest < TestCase
     )
     tasks_close_all()
 
-    # search and open user
     user_open_by_search(value: 'Test Master')
 
     verify_task(
@@ -121,10 +118,7 @@ class AgentProfilePermissionsTest < TestCase
     sleep 2
 
     click(css: '.content.active .js-action .icon-arrow-down', fast: true)
-
-    exists_not(
-      css: '.content.active .js-action [data-type="edit"]'
-    )
+    exists_not(css: '.content.active .js-action [data-type="edit"]')
   end
 
   def test_agent_to_edit_admin_ticket_user_details
@@ -139,9 +133,9 @@ class AgentProfilePermissionsTest < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'master',
-        group: 'Users',
-        title: 'test_user_access_permissions_1 - ticket 1',
-        body: 'test_user_access_permissions_1 - ticket 1',
+        group:    'Users',
+        title:    'test_user_access_permissions - ticket 1',
+        body:     'test_user_access_permissions - ticket 1',
       },
     )
 
@@ -156,7 +150,6 @@ class AgentProfilePermissionsTest < TestCase
     )
     tasks_close_all()
 
-    # open ticket#1
     ticket_open_by_search(
       number: ticket1[:number],
     )
@@ -184,13 +177,11 @@ class AgentProfilePermissionsTest < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'test_user_access_permissions_2 - ticket 2',
-        body: 'test_user_access_permissions_2 - ticket 2',
+        group:    'Users',
+        title:    'test_user_access_permissions - ticket 2',
+        body:     'test_user_access_permissions - ticket 2',
       },
     )
-
-    # open ticket#1
     ticket_open_by_search(
       number: ticket1[:number],
     )
@@ -216,20 +207,12 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
 
-    # search and open user
-    user_open_by_search(value: 'Nicole')
-
-    verify_task(
-      data: {
-        title: 'Nicole B2',
-      }
+    watch_for(
+      css: '.content.active .sidebar[data-tab="customer"] .sidebar-block h3[title="Name"]',
+      value: 'Nicole B2',
     )
 
-    ticket_open_by_search(
-      number: ticket1[:number],
-    )
-    sleep 0.3
-
+    sleep 2
     # change lastname back
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions')
     click(css: 'li[data-type="customer-edit"]')
@@ -254,13 +237,9 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
 
-    # search and open user
-    user_open_by_search(value: 'Nicole')
-
-    verify_task(
-      data: {
-        title: 'Nicole Braun',
-      }
+    watch_for(
+      css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [title="Name"]',
+      value: 'Nicole Braun',
     )
   end
 
@@ -274,25 +253,27 @@ class AgentProfilePermissionsTest < TestCase
     )
     tasks_close_all()
 
-    # search and open user
-    user_open_by_search(value: 'Nicole')
-
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'test_user_access_permissions_2 - ticket 2',
-        body: 'test_user_access_permissions_2 - ticket 2',
+        group:    'Users',
+        title:    'test_user_access_permissions - ticket 3',
+        body:     'test_user_access_permissions - ticket 3',
       },
     )
-
     ticket_open_by_search(
       number: ticket1[:number],
     )
 
-    click(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
-    click(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
-    click(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
+    exists(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
+    exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
+
+    click(css: '.content.active .tabsSidebar-holder .js-avatar')
+
+    # check and change note again in edit screen
+    click(css: '.content.active .js-action .dropdown-toggle')
+    click(css: '.content.active .js-action [data-type="edit"]')
 
     watch_for(
       css: '.content.active .modal',
@@ -310,14 +291,9 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .modal button.js-submit')
 
     watch_for(
-      css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
+      css: '.content.active .profile-window',
       value: 'some note abc',
     )
-
-    tasks_close_all()
-
-    # search and open user
-    user_open_by_search(value: 'Nicole')
 
     verify_task(
       data: {
@@ -325,14 +301,9 @@ class AgentProfilePermissionsTest < TestCase
       }
     )
 
-    ticket_open_by_search(
-      number: ticket1[:number],
-    )
-
     # change lastname back
-    click(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
-    click(css: '.content.active .tabsSidebar .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
-    click(css: '.content.active .tabsSidebar .sidebar[data-tab="customer"] .js-actions li[data-type="customer-edit"]')
+    click(css: '.content.active .js-action .dropdown-toggle')
+    click(css: '.content.active .js-action [data-type="edit"]')
 
     watch_for(
       css: '.content.active .modal',
@@ -347,9 +318,6 @@ class AgentProfilePermissionsTest < TestCase
       value: 'note',
     )
     click(css: '.content.active .modal button.js-submit')
-
-    # search and open user
-    user_open_by_search(value: 'Nicole')
 
     verify_task(
       data: {
@@ -371,9 +339,9 @@ class AgentProfilePermissionsTest < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'master',
-        group: 'Users',
-        title: 'test_user_access_permissions_2 - ticket 2',
-        body: 'test_user_access_permissions_2 - ticket 2',
+        group:    'Users',
+        title:    'test_user_access_permissions - ticket 4',
+        body:     'test_user_access_permissions - ticket 4',
       },
     )
 
@@ -381,11 +349,13 @@ class AgentProfilePermissionsTest < TestCase
       number: ticket1[:number],
     )
 
-    click(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
-    click(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    exists(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="customer"]')
+    exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
+    exists_not(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
-    exists_not(
-      css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]'
-    )
+    click(css: '.content.active .tabsSidebar-holder .js-avatar')
+
+    click(css: '.content.active .js-action .icon-arrow-down', fast: true)
+    exists_not(css: '.content.active .js-action [data-type="edit"]')
   end
 end
