@@ -565,6 +565,7 @@ class TestCase < Test::Unit::TestCase
     displayed: false, # true|false
     browser: browser1,
     css: '.some_class',
+    displayed: true, # true|false
   )
 
 =end

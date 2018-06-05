@@ -22,6 +22,7 @@ add an attachment to storage
     object: 'Ticket::Article',
     o_id: 4711,
     data: binary_string,
+    filename: 'filename.txt',
     preferences: {
       content_type: 'image/png',
       content_id: 234,
