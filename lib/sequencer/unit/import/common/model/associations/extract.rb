@@ -5,6 +5,9 @@ class Sequencer
         module Model
           module Associations
             class Extract < Sequencer::Unit::Base
+              prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+              skip_any_action
 
               uses :model_class, :mapped
               provides :associations

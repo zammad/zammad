@@ -1,7 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class RecentView < ApplicationModel
-  load 'recent_view/assets.rb'
   include RecentView::Assets
 
   # rubocop:disable Rails/InverseOf

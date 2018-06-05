@@ -58,8 +58,8 @@ class EmailBuildTest < ActiveSupport::TestCase
 >
 > Thank you for installing Zammad. äöüß
 >'
-    assert_equal(should, mail.text_part.body.to_s)
-    assert_equal(html, mail.html_part.body.to_s)
+    assert_equal(mail.text_part.body.to_s, Mail::Utilities.to_crlf(should))
+    assert_equal(mail.html_part.body.to_s, Mail::Utilities.to_crlf(html))
 
     parser = Channel::EmailParser.new
     data = parser.parse(mail.to_s)
@@ -112,7 +112,7 @@ class EmailBuildTest < ActiveSupport::TestCase
 >
 > Thank you for installing Zammad. äöüß
 >'
-    assert_equal(should, mail.text_part.body.to_s)
+    assert_equal(mail.text_part.body.to_s, Mail::Utilities.to_crlf(should))
     assert_nil(mail.html_part)
     assert_equal('image/png; filename=somename.png', mail.attachments[0].content_type)
 
@@ -194,7 +194,7 @@ class EmailBuildTest < ActiveSupport::TestCase
 >
 > Thank you for installing Zammad. äöüß
 >'
-    assert_equal(should, mail.text_part.body.to_s)
+    assert_equal(mail.text_part.body.to_s, Mail::Utilities.to_crlf(should))
     assert_nil(mail.html_part)
     assert_equal('text/calendar; filename=schedule.ics', mail.attachments[0].content_type)
 
@@ -235,7 +235,7 @@ class EmailBuildTest < ActiveSupport::TestCase
 >
 > Thank you for installing Zammad. äöüß
 >'
-    assert_equal(should, mail.body.to_s)
+    assert_equal(mail.body.to_s, Mail::Utilities.to_crlf(should))
     assert_nil(mail.html_part)
 
     parser = Channel::EmailParser.new

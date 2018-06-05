@@ -3,6 +3,8 @@ require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 require 'cache'
 
+require 'test_support_helper'
+
 class ActiveSupport::TestCase
 
   # disable transactions / to work with own database connections for each thread

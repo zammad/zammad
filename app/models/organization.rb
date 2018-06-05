@@ -7,12 +7,10 @@ class Organization < ApplicationModel
   include HasHistory
   include HasSearchIndexBackend
   include CanCsvImport
-  include Organization::ChecksAccess
 
-  load 'organization/assets.rb'
+  include Organization::ChecksAccess
   include Organization::Assets
-  extend Organization::Search
-  load 'organization/search_index.rb'
+  include Organization::Search
   include Organization::SearchIndex
 
   # rubocop:disable Rails/InverseOf

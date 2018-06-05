@@ -8,12 +8,13 @@
   </div>
 </div>
 <div class="page-content">
-  <div class="settings-entry">
+  <form class="settings-entry">
     <p><%- @T('Enable automatic assignment the first time an agent opens a ticket.') %></p>
     <p><%- @T('Tickets are only assigned automatically if they do not already have an owner.') %></p>
     <div class="js-selector"></div>
+    <p><%- @T('Define an exception of "automatic assignment" for certain users (e.g. executives).') %></p>
+    <div class="js-users"></div>
     <button type="submit" class="btn btn--primary js-timeAccountingFilter"><%- @T('Save') %></button>
     <button type="submit" class="btn btn--danger js-timeAccountingFilterReset"><%- @T('Reset') %></button>
-  </div>
-  <div class="settings-entry">
+  </form>
 </div>

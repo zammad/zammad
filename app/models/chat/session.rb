@@ -2,10 +2,8 @@ class Chat::Session < ApplicationModel
   include HasSearchIndexBackend
   include HasTags
 
-  extend Chat::Session::Search
-  load 'chat/session/search_index.rb'
+  include Chat::Session::Search
   include Chat::Session::SearchIndex
-  load 'chat/session/assets.rb'
   include Chat::Session::Assets
 
   # rubocop:disable Rails/InverseOf

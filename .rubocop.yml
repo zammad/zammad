@@ -202,6 +202,7 @@ Lint/InterpolationCheck:
     - "test/unit/notification_factory_renderer_test.rb"
     - "test/unit/notification_factory_template_test.rb"
     - "test/unit/ticket_trigger_test.rb"
+    - "test/unit/ticket_trigger_recursive_disabled_test.rb"
 
 # RSpec tests
 Style/NumericPredicate:
@@ -224,5 +225,12 @@ Lint/AmbiguousBlockAssociation:
   StyleGuide: '#syntax'
   Enabled: true
   Exclude:
+    - "spec/support/*.rb"
     - "**/*_spec.rb"
     - "**/*_examples.rb"
+
+# Special exceptions
+
+Style/HashSyntax:
+  Exclude:
+    - "**/*.rake"

@@ -994,7 +994,9 @@ class App.Utils
       if !_.isEmpty(article.to)
         recipients = App.Utils.parseAddressListLocal(article.to)
         if recipients && recipients[0]
-          recipientIsLocal = isLocalAddress(recipients[0])
+          for localRecipient in recipients
+            recipientIsLocal = isLocalAddress(localRecipient)
+            break if recipientIsLocal is true
 
       # sender is local
       if senderIsLocal
@@ -1058,3 +1060,23 @@ class App.Utils
           articleNew.cc = addAddresses(article.cc, articleNew.cc)
 
     articleNew
+
+  # apply email token field with autocompletion
+  @tokaniceEmails: (selector) ->
+    source = "#{App.Config.get('api_path')}/users/search"
+    a = ->
+      $(selector).tokenfield(
+        createTokensOnBlur: true
+        autocomplete: {
+          source: source
+          minLength: 2
+        },
+      ).on('tokenfield:createtoken', (e) ->
+        if !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
+          e.preventDefault()
+          return false
+        e.attrs.label = e.attrs.value
+        true
+      )
+    App.Delay.set(a, 500, undefined, 'tags')
+

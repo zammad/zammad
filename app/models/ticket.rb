@@ -15,11 +15,9 @@ class Ticket < ApplicationModel
 
   include Ticket::Escalation
   include Ticket::Subject
-  load 'ticket/assets.rb'
   include Ticket::Assets
-  load 'ticket/search_index.rb'
   include Ticket::SearchIndex
-  extend Ticket::Search
+  include Ticket::Search
 
   store          :preferences
   before_create  :check_generate, :check_defaults, :check_title, :set_default_state, :set_default_priority
@@ -593,7 +591,7 @@ condition example
         elsif selector['pre_condition'] == 'current_user.organization_id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
           query += "#{attribute} IN (?)"
-          user = User.lookup(id: current_user_id)
+          user = User.find_by(id: current_user_id)
           bind_params.push user.organization_id
         else
           # rubocop:disable Style/IfInsideElse
@@ -626,7 +624,7 @@ condition example
           end
         elsif selector['pre_condition'] == 'current_user.organization_id'
           query += "#{attribute} NOT IN (?)"
-          user = User.lookup(id: current_user_id)
+          user = User.find_by(id: current_user_id)
           bind_params.push user.organization_id
         else
           # rubocop:disable Style/IfInsideElse
@@ -808,6 +806,12 @@ perform changes on ticket
   def perform_changes(perform, perform_origin, item = nil, current_user_id = nil)
     logger.debug { "Perform #{perform_origin} #{perform.inspect} on Ticket.find(#{id})" }
 
+    article = begin
+                Ticket::Article.find_by(id: item.try(:dig, :article_id))
+              rescue ArgumentError
+                nil
+              end
+
     # if the configuration contains the deletion of the ticket then
     # we skip all other ticket changes because they does not matter
     if perform['ticket.action'].present? && perform['ticket.action']['value'] == 'delete'
@@ -837,25 +841,24 @@ perform changes on ticket
         recipients_raw = []
         value_recipient.each do |recipient|
           if recipient == 'article_last_sender'
-            if item && item[:article_id]
-              article = Ticket::Article.lookup(id: item[:article_id])
+            if article.present?
               if article.reply_to.present?
                 recipients_raw.push(article.reply_to)
               elsif article.from.present?
                 recipients_raw.push(article.from)
               elsif article.origin_by_id
-                email = User.lookup(id: article.origin_by_id).email
+                email = User.find_by(id: article.origin_by_id).email
                 recipients_raw.push(email)
               elsif article.created_by_id
-                email = User.lookup(id: article.created_by_id).email
+                email = User.find_by(id: article.created_by_id).email
                 recipients_raw.push(email)
               end
             end
           elsif recipient == 'ticket_customer'
-            email = User.lookup(id: customer_id).email
+            email = User.find_by(id: customer_id).email
             recipients_raw.push(email)
           elsif recipient == 'ticket_owner'
-            email = User.lookup(id: owner_id).email
+            email = User.find_by(id: owner_id).email
             recipients_raw.push(email)
           elsif recipient == 'ticket_agents'
             User.group_access(group_id, 'full').sort_by(&:login).each do |user|
@@ -916,12 +919,9 @@ perform changes on ticket
           end
 
           # check if notification should be send because of customer emails
-          if item && item[:article_id]
-            article = Ticket::Article.lookup(id: item[:article_id])
-            if article&.preferences&.fetch('is-auto-response', false) == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
-              logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
-              next
-            end
+          if article.present? && article.preferences.fetch('is-auto-response', false) == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
+            logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
+            next
           end
 
           # loop protection / check if maximal count of trigger mail has reached
@@ -986,9 +986,12 @@ perform changes on ticket
           next
         end
 
+        # articles.last breaks (returns the wrong article)
+        # if another email notification trigger preceded this one
+        # (see https://github.com/zammad/zammad/issues/1543)
         objects = {
           ticket: self,
-          article: articles.last,
+          article: article || articles.last
         }
 
         # get subject
@@ -1009,7 +1012,7 @@ perform changes on ticket
 
         (body, attachments_inline) = HtmlSanitizer.replace_inline_images(body, id)
 
-        article = Ticket::Article.create(
+        message = Ticket::Article.create(
           ticket_id: id,
           to: recipient_string,
           subject: subject,
@@ -1028,7 +1031,7 @@ perform changes on ticket
         attachments_inline.each do |attachment|
           Store.add(
             object: 'Ticket::Article',
-            o_id: article.id,
+            o_id: message.id,
             data: attachment[:data],
             filename: attachment[:filename],
             preferences: attachment[:preferences],
@@ -1043,11 +1046,11 @@ perform changes on ticket
         tags = value['value'].split(/,/)
         if value['operator'] == 'add'
           tags.each do |tag|
-            tag_add(tag)
+            tag_add(tag, current_user_id || 1)
           end
         elsif value['operator'] == 'remove'
           tags.each do |tag|
-            tag_remove(tag)
+            tag_remove(tag, current_user_id || 1)
           end
         else
           logger.error "Unknown #{attribute} operator #{value['operator']}"
@@ -1082,6 +1085,183 @@ perform changes on ticket
     end
     return if !changed
     save
+
+    true
+  end
+
+=begin
+
+perform active triggers on ticket
+
+  Ticket.perform_triggers(ticket, article, item, options)
+
+=end
+
+  def self.perform_triggers(ticket, article, item, options = {})
+    recursive = Setting.get('ticket_trigger_recursive')
+    type = options[:type] || item[:type]
+    local_options = options.clone
+    local_options[:type] = type
+    local_options[:reset_user_id] = true
+    local_options[:disable] = ['Transaction::Notification']
+    local_options[:trigger_ids] ||= {}
+    local_options[:trigger_ids][ticket.id] ||= []
+    local_options[:loop_count] ||= 0
+    local_options[:loop_count] += 1
+
+    ticket_trigger_recursive_max_loop = Setting.get('ticket_trigger_recursive_max_loop')&.to_i || 10
+    if local_options[:loop_count] > ticket_trigger_recursive_max_loop
+      message = "Stopped perform_triggers for this object (Ticket/#{ticket.id}), because loop count was #{local_options[:loop_count]}!"
+      logger.info { message }
+      return [false, message]
+    end
+
+    triggers = if Rails.configuration.db_case_sensitive
+                 ::Trigger.where(active: true).order('LOWER(name)')
+               else
+                 ::Trigger.where(active: true).order(:name)
+               end
+    return [true, 'No triggers active'] if triggers.blank?
+
+    # check if notification should be send because of customer emails
+    send_notification = true
+    if local_options[:send_notification] == false
+      send_notification = false
+    elsif item[:article_id]
+      article = Ticket::Article.lookup(id: item[:article_id])
+      if article&.preferences && article.preferences['send-auto-response'] == false
+        send_notification = false
+      end
+    end
+
+    Transaction.execute(local_options) do
+      triggers.each do |trigger|
+        condition = trigger.condition
+
+        # check if one article attribute is used
+        one_has_changed_done = false
+        article_selector = false
+        trigger.condition.each_key do |key|
+          (object_name, attribute) = key.split('.', 2)
+          next if object_name != 'article'
+          next if attribute == 'id'
+          article_selector = true
+        end
+        if article && article_selector
+          one_has_changed_done = true
+        end
+        if article && type == 'update'
+          one_has_changed_done = true
+        end
+
+        # check ticket "has changed" options
+        has_changed_done = true
+        condition.each do |key, value|
+          next if value.blank?
+          next if value['operator'].blank?
+          next if !value['operator']['has changed']
+
+          # remove condition item, because it has changed
+          (object_name, attribute) = key.split('.', 2)
+          next if object_name != 'ticket'
+          next if item[:changes].blank?
+          next if !item[:changes].key?(attribute)
+          condition.delete(key)
+          one_has_changed_done = true
+        end
+
+        # check if we have not matching "has changed" attributes
+        condition.each_value do |value|
+          next if value.blank?
+          next if value['operator'].blank?
+          next if !value['operator']['has changed']
+          has_changed_done = false
+          break
+        end
+
+        # check ticket action
+        if condition['ticket.action']
+          next if condition['ticket.action']['operator'] == 'is' && condition['ticket.action']['value'] != type
+          next if condition['ticket.action']['operator'] != 'is' && condition['ticket.action']['value'] == type
+          condition.delete('ticket.action')
+        end
+        next if !has_changed_done
+
+        # check in min one attribute of condition has changed on update
+        one_has_changed_condition = false
+        if type == 'update'
+
+          # verify if ticket condition exists
+          condition.each_key do |key|
+            (object_name, attribute) = key.split('.', 2)
+            next if object_name != 'ticket'
+            one_has_changed_condition = true
+            next if item[:changes].blank?
+            next if !item[:changes].key?(attribute)
+            one_has_changed_done = true
+            break
+          end
+          next if one_has_changed_condition && !one_has_changed_done
+        end
+
+        # check if ticket selector is matching
+        condition['ticket.id'] = {
+          operator: 'is',
+          value: ticket.id,
+        }
+        next if article_selector && !article
+
+        # check if article selector is matching
+        if article_selector
+          condition['article.id'] = {
+            operator: 'is',
+            value: article.id,
+          }
+        end
+
+        # verify is condition is matching
+        ticket_count, tickets = Ticket.selectors(condition, 1)
+
+        next if ticket_count.blank?
+        next if ticket_count.zero?
+        next if tickets.first.id != ticket.id
+        user_id = ticket.updated_by_id
+        if article
+          user_id = article.updated_by_id
+        end
+
+        if recursive == false && local_options[:loop_count] > 1
+          message = "Do not execute recursive triggers per default until Zammad 3.0. With Zammad 3.0 and higher the following trigger is executed '#{trigger.name}' on Ticket:#{ticket.id}. Please review your current triggers and change them if needed."
+          logger.info { message }
+          return [true, message]
+        end
+
+        local_send_notification = true
+        if article && send_notification == false && trigger.perform['notification.email'] && trigger.perform['notification.email']['recipient']
+          recipient = trigger.perform['notification.email']['recipient']
+          local_send_notification = false
+          local_options[:send_notification] = false
+          if recipient.include?('ticket_customer') || recipient.include?('article_last_sender')
+            logger.info { "Skip trigger (#{trigger.name}/#{trigger.id}) because sender do not want to get auto responder for object (Ticket/#{ticket.id}/Article/#{article.id})" }
+            next
+          end
+        end
+
+        if local_options[:trigger_ids][ticket.id].include?(trigger.id)
+          logger.info { "Skip trigger (#{trigger.name}/#{trigger.id}) because was already executed for this object (Ticket:#{ticket.id}/Loop:#{local_options[:loop_count]})" }
+          next
+        end
+        local_options[:trigger_ids][ticket.id].push trigger.id
+        logger.info { "Execute trigger (#{trigger.name}/#{trigger.id}) for this object (Ticket:#{ticket.id}/Loop:#{local_options[:loop_count]})" }
+
+        ticket.perform_changes(trigger.perform, 'trigger', item, user_id)
+
+        if recursive == true
+          Observer::Transaction.commit(local_options)
+        end
+      end
+    end
+    [true, ticket, local_options]
   end
 
 =begin

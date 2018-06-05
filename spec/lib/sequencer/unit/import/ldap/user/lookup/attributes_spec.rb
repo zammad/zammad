@@ -9,13 +9,6 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Lookup::Attributes, sequence
 
     current_user = create(:user)
 
-    # ExternalSync.create(
-    #   source:    external_sync_source,
-    #   source_id: remote_id,
-    #   o_id:      user.id,
-    #   object:    user.class,
-    # )
-
     provided = process(
       found_ids:            [],
       model_class:          model_class,
@@ -46,7 +39,7 @@ RSpec.describe Sequencer::Unit::Import::Ldap::User::Lookup::Attributes, sequence
     expect(provided[:instance]).to be_nil
   end
 
-  it "doesn't not synced users" do
+  it "doesn't sync already synced users" do
 
     provided = process(
       found_ids:            [],

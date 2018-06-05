@@ -80,8 +80,9 @@ gem 'twitter'
 
 # channels - email additions
 gem 'htmlentities'
-gem 'mail', '2.6.6'
+gem 'mail', '>= 2.7.1.rc1'
 gem 'mime-types'
+gem 'rchardet', '>= 1.8.0'
 gem 'valid_email2'
 
 # feature - business hours
@@ -100,6 +101,9 @@ gem 'browser'
 gem 'icalendar'
 gem 'icalendar-recurrence'
 
+# feature - phone number formatting
+gem 'telephone_number'
+
 # integrations
 gem 'clearbit'
 gem 'net-ldap'
@@ -114,6 +118,10 @@ gem 'viewpoint'
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do
+
+  # debugging
+  gem 'pry-rails'
+  gem 'pry-remote'
 
   # test frameworks
   gem 'rspec-rails'
@@ -157,8 +165,10 @@ group :development, :test do
   gem 'webmock'
 end
 
-# load onw gems for development and testing purposes
-local_gemfile = File.join(File.dirname(__FILE__), 'Gemfile.local')
-if File.exist?(local_gemfile)
-  eval_gemfile local_gemfile
-end
+# Want to extend Zammad with additional gems?
+# ZAMMAD USERS: Specify them in Gemfile.local
+#               (That way, you can customize the Gemfile
+#               without having your changes overwritten during upgrades.)
+# ZAMMAD DEVS:  Consult the internal wiki
+#               (or else risk pushing unwanted changes to Gemfile.lock!)
+eval_gemfile 'Gemfile.local' if File.exist?('Gemfile.local')

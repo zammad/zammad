@@ -113,9 +113,26 @@ test 123
     assert_equal(HtmlSanitizer.strict('<table><tr style=" Font-size:0%"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
     assert_equal(HtmlSanitizer.strict('<table><tr style="font-size:0%;display: none;"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
     assert_equal(HtmlSanitizer.strict('<table><tr style="font-size:0%;visibility:hidden;"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
+    assert_equal(HtmlSanitizer.strict('<table><tr style="font-size:0%;visibility:hidden;"><td>123</td></tr></table>'), '<table><tr><td>123</td></tr></table>')
     assert_equal(HtmlSanitizer.strict('<a href="/some/path%20test.pdf">test</a>'), '<a href="/some/path%20test.pdf">test</a>')
     assert_equal(HtmlSanitizer.strict('<a href="https://somehost.domain/path%20test.pdf">test</a>'), '<a href="https://somehost.domain/path%20test.pdf" rel="nofollow noreferrer noopener" target="_blank" title="https://somehost.domain/path test.pdf">test</a>')
     assert_equal(HtmlSanitizer.strict('<a href="https://somehost.domain/zaihan%20test">test</a>'), '<a href="https://somehost.domain/zaihan%20test" rel="nofollow noreferrer noopener" target="_blank" title="https://somehost.domain/zaihan test">test</a>')
-  end
 
+    api_path            = Rails.configuration.api_path
+    http_type           = Setting.get('http_type')
+    fqdn                = Setting.get('fqdn')
+    attachment_url      = "#{http_type}://#{fqdn}#{api_path}/ticket_attachment/239/986/1653"
+    attachment_url_good = "#{attachment_url}?disposition=attachment"
+    attachment_url_evil = "#{attachment_url}?disposition=inline"
+    assert_equal(HtmlSanitizer.strict("<a href=\"#{attachment_url_evil}\">Evil link</a>"), "<a href=\"#{attachment_url_good}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{attachment_url_good}\">Evil link</a>")
+
+    assert_equal(HtmlSanitizer.strict("<a href=\"#{attachment_url_good}\">Good link</a>"), "<a href=\"#{attachment_url_good}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{attachment_url_good}\">Good link</a>")
+    assert_equal(HtmlSanitizer.strict("<a href=\"#{attachment_url}\">No disposition</a>"), "<a href=\"#{attachment_url}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{attachment_url}\">No disposition</a>")
+
+    different_fqdn_url = attachment_url_evil.gsub(fqdn, 'some.other.tld')
+    assert_equal(HtmlSanitizer.strict("<a href=\"#{different_fqdn_url}\">Different FQDN</a>"), "<a href=\"#{different_fqdn_url}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{different_fqdn_url}\">Different FQDN</a>")
+
+    attachment_url_evil_other = "#{attachment_url}?disposition=some_other"
+    assert_equal(HtmlSanitizer.strict("<a href=\"#{attachment_url_evil_other}\">Evil link</a>"), "<a href=\"#{attachment_url_good}\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"#{attachment_url_good}\">Evil link</a>")
+  end
 end

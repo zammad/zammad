@@ -134,9 +134,7 @@ satinize html string based on whiltelist
         value = node[key]
         node.delete(key)
         next if value.blank?
-        if value !~ /%|px|em/i
-          value += 'px'
-        end
+        value += 'px' if !value.match?(/%|px|em/i)
         node['style'] += "#{key}:#{value}"
       end
 
@@ -382,7 +380,28 @@ cleanup html string:
                   else
                     /[[:space:]]|\t|\n|\r/
                   end
-    string.strip.gsub(blank_regex, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '').delete("\u0000")
+    cleaned_string = string.strip.gsub(blank_regex, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '').delete("\u0000")
+    sanitize_attachment_disposition(cleaned_string)
+  end
+
+  def self.sanitize_attachment_disposition(url)
+    uri = URI(url)
+    return url if uri.host != Setting.get('fqdn')
+
+    params = CGI.parse(uri.query || '')
+    if params.key?('disposition')
+      params['disposition'] = 'attachment'
+    end
+
+    uri.query = if params.blank?
+                  nil
+                else
+                  URI.encode_www_form(params)
+                end
+
+    uri.to_s
+  rescue URI::InvalidURIError
+    url
   end
 
   def self.url_same?(url_new, url_old)

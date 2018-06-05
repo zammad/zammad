@@ -2,6 +2,7 @@
 
 class Channel
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

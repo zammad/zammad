@@ -13,10 +13,7 @@ class Transaction
       if options[:interface_handle]
         ApplicationHandleInfo.current = original_interface_handle
       end
-      Observer::Transaction.commit(
-        disable_notification: options[:disable_notification],
-        disable: options[:disable],
-      )
+      Observer::Transaction.commit(options)
       PushMessages.finish
     end
   end

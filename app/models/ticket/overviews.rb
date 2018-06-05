@@ -23,7 +23,7 @@ returns
       if current_user.organization_id && current_user.organization.shared
         overview_filter.delete(:organization_shared)
       end
-      overviews = Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: nil }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: current_user.id }, overviews: overview_filter)).distinct('overview.id').order(:prio)
+      overviews = Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: nil }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: current_user.id }, overviews: overview_filter)).distinct('overview.id').order(:prio, :name)
       return overviews
     end
 
@@ -34,7 +34,7 @@ returns
     if User.where('out_of_office = ? AND out_of_office_start_at <= ? AND out_of_office_end_at >= ? AND out_of_office_replacement_id = ? AND active = ?', true, Time.zone.today, Time.zone.today, current_user.id, true).count.positive?
       overview_filter_not = {}
     end
-    Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: nil }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: current_user.id }, overviews: overview_filter)).where.not(overview_filter_not).distinct('overview.id').order(:prio)
+    Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: nil }, overviews: overview_filter).or(Overview.joins(:roles).left_joins(:users).where(overviews_roles: { role_id: role_ids }, overviews_users: { user_id: current_user.id }, overviews: overview_filter)).where.not(overview_filter_not).distinct('overview.id').order(:prio, :name)
   end
 
 =begin

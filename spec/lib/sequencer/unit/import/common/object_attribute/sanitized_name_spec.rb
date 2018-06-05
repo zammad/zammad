@@ -11,7 +11,7 @@ RSpec.describe Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName, 
 
   context 'sanitizes' do
 
-    it 'whitespaces' do
+    it 'replaces whitespaces' do
       provided = process do |instance|
         expect(instance).to receive(:unsanitized_name).and_return('model name')
       end
@@ -19,7 +19,7 @@ RSpec.describe Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName, 
       expect(provided[:sanitized_name]).to eq('model_name')
     end
 
-    it 'dashes' do
+    it 'replaces dashes' do
       provided = process do |instance|
         expect(instance).to receive(:unsanitized_name).and_return('model-name')
       end
@@ -27,7 +27,7 @@ RSpec.describe Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName, 
       expect(provided[:sanitized_name]).to eq('model_name')
     end
 
-    it 'ids suffix' do
+    it 'replaces ids suffix' do
       provided = process do |instance|
         expect(instance).to receive(:unsanitized_name).and_return('Model Ids')
       end
@@ -35,12 +35,20 @@ RSpec.describe Sequencer::Unit::Import::Common::ObjectAttribute::SanitizedName, 
       expect(provided[:sanitized_name]).to eq('model_nos')
     end
 
-    it 'id suffix' do
+    it 'replaces id suffix' do
       provided = process do |instance|
         expect(instance).to receive(:unsanitized_name).and_return('Model Id')
       end
 
       expect(provided[:sanitized_name]).to eq('model_no')
+    end
+
+    it 'replaces non-ASCII characters' do
+      provided = process do |instance|
+        expect(instance).to receive(:unsanitized_name).and_return('Ærøskøbing Ät Mödél')
+      end
+
+      expect(provided[:sanitized_name]).to eq('a_eroskobing_at_model')
     end
   end
 end

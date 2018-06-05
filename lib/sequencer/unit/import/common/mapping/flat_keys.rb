@@ -5,8 +5,12 @@ class Sequencer
         module Mapping
           class FlatKeys < Sequencer::Unit::Base
             include ::Sequencer::Unit::Import::Common::Mapping::Mixin::ProvideMapped
+            prepend ::Sequencer::Unit::Import::Common::Model::Mixin::Skip::Action
+
+            skip_any_action
 
             uses :resource
+            provides :mapped
 
             def process
               provide_mapped do

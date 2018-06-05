@@ -2,6 +2,10 @@
 
 class User
   module Search
+    extend ActiveSupport::Concern
+
+    # methods defined here are going to extend the class, not the instance of it
+    class_methods do
 
 =begin
 
@@ -22,13 +26,13 @@ returns if user has no permissions to search
 
 =end
 
-    def search_preferences(current_user)
-      return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.user')
-      {
-        prio: 2000,
-        direct_search_index: true,
-      }
-    end
+      def search_preferences(current_user)
+        return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.user')
+        {
+          prio: 2000,
+          direct_search_index: true,
+        }
+      end
 
 =begin
 
@@ -58,61 +62,62 @@ returns
 
 =end
 
-    def search(params)
+      def search(params)
 
-      # get params
-      query = params[:query]
-      limit = params[:limit] || 10
-      offset = params[:offset] || 0
-      current_user = params[:current_user]
+        # get params
+        query = params[:query]
+        limit = params[:limit] || 10
+        offset = params[:offset] || 0
+        current_user = params[:current_user]
 
-      # enable search only for agents and admins
-      return [] if !search_preferences(current_user)
+        # enable search only for agents and admins
+        return [] if !search_preferences(current_user)
 
-      # lookup for roles of permission
-      if params[:permissions].present?
-        params[:role_ids] ||= []
-        role_ids = Role.with_permissions(params[:permissions]).pluck(:id)
-        params[:role_ids].concat(role_ids)
-      end
+        # lookup for roles of permission
+        if params[:permissions].present?
+          params[:role_ids] ||= []
+          role_ids = Role.with_permissions(params[:permissions]).pluck(:id)
+          params[:role_ids].concat(role_ids)
+        end
 
-      # try search index backend
-      if SearchIndexBackend.enabled?
-        query_extention = {}
-        if params[:role_ids].present?
-          query_extention['bool'] = {}
-          query_extention['bool']['must'] = []
-          if !params[:role_ids].is_a?(Array)
-            params[:role_ids] = [params[:role_ids]]
+        # try search index backend
+        if SearchIndexBackend.enabled?
+          query_extention = {}
+          if params[:role_ids].present?
+            query_extention['bool'] = {}
+            query_extention['bool']['must'] = []
+            if !params[:role_ids].is_a?(Array)
+              params[:role_ids] = [params[:role_ids]]
+            end
+            access_condition = {
+              'query_string' => { 'default_field' => 'role_ids', 'query' => "\"#{params[:role_ids].join('" OR "')}\"" }
+            }
+            query_extention['bool']['must'].push access_condition
           end
-          access_condition = {
-            'query_string' => { 'default_field' => 'role_ids', 'query' => "\"#{params[:role_ids].join('" OR "')}\"" }
-          }
-          query_extention['bool']['must'].push access_condition
+          items = SearchIndexBackend.search(query, limit, 'User', query_extention, offset)
+          users = []
+          items.each do |item|
+            user = User.lookup(id: item[:id])
+            next if !user
+            users.push user
+          end
+          return users
         end
-        items = SearchIndexBackend.search(query, limit, 'User', query_extention, offset)
-        users = []
-        items.each do |item|
-          user = User.lookup(id: item[:id])
-          next if !user
-          users.push user
-        end
-        return users
-      end
 
-      # fallback do sql query
-      # - stip out * we already search for *query* -
-      query.delete! '*'
-      users = if params[:role_ids]
-                User.joins(:roles).where('roles.id' => params[:role_ids]).where(
-                  '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-                ).order('updated_at DESC').offset(offset).limit(limit)
-              else
-                User.where(
-                  '(firstname LIKE ? OR lastname LIKE ? OR email LIKE ? OR login LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-                ).order('updated_at DESC').offset(offset).limit(limit)
-              end
-      users
+        # fallback do sql query
+        # - stip out * we already search for *query* -
+        query.delete! '*'
+        users = if params[:role_ids]
+                  User.joins(:roles).where('roles.id' => params[:role_ids]).where(
+                    '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
+                  ).order('updated_at DESC').offset(offset).limit(limit)
+                else
+                  User.where(
+                    '(firstname LIKE ? OR lastname LIKE ? OR email LIKE ? OR login LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
+                  ).order('updated_at DESC').offset(offset).limit(limit)
+                end
+        users
+      end
     end
   end
 end

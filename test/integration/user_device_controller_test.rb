@@ -506,7 +506,28 @@ class UserDeviceControllerTest < ActionDispatch::IntegrationTest
 
   end
 
-  test '12 - login form controller - check no user device logging' do
+  test '12 - login with integer as fingerprint' do
+
+    assert_equal(0, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(0, email_notification_count('user_device_new', @admin.email))
+    assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
+
+    params = { fingerprint: 123_456_789, username: 'user-device-admin', password: 'adminpw' }
+    post '/api/v1/signin', params: params.to_json, headers: @headers
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert(123_456_789, controller.session[:user_device_fingerprint])
+
+    Scheduler.worker(true)
+
+    assert_equal(1, UserDevice.where(user_id: @admin.id).count)
+    assert_equal(0, email_notification_count('user_device_new', @admin.email))
+    assert_equal(0, email_notification_count('user_device_new_location', @admin.email))
+    assert_equal(result.class, Hash)
+    assert_nil(result['error'])
+  end
+
+  test '13 - login form controller - check no user device logging' do
 
     Setting.set('form_ticket_create', true)
 

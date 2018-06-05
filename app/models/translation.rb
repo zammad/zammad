@@ -362,7 +362,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
           translation_raw.each_key do |key|
 
             # if translation target has changes
-            next unless translation_raw[key] != translation.target
+            next if translation_raw[key] == translation.target
 
             # do not update translations which are already changed by user
             if translation.target == translation.target_initial

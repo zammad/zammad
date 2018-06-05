@@ -15,7 +15,7 @@ module Net
       check_response critical { recv_response() }
       do_helo helo_domain
       if starttls_always? or (capable_starttls? and starttls_auto?)
-        unless capable_starttls?
+        if !capable_starttls?
           raise SMTPUnsupportedCommand,
               "STARTTLS is not supported on this server"
         end
@@ -45,7 +45,7 @@ module Net
       authenticate user, secret, (authtype || DEFAULT_AUTH_TYPE) if user
       @started = true
     ensure
-      unless @started
+      if !@started
         # authentication failed, cancel connection.
         s.close if s and not s.closed?
         @socket = nil

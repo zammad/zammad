@@ -9,6 +9,13 @@ class App.SettingsAreaItem extends App.Controller
 
   render: =>
 
+    # input validation for error handling
+    if !@setting.options
+      throw "No such options for #{@setting.name}"
+
+    if !@setting.options.form
+      throw "No such options.form for #{@setting.name}"
+
     # defaults
     directValue = 0
     for item in @setting.options['form']

@@ -502,6 +502,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
     add_index :online_notifications, [:seen]
     add_index :online_notifications, [:created_at]
     add_index :online_notifications, [:updated_at]
+    add_foreign_key :online_notifications, :users
     add_foreign_key :online_notifications, :users, column: :created_by_id
     add_foreign_key :online_notifications, :users, column: :updated_by_id
 

@@ -147,6 +147,18 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
 
   test '03 monitoring with correct token' do
 
+    # test storage usage
+    string = ''
+    10.times do
+      string += 'Some Text Some Text Some Text Some Text Some Text Some Text Some Text Some Text'
+    end
+    Store.add(
+      object: 'User',
+      o_id: 1,
+      data: string,
+      filename: 'filename.txt',
+    )
+
     # health_check
     get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
@@ -168,6 +180,15 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result.key?('last_login'))
     assert(result.key?('counts'))
     assert(result.key?('last_created_at'))
+
+    if ActiveRecord::Base.connection_config[:adapter] == 'postgresql'
+      assert(result['storage'])
+      assert(result['storage'].key?('kB'))
+      assert(result['storage'].key?('MB'))
+      assert(result['storage'].key?('GB'))
+    else
+      assert_not(result['storage'])
+    end
 
     # token
     post '/api/v1/monitoring/token', params: { token: @token }.to_json, headers: @headers
@@ -428,7 +449,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result['message'])
     assert(result['issues'])
     assert_equal(false, result['healthy'])
-    assert_equal("Channel: Email::Notification out  ;unprocessable mails: 1;scheduler not running;Failed to run import backend 'Import::Ldap'. Cause: Some bad error;Stuck import backend 'Import::Ldap' detected. Last update: #{15.minutes.ago}", result['message'])
+    assert_equal("Channel: Email::Notification out  ;unprocessable mails: 1;scheduler not running;Failed to run import backend 'Import::Ldap'. Cause: Some bad error;Stuck import backend 'Import::Ldap' detected. Last update: #{stuck_updated_at_timestamp}", result['message'])
 
     Setting.set('ldap_integration', false)
   end

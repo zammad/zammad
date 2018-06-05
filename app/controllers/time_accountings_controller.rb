@@ -162,6 +162,15 @@ class TimeAccountingsController < ApplicationController
           width: 10,
         },
       ]
+      objects = ObjectManager::Attribute.where(editable: true,
+                                               active: true,
+                                               object_lookup_id: ObjectLookup.lookup(name: 'Ticket').id)
+                                        .pluck(:name, :display, :data_type, :data_option)
+                                        .map { |name, display, data_type, data_option| { name: name, display: display, data_type: data_type, data_option: data_option } }
+      objects.each do |object|
+        header.push({ name: object[:display], width: 10 })
+      end
+
       result = []
       results.each do |row|
         row[:ticket].each_key do |field|
@@ -197,6 +206,26 @@ class TimeAccountingsController < ApplicationController
           row[:ticket]['article_count'],
           row[:ticket]['escalation_at'],
         ]
+
+        # needed to get human values for boolean/select rather than true/false values
+        ticket = Ticket.lookup(id: row[:ticket]['id'])
+
+        # Object Manager attributes
+        # We already queried ObjectManager::Attributes, so we just use objects
+        objects.each do |object|
+          key = object[:name]
+          case object[:data_type]
+          when 'boolean', 'select'
+            value = object[:data_option]['options'][ticket.send(key.to_sym)]
+            value.present? ? result_row.push(value) : result_row.push('')
+          when 'datetime', 'date'
+            row[:ticket][key].present? ? result_row.push(row[:ticket][key].to_time.iso8601) : result_row.push('')
+          else
+            # for text, integer and tree select
+            row[:ticket][key].present? ? result_row.push(row[:ticket][key]) : result_row.push('')
+          end
+        end
+
         result.push result_row
       end
       content = sheet("By Ticket #{year}-#{month}", header, result)

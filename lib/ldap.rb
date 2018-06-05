@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-require 'net/ldap'
-require 'net/ldap/entry'
+require_dependency 'net/ldap'
+require_dependency 'net/ldap/entry'
 
 # Class for establishing LDAP connections. A wrapper around Net::LDAP needed for Auth and Sync.
 # ATTENTION: Loads custom 'net/ldap/entry' from 'lib/core_ext' which extends the Net::LDAP::Entry class.

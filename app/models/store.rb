@@ -1,8 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
+require_dependency 'store/object'
+require_dependency 'store/file'
+
 class Store < ApplicationModel
-  load 'store/object.rb'
-  load 'store/file.rb'
 
   # rubocop:disable Rails/InverseOf
   belongs_to :store_object, class_name: 'Store::Object'
@@ -21,6 +22,7 @@ add an attachment to storage
     object: 'Ticket::Article',
     o_id: 4711,
     data: binary_string,
+    filename: 'filename.txt',
     preferences: {
       content_type: 'image/png',
       content_id: 234,

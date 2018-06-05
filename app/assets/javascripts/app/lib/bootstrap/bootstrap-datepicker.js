@@ -27,6 +27,7 @@
 		- fix that place method doesn't think that the container is the window, but rather the real window is the window
 		- added rerender method to show correct today if task is longer open the 24 hours
 		- scroll into view
+		- fix vertical auto position
  */
 
 (function(factory){
@@ -689,7 +690,9 @@
 				visualPadding = 10,
 				container = $(this.o.container),
 				windowWidth = $(window).width(),
-				scrollTop = container.scrollTop(),
+				scrollTop = container.scrollParent().scrollTop(),
+				bottomEdge = container.offset().top + container.height(),
+				scrollHeight = container.scrollParent().prop('scrollHeight'),
 				appendOffset = container.offset();
 
 			var parentsZindex = [];
@@ -738,10 +741,10 @@
 			// auto y orientation is best-situation: top or bottom, no fudging,
 			// decision based on which shows more of the calendar
 			var yorient = this.o.orientation.y,
-				top_overflow;
+				space_below;
 			if (yorient === 'auto'){
-				top_overflow = -scrollTop + top - calendarHeight;
-				yorient = top_overflow < 0 ? 'bottom' : 'top';
+				space_below = scrollHeight - bottomEdge - scrollTop;
+				yorient = space_below > calendarHeight ? 'bottom' : 'top';
 			}
 
 			this.picker.addClass('datepicker-orient-' + yorient);

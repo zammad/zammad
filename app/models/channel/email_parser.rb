@@ -2,9 +2,6 @@
 
 # encoding: utf-8
 
-require 'mail'
-require 'encode'
-
 class Channel::EmailParser
 
 =begin
@@ -71,6 +68,11 @@ class Channel::EmailParser
 
   def parse(msg)
     data = {}
+
+    # Rectify invalid encodings
+    encoding = CharDet.detect(msg)['encoding']
+    msg.force_encoding(encoding) if !msg.valid_encoding?
+
     mail = Mail.new(msg)
 
     # set all headers
@@ -680,6 +682,10 @@ returns
       end
     end
 
+    ticket.reload
+    article.reload
+    session_user.reload
+
     # run postmaster post filter
     filters = {}
     Setting.where(area: 'Postmaster::PostFilter').order(:name).each do |setting|
@@ -866,7 +872,7 @@ module Mail
   module Encodings
     def self.value_decode(str)
       # Optimization: If there's no encoded-words in the string, just return it
-      return str unless str.index('=?')
+      return str if !str.index('=?')
 
       str = str.gsub(/\?=(\s*)=\?/, '?==?') # Remove whitespaces between 'encoded-word's
 
