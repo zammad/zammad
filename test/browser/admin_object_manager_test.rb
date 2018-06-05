@@ -72,7 +72,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -140,7 +140,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -275,7 +275,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -354,7 +354,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -419,7 +419,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -451,7 +451,7 @@ class AdminObjectManagerTest < TestCase
     click(css: '.modal .js-submit')
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -482,7 +482,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
