@@ -1,0 +1,21 @@
+<div>
+<p class="alert alert--danger js-error hide"></p>
+
+<p>
+<% if @result.stats: %>
+  <%- @T('The test run was successful.') %>
+  <%- @T('The following changes are made:') %>
+  <ul>
+  <% if @result.stats.deleted isnt undefined: %>
+    <li><%- @T('%s Object(s) are deleted.', @result.stats.deleted) %></li>
+  <% end %>
+  <% if @result.stats.created isnt undefined: %>
+    <li><%- @T('%s Object(s) are created.', @result.stats.created) %></li>
+  <% end %>
+  <% if @result.stats.updated isnt undefined: %>
+    <li><%- @T('%s Object(s) are updated.', @result.stats.updated) %></li>
+  <% end %>
+<% end %>
+</p>
+
+</div>

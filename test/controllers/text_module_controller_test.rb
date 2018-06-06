@@ -102,7 +102,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
 
     # invalid file
     csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'text_module_simple_col_not_existing.csv'), 'text/csv')
-    post '/api/v1/text_modules/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    post '/api/v1/text_modules/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -116,7 +116,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
 
     # valid file try
     csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'text_module_simple.csv'), 'text/csv')
-    post '/api/v1/text_modules/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    post '/api/v1/text_modules/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -130,7 +130,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
 
     # valid file
     csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'text_module_simple.csv'), 'text/csv')
-    post '/api/v1/text_modules/import', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    post '/api/v1/text_modules/import', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)

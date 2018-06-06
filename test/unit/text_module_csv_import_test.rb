@@ -22,6 +22,34 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
     assert_not(header.include?('customer'))
   end
 
+  test 'empty payload' do
+    csv_string = ''
+    result = TextModule.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert_nil(result[:records])
+    assert_equal('failed', result[:result])
+    assert_equal('Unable to parse empty file/string for TextModule.', result[:errors][0])
+
+    csv_string = 'name;keywords;content;note;active;'
+    result = TextModule.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert(result[:records].blank?)
+    assert_equal('failed', result[:result])
+    assert_equal('No records found in file/string for TextModule.', result[:errors][0])
+  end
+
   test 'simple import' do
 
     csv_string = "name;keywords;content;note;active;\nsome name1;keyword1;\"some\ncontent1\";-;\nsome name2;keyword2;some content<br>test123\n"

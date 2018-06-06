@@ -629,10 +629,11 @@ class TicketsController < ApplicationController
     if Setting.get('import_mode') != true
       raise 'Only can import tickets if system is in import mode.'
     end
+    string = params[:data] || params[:file].read.force_encoding('utf-8')
     result = Ticket.csv_import(
-      string: params[:file].read.force_encoding('utf-8'),
+      string: string,
       parse_params: {
-        col_sep: ';',
+        col_sep: params[:col_sep] || ',',
       },
       try: params[:try],
     )

@@ -164,11 +164,11 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
   def import_example
     permission_check('admin.text_module')
     csv_string = TextModule.csv_example(
-      col_sep: ',',
+      col_sep: params[:col_sep] || ',',
     )
     send_data(
       csv_string,
-      filename: 'example.csv',
+      filename: 'text_module-example.csv',
       type: 'text/csv',
       disposition: 'attachment'
     )
@@ -186,10 +186,11 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password} -H "Co
   # @response_message 401 Invalid session.
   def import_start
     permission_check('admin.text_module')
+    string = params[:data] || params[:file].read.force_encoding('utf-8')
     result = TextModule.csv_import(
-      string: params[:file].read.force_encoding('utf-8'),
+      string: string,
       parse_params: {
-        col_sep: ';',
+        col_sep: params[:col_sep] || ',',
       },
       try: params[:try],
     )

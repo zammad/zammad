@@ -45,6 +45,7 @@ returns
 =end
 
     def csv_import(data)
+      errors = []
 
       if data[:file].present?
         raise Exceptions::UnprocessableEntity, "No such file '#{data[:file]}'" if !File.exist?(data[:file])
@@ -56,13 +57,25 @@ returns
         end
       end
       if data[:string].blank?
-        raise Exceptions::UnprocessableEntity, 'Unable to parse empty file/string!'
+        errors.push "Unable to parse empty file/string for #{new.class}."
+        result = {
+          errors: errors,
+          try: data[:try],
+          result: 'failed',
+        }
+        return result
       end
 
       rows = ::CSV.parse(data[:string], data[:parse_params])
       header = rows.shift
       if header.blank?
-        raise Exceptions::UnprocessableEntity, 'Unable to parse file/string without header!'
+        errors.push "Unable to parse file/string without header for #{new.class}."
+        result = {
+          errors: errors,
+          try: data[:try],
+          result: 'failed',
+        }
+        return result
       end
       header.each do |item|
         if item.respond_to?(:strip!)
@@ -72,6 +85,16 @@ returns
         item.downcase!
       end
 
+      if rows[0].blank?
+        errors.push "No records found in file/string for #{new.class}."
+        result = {
+          errors: errors,
+          try: data[:try],
+          result: 'failed',
+        }
+        return result
+      end
+
       # get payload based on csv
       payload = []
       rows.each do |row|
@@ -79,6 +102,7 @@ returns
           payload_last = payload.last
           row.each_with_index do |item, count|
             next if item.blank?
+            next if header[count].nil?
             if payload_last[header[count].to_sym].class != Array
               payload_last[header[count].to_sym] = [payload_last[header[count].to_sym]]
             end
@@ -110,7 +134,6 @@ returns
         created: 0,
         updated: 0,
       }
-      errors = []
       line_count = 0
       payload.each do |attributes|
         line_count += 1

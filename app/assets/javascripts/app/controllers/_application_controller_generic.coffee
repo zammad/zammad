@@ -98,6 +98,7 @@ class App.ControllerGenericIndex extends App.Controller
   events:
     'click [data-type=edit]': 'edit'
     'click [data-type=new]': 'new'
+    'click [data-type=import]': 'import'
     'click .js-description': 'description'
 
   constructor: ->
@@ -216,6 +217,10 @@ class App.ControllerGenericIndex extends App.Controller
       container:     @container
       large:         @large
     )
+
+  import: (e) ->
+    e.preventDefault()
+    @importCallback()
 
   description: (e) =>
     new App.ControllerGenericDescription(
@@ -1275,3 +1280,123 @@ class App.ObserverActionRow extends App.ObserverController
             e.preventDefault()
             item.callback(object)
         )
+
+class App.Import extends App.ControllerModal
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: 'Import'
+  head: 'Import'
+  large: true
+  templateDirectory: 'generic/object_import'
+  baseUrl: '/api/v1/text_modules'
+
+  content: =>
+
+    # show start dialog
+    content = $(App.view("#{@templateDirectory}/index")(
+      head: 'Import'
+      import_example_url: "#{@baseUrl}/import_example"
+    ))
+
+    # check if data is processing...
+    if @data
+      result = App.view("#{@templateDirectory}/result")(
+        @data
+      )
+      content.find('.js-error').html(result)
+      if result
+        content.find('.js-error').removeClass('hide')
+      else
+        content.find('.js-error').addClass('hide')
+    content
+
+  onSubmit: (e) =>
+    params = new FormData($(e.currentTarget).closest('form').get(0))
+    params.set('try', true)
+    if _.isEmpty(params.get('data'))
+      params.delete('data')
+    @ajax(
+      id:          'csv_import'
+      type:        'POST'
+      url:         "#{@baseUrl}/import"
+      processData: false
+      contentType: false
+      cache:       false
+      data:        params
+      success:     (data, status, xhr) =>
+        if data.result is 'success'
+          new App.ImportTryResult(
+            container: @el.closest('.content')
+            result: data
+            params: params
+            templateDirectory: @templateDirectory
+            baseUrl: @baseUrl
+          )
+          @close()
+          return
+        @data = data
+        @update()
+    )
+
+class App.ImportTryResult extends App.ControllerModal
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: 'Yes, start real import.'
+  head: 'Import'
+  large: true
+  templateDirectory: 'generic/object_import/'
+  baseUrl: '/api/v1/text_modules'
+
+  content: =>
+
+    # show start dialog
+    content = $(App.view("#{@templateDirectory}/import_try")(
+      head: 'Import'
+      import_example_url: "#{@baseUrl}/import"
+      result: @result
+    ))
+    content
+
+  onSubmit: (e) =>
+    @params.set('try', false)
+    @ajax(
+      id:          'csv_import'
+      type:        'POST'
+      url:         "#{@baseUrl}/import"
+      processData: false
+      contentType: false
+      cache:       false
+      data:        @params
+      success:     (data, status, xhr) =>
+        if data.result is 'success'
+          new App.ImportResult(
+            container: @el.closest('.content')
+            result: data
+            params: @params
+            templateDirectory: @templateDirectory
+            baseUrl: @baseUrl
+          )
+          @close()
+          return
+        @data = data
+        @update()
+    )
+
+class App.ImportResult extends App.ControllerModal
+  buttonClose: true
+  buttonCancel: true
+  buttonSubmit: 'Close'
+  head: 'Import'
+  large: true
+  templateDirectory: 'generic/object_import/'
+
+  content: =>
+
+    content = $(App.view("#{@templateDirectory}/imported")(
+      head: 'Imported'
+      result: @result
+    ))
+    content
+
+  onSubmit: (e) =>
+    @close()
