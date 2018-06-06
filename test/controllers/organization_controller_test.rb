@@ -532,7 +532,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # invalid file
     csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple_col_not_existing.csv'), 'text/csv')
-    post '/api/v1/organizations/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -546,7 +546,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # valid file try
     csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
-    post '/api/v1/organizations/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
@@ -560,7 +560,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # valid file
     csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
-    post '/api/v1/organizations/import', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    post '/api/v1/organizations/import', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)

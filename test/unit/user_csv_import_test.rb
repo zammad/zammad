@@ -17,6 +17,34 @@ class UserCsvImportTest < ActiveSupport::TestCase
     assert(header.include?('organization'))
   end
 
+  test 'empty payload' do
+    csv_string = ''
+    result = User.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert_nil(result[:records])
+    assert_equal('failed', result[:result])
+    assert_equal('Unable to parse empty file/string for User.', result[:errors][0])
+
+    csv_string = "login;firstname;lastname;email;active;\n"
+    result = User.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert(result[:records].blank?)
+    assert_equal('failed', result[:result])
+    assert_equal('No records found in file/string for User.', result[:errors][0])
+  end
+
   test 'simple import' do
 
     csv_string = "login;firstname;lastname;email;active;\nuser-simple-import1;firstname-simple-import1;lastname-simple-import1;user-simple-import1@example.com;true\nuser-simple-import2;firstname-simple-import2;lastname-simple-import2;user-simple-import2@example.com;false\n"
