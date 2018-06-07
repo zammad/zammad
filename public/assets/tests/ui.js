@@ -1,3 +1,34 @@
+// date picker timezone conversion for display
+test("date picker", function() {
+  Date.prototype.getTimezoneOffset2 = Date.prototype.getTimezoneOffset
+  Date.prototype.getTimezoneOffset = function() { return -360 }
+
+  obj_date_time = {
+    name: 'test',
+    value: '2018-04-06T20:45:00.000Z'
+  }
+
+  el_date_time = App.UiElement.datetime.render(obj_date_time)
+
+  date_time_parsed = new Date(Date.parse(obj_date_time.value))
+  date_time_input = el_date_time.find('.js-datepicker').datepicker('getDate')
+  equal(date_time_parsed.getDate(), date_time_input.getDate(), 'datetime matching day')
+
+  obj_date = {
+    name: 'test',
+    value: '2018-06-06'
+  }
+
+  el_date = App.UiElement.date.render(obj_date)
+
+  date_parsed = new Date(Date.parse(obj_date.value))
+  date_input = el_date.find('.js-datepicker').datepicker('getUTCDate')
+  equal(date_parsed.getDate(), date_input.getDate(), 'date matching day')
+
+  Date.prototype.getTimezoneOffset = Date.prototype.getTimezoneOffset2
+  Date.prototype.getTimezoneOffset2 = undefined
+})
+
 // pretty date
 test("check pretty date", function() {
   var current = new Date()
