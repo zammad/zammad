@@ -400,7 +400,7 @@ cleanup html string:
                 end
 
     uri.to_s
-  rescue URI::InvalidURIError
+  rescue URI::Error
     url
   end
 
@@ -485,6 +485,7 @@ satinize style of img tags
   end
 
   private_class_method :cleanup_target
+  private_class_method :sanitize_attachment_disposition
   private_class_method :add_link
   private_class_method :url_same?
   private_class_method :html_decode
