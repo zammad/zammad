@@ -2776,6 +2776,34 @@ Some Text',
           ],
         },
       },
+      {
+        data: <<~RAW_MAIL.chomp,
+          From: me@example.com
+          To: customer@example.com
+          Subject: some subject
+          Content-Type: text/html; charset=us-ascii; format=flowed
+
+          <html>
+            <body>
+              <a href="mailto:testäöü@example.com">test</a>
+            </body>
+          </html>
+          RAW_MAIL
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'some subject',
+          },
+          1 => {
+            content_type: 'text/html',
+            body: 'testäöü@example.com',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+      },
     ]
     assert_process(files)
   end

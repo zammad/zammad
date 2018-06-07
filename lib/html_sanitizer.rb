@@ -373,34 +373,29 @@ cleanup html string:
     string.gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>').gsub('&quot;', '"').gsub('&nbsp;', ' ')
   end
 
-  def self.cleanup_target(string, keep_spaces: false)
-    string = CGI.unescape(string).utf8_encode(fallback: :read_as_sanitized_binary)
-    blank_regex = if keep_spaces
-                    /\t|\n|\r/
-                  else
-                    /[[:space:]]|\t|\n|\r/
-                  end
-    cleaned_string = string.strip.gsub(blank_regex, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '').delete("\u0000")
+  def self.cleanup_target(string, **options)
+    cleaned_string = CGI.unescape(string).utf8_encode(fallback: :read_as_sanitized_binary)
+    cleaned_string = cleaned_string.delete(' ') unless options[:keep_spaces]
+    cleaned_string = cleaned_string.strip
+                                   .delete("\t\n\r\u0000")
+                                   .gsub(%r{/\*.*?\*/}, '')
+                                   .gsub(/<!--.*?-->/, '')
+                                   .gsub(/\[.+?\]/, '')
+
     sanitize_attachment_disposition(cleaned_string)
   end
 
   def self.sanitize_attachment_disposition(url)
     uri = URI(url)
-    return url if uri.host != Setting.get('fqdn')
 
-    params = CGI.parse(uri.query || '')
-    if params.key?('disposition')
-      params['disposition'] = 'attachment'
+    if uri.host == Setting.get('fqdn') && uri.query.present?
+      params = CGI.parse(uri.query || '')
+                  .tap { |p| p.merge!('disposition' => 'attachment') if p.include?('disposition') }
+      uri.query = URI.encode_www_form(params)
     end
 
-    uri.query = if params.blank?
-                  nil
-                else
-                  URI.encode_www_form(params)
-                end
-
     uri.to_s
-  rescue URI::InvalidURIError
+  rescue URI::Error
     url
   end
 
@@ -485,6 +480,7 @@ satinize style of img tags
   end
 
   private_class_method :cleanup_target
+  private_class_method :sanitize_attachment_disposition
   private_class_method :add_link
   private_class_method :url_same?
   private_class_method :html_decode
