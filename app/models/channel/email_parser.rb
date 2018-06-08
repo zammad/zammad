@@ -278,11 +278,24 @@ class Channel::EmailParser
     # get mail date
     begin
       if mail.date
-        data[:date] = Time.zone.parse(mail.date.to_s)
+        date = Time.zone.parse(mail.date.to_s)
       end
     rescue
-      data[:date] = nil
+      date = nil
     end
+    if !date
+      data[:received_header_date] = data[:received].to_s.split("; ")[1]    
+      ['date', 'delivery-date', 'received_header_date'].each do |item|
+        next if data[item.to_sym].blank?
+        begin
+          date = Time.zone.parse(data[item.to_sym].to_s)
+        rescue
+          date = nil
+        end
+        break if date
+      end
+    end
+    data[:date] = date
 
     # remember original mail instance
     data[:mail_instance] = mail
