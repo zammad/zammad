@@ -259,10 +259,10 @@ returns
     local_message_id = message_meta.attr['ENVELOPE'].message_id
     if local_message_id.blank?
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
-      if !message_meta.attr['ENVELOPE'].from.nil?
-        fqdn = message_meta.attr['ENVELOPE'].from.split('@')[1]
+      if message_meta.attr['ENVELOPE'].from
+        fqdn = message_meta.attr['ENVELOPE'].from.host
       end
-      if fqdn.nil?
+      if fqdn.blank?
         fqdn = 'zammad_generated'
       end
       local_message_id = 'gen-'+Digest::MD5.hexdigest(msg)+'@'+fqdn

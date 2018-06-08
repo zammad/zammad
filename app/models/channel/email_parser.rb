@@ -139,10 +139,10 @@ class Channel::EmailParser
     # compat headers
     data[:message_id] = data['message-id'.to_sym]
     if data[:message_id].blank?
-      if !from.nil?
-        fqdn = from.split('@')[1]
+      if data[:from]
+        fqdn = Mail::Address.new(data[:from]).domain
       end
-      if fqdn.nil?
+      if fqdn.blank?
         fqdn = 'zammad_generated'
       end
       data[:message_id] = 'gen-'+Digest::MD5.hexdigest(msg)+'@'+fqdn
