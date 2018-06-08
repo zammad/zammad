@@ -264,7 +264,11 @@ example
         filter = ['SINCE', Net::IMAP.format_date(channel.preferences[:last_fetch] - 2.days)]
       end
 
-      message_ids = @imap.search(filter)
+      begin
+        message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
+      rescue
+        message_ids = @imap.search(filter)
+      end
 
       count_all     = message_ids.count
       count         = 0
