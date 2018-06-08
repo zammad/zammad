@@ -259,8 +259,8 @@ returns
     local_message_id = message_meta.attr['ENVELOPE'].message_id
     if local_message_id.blank?
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
-      if message_meta.attr['ENVELOPE'].from
-        fqdn = message_meta.attr['ENVELOPE'].from.host
+      if message_meta.attr['ENVELOPE'].from[0]
+        fqdn = message_meta.attr['ENVELOPE'].from[0][:host]
       end
       if fqdn.blank?
         fqdn = 'zammad_generated'
