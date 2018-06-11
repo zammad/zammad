@@ -421,7 +421,7 @@ class App.TicketZoom extends App.Controller
         object_id:   @ticket_id
         overview_id: @overview_id
         el:          elLocal.find('.js-ticketTitleContainer')
-        taskKey:    @taskKey
+        taskKey:     @taskKey
       )
 
       new App.TicketZoomMeta(
@@ -434,7 +434,7 @@ class App.TicketZoom extends App.Controller
         el:          elLocal.find('.js-attributeBar')
         overview_id: @overview_id
         callback:    @submit
-        taskKey:    @taskKey
+        taskKey:     @taskKey
       )
       #if @shown
       #  @attributeBar.start()
@@ -448,7 +448,7 @@ class App.TicketZoom extends App.Controller
         formMeta:  @formMeta
         form_id:   @form_id
         defaults:  @taskGet('article')
-        taskKey:  @taskKey
+        taskKey:   @taskKey
         ui:        @
       )
 

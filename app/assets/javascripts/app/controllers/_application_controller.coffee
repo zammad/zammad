@@ -138,6 +138,12 @@ class App.Controller extends Spine.Controller
       App.Event.trigger('menu:render')
     @delay(delay, 150)
 
+  closeTab: (key = @taskKey, dest) =>
+    return if !key?
+    App.TaskManager.remove(key)
+    dest ?= App.TaskManager.nextTaskUrl() || '#'
+    @navigate dest
+
   scrollTo: (x = 0, y = 0, delay = 0) ->
     a = ->
       window.scrollTo(x, y)

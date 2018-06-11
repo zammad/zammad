@@ -7,4 +7,5 @@ class Macro < ApplicationModel
 
   store     :perform
   validates :name, presence: true
+  validates :ux_flow_next_up, inclusion: { in: %w[none next_task next_from_overview] }
 end
