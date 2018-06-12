@@ -1,0 +1,6 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"Smith, Karoline, Example DE" <Karoline.Smith@example.com>'
+from_email: Karoline.Smith@example.com
+from_display_name: Smith, Karoline, Example DE
+subject: 'AW: One Net Business'
+body: no visible content

@@ -144,7 +144,7 @@ class Ldap
           next if value.blank?
           next if value[0].blank?
 
-          example_value         = value[0].force_encoding('UTF-8').encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+          example_value         = value[0].force_encoding('UTF-8').utf8_encode(fallback: :read_as_sanitized_binary)
           attributes[attribute] = "#{attribute} (e. g. #{example_value})"
         end
 

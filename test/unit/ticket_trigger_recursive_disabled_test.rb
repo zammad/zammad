@@ -707,7 +707,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -833,21 +833,21 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     assert_equal('text/html', article_p.content_type)
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('new', ticket_p.state.name)
     assert_equal(2, ticket_p.articles.count)
 
     # process mail with Precedence header (no auto response)
-    content = IO.binread('test/fixtures/ticket_trigger/mail2.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail2.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('new', ticket_p.state.name)
     assert_equal(1, ticket_p.articles.count)
 
     # process mail with abuse@ (no auto response)
-    content = IO.binread('test/fixtures/ticket_trigger/mail3.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail3.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('new', ticket_p.state.name)
@@ -926,7 +926,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -991,7 +991,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -1076,7 +1076,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -1156,7 +1156,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal(1, ticket_p.articles.count)
@@ -4234,7 +4234,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, IO.binread('test/fixtures/mail65.box'))
+    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail065.box')))
 
     assert_equal('aaäöüßad asd', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -4275,7 +4275,7 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, IO.binread('test/fixtures/mail65.box'))
+    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail065.box')))
 
     assert_equal('aaäöüßad asd', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')

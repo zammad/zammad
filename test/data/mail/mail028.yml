@@ -1,0 +1,7 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: kontakt@example.de
+from_email: kontakt@example.de
+from_display_name: ''
+subject: Bewerbung auf Ihr Stellenangebot
+to: info@znuny.inc
+body: no visible content

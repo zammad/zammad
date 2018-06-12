@@ -1,0 +1,8 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Martin Edenhofer <me@example.com>
+from_email: me@example.com
+from_display_name: Martin Edenhofer
+subject: 'test 1234 äöü sig test with attachment '
+to: Martin Edenhofer <me@example.net>
+body: test 1234 äöü sig test with attachment<div><img src="cid:2ECB31C9-0E1D-4EBF-BD02-8D8B24208A3E@openvpn"
+  style="width:320px;height:213px;"></div>

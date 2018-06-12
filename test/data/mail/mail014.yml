@@ -1,0 +1,14 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"Müller, Bernd" <Bernd.Mueller@example.com>'
+from_email: Bernd.Mueller@example.com
+from_display_name: Müller, Bernd
+subject: 'AW: OTRS [Ticket#118192]'
+to: "'Martin Edenhofer via Znuny Sales' <sales@znuny.com>"
+content_type: text/plain
+body: |
+  äöüß ad asd
+
+  -Martin
+
+  --
+  Old programmers never die. They just branch to a new address.

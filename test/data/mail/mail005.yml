@@ -1,0 +1,6 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: marc.smith@example.com (Marc Smith)
+from_email: marc.smith@example.com
+from_display_name: Marc Smith
+subject: 'Re: XXXX Betatest Ticket Templates [Ticket#11162]'
+content_type: text/plain
