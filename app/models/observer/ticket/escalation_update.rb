@@ -3,11 +3,7 @@
 class Observer::Ticket::EscalationUpdate < ActiveRecord::Observer
   observe 'ticket'
 
-  def after_create(record)
-    _check(record)
-  end
-
-  def after_update(record)
+  def after_commit(record)
     _check(record)
   end
 
@@ -16,9 +12,11 @@ class Observer::Ticket::EscalationUpdate < ActiveRecord::Observer
   def _check(record)
 
     # return if we run import mode
-    return false if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
-    return false if !record.saved_changes?
+    return true if record.destroyed?
+
+    return true if !record.saved_changes?
 
     record.escalation_calculation
   end
