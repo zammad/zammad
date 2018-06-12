@@ -1107,6 +1107,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
         col_sep: params[:col_sep] || ',',
       },
       try: params[:try],
+      delete: params[:delete],
     )
     render json: result, status: :ok
   end

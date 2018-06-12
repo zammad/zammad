@@ -1285,6 +1285,7 @@ class App.Import extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: 'Import'
+  autoFocusOnFirstInput: false
   head: 'Import'
   large: true
   templateDirectory: 'generic/object_import'
@@ -1296,6 +1297,7 @@ class App.Import extends App.ControllerModal
     content = $(App.view("#{@templateDirectory}/index")(
       head: 'Import'
       import_example_url: "#{@baseUrl}/import_example"
+      deleteOption: @deleteOption
     ))
 
     # check if data is processing...
@@ -1342,6 +1344,7 @@ class App.ImportTryResult extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: 'Yes, start real import.'
+  autoFocusOnFirstInput: false
   head: 'Import'
   large: true
   templateDirectory: 'generic/object_import/'
@@ -1386,6 +1389,7 @@ class App.ImportResult extends App.ControllerModal
   buttonClose: true
   buttonCancel: true
   buttonSubmit: 'Close'
+  autoFocusOnFirstInput: false
   head: 'Import'
   large: true
   templateDirectory: 'generic/object_import/'

@@ -51,6 +51,13 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
   end
 
   test 'simple import' do
+    TextModule.create!(
+      name: 'nsome name1',
+      content: 'nsome name1',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
 
     csv_string = "name;keywords;content;note;active;\nsome name1;keyword1;\"some\ncontent1\";-;\nsome name2;keyword2;some content<br>test123\n"
     result = TextModule.csv_import(
@@ -92,6 +99,84 @@ class TextModuleCsvImportTest < ActiveSupport::TestCase
     assert_equal(text_module2.keywords, 'keyword2')
     assert_equal(text_module2.content, 'some content<br>test123')
     assert_equal(text_module2.active, true)
+
+    text_module1.destroy!
+    text_module2.destroy!
+  end
+
+  test 'simple import with delete' do
+    assert_equal(0, TextModule.count)
+
+    TextModule.create!(
+      name: 'some name1',
+      content: 'some name1',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    TextModule.create!(
+      name: 'name should be deleted 2',
+      content: 'name should be deleted 1',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    csv_string = "name;keywords;content;note;active;\nsome name1;keyword1;\"some\ncontent1\";-;\nsome name2;keyword2;some content<br>test123\n"
+    result = TextModule.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+      delete: true,
+    )
+
+    assert_equal(true, result[:try])
+    assert(result[:stats])
+    assert_equal(2, result[:stats][:created])
+    assert_equal(0, result[:stats][:updated])
+    assert_equal(2, result[:stats][:deleted])
+
+    assert_equal(2, result[:records].count)
+    assert_equal('success', result[:result])
+
+    assert(TextModule.find_by(name: 'some name1'))
+    assert_nil(TextModule.find_by(name: 'some name2'))
+
+    result = TextModule.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: false,
+      delete: true,
+    )
+
+    assert_equal(false, result[:try])
+    assert(result[:stats])
+    assert_equal(2, result[:stats][:created])
+    assert_equal(0, result[:stats][:updated])
+    assert_equal(2, result[:stats][:deleted])
+    assert_equal(2, result[:records].count)
+    assert_equal('success', result[:result])
+
+    assert_equal(2, TextModule.count)
+
+    text_module1 = TextModule.find_by(name: 'some name1')
+    assert(text_module1)
+    assert_equal(text_module1.name, 'some name1')
+    assert_equal(text_module1.keywords, 'keyword1')
+    assert_equal(text_module1.content, 'some<br>content1')
+    assert_equal(text_module1.active, true)
+    text_module2 = TextModule.find_by(name: 'some name2')
+    assert(text_module2)
+    assert_equal(text_module2.name, 'some name2')
+    assert_equal(text_module2.keywords, 'keyword2')
+    assert_equal(text_module2.content, 'some content<br>test123')
+    assert_equal(text_module2.active, true)
+
+    assert_nil(TextModule.find_by(name: 'name should be deleted 2'))
 
     text_module1.destroy!
     text_module2.destroy!

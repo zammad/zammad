@@ -12,6 +12,7 @@ class Index extends App.ControllerSubContent
         new App.Import(
           baseUrl: '/api/v1/text_modules'
           container: @el.closest('.content')
+          deleteOption: true
         )
       pageData:
         home: 'text_modules'

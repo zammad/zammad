@@ -441,4 +441,20 @@ class UserCsvImportTest < ActiveSupport::TestCase
     orgaization2.destroy!
   end
 
+  test 'simple import with delete' do
+    csv_string = "login;firstname;lastname;email\nuser-simple-import-fixed1;firstname-simple-import-fixed1;lastname-simple-import-fixed1;user-simple-import-fixed1@example.com\nuser-simple-import-fixed2;firstname-simple-import-fixed2;lastname-simple-import-fixed2;user-simple-import-fixed2@example.com\n"
+    result = User.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+      delete: true,
+    )
+
+    assert_equal(true, result[:try])
+    assert_equal('failed', result[:result])
+    assert_equal('Delete is not possible for User.', result[:errors][0])
+  end
+
 end
