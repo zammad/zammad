@@ -375,7 +375,7 @@ cleanup html string:
 
   def self.cleanup_target(string, **options)
     cleaned_string = CGI.unescape(string).utf8_encode(fallback: :read_as_sanitized_binary)
-    cleaned_string = cleaned_string.delete(' ') unless options[:keep_spaces]
+    cleaned_string = cleaned_string.gsub(/[[:space:]]/, '') if !options[:keep_spaces]
     cleaned_string = cleaned_string.strip
                                    .delete("\t\n\r\u0000")
                                    .gsub(%r{/\*.*?\*/}, '')
