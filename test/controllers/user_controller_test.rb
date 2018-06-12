@@ -985,7 +985,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_equal('true', result['try'])
+    assert_equal(true, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('failed', result['result'])
     assert_equal(2, result['errors'].count)
@@ -1000,7 +1000,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_equal('true', result['try'])
+    assert_equal(true, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('success', result['result'])
 
@@ -1015,7 +1015,7 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_nil(result['try'])
+    assert_equal(false, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('success', result['result'])
 

@@ -16,6 +16,7 @@ module CanCsvImport
       col_sep: ',',
     },
     try: true,
+    delete: false,
   )
 
   result = Model.csv_import(
@@ -24,6 +25,7 @@ module CanCsvImport
       col_sep: ',',
     },
     try: true,
+    delete: false,
   )
 
   result = TextModule.csv_import(
@@ -32,6 +34,7 @@ module CanCsvImport
       col_sep: ',',
     },
     try: false,
+    delete: false,
   )
 
 returns
@@ -45,7 +48,25 @@ returns
 =end
 
     def csv_import(data)
+      try = true
+      if data[:try] != 'true' && data[:try] != true
+        try = false
+      end
+      delete = false
+      if data[:delete] == true || data[:delete] == 'true'
+        delete = true
+      end
+
       errors = []
+      if delete == true && @csv_delete_possible != true
+        errors.push "Delete is not possible for #{new.class}."
+        result = {
+          errors: errors,
+          try: try,
+          result: 'failed',
+        }
+        return result
+      end
 
       if data[:file].present?
         raise Exceptions::UnprocessableEntity, "No such file '#{data[:file]}'" if !File.exist?(data[:file])
@@ -60,7 +81,7 @@ returns
         errors.push "Unable to parse empty file/string for #{new.class}."
         result = {
           errors: errors,
-          try: data[:try],
+          try: try,
           result: 'failed',
         }
         return result
@@ -72,7 +93,7 @@ returns
         errors.push "Unable to parse file/string without header for #{new.class}."
         result = {
           errors: errors,
-          try: data[:try],
+          try: try,
           result: 'failed',
         }
         return result
@@ -89,7 +110,7 @@ returns
         errors.push "No records found in file/string for #{new.class}."
         result = {
           errors: errors,
-          try: data[:try],
+          try: try,
           result: 'failed',
         }
         return result
@@ -127,13 +148,22 @@ returns
         payload.push attributes
       end
 
-      # create or update records
-      csv_object_ids_ignored = @csv_object_ids_ignored || []
-      records = []
       stats = {
         created: 0,
         updated: 0,
       }
+
+      # delete
+      if delete == true
+        stats[:deleted] = self.count
+        if try == false
+          destroy_all
+        end
+      end
+
+      # create or update records
+      csv_object_ids_ignored = @csv_object_ids_ignored || []
+      records = []
       line_count = 0
       payload.each do |attributes|
         line_count += 1
@@ -166,7 +196,7 @@ returns
         # create object
         Transaction.execute(disable_notification: true, reset_user_id: true) do
           UserInfo.current_user_id = clean_params[:updated_by_id] || clean_params[:created_by_id]
-          if !record
+          if !record || delete == true
             stats[:created] += 1
             begin
               csv_verify_attributes(clean_params)
@@ -177,7 +207,7 @@ returns
                 clean_params[:updated_by_id] = 1
               end
               record = new(clean_params)
-              next if data[:try] == 'true' || data[:try] == true
+              next if try == true
               record.associations_from_param(attributes)
               record.save!
             rescue => e
@@ -186,7 +216,7 @@ returns
             end
           else
             stats[:updated] += 1
-            next if data[:try] == 'true' || data[:try] == true
+            next if try == true
             begin
               csv_verify_attributes(clean_params)
               clean_params = param_cleanup(clean_params)
@@ -218,7 +248,7 @@ returns
         stats: stats,
         records: records,
         errors: errors,
-        try: data[:try],
+        try: try,
         result: result,
       }
 
@@ -371,5 +401,20 @@ end
       @csv_attributes_ignored = attributes
     end
 
+=begin
+
+serve methode to define if delete option is possible or not
+
+class Model < ApplicationModel
+  include CanCsvImport
+  csv_delete_possible true
+
+end
+
+=end
+
+    def csv_delete_possible(value)
+      @csv_delete_possible = value
+    end
   end
 end

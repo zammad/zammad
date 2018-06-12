@@ -234,4 +234,20 @@ class OrganizationCsvImportTest < ActiveSupport::TestCase
     assert_nil(Organization.find_by(name: 'organization-invalid-import2'))
   end
 
+  test 'simple import with delete' do
+    csv_string = "id;name;shared;domain;domain_assignment;active;note\n;org-simple-import1;true;org-simple-import1.example.com;false;true;some note1\n;org-simple-import2;true;org-simple-import2.example.com;false;false;some note2\n"
+    result = Organization.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+      delete: true,
+    )
+
+    assert_equal(true, result[:try])
+    assert_equal('failed', result[:result])
+    assert_equal('Delete is not possible for Organization.', result[:errors][0])
+  end
+
 end

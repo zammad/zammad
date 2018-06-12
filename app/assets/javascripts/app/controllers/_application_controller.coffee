@@ -663,6 +663,7 @@ class App.ControllerModal extends App.Controller
   large: false
   small: false
   head: '?'
+  autoFocusOnFirstInput: true
   container: null
   buttonClass: 'btn--success'
   centerButtons: []
@@ -812,7 +813,8 @@ class App.ControllerModal extends App.Controller
     @onShown(e)
 
   onShown: (e) =>
-    @$('input:not([disabled]):not([type="hidden"]):not(".btn"), textarea').first().focus()
+    if @autoFocusOnFirstInput
+      @$('input:not([disabled]):not([type="hidden"]):not(".btn"), textarea').first().focus()
     @initalFormParams = @formParams()
 
   localOnClose: (e) =>

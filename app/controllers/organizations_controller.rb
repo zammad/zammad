@@ -354,6 +354,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
         col_sep: params[:col_sep] || ',',
       },
       try: params[:try],
+      delete: params[:delete],
     )
     render json: result, status: :ok
   end
