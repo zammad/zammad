@@ -207,7 +207,7 @@ class _i18nSingleton extends Spine.Module
     return string if !string
 
     if App.Config.get('translation_inline')
-      return '<span class="translation" onclick="arguments[0].stopPropagation(); return false" contenteditable="true" title="' + App.Utils.htmlEscape(string) + '">' + App.Utils.htmlEscape(@translate(string)) + '</span>'
+      return '<span class="translation" onkeydown="arguments[0].stopPropagation(); return true" onclick="arguments[0].stopPropagation(); return false" contenteditable="true" title="' + App.Utils.htmlEscape(string) + '">' + App.Utils.htmlEscape(@translate(string)) + '</span>'
 
     translated = @translate(string, args, true, true)
 
