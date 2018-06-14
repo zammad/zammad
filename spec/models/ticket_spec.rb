@@ -362,30 +362,19 @@ RSpec.describe Ticket do
     end
   end
 
-  describe '#check_defaults' do
+  describe ' when created' do
 
-    it 'changes to correct owner_id' do
-      ticket = build(:ticket, owner_id: 2)
-      ticket.send(:check_defaults)
+    it 'change to correct owner_id' do
+      ticket = create(:ticket, owner_id: 2)
+      # ticket.run_callbacks :create
       expect(ticket.owner_id).to be 2
-      ticket = build(:ticket)
-      ticket.send(:check_defaults)
+      ticket = create(:ticket)
+      # ticket.run_callbacks :create
       expect(ticket.owner_id).to be 1
     end
-    it 'searches for customer_id' do
-      ticket = build(:ticket, customer: nil)
-      ticket.send(:check_defaults)
-      expect(ticket.customer_id).to be nil
-    end
-    it 'checks for new customer' do
-      ticket = build(:ticket, customer_id: 999999)
-      ticket.send(:check_defaults)
-      expect(ticket.customer_id).to be 999999
-    end
 
-    it 'checks organization_id' do
-      ticket = build(:ticket)
-      ticket.send(:check_defaults)
+    it 'check organization_id' do
+      ticket = create(:ticket)
       expect(ticket.organization_id).to be nil
     end
 
@@ -394,22 +383,19 @@ RSpec.describe Ticket do
       let(:organization) { create(:organization) }
       let(:user) { create(:user, organization: organization) }
 
-      it 'checks for customer organizations' do
-        ticket = build(:ticket, customer: user, organization: organization)
-        ticket.send(:check_defaults)
+      it 'check for customer organizations' do
+        ticket = create(:ticket, customer: user, organization: organization)
         expect(ticket.customer_id).to be user.id
         expect(ticket.organization_id).to be organization.id
       end
 
-      it 'returns organization_id when all condition skipped' do
-        ticket = build(:ticket, customer: user)
-        ticket.send(:check_defaults)
+      it 'return organization_id when all condition skipped' do
+        ticket = create(:ticket, customer: user)
         expect(ticket.organization_id).to be organization.id
         another_user = create(:user, organization_ids: [organization.id])
         expect(another_user.organization_ids[0]).to be organization.id
         expect(another_user.organization_id).to be nil
-        another_ticket = build(:ticket, customer: another_user)
-        another_ticket.send(:check_defaults)
+        another_ticket = create(:ticket, customer: another_user)
         expect(another_ticket.organization_id).to be another_user.organization_ids[0]
       end
     end
@@ -417,53 +403,50 @@ RSpec.describe Ticket do
 
   describe '#selector2sql' do
 
-    context '' do
-
-      it 'checks no organizations' do
-        user = create(:user)
-        condition = {
-          'ticket.organization_id' => {
-              operator: 'is',
-              pre_condition: 'current_user.organization_id',
-          }
+    it 'checks no organizations' do
+      user = create(:user)
+      condition = {
+        'ticket.organization_id' => {
+            operator: 'is',
+            pre_condition: 'current_user.organization_id',
         }
-        organizations = []
-        organizations.push user.organization_id if user.organization_id
-        organizations.concat user.organization_ids if user.organization_ids&.any?
-        query, bind_params, tables = Ticket.selector2sql(condition, user)
-        expect(bind_params).to eq [organizations]
-      end
-      it 'checks Primary organization' do
-        organization = create(:organization)
-        user = create(:user, organization: organization)
-        condition = {
-          'ticket.organization_id' => {
-              operator: 'is',
-              pre_condition: 'current_user.organization_id',
-          }
+      }
+      organizations = []
+      organizations.push user.organization_id if user.organization_id
+      organizations.concat user.organization_ids if user.organization_ids&.any?
+      query, bind_params, tables = Ticket.selector2sql(condition, user)
+      expect(bind_params).to eq [organizations]
+    end
+    it 'checks Primary organization' do
+      organization = create(:organization)
+      user = create(:user, organization: organization)
+      condition = {
+        'ticket.organization_id' => {
+            operator: 'is',
+            pre_condition: 'current_user.organization_id',
         }
-        organizations = []
-        organizations.push user.organization_id if user.organization_id
-        organizations.concat user.organization_ids if user.organization_ids&.any?
-        query, bind_params, tables = Ticket.selector2sql(condition, user)
-        expect(bind_params).to eq [organizations]
-      end
-      it 'checks Primary and Alternative organizations' do
-        organization = create(:organization)
-        organization2 = create(:organization)
-        user = create(:user, organization: organization, organizations: [organization2])
-        condition = {
-          'ticket.organization_id' => {
-              operator: 'is',
-              pre_condition: 'current_user.organization_id',
-          }
+      }
+      organizations = []
+      organizations.push user.organization_id if user.organization_id
+      organizations.concat user.organization_ids if user.organization_ids&.any?
+      query, bind_params, tables = Ticket.selector2sql(condition, user)
+      expect(bind_params).to eq [organizations]
+    end
+    it 'checks Primary and Alternative organizations' do
+      organization = create(:organization)
+      organization2 = create(:organization)
+      user = create(:user, organization: organization, organizations: [organization2])
+      condition = {
+        'ticket.organization_id' => {
+            operator: 'is',
+            pre_condition: 'current_user.organization_id',
         }
-        organizations = []
-        organizations.push user.organization_id if user.organization_id
-        organizations.concat user.organization_ids if user.organization_ids&.any?
-        query, bind_params, tables = Ticket.selector2sql(condition, user)
-        expect(bind_params).to eq [organizations]
-      end
+      }
+      organizations = []
+      organizations.push user.organization_id if user.organization_id
+      organizations.concat user.organization_ids if user.organization_ids&.any?
+      query, bind_params, tables = Ticket.selector2sql(condition, user)
+      expect(bind_params).to eq [organizations]
     end
   end
 
