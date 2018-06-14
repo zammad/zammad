@@ -198,6 +198,7 @@ ObjectManager::Attribute.add(
       'ticket.customer' => {
         nulloption: false,
         null: true,
+        item_class: 'column',
         filter: Ticket::State.by_category(:viewable_customer_new).pluck(:id),
         default: Ticket::State.find_by(default_create: true).id,
       },
@@ -349,7 +350,7 @@ ObjectManager::Attribute.add(
             'ticket.customer' => {
                 null: false,
                 default: 0,
-                item_class: 'two-columns'
+                item_class: 'column'
             },
         },
     },

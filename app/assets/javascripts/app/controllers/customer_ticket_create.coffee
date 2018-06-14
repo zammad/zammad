@@ -71,7 +71,7 @@ class Index extends App.ControllerContent
       handlersConfig: handlers
     )
     new App.ControllerFormOrganization(
-      el:             @el.find('.ticket-form-organization')
+      el:             @el.find('.ticket-form-middle')
       form_id:        @form_id
       model:          App.Ticket
       screen:         'create_middle_org'

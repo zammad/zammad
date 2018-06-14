@@ -302,7 +302,7 @@ class App.TicketCreate extends App.Controller
       taskKey:        @taskKey
     )
     new App.ControllerFormOrganization(
-      el:             @$('.ticket-form-organization')
+      el:             @$('.ticket-form-middle')
       form_id:        @formId
       model:          App.Ticket
       screen:         'create_middle_org'
