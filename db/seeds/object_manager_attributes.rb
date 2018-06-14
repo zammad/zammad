@@ -196,9 +196,9 @@ ObjectManager::Attribute.add(
         filter: Ticket::State.by_category(:viewable_agent_new).pluck(:id),
       },
       'ticket.customer' => {
+        item_class: 'column',
         nulloption: false,
         null: true,
-        item_class: 'column',
         filter: Ticket::State.by_category(:viewable_customer_new).pluck(:id),
         default: Ticket::State.find_by(default_create: true).id,
       },
