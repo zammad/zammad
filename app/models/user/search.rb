@@ -99,6 +99,7 @@ returns
           items.each do |item|
             user = User.lookup(id: item[:id])
             next if !user
+            next if !user.active
             users.push user
           end
           return users
