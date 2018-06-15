@@ -36,7 +36,12 @@ returns
     format = data[:format]
     type = data[:type]
     root = Rails.root
-    location = "#{root}/app/views/#{type}/#{template}/#{locale}.#{format}.erb"
+    location = "#{root}/app/views/#{type}/#{template}/custom.#{locale}.#{format}.erb"
+
+    # custom but as fallback, use 2 char locale
+    if !File.exist?(location)
+      location = "#{root}/app/views/#{type}/#{template}/custom.#{locale[0,2]}.#{format}.erb"
+    end
 
     # as fallback, use 2 char locale
     if !File.exist?(location)
