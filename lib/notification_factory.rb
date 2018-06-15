@@ -40,7 +40,7 @@ returns
 
     # custom but as fallback, use 2 char locale
     if !File.exist?(location)
-      location = "#{root}/app/views/#{type}/#{template}/custom.#{locale[0,2]}.#{format}.erb"
+      location = "#{root}/app/views/#{type}/#{template}/custom.#{locale[0, 2]}.#{format}.erb"
     end
 
     # as fallback, use 2 char locale
