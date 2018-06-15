@@ -16,8 +16,6 @@ class Observer::Ticket::EscalationUpdate < ActiveRecord::Observer
 
     return true if record.destroyed?
 
-    return true if !record.saved_changes?
-
     record.escalation_calculation
   end
 end
