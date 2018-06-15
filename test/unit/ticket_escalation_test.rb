@@ -192,10 +192,10 @@ Some Text"
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email)
     ticket_p.reload
     assert(ticket_p.escalation_at)
-    assert_equal(ticket_p.first_response_escalation_at.to_s, (ticket_p.created_at + 1.hour).to_s)
-    assert_equal(ticket_p.update_escalation_at.to_s, (ticket_p.created_at + 3.hours).to_s)
-    assert_equal(ticket_p.close_escalation_at.to_s, (ticket_p.created_at + 4.hours).to_s)
-    assert_equal(ticket_p.escalation_at.to_s, (ticket_p.created_at + 1.hour).to_s)
+    assert_in_delta(ticket_p.first_response_escalation_at.to_i, (ticket_p.created_at + 1.hour).to_i, 120)
+    assert_in_delta(ticket_p.update_escalation_at.to_i, (ticket_p.created_at + 3.hours).to_i, 120)
+    assert_in_delta(ticket_p.close_escalation_at.to_i, (ticket_p.created_at + 4.hours).to_i, 120)
+    assert_in_delta(ticket_p.escalation_at.to_i, (ticket_p.created_at + 1.hour).to_i, 120)
 
     travel 3.hours
     article = nil
@@ -217,10 +217,10 @@ Some Text"
     end
 
     ticket_p.reload
-    assert_equal(ticket_p.first_response_escalation_at.to_s, (ticket_p.created_at + 1.hour).to_s)
-    assert_equal(ticket_p.update_escalation_at.to_s, (ticket_p.last_contact_agent_at + 3.hours).to_s)
-    assert_equal(ticket_p.close_escalation_at.to_s, (ticket_p.created_at + 4.hours).to_s)
-    assert_equal(ticket_p.escalation_at.to_s, (ticket_p.created_at + 4.hours).to_s)
+    assert_in_delta(ticket_p.first_response_escalation_at.to_i, (ticket_p.created_at + 1.hour).to_i, 120)
+    assert_in_delta(ticket_p.update_escalation_at.to_i, (ticket_p.last_contact_agent_at + 3.hours).to_i, 120)
+    assert_in_delta(ticket_p.close_escalation_at.to_i, (ticket_p.created_at + 4.hours).to_i, 120)
+    assert_in_delta(ticket_p.escalation_at.to_i, (ticket_p.created_at + 4.hours).to_i, 120)
 
   end
 end
