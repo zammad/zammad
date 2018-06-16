@@ -182,6 +182,12 @@
     })
   }
 
+  // me - 2018-05-24
+  // cleanup element on hide - cleanup dom with old modal dialogs
+  Modal.prototype.remove = function () {
+    this.$element.remove()
+  }
+
   Modal.prototype.removeBackdrop = function () {
     this.$backdrop && this.$backdrop.remove()
     this.$backdrop = null

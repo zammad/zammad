@@ -1162,9 +1162,10 @@ class Table extends App.Controller
     # start organization popups
     @organizationPopups()
 
-    @bulkForm = new BulkForm
+    @bulkForm = new BulkForm(
       holder: @el
       view: @view
+    )
 
     # start bulk action observ
     @el.append(@bulkForm.el)
@@ -1226,12 +1227,16 @@ class BulkForm extends App.Controller
   constructor: ->
     super
 
-    @configure_attributes_ticket = [
-      { name: 'state_id',    display: 'State',    tag: 'select', multiple: false, null: true, relation: 'TicketState', translate: true, nulloption: true, default: '' },
-      { name: 'priority_id', display: 'Priority', tag: 'select', multiple: false, null: true, relation: 'TicketPriority', translate: true, nulloption: true, default: '' },
-      { name: 'group_id',    display: 'Group',    tag: 'select', multiple: false, null: true, relation: 'Group', nulloption: true  },
-      { name: 'owner_id',    display: 'Owner',    tag: 'select', multiple: false, null: true, relation: 'User', nulloption: true }
-    ]
+    @configure_attributes_ticket = []
+    used_attributes = ['state_id', 'pending_time', 'priority_id', 'group_id', 'owner_id']
+    attributesClean = App.Ticket.attributesGet('edit')
+    for attributeName, attribute of attributesClean
+      if _.contains(used_attributes, attributeName)
+        localAttribute = clone(attribute)
+        localAttribute.nulloption = true
+        localAttribute.default = ''
+        localAttribute.null = true
+        @configure_attributes_ticket.push localAttribute
 
     @holder = @options.holder
     @visible = false
@@ -1246,9 +1251,9 @@ class BulkForm extends App.Controller
     App.TicketCreateCollection.unbind(@bindId)
 
   render: ->
-    @el.css 'right', App.Utils.getScrollBarWidth()
+    @el.css('right', App.Utils.getScrollBarWidth())
 
-    @html App.view('agent_ticket_view/bulk')()
+    @html(App.view('agent_ticket_view/bulk')())
 
     handlers = @Config.get('TicketZoomFormHandler')
 
@@ -1304,11 +1309,14 @@ class BulkForm extends App.Controller
     setTimeout ( => @$('.textarea.form-group textarea').focus() ), 0
 
   reset: =>
-    @$('.js-action-step').removeClass('hide')
-    @$('.js-confirm-step').addClass('hide')
+    @cancel()
 
     if @visible
       @makeSpaceForTableRows()
+
+  cancel: =>
+    @$('.js-action-step').removeClass('hide')
+    @$('.js-confirm-step').addClass('hide')
 
   show: =>
     @el.removeClass('hide')
@@ -1325,30 +1333,84 @@ class BulkForm extends App.Controller
     scrollParent = @holder.scrollParent()
     isScrolledToBottom = scrollParent.prop('scrollHeight') is scrollParent.scrollTop() + scrollParent.outerHeight()
 
-    @holder.css 'margin-bottom', height
+    @holder.css('margin-bottom', height)
 
     if isScrolledToBottom
       scrollParent.scrollTop scrollParent.prop('scrollHeight') - scrollParent.outerHeight()
 
   removeSpaceForTableRows: =>
-    @holder.css 'margin-bottom', 0
+    @holder.css('margin-bottom', 0)
+
+  ticketMergeParams: (params) ->
+    ticketUpdate = {}
+    for item of params
+      if params[item] != '' && params[item] != null
+        ticketUpdate[item] = params[item]
+
+    # in case if a group is selected, set also the selected owner (maybe nobody)
+    if params.group_id != '' && params.group_id != null
+      ticketUpdate.owner_id = params.owner_id
+    ticketUpdate
 
   submit: (e) =>
     e.preventDefault()
 
-    @bulk_count = @holder.find('.table-overview').find('[name="bulk"]:checked').length
-    @bulk_count_index = 0
-    @holder.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) =>
-      @log 'notice', '@bulk_count_index', @bulk_count, @bulk_count_index
+    @bulkCount = @holder.find('.table-overview').find('[name="bulk"]:checked').length
+
+    if @bulkCount is 0
+      App.Event.trigger 'notify', {
+        type: 'error'
+        msg: App.i18n.translateContent('At least one object must be selected.')
+      }
+      return
+
+    ticket_ids = []
+    @holder.find('.table-overview').find('[name="bulk"]:checked').each( (index, element) ->
       ticket_id = $(element).val()
+      ticket_ids.push ticket_id
+    )
+
+    params = @formParam(e.target)
+
+    for ticket_id in ticket_ids
       ticket = App.Ticket.find(ticket_id)
-      params = @formParam(e.target)
+
+      ticketUpdate = @ticketMergeParams(params)
+      ticket.load(ticketUpdate)
+
+      # if title is empty - ticket can't processed, set ?
+      if _.isEmpty(ticket.title)
+        ticket.title = '-'
+
+      # validate ticket
+      errors = ticket.validate(
+        screen: 'edit'
+      )
+      if errors
+        @log 'error', 'update', errors
+        errorString = ''
+        for key, error of errors
+          errorString += "#{key}: #{error}"
+
+        @formValidate(
+          form:   e.target
+          errors: errors
+          screen: 'edit'
+        )
+
+        App.Event.trigger 'notify', {
+          type: 'error'
+          msg: App.i18n.translateContent('Bulk action stopped %s!', errorString)
+        }
+        @cancel()
+        return
+
+    @bulkCountIndex = 0
+    for ticket_id in ticket_ids
+      ticket = App.Ticket.find(ticket_id)
 
       # update ticket
-      ticket_update = {}
-      for item of params
-        if params[item] != ''
-          ticket_update[item] = params[item]
+      ticketUpdate = @ticketMergeParams(params)
 
       # validate article
       if params['body']
@@ -1372,7 +1434,7 @@ class BulkForm extends App.Controller
           @formEnable(e)
           return
 
-      ticket.load(ticket_update)
+      ticket.load(ticketUpdate)
 
       # if title is empty - ticket can't processed, set ?
       if _.isEmpty(ticket.title)
@@ -1380,7 +1442,7 @@ class BulkForm extends App.Controller
 
       ticket.save(
         done: (r) =>
-          @bulk_count_index++
+          @bulkCountIndex++
 
           # reset form after save
           if article
@@ -1390,13 +1452,22 @@ class BulkForm extends App.Controller
             )
 
           # refresh view after all tickets are proceeded
-          if @bulk_count_index == @bulk_count
+          if @bulkCountIndex == @bulkCount
+            @render()
             @hide()
 
             # fetch overview data again
             App.Event.trigger('overview:fetch')
+
+        fail: (r) =>
+          @bulkCountIndex++
+          @log 'error', 'update ticket', r
+          App.Event.trigger 'notify', {
+            type: 'error'
+            msg: App.i18n.translateContent('Can\'t update Ticket %s!', ticket.number)
+          }
       )
-    )
+
     @holder.find('.table-overview').find('[name="bulk"]:checked').prop('checked', false)
     App.Event.trigger 'notify', {
       type: 'success'

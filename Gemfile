@@ -80,8 +80,9 @@ gem 'twitter'
 
 # channels - email additions
 gem 'htmlentities'
-gem 'mail', '2.6.6'
+gem 'mail', '>= 2.7.1.rc1'
 gem 'mime-types'
+gem 'rchardet', '>= 1.8.0'
 gem 'valid_email2'
 
 # feature - business hours
@@ -99,6 +100,9 @@ gem 'browser'
 # feature - iCal export
 gem 'icalendar'
 gem 'icalendar-recurrence'
+
+# feature - phone number formatting
+gem 'telephone_number'
 
 # integrations
 gem 'clearbit'

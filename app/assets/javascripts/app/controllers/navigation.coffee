@@ -305,6 +305,31 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @searchContainer.toggleClass('filled', !!@query)
     @globalSearch.search(query: @query)
 
+  filterNavbar: (values, user, parent = null) ->
+    return _.filter values, (item) =>
+      if typeof item.callback is 'function'
+        data = item.callback() || {}
+        for key, value of data
+          item[key] = value
+
+      if !parent? && !item.parent || item.parent is parent
+        return @filterNavbarPermissionOk(item, user) &&
+          @filterNavbarSettingOk(item)
+      else
+        return false
+
+  filterNavbarPermissionOk: (item, user) ->
+    return true unless item.permission
+
+    return _.any item.permission, (permissionName) ->
+      return user && user.permission(permissionName)
+
+  filterNavbarSettingOk: (item) ->
+    return true unless item.setting
+
+    return _.any item.setting, (settingName) =>
+      return @Config.get(settingName)
+
   getItems: (data) ->
     navbar =  _.values(data.navbar)
 
@@ -315,38 +340,12 @@ class App.Navigation extends App.ControllerWidgetPermanent
     if App.Session.get('id')
       user = App.User.find(App.Session.get('id'))
 
-    for item in navbar
-      if typeof item.callback is 'function'
-        data = item.callback() || {}
-        for key, value of data
-          item[key] = value
-      if !item.parent
-        match = true
-        if item.permission
-          match = false
-          for permissionName in item.permission
-            if !match && user && user.permission(permissionName)
-              match = true
-        if match
-          level1.push item
+    level1 = @filterNavbar(navbar, user)
 
     for item in navbar
       if item.parent && !dropdown[ item.parent ]
-        dropdown[ item.parent ] = []
+        dropdown[ item.parent ] = @filterNavbar(navbar, user, item.parent)
 
-        # find all childs and order
-        for itemSub in navbar
-          if itemSub.parent is item.parent
-            match = true
-            if itemSub.permission
-              match = false
-              for permissionName in itemSub.permission
-                if !match && user && user.permission(permissionName)
-                  match = true
-            if match
-              dropdown[ item.parent ].push itemSub
-
-        # find parent
         for itemLevel1 in level1
           if itemLevel1.target is item.parent
             sub = @getOrder(dropdown[ item.parent ])

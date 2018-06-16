@@ -19,7 +19,7 @@ module Channel::Filter::ReplyToBasedSender
     mail['origin_from_display_name'.to_sym] = mail[:from_display_name]
 
     # get properties of reply-to header
-    result = Channel::EmailParser.sender_properties(reply_to)
+    result = Channel::EmailParser.sender_attributes(reply_to)
 
     if setting == 'as_sender_of_email'
 

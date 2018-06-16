@@ -1,0 +1,7 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: oracle@IG0-1-DB01.example.com
+from_email: oracle@IG0-1-DB01.example.com
+from_display_name: ''
+subject: 'Regelsets im Test-Status gefunden: 1'
+to: support@example.com
+body: no visible content

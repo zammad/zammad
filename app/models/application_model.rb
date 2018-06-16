@@ -17,6 +17,7 @@ class ApplicationModel < ActiveRecord::Base
   include ApplicationModel::HasExternalSync
   include ApplicationModel::ChecksImport
   include ApplicationModel::CanTouchReferences
+  include ApplicationModel::CanQueryCaseInsensitiveWhereOrSql
 
   self.abstract_class = true
 end

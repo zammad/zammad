@@ -1,8 +1,8 @@
-
 require 'test_helper'
-require 'rake'
 
 class OrganizationControllerTest < ActionDispatch::IntegrationTest
+  include SearchindexHelper
+
   setup do
 
     # set accept header
@@ -73,32 +73,11 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
       organization_id: @organization.id,
     )
 
-    # configure es
-    if ENV['ES_URL'].present?
-      #fail "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
-      Setting.set('es_url', ENV['ES_URL'])
-
-      # Setting.set('es_url', 'http://127.0.0.1:9200')
-      # Setting.set('es_index', 'estest.local_zammad')
-      # Setting.set('es_user', 'elasticsearch')
-      # Setting.set('es_password', 'zammad')
-
-      if ENV['ES_INDEX_RAND'].present?
-        ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
-      end
-      if ENV['ES_INDEX'].blank?
-        raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
-      end
-      Setting.set('es_index', ENV['ES_INDEX'])
+    configure_elasticsearch do
 
       travel 1.minute
 
-      # drop/create indexes
-      Rake::Task.clear
-      Zammad::Application.load_tasks
-      #Rake::Task["searchindex:drop"].execute
-      #Rake::Task["searchindex:create"].execute
-      Rake::Task['searchindex:rebuild'].execute
+      rebuild_searchindex
 
       # execute background jobs
       Scheduler.worker(true)
@@ -552,13 +531,14 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
 
     # invalid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple_col_not_existing.csv'), 'text/csv')
-    post '/api/v1/organizations/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple_col_not_existing.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_equal('true', result['try'])
+    assert_equal(true, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('failed', result['result'])
     assert_equal(2, result['errors'].count)
@@ -566,13 +546,14 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal("Line 2: unknown attribute 'name2' for Organization.", result['errors'][1])
 
     # valid file try
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
-    post '/api/v1/organizations/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_equal('true', result['try'])
+    assert_equal(true, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('success', result['result'])
 
@@ -580,13 +561,14 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_nil(Organization.find_by(name: 'organization-member-import2'))
 
     # valid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
-    post '/api/v1/organizations/import', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/organizations/import', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_nil(result['try'])
+    assert_equal(false, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('success', result['result'])
 

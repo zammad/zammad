@@ -185,7 +185,7 @@ class IdoitControllerTest < ActionDispatch::IntegrationTest
   end
 
   def read_messaage(file)
-    File.read("test/fixtures/idoit/#{file}.json")
+    File.read(Rails.root.join('test', 'data', 'idoit', "#{file}.json"))
   end
 
 end

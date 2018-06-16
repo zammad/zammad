@@ -1790,6 +1790,32 @@ Setting.create_if_not_exists(
   frontend: false
 )
 Setting.create_if_not_exists(
+  title: 'Ticket Last Contact Behaviour',
+  name: 'ticket_last_contact_behaviour',
+  area: 'Ticket::Base',
+  description: 'Sets the last customer contact based on the last contact of a customer or on the last contact of a customer to whom an agent has not yet responded.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'ticket_last_contact_behaviour',
+        tag: 'select',
+        translate: true,
+        options: {
+          'based_on_customer_reaction' => 'Last customer contact (without consideration an agent has replied to it)',
+          'check_if_agent_already_replied' => 'Last customer contact (with consideration an agent has replied to it)',
+        },
+      },
+    ],
+  },
+  state: 'check_if_agent_already_replied',
+  preferences: {
+    permission: ['admin.ticket'],
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
   title: 'Ticket Number Format',
   name: 'ticket_number',
   area: 'Ticket::Number',
@@ -1948,7 +1974,23 @@ Setting.create_if_not_exists(
   state: { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } },
   frontend: true
 )
-
+Setting.create_or_update(
+  title: 'Time Accounting Selector',
+  name: 'ticket_auto_assignment_user_ids_ignore',
+  area: 'Web::Base',
+  description: 'Define an exception of "automatic assignment" for certain users (e.g. executives).',
+  options: {
+    form: [
+      {},
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission: ['admin.ticket_auto_assignment'],
+  },
+  state: [],
+  frontend: true
+)
 Setting.create_if_not_exists(
   title: 'Ticket Number ignore system_id',
   name: 'ticket_number_ignore_system_id',
@@ -1971,6 +2013,77 @@ Setting.create_if_not_exists(
   state: {
     ticket_number_ignore_system_id: false
   },
+  preferences: {
+    permission: ['admin.ticket'],
+    hidden: true,
+  },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
+  title: 'Recursive Ticket Triggers',
+  name: 'ticket_trigger_recursive',
+  area: 'Ticket::Core',
+  description: 'Activate the recursive processing of ticket triggers.',
+  options: {
+    form: [
+      {
+        display: 'Recursive Ticket Triggers',
+        null: true,
+        name: 'ticket_trigger_recursive',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    permission: ['admin.ticket'],
+    hidden: true,
+  },
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Recursive Ticket Triggers Loop Max.',
+  name: 'ticket_trigger_recursive_max_loop',
+  area: 'Ticket::Core',
+  description: 'Maximum number of recursively executed triggers.',
+  options: {
+    form: [
+      {
+        display: 'Recursive Ticket Triggers',
+        null: true,
+        name: 'ticket_trigger_recursive_max_loop',
+        tag: 'select',
+        options: {
+          1 => ' 1',
+          2 => ' 2',
+          3 => ' 3',
+          4 => ' 4',
+          5 => ' 5',
+          6 => ' 6',
+          7 => ' 7',
+          8 => ' 8',
+          9 => ' 9',
+          10 => '10',
+          11 => '11',
+          12 => '12',
+          13 => '13',
+          14 => '14',
+          15 => '15',
+          16 => '16',
+          17 => '17',
+          18 => '18',
+          19 => '19',
+          20 => '20',
+        },
+      },
+    ],
+  },
+  state: 10,
   preferences: {
     permission: ['admin.ticket'],
     hidden: true,
@@ -2485,7 +2598,7 @@ Setting.create_if_not_exists(
       },
     ],
   },
-  state: SecureRandom.urlsafe_base64(40),
+  state: ENV['MONITORING_TOKEN'] || SecureRandom.urlsafe_base64(40),
   preferences: {
     permission: ['admin.monitoring'],
   },
@@ -3377,7 +3490,7 @@ Setting.create_if_not_exists(
   area: 'Core',
   description: 'Defines the Check_MK token for allowing updates.',
   options: {},
-  state: SecureRandom.hex(16),
+  state: ENV['CHECK_MK_TOKEN'] || SecureRandom.hex(16),
   preferences: {
     permission: ['admin.integration'],
   },
@@ -3715,12 +3828,74 @@ Setting.create_if_not_exists(
   area: 'Integration::Sipgate',
   description: 'Defines the sipgate.io config.',
   options: {},
-  state: {},
+  state: { 'outbound' => { 'routing_table' => [], 'default_caller_id' => '' }, 'inbound' => { 'block_caller_ids' => [] } },
   preferences: {
     prio: 2,
     permission: ['admin.integration'],
   },
   frontend: false,
+)
+Setting.create_if_not_exists(
+  title: 'cti integration',
+  name: 'cti_integration',
+  area: 'Integration::Switch',
+  description: 'Defines if generic CTI is enabled or not.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: true,
+        name: 'cti_integration',
+        tag: 'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state: false,
+  preferences: {
+    prio: 1,
+    trigger: ['menu:render', 'cti:reload'],
+    authentication: true,
+    permission: ['admin.integration'],
+  },
+  frontend: true
+)
+Setting.create_if_not_exists(
+  title: 'cti config',
+  name: 'cti_config',
+  area: 'Integration::Cti',
+  description: 'Defines the cti config.',
+  options: {},
+  state: { 'outbound' => { 'routing_table' => [], 'default_caller_id' => '' }, 'inbound' => { 'block_caller_ids' => [] } },
+  preferences: {
+    prio: 2,
+    permission: ['admin.integration'],
+  },
+  frontend: false,
+)
+Setting.create_if_not_exists(
+  title: 'CTI Token',
+  name: 'cti_token',
+  area: 'Integration::Cti',
+  description: 'Token for cti.',
+  options: {
+    form: [
+      {
+        display: '',
+        null: false,
+        name: 'cti_token',
+        tag: 'input',
+      },
+    ],
+  },
+  state: ENV['CTI_TOKEN'] || SecureRandom.urlsafe_base64(20),
+  preferences: {
+    permission: ['admin.integration'],
+  },
+  frontend: false
 )
 Setting.create_if_not_exists(
   title: 'Clearbit integration',

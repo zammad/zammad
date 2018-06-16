@@ -143,7 +143,7 @@ class Ldap
     def group_user_dns_memberuid(entry)
       entry[:memberuid].collect do |uid|
         dn = nil
-        @ldap.search("(uid=#{uid})", attributes: %w[dn]) do |user|
+        @ldap.search("(&(uid=#{uid})#{Import::Ldap.config[:user_filter]})", attributes: %w[dn]) do |user|
           dn = user.dn
         end
         dn

@@ -13,6 +13,8 @@ class TextModule < ApplicationModel
 
   sanitized_html :content
 
+  csv_delete_possible true
+
 =begin
 
 load text modules from online

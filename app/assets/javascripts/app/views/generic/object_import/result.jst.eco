@@ -1,0 +1,9 @@
+<div>
+<%- @T('Result') %>: <%= @result %>
+<% if @errors: %>
+  <ul>
+  <% for error in @errors: %>
+    <li><%= error %>
+  <% end %>
+<% end %>
+</div>

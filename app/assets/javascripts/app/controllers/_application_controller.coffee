@@ -663,6 +663,7 @@ class App.ControllerModal extends App.Controller
   large: false
   small: false
   head: '?'
+  autoFocusOnFirstInput: true
   container: null
   buttonClass: 'btn--success'
   centerButtons: []
@@ -676,6 +677,7 @@ class App.ControllerModal extends App.Controller
   closeOnAnyClick: false
   initalFormParams: {}
   initalFormParamsIgnore: false
+  showTrySupport: false
   showTryMax: 10
   showTrydelay: 1000
 
@@ -722,7 +724,7 @@ class App.ControllerModal extends App.Controller
       content = @contentInline
     else
       content = @content()
-    modal = $(App.view('modal')
+    modal = $(App.view('modal')(
       head:              @head
       headPrefix:        @headPrefix
       message:           @message
@@ -734,7 +736,7 @@ class App.ControllerModal extends App.Controller
       buttonClass:       @buttonClass
       centerButtons:     @centerButtons
       leftButtons:       @leftButtons
-    )
+    ))
     modal.find('.modal-body').html(content)
     if !@initRenderingDone
       @initRenderingDone = true
@@ -750,7 +752,7 @@ class App.ControllerModal extends App.Controller
     @el
 
   render: =>
-    if @modalAlreadyExists() && @showTryCount <= @showTryMax
+    if @showTrySupport is true && @modalAlreadyExists() && @showTryCount <= @showTryMax
       @showDelayed()
       return
 
@@ -811,7 +813,8 @@ class App.ControllerModal extends App.Controller
     @onShown(e)
 
   onShown: (e) =>
-    @$('input:not([disabled]):not([type="hidden"]):not(".btn"), textarea').first().focus()
+    if @autoFocusOnFirstInput
+      @$('input:not([disabled]):not([type="hidden"]):not(".btn"), textarea').first().focus()
     @initalFormParams = @formParams()
 
   localOnClose: (e) =>
@@ -827,7 +830,7 @@ class App.ControllerModal extends App.Controller
 
   localOnClosed: (e) =>
     @onClosed(e)
-    $('.modal').remove()
+    @el.modal('remove')
 
   onClosed: (e) ->
     # do nothing
@@ -851,6 +854,8 @@ class App.ControllerModal extends App.Controller
     @onSubmit(e)
 
 class App.SessionMessage extends App.ControllerModal
+  showTrySupport: true
+
   onCancel: (e) =>
     if @forceReload
       @windowReload(e)

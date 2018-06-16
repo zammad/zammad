@@ -1100,12 +1100,14 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   # @response_message 401 Invalid session.
   def import_start
     permission_check('admin.user')
+    string = params[:data] || params[:file].read.force_encoding('utf-8')
     result = User.csv_import(
-      string: params[:file].read.force_encoding('utf-8'),
+      string: string,
       parse_params: {
-        col_sep: ';',
+        col_sep: params[:col_sep] || ',',
       },
       try: params[:try],
+      delete: params[:delete],
     )
     render json: result, status: :ok
   end

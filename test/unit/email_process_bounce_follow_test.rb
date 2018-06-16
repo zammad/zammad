@@ -27,7 +27,8 @@ class EmailProcessBounceFollowUpTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
     travel 1.second
-    email_raw_string = IO.binread('test/fixtures/mail33-undelivered-mail-returned-to-sender.box')
+    email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail033-undelivered-mail-returned-to-sender.box')
+    email_raw_string = File.read(email_file_path)
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('new', ticket_p.state.name)
@@ -134,7 +135,8 @@ class EmailProcessBounceFollowUpTest < ActiveSupport::TestCase
     assert_equal(4, ticket.articles.count)
 
     travel 1.second
-    email_raw_string = IO.binread('test/fixtures/mail33-undelivered-mail-returned-to-sender.box')
+    email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail033-undelivered-mail-returned-to-sender.box')
+    email_raw_string = File.read(email_file_path)
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('open', ticket_p.state.name)
@@ -241,7 +243,8 @@ class EmailProcessBounceFollowUpTest < ActiveSupport::TestCase
     assert_equal(4, ticket.articles.count)
 
     travel 1.second
-    email_raw_string = IO.binread('test/fixtures/mail55.box')
+    email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail055.box')
+    email_raw_string = File.read(email_file_path)
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(ticket.id, ticket_p.id)
     assert_equal('open', ticket_p.state.name)

@@ -121,9 +121,24 @@ class Scheduler < ApplicationModel
       raise 'This method should only get called when Scheduler.threads are initialized. Use `force: true` to start anyway.'
     end
 
-    log_start_finish(:info, 'Cleanup of left over locked delayed jobs') do
+    start_time = Time.zone.now
 
-      Delayed::Job.all.each do |job|
+    cleanup_delayed_jobs(start_time)
+    cleanup_import_jobs(start_time)
+  end
+
+  # Checks for locked delayed jobs and tries to reschedule or destroy each of them.
+  #
+  # @param [ActiveSupport::TimeWithZone] after the time the cleanup was started
+  #
+  # @example
+  #   Scheduler.cleanup_delayed_jobs(TimeZone.now)
+  #
+  # return [nil]
+  def self.cleanup_delayed_jobs(after)
+    log_start_finish(:info, "Cleanup of left over locked delayed jobs #{after}") do
+
+      Delayed::Job.where('updated_at < ?', after).where.not(locked_at: nil).each do |job|
         log_start_finish(:info, "Checking left over delayed job #{job.inspect}") do
           cleanup_delayed(job)
         end
@@ -131,13 +146,13 @@ class Scheduler < ApplicationModel
     end
   end
 
-  # Checks if the given job can be rescheduled or destroys it. Logs the action as warn.
-  # Works only for locked jobs. Jobs that are not locked are ignored and
+  # Checks if the given delayed job can be rescheduled or destroys it. Logs the action as warn.
+  # Works only for locked delayed jobs. Delayed jobs that are not locked are ignored and
   # should get destroyed directly.
-  # Checks the delayed job object for a method called .reschedule?. The memthod is called
-  # with the delayed job as a parameter. The result value is expected as a Boolean. If the
-  # result is true the lock gets removed and the delayed job gets rescheduled. If the return
-  # value is false it will get destroyed which is the default behaviour.
+  # Checks the Delayed::Job instance for a method called .reschedule?. The method is called
+  # with the Delayed::Job instance as a parameter. The result value is expected to be a Boolean.
+  # If the result is true the lock gets removed and the delayed job gets rescheduled.
+  # If the return value is false it will get destroyed which is the default behaviour.
   #
   # @param [Delayed::Job] job the job that should get checked for destroying/rescheduling.
   #
@@ -179,6 +194,33 @@ class Scheduler < ApplicationModel
     end
 
     logger.warn "#{action} locked delayed job: #{job_name}"
+  end
+
+  # Checks for killed import jobs and marks them as finished and adds a note.
+  #
+  # @param [ActiveSupport::TimeWithZone] after the time the cleanup was started
+  #
+  # @example
+  #   Scheduler.cleanup_import_jobs(TimeZone.now)
+  #
+  # return [nil]
+  def self.cleanup_import_jobs(after)
+    log_start_finish(:info, "Cleanup of left over import jobs #{after}") do
+      error = 'Interrupted by scheduler restart. Please restart manually or wait till next execution time.'.freeze
+
+      # we need to exclude jobs that were updated at or since we started
+      # cleaning up (via the #reschedule? call) because they might
+      # were started `.delay`-ed and are flagged for restart
+      ImportJob.running.where('updated_at < ?', after).each do |job|
+
+        job.update!(
+          finished_at: after,
+          result:      {
+            error: error
+          }
+        )
+      end
+    end
   end
 
   def self.start_job(job)

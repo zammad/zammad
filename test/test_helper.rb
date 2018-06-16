@@ -2,27 +2,13 @@ ENV['RAILS_ENV'] = 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
 require 'cache'
-require 'simplecov'
-require 'simplecov-rcov'
-require 'coveralls'
-Coveralls.wear!
+
+require 'test_support_helper'
 
 class ActiveSupport::TestCase
 
   ActiveRecord::Base.logger = Rails.logger.clone
   ActiveRecord::Base.logger.level = Logger::INFO
-
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
-                                                                   SimpleCov::Formatter::RcovFormatter,
-                                                                   Coveralls::SimpleCov::Formatter
-                                                                 ])
-  merge_timeout = 3600
-  SimpleCov.start
-  fixtures :all
 
   # clear cache
   Cache.clear

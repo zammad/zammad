@@ -1,4 +1,4 @@
-class SettingAddTicketAutoAssignment < ActiveRecord::Migration[5.1]
+class SettingAddTicketAutoAssignment2 < ActiveRecord::Migration[5.1]
   def up
 
     # return if it's a new setup
@@ -45,6 +45,23 @@ class SettingAddTicketAutoAssignment < ActiveRecord::Migration[5.1]
         permission: ['admin.ticket_auto_assignment'],
       },
       state: { condition: { 'ticket.state_id' => { operator: 'is', value: Ticket::State.by_category(:work_on).pluck(:id) } } },
+      frontend: true
+    )
+    Setting.create_or_update(
+      title: 'Time Accounting Selector',
+      name: 'ticket_auto_assignment_user_ids_ignore',
+      area: 'Web::Base',
+      description: 'Define an exception of "automatic assignment" for certain users (e.g. executives).',
+      options: {
+        form: [
+          {},
+        ],
+      },
+      preferences: {
+        authentication: true,
+        permission: ['admin.ticket_auto_assignment'],
+      },
+      state: [],
       frontend: true
     )
   end

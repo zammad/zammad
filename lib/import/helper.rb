@@ -22,8 +22,8 @@ module Import
     def utf8_encode(data)
       data.each do |key, value|
         next if !value
-        next if value.class != String
-        data[key] = Encode.conv('utf8', value)
+        next if !value.respond_to?(:utf8_encode)
+        data[key] = value.utf8_encode
       end
     end
 

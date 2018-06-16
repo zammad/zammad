@@ -4,11 +4,7 @@ module ApplicationModel::HasCache
 
   included do
     before_create :cache_delete
-
-    after_create  :cache_delete
-    after_update  :cache_delete
-    after_touch   :cache_delete
-    after_destroy :cache_delete
+    after_commit :cache_delete
   end
 
   def cache_update(other)

@@ -1,0 +1,21 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Martin Smith <m.Smith@example.com>
+from_email: m.Smith@example.com
+from_display_name: Martin Smith
+subject: 'Fw: Zugangsdaten'
+to: Martin Edenhofer <me@example.com>
+body: |-
+  <div>
+  <div>&nbsp;</div><div>--<br> don't cry - work! (Rainald Goetz)</div><div> <div> <div>
+  <div>
+  <b>Gesendet:</b> Mittwoch, 03. Februar 2016 um 12:43 Uhr<span class="js-signatureMarker"></span><br>
+  <b>Von:</b> "Martin Smith" &lt;m.Smith@example.com&gt;<br>
+  <b>An:</b> linuxhotel@example.com<br>
+  <b>Betreff:</b> Fw: Zugangsdaten</div><div>
+  <div>
+  <div>&nbsp;</div><div>--<br> don't cry - work! (Rainald Goetz)</div><div> <div> <div>
+  <div>
+  <b>Gesendet:</b> Freitag, 22. Januar 2016 um 11:52 Uhr<br>
+  <b>Von:</b> "Martin Edenhofer" &lt;me@example.com&gt;<br>
+  <b>An:</b> m.Smith@example.com<br>
+  <b>Betreff:</b> Zugangsdaten</div><div>Um noch vertrauter zu werden, kannst Du mit einen externen E-Mail Account (z. B. <a href="http://web.de" rel="nofollow noreferrer noopener" target="_blank">web.de</a>) mal ein wenig selber “spielen”. :)</div></div></div></div></div></div></div></div></div></div>

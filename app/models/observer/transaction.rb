@@ -120,12 +120,12 @@ class Observer::Transaction < ActiveRecord::Observer
       # simulate article create as ticket update
       article = nil
       if event[:object] == 'Ticket::Article'
-        article = Ticket::Article.lookup(id: event[:id])
+        article = Ticket::Article.find_by(id: event[:id])
         next if !article
         next if event[:type] == 'update'
 
         # set new event infos
-        ticket = Ticket.lookup(id: article.ticket_id)
+        ticket = Ticket.find_by(id: article.ticket_id)
         event[:object] = 'Ticket'
         event[:id] = ticket.id
         event[:type] = 'update'
@@ -133,7 +133,7 @@ class Observer::Transaction < ActiveRecord::Observer
       end
 
       # get current state of objects
-      object = Kernel.const_get(event[:object]).lookup(id: event[:id])
+      object = Kernel.const_get(event[:object]).find_by(id: event[:id])
 
       # next if object is already deleted
       next if !object

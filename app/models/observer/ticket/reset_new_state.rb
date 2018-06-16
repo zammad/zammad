@@ -6,10 +6,10 @@ class Observer::Ticket::ResetNewState < ActiveRecord::Observer
   def after_create(record)
 
     # return if we run import mode
-    return if Setting.get('import_mode')
+    return true if Setting.get('import_mode')
 
     # only change state if not processed via postmaster
-    return if ApplicationHandleInfo.postmaster?
+    return true if ApplicationHandleInfo.postmaster?
 
     # if article in internal
     return true if record.internal
@@ -21,12 +21,13 @@ class Observer::Ticket::ResetNewState < ActiveRecord::Observer
     return true if !Ticket::Article::Type.lookup(id: record.type_id).communication
 
     # if current ticket state is still new
-    ticket = Ticket.lookup(id: record.ticket_id)
+    ticket = Ticket.find_by(id: record.ticket_id)
+    return true if !ticket
     new_state = Ticket::State.find_by(default_create: true)
     return true if ticket.state_id != new_state.id
 
     state = Ticket::State.find_by(default_follow_up: true)
-    return if !state
+    return true if !state
 
     # set ticket to open
     ticket.state_id = state.id
