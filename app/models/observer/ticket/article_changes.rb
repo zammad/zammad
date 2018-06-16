@@ -27,7 +27,7 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
       record.ticket.touch # rubocop:disable Rails/SkipsModelValidations
       return
     end
-    record.ticket.save
+    record.ticket.save!
   end
 
   def after_destroy(record)

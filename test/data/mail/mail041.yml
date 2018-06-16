@@ -1,0 +1,7 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Martin Edenhofer <me@example.com>
+from_email: me@example.com
+from_display_name: Martin Edenhofer
+subject: smime sign & crypt
+to: Martin Edenhofer <me@example.com>
+body: no visible content

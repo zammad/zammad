@@ -565,6 +565,7 @@ class TestCase < Test::Unit::TestCase
     displayed: false, # true|false
     browser: browser1,
     css: '.some_class',
+    displayed: true, # true|false
   )
 
 =end
@@ -1225,7 +1226,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
   file_upload(
     browser: browser1,
     css:     '.content.active .attachmentPlaceholder-inputHolder input'
-    files:   ['path/in/home/some_file.ext'], # 'test/fixtures/test1.pdf'
+    files:   ['path/in/home/some_file.ext'], # 'test/data/pdf/test1.pdf'
   )
 
 =end

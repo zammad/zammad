@@ -721,7 +721,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -847,7 +847,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('text/html', article_p.content_type)
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p1, article_p1, user_p1, mail = Channel::EmailParser.new.process({}, content)
 
     assert_not_equal(ticket_p.id, ticket_p1.id)
@@ -855,7 +855,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(2, ticket_p1.articles.count)
 
     # process mail with Precedence header (no auto response)
-    content = IO.binread('test/fixtures/ticket_trigger/mail2.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail2.box'))
     ticket_p2, article_p2, user_p2, mail = Channel::EmailParser.new.process({}, content)
 
     assert_not_equal(ticket_p.id, ticket_p1.id)
@@ -865,7 +865,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal(1, ticket_p2.articles.count)
 
     # process mail with abuse@ (no auto response)
-    content = IO.binread('test/fixtures/ticket_trigger/mail3.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail3.box'))
     ticket_p3, article_p3, user_p3, mail = Channel::EmailParser.new.process({}, content)
 
     assert_not_equal(ticket_p.id, ticket_p1.id)
@@ -951,7 +951,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -1016,7 +1016,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -1101,7 +1101,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal('aaäöüßad asd', ticket_p.title)
@@ -1181,7 +1181,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
 
     # process mail without Precedence header
-    content = IO.binread('test/fixtures/ticket_trigger/mail1.box')
+    content = File.read(Rails.root.join('test', 'data', 'ticket_trigger', 'mail1.box'))
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, content)
 
     assert_equal(1, ticket_p.articles.count)
@@ -4259,7 +4259,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, IO.binread('test/fixtures/mail65.box'))
+    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail065.box')))
 
     assert_equal('aaäöüßad asd', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
@@ -4300,7 +4300,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, IO.binread('test/fixtures/mail65.box'))
+    ticket1, article1, user, mail = Channel::EmailParser.new.process({}, File.read(Rails.root.join('test', 'data', 'mail', 'mail065.box')))
 
     assert_equal('aaäöüßad asd', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')

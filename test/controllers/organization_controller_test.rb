@@ -531,13 +531,14 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
 
     # invalid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple_col_not_existing.csv'), 'text/csv')
-    post '/api/v1/organizations/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple_col_not_existing.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_equal('true', result['try'])
+    assert_equal(true, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('failed', result['result'])
     assert_equal(2, result['errors'].count)
@@ -545,13 +546,14 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal("Line 2: unknown attribute 'name2' for Organization.", result['errors'][1])
 
     # valid file try
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
-    post '/api/v1/organizations/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_equal('true', result['try'])
+    assert_equal(true, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('success', result['result'])
 
@@ -559,13 +561,14 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_nil(Organization.find_by(name: 'organization-member-import2'))
 
     # valid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
-    post '/api/v1/organizations/import', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/organizations/import', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_nil(result['try'])
+    assert_equal(false, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('success', result['result'])
 

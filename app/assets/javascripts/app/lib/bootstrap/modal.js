@@ -185,7 +185,6 @@
   // me - 2018-05-24
   // cleanup element on hide - cleanup dom with old modal dialogs
   Modal.prototype.remove = function () {
-    console.log('remove', this.$element)
     this.$element.remove()
   }
 

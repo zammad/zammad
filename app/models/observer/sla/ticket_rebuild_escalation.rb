@@ -3,15 +3,7 @@
 class Observer::Sla::TicketRebuildEscalation < ActiveRecord::Observer
   observe 'sla', 'calendar'
 
-  def after_create(record)
-    _rebuild(record)
-  end
-
-  def after_update(record)
-    _check(record)
-  end
-
-  def after_delete(record)
+  def after_commit(record)
     _rebuild(record)
   end
 

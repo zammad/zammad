@@ -1,0 +1,10 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: example@example.com
+from_email: example@example.com
+from_display_name: ''
+subject: 'W.: Invoice'
+content_type: text/plain
+body: " \n\n\n----- Original Nachricht ----\nVon:     example@example.com\nAn:      bob@example.com\nDatum:
+  \  30.05.2017 16:17\nBetreff: Invoice\n\nDear Mrs.Weber\n\nanbei mal wieder ein
+  paar Invoice.\n\nWünsche Ihnen noch einen schönen Arbeitstag.\n\nMit freundlichen
+  Grüßen\n\nBob Smith\n"

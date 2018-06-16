@@ -265,7 +265,7 @@ returns
       if fqdn.blank?
         fqdn = 'zammad_generated'
       end
-      local_message_id = 'gen-'+Digest::MD5.hexdigest(msg)+'@'+fqdn
+      local_message_id = '<gen-'+Digest::MD5.hexdigest(msg)+'@'+fqdn+'>'
     end
     local_message_id_md5 = Digest::MD5.hexdigest(local_message_id)
     article = Ticket::Article.where(message_id_md5: local_message_id_md5).order('created_at DESC, id DESC').limit(1).first

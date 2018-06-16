@@ -1,0 +1,7 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Bay <memberbay+12345@members.somewhat>
+from_email: memberbay+12345@members.somewhat
+from_display_name: Bay
+subject: strange email with empty text/plain
+to: bay@example.com
+body: "<b>some html text</b>"

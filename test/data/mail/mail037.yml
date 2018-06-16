@@ -1,0 +1,10 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Example <info@example.com>
+from_email: info@example.com
+from_display_name: Example
+subject: 'Example: Java 8 Neuerungen'
+to: Max Kohl | [example.com] <kohl@example.com>
+cc: Ingo Best <iw@example.com>
+body: 'Tag Max / Ingo!
+
+'

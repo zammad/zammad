@@ -61,7 +61,7 @@ end
 
 if connection.execute("SHOW tables LIKE 'settings';").any? &&
    Setting.get('postmaster_max_size').present? &&
-   Setting.get('postmaster_max_size') > max_allowed_packet_mb
+   Setting.get('postmaster_max_size').to_i > max_allowed_packet_mb
   printf "\e[33m" # ANSI yellow
   puts <<~MSG
   Warning: Database config value 'max_allowed_packet' less than Zammad setting 'Maximum Email Size'

@@ -22,6 +22,34 @@ class TicketCsvImportTest < ActiveSupport::TestCase
 
   end
 
+  test 'empty payload' do
+    csv_string = ''
+    result = Ticket.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert_nil(result[:records])
+    assert_equal('failed', result[:result])
+    assert_equal('Unable to parse empty file/string for Ticket.', result[:errors][0])
+
+    csv_string = 'id;number;title;state;priority;'
+    result = Ticket.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert(result[:records].blank?)
+    assert_equal('failed', result[:result])
+    assert_equal('No records found in file/string for Ticket.', result[:errors][0])
+  end
+
   test 'simple import' do
 
     csv_string = "id;number;title;state;priority;owner;customer;group;note\n;123456;some title1;new;2 normal;-;nicole.braun@zammad.org;Users;some note1\n;123457;some title2;closed;1 low;admin@example.com;nicole.braun@zammad.org;Users;some note2\n"

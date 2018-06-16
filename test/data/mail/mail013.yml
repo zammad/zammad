@@ -1,0 +1,8 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: thomas.smith@example.com
+from_email: thomas.smith@example.com
+from_display_name: ''
+subject: 'Antwort: Probleme ADB / Anlegen von Tickets [Ticket#111079]'
+to: q1@znuny.com
+content_type: text/html
+body: "<p>JA</p>"

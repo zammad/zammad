@@ -1,0 +1,13 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Martin Edenhofer <martin@example.com>
+from_email: martin@example.com
+from_display_name: Martin Edenhofer
+subject: aaäöüßad asd
+content_type: text/plain
+body: |
+  äöüß ad asd
+
+  -Martin
+
+  --
+  Old programmers never die. They just branch to a new address.

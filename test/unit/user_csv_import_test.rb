@@ -17,6 +17,34 @@ class UserCsvImportTest < ActiveSupport::TestCase
     assert(header.include?('organization'))
   end
 
+  test 'empty payload' do
+    csv_string = ''
+    result = User.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert_nil(result[:records])
+    assert_equal('failed', result[:result])
+    assert_equal('Unable to parse empty file/string for User.', result[:errors][0])
+
+    csv_string = "login;firstname;lastname;email;active;\n"
+    result = User.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+    )
+    assert_equal(true, result[:try])
+    assert(result[:records].blank?)
+    assert_equal('failed', result[:result])
+    assert_equal('No records found in file/string for User.', result[:errors][0])
+  end
+
   test 'simple import' do
 
     csv_string = "login;firstname;lastname;email;active;\nuser-simple-import1;firstname-simple-import1;lastname-simple-import1;user-simple-import1@example.com;true\nuser-simple-import2;firstname-simple-import2;lastname-simple-import2;user-simple-import2@example.com;false\n"
@@ -411,6 +439,22 @@ class UserCsvImportTest < ActiveSupport::TestCase
 
     orgaization1.destroy!
     orgaization2.destroy!
+  end
+
+  test 'simple import with delete' do
+    csv_string = "login;firstname;lastname;email\nuser-simple-import-fixed1;firstname-simple-import-fixed1;lastname-simple-import-fixed1;user-simple-import-fixed1@example.com\nuser-simple-import-fixed2;firstname-simple-import-fixed2;lastname-simple-import-fixed2;user-simple-import-fixed2@example.com\n"
+    result = User.csv_import(
+      string: csv_string,
+      parse_params: {
+        col_sep: ';',
+      },
+      try: true,
+      delete: true,
+    )
+
+    assert_equal(true, result[:try])
+    assert_equal('failed', result[:result])
+    assert_equal('Delete is not possible for User.', result[:errors][0])
   end
 
 end

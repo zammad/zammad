@@ -1,0 +1,28 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Manfred Haert <Manfred.Haert@example.com>
+from_email: Manfred.Haert@example.com
+from_display_name: Manfred Haert
+subject: Antragswesen in TesT abbilden
+to: info@znuny.inc
+body: 'Sehr geehrte Damen und Herren,<br> <br> wir hatten bereits letztes Jahr einen
+  TesT-Workshop mit Ihrem Herrn XXX durchgeführt und würden nun gerne erneut Ihre
+  Dienste in Anspruch nehmen.<br> <br> Mittlerweile setzen wir TesT produktiv ein
+  und würden nun gerne an einem Anwendungsfall (Change-Management) die Machbarkeit
+  des Abbildens eines derzeit "per Papier" durchgeführten Antragswesens in TesT prüfen
+  wollen.<br> <br> Wir bitten gerne um ein entsprechendes Angebot.<br> <br> Für Rückfragen
+  stehe ich gerne zur Verfügung. Vielen Dank!<br> <br> <div>--<br> Freundliche Grüße<br>
+  i.A. Manfred Härt<br> <br> <small>Test Somewhere GmbH<br> Ferdinand-Straße 99<br>
+  99073 Korlben<br> <b>Bitte beachten Sie die neuen Rufnummern!</b><br> Telefon: 011261
+  00000-2460<br> Fax: 011261 0000-7460<br> manfred.haertel@example.com<br> <a href="http://www.example.com"
+  rel="nofollow noreferrer noopener" target="_blank">http://www.example.com</a><br>
+  JETZT AUCH BEI FACEBOOK !<br> <a href="https://www.facebook.com/test" rel="nofollow
+  noreferrer noopener" target="_blank">https://www.facebook.com/test</a><span class="js-signatureMarker"></span><br>
+  ___________________________________<br> Test Somewhere GmbH<br> </small> <p><small>Diese
+  e-Mail ist ausschließlich für den beabsichtigten Empfänger bestimmt. Sollten Sie
+  irrtümlich diese e-Mail erhalten haben, unterrichten Sie uns bitte umgehend unter
+  kontakt@example.com und vernichten Sie diese Mitteilung einschließlich der ggf.
+  beigefügten Dateien.<br> Weil wir die Echtheit oder Vollständigkeit der in dieser
+  Nachricht enthaltenen Informationen nicht garantieren können, bitten wir um Verständnis,
+  dass wir zu Ihrem und unserem Schutz die rechtliche Verbindlichkeit der vorstehenden
+  Erklärungen ausschließen, soweit wir mit Ihnen keine anders lautenden Vereinbarungen
+  getroffen haben.</small> </p></div>'

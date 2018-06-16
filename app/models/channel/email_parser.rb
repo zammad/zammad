@@ -3,6 +3,9 @@
 # encoding: utf-8
 
 class Channel::EmailParser
+  EMAIL_REGEX = /.+@.+/
+  RECIPIENT_FIELDS = %w[to cc delivered-to x-original-to envelope-to].freeze
+  SENDER_FIELDS = %w[from reply-to return-path].freeze
 
 =begin
 
@@ -67,427 +70,16 @@ class Channel::EmailParser
 =end
 
   def parse(msg)
-    data = {}
+    mail = Mail.new(msg.utf8_encode)
 
-    # Rectify invalid encodings
-    encoding = CharDet.detect(msg)['encoding']
-    msg.force_encoding(encoding) if !msg.valid_encoding?
+    message_attributes = [
+      { mail_instance: mail },
+      message_header_hash(mail),
+      message_body_hash(mail),
+      self.class.sender_attributes(mail),
+    ]
 
-    mail = Mail.new(msg)
-
-    # set all headers
-    mail.header.fields.each do |field|
-
-      # full line, encode, ready for storage
-      begin
-        value = Encode.conv('utf8', field.to_s)
-        if value.blank?
-          value = field.raw_value
-        end
-        data[field.name.to_s.downcase.to_sym] = value
-      rescue => e
-        data[field.name.to_s.downcase.to_sym] = field.raw_value
-      end
-
-      # if we need to access the lines by objects later again
-      data["raw-#{field.name.downcase}".to_sym] = field
-    end
-
-    # verify content, ignore recipients with non email address
-    ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each do |field|
-      next if data[field.to_sym].blank?
-      next if data[field.to_sym].match?(/@/)
-      data[field.to_sym] = ''
-    end
-
-    # get sender with @ / email address
-    from = nil
-    ['from', 'reply-to', 'return-path'].each do |item|
-      next if data[item.to_sym].blank?
-      next if data[item.to_sym] !~ /@/
-      from = data[item.to_sym]
-      break if from
-    end
-
-    # in case of no sender with email address - get sender
-    if !from
-      ['from', 'reply-to', 'return-path'].each do |item|
-        next if data[item.to_sym].blank?
-        from = data[item.to_sym]
-        break if from
-      end
-    end
-
-    # set x-any-recipient
-    data['x-any-recipient'.to_sym] = ''
-    ['to', 'cc', 'delivered-to', 'x-original-to', 'envelope-to'].each do |item|
-      next if data[item.to_sym].blank?
-      if data['x-any-recipient'.to_sym] != ''
-        data['x-any-recipient'.to_sym] += ', '
-      end
-      data['x-any-recipient'.to_sym] += mail[item.to_sym].to_s
-    end
-
-    # set extra headers
-    data = data.merge(Channel::EmailParser.sender_properties(from))
-
-    # do extra encoding (see issue#1045)
-    if data[:subject].present?
-      data[:subject].sub!(/^=\?us-ascii\?Q\?(.+)\?=$/, '\1')
-    end
-
-    # compat headers
-    data[:message_id] = data['message-id'.to_sym].strip
-    if data[:message_id].blank?
-      if data[:from]
-        fqdn = Mail::Address.new(data[:from]).domain.strip
-      end
-      if fqdn.blank?
-        fqdn = 'zammad_generated'
-      end
-      data[:message_id] = 'gen-'+Digest::MD5.hexdigest(msg)+'@'+fqdn
-    end
-
-    # body
-    #    plain_part = mail.multipart? ? (mail.text_part ? mail.text_part.body.decoded : nil) : mail.body.decoded
-    #    html_part = message.html_part ? message.html_part.body.decoded : nil
-    data[:attachments] = []
-
-    # multi part email
-    if mail.multipart?
-
-      # html attachment/body may exists and will be converted to strict html
-      if mail.html_part&.body
-        data[:body] = mail.html_part.body.to_s
-        data[:body] = Encode.conv(mail.html_part.charset.to_s, data[:body])
-        data[:body] = data[:body].html2html_strict.to_s.force_encoding('utf-8')
-
-        if !data[:body].force_encoding('UTF-8').valid_encoding?
-          data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-        end
-        data[:content_type] = 'text/html'
-      end
-
-      # text attachment/body exists
-      if data[:body].blank? && mail.text_part
-        data[:body] = mail.text_part.body.decoded
-        data[:body] = Encode.conv(mail.text_part.charset, data[:body])
-        data[:body] = data[:body].to_s.force_encoding('utf-8')
-
-        if !data[:body].valid_encoding?
-          data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-        end
-        data[:content_type] = 'text/plain'
-      end
-
-      # any other attachments
-      if data[:body].blank?
-        data[:body] = 'no visible content'
-        data[:content_type] = 'text/plain'
-      end
-
-      # add html attachment/body as real attachment
-      if mail.html_part
-        filename = 'message.html'
-        headers_store = {
-          'content-alternative' => true,
-          'original-format' => true,
-        }
-        if mail.mime_type
-          headers_store['Mime-Type'] = mail.html_part.mime_type
-        end
-        if mail.charset
-          headers_store['Charset'] = mail.html_part.charset
-        end
-        attachment = {
-          data: mail.html_part.body.to_s,
-          filename: mail.html_part.filename || filename,
-          preferences: headers_store
-        }
-        data[:attachments].push attachment
-      end
-
-      # get attachments
-      mail.parts&.each do |part|
-
-        # protect process to work fine with spam emails, see test/fixtures/mail15.box
-        begin
-          attachs = _get_attachment(part, data[:attachments], mail)
-          data[:attachments].concat(attachs)
-        rescue
-          attachs = _get_attachment(part, data[:attachments], mail)
-          data[:attachments].concat(attachs)
-        end
-      end
-
-    # not multipart email
-
-    # html part only, convert to text and add it as attachment
-    elsif mail.mime_type && mail.mime_type.to_s.casecmp('text/html').zero?
-      filename = 'message.html'
-      data[:body] = mail.body.decoded
-      data[:body] = Encode.conv(mail.charset, data[:body])
-      data[:body] = data[:body].html2html_strict.to_s.force_encoding('utf-8')
-
-      if !data[:body].valid_encoding?
-        data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-      end
-      data[:content_type] = 'text/html'
-
-      # add body as attachment
-      headers_store = {
-        'content-alternative' => true,
-        'original-format' => true,
-      }
-      if mail.mime_type
-        headers_store['Mime-Type'] = mail.mime_type
-      end
-      if mail.charset
-        headers_store['Charset'] = mail.charset
-      end
-      attachment = {
-        data: mail.body.decoded,
-        filename: mail.filename || filename,
-        preferences: headers_store
-      }
-      data[:attachments].push attachment
-
-    # text part only
-    elsif !mail.mime_type || mail.mime_type.to_s == '' || mail.mime_type.to_s.casecmp('text/plain').zero?
-      data[:body] = mail.body.decoded
-      data[:body] = Encode.conv(mail.charset, data[:body])
-
-      if !data[:body].force_encoding('UTF-8').valid_encoding?
-        data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-      end
-      data[:content_type] = 'text/plain'
-    else
-      filename = '-no name-'
-      data[:body] = 'no visible content'
-      data[:content_type] = 'text/plain'
-
-      # add body as attachment
-      headers_store = {
-        'content-alternative' => true,
-      }
-      if mail.mime_type
-        headers_store['Mime-Type'] = mail.mime_type
-      end
-      if mail.charset
-        headers_store['Charset'] = mail.charset
-      end
-      attachment = {
-        data: mail.body.decoded,
-        filename: mail.filename || filename,
-        preferences: headers_store
-      }
-      data[:attachments].push attachment
-    end
-
-    # strip not wanted chars
-    data[:body].gsub!(/\n\r/, "\n")
-    data[:body].gsub!(/\r\n/, "\n")
-    data[:body].tr!("\r", "\n")
-
-    # get mail date
-    begin
-      if mail.date
-        data[:date] = Time.zone.parse(mail.date.to_s)
-      end
-    rescue
-      data[:date] = nil
-    end
-
-    # remember original mail instance
-    data[:mail_instance] = mail
-
-    data
-  end
-
-  def _get_attachment(file, attachments, mail)
-
-    # check if sub parts are available
-    if file.parts.present?
-      list = []
-      file.parts.each do |p|
-        attachment = _get_attachment(p, attachments, mail)
-        list.concat(attachment)
-      end
-      return list
-    end
-
-    # ignore text/plain attachments - already shown in view
-    return [] if mail.text_part&.body.to_s == file.body.to_s
-
-    # ignore text/html - html part, already shown in view
-    return [] if mail.html_part&.body.to_s == file.body.to_s
-
-    # get file preferences
-    headers_store = {}
-    file.header.fields.each do |field|
-
-      # full line, encode, ready for storage
-      begin
-        value = Encode.conv('utf8', field.to_s)
-        if value.blank?
-          value = field.raw_value
-        end
-        headers_store[field.name.to_s] = value
-      rescue => e
-        headers_store[field.name.to_s] = field.raw_value
-      end
-    end
-
-    # cleanup content id, <> will be added automatically later
-    if headers_store['Content-ID']
-      headers_store['Content-ID'].gsub!(/^</, '')
-      headers_store['Content-ID'].gsub!(/>$/, '')
-    end
-
-    # get filename from content-disposition
-    filename = nil
-
-    # workaround for: NoMethodError: undefined method `filename' for #<Mail::UnstructuredField:0x007ff109e80678>
-    begin
-      filename = file.header[:content_disposition].filename
-    rescue
-      begin
-        if file.header[:content_disposition].to_s =~ /filename="(.+?)"/i
-          filename = $1
-        elsif file.header[:content_disposition].to_s =~ /filename='(.+?)'/i
-          filename = $1
-        elsif file.header[:content_disposition].to_s =~ /filename=(.+?);/i
-          filename = $1
-        end
-      rescue
-        Rails.logger.debug { 'Unable to get filename' }
-      end
-    end
-
-    # as fallback, use raw values
-    if filename.blank?
-      if headers_store['Content-Disposition'].to_s =~ /filename="(.+?)"/i
-        filename = $1
-      elsif headers_store['Content-Disposition'].to_s =~ /filename='(.+?)'/i
-        filename = $1
-      elsif headers_store['Content-Disposition'].to_s =~ /filename=(.+?);/i
-        filename = $1
-      end
-    end
-
-    # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
-    filename ||= file.header[:content_location].to_s
-
-    # generate file name based on content-id
-    if filename.blank? && headers_store['Content-ID'].present?
-      if headers_store['Content-ID'] =~ /(.+?)@.+?/i
-        filename = $1
-      end
-    end
-
-    # generate file name based on content type
-    if filename.blank? && headers_store['Content-Type'].present?
-      if headers_store['Content-Type'].match?(%r{^message/rfc822}i)
-        begin
-          parser = Channel::EmailParser.new
-          mail_local = parser.parse(file.body.to_s)
-          filename = if mail_local[:subject].present?
-                       "#{mail_local[:subject]}.eml"
-                     elsif headers_store['Content-Description'].present?
-                       "#{headers_store['Content-Description']}.eml".to_s.force_encoding('utf-8')
-                     else
-                       'Mail.eml'
-                     end
-        rescue
-          filename = 'Mail.eml'
-        end
-      end
-
-      # e. g. Content-Type: video/quicktime; name="Video.MOV";
-      if filename.blank?
-        ['name="(.+?)"(;|$)', "name='(.+?)'(;|$)", 'name=(.+?)(;|$)'].each do |regexp|
-          if headers_store['Content-Type'] =~ /#{regexp}/i
-            filename = $1
-            break
-          end
-        end
-      end
-
-      # e. g. Content-Type: video/quicktime
-      if filename.blank?
-        map = {
-          'message/delivery-status': ['txt', 'delivery-status'],
-          'text/plain': %w[txt document],
-          'text/html': %w[html document],
-          'video/quicktime': %w[mov video],
-          'image/jpeg': %w[jpg image],
-          'image/jpg': %w[jpg image],
-          'image/png': %w[png image],
-          'image/gif': %w[gif image],
-        }
-        map.each do |type, ext|
-          next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
-          filename = if headers_store['Content-Description'].present?
-                       "#{headers_store['Content-Description']}.#{ext[0]}".to_s.force_encoding('utf-8')
-                     else
-                       "#{ext[1]}.#{ext[0]}"
-                     end
-          break
-        end
-      end
-    end
-
-    if filename.blank?
-      filename = 'file'
-    end
-
-    attachment_count = 0
-    local_filename = ''
-    local_extention = ''
-    if filename =~ /^(.*?)\.(.+?)$/
-      local_filename = $1
-      local_extention = $2
-    end
-
-    (1..1000).each do |count|
-      filename_exists = false
-      attachments.each do |attachment|
-        if attachment[:filename] == filename
-          filename_exists = true
-        end
-      end
-      break if filename_exists == false
-      filename = if local_extention.present?
-                   "#{local_filename}#{count}.#{local_extention}"
-                 else
-                   "#{local_filename}#{count}"
-                 end
-    end
-
-    # get mime type
-    if file.header[:content_type]&.string
-      headers_store['Mime-Type'] = file.header[:content_type].string
-    end
-
-    # get charset
-    if file.header&.charset
-      headers_store['Charset'] = file.header.charset
-    end
-
-    # remove not needed header
-    headers_store.delete('Content-Transfer-Encoding')
-    headers_store.delete('Content-Disposition')
-
-    # workaround for mail gem
-    # https://github.com/zammad/zammad/issues/928
-    filename = Mail::Encodings.value_decode(filename)
-
-    attach = {
-      data: file.body.to_s,
-      filename: filename,
-      preferences: headers_store,
-    }
-    [attach]
+    message_attributes.reduce({}.with_indifferent_access, &:merge)
   end
 
 =begin
@@ -678,7 +270,7 @@ returns
         mail[:attachments]&.each do |attachment|
           filename = attachment[:filename].force_encoding('utf-8')
           if !filename.force_encoding('UTF-8').valid_encoding?
-            filename = filename.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+            filename = filename.utf8_encode(fallback: :read_as_sanitized_binary)
           end
           Store.add(
             object: 'Ticket::Article',
@@ -737,45 +329,51 @@ returns
     true
   end
 
-  def self.sender_properties(from)
-    data = {}
-    return data if from.blank?
-    begin
-      list = Mail::AddressList.new(from)
-      list.addresses.each do |address|
-        data[:from_email] = address.address
-        data[:from_local]        = address.local
-        data[:from_domain]       = address.domain
-        data[:from_display_name] = address.display_name ||
-                                   (address.comments && address.comments[0])
-        break if data[:from_email].present? && data[:from_email] =~ /@/
-      end
-    rescue => e
-      if from =~ /<>/ && from =~ /<.+?>/
-        data = sender_properties(from.gsub(/<>/, ''))
-      end
+  def self.sender_attributes(from)
+    if from.is_a?(Mail::Message)
+      from = SENDER_FIELDS.map { |f| from.header[f] }.compact
+                          .map(&:to_utf8).reject(&:blank?)
+                          .partition { |address| address.match?(EMAIL_REGEX) }
+                          .flatten.first
     end
 
-    if data.blank? || data[:from_email].blank?
-      from.strip!
-      if from =~ /^(.+?)<(.+?)@(.+?)>$/
-        data[:from_email]        = "#{$2}@#{$3}"
-        data[:from_local]        = $2
-        data[:from_domain]       = $3
-        data[:from_display_name] = $1
-      else
-        data[:from_email]  = from
-        data[:from_local]  = from
-        data[:from_domain] = from
-      end
+    data = {}.with_indifferent_access
+    return data if from.blank?
+
+    from = from.gsub('<>', '').strip
+    mail_address = begin
+                     Mail::AddressList.new(from).addresses
+                                      .select { |a| a.address.present? }
+                                      .partition { |a| a.address.match?(EMAIL_REGEX) }
+                                      .flatten.first
+                   rescue Mail::Field::ParseError => e
+                     STDOUT.puts e
+                   end
+
+    if mail_address&.address.present?
+      data[:from_email]        = mail_address.address
+      data[:from_local]        = mail_address.local
+      data[:from_domain]       = mail_address.domain
+      data[:from_display_name] = mail_address.display_name || mail_address.comments&.first
+    elsif from =~ /^(.+?)<((.+?)@(.+?))>$/
+      data[:from_email]        = $2
+      data[:from_local]        = $3
+      data[:from_domain]       = $4
+      data[:from_display_name] = $1
+    else
+      data[:from_email]        = from
+      data[:from_local]        = from
+      data[:from_domain]       = from
+      data[:from_display_name] = from
     end
 
     # do extra decoding because we needed to use field.value
-    data[:from_display_name] = Mail::Field.new('X-From', Encode.conv('utf8', data[:from_display_name])).to_s
-    data[:from_display_name].delete!('"')
-    data[:from_display_name].strip!
-    data[:from_display_name].gsub!(/^'/, '')
-    data[:from_display_name].gsub!(/'$/, '')
+    data[:from_display_name] =
+      Mail::Field.new('X-From', data[:from_display_name].to_utf8)
+                 .to_s
+                 .delete('"')
+                 .strip
+                 .gsub(/(^'|'$)/, '')
 
     data
   end
@@ -864,6 +462,280 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     files
   end
 
+  private
+
+  def generate_message_id(imported_fields)
+    if imported_fields["from"]
+      fqdn = Mail::Address.new(imported_fields["from"]).domain.strip
+    end
+    if fqdn.blank?
+      fqdn = 'zammad_generated'
+    end
+    return '<gen-'+Digest::MD5.hexdigest(msg)+'@'+fqdn+'>'
+  end
+
+  def message_header_hash(mail)
+    imported_fields = mail.header.fields.map do |f|
+      value = begin
+                f.to_utf8
+              rescue NameError # handle bug #1238 in Mail 2.7.1.rc1
+                ''             # swap out for commented line below once upgrade is available
+              end
+
+      [f.name.downcase, value]
+    end.to_h
+
+    # imported_fields = mail.header.fields.map { |f| [f.name.downcase, f.to_utf8] }.to_h
+    raw_fields = mail.header.fields.map { |f| ["raw-#{f.name.downcase}", f] }.to_h
+    custom_fields = {}.tap do |h|
+      validated_recipients = imported_fields.slice(*RECIPIENT_FIELDS)
+                                            .transform_values { |v| v.match?(EMAIL_REGEX) ? v : '' }
+      h.merge!(validated_recipients)
+
+      h['date']            = Time.zone.parse(mail.date.to_s) || imported_fields['date']
+      h['message_id']      = imported_fields['message-id'] || generate_message_id(imported_fields)
+      h['subject']         = imported_fields['subject']&.sub(/^=\?us-ascii\?Q\?(.+)\?=$/, '\1')
+      h['x-any-recipient'] = validated_recipients.values.select(&:present?).join(', ')
+    end
+
+    [imported_fields, raw_fields, custom_fields].reduce({}.with_indifferent_access, &:merge)
+  end
+
+  def message_body_hash(mail)
+    message = [mail.html_part, mail.text_part, mail].find { |m| m&.body.present? }
+
+    if message.mime_type.nil? || message.mime_type.match?(%r{^text/(plain|html)$})
+      content_type = message.mime_type || 'text/plain'
+      body = body_text(message, strict_html: content_type.eql?('text/html'))
+    end
+
+    content_type = 'text/plain' if body.blank?
+
+    {
+      attachments:  collect_attachments(mail),
+      content_type: content_type || 'text/plain',
+      body:         body.presence || 'no visible content'
+    }.with_indifferent_access
+  end
+
+  def body_text(message, **options)
+    body_text = begin
+                  message.body.to_s
+                rescue Mail::UnknownEncodingType # see test/data/mail/mail043.box / issue #348
+                  message.body.raw_source
+                end
+
+    body_text = body_text.utf8_encode(from: message.charset, fallback: :read_as_sanitized_binary)
+    body_text = Mail::Utilities.to_lf(body_text)
+
+    return body_text.html2html_strict if options[:strict_html]
+    body_text
+  end
+
+  def collect_attachments(mail)
+    attachments = []
+
+    # Add non-plaintext body as an attachment
+    if mail.html_part&.body.present? ||
+       (!mail.multipart? && mail.mime_type.present? && mail.mime_type != 'text/plain')
+      message = mail.html_part || mail
+
+      filename = message.filename.presence ||
+                 (message.mime_type.eql?('text/html') ? 'message.html' : '-no name-')
+
+      headers_store = {
+        'content-alternative' => true,
+        'original-format'     => message.mime_type.eql?('text/html'),
+        'Mime-Type'           => message.mime_type,
+        'Charset'             => message.charset,
+      }.reject { |_, v| v.blank? }
+
+      attachments.push({ data:        body_text(message),
+                         filename:    filename,
+                         preferences: headers_store })
+    end
+
+    mail.parts.each do |part|
+      begin
+        new_attachments = get_attachments(part, attachments, mail).flatten.compact
+        attachments.push(*new_attachments)
+      rescue => e # Protect process to work with spam emails (see test/fixtures/mail15.box)
+        raise e if (fail_count ||= 0).positive?
+        (fail_count += 1) && retry
+      end
+    end
+
+    attachments
+  end
+
+  def get_attachments(file, attachments, mail)
+    return file.parts.map { |p| get_attachments(p, attachments, mail) } if file.parts.any?
+    return [] if [mail.text_part, mail.html_part].include?(file)
+
+    # get file preferences
+    headers_store = {}
+    file.header.fields.each do |field|
+
+      # full line, encode, ready for storage
+      begin
+        value = field.to_utf8
+        if value.blank?
+          value = field.raw_value
+        end
+        headers_store[field.name.to_s] = value
+      rescue => e
+        headers_store[field.name.to_s] = field.raw_value
+      end
+    end
+
+    # cleanup content id, <> will be added automatically later
+    if headers_store['Content-ID']
+      headers_store['Content-ID'].gsub!(/^</, '')
+      headers_store['Content-ID'].gsub!(/>$/, '')
+    end
+
+    # get filename from content-disposition
+
+    # workaround for: NoMethodError: undefined method `filename' for #<Mail::UnstructuredField:0x007ff109e80678>
+    filename = file.header[:content_disposition].try(:filename)
+
+    begin
+      if file.header[:content_disposition].to_s =~ /filename="(.+?)"/i
+        filename = $1
+      elsif file.header[:content_disposition].to_s =~ /filename='(.+?)'/i
+        filename = $1
+      elsif file.header[:content_disposition].to_s =~ /filename=(.+?);/i
+        filename = $1
+      end
+    rescue
+      Rails.logger.debug { 'Unable to get filename' }
+    end
+
+    # as fallback, use raw values
+    if filename.blank?
+      if headers_store['Content-Disposition'].to_s =~ /filename="(.+?)"/i
+        filename = $1
+      elsif headers_store['Content-Disposition'].to_s =~ /filename='(.+?)'/i
+        filename = $1
+      elsif headers_store['Content-Disposition'].to_s =~ /filename=(.+?);/i
+        filename = $1
+      end
+    end
+
+    # for some broken sm mail clients (X-MimeOLE: Produced By Microsoft Exchange V6.5)
+    filename ||= file.header[:content_location].to_s
+
+    # generate file name based on content-id
+    if filename.blank? && headers_store['Content-ID'].present?
+      if headers_store['Content-ID'] =~ /(.+?)@.+?/i
+        filename = $1
+      end
+    end
+
+    # generate file name based on content type
+    if filename.blank? && headers_store['Content-Type'].present?
+      if headers_store['Content-Type'].match?(%r{^message/rfc822}i)
+        begin
+          parser = Channel::EmailParser.new
+          mail_local = parser.parse(file.body.to_s)
+          filename = if mail_local[:subject].present?
+                       "#{mail_local[:subject]}.eml"
+                     elsif headers_store['Content-Description'].present?
+                       "#{headers_store['Content-Description']}.eml".to_s.force_encoding('utf-8')
+                     else
+                       'Mail.eml'
+                     end
+        rescue
+          filename = 'Mail.eml'
+        end
+      end
+
+      # e. g. Content-Type: video/quicktime; name="Video.MOV";
+      if filename.blank?
+        ['name="(.+?)"(;|$)', "name='(.+?)'(;|$)", 'name=(.+?)(;|$)'].each do |regexp|
+          if headers_store['Content-Type'] =~ /#{regexp}/i
+            filename = $1
+            break
+          end
+        end
+      end
+
+      # e. g. Content-Type: video/quicktime
+      if filename.blank?
+        map = {
+          'message/delivery-status': ['txt', 'delivery-status'],
+          'text/plain': %w[txt document],
+          'text/html': %w[html document],
+          'video/quicktime': %w[mov video],
+          'image/jpeg': %w[jpg image],
+          'image/jpg': %w[jpg image],
+          'image/png': %w[png image],
+          'image/gif': %w[gif image],
+        }
+        map.each do |type, ext|
+          next if headers_store['Content-Type'] !~ /^#{Regexp.quote(type)}/i
+          filename = if headers_store['Content-Description'].present?
+                       "#{headers_store['Content-Description']}.#{ext[0]}".to_s.force_encoding('utf-8')
+                     else
+                       "#{ext[1]}.#{ext[0]}"
+                     end
+          break
+        end
+      end
+    end
+
+    if filename.blank?
+      filename = 'file'
+    end
+
+    local_filename = ''
+    local_extention = ''
+    if filename =~ /^(.*?)\.(.+?)$/
+      local_filename = $1
+      local_extention = $2
+    end
+
+    1.upto(1000) do |i|
+      filename_exists = false
+      attachments.each do |attachment|
+        if attachment[:filename] == filename
+          filename_exists = true
+        end
+      end
+      break if filename_exists == false
+      filename = if local_extention.present?
+                   "#{local_filename}#{i}.#{local_extention}"
+                 else
+                   "#{local_filename}#{i}"
+                 end
+    end
+
+    # get mime type
+    if file.header[:content_type]&.string
+      headers_store['Mime-Type'] = file.header[:content_type].string
+    end
+
+    # get charset
+    if file.header&.charset
+      headers_store['Charset'] = file.header.charset
+    end
+
+    # remove not needed header
+    headers_store.delete('Content-Transfer-Encoding')
+    headers_store.delete('Content-Disposition')
+
+    # workaround for mail gem
+    # https://github.com/zammad/zammad/issues/928
+    filename = Mail::Encodings.value_decode(filename)
+
+    attach = {
+      data: file.body.to_s,
+      filename: filename,
+      preferences: headers_store,
+    }
+
+    [attach]
+  end
 end
 
 module Mail
@@ -871,7 +743,7 @@ module Mail
   # workaround to get content of no parseable headers - in most cases with non 7 bit ascii signs
   class Field
     def raw_value
-      value = Encode.conv('utf8', @raw_value)
+      value = @raw_value.try(:utf8_encode)
       return value if value.blank?
       value.sub(/^.+?:(\s|)/, '')
     end
@@ -912,19 +784,4 @@ module Mail
       end.join('')
     end
   end
-
-  # issue#348 - IMAP mail fetching stops because of broken spam email (e. g. broken Content-Transfer-Encoding value see test/fixtures/mail43.box)
-  # https://github.com/zammad/zammad/issues/348
-  class Body
-    def decoded
-      if !Encodings.defined?(encoding)
-        #raise UnknownEncodingType, "Don't know how to decode #{encoding}, please call #encoded and decode it yourself."
-        Rails.logger.info "UnknownEncodingType: Don't know how to decode #{encoding}!"
-        raw_source
-      else
-        Encodings.get_encoding(encoding).decode(raw_source)
-      end
-    end
-  end
-
 end
