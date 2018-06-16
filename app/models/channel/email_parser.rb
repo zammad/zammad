@@ -464,6 +464,16 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
   private
 
+  def generate_message_id(imported_fields)
+    if imported_fields["from"]
+      fqdn = Mail::Address.new(imported_fields["from"]).domain.strip
+    end
+    if fqdn.blank?
+      fqdn = 'zammad_generated'
+    end
+    return '<gen-'+Digest::MD5.hexdigest(msg)+'@'+fqdn+'>'
+  end
+
   def message_header_hash(mail)
     imported_fields = mail.header.fields.map do |f|
       value = begin
@@ -483,7 +493,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
       h.merge!(validated_recipients)
 
       h['date']            = Time.zone.parse(mail.date.to_s) || imported_fields['date']
-      h['message_id']      = imported_fields['message-id']
+      h['message_id']      = imported_fields['message-id'] || generate_message_id(imported_fields)
       h['subject']         = imported_fields['subject']&.sub(/^=\?us-ascii\?Q\?(.+)\?=$/, '\1')
       h['x-any-recipient'] = validated_recipients.values.select(&:present?).join(', ')
     end
