@@ -256,11 +256,11 @@ returns
     return false if !keep_on_server
     return false if !message_meta.attr
     return false if !message_meta.attr['ENVELOPE']
-    local_message_id = message_meta.attr['ENVELOPE'].message_id
+    local_message_id = message_meta.attr['ENVELOPE'].message_id.strip
     if local_message_id.blank?
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
       if message_meta.attr['ENVELOPE'].from[0]
-        fqdn = message_meta.attr['ENVELOPE'].from[0][:host]
+        fqdn = message_meta.attr['ENVELOPE'].from[0][:host].strip
       end
       if fqdn.blank?
         fqdn = 'zammad_generated'

@@ -137,10 +137,10 @@ class Channel::EmailParser
     end
 
     # compat headers
-    data[:message_id] = data['message-id'.to_sym]
+    data[:message_id] = data['message-id'.to_sym].strip
     if data[:message_id].blank?
       if data[:from]
-        fqdn = Mail::Address.new(data[:from]).domain
+        fqdn = Mail::Address.new(data[:from]).domain.strip
       end
       if fqdn.blank?
         fqdn = 'zammad_generated'
