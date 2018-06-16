@@ -21,14 +21,13 @@ returns
       key        = "#{new.class.name}_latest_change"
       updated_at = Cache.get(key)
 
+      return updated_at if updated_at
+
       # if we do not have it cached, do lookup
-      if !updated_at
-        o = select(:updated_at).order(updated_at: :desc, id: :desc).limit(1).first
-        if o
-          updated_at = o.updated_at
-          latest_change_set(updated_at)
-        end
-      end
+      updated_at = order(updated_at: :desc, id: :desc).limit(1).pluck(:updated_at).first
+
+      return if !updated_at
+      latest_change_set(updated_at)
       updated_at
     end
 
