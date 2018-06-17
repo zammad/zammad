@@ -466,12 +466,12 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
   def generate_message_id(imported_fields, msg)
     if imported_fields['from']
-      fqdn = Mail::Address.new(imported_fields['from']).domain.strip
+      fqdn = Mail::Address.new(imported_fields['from']).domain
     end
     if fqdn.blank?
       fqdn = 'zammad_generated'
     end
-    '<gen-' + Digest::MD5.hexdigest(msg) + '@' + fqdn + '>'
+    '<gen-' + Digest::MD5.hexdigest(msg) + '@' + fqdn.strip + '>'
   end
 
   def message_header_hash(mail, msg)

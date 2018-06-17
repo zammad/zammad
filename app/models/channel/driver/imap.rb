@@ -256,17 +256,18 @@ returns
     return false if !keep_on_server
     return false if !message_meta.attr
     return false if !message_meta.attr['ENVELOPE']
-    local_message_id = message_meta.attr['ENVELOPE'].message_id.strip
+    local_message_id = message_meta.attr['ENVELOPE'].message_id
     if local_message_id.blank?
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
       if message_meta.attr['ENVELOPE'].from[0]
-        fqdn = message_meta.attr['ENVELOPE'].from[0][:host].strip
+        fqdn = message_meta.attr['ENVELOPE'].from[0][:host]
       end
       if fqdn.blank?
         fqdn = 'zammad_generated'
       end
-      local_message_id = '<gen-' + Digest::MD5.hexdigest(msg) + '@' + fqdn + '>'
+      local_message_id = '<gen-' + Digest::MD5.hexdigest(msg) + '@' + fqdn.strip + '>'
     end
+    local_message_id = local_message_id.strip
     local_message_id_md5 = Digest::MD5.hexdigest(local_message_id)
     article = Ticket::Article.where(message_id_md5: local_message_id_md5).order('created_at DESC, id DESC').limit(1).first
     return false if !article
