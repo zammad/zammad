@@ -471,7 +471,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     if fqdn.blank?
       fqdn = 'zammad_generated'
     end
-    return '<gen-' + Digest::MD5.hexdigest(msg) + '@' + fqdn + '>'
+    '<gen-' + Digest::MD5.hexdigest(msg) + '@' + fqdn + '>'
   end
 
   def message_header_hash(mail)
