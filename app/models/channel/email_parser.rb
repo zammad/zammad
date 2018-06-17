@@ -466,7 +466,11 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
   def generate_message_id(imported_fields, msg)
     if imported_fields['from']
-      fqdn = Mail::Address.new(imported_fields['from']).domain
+      begin
+        fqdn = Mail::Address.new(imported_fields['from']).domain
+      rescue
+        fqdn = nil
+      end
     end
     if fqdn.blank?
       fqdn = 'zammad_generated'
