@@ -475,7 +475,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     date = Time.zone.parse(imported_fields['delivery-date'])
     return date if !date.nil?
 
-    received_header_date = imported_fields["received"].to_s.split("; ")[1]
+    received_header_date = imported_fields['received'].to_s.split('; ')[1]
     date = Time.zone.parse(received_header_date)
     return date if !date.nil?
   end
