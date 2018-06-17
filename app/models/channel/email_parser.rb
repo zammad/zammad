@@ -469,15 +469,24 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   private
 
   def get_other_date_options(imported_fields)
-    date = Time.zone.parse(imported_fields['date'])
-    return date if !date.nil?
+    date = nil
 
-    date = Time.zone.parse(imported_fields['delivery-date'])
-    return date if !date.nil?
+    if !imported_fields['date'].blank?
+      date = Time.zone.parse(imported_fields['date'])
+      return date if !date.nil?
+    end
 
-    received_header_date = imported_fields['received'].to_s.split('; ')[1]
-    date = Time.zone.parse(received_header_date)
-    return date if !date.nil?
+    if !imported_fields['delivery-date'].blank?
+      date = Time.zone.parse(imported_fields['delivery-date'])
+      return date if !date.nil?
+    end
+
+    if !imported_fields['received'].blank?
+      received_header_date = imported_fields['received'].to_s.split('; ')[1]
+      date = Time.zone.parse(received_header_date)
+      return date if !date.nil?
+    end
+
   end
 
   def message_header_hash(mail)
