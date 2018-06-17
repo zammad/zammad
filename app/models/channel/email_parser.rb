@@ -469,14 +469,14 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   def get_other_date_options(imported_fields)
     date = nil
 
-    date = Time.zone.parse(imported_fields['date']) unless imported_fields['date'].blank?
+    date = Time.zone.parse(imported_fields['date']) if imported_fields['date'].present?
     return date if date.present?
 
-    date = Time.zone.parse(imported_fields['delivery-date']) unless imported_fields['delivery-date'].blank
+    date = Time.zone.parse(imported_fields['delivery-date']) if imported_fields['delivery-date'].present?
     return date if date.present?
 
     received_header_date = imported_fields['received'].to_s.split('; ')[1]
-    date = Time.zone.parse(received_header_date) unless imported_fields['received'].blank?
+    date = Time.zone.parse(received_header_date) if imported_fields['received'].present?
     return date if date.present?
 
   end
