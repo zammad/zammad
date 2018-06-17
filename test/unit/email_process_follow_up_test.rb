@@ -13,6 +13,7 @@ class EmailProcessFollowUpTest < ActiveSupport::TestCase
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
+      created_at: Time.zone.parse('30 Aug 2015 14:56:01 +0200'),
     )
     article = Ticket::Article.create(
       ticket_id: ticket.id,
@@ -26,6 +27,7 @@ class EmailProcessFollowUpTest < ActiveSupport::TestCase
       type: Ticket::Article::Type.lookup(name: 'email'),
       updated_by_id: 1,
       created_by_id: 1,
+      created_at: Time.zone.parse('30 Aug 2015 14:56:01 +0200'),
     )
 
     email_raw_string_subject = "From: me@example.com

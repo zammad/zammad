@@ -233,7 +233,6 @@ returns
           group_id: group.id,
           title: title,
           created_at: mail[:date],
-          updated_at: mail[:date],
           preferences: preferences,
         )
         set_attributes_by_x_headers(ticket, 'ticket', mail)
@@ -256,7 +255,6 @@ returns
           cc: mail[:cc],
           subject: mail[:subject],
           created_at: mail[:date],
-          updated_at: mail[:date],
           message_id: mail[:message_id],
           internal: false,
         )
@@ -471,20 +469,20 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   def get_other_date_options(imported_fields)
     date = nil
 
-    if !imported_fields['date'].blank?
+    if imported_fields['date'].present?
       date = Time.zone.parse(imported_fields['date'])
-      return date if !date.nil?
+      return date if date.present?
     end
 
-    if !imported_fields['delivery-date'].blank?
+    if imported_fields['delivery-date'].present?
       date = Time.zone.parse(imported_fields['delivery-date'])
-      return date if !date.nil?
+      return date if date.present?
     end
 
-    if !imported_fields['received'].blank?
+    if imported_fields['received'].present?
       received_header_date = imported_fields['received'].to_s.split('; ')[1]
       date = Time.zone.parse(received_header_date)
-      return date if !date.nil?
+      return date if date.present?
     end
 
   end
