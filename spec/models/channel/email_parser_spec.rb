@@ -28,6 +28,24 @@ RSpec.describe Channel::EmailParser, type: :model do
               .to change { ticket.articles.length }
           end
         end
+
+        context 'as part of a larger word' do
+          let(:raw_mail) { File.read(mail_file).sub(/(?<=Hallo) =\n(?=Martin,<o:p>)/, test_string) }
+
+          it 'creates a separate ticket' do
+            expect { described_class.new.process({}, raw_mail) }
+              .not_to change { ticket.articles.length }
+          end
+        end
+
+        context 'in html attributes' do
+          let(:raw_mail) { File.read(mail_file).sub(%r{<a href.*?/a>}m, %(<table bgcolor="#{test_string}"> </table>)) }
+
+          it 'creates a separate ticket' do
+            expect { described_class.new.process({}, raw_mail) }
+              .not_to change { ticket.articles.length }
+          end
+        end
       end
     end
   end

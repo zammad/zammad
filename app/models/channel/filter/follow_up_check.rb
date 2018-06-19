@@ -18,7 +18,7 @@ module Channel::Filter::FollowUpCheck
 
     # get ticket# from body
     if setting.include?('body')
-      ticket = Ticket::Number.check(mail[:body])
+      ticket = Ticket::Number.check(mail[:body].html2text)
       if ticket
         Rails.logger.debug { "Follow up for '##{ticket.number}' in body." }
         mail['x-zammad-ticket-id'.to_sym] = ticket.id
@@ -30,7 +30,7 @@ module Channel::Filter::FollowUpCheck
     if setting.include?('attachment') && mail[:attachments]
       mail[:attachments].each do |attachment|
         next if !attachment[:data]
-        ticket = Ticket::Number.check(attachment[:data])
+        ticket = Ticket::Number.check(attachment[:data].html2text)
         next if !ticket
         Rails.logger.debug { "Follow up for '##{ticket.number}' in attachment." }
         mail['x-zammad-ticket-id'.to_sym] = ticket.id
