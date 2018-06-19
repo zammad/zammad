@@ -9610,3 +9610,8 @@ body.fit {
 .flex-spacer {
   flex: 1;
 }
+
+span.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

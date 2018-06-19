@@ -29,12 +29,18 @@ list of all attributes
 
   def self.list_full
     result = ObjectManager::Attribute.all.order('position ASC, name ASC')
+    references = attribute_to_references_hash()
     attributes = []
     assets = {}
     result.each do |item|
       attribute = item.attributes
       attribute[:object] = ObjectLookup.by_id(item.object_lookup_id)
       attribute.delete('object_lookup_id')
+      # an attribute is deletable if it is both editable and not referenced by other Objects (Triggers, Overviews, Schedulers)
+      attribute[:deletable] = attribute['editable'] && !references.key?(attribute['name'])
+      if references.key?(attribute['name'])
+        attribute[:not_deletable_reason] = "This attribute is referenced by #{references[attribute['name']]} and thus cannot be deleted!"
+      end
       attributes.push attribute
     end
     attributes
@@ -369,6 +375,12 @@ use "force: true" to delete also not editable fields
 
     if !data[:force] && !record.editable
       raise "ERROR: #{data[:object]}.#{data[:name]} can't be removed!"
+    end
+
+    # check to make sure that no triggers, overviews, or schedulers references this attribute
+    references = attribute_to_references_hash()
+    if references.key?(data[:name])
+      raise "ERROR: #{data[:object]}.#{data[:name]} is referenced by #{references[data[:name]]} and thus cannot be deleted!"
     end
 
     # if record is to create, just destroy it
@@ -818,4 +830,16 @@ to send no browser reload event, pass false
     true
   end
 
+  # compile a hash mapping attributes to a string listing all Objects (triggers, overviews, and schedulers) referencing that attribute
+  private_class_method def self.attribute_to_references_hash
+    objects = Trigger.select(:name, :condition) + Overview.select(:name, :condition) + Job.select(:name, :condition)
+    objects = objects.map do |x|
+      x.as_json.merge(type: x.class.name, attribute: x[:condition].keys.first.split('.').last)
+    end
+    result = Hash.new { |h, k| h[k] = [] }
+    objects.each do |x|
+      result[x[:attribute]].push x[:type] + ' ' + x['name']
+    end
+    Hash[ result.map { |key, value| [key, value.join(', ')] } ]
+  end
 end
