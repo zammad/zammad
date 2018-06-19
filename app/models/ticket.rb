@@ -557,11 +557,11 @@ condition example
 
       # get attributes
       attributes = attribute.split(/\./)
-      attribute = "#{attributes[0]}s.#{attributes[1]}"
+      attribute = "#{ActiveRecord::Base.connection.quote_table_name("#{attributes[0]}s")}.#{ActiveRecord::Base.connection.quote_column_name(attributes[1])}"
 
       # magic selectors
       if attributes[0] == 'ticket' && attributes[1] == 'out_of_office_replacement_id'
-        attribute = "#{attributes[0]}s.owner_id"
+        attribute = "#{ActiveRecord::Base.connection.quote_table_name("#{attributes[0]}s")}.#{ActiveRecord::Base.connection.quote_column_name('owner_id')}"
       end
 
       if attributes[0] == 'ticket' && attributes[1] == 'tags'

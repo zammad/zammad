@@ -663,4 +663,78 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
   end
 
+  test 'c object manager attribute - certain names' do
+
+    assert_equal(false, ObjectManager::Attribute.pending_migration?)
+    assert_equal(0, ObjectManager::Attribute.where(to_migrate: true).count)
+    assert_equal(0, ObjectManager::Attribute.migrations.count)
+
+    attribute1 = ObjectManager::Attribute.add(
+      object: 'Ticket',
+      name: '1_a_anfrage_status',
+      display: '1_a_anfrage_status',
+      data_type: 'input',
+      data_option: {
+        maxlength: 200,
+        type: 'text',
+        null: true,
+      },
+      active: true,
+      screens: {},
+      position: 20,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    assert(attribute1)
+
+    assert_equal(true, ObjectManager::Attribute.pending_migration?)
+    assert_equal(1, ObjectManager::Attribute.where(to_migrate: true).count)
+    assert_equal(1, ObjectManager::Attribute.migrations.count)
+
+    # execute migrations
+    assert(ObjectManager::Attribute.migration_execute)
+
+    assert_equal(false, ObjectManager::Attribute.pending_migration?)
+    assert_equal(0, ObjectManager::Attribute.where(to_migrate: true).count)
+    assert_equal(0, ObjectManager::Attribute.migrations.count)
+
+    # create example ticket
+    ticket1 = Ticket.create(
+      title: 'some attribute test3',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      '1_a_anfrage_status': 'some attribute text',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert('ticket1 created', ticket1)
+
+    assert_equal('some attribute test3', ticket1.title)
+    assert_equal('Users', ticket1.group.name)
+    assert_equal('new', ticket1.state.name)
+    assert_equal('some attribute text', ticket1['1_a_anfrage_status'])
+
+    condition = {
+      'ticket.title' => {
+        operator: 'is',
+        value: 'some attribute test3',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal(ticket_count, 1)
+    assert_equal(tickets[0].id, ticket1.id)
+
+    condition = {
+      'ticket.1_a_anfrage_status' => {
+        operator: 'is',
+        value: 'some attribute text',
+      },
+    }
+    ticket_count, tickets = Ticket.selectors(condition, 10)
+    assert_equal(ticket_count, 1)
+    assert_equal(tickets[0].id, ticket1.id)
+
+  end
 end
