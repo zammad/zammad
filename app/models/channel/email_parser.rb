@@ -134,7 +134,7 @@ returns
     UserInfo.current_user_id = 1
     filters = {}
     Setting.where(area: 'Postmaster::PreFilter').order(:name).each do |setting|
-      filters[setting.name] = Kernel.const_get(Setting.get(setting.name))
+      filters[setting.name] = Setting.get(setting.name).constantize
     end
     filters.each do |key, backend|
       Rails.logger.debug { "run postmaster pre filter #{key}: #{backend}" }
