@@ -7,6 +7,10 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     if params.data_option_new && !_.isEmpty(params.data_option_new)
       params.data_option = params.data_option_new
 
+    if attribute.value == 'select' && params.data_option? && params.data_option.options?
+      sorted = _.map params.data_option.options, (value, key) -> [key.toString(), value]
+      params.data_option.sorted = _.sortBy sorted, (e) -> e[0].collationString()
+
     item = $(App.view('object_manager/attribute')(attribute: attribute))
 
     updateDataMap = (localParams, localAttribute, localAttributes, localClassname, localForm, localA) =>
