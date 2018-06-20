@@ -1,4 +1,6 @@
 class App.TicketZoomAttributeBar extends App.Controller
+  @include App.TicketNavigable
+
   elements:
     '.js-submitDropdown': 'buttonDropdown'
     '.js-reset': 'resetButton'
@@ -97,26 +99,6 @@ class App.TicketZoomAttributeBar extends App.Controller
       when 'next_from_overview'
         @closeTab()
         @openNextTicketInOverview()
-
-  openNextTicketInOverview: (overview = @overview_id, ticket = @ticket.id) =>
-    # coerce ids to objects
-    overview = App.Overview.find(overview) if !(overview instanceof App.Overview)
-    ticket = App.Ticket.find(ticket) if !(ticket instanceof App.Ticket)
-    return if !overview? || !ticket?
-
-    nextTicket = overview.nextTicket(ticket.id)
-    return if !nextTicket?
-
-    # open task via task manager to preserve overview information
-    App.TaskManager.execute(
-      key:        "Ticket-#{nextTicket.id}"
-      controller: 'TicketZoom'
-      params:
-        ticket_id:   nextTicket.id
-        overview_id: overview.id
-    )
-
-    @navigate "ticket/zoom/#{nextTicket.id}"
 
   onActionMacroMouseEnter: (e) =>
     @$(e.currentTarget).addClass('is-active')

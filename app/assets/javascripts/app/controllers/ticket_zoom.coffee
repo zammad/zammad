@@ -25,7 +25,7 @@ class App.TicketZoom extends App.Controller
     if !params.init
       @overview_id = params.overview_id
     else
-      @overview_id = false
+      @overview_id = undefined
 
     @key = "ticket::#{@ticket_id}"
     cache = App.SessionStorage.get(@key)

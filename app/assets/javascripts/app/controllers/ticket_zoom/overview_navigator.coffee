@@ -1,4 +1,6 @@
 class App.TicketZoomOverviewNavigator extends App.Controller
+  @include App.TicketNavigable
+
   events:
     'click a': 'open'
 
@@ -59,24 +61,13 @@ class App.TicketZoomOverviewNavigator extends App.Controller
 
   open: (e) =>
     e.preventDefault()
+    ticketLink = $(e.target)
 
-    # get requested object and location
-    id  = $(e.target).data('id')
-    url = $(e.target).attr('href')
-    if !id
-      id  = $(e.target).closest('a').data('id')
-      url = $(e.target).closest('a').attr('href')
+    if (id = ticketLink.data('id'))?
+      url = ticketLink.attr('href')
+    else if (id = ticketLink.closest('a').data('id'))?
+      url = ticketLink.closest('a').attr('href')
+    else
+      return
 
-    # return if we are unable to get id
-    return if !id
-
-    # open task via task manager to get overview information
-    App.TaskManager.execute(
-      key:        'Ticket-' + id
-      controller: 'TicketZoom'
-      params:
-        ticket_id:   id
-        overview_id: @overview_id
-      show:       true
-    )
-    @navigate url
+    @openTicket(id, url)
