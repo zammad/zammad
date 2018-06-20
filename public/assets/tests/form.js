@@ -713,13 +713,6 @@ test("form handler check with and without fieldset", function() {
 
 test("form postmaster filter", function() {
 
-// check match area
-
-// check set area
-
-// add match rule
-
-// add set rule
   App.TicketPriority.refresh([
     {
       id:   1,
@@ -824,81 +817,112 @@ test("form postmaster filter", function() {
     },
   };
   deepEqual(params, test_params, 'form param check')
+
   el.find('[name="set::x-zammad-ticket-priority_id::value"]').closest('.js-filterElement').find('.js-remove').click()
   el.find('[name="set::x-zammad-ticket-customer_id::value"]').closest('.js-filterElement').find('.js-remove').click()
-  App.Delay.set(function() {
-      test("form param check after remove click", function() {
-        params = App.ControllerForm.params(el)
-        test_params = {
-          input1: 'some not used default',
-          input2: 'some name',
-          match: {
-            from: {
-              operator: 'contains',
-              value: 'some@address'
-            },
-            subject: {
-              operator: 'contains',
-              value: 'some subject'
-            }
-          },
-          set: {
-            'x-zammad-ticket-owner_id': {
-              value: 'owner',
-              value_completion: ''
-            },
-            'x-zammad-ticket-group_id': {
-              value: '1'
-            },
-            'x-zammad-ticket-tags': {
-              operator: 'add',
-              value: "test, test1"
-            },
-          },
-        };
-        deepEqual(params, test_params, 'form param check')
-      });
-    },
-    1000
-  );
-  App.Delay.set(function() {
-      el.find('.postmaster_set .js-filterElement').last().find('.filter-controls .js-add').click()
-      test("form param check click add after tag option", function() {
-        params = App.ControllerForm.params(el)
-        test_params = {
-          input1: 'some not used default',
-          input2: 'some name',
-          match: {
-            from: {
-              operator: 'contains',
-              value: 'some@address'
-            },
-            subject: {
-              operator: 'contains',
-              value: 'some subject'
-            }
-          },
-          set: {
-            'x-zammad-ticket-owner_id': {
-              value: 'owner',
-              value_completion: ''
-            },
-            'x-zammad-ticket-group_id': {
-              value: '1'
-            },
-            'x-zammad-ticket-tags': {
-              operator: 'add',
-              value: "test, test1"
-            },
-          },
-        };
-        deepEqual(params, test_params, 'form param check')
-      });
-    },
-    1000
-  );
 
+  params = App.ControllerForm.params(el)
+  test_params = {
+    input1: 'some not used default',
+    input2: 'some name',
+    match: {
+      from: {
+        operator: 'contains',
+        value: 'some@address'
+      },
+      subject: {
+        operator: 'contains',
+        value: 'some subject'
+      }
+    },
+    set: {
+      'x-zammad-ticket-owner_id': {
+        value: 'owner',
+        value_completion: ''
+      },
+      'x-zammad-ticket-group_id': {
+        value: '1'
+      },
+      'x-zammad-ticket-tags': {
+        operator: 'add',
+        value: 'test, test1'
+      },
+    },
+  };
+  deepEqual(params, test_params, 'form param check')
 
+  el.find('.postmaster_set .js-filterElement').last().find('.filter-controls .js-add').click()
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    input1: 'some not used default',
+    input2: 'some name',
+    match: {
+      from: {
+        operator: 'contains',
+        value: 'some@address'
+      },
+      subject: {
+        operator: 'contains',
+        value: 'some subject'
+      }
+    },
+    set: {
+      'x-zammad-ticket-owner_id': {
+        value: 'owner',
+        value_completion: ''
+      },
+      'x-zammad-ticket-group_id': {
+        value: '1'
+      },
+      'x-zammad-ticket-priority_id': {
+        value: '1'
+      },
+      'x-zammad-ticket-tags': {
+        operator: 'add',
+        value: 'test, test1'
+      },
+    },
+  };
+  deepEqual(params, test_params, 'form param check')
+
+  App.Delay.set(function() {
+    test("form postmaster filter - needed to do delayed because of tag ui", function() {
+      el.find('[name="set::x-zammad-ticket-tags::value"]').closest('.js-filterElement').find('.token .close').last().click()
+      params = App.ControllerForm.params(el)
+      test_params = {
+        input1: 'some not used default',
+        input2: 'some name',
+        match: {
+          from: {
+            operator: 'contains',
+            value: 'some@address'
+          },
+          subject: {
+            operator: 'contains',
+            value: 'some subject'
+          }
+        },
+        set: {
+          'x-zammad-ticket-owner_id': {
+            value: 'owner',
+            value_completion: ''
+          },
+          'x-zammad-ticket-group_id': {
+            value: '1'
+          },
+          'x-zammad-ticket-priority_id': {
+            value: '1'
+          },
+          'x-zammad-ticket-tags': {
+            operator: 'add',
+            value: 'test'
+          },
+        },
+      };
+      deepEqual(params, test_params, 'form param check')
+    })
+  }, 500);
 });
 
 test("form selector", function() {
