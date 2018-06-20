@@ -77,6 +77,9 @@ class ObjectManagerAttributesController < ApplicationController
       name: object_manager_attribute.name,
     )
     model_destroy_render_item
+  rescue => e
+    logger.error e
+    raise Exceptions::UnprocessableEntity, e
   end
 
   # POST /object_manager_attributes_discard_changes
