@@ -74,9 +74,9 @@ class _collectionSingleton extends Spine.Module
         if !_.isEmpty(later)
           loadAssetsLater[type] = later
 
-      # process existing assets
-      for type, collections of loadAssetsLater
-        App[type].refresh(collections)
+    # process existing assets
+    for type, collections of loadAssetsLater
+      App[type].refresh(collections)
 
     if params.targetModel
       for type, collections of assets
