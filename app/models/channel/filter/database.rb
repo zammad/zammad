@@ -45,6 +45,29 @@ module Channel::Filter::Database
       filter[:perform].each do |key, meta|
         next if !Channel::EmailParser.check_attributes_by_x_headers(key, meta['value'])
         Rails.logger.info "  perform '#{key.downcase}' = '#{meta.inspect}'"
+
+        if key.downcase == 'x-zammad-ticket-tags' && meta['value'].present? && meta['operator'].present?
+          mail[ 'x-zammad-ticket-tags'.downcase.to_sym ] ||= []
+          tags = meta['value'].split(',')
+
+          case meta['operator']
+          when 'add'
+            tags.each do |tag|
+              next if tag.blank?
+              tag.strip!
+              next if mail[ 'x-zammad-ticket-tags'.downcase.to_sym ].include?(tag)
+              mail[ 'x-zammad-ticket-tags'.downcase.to_sym ].push tag
+            end
+          when 'remove'
+            tags.each do |tag|
+              next if tag.blank?
+              tag.strip!
+              mail[ 'x-zammad-ticket-tags'.downcase.to_sym ] -= [tag]
+            end
+          end
+          next
+        end
+
         mail[ key.downcase.to_sym ] = meta['value']
       end
     end

@@ -238,6 +238,14 @@ returns
 
         # create ticket
         ticket.save!
+
+      end
+
+      # apply tags to ticket
+      if mail['x-zammad-ticket-tags'.to_sym].present?
+        mail['x-zammad-ticket-tags'.to_sym].each do |tag|
+          ticket.tag_add(tag)
+        end
       end
 
       # set attributes
@@ -309,6 +317,8 @@ returns
   def self.check_attributes_by_x_headers(header_name, value)
     class_name = nil
     attribute = nil
+    # skip check attributes if it is tags
+    return true if header_name == 'x-zammad-ticket-tags'
     if header_name =~ /^x-zammad-(.+?)-(followup-|)(.*)$/i
       class_name = $1
       attribute = $3

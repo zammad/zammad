@@ -769,6 +769,10 @@ test("form postmaster filter", function() {
       },
       'x-zammad-ticket-priority_id': {
         value: '1'
+      },
+      'x-zammad-ticket-tags': {
+        operator: 'add',
+        value: 'test, test1'
       }
     },
   }
@@ -812,6 +816,10 @@ test("form postmaster filter", function() {
       },
       'x-zammad-ticket-priority_id': {
         value: '1'
+      },
+      'x-zammad-ticket-tags': {
+        operator: 'add',
+        value: 'test, test1'
       }
     },
   };
@@ -842,6 +850,10 @@ test("form postmaster filter", function() {
             'x-zammad-ticket-group_id': {
               value: '1'
             },
+            'x-zammad-ticket-tags': {
+              operator: 'add',
+              value: "test, test1"
+            },
           },
         };
         deepEqual(params, test_params, 'form param check')
@@ -849,6 +861,43 @@ test("form postmaster filter", function() {
     },
     1000
   );
+  App.Delay.set(function() {
+      el.find('.postmaster_set .js-filterElement').last().find('.filter-controls .js-add').click()
+      test("form param check click add after tag option", function() {
+        params = App.ControllerForm.params(el)
+        test_params = {
+          input1: 'some not used default',
+          input2: 'some name',
+          match: {
+            from: {
+              operator: 'contains',
+              value: 'some@address'
+            },
+            subject: {
+              operator: 'contains',
+              value: 'some subject'
+            }
+          },
+          set: {
+            'x-zammad-ticket-owner_id': {
+              value: 'owner',
+              value_completion: ''
+            },
+            'x-zammad-ticket-group_id': {
+              value: '1'
+            },
+            'x-zammad-ticket-tags': {
+              operator: 'add',
+              value: "test, test1"
+            },
+          },
+        };
+        deepEqual(params, test_params, 'form param check')
+      });
+    },
+    1000
+  );
+
 
 });
 
