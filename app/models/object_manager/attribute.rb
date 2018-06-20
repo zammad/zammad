@@ -29,12 +29,25 @@ list of all attributes
 
   def self.list_full
     result = ObjectManager::Attribute.all.order('position ASC, name ASC')
+    references = ObjectManager::Attribute.attribute_to_references_hash
     attributes = []
     assets = {}
     result.each do |item|
       attribute = item.attributes
       attribute[:object] = ObjectLookup.by_id(item.object_lookup_id)
       attribute.delete('object_lookup_id')
+
+      # an attribute is deletable if it is both editable and not referenced by other Objects (Triggers, Overviews, Schedulers)
+      deletable = true
+      not_deletable_reason = ''
+      if ObjectManager::Attribute.attribute_used_by_references?(attribute[:object], attribute['name'], references)
+        deletable = false
+        not_deletable_reason = ObjectManager::Attribute.attribute_used_by_references_humaniced(attribute[:object], attribute['name'], references)
+      end
+      attribute[:deletable] = attribute['editable'] && deletable == true
+      if not_deletable_reason.present?
+        attribute[:not_deletable_reason] = "This attribute is referenced by #{not_deletable_reason} and thus cannot be deleted!"
+      end
       attributes.push attribute
     end
     attributes
@@ -354,6 +367,10 @@ use "force: true" to delete also not editable fields
     # lookups
     if data[:object]
       data[:object_lookup_id] = ObjectLookup.by_name(data[:object])
+    elsif data[:object_lookup_id]
+      data[:object] = ObjectLookup.by_id(data[:object_lookup_id])
+    else
+      raise 'ERROR: need object or object_lookup_id param!'
     end
 
     data[:name].downcase!
@@ -369,6 +386,12 @@ use "force: true" to delete also not editable fields
 
     if !data[:force] && !record.editable
       raise "ERROR: #{data[:object]}.#{data[:name]} can't be removed!"
+    end
+
+    # check to make sure that no triggers, overviews, or schedulers references this attribute
+    if ObjectManager::Attribute.attribute_used_by_references?(data[:object], data[:name])
+      text = ObjectManager::Attribute.attribute_used_by_references_humaniced(data[:object], data[:name])
+      raise "ERROR: #{data[:object]}.#{data[:name]} is referenced by #{text} and thus cannot be deleted!"
     end
 
     # if record is to create, just destroy it
@@ -719,6 +742,109 @@ to send no browser reload event, pass false
       end
     end
     true
+  end
+
+=begin
+
+where attributes are used by triggers, overviews or schedulers
+
+  result = ObjectManager::Attribute.attribute_to_references_hash
+
+  result = {
+    ticket.category: {
+      Trigger: ['abc', 'xyz'],
+      Overview: ['abc1', 'abc2'],
+    },
+    ticket.field_b: {
+      Trigger: ['abc'],
+      Overview: ['abc1', 'abc2'],
+    },
+  },
+
+=end
+
+  def self.attribute_to_references_hash
+    objects = Trigger.select(:name, :condition) + Overview.select(:name, :condition) + Job.select(:name, :condition)
+    attribute_list = {}
+    objects.each do |item|
+      item.condition.each do |condition_key, _condition_attributes|
+        attribute_list[condition_key] ||= {}
+        attribute_list[condition_key][item.class.name] ||= []
+        next if attribute_list[condition_key][item.class.name].include?(item.name)
+        attribute_list[condition_key][item.class.name].push item.name
+      end
+    end
+    attribute_list
+  end
+
+=begin
+
+is certain attribute used by triggers, overviews or schedulers
+
+  ObjectManager::Attribute.attribute_used_by_references?('Ticket', 'attribute_name')
+
+=end
+
+  def self.attribute_used_by_references?(object_name, attribute_name, references = attribute_to_references_hash)
+    references.each do |reference_key, _relations|
+      local_object, local_attribute = reference_key.split('.')
+      next if local_object != object_name.downcase
+      next if local_attribute != attribute_name
+      return true
+    end
+    false
+  end
+
+=begin
+
+is certain attribute used by triggers, overviews or schedulers
+
+  result = ObjectManager::Attribute.attribute_used_by_references('Ticket', 'attribute_name')
+
+  result = {
+    Trigger: ['abc', 'xyz'],
+    Overview: ['abc1', 'abc2'],
+  }
+
+=end
+
+  def self.attribute_used_by_references(object_name, attribute_name, references = attribute_to_references_hash)
+    result = {}
+    references.each do |reference_key, relations|
+      local_object, local_attribute = reference_key.split('.')
+      next if local_object != object_name.downcase
+      next if local_attribute != attribute_name
+      relations.each do |relation, relation_names|
+        result[relation] ||= []
+        result[relation].push relation_names.sort
+      end
+      break
+    end
+    result
+  end
+
+=begin
+
+is certain attribute used by triggers, overviews or schedulers
+
+  text = ObjectManager::Attribute.attribute_used_by_references_humaniced('Ticket', 'attribute_name', references)
+
+=end
+
+  def self.attribute_used_by_references_humaniced(object_name, attribute_name, references = nil)
+    result = if references.present?
+               ObjectManager::Attribute.attribute_used_by_references(object_name, attribute_name, references)
+             else
+               ObjectManager::Attribute.attribute_used_by_references(object_name, attribute_name)
+             end
+    not_deletable_reason = ''
+    result.each do |relation, relation_names|
+      if not_deletable_reason.present?
+        not_deletable_reason += '; '
+      end
+      not_deletable_reason += "#{relation}: #{relation_names.sort.join(',')}"
+    end
+    not_deletable_reason
   end
 
   def self.reset_database_info(model)
