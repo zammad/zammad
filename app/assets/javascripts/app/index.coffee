@@ -308,6 +308,9 @@ class App extends Spine.Controller
           humanTime = App.PrettyDate.humanTime(resultLocal, escalation)
         resultLocal = "<time class=\"humanTimeFromNow #{cssClass}\" data-time=\"#{resultLocal}\" title=\"#{timestamp}\">#{humanTime}</time>"
 
+      else if attributeConfig.tag is 'select'
+        isHtmlEscape = true
+
       if !isHtmlEscape && typeof resultLocal is 'string'
         resultLocal = App.Utils.htmlEscape(resultLocal)
 
