@@ -16,6 +16,8 @@ class Role < ApplicationModel
   before_create  :validate_permissions, :check_default_at_signup_permissions
   before_update  :validate_permissions, :last_admin_check_by_attribute, :validate_agent_limit_by_attributes, :check_default_at_signup_permissions
 
+  # ignore Users because this will lead to huge
+  # results for e.g. the Customer role
   association_attributes_ignored :users
 
   activity_stream_permission 'admin.role'
