@@ -1,5 +1,5 @@
 class Widget extends App.Controller
-  errorCount: 0
+  serverRestarted: false
   constructor: ->
     super
 
@@ -109,21 +109,24 @@ class Widget extends App.Controller
       )
     @delay(message, 2000)
 
-  checkAvailability: (delay) =>
+  checkAvailability: (timeout) =>
     delay = =>
       @ajax(
-        id:    'check_availability'
-        type:  'get'
-        url:   "#{@apiPath}/available"
+        id:      'check_availability'
+        type:    'get'
+        url:     "#{@apiPath}/available"
         success: (data) =>
-          if @errorCount is 0
-            @checkAvailability()
+          if @serverRestarted
+            @windowReload()
             return
-          @windowReload()
-        error: =>
-          @errorCount += 1
+
           @checkAvailability()
+        error: =>
+          @serverRestarted = true
+          @checkAvailability(2000)
       )
-    @delay(delay, 2000)
+
+    timeout ?= 1000
+    @delay(delay, timeout)
 
 App.Config.set('maintenance', Widget, 'Widgets')
