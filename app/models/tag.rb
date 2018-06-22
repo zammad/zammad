@@ -149,17 +149,17 @@ returns
   def self.tag_list(data)
     tag_object_id_requested = Tag::Object.lookup(name: data[:object])
     return [] if !tag_object_id_requested
+
     tag_search = Tag.where(
       tag_object_id: tag_object_id_requested,
       o_id: data[:o_id],
-    )
-    tags = []
-    tag_search.each do |tag|
+    ).order(:id)
+
+    tag_search.each_with_object([]) do |tag, result|
       tag_item = Tag::Item.lookup(id: tag.tag_item_id)
       next if !tag_item
-      tags.push tag_item.name
+      result.push tag_item.name
     end
-    tags
   end
 
   class Object < ApplicationModel
