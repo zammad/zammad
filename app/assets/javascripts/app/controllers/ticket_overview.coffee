@@ -34,6 +34,11 @@ class App.TicketOverview extends App.Controller
     @bind 'ui:rerender', =>
       @renderBatchOverlay()
 
+    load = (data) =>
+      App.Collection.loadAssets(data.assets)
+      @formMeta = data.form_meta
+    @bindId = App.TicketCreateCollection.bind(load)
+
   startDragItem: (event) =>
     return if !@batchSupport
     @grabbedItem = $(event.currentTarget)
@@ -413,17 +418,10 @@ class App.TicketOverview extends App.Controller
 
     groupId = @hoveredBatchEntry.attr('data-id')
     group = App.Group.find(groupId)
-    users = []
-
-    for user_id in _.uniq(group.user_ids)
-      if App.User.exists(user_id)
-        user = App.User.find(user_id)
-        if user.active is true
-          users.push user
 
     @batchAssignGroupName.text group.displayName()
     @batchAssignGroupInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
-      users: users
+      users: @usersInGroups([groupId])
       groups: []
       groupId: groupId
     ))
@@ -542,6 +540,19 @@ class App.TicketOverview extends App.Controller
       .velocity({ opacity: [0.5, 1] }, { duration: 120 })
       .velocity({ opacity: [1, 0.5] }, { duration: 60, delay: 40 })
 
+  usersInGroups: (group_ids) ->
+    ids_by_group = _.chain(@formMeta?.dependencies?.group_id)
+      .pick(group_ids)
+      .values()
+      .map( (e) -> e.owner_id)
+      .value()
+
+    # Underscore's intersection doesn't work when chained
+    ids_in_all_groups = _.intersection(ids_by_group...)
+
+    users = App.User.findAll(ids_in_all_groups)
+    _.sortBy(users, (user) -> user.firstname)
+
   render: ->
     elLocal = $(App.view('ticket_overview/index')())
 
@@ -589,47 +600,42 @@ class App.TicketOverview extends App.Controller
     @refreshElements()
 
   renderOptions: =>
-    macros = App.Macro.findAllByAttribute('active', true)
-    groups = App.Group.findAllByAttribute('active', true)
-    users = []
+    @renderOptionsGroups()
+    @renderOptionsMacros()
+
+  renderOptionsGroups: =>
     items = @el.find('[name="bulk"]:checked')
 
-    # find all possible owners for selected tickets
-    possibleUsers = {}
-    possibleUserGroups = {}
-    for item in items
-      #console.log "selected items with id ", $(item).val()
-      ticket = App.Ticket.find($(item).val())
-      if !possibleUserGroups[ticket.group_id.toString()]
-        group = App.Group.find(ticket.group_id)
-        for user_id in group.user_ids
-          if !possibleUserGroups[ticket.group_id.toString()]
-            possibleUsers[user_id.toString()] = true
-          else
-            hit = false
-            for user_id, exists of possibleUsers
-              if possibleUsers[user_id.toString()]
-                hit = true
-            if !hit
-              delete possibleUsers[user_id.toString()]
-        possibleUserGroups[ticket.group_id.toString()] = true
-    for user_id, _exists of possibleUsers
-      if App.User.exists(user_id)
-        user = App.User.find(user_id)
-        if user.active is true
-          users.push user
+    # we want to display all users for which we can assign the tickets directly
+    # for this we need to get the groups of all selected tickets
+    # after we got those we need to check which users are available in all groups
+    # users that are not in all groups can't get the tickets assigned
+    ticket_ids       = _.map(items, (el) -> $(el).val() )
+    ticket_group_ids = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
+    users            = @usersInGroups(ticket_group_ids)
+
+    # get the list of possible groups for the current user
+    # from the TicketCreateCollection
+    # (filled for e.g. the TicketCreation or TicketZoom assignment)
+    # and order them by name
+    group_ids     = _.keys(@formMeta?.dependencies?.group_id)
+    groups        = App.Group.findAll(group_ids)
+    groups_sorted = _.sortBy(groups, (group) -> group.name)
+
+    # get the number of visible users per group
+    # from the TicketCreateCollection
+    # (filled for e.g. the TicketCreation or TicketZoom assignment)
     for group in groups
-      valid_user_ids = []
-      for user_id in _.uniq(group.user_ids)
-        if App.User.exists(user_id)
-          if App.User.find(user_id).active is true
-            valid_user_ids.push user_id
-      group.valid_user_ids = valid_user_ids
+      group.valid_users_count = @formMeta?.dependencies?.group_id?[group.id]?.owner_id.length || 0
 
     @batchAssignInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
       users: users
-      groups: groups
+      groups: groups_sorted
     ))
+
+  renderOptionsMacros: =>
+    macros = App.Macro.search(filter: { active: true }, sortBy:'name', order:'DESC')
+
     @batchMacro.html $(App.view('ticket_overview/batch_overlay_macro')(
       macros: macros
     ))
@@ -695,9 +701,10 @@ class App.TicketOverview extends App.Controller
   changed: ->
     false
 
-  release: ->
+  release: =>
     @keyboardOff()
     super
+    App.TicketCreateCollection.unbindById(@bindId)
 
   keyboardOn: =>
     $(window).off 'keydown.overview_navigation'
