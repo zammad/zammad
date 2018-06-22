@@ -1881,7 +1881,7 @@ class TicketSlaTest < ActiveSupport::TestCase
       message_id: 'some@id',
       body: 'some message',
       internal: false,
-      sender: Ticket::Article::Sender.where(name: 'Customer').first,
+      sender: Ticket::Article::Sender.where(name: 'Agent').first,
       type: Ticket::Article::Type.where(name: 'email').first,
       updated_by_id: 1,
       created_by_id: 1,
@@ -1891,9 +1891,9 @@ class TicketSlaTest < ActiveSupport::TestCase
 
     Scheduler.worker(true)
     ticket = Ticket.find(ticket.id)
-    assert_equal(ticket.escalation_at.gmtime.to_s, '2016-11-09 09:27:00 UTC', 'ticket.escalation_at verify 1')
+    assert_equal(ticket.escalation_at.gmtime.to_s, '2016-11-09 09:26:36 UTC', 'ticket.escalation_at verify 1')
     assert_equal(ticket.first_response_escalation_at.gmtime.to_s, '2016-11-02 09:00:00 UTC', 'ticket.first_response_escalation_at verify 1')
-    assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-11-09 09:27:00 UTC', 'ticket.update_escalation_at verify 1')
+    assert_equal(ticket.update_escalation_at.gmtime.to_s, '2016-11-09 09:26:36 UTC', 'ticket.update_escalation_at verify 1')
     assert_nil(ticket.close_escalation_at, 'ticket.close_escalation_at verify 1')
 
     article_agent = Ticket::Article.create!(
