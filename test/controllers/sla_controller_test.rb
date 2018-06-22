@@ -12,7 +12,7 @@ class SlaControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'sla-admin',
       firstname: 'Packages',
       lastname: 'Admin',

@@ -15,7 +15,7 @@ class TimeAccountingControllerTest < ActionDispatch::IntegrationTest
     @year = DateTime.now.utc.year
     @month = DateTime.now.utc.month
 
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'rest-admin',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -29,7 +29,7 @@ class TimeAccountingControllerTest < ActionDispatch::IntegrationTest
     )
 
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
       lastname: 'Customer1',
@@ -43,7 +43,7 @@ class TimeAccountingControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '01.01 time account report' do
-    group = Group.create_or_update(
+    group = Group.create!(
       name: "GroupWithoutPermission-#{rand(9_999_999_999)}",
       active: true,
       updated_by_id: 1,

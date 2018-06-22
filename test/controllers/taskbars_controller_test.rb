@@ -12,7 +12,7 @@ class TaskbarsControllerTest < ActionDispatch::IntegrationTest
     roles = Role.where(name: 'Agent')
     groups = Group.all
 
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'taskbar-agent@example.com',
       firstname: 'Taskbar',
       lastname: 'Agent',
@@ -25,7 +25,7 @@ class TaskbarsControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'taskbar-customer1@example.com',
       firstname: 'Taskbar',
       lastname: 'Customer1',

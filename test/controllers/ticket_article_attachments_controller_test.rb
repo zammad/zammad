@@ -9,7 +9,7 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'tickets-admin',
       firstname: 'Tickets',
       lastname: 'Admin',
@@ -22,7 +22,7 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'tickets-agent@example.com',
       firstname: 'Tickets',
       lastname: 'Agent',
@@ -35,7 +35,7 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'tickets-customer1@example.com',
       firstname: 'Tickets',
       lastname: 'Customer1',

@@ -14,7 +14,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
 
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'rest-admin',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -27,7 +27,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'rest-agent@example.com',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -40,7 +40,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
       lastname: 'Customer1',
@@ -51,7 +51,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create customer
-    @customer_with_org = User.create_or_update(
+    @customer_with_org = User.create!(
       login: 'rest-customer2@example.com',
       firstname: 'Rest',
       lastname: 'Customer2',

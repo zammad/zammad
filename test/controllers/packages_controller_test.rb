@@ -12,7 +12,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'packages-admin',
       firstname: 'Packages',
       lastname: 'Admin',
@@ -25,7 +25,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'packages-agent@example.com',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -38,7 +38,7 @@ class PackagesControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'packages-customer1@example.com',
       firstname: 'Packages',
       lastname: 'Customer1',

@@ -12,7 +12,7 @@ class CalendarControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'calendar-admin',
       firstname: 'Packages',
       lastname: 'Admin',

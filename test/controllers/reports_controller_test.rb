@@ -18,7 +18,7 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
 
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'rest-admin',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -32,7 +32,7 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
     )
 
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
       lastname: 'Customer1',
@@ -44,7 +44,7 @@ class ReportsControllerTest < ActionDispatch::IntegrationTest
       created_by_id: 1
     )
 
-    @group1 = Group.create_or_update(
+    @group1 = Group.create!(
       name: "GroupWithoutPermission-#{rand(9_999_999_999)}",
       active: true,
       updated_by_id: 1,

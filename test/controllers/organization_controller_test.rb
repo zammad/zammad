@@ -14,7 +14,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
 
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'rest-admin',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -27,7 +27,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'rest-agent@example.com',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -40,7 +40,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
       lastname: 'Customer1',
@@ -51,18 +51,18 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create orgs
-    @organization = Organization.create_or_update(
+    @organization = Organization.create!(
       name: 'Rest Org',
     )
-    @organization2 = Organization.create_or_update(
+    @organization2 = Organization.create!(
       name: 'Rest Org #2',
     )
-    @organization3 = Organization.create_or_update(
+    @organization3 = Organization.create!(
       name: 'Rest Org #3',
     )
 
     # create customer with org
-    @customer_with_org = User.create_or_update(
+    @customer_with_org = User.create!(
       login: 'rest-customer2@example.com',
       firstname: 'Rest',
       lastname: 'Customer2',
@@ -229,7 +229,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '04.01 organization show and response format' do
-    organization = Organization.create_or_update(
+    organization = Organization.create!(
       name: 'Rest Org NEW',
       members: [@customer_without_org],
       updated_by_id: @admin.id,
@@ -297,7 +297,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '04.02 organization index and response format' do
-    organization = Organization.create_or_update(
+    organization = Organization.create!(
       name: 'Rest Org NEW',
       members: [@customer_without_org],
       updated_by_id: @admin.id,
@@ -420,7 +420,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '04.04 ticket update and response formats' do
-    organization = Organization.create_or_update(
+    organization = Organization.create!(
       name: 'Rest Org NEW',
       members: [@customer_without_org],
       updated_by_id: @admin.id,
@@ -510,7 +510,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   test '05.03 csv import - admin access' do
 
     UserInfo.current_user_id = 1
-    customer1 = User.create_or_update(
+    customer1 = User.create!(
       login: 'customer1-members@example.com',
       firstname: 'Member',
       lastname: 'Customer',
@@ -518,7 +518,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
       password: 'customerpw',
       active: true,
     )
-    customer2 = User.create_or_update(
+    customer2 = User.create!(
       login: 'customer2-members@example.com',
       firstname: 'Member',
       lastname: 'Customer',

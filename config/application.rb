@@ -38,7 +38,6 @@ module Zammad
       'observer::_ticket::_ref_object_touch',
       'observer::_ticket::_online_notification_seen',
       'observer::_ticket::_stats_reopen',
-      'observer::_ticket::_escalation_update',
       'observer::_tag::_ticket_history',
       'observer::_user::_ref_object_touch',
       'observer::_user::_ticket_organization',
