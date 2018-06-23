@@ -75,6 +75,8 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
       roles: roles,
     )
 
+    # ensure fresh state
+    Delayed::Job.destroy_all
   end
 
   test '01 monitoring without token' do
