@@ -120,6 +120,7 @@ gem 'viewpoint'
 group :development, :test do
 
   # debugging
+  gem 'byebug'
   gem 'pry-rails'
   gem 'pry-remote'
 
