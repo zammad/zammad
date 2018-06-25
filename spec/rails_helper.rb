@@ -39,6 +39,9 @@ RSpec.configure do |config|
 
   # make usage of time travel helpers possible
   config.include ActiveSupport::Testing::TimeHelpers
+  config.after(:each) do
+    travel_back
+  end
 
   # Zammad specific helpers
   config.include ZammadHelper
