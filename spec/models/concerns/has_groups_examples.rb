@@ -242,6 +242,24 @@ RSpec.shared_examples 'HasGroups' do
             described_class.group_through.klass.count
           }.by(-3)
         end
+
+        it 'prevents having full and other privilege at the same time' do
+
+          invalid_combination = %w[full read change]
+          exception           = ActiveRecord::RecordInvalid
+
+          expect do
+            group_access_instance.group_names_access_map = {
+              group_full.name => invalid_combination,
+            }
+          end.to raise_error(exception)
+
+          expect do
+            group_access_instance.group_names_access_map = {
+              group_full.name => invalid_combination.reverse,
+            }
+          end.to raise_error(exception)
+        end
       end
 
       context 'new instance' do
