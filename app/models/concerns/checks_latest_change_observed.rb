@@ -3,19 +3,11 @@ module ChecksLatestChangeObserved
   extend ActiveSupport::Concern
 
   included do
-    after_create  :latest_change_set_from_observer
-    after_update  :latest_change_set_from_observer
-    after_touch   :latest_change_set_from_observer
-    after_destroy :latest_change_set_from_observer_destroy
+    after_commit :latest_change_set_from_observer
   end
 
   def latest_change_set_from_observer
-    self.class.latest_change_set(updated_at)
-    true
-  end
-
-  def latest_change_set_from_observer_destroy
-    self.class.latest_change_set(nil)
-    true
+    latest_change = destroyed? ? nil : updated_at
+    self.class.latest_change_set(latest_change)
   end
 end
