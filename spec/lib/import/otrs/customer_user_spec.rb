@@ -108,10 +108,6 @@ RSpec.describe Import::OTRS::CustomerUser do
       travel_to DateTime.current
     end
 
-    after(:each) do
-      travel_back
-    end
-
     it 'creates' do
       creates_with(zammad_structure)
     end
