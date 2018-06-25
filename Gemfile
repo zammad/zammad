@@ -123,6 +123,8 @@ group :development, :test do
   gem 'byebug'
   gem 'pry-rails'
   gem 'pry-remote'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
 
   # test frameworks
   gem 'rspec-rails'
