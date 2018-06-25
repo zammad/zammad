@@ -45,18 +45,33 @@ class App.Auth
 
   @logout: ->
     App.Log.debug 'Auth', 'logout'
-    App.Ajax.request(
-      id:   'logout'
-      type: 'DELETE'
-      url:  App.Config.get('api_path') + '/signout'
-      success: =>
 
-        # set logout (config, session, ...)
-        @_logout()
+    # abort all AJAX requests
+    # performed from the App context
+    App.Ajax.abortAll()
 
-      error: (xhr, statusText, error) =>
-        @_loginError()
-    )
+    # add task to Spine.AJAX queue
+    # which will finish all queued requests
+    # and perform the logout afterwards
+    performLogut = =>
+
+      # clear all following AJAX
+      # tasks left in the queue
+      Spine.Ajax.clearQueue()
+
+      App.Ajax.request(
+        id:   'logout'
+        type: 'DELETE'
+        url:  App.Config.get('api_path') + '/signout'
+        success: =>
+
+          # set logout (config, session, ...)
+          @_logout()
+
+        error: (xhr, statusText, error) =>
+          @_loginError()
+      )
+    Spine.Ajax.queue(performLogut)
 
   @_login: (data, type) ->
     App.Log.debug 'Auth', '_login:success', data
@@ -137,9 +152,14 @@ class App.Auth
   @_logout: (rerender = true) ->
     App.Log.debug 'Auth', '_logout'
 
-    App.Ajax.abortAll()
     App.TaskManager.reset()
     App.Session.init()
+    App.Ajax.abortAll()
+
+    # clear all in-memory data of all App.Model's
+    for model_key, model_object of App
+      if _.isFunction(model_object.clearInMemory)
+        model_object.clearInMemory()
 
     App.Event.trigger('auth')
     App.Event.trigger('auth:logout')
@@ -147,11 +167,6 @@ class App.Auth
       window.location.href = '#login'
       App.Event.trigger('ui:rerender')
     App.Event.trigger('clearStore')
-
-    # clear all in-memory data of all App.Model's
-    for model_key, model_object of App
-      if _.isFunction(model_object.clearInMemory)
-        model_object.clearInMemory()
 
   @_loginError: ->
     App.Log.debug 'Auth', '_loginError:error'

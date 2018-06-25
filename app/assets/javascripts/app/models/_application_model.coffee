@@ -393,7 +393,7 @@ set new attributes of model (remove already available attributes)
               ->
               clear: true
             )
-          App.Delay.set(callback, 200, "full-#{@className}")
+          App.Delay.set(callback, 200, "fullcollection-#{@className}", "model-#{@className}")
 
         "Collection::Subscribe::#{@className}"
       )
@@ -506,7 +506,7 @@ set new attributes of model (remove already available attributes)
             if !genericObject || new Date(item.updated_at) > new Date(genericObject.updated_at)
               App.Log.debug('Model', "request #{@className}.find(#{item.id}) from server")
               @full(item.id, false, true)
-          App.Delay.set(callback, 600, item.id, "full-#{@className}-#{item.id}")
+          App.Delay.set(callback, 600, "full-#{item.id}", "model-#{@className}")
         "Item::Subscribe::#{@className}"
       )
 
@@ -520,7 +520,7 @@ set new attributes of model (remove already available attributes)
           App.Log.debug('Model', "server delete on #{@className}.find(#{item.id}) #{item.updated_at}")
           callback = ->
             genericObject.trigger('destroy', genericObject)
-          App.Delay.set(callback, 500, item.id, "delete-#{@className}-#{item.id}")
+          App.Delay.set(callback, 500, "delete-#{item.id}", "model-#{@className}")
         "Item::SubscribeDelete::#{@className}"
       )
 
@@ -833,6 +833,8 @@ set new attributes of model (remove already available attributes)
     )
 
   @clearInMemory: ->
+    App.Delay.clearLevel("model-#{@className}")
+
     # reset callbacks to session based functions
     @resetCallbacks()
 
