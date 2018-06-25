@@ -1,8 +1,7 @@
 
-require 'integration_test_helper'
+require 'test_helper'
 
 class ClearbitTest < ActiveSupport::TestCase
-  self.use_transactional_tests = true
 
   # check
   test 'base' do

@@ -1,8 +1,7 @@
-require 'test_helper'
+require 'integration_test_helper'
 require 'rake'
 
 class ObjectManagerAttributesControllerTest < ActionDispatch::IntegrationTest
-  self.use_transactional_tests = false
 
   setup do
 

@@ -1,7 +1,7 @@
-require 'test_helper'
+require 'integration_test_helper'
 
 class MonitoringControllerTest < ActionDispatch::IntegrationTest
-  self.use_transactional_tests = false
+
   setup do
 
     # set accept header
@@ -75,8 +75,6 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
       roles: roles,
     )
 
-    # ensure fresh state
-    Delayed::Job.destroy_all
   end
 
   test '01 monitoring without token' do

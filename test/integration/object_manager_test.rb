@@ -1,7 +1,6 @@
-require 'test_helper'
+require 'integration_test_helper'
 
 class ObjectManagerTest < ActiveSupport::TestCase
-  self.use_transactional_tests = false
 
   test 'a object manager' do
 

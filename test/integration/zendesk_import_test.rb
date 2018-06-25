@@ -3,7 +3,6 @@ require 'integration_test_helper'
 
 class ZendeskImportTest < ActiveSupport::TestCase
   self.test_order = :sorted
-  self.use_transactional_tests = false
 
   if !ENV['IMPORT_ZENDESK_ENDPOINT']
     raise "ERROR: Need IMPORT_ZENDESK_ENDPOINT - hint IMPORT_ZENDESK_ENDPOINT='https://example.zendesk.com/api/v2'"

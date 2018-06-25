@@ -20,6 +20,9 @@ class ActiveSupport::TestCase
   load Rails.root.join('db', 'seeds.rb')
   load Rails.root.join('test', 'fixtures', 'seeds.rb')
 
+  # set system mode to done / to activate
+  Setting.set('system_init_done', true)
+
   setup do
 
     # clear cache
@@ -31,8 +34,13 @@ class ActiveSupport::TestCase
     # remove all session messages
     Sessions.cleanup
 
+    # remove old delayed jobs
+    Delayed::Job.destroy_all
+
     # set current user
     UserInfo.current_user_id = nil
+
+    travel_back
   end
 
   # Add more helper methods to be used by all tests here...
