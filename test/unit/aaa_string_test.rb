@@ -1020,16 +1020,28 @@ html.html2html_strict
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
     assert_match(/<img style="width: 181px; height: 125px" src="cid:.+?">/, body)
     assert(1, attachments_inline.count)
+    assert_equal('image1.jpeg', attachments_inline[0][:filename])
+    assert_equal('image/jpeg', attachments_inline[0][:preferences]['Content-Type'])
+    assert_match(/@#{Setting.get('fqdn')}/, attachments_inline[0][:preferences]['Content-ID'])
+    assert_equal('inline', attachments_inline[0][:preferences]['Content-Disposition'])
 
     html   = '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc">'
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
     assert_match(/<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">/, body)
     assert(1, attachments_inline.count)
+    assert_equal('image1.jpeg', attachments_inline[0][:filename])
+    assert_equal('image/jpeg', attachments_inline[0][:preferences]['Content-Type'])
+    assert_match(/@#{Setting.get('fqdn')}/, attachments_inline[0][:preferences]['Content-ID'])
+    assert_equal('inline', attachments_inline[0][:preferences]['Content-Disposition'])
 
     html   = '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc"><invalid what ever'
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
     assert_match(/<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">/, body)
     assert(1, attachments_inline.count)
+    assert_equal('image1.jpeg', attachments_inline[0][:filename])
+    assert_equal('image/jpeg', attachments_inline[0][:preferences]['Content-Type'])
+    assert_match(/@#{Setting.get('fqdn')}/, attachments_inline[0][:preferences]['Content-ID'])
+    assert_equal('inline', attachments_inline[0][:preferences]['Content-Disposition'])
 
     html   = '<img src="/some_one.png" style="width: 181px; height: 125px" alt="abc">'
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
@@ -1040,6 +1052,15 @@ html.html2html_strict
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
     assert_match(/<div>\s+<img style="width: 181px; height: 125px" src="cid:.+?"><p>123<\/p>\s+<img style="width: 181px; height: 125px" src="cid:.+?">\s+<\/div>/, body)
     assert(2, attachments_inline.count)
+    assert_equal('image1.jpeg', attachments_inline[0][:filename])
+    assert_equal('image/jpeg', attachments_inline[0][:preferences]['Content-Type'])
+    assert_match(/@#{Setting.get('fqdn')}/, attachments_inline[0][:preferences]['Content-ID'])
+    assert_equal('inline', attachments_inline[0][:preferences]['Content-Disposition'])
+
+    assert_equal('image2.jpeg', attachments_inline[1][:filename])
+    assert_equal('image/jpeg', attachments_inline[1][:preferences]['Content-Type'])
+    assert_match(/@#{Setting.get('fqdn')}/, attachments_inline[1][:preferences]['Content-ID'])
+    assert_equal('inline', attachments_inline[1][:preferences]['Content-Disposition'])
   end
 
   test 'set dynamic image size' do

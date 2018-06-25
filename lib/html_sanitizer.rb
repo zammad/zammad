@@ -422,14 +422,20 @@ reolace inline images with cid images
 
   def self.replace_inline_images(string, prefix = rand(999_999_999))
     attachments_inline = []
+    filename_counter = 0
     scrubber = Loofah::Scrubber.new do |node|
       if node.name == 'img'
         if node['src'] && node['src'] =~ %r{^(data:image/(jpeg|png);base64,.+?)$}i
+          filename_counter += 1
           file_attributes = StaticAssets.data_url_attributes($1)
           cid = "#{prefix}.#{rand(999_999_999)}@#{Setting.get('fqdn')}"
+          filename = cid
+          if file_attributes[:file_extention].present?
+            filename = "image#{filename_counter}.#{file_attributes[:file_extention]}"
+          end
           attachment = {
             data: file_attributes[:content],
-            filename: cid,
+            filename: filename,
             preferences: {
               'Content-Type' => file_attributes[:mime_type],
               'Mime-Type' => file_attributes[:mime_type],
