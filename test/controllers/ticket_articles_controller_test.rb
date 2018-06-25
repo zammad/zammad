@@ -110,7 +110,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(0, ticket.articles[1].attachments.count)
     assert_equal(1, ticket.articles[2].attachments.count)
     assert(ticket.articles[2].attachments[0]['id'])
-    assert_match(/@zammad.example.com/, ticket.articles[2].attachments[0]['filename'])
+    assert_equal('image1.png', ticket.articles[2].attachments[0]['filename'])
     assert_equal('21', ticket.articles[2].attachments[0]['size'])
     assert_equal('image/png', ticket.articles[2].attachments[0]['preferences']['Mime-Type'])
     assert_equal('inline', ticket.articles[2].attachments[0]['preferences']['Content-Disposition'])

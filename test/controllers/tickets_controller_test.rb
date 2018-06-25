@@ -626,13 +626,15 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(2, ticket.articles.first.attachments.count)
     file = ticket.articles.first.attachments[0]
     assert_equal('d3c1e09bdefb92b6a06b791a24ca9599', Digest::MD5.hexdigest(file.content))
-    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.filename)
+    assert_equal('image1.png', file.filename)
     assert_equal('image/png', file.preferences['Mime-Type'])
+    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.preferences['Content-ID'])
     assert(file.preferences['Content-ID'])
     file = ticket.articles.first.attachments[1]
     assert_equal('006a2ca3793b550c8fe444acdeb39252', Digest::MD5.hexdigest(file.content))
-    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.filename)
+    assert_equal('image2.jpeg', file.filename)
     assert_equal('image/jpeg', file.preferences['Mime-Type'])
+    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.preferences['Content-ID'])
     assert(file.preferences['Content-ID'])
   end
 
@@ -670,9 +672,10 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(2, ticket.articles.first.attachments.count)
     file = ticket.articles.first.attachments[0]
     assert_equal('006a2ca3793b550c8fe444acdeb39252', Digest::MD5.hexdigest(file.content))
-    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.filename)
+    assert_equal('image1.jpeg', file.filename)
     assert_equal('image/jpeg', file.preferences['Mime-Type'])
     assert(file.preferences['Content-ID'])
+    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.preferences['Content-ID'])
     file = ticket.articles.first.attachments[1]
     assert_equal('39d0d586a701e199389d954f2d592720', Digest::MD5.hexdigest(file.content))
     assert_equal('some_file.txt', file.filename)
