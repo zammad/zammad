@@ -2644,8 +2644,6 @@ test('check getRecipientArticle format', function() {
 
 });
 
-}
-
 test("contentTypeCleanup", function() {
 
   var source = "image/png"
@@ -2683,3 +2681,50 @@ test("contentTypeCleanup", function() {
   result = App.Utils.contentTypeCleanup(source)
   equal(result, should, source)
 });
+
+// htmlImage2DataUrl
+test("htmlImage2DataUrl", function() {
+
+  var source = '<div>test 13</div>'
+  var should = '<div>test 13</div>'
+  var result = App.Utils.htmlImage2DataUrl(source)
+  equal(result, should, source)
+
+  source = 'some test'
+  should = 'some test'
+  result = App.Utils.htmlImage2DataUrl(source)
+  equal(result, should, source)
+
+  source = '<img src="some url">some test'
+  should = '<img src="data:,">some test'
+  result = App.Utils.htmlImage2DataUrl(source)
+  equal(result, should, source)
+
+  source = '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAADAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACv/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAUAQEAAAAAAAAAAAAAAAAAAAAF/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AbgQDv//Z">some test'
+  should = '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAADAAEDAREAAhEBAxEB/8QAFAABAAAAAAAAAAAAAAAAAAAACv/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAUAQEAAAAAAAAAAAAAAAAAAAAF/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AbgQDv//Z">some test'
+  result = App.Utils.htmlImage2DataUrl(source)
+  equal(result, should, source)
+
+  source = '<img src="data:image/jpeg;base64,some_data_123">some <img src="some url">test'
+  should = '<img src="data:image/jpeg;base64,some_data_123">some <img src="data:,">test'
+  result = App.Utils.htmlImage2DataUrl(source)
+  equal(result, should, source)
+
+});
+
+source = '<img src="/assets/images/avatar-bg.png">some test'
+$('#image2text').html(source)
+var htmlImage2DataUrlTest = function() {
+
+  var result = App.Utils.htmlImage2DataUrl(source)
+  test("htmlImage2DataUrl async", function() {
+    var result = App.Utils.htmlImage2DataUrl(source)
+    ok(result.match(/some test/), source)
+    ok(!result.match(/avatar-bg.png/), source)
+    ok(result.match(/^\<img src=\"data:image\/png;base64,/), source)
+  });
+
+}
+$('#image2text img').one('load', htmlImage2DataUrlTest)
+
+}
