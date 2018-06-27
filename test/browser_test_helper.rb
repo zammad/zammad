@@ -122,7 +122,7 @@ class TestCase < Test::Unit::TestCase
     end
   end
 
-  def screenshot(params)
+  def screenshot(params = {})
     instance = params[:browser] || @browser
     comment = params[:comment] || ''
     filename = "tmp/#{Time.zone.now.strftime('screenshot_%Y_%m_%d__%H_%M_%S_%L')}_#{comment}#{instance.hash}.png"
