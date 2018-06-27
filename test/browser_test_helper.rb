@@ -2748,12 +2748,20 @@ wait untill text in selector disabppears
       element = instance.find_elements(css: '.modal input.searchableSelect-main')[0]
       element.clear
       element.send_keys(data[:organization])
-      target = nil
-      until target
-        sleep 0.5
-        target = instance.find_elements(css: ".modal li[title='#{data[:organization]}']")[0]
+
+      begin
+        retries ||= 0
+        target    = nil
+        until target
+          sleep 0.5
+          target = instance.find_elements(css: ".modal li[title='#{data[:organization]}']")[0]
+        end
+        target.click()
+      rescue Selenium::WebDriver::Error::StaleElementReferenceError
+        sleep retries
+        retries += 1
+        retry if retries < 3
       end
-      target.click()
     end
     check(
       browser: instance,
