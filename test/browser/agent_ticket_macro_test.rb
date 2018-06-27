@@ -2,28 +2,37 @@
 require 'browser_test_helper'
 
 class AgentTicketMacroTest < TestCase
-  def test_macro
+
+  def test_close_and_tag_as_spam_default
     @browser = browser_instance
     login(
       username: 'agent1@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
-    ticket1 = ticket_create(
+    ticket = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'some subject - macro#1',
-        body: 'some body - macro#1',
+        group:    'Users',
+        title:    'some subject - macro "Close & Tag as Spam" default',
+        body:     'some body - macro "Close & Tag as Spam" default',
       },
     )
 
-    click(css: '.active.content .js-submitDropdown .js-openDropdownMacro')
-    click(css: '.active.content .js-submitDropdown .js-dropdownActionMacro')
+    perform_macro(name: 'Close & Tag as Spam')
 
-    # verify tags
+    # check redirect after perfoming macro
+    location_check(
+      url: "#{browser_url}/#dashboard",
+    )
+
+    # reopen ticket and verify tags
+    ticket_open_by_search(
+      number: ticket[:number],
+    )
+
     tags_verify(
       tags: {
         'spam' => true,
@@ -32,86 +41,138 @@ class AgentTicketMacroTest < TestCase
     )
   end
 
-  def test_macro_ux_flow_next_up
+  def test_ux_flow_next_up_stay_on_tab
     @browser = browser_instance
     login(
       username: 'master@example.com',
       password: 'test',
-      url: browser_url,
+      url:      browser_url,
     )
     tasks_close_all()
 
-    # Setup: Create two tickets
-    ticket_create(
+    ux_flow_next_up = 'Stay on tab'
+    macro_name      = "Test #{ux_flow_next_up}"
+    macro_create(
+      name:            macro_name,
+      ux_flow_next_up: ux_flow_next_up,
+      actions:         {
+        'Tags' => {
+          operator: 'add',
+          value:    'spam',
+        }
+      }
+    )
+
+    ticket = ticket_create(
       data: {
-        customer: 'nicole.braun',
-        group: 'Users',
-        title: 'Sample Ticket 1',
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+        customer: 'nico',
+        group:    'Users',
+        title:    "some subject - macro #{macro_name}",
+        body:     "some body - macro #{macro_name}",
       },
     )
 
-    ticket_create(
-      data: {
-        customer: 'nicole.braun',
-        group: 'Users',
-        title: 'Sample Ticket 2',
-        body: 'Suspendisse volutpat lectus sem, in fermentum orci semper sit amet.',
-      },
+    perform_macro(name: macro_name)
+
+    location_check(
+      url: "#{browser_url}/#ticket/zoom/#{ticket[:id]}",
     )
 
-    # Setup: Create three macros (one for each ux_flow_next_up option)
-    click(css: 'a[href="#manage"]')
-    click(css: '.sidebar a[href="#manage/macros"]')
-    macro_options = ['Stay on tab', 'Close tab', 'Advance to next ticket from overview']
-    macro_options.each.with_index do |o, i|
-      click(css: '.page-header-meta > a[data-type="new"]')
-      sendkey(css: '.modal-body input[name="name"]', value: "Test Macro #{i + 1}")
-      select(css: '.modal-body select[name="ux_flow_next_up"]', value: o)
-      click(css: '.modal-footer button[type="submit"]')
-    end
+    tags_verify(
+      tags: {
+        'spam' => true,
+        'tag1' => false,
+      }
+    )
+  end
 
-    click(css: 'a[title$="Sample Ticket 1"]')
-
-    # Assert: Run the first macro and verify the tab is still open
-    click(css: '.active.content .js-submitDropdown .js-openDropdownMacro')
-    click(css: '.active.content .js-submitDropdown .js-dropdownActionMacro[data-id="2"]')
-    match(css: '.tasks > a.is-active > .nav-tab-name', value: 'Sample Ticket 1',)
-
-    # Setup: Close all tabs and reopen only the first ticket
+  def test_ux_flow_next_up_close_tab
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url:      browser_url,
+    )
     tasks_close_all()
-    click(css: 'a[href="#ticket/view"]')
-    begin
-      remaining_retries = 1
-      click(css: 'a[href="#ticket/view/all_unassigned"]')
-    # responsive design means some elements are un-clickable at certain viewport sizes
-    rescue Selenium::WebDriver::Error::WebDriverError => e
-      raise e if remaining_retries.zero?
-      (remaining_retries -= 1) && click(css: 'a.tab.js-tab[href="#ticket/view/all_unassigned"]')
-    end
-    click(css: 'td[title="Sample Ticket 1"]')
 
-    # Assert: Run the second macro and verify the tab is closed
-    click(css: '.active.content .js-submitDropdown .js-openDropdownMacro')
-    click(css: '.active.content .js-submitDropdown .js-dropdownActionMacro[data-id="3"]')
+    ux_flow_next_up = 'Close tab'
+    macro_name      = "Test #{ux_flow_next_up}"
+    macro_create(
+      name:            macro_name,
+      ux_flow_next_up: ux_flow_next_up,
+    )
+
+    ticket = ticket_create(
+      data: {
+        customer: 'nico',
+        group:    'Users',
+        title:    "some subject - macro #{macro_name}",
+        body:     "some body - macro #{macro_name}",
+      },
+    )
+
+    perform_macro(name: macro_name)
+
     exists_not(css: '.tasks > a')
+  end
 
-    # Setup: Reopen the first ticket via a Ticket Overview
-    click(css: 'a[href="#ticket/view"]')
-    begin
-      remaining_retries = 1
-      click(css: 'a[href="#ticket/view/all_unassigned"]')
-    # responsive design means some elements are un-clickable at certain viewport sizes
-    rescue Selenium::WebDriver::Error::WebDriverError => e
-      raise e if remaining_retries.zero?
-      (remaining_retries -= 1) && click(css: 'a.tab.js-tab[href="#ticket/view/all_unassigned"]')
-    end
-    click(css: 'td[title="Sample Ticket 1"]')
+  def test_ux_flow_next_up_advance_to_next_ticket_from_overview
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url:      browser_url,
+    )
+    tasks_close_all()
 
-    # Assert: Run the third macro and verify the second ticket opens
-    click(css: '.active.content .js-submitDropdown .js-openDropdownMacro')
-    click(css: '.active.content .js-submitDropdown .js-dropdownActionMacro[data-id="4"]')
-    match_not(css: '.tasks > a.task > .nav-tab-name', value: 'Sample Ticket 1',)
-    match(css: '.tasks > a.is-active > .nav-tab-name', value: 'Sample Ticket 2',)
+    ux_flow_next_up = 'Advance to next ticket from overview'
+    macro_name      = "Test #{ux_flow_next_up}"
+    macro_create(
+      name:            macro_name,
+      ux_flow_next_up: ux_flow_next_up,
+    )
+
+    title_prefix = "some subject - macro #{macro_name}"
+    ticket1      = ticket_create(
+      data: {
+        customer: 'nico',
+        group:    'Users',
+        title:    "#{title_prefix} - 1",
+        body:     "some body - macro #{macro_name}",
+      },
+    )
+
+    ticket2 = ticket_create(
+      data: {
+        customer: 'nico',
+        group:    'Users',
+        title:    "#{title_prefix} - 2",
+        body:     "some body - macro #{macro_name}",
+      },
+    )
+
+    # we need to close all open ticket tasks because
+    # otherwise the Zoom view won't change in "Overview"-mode
+    # when we re-enter the Zoom view for a ticket via the overview
+    tasks_close_all()
+
+    ticket_open_by_overview(
+      title: ticket1[:title],
+      link:  '#ticket/view/all_unassigned',
+    )
+
+    verify_task(
+      data: {
+        title: ticket1[:title],
+      }
+    )
+
+    perform_macro(name: macro_name)
+
+    verify_task(
+      data: {
+        title: ticket2[:title],
+      }
+    )
   end
 end
