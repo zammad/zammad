@@ -1080,3 +1080,23 @@ class App.Utils
       )
     App.Delay.set(a, 500, undefined, 'tags')
 
+  @htmlImage2DataUrl: (html) ->
+    return html if !html
+    return html if !html.match(/<img/i)
+    html = @_checkTypeOf("<div>#{html}</div>")
+
+    html.find('img').each( (index) ->
+      src = $(@).attr('src')
+      if !src.match(/^data:/i)
+        base64 = App.Utils._htmlImage2DataUrl(@)
+        $(@).attr('src', base64)
+    )
+    html.get(0).innerHTML
+
+  @_htmlImage2DataUrl: (img) ->
+    canvas = document.createElement('canvas')
+    canvas.width = img.width
+    canvas.height = img.height
+    ctx = canvas.getContext('2d')
+    ctx.drawImage(img, 0, 0)
+    canvas.toDataURL('image/png')

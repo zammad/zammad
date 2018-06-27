@@ -131,6 +131,7 @@ class EmailReply extends App.Controller
     selected = App.ClipBoard.getSelected('html')
     if selected
       selected = App.Utils.htmlCleanup(selected).html()
+      selected = App.Utils.htmlImage2DataUrl(selected)
     if !selected
       selected = App.ClipBoard.getSelected('text')
       if selected
@@ -173,6 +174,8 @@ class EmailReply extends App.Controller
     body = ''
     if article.content_type.match('html')
       body = App.Utils.textCleanup(article.body)
+      body = App.Utils.htmlImage2DataUrl(article.body)
+
     if article.content_type.match('plain')
       body = App.Utils.textCleanup(article.body)
       body = App.Utils.text2html(body)
