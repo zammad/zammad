@@ -390,16 +390,23 @@ class TestCase < Test::Unit::TestCase
 
   click(
     browser: browser1,
-    css:  '.some_class',
-    fast: false, # do not wait
-    wait: 1, # wait 1 sec.
+    css:     '.some_class',
+    fast:    false, # do not wait
+    wait:    1, # wait 1 sec.
   )
 
   click(
     browser: browser1,
-    text: '.partial_link_text',
-    fast: false, # do not wait
-    wait: 1, # wait 1 sec.
+    xpath:   '//a[contains(@class,".text-1")]',
+    fast:    false, # do not wait
+    wait:    1, # wait 1 sec.
+  )
+
+  click(
+    browser: browser1,
+    text:    '.partial_link_text',
+    fast:    false, # do not wait
+    wait:    1, # wait 1 sec.
   )
 
 =end
@@ -410,10 +417,13 @@ class TestCase < Test::Unit::TestCase
 
     instance = params[:browser] || @browser
     if params.include?(:css)
-      param_key = :css
+      param_key        = :css
       find_element_key = :css
+    elsif params.include?(:xpath)
+      param_key        = :xpath
+      find_element_key = :xpath
     else
-      param_key = :text
+      param_key        = :text
       find_element_key = :partial_link_text
       sleep 0.5
     end
@@ -445,6 +455,36 @@ class TestCase < Test::Unit::TestCase
 
     sleep 0.2 if !params[:fast]
     sleep params[:wait] if params[:wait]
+  end
+
+=begin
+
+  perform_macro('Close & Tag as Spam')
+
+  # or
+
+  perform_macro(
+    name:    'Close & Tag as Spam',
+    browser: browser1,
+  )
+
+=end
+
+  def perform_macro(params)
+    switch_window_focus(params)
+    log('perform_macro', params)
+
+    instance = params[:browser] || @browser
+
+    click(
+      browser: instance,
+      css:     '.active.content .js-submitDropdown .js-openDropdownMacro'
+    )
+
+    click(
+      browser: instance,
+      xpath:   "//div[contains(@class, 'content') and contains(@class, 'active')]//li[contains(@class, 'js-dropdownActionMacro') and contains(text(), '#{params[:name]}')]"
+    )
   end
 
 =begin
@@ -1249,7 +1289,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     browser:   browser1,
     container: element # optional, defaults to browser, must exist at the time of dispatch
     css:       '#content .text-1', # xpath or css required
-    xpath:       '/content[contains(@class,".text-1")]', # xpath or css required
+    xpath:     '/content[contains(@class,".text-1")]', # xpath or css required
     value:     'some text',
     attribute: 'some_attribute' # optional
     timeout:   16, # in sec, default 16
@@ -3130,6 +3170,101 @@ wait untill text in selector disabppears
     end
     screenshot(browser: instance, comment: 'group_create_failed')
     raise 'group creation failed'
+  end
+
+=begin
+
+  macro_create(
+    browser:         browser1,
+    name:            'Emmanuel Macro',
+    ux_flow_next_up: 'Stay on tab',    # possible: 'Stay on tab', 'Close tab', 'Advance to next ticket from overview'
+    actions: {
+      'Tags' => {                      # currently only 'Tags' is supported
+        operator: 'add',
+        value:    'spam',
+      }
+    }
+  )
+
+=end
+
+  def macro_create(params)
+    switch_window_focus(params)
+    log('macro_create', params)
+
+    instance = params[:browser] || @browser
+
+    click(
+      browser: instance,
+      css:     'a[href="#manage"]',
+      mute_log: true,
+    )
+
+    click(
+      browser: instance,
+      css:     '.sidebar a[href="#manage/macros"]',
+      mute_log: true,
+    )
+
+    click(
+      browser: instance,
+      css:     '.page-header-meta > a[data-type="new"]'
+    )
+
+    sendkey(
+      browser: instance,
+      css:     '.modal-body input[name="name"]',
+      value:   params[:name]
+    )
+
+    params[:actions]&.each do |attribute, changes|
+
+      select(
+        browser:  instance,
+        css:      '.modal .ticket_perform_action .js-filterElement .js-attributeSelector select',
+        value:    attribute,
+        mute_log: true,
+      )
+
+      next if attribute != 'Tags'
+
+      select(
+        browser:  instance,
+        css:      '.modal .ticket_perform_action .js-filterElement .js-operator select',
+        value:    changes[:operator],
+        mute_log: true,
+      )
+
+      sendkey(
+        browser:  instance,
+        css:      '.modal .ticket_perform_action .js-filterElement .js-value .token-input',
+        value:    changes[:value],
+        mute_log: true,
+      )
+      sendkey(
+        browser: instance,
+        value:   :enter,
+      )
+    end
+
+    select(
+      browser: instance,
+      css:     '.modal-body select[name="ux_flow_next_up"]',
+      value:   params[:ux_flow_next_up]
+    )
+
+    click(
+      browser: instance,
+      css:     '.modal-footer button[type="submit"]'
+    )
+
+    watch_for(
+      browser: instance,
+      css:     'body',
+      value:   params[:name],
+    )
+
+    assert(true, 'macro created')
   end
 
 =begin
