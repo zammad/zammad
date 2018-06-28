@@ -88,7 +88,7 @@ class Sequencer
     # @return [Object, nil]
     def optional(attribute)
       return get(attribute) if @attributes.known?(attribute)
-      logger.debug { "Access to unknown optional attribute '#{attribute}'." }
+      logger.public_send(log_level[:optional]) { "Access to unknown optional attribute '#{attribute}'." }
       nil
     end
 
@@ -184,13 +184,13 @@ class Sequencer
     end
 
     def set(attribute, value)
-      logger.debug { "Setting '#{attribute}' value (#{value.class.name}): #{value.inspect}" }
+      logger.public_send(log_level[:set]) { "Setting '#{attribute}' value (#{value.class.name}): #{value.inspect}" }
       @values[attribute] = value
     end
 
     def get(attribute)
       value = @values[attribute]
-      logger.debug { "Getting '#{attribute}' value (#{value.class.name}): #{value.inspect}" }
+      logger.public_send(log_level[:get]) { "Getting '#{attribute}' value (#{value.class.name}): #{value.inspect}" }
       value
     end
 
@@ -207,21 +207,21 @@ class Sequencer
     end
 
     def initialize_attributes(units)
-      log_start_finish(:debug, 'Attributes lifespan initialization') do
+      log_start_finish(log_level[:attribute_initialization][:start_finish], 'Attributes lifespan initialization') do
         @attributes = Sequencer::Units::Attributes.new(units.declarations)
-        logger.debug { "Attributes lifespan: #{@attributes.inspect}" }
+        logger.public_send(log_level[:attribute_initialization][:attributes]) { "Attributes lifespan: #{@attributes.inspect}" }
       end
     end
 
     def initialize_parameters(parameters)
-      logger.debug { "Initializing Sequencer::State with initial parameters: #{parameters.inspect}" }
+      logger.public_send(log_level[:parameter_initialization][:parameters]) { "Initializing Sequencer::State with initial parameters: #{parameters.inspect}" }
 
-      log_start_finish(:debug, 'Attribute value provisioning check and initialization') do
+      log_start_finish(log_level[:parameter_initialization][:start_finish], 'Attribute value provisioning check and initialization') do
 
         @attributes.each do |identifier, attribute|
 
           if !attribute.will_be_used?
-            logger.debug { "Attribute '#{identifier}' is provided by Unit(s) but never used." }
+            logger.public_send(log_level[:parameter_initialization][:unused]) { "Attribute '#{identifier}' is provided by Unit(s) but never used." }
             next
           end
 
@@ -250,23 +250,27 @@ class Sequencer
 
     def initialize_expectations(expected_attributes)
       expected_attributes.each do |identifier|
-        logger.debug { "Adding attribute '#{identifier}' to the list of expected result attributes." }
+        logger.public_send(log_level[:expectations_initialization]) { "Adding attribute '#{identifier}' to the list of expected result attributes." }
         @attributes[identifier].to = @result_index
       end
     end
 
     def cleanup
-      log_start_finish(:info, "State cleanup of Unit #{unit.name} (index: #{@index})") do
+      log_start_finish(log_level[:cleanup][:start_finish], "State cleanup of Unit #{unit.name} (index: #{@index})") do
 
         @attributes.delete_if do |identifier, attribute|
           remove = !attribute.will_be_used?
           remove ||= attribute.to <= @index
           if remove && attribute.will_be_used?
-            logger.debug { "Removing unneeded attribute '#{identifier}': #{@values[identifier].inspect}" }
+            logger.public_send(log_level[:cleanup][:remove]) { "Removing unneeded attribute '#{identifier}': #{@values[identifier].inspect}" }
           end
           remove
         end
       end
+    end
+
+    def log_level
+      @log_level ||= Sequencer.log_level_for(:state)
     end
   end
 end
