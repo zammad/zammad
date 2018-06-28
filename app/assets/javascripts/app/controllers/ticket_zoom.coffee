@@ -109,7 +109,7 @@ class App.TicketZoom extends App.Controller
 
         # if ticket is already loaded, ignore status "0" - network issues e. g. temp. not connection
         if @ticketUpdatedAtLastCall && status is 0
-          console.log('network issues e. g. temp. not connection', status, statusText, detail)
+          console.log('network issues e. g. temp. no connection', status, statusText, detail)
           return
 
         # show error message
