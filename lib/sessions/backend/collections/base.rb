@@ -1,6 +1,8 @@
 class Sessions::Backend::Collections::Base < Sessions::Backend::Base
   class << self; attr_accessor :model, :permissions end
 
+  attr_writer :user
+
   def initialize(user, asset_lookup, client, client_id, ttl)
     @user         = user
     @client       = client

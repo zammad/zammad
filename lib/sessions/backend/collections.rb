@@ -22,6 +22,15 @@ class Sessions::Backend::Collections < Sessions::Backend::Base
     results
   end
 
+  def user=(user)
+    @user = user
+
+    # update stored user in backends, too
+    @backends.each do |backend|
+      backend.user = user
+    end
+  end
+
   def backend
 
     # auto population collections
