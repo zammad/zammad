@@ -17,10 +17,11 @@ class Sessions::Client
       'Sessions::Backend::TicketCreate',
     ]
 
-    asset_lookup = {}
-    backend_pool = []
-    user_id_last_run = nil
-    loop_count = 0
+    asset_lookup             = {}
+    backend_pool             = []
+    user_id_last_run         = nil
+    user_updated_at_last_run = nil
+    loop_count               = 0
     loop do
 
       # check if session still exists
@@ -49,6 +50,14 @@ class Sessions::Client
         backends.each do |backend|
           item = backend.constantize.new(user, asset_lookup, self, @client_id)
           backend_pool.push item
+        end
+      # update user if required
+      elsif user_updated_at_last_run != user.updated_at
+        user_updated_at_last_run = user.updated_at
+
+        log "---client - updating user #{user.id} - #{user_updated_at_last_run}"
+        backend_pool.each do |backend|
+          backend.user = user
         end
       end
 
