@@ -3458,19 +3458,22 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     click(
-      browser: instance,
-      css:  'a[href="#manage"]',
+      browser:  instance,
+      css:      'a[href="#manage"]',
       mute_log: true,
     )
     click(
-      browser: instance,
-      css:  '.content.active a[href="#system/object_manager"]',
+      browser:  instance,
+      css:      '.content.active a[href="#system/object_manager"]',
       mute_log: true,
     )
-    sleep 4
-    click(
+    watch_for(
       browser: instance,
-      css:  '.content.active .js-new',
+      css:     '.content.active .js-new',
+    )
+    click(
+      browser:  instance,
+      css:      '.content.active .js-new',
       mute_log: true,
     )
     modal_ready(browser: instance)
@@ -3593,17 +3596,19 @@ wait untill text in selector disabppears
     data     = params[:data]
 
     click(
-      browser: instance,
-      css:  'a[href="#manage"]',
+      browser:  instance,
+      css:      'a[href="#manage"]',
       mute_log: true,
     )
     click(
-      browser: instance,
-      css:  '.content.active a[href="#system/object_manager"]',
+      browser:  instance,
+      css:      '.content.active a[href="#system/object_manager"]',
       mute_log: true,
     )
-    sleep 4
-
+    watch_for(
+      browser: instance,
+      css:     '.content.active .js-new',
+    )
     instance.execute_script("$(\".content.active td:contains('#{data[:name]}')\").first().click()")
     modal_ready(browser: instance)
     element = instance.find_elements(css: '.modal input[name=display]')[0]
@@ -3615,6 +3620,12 @@ wait untill text in selector disabppears
       value:    data[:data_type],
       mute_log: true,
     )
+
+    # if attribute is created, do not be able to select other types anymore
+    if instance.find_elements(css: '.modal select[name="data_type"] option').count > 1
+      assert(false, 'able to change the data_type of existing attribute which should not be allowed')
+    end
+
     if data[:data_option]
       if data[:data_option][:options]
         if data[:data_type] == 'Boolean'
