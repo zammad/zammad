@@ -12,6 +12,9 @@ class ObjectManager::Attribute < ApplicationModel
   store :data_option
   store :data_option_new
 
+  before_create :check_datatype
+  before_update :check_datatype, :verify_possible_type_change
+
 =begin
 
 list of all attributes
@@ -324,7 +327,6 @@ possible types
         record.check_editable
         record.check_name
       end
-      record.check_datatype
       record.save!
       return record
     end
@@ -344,7 +346,6 @@ possible types
       record.check_editable
       record.check_name
     end
-    record.check_datatype
     record.save!
     record
   end
@@ -878,7 +879,13 @@ is certain attribute used by triggers, overviews or schedulers
     raise 'Attribute not editable!'
   end
 
+  private
+
   def check_datatype
+    local_data_option = data_option
+    if to_config == true
+      local_data_option = data_option_new
+    end
     if !data_type
       raise 'Need data_type param'
     end
@@ -886,62 +893,76 @@ is certain attribute used by triggers, overviews or schedulers
       raise "Invalid data_type param '#{data_type}'"
     end
 
-    if !data_option
-      raise 'Need data_type param'
+    if local_data_option.blank?
+      raise 'Need data_option param'
     end
-    if data_option[:null].nil?
+    if local_data_option[:null].nil?
       raise 'Need data_option[:null] param with true or false'
     end
 
     # validate data_option
     if data_type == 'input'
-      raise 'Need data_option[:type] param e. g. (text|password|tel|fax|email|url)' if !data_option[:type]
-      raise "Invalid data_option[:type] param '#{data_option[:type]}' (text|password|tel|fax|email|url)" if data_option[:type] !~ /^(text|password|tel|fax|email|url)$/
-      raise 'Need data_option[:maxlength] param' if !data_option[:maxlength]
-      raise "Invalid data_option[:maxlength] param #{data_option[:maxlength]}" if data_option[:maxlength].to_s !~ /^\d+?$/
+      raise 'Need data_option[:type] param e. g. (text|password|tel|fax|email|url)' if !local_data_option[:type]
+      raise "Invalid data_option[:type] param '#{local_data_option[:type]}' (text|password|tel|fax|email|url)" if local_data_option[:type] !~ /^(text|password|tel|fax|email|url)$/
+      raise 'Need data_option[:maxlength] param' if !local_data_option[:maxlength]
+      raise "Invalid data_option[:maxlength] param #{local_data_option[:maxlength]}" if local_data_option[:maxlength].to_s !~ /^\d+?$/
     end
 
     if data_type == 'richtext'
-      raise 'Need data_option[:maxlength] param' if !data_option[:maxlength]
-      raise "Invalid data_option[:maxlength] param #{data_option[:maxlength]}" if data_option[:maxlength].to_s !~ /^\d+?$/
+      raise 'Need data_option[:maxlength] param' if !local_data_option[:maxlength]
+      raise "Invalid data_option[:maxlength] param #{local_data_option[:maxlength]}" if local_data_option[:maxlength].to_s !~ /^\d+?$/
     end
 
     if data_type == 'integer'
       %i[min max].each do |item|
-        raise "Need data_option[#{item.inspect}] param" if !data_option[item]
-        raise "Invalid data_option[#{item.inspect}] param #{data_option[item]}" if data_option[item].to_s !~ /^\d+?$/
+        raise "Need data_option[#{item.inspect}] param" if !local_data_option[item]
+        raise "Invalid data_option[#{item.inspect}] param #{data_option[item]}" if local_data_option[item].to_s !~ /^\d+?$/
       end
     end
 
     if data_type == 'select' || data_type == 'tree_select' || data_type == 'checkbox'
-      raise 'Need data_option[:default] param' if !data_option.key?(:default)
-      raise 'Invalid data_option[:options] or data_option[:relation] param' if data_option[:options].nil? && data_option[:relation].nil?
-      if !data_option.key?(:maxlength)
-        data_option[:maxlength] = 255
+      raise 'Need data_option[:default] param' if !local_data_option.key?(:default)
+      raise 'Invalid data_option[:options] or data_option[:relation] param' if local_data_option[:options].nil? && local_data_option[:relation].nil?
+      if !local_data_option.key?(:maxlength)
+        local_data_option[:maxlength] = 255
       end
-      if !data_option.key?(:nulloption)
-        data_option[:nulloption] = true
+      if !local_data_option.key?(:nulloption)
+        local_data_option[:nulloption] = true
       end
     end
 
     if data_type == 'boolean'
-      raise 'Need data_option[:default] param true|false|undefined' if !data_option.key?(:default)
-      raise 'Invalid data_option[:options] param' if data_option[:options].nil?
+      raise 'Need data_option[:default] param true|false|undefined' if !local_data_option.key?(:default)
+      raise 'Invalid data_option[:options] param' if local_data_option[:options].nil?
     end
 
     if data_type == 'datetime'
-      raise 'Need data_option[:future] param true|false' if data_option[:future].nil?
-      raise 'Need data_option[:past] param true|false' if data_option[:past].nil?
-      raise 'Need data_option[:diff] param in hours' if data_option[:diff].nil?
+      raise 'Need data_option[:future] param true|false' if local_data_option[:future].nil?
+      raise 'Need data_option[:past] param true|false' if local_data_option[:past].nil?
+      raise 'Need data_option[:diff] param in hours' if local_data_option[:diff].nil?
     end
 
     if data_type == 'date'
-      raise 'Need data_option[:future] param true|false' if data_option[:future].nil?
-      raise 'Need data_option[:past] param true|false' if data_option[:past].nil?
-      raise 'Need data_option[:diff] param in days' if data_option[:diff].nil?
+      raise 'Need data_option[:future] param true|false' if local_data_option[:future].nil?
+      raise 'Need data_option[:past] param true|false' if local_data_option[:past].nil?
+      raise 'Need data_option[:diff] param in days' if local_data_option[:diff].nil?
     end
 
     true
   end
 
+  def verify_possible_type_change
+    return true if changes_to_save['data_type'].blank?
+
+    possible = {
+      'select' => %w[tree_select select input checkbox],
+      'tree_select' => %w[tree_select select input checkbox],
+      'checkbox' => %w[tree_select select input checkbox],
+      'input' => %w[tree_select select input checkbox],
+    }
+
+    return true if possible[changes_to_save['data_type'][0]]&.include?(changes_to_save['data_type'][1])
+
+    raise 'Can\'t be changed data_type of attribute. Drop the attribute and recreate it with new data_type.'
+  end
 end

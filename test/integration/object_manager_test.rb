@@ -788,4 +788,83 @@ class ObjectManagerTest < ActiveSupport::TestCase
     assert_equal(1, overview[:count])
     assert_equal(ticket1.id, overview[:tickets][0][:id])
   end
+
+  test 'd object manager attribute - update attribute type' do
+
+    attribute1 = ObjectManager::Attribute.add(
+      object: 'Ticket',
+      name: 'example_1',
+      display: 'example_1',
+      data_type: 'input',
+      data_option: {
+        default: '',
+        maxlength: 200,
+        type: 'text',
+        null: true,
+        options: {},
+      },
+      active: true,
+      screens: {},
+      position: 20,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    assert_equal(true, ObjectManager::Attribute.pending_migration?)
+    assert_equal(1, ObjectManager::Attribute.migrations.count)
+
+    assert(ObjectManager::Attribute.migration_execute)
+
+    assert_raises(RuntimeError) do
+      ObjectManager::Attribute.add(
+        object: 'Ticket',
+        name: 'example_1',
+        display: 'example_1',
+        data_type: 'boolean',
+        data_option: {
+          default: true,
+          options: {
+            true: 'Yes',
+            false: 'No',
+          },
+          null: false,
+        },
+        active: true,
+        screens: {},
+        position: 200,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+    end
+
+    attribute2 = ObjectManager::Attribute.add(
+      object: 'Ticket',
+      name: 'example_1',
+      display: 'example_1',
+      data_type: 'select',
+      data_option: {
+        default: '',
+        maxlength: 200,
+        type: 'text',
+        null: true,
+        options: {
+          aa: 'aa',
+          bb: 'bb',
+        },
+      },
+      active: true,
+      screens: {},
+      position: 20,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    assert_equal(attribute1.id, attribute2.id)
+    assert_equal(true, ObjectManager::Attribute.pending_migration?)
+    assert_equal(1, ObjectManager::Attribute.migrations.count)
+
+    assert(ObjectManager::Attribute.migration_execute)
+
+  end
+
 end

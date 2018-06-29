@@ -41,33 +41,16 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
     end
   end
 
-  context '[:data_option]' do
-
-    it 'ensures an empty Hash' do
-      attribute = create(:object_manager_attribute_text, data_option: nil)
-      migrate
-      attribute.reload
-
-      expect(attribute[:data_option]).to be_a(Hash)
-    end
-  end
-
   context '[:data_option][:options]' do
-
-    it 'ensures an empty Hash' do
-      attribute = create(:object_manager_attribute_text, data_option: {})
-      migrate
-      attribute.reload
-
-      expect(attribute[:data_option][:options]).to be_a(Hash)
-    end
 
     it 'converts String to Hash' do
       wrong = {
-        default:  '',
-        options:  '',
-        relation: '',
-        null:     true
+        default:   '',
+        options:   '',
+        relation:  '',
+        type:      'text',
+        maxlength: 255,
+        null:      true
       }
 
       attribute = create(:object_manager_attribute_text, data_option: wrong)
@@ -83,9 +66,11 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
 
     it 'ensures an empty String' do
       wrong = {
-        default: '',
-        options: {},
-        null:    true
+        default:   '',
+        options:   {},
+        type:      'text',
+        maxlength: 255,
+        null:      true
       }
 
       attribute = create(:object_manager_attribute_text, data_option: wrong)
@@ -97,10 +82,12 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
 
     it 'converts Hash to String' do
       wrong = {
-        default:  '',
-        options:  {},
-        relation: {},
-        null:     true
+        default:   '',
+        options:   {},
+        relation:  {},
+        type:      'text',
+        maxlength: 255,
+        null:      true
       }
 
       attribute = create(:object_manager_attribute_text, data_option: wrong)

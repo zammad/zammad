@@ -175,7 +175,7 @@ RSpec.describe Issue1660FixTreeSelectConfigurations, type: :db_migration do
       }
     ]
 
-    attribute = create(:object_manager_attribute_tree_select, data_option: { options: broken })
+    attribute = create(:object_manager_attribute_tree_select, data_option: { options: broken, null: true, default: '' })
 
     expect do
       migrate
@@ -192,18 +192,8 @@ RSpec.describe Issue1660FixTreeSelectConfigurations, type: :db_migration do
     end
   end
 
-  it 'skips blank data_option' do
-    attribute = create(:object_manager_attribute_tree_select, data_option: {})
-
-    expect do
-      migrate
-    end.not_to change {
-      attribute.reload.data_option
-    }
-  end
-
   it 'skips blank data_option options' do
-    attribute = create(:object_manager_attribute_tree_select, data_option: { options: [] })
+    attribute = create(:object_manager_attribute_tree_select, data_option: { options: [], null: true, default: '' })
 
     expect do
       migrate

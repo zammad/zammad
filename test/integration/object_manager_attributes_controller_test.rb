@@ -1014,4 +1014,138 @@ class ObjectManagerAttributesControllerTest < ActionDispatch::IntegrationTest
     assert @response.body.include?('cannot be deleted!')
   end
 
+  test '07 verify if attribute type can not be changed' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin@example.com', 'adminpw')
+
+    params = {
+      'name': "customerdescription_#{rand(999_999_999)}",
+      'object': 'Ticket',
+      'display': "custom description #{rand(999_999_999)}",
+      'active': true,
+      'data_type': 'boolean',
+      'data_option': {
+        'options': {
+          'true': '',
+          'false': '',
+        },
+        'default': 'false',
+        'screens': {
+          'create_middle': {
+            'ticket.customer': {
+              'shown': true,
+              'item_class': 'column'
+            },
+            'ticket.agent': {
+              'shown': true,
+              'item_class': 'column'
+            }
+          },
+          'edit': {
+            'ticket.customer': {
+              'shown': true
+            },
+            'ticket.agent': {
+              'shown': true
+            }
+          }
+        }
+      },
+    }
+
+    post '/api/v1/object_manager_attributes', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+
+    assert_response(201) # created
+    result = JSON.parse(@response.body)
+
+    assert(result)
+    assert_not(result['data_option']['default'])
+    assert_equal(result['data_option']['default'], false)
+    assert_equal(result['data_type'], 'boolean')
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert_equal(migration, true)
+
+    params['data_type'] = 'input'
+    params['data_option'] = {
+      'default': 'test',
+      'type': 'text',
+      'maxlength': 120
+    }
+
+    put "/api/v1/object_manager_attributes/#{result['id']}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert(result)
+    assert(result['error']['Can\'t be changed data_type of attribute. Drop the attribute and recreate it with new data_type.'])
+
+  end
+
+  test '08 verify if attribute type can be changed' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin@example.com', 'adminpw')
+
+    params = {
+      'name': "customerdescription_#{rand(999_999_999)}",
+      'object': 'Ticket',
+      'display': "custom description #{rand(999_999_999)}",
+      'active': true,
+      'data_type': 'input',
+      'data_option': {
+        'default': 'test',
+        'type': 'text',
+        'maxlength': 120,
+      },
+      'screens': {
+        'create_middle': {
+          'ticket.customer': {
+            'shown': true,
+            'item_class': 'column'
+          },
+          'ticket.agent': {
+            'shown': true,
+            'item_class': 'column'
+          }
+        },
+        'edit': {
+          'ticket.customer': {
+            'shown': true
+          },
+          'ticket.agent': {
+            'shown': true
+          }
+        },
+      },
+    }
+
+    post '/api/v1/object_manager_attributes', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+
+    assert_response(201) # created
+    result = JSON.parse(@response.body)
+
+    assert(result)
+    assert_equal(result['data_option']['default'], 'test')
+    assert_equal(result['data_type'], 'input')
+
+    migration = ObjectManager::Attribute.migration_execute
+    assert_equal(migration, true)
+
+    params['data_type'] = 'select'
+    params['data_option'] = {
+      'default': 'fuu',
+      'options': {
+        'key1': 'foo',
+        'key2': 'fuu',
+      }
+    }
+
+    put "/api/v1/object_manager_attributes/#{result['id']}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert(result)
+    assert_equal(result['data_option']['default'], 'test')
+    assert_equal(result['data_option_new']['default'], 'fuu')
+    assert_equal(result['data_type'], 'select')
+
+  end
+
 end
