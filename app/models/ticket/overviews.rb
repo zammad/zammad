@@ -47,6 +47,8 @@ returns
   {
     overview: {
       id: 123,
+      name: 'some name',
+      view: 'some_view',
       updated_at: ...,
     },
     count: 3,
