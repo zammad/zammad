@@ -61,6 +61,12 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     @organization3 = Organization.create!(
       name: 'Rest Org #3',
     )
+    @organization4 = Organization.create!(
+      name: 'Tes.t. Org',
+    )
+    @organization5 = Organization.create!(
+      name: 'ABC_D Org',
+    )
 
     # create customer with org
     @customer_with_org2 = User.create!(
@@ -414,4 +420,29 @@ class SearchControllerTest < ActionDispatch::IntegrationTest
     assert_not(result['result'][0])
   end
 
+  # Verify fix for Github issue #2058 - Autocomplete hangs on dot in the new user form
+  test 'searching for organization with a dot in its name' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('search-agent@example.com', 'agentpw')
+
+    get '/api/v1/search/organization?query=tes.', headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(1, result['result'].size)
+    assert_equal('Organization', result['result'][0]['type'])
+    target_id = result['result'][0]['id']
+    assert_equal('Tes.t. Org', result['assets']['Organization'][target_id.to_s]['name'])
+  end
+
+  # Search query H& should correctly match H&M
+  test 'searching for organization with _ in its name' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('search-agent@example.com', 'agentpw')
+
+    get '/api/v1/search/organization?query=abc_', headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(1, result['result'].size)
+    assert_equal('Organization', result['result'][0]['type'])
+    target_id = result['result'][0]['id']
+    assert_equal('ABC_D Org', result['assets']['Organization'][target_id.to_s]['name'])
+  end
 end
