@@ -27,6 +27,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
 
   objectSingle: 'User'
   objectIcon: 'user'
+  inactiveObjectIcon: 'inactive-user'
   objectSingels: 'People'
   objectCreate: 'Create new object'
   referenceAttribute: 'member_ids'
@@ -89,6 +90,7 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     @objectId.val('').trigger('change')
 
   onObjectClick: (e) =>
+    return if e.currentTarget.classList.contains('is-inactive')
     objectId = $(e.currentTarget).data('object-id')
     @selectObject(objectId)
     @close()
@@ -257,9 +259,14 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
         organizationMemebers.append(@buildObjectItem(object))
 
   buildObjectItem: (object) =>
+    icon = @objectIcon
+
+    if object.active is false and @inactiveObjectIcon
+      icon = @inactiveObjectIcon
+
     App.view(@templateObjectItem)(
       object: object
-      icon: @objectIcon
+      icon: icon
     )
 
   buildObjectNew: =>

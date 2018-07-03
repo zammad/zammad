@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>horizontal-rule</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="horizontal-rule" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle-11" fill="#50E3C2" x="0" y="5" width="12" height="1"></rect>
+        <rect id="Rectangle-12" fill-opacity="0.3" fill="#50E3C2" x="1" y="0" width="10" height="3"></rect>
+        <rect id="Rectangle-12-Copy" fill-opacity="0.3" fill="#50E3C2" x="1" y="8" width="10" height="3"></rect>
+    </g>
+</svg>

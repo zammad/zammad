@@ -6591,12 +6591,15 @@ footer {
   .dropdown li:hover,
   .dropdown li.is-active {
     background: hsl(205,90%,60%);
-  }
 
-    .dropdown li:hover + li,
-    .dropdown li.is-active + li {
+    &.is-inactive {
+      background: none !important;
+    }
+
+    + li {
       box-shadow: none;
     }
+  }
 
   .dropdown-menu > li.danger:hover,
   .dropdown-menu > li.danger.is-active {
@@ -6736,9 +6739,24 @@ footer {
 }
 
 .recipientList-entry {
-  @extend .u-clickable;
   display: flex;
   align-items: center;
+  @extend .u-clickable;
+
+  &.is-inactive {
+    cursor: not-allowed;
+
+    &:hover,
+    &.is-active {
+      .recipientList-icon {
+        opacity: 0.2;
+      }
+    }
+
+    .recipientList-name {
+      color: hsl(238,2%,56%);
+    }
+  }
 }
 
   .recipientList-entry .recipientList-iconSpacer {
@@ -6756,13 +6774,12 @@ footer {
     opacity: 0.2;
   }
 
-  .recipientList--new .recipientList-icon {
-    opacity: 1;
-  }
-
-  .recipientList-entry:hover .recipientList-icon,
-  .recipientList-entry.is-active .recipientList-icon {
-    opacity: 1;
+  .recipientList--new,
+  .recipientList-entry:hover,
+  .recipientList-entry.is-active {
+    .recipientList-icon {
+      opacity: 1;
+    }
   }
 
   .recipientList-name {
@@ -6770,6 +6787,11 @@ footer {
     @include bidi-style(margin-left, 10px, margin-right, 0);
     flex: 1;
     @extend .u-textTruncate;
+  }
+
+  .recipientList-status {
+    color: hsl(238,2%,56%);
+    opacity: 0.5;
   }
 
   .recipientList-arrow {

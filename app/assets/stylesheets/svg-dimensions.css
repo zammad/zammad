@@ -2,6 +2,7 @@
 .icon-arrow-left { width: 7px; height: 13px; }
 .icon-arrow-right { width: 7px; height: 13px; }
 .icon-arrow-up { width: 13px; height: 7px; }
+.icon-bold { width: 12px; height: 12px; }
 .icon-chat { width: 24px; height: 24px; }
 .icon-checkbox-checked { width: 11px; height: 11px; }
 .icon-checkbox-indeterminate { width: 11px; height: 11px; }
@@ -38,9 +39,12 @@
 .icon-google-button { width: 29px; height: 24px; }
 .icon-group { width: 24px; height: 24px; }
 .icon-help { width: 16px; height: 16px; }
+.icon-horizontal-rule { width: 12px; height: 12px; }
 .icon-important { width: 16px; height: 16px; }
 .icon-in-process { width: 64px; height: 64px; }
+.icon-inactive-user { width: 16px; height: 16px; }
 .icon-info { width: 5px; height: 11px; }
+.icon-italic { width: 12px; height: 12px; }
 .icon-line-left-arrow { width: 34px; height: 7px; }
 .icon-line-right-arrow { width: 34px; height: 7px; }
 .icon-linkedin-button { width: 29px; height: 24px; }
@@ -93,6 +97,7 @@
 .icon-status-modified-outer-circle { width: 16px; height: 16px; }
 .icon-status { width: 16px; height: 16px; }
 .icon-stopwatch { width: 77px; height: 83px; }
+.icon-strikethrough { width: 12px; height: 12px; }
 .icon-switchView { width: 19px; height: 18px; }
 .icon-task-state { width: 16px; height: 16px; }
 .icon-team { width: 16px; height: 16px; }
@@ -103,7 +108,9 @@
 .icon-trash { width: 16px; height: 16px; }
 .icon-twitter-button { width: 29px; height: 24px; }
 .icon-twitter { width: 17px; height: 17px; }
+.icon-underline { width: 12px; height: 12px; }
 .icon-unmute { width: 16px; height: 16px; }
+.icon-unordered-list { width: 12px; height: 12px; }
 .icon-user { width: 16px; height: 16px; }
 .icon-web { width: 17px; height: 17px; }
 .icon-weibo-button { width: 29px; height: 24px; }

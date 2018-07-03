@@ -1,9 +1,5 @@
 class App.UserOrganizationAutocompletion extends App.ObjectOrganizationAutocompletion
-  objectSingle: 'User'
-  objectIcon: 'user'
-  objectSingels: 'People'
   objectCreate: 'Create new Customer'
-  referenceAttribute: 'member_ids'
 
   newObject: (e) =>
     if e
@@ -18,10 +14,15 @@ class App.UserOrganizationAutocompletion extends App.ObjectOrganizationAutocompl
     if @Config.get('ui_user_organization_selector_with_email') && !_.isEmpty(object.email)
       realname += " <#{object.email}>"
 
+    icon = @objectIcon
+
+    if object.active is false and @inactiveObjectIcon
+      icon = @inactiveObjectIcon
+
     App.view(@templateObjectItem)(
       realname: realname
       object: object
-      icon: @objectIcon
+      icon: icon
     )
 
 class UserNew extends App.ControllerModal
