@@ -74,7 +74,7 @@
 /public/assets/doorkeeper
 
 # ignore all automatically downloaded images except the default ones
-/public/assets/images
+/public/assets/images/*
 !/public/assets/images/icons
 !/public/assets/images/avatar-bg.png
 !/public/assets/images/chat-demo-avatar.png
