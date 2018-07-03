@@ -6592,10 +6592,6 @@ footer {
   .dropdown li.is-active {
     background: hsl(205,90%,60%);
 
-    &.is-inactive {
-      background: none !important;
-    }
-
     + li {
       box-shadow: none;
     }
@@ -6742,21 +6738,6 @@ footer {
   display: flex;
   align-items: center;
   @extend .u-clickable;
-
-  &.is-inactive {
-    cursor: not-allowed;
-
-    &:hover,
-    &.is-active {
-      .recipientList-icon {
-        opacity: 0.2;
-      }
-    }
-
-    .recipientList-name {
-      color: hsl(238,2%,56%);
-    }
-  }
 }
 
   .recipientList-entry .recipientList-iconSpacer {
@@ -6765,6 +6746,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
 
   .recipientList-icon {
@@ -6790,8 +6772,13 @@ footer {
   }
 
   .recipientList-status {
-    color: hsl(238,2%,56%);
     opacity: 0.5;
+    margin: 0 10px;
+    flex-shrink: 1;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   .recipientList-arrow {

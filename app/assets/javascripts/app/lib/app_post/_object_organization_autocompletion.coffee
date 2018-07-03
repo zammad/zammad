@@ -90,7 +90,6 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
     @objectId.val('').trigger('change')
 
   onObjectClick: (e) =>
-    return if e.currentTarget.classList.contains('is-inactive')
     objectId = $(e.currentTarget).data('object-id')
     @selectObject(objectId)
     @close()

@@ -1,5 +1,10 @@
 class App.UserOrganizationAutocompletion extends App.ObjectOrganizationAutocompletion
+  objectSingle: 'User'
+  objectIcon: 'user'
+  inactiveObjectIcon: 'inactive-user'
+  objectSingels: 'People'
   objectCreate: 'Create new Customer'
+  referenceAttribute: 'member_ids'
 
   newObject: (e) =>
     if e
