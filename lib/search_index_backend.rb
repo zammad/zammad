@@ -332,18 +332,10 @@ return search result
     data['query']['bool'] ||= {}
     data['query']['bool']['must'] ||= []
 
-    # add * on simple query like "somephrase23" or "attribute: somephrase23"
-    if query.present?
-      query.strip!
-      if query.match?(/^([[:alpha:],0-9]+|[[:alpha:],0-9]+\:\s+[[:alpha:],0-9]+)$/)
-        query += '*'
-      end
-    end
-
     # real search condition
     condition = {
       'query_string' => {
-        'query' => query,
+        'query' => append_wildcard_to_simple_query(query),
         'default_operator' => 'AND',
       }
     }
@@ -615,5 +607,12 @@ return true if backend is configured
     result = "#{prefix} #{message}#{suffix}"
     Rails.logger.error result.first(40_000)
     result
+  end
+
+  # add * on simple query like "somephrase23" or "attribute: somephrase23"
+  def self.append_wildcard_to_simple_query(query)
+    query.strip!
+    query += '*' if query.match?(/^([[:alnum:]._]+|[[:alnum:]]+\:\s*[[:alnum:]._]+)$/)
+    query
   end
 end
