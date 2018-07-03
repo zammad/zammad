@@ -481,25 +481,82 @@ get count of tickets and tickets which match on selector
   def self.selector2query(selector, _current_user, aggs_interval, limit)
     query_must = []
     query_must_not = []
+    relative_map = {
+      day: 'd',
+      year: 'y',
+      month: 'M',
+      hour: 'h',
+      minute: 'm',
+    }
     if selector.present?
       selector.each do |key, data|
         key_tmp = key.sub(/^.+?\./, '')
         t = {}
-        if data['value'].class == Array
-          t[:terms] = {}
-          t[:terms][key_tmp] = data['value']
+
+        # is/is not/contains/contains not
+        if data['operator'] == 'is' || data['operator'] == 'is not' || data['operator'] == 'contains' || data['operator'] == 'contains not'
+          if data['value'].class == Array
+            t[:terms] = {}
+            t[:terms][key_tmp] = data['value']
+          else
+            t[:term] = {}
+            t[:term][key_tmp] = data['value']
+          end
+
+        # within last/within next (relative)
+        elsif data['operator'] == 'within last (relative)' || data['operator'] == 'within next (relative)'
+          range = relative_map[data['range'].to_sym]
+          if range.blank?
+            raise "Invalid relative_map for range '#{data['range']}'."
+          end
+          t[:range] = {}
+          t[:range][key_tmp] = {}
+          if data['operator'] == 'within last (relative)'
+            t[:range][key_tmp][:gte] = "now-#{data['value']}#{range}"
+          else
+            t[:range][key_tmp][:lt] = "now+#{data['value']}#{range}"
+          end
+
+        # before/after (relative)
+        elsif data['operator'] == 'before (relative)' || data['operator'] == 'after (relative)'
+          range = relative_map[data['range'].to_sym]
+          if range.blank?
+            raise "Invalid relative_map for range '#{data['range']}'."
+          end
+          t[:range] = {}
+          t[:range][key_tmp] = {}
+          if data['operator'] == 'before (relative)'
+            t[:range][key_tmp][:lt] = "now-#{data['value']}#{range}"
+          else
+            t[:range][key_tmp][:gt] = "now+#{data['value']}#{range}"
+          end
+
+        # before/after (absolute)
+        elsif data['operator'] == 'before (absolute)' || data['operator'] == 'after (absolute)'
+          t[:range] = {}
+          t[:range][key_tmp] = {}
+          if data['operator'] == 'before (absolute)'
+            t[:range][key_tmp][:lt] = (data['value']).to_s
+          else
+            t[:range][key_tmp][:gt] = (data['value']).to_s
+          end
         else
-          t[:term] = {}
-          t[:term][key_tmp] = data['value']
+          raise "unknown operator '#{data['operator']}' for #{key}"
         end
         if data['operator'] == 'is'
           query_must.push t
         elsif data['operator'] == 'is not'
           query_must_not.push t
         elsif data['operator'] == 'contains'
-          query_must.push t
+          query_must_not.push t
         elsif data['operator'] == 'contains not'
           query_must_not.push t
+        elsif data['operator'] == 'within last (relative)' || data['operator'] == 'within next (relative)'
+          query_must.push t
+        elsif data['operator'] == 'before (relative)' || data['operator'] == 'after (relative)'
+          query_must.push t
+        elsif data['operator'] == 'before (absolute)' || data['operator'] == 'after (absolute)'
+          query_must.push t
         else
           raise "unknown operator '#{data['operator']}' for #{key}"
         end
