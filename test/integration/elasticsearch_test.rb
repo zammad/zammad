@@ -405,7 +405,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # search for tags
     result = Ticket.search(
       current_user: @agent,
-      query: 'tag:someTagA',
+      query: 'tags:someTagA',
       limit: 15,
     )
     assert(result[0], 'record 1')
@@ -414,7 +414,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     result = Ticket.search(
       current_user: @agent,
-      query: 'tag:someTagB',
+      query: 'tags:someTagB',
       limit: 15,
     )
     assert(result[0], 'record 2')
@@ -437,7 +437,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
     # search for tags
     result = Ticket.search(
       current_user: @agent,
-      query: 'tag:someTagA',
+      query: 'tags:someTagA',
       limit: 15,
     )
     assert(!result[0], 'record 1')
@@ -445,7 +445,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     result = Ticket.search(
       current_user: @agent,
-      query: 'tag:someTagB',
+      query: 'tags:someTagB',
       limit: 15,
     )
     assert(result[0], 'record 2')
@@ -454,7 +454,7 @@ class ElasticsearchTest < ActiveSupport::TestCase
 
     result = Ticket.search(
       current_user: @agent,
-      query: 'tag:someTagC',
+      query: 'tags:someTagC',
       limit: 15,
     )
     assert(result[0], 'record 1')

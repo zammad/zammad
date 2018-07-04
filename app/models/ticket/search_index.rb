@@ -23,7 +23,7 @@ returns
     # add tags
     tags = tag_list
     if tags.present?
-      attributes[:tag] = tags
+      attributes[:tags] = tags
     end
 
     # list ignored file extentions

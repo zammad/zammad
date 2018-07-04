@@ -502,6 +502,27 @@ get count of tickets and tickets which match on selector
             t[:term] = {}
             t[:term][key_tmp] = data['value']
           end
+          if data['operator'] == 'is' || data['operator'] == 'contains'
+            query_must.push t
+          elsif data['operator'] == 'is not' || data['operator'] == 'contains not'
+            query_must_not.push t
+          end
+        elsif data['operator'] == 'contains all' || data['operator'] == 'contains one' || data['operator'] == 'contains all not' || data['operator'] == 'contains one not'
+          values = data['value'].split(',').map(&:strip)
+          t[:query_string] = {}
+          if data['operator'] == 'contains all'
+            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" AND "')}\""
+            query_must.push t
+          elsif data['operator'] == 'contains one not'
+            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" OR "')}\""
+            query_must_not.push t
+          elsif data['operator'] == 'contains one'
+            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" OR "')}\""
+            query_must.push t
+          elsif data['operator'] == 'contains all not'
+            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" AND "')}\""
+            query_must_not.push t
+          end
 
         # within last/within next (relative)
         elsif data['operator'] == 'within last (relative)' || data['operator'] == 'within next (relative)'
@@ -516,6 +537,7 @@ get count of tickets and tickets which match on selector
           else
             t[:range][key_tmp][:lt] = "now+#{data['value']}#{range}"
           end
+          query_must.push t
 
         # before/after (relative)
         elsif data['operator'] == 'before (relative)' || data['operator'] == 'after (relative)'
@@ -530,6 +552,7 @@ get count of tickets and tickets which match on selector
           else
             t[:range][key_tmp][:gt] = "now+#{data['value']}#{range}"
           end
+          query_must.push t
 
         # before/after (absolute)
         elsif data['operator'] == 'before (absolute)' || data['operator'] == 'after (absolute)'
@@ -540,22 +563,6 @@ get count of tickets and tickets which match on selector
           else
             t[:range][key_tmp][:gt] = (data['value']).to_s
           end
-        else
-          raise "unknown operator '#{data['operator']}' for #{key}"
-        end
-        if data['operator'] == 'is'
-          query_must.push t
-        elsif data['operator'] == 'is not'
-          query_must_not.push t
-        elsif data['operator'] == 'contains'
-          query_must_not.push t
-        elsif data['operator'] == 'contains not'
-          query_must_not.push t
-        elsif data['operator'] == 'within last (relative)' || data['operator'] == 'within next (relative)'
-          query_must.push t
-        elsif data['operator'] == 'before (relative)' || data['operator'] == 'after (relative)'
-          query_must.push t
-        elsif data['operator'] == 'before (absolute)' || data['operator'] == 'after (absolute)'
           query_must.push t
         else
           raise "unknown operator '#{data['operator']}' for #{key}"

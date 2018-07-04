@@ -22,7 +22,7 @@ returns
       attributes = super
       return if !attributes
 
-      attributes[:tag] = tag_list
+      attributes[:tags] = tag_list
 
       messages = Chat::Message.where(chat_session_id: id)
       attributes['messages'] = []
