@@ -291,6 +291,7 @@ class App.TicketZoom extends App.Controller
 
   hide: =>
     @activeState = false
+    $('body > .modal').modal('hide')
     @positionPageHeaderStop()
     @autosaveStop()
     @shortcutNavigationstop()

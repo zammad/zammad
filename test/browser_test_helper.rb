@@ -2,6 +2,9 @@ ENV['RAILS_ENV'] = 'test'
 # rubocop:disable HandleExceptions, NonLocalExitFromIterator, Style/GuardClause, Lint/MissingCopEnableDirective
 require File.expand_path('../config/environment', __dir__)
 require 'selenium-webdriver'
+require 'json'
+require 'net/http'
+require 'uri'
 
 class TestCase < Test::Unit::TestCase
 
@@ -2235,6 +2238,13 @@ wait untill text in selector disabppears
       )
     end
 
+    if data[:files]
+      file_upload(
+        css:   '.content.active .attachmentPlaceholder-inputHolder input',
+        files: data[:files],
+      )
+    end
+
     params[:custom_data_select]&.each do |local_key, local_value|
       select(
         browser: instance,
@@ -3935,5 +3945,48 @@ wait untill text in selector disabppears
 
   def checkbox_is_selected(scope, value)
     scope.find_element(css: "input[value=#{value}]").property('checked')
+  end
+
+=begin
+
+  Retrieve a hash of all the avaiable Zammad settings and their current values.
+
+  settings = fetch_settings()
+
+=end
+
+  def fetch_settings
+    url = URI.parse(browser_url)
+    req = Net::HTTP::Get.new(browser_url + '/api/v1/settings/')
+    req.basic_auth('master@example.com', 'test')
+
+    res = Net::HTTP.start(url.host, url.port) do |http|
+      http.request(req)
+    end
+    raise "HTTP error #{res.code} while fetching #{browser_url}/api/v1/settings/" if res.code != '200'
+    JSON.parse(res.body)
+  end
+
+=begin
+
+  Enable or disable Zammad experiemental features remotely.
+
+  set_setting('ui_ticket_zoom_attachments_preview', true)
+
+=end
+
+  def set_setting(name, value)
+    name_to_id = fetch_settings.map { |s| [s['name'], s['id']] }.to_h
+    id = name_to_id[name]
+
+    url = URI.parse(browser_url)
+    req = Net::HTTP::Put.new("#{browser_url}/api/v1/settings/#{id}")
+    req['Content-Type'] = 'application/json'
+    req.basic_auth('master@example.com', 'test')
+    req.body = { 'state_current' => { 'value' => value } }.to_json
+    res = Net::HTTP.start(url.host, url.port) do |http|
+      http.request(req)
+    end
+    raise "HTTP error #{res.code} while POSTing to #{browser_url}/api/v1/settings/" if res.code != '200'
   end
 end
