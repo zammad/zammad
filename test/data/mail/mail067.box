@@ -1,0 +1,19 @@
+Return-Path: <info@example.de>
+X-Original-To: info@example.de
+Delivered-To: m032b9f7@dd38536.example.com
+Received: from dd38536.example.com (dd0801.example.com [1.1.1.1])
+	by dd38536.example.com (Postfix) with ESMTPSA id 343463D42403
+	for <info@example.de>; Wed,  4 Jul 2018 10:02:32 +0200 (CEST)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8bit
+X-SenderIP: 1.1.1.1
+User-Agent: ALL-INKL Webmail 2.11
+Subject: Testmail - Alias in info@example.de Gruppe
+From: "Bob Smith | deal" <info@example.de>
+To: info@example.de
+Message-Id: <20180704080232.343463D42403@dd38536.example.com>
+Date: Wed,  4 Jul 2018 10:02:32 +0200 (CEST)
+X-KasLoop: m032b9f7
+
+ 

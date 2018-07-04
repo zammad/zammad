@@ -504,7 +504,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   def message_body_hash(mail)
     message = [mail.html_part, mail.text_part, mail].find { |m| m&.body.present? }
 
-    if message.mime_type.nil? || message.mime_type.match?(%r{^text/(plain|html)$})
+    if message.present? && (message.mime_type.nil? || message.mime_type.match?(%r{^text/(plain|html)$}))
       content_type = message.mime_type || 'text/plain'
       body = body_text(message, strict_html: content_type.eql?('text/html'))
     end
