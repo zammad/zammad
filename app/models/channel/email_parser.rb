@@ -248,7 +248,7 @@ class Channel::EmailParser
       data[:body] = mail.body.decoded
       data[:body] = Encode.conv(mail.charset, data[:body])
 
-      if !data[:body].force_encoding('UTF-8').valid_encoding?
+      if data[:body].present? && !data[:body].force_encoding('UTF-8').valid_encoding?
         data[:body] = data[:body].encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
       end
       data[:content_type] = 'text/plain'
@@ -276,9 +276,11 @@ class Channel::EmailParser
     end
 
     # strip not wanted chars
-    data[:body].gsub!(/\n\r/, "\n")
-    data[:body].gsub!(/\r\n/, "\n")
-    data[:body].tr!("\r", "\n")
+    if data[:body].present?
+      data[:body].gsub!(/\n\r/, "\n")
+      data[:body].gsub!(/\r\n/, "\n")
+      data[:body].tr!("\r", "\n")
+    end
 
     # get mail date
     begin

@@ -2804,6 +2804,33 @@ Some Text',
           },
         },
       },
+      {
+        data: File.read(Rails.root.join('test', 'fixtures', 'mail67.box')),
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'Testmail - Alias in info@example.de Gruppe',
+          },
+          1 => {
+            from: 'Bob Smith | deal <info@example.de>',
+            sender: 'Customer',
+            type: 'email',
+            subject: 'Testmail - Alias in info@example.de Gruppe',
+            body: '',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Bob',
+              lastname: 'Smith | deal',
+              fullname: 'Bob Smith | deal',
+              email: 'info@example.de',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end
