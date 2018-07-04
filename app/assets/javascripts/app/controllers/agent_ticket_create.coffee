@@ -301,17 +301,6 @@ class App.TicketCreate extends App.Controller
       noFieldset:     true
       taskKey:        @taskKey
     )
-    new App.ControllerFormOrganization(
-      el:             @$('.ticket-form-middle')
-      form_id:        @formId
-      model:          App.Ticket
-      screen:         'create_middle_org'
-      filter:         @formMeta.filter
-      formMeta:       @formMeta
-      params:         params
-      noFieldset:     true
-      handlersConfig: handlers
-    )
     new App.ControllerForm(
       el:             @$('.ticket-form-bottom')
       form_id:        @formId

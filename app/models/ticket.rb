@@ -1167,11 +1167,12 @@ result
   end
 
   def check_defaults
-    self.owner_id = 1 unless owner_id
+    self.owner_id = 1 if !owner_id
     return true if !customer_id
     customer = User.find_by(id: customer_id)
     return true if !customer
-    return true if (customer.organization_ids.include?(organization_id) || customer.organization_id? && customer.organization_id == organization_id)
+    return true if customer.organization_ids.include?(organization_id)
+    return true if customer.organization_id? && customer.organization_id == organization_id
     return true if organization_id
     self.organization_id = customer.organization_id ? customer.organization_id : customer.organization_ids[0]
     true

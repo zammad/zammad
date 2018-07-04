@@ -1,5 +1,11 @@
 class App.SearchableMultipleSelect extends App.SearchableAjaxSelect
 
+  events:
+    'click .selected_item':      'testClick'
+
+  elements:
+    '.items':                     'itemList'
+
   render: ->
     @attribute.valueName = ''
 
@@ -22,9 +28,12 @@ class App.SearchableMultipleSelect extends App.SearchableAjaxSelect
     ids = []
     if js_shadow_ids.length > 0
       js_shadow_ids.each( -> ids.push $(this).val() )
-    unless ids.includes(data_value) || $(".js-shadow[name='"+@attribute.name+"']").val() == data_value
+    if !ids.includes(data_value) && $(".js-shadow[name='"+@attribute.name+"']").val() != data_value
       html = App.view('generic/searchable_multiple_select_item')
         title: event.currentTarget.getAttribute('title')
         data_value: parseInt(data_value)
         name: @attribute.name
       @itemList.append html
+
+  testClick: (event) ->
+    $(event.currentTarget).closest('div').remove()

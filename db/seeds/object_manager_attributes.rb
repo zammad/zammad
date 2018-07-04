@@ -341,7 +341,7 @@ ObjectManager::Attribute.add(
     active: true,
 
     screens: {
-        create_middle_org: {
+        create_middle: {
             'ticket.agent' =>  {
                 null: false,
                 default: 0,

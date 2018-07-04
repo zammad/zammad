@@ -1,4 +1,4 @@
 <div>
-    <span class='selected_item' onclick="$(this).closest('div').remove()"><%= @title %></span>
+    <span class='selected_item'><%= @title %></span>
     <input class='searchableSelect-shadow form-control js-shadow-ids' name='<%- @name %>' value=<%= @data_value %>>
 </div>

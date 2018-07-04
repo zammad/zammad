@@ -362,7 +362,7 @@ RSpec.describe Ticket do
     end
   end
 
-  describe ' when created' do
+  describe 'when created' do
 
     it 'change to correct owner_id' do
       ticket = create(:ticket, owner_id: 2)

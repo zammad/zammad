@@ -23,7 +23,7 @@
   <% if @attribute.value: %>
     <% for value in @attribute.value: %>
       <div>
-        <span class='selected_item' onclick="$(this).closest('div').remove()">
+        <span class='selected_item'>
           <%- App.Organization.findNative(value).name %>
         </span>
         <input class='searchableSelect-shadow form-control js-shadow-ids' name='<%- @attribute.name %>' value='<%- value %>'>
