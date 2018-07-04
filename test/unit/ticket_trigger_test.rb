@@ -4315,4 +4315,55 @@ class TicketTriggerTest < ActiveSupport::TestCase
     assert_equal('789', article1.attachments[0].size)
     assert_equal('text/html', article1.content_type)
   end
+
+  # Issue #1316 - 'organization is not X' conditions break triggers
+  test 'NOT IN predicates handle NULL values' do
+    customer = User.create!(
+      email: 'issue_1316_test_user@zammad.org',
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    Trigger.create_or_update(
+      name: 'auto reply (condition: organization-is-not)',
+      condition: {
+        'ticket.organization_id' => {
+          'operator' => 'is not',
+          'value' => Organization.first.id.to_s,
+        },
+      },
+      perform: {
+        'notification.email' => {
+          'body' => 'Lorem ipsum dolor',
+          'recipient' => 'ticket_customer',
+          'subject' => 'Thanks for your inquiry (#{ticket.title})!',
+        },
+      },
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    ticket = Ticket.create!(
+      title: "some <b>title</b>\n äöüß",
+      group: Group.lookup(name: 'Users'),
+      customer: customer,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert_nil(customer.organization_id)
+    assert_equal(0, ticket.reload.articles.count, 'ticket.articles verify')
+
+    Observer::Transaction.commit
+
+    assert_equal(1, ticket.reload.articles.count, 'ticket.articles verify')
+
+    autoreply = ticket.articles.first
+    assert_equal('Zammad <zammad@localhost>', autoreply.from)
+    assert_equal(customer.email, autoreply.to)
+    assert_equal("Thanks for your inquiry (#{ticket.title})!", autoreply.subject)
+    assert_equal('Lorem ipsum dolor', autoreply.body)
+    assert_equal('text/html', autoreply.content_type)
+  end
 end
