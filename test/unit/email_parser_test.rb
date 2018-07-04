@@ -17,9 +17,17 @@ class EmailParserTest < ActiveSupport::TestCase
 
     messages.each do |m|
       # assert: raw content hash is a subset of parsed message hash
-      assert_operator(m[:content].except(:attachments), :<=, m[:parsed],
-                      "parsed message data from #{m[:source]} does not match " \
-                      "message content from #{m[:source].ext('yml')}")
+      expected_msg = m[:content].except(:attachments)
+      parsed_msg = m[:parsed].slice(*expected_msg.keys)
+      failure_msg = [parsed_msg, expected_msg]
+                      .map(&:to_a).map(&:sort).reduce(&:zip)
+                      .reject { |a| a.uniq.one? }
+                      .map { |a, b| "#{a.first.upcase}\n  #{m[:source]}: #{a.last}\n  #{m[:source].ext('yml')}: #{b.last}" }
+                      .join("\n")
+
+      assert_operator(expected_msg, :<=, parsed_msg,
+                      "parsed message data does not match message content:\n" +
+                      failure_msg)
 
       # assert: attachments in parsed message hash match metadata in raw hash
       next if m[:content][:attachments].blank?
