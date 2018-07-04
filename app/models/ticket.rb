@@ -610,20 +610,20 @@ condition example
       elsif selector['operator'] == 'is not'
         if selector['pre_condition'] == 'not_set'
           if attributes[1].match?(/^(created_by|updated_by|owner|customer|user)_id/)
-            query += "#{attribute} NOT IN (?)"
+            query += "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
             bind_params.push 1
           else
             query += "#{attribute} IS NOT NULL"
           end
         elsif selector['pre_condition'] == 'current_user.id'
-          query += "#{attribute} NOT IN (?)"
+          query += "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
           if attributes[1] == 'out_of_office_replacement_id'
             bind_params.push User.find(current_user_id).out_of_office_agent_of.pluck(:id)
           else
             bind_params.push current_user_id
           end
         elsif selector['pre_condition'] == 'current_user.organization_id'
-          query += "#{attribute} NOT IN (?)"
+          query += "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
           user = User.find_by(id: current_user_id)
           bind_params.push user.organization_id
         else
@@ -631,7 +631,7 @@ condition example
           if selector['value'].nil?
             query += "#{attribute} IS NOT NULL"
           else
-            query += "#{attribute} NOT IN (?)"
+            query += "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
             if attributes[1] == 'out_of_office_replacement_id'
               bind_params.push User.find(selector['value']).out_of_office_agent_of.pluck(:id)
             else
