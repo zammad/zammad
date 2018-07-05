@@ -150,7 +150,11 @@ class JobTest < ActiveSupport::TestCase
     assert_not(job1.executable?)
 
     assert_not(job1.in_timeplan?)
-    time    = Time.zone.now
+
+    time = Time.zone.now
+    # "freeze" time to avoid timing issues
+    travel_to(time)
+
     day_map = {
       0 => 'Sun',
       1 => 'Mon',
