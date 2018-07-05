@@ -1,6 +1,8 @@
 require 'rails_helper'
+require 'models/concerns/can_lookup'
 
 RSpec.describe Organization do
+  include_examples 'CanLookup'
 
   context '.where_or_cis' do
 

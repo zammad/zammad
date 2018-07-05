@@ -2,9 +2,9 @@ require 'rails_helper'
 require 'models/concerns/has_groups_examples'
 require 'models/concerns/has_roles_examples'
 require 'models/concerns/has_groups_permissions_examples'
+require 'models/concerns/can_lookup'
 
 RSpec.describe User do
-
   let(:group_access_instance) { create(:agent_user) }
   let(:new_group_access_instance) { build(:agent_user) }
   let(:group_access_no_permission_instance) { build(:user) }
@@ -12,6 +12,7 @@ RSpec.describe User do
   include_examples 'HasGroups'
   include_examples 'HasRoles'
   include_examples 'HasGroups and Permissions'
+  include_examples 'CanLookup'
 
   let(:new_password) { 'N3W54V3PW!' }
 
