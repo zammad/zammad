@@ -96,7 +96,8 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     end
 
     listed_failed_jobs = failed_jobs.select(:handler, :attempts).limit(10)
-    listed_failed_jobs.group_by(&:name).each_with_index do |(name, jobs), index|
+    sorted_failed_jobs = listed_failed_jobs.group_by(&:name).sort_by { |_handler, entries| entries.length }.reverse.to_h
+    sorted_failed_jobs.each_with_index do |(name, jobs), index|
 
       attempts = jobs.map(&:attempts).sum
 

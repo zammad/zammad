@@ -632,7 +632,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result['message'])
     assert(result['issues'])
     assert_equal(false, result['healthy'])
-    assert_equal("13 failing background jobs.;Failed to run background job #1 'BackgroundJobSearchIndex' 2 time(s) with 14 attempt(s).;Failed to run background job #2 'Object' 8 time(s) with 40 attempt(s).",  result['message'])
+    assert_equal("13 failing background jobs.;Failed to run background job #1 'Object' 8 time(s) with 40 attempt(s).;Failed to run background job #2 'BackgroundJobSearchIndex' 2 time(s) with 14 attempt(s).",  result['message'])
 
     # cleanup
     Delayed::Job.delete_all
