@@ -8,6 +8,10 @@ class App.SearchableMultipleSelect extends App.SearchableAjaxSelect
 
   render: ->
     @attribute.valueName = ''
+    organizations = {}
+    for value in @attribute.value
+      organizations[value] = App.Organization.findNative(value).name
+    @attribute.organizations = organizations
 
     @html App.view('generic/searchable_multiple_select')
       attribute: @attribute
