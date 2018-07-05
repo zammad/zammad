@@ -158,9 +158,6 @@ group :development, :test do
   # changelog generation
   gem 'github_changelog_generator'
 
-  # Setting ENV for testing purposes
-  gem 'figaro'
-
   # Use Factory Bot for generating random test data
   gem 'factory_bot_rails'
 

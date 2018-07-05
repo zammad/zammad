@@ -19,17 +19,6 @@
 # Ignore .project files
 /.project
 
-# Ignore .rbenv-vars
-/.rbenv-vars
-
-# exclude the figaro ENV setting helper file - run 'bundle exec figaro install' for creating your own
-# see: https://github.com/laserlemon/figaro
-# Ignore application configuration
-/config/application.yml
-
-# Ignore .envrc for direnv
-/.envrc
-
 # Ignore database config
 /config/database.yml
 
