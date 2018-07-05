@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'models/concerns/can_lookup'
+require 'models/concerns/can_lookup_examples'
 
 RSpec.describe Ticket do
   include_examples 'CanLookup'

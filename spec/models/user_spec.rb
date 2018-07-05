@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'models/concerns/has_groups_examples'
 require 'models/concerns/has_roles_examples'
 require 'models/concerns/has_groups_permissions_examples'
-require 'models/concerns/can_lookup'
+require 'models/concerns/can_lookup_examples'
 
 RSpec.describe User do
   let(:group_access_instance) { create(:agent_user) }
