@@ -238,7 +238,7 @@ GEM
     net-ldap (0.16.1)
     netrc (0.11.0)
     nio4r (2.3.0)
-    nokogiri (1.8.2)
+    nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     nori (2.6.0)
     notiffany (0.1.1)
