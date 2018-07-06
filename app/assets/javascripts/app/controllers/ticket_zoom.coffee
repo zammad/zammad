@@ -633,6 +633,11 @@ class App.TicketZoom extends App.Controller
     # and the default is was not set before
     return if @isDefaultFollowUpStateSet
 
+    # and only if ticket is not in "new" state
+    if @ticket && @ticket.state_id
+      state = App.TicketState.findByAttribute('id', @ticket.state_id)
+      return if state && state.default_create is true
+
     # prevent multiple changes for the default follow up state
     @isDefaultFollowUpStateSet = true
 
