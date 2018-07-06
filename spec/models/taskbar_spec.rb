@@ -78,8 +78,6 @@ RSpec.describe Taskbar do
 
       expect(taskbar.last_contact.to_s).not_to eq(last_contact1.to_s)
       expect(taskbar.last_contact.to_s).not_to eq(last_contact2.to_s)
-
-      travel_back
     end
 
     UserInfo.current_user_id = nil

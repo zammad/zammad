@@ -2,16 +2,17 @@ class Chat::Session < ApplicationModel
   include HasSearchIndexBackend
   include HasTags
 
-  extend Chat::Session::Search
-  load 'chat/session/search_index.rb'
+  include Chat::Session::Search
   include Chat::Session::SearchIndex
-  load 'chat/session/assets.rb'
   include Chat::Session::Assets
 
-  has_many :messages,  class_name: 'Chat::Message', foreign_key: 'chat_session_id'
+  # rubocop:disable Rails/InverseOf
+  has_many :messages, class_name: 'Chat::Message', foreign_key: 'chat_session_id'
+  # rubocop:enable Rails/InverseOf
 
   before_create :generate_session_id
-  store         :preferences
+
+  store :preferences
 
   def generate_session_id
     self.session_id = Digest::MD5.hexdigest(Time.zone.now.to_s + rand(99_999_999_999_999).to_s)

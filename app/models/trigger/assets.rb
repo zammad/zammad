@@ -2,6 +2,7 @@
 
 class Trigger
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

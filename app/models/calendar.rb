@@ -251,10 +251,7 @@ returns
   def self.day_and_comment_by_event(event, start_time)
     day = "#{start_time.year}-#{format('%02d', start_time.month)}-#{format('%02d', start_time.day)}"
     comment = event.summary || event.description
-    comment = Encode.conv( 'utf8', comment.to_s.force_encoding('utf-8') )
-    if !comment.valid_encoding?
-      comment = comment.encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-    end
+    comment = comment.to_utf8(fallback: :read_as_sanitized_binary)
 
     # ignore daylight saving time entries
     return if comment.match?(/(daylight saving|sommerzeit|summertime)/i)

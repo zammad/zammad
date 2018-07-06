@@ -6,7 +6,7 @@ rm -rf tmp/cache*
 
 export Z_LOCALES='en-us:de-de'
 
-rake db:drop
-rake db:create
-rake db:migrate
-rake db:seed
+bundle exec rake db:drop
+bundle exec rake db:create
+bundle exec rake db:migrate
+bundle exec rake db:seed

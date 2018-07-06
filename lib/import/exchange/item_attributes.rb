@@ -11,7 +11,7 @@ module Import
       end
 
       def extract
-        @attributes ||= begin
+        @extract ||= begin
           properties  = @resource.get_all_properties!
           result      = normalize(properties)
           flattened   = flatten(result)

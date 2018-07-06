@@ -53,7 +53,7 @@
   }
 
   Plugin.prototype.onKeydown = function (e) {
-    console.log("onKeydown", this.isActive())
+    //console.log("onKeydown", this.isActive())
     // navigate through item
     if (this.isActive()) {
 
@@ -344,7 +344,7 @@
 
   Plugin.prototype.onEntryClick = function(event) {
     event.preventDefault()
-    var id = $(event.target).data('id')
+    var id = $(event.currentTarget).data('id')
     this.take(id)
   }
 

@@ -1,8 +1,8 @@
-
 require 'test_helper'
-require 'rake'
 
 class OrganizationControllerTest < ActionDispatch::IntegrationTest
+  include SearchindexHelper
+
   setup do
 
     # set accept header
@@ -14,7 +14,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
 
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'rest-admin',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -27,7 +27,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'rest-agent@example.com',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -40,7 +40,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
       lastname: 'Customer1',
@@ -51,18 +51,18 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create orgs
-    @organization = Organization.create_or_update(
+    @organization = Organization.create!(
       name: 'Rest Org',
     )
-    @organization2 = Organization.create_or_update(
+    @organization2 = Organization.create!(
       name: 'Rest Org #2',
     )
-    @organization3 = Organization.create_or_update(
+    @organization3 = Organization.create!(
       name: 'Rest Org #3',
     )
 
     # create customer with org
-    @customer_with_org = User.create_or_update(
+    @customer_with_org = User.create!(
       login: 'rest-customer2@example.com',
       firstname: 'Rest',
       lastname: 'Customer2',
@@ -73,32 +73,11 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
       organization_id: @organization.id,
     )
 
-    # configure es
-    if ENV['ES_URL'].present?
-      #fail "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
-      Setting.set('es_url', ENV['ES_URL'])
-
-      # Setting.set('es_url', 'http://127.0.0.1:9200')
-      # Setting.set('es_index', 'estest.local_zammad')
-      # Setting.set('es_user', 'elasticsearch')
-      # Setting.set('es_password', 'zammad')
-
-      if ENV['ES_INDEX_RAND'].present?
-        ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
-      end
-      if ENV['ES_INDEX'].blank?
-        raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
-      end
-      Setting.set('es_index', ENV['ES_INDEX'])
+    configure_elasticsearch do
 
       travel 1.minute
 
-      # drop/create indexes
-      Rake::Task.clear
-      Zammad::Application.load_tasks
-      #Rake::Task["searchindex:drop"].execute
-      #Rake::Task["searchindex:create"].execute
-      Rake::Task['searchindex:rebuild'].execute
+      rebuild_searchindex
 
       # execute background jobs
       Scheduler.worker(true)
@@ -250,7 +229,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '04.01 organization show and response format' do
-    organization = Organization.create_or_update(
+    organization = Organization.create!(
       name: 'Rest Org NEW',
       members: [@customer_without_org],
       updated_by_id: @admin.id,
@@ -318,7 +297,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '04.02 organization index and response format' do
-    organization = Organization.create_or_update(
+    organization = Organization.create!(
       name: 'Rest Org NEW',
       members: [@customer_without_org],
       updated_by_id: @admin.id,
@@ -441,7 +420,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '04.04 ticket update and response formats' do
-    organization = Organization.create_or_update(
+    organization = Organization.create!(
       name: 'Rest Org NEW',
       members: [@customer_without_org],
       updated_by_id: @admin.id,
@@ -531,7 +510,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
   test '05.03 csv import - admin access' do
 
     UserInfo.current_user_id = 1
-    customer1 = User.create_or_update(
+    customer1 = User.create!(
       login: 'customer1-members@example.com',
       firstname: 'Member',
       lastname: 'Customer',
@@ -539,7 +518,7 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
       password: 'customerpw',
       active: true,
     )
-    customer2 = User.create_or_update(
+    customer2 = User.create!(
       login: 'customer2-members@example.com',
       firstname: 'Member',
       lastname: 'Customer',
@@ -552,13 +531,14 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
 
     # invalid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple_col_not_existing.csv'), 'text/csv')
-    post '/api/v1/organizations/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple_col_not_existing.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_equal('true', result['try'])
+    assert_equal(true, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('failed', result['result'])
     assert_equal(2, result['errors'].count)
@@ -566,13 +546,14 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_equal("Line 2: unknown attribute 'name2' for Organization.", result['errors'][1])
 
     # valid file try
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
-    post '/api/v1/organizations/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/organizations/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_equal('true', result['try'])
+    assert_equal(true, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('success', result['result'])
 
@@ -580,13 +561,14 @@ class OrganizationControllerTest < ActionDispatch::IntegrationTest
     assert_nil(Organization.find_by(name: 'organization-member-import2'))
 
     # valid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'organization_simple.csv'), 'text/csv')
-    post '/api/v1/organizations/import', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/organizations/import', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_nil(result['try'])
+    assert_equal(false, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('success', result['result'])
 

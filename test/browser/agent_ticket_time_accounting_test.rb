@@ -152,5 +152,10 @@ class AgentTicketTimeAccountingTest < TestCase
       css: '.content.active .js-timeAccountingSetting',
       type: 'off',
     )
+
+    # make sure "off" AJAX request gets completed
+    # otherwise following tests might fail because
+    # off still active timeaccounting
+    logout()
   end
 end

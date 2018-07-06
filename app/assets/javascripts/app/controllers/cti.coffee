@@ -10,6 +10,7 @@ class App.CTI extends App.Controller
     active: false
     counter: 0
     state: {}
+  backendEnabled: false
 
   constructor: ->
     super
@@ -18,35 +19,10 @@ class App.CTI extends App.Controller
     @meta.active = preferences.cti || false
 
     @load()
-
-    @bind('cti_event', (data) =>
-      if data.direction is 'in'
-        if data.state is 'newCall'
-          if @switch()
-            @notify(data)
-          return if @meta.state[data.id]
-          @meta.state[data.id] = true
-          @meta.counter += 1
-          @updateNavMenu()
-        if data.state is 'answer' || data.state is 'hangup'
-          return if !@meta.state[data.id]
-          delete @meta.state[data.id]
-          @meta.counter -= 1
-          @updateNavMenu()
-      'cti_event'
-    )
     @bind('cti_list_push', (data) =>
-      if data.assets
-        App.Collection.loadAssets(data.assets)
-      if data.backends
-        @backends = data.backends
-      if data.list
-        @list = data.list
-        if @renderDone
-          @renderCallerLog()
-          return
-        @render()
-
+      delay = =>
+        @load()
+      @delay(delay, 500, 'cti_list_push_render')
       'cti_list_push'
     )
     @bind('auth', (data) =>
@@ -82,6 +58,17 @@ class App.CTI extends App.Controller
           App.Collection.loadAssets(data.assets)
         if data.backends
           @backends = data.backends
+
+          # check if configured backends are changed
+          backendEnabled = false
+          for backend in @backends
+            if backend.enabled
+              backendEnabled = true
+          if backendEnabled isnt @backendEnabled
+            @renderDone = false
+          @backendEnabled = backendEnabled
+
+        # render new caller list
         if data.list
           @list = data.list
           if @renderDone
@@ -100,6 +87,7 @@ class App.CTI extends App.Controller
 
   featureActive: =>
     return true if @Config.get('sipgate_integration')
+    return true if @Config.get('cti_integration')
     false
 
   render: ->
@@ -109,11 +97,7 @@ class App.CTI extends App.Controller
       return
 
     # check if min one backend is enabled
-    backendEnabled = false
-    for backend in @backends
-      if backend.enabled
-        backendEnabled = true
-    if !backendEnabled
+    if !@backendEnabled
       @html App.view('cti/not_configured')(
         backends: @backends
         isAdmin: @permissionCheck('admin.integration')
@@ -123,7 +107,6 @@ class App.CTI extends App.Controller
 
     @html App.view('cti/index')()
     @renderCallerLog()
-    @updateNavMenu()
 
   renderCallerLog: ->
     format = (time) ->
@@ -172,6 +155,7 @@ class App.CTI extends App.Controller
     @userPopupsDestroy()
     @callerLog.html( App.view('cti/caller_log')(list: @list))
     @userPopups()
+    @updateNavMenu()
 
   done: (e) =>
     element = $(e.currentTarget)

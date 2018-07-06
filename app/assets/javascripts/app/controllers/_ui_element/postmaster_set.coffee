@@ -4,6 +4,7 @@ class App.UiElement.postmaster_set
     groups =
       ticket:
         name: 'Ticket'
+        model: 'Ticket'
         options: [
           {
             value:    'priority_id'
@@ -14,6 +15,11 @@ class App.UiElement.postmaster_set
             value:    'state_id'
             name:     'State'
             relation: 'TicketState'
+          }
+          {
+            value:    'tags'
+            name:     'Tag'
+            tag:      'tag'
           }
           {
             value:    'customer_id'
@@ -64,6 +70,24 @@ class App.UiElement.postmaster_set
           }
         ]
 
+    elements = {}
+    for groupKey, groupMeta of groups
+      if !App[groupMeta.model]
+        elements["#{groupKey}.email"] = { name: 'email', display: 'Email' }
+      else
+
+        for row in App[groupMeta.model].configure_attributes
+
+          # ignore passwords and relations
+          if row.type isnt 'password' && row.name.substr(row.name.length-4,4) isnt '_ids'
+
+            # ignore readonly attributes
+            if !row.readonly
+              config = _.clone(row)
+              if config.tag is 'tag'
+                config.operator = ['add', 'remove']
+              elements["x-zammad-ticket-#{config.name}"] = config
+
     # add additional ticket attributes
     for row in App.Ticket.configure_attributes
       exists = false
@@ -91,11 +115,11 @@ class App.UiElement.postmaster_set
     for item in groups.ticket.options
       item.value = "x-zammad-ticket-#{item.value}"
 
-    groups
+    [elements, groups]
 
   @render: (attribute, params = {}) ->
 
-    groups = @defaults()
+    [elements, groups] = @defaults()
 
     selector = @buildAttributeSelector(groups, attribute)
 
@@ -121,7 +145,9 @@ class App.UiElement.postmaster_set
     item.find('.js-attributeSelector select').bind('change', (e) =>
       key = $(e.target).find('option:selected').attr('value')
       elementRow = $(e.target).closest('.js-filterElement')
+      groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       @rebuildAttributeSelectors(item, elementRow, key, attribute)
+      @buildOperator(item, elementRow, groupAndAttribute, elements, {},  attribute)
       @buildValue(item, elementRow, key, groups, undefined, undefined, attribute)
     )
 
@@ -203,3 +229,28 @@ class App.UiElement.postmaster_set
     if key
       elementRow.find('.js-attributeSelector select').val(key)
 
+  @buildOperator: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+    currentOperator = elementRow.find('.js-operator option:selected').attr('value')
+
+    if !meta.operator
+      meta.operator = currentOperator
+
+    name = "#{attribute.name}::#{groupAndAttribute}::operator"
+
+    selection = $("<select class=\"form-control\" name=\"#{name}\"></select>")
+    attributeConfig = elements[groupAndAttribute]
+
+    if !attributeConfig.operator
+      elementRow.find('.js-operator').addClass('hide')
+    else
+      elementRow.find('.js-operator').removeClass('hide')
+    if attributeConfig.operator
+      for operator in attributeConfig.operator
+        operatorName = App.i18n.translateInline(operator)
+        selected = ''
+        if meta.operator is operator
+          selected = 'selected="selected"'
+        selection.append("<option value=\"#{operator}\" #{selected}>#{operatorName}</option>")
+      selection
+
+    elementRow.find('.js-operator select').replaceWith(selection)

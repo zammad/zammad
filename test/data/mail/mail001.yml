@@ -1,0 +1,13 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: John.Smith@example.com
+from_email: John.Smith@example.com
+from_display_name: ''
+subject: 'CI Daten für PublicView '
+content_type: text/html
+body: |-
+  <div>
+  <div>Hallo Martin,</div><p>&nbsp;</p><div>wie besprochen hier noch die Daten für die Intranetseite:</div><p>&nbsp;</p><div>Schriftart/-größe: Verdana 11 Pt wenn von Browser nicht unterstützt oder nicht vorhanden wird Arial 11 Pt genommen</div><div>Schriftfarbe: Schwarz</div><div>Farbe für die Balken in der Grafik: D7DDE9 (Blau)</div><p>&nbsp;</p><div>Wenn noch was fehlt oder du was brauchst sag mir Bescheid.</div><p>&nbsp;</p><div>Mit freundlichem Gruß<br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co. </div><div>Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br>
+  </div><div>Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472 </div><div>john.smith@example.com</div><div>
+  <a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank">www.example.com</a>
+  </div><div>
+  <br>OHG mit Sitz in Someware<br>AG: Someware - HRA 4158<br>Geschäftsführung: Tilman Test, Klaus Jürgen Test, </div><div>Bernhard Test, Ulrich Test<br>USt-IdNr. DE 1010101010<br><br>Persönlich haftende geschäftsführende Gesellschafterin: </div><div>Marie Test Example Stiftung, Someware<br>Vorstand: Rolf Test<br><br>Persönlich haftende Gesellschafterin: </div><div>Example Service AG, Someware<br>AG: Someware - HRB xxx<br>Vorstand: Marie Test </div><p>&nbsp;</p></div>

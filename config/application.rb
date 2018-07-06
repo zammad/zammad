@@ -1,6 +1,9 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path('boot', __dir__)
 
 require 'rails/all'
+
+# DO NOT REMOVE THIS LINE - see issue #2037
+Bundler.setup
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -35,6 +38,7 @@ module Zammad
       'observer::_ticket::_ref_object_touch',
       'observer::_ticket::_online_notification_seen',
       'observer::_ticket::_stats_reopen',
+      'observer::_ticket::_escalation_update',
       'observer::_tag::_ticket_history',
       'observer::_user::_ref_object_touch',
       'observer::_user::_ticket_organization',

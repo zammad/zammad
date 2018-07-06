@@ -27,6 +27,7 @@
 		- fix that place method doesn't think that the container is the window, but rather the real window is the window
 		- added rerender method to show correct today if task is longer open the 24 hours
 		- scroll into view
+		- fix vertical auto position
  */
 
 (function(factory){
@@ -689,7 +690,9 @@
 				visualPadding = 10,
 				container = $(this.o.container),
 				windowWidth = $(window).width(),
-				scrollTop = container.scrollTop(),
+				scrollTop = container.scrollParent().scrollTop(),
+				bottomEdge = container.offset().top + container.height(),
+				scrollHeight = container.scrollParent().prop('scrollHeight'),
 				appendOffset = container.offset();
 
 			var parentsZindex = [];
@@ -702,7 +705,8 @@
 			var height = this.component ? this.component.outerHeight(true) : this.element.outerHeight(false);
 			var width = this.component ? this.component.outerWidth(true) : this.element.outerWidth(false);
 			var left = offset.left - appendOffset.left,
-				top = offset.top - appendOffset.top;
+				top = offset.top - appendOffset.top,
+				right = container.width() - width - left;
 
 			this.picker.removeClass(
 				'datepicker-orient-top datepicker-orient-bottom '+
@@ -713,6 +717,8 @@
 				this.picker.addClass('datepicker-orient-' + this.o.orientation.x);
 				if (this.o.orientation.x === 'right')
 					left -= calendarWidth - width;
+					if(this.o.rtl)
+						right -= calendarWidth - width;
 			}
 			// auto x orientation is best-placement: if it crosses a window
 			// edge, fudge it sideways
@@ -725,6 +731,7 @@
 					// the calendar passes the widow right edge. Align it to component right side
 					this.picker.addClass('datepicker-orient-right');
 					left = offset.left + width - calendarWidth;
+					right = 0;
 				} else {
 					// Default to left
 					this.picker.addClass('datepicker-orient-left');
@@ -734,10 +741,10 @@
 			// auto y orientation is best-situation: top or bottom, no fudging,
 			// decision based on which shows more of the calendar
 			var yorient = this.o.orientation.y,
-				top_overflow;
+				space_below;
 			if (yorient === 'auto'){
-				top_overflow = -scrollTop + top - calendarHeight;
-				yorient = top_overflow < 0 ? 'bottom' : 'top';
+				space_below = scrollHeight - bottomEdge - scrollTop;
+				yorient = space_below > calendarHeight ? 'bottom' : 'top';
 			}
 
 			this.picker.addClass('datepicker-orient-' + yorient);
@@ -747,7 +754,6 @@
 				top += height;
 
 			if (this.o.rtl) {
-				var right = windowWidth - (left + width);
 				this.picker.css({
 					top: top,
 					right: right,

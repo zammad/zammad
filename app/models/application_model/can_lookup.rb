@@ -2,7 +2,6 @@
 module ApplicationModel::CanLookup
   extend ActiveSupport::Concern
 
-  # methods defined here are going to extend the class, not the instance of it
   class_methods do
 
 =begin
@@ -20,78 +19,31 @@ returns
 
 =end
 
-    def lookup(data)
-      if data[:id]
-        cache = cache_get(data[:id])
-        return cache if cache
+    def lookup(**attr)
+      attr.transform_keys!(&:to_sym).slice!(*lookup_keys)
+      raise ArgumentError, "Valid lookup attribute required (#{lookup_keys.join(', ')})" if attr.empty?
+      raise ArgumentError, "Multiple lookup attributes given (#{attr.keys.join(', ')})" if attr.many?
 
-        record = find_by(id: data[:id])
-        cache_set(data[:id], record)
-        return record
-      elsif data[:name]
-        cache = cache_get(data[:name])
-        return cache if cache
+      record   = cache_get(attr.values.first)
+      record ||= find_and_save_to_cache_by(attr)
+    end
 
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(name) = LOWER(?)', data[:name])
-                  else
-                    where(name: data[:name])
-                  end
-        records.each do |loop_record|
-          next if loop_record.name != data[:name]
-          cache_set(data[:name], loop_record)
-          return loop_record
-        end
-        return
-      elsif data[:login]
-        cache = cache_get(data[:login])
-        return cache if cache
+    private
 
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(login) = LOWER(?)',  data[:login])
-                  else
-                    where(login: data[:login])
-                  end
-        records.each do |loop_record|
-          next if loop_record.login != data[:login]
-          cache_set(data[:login], loop_record)
-          return loop_record
-        end
-        return
-      elsif data[:email]
-        cache = cache_get(data[:email])
-        return cache if cache
+    def lookup_keys
+      @lookup_keys ||= %i[id name login email number] & attribute_names.map(&:to_sym)
+    end
 
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(email) = LOWER(?)',  data[:email])
-                  else
-                    where(email: data[:email])
-                  end
-        records.each do |loop_record|
-          next if loop_record.email != data[:email]
-          cache_set(data[:email], loop_record)
-          return loop_record
-        end
-        return
-      elsif data[:number]
+    def find_and_save_to_cache_by(attr)
+      if !Rails.application.config.db_case_sensitive && string_key?(attr.keys.first)
+        where(attr).find { |r| r[attr.keys.first] == attr.values.first }
+      else
+        find_by(attr)
+      end.tap { |r| cache_set(attr.values.first, r) }
+    end
 
-        # do lookup with == to handle case insensitive databases
-        records = if Rails.application.config.db_case_sensitive
-                    where('LOWER(number) = LOWER(?)',  data[:number])
-                  else
-                    where(number: data[:number])
-                  end
-        records.each do |loop_record|
-          next if loop_record.number != data[:number]
-          return loop_record
-        end
-        return
-      end
-
-      raise ArgumentError, 'Need name, id, number, login or email for lookup()'
+    def string_key?(key)
+      type_for_attribute(key.to_s).type == :string
     end
   end
 end

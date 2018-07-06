@@ -45,7 +45,7 @@ class Channel::Filter::MonitoringBase
 
     # icinga - get state by body - new templates
     if result['state'].blank?
-      if mail[:body] =~ /==>.*\sis\s(.+?)\!\s+?<==/
+      if mail[:body] =~ /.+?\sis\s(.+?)\!/
         result['state'] = $1
       end
     end

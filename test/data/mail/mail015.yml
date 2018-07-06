@@ -1,0 +1,7 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"Sara.Gang" <ynbe.ctrhk@gmail.com>'
+from_email: ynbe.ctrhk@gmail.com
+from_display_name: Sara.Gang
+subject: 绩效管理,究竟谁错了
+to: info42@znuny.com
+content_type: text/plain

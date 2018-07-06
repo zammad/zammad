@@ -288,20 +288,20 @@ return search result
 
 =end
 
-  def self.search(query, limit = 10, index = nil, query_extention = {})
+  def self.search(query, limit = 10, index = nil, query_extention = {}, from = 0)
     return [] if query.blank?
     if index.class == Array
       ids = []
       index.each do |local_index|
-        local_ids = search_by_index(query, limit, local_index, query_extention)
+        local_ids = search_by_index(query, limit, local_index, query_extention, from)
         ids = ids.concat(local_ids)
       end
       return ids
     end
-    search_by_index(query, limit, index, query_extention)
+    search_by_index(query, limit, index, query_extention, from)
   end
 
-  def self.search_by_index(query, limit = 10, index = nil, query_extention = {})
+  def self.search_by_index(query, limit = 10, index = nil, query_extention = {}, from)
     return [] if query.blank?
 
     url = build_url
@@ -316,7 +316,7 @@ return search result
              '/_search'
            end
     data = {}
-    data['from'] = 0
+    data['from'] = from
     data['size'] = limit
     data['sort'] =
       [
@@ -332,18 +332,10 @@ return search result
     data['query']['bool'] ||= {}
     data['query']['bool']['must'] ||= []
 
-    # add * on simple query like "somephrase23" or "attribute: somephrase23"
-    if query.present?
-      query.strip!
-      if query.match?(/^([[:alpha:],0-9]+|[[:alpha:],0-9]+\:\s+[[:alpha:],0-9]+)$/)
-        query += '*'
-      end
-    end
-
     # real search condition
     condition = {
       'query_string' => {
-        'query' => query,
+        'query' => append_wildcard_to_simple_query(query),
         'default_operator' => 'AND',
       }
     }
@@ -489,25 +481,89 @@ get count of tickets and tickets which match on selector
   def self.selector2query(selector, _current_user, aggs_interval, limit)
     query_must = []
     query_must_not = []
+    relative_map = {
+      day: 'd',
+      year: 'y',
+      month: 'M',
+      hour: 'h',
+      minute: 'm',
+    }
     if selector.present?
       selector.each do |key, data|
         key_tmp = key.sub(/^.+?\./, '')
         t = {}
-        if data['value'].class == Array
-          t[:terms] = {}
-          t[:terms][key_tmp] = data['value']
-        else
-          t[:term] = {}
-          t[:term][key_tmp] = data['value']
-        end
-        if data['operator'] == 'is'
+
+        # is/is not/contains/contains not
+        if data['operator'] == 'is' || data['operator'] == 'is not' || data['operator'] == 'contains' || data['operator'] == 'contains not'
+          if data['value'].class == Array
+            t[:terms] = {}
+            t[:terms][key_tmp] = data['value']
+          else
+            t[:term] = {}
+            t[:term][key_tmp] = data['value']
+          end
+          if data['operator'] == 'is' || data['operator'] == 'contains'
+            query_must.push t
+          elsif data['operator'] == 'is not' || data['operator'] == 'contains not'
+            query_must_not.push t
+          end
+        elsif data['operator'] == 'contains all' || data['operator'] == 'contains one' || data['operator'] == 'contains all not' || data['operator'] == 'contains one not'
+          values = data['value'].split(',').map(&:strip)
+          t[:query_string] = {}
+          if data['operator'] == 'contains all'
+            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" AND "')}\""
+            query_must.push t
+          elsif data['operator'] == 'contains one not'
+            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" OR "')}\""
+            query_must_not.push t
+          elsif data['operator'] == 'contains one'
+            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" OR "')}\""
+            query_must.push t
+          elsif data['operator'] == 'contains all not'
+            t[:query_string][:query] = "#{key_tmp}:\"#{values.join('" AND "')}\""
+            query_must_not.push t
+          end
+
+        # within last/within next (relative)
+        elsif data['operator'] == 'within last (relative)' || data['operator'] == 'within next (relative)'
+          range = relative_map[data['range'].to_sym]
+          if range.blank?
+            raise "Invalid relative_map for range '#{data['range']}'."
+          end
+          t[:range] = {}
+          t[:range][key_tmp] = {}
+          if data['operator'] == 'within last (relative)'
+            t[:range][key_tmp][:gte] = "now-#{data['value']}#{range}"
+          else
+            t[:range][key_tmp][:lt] = "now+#{data['value']}#{range}"
+          end
           query_must.push t
-        elsif data['operator'] == 'is not'
-          query_must_not.push t
-        elsif data['operator'] == 'contains'
+
+        # before/after (relative)
+        elsif data['operator'] == 'before (relative)' || data['operator'] == 'after (relative)'
+          range = relative_map[data['range'].to_sym]
+          if range.blank?
+            raise "Invalid relative_map for range '#{data['range']}'."
+          end
+          t[:range] = {}
+          t[:range][key_tmp] = {}
+          if data['operator'] == 'before (relative)'
+            t[:range][key_tmp][:lt] = "now-#{data['value']}#{range}"
+          else
+            t[:range][key_tmp][:gt] = "now+#{data['value']}#{range}"
+          end
           query_must.push t
-        elsif data['operator'] == 'contains not'
-          query_must_not.push t
+
+        # before/after (absolute)
+        elsif data['operator'] == 'before (absolute)' || data['operator'] == 'after (absolute)'
+          t[:range] = {}
+          t[:range][key_tmp] = {}
+          if data['operator'] == 'before (absolute)'
+            t[:range][key_tmp][:lt] = (data['value']).to_s
+          else
+            t[:range][key_tmp][:gt] = (data['value']).to_s
+          end
+          query_must.push t
         else
           raise "unknown operator '#{data['operator']}' for #{key}"
         end
@@ -606,12 +662,21 @@ return true if backend is configured
 
     message = if response&.error&.match?('Connection refused')
                 "Elasticsearch is not reachable, probably because it's not running or even installed."
-              elsif url.end_with?('pipeline/zammad-attachment') && response.code == 400
+              elsif url.end_with?('pipeline/zammad-attachment', 'pipeline=zammad-attachment') && response.code == 400
                 'The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (5.6 => ingest-attachment, 2.4 - 5.5 => mapper-attachments).'
               else
                 'Check the response and payload for detailed information: '
               end
 
-    "#{prefix}#{message}#{suffix}"
+    result = "#{prefix} #{message}#{suffix}"
+    Rails.logger.error result.first(40_000)
+    result
+  end
+
+  # add * on simple query like "somephrase23" or "attribute: somephrase23"
+  def self.append_wildcard_to_simple_query(query)
+    query.strip!
+    query += '*' if query.match?(/^([[:alnum:]._]+|[[:alnum:]]+\:\s*[[:alnum:]._]+)$/)
+    query
   end
 end

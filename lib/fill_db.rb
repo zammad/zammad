@@ -205,3 +205,4 @@ or if you only want to create 100 tickets
     end
   end
 end
+# rubocop:enable Rails/Output

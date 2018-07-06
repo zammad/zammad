@@ -5,7 +5,7 @@ class App.Calendar extends App.Model
 
   @configure_attributes = [
     { name: 'name',           display: 'Name',            tag: 'input',    type: 'text', limit: 100, null: false },
-    { name: 'timezone',       display: 'Time zone',        tag: 'timezone', null: false }
+    { name: 'timezone',       display: 'Time zone',       tag: 'timezone', null: false }
     { name: 'business_hours', display: 'Business Hours',  tag: 'business_hours', null: true }
     { name: 'ical_url',       display: 'Holidays iCalendar Feed', tag: 'ical_feed', placeholder: 'http://example.com/public_holidays.ical', null: true }
     { name: 'public_holidays',display: 'Holidays',        tag: 'holiday_selector', null: true }
@@ -20,9 +20,9 @@ class App.Calendar extends App.Model
     "#{@name} - #{@timezone}"
 
   @description = '''
-Ein **Kalender** wird benötigt um Eskalationen oder Auswertungen anhand von Geschäftszeiten zu berechnen.
+A **calendar** is needed for calculation of escalation based on business hours and sending out escalation notifications..
 
-Definieren Sie einen **"Standard"-Kalender** welcher Systemweit gültig ist. Nur in den angegebenen Geschäftszeiten werden Eskalations-Benachrichtigungen an Agenten versendet.
+Define a **"standard"** calendar which is valid system-wide. Only in the defined business hours the escalation notifications will be sent to your agents.
 
-Haben Sie Kunden für welche Sie unterschiedliche Geschäftszeiten einhalten müssen, so können Sie mehrere Kalender anlegen. Die Zuweisung zu den Kunden-Tickets geschieht über die **SLAs**.
+Do you have customers with different business hours, you can create multiple calendars. Tickets are linked to calendars using **SLAs**.
 '''

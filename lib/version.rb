@@ -15,18 +15,9 @@ returns
 =end
 
   def self.get
-
-    begin
-      version = File.read(Rails.root.join('VERSION'))
-      version.strip!
-    rescue => e
-      message = e.to_s
-      Rails.logger.error "VERSION file could not be read: #{message}"
-
-      version = ''
-    end
-
-    version
+    File.read(Rails.root.join('VERSION')).strip
+  rescue => e
+    Rails.logger.error "VERSION file could not be read: #{e}"
+    ''
   end
-
 end

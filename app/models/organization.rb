@@ -7,19 +7,20 @@ class Organization < ApplicationModel
   include HasHistory
   include HasSearchIndexBackend
   include CanCsvImport
-  include Organization::ChecksAccess
 
-  load 'organization/assets.rb'
+  include Organization::ChecksAccess
   include Organization::Assets
-  extend Organization::Search
-  load 'organization/search_index.rb'
+  include Organization::Search
   include Organization::SearchIndex
 
-  has_many                :members,  class_name: 'User'
-  validates               :name,     presence: true
+  # rubocop:disable Rails/InverseOf
+  has_many :members, class_name: 'User'
+  # rubocop:enable Rails/InverseOf
 
   before_create :domain_cleanup
   before_update :domain_cleanup
+
+  validates :name, presence: true
 
   activity_stream_permission 'admin.role'
 

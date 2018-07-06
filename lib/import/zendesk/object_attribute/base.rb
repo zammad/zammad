@@ -21,6 +21,7 @@ module Import
         rescue => e
           # rubocop:disable Style/SpecialGlobalVars
           raise $!, "Problem with ObjectManager Attribute '#{name}': #{$!}", $!.backtrace
+          # rubocop:enable Style/SpecialGlobalVars
         end
 
         def attribute_config(object, name, attribute)

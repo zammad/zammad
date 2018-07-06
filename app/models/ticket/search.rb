@@ -1,5 +1,9 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 module Ticket::Search
+  extend ActiveSupport::Concern
+
+  # methods defined here are going to extend the class, not the instance of it
+  class_methods do
 
 =begin
 
@@ -20,12 +24,12 @@ returns if user has no permissions to search
 
 =end
 
-  def search_preferences(_current_user)
-    {
-      prio: 3000,
-      direct_search_index: false,
-    }
-  end
+    def search_preferences(_current_user)
+      {
+        prio: 3000,
+        direct_search_index: false,
+      }
+    end
 
 =begin
 
@@ -35,6 +39,7 @@ search tickets via search index
     current_user: User.find(123),
     query:        'search something',
     limit:        15,
+    offset:       100,
   )
 
 returns
@@ -47,6 +52,7 @@ search tickets via search index
     current_user: User.find(123),
     query:        'search something',
     limit:        15,
+    offset:       100,
     full:         false,
   )
 
@@ -77,6 +83,7 @@ search tickets via database
       ),
     },
     limit: 15,
+    offset: 100,
     full: false,
   )
 
@@ -86,100 +93,104 @@ returns
 
 =end
 
-  def search(params)
+    def search(params)
 
-    # get params
-    query        = params[:query]
-    condition    = params[:condition]
-    limit        = params[:limit] || 12
-    current_user = params[:current_user]
-    full         = false
-    if params[:full] == true || params[:full] == 'true' || !params.key?(:full)
-      full = true
-    end
-
-    # try search index backend
-    if condition.blank? && SearchIndexBackend.enabled?
-      query_extention = {}
-      query_extention['bool'] = {}
-      query_extention['bool']['must'] = []
-
-      if current_user.permissions?('ticket.agent')
-        group_ids = current_user.group_ids_access('read')
-        access_condition = {
-          'query_string' => { 'default_field' => 'group_id', 'query' => "\"#{group_ids.join('" OR "')}\"" }
-        }
-      else
-        access_condition = if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
-                             {
-                               'query_string' => { 'default_field' => 'customer_id', 'query' => current_user.id }
-                             }
-                           #  customer_id: XXX
-                           #          conditions = [ 'customer_id = ?', current_user.id ]
-                           else
-                             {
-                               'query_string' => { 'query' => "customer_id:#{current_user.id} OR organization_id:#{current_user.organization.id}" }
-                             }
-                             # customer_id: XXX OR organization_id: XXX
-                             #          conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
-                           end
+      # get params
+      query        = params[:query]
+      condition    = params[:condition]
+      limit        = params[:limit] || 12
+      offset       = params[:offset] || 0
+      current_user = params[:current_user]
+      full         = false
+      if params[:full] == true || params[:full] == 'true' || !params.key?(:full)
+        full = true
       end
 
-      query_extention['bool']['must'].push access_condition
+      # try search index backend
+      if condition.blank? && SearchIndexBackend.enabled?
+        query_extention = {}
+        query_extention['bool'] = {}
+        query_extention['bool']['must'] = []
 
-      items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention)
+        if current_user.permissions?('ticket.agent')
+          group_ids = current_user.group_ids_access('read')
+          access_condition = {
+            'query_string' => { 'default_field' => 'group_id', 'query' => "\"#{group_ids.join('" OR "')}\"" }
+          }
+        else
+          access_condition = if !current_user.organization || ( !current_user.organization.shared || current_user.organization.shared == false )
+                               {
+                                 'query_string' => { 'default_field' => 'customer_id', 'query' => current_user.id }
+                               }
+                             #  customer_id: XXX
+                             #          conditions = [ 'customer_id = ?', current_user.id ]
+                             else
+                               {
+                                 'query_string' => { 'query' => "customer_id:#{current_user.id} OR organization_id:#{current_user.organization.id}" }
+                               }
+                               # customer_id: XXX OR organization_id: XXX
+                               #          conditions = [ '( customer_id = ? OR organization_id = ? )', current_user.id, current_user.organization.id ]
+                             end
+        end
+
+        query_extention['bool']['must'].push access_condition
+
+        items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention, offset)
+        if !full
+          ids = []
+          items.each do |item|
+            ids.push item[:id]
+          end
+          return ids
+        end
+        tickets = []
+        items.each do |item|
+          ticket = Ticket.lookup(id: item[:id])
+          next if !ticket
+          tickets.push ticket
+        end
+        return tickets
+      end
+
+      # fallback do sql query
+      access_condition = Ticket.access_condition(current_user, 'read')
+
+      # do query
+      # - stip out * we already search for *query* -
+      if query
+        query.delete! '*'
+        tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
+                            .where(access_condition)
+                            .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
+                            .joins(:articles)
+                            .order('tickets.created_at DESC')
+                            .offset(offset)
+                            .limit(limit)
+      else
+        query_condition, bind_condition, tables = selector2sql(condition)
+        tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
+                            .joins(tables)
+                            .where(access_condition)
+                            .where(query_condition, *bind_condition)
+                            .order('tickets.created_at DESC')
+                            .offset(offset)
+                            .limit(limit)
+      end
+
+      # build result list
       if !full
         ids = []
-        items.each do |item|
-          ids.push item[:id]
+        tickets_all.each do |ticket|
+          ids.push ticket.id
         end
         return ids
       end
+
       tickets = []
-      items.each do |item|
-        ticket = Ticket.lookup(id: item[:id])
-        next if !ticket
-        tickets.push ticket
-      end
-      return tickets
-    end
-
-    # fallback do sql query
-    access_condition = Ticket.access_condition(current_user, 'read')
-
-    # do query
-    # - stip out * we already search for *query* -
-    if query
-      query.delete! '*'
-      tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
-                          .where(access_condition)
-                          .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
-                          .joins(:articles)
-                          .order('tickets.created_at DESC')
-                          .limit(limit)
-    else
-      query_condition, bind_condition, tables = selector2sql(condition)
-      tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
-                          .joins(tables)
-                          .where(access_condition)
-                          .where(query_condition, *bind_condition)
-                          .order('tickets.created_at DESC')
-                          .limit(limit)
-    end
-
-    # build result list
-    if !full
-      ids = []
       tickets_all.each do |ticket|
-        ids.push ticket.id
+        tickets.push Ticket.lookup(id: ticket.id)
       end
-      return ids
+      tickets
     end
-
-    tickets = []
-    tickets_all.each do |ticket|
-      tickets.push Ticket.lookup(id: ticket.id)
-    end
-    tickets
   end
 end

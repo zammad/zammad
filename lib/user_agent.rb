@@ -3,7 +3,6 @@
 require 'net/http'
 require 'net/https'
 require 'net/ftp'
-require 'tempfile'
 
 class UserAgent
 
@@ -402,6 +401,7 @@ returns
         error: "Client Error: #{response.inspect}!",
         success: false,
         code: response.code,
+        body: response.body
       )
     when Net::HTTPInternalServerError
       return Result.new(
@@ -458,7 +458,7 @@ returns
         else
           ftp.login
         end
-        ftp.chdir(remote_dir) unless remote_dir == '.'
+        ftp.chdir(remote_dir) if remote_dir != '.'
 
         begin
           ftp.getbinaryfile(filename, temp_file)

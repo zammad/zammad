@@ -1,4 +1,4 @@
-require 'sequencer/unit/import/common/model/statistics/mixin/action_diff'
+require_dependency 'sequencer/unit/import/common/model/statistics/mixin/action_diff'
 
 class Sequencer
   class Unit
@@ -21,6 +21,7 @@ class Sequencer
 
               def add_role_ids(statistics)
                 return statistics if instance.blank?
+                return statistics if associations.blank?
 
                 # add the parent role_ids hash
                 # so we can fill it

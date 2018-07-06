@@ -6,9 +6,9 @@
                     <th colspan="7" class="datepicker-title"></th>
                 </tr>
                 <tr>
-                    <th class="prev"><%- @Icon('arrow-left') %></th>
+                    <th class="prev"><%- @Icon('arrow-{start}') %></th>
                     <th colspan="5" class="datepicker-switch"></th>
-                    <th class="next"><%- @Icon('arrow-right') %></th>
+                    <th class="next"><%- @Icon('arrow-{end}') %></th>
                 </tr>
             </thead>
         <tbody></tbody>
@@ -29,9 +29,9 @@
                   <th colspan="7" class="datepicker-title"></th>
               </tr>
               <tr>
-                  <th class="prev"><%- @Icon('arrow-left') %></th>
+                  <th class="prev"><%- @Icon('arrow-{start}') %></th>
                   <th colspan="5" class="datepicker-switch"></th>
-                  <th class="next"><%- @Icon('arrow-right') %></th>
+                  <th class="next"><%- @Icon('arrow-{end}') %></th>
               </tr>
           </thead>
           <tbody><tr><td colspan="7"></td></tr></tbody>
@@ -52,9 +52,9 @@
                   <th colspan="7" class="datepicker-title"></th>
               </tr>
               <tr>
-                  <th class="prev"><%- @Icon('arrow-left') %></th>
+                  <th class="prev"><%- @Icon('arrow-{start}') %></th>
                   <th colspan="5" class="datepicker-switch"></th>
-                  <th class="next"><%- @Icon('arrow-right') %></th>
+                  <th class="next"><%- @Icon('arrow-{end}') %></th>
               </tr>
           </thead>
           <tbody><tr><td colspan="7"></td></tr></tbody>

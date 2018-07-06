@@ -14,7 +14,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
 
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'rest-admin',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -27,7 +27,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'rest-agent@example.com',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -40,7 +40,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
       lastname: 'Customer1',
@@ -51,7 +51,7 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create customer
-    @customer_with_org = User.create_or_update(
+    @customer_with_org = User.create!(
       login: 'rest-customer2@example.com',
       firstname: 'Rest',
       lastname: 'Customer2',
@@ -101,13 +101,14 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
 
     # invalid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'text_module_simple_col_not_existing.csv'), 'text/csv')
-    post '/api/v1/text_modules/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'text_module_simple_col_not_existing.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/text_modules/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_equal('true', result['try'])
+    assert_equal(true, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('failed', result['result'])
     assert_equal(2, result['errors'].count)
@@ -115,13 +116,14 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
     assert_equal("Line 2: unknown attribute 'keywords2' for TextModule.", result['errors'][1])
 
     # valid file try
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'text_module_simple.csv'), 'text/csv')
-    post '/api/v1/text_modules/import?try=true', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'text_module_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/text_modules/import?try=true', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_equal('true', result['try'])
+    assert_equal(true, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('success', result['result'])
 
@@ -129,13 +131,14 @@ class TextModuleControllerTest < ActionDispatch::IntegrationTest
     assert_nil(TextModule.find_by(name: 'some name2'))
 
     # valid file
-    csv_file = ::Rack::Test::UploadedFile.new(Rails.root.join('test', 'fixtures', 'csv', 'text_module_simple.csv'), 'text/csv')
-    post '/api/v1/text_modules/import', params: { file: csv_file }, headers: { 'Authorization' => credentials }
+    csv_file_path = Rails.root.join('test', 'data', 'csv', 'text_module_simple.csv')
+    csv_file = ::Rack::Test::UploadedFile.new(csv_file_path, 'text/csv')
+    post '/api/v1/text_modules/import', params: { file: csv_file, col_sep: ';' }, headers: { 'Authorization' => credentials }
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
 
-    assert_nil(result['try'])
+    assert_equal(false, result['try'])
     assert_equal(2, result['records'].count)
     assert_equal('success', result['result'])
 

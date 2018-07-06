@@ -1,5 +1,5 @@
-require 'sequencer/units/attribute'
-require 'sequencer/units/attributes'
+require_dependency 'sequencer/units/attribute'
+require_dependency 'sequencer/units/attributes'
 
 class Sequencer
   class Units < SimpleDelegator

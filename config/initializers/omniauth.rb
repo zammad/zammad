@@ -50,3 +50,11 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :weibo_database, 'not_change_will_be_set_by_database', 'not_change_will_be_set_by_database'
 
 end
+
+# This fixes issue #1642 and is required for setups in which Zammad is used
+# with a reverse proxy (like e.g. NGINX) handling the HTTPS stuff.
+# This leads to the generation of a wrong redirect_uri because Rack detects a
+# HTTP request which breaks OAuth2.
+OmniAuth.config.full_host = proc {
+  "#{Setting.get('http_type')}://#{Setting.get('fqdn')}"
+}

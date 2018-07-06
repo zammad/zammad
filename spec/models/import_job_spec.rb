@@ -57,7 +57,6 @@ RSpec.describe ImportJob do
           payload: {},
           delay:   false
         )
-
       end.not_to change {
         Delayed::Job.count
       }
@@ -72,7 +71,6 @@ RSpec.describe ImportJob do
           name:    test_backend_name,
           payload: {},
         )
-
       end.not_to change {
         Delayed::Job.count
       }
@@ -122,7 +120,7 @@ RSpec.describe ImportJob do
     it 'logs errors for invalid registered backends' do
       allow(Setting).to receive(:get)
       expect(Setting).to receive(:get).with('import_backends').and_return(['InvalidBackend'])
-      expect(Rails.logger).to receive(:error)
+      expect(described_class.logger).to receive(:error)
       described_class.queue_registered
     end
 

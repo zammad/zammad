@@ -12,7 +12,7 @@ class TicketArticlesControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'tickets-admin',
       firstname: 'Tickets',
       lastname: 'Admin',
@@ -25,7 +25,7 @@ class TicketArticlesControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'tickets-agent@example.com',
       firstname: 'Tickets',
       lastname: 'Agent',
@@ -38,7 +38,7 @@ class TicketArticlesControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'tickets-customer1@example.com',
       firstname: 'Tickets',
       lastname: 'Customer1',
@@ -110,7 +110,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(0, ticket.articles[1].attachments.count)
     assert_equal(1, ticket.articles[2].attachments.count)
     assert(ticket.articles[2].attachments[0]['id'])
-    assert_match(/@zammad.example.com/, ticket.articles[2].attachments[0]['filename'])
+    assert_equal('image1.png', ticket.articles[2].attachments[0]['filename'])
     assert_equal('21', ticket.articles[2].attachments[0]['size'])
     assert_equal('image/png', ticket.articles[2].attachments[0]['preferences']['Mime-Type'])
     assert_equal('inline', ticket.articles[2].attachments[0]['preferences']['Content-Disposition'])

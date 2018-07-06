@@ -77,6 +77,9 @@ class ObjectManagerAttributesController < ApplicationController
       name: object_manager_attribute.name,
     )
     model_destroy_render_item
+  rescue => e
+    logger.error e
+    raise Exceptions::UnprocessableEntity, e
   end
 
   # POST /object_manager_attributes_discard_changes
@@ -127,7 +130,8 @@ class ObjectManagerAttributesController < ApplicationController
           permitted[:data_option][:null] = true
         end
 
-        if !permitted[:data_option][:options].is_a?(Hash) && !permitted[:data_option][:options].is_a?(Array)
+        if !permitted[:data_option][:options].is_a?(Hash) &&
+           !permitted[:data_option][:options].is_a?(Array)
           permitted[:data_option][:options] = {}
         end
 

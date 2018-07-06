@@ -452,6 +452,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.string  :name,                   limit: 250,    null: true
       t.text    :perform,                limit: 500.kilobytes + 1, null: false
       t.boolean :active,                                null: false, default: true
+      t.string  :ux_flow_next_up,                       null: false, default: 'none'
       t.string  :note,                   limit: 250,    null: true
       t.integer :updated_by_id,                         null: false
       t.integer :created_by_id,                         null: false

@@ -213,4 +213,64 @@ class CustomerTicketCreateTest < TestCase
     )
   end
 
+  def test_customer_disable_ticket_creation
+    @browser = browser_instance
+
+    # disable ticket creation
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#channels/web"]')
+
+    @browser.find_element(css: 'select[name=customer_ticket_create]').find_element(css: 'option[value=false]').click
+    click(css: '#customer_ticket_create .btn')
+
+    sleep(1)
+
+    logout()
+
+    # check if new ticket button is not visible
+
+    login(
+      username: 'nicole.braun@zammad.org',
+      password: 'test',
+      url: browser_url,
+    )
+
+    assert(exists_not(css: 'a[href="#customer_ticket_new"]'))
+
+    logout()
+
+    # enable ticket creation
+
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#channels/web"]')
+
+    @browser.find_element(css: 'select[name=customer_ticket_create]').find_element(css: 'option[value=true]').click
+    click(css: '#customer_ticket_create .btn')
+
+    sleep(1)
+
+    logout()
+
+    # check if new ticket button is visible
+
+    login(
+      username: 'nicole.braun@zammad.org',
+      password: 'test',
+      url: browser_url,
+    )
+
+    assert(exists(css: 'a[href="#customer_ticket_new"]'))
+  end
 end

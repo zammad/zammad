@@ -2,6 +2,7 @@
 
 class User
   module SearchIndex
+    extend ActiveSupport::Concern
 
 =begin
 
@@ -67,6 +68,5 @@ returns
 
       attributes
     end
-
   end
 end

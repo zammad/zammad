@@ -294,7 +294,7 @@ class ConnectionWizard extends App.WizardModal
 
         option = ''
         options = {}
-        if !_.isEmpty data.attributes
+        if !_.isEmpty(data.attributes) && !_.isEmpty(data.attributes.namingcontexts)
           for dn in data.attributes.namingcontexts
             options[dn] = dn
             if option is ''
@@ -372,7 +372,7 @@ class ConnectionWizard extends App.WizardModal
         @wizardConfig.wizardData.roles = roles
 
         for key in ['user_uid', 'user_filter', 'group_uid', 'group_filter']
-          @wizardConfig[key] = data[key]
+          @wizardConfig[key] ?= data[key]
 
         @mappingShow()
 

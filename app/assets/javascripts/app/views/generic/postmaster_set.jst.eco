@@ -6,6 +6,12 @@
           <%- @Icon('arrow-down', 'dropdown-arrow') %>
         </div>
       </div>
+      <div class="controls">
+        <div class="u-positionOrigin js-operator">
+          <select></select>
+          <%- @Icon('arrow-down') %>
+        </div>
+      </div>
       <div class="controls js-value"></div>
     </div>
     <div class="filter-controls">

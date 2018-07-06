@@ -530,4 +530,138 @@ RSpec.describe User do
       end
     end
   end
+
+  context 'agent limit' do
+
+    def current_agent_count
+      User.with_permissions('ticket.agent').count
+    end
+
+    let(:agent_role) { Role.lookup(name: 'Agent') }
+    let(:admin_role) { Role.lookup(name: 'Admin') }
+
+    context '#validate_agent_limit_by_role' do
+
+      context 'agent creation limit not reached' do
+
+        it 'grants agent creation' do
+          Setting.set('system_agent_limit', current_agent_count + 1)
+
+          expect do
+            create(:agent_user)
+          end.to change {
+            current_agent_count
+          }.by(1)
+        end
+
+        it 'grants role change' do
+          Setting.set('system_agent_limit', current_agent_count + 1)
+
+          future_agent = create(:customer_user)
+
+          expect do
+            future_agent.roles = [agent_role]
+          end.to change {
+            current_agent_count
+          }.by(1)
+        end
+
+        context 'role updates' do
+
+          it 'grants update by instances' do
+            Setting.set('system_agent_limit', current_agent_count + 1)
+
+            agent = create(:agent_user)
+
+            expect do
+              agent.roles = [
+                admin_role,
+                agent_role
+              ]
+              agent.save!
+            end.not_to raise_error
+          end
+
+          it 'grants update by id (Integer)' do
+            Setting.set('system_agent_limit', current_agent_count + 1)
+
+            agent = create(:agent_user)
+
+            expect do
+              agent.role_ids = [
+                admin_role.id,
+                agent_role.id
+              ]
+              agent.save!
+            end.not_to raise_error
+          end
+
+          it 'grants update by id (String)' do
+            Setting.set('system_agent_limit', current_agent_count + 1)
+
+            agent = create(:agent_user)
+
+            expect do
+              agent.role_ids = [
+                admin_role.id.to_s,
+                agent_role.id.to_s
+              ]
+              agent.save!
+            end.not_to raise_error
+          end
+        end
+      end
+
+      context 'agent creation limit surpassing prevention' do
+
+        it 'creation of new agents' do
+          Setting.set('system_agent_limit', current_agent_count + 2)
+
+          create_list(:agent_user, 2)
+
+          initial_agent_count = current_agent_count
+
+          expect do
+            create(:agent_user)
+          end.to raise_error(Exceptions::UnprocessableEntity)
+
+          expect(current_agent_count).to eq(initial_agent_count)
+        end
+
+        it 'prevents role change' do
+          Setting.set('system_agent_limit', current_agent_count)
+
+          future_agent = create(:customer_user)
+
+          initial_agent_count = current_agent_count
+
+          expect do
+            future_agent.roles = [agent_role]
+          end.to raise_error(Exceptions::UnprocessableEntity)
+
+          expect(current_agent_count).to eq(initial_agent_count)
+        end
+      end
+    end
+
+    context '#validate_agent_limit_by_attributes' do
+
+      context 'agent creation limit surpassing prevention' do
+
+        it 'prevents re-activation of agents' do
+          Setting.set('system_agent_limit', current_agent_count)
+
+          inactive_agent = create(:agent_user, active: false)
+
+          initial_agent_count = current_agent_count
+
+          expect do
+            inactive_agent.update!(active: true)
+          end.to raise_error(Exceptions::UnprocessableEntity)
+
+          expect(current_agent_count).to eq(initial_agent_count)
+        end
+      end
+    end
+  end
 end

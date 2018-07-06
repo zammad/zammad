@@ -1,8 +1,16 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class Tag < ApplicationModel
-  belongs_to :tag_object,       class_name: 'Tag::Object'
-  belongs_to :tag_item,         class_name: 'Tag::Item'
+
+  # rubocop:disable Rails/InverseOf
+  belongs_to :tag_object, class_name: 'Tag::Object'
+  belongs_to :tag_item,   class_name: 'Tag::Item'
+  # rubocop:enable Rails/InverseOf
+
+  # the noop is needed since Layout/EmptyLines detects
+  # the block commend below wrongly as the measurement of
+  # the wanted indentation of the rubocop re-enabling above
+  def noop; end
 
 =begin
 
@@ -141,17 +149,17 @@ returns
   def self.tag_list(data)
     tag_object_id_requested = Tag::Object.lookup(name: data[:object])
     return [] if !tag_object_id_requested
+
     tag_search = Tag.where(
       tag_object_id: tag_object_id_requested,
       o_id: data[:o_id],
-    )
-    tags = []
-    tag_search.each do |tag|
+    ).order(:id)
+
+    tag_search.each_with_object([]) do |tag, result|
       tag_item = Tag::Item.lookup(id: tag.tag_item_id)
       next if !tag_item
-      tags.push tag_item.name
+      result.push tag_item.name
     end
-    tags
   end
 
   class Object < ApplicationModel

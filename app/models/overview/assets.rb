@@ -2,6 +2,7 @@
 
 class Overview
   module Assets
+    extend ActiveSupport::Concern
 
 =begin
 

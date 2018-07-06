@@ -237,8 +237,8 @@ set new attributes of model (remove already available attributes)
     attributesNew = {}
     if screen
       for attribute in attributes
-        if attribute && attribute.screen && attribute.screen[ screen ] && !_.isEmpty(attribute.screen[ screen ])
-          for item, value of attribute.screen[ screen ]
+        if attribute && attribute.screen && attribute.screen[screen] && (!_.isEmpty(attribute.screen[screen]) && (attribute.screen[screen].shown is true || attribute.screen[screen].shown is undefined))
+          for item, value of attribute.screen[screen]
             attribute[item] = value
           attributesNew[ attribute.name ] = attribute
 
@@ -393,7 +393,7 @@ set new attributes of model (remove already available attributes)
               ->
               clear: true
             )
-          App.Delay.set(callback, 200, "full-#{@className}")
+          App.Delay.set(callback, 200, "fullcollection-#{@className}", "model-#{@className}")
 
         "Collection::Subscribe::#{@className}"
       )
@@ -406,10 +406,12 @@ set new attributes of model (remove already available attributes)
       clear = true
       if param.clear is true || param.clear is false
         clear = param.clear
-      if !@initFetchActive
+      if !@initFetchActives && @count() is 0
         @initFetchActive = true
-        @one 'refresh', (collection) ->
+        @one('refresh', (collection) =>
+          @initFetchActive = false
           callback(collection)
+        )
         @fetchFull(
           ->
           clear: clear
@@ -504,7 +506,7 @@ set new attributes of model (remove already available attributes)
             if !genericObject || new Date(item.updated_at) > new Date(genericObject.updated_at)
               App.Log.debug('Model', "request #{@className}.find(#{item.id}) from server")
               @full(item.id, false, true)
-          App.Delay.set(callback, 600, item.id, "full-#{@className}-#{item.id}")
+          App.Delay.set(callback, 600, "full-#{item.id}", "model-#{@className}")
         "Item::Subscribe::#{@className}"
       )
 
@@ -518,7 +520,7 @@ set new attributes of model (remove already available attributes)
           App.Log.debug('Model', "server delete on #{@className}.find(#{item.id}) #{item.updated_at}")
           callback = ->
             genericObject.trigger('destroy', genericObject)
-          App.Delay.set(callback, 500, item.id, "delete-#{@className}-#{item.id}")
+          App.Delay.set(callback, 500, "delete-#{item.id}", "model-#{@className}")
         "Item::SubscribeDelete::#{@className}"
       )
 
@@ -831,6 +833,8 @@ set new attributes of model (remove already available attributes)
     )
 
   @clearInMemory: ->
+    App.Delay.clearLevel("model-#{@className}")
+
     # reset callbacks to session based functions
     @resetCallbacks()
 
@@ -867,5 +871,7 @@ set new attributes of model (remove already available attributes)
     @configure_attributes = $.extend(true, [], @org_configure_attributes)
 
   @resetCallbacks: ->
-    @SUBSCRIPTION_ITEM = {}
-    @SUBSCRIPTION_COLLECTION = {}
+    if @SUBSCRIPTION_ITEM
+      @SUBSCRIPTION_ITEM = {}
+    if @SUBSCRIPTION_COLLECTION
+      @SUBSCRIPTION_COLLECTION = {}

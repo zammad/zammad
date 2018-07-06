@@ -373,14 +373,28 @@ class UsersController < ApplicationController
       return
     end
 
-    # set limit for pagination if needed
-    if params[:page] && params[:per_page]
-      params[:limit] = params[:page].to_i * params[:per_page].to_i
+    per_page = params[:per_page] || params[:limit] || 100
+    per_page = per_page.to_i
+    if per_page > 500
+      per_page = 500
+    end
+    page = params[:page] || 1
+    page = page.to_i
+    offset = (page - 1) * per_page
+
+    query = params[:query]
+    if query.respond_to?(:permit!)
+      query = query.permit!.to_h
     end
 
-    if params[:limit] && params[:limit].to_i > 500
-      params[:limit] = 500
-    end
+    # build result list
+    tickets = Ticket.search(
+      query: query,
+      condition: params[:condition].to_h,
+      limit: per_page,
+      offset: offset,
+      current_user: current_user,
+    )
 
     query = params[:query] || params[:term]
     if query.respond_to?(:permit!)
@@ -389,7 +403,8 @@ class UsersController < ApplicationController
 
     query_params = {
       query: query,
-      limit: params[:limit],
+      limit: per_page,
+      offset: offset,
       current_user: current_user,
     }
     %i[role_ids permissions].each do |key|
@@ -1085,12 +1100,14 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
   # @response_message 401 Invalid session.
   def import_start
     permission_check('admin.user')
+    string = params[:data] || params[:file].read.force_encoding('utf-8')
     result = User.csv_import(
-      string: params[:file].read.force_encoding('utf-8'),
+      string: string,
       parse_params: {
-        col_sep: ';',
+        col_sep: params[:col_sep] || ',',
       },
       try: params[:try],
+      delete: params[:delete],
     )
     render json: result, status: :ok
   end

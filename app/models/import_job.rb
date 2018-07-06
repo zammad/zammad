@@ -5,6 +5,8 @@ class ImportJob < ApplicationModel
   store :payload
   store :result
 
+  scope :running, -> { where(finished_at: nil, dry_run: false).where.not(started_at: nil) }
+
   # Starts the import backend class based on the name attribute.
   # Import backend class is initialized with the current instance.
   # Logs the start and end time (if ended successfully) and logs
@@ -109,15 +111,7 @@ class ImportJob < ApplicationModel
   #
   # return [nil]
   def self.queue_registered
-    import_backends = Setting.get('import_backends')
-    return if import_backends.blank?
-
-    import_backends.each do |backend|
-
-      if !backend_valid?(backend)
-        Rails.logger.error "Invalid import backend '#{backend}'"
-        next
-      end
+    backends.each do |backend|
 
       # skip backends that are not "ready" yet
       next if !backend.constantize.queueable?

@@ -255,6 +255,10 @@ class App.ControllerForm extends App.Controller
       if attribute.name of @params
         attribute.value = @params[attribute.name]
 
+    # set new value
+    if 'newValue' of attribute
+      attribute.value = attribute.newValue
+
     App.Log.debug 'ControllerForm', 'formGenItem-before', attribute
 
     if App.UiElement[attribute.tag]
@@ -439,6 +443,8 @@ class App.ControllerForm extends App.Controller
       if item.type is 'boolean'
         if value is ''
           value = undefined
+        else if value is undefined
+          value = false
         else if value is 'true'
           value = true
         else if value is 'false'
@@ -459,21 +465,31 @@ class App.ControllerForm extends App.Controller
     # verify if we have not checked checkboxes
     uncheckParam = {}
     lookupForm.find('input[type=checkbox]').each( (index) ->
-      checked = $(@).attr('checked')
+      type = $(@).data('field-type')
+      checked = $(@).prop('checked')
       name = $(@).attr('name')
-      if name && !checked && (!(name of param) || param[name] is '')
+      if name && !checked && !(name of param)
         if !(name of uncheckParam)
-          uncheckParam[name] = undefined
+          if type is 'boolean'
+            uncheckParam[name] = false
+          else
+            uncheckParam[name] = undefined
         else
           uncheckParam[name] = []
+      true
     )
 
     # verify if we have not checked radios
     lookupForm.find('input[type=radio]').each( (index) ->
-      checked = $(@).attr('checked')
+      type = $(@).data('field-type')
+      checked = $(@).prop('checked')
       name = $(@).attr('name')
       if name && !checked && !(name of param)
-        uncheckParam[name] = undefined
+        if type is 'boolean'
+          uncheckParam[name] = false
+        else
+          uncheckParam[name] = undefined
+      true
     )
 
     # apply empty checkboxes & radio values to params

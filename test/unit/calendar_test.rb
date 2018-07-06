@@ -111,7 +111,7 @@ class CalendarTest < ActiveSupport::TestCase
         fri: { '09:00' => '17:00' }
       },
       default: true,
-      ical_url: 'test/fixtures/calendar1.ics',
+      ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar1.ics'),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -149,10 +149,10 @@ class CalendarTest < ActiveSupport::TestCase
     cache_key = "CalendarIcal::#{calendar1.id}"
     cache = Cache.get(cache_key)
 
-    calendar1.update_columns(ical_url: 'test/fixtures/calendar2.ics')
+    calendar1.update_columns(ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar2.ics').to_s)
     cache_key = "CalendarIcal::#{calendar1.id}"
     cache = Cache.get(cache_key)
-    cache[:ical_url] = 'test/fixtures/calendar2.ics'
+    cache[:ical_url] = calendar1.ical_url
     Cache.write(
       cache_key,
       cache,
@@ -213,7 +213,7 @@ class CalendarTest < ActiveSupport::TestCase
         fri: { '09:00' => '17:00' }
       },
       default: true,
-      ical_url: 'test/fixtures/calendar3.ics',
+      ical_url: Rails.root.join('test', 'data', 'calendar', 'calendar3.ics'),
       updated_by_id: 1,
       created_by_id: 1,
     )

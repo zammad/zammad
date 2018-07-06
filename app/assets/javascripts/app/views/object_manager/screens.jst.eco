@@ -2,7 +2,7 @@
   <table class="settings-list" style="width: 100%;">
     <thead>
       <tr>
-        <th><%- @T('Role') %>
+        <th><%- @T('Permissions') %>
         <th><%- @T('Screen') %>
         <th style="width: 50%;"><%- @T('Options') %>
     </thead>
@@ -20,11 +20,10 @@
             <%= screen %>
           <td class="settings-list-row-control">
             <% for key, defaultValue of options: %>
-              <%- @T(key) %>: <input class="js-boolean" name="screens::<%= screen %>::<%= role %>::<%= key %>" type="checkbox" <% if (@init && defaultValue is true) || (@params && @params.screens && @params.screens[screen] && @params.screens[screen][role] && @params.screens[screen][role][key] is true) : %>checked<% end %> value="true">
+              <%- @T(key) %>: <input class="js-boolean" name="screens::<%= screen %>::<%= role %>::<%= key %>" type="checkbox" <% if @params && @params.screens && @params.screens[screen] && @params.screens[screen][role] && @params.screens[screen][role][key] is true: %>checked<% end %> value="true">
             <% end %>
         <% end %>
       <% end %>
-
     </tbody>
   </table>
 </div>

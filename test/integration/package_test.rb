@@ -1,8 +1,7 @@
 
-require 'test_helper'
+require 'integration_test_helper'
 
 class PackageTest < ActiveSupport::TestCase
-  self.use_transactional_tests = false
 
   test 'packages' do
     tests = [

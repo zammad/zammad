@@ -9,9 +9,12 @@ class Sequencer
               uses :resource
 
               def value
-                method_name = resource.via.channel.to_sym
-                return if !respond_to?(method_name, true)
-                send(method_name)
+                return if private_methods(false).exclude?(value_method_name)
+                send(value_method_name)
+              end
+
+              def value_method_name
+                @value_method_name ||= resource.via.channel.to_sym
               end
             end
           end

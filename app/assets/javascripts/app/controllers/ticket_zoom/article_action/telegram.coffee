@@ -61,7 +61,7 @@ class TelegramReply
     }
     articleTypes
 
-  @setArticleType: (type, ticket, ui) ->
+  @setArticleTypePost: (type, ticket, ui) ->
     return if type isnt 'telegram personal-message'
     rawHTML = ui.$('[data-name=body]').html()
     cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)

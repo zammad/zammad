@@ -1,43 +1,16 @@
-
 require 'test_helper'
-require 'rake'
 
 class FormControllerTest < ActionDispatch::IntegrationTest
+  include SearchindexHelper
+
   setup do
     @headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json', 'REMOTE_ADDR' => '1.2.3.4' }
 
-    if ENV['ES_URL'].present?
-
-      #fail "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
-      Setting.set('es_url', ENV['ES_URL'])
-
-      # Setting.set('es_url', 'http://127.0.0.1:9200')
-      # Setting.set('es_index', 'estest.local_zammad')
-      # Setting.set('es_user', 'elasticsearch')
-      # Setting.set('es_password', 'zammad')
-
-      if ENV['ES_INDEX_RAND'].present?
-        ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
-      end
-      if ENV['ES_INDEX'].blank?
-        raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
-      end
-      Setting.set('es_index', ENV['ES_INDEX'])
-    end
+    configure_elasticsearch
 
     Ticket.destroy_all
 
-    # drop/create indexes
-    Setting.reload
-    Rake::Task.clear
-    Zammad::Application.load_tasks
-    Rake::Task['searchindex:rebuild'].execute
-  end
-
-  teardown do
-    if ENV['ES_URL'].present?
-      Rake::Task['searchindex:drop'].execute
-    end
+    rebuild_searchindex
   end
 
   test '01 - get config call' do

@@ -1,5 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 module Chat::Session::Assets
+  extend ActiveSupport::Concern
 
 =begin
 

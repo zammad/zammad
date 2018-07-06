@@ -4,7 +4,6 @@ class Sla < ApplicationModel
   include ChecksClientNotification
   include ChecksConditionValidation
 
-  load 'sla/assets.rb'
   include Sla::Assets
 
   store      :condition

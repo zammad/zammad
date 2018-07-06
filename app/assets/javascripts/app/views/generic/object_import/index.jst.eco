@@ -1,0 +1,29 @@
+<div>
+<p class="alert alert--danger js-error hide"></p>
+
+<p>
+  <%- @T('Bulk import allows you to create and update many records at once.') %>
+  <%- @T('The data must be in the comma separated values (CSV) format and saved as UTF-8. You can import a CSV file or paste the data directly into the text area.') %>
+</p>
+
+<p><%- @T('Alternatively, you can use the Zammad API to import data.') %></p>
+
+<h2><input checked="checked" disabled="disabled" type="checkbox" name="create" value="true"> <%- @T('Create new records') %></h2>
+<%- @T('Records that exist in the import data (but not in Zammad) will always be created.') %>
+
+<h2><input checked="checked" disabled="disabled" type="checkbox" name="update" value="true"> <%- @T('Update existing records') %></h2>
+<%- @T('Update existing records with the attributes specified in the import data.') %>
+
+<% if @deleteOption is true: %>
+<h2><input type="checkbox" name="delete" value="true"> <%- @T('Delete records') %></h2>
+<%- @T('Delete all existing records first.') %>
+<% end %>
+
+<h2><%- @T('Select CSV file') %></h2>
+<input name="file" type="file">
+
+<h2><%- @T('Paste in CSV data') %></h2>
+<textarea cols="25" rows="6" name="data"></textarea>
+
+<p><%- @T('Note') %>: <a href="<%- @import_example_url %>" target="_blank"><%- @T('Example CSV file for download.') %></a></p>
+</div>

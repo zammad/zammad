@@ -119,9 +119,9 @@ module Enrichment
 
       def fetch
         if !Rails.env.production?
-          filename = Rails.root.join('test', 'fixtures', 'clearbit', "#{@local_user.email}.json")
+          filename = Rails.root.join('test', 'data', 'clearbit', "#{@local_user.email}.json")
           if File.exist?(filename)
-            data = IO.binread(filename)
+            data = File.binread(filename)
             return JSON.parse(data) if data
           end
         end

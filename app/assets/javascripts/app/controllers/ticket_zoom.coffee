@@ -25,7 +25,7 @@ class App.TicketZoom extends App.Controller
     if !params.init
       @overview_id = params.overview_id
     else
-      @overview_id = false
+      @overview_id = undefined
 
     @key = "ticket::#{@ticket_id}"
     cache = App.SessionStorage.get(@key)
@@ -109,7 +109,7 @@ class App.TicketZoom extends App.Controller
 
         # if ticket is already loaded, ignore status "0" - network issues e. g. temp. not connection
         if @ticketUpdatedAtLastCall && status is 0
-          console.log('network issues e. g. temp. not connection', status, statusText, detail)
+          console.log('network issues e. g. temp. no connection', status, statusText, detail)
           return
 
         # show error message
@@ -421,7 +421,7 @@ class App.TicketZoom extends App.Controller
         object_id:   @ticket_id
         overview_id: @overview_id
         el:          elLocal.find('.js-ticketTitleContainer')
-        taskKey:    @taskKey
+        taskKey:     @taskKey
       )
 
       new App.TicketZoomMeta(
@@ -434,7 +434,7 @@ class App.TicketZoom extends App.Controller
         el:          elLocal.find('.js-attributeBar')
         overview_id: @overview_id
         callback:    @submit
-        taskKey:    @taskKey
+        taskKey:     @taskKey
       )
       #if @shown
       #  @attributeBar.start()
@@ -448,7 +448,7 @@ class App.TicketZoom extends App.Controller
         formMeta:  @formMeta
         form_id:   @form_id
         defaults:  @taskGet('article')
-        taskKey:  @taskKey
+        taskKey:   @taskKey
         ui:        @
       )
 

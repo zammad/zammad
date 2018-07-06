@@ -115,4 +115,4 @@ class App.WidgetTag extends App.Controller
   searchTag: (e) ->
     e.preventDefault()
     item = $(e.target).text()
-    App.GlobalSearchWidget.search(item, 'tag')
+    App.GlobalSearchWidget.search(item, 'tags')

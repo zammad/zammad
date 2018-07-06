@@ -46,12 +46,15 @@ satinize html string based on whiltelist
 
       # prepare links
       if node['href']
-        href = cleanup_target(node['href'])
-        if external && href.present? && !href.downcase.start_with?('//') && href.downcase !~ %r{^.{1,6}://.+?}
-          node['href'] = "http://#{node['href']}"
-          href = node['href']
+        href                = cleanup_target(node['href'], keep_spaces: true)
+        href_without_spaces = href.gsub(/[[:space:]]/, '')
+        if external && href_without_spaces.present? && !href_without_spaces.downcase.start_with?('//') && href_without_spaces.downcase !~ %r{^.{1,6}://.+?}
+          node['href']        = "http://#{node['href']}"
+          href                = node['href']
+          href_without_spaces = href.gsub(/[[:space:]]/, '')
         end
-        next if !href.downcase.start_with?('http', 'ftp', '//')
+
+        next if !href_without_spaces.downcase.start_with?('http', 'ftp', '//')
         node.set_attribute('href', href)
         node.set_attribute('rel', 'nofollow noreferrer noopener')
         node.set_attribute('target', '_blank')
@@ -131,9 +134,7 @@ satinize html string based on whiltelist
         value = node[key]
         node.delete(key)
         next if value.blank?
-        if value !~ /%|px|em/i
-          value += 'px'
-        end
+        value += 'px' if !value.match?(/%|px|em/i)
         node['style'] += "#{key}:#{value}"
       end
 
@@ -165,7 +166,7 @@ satinize html string based on whiltelist
       end
 
       # remove attributes if not whitelisted
-      node.each do |attribute, _value| # rubocop:disable Performance/HashEachMethods
+      node.each do |attribute, _value|
         attribute_name = attribute.downcase
         next if attributes_whitelist[:all].include?(attribute_name) || (attributes_whitelist[node.name]&.include?(attribute_name))
         node.delete(attribute)
@@ -372,14 +373,35 @@ cleanup html string:
     string.gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>').gsub('&quot;', '"').gsub('&nbsp;', ' ')
   end
 
-  def self.cleanup_target(string)
-    string = CGI.unescape(string).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
-    string.gsub(/[[:space:]]|\t|\n|\r/, '').gsub(%r{/\*.*?\*/}, '').gsub(/<!--.*?-->/, '').gsub(/\[.+?\]/, '').delete("\u0000")
+  def self.cleanup_target(string, **options)
+    cleaned_string = CGI.unescape(string).utf8_encode(fallback: :read_as_sanitized_binary)
+    cleaned_string = cleaned_string.gsub(/[[:space:]]/, '') if !options[:keep_spaces]
+    cleaned_string = cleaned_string.strip
+                                   .delete("\t\n\r\u0000")
+                                   .gsub(%r{/\*.*?\*/}, '')
+                                   .gsub(/<!--.*?-->/, '')
+                                   .gsub(/\[.+?\]/, '')
+
+    sanitize_attachment_disposition(cleaned_string)
+  end
+
+  def self.sanitize_attachment_disposition(url)
+    uri = URI(url)
+
+    if uri.host == Setting.get('fqdn') && uri.query.present?
+      params = CGI.parse(uri.query || '')
+                  .tap { |p| p.merge!('disposition' => 'attachment') if p.include?('disposition') }
+      uri.query = URI.encode_www_form(params)
+    end
+
+    uri.to_s
+  rescue URI::Error
+    url
   end
 
   def self.url_same?(url_new, url_old)
-    url_new = CGI.unescape(url_new.to_s).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?').downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
-    url_old = CGI.unescape(url_old.to_s).encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?').downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
+    url_new = CGI.unescape(url_new.to_s).utf8_encode(fallback: :read_as_sanitized_binary).downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
+    url_old = CGI.unescape(url_old.to_s).utf8_encode(fallback: :read_as_sanitized_binary).downcase.gsub(%r{/$}, '').gsub(/[[:space:]]|\t|\n|\r/, '').strip
     url_new = html_decode(url_new).sub('/?', '?')
     url_old = html_decode(url_old).sub('/?', '?')
     return true if url_new == url_old
@@ -400,14 +422,20 @@ reolace inline images with cid images
 
   def self.replace_inline_images(string, prefix = rand(999_999_999))
     attachments_inline = []
+    filename_counter = 0
     scrubber = Loofah::Scrubber.new do |node|
       if node.name == 'img'
         if node['src'] && node['src'] =~ %r{^(data:image/(jpeg|png);base64,.+?)$}i
+          filename_counter += 1
           file_attributes = StaticAssets.data_url_attributes($1)
           cid = "#{prefix}.#{rand(999_999_999)}@#{Setting.get('fqdn')}"
+          filename = cid
+          if file_attributes[:file_extention].present?
+            filename = "image#{filename_counter}.#{file_attributes[:file_extention]}"
+          end
           attachment = {
             data: file_attributes[:content],
-            filename: cid,
+            filename: filename,
             preferences: {
               'Content-Type' => file_attributes[:mime_type],
               'Mime-Type' => file_attributes[:mime_type],
@@ -458,6 +486,7 @@ satinize style of img tags
   end
 
   private_class_method :cleanup_target
+  private_class_method :sanitize_attachment_disposition
   private_class_method :add_link
   private_class_method :url_same?
   private_class_method :html_decode

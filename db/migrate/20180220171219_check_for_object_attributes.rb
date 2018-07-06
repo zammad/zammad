@@ -26,7 +26,8 @@ class CheckForObjectAttributes < ActiveRecord::Migration[5.1]
   end
 
   def fix_options(attribute)
-    return if attribute[:data_option][:options].is_a?(Hash) || attribute[:data_option][:options].is_a?(Array)
+    return if attribute[:data_option][:options].is_a?(Hash)
+    return if attribute[:data_option][:options].is_a?(Array)
     attribute[:data_option][:options] = {}
   end
 

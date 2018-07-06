@@ -70,6 +70,7 @@ class App.UiElement.datetime
       todayBtn: 'linked'
       todayHighlight: true
       format: App.i18n.timeFormat().date
+      rtl: App.i18n.dir() is 'rtl'
       container: item
       language: 'custom'
     )

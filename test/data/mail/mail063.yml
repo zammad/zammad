@@ -1,0 +1,20 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: MAILER-DAEMON@mx1.example.com (Mail Delivery System)
+from_email: MAILER-DAEMON@mx1.example.com
+from_display_name: Mail Delivery System
+subject: Undelivered Mail Returned to Sender
+content_type: text/plain
+body: |
+  This is the mail system at host mx1.example.com.
+
+  I'm sorry to have to inform you that your message could not
+  be delivered to one or more recipients. It's attached below.
+
+  For further assistance, please send mail to postmaster.
+
+  If you do so, please include this problem report. You can
+  delete your own text from the attached returned message.
+
+                     The mail system
+
+  <notextisting@example.com>: user unknown

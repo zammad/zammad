@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-require 'net/ldap'
-require 'net/ldap/entry'
+require_dependency 'net/ldap'
+require_dependency 'net/ldap/entry'
 
 # Class for establishing LDAP connections. A wrapper around Net::LDAP needed for Auth and Sync.
 # ATTENTION: Loads custom 'net/ldap/entry' from 'lib/core_ext' which extends the Net::LDAP::Entry class.
@@ -11,7 +11,7 @@ require 'net/ldap/entry'
 #   @return [String] the base dn used while initializing the connection
 class Ldap
 
-  attr_reader :connection, :base_dn, :host, :port, :ssl
+  attr_reader :base_dn, :host, :port, :ssl
 
   # Initializes a LDAP connection.
   #
@@ -35,7 +35,8 @@ class Ldap
       @config = Setting.get('ldap_config')
     end
 
-    connect
+    # connect on initialization
+    connection
   end
 
   # Requests the rootDSE (the root of the directory data tree on a directory server).
@@ -46,7 +47,7 @@ class Ldap
   #
   # @return [Hash{String => Array<String>}] The found RootDSEs.
   def preferences
-    @connection.search_root_dse.to_h
+    connection.search_root_dse.to_h
   end
 
   # Performs a LDAP search and yields over the found LDAP entries.
@@ -68,7 +69,7 @@ class Ldap
     base  ||= base_dn()
     scope ||= Net::LDAP::SearchScope_WholeSubtree
 
-    @connection.search(
+    connection.search(
       base:          base,
       filter:        filter,
       scope:         scope,
@@ -114,14 +115,14 @@ class Ldap
     counter
   end
 
-  private
-
-  def connect
+  def connection
     @connection ||= begin
       attributes_from_config
       binded_connection
     end
   end
+
+  private
 
   def binded_connection
     # ldap connect
@@ -175,7 +176,7 @@ class Ldap
 
     # fallback to default
     # port if none given
-    @port ||= 389
+    @port ||= 389 # rubocop:disable Naming/MemoizedInstanceVariableName
   end
 
   def parse_host_url

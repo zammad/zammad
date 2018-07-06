@@ -9,7 +9,7 @@ class TicketArticleStoreEmpty < ActiveSupport::TestCase
     current_file_count = Store::File.count
     current_backend_count = Store::Provider::DB.count
 
-    email_raw_string = IO.binread('test/fixtures/mail1.box')
+    email_raw_string = File.read(Rails.root.join('test', 'data', 'mail', 'mail001.box'))
     ticket, article, user, mail = Channel::EmailParser.new.process({}, email_raw_string)
 
     next_count = Store.count
@@ -38,7 +38,7 @@ class TicketArticleStoreEmpty < ActiveSupport::TestCase
     current_file_count = Store::File.count
     current_backend_count = Store::Provider::DB.count
 
-    email_raw_string = IO.binread('test/fixtures/mail1.box')
+    email_raw_string = File.read(Rails.root.join('test', 'data', 'mail', 'mail001.box'))
     ticket1, article1, user1, mail1 = Channel::EmailParser.new.process({}, email_raw_string)
     ticket2, article2, user2, mail2 = Channel::EmailParser.new.process({}, email_raw_string)
 

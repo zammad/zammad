@@ -1,5 +1,4 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
-
 require 'net/imap'
 
 class Channel::Driver::Imap < Channel::EmailParser
@@ -62,29 +61,37 @@ example
 
   def fetch(options, channel, check_type = '', verify_string = '')
     ssl            = true
+    starttls       = false
     port           = 993
     keep_on_server = false
     folder         = 'INBOX'
     if options[:keep_on_server] == true || options[:keep_on_server] == 'true'
       keep_on_server = true
     end
+
     if options.key?(:ssl) && options[:ssl] == false
       ssl  = false
       port = 143
     end
-    if options.key?(:port) && options[:port].present?
-      port = options[:port]
 
-      # disable ssl for non ssl ports
-      if port == 143 && !options.key?(:ssl)
-        ssl = false
-      end
+    port = if options.key?(:port) && options[:port].present?
+             options[:port].to_i
+           elsif ssl == true
+             993
+           else
+             143
+           end
+
+    if ssl == true && port != 993
+      ssl = false
+      starttls = true
     end
+
     if options[:folder].present?
       folder = options[:folder]
     end
 
-    Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},folder=#{folder},keep_on_server=#{keep_on_server})"
+    Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server})"
 
     # on check, reduce open_timeout to have faster probing
     timeout = 45
@@ -93,7 +100,10 @@ example
     end
 
     Timeout.timeout(timeout) do
-      @imap = Net::IMAP.new(options[:host], port, ssl, nil, false)
+      @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, false)
+      if starttls
+        @imap.starttls()
+      end
     end
 
     @imap.login(options[:user], options[:password])

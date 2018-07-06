@@ -2,6 +2,7 @@
 
 #= require_self
 #= require_tree ./lib/app_init
+#= require_tree ./lib/mixins
 #= require ./config.coffee
 #= require_tree ./models
 #= require_tree ./controllers

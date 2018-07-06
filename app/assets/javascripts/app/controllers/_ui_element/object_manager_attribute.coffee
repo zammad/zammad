@@ -28,6 +28,12 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
       boolean: 'Boolean'
       integer: 'Integer'
 
+    # if attribute already exists, do not allow to change it anymore
+    if params.data_type
+      for key, value of options
+        if key isnt params.data_type
+          delete options[key]
+
     configureAttributes = [
       { name: attribute.name, display: '', tag: 'select', null: false, options: options, translate: true, default: 'input', disabled: attribute.disabled },
     ]
@@ -134,6 +140,17 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
     init = false
     if params && !params.id
       init = true
+
+    data = objects[object]
+    if init
+      for role, screenOptions of data
+        for screen, options of screenOptions
+          for key, defaultValue of options
+            params.screens ||= {}
+            params.screens[screen] ||= {}
+            params.screens[screen][role] ||= {}
+            params.screens[screen][role][key] = defaultValue
+
     item = $(App.view('object_manager/screens')(
       attribute: attribute
       data: objects[object]

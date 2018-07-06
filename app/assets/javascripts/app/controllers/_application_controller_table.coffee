@@ -466,6 +466,7 @@ class App.ControllerTable extends App.Controller
     if @checkbox || @radio
       columnsLength++
     groupLast = ''
+    groupLastName = ''
     tableBody = []
     objectsToShow = @objectsOfPage(@shownPage)
     for object in objectsToShow
@@ -473,16 +474,31 @@ class App.ControllerTable extends App.Controller
         position++
         if @groupBy
           groupByName = App.viewPrint(object, @groupBy, @attributesList)
-          if groupLast isnt groupByName
-            groupLast = groupByName
+          if groupLastName isnt groupByName
+            groupLastName = groupByName
             tableBody.push @renderTableGroupByRow(object, position, groupByName)
         tableBody.push @renderTableRow(object, position)
     tableBody
 
   renderTableGroupByRow: (object, position, groupByName) =>
+    ui_table_group_by_show_count = @Config.get('ui_table_group_by_show_count')
+    groupByCount = undefined
+    if ui_table_group_by_show_count is true
+      groupBy = @groupBy
+      groupLast = object[@groupBy]
+      if !groupLast
+        groupBy = "#{@groupBy}_id"
+        groupLast = object[groupBy]
+      groupByCount = 0
+      if @objects
+        for localObject in @objects
+          if localObject[groupBy] is groupLast
+            groupByCount += 1
+
     App.view('generic/table_row_group_by')(
       position:      position
       groupByName:   groupByName
+      groupByCount:  groupByCount
       columnsLength: @columnsLength
     )
 

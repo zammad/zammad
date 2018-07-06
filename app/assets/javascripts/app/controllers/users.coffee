@@ -5,6 +5,7 @@ class Index extends App.ControllerSubContent
     '.js-search': 'searchInput'
   events:
     'click [data-type=new]': 'new'
+    'click [data-type=import]': 'import'
 
   constructor: ->
     super
@@ -14,6 +15,7 @@ class Index extends App.ControllerSubContent
     @html App.view('user')(
       head: 'Users'
       buttons: [
+        { name: 'Import', 'data-type': 'import', class: 'btn' }
         { name: 'New User', 'data-type': 'new', class: 'btn--success' }
       ]
       roles: App.Role.all()
@@ -90,6 +92,7 @@ class Index extends App.ControllerSubContent
       item = App.User.find(id)
 
       rerender = =>
+        App.Group.fetch()
         @renderResult(user_ids)
 
       new App.ControllerGenericEdit(
@@ -189,6 +192,13 @@ class Index extends App.ControllerSubContent
       genericObject: 'User'
       container: @el.closest('.content')
       callback: @recent
+    )
+
+  import: (e) ->
+    e.preventDefault()
+    new App.Import(
+      baseUrl: '/api/v1/users'
+      container: @el.closest('.content')
     )
 
 App.Config.set( 'User', { prio: 1000, name: 'Users', parent: '#manage', target: '#manage/users', controller: Index, permission: ['admin.user'] }, 'NavBarAdmin' )

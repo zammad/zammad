@@ -829,6 +829,23 @@ class App.Utils
     num
 
   @icon: (name, className = '') ->
+    return if !name
+
+    # rtl support
+    # ===========
+    #
+    # translates @Icon('arrow-{start}') to @Icon('arrow-left') on ltr and @Icon('arrow-right') on rtl
+    dictionary =
+      ltr:
+        start: 'left'
+        end: 'right'
+      rtl:
+        start: 'right'
+        end: 'left'
+    if name.indexOf('{') > 0 # only run through the dictionary when there is a {helper}
+      for key, value of dictionary[App.i18n.dir()]
+        name = name.replace("{#{key}}", value)
+
     #
     # reverse regex
     # =============
@@ -977,7 +994,9 @@ class App.Utils
       if !_.isEmpty(article.to)
         recipients = App.Utils.parseAddressListLocal(article.to)
         if recipients && recipients[0]
-          recipientIsLocal = isLocalAddress(recipients[0])
+          for localRecipient in recipients
+            recipientIsLocal = isLocalAddress(localRecipient)
+            break if recipientIsLocal is true
 
       # sender is local
       if senderIsLocal
@@ -1041,3 +1060,43 @@ class App.Utils
           articleNew.cc = addAddresses(article.cc, articleNew.cc)
 
     articleNew
+
+  # apply email token field with autocompletion
+  @tokaniceEmails: (selector) ->
+    source = "#{App.Config.get('api_path')}/users/search"
+    a = ->
+      $(selector).tokenfield(
+        createTokensOnBlur: true
+        autocomplete: {
+          source: source
+          minLength: 2
+        },
+      ).on('tokenfield:createtoken', (e) ->
+        if !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
+          e.preventDefault()
+          return false
+        e.attrs.label = e.attrs.value
+        true
+      )
+    App.Delay.set(a, 500, undefined, 'tags')
+
+  @htmlImage2DataUrl: (html) ->
+    return html if !html
+    return html if !html.match(/<img/i)
+    html = @_checkTypeOf("<div>#{html}</div>")
+
+    html.find('img').each( (index) ->
+      src = $(@).attr('src')
+      if !src.match(/^data:/i)
+        base64 = App.Utils._htmlImage2DataUrl(@)
+        $(@).attr('src', base64)
+    )
+    html.get(0).innerHTML
+
+  @_htmlImage2DataUrl: (img) ->
+    canvas = document.createElement('canvas')
+    canvas.width = img.width
+    canvas.height = img.height
+    ctx = canvas.getContext('2d')
+    ctx.drawImage(img, 0, 0)
+    canvas.toDataURL('image/png')

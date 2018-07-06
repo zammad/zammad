@@ -175,7 +175,7 @@ RSpec.describe Ticket do
 
   describe '#perform_changes' do
 
-    it 'performes a ticket state change on a ticket' do
+    it 'performs a ticket state change on a ticket' do
       source_ticket = create(:ticket)
 
       changes = {
@@ -188,7 +188,7 @@ RSpec.describe Ticket do
       expect(source_ticket.state.name).to eq('closed')
     end
 
-    it 'performes a ticket deletion on a ticket' do
+    it 'performs a ticket deletion on a ticket' do
       source_ticket = create(:ticket)
 
       changes = {
@@ -201,6 +201,62 @@ RSpec.describe Ticket do
       expect(ticket_with_source_ids).to match_array([])
     end
 
+    # Regression test for https://github.com/zammad/zammad/issues/2001
+    it 'does not modify its arguments' do
+      trigger = Trigger.new(
+        perform: {
+          'notification.email' => {
+            body: "Hello \#{ticket.customer.firstname} \#{ticket.customer.lastname},",
+            recipient: %w[article_last_sender ticket_owner ticket_customer ticket_agents],
+            subject: "Autoclose (\#{ticket.title})"
+          }
+        }
+      )
+
+      expect { Ticket.first.perform_changes(trigger.perform, 'trigger', {}, 1) }
+        .to not_change { trigger.perform['notification.email'][:body] }
+        .and not_change { trigger.perform['notification.email'][:subject] }
+    end
+
+    # Regression test for https://github.com/zammad/zammad/issues/1543
+    #
+    # If a new article fires an email notification trigger,
+    # and then another article is added to the same ticket
+    # before that trigger is performed,
+    # the email template's 'article' var should refer to the originating article,
+    # not the newest one.
+    #
+    # (This occurs whenever one action fires multiple email notification triggers.)
+    it 'passes the correct article to NotificationFactory::Mailer' do
+      # required by Ticket#perform_changes for email notifications
+      Group.first.update(email_address: create(:email_address))
+
+      ticket        = Ticket.first
+      orig_article  = Ticket::Article.where(ticket_id: ticket.id).first
+      newer_article = create(:ticket_article, ticket_id: ticket.id)
+      trigger       = Trigger.new(
+        perform: {
+          'notification.email' => {
+            body: '',
+            recipient: 'ticket_customer',
+            subject: ''
+          }
+        }
+      )
+
+      allow(NotificationFactory::Mailer).to receive(:template).and_return('')
+
+      ticket.perform_changes(trigger.perform, 'trigger', { article_id: orig_article.id }, 1)
+
+      expect(NotificationFactory::Mailer)
+        .to have_received(:template)
+        .with(hash_including(objects: { ticket: ticket, article: orig_article }))
+        .at_least(:once)
+
+      expect(NotificationFactory::Mailer)
+        .not_to have_received(:template)
+        .with(hash_including(objects: { ticket: ticket, article: newer_article }))
+    end
   end
 
   describe '#selectors' do

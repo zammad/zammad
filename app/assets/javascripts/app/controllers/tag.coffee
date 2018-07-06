@@ -95,7 +95,7 @@ class Table extends App.Controller
     e.preventDefault()
     e.stopPropagation()
     item = $(e.target).closest('tr').find('.js-name').text()
-    App.GlobalSearchWidget.search(item, 'tag')
+    App.GlobalSearchWidget.search(item, 'tags')
 
 class Edit extends App.ControllerModal
   buttonClose: true

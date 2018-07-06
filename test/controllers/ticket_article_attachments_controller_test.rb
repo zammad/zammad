@@ -9,7 +9,7 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'tickets-admin',
       firstname: 'Tickets',
       lastname: 'Admin',
@@ -22,7 +22,7 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'tickets-agent@example.com',
       firstname: 'Tickets',
       lastname: 'Agent',
@@ -35,7 +35,7 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'tickets-customer1@example.com',
       firstname: 'Tickets',
       lastname: 'Customer1',
@@ -144,7 +144,8 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
   test '01.02 test attachments for split' do
     headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
 
-    email_raw_string = IO.binread('test/fixtures/mail24.box')
+    email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail024.box')
+    email_raw_string = File.read(email_file_path)
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
@@ -161,7 +162,8 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
   test '01.03 test attachments for forward' do
     headers = { 'ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json' }
 
-    email_raw_string = IO.binread('test/fixtures/mail8.box')
+    email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail008.box')
+    email_raw_string = File.read(email_file_path)
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
@@ -177,7 +179,8 @@ class TicketArticleAttachmentsControllerTest < ActionDispatch::IntegrationTest
     assert_equal(result['attachments'].class, Array)
     assert(result['attachments'].blank?)
 
-    email_raw_string = IO.binread('test/fixtures/mail24.box')
+    email_file_path  = Rails.root.join('test', 'data', 'mail', 'mail024.box')
+    email_raw_string = File.read(email_file_path)
     ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, email_raw_string)
 
     post "/api/v1/ticket_attachment_upload_clone_by_article/#{article_p.id}", params: { form_id: '1234-2' }.to_json, headers: headers.merge('Authorization' => credentials)

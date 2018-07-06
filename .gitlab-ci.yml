@@ -51,7 +51,7 @@ test:rspec:mysql:
     - rake db:create
     - rake db:migrate
     - rake db:seed
-    - rspec
+    - bundle exec rspec
     - rake db:drop
 
 test:rspec:postgresql:
@@ -64,7 +64,7 @@ test:rspec:postgresql:
     - rake db:create
     - rake db:migrate
     - rake db:seed
-    - rspec
+    - bundle exec rspec
     - rake db:drop
 
 test:unit:mysql:
@@ -103,18 +103,7 @@ test:unit:postgresql:
     - ruby -I test/ test/integration/monitoring_controller_test.rb
     - rake db:drop
 
-test:integration:autowizard:
-  stage: test
-  tags:
-    - core
-  script:
-    - export RAILS_ENV=test
-    - rake db:create
-    - rake db:migrate
-    - ruby -I test/ test/integration/auto_wizard_test.rb
-    - rake db:drop
-
-test:integration:email_helper:
+test:integration:email_helper_deliver:
   stage: test
   tags:
     - core
@@ -123,27 +112,7 @@ test:integration:email_helper:
     - rake db:create
     - rake db:migrate
     - ruby -I test/ test/integration/email_helper_test.rb
-    - rake db:drop
-
-test:integration:email_deliver:
-  stage: test
-  tags:
-    - core
-  script:
-    - export RAILS_ENV=test
-    - rake db:create
-    - rake db:migrate
     - ruby -I test/ test/integration/email_deliver_test.rb
-    - rake db:drop
-
-test:integration:email_keep_on_server:
-  stage: test
-  tags:
-    - core
-  script:
-    - export RAILS_ENV=test
-    - rake db:create
-    - rake db:migrate
     - ruby -I test/ test/integration/email_keep_on_server_test.rb
     - rake db:drop
 
@@ -173,29 +142,7 @@ test:integration:facebook:
     - rake db:drop
   allow_failure: true
 
-test:integration:geo_ip:
-  stage: test
-  tags:
-    - core
-  script:
-    - export RAILS_ENV=test
-    - rake db:create
-    - rake db:migrate
-    - ruby -I test/ test/integration/geo_ip_test.rb
-    - rake db:drop
-
-test:integration:geo_location:
-  stage: test
-  tags:
-    - core
-  script:
-    - export RAILS_ENV=test
-    - rake db:create
-    - rake db:migrate
-    - ruby -I test/ test/integration/geo_location_test.rb
-    - rake db:drop
-
-test:integration:geo_calendar:
+test:integration:geo:
   stage: test
   tags:
     - core
@@ -204,6 +151,8 @@ test:integration:geo_calendar:
     - rake db:create
     - rake db:migrate
     - ruby -I test/ test/integration/geo_calendar_test.rb
+    - ruby -I test/ test/integration/geo_location_test.rb
+    - ruby -I test/ test/integration/geo_ip_test.rb
     - rake db:drop
 
 test:integration:user_agent:
@@ -215,19 +164,10 @@ test:integration:user_agent:
     - rake db:create
     - rake db:migrate
     - ruby -I test/ test/integration/user_agent_test.rb
-    - rake db:drop
-
-test:integration:user_agent_proxy:
-  stage: test
-  tags:
-    - core
-  script:
     - export ZAMMAD_PROXY_TEST=true
-    - export RAILS_ENV=test
-    - rake db:create
-    - rake db:migrate
     - ruby -I test/ test/integration/user_agent_test.rb
     - rake db:drop
+  allow_failure: true
 
 test:integration:user_device:
   stage: test
@@ -264,17 +204,6 @@ test:integration:clearbit:
     - ruby -I test test/integration/clearbit_test.rb
     - rake db:drop
   allow_failure: true
-
-test:integration:sipgate:
-  stage: test
-  tags:
-    - core
-  script:
-    - export RAILS_ENV=test
-    - rake db:create
-    - rake db:migrate
-    - ruby -I test test/integration/sipgate_controller_test.rb
-    - rake db:drop
 
 test:integration:telegram:
   stage: test
@@ -480,8 +409,8 @@ test:browser:integration:api_client_ruby:
     - git clone git@github.com:zammad/zammad-api-client-ruby.git || script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1
     - cd zammad-api-client-ruby
     - bundle install --jobs 8
-    - export TEST_URL=http://$IP:$BROWSER_PORT
-    - rspec || (cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1)
+    - export TEST_URL=http://$IP:$BROWSER_PORT/
+    - bundle exec rspec || (cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 1 1)
     - cd .. && script/build/test_shutdown.sh $RAILS_ENV $BROWSER_PORT $WS_PORT 0 1
 
 test:browser:integration:api_client_php:

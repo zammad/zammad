@@ -315,4 +315,18 @@ class UserDeviceTest < ActiveSupport::TestCase
 
   end
 
+  test 'invalid fingerprint size' do
+
+    assert_raises(Exceptions::UnprocessableEntity) do
+      UserDevice.add(
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+        '91.115.248.231',
+        @agent.id,
+        'fingerprint1234fingerprint1234fingerprint1234fingerprint1234fingerprint1234fingerprint1234fingerprint1234fingerprint1234fingerprint1234fingerprint1234fingerprint1234',
+        'session',
+      )
+    end
+
+  end
+
 end

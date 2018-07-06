@@ -1,9 +1,14 @@
 FactoryBot.define do
+  sequence :test_factory_name do |n|
+    "Test Overview #{n}"
+  end
+end
+
+FactoryBot.define do
 
   factory :overview do
-    name 'My Factory Tickets'
-    link 'my_factory_tickets'
-    prio 1100
+    name { generate(:test_factory_name) }
+    prio 1
     role_ids { [ Role.find_by(name: 'Customer').id, Role.find_by(name: 'Agent').id, Role.find_by(name: 'Admin').id ] }
     out_of_office true
     condition do

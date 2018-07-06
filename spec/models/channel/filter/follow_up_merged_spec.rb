@@ -1,65 +1,97 @@
 require 'rails_helper'
 
-RSpec.describe Channel::Filter::FollowUpMerged do
+RSpec.describe Channel::Filter::FollowUpMerged, type: :channel_filter do
 
-  describe '#find_merge_follow_up_ticket' do
+  context 'merged' do
 
-    it 'finds the follow up ticket for merged tickets' do
+    it 'handles ticket merged to one ticket' do
+      ticket1 = create(:ticket)
+      ticket2 = create(:ticket)
+
+      ticket1.merge_to( ticket_id: ticket2.id, user_id: 1 )
+
+      mail = {
+        'x-zammad-ticket-id': ticket1.id
+      }
+
+      filter(mail)
+
+      expect(mail[:'x-zammad-ticket-id']).to eq(ticket2.id)
+    end
+
+    it 'handles first merged chain' do
+      ticket1 = create(:ticket)
+      ticket2 = create(:ticket)
+      ticket3 = create(:ticket)
+
+      ticket1.merge_to( ticket_id: ticket2.id, user_id: 1 )
+      ticket2.merge_to( ticket_id: ticket3.id, user_id: 1 )
+
+      mail = {
+        'x-zammad-ticket-id': ticket1.id
+      }
+
+      filter(mail)
+
+      expect(mail[:'x-zammad-ticket-id']).to eq(ticket3.id)
+    end
+
+    it 'handles ticket in merged ticket chain' do
       ticket1 = create(:ticket)
       ticket2 = create(:ticket)
       ticket3 = create(:ticket)
       ticket4 = create(:ticket)
-      ticket5 = create(:ticket)
 
       ticket1.merge_to( ticket_id: ticket2.id, user_id: 1 )
       ticket2.merge_to( ticket_id: ticket3.id, user_id: 1 )
       ticket3.merge_to( ticket_id: ticket4.id, user_id: 1 )
-      ticket4.merge_to( ticket_id: ticket5.id, user_id: 1 )
 
-      ticket = Channel::Filter::FollowUpMerged.find_merge_follow_up_ticket(ticket1)
-      expect(ticket.id).to eq(ticket5.id)
+      mail = {
+        'x-zammad-ticket-id': ticket2.id
+      }
 
-      follow_up_raw = "From: me@example.com
-To: customer@example.com
-Subject: #{ticket1.subject_build('some new subject')}
+      filter(mail)
 
-blub follow up"
-      ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, follow_up_raw)
-      expect(ticket_p.id).to eq(ticket5.id)
-
-      follow_up_raw = "From: me@example.com
-To: customer@example.com
-Subject: #{ticket2.subject_build('some new subject')}
-
-blub follow up"
-      ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, follow_up_raw)
-      expect(ticket_p.id).to eq(ticket5.id)
-
-      follow_up_raw = "From: me@example.com
-To: customer@example.com
-Subject: #{ticket3.subject_build('some new subject')}
-
-blub follow up"
-      ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, follow_up_raw)
-      expect(ticket_p.id).to eq(ticket5.id)
-
-      follow_up_raw = "From: me@example.com
-To: customer@example.com
-Subject: #{ticket4.subject_build('some new subject')}
-
-blub follow up"
-      ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, follow_up_raw)
-      expect(ticket_p.id).to eq(ticket5.id)
-
-      follow_up_raw = "From: me@example.com
-To: customer@example.com
-Subject: #{ticket5.subject_build('some new subject')}
-
-blub follow up"
-      ticket_p, article_p, user_p = Channel::EmailParser.new.process({}, follow_up_raw)
-      expect(ticket_p.id).to eq(ticket5.id)
+      expect(mail[:'x-zammad-ticket-id']).to eq(ticket4.id)
     end
-
   end
 
+  context 'ignored mails' do
+
+    it 'ignores new tickets' do
+      mail = {}
+
+      expect do
+        filter(mail)
+      end.to not_change {
+        mail
+      }
+    end
+
+    it 'ignores unmerged tickets' do
+      ticket = create(:ticket)
+
+      mail = {
+        'x-zammad-ticket-id': ticket.id
+      }
+
+      expect do
+        filter(mail)
+      end.to not_change {
+        mail
+      }
+    end
+
+    it 'ignores not existing tickets' do
+      mail = {
+        'x-zammad-ticket-id': 1_234_567_890
+      }
+
+      expect do
+        filter(mail)
+      end.to not_change {
+        mail
+      }
+    end
+  end
 end

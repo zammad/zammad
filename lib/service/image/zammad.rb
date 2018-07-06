@@ -2,11 +2,10 @@
 
 class Service::Image::Zammad
 
-  # rubocop:disable Style/ClassVars
-  @@api_host = 'https://images.zammad.com'
-  @@open_timeout = 4
-  @@read_timeout = 6
-  @@total_timeout = 6
+  API_HOST      = 'https://images.zammad.com'.freeze
+  OPEN_TIMEOUT  = 4
+  READ_TIMEOUT  = 6
+  TOTAL_TIMEOUT = 6
 
   def self.user(email)
     raise Exceptions::UnprocessableEntity, 'no email given' if email.blank?
@@ -17,14 +16,14 @@ class Service::Image::Zammad
 
     # fetch image
     response = UserAgent.post(
-      "#{@@api_host}/api/v1/person/image",
+      "#{API_HOST}/api/v1/person/image",
       {
         email: email,
       },
       {
-        open_timeout: @@open_timeout,
-        read_timeout: @@read_timeout,
-        total_timeout: @@total_timeout,
+        open_timeout:  OPEN_TIMEOUT,
+        read_timeout:  READ_TIMEOUT,
+        total_timeout: TOTAL_TIMEOUT,
       },
     )
     if !response.success?
@@ -50,14 +49,14 @@ class Service::Image::Zammad
 
     # fetch org logo
     response = UserAgent.post(
-      "#{@@api_host}/api/v1/organization/image",
+      "#{API_HOST}/api/v1/organization/image",
       {
         domain: domain
       },
       {
-        open_timeout: @@open_timeout,
-        read_timeout: @@read_timeout,
-        total_timeout: @@total_timeout,
+        open_timeout:  OPEN_TIMEOUT,
+        read_timeout:  READ_TIMEOUT,
+        total_timeout: TOTAL_TIMEOUT,
       },
     )
     if !response.success?

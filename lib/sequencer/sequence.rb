@@ -1,4 +1,4 @@
-require 'sequencer/mixin/prefixed_constantize'
+require_dependency 'sequencer/mixin/prefixed_constantize'
 
 class Sequencer
   class Sequence

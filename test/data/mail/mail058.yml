@@ -1,0 +1,13 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Yangzhou ABC Lighting Equipment <bob@example.com>, LTD <ly@example.com>
+from_email: bob@example.com
+from_display_name: Yangzhou ABC Lighting Equipment
+subject: new design solar street lights
+content_type: text/plain
+body: |-
+  äöüß ad asd
+
+  -Martin
+
+  --
+  Old programmers never die. They just branch to a new address.

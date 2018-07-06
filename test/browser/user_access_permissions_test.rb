@@ -10,7 +10,6 @@ class AgentProfilePermissionsTest < TestCase
     )
     tasks_close_all()
 
-    # search and open user
     user_open_by_search(value: 'Braun')
 
     verify_task(
@@ -29,7 +28,6 @@ class AgentProfilePermissionsTest < TestCase
       value: 'email',
     )
 
-    # update note
     set(
       css: '.content.active [data-name="note"]',
       value: 'some note 123',
@@ -99,7 +97,6 @@ class AgentProfilePermissionsTest < TestCase
     )
     tasks_close_all()
 
-    # search and open user
     user_open_by_search(value: 'Test Master')
 
     verify_task(
@@ -121,10 +118,7 @@ class AgentProfilePermissionsTest < TestCase
     sleep 2
 
     click(css: '.content.active .js-action .icon-arrow-down', fast: true)
-
-    exists_not(
-      css: '.content.active .js-action [data-type="edit"]'
-    )
+    exists_not(css: '.content.active .js-action [data-type="edit"]')
   end
 
   def test_agent_to_edit_admin_ticket_user_details
@@ -139,9 +133,9 @@ class AgentProfilePermissionsTest < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'master',
-        group: 'Users',
-        title: 'test_auto_assignment_1 - ticket 1',
-        body: 'test_auto_assignment_1 - ticket 1 - no auto assignment',
+        group:    'Users',
+        title:    'test_user_access_permissions - ticket 1',
+        body:     'test_user_access_permissions - ticket 1',
       },
     )
 
@@ -156,7 +150,6 @@ class AgentProfilePermissionsTest < TestCase
     )
     tasks_close_all()
 
-    # open ticket#1
     ticket_open_by_search(
       number: ticket1[:number],
     )
@@ -184,13 +177,11 @@ class AgentProfilePermissionsTest < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'test_auto_assignment_2 - ticket 2',
-        body: 'test_auto_assignment_2 - ticket 2 - no auto assignment',
+        group:    'Users',
+        title:    'test_user_access_permissions - ticket 2',
+        body:     'test_user_access_permissions - ticket 2',
       },
     )
-
-    # open ticket#1
     ticket_open_by_search(
       number: ticket1[:number],
     )
@@ -265,13 +256,11 @@ class AgentProfilePermissionsTest < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'nico',
-        group: 'Users',
-        title: 'test_auto_assignment_2 - ticket 2',
-        body: 'test_auto_assignment_2 - ticket 2 - no auto assignment',
+        group:    'Users',
+        title:    'test_user_access_permissions - ticket 3',
+        body:     'test_user_access_permissions - ticket 3',
       },
     )
-
-    # open ticket#1
     ticket_open_by_search(
       number: ticket1[:number],
     )
@@ -280,7 +269,15 @@ class AgentProfilePermissionsTest < TestCase
     exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
-    click(css: '.content.active .tabsSidebar-holder .js-avatar')
+    # scroll to the Avatar at the top of the zoom view and click it
+    # scrolling is needed because the browser might have scrolled down
+    # caused by a undeliverable email (of the created ticket)
+    zoom_top_avatar_selector = '.content.active .tabsSidebar-holder .js-avatar'
+    scroll_to(
+      position: 'botton',
+      css:      zoom_top_avatar_selector,
+    )
+    click(css: zoom_top_avatar_selector)
 
     # check and change note again in edit screen
     click(css: '.content.active .js-action .dropdown-toggle')
@@ -350,13 +347,12 @@ class AgentProfilePermissionsTest < TestCase
     ticket1 = ticket_create(
       data: {
         customer: 'master',
-        group: 'Users',
-        title: 'test_auto_assignment_2 - ticket 2',
-        body: 'test_auto_assignment_2 - ticket 2 - no auto assignment',
+        group:    'Users',
+        title:    'test_user_access_permissions - ticket 4',
+        body:     'test_user_access_permissions - ticket 4',
       },
     )
 
-    # open ticket#1
     ticket_open_by_search(
       number: ticket1[:number],
     )
@@ -365,12 +361,17 @@ class AgentProfilePermissionsTest < TestCase
     exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     exists_not(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
-    click(css: '.content.active .tabsSidebar-holder .js-avatar')
-
-    # check and change note again in edit screen
-    click(css: '.content.active .js-action .icon-arrow-down', fast: true)
-    exists_not(
-      css: '.content.active .js-action [data-type="edit"]'
+    # scroll to the Avatar at the top of the zoom view and click it
+    # scrolling is needed because the browser might have scrolled down
+    # caused by a undeliverable email (of the created ticket)
+    zoom_top_avatar_selector = '.content.active .tabsSidebar-holder .js-avatar'
+    scroll_to(
+      position: 'botton',
+      css:      zoom_top_avatar_selector,
     )
+    click(css: zoom_top_avatar_selector)
+
+    click(css: '.content.active .js-action .icon-arrow-down', fast: true)
+    exists_not(css: '.content.active .js-action [data-type="edit"]')
   end
 end

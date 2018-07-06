@@ -1,5 +1,7 @@
 class Sessions::Backend::ActivityStream
 
+  attr_writer :user
+
   def initialize(user, asset_lookup, client = nil, client_id = nil, ttl = 25)
     @user         = user
     @client       = client

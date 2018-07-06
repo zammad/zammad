@@ -1,11 +1,4 @@
-<div class="controls u-positionOrigin">
-  <select class="form-control js-value" name="<%= @attribute.name %>::value">
-    <% for key, value of @values: %>
-      <option value="<%= key %>" <% if @attribute.value && @attribute.value.value.toString() is key.toString(): %>selected<% end %>><%- value %></option>
-    <% end %>
-  </select>
-  <%- @Icon('arrow-down', 'dropdown-arrow') %>
-</div>
+<div class="controls u-positionOrigin js-valueRangeSelector"></div>
 <div class="controls u-positionOrigin">
   <select class="form-control js-range" name="<%= @attribute.name %>::range">
     <% for key, value of @ranges: %>

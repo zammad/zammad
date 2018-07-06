@@ -3,6 +3,10 @@ require 'test_helper'
 
 class TicketArticleDos < ActiveSupport::TestCase
 
+  def two_mio_random_chars
+    @two_mio_random_chars ||= Array.new(2_000_000) { [*'0'..'9', *'a'..'z', ' ', ' ', ' ', '. '].sample }.join
+  end
+
   test 'check body size' do
 
     org_community = Organization.create_if_not_exists(
@@ -36,7 +40,7 @@ class TicketArticleDos < ActiveSupport::TestCase
       type_id: Ticket::Article::Type.find_by(name: 'phone').id,
       sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
       from: 'Zammad Feedback <feedback@example.org>',
-      body: Array.new(2_000_000) { [*'0'..'9', *'a'..'z', ' ', ' ', ' ', '. '].sample }.join,
+      body: two_mio_random_chars,
       internal: false,
       updated_by_id: 1,
       created_by_id: 1,
@@ -55,7 +59,7 @@ class TicketArticleDos < ActiveSupport::TestCase
       type_id: Ticket::Article::Type.find_by(name: 'phone').id,
       sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
       from: 'Zammad Feedback <feedback@example.org>',
-      body: "\u0000#{Array.new(2_000_000) { [*'0'..'9', *'a'..'z', ' ', ' ', ' ', '. '].sample }.join}",
+      body: "\u0000#{two_mio_random_chars}",
       internal: false,
       updated_by_id: 1,
       created_by_id: 1,
@@ -78,7 +82,7 @@ class TicketArticleDos < ActiveSupport::TestCase
         type_id: Ticket::Article::Type.find_by(name: 'phone').id,
         sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
         from: 'Zammad Feedback <feedback@example.org>',
-        body: "\u0000#{Array.new(2_000_000) { [*'0'..'9', *'a'..'z', ' ', ' ', ' ', '. '].sample }.join}",
+        body: "\u0000#{two_mio_random_chars}",
         internal: false,
         updated_by_id: 1,
         created_by_id: 1,
@@ -89,11 +93,13 @@ class TicketArticleDos < ActiveSupport::TestCase
 
   test 'check body size / cut if email' do
 
-    email_raw_string = "From: me@example.com
-To: customer@example.com
-Subject: some new subject
+    email_raw_string = <<-MAIL.strip_indent
+      From: me@example.com
+      To: customer@example.com
+      Subject: some new subject
 
-Some Text" + Array.new(2_000_000) { [*'0'..'9', *'a'..'z', ' ', ' ', ' ', '. '].sample }.join
+      Some Text#{two_mio_random_chars}
+    MAIL
 
     ticket_p, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
     assert_equal(1_500_000, article_p.body.length)

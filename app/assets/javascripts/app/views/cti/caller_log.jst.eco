@@ -40,9 +40,9 @@
           <br>
         <% end %>
         <% if shown: %>
-          <small><%= item.from %></small>
+          <small><%= item.from_pretty %></small>
         <% else: %>
-          <span class="js-userNew u-clickable" href="#"><%= item.from %></span>
+          <span class="js-userNew u-clickable" href="#"><%= item.from_pretty %></span>
         <% end %>
       </td>
       <td>
@@ -66,9 +66,9 @@
           <br>
         <% end %>
         <% if shown: %>
-          <small><%= item.to %></small>
+          <small><%= item.to_pretty %></small>
         <% else: %>
-          <%= item.to %>
+          <%= item.to_pretty %>
         <% end %>
       </td>
       <td style="vertical-align: middle">

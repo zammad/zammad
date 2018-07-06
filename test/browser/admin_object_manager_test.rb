@@ -1,4 +1,3 @@
-# rubocop:disable Lint/BooleanSymbol
 require 'browser_test_helper'
 
 class AdminObjectManagerTest < TestCase
@@ -73,7 +72,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -141,7 +140,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -248,6 +247,7 @@ class AdminObjectManagerTest < TestCase
       },
     )
 
+    # rubocop:disable Lint/BooleanSymbol
     object_manager_attribute_create(
       data: {
         name: 'browser_test7',
@@ -262,6 +262,7 @@ class AdminObjectManagerTest < TestCase
         },
       },
     )
+    # rubocop:enable Lint/BooleanSymbol
 
     watch_for(
       css: '.content.active',
@@ -274,7 +275,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -353,7 +354,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -418,7 +419,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -450,7 +451,7 @@ class AdminObjectManagerTest < TestCase
     click(css: '.modal .js-submit')
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -481,7 +482,7 @@ class AdminObjectManagerTest < TestCase
     )
     watch_for_disappear(
       css:     '.modal',
-      timeout: 120,
+      timeout: 240,
     )
     sleep 5
     watch_for(
@@ -498,4 +499,99 @@ class AdminObjectManagerTest < TestCase
 
   end
 
+  def test_that_attributes_with_references_should_have_a_disabled_delete_button
+    @browser = instance = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+
+    tasks_close_all()
+
+    # create two new attributes
+    object_manager_attribute_create(
+      data: {
+        name: 'deletable_attribute',
+        display: 'Deletable Attribute',
+        data_type: 'Text',
+      },
+    )
+
+    object_manager_attribute_create(
+      data: {
+        name: 'undeletable_attribute',
+        display: 'Undeletable Attribute',
+        data_type: 'Text',
+      },
+    )
+
+    watch_for(
+      css: '.content.active',
+      value: 'Database Update required',
+    )
+    click(css: '.content.active .tab-pane.active div.js-execute')
+    watch_for(
+      css: '.modal',
+      value: 'restart',
+    )
+    watch_for_disappear(
+      css:     '.modal',
+      timeout: 120,
+    )
+    sleep 5
+    watch_for(
+      css: '.content.active',
+    )
+    match_not(
+      css: '.content.active',
+      value: 'Database Update required',
+    )
+
+    # create a new overview that references the undeletable_attribute
+    overview_create(
+      browser: instance,
+      data: {
+        name: 'test_overview',
+        roles: ['Agent'],
+        selector: {
+          'Undeletable Attribute' => 'DUMMY',
+        },
+        'order::direction' => 'down',
+        'text_input' => true,
+      }
+    )
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css:  '.content.active a[href="#system/object_manager"]',
+      mute_log: true,
+    )
+
+    30.times do
+      deletable_attribute = instance.find_elements(xpath: '//td[text()="deletable_attribute"]/following-sibling::*[2]')[0]
+      break if deletable_attribute
+      sleep 1
+    end
+
+    sleep 1
+    deletable_attribute = instance.find_elements(xpath: '//td[text()="deletable_attribute"]/following-sibling::*[2]')[0]
+    assert_not_nil(deletable_attribute)
+    deletable_attribute_html = deletable_attribute.attribute('innerHTML')
+    assert(deletable_attribute_html.include?('title="Delete"'))
+    assert(deletable_attribute_html.include?('href="#"'))
+    assert(deletable_attribute_html.exclude?('cannot be deleted'))
+
+    undeletable_attribute = instance.find_elements(xpath: '//td[text()="undeletable_attribute"]/following-sibling::*[2]')[0]
+    assert_not_nil(undeletable_attribute)
+    undeletable_attribute_html = undeletable_attribute.attribute('innerHTML')
+    assert(undeletable_attribute_html.include?('Overview'))
+    assert(undeletable_attribute_html.include?('test_overview'))
+    assert(undeletable_attribute_html.include?('cannot be deleted'))
+    assert(undeletable_attribute_html.exclude?('href="#"'))
+  end
 end

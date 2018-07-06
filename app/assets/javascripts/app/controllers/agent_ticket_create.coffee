@@ -7,12 +7,33 @@ class App.TicketCreate extends App.Controller
     'submit form':           'submit'
     'click .js-cancel':      'cancel'
 
+  types: {
+    'phone-in': {
+      icon: 'received-calls',
+      label: 'Received Call'
+    },
+    'phone-out': {
+      icon: 'outbound-calls',
+      label: 'Outbound Call'
+    },
+    'email-out': {
+      icon: 'email',
+      label: 'Send Email'
+    }
+  }
+
   constructor: (params) ->
     super
     @sidebarState = {}
 
-    # define default type
-    @default_type = 'phone-in'
+    # define default type and available types
+    @defaultType = @Config.get('ui_ticket_create_default_type')
+    @availableTypes = @Config.get('ui_ticket_create_available_types') || []
+    if !_.isArray(@availableTypes)
+      @availableTypes = [@availableTypes]
+
+    if !_.contains(@availableTypes, @defaultType)
+      @defaultType = @availableTypes[0]
 
     @formId = App.ControllerForm.formId()
 
@@ -33,6 +54,7 @@ class App.TicketCreate extends App.Controller
     @bind('ui:rerender', =>
       return if !@authenticateCheck()
       @renderQueue()
+      @tokanice()
     )
 
     # listen to rerender sidebars
@@ -49,12 +71,13 @@ class App.TicketCreate extends App.Controller
     if !type
       type = @$('.type-tabs .tab.active').data('type')
     if !type
-      type = @default_type
+      type = @defaultType
     type
 
   changeFormType: (e) =>
     type = $(e.currentTarget).data('type')
     @setFormTypeInUi(type)
+    @tokanice()
 
   setFormTypeInUi: (type) =>
 
@@ -220,8 +243,7 @@ class App.TicketCreate extends App.Controller
 
   renderQueue: (template = {}) =>
     localeRender = =>
-      @render(options: template)
-      @render()
+      @render(template)
     App.QueueManager.add(@queueKey, localeRender)
     return if !@formMeta
     App.QueueManager.run(@queueKey)
@@ -238,10 +260,12 @@ class App.TicketCreate extends App.Controller
         @formId = params['form_id']
 
     @html(App.view('agent_ticket_create')(
-      head:    'New Ticket'
-      agent:   @permissionCheck('ticket.agent')
-      admin:   @permissionCheck('admin')
-      form_id: @formId
+      head:           'New Ticket'
+      agent:          @permissionCheck('ticket.agent')
+      admin:          @permissionCheck('admin')
+      types:          @types,
+      availableTypes: @availableTypes
+      form_id:        @formId
     ))
 
     App.Ticket.configure_attributes.push {
@@ -347,6 +371,11 @@ class App.TicketCreate extends App.Controller
 
     # update taskbar with new meta data
     App.TaskManager.touch(@taskKey)
+
+    @tokanice()
+
+  tokanice: ->
+    App.Utils.tokaniceEmails('.content.active input[name=cc]')
 
   localUserInfo: (e) =>
     return if !@sidebarWidget

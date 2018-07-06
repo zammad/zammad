@@ -1,5 +1,6 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 module Ticket::SearchIndex
+  extend ActiveSupport::Concern
 
 =begin
 
@@ -22,7 +23,7 @@ returns
     # add tags
     tags = tag_list
     if tags.present?
-      attributes[:tag] = tags
+      attributes[:tags] = tags
     end
 
     # list ignored file extentions

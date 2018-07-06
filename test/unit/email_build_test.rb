@@ -31,15 +31,17 @@ class EmailBuildTest < ActiveSupport::TestCase
   end
 
   test 'html email + attachment check' do
-    html = '<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  </head>
-  <body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">
-    <div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad. äöüß</div><div>&gt;</div>
-  </body>
-</html>'
+    html = <<~MSG_HTML.chomp
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        </head>
+        <body style="font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;">
+          <div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad. äöüß</div><div>&gt;</div>
+        </body>
+      </html>
+      MSG_HTML
     mail = Channel::EmailBuild.build(
       from: 'sender@example.com',
       to: 'recipient@example.com',
@@ -49,17 +51,20 @@ class EmailBuildTest < ActiveSupport::TestCase
         {
           'Mime-Type' => 'image/png',
           :content      => 'xxx',
-          :filename     => 'somename.png',
-        },
+          :filename     => 'somename.png'
+        }
       ],
     )
 
-    should = '> Welcome!
->
-> Thank you for installing Zammad. äöüß
->'
-    assert_equal(should, mail.text_part.body.to_s)
-    assert_equal(html, mail.html_part.body.to_s)
+    text_should = Mail::Utilities.to_crlf(<<~MSG_TEXT.chomp)
+      > Welcome!
+      >
+      > Thank you for installing Zammad. äöüß
+      >
+      MSG_TEXT
+    html_should = Mail::Utilities.to_crlf(html)
+    assert_equal(text_should, mail.text_part.body.to_s)
+    assert_equal(html_should, mail.html_part.body.to_s)
 
     parser = Channel::EmailParser.new
     data = parser.parse(mail.to_s)
@@ -91,10 +96,12 @@ class EmailBuildTest < ActiveSupport::TestCase
   end
 
   test 'plain email + attachment check' do
-    text = '> Welcome!
->
-> Thank you for installing Zammad. äöüß
->'
+    text = <<~MSG_TEXT.chomp
+      > Welcome!
+      >
+      > Thank you for installing Zammad. äöüß
+      >
+      MSG_TEXT
     mail = Channel::EmailBuild.build(
       from: 'sender@example.com',
       to: 'recipient@example.com',
@@ -103,23 +110,22 @@ class EmailBuildTest < ActiveSupport::TestCase
         {
           'Mime-Type' => 'image/png',
           :content      => 'xxx',
-          :filename     => 'somename.png',
-        },
+          :filename     => 'somename.png'
+        }
       ],
     )
 
-    should = '> Welcome!
->
-> Thank you for installing Zammad. äöüß
->'
-    assert_equal(should, mail.text_part.body.to_s)
+    mail_gem_should = Mail::Utilities.to_crlf(text)
+    email_parser_should = text
+    assert_equal(mail_gem_should, mail.text_part.body.to_s)
     assert_nil(mail.html_part)
+    assert_equal('image/png; filename=somename.png', mail.attachments[0].content_type)
 
     parser = Channel::EmailParser.new
     data = parser.parse(mail.to_s)
 
     # check body
-    assert_equal(should, data[:body])
+    assert_equal(email_parser_should, data[:body])
 
     # check count of attachments, 2
     assert_equal(1, data[:attachments].length)
@@ -137,29 +143,111 @@ class EmailBuildTest < ActiveSupport::TestCase
     end
   end
 
+  test 'plain email + attachment check 2' do
+    ticket1 = Ticket.create!(
+      title: 'some article helper test1',
+      group: Group.lookup(name: 'Users'),
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(ticket1, 'ticket created')
+
+    # create inbound article #1
+    article1 = Ticket::Article.create!(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      content_type: 'text/html',
+      body: 'some message article helper test1 <div><img style="width: 85.5px; height: 49.5px" src="cid:15.274327094.140938@zammad.example.com">asdasd<img src="cid:15.274327094.140939@zammad.example.com"><br>',
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    store1 = Store.add(
+      object: 'Ticket::Article',
+      o_id: article1.id,
+      data: 'content_file1_normally_should_be_an_ics_calendar_file',
+      filename: 'schedule.ics',
+      preferences: {
+        'Mime-Type' => 'text/calendar'
+      },
+      created_by_id: 1,
+    )
+
+    text = <<~MSG_TEXT.chomp
+      > Welcome!
+      >
+      > Thank you for installing Zammad. äöüß
+      >
+      MSG_TEXT
+    mail = Channel::EmailBuild.build(
+      from: 'sender@example.com',
+      to: 'recipient@example.com',
+      body: text,
+      attachments: [
+        store1
+      ],
+    )
+
+    mail_gem_should = Mail::Utilities.to_crlf(text)
+    email_parser_should = text
+    assert_equal(mail_gem_should, mail.text_part.body.to_s)
+    assert_nil(mail.html_part)
+    assert_equal('text/calendar; filename=schedule.ics', mail.attachments[0].content_type)
+
+    parser = Channel::EmailParser.new
+    data = parser.parse(mail.to_s)
+
+    # check body
+    assert_equal(email_parser_should, data[:body])
+
+    # check count of attachments, 2
+    assert_equal(1, data[:attachments].length)
+
+    # check attachments
+    data[:attachments]&.each do |attachment|
+      if attachment[:filename] == 'schedule.ics'
+        assert(attachment[:preferences]['Content-ID'])
+        assert_nil(attachment[:preferences]['content-alternative'])
+        assert_equal('text/calendar', attachment[:preferences]['Mime-Type'])
+        assert_equal('UTF-8', attachment[:preferences]['Charset'])
+      else
+        assert(false, "invalid attachment, should not be there, #{attachment.inspect}")
+      end
+    end
+  end
+
   test 'plain email + without attachment check' do
-    text = '> Welcome!
->
-> Thank you for installing Zammad. äöüß
->'
+    text = <<~MSG_TEXT.chomp
+      > Welcome!
+      >
+      > Thank you for installing Zammad. äöüß
+      >
+      MSG_TEXT
     mail = Channel::EmailBuild.build(
       from: 'sender@example.com',
       to: 'recipient@example.com',
       body: text,
     )
 
-    should = '> Welcome!
->
-> Thank you for installing Zammad. äöüß
->'
-    assert_equal(should, mail.body.to_s)
+    mail_gem_should = Mail::Utilities.to_crlf(text)
+    email_parser_should = text
+    assert_equal(mail_gem_should, mail.body.to_s)
     assert_nil(mail.html_part)
 
     parser = Channel::EmailParser.new
     data = parser.parse(mail.to_s)
 
     # check body
-    assert_equal(should, data[:body])
+    assert_equal(email_parser_should, data[:body])
 
     # check count of attachments, 0
     assert_equal(0, data[:attachments].length)

@@ -6,8 +6,8 @@ class Ldap
   #  an ::Ldap instance.
   #
   # @example
-  #  require 'ldap'
-  #  require 'ldap/user'
+  #  require_dependency 'ldap'
+  #  require_dependency 'ldap/user'
   class User
     include Ldap::FilterLookup
 
@@ -76,8 +76,8 @@ class Ldap
     # @param ldap [Ldap] An optional existing Ldap class instance. Default is a new connection with given configuration.
     #
     # @example
-    #  require 'ldap'
-    #  require 'ldap/user'
+    #  require_dependency 'ldap'
+    #  require_dependency 'ldap/user'
     #  ldap_user = Ldap::User.new
     #
     # @return [nil]
@@ -144,7 +144,7 @@ class Ldap
           next if value.blank?
           next if value[0].blank?
 
-          example_value         = value[0].force_encoding('UTF-8').encode('utf-8', 'binary', invalid: :replace, undef: :replace, replace: '?')
+          example_value         = value[0].force_encoding('UTF-8').utf8_encode(fallback: :read_as_sanitized_binary)
           attributes[attribute] = "#{attribute} (e. g. #{example_value})"
         end
 

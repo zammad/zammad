@@ -18,7 +18,7 @@ module Channel::Filter::FollowUpCheck
 
     # get ticket# from body
     if setting.include?('body')
-      ticket = Ticket::Number.check(mail[:body])
+      ticket = Ticket::Number.check(mail[:body].html2text)
       if ticket
         Rails.logger.debug { "Follow up for '##{ticket.number}' in body." }
         mail['x-zammad-ticket-id'.to_sym] = ticket.id
@@ -30,7 +30,7 @@ module Channel::Filter::FollowUpCheck
     if setting.include?('attachment') && mail[:attachments]
       mail[:attachments].each do |attachment|
         next if !attachment[:data]
-        ticket = Ticket::Number.check(attachment[:data])
+        ticket = Ticket::Number.check(attachment[:data].html2text)
         next if !ticket
         Rails.logger.debug { "Follow up for '##{ticket.number}' in attachment." }
         mail['x-zammad-ticket-id'.to_sym] = ticket.id
@@ -92,7 +92,7 @@ module Channel::Filter::FollowUpCheck
 
           # remove leading "..:\s" and "..[\d+]:\s" e. g. "Re: " or "Re[5]: "
           subject_to_check = mail[:subject]
-          subject_to_check.gsub!(/^(..(\[\d+\])?:\s)+/, '')
+          subject_to_check.gsub!(/^(..(\[\d+\])?:\s+)+/, '')
 
           # if subject is different, it's no followup
           next if subject_to_check != article_first.subject

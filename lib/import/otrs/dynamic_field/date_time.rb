@@ -1,7 +1,7 @@
 # this require is required (hehe) because of Rails autoloading
 # which causes strange behavior not inheriting correctly
 # from Import::OTRS::DynamicField
-require 'import/otrs/dynamic_field'
+require_dependency 'import/otrs/dynamic_field'
 
 module Import
   module OTRS

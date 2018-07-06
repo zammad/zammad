@@ -1,0 +1,5 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: MAILER-DAEMON@example.com (Mail Delivery System)
+from_email: MAILER-DAEMON@example.com
+from_display_name: Mail Delivery System
+subject: Undelivered Mail Returned to Sender

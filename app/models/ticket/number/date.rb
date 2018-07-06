@@ -86,12 +86,14 @@ module Ticket::Number::Date
     end
 
     # probe format
-    string.scan(/#{Regexp.quote(ticket_hook)}#{Regexp.quote(ticket_hook_divider)}(\d{4,10}#{system_id}\d{2,40})/i) do
+    # NOTE: we use `(?<=\W|^)` at the start of the regular expressions below
+    # because `\b` fails when ticket_hook begins with a non-word character (like '#')
+    string.scan(/(?<=\W|^)#{Regexp.quote(ticket_hook)}#{Regexp.quote(ticket_hook_divider)}(\d{4,10}#{system_id}\d{2,40})\b/i) do
       ticket = Ticket.find_by(number: $1)
       break if ticket
     end
     if !ticket
-      string.scan(/#{Regexp.quote(ticket_hook)}\s{0,2}(\d{4,10}#{system_id}\d{2,40})/i) do
+      string.scan(/(?<=\W|^)#{Regexp.quote(ticket_hook)}\s{0,2}(\d{4,10}#{system_id}\d{2,40})\b/i) do
         ticket = Ticket.find_by(number: $1)
         break if ticket
       end

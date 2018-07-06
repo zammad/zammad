@@ -1,10 +1,12 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class RecentView < ApplicationModel
-  load 'recent_view/assets.rb'
   include RecentView::Assets
 
+  # rubocop:disable Rails/InverseOf
+  belongs_to :ticket, foreign_key: 'o_id'
   belongs_to :object, class_name: 'ObjectLookup', foreign_key: 'recent_view_object_id'
+  # rubocop:enable Rails/InverseOf
 
   after_create  :notify_clients
   after_update  :notify_clients

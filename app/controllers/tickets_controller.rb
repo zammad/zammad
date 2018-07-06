@@ -425,14 +425,14 @@ class TicketsController < ApplicationController
       params.require(:condition).permit!
     end
 
-    # set limit for pagination if needed
-    if params[:page] && params[:per_page]
-      params[:limit] = params[:page].to_i * params[:per_page].to_i
+    per_page = params[:per_page] || params[:limit] || 50
+    per_page = per_page.to_i
+    if per_page > 200
+      per_page = 200
     end
-
-    if params[:limit] && params[:limit].to_i > 100
-      params[:limit] = 100
-    end
+    page = params[:page] || 1
+    page = page.to_i
+    offset = (page - 1) * per_page
 
     query = params[:query]
     if query.respond_to?(:permit!)
@@ -443,15 +443,10 @@ class TicketsController < ApplicationController
     tickets = Ticket.search(
       query: query,
       condition: params[:condition].to_h,
-      limit: params[:limit],
+      limit: per_page,
+      offset: offset,
       current_user: current_user,
     )
-
-    # do pagination if needed
-    if params[:page] && params[:per_page]
-      offset = (params[:page].to_i - 1) * params[:per_page].to_i
-      tickets = tickets[offset, params[:per_page].to_i] || []
-    end
 
     if response_expand?
       list = []
@@ -634,10 +629,11 @@ class TicketsController < ApplicationController
     if Setting.get('import_mode') != true
       raise 'Only can import tickets if system is in import mode.'
     end
+    string = params[:data] || params[:file].read.force_encoding('utf-8')
     result = Ticket.csv_import(
-      string: params[:file].read.force_encoding('utf-8'),
+      string: string,
       parse_params: {
-        col_sep: ';',
+        col_sep: params[:col_sep] || ',',
       },
       try: params[:try],
     )

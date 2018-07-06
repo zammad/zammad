@@ -4,6 +4,7 @@ class FormController < ApplicationController
   skip_before_action :verify_csrf_token
   before_action :cors_preflight_check_execute
   after_action :set_access_control_headers_execute
+  skip_before_action :user_device_check
 
   def configuration
     return if !enabled?
@@ -42,7 +43,7 @@ class FormController < ApplicationController
     end
     if params[:email].blank?
       errors['email'] = 'required'
-    elsif params[:email] !~ /@/
+    elsif !/@/.match?(params[:email])
       errors['email'] = 'invalid'
     elsif params[:email].match?(/(>|<|\||\!|"|§|'|\$|%|&|\(|\)|\?|\s|\.\.)/)
       errors['email'] = 'invalid'
@@ -66,9 +67,7 @@ class FormController < ApplicationController
         Rails.logger.info "Can't verify email #{params[:email]}: #{message}"
 
         # ignore 450, graylistings
-        if message !~ /450/
-          errors['email'] = message
-        end
+        errors['email'] = message if !message.match?(/450/)
       end
     end
 

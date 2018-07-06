@@ -1,4 +1,4 @@
-require 'sequencer/unit/import/common/model/mixin/without_callback'
+require_dependency 'sequencer/unit/import/common/model/mixin/without_callback'
 
 class Sequencer
   class Unit

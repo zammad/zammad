@@ -12,7 +12,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     groups = Group.all
 
     UserInfo.current_user_id = 1
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'tickets-admin',
       firstname: 'Tickets',
       lastname: 'Admin',
@@ -25,7 +25,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'tickets-agent@example.com',
       firstname: 'Tickets',
       lastname: 'Agent',
@@ -38,7 +38,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'tickets-customer1@example.com',
       firstname: 'Tickets',
       lastname: 'Customer1',
@@ -626,13 +626,15 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(2, ticket.articles.first.attachments.count)
     file = ticket.articles.first.attachments[0]
     assert_equal('d3c1e09bdefb92b6a06b791a24ca9599', Digest::MD5.hexdigest(file.content))
-    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.filename)
+    assert_equal('image1.png', file.filename)
     assert_equal('image/png', file.preferences['Mime-Type'])
+    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.preferences['Content-ID'])
     assert(file.preferences['Content-ID'])
     file = ticket.articles.first.attachments[1]
     assert_equal('006a2ca3793b550c8fe444acdeb39252', Digest::MD5.hexdigest(file.content))
-    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.filename)
+    assert_equal('image2.jpeg', file.filename)
     assert_equal('image/jpeg', file.preferences['Mime-Type'])
+    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.preferences['Content-ID'])
     assert(file.preferences['Content-ID'])
   end
 
@@ -670,9 +672,10 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(2, ticket.articles.first.attachments.count)
     file = ticket.articles.first.attachments[0]
     assert_equal('006a2ca3793b550c8fe444acdeb39252', Digest::MD5.hexdigest(file.content))
-    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.filename)
+    assert_equal('image1.jpeg', file.filename)
     assert_equal('image/jpeg', file.preferences['Mime-Type'])
     assert(file.preferences['Content-ID'])
+    assert_match(/#{ticket.id}\..+?@zammad.example.com/, file.preferences['Content-ID'])
     file = ticket.articles.first.attachments[1]
     assert_equal('39d0d586a701e199389d954f2d592720', Digest::MD5.hexdigest(file.content))
     assert_equal('some_file.txt', file.filename)
@@ -716,7 +719,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   end
 
   test '02.03 ticket with wrong ticket id' do
-    group = Group.create_or_update(
+    group = Group.create!(
       name: "GroupWithoutPermission-#{rand(9_999_999_999)}",
       active: true,
       updated_by_id: 1,
@@ -1949,7 +1952,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   end
 
   test '06.01 - ticket with follow up possible set to new_ticket' do
-    group = Group.create_or_update(
+    group = Group.create!(
       name: "GroupWithNoFollowUp-#{rand(9_999_999_999)}",
       active: true,
       updated_by_id: 1,
@@ -2021,7 +2024,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   end
 
   test '07.01 ticket merge' do
-    group_no_permission = Group.create_or_update(
+    group_no_permission = Group.create!(
       name: 'GroupWithNoPermission',
       active: true,
       updated_by_id: 1,
@@ -2086,7 +2089,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
   end
 
   test '07.02 ticket merge - change permission' do
-    group_change_permission = Group.create_or_update(
+    group_change_permission = Group.create!(
       name: 'GroupWithChangePermission',
       active: true,
       updated_by_id: 1,

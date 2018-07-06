@@ -5,6 +5,9 @@ class UserDevice < ApplicationModel
   store     :location_details
   validates :name, presence: true
 
+  before_create  :fingerprint_validation
+  before_update  :fingerprint_validation
+
 =begin
 
 store new device for user if device not already known
@@ -34,7 +37,8 @@ store new device for user if device not already known
 
     # find device by fingerprint
     device_exists_by_fingerprint = false
-    if fingerprint
+    if fingerprint.present?
+      UserDevice.fingerprint_validation(fingerprint)
       user_devices = UserDevice.where(
         user_id: user_id,
         fingerprint: fingerprint,
@@ -220,5 +224,25 @@ delete device devices of user
 
   def self.remove(user_id)
     UserDevice.where(user_id: user_id).destroy_all
+  end
+
+=begin
+
+check fingerprint string
+
+  UserDevice.fingerprint_validation(fingerprint)
+
+=end
+
+  def self.fingerprint_validation(fingerprint)
+    return true if fingerprint.blank?
+    raise Exceptions::UnprocessableEntity, "fingerprint is #{fingerprint.to_s.length} chars but can only be 160 chars!" if fingerprint.to_s.length > 160
+    true
+  end
+
+  private
+
+  def fingerprint_validation
+    UserDevice.fingerprint_validation(fingerprint)
   end
 end

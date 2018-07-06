@@ -1,4 +1,4 @@
-require 'sequencer/unit/common/mixin/dynamic_attribute'
+require_dependency 'sequencer/unit/common/mixin/dynamic_attribute'
 
 class Sequencer
   class Unit

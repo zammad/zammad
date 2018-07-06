@@ -1,0 +1,7 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Bob Smith | deal <info@example.de>
+from_email: info@example.de
+from_display_name: Bob Smith | deal
+subject: Testmail - Alias in info@example.de Gruppe
+content_type: text/plain
+body: no visible content

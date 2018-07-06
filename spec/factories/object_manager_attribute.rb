@@ -72,4 +72,115 @@ FactoryBot.define do
       }
     end
   end
+
+  factory :object_manager_attribute_tree_select, parent: :object_manager_attribute do
+    data_type 'tree_select'
+    data_option do
+      {
+        'options' => [
+          {
+            'name'     => 'Incident',
+            'value'    => 'Incident',
+            'children' => [
+              {
+                'name'     => 'Hardware',
+                'value'    => 'Incident::Hardware',
+                'children' => [
+                  {
+                    'name'  => 'Monitor',
+                    'value' => 'Incident::Hardware::Monitor'
+                  },
+                  {
+                    'name'  => 'Mouse',
+                    'value' => 'Incident::Hardware::Mouse'
+                  },
+                  {
+                    'name'  => 'Keyboard',
+                    'value' => 'Incident::Hardware::Keyboard'
+                  }
+                ]
+              },
+              {
+                'name'     => 'Softwareproblem',
+                'value'    => 'Incident::Softwareproblem',
+                'children' => [
+                  {
+                    'name'  => 'CRM',
+                    'value' => 'Incident::Softwareproblem::CRM'
+                  },
+                  {
+                    'name' => 'EDI',
+                    'value' => 'Incident::Softwareproblem::EDI'
+                  },
+                  {
+                    'name'     => 'SAP',
+                    'value'    => 'Incident::Softwareproblem::SAP',
+                    'children' => [
+                      {
+                        'name'  => 'Authentication',
+                        'value' => 'Incident::Softwareproblem::SAP::Authentication'
+                      },
+                      {
+                        'name'  => 'Not reachable',
+                        'value' => 'Incident::Softwareproblem::SAP::Not reachable'
+                      }
+                    ]
+                  },
+                  {
+                    'name'     => 'MS Office',
+                    'value'    => 'Incident::Softwareproblem::MS Office',
+                    'children' => [
+                      {
+                        'name'  => 'Excel',
+                        'value' => 'Incident::Softwareproblem::MS Office::Excel'
+                      },
+                      {
+                        'name'  => 'PowerPoint',
+                        'value' => 'Incident::Softwareproblem::MS Office::PowerPoint'
+                      },
+                      {
+                        'name'  => 'Word',
+                        'value' => 'Incident::Softwareproblem::MS Office::Word'
+                      },
+                      {
+                        'name'  => 'Outlook',
+                        'value' => 'Incident::Softwareproblem::MS Office::Outlook'
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            'name'     => 'Service request',
+            'value'    => 'Service request',
+            'children' => [
+              {
+                'name'  => 'New software requirement',
+                'value' => 'Service request::New software requirement'
+              },
+              {
+                'name'  => 'New hardware',
+                'value' => 'Service request::New hardware'
+              },
+              {
+                'name'  => 'Consulting',
+                'value' => 'Service request::Consulting'
+              }
+            ]
+          },
+          {
+            'name'  => 'Change request',
+            'value' => 'Change request'
+          }
+        ],
+        'default'    => '',
+        'null'       => true,
+        'relation'   => '',
+        'maxlength'  => 255,
+        'nulloption' => true,
+      }
+    end
+  end
 end

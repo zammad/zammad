@@ -116,7 +116,7 @@ class TwitterReply
     else
       articleNew.to = article.from
 
-    if !articleNew.to
+    if !articleNew.to && customer && customer.accounts
       articleNew.to = customer.accounts['twitter'].username || customer.accounts['twitter'].uid
 
     App.Event.trigger('ui::ticket::setArticleType', {
@@ -169,9 +169,23 @@ class TwitterReply
       textLength = ui.maxTextLength - App.Utils.textLengthWithUrl(params.body)
       return false if textLength < 0
 
+      # check if recipient exists
+      if _.isEmpty(params.to)
+        new App.ControllerModal(
+          head: 'Text missing'
+          buttonCancel: 'Cancel'
+          buttonCancelClass: 'btn--danger'
+          buttonSubmit: false
+          message: 'Need recipient in "To".'
+          shown: true
+          small: true
+          container: ui.el.closest('.content')
+        )
+        return false
+
     true
 
-  @setArticleType: (type, ticket, ui) ->
+  @setArticleTypePost: (type, ticket, ui) ->
     return if type isnt 'twitter status' && type isnt 'twitter direct-message'
     rawHTML = ui.$('[data-name=body]').html()
     cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)

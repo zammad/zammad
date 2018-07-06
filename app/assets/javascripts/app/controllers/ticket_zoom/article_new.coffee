@@ -51,6 +51,8 @@ class App.TicketZoomArticleNew extends App.Controller
     @bind('ui::ticket::setArticleType', (data) =>
       return if data.ticket.id.toString() isnt @ticket_id.toString()
 
+      @setArticleTypePre(data.type.name, data.signaturePosition)
+
       @openTextarea(null, true)
       for key, value of data.article
         if key is 'body'
@@ -58,8 +60,7 @@ class App.TicketZoomArticleNew extends App.Controller
         else
           @$("[name=\"#{key}\"]").val(value).trigger('change')
 
-      # preselect article type
-      @setArticleType(data.type.name, data.signaturePosition)
+      @setArticleTypePost(data.type.name, data.signaturePosition)
 
       # set focus into field
       if data.focus
@@ -102,29 +103,11 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
   tokanice: ->
-    source = "#{App.Config.get('api_path')}/users/search"
-    a = ->
-      $('.content.active .js-to, .js-cc, js-bcc').tokenfield(
-        createTokensOnBlur: true
-        autocomplete: {
-          source: source
-          minLength: 2
-        },
-      ).on('tokenfield:createtoken', (e) ->
-        if !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
-          e.preventDefault()
-          return false
-        e.attrs.label = e.attrs.value
-        true
-      )
-    App.Delay.set(a, 500, undefined, 'tags')
+    App.Utils.tokaniceEmails('.content.active .js-to, .js-cc, js-bcc')
 
   setPossibleArticleTypes: =>
-    actionConfig = App.Config.get('TicketZoomArticleAction')
-    keys = _.keys(actionConfig).sort()
     @articleTypes = []
-    for key in keys
-      config = actionConfig[key]
+    for config in @actions()
       if config && config.articleTypes
         @articleTypes = config.articleTypes(@articleTypes, @ticket, @)
 
@@ -166,7 +149,8 @@ class App.TicketZoomArticleNew extends App.Controller
       isCustomer:       @permissionCheck('ticket.customer')
       internalSelector: @internalSelector
     )
-    @setArticleType(@type)
+    @setArticleTypePre(@type)
+    @setArticleTypePost(@type)
 
     new App.WidgetAvatar(
       el:        @$('.js-avatar')
@@ -278,10 +262,7 @@ class App.TicketZoomArticleNew extends App.Controller
       params.internal = false
 
     # backend based validation
-    actionConfig = App.Config.get('TicketZoomArticleAction')
-    keys = _.keys(actionConfig).sort()
-    for key in keys
-      config = actionConfig[key]
+    for config in @actions()
       if config && config.params
         params = config.params(params.type, params, @)
 
@@ -323,10 +304,7 @@ class App.TicketZoomArticleNew extends App.Controller
           return false
 
     # backend based validation
-    actionConfig = App.Config.get('TicketZoomArticleAction')
-    keys = _.keys(actionConfig).sort()
-    for key in keys
-      config = actionConfig[key]
+    for config in @actions()
       if config && config.validation
         return false if !config.validation(params.type, params, @)
 
@@ -350,10 +328,11 @@ class App.TicketZoomArticleNew extends App.Controller
   selectArticleType: (event) =>
     event.stopPropagation()
     articleTypeToSet = $(event.target).closest('.pop-selectable').data('value')
-    @setArticleType(articleTypeToSet)
+    @setArticleTypePre(articleTypeToSet)
     @hideSelectableArticleType()
+    @setArticleTypePost(articleTypeToSet)
 
-    $(window).off 'click.ticket-zoom-select-type'
+    $(window).off('click.ticket-zoom-select-type')
     @tokanice()
 
   hideSelectableArticleType: =>
@@ -374,8 +353,14 @@ class App.TicketZoomArticleNew extends App.Controller
 
     @$('[name=internal]').val('')
 
-  setArticleType: (type, signaturePosition = 'bottom') =>
+  setArticleTypePre: (type, signaturePosition = 'bottom') =>
     wasScrolledToBottom = @isScrolledToBottom()
+
+    # reset old params
+    if type isnt @type
+      for key in ['to', 'cc', 'bcc', 'subject', 'in_reply_to']
+        @$("[name=#{key}]").val('').trigger('change')
+
     @type = type
     @$('[name=type]').val(type).trigger('change')
     @articleNewEdit.attr('data-type', type)
@@ -394,13 +379,6 @@ class App.TicketZoomArticleNew extends App.Controller
         @setArticleInternal(true)
       else
         @setArticleInternal(false)
-
-    actionConfig = App.Config.get('TicketZoomArticleAction')
-    keys = _.keys(actionConfig).sort()
-    for key in keys
-      localConfig = actionConfig[key]
-      if localConfig && localConfig.setArticleType
-        localConfig.setArticleType(@type, @ticket, @, signaturePosition)
 
     # show/hide attributes/features
     @maxTextLength = undefined
@@ -437,6 +415,11 @@ class App.TicketZoomArticleNew extends App.Controller
     )
 
     @scrollToBottom() if wasScrolledToBottom
+
+  setArticleTypePost: (type, signaturePosition = 'bottom') =>
+    for localConfig in @actions()
+      if localConfig && localConfig.setArticleTypePost
+        localConfig.setArticleTypePost(@type, @ticket, @, signaturePosition)
 
   isScrolledToBottom: ->
     return @el.scrollParent().scrollTop() + @el.scrollParent().height() is @el.scrollParent().prop('scrollHeight')
@@ -615,3 +598,13 @@ class App.TicketZoomArticleNew extends App.Controller
       if element.find('.attachment').length == 0
         element.empty()
     )
+
+  actions: ->
+    actionConfig = App.Config.get('TicketZoomArticleAction')
+    keys = _.keys(actionConfig).sort()
+    actions = []
+    for key in keys
+      localConfig = actionConfig[key]
+      if localConfig
+        actions.push localConfig
+    actions

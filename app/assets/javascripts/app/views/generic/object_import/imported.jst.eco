@@ -1,0 +1,28 @@
+<div>
+<% if @errors: %>
+  <ul>
+  <% for error in @errors: %>
+    <li><%= error %>
+  <% end %>
+<% end %>
+</div>
+
+<div>
+<p class="alert alert--danger js-error hide"></p>
+<p>
+<% if @result.stats: %>
+  <%- @T('The import was successful.') %>
+  <%- @T('The following changes have been made:') %>
+  <ul>
+  <% if @result.stats.deleted isnt undefined: %>
+    <li><%- @T('%s Object(s) were deleted.', @result.stats.deleted) %></li>
+  <% end %>
+  <% if @result.stats.created isnt undefined: %>
+    <li><%- @T('%s Object(s) have been created.', @result.stats.created) %></li>
+  <% end %>
+  <% if @result.stats.updated isnt undefined: %>
+    <li><%- @T('%s Object(s) have been updated.', @result.stats.updated) %></li>
+  <% end %>
+<% end %>
+</p>
+</div>

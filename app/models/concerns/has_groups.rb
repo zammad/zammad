@@ -7,8 +7,12 @@ module HasGroups
 
     attr_accessor :group_access_buffer
 
-    after_create :process_group_access_buffer
-    after_update :process_group_access_buffer
+    after_save :process_group_access_buffer
+
+    # add association to Group, too but ignore it in asset output
+    Group.has_many group_through_identifier
+    Group.has_many model_name.collection.to_sym, through: group_through_identifier, after_add: :cache_update, after_remove: :cache_update, dependent: :destroy
+    Group.association_attributes_ignored group_through_identifier
 
     association_attributes_ignored :groups, group_through_identifier
 
@@ -129,8 +133,6 @@ module HasGroups
   #
   # @return [Array<Group>] Groups the instance has the given access(es) to.
   def groups_access(access)
-    return [] if !active?
-    return [] if !groups_access_permission?
     group_ids = group_ids_access(access)
     Group.where(id: group_ids)
   end

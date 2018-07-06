@@ -4,11 +4,16 @@ class ObjectManager::Attribute < ApplicationModel
 
   self.table_name = 'object_manager_attributes'
 
-  belongs_to :object_lookup,   class_name: 'ObjectLookup'
-  validates  :name, presence: true
-  store      :screens
-  store      :data_option
-  store      :data_option_new
+  belongs_to :object_lookup
+
+  validates :name, presence: true
+
+  store :screens
+  store :data_option
+  store :data_option_new
+
+  before_create :check_datatype
+  before_update :check_datatype, :verify_possible_type_change
 
 =begin
 
@@ -27,12 +32,25 @@ list of all attributes
 
   def self.list_full
     result = ObjectManager::Attribute.all.order('position ASC, name ASC')
+    references = ObjectManager::Attribute.attribute_to_references_hash
     attributes = []
     assets = {}
     result.each do |item|
       attribute = item.attributes
       attribute[:object] = ObjectLookup.by_id(item.object_lookup_id)
       attribute.delete('object_lookup_id')
+
+      # an attribute is deletable if it is both editable and not referenced by other Objects (Triggers, Overviews, Schedulers)
+      deletable = true
+      not_deletable_reason = ''
+      if ObjectManager::Attribute.attribute_used_by_references?(attribute[:object], attribute['name'], references)
+        deletable = false
+        not_deletable_reason = ObjectManager::Attribute.attribute_used_by_references_humaniced(attribute[:object], attribute['name'], references)
+      end
+      attribute[:deletable] = attribute['editable'] && deletable == true
+      if not_deletable_reason.present?
+        attribute[:not_deletable_reason] = "This attribute is referenced by #{not_deletable_reason} and thus cannot be deleted!"
+      end
       attributes.push attribute
     end
     attributes
@@ -309,7 +327,6 @@ possible types
         record.check_editable
         record.check_name
       end
-      record.check_datatype
       record.save!
       return record
     end
@@ -329,7 +346,6 @@ possible types
       record.check_editable
       record.check_name
     end
-    record.check_datatype
     record.save!
     record
   end
@@ -352,6 +368,10 @@ use "force: true" to delete also not editable fields
     # lookups
     if data[:object]
       data[:object_lookup_id] = ObjectLookup.by_name(data[:object])
+    elsif data[:object_lookup_id]
+      data[:object] = ObjectLookup.by_id(data[:object_lookup_id])
+    else
+      raise 'ERROR: need object or object_lookup_id param!'
     end
 
     data[:name].downcase!
@@ -367,6 +387,12 @@ use "force: true" to delete also not editable fields
 
     if !data[:force] && !record.editable
       raise "ERROR: #{data[:object]}.#{data[:name]} can't be removed!"
+    end
+
+    # check to make sure that no triggers, overviews, or schedulers references this attribute
+    if ObjectManager::Attribute.attribute_used_by_references?(data[:object], data[:name])
+      text = ObjectManager::Attribute.attribute_used_by_references_humaniced(data[:object], data[:name])
+      raise "ERROR: #{data[:object]}.#{data[:name]} is referenced by #{text} and thus cannot be deleted!"
     end
 
     # if record is to create, just destroy it
@@ -719,6 +745,109 @@ to send no browser reload event, pass false
     true
   end
 
+=begin
+
+where attributes are used by triggers, overviews or schedulers
+
+  result = ObjectManager::Attribute.attribute_to_references_hash
+
+  result = {
+    ticket.category: {
+      Trigger: ['abc', 'xyz'],
+      Overview: ['abc1', 'abc2'],
+    },
+    ticket.field_b: {
+      Trigger: ['abc'],
+      Overview: ['abc1', 'abc2'],
+    },
+  },
+
+=end
+
+  def self.attribute_to_references_hash
+    objects = Trigger.select(:name, :condition) + Overview.select(:name, :condition) + Job.select(:name, :condition)
+    attribute_list = {}
+    objects.each do |item|
+      item.condition.each do |condition_key, _condition_attributes|
+        attribute_list[condition_key] ||= {}
+        attribute_list[condition_key][item.class.name] ||= []
+        next if attribute_list[condition_key][item.class.name].include?(item.name)
+        attribute_list[condition_key][item.class.name].push item.name
+      end
+    end
+    attribute_list
+  end
+
+=begin
+
+is certain attribute used by triggers, overviews or schedulers
+
+  ObjectManager::Attribute.attribute_used_by_references?('Ticket', 'attribute_name')
+
+=end
+
+  def self.attribute_used_by_references?(object_name, attribute_name, references = attribute_to_references_hash)
+    references.each do |reference_key, _relations|
+      local_object, local_attribute = reference_key.split('.')
+      next if local_object != object_name.downcase
+      next if local_attribute != attribute_name
+      return true
+    end
+    false
+  end
+
+=begin
+
+is certain attribute used by triggers, overviews or schedulers
+
+  result = ObjectManager::Attribute.attribute_used_by_references('Ticket', 'attribute_name')
+
+  result = {
+    Trigger: ['abc', 'xyz'],
+    Overview: ['abc1', 'abc2'],
+  }
+
+=end
+
+  def self.attribute_used_by_references(object_name, attribute_name, references = attribute_to_references_hash)
+    result = {}
+    references.each do |reference_key, relations|
+      local_object, local_attribute = reference_key.split('.')
+      next if local_object != object_name.downcase
+      next if local_attribute != attribute_name
+      relations.each do |relation, relation_names|
+        result[relation] ||= []
+        result[relation].push relation_names.sort
+      end
+      break
+    end
+    result
+  end
+
+=begin
+
+is certain attribute used by triggers, overviews or schedulers
+
+  text = ObjectManager::Attribute.attribute_used_by_references_humaniced('Ticket', 'attribute_name', references)
+
+=end
+
+  def self.attribute_used_by_references_humaniced(object_name, attribute_name, references = nil)
+    result = if references.present?
+               ObjectManager::Attribute.attribute_used_by_references(object_name, attribute_name, references)
+             else
+               ObjectManager::Attribute.attribute_used_by_references(object_name, attribute_name)
+             end
+    not_deletable_reason = ''
+    result.each do |relation, relation_names|
+      if not_deletable_reason.present?
+        not_deletable_reason += '; '
+      end
+      not_deletable_reason += "#{relation}: #{relation_names.sort.join(',')}"
+    end
+    not_deletable_reason
+  end
+
   def self.reset_database_info(model)
     model.connection.schema_cache.clear!
     model.reset_column_information
@@ -750,70 +879,90 @@ to send no browser reload event, pass false
     raise 'Attribute not editable!'
   end
 
+  private
+
   def check_datatype
+    local_data_option = data_option
+    if to_config == true
+      local_data_option = data_option_new
+    end
     if !data_type
       raise 'Need data_type param'
     end
-    if data_type !~ /^(input|user_autocompletion|checkbox|select|tree_select|datetime|date|tag|richtext|textarea|integer|autocompletion_ajax|boolean|user_permission|active|select_organization|autocompletion_multiple_ajax)$/
+    if !data_type.match?(/^(input|user_autocompletion|checkbox|select|tree_select|datetime|date|tag|richtext|textarea|integer|autocompletion_ajax|boolean|user_permission|active|select_organization|autocompletion_multiple_ajax)$/)
       raise "Invalid data_type param '#{data_type}'"
     end
 
-    if !data_option
-      raise 'Need data_type param'
+    if local_data_option.blank?
+      raise 'Need data_option param'
     end
-    if data_option[:null].nil?
+    if local_data_option[:null].nil?
       raise 'Need data_option[:null] param with true or false'
     end
 
     # validate data_option
     if data_type == 'input'
-      raise 'Need data_option[:type] param' if !data_option[:type]
-      raise "Invalid data_option[:type] param '#{data_option[:type]}'" if data_option[:type] !~ /^(text|password|tel|fax|email|url)$/
-      raise 'Need data_option[:maxlength] param' if !data_option[:maxlength]
-      raise "Invalid data_option[:maxlength] param #{data_option[:maxlength]}" if data_option[:maxlength].to_s !~ /^\d+?$/
+      raise 'Need data_option[:type] param e. g. (text|password|tel|fax|email|url)' if !local_data_option[:type]
+      raise "Invalid data_option[:type] param '#{local_data_option[:type]}' (text|password|tel|fax|email|url)" if local_data_option[:type] !~ /^(text|password|tel|fax|email|url)$/
+      raise 'Need data_option[:maxlength] param' if !local_data_option[:maxlength]
+      raise "Invalid data_option[:maxlength] param #{local_data_option[:maxlength]}" if local_data_option[:maxlength].to_s !~ /^\d+?$/
     end
 
     if data_type == 'richtext'
-      raise 'Need data_option[:maxlength] param' if !data_option[:maxlength]
-      raise "Invalid data_option[:maxlength] param #{data_option[:maxlength]}" if data_option[:maxlength].to_s !~ /^\d+?$/
+      raise 'Need data_option[:maxlength] param' if !local_data_option[:maxlength]
+      raise "Invalid data_option[:maxlength] param #{local_data_option[:maxlength]}" if local_data_option[:maxlength].to_s !~ /^\d+?$/
     end
 
     if data_type == 'integer'
       %i[min max].each do |item|
-        raise "Need data_option[#{item.inspect}] param" if !data_option[item]
-        raise "Invalid data_option[#{item.inspect}] param #{data_option[item]}" if data_option[item].to_s !~ /^\d+?$/
+        raise "Need data_option[#{item.inspect}] param" if !local_data_option[item]
+        raise "Invalid data_option[#{item.inspect}] param #{data_option[item]}" if local_data_option[item].to_s !~ /^\d+?$/
       end
     end
 
     if data_type == 'select' || data_type == 'tree_select' || data_type == 'checkbox'
-      raise 'Need data_option[:default] param' if !data_option.key?(:default)
-      raise 'Invalid data_option[:options] or data_option[:relation] param' if data_option[:options].nil? && data_option[:relation].nil?
-      if !data_option.key?(:maxlength)
-        data_option[:maxlength] = 255
+      raise 'Need data_option[:default] param' if !local_data_option.key?(:default)
+      raise 'Invalid data_option[:options] or data_option[:relation] param' if local_data_option[:options].nil? && local_data_option[:relation].nil?
+      if !local_data_option.key?(:maxlength)
+        local_data_option[:maxlength] = 255
       end
-      if !data_option.key?(:nulloption)
-        data_option[:nulloption] = true
+      if !local_data_option.key?(:nulloption)
+        local_data_option[:nulloption] = true
       end
     end
 
     if data_type == 'boolean'
-      raise 'Need data_option[:default] param true|false|undefined' if !data_option.key?(:default)
-      raise 'Invalid data_option[:options] param' if data_option[:options].nil?
+      raise 'Need data_option[:default] param true|false|undefined' if !local_data_option.key?(:default)
+      raise 'Invalid data_option[:options] param' if local_data_option[:options].nil?
     end
 
     if data_type == 'datetime'
-      raise 'Need data_option[:future] param true|false' if data_option[:future].nil?
-      raise 'Need data_option[:past] param true|false' if data_option[:past].nil?
-      raise 'Need data_option[:diff] param in hours' if data_option[:diff].nil?
+      raise 'Need data_option[:future] param true|false' if local_data_option[:future].nil?
+      raise 'Need data_option[:past] param true|false' if local_data_option[:past].nil?
+      raise 'Need data_option[:diff] param in hours' if local_data_option[:diff].nil?
     end
 
     if data_type == 'date'
-      raise 'Need data_option[:future] param true|false' if data_option[:future].nil?
-      raise 'Need data_option[:past] param true|false' if data_option[:past].nil?
-      raise 'Need data_option[:diff] param in days' if data_option[:diff].nil?
+      raise 'Need data_option[:future] param true|false' if local_data_option[:future].nil?
+      raise 'Need data_option[:past] param true|false' if local_data_option[:past].nil?
+      raise 'Need data_option[:diff] param in days' if local_data_option[:diff].nil?
     end
 
     true
   end
 
+  def verify_possible_type_change
+    return true if changes_to_save['data_type'].blank?
+
+    possible = {
+      'select' => %w[tree_select select input checkbox],
+      'tree_select' => %w[tree_select select input checkbox],
+      'checkbox' => %w[tree_select select input checkbox],
+      'input' => %w[tree_select select input checkbox],
+    }
+
+    return true if possible[changes_to_save['data_type'][0]]&.include?(changes_to_save['data_type'][1])
+
+    raise 'Can\'t be changed data_type of attribute. Drop the attribute and recreate it with new data_type.'
+  end
 end

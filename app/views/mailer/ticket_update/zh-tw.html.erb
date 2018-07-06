@@ -6,7 +6,7 @@
 工單 (#{ticket.title}) 已被 "<b>#{current_user.longname}</b>" 更新.
 </div>
 <br>
-<% if @objects[:changes] && !@objects[:changes].empty? %>
+<% if @objects[:changes].present? %>
   <div>
   #{t('Changes')}:<br>
   <% @objects[:changes].each do |key, value| %>

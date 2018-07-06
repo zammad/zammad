@@ -1,8 +1,8 @@
-
 require 'test_helper'
-require 'rake'
 
 class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
+  include SearchindexHelper
+
   setup do
 
     # set accept header
@@ -14,7 +14,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     UserInfo.current_user_id = 1
 
-    @backup_admin = User.create_or_update(
+    @backup_admin = User.create!(
       login: 'backup-admin',
       firstname: 'Backup',
       lastname: 'Agent',
@@ -25,7 +25,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
       groups: groups,
     )
 
-    @admin = User.create_or_update(
+    @admin = User.create!(
       login: 'rest-admin',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -38,7 +38,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create agent
     roles = Role.where(name: 'Agent')
-    @agent = User.create_or_update(
+    @agent = User.create!(
       login: 'rest-agent@example.com',
       firstname: 'Rest',
       lastname: 'Agent',
@@ -51,7 +51,7 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
 
     # create customer without org
     roles = Role.where(name: 'Customer')
-    @customer_without_org = User.create_or_update(
+    @customer_without_org = User.create!(
       login: 'rest-customer1@example.com',
       firstname: 'Rest',
       lastname: 'Customer1',
@@ -62,18 +62,18 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     )
 
     # create orgs
-    @organization = Organization.create_or_update(
+    @organization = Organization.create!(
       name: 'Rest Org',
     )
-    @organization2 = Organization.create_or_update(
+    @organization2 = Organization.create!(
       name: 'Rest Org #2',
     )
-    @organization3 = Organization.create_or_update(
+    @organization3 = Organization.create!(
       name: 'Rest Org #3',
     )
 
     # create customer with org
-    @customer_with_org = User.create_or_update(
+    @customer_with_org = User.create!(
       login: 'rest-customer2@example.com',
       firstname: 'Rest',
       lastname: 'Customer2',
@@ -84,39 +84,17 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
       organization_id: @organization.id,
     )
 
-    # configure es
-    if ENV['ES_URL'].present?
-      #fail "ERROR: Need ES_URL - hint ES_URL='http://127.0.0.1:9200'"
-      Setting.set('es_url', ENV['ES_URL'])
-
-      # Setting.set('es_url', 'http://127.0.0.1:9200')
-      # Setting.set('es_index', 'estest.local_zammad')
-      # Setting.set('es_user', 'elasticsearch')
-      # Setting.set('es_password', 'zammad')
-
-      if ENV['ES_INDEX_RAND'].present?
-        ENV['ES_INDEX'] = "es_index_#{rand(999_999_999)}"
-      end
-      if ENV['ES_INDEX'].blank?
-        raise "ERROR: Need ES_INDEX - hint ES_INDEX='estest.local_zammad'"
-      end
-      Setting.set('es_index', ENV['ES_INDEX'])
+    configure_elasticsearch do
 
       travel 1.minute
 
-      # drop/create indexes
-      Rake::Task.clear
-      Zammad::Application.load_tasks
-      #Rake::Task["searchindex:drop"].execute
-      #Rake::Task["searchindex:create"].execute
-      Rake::Task['searchindex:rebuild'].execute
+      rebuild_searchindex
 
       # execute background jobs
       Scheduler.worker(true)
 
       sleep 6
     end
-
   end
 
   test 'user create tests - no user' do
