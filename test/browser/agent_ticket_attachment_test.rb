@@ -49,12 +49,19 @@ class AgentTicketAttachmentTest < TestCase
               Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
     )
 
+    # upload might take a while
+    watch_for(
+      css:   '.content.active .newTicket .attachments',
+      value: 'upload1.txt',
+    )
+    watch_for(
+      css:   '.content.active .newTicket .attachments',
+      value: 'upload2.jpg',
+    )
+
     # submit form
     click(css: '.content.active .js-submit')
     sleep 5
-
-    # no warning
-    #alert = @browser.switch_to.alert
 
     # check if ticket is shown and attachment exists
     location_check(url: '#ticket/zoom/')
@@ -93,6 +100,12 @@ class AgentTicketAttachmentTest < TestCase
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
       files: [Rails.root.join('test', 'data', 'upload', 'upload1.txt')],
+    )
+
+    # upload might take a while
+    watch_for(
+      css:   '.content.active .article-add .attachments',
+      value: 'upload1.txt',
     )
 
     # submit form
@@ -135,6 +148,16 @@ class AgentTicketAttachmentTest < TestCase
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
       files: [Rails.root.join('test', 'data', 'upload', 'upload1.txt'),
               Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
+    )
+
+    # upload might take a while
+    watch_for(
+      css:   '.content.active .article-add .attachments',
+      value: 'upload1.txt',
+    )
+    watch_for(
+      css:   '.content.active .article-add .attachments',
+      value: 'upload2.jpg',
     )
 
     # submit form
