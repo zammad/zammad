@@ -165,13 +165,19 @@ create/update/delete index
     Rails.logger.info "# curl -X PUT \"#{url}\" \\"
     Rails.logger.debug { "-d '#{data[:data].to_json}'" }
 
+    # note that we use a high read timeout here because
+    # otherwise the request will be retried (underhand)
+    # which leads to an "index_already_exists_exception"
+    # HTTP 400 status error
+    # see: https://github.com/ankane/the-ultimate-guide-to-ruby-timeouts/issues/8
+    # Improving the Elasticsearch config is probably the proper solution
     response = UserAgent.put(
       url,
       data[:data],
       {
         json: true,
         open_timeout: 8,
-        read_timeout: 12,
+        read_timeout: 30,
         user: Setting.get('es_user'),
         password: Setting.get('es_password'),
       }
