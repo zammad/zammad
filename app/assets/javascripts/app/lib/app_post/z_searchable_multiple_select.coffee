@@ -1,10 +1,10 @@
 class App.SearchableMultipleSelect extends App.SearchableAjaxSelect
 
   events:
-    'click .selected_item':      'testClick'
+    'click .selected_item':      'removeItem'
 
   elements:
-    '.items':                     'itemList'
+    '.items':                    'itemList'
 
   render: ->
     @attribute.valueName = ''
@@ -39,5 +39,5 @@ class App.SearchableMultipleSelect extends App.SearchableAjaxSelect
         name: @attribute.name
       @itemList.append html
 
-  testClick: (event) ->
+  removeItem: (event) ->
     $(event.currentTarget).closest('div').remove()
