@@ -25,8 +25,8 @@ Zammad::Application.routes.draw do
   match api_path + '/users/:id',                   to: 'users#show',                  via: :get
   match api_path + '/users/history/:id',           to: 'users#history',               via: :get
   match api_path + '/users',                       to: 'users#create',                via: :post
-  match api_path + '/users/:id',                   to: 'users#update',                via: :put
-  match api_path + '/users/:id',                   to: 'users#destroy',               via: :delete
+  match api_path + '/users/:id',                   to: 'users#update',                via: :put,    as: 'api_v1_update_user'
+  match api_path + '/users/:id',                   to: 'users#destroy',               via: :delete, as: 'api_v1_delete_user'
   match api_path + '/users/image/:hash',           to: 'users#image',                 via: :get
 
   match api_path + '/users/email_verify',          to: 'users#email_verify',          via: :post

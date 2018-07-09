@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, type: :controller do
+RSpec.describe 'User endpoint', type: :request do
 
   let(:role_with_admin_user_permissions) do
     create(:role).tap do |role|
@@ -16,7 +16,7 @@ RSpec.describe UsersController, type: :controller do
   end
   let(:admin_without_admin_user_permissions) { create(:user, roles: [role_without_admin_user_permissions]) }
 
-  describe 'POST #create' do
+  describe 'User creation' do
 
     let(:attributes) { attributes_params_for(:user) }
 
@@ -25,7 +25,7 @@ RSpec.describe UsersController, type: :controller do
       authenticated_as(requester)
 
       expect do
-        post :create, params: attributes
+        post api_v1_users_path, params: attributes
       end.to not_change {
         User.count
       }
@@ -51,7 +51,7 @@ RSpec.describe UsersController, type: :controller do
             authenticated_as(admin_with_admin_user_permissions)
 
             expect do
-              post :create, params: payload
+              post api_v1_users_path, params: payload
             end.to change {
               User.count
             }.by(1)
@@ -64,7 +64,7 @@ RSpec.describe UsersController, type: :controller do
             authenticated_as(admin_without_admin_user_permissions)
 
             expect do
-              post :create, params: payload
+              post api_v1_users_path, params: payload
             end.to not_change {
               User.count
             }
@@ -77,7 +77,7 @@ RSpec.describe UsersController, type: :controller do
             authenticated_as(requester)
 
             expect do
-              post :create, params: payload
+              post api_v1_users_path, params: payload
             end.to change {
               User.count
             }.by(1)
@@ -128,7 +128,7 @@ RSpec.describe UsersController, type: :controller do
             authenticated_as(admin_with_admin_user_permissions)
 
             expect do
-              post :create, params: payload
+              post api_v1_users_path, params: payload
             end.to change {
               User.count
             }.by(1)
@@ -141,7 +141,7 @@ RSpec.describe UsersController, type: :controller do
             authenticated_as(admin_without_admin_user_permissions)
 
             expect do
-              post :create, params: payload
+              post api_v1_users_path, params: payload
             end.to not_change {
               User.count
             }
@@ -154,7 +154,7 @@ RSpec.describe UsersController, type: :controller do
             authenticated_as(requester)
 
             expect do
-              post :create, params: payload
+              post api_v1_users_path, params: payload
             end.to change {
               User.count
             }.by(1)
@@ -187,13 +187,13 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe 'PUT #update' do
+  describe 'User update' do
 
     def authorized_update_request(requester:, requested:)
       authenticated_as(requester)
 
       expect do
-        put :update, params: cleaned_params_for(requested).merge(firstname: 'Changed')
+        put api_v1_update_user_path(requested), params: cleaned_params_for(requested).merge(firstname: 'Changed')
       end.to change {
         requested.reload.firstname
       }
@@ -205,7 +205,7 @@ RSpec.describe UsersController, type: :controller do
       authenticated_as(requester)
 
       expect do
-        put :update, params: cleaned_params_for(requested).merge(firstname: 'Changed')
+        put api_v1_update_user_path(requested), params: cleaned_params_for(requested).merge(firstname: 'Changed')
       end.to not_change {
         requested.reload.attributes
       }
@@ -375,7 +375,7 @@ RSpec.describe UsersController, type: :controller do
           authenticated_as(admin_with_admin_user_permissions)
 
           expect do
-            put :update, params: payload
+            put api_v1_update_user_path(requested), params: payload
           end.to change {
             value_of_attribute
           }
@@ -386,7 +386,7 @@ RSpec.describe UsersController, type: :controller do
           authenticated_as(admin_without_admin_user_permissions)
 
           expect do
-            put :update, params: payload
+            put api_v1_update_user_path(requested), params: payload
           end.to not_change {
             value_of_attribute
           }
@@ -402,7 +402,7 @@ RSpec.describe UsersController, type: :controller do
           authenticated_as(requester)
 
           expect do
-            put :update, params: payload
+            put api_v1_update_user_path(requested), params: payload
           end.to change {
             value_of_attribute
           }
@@ -418,7 +418,7 @@ RSpec.describe UsersController, type: :controller do
           authenticated_as(requester)
 
           expect do
-            put :update, params: payload
+            put api_v1_update_user_path(requested), params: payload
           end.to not_change {
             value_of_attribute
           }
@@ -510,12 +510,12 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe 'DELETE #destroy' do
+  describe 'User deletion' do
 
     def authorized_destroy_request(requester:, requested:)
       authenticated_as(requester)
 
-      delete :destroy, params: { id: requested.id }
+      delete api_v1_delete_user_path(requested)
 
       expect(response).to have_http_status(:success)
       expect(requested).not_to exist_in_database
@@ -524,7 +524,7 @@ RSpec.describe UsersController, type: :controller do
     def unauthorized_destroy_request(requester:, requested:)
       authenticated_as(requester)
 
-      delete :destroy, params: { id: requested.id }
+      delete api_v1_delete_user_path(requested)
 
       expect(response).to have_http_status(:unauthorized)
       expect(requested).to exist_in_database
