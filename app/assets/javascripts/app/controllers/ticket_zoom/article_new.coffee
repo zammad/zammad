@@ -184,11 +184,18 @@ class App.TicketZoomArticleNew extends App.Controller
             @attachmentPlaceholder.addClass('hide')
             @attachmentUpload.removeClass('hide')
             @cancelContainer.removeClass('hide')
+            # Disable the update ticket button during uploading
+            $('.active .attributeBar .js-submit')
+              .text(App.i18n.translateInline('Uploading'))
+              .addClass('is-disabled')
 
           onAborted: =>
             @attachmentPlaceholder.removeClass('hide')
             @attachmentUpload.addClass('hide')
             @$('.article-attachment input').val('')
+            $('.active .attributeBar .js-submit')
+              .text(App.i18n.translateInline('Update'))
+              .removeClass('is-disabled')
 
           # Called after received response from the server
           onCompleted: (response) =>
@@ -205,6 +212,9 @@ class App.TicketZoomArticleNew extends App.Controller
 
             @renderAttachment(response.data)
             @$('.article-attachment input').val('')
+            $('.active .attributeBar .js-submit')
+              .text(App.i18n.translateInline('Update'))
+              .removeClass('is-disabled')
 
           # Called during upload progress, first parameter
           # is decimal value from 0 to 100.
