@@ -8,8 +8,9 @@ module ZammadSpecSupportRequest
   %i[get post patch put delete head].each do |method_id|
 
     define_method(method_id) do |path, **args|
-      headers = Hash(headers).merge(Hash(@headers))
-      super(path, headers: headers, **args)
+      args = args.with_indifferent_access
+      args[:headers] = Hash(args[:headers]).merge!(Hash(@headers))
+      super(path, **args.symbolize_keys)
     end
   end
 
