@@ -5,6 +5,8 @@ module Import
     class Folder
       include ::Mixin::RailsLogger
 
+      DEFAULT_ROOTS = %i[root msgfolderroot publicfoldersroot].freeze
+
       def initialize(connection)
         @connection = connection
         @lookup_map = {}
@@ -27,22 +29,16 @@ module Import
       end
 
       def all
-        # request folders only if neccessary and store the result
-        @all ||= children(%i[root msgfolderroot publicfoldersroot])
+        @all ||= children(*DEFAULT_ROOTS)
       end
 
-      def children(parent_identifiers)
-        parent_identifiers.each_with_object([]) do |parent_identifier, result|
+      def children(*parents)
+        return [] if parents.empty?
 
-          child_folders = request_children(parent_identifier)
+        direct_descendants = parents.map(&method(:request_children))
+                                    .flatten.uniq.compact
 
-          next if child_folders.blank?
-
-          child_folder_ids = child_folders.collect(&:id)
-          child_folders   += children(child_folder_ids)
-
-          result.concat(child_folders)
-        end
+        direct_descendants | children(*direct_descendants)
       end
 
       def display_path(folder)
@@ -65,11 +61,11 @@ module Import
 
       private
 
-      def request_children(parent_identifier)
-        @connection.folders(root: parent_identifier)
+      def request_children(parent)
+        parent = parent.id if parent.respond_to?(:id) # type coercion
+        @connection.folders(root: parent)
       rescue Viewpoint::EWS::EwsFolderNotFound => e
-        logger.warn(e)
-        nil
+        logger.warn(e) && return
       end
     end
   end
