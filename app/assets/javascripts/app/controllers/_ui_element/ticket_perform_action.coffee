@@ -16,7 +16,7 @@ class App.UiElement.ticket_perform_action
     # megre config
     elements = {}
     for groupKey, groupMeta of groups
-      if !App[groupMeta.model]
+      if !groupMeta.model || !App[groupMeta.model]
         elements["#{groupKey}.email"] = { name: 'email', display: 'Email' }
       else
 
@@ -45,76 +45,40 @@ class App.UiElement.ticket_perform_action
 
     [defaults, groups, elements]
 
+  @placeholder: (elementFull, attribute, params, groups, elements) ->
+    item = $( App.view('generic/ticket_perform_action/row')( attribute: attribute ) )
+    selector = @buildAttributeSelector(elementFull, groups, elements)
+    item.find('.js-attributeSelector').prepend(selector)
+    item
+
   @render: (attribute, params = {}) ->
 
     [defaults, groups, elements] = @defaults(attribute)
 
-    selector = @buildAttributeSelector(groups, elements)
-
     # return item
     item = $( App.view('generic/ticket_perform_action/index')( attribute: attribute ) )
-    item.find('.js-attributeSelector').prepend(selector)
 
     # add filter
-    item.find('.js-add').bind('click', (e) =>
+    item.on('click', '.js-add', (e) =>
       element = $(e.target).closest('.js-filterElement')
-      elementClone = element.clone(true)
-      element.after(elementClone)
-      elementClone.find('.js-attributeSelector select').trigger('change')
+      placeholder = @placeholder(item, attribute, params, groups, elements)
+      if element.get(0)
+        element.after(placeholder)
+      else
+        item.append(placeholder)
+      placeholder.find('.js-attributeSelector select').trigger('change')
       @updateAttributeSelectors(item)
     )
 
     # remove filter
-    item.find('.js-remove').bind('click', (e) =>
+    item.on('click', '.js-remove', (e) =>
       return if $(e.currentTarget).hasClass('is-disabled')
       $(e.target).closest('.js-filterElement').remove()
       @updateAttributeSelectors(item)
     )
 
     # change attribute selector
-    item.find('.js-attributeSelector select').bind('change', (e) =>
-      elementRow = $(e.target).closest('.js-filterElement')
-      groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
-      @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, elements, {}, attribute)
-      @updateAttributeSelectors(item)
-    )
-
-    # build inital params
-    if !_.isEmpty(params[attribute.name])
-
-      selectorExists = false
-      for groupAndAttribute, meta of params[attribute.name]
-        selectorExists = true
-
-        # get selector rows
-        elementFirst = item.find('.js-filterElement').first()
-        elementLast = item.find('.js-filterElement').last()
-
-        # clone, rebuild and append
-        elementClone = elementFirst.clone(true)
-        @rebuildAttributeSelectors(item, elementClone, groupAndAttribute, elements, meta, attribute)
-        elementLast.after(elementClone)
-
-      # remove first dummy row
-      if selectorExists
-        item.find('.js-filterElement').first().remove()
-
-    else
-      for groupAndAttribute in defaults
-
-        # get selector rows
-        elementFirst = item.find('.js-filterElement').first()
-        elementLast = item.find('.js-filterElement').last()
-
-        # clone, rebuild and append
-        elementClone = elementFirst.clone(true)
-        @rebuildAttributeSelectors(item, elementClone, groupAndAttribute, elements, {}, attribute)
-
-        elementLast.after(elementClone)
-      item.find('.js-filterElement').first().remove()
-
-    # change attribute selector
-    item.find('.js-attributeSelector select').bind('change', (e) =>
+    item.on('change', '.js-attributeSelector select', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
       groupAndAttribute = elementRow.find('.js-attributeSelector option:selected').attr('value')
       @rebuildAttributeSelectors(item, elementRow, groupAndAttribute, elements, {}, attribute)
@@ -128,9 +92,35 @@ class App.UiElement.ticket_perform_action
       @buildOperator(item, elementRow, groupAndAttribute, elements, {}, attribute)
     )
 
+    # build inital params
+    if _.isEmpty(params[attribute.name])
+
+      for groupAndAttribute in defaults
+
+        # build and append
+        element = @placeholder(item, attribute, params, groups, elements)
+        item.append(element)
+        @rebuildAttributeSelectors(item, element, groupAndAttribute, elements, {}, attribute)
+
+      return item
+
+    for groupAndAttribute, meta of params[attribute.name]
+
+      # build and append
+      element = @placeholder(item, attribute, params, groups, elements)
+      @rebuildAttributeSelectors(item, element, groupAndAttribute, elements, meta, attribute)
+      item.append(element)
     item
 
-  @buildAttributeSelector: (groups, elements) ->
+  @buildAttributeSelector: (elementFull, groups, elements) ->
+
+    # find first possible attribute
+    selectedValue = ''
+    elementFull.find('.js-attributeSelector select option').each(->
+      if !selectedValue && !$(@).prop('disabled')
+        selectedValue = $(@).val()
+    )
+
     selection = $('<select class="form-control"></select>')
     for groupKey, groupMeta of groups
       displayName = App.i18n.translateInline(groupMeta.name)
@@ -141,7 +131,11 @@ class App.UiElement.ticket_perform_action
         if spacer[0] is groupKey
           attributeConfig = elements[elementKey]
           displayName = App.i18n.translateInline(attributeConfig.display)
-          optgroup.append("<option value=\"#{elementKey}\">#{displayName}</option>")
+
+          selected = ''
+          if elementKey is selectedValue
+            selected = 'selected="selected"'
+          optgroup.append("<option value=\"#{elementKey}\" #{selected}>#{displayName}</option>")
     selection
 
   @updateAttributeSelectors: (elementFull) ->
@@ -191,11 +185,11 @@ class App.UiElement.ticket_perform_action
 
     selection = $("<select class=\"form-control\" name=\"#{name}\"></select>")
     attributeConfig = elements[groupAndAttribute]
-    if !attributeConfig.operator
+    if !attributeConfig || !attributeConfig.operator
       elementRow.find('.js-operator').addClass('hide')
     else
       elementRow.find('.js-operator').removeClass('hide')
-    if attributeConfig.operator
+    if attributeConfig && attributeConfig.operator
       for operator in attributeConfig.operator
         operatorName = App.i18n.translateInline(operator)
         selected = ''

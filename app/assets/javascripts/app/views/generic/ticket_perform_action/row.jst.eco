@@ -1,0 +1,19 @@
+<div class="horizontal-filter js-filterElement">
+  <div class="horizontal-filter-body">
+    <div class="controls">
+      <div class="u-positionOrigin js-attributeSelector">
+        <%- @Icon('arrow-down', 'dropdown-arrow') %>
+      </div>
+    </div>
+    <div class="js-setAttribute"></div>
+    <div class="js-setNotification flex"></div>
+  </div>
+  <div class="filter-controls">
+    <div class="filter-control filter-control-remove js-remove" title="<%- @Ti('Remote') %>">
+      <%- @Icon('minus-small') %>
+    </div>
+    <div class="filter-control filter-control-add js-add" title="<%- @Ti('Add') %>">
+      <%- @Icon('plus-small') %>
+    </div>
+  </div>
+</div>

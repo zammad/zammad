@@ -564,7 +564,7 @@ test('form checks', function() {
   el.find('.js-attributeSelector').last().find('select').val('notification.email').trigger('change')
   el.find('[name="executions::notification.email::subject"]').val('some subject')
   el.find('[data-name="executions::notification.email::body"]').html('lala')
-  el.find('[data-name="executions::notification.email::recipient"] .js-option[data-value="ticket_owner"]').click()
+  el.find('[data-name="executions::notification.email::recipient"] .js-select.js-option[data-value="ticket_owner"]').click()
 
   var params = App.ControllerForm.params(el)
   var test_params = {
