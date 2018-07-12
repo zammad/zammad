@@ -29,6 +29,10 @@ class App.TicketZoomTimeAccounting extends App.ControllerModal
     return if !@cancelCallback
     @cancelCallback()
 
+  onClose: ->
+    return if !@cancelCallback
+    @cancelCallback()
+
   onSubmit: =>
     @$('[name="time_unit"]').removeClass('has-error')
     params = @formParams()
