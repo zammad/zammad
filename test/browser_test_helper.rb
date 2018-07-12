@@ -1018,40 +1018,6 @@ class TestCase < Test::Unit::TestCase
 
 =begin
 
-Get the on-screen pixel coordinates of a given DOM element. Can be used to compare
-the relative location of table rows before and after sort, for example.
-
-Returns a Selenium::WebDriver::Point object. Use result.x and result.y to access
-its X and Y coordinates respectively.
-
-      get_location(
-        browser: browser1,
-        css: '.some_class',
-      )
-
-=end
-
-  def get_location(params)
-    switch_window_focus(params)
-    log('exists', params)
-
-    instance = params[:browser] || @browser
-    if params[:css]
-      query = { css: params[:css] }
-    end
-    if params[:xpath]
-      query = { xpath: params[:xpath] }
-    end
-    if !instance.find_elements(query)[0]
-      screenshot(browser: instance, comment: 'exists_failed')
-      raise "#{query} dosn't exist, but should"
-    end
-
-    instance.find_elements(query)[0].location
-  end
-
-=begin
-
 set type of task (closeTab, closeNextInOverview, stayOnTab)
 
   task_type(
@@ -1769,15 +1735,6 @@ wait untill text in selector disabppears
       )
     end
 
-    if data[:group_direction]
-      select(
-        browser:  instance,
-        css:      '.modal select[name="group_direction"]',
-        value:    data[:group_direction],
-        mute_log: true,
-      )
-    end
-
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
     11.times do
@@ -1878,15 +1835,6 @@ wait untill text in selector disabppears
         browser:  instance,
         css:      '.modal select[name="order::direction"]',
         value:    data['order::direction'],
-        mute_log: true,
-      )
-    end
-
-    if data[:group_direction]
-      select(
-        browser:  instance,
-        css:      '.modal select[name="group_direction"]',
-        value:    data[:group_direction],
         mute_log: true,
       )
     end

@@ -113,7 +113,6 @@ class App.ControllerTable extends App.Controller
   radio:              false
   renderState:        undefined
   groupBy:            undefined
-  groupDirection:     undefined
 
   shownPerPage: 150
   shownPage: 0
@@ -772,9 +771,6 @@ class App.ControllerTable extends App.Controller
       for key of groupObjects
         groupsSorted.push key
       groupsSorted = groupsSorted.sort()
-      # Reverse the sorted groups depending on the groupDirection
-      if @groupDirection == 'DESC'
-        groupsSorted.reverse()
 
       # get new order
       localObjects = []

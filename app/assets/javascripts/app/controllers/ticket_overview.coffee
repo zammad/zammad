@@ -969,7 +969,6 @@ class Table extends App.Controller
       overviewAttributes: @overview.view.s
       objects:            ticketListShow
       groupBy:            @overview.group_by
-      groupDirection:     @overview.group_direction
       orderBy:            @overview.order.by
       orderDirection:     @overview.order.direction
     )
@@ -1135,7 +1134,6 @@ class Table extends App.Controller
         objects:        ticketListShow
         checkbox:       checkbox
         groupBy:        @overview.group_by
-        groupDirection: @overview.group_direction
         orderBy:        @overview.order.by
         orderDirection: @overview.order.direction
         class: 'table--light'
@@ -1531,7 +1529,7 @@ class App.OverviewSettings extends App.ControllerModal
     },
     {
       name:      'order::direction'
-      display:   'Order by Direction'
+      display:   'Direction'
       tag:       'select'
       default:   @overview.order.direction
       null:      false
@@ -1549,18 +1547,7 @@ class App.OverviewSettings extends App.ControllerModal
       nulloption: true
       translate:  true
       options:    App.Overview.groupByAttributes()
-    },
-    {
-      name:    'group_direction'
-      display: 'Group by Direction'
-      tag:     'select'
-      default: @overview.group_direction
-      null:    false
-      translate: true
-      options:
-        ASC:   'up'
-        DESC:  'down'
-    },)
+    })
 
     controller = new App.ControllerForm(
       model:     { configure_attributes: @configure_attributes_article }
@@ -1583,10 +1570,6 @@ class App.OverviewSettings extends App.ControllerModal
 
     if @overview.order.direction isnt params.order.direction
       @overview.order.direction = params.order.direction
-      @reload_needed = true
-
-    if @overview.group_direction isnt params.group_direction
-      @overview.group_direction = params.group_direction
       @reload_needed = true
 
     for key, value of params.view
