@@ -24,7 +24,7 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     return true if type['name'] != 'email'
 
     # set subject if empty
-    ticket = Ticket.lookup(id: record.ticket_id)
+    ticket = record.ticket
     if !record.subject || record.subject == ''
       record.subject = ticket.title
     end
@@ -44,7 +44,7 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
     # set sender
     email_address = ticket.group.email_address
     if !email_address
-      raise "No email address found for group '#{ticket.group.name}'"
+      raise "No email address found for group '#{ticket.group.name}' (#{ticket.group_id})"
     end
 
     # remember email address for background job
