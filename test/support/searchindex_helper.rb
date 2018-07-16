@@ -43,15 +43,7 @@ module SearchindexHelper
   def rebuild_searchindex
     Rake::Task.clear
     Zammad::Application.load_tasks
-
-    if ENV['ES_INDEX_RAND'].blank?
-      Rake::Task['searchindex:rebuild'].execute
-    else
-      # if we have a random index we don't need
-      # to drop the index in the first place
-      Rake::Task['searchindex:create'].execute
-      Rake::Task['searchindex:reload'].execute
-    end
+    Rake::Task['searchindex:rebuild'].execute
   end
 
 end
