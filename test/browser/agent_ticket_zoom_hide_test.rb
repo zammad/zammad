@@ -43,7 +43,7 @@ class AgentTicketZoomHideTest < TestCase
     ticket_update(
       data: {
         body:  'added image attachment',
-        files: [Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
+        files: [Rails.root.join('test', 'fixtures', 'upload2.jpg')],
       },
     )
 
