@@ -651,6 +651,12 @@ test("htmlCleanup", function() {
   result = App.Utils.htmlCleanup(source)
   equal(result.get(0).outerHTML, should, source)
 
+  // strip out browser-inserted (broken) link (see https://github.com/zammad/zammad/issues/2019)
+  source = "<div><a href=\"https://example.com/#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\">test</a></div>"
+  should = "<a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\">test</a>"
+  result = App.Utils.htmlCleanup(source)
+  equal(result.html(), should, source)
+
   source = "<table bgcolor=\"green\" aaa=\"1\" style=\"color: red\"><thead><tr style=\"margin-top: 10px\"><th colspan=\"2\" abc=\"a\" style=\"margin-top: 12px\">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>"
   should = "<table bgcolor=\"green\" style=\"color:red;\"><thead><tr style=\"margin-top:10px;\"><th colspan=\"2\" style=\"margin-top:12px;\">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>"
   result = App.Utils.htmlCleanup(source)

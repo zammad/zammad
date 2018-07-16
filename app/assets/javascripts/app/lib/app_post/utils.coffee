@@ -262,6 +262,10 @@ class App.Utils
     # remove word markup
     @_removeWordMarkup(html)
 
+    # strip out browser-inserted (broken) link
+    # (see https://github.com/zammad/zammad/issues/2019)
+    @_stripDoubleDomainAnchors(html)
+
     # remove tags, keep content
     html.find('font, small, time, form, label').replaceWith( ->
       $(@).contents()
@@ -394,6 +398,15 @@ class App.Utils
     if match
       return window.word_filter(html)
     html
+
+  @_stripDoubleDomainAnchors: (html) ->
+    html.find('a').each( ->
+      origHref  = $(@).attr('href')
+      return if !origHref?
+
+      fixedHref = origHref.replace(/^https?:\/\/.*(?=(https?|#{config.http_type}):\/\/)/, '')
+      if origHref != fixedHref then $(@).attr('href', fixedHref)
+    )
 
   # signatureNeeded = App.Utils.signatureCheck(message, signature)
   @signatureCheck: (message, signature) ->
