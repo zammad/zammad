@@ -365,7 +365,7 @@ returns
       data[:from_local]        = mail_address.local
       data[:from_domain]       = mail_address.domain
       data[:from_display_name] = mail_address.display_name || mail_address.comments&.first
-    elsif from =~ /^(.+?)<((.+?)@(.+?))>$/
+    elsif from =~ /^(.+?)<((.+?)@(.+?))>/
       data[:from_email]        = $2
       data[:from_local]        = $3
       data[:from_domain]       = $4

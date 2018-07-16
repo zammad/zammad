@@ -360,19 +360,24 @@ returns
       next if local_url.blank?
       url = local_url
     end
-    create!(
-      login: hash['info']['nickname'] || hash['uid'],
-      firstname: hash['info']['name'],
-      email: hash['info']['email'],
-      image_source: hash['info']['image'],
-      web: url,
-      address: hash['info']['location'],
-      note: hash['info']['description'],
-      source: hash['provider'],
-      role_ids: role_ids,
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
+    begin
+      create!(
+        login: hash['info']['nickname'] || hash['uid'],
+        firstname: hash['info']['name'],
+        email: hash['info']['email'],
+        image_source: hash['info']['image'],
+        web: url,
+        address: hash['info']['location'],
+        note: hash['info']['description'],
+        source: hash['provider'],
+        role_ids: role_ids,
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+    rescue => e
+      logger.error e
+      raise Exceptions::UnprocessableEntity, e.message
+    end
   end
 
 =begin
@@ -532,10 +537,10 @@ returns
     return if username.blank?
 
     # try to find user based on login
-    user = User.find_by(login: username.downcase, active: true)
+    user = User.find_by(login: username.downcase.strip, active: true)
 
     # try second lookup with email
-    user ||= User.find_by(email: username.downcase, active: true)
+    user ||= User.find_by(email: username.downcase.strip, active: true)
 
     # check if email address exists
     return if !user
@@ -829,6 +834,62 @@ returns
     Cache.delete(key)
   end
 
+=begin
+
+try to find correct name
+
+  [firstname, lastname] = User.name_guess('Some Name', 'some.name@example.com')
+
+=end
+
+  def self.name_guess(string, email = nil)
+    return if string.blank? && email.blank?
+    string.strip!
+    firstname = ''
+    lastname = ''
+
+    # "Lastname, Firstname"
+    if string.match?(',')
+      name = string.split(', ', 2)
+      if name.count == 2
+        if name[0].present?
+          lastname = name[0].strip
+        end
+        if name[1].present?
+          firstname = name[1].strip
+        end
+        return [firstname, lastname] if firstname.present? || lastname.present?
+      end
+    end
+
+    # "Firstname Lastname"
+    if string =~ /^(((Dr\.|Prof\.)[[:space:]]|).+?)[[:space:]](.+?)$/i
+      if $1.present?
+        firstname = $1.strip
+      end
+      if $4.present?
+        lastname = $4.strip
+      end
+      return [firstname, lastname] if firstname.present? || lastname.present?
+    end
+
+    # -no name- "firstname.lastname@example.com"
+    if string.blank? && email.present?
+      scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
+      if scan[0].present?
+        if scan[0][0].present?
+          firstname = scan[0][0].strip
+        end
+        if scan[0][1].present?
+          lastname = scan[0][1].strip
+        end
+        return [firstname, lastname] if firstname.present? || lastname.present?
+      end
+    end
+
+    nil
+  end
+
   private
 
   def check_name
@@ -842,43 +903,21 @@ returns
     return true if firstname.present? && lastname.present?
 
     if (firstname.blank? && lastname.present?) || (firstname.present? && lastname.blank?)
-
-      # "Lastname, Firstname"
       used_name = firstname.presence || lastname
-      name = used_name.split(', ', 2)
-      if name.count == 2
-        if name[0].present?
-          self.lastname = name[0]
-        end
-        if name[1].present?
-          self.firstname = name[1]
-        end
-        return true
-      end
+      (local_firstname, local_lastname) = User.name_guess(used_name, email)
 
-      # "Firstname Lastname"
-      name = used_name.split(' ', 2)
-      if name.count == 2
-        if name[0].present?
-          self.firstname = name[0]
-        end
-        if name[1].present?
-          self.lastname = name[1]
-        end
-        return true
-      end
-
-    # -no name- "firstname.lastname@example.com"
     elsif firstname.blank? && lastname.blank? && email.present?
-      scan = email.scan(/^(.+?)\.(.+?)\@.+?$/)
-      if scan[0]
-        if scan[0][0].present?
-          self.firstname = scan[0][0].capitalize
-        end
-        if scan[0][1].present?
-          self.lastname = scan[0][1].capitalize
-        end
-      end
+      (local_firstname, local_lastname) = User.name_guess('', email)
+    end
+
+    self.firstname = local_firstname if local_firstname.present?
+    self.lastname = local_lastname if local_lastname.present?
+
+    if firstname.present? && firstname.match(/^[A-z]+$/) && (firstname.downcase == firstname || firstname.upcase == firstname)
+      firstname.capitalize!
+    end
+    if lastname.present? && lastname.match(/^[A-z]+$/) && (lastname.downcase == lastname || lastname.upcase == lastname)
+      lastname.capitalize!
     end
     true
   end

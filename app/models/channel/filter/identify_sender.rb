@@ -145,8 +145,9 @@ module Channel::Filter::IdentifySender
 
   def self.user_create(data, role_ids = nil)
     data[:email] += '@local' if !data[:email].match?(/@/)
-    user = User.find_by(email: data[:email].downcase) ||
-           User.find_by(login: data[:email].downcase)
+    data[:email] = cleanup_email(data[:email])
+    user = User.find_by(email: data[:email]) ||
+           User.find_by(login: data[:email])
 
     # check if firstname or lastname need to be updated
     if user
@@ -191,6 +192,13 @@ module Channel::Filter::IdentifySender
     string.gsub!(/^'/, '')
     string.gsub!(/'$/, '')
     string.gsub!(/.+?\s\(.+?\)$/, '')
+    string
+  end
+
+  def self.cleanup_email(string)
+    string = string.downcase
+    string.strip!
+    string.delete!('"')
     string
   end
 
