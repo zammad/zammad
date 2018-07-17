@@ -24,7 +24,7 @@
     <% for value in @attribute.value: %>
       <div>
         <span class='selected_item'>
-          <%- @attribute.organizations[value] %>
+          <%- @attribute.display_names[value] %>
         </span>
         <input class='searchableSelect-shadow form-control js-shadow-ids' name='<%- @attribute.name %>' value='<%- value %>'>
       </div>
