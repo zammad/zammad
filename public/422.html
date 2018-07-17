@@ -5,6 +5,9 @@
 <link rel="stylesheet" href="/assets/error/style.css">
 <body <% if @traceback %>class="error-message"<% end %>>
   <h1>422: The change you wanted was rejected.</h1>
+<% if @message.present? %>
+  <div><%= @message %></div>
+<% end %>
 <% if !@traceback %>
   <div class="error-image" style="background-image: url(/assets/error/error-1.svg)"></div>
   <p>Maybe you tried to change something you didn't have access to.</p>

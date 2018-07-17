@@ -3,6 +3,7 @@ Zammad::Application.routes.draw do
 
   # omniauth
   match '/auth/:provider/callback',         to: 'sessions#create_omniauth',      via: %i[post get puts delete]
+  match '/auth/failure',                    to: 'sessions#failure_omniauth',     via: %i[post get]
 
   # sso
   match '/auth/sso',                        to: 'sessions#create_sso',           via: %i[post get]
