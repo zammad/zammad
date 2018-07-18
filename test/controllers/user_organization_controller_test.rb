@@ -64,12 +64,15 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     # create orgs
     @organization = Organization.create!(
       name: 'Rest Org',
+      note: 'Rest Org A',
     )
     @organization2 = Organization.create!(
       name: 'Rest Org #2',
+      note: 'Rest Org B',
     )
     @organization3 = Organization.create!(
       name: 'Rest Org #3',
+      note: 'Rest Org C',
     )
 
     # create customer with org
@@ -765,6 +768,38 @@ class UserOrganizationControllerTest < ActionDispatch::IntegrationTest
     Scheduler.worker(true)
     get "/api/v1/organizations/search?query=#{CGI.escape('Zammad')}", params: {}, headers: @headers.merge('Authorization' => credentials)
     assert_response(401)
+  end
+
+  test 'organization search sortable' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin', 'adminpw')
+
+    get "/api/v1/organizations/search?query=#{CGI.escape('Rest Org')}", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    result.collect! { |v| v['id'] }
+    assert_equal(Array, result.class)
+    assert_equal([ @organization.id, @organization2.id, @organization3.id ], result)
+
+    get "/api/v1/organizations/search?query=#{CGI.escape('Rest Org')}", params: { sort_by: 'note', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    result.collect! { |v| v['id'] }
+    assert_equal(Array, result.class)
+    assert_equal([ @organization.id, @organization2.id, @organization3.id ], result)
+
+    get "/api/v1/organizations/search?query=#{CGI.escape('Rest Org')}", params: { sort_by: 'note', order_by: 'desc' }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    result.collect! { |v| v['id'] }
+    assert_equal(Array, result.class)
+    assert_equal([ @organization3.id, @organization2.id, @organization.id ], result)
+
+    get "/api/v1/organizations/search?query=#{CGI.escape('Rest Org')}", params: { sort_by: %w[note created_at], order_by: %w[desc asc] }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    result.collect! { |v| v['id'] }
+    assert_equal(Array, result.class)
+    assert_equal([ @organization3.id, @organization2.id, @organization.id ], result)
   end
 
 end

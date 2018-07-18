@@ -445,6 +445,8 @@ class TicketsController < ApplicationController
       condition: params[:condition].to_h,
       limit: per_page,
       offset: offset,
+      order_by: params[:order_by],
+      sort_by: params[:sort_by],
       current_user: current_user,
     )
 

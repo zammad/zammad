@@ -1038,4 +1038,100 @@ class UserControllerTest < ActionDispatch::IntegrationTest
     user2.destroy!
   end
 
+  test 'user search sortable' do
+    firstname = "user_search_sortable #{rand(999_999_999)}"
+
+    roles = Role.where(name: 'Customer')
+    user1 = User.create_or_update(
+      login: 'rest-user_search_sortableA@example.com',
+      firstname: "#{firstname} A",
+      lastname: 'user_search_sortableA',
+      email: 'rest-user_search_sortableA@example.com',
+      password: 'user_search_sortableA',
+      active: true,
+      roles: roles,
+      organization_id: @organization.id,
+      out_of_office: false,
+      created_at: '2016-02-05 17:42:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    user2 = User.create_or_update(
+      login: 'rest-user_search_sortableB@example.com',
+      firstname: "#{firstname} B",
+      lastname: 'user_search_sortableB',
+      email: 'rest-user_search_sortableB@example.com',
+      password: 'user_search_sortableB',
+      active: true,
+      roles: roles,
+      organization_id: @organization.id,
+      out_of_office_start_at: '2016-02-06 19:42:00',
+      out_of_office_end_at: '2016-02-07 19:42:00',
+      out_of_office_replacement_id: 1,
+      out_of_office: true,
+      created_at: '2016-02-05 19:42:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Scheduler.worker(true)
+    sleep 2 # let es time to come ready
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('rest-admin@example.com', 'adminpw')
+    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'created_at', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    result.collect! { |v| v['id'] }
+    assert_equal([user1.id, user2.id], result)
+
+    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'firstname', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    result.collect! { |v| v['id'] }
+    assert_equal([user1.id, user2.id], result)
+
+    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'firstname', order_by: 'desc' }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    result.collect! { |v| v['id'] }
+    assert_equal([user2.id, user1.id], result)
+
+    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: %w[firstname created_at], order_by: %w[desc asc] }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    result.collect! { |v| v['id'] }
+    assert_equal([user2.id, user1.id], result)
+
+    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: %w[firstname created_at], order_by: %w[desc asc] }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    result.collect! { |v| v['id'] }
+    assert_equal([user2.id, user1.id], result)
+
+    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'out_of_office', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    result.collect! { |v| v['id'] }
+    assert_equal([user1.id, user2.id], result)
+
+    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: 'out_of_office', order_by: 'desc' }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    result.collect! { |v| v['id'] }
+    assert_equal([user2.id, user1.id], result)
+
+    get "/api/v1/users/search?query=#{CGI.escape(firstname)}", params: { sort_by: %w[created_by_id created_at], order_by: %w[asc asc] }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Array, result.class)
+    result.collect! { |v| v['id'] }
+    assert_equal([user1.id, user2.id], result)
+  end
+
 end

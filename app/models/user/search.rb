@@ -4,6 +4,10 @@ class User
   module Search
     extend ActiveSupport::Concern
 
+    included do
+      include HasSearchSortable
+    end
+
     # methods defined here are going to extend the class, not the instance of it
     class_methods do
 
@@ -54,6 +58,14 @@ or with certain role_ids | permissions
     current_user: user_model,
     role_ids: [1,2,3],
     permissions: ['ticket.agent']
+
+    # sort single column
+    sort_by: 'created_at',
+    order_by: 'asc',
+
+    # sort multiple columns
+    sort_by: [ 'created_at', 'updated_at' ],
+    order_by: [ 'asc', 'desc' ],
   )
 
 returns
@@ -69,6 +81,12 @@ returns
         limit = params[:limit] || 10
         offset = params[:offset] || 0
         current_user = params[:current_user]
+
+        # check sort
+        sort_by = search_get_sort_by(params, 'updated_at')
+
+        # check order
+        order_by = search_get_order_by(params, 'desc')
 
         # enable search only for agents and admins
         return [] if !search_preferences(current_user)
@@ -94,7 +112,7 @@ returns
             }
             query_extention['bool']['must'].push access_condition
           end
-          items = SearchIndexBackend.search(query, limit, 'User', query_extention, offset)
+          items = SearchIndexBackend.search(query, limit, 'User', query_extention, offset, sort_by, order_by)
           users = []
           items.each do |item|
             user = User.lookup(id: item[:id])
@@ -104,17 +122,19 @@ returns
           return users
         end
 
+        order_sql = search_get_order_sql(sort_by, order_by, 'users.updated_at DESC')
+
         # fallback do sql query
         # - stip out * we already search for *query* -
         query.delete! '*'
         users = if params[:role_ids]
                   User.joins(:roles).where('roles.id' => params[:role_ids]).where(
                     '(users.firstname LIKE ? OR users.lastname LIKE ? OR users.email LIKE ? OR users.login LIKE ?) AND users.id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-                  ).order('updated_at DESC').offset(offset).limit(limit)
+                  ).order(order_sql).offset(offset).limit(limit)
                 else
                   User.where(
                     '(firstname LIKE ? OR lastname LIKE ? OR email LIKE ? OR login LIKE ?) AND id != 1', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"
-                  ).order('updated_at DESC').offset(offset).limit(limit)
+                  ).order(order_sql).offset(offset).limit(limit)
                 end
         users
       end

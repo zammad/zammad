@@ -246,6 +246,8 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
       query: query,
       limit: per_page,
       offset: offset,
+      sort_by: params[:sort_by],
+      order_by: params[:order_by],
       current_user: current_user,
     }
     if params[:role_ids].present?

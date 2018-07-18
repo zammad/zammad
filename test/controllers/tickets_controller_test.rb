@@ -2126,4 +2126,93 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(ticket2.id, result['master_ticket']['id'])
   end
 
+  test '08.01 ticket search sorted' do
+    title = "ticket pagination #{rand(999_999_999)}"
+    tickets = []
+
+    ticket1 = Ticket.create!(
+      title: "#{title} A",
+      group: Group.lookup(name: 'Users'),
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create!(
+      type: Ticket::Article::Type.lookup(name: 'note'),
+      sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+      from: 'sender',
+      subject: 'subject',
+      body: 'some body',
+      ticket_id: ticket1.id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    travel 2.seconds
+
+    ticket2 = Ticket.create!(
+      title: "#{title} B",
+      group: Group.lookup(name: 'Users'),
+      customer_id: @customer_without_org.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '3 hoch'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create!(
+      type: Ticket::Article::Type.lookup(name: 'note'),
+      sender: Ticket::Article::Sender.lookup(name: 'Customer'),
+      from: 'sender',
+      subject: 'subject',
+      body: 'some body',
+      ticket_id: ticket2.id,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: {}, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal([ticket2.id, ticket1.id], result['tickets'])
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'created_at', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal([ticket1.id, ticket2.id], result['tickets'])
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'title', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal([ticket1.id, ticket2.id], result['tickets'])
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'title', order_by: 'desc' }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal([ticket2.id, ticket1.id], result['tickets'])
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[asc asc] }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal([ticket1.id, ticket2.id], result['tickets'])
+
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
+    get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: %w[created_at updated_at], order_by: %w[desc asc]  }, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal([ticket2.id, ticket1.id], result['tickets'])
+  end
+
 end

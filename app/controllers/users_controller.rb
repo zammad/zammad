@@ -405,6 +405,8 @@ class UsersController < ApplicationController
       query: query,
       limit: per_page,
       offset: offset,
+      sort_by: params[:sort_by],
+      order_by: params[:order_by],
       current_user: current_user,
     }
     %i[role_ids permissions].each do |key|
