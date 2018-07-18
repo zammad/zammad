@@ -15,40 +15,47 @@ class Sequencer
               def process
                 return if dry_run
                 return if instance.blank?
+                return if associations.blank? && log_associations_error
 
+                register_changes
                 instance.assign_attributes(associations)
-
-                # execute associations check only if needed for performance reasons
-                return if action != :unchanged
-                return if !changed?
-                state.provide(:action, :changed)
               rescue => e
                 handle_failure(e)
               end
 
               private
 
-              def changed?
+              # always returns true
+              def log_associations_error
+                return true if %i[failed deactivated].include?(action)
+                logger.error { 'associations cannot be nil' } if associations.nil?
+                true
+              end
+
+              def register_changes
+                return if !(action == :unchanged && changes.any?)
                 logger.debug { "Changed instance associations: #{changes.inspect}" }
-                changes.present?
+                state.provide(:action, :updated)
               end
 
+              # Why not just use instance.changes?
+              # Because it doesn't include associations
+              # stored on OTHER TABLES (has-one, has-many, HABTM)
               def changes
-                @changes ||= begin
-                  return {} if associations.blank?
-                  associations.collect do |association, value|
-                    before = compareable(instance.send(association))
-                    after  = compareable(value)
-                    next if before == after
-                    [association, [before, after]]
-                  end.compact.to_h.with_indifferent_access
-                end
+                @changes ||= unfiltered_changes.reject(&method(:no_diff?))
               end
 
-              def compareable(value)
-                return nil if value.blank?
-                return value.sort if value.respond_to?(:sort)
-                value
+              def unfiltered_changes
+                attrs  = associations.keys
+                before = attrs.map(&instance.method(:send))
+                after  = associations.values
+                attrs.zip(before.zip(after)).to_h.with_indifferent_access
+              end
+
+              def no_diff?(_, values)
+                values.map!(&:sort) if values.all? { |val| val.respond_to?(:sort) }
+                values.map!(&:presence) # [nil, []] -> [nil, nil]
+                values.uniq.length == 1
               end
             end
           end
