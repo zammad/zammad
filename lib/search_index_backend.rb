@@ -407,7 +407,7 @@ return search result
 
     if result.blank?
       result.push(
-        created_at: {
+        updated_at: {
           order: 'desc',
         },
       )

@@ -72,10 +72,10 @@ returns
         current_user = params[:current_user]
 
         # check sort
-        sort_by = search_get_sort_by(params, 'name')
+        sort_by = search_get_sort_by(params, 'updated_at')
 
         # check order
-        order_by = search_get_order_by(params, 'asc')
+        order_by = search_get_order_by(params, 'desc')
 
         # enable search only for agents and admins
         return [] if !search_preferences(current_user)
@@ -92,8 +92,8 @@ returns
           return organizations
         end
 
-        order_select_sql = search_get_order_select_sql(sort_by, order_by, 'organizations.name')
-        order_sql        = search_get_order_sql(sort_by, order_by, 'organizations.name ASC')
+        order_select_sql = search_get_order_select_sql(sort_by, order_by, 'organizations.updated_at')
+        order_sql        = search_get_order_sql(sort_by, order_by, 'organizations.updated_at ASC')
 
         # fallback do sql query
         # - stip out * we already search for *query* -
@@ -110,7 +110,7 @@ returns
         return organizations if organizations.length > 3
 
         # if only a few organizations are found, search for names of users
-        organizations_by_user = Organization.select('DISTINCT(organizations.id), ' + order_select_sql)
+        organizations_by_user = Organization.select("DISTINCT(organizations.id), #{order_select_sql}")
                                             .joins('LEFT OUTER JOIN users ON users.organization_id = organizations.id')
                                             .where(User.or_cis(%i[firstname lastname email], "%#{query}%"))
                                             .order(order_sql)

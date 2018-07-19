@@ -2136,6 +2136,8 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       customer_id: @customer_without_org.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_at: '2018-02-05 17:42:00',
+      updated_at: '2018-02-05 20:42:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -2150,14 +2152,14 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       created_by_id: 1,
     )
 
-    travel 2.seconds
-
     ticket2 = Ticket.create!(
       title: "#{title} B",
       group: Group.lookup(name: 'Users'),
       customer_id: @customer_without_org.id,
       state: Ticket::State.lookup(name: 'new'),
       priority: Ticket::Priority.lookup(name: '3 hoch'),
+      created_at: '2018-02-05 19:42:00',
+      updated_at: '2018-02-05 19:42:00',
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -2177,7 +2179,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
-    assert_equal([ticket2.id, ticket1.id], result['tickets'])
+    assert_equal([ticket1.id, ticket2.id], result['tickets'])
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
     get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'created_at', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)

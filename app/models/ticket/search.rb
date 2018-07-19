@@ -120,7 +120,7 @@ returns
       end
 
       # check sort
-      sort_by = search_get_sort_by(params, 'created_at')
+      sort_by = search_get_sort_by(params, 'updated_at')
 
       # check order
       order_by = search_get_order_by(params, 'desc')
@@ -177,11 +177,11 @@ returns
       # do query
       # - stip out * we already search for *query* -
 
-      order_select_sql = search_get_order_select_sql(sort_by, order_by, 'tickets.created_at')
-      order_sql        = search_get_order_sql(sort_by, order_by, 'tickets.created_at DESC')
+      order_select_sql = search_get_order_select_sql(sort_by, order_by, 'tickets.updated_at')
+      order_sql        = search_get_order_sql(sort_by, order_by, 'tickets.updated_at DESC')
       if query
         query.delete! '*'
-        tickets_all = Ticket.select('DISTINCT(tickets.id), ' + order_select_sql)
+        tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
                             .where(access_condition)
                             .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
                             .joins(:articles)
@@ -190,7 +190,7 @@ returns
                             .limit(limit)
       else
         query_condition, bind_condition, tables = selector2sql(condition)
-        tickets_all = Ticket.select('DISTINCT(tickets.id), ' + order_select_sql)
+        tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
                             .joins(tables)
                             .where(access_condition)
                             .where(query_condition, *bind_condition)
