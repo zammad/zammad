@@ -27,23 +27,20 @@ class Index extends App.ControllerSubContent
         e.preventDefault()
         $(e.target).toggleClass('active')
         query = @searchInput.val().trim()
-        if query
-          @delay( @search, 220, 'search' )
-          return
-        @recent()
+        @query = query
+        @delay(@search, 220, 'search')
     )
 
     # start search
     @searchInput.bind( 'keyup', (e) =>
       query = @searchInput.val().trim()
-      return if !query
       return if query is @query
       @query = query
-      @delay( @search, 220, 'search' )
+      @delay(@search, 220, 'search')
     )
 
     # show last 20 users
-    @recent()
+    @search()
 
   renderResult: (user_ids = []) ->
     @stopLoading()
@@ -143,40 +140,18 @@ class Index extends App.ControllerSubContent
     App.Ajax.request(
       id: 'search'
       type: 'GET'
-      url: "#{@apiPath}/users/search"
+      url: "#{@apiPath}/users/search?sort_by=created_at"
       data:
-        query: @query
-        limit: 140
+        query: @query || '*'
+        limit: 50
         role_ids: role_ids
         full:  true
       processData: true,
       success: (data, status, xhr) =>
         App.Collection.loadAssets(data.assets)
         @renderResult(data.user_ids)
+        @stopLoading()
       done: =>
-        @stopLoading()
-    )
-
-  recent: =>
-    role_ids = []
-    @$('.tab.active').each( (i,d) ->
-      role_ids.push $(d).data('id')
-    )
-    @startLoading(@$('.table-overview'))
-    App.Ajax.request(
-      id: 'search'
-      type: 'GET'
-      url: "#{@apiPath}/users/recent"
-      data:
-        limit: 50
-        role_ids: role_ids
-        full: true
-      processData: true
-      success: (data, status, xhr) =>
-        App.Collection.loadAssets(data.assets)
-        @renderResult(data.user_ids)
-        @stopLoading()
-      error: =>
         @stopLoading()
     )
 
@@ -191,7 +166,7 @@ class Index extends App.ControllerSubContent
         navupdate: '#users'
       genericObject: 'User'
       container: @el.closest('.content')
-      callback: @recent
+      callback: @search
     )
 
   import: (e) ->
