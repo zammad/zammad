@@ -413,6 +413,15 @@ return search result
       )
     end
 
+    # add sorting by active if active is not part of the query
+    if result.flat_map(&:keys).exclude?(:active)
+      result.unshift(
+        active: {
+          order: 'desc',
+        },
+      )
+    end
+
     result.push('_score')
 
     result
