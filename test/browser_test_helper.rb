@@ -1243,6 +1243,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     params[:files].each do |file|
       instance.find_elements(css: params[:css])[0].send_keys(Rails.root.join(file))
     end
+    return if params[:no_sleep]
     sleep 2 * params[:files].count
   end
 
