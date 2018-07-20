@@ -302,4 +302,76 @@ class AgentTicketAttachmentTest < TestCase
 
     # some form reset checks
   end
+
+  def test_upload_blocks_ticket_updates
+    # since selenium webdriver with firefox is not able to upload files, skip here
+    # https://github.com/w3c/webdriver/issues/1230
+    return if browser == 'firefox'
+
+    @browser = browser_instance
+    login(
+      username: 'agent1@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    ticket1 = ticket_create(
+      data: {
+        customer: 'Nico',
+        group: 'Users',
+        title: 'Ticket 1',
+        body: 'some body',
+      },
+      do_not_submit: true,
+    )
+
+    # First test the attachment uploading for new tickets
+    file_upload(
+      css:   '.content.active .attachmentPlaceholder-inputHolder input',
+      files: [Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
+      no_sleep: true,
+    )
+    match(
+      css:   '.js-submit.is-disabled',
+      value: 'Uploading',
+    )
+    watch_for_disappear(
+      css:   '.js-submit.is-disabled',
+      value: 'Uploading',
+    )
+    match(
+      css:   '.js-submit',
+      value: 'Create',
+    )
+    click(
+      css: '.active .js-submit',
+    )
+    sleep 2
+
+    # Next test the attachment uploading for new articles
+    ticket_update(
+      data: {
+        body: 'added attachment',
+      },
+      do_not_submit: true,
+    )
+    file_upload(
+      css:   '.content.active .attachmentPlaceholder-inputHolder input',
+      files: [Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
+      no_sleep: true,
+    )
+    match(
+      css:   '.js-submit.is-disabled',
+      value: 'Uploading',
+    )
+    watch_for_disappear(
+      css:   '.js-submit.is-disabled',
+      value: 'Uploading',
+    )
+    match(
+      css:   '.js-submit',
+      value: 'Update',
+    )
+  end
 end
