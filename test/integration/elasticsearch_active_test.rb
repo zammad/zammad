@@ -60,8 +60,9 @@ class ElasticsearchActiveTest < ActiveSupport::TestCase
     assert(result.present?, 'result should not be empty')
 
     names = result.map(&:lastname)
-    correct_names = %w[Active-6 Active-4 Active-2 Inactive-5 Inactive-3 Inactive-1]
-    assert_equal(correct_names, names)
+    correct_names = %w[Active-2 Active-4 Active-6 Inactive-1 Inactive-3 Inactive-5]
+    assert_equal(correct_names[0, 3], names[0, 3].sort)
+    assert_equal(correct_names[3, 6], names[3, 6].sort)
   end
 
   test 'active organizations appear before inactive organizations in search results' do
@@ -79,7 +80,8 @@ class ElasticsearchActiveTest < ActiveSupport::TestCase
                        TestOrg-Inactive-1
                        TestOrg-Inactive-3
                        TestOrg-Inactive-5]
-    assert_equal(correct_names, names)
+    assert_equal(correct_names[0, 3], names[0, 3].sort)
+    assert_equal(correct_names[3, 6], names[3, 6].sort)
   end
 
   test 'ordering of tickets are not affected by the lack of active flags' do
