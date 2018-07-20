@@ -2499,6 +2499,53 @@ wait untill text in selector disabppears
 
 =begin
 
+  overview_open(
+    browser: browser2,
+    name:    overview_name,
+  )
+
+  overview_open(
+    browser: browser2,
+    link:    "#ticket/view/some_special_name",
+  )
+
+=end
+
+  def overview_open(params)
+    switch_window_focus(params)
+    log('overview_open', params)
+
+    instance = params[:browser] || @browser
+
+    # click on overview task in sidebar
+    instance.find_elements(css: '.js-overviewsMenuItem')[0].click
+
+    # show larger overview selection list
+    sleep 0.5
+    execute(
+      browser: instance,
+      js: '$(".content.active .sidebar").css("display", "block")',
+    )
+
+    link = if params[:link]
+             params[:link]
+           elsif params[:name]
+             "\#ticket/view/#{params[:name]}"
+           end
+
+    # switch to overview
+    instance.find_elements(css: ".content.active .sidebar a[href=\"#{link}\"]")[0].click
+
+    # hide larger overview selection list again
+    sleep 0.5
+    execute(
+      browser: instance,
+      js: '$(".content.active .sidebar").css("display", "none")',
+    )
+  end
+
+=begin
+
   ticket_open_by_overview(
     browser: browser2,
     number:  ticket1[:number],
@@ -2520,18 +2567,8 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
 
-    instance.find_elements(css: '.js-overviewsMenuItem')[0].click
-    sleep 0.5
-    execute(
-      browser: instance,
-      js: '$(".content.active .sidebar").css("display", "block")',
-    )
-    instance.find_elements(css: ".content.active .sidebar a[href=\"#{params[:link]}\"]")[0].click
-    sleep 0.5
-    execute(
-      browser: instance,
-      js: '$(".content.active .sidebar").css("display", "none")',
-    )
+    overview_open(params)
+
     if params[:title]
       element = instance.find_element(css: '.content.active').find_element(partial_link_text: params[:title])
       if !element
