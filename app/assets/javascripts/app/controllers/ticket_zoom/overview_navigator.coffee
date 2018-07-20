@@ -70,4 +70,4 @@ class App.TicketZoomOverviewNavigator extends App.Controller
     else
       return
 
-    @openTicket(id, url)
+    @taskOpenTicket(id, url)

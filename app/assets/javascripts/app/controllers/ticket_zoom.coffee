@@ -1,4 +1,6 @@
 class App.TicketZoom extends App.Controller
+  @include App.TicketNavigable
+
   elements:
     '.main':             'main'
     '.ticketZoom':       'ticketZoom'
@@ -763,19 +765,20 @@ class App.TicketZoom extends App.Controller
     for key, value of ticketParams
       ticket[key] = value
 
-    App.Ticket.macro(
-      macro: macro
-      ticket: ticket
-      callback:
-        tagAdd: (tag) =>
-          return if !@sidebarWidget
-          return if !@sidebarWidget.reload
-          @sidebarWidget.reload(tagAdd: tag, source: 'macro')
-        tagRemove: (tag) =>
-          return if !@sidebarWidget
-          return if !@sidebarWidget.reload
-          @sidebarWidget.reload(tagRemove: tag)
-    )
+    if macro.perform
+      App.Ticket.macro(
+        macro: macro.perform
+        ticket: ticket
+        callback:
+          tagAdd: (tag) =>
+            return if !@sidebarWidget
+            return if !@sidebarWidget.reload
+            @sidebarWidget.reload(tagAdd: tag, source: 'macro')
+          tagRemove: (tag) =>
+            return if !@sidebarWidget
+            return if !@sidebarWidget.reload
+            @sidebarWidget.reload(tagRemove: tag)
+      )
 
     # set defaults
     if !@permissionCheck('ticket.customer')
@@ -823,23 +826,23 @@ class App.TicketZoom extends App.Controller
       ticket.article = article
 
     if !ticket.article
-      @submitPost(e, ticket)
+      @submitPost(e, ticket, macro)
       return
 
     # verify if time accounting is enabled
     if @Config.get('time_accounting') isnt true
-      @submitPost(e, ticket)
+      @submitPost(e, ticket, macro)
       return
 
     # verify if time accounting is active for ticket
     time_accounting_selector = @Config.get('time_accounting_selector')
     if !App.Ticket.selector(ticket, time_accounting_selector['condition'])
-      @submitPost(e, ticket)
+      @submitPost(e, ticket, macro)
       return
 
     # time tracking
     if @permissionCheck('ticket.customer')
-      @submitPost(e, ticket)
+      @submitPost(e, ticket, macro)
       return
 
     new App.TicketZoomTimeAccounting(
@@ -850,12 +853,14 @@ class App.TicketZoom extends App.Controller
       submitCallback: (params) =>
         if params.time_unit
           ticket.article.time_unit = params.time_unit
-        @submitPost(e, ticket)
+        @submitPost(e, ticket, macro)
     )
 
-  submitPost: (e, ticket) =>
-
+  submitPost: (e, ticket, macro) =>
     taskAction = @$('.js-secondaryActionButtonLabel').data('type')
+
+    if macro && macro.ux_flow_next_up
+      taskAction = macro.ux_flow_next_up
 
     # submit changes
     @ajax(
@@ -878,53 +883,27 @@ class App.TicketZoom extends App.Controller
         if @sidebarWidget
           @sidebarWidget.commit()
 
-        if taskAction is 'closeNextInOverview'
-          if @overview_id
-            current_position = 0
-            overview = App.Overview.find(@overview_id)
-            list = App.OverviewListCollection.get(overview.link)
-            for ticket in list.tickets
-              current_position += 1
-              if ticket.id is @ticket_id
-                next = list.tickets[current_position]
-                if next
-                  # close task
-                  App.TaskManager.remove(@taskKey)
+        if taskAction is 'closeNextInOverview' || taskAction is 'next_from_overview'
+          App.Event.trigger('overview:fetch')
+          @taskOpenNextTicketInOverview()
+          return
 
-                  # open task via task manager to get overview information
-                  App.TaskManager.execute(
-                    key:        'Ticket-' + next.id
-                    controller: 'TicketZoom'
-                    params:
-                      ticket_id:   next.id
-                      overview_id: @overview_id
-                    show:       true
-                  )
-                  @navigate "ticket/zoom/#{next.id}"
-                  return
-
-          # fallback, close task
-          taskAction = 'closeTab'
-
-        if taskAction is 'closeTab'
-          App.TaskManager.remove(@taskKey)
-          nextTaskUrl = App.TaskManager.nextTaskUrl()
-          if nextTaskUrl
-            @navigate nextTaskUrl
-            return
-
-          @navigate '#'
+        if taskAction is 'closeTab' || taskAction is 'next_task'
+          App.Event.trigger('overview:fetch')
+          @taskCloseTicket(true)
           return
 
         @autosaveStart()
         @muteTask()
         @formEnable(e)
-        App.Event.trigger('overview:fetch')
 
       error: (settings, details) =>
+        error = undefined
+        if settings && settings.responseJSON && settings.responseJSON.error
+          error = settings.responseJSON.error
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || settings.responseJSON.error || 'Unable to update!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || error || 'Unable to update!')
           timeout: 2000
         }
         @autosaveStart()

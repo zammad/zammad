@@ -24,12 +24,13 @@
       </span>
   </ul>
 </div>
+<form class="buttonDropdown">
 <% if @macroDisabled: %>
-  <div class="btn btn--primary js-submit"><%- @T('Update') %></div>
+  <button class="btn btn--primary js-submit"><%- @T('Update') %></button>
 <% else: %>
   <div class="buttonDropdown dropdown dropup js-submitDropdown">
-    <div class="btn btn--primary btn--split--first js-submit"><%- @T('Update') %></div>
-    <div class="btn btn--primary btn--slim btn--split--last js-openDropdownMacro"><%- @Icon('arrow-up') %></div>
+    <button class="btn btn--primary btn--split--first js-submit"><%- @T('Update') %></button>
+    <button class="btn btn--primary btn--slim btn--split--last js-openDropdownMacro"><%- @Icon('arrow-up') %></button>
     <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="userAction">
       <% for macro in @macros: %>
         <li class="js-dropdownActionMacro" role="menuitem" data-id="<%= macro.id %>"><%- @T(macro.displayName()) %>
@@ -37,3 +38,4 @@
     </ul>
   </div>
 <% end %>
+</form>
