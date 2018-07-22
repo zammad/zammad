@@ -178,7 +178,7 @@ def get_mapping_properties_object(object)
   object.columns_hash.each do |key, value|
     if value.type == :string && value.limit && value.limit <= 5000 && store_columns.exclude?(key)
       result[object.name][:properties][key] = {
-        type: 'text',
+        type: 'string',
         fields: {
           raw: { 'type': 'string', 'index': 'not_analyzed' }
         }
