@@ -47,6 +47,8 @@ module Zammad
       'observer::_sla::_ticket_rebuild_escalation',
       'observer::_transaction'
 
+    config.active_job.queue_adapter = :delayed_job
+
     # REST api path
     config.api_path = '/api/v1'
 
