@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Cti::CallerId do
+  subject { create(:cti_caller_id, caller_id: phone) }
+  let(:phone) { '1234567890' }
 
   describe 'extract_numbers' do
     it { expect(described_class.extract_numbers("some text\ntest 123")).to eq [] }
@@ -30,5 +32,35 @@ RSpec.describe Cti::CallerId do
     it { expect(described_class.normalize_number('0043 (0) 30 60 00 00 00-0')).to eq '4330600000000' }
     it { expect(described_class.normalize_number('0043 30 60 00 00 00-0')).to eq '4330600000000' }
     it { expect(described_class.normalize_number('1-888-407-4747')).to eq '18884074747' }
+  end
+
+  context 'on creation' do
+    it 'adopts CTI Logs from same number (via UpdateCtiLogsByCallerJob)' do
+      allow(UpdateCtiLogsByCallerJob).to receive(:perform_later).with(any_args)
+
+      subject # create CallerId record
+
+      expect(UpdateCtiLogsByCallerJob).to have_received(:perform_later)
+    end
+
+    it 'splits job into fg and bg (for more responsive UI – see #2057)' do
+      allow(UpdateCtiLogsByCallerJob).to receive(:perform_now).with(any_args)
+      allow(UpdateCtiLogsByCallerJob).to receive(:perform_later).with(any_args)
+
+      subject # create CallerId record
+
+      expect(UpdateCtiLogsByCallerJob).to have_received(:perform_now).with(phone, limit: 20)
+      expect(UpdateCtiLogsByCallerJob).to have_received(:perform_later).with(phone, limit: 40, offset: 20)
+    end
+  end
+
+  context 'on destruction' do
+    before { subject }
+
+    it 'orphans CTI Logs from same number (via UpdateCtiLogsByCallerJob)' do
+      allow(UpdateCtiLogsByCallerJob).to receive(:perform_later).with(phone)
+      subject.destroy
+      expect(UpdateCtiLogsByCallerJob).to have_received(:perform_later)
+    end
   end
 end

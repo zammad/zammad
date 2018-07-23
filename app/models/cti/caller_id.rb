@@ -4,6 +4,11 @@ module Cti
 
     DEFAULT_COUNTRY_ID = '49'.freeze
 
+    # adopt/orphan matching Cti::Log records
+    # (see https://github.com/zammad/zammad/issues/2057)
+    after_commit :update_cti_logs, on: :destroy
+    after_commit :update_cti_logs_with_fg_optimization, on: :create
+
 =begin
 
   Cti::CallerId.maybe_add(
@@ -253,5 +258,13 @@ returns
       nil
     end
 
+    def update_cti_logs
+      UpdateCtiLogsByCallerJob.perform_later(caller_id)
+    end
+
+    def update_cti_logs_with_fg_optimization
+      UpdateCtiLogsByCallerJob.perform_now(caller_id, limit: 20)
+      UpdateCtiLogsByCallerJob.perform_later(caller_id, limit: 40, offset: 20)
+    end
   end
 end
