@@ -594,4 +594,81 @@ class AdminObjectManagerTest < TestCase
     assert(undeletable_attribute_html.include?('cannot be deleted'))
     assert(undeletable_attribute_html.exclude?('href="#"'))
   end
+
+  def test_proper_sorting_of_select_attributes
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    # lexicographically ordered list of option strings
+    options = %w[0 000.000 1 100.100 100.200 2 200.100 200.200 3 ä b n ö p sr ß st t ü v]
+    options_hash = Hash[options.reverse.collect { |o| [o, o] }]
+
+    object_manager_attribute_create(
+      data: {
+        name: 'select_attributes_sorting_test',
+        display: 'Select Attributes Sorting Test',
+        data_type: 'Select',
+        data_option: { options: options_hash },
+      },
+    )
+    sleep 2
+
+    # open the select attribute that we just created
+    execute(js: "$(\".content.active td:contains('select_attributes_sorting_test')\").first().click()")
+    sleep 3
+
+    unsorted_locations = options.map do |key|
+      [get_location(xpath: "//input[@value='#{key}']").y, key]
+    end
+    log("unsorted_locations = #{unsorted_locations.inspect}")
+    sorted_locations = unsorted_locations.sort_by(&:first).map(&:second)
+    log("sorted_locations = #{sorted_locations.inspect}")
+    assert_equal options, sorted_locations
+
+    # close the attribute modal
+    click(css: '.modal button.js-submit')
+
+    watch_for(
+      css: '.content.active',
+      value: 'Database Update required',
+    )
+    watch_for(
+      css: '.content.active table',
+      value: 'select_attributes_sorting_test',
+    )
+
+    click(css: '.content.active .tab-pane.active div.js-execute')
+    watch_for(
+      css: '.modal',
+      value: 'restart',
+    )
+    watch_for_disappear(
+      css:     '.modal',
+      timeout: 7.minutes,
+    )
+    sleep 5
+    watch_for(
+      css: '.content.active',
+    )
+
+    # create a new ticket and check whether the select attributes are correctly sorted or not
+    click(
+      css: 'a[href="#ticket/create"]',
+      mute_log: true,
+    )
+
+    watch_for(
+      css: 'select[name="select_attributes_sorting_test"]',
+    )
+
+    select_element = @browser.find_elements(css: 'select[name="select_attributes_sorting_test"]')[0]
+    unsorted_options = select_element.find_elements(xpath: './*').map(&:text).reject { |x| x == '-' }
+    log unsorted_options.inspect
+    assert_equal options, unsorted_options
+  end
 end

@@ -8,8 +8,8 @@
         <th style="width: 30px"><%- @T('Action') %>
     </thead>
     <tbody>
-      <% if @params.data_option && @params.data_option.options: %>
-        <% for key, display of @params.data_option.options: %>
+      <% if @params.data_option && @params.data_option.sorted: %>
+        <% for [key, display] in @params.data_option.sorted: %>
         <tr>
           <td class="settings-list-control-cell">
             <input class="form-control form-control--small js-key" type="text" value="<%= key %>" required/>
