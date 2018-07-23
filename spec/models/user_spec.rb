@@ -5,6 +5,7 @@ require 'models/concerns/has_groups_permissions_examples'
 require 'models/concerns/can_lookup_examples'
 
 RSpec.describe User do
+  let(:subject) { create(:user, user_attrs || {}) }
   let(:group_access_instance) { create(:agent_user) }
   let(:new_group_access_instance) { build(:agent_user) }
   let(:group_access_no_permission_instance) { build(:user) }
@@ -662,6 +663,58 @@ RSpec.describe User do
 
           expect(current_agent_count).to eq(initial_agent_count)
         end
+      end
+    end
+  end
+
+  context 'when phone attribute' do
+    let(:user_attrs) { { phone: orig_number } }
+
+    context 'included on create' do
+      let(:orig_number) { '1234567890' }
+
+      it 'adds corresponding CallerId record' do
+        expect { subject }
+          .to change { Cti::CallerId.where(caller_id: orig_number).count }.by(1)
+      end
+    end
+
+    context 'added on update' do
+      let(:orig_number) { nil }
+      let(:new_number) { '1234567890' }
+
+      before { subject } # create user
+
+      it 'adds corresponding CallerId record' do
+        expect { subject.update(phone: new_number) }
+          .to change { Cti::CallerId.where(caller_id: new_number).count }.by(1)
+      end
+    end
+
+    context 'removed on update' do
+      let(:orig_number) { '1234567890' }
+      let(:new_number) { nil }
+
+      before { subject } # create user
+
+      it 'removes corresponding CallerId record' do
+        expect { subject.update(phone: nil) }
+          .to change { Cti::CallerId.where(caller_id: orig_number).count }.by(-1)
+      end
+    end
+
+    context 'changed on update' do
+      let(:orig_number) { '1234567890' }
+      let(:new_number)  { orig_number.next }
+
+      before { subject } # create user
+
+      it 'replaces CallerId record' do
+        # rubocop:disable Layout/MultilineMethodCallIndentation
+        expect { subject.update(phone: new_number) }
+          .to change { Cti::CallerId.where(caller_id: orig_number).count }.by(-1)
+          .and change { Cti::CallerId.where(caller_id: new_number).count }.by(1)
+        # rubocop:enable Layout/MultilineMethodCallIndentation
       end
     end
   end

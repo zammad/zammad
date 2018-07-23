@@ -24,6 +24,7 @@ class User < ApplicationModel
   before_update   :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
   after_update    :avatar_for_email_check
+  after_commit    :update_caller_id
   before_destroy  :destroy_longer_required_objects
 
   store :preferences
@@ -1190,5 +1191,17 @@ raise 'Minimum one user need to have admin permissions'
     return true if !will_save_change_to_attribute?('password')
     self.login_failed = 0
     true
+  end
+
+  # When adding/removing a phone number from the User table,
+  # update caller ID table
+  # to adopt/orphan matching Cti::Logs accordingly
+  # (see https://github.com/zammad/zammad/issues/2057)
+  def update_caller_id
+    # skip if "phone" does not change, or changes like [nil, ""]
+    return if persisted? && !previous_changes[:phone]&.any?(&:present?)
+    return if destroyed? && phone.blank?
+
+    Cti::CallerId.build(self)
   end
 end
