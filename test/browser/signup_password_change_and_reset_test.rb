@@ -31,9 +31,11 @@ class SignupPasswordChangeAndResetTest < TestCase
       value: 'some-pass',
     )
     click(css: 'button.js-submit')
-    sleep 5
 
-    exists_not(css: '.signup')
+    watch_for_disappear(
+      css: '.signup',
+      timeout: 10,
+    )
 
     match(
       css: '.user-menu .user a',
