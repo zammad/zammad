@@ -361,17 +361,25 @@ class AgentProfilePermissionsTest < TestCase
     exists(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     exists_not(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
-    # scroll to the Avatar at the top of the zoom view and click it
-    # scrolling is needed because the browser might have scrolled down
-    # caused by a undeliverable email (of the created ticket)
-    zoom_top_avatar_selector = '.content.active .tabsSidebar-holder .js-avatar'
-    scroll_to(
-      position: 'botton',
-      css:      zoom_top_avatar_selector,
-    )
-    click(css: zoom_top_avatar_selector)
+    begin
+      retries ||= 0
 
-    click(css: '.content.active .js-action .icon-arrow-down', fast: true)
-    exists_not(css: '.content.active .js-action [data-type="edit"]')
+      # scroll to the Avatar at the top of the zoom view and click it
+      # scrolling is needed because the browser might have scrolled down
+      # caused by a undeliverable email (of the created ticket)
+      zoom_top_avatar_selector = '.content.active .tabsSidebar-holder .js-avatar'
+      scroll_to(
+        position: 'botton',
+        css:      zoom_top_avatar_selector,
+      )
+      click(css: zoom_top_avatar_selector)
+
+      click(css: '.content.active .js-action .icon-arrow-down', fast: true)
+      exists_not(css: '.content.active .js-action [data-type="edit"]')
+    rescue Selenium::WebDriver::Error::UnknownError
+      sleep retries
+      retries += 1
+      retry if retries < 3
+    end
   end
 end
