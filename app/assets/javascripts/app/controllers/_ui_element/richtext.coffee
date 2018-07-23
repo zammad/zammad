@@ -73,19 +73,14 @@ class App.UiElement.richtext
               @attachmentPlaceholder.addClass('hide')
               @attachmentUpload.removeClass('hide')
               @cancelContainer.removeClass('hide')
-              # Disable the create ticket button during uploading
-              $('.main .newTicket .page-content .js-submit')
-                .text(App.i18n.translateInline('Uploading'))
-                .addClass('is-disabled')
+              item.find('[contenteditable]').trigger('fileUploadStart')
               App.Log.debug 'UiElement.richtext', 'upload start'
 
             onAborted: =>
               @attachmentPlaceholder.removeClass('hide')
               @attachmentUpload.addClass('hide')
               item.find('input').val('')
-              $('.main .newTicket .page-content .js-submit')
-                .text(App.i18n.translateInline('Create'))
-                .removeClass('is-disabled')
+              item.find('[contenteditable]').trigger('fileUploadStop', ['aborted'])
 
             # Called after received response from the server
             onCompleted: (response) =>
@@ -100,10 +95,7 @@ class App.UiElement.richtext
 
               renderFile(response.data)
               item.find('input').val('')
-              $('.main .newTicket .page-content .js-submit')
-                .text(App.i18n.translateInline('Create'))
-                .removeClass('is-disabled')
-
+              item.find('[contenteditable]').trigger('fileUploadStop', ['completed'])
               App.Log.debug 'UiElement.richtext', 'upload complete', response.data
 
             # Called during upload progress, first parameter

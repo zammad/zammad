@@ -310,6 +310,9 @@ class App.TicketCreate extends App.Controller
       form_id: @formId
       model:   App.TicketArticle
       screen:  'create_top'
+      events:
+        'fileUploadStart .richtext': => @submitDisable()
+        'fileUploadStop .richtext': => @submitEnable()
       params:  params
       taskKey: @taskKey
     )
@@ -506,7 +509,7 @@ class App.TicketCreate extends App.Controller
             return
 
     # disable form
-    @formDisable(e)
+    @submitDisable(e)
     ui = @
     ticket.save(
       done: ->
@@ -538,13 +541,25 @@ class App.TicketCreate extends App.Controller
 
       fail: (settings, details) ->
         ui.log 'errors', details
-        ui.formEnable(e)
+        ui.submitEnable(e)
         ui.notify(
           type:    'error'
           msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to create object!')
           timeout: 6000
         )
     )
+
+  submitDisable: (e) =>
+    if e
+      @formDisable(e)
+      return
+    @formDisable(@$('.js-submit'), 'button')
+
+  submitEnable: (e) =>
+    if e
+      @formEnable(e)
+      return
+    @formEnable(@$('.js-submit'), 'button')
 
 class Router extends App.ControllerPermanent
   requiredPermission: 'ticket.agent'

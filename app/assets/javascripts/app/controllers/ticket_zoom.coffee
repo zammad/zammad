@@ -445,14 +445,16 @@ class App.TicketZoom extends App.Controller
       @form_id = @taskGet('article').form_id || App.ControllerForm.formId()
 
       @articleNew = new App.TicketZoomArticleNew(
-        ticket:    @ticket
-        ticket_id: @ticket_id
-        el:        elLocal.find('.article-new')
-        formMeta:  @formMeta
-        form_id:   @form_id
-        defaults:  @taskGet('article')
-        taskKey:   @taskKey
-        ui:        @
+        ticket:                  @ticket
+        ticket_id:               @ticket_id
+        el:                      elLocal.find('.article-new')
+        formMeta:                @formMeta
+        form_id:                 @form_id
+        defaults:                @taskGet('article')
+        taskKey:                 @taskKey
+        ui:                      @
+        callbackFileUploadStart: @submitDisable
+        callbackFileUploadStop:  @submitEnable
       )
 
       @highligher = new App.TicketZoomHighlighter(
@@ -738,16 +740,28 @@ class App.TicketZoom extends App.Controller
 
       resetButton.removeClass('hide')
 
+  submitDisable: (e) =>
+    if e
+      @formDisable(e)
+      return
+    @formDisable(@$('.js-submitDropdown'))
+
+  submitEnable: (e) =>
+    if e
+      @formEnable(e)
+      return
+    @formEnable(@$('.js-submitDropdown'))
+
   submit: (e, macro = {}) =>
     e.stopPropagation()
     e.preventDefault()
 
     # disable form
-    @formDisable(e)
+    @submitDisable(e)
 
     # validate new article
     if !@articleNew.validate()
-      @formEnable(e)
+      @submitEnable(e)
       return
 
     ticketParams = @formParam(@$('.edit'))
@@ -803,7 +817,7 @@ class App.TicketZoom extends App.Controller
         errors: errors
         screen: 'edit'
       )
-      @formEnable(e)
+      @submitEnable(e)
       @autosaveStart()
       return
 
@@ -819,7 +833,7 @@ class App.TicketZoom extends App.Controller
           errors: errors
           screen: 'edit'
         )
-        @formEnable(e)
+        @submitEnable(e)
         @autosaveStart()
         return
 
@@ -849,7 +863,7 @@ class App.TicketZoom extends App.Controller
       container: @el.closest('.content')
       ticket: ticket
       cancelCallback: =>
-        @formEnable(e)
+        @submitEnable(e)
       submitCallback: (params) =>
         if params.time_unit
           ticket.article.time_unit = params.time_unit
@@ -895,7 +909,7 @@ class App.TicketZoom extends App.Controller
 
         @autosaveStart()
         @muteTask()
-        @formEnable(e)
+        @submitEnable(e)
 
       error: (settings, details) =>
         error = undefined
@@ -909,7 +923,7 @@ class App.TicketZoom extends App.Controller
         @autosaveStart()
         @muteTask()
         @fetch()
-        @formEnable(e)
+        @submitEnable(e)
     )
 
   bookmark: (e) ->

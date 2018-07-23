@@ -332,20 +332,17 @@ class AgentTicketAttachmentTest < TestCase
       files: [Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
       no_sleep: true,
     )
-    match(
-      css:   '.js-submit.is-disabled',
-      value: 'Uploading',
+    exists(
+      css: '.content.active .js-submit:disabled',
     )
     watch_for_disappear(
-      css:   '.js-submit.is-disabled',
-      value: 'Uploading',
+      css: '.content.active .js-submit:disabled',
     )
-    match(
-      css:   '.js-submit',
-      value: 'Create',
+    exists(
+      css: '.content.active .js-submit',
     )
     click(
-      css: '.active .js-submit',
+      css: '.content.active .js-submit',
     )
     sleep 2
 
@@ -361,17 +358,11 @@ class AgentTicketAttachmentTest < TestCase
       files: [Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
       no_sleep: true,
     )
-    match(
-      css:   '.js-submit.is-disabled',
-      value: 'Uploading',
+    exists(
+      css: '.content.active .js-submit:disabled',
     )
     watch_for_disappear(
-      css:   '.js-submit.is-disabled',
-      value: 'Uploading',
-    )
-    match(
-      css:   '.js-submit',
-      value: 'Update',
+      css: '.content.active .js-submit:disabled',
     )
   end
 end

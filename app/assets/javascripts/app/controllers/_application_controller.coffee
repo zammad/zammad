@@ -182,11 +182,11 @@ class App.Controller extends Spine.Controller
   formParam: (form) ->
     App.ControllerForm.params(form)
 
-  formDisable: (form) ->
-    App.ControllerForm.disable(form)
+  formDisable: (form, type) ->
+    App.ControllerForm.disable(form, type)
 
-  formEnable: (form) ->
-    App.ControllerForm.enable(form)
+  formEnable: (form, type) ->
+    App.ControllerForm.enable(form, type)
 
   formValidate: (data) ->
     App.ControllerForm.validate(data)
