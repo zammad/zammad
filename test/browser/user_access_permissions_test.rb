@@ -38,10 +38,8 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action .icon-arrow-down', fast: true)
     click(css: '.content.active .js-action [data-type="edit"]')
 
-    watch_for(
-      css: '.content.active .modal',
-      value: 'note',
-    )
+    modal_ready()
+
     watch_for(
       css: '.content.active .modal',
       value: 'some note 123',
@@ -71,10 +69,9 @@ class AgentProfilePermissionsTest < TestCase
     # change lastname back
     click(css: '.content.active .js-action .icon-arrow-down', fast: true)
     click(css: '.content.active .js-action [data-type="edit"]')
-    watch_for(
-      css: '.content.active .modal',
-      value: 'note',
-    )
+
+    modal_ready()
+
     set(
       css: '.modal [name="lastname"]',
       value: 'Braun',
@@ -190,6 +187,8 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
+    modal_ready()
+
     set(
       css: '.modal [name="lastname"]',
       value: 'B2',
@@ -212,15 +211,11 @@ class AgentProfilePermissionsTest < TestCase
       value: 'Nicole B2',
     )
 
-    sleep 2
     # change lastname back
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions')
     click(css: 'li[data-type="customer-edit"]')
 
-    watch_for(
-      css: '.content.active .modal',
-      value: 'note',
-    )
+    modal_ready()
 
     set(
       css: '.modal [name="lastname"]',
@@ -283,10 +278,7 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action .dropdown-toggle')
     click(css: '.content.active .js-action [data-type="edit"]')
 
-    watch_for(
-      css: '.content.active .modal',
-      value: 'note',
-    )
+    modal_ready()
 
     set(
       css: '.modal [name="lastname"]',
@@ -313,10 +305,8 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action .dropdown-toggle')
     click(css: '.content.active .js-action [data-type="edit"]')
 
-    watch_for(
-      css: '.content.active .modal',
-      value: 'note',
-    )
+    modal_ready()
+
     set(
       css: '.modal [name="lastname"]',
       value: 'Braun',
