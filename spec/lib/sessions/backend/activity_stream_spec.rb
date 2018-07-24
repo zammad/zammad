@@ -17,8 +17,9 @@ RSpec.describe Sessions::Backend::ActivityStream do
     end
 
     it 'manages race condition' do
-      Thread.new { associated_tickets.each(&:destroy) }
+      thread = Thread.new { associated_tickets.each(&:destroy) }
       expect { subject.load }.not_to raise_error
+      thread.join
     end
   end
 end
