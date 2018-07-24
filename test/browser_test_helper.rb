@@ -552,7 +552,12 @@ class TestCase < Test::Unit::TestCase
     log('modal_ready', params)
 
     instance = params[:browser] || @browser
-    sleep 3
+
+    watch_for(
+      browser: instance,
+      css:     '.modal.in',
+      timeout: params[:timeout] || 4,
+    )
   end
 
 =begin
