@@ -89,14 +89,17 @@ module CreatesTicketArticles
           preferences[store_key] = attachment[key]
         end
 
-        if !attachment[:data].match?(%r{^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$})
+        begin
+          base64_data = attachment[:data].gsub(/[\r\n]/, '')
+          attachment_data = Base64.strict_decode64(base64_data)
+        rescue ArgumentError => e
           raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"
         end
 
         Store.add(
           object: 'Ticket::Article',
           o_id: article.id,
-          data: Base64.decode64(attachment[:data]),
+          data: attachment_data,
           filename: attachment[:filename],
           preferences: preferences,
         )
