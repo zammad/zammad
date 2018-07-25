@@ -227,7 +227,8 @@ class AgentTicketTextModuleTest < TestCase
       browser: browser2,
       css: '.active div[data-tab="ticket"] .js-actions [data-type="customer-change"]',
     )
-    sleep 1
+
+    modal_ready(browser: browser2)
 
     ticket_customer_select(
       browser:  browser2,
@@ -240,10 +241,7 @@ class AgentTicketTextModuleTest < TestCase
       css: '.modal-content .js-submit',
     )
 
-    watch_for_disappear(
-      browser: browser2,
-      css: '.modal',
-    )
+    modal_disappear(browser: browser2)
 
     set(
       browser: browser2,

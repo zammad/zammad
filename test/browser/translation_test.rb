@@ -283,13 +283,14 @@ class TranslationTest < TestCase
     )
 
     click(css: '.content.active .js-syncChanges')
+
+    modal_ready()
     watch_for(
       css: '.content.active .modal',
       value: 'Letzte Übersetzung laden',
     )
-    watch_for_disappear(
-      css: '.content.active .modal',
-      timeout: 6 * 60,
+    modal_disappear(
+      timeout: 6.minutes,
     )
 
     click(css: 'a[href="#current_user"]')

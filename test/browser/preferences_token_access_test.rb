@@ -16,11 +16,8 @@ class PreferencesTokenAccessTest < TestCase
     click(css: 'a[href="#profile/token_access"]')
 
     click(css: '.content.active .js-create')
-    watch_for(
-      css: '.modal .modal-title',
-      value: 'Add a Personal Access Token'
-    )
 
+    modal_ready()
     set(
       css:   '.content.active .modal .js-input',
       value: 'Some App#1',
@@ -37,6 +34,8 @@ class PreferencesTokenAccessTest < TestCase
       value: 'Your New Personal Access Token'
     )
     click(css: '.modal .js-submit')
+    modal_disappear()
+
     watch_for(
       css: '.content.active .js-tokenList',
       value: 'Some App#1'
@@ -47,10 +46,8 @@ class PreferencesTokenAccessTest < TestCase
     )
 
     click(css: '.content.active .js-create')
-    watch_for(
-      css: '.modal .modal-title',
-      value: 'Add a Personal Access Token'
-    )
+
+    modal_ready()
     set(
       css:   '.content.active .modal .js-input',
       value: 'Some App#2',
@@ -63,12 +60,16 @@ class PreferencesTokenAccessTest < TestCase
       value: 'Your New Personal Access Token'
     )
     click(css: '.modal .js-submit')
+    modal_disappear()
+
     watch_for(
       css: '.content.active .js-tokenList',
       value: 'Some App#2'
     )
 
     click(css: '.content.active .js-tokenList a')
+
+    modal_ready()
     watch_for(
       css: '.content.active .modal .modal-header',
       value: 'confirm',
@@ -76,6 +77,7 @@ class PreferencesTokenAccessTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
+    modal_disappear()
     watch_for_disappear(
       css: '.content.active .js-tokenList',
       value: 'Some App#2'

@@ -177,9 +177,7 @@ class AgentTicketCreateResetCustomerSelectionTest < TestCase
     click(css: '.content.active .tabsSidebar .sidebar[data-tab="customer"] .js-actions')
     click(css: '.content.active .tabsSidebar .sidebar[data-tab="customer"] .js-actions li[data-type="customer-change"]')
 
-    watch_for(
-      css: '.content.active .modal',
-    )
+    modal_ready()
 
     exists_not(
       css: '.content.active .modal .user_autocompletion.form-group.has-error',

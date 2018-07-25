@@ -41,11 +41,7 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.active .js-submit',
     )
-
-    watch_for(
-      css: '.content.active .modal',
-      value: 'Time Accounting',
-    )
+    modal_ready()
     set(
       css: '.content.active .modal [name=time_unit]',
       value: '4',
@@ -53,10 +49,8 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    watch_for_disappear(
-      css: '.content.active .modal',
-      value: 'Time Accounting',
-    )
+    modal_disappear()
+
     watch_for(
       css: '.content.active .js-timeUnit',
       value: '4',
@@ -80,11 +74,7 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.active .js-submit',
     )
-
-    watch_for(
-      css: '.content.active .modal',
-      value: 'Time Accounting',
-    )
+    modal_ready()
     set(
       css: '.content.active .modal [name=time_unit]',
       value: '4,6',
@@ -92,10 +82,8 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    watch_for_disappear(
-      css: '.content.active .modal',
-      value: 'Time Accounting',
-    )
+    modal_disappear()
+
     watch_for(
       css: '.content.active .js-timeUnit',
       value: '4.6',
@@ -111,10 +99,7 @@ class AgentTicketTimeAccountingTest < TestCase
       css: '.active .js-submit',
     )
 
-    watch_for(
-      css: '.content.active .modal',
-      value: 'Time Accounting',
-    )
+    modal_ready()
     set(
       css: '.content.active .modal [name=time_unit]',
       value: '4abc',
@@ -132,10 +117,7 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    watch_for_disappear(
-      css: '.content.active .modal',
-      value: 'Time Accounting',
-    )
+    modal_disappear()
     watch_for(
       css: '.content.active .js-timeUnit',
       value: '8.6',
@@ -198,29 +180,18 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.active .js-submit',
     )
-
-    watch_for(
-      css: '.content.active .modal',
-      value: 'Time Accounting',
-    )
+    modal_ready()
 
     # Click outside the modal to make it disappear
     execute(
       js: 'document.elementFromPoint(300, 100).click();',
     )
-    watch_for_disappear(
-      css: '.content.active .modal',
-      value: 'Time Accounting',
-    )
+    modal_disappear()
 
     click(
       css: '.active .js-submit',
     )
-    watch_for(
-      css: '.content.active .modal',
-      value: 'Time Accounting',
-    )
-
+    modal_ready()
     set(
       css: '.content.active .modal [name=time_unit]',
       value: '4',
@@ -228,10 +199,7 @@ class AgentTicketTimeAccountingTest < TestCase
     click(
       css: '.content.active .modal .js-submit',
     )
-    watch_for_disappear(
-      css: '.content.active .modal',
-      value: 'Time Accounting',
-    )
+    modal_disappear()
 
     # disable time accounting
     click(

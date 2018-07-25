@@ -39,7 +39,6 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action [data-type="edit"]')
 
     modal_ready()
-
     watch_for(
       css: '.content.active .modal',
       value: 'some note 123',
@@ -54,6 +53,7 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
+    modal_disappear()
 
     watch_for(
       css: '.content.active .profile-window',
@@ -71,12 +71,12 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action [data-type="edit"]')
 
     modal_ready()
-
     set(
       css: '.modal [name="lastname"]',
       value: 'Braun',
     )
     click(css: '.content.active .modal button.js-submit')
+    modal_disappear()
 
     verify_task(
       data: {
@@ -188,18 +188,16 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
 
     modal_ready()
-
     set(
       css: '.modal [name="lastname"]',
       value: 'B2',
     )
-
     set(
       css: '.modal [data-name="note"]',
       value: 'some note abc',
     )
-
     click(css: '.content.active .modal button.js-submit')
+    modal_disappear()
 
     watch_for(
       css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
@@ -216,7 +214,6 @@ class AgentProfilePermissionsTest < TestCase
     click(css: 'li[data-type="customer-edit"]')
 
     modal_ready()
-
     set(
       css: '.modal [name="lastname"]',
       value: 'Braun',
@@ -226,6 +223,7 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
+    modal_disappear()
 
     watch_for(
       css: '.content.active .sidebar[data-tab="customer"] .sidebar-block [data-name="note"]',
@@ -279,7 +277,6 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action [data-type="edit"]')
 
     modal_ready()
-
     set(
       css: '.modal [name="lastname"]',
       value: 'B2',
@@ -289,6 +286,7 @@ class AgentProfilePermissionsTest < TestCase
       value: 'some note abc',
     )
     click(css: '.content.active .modal button.js-submit')
+    modal_disappear()
 
     watch_for(
       css: '.content.active .profile-window',
@@ -306,7 +304,6 @@ class AgentProfilePermissionsTest < TestCase
     click(css: '.content.active .js-action [data-type="edit"]')
 
     modal_ready()
-
     set(
       css: '.modal [name="lastname"]',
       value: 'Braun',
@@ -316,6 +313,7 @@ class AgentProfilePermissionsTest < TestCase
       value: 'note',
     )
     click(css: '.content.active .modal button.js-submit')
+    modal_disappear()
 
     verify_task(
       data: {
