@@ -551,7 +551,7 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     assert_not(file.preferences['Content-ID'])
   end
 
-  test '01.15 ticket create with agent - minimal article and attachment missing mine-type with customer' do
+  test '01.15 ticket create with agent - minimal article and simple invalid base64 attachment with customer' do
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     params = {
       title: 'a new ticket #15',
@@ -572,6 +572,83 @@ class TicketsControllerTest < ActionDispatch::IntegrationTest
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
     assert_equal('Invalid base64 for attachment with index \'0\'', result['error'])
+  end
+
+  test '01.15a ticket create with agent - minimal article and large invalid base64 attachment with customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #15a',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        subject: 'some test 123',
+        body: 'some test 123',
+        attachments: [
+          'filename' => 'some_file.txt',
+          'data' => "LARGE_INVALID_BASE64_#{'#' * 20_000_000}",
+          'mime-type' => 'text/plain',
+        ],
+      },
+    }
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(422)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('Invalid base64 for attachment with index \'0\'', result['error'])
+  end
+
+  test '01.15b ticket create with agent - minimal article and valid multiline base64 with linebreaks attachment with customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #15b',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        subject: 'some test 123',
+        body: 'some test 123',
+        attachments: [
+          'filename' => 'some_file.txt',
+          'data' =>  Base64.encode64('a' * 1_000),
+          'mime-type' => 'text/plain',
+        ],
+      },
+    }
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal('a new ticket #15b', result['title'])
+    ticket = Ticket.find(result['id'])
+    assert_equal(1, ticket.articles.count)
+    assert_equal(1, ticket.articles.first.attachments.count)
+    file = ticket.articles.first.attachments.first
+    assert_equal('a' * 1_000, file.content)
+  end
+
+  test '01.15c ticket create with agent - minimal article and valid multiline base64 without linebreaks attachment with customer' do
+    credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
+    params = {
+      title: 'a new ticket #15c',
+      group: 'Users',
+      customer_id: @customer_without_org.id,
+      article: {
+        subject: 'some test 123',
+        body: 'some test 123',
+        attachments: [
+          'filename' => 'some_file.txt',
+          'data' =>  Base64.strict_encode64('a' * 1_000),
+          'mime-type' => 'text/plain',
+        ],
+      },
+    }
+    post '/api/v1/tickets', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal('a new ticket #15c', result['title'])
+    ticket = Ticket.find(result['id'])
+    assert_equal(1, ticket.articles.count)
+    assert_equal(1, ticket.articles.first.attachments.count)
+    file = ticket.articles.first.attachments.first
+    assert_equal('a' * 1_000, file.content)
   end
 
   test '01.16 ticket create with agent - minimal article and attachment invalid base64 with customer' do
