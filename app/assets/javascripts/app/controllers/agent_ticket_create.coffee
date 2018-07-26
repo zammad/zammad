@@ -503,6 +503,10 @@ class App.TicketCreate extends App.Controller
           if !confirm(App.i18n.translateContent('You use %s in text but no attachment is attached. Do you want to continue?', matchingWord))
             return
 
+    # add sidebar params
+    if @sidebarWidget && @sidebarWidget.postParams
+      @sidebarWidget.postParams(ticket: ticket)
+
     # disable form
     @formDisable(e)
     ui = @

@@ -822,6 +822,10 @@ class App.TicketZoom extends App.Controller
 
       ticket.article = article
 
+    # add sidebar params
+    if @sidebarWidget && @sidebarWidget.postParams
+      @sidebarWidget.postParams(ticket: ticket)
+
     if !ticket.article
       @submitPost(e, ticket)
       return
