@@ -858,6 +858,7 @@ perform changes on ticket
       if key == 'ticket.action'
         next if value['value'].blank?
         next if value['value'] != 'delete'
+        logger.debug { "Deleted ticket from #{perform_origin} #{perform.inspect} Ticket.find(#{id})" }
         destroy!
         next
       end
