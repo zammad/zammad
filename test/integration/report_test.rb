@@ -1,4 +1,4 @@
-require 'integration_test_helper'
+require 'test_helper'
 
 class ReportTest < ActiveSupport::TestCase
   include SearchindexHelper
@@ -12,7 +12,7 @@ class ReportTest < ActiveSupport::TestCase
     rebuild_searchindex
 
     group1 = Group.lookup(name: 'Users')
-    group2 = Group.create_if_not_exists(
+    group2 = Group.create!(
       name: 'Report Test',
       updated_by_id: 1,
       created_by_id: 1
@@ -1353,8 +1353,6 @@ class ReportTest < ActiveSupport::TestCase
     assert(result)
     assert_nil(result[:ticket_ids][0])
 
-    # cleanup
-    Rake::Task['searchindex:drop'].execute
   end
 
 end
