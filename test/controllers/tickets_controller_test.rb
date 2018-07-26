@@ -767,6 +767,9 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
       priority: Ticket::Priority.lookup(name: '2 normal'),
       updated_by_id: 1,
       created_by_id: 1,
+      preferences: {
+        some_key1: 123,
+      },
     )
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-agent@example.com', 'agentpw')
     get "/api/v1/tickets/#{ticket.id}", params: {}, headers: @headers.merge('Authorization' => credentials)
@@ -778,10 +781,14 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(ticket.customer_id, result['customer_id'])
     assert_equal(1, result['updated_by_id'])
     assert_equal(1, result['created_by_id'])
+    assert_equal(123, result['preferences']['some_key1'])
 
     params = {
       title: "#{title} - 2",
       customer_id: @agent.id,
+      preferences: {
+        some_key2: 'abc',
+      },
     }
     put "/api/v1/tickets/#{ticket.id}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
     assert_response(200)
@@ -792,6 +799,8 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(@agent.id, result['customer_id'])
     assert_equal(@agent.id, result['updated_by_id'])
     assert_equal(1, result['created_by_id'])
+    assert_equal(123, result['preferences']['some_key1'])
+    assert_equal('abc', result['preferences']['some_key2'])
 
     params = {
       ticket_id: ticket.id,

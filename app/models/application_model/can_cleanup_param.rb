@@ -33,30 +33,30 @@ returns
 
       data = {}
       params.each do |key, value|
-        data[key.to_sym] = value
+        data[key.to_s] = value
       end
 
       # ignore id for new objects
       if new_object && params[:id]
-        data.delete(:id)
+        data.delete('id')
       end
 
       # only use object attributes
-      clean_params = {}
+      clean_params = ActiveSupport::HashWithIndifferentAccess.new
       new.attributes.each_key do |attribute|
-        next if !data.key?(attribute.to_sym)
+        next if !data.key?(attribute)
 
         # check reference records, referenced by _id attributes
         reflect_on_all_associations.map do |assoc|
           class_name = assoc.options[:class_name]
           next if !class_name
-          name = "#{assoc.name}_id".to_sym
+          name = "#{assoc.name}_id"
           next if !data.key?(name)
           next if data[name].blank?
           next if assoc.klass.lookup(id: data[name])
           raise ArgumentError, "Invalid value for param '#{name}': #{data[name].inspect}"
         end
-        clean_params[attribute.to_sym] = data[attribute.to_sym]
+        clean_params[attribute] = data[attribute]
       end
 
       # we do want to set this via database
@@ -89,5 +89,23 @@ returns
       end
       data
     end
+
+  end
+
+=begin
+
+merge preferences param
+
+  record = Model.find(123)
+
+  new_preferences = record.param_preferences_merge(param_preferences)
+
+=end
+
+  def param_preferences_merge(new_params)
+    return new_params if new_params.blank?
+    return new_params if preferences.blank?
+    new_params[:preferences] = preferences.merge(new_params[:preferences] || {})
+    new_params
   end
 end

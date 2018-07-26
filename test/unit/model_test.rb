@@ -337,4 +337,51 @@ class ModelTest < ActiveSupport::TestCase
     assert_not(result.key?(:controller))
   end
 
+  test 'param_preferences_merge test' do
+    params = {
+      id: 123,
+      firstname: '123',
+      created_by_id: 1,
+      created_at: Time.zone.now,
+      updated_by_id: 1,
+      updated_at: Time.zone.now,
+      preferences: {},
+    }
+    user = User.new(params)
+    assert(user.preferences.blank?)
+
+    user.preferences = { A: 1, B: 2 }
+    assert(user.preferences.present?)
+
+    params = {
+      firstname: '123 ABC',
+      preferences: { 'B' => 3, 'C': 4 },
+    }
+    clean_params = User.param_cleanup(params)
+    clean_user_params = user.param_preferences_merge(clean_params)
+    assert_equal(clean_user_params[:firstname], '123 ABC')
+    assert(clean_user_params[:preferences].present?)
+    assert_equal(clean_user_params[:preferences]['A'], 1)
+    assert_equal(clean_user_params[:preferences]['B'], 3)
+    assert_equal(clean_user_params[:preferences]['C'], 4)
+    assert_equal(clean_user_params[:preferences][:A], 1)
+    assert_equal(clean_user_params[:preferences][:B], 3)
+    assert_equal(clean_user_params[:preferences][:C], 4)
+
+    params = {
+      firstname: '123 ABCD',
+      preferences: {},
+    }
+    clean_params = User.param_cleanup(params)
+    clean_user_params = user.param_preferences_merge(clean_params)
+    assert_equal(clean_user_params[:firstname], '123 ABCD')
+    assert(clean_user_params[:preferences].present?)
+    assert_equal(clean_user_params[:preferences]['A'], 1)
+    assert_equal(clean_user_params[:preferences]['B'], 2)
+    assert_nil(clean_user_params[:preferences]['C'])
+    assert_equal(clean_user_params[:preferences][:A], 1)
+    assert_equal(clean_user_params[:preferences][:B], 2)
+    assert_nil(clean_user_params[:preferences][:C])
+  end
+
 end

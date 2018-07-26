@@ -14,6 +14,11 @@ class App.TicketZoomSidebar extends App.ObserverController
       if backend && backend.commit
         backend.commit(args)
 
+  postParams: (args) =>
+    for key, backend of @sidebarBackends
+      if backend && backend.postParams
+        backend.postParams(args)
+
   render: (ticket) =>
     @sidebarBackends ||= {}
     @sidebarItems = []

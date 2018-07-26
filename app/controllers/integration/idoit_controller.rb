@@ -38,10 +38,12 @@ class Integration::IdoitController < ApplicationController
   def update
     params[:object_ids] ||= []
     ticket = Ticket.find(params[:ticket_id])
-    access!(ticket, 'read')
-    ticket.preferences[:idoit] ||= {}
-    ticket.preferences[:idoit][:object_ids] = Array(params[:object_ids]).uniq
-    ticket.save!
+    ticket.with_lock do
+      access!(ticket, 'read')
+      ticket.preferences[:idoit] ||= {}
+      ticket.preferences[:idoit][:object_ids] = Array(params[:object_ids]).uniq
+      ticket.save!
+    end
 
     render json: {
       result: 'ok',

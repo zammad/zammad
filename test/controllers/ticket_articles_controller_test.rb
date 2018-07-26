@@ -152,6 +152,46 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal('some_file.txt', result['attachments'][0]['filename'])
     assert_equal('8', result['attachments'][0]['size'])
     assert_equal('text/plain', result['attachments'][0]['preferences']['Mime-Type'])
+
+    params = {
+      ticket_id: result['ticket_id'],
+      content_type: 'text/plain',
+      body: 'some body',
+      type: 'note',
+      preferences: {
+        some_key1: 123,
+      },
+    }
+    post '/api/v1/ticket_articles', params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(201)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_nil(result['subject'])
+    assert_equal('some body', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+    assert_equal(123, result['preferences']['some_key1'])
+    assert_equal(5, ticket.articles.count)
+
+    params = {
+      body: 'some body 2',
+      preferences: {
+        some_key2: 'abc',
+      },
+    }
+    put "/api/v1/ticket_articles/#{result['id']}", params: params.to_json, headers: @headers.merge('Authorization' => credentials)
+    assert_response(200)
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_nil(result['subject'])
+    assert_equal('some body 2', result['body'])
+    assert_equal('text/plain', result['content_type'])
+    assert_equal(@agent.id, result['updated_by_id'])
+    assert_equal(@agent.id, result['created_by_id'])
+    assert_equal(123, result['preferences']['some_key1'])
+    assert_equal('abc', result['preferences']['some_key2'])
+
   end
 
   test '02.01 ticket create with customer and articles' do
@@ -243,7 +283,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_equal(0, ticket.articles[3].attachments.count)
 
     # add internal article
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -297,6 +337,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_response(201)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
+    assert_equal('a new ticket #1', result['title'])
 
     article = Ticket::Article.find_by(ticket_id: result['id'])
     assert_equal(@customer_without_org.id, article.origin_by_id)

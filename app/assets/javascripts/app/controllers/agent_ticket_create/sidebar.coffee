@@ -13,6 +13,11 @@ class App.TicketCreateSidebar extends App.Controller
       if backend && backend.commit
         backend.commit(args)
 
+  postParams: (args) =>
+    for key, backend of @sidebarBackends
+      if backend && backend.postParams
+        backend.postParams(args)
+
   render: (params) =>
     if params
       @params = params
