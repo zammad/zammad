@@ -1458,3 +1458,49 @@ test("form select with empty option list", function() {
   }
   deepEqual(params, test_params)
 });
+
+test("form elements with sort check", function() {
+
+  $('#forms').append('<hr><h1>form elements with sort check</h1><form id="form16"></form>')
+  var el = $('#form16')
+  var defaults = {}
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'select1', display: 'Select1', tag: 'select', null: true, default: 'XY', options: { 'XX': 'AA', 'A': 'XX', 'B': 'B', 'XY': 'b', '': 'äöü' } },
+        { name: 'checkbox1', display: 'Checkbox1', tag: 'checkbox', null: false, default: 'A', options: { 'XX': 'AA', 'A': 'XX', 'B': 'B', 'XY': 'b', '': 'äöü' } },
+        { name: 'radio1', display: 'Radio1', tag: 'radio', null: false, default: 'A', options: { 'XX': 'AA', 'A': 'XX', 'B': 'B', 'XY': 'b', '': 'äöü' } },
+      ],
+    },
+    params: defaults,
+    autofocus: true
+  });
+
+  params = App.ControllerForm.params(el)
+  test_params = {
+    select1: 'XY',
+    checkbox1: 'A',
+    radio1: 'A',
+  }
+  deepEqual(params, test_params)
+
+  equal('AA', el.find('[name=select1] option')[0].text)
+  equal('äöü', el.find('[name=select1] option')[1].text)
+  equal('b', el.find('[name=select1] option')[2].text)
+  equal('B', el.find('[name=select1] option')[3].text)
+  equal('XX', el.find('[name=select1] option')[4].text)
+
+  equal('XX', el.find('[name=checkbox1]')[0].value)
+  equal('', el.find('[name=checkbox1]')[1].value)
+  equal('XY', el.find('[name=checkbox1]')[2].value)
+  equal('B', el.find('[name=checkbox1]')[3].value)
+  equal('A', el.find('[name=checkbox1]')[4].value)
+
+  equal('XX', el.find('[name=radio1]')[0].value)
+  equal('', el.find('[name=radio1]')[1].value)
+  equal('XY', el.find('[name=radio1]')[2].value)
+  equal('B', el.find('[name=radio1]')[3].value)
+  equal('A', el.find('[name=radio1]')[4].value)
+
+});
