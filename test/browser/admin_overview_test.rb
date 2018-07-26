@@ -94,24 +94,11 @@ class AdminOverviewTest < TestCase
       }
     )
 
-    click(
-      browser: instance,
-      css:  'a[href="#ticket/view"]',
-      mute_log: true,
-    )
-    click(
-      browser: instance,
-      css:  "div.overview-header a[href='#ticket/view/#{name}']",
-      mute_log: true,
+    overview_open(
+      name: name
     )
 
-    # Sort the tickets according to their onscreen Y location
-    tickets_low_to_high = ticket_titles.map do |title|
-      [title,
-       get_location( css: "td[title='#{title}']").y]
-    end
-    tickets_low_to_high = tickets_low_to_high.sort_by { |x| -x[1] }.map { |x| x[0] }
-    assert_equal(ticket_titles, tickets_low_to_high)
+    assert_equal(ticket_titles.reverse, ordered_ticket_titles(ticket_titles))
 
     # Update overview to sort groups from low to high
     overview_update(
@@ -121,23 +108,21 @@ class AdminOverviewTest < TestCase
       }
     )
 
-    click(
-      browser: instance,
-      css:  'a[href="#ticket/view"]',
-      mute_log: true,
-    )
-    click(
-      browser: instance,
-      css:  "div.overview-header a[href='#ticket/view/#{name}']",
-      mute_log: true,
+    overview_open(
+      name: name
     )
 
-    # Sort the tickets according to their onscreen Y location
-    tickets_high_to_low = ticket_titles.map do |title|
+    # wait till the scheduler pushed
+    # the changes to the FE
+    sleep 5
+
+    assert_equal(ticket_titles, ordered_ticket_titles(ticket_titles))
+  end
+
+  def ordered_ticket_titles(ticket_titles)
+    ticket_titles.map do |title|
       [title,
        get_location( css: "td[title='#{title}']").y]
-    end
-    tickets_high_to_low = tickets_high_to_low.sort_by { |x| x[1] }.map { |x| x[0] }
-    assert_equal(ticket_titles, tickets_high_to_low)
+    end.sort_by { |x| x[1] }.map { |x| x[0] }
   end
 end

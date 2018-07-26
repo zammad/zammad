@@ -96,10 +96,8 @@ class AgentTicketOverviewLevel0Test < TestCase
     # click options and enable number and article count
     click(css: '.content.active [data-type="settings"]')
 
-    watch_for(
-      css: '.modal h1',
-      value: 'Edit',
-    )
+    modal_ready()
+
     check(
       css: '.modal input[value="number"]',
     )
@@ -156,10 +154,8 @@ class AgentTicketOverviewLevel0Test < TestCase
     # disable number and article count
     click(css: '.content.active [data-type="settings"]')
 
-    watch_for(
-      css: '.modal h1',
-      value: 'Edit',
-    )
+    modal_ready()
+
     uncheck(
       css: '.modal input[value="number"]',
     )

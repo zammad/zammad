@@ -691,6 +691,25 @@ RSpec.describe User do
       end
     end
 
+    context 'falsely added on update (change: [nil, ""])' do
+      let(:orig_number) { nil }
+      let(:new_number)  { '' }
+
+      before { subject } # create user
+
+      it 'does not attempt to update CallerId record' do
+        allow(Cti::CallerId).to receive(:build).with(any_args)
+
+        expect(Cti::CallerId.where(object: 'User', o_id: subject.id).count)
+          .to eq(0)
+
+        expect { subject.update(phone: new_number) }
+          .to change { Cti::CallerId.where(object: 'User', o_id: subject.id).count }.by(0)
+
+        expect(Cti::CallerId).not_to have_received(:build)
+      end
+    end
+
     context 'removed on update' do
       let(:orig_number) { '1234567890' }
       let(:new_number) { nil }

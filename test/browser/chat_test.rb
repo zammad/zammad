@@ -462,6 +462,8 @@ class ChatTest < TestCase
       browser: agent,
       css: '.active .js-settings',
     )
+
+    modal_ready(browser: agent)
     set(
       browser: agent,
       css: '.modal [name="chat::phrase::1"]',

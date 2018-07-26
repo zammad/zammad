@@ -39,15 +39,12 @@ class MaintenanceModeTest < TestCase
     )
 
     # check warning
-    watch_for(
-      browser: browser1,
-      css: '.content.active .modal .modal-header',
-      value: 'confirm',
-    )
+    modal_ready(browser: browser1)
     click(
       browser: browser1,
       css: '.content.active .modal .js-submit',
     )
+    modal_disappear(browser: browser1)
 
     watch_for(
       browser: browser2,
@@ -127,15 +124,12 @@ class MaintenanceModeTest < TestCase
     )
 
     # check warning
-    watch_for(
-      browser: browser1,
-      css: '.content.active .modal .modal-header',
-      value: 'confirm',
-    )
+    modal_ready(browser: browser1)
     click(
       browser: browser1,
       css: '.content.active .modal .js-submit',
     )
+    modal_disappear(browser: browser1)
 
     watch_for(
       browser: browser2,

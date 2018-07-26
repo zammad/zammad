@@ -31,9 +31,11 @@ class SignupPasswordChangeAndResetTest < TestCase
       value: 'some-pass',
     )
     click(css: 'button.js-submit')
-    sleep 5
 
-    exists_not(css: '.signup')
+    watch_for_disappear(
+      css: '.signup',
+      timeout: 10,
+    )
 
     match(
       css: '.user-menu .user a',
@@ -61,11 +63,9 @@ class SignupPasswordChangeAndResetTest < TestCase
     execute(
       js: 'App.Event.trigger("user_signup_verify", App.Session.get())',
     )
-    watch_for(
-      css: '.modal',
-      value: 'Account not verified',
-    )
+    modal_ready()
     click(css: '.modal .js-submit')
+
     execute(
       js: 'App.Auth.logout()',
     )
@@ -81,9 +81,7 @@ class SignupPasswordChangeAndResetTest < TestCase
       css: '#content',
       value: 'Your email address has been verified',
     )
-    exists_not(
-      css: '.modal',
-    )
+    modal_disappear()
     sleep 2
 
     # change password

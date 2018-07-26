@@ -50,6 +50,7 @@ class MaintenanceSessionMessageTest < TestCase
       css: '.content.active .js-Message button.js-submit',
     )
 
+    modal_ready(browser: browser2)
     watch_for(
       browser: browser2,
       css: '.modal',
@@ -71,6 +72,7 @@ class MaintenanceSessionMessageTest < TestCase
       browser: browser2,
       css: 'div.modal-header .js-close',
     )
+    modal_disappear(browser: browser2)
 
     # check #2
     click(
@@ -98,6 +100,7 @@ class MaintenanceSessionMessageTest < TestCase
       css: '.content.active .js-Message button.js-submit',
     )
 
+    modal_ready(browser: browser2)
     watch_for(
       browser: browser2,
       css: '.modal',
@@ -119,6 +122,7 @@ class MaintenanceSessionMessageTest < TestCase
       browser: browser2,
       css: 'div.modal-header .js-close',
     )
+    modal_disappear(browser: browser2)
 
     # check #3
     click(
@@ -149,6 +153,7 @@ class MaintenanceSessionMessageTest < TestCase
       css: '.content.active .js-Message button.js-submit',
     )
 
+    modal_ready(browser: browser2)
     watch_for(
       browser: browser2,
       css: '.modal',

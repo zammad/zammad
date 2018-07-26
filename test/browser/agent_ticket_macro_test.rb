@@ -113,7 +113,10 @@ class AgentTicketMacroTest < TestCase
 
     perform_macro(name: macro_name)
 
-    exists_not(css: '.tasks > a')
+    watch_for_disappear(
+      css:     '.tasks > a',
+      timeout: 5,
+    )
   end
 
   def test_ux_flow_next_up_advance_to_next_ticket_from_overview

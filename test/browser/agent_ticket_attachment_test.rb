@@ -162,15 +162,15 @@ class AgentTicketAttachmentTest < TestCase
 
     # submit form
     click(css: '.content.active .js-submit')
-    sleep 2
 
     # check warning
+    modal_ready()
     match(
       css: '.content.active .modal',
       value: 'missing',
     )
     click(css: '.content.active .modal .js-cancel')
-    sleep 2
+    modal_disappear()
 
     ticket_update(
       data: {
@@ -259,7 +259,7 @@ class AgentTicketAttachmentTest < TestCase
     # modify customer
     click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
-    sleep 2
+    modal_ready(browser: browser1)
     set(browser: browser1, css: '.modal [name="address"]', value: 'some new address')
     click(browser: browser1, css: '.modal .js-submit')
     modal_disappear(browser: browser1)
@@ -279,7 +279,7 @@ class AgentTicketAttachmentTest < TestCase
     # change org of customer, check if org is shown in sidebar
     click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle')
     click(browser: browser1, css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]')
-    sleep 2
+    modal_ready(browser: browser1)
     set(browser: browser1, css: '.modal .js-input', value: 'zammad')
     click(browser: browser1, css: '.modal .js-input')
     click(browser: browser1, css: '.modal .js-option')
@@ -329,14 +329,15 @@ class AgentTicketAttachmentTest < TestCase
     # First test the attachment uploading for new tickets
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: [Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
+      files: [large_file],
       no_sleep: true,
     )
     exists(
       css: '.content.active .js-submit:disabled',
     )
     watch_for_disappear(
-      css: '.content.active .js-submit:disabled',
+      css:     '.content.active .js-submit:disabled',
+      timeout: 4.minutes,
     )
     exists(
       css: '.content.active .js-submit',
@@ -355,14 +356,23 @@ class AgentTicketAttachmentTest < TestCase
     )
     file_upload(
       css:   '.content.active .attachmentPlaceholder-inputHolder input',
-      files: [Rails.root.join('test', 'data', 'upload', 'upload2.jpg')],
+      files: [large_file],
       no_sleep: true,
     )
     exists(
       css: '.content.active .js-submit:disabled',
     )
     watch_for_disappear(
-      css: '.content.active .js-submit:disabled',
+      css:     '.content.active .js-submit:disabled',
+      timeout: 4.minutes,
     )
+  end
+
+  def large_file
+    file = Tempfile.new
+    file.binmode
+    file.write(SecureRandom.random_bytes(6.megabyte))
+    file.close
+    file.path
   end
 end

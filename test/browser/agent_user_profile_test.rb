@@ -43,10 +43,7 @@ class AgentUserProfileTest < TestCase
     click(css: '.active .js-action .icon-arrow-down', fast: true)
     click(css: '.active .js-action [data-type="edit"]')
 
-    watch_for(
-      css: '.active .modal',
-      value: 'note',
-    )
+    modal_ready()
     watch_for(
       css: '.active .modal',
       value: 'some note 123',
@@ -61,6 +58,7 @@ class AgentUserProfileTest < TestCase
       value: 'some note abc',
     )
     click(css: '.active .modal button.js-submit')
+    modal_disappear()
 
     watch_for(
       css: '.active .profile-window',
@@ -76,15 +74,14 @@ class AgentUserProfileTest < TestCase
     # change lastname back
     click(css: '.active .js-action .icon-arrow-down', fast: true)
     click(css: '.active .js-action [data-type="edit"]')
-    watch_for(
-      css: '.active .modal',
-      value: 'note',
-    )
+
+    modal_ready()
     set(
       css: '.modal [name="lastname"]',
       value: 'Braun',
     )
     click(css: '.active .modal button.js-submit')
+    modal_disappear()
 
     verify_task(
       data: {
