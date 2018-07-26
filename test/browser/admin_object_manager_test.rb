@@ -347,19 +347,9 @@ class AdminObjectManagerTest < TestCase
         name: 'browser_test7',
       },
     )
-    click(css: '.content.active .tab-pane.active div.js-execute')
-    watch_for(
-      css: '.modal',
-      value: 'restart',
-    )
-    watch_for_disappear(
-      css:     '.modal',
-      timeout: 7.minutes,
-    )
-    sleep 5
-    watch_for(
-      css: '.content.active',
-    )
+    sleep 1
+    object_manager_attribute_migrate
+
     match_not(
       css: '.content.active',
       value: 'Database Update required',
@@ -670,5 +660,118 @@ class AdminObjectManagerTest < TestCase
     unsorted_options = select_element.find_elements(xpath: './*').map(&:text).reject { |x| x == '-' }
     log unsorted_options.inspect
     assert_equal options, unsorted_options
+
+    object_manager_attribute_delete(
+      data: {
+        name: 'select_attributes_sorting_test',
+      },
+    )
+    object_manager_attribute_migrate
   end
+
+  def test_deleted_select_attributes
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+
+    options = Hash[ %w[äöü cat delete dog ß].map { |x| [x, "#{x.capitalize} Display"] } ]
+    options_no_dog = options.except('dog')
+    options_no_dog_no_delete = options_no_dog.except('delete')
+
+    tasks_close_all()
+
+    object_manager_attribute_create(
+      data: {
+        name: 'select_attributes_delete_test',
+        display: 'Select Attributes Delete Test',
+        data_type: 'Select',
+        data_option: {
+          options: options,
+        },
+      },
+    )
+    object_manager_attribute_migrate
+
+    ticket = ticket_create(
+      data: {
+        customer: 'nico',
+        group:    'Users',
+        title:    'select_attributes_delete_test',
+        body:     'select_attributes_delete_test',
+      },
+      custom_data_select: {
+        select_attributes_delete_test: 'Delete Display',
+      },
+      disable_group_check: true,
+    )
+
+    watch_for(
+      css: '.content.active select[name="select_attributes_delete_test"]',
+    )
+
+    # confirm that all options and their display values are there and are in the correct order
+    select_element = @browser.find_elements(css: '.content.active select[name="select_attributes_delete_test"]')[0]
+    unsorted_options = select_element.find_elements(xpath: './*').map { |o| o.attribute('value') }.reject { |x| x == '' }
+    assert_equal options.keys, unsorted_options
+    unsorted_display_options = select_element.find_elements(xpath: './*').map(&:text).reject { |x| x == '-' }
+    assert_equal options.values, unsorted_display_options
+
+    # confirm that the "delete" option is selected and that its display text is indeed "Delete Display"
+    selected_option = select_element.find_elements(css: 'option:checked')[0]
+    assert_equal 'delete', selected_option.attribute('value')
+    assert_equal 'Delete Display', selected_option.text
+
+    object_manager_attribute_update(
+      data: {
+        name: 'select_attributes_delete_test',
+        data_option: {
+          options: options_no_dog_no_delete,
+        },
+      },
+    )
+    object_manager_attribute_migrate
+
+    # open the previously created ticket and verify its attribute selection
+    click(
+      xpath:   '//a/div[contains(text(),"select_attributes_delete_test")]',
+    )
+    # confirm that all options and their display values are there and are in the correct order
+    select_element = @browser.find_elements(css: '.content.active select[name="select_attributes_delete_test"]')[0]
+    unsorted_options = select_element.find_elements(xpath: './*').map { |o| o.attribute('value') }.reject { |x| x == '' }
+    assert_equal options_no_dog.keys, unsorted_options
+    unsorted_display_options = select_element.find_elements(xpath: './*').map(&:text).reject { |x| x == '-' }
+    assert_equal options_no_dog.values, unsorted_display_options
+
+    # confirm that the "delete" option is still selected and that its display text is still indeed "Delete Display"
+    selected_option = select_element.find_elements(css: 'option:checked')[0]
+    assert_equal 'delete', selected_option.attribute('value')
+    assert_equal 'Delete Display', selected_option.text
+
+    # create a new ticket and check that the deleted options no longer appear
+    click(
+      css: 'a[href="#ticket/create"]',
+      mute_log: true,
+    )
+
+    watch_for(
+      css: 'select[name="select_attributes_delete_test"]',
+    )
+
+    select_element = @browser.find_elements(css: 'select[name="select_attributes_delete_test"]')[0]
+    unsorted_options = select_element.find_elements(xpath: './*').map { |o| o.attribute('value') }.reject { |x| x == '' }
+    assert_equal options_no_dog_no_delete.keys, unsorted_options
+    unsorted_display_options = select_element.find_elements(xpath: './*').map(&:text).reject { |x| x == '-' }
+    assert_equal options_no_dog_no_delete.values, unsorted_display_options
+
+    object_manager_attribute_delete(
+      data: {
+        name: 'select_attributes_delete_test',
+      },
+    )
+    object_manager_attribute_migrate
+  end
+
 end
