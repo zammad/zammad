@@ -386,6 +386,7 @@ class App.TicketZoom extends App.Controller
     # if page header is not possible to use - mainScrollHeigth to low - hide page header
     if not mainScrollHeigth > mainHeigth + headerHeight
       @scrollPageHeader.css('transform', "translateY(#{-headerHeight}px)")
+      return
 
     if scroll > headerHeight
       scroll = headerHeight
