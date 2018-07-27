@@ -4,7 +4,7 @@ require 'browser_test_helper'
 class IntegrationIdoitTest < TestCase
 
   def test_idoit_objects_corrects_saves_on_ticket_creation
-    # Read I-doit credentials from ENV
+    # Read i-doit credentials from ENV
     if !ENV['IDOIT_API_TOKEN']
       raise "ERROR: Need IDOIT_API_TOKEN - hint IDOIT_API_TOKEN='1234'"
     end
@@ -19,14 +19,15 @@ class IntegrationIdoitTest < TestCase
     api_category = ENV['IDOIT_API_CATEGORY']
 
     id = rand(99_999_999)
-    @browser = instance = browser_instance
+    @browser = browser_instance
     login(
       username: 'master@example.com',
       password: 'test',
       url: browser_url,
+      auto_wizard: true,
     )
 
-    # turn on I-doit integration
+    # turn on i-doit integration
     click(css: 'a[href="#manage"]')
     click(css: 'a[href="#system/integration"]')
     click(css: 'a[href="#system/integration/idoit"]')
@@ -35,7 +36,7 @@ class IntegrationIdoitTest < TestCase
       type: 'on'
     )
 
-    # fill in I-doit login details
+    # fill in i-doit login details
     set(
       css: '.content.active .main input[name="api_token"]',
       value: api_token,
@@ -51,18 +52,18 @@ class IntegrationIdoitTest < TestCase
       value: 'update successful',
     )
 
-    # new create a new ticket with an I-doit object
+    # new create a new ticket with an i-doit object
     ticket = ticket_create(
       data: {
         customer: 'nico',
         group: 'Users',
-        title: 'subject - I-doit integration',
-        body: 'body - I-doit integration',
+        title: 'subject - i-doit integration',
+        body: 'body - i-doit integration',
       },
       do_not_submit: true,
     )
 
-    # open the I-doit selection modal
+    # open the i-doit selection modal
     click(css: '.content.active .tabsSidebar svg.icon-printer')
     click(css: '.content.active .sidebar[data-tab="idoit"] .js-headline')
     click(css: '.content.active .sidebar[data-tab="idoit"] .dropdown-menu')
@@ -76,11 +77,11 @@ class IntegrationIdoitTest < TestCase
     watch_for(css: '.content.active .modal form.js-result table.table')
 
     # click the check box from the first row and note its entry ID
-    checkbox = instance.find_elements(css: '.content.active .modal form.js-result tbody :first-child input')[0]
+    checkbox = @browser.find_elements(css: '.content.active .modal form.js-result tbody :first-child input')[0]
     entry_id = checkbox.attribute('value')
     checkbox.click()
 
-    # submit the I-doit object selections
+    # submit the i-doit object selections
     click(css: '.content.active .modal form button.js-submit')
 
     # confirm that the entry have been successfully recorded
@@ -90,15 +91,81 @@ class IntegrationIdoitTest < TestCase
 
     # now submit the ticket
     click(css: '.content.active .newTicket button.js-submit')
-    sleep 5
 
-    # open the I-doit sidebar again and verify that the entry is still there
-    click(css: '.content.active .tabsSidebar svg.icon-printer')
+    watch_for(
+      css: '.content.active .ticketZoom-header .ticket-number',
+    )
+
+    # open the i-doit sidebar again and verify that the entry is still there
+    click(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="idoit"]')
     watch_for(
       css: ".content.active .sidebar[data-tab='idoit'] a[href='#{api_endpoint}/?objID=#{entry_id}']",
     )
 
-    # finally turn off I-doit integration
+    # remove i-doit object
+    click(css: ".content.active .sidebar[data-tab='idoit'] .js-delete[data-object-id=\"#{entry_id}\"]")
+    watch_for_disappear(
+      css: ".content.active .sidebar[data-tab='idoit'] a[href='#{api_endpoint}/?objID=#{entry_id}']",
+    )
+
+    # reload browser and check if it's still removed
+    sleep 3
+    reload()
+    watch_for(
+      css: '.content.active .ticketZoom-header .ticket-number',
+    )
+    click(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="idoit"]')
+    watch_for(
+      css: ".content.active .sidebar[data-tab='idoit'] .sidebar-content",
+    )
+    match(
+      css: ".content.active .sidebar[data-tab='idoit'] .sidebar-content",
+      value: 'none',
+    )
+    exists_not(
+      css: ".content.active .sidebar[data-tab='idoit'] a[href='#{api_endpoint}/?objID=#{entry_id}']",
+    )
+
+    # add item again
+    click(css: '.content.active .sidebar[data-tab="idoit"] .js-actions .dropdown-toggle')
+    click(css: '.content.active .sidebar[data-tab="idoit"] .js-actions [data-type="objects-change"]')
+    modal_ready()
+
+    # wait for the API call to populate the dropdown menu
+    watch_for(css: '.content.active .modal form input.js-input')
+    # open the dropdown menu and choose the Building option
+    click(css: '.content.active .modal form input.js-input')
+    click(css: ".content.active .modal form li.js-option[title='#{api_category}']")
+    # wait for the building results to populate from the API
+    watch_for(css: '.content.active .modal form.js-result table.table')
+
+    # click the check box from the first row and note its entry ID
+    checkbox = @browser.find_elements(css: '.content.active .modal form.js-result tbody :first-child input')[0]
+    entry_id = checkbox.attribute('value')
+    checkbox.click()
+
+    # submit the i-doit object selections
+    click(css: '.content.active .modal form button.js-submit')
+
+    # confirm that the entry have been successfully recorded
+    watch_for(
+      css: ".content.active .sidebar[data-tab='idoit'] a[href='#{api_endpoint}/?objID=#{entry_id}']",
+    )
+
+    # reload browser and check if it's still removed
+    sleep 3
+    reload()
+    watch_for(
+      css: '.content.active .ticketZoom-header .ticket-number',
+    )
+
+    # open the i-doit sidebar again and verify that the entry is still there
+    click(css: '.content.active .tabsSidebar .tabsSidebar-tab[data-tab="idoit"]')
+    watch_for(
+      css: ".content.active .sidebar[data-tab='idoit'] a[href='#{api_endpoint}/?objID=#{entry_id}']",
+    )
+
+    # finally turn off i-doit integration
     click(css: 'a[href="#manage"]')
     click(css: 'a[href="#system/integration"]')
     click(css: 'a[href="#system/integration/idoit"]')
