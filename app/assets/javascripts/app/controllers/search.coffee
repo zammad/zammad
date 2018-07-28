@@ -125,8 +125,7 @@ class App.Search extends App.Controller
 
     @globalSearch.search(query: @query)
 
-  renderResult: (result = [], noChange) =>
-    return if noChange
+  renderResult: (result = []) =>
     @result = result
     for tab in @tabs
       count = 0

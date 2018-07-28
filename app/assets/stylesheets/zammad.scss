@@ -1962,6 +1962,7 @@ input.has-error {
     border-radius: 19px;
     padding: 0 17px 0 42px;
     @include rtl(padding, 0 42px 0 17px);
+    will-change: transform;
 
     &.is-empty + .empty-search {
       visibility: hidden;
@@ -3278,6 +3279,10 @@ footer {
   .nav-tab.nav-tab--search.is-hover {
     background: #389ed9;
     color: white;
+
+    .nav-tab-icon .icon {
+      fill: white;
+    }
   }
 
   .nav-tab.ui-sortable-helper {
@@ -3301,7 +3306,7 @@ footer {
   .nav-tab-icon .icon {
     max-width: 18px;
     max-height: 18px;
-    fill: currentColor;
+    fill: #808080;
   }
 
   .nav-tab-icon .icon-diagonal-cross {
@@ -3427,8 +3432,7 @@ footer {
     flex: 1;
     border-radius: 15px;
     position: relative;
-    transition: margin-right 120ms;
-    will-change: margin-right;
+    transition: 240ms;
   }
 
   .empty-search {
@@ -3438,23 +3442,16 @@ footer {
     height: 30px;
     width: 40px;
     z-index: 1;
+    visibility: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     @extend %clickable;
-    visibility: hidden;
-    cursor: pointer;
-    
-    &:hover {
-      .icon {
-        opacity: 1;
-      }
-    }
+  }
 
-    .icon {
-      fill: white;
-      opacity: 0.5;
-    }
+  .search .empty-search .icon-diagonal-cross {
+    fill: white;
+    opacity: 0.5;
   }
 
     .filled.search .empty-search {
@@ -3492,8 +3489,7 @@ footer {
   }
 
   .search.focused .search-holder {
-    transition: margin-right 240ms;
-    @include bidi-style(margin-right, -59px, margin-left, 0);
+    @include bidi-style(margin-right, -46px, margin-left, 0);
   }
 
   .search.focused .logo {
@@ -3559,10 +3555,6 @@ footer {
     padding: 9px 15px 8px 0;
     margin-bottom: 7px;
     height: auto !important;
-    
-    .no-match & {
-      display: none;
-    }
 
     .nav-tab-icon {
       width: 18px;
@@ -3588,62 +3580,6 @@ footer {
     margin: 0;
     padding: 0;
     list-style: none;
-  }
-
-  .global-search-detail-no-result {
-    margin: 0 10px;
-    
-    .icon {
-      width: 30px;
-      height: 29px;
-    }
-  }
-
-  .global-search-detail-placeholder {
-    pointer-events: none;
-    color: inherit;
-    
-    .nav-tab {
-      animation: fade-in 4s forwards;
-    }
-    
-    .nav-tab-name {
-      background: linear-gradient(to right, hsl(0,0%,50%) 50%, hsl(0,0%,70%));
-      background-size: 200% 100%;
-      height: 10px;
-      width: 77%;
-      animation: placeholder-background 1.4s infinite;
-    }
-
-    &:nth-child(2) {
-      .nav-tab-name {
-        width: 54%;
-      }
-    }
-
-    &:nth-child(3) {
-      .nav-tab-name {
-        width: 68%;
-      }
-    }
-  }
-
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes placeholder-background {
-    from {
-      background-position: 0% 0%;
-    }
-    to {
-      background-position: -200% 0%;
-    }
   }
 
   .user-menu {
@@ -5907,11 +5843,6 @@ footer {
   border-radius: 3px;
   color: white;
   border: none;
-  
-  .icon {
-    margin-right: 10px;
-    fill: currentColor;
-  }
 
   &.alert--info {
     background: hsl(203,65%,55%);
