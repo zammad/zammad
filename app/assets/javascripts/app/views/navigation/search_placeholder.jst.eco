@@ -1,0 +1,24 @@
+<li class="global-search-detail-placeholder">
+  <a class="nav-tab nav-tab--search">
+    <div class="nav-tab-icon">
+    	<%- @Icon('task-state') %>
+    </div>
+    <span class="nav-tab-name"></span>
+  </a>
+</li>
+<li class="global-search-detail-placeholder">
+  <a class="nav-tab nav-tab--search">
+    <div class="nav-tab-icon">
+    	<%- @Icon('task-state') %>
+    </div>
+    <span class="nav-tab-name"></span>
+  </a>
+</li>
+<li class="global-search-detail-placeholder">
+  <a class="nav-tab nav-tab--search">
+    <div class="nav-tab-icon">
+    	<%- @Icon('task-state') %>
+    </div>
+    <span class="nav-tab-name"></span>
+  </a>
+</li>
