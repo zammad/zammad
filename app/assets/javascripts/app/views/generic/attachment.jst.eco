@@ -2,8 +2,11 @@
 <div class="article-attachment">
   <div class="attachmentPlaceholder">
     <span class="attachmentPlaceholder-inputHolder fileUpload">
-      <%- @T('select attachment...') %>
-      <input multiple="multiple" type="file" name="file" style="">
+      <% uid =  _.uniqueId('fileUpload_') %>
+      <input multiple="multiple" type="file" name="file" id="<%- uid %>">
+      <label class="attachmentPlaceholder-label" for="<%- uid %>">
+        <%- @T('select attachment...') %>
+      </label>
     </span>
   </div>
   <div class="attachmentUpload hide">

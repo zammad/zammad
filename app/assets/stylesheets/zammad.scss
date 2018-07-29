@@ -1358,7 +1358,8 @@ label,
 .inline-label,
 .label-success,
 .label-warning,
-.label-danger {
+.label-danger,
+.fileUpload label {
   font-size: inherit;
   font-weight: inherit;
   text-align: inherit;
@@ -7378,6 +7379,10 @@ label + .wizard-buttonList {
   padding: 0;
   @extend %clickable;
   opacity: 0;
+  
+  &:focus + label {
+    text-decoration: underline;
+  }
 }
 
 .imagePreview img {
