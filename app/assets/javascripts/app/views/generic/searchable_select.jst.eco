@@ -6,6 +6,7 @@
     <%= @attribute.required %>
     <%= @attribute.autofocus %>
     value="<%= @attribute.value %>"
+    tabindex="-1"
   >
   <input
     class="searchableSelect-main form-control js-input<%= " #{ @attribute.class }" if @attribute.class %>"
