@@ -234,11 +234,17 @@ function setup_elasticsearch () {
     ES_CONNECTION="http://127.0.0.1:9200"
   fi
 
+  ES_INDEX="$(zammad run rails r "puts Setting.get('es_index')" 2>> /dev/null)"
+
+  if [ -z "${ES_INDEX}" ]; then
+    ES_INDEX="zammad_production"
+  fi
+
   if [ -n "$(/usr/share/elasticsearch/bin/elasticsearch-plugin list | grep mapper-attachments)" ]; then
     REBUILD_ES_SEARCHINDEX="yes"
 
-    echo "# Deleting old zammad_production elasticsearch index..."
-    curl -XDELETE "${ES_CONNECTION}/zammad_production"
+    echo "# Deleting old ${ES_INDEX} elasticsearch index..."
+    curl -XDELETE "${ES_CONNECTION}/${ES_INDEX}"
 
     yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s remove mapper-attachments
 
