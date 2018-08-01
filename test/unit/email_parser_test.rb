@@ -45,7 +45,7 @@ Old programmers never die. They just branch to a new address.
       {
         data: IO.read('test/fixtures/mail3.box'),
         source: 'test/fixtures/mail3.box',
-        body_md5: '0b6eb998e8903ba69a3528dedb5a5476',
+        body_md5: 'f77485ea9b1c67c2e50fc3592bddc312',
         params: {
           from: '"Günther John | Example GmbH" <k.guenther@example.com>',
           from_email: 'k.guenther@example.com',
@@ -53,7 +53,7 @@ Old programmers never die. They just branch to a new address.
           subject: 'Ticket Templates',
           content_type: 'text/html',
           body: "<div>
-<p>Hallo Martin,</p><p>&nbsp;</p><p>ich möchte mich gern für den Beta-Test für die Ticket Templates unter XXXX 2.4 anmelden.</p><p>&nbsp;</p><div> <p>&nbsp;</p><p>Mit freundlichen Grüßen</p><p>John Günther</p><p>&nbsp;</p><p><a href=\"http://www.GeoFachDatenServer.de\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"http://www.GeoFachDatenServer.de\">example.com</a> – profitieren Sie vom umfangreichen Daten-Netzwerk </p><p>&nbsp;</p><p>_ __ ___ ____________________________ ___ __ _</p><p>&nbsp;</p><p>Example GmbH</p><p>Some What</p><p>&nbsp;</p><p>Sitz: Someware-Straße 9, XXXXX Someware</p><p>&nbsp;</p><p>M: +49 (0) XXX XX XX 70</p><p>T: +49 (0) XXX XX XX 22</p><p>F: +49 (0) XXX XX XX 11</p><p>W: <a href=\"http://www.example.de\" rel=\"nofollow noreferrer noopener\" target=\"_blank\">http://www.example.de</a></p><p>&nbsp;</p><p>Geschäftsführer: John Smith</p><p>HRB XXXXXX AG Someware</p><p>St.-Nr.: 112/107/05858</p><p>&nbsp;</p><p>ISO 9001:2008 Zertifiziert -Qualitätsstandard mit Zukunft</p><p>_ __ ___ ____________________________ ___ __ _</p><p>&nbsp;</p><p>Diese Information ist ausschließlich für den Adressaten bestimmt und kann vertrauliche oder gesetzlich geschützte Informationen enthalten. Wenn Sie nicht der bestimmungsgemäße Adressat sind, unterrichten Sie bitte den Absender und vernichten Sie diese Mail. Anderen als dem bestimmungsgemäßen Adressaten ist es untersagt, diese E-Mail zu lesen, zu speichern, weiterzuleiten oder ihren Inhalt auf welche Weise auch immer zu verwenden.</p></div><p>&nbsp;</p><div>
+<p>Hallo Martin,</p><p>&nbsp;</p><p>ich möchte mich gern für den Beta-Test für die Ticket Templates unter XXXX 2.4 anmelden.</p><p>&nbsp;</p><div> <p>&nbsp;</p><p>Mit freundlichen Grüßen</p><p>John Günther</p><p>&nbsp;</p><p><a href=\"http://www.GeoFachDatenServer.de\" rel=\"nofollow noreferrer noopener\" target=\"_blank\" title=\"http://www.GeoFachDatenServer.de\">example.com</a> – profitieren Sie vom umfangreichen Daten-Netzwerk </p><p>&nbsp;</p><p>_ __ ___ ____________________________ ___ __ _</p><p>&nbsp;</p><p>Example GmbH</p><p>Some What</p><p>&nbsp;</p><p>Sitz: Someware-Straße 9, XXXXX Someware</p><p>&nbsp;</p><p>M: +49 (0) XXX XX XX 70</p><p>T: +49 (0) XXX XX XX 22</p><p>F: +49 (0) XXX XX XX 11</p><p>W: www.example.de</p><p>&nbsp;</p><p>Geschäftsführer: John Smith</p><p>HRB XXXXXX AG Someware</p><p>St.-Nr.: 112/107/05858</p><p>&nbsp;</p><p>ISO 9001:2008 Zertifiziert -Qualitätsstandard mit Zukunft</p><p>_ __ ___ ____________________________ ___ __ _</p><p>&nbsp;</p><p>Diese Information ist ausschließlich für den Adressaten bestimmt und kann vertrauliche oder gesetzlich geschützte Informationen enthalten. Wenn Sie nicht der bestimmungsgemäße Adressat sind, unterrichten Sie bitte den Absender und vernichten Sie diese Mail. Anderen als dem bestimmungsgemäßen Adressaten ist es untersagt, diese E-Mail zu lesen, zu speichern, weiterzuleiten oder ihren Inhalt auf welche Weise auch immer zu verwenden.</p></div><p>&nbsp;</p><div>
 <span class=\"js-signatureMarker\"></span><p><b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's</p></div><p>&nbsp;</p><p>Hallo,</p><div> <p>&nbsp;</p></div><div>
 <p>ich versuche an den Punkten anzuknüpfen.</p></div><div> <p>&nbsp;</p></div><div>
 <p><b>a) LDAP Muster Konfigdatei</b></p></div><div> <p>&nbsp;</p></div><div>
@@ -517,7 +517,7 @@ Managing Director: Martin Edenhofer
       {
         data: IO.read('test/fixtures/mail19.box'),
         source: 'test/fixtures/mail19.box',
-        body_md5: '6021dd92d8e7844e6bb9b5bb7a4adfb8',
+        body_md5: '91dcfec2968598e221954010e49428af',
         params: {
           from: '"我" <>',
           from_email: 'vipyiming@126.com',
