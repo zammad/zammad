@@ -1,4 +1,5 @@
 class HtmlSanitizer
+  LINKABLE_URL_SCHEMES = URI.scheme_list.keys.map(&:downcase) - ['mailto'] + ['tel']
 
 =begin
 
@@ -25,23 +26,14 @@ satinize html string based on whiltelist
 
     scrubber_link = Loofah::Scrubber.new do |node|
 
-      # check if text has urls which need to be clickable
-      if node&.name != 'a' && node.parent && node.parent.name != 'a' && (!node.parent.parent || node.parent.parent.name != 'a')
-        if node.class == Nokogiri::XML::Text
-          urls = []
-          node.content.scan(%r{((http|https|ftp|tel)://.+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)}mxi).each do |match|
-            if match[0]
-              urls.push match[0].to_s.strip
-            end
-          end
-          node.content.scan(/(^|:|;|\s)(www\..+?)([[:space:]]|\.[[:space:]]|,[[:space:]]|\.$|,$|\)|\(|$)/mxi).each do |match|
-            if match[1]
-              urls.push match[1].to_s.strip
-            end
-          end
-          next if urls.blank?
-          add_link(node.content, urls, node)
-        end
+      # wrap plain-text URLs in <a> tags
+      if node.is_a?(Nokogiri::XML::Text) && node.ancestors.map(&:name).exclude?('a')
+        urls = URI.extract(node.content, LINKABLE_URL_SCHEMES)
+                  .map { |u| u.sub(/[,.]$/, '') }      # URI::extract captures trailing dots/commas
+                  .reject { |u| u.match?(/^[^:]+:$/) } # URI::extract will match, e.g., 'tel:'
+
+        next if urls.blank?
+        add_link(node.content, urls, node)
       end
 
       # prepare links
