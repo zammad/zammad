@@ -92,6 +92,9 @@ class SidebarIdoit extends App.Controller
   showError: (message) =>
     @html App.i18n.translateInline(message)
 
+  reload: =>
+    @showObjectsContent()
+
   delete: (objectId) =>
     localObjects = []
     for localObjectId in @objectIds
