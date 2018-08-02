@@ -57,7 +57,67 @@ class IntegrationIdoitTest < TestCase
       data: {
         customer: 'nico',
         group: 'Users',
-        title: 'subject - i-doit integration',
+        title: 'subject - i-doit integration #1',
+        body: 'body - i-doit integration',
+      },
+      do_not_submit: true,
+    )
+
+    # open the i-doit selection modal
+    click(css: '.content.active .tabsSidebar svg.icon-printer')
+    click(css: '.content.active .sidebar[data-tab="idoit"] .js-headline')
+    click(css: '.content.active .sidebar[data-tab="idoit"] .dropdown-menu')
+
+    # wait for the API call to populate the dropdown menu
+    watch_for(css: '.content.active .modal form input.js-input')
+    # open the dropdown menu and choose the Building option
+    click(css: '.content.active .modal form input.js-input')
+    click(css: ".content.active .modal form li.js-option[title='#{api_category}']")
+    # wait for the building results to populate from the API
+    watch_for(css: '.content.active .modal form.js-result table.table')
+
+    # click the check box from the first row and note its entry ID
+    checkbox = @browser.find_elements(css: '.content.active .modal form.js-result tbody :first-child input')[0]
+    entry_id = checkbox.attribute('value')
+    checkbox.click()
+
+    # submit the i-doit object selections
+    click(css: '.content.active .modal form button.js-submit')
+
+    # confirm that the entry have been successfully recorded
+    watch_for(
+      css: ".content.active .sidebar[data-tab='idoit'] a[href='#{api_endpoint}/?objID=#{entry_id}']",
+    )
+
+    # reselect the customer and verify if object is still shown in sidebar
+    ticket_customer_select(
+      css:      '.content.active .newTicket',
+      customer: 'master',
+    )
+
+    watch_for(
+      css: ".content.active .sidebar[data-tab='idoit'] a[href='#{api_endpoint}/?objID=#{entry_id}']",
+    )
+
+    # now submit the ticket
+    click(css: '.content.active .newTicket button.js-submit')
+
+    watch_for(
+      css: '.content.active .ticketZoom-header .ticket-number',
+    )
+
+    watch_for(
+      css: ".content.active .sidebar[data-tab='idoit'] a[href='#{api_endpoint}/?objID=#{entry_id}']",
+    )
+
+    tasks_close_all()
+
+    # new create a new ticket with an i-doit object
+    ticket = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'subject - i-doit integration #2',
         body: 'body - i-doit integration',
       },
       do_not_submit: true,
