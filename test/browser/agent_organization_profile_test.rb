@@ -159,4 +159,96 @@ class AgentOrganizationProfileTest < TestCase
       value: message,
     )
   end
+
+  def test_org_profile_user_active_update
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    # search and open org
+    organization_open_by_search(
+      value: 'Zammad Foundation',
+    )
+
+    watch_for(
+      css: '.active .profile-window .userList-entry a.user-popover',
+      value: 'Nicole Braun',
+    )
+
+    exists(
+      css: '.active .profile-window .userList-entry .avatar--unique',
+    )
+
+    # open user and change status to inactive
+    click(
+      css: '.active .profile-window .userList-entry a.user-popover',
+    )
+    click(
+      css: '.active .profile-window .dropdown #userAction',
+    )
+    click(
+      css: '.active .profile-window .dropdown li[data-type="edit"]',
+    )
+    modal_ready()
+
+    select(
+      css: '.active .modal select[name="active"]',
+      value: 'inactive'
+    )
+
+    click(
+      css: '.modal .js-submit',
+    )
+
+    modal_disappear()
+
+    # go back to the org and check for inactive status update
+    click(
+      css: '#navigation .nav-tab[data-key="Organization-1"]',
+    )
+
+    watch_for(
+      css: '.active .profile-window .userList-entry .avatar--unique.avatar--inactive',
+    )
+
+    # open user and change status to active again
+    click(
+      css: '.active .profile-window .userList-entry a.user-popover',
+    )
+    click(
+      css: '.active .profile-window .dropdown #userAction',
+    )
+    click(
+      css: '.active .profile-window .dropdown li[data-type="edit"]',
+    )
+    modal_ready()
+
+    select(
+      css: '.active .modal select[name="active"]',
+      value: 'active'
+    )
+
+    click(
+      css: '.modal .js-submit',
+    )
+
+    modal_disappear()
+
+    # go back to the org and check for active status update
+    click(
+      css: '#navigation .nav-tab[data-key="Organization-1"]',
+    )
+
+    watch_for(
+      css: '.active .profile-window .userList-entry .avatar--unique',
+    )
+
+    exists_not(
+      css: '.active .profile-window .userList-entry .avatar--unique.avatar--inactive',
+    )
+  end
 end

@@ -195,6 +195,7 @@ class Member extends App.ObserverController
     lastname: true
     login: true
     email: true
+    active: true
   globalRerender: false
 
   render: (user) =>
