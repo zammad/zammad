@@ -1,0 +1,29 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+body: "Software zur Erkennung von \"Spam\" auf dem Rechner\n\n    bob.example.io\n\nhat
+  die eingegangene E-mail als m鰃liche \"Spam\"-Nachricht identifiziert.\nDie urspr黱gliche
+  Nachricht wurde an diesen Bericht angeh鋘gt, so dass\nSie sie anschauen k鰊nen (falls
+  es doch eine legitime E-Mail ist) oder\n鋒nliche unerw黱schte Nachrichten in Zukunft
+  markieren k鰊nen.\nBei Fragen zu diesem Vorgang wenden Sie sich bitte an\n\n    the
+  administrator of that system\n\nVorschau: “Ladies and gentlemen,” he said loudly,
+  waving for quiet.\n   “What an extraordinary moment this is! The perfect moment
+  for me to make\n   a little announcement I've been sitting on for some time! [...]
+  \n\nInhaltsanalyse im Detail:   (9.4 Punkte, 5.0 ben鰐igt)\n\nPkte Regelname              Beschreibung\n----
+  ---------------------- --------------------------------------------------\n 0.0
+  RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to DNSWL\n                            was
+  blocked.  See\n                            http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block\n
+  \                            for more information.\n                            [127.0.0.1
+  listed in list.dnswl.org]\n 1.6 RCVD_IN_BRBL_LASTEXT   RBL: No description available.\n
+  \                           [127.0.0.1 listed in bb.barracudacentral.org]\n 1.0
+  RCVD_IN_PBL            RBL: Received via a relay in Spamhaus PBL\n                            [127.0.0.1
+  listed in zen.spamhaus.org]\n 0.0 MIME_HTML_MOSTLY       BODY: Mehrteilige MIME-Nachricht
+  黚erwiegend in HTML\n 0.0 HTML_MESSAGE           BODY: Nachricht enth鋖t HTML\n 0.7
+  MPART_ALT_DIFF         BODY: Nachrichtentext im Text- und HTML-Format\n                            unterscheiden
+  sich\n 1.6 RDNS_NONE              Delivered to internal network by a host with no
+  rDNS\n 1.1 SUBJ_ILLEGAL_CHARS     Betreff enth鋖t zu viele ung黮tige Zeichen\n 0.1
+  SUBJECT_NEEDS_ENCODING Subject is encoded but does not specify the\n                            encoding\n
+  3.2 HELO_DYNAMIC_IPADDR    HELO-Rechnername verd鋍htig (IP-Adresse 1)\n\nDie urspr黱gliche
+  Nachricht enthielt nicht ausschlie遧ich Klartext\n(plain text) und kann eventuell
+  eine Gefahr f黵 einige E-Mail-Programme\ndarstellen (falls sie z.B. einen Computervirus
+  enth鋖t).\nM鯿hten Sie die Nachricht dennoch ansehen, ist es wahrscheinlich\nsicherer,
+  sie zuerst in einer Datei zu speichern und diese Datei danach\nmit einem Texteditor
+  zu 鰂fnen.\n\n"
