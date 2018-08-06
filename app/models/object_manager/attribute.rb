@@ -870,6 +870,7 @@ is certain attribute used by triggers, overviews or schedulers
 
     record = object_lookup.name.constantize.new
     return true if !record.respond_to?(name.to_sym)
+    raise "#{name} already exists!" if record.attributes.key?(name) && new_record?
     return true if record.attributes.key?(name)
     raise "#{name} is a reserved word, please choose a different one"
   end
