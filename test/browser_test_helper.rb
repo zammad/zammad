@@ -51,7 +51,19 @@ class TestCase < Test::Unit::TestCase
   def browser_instance
     @browsers ||= {}
     if ENV['REMOTE_URL'].blank?
-      local_browser = Selenium::WebDriver.for(browser.to_sym, profile: profile)
+      params = {
+        profile: profile,
+      }
+      if ENV['BROWSER_HEADLESS'].present?
+        if browser == 'firefox'
+          params[:options] = Selenium::WebDriver::Firefox::Options.new
+          params[:options].add_argument('-headless')
+        elsif browser == 'chrome'
+          params[:options] = Selenium::WebDriver::Chrome::Options.new
+          params[:options].add_argument('-headless')
+        end
+      end
+      local_browser = Selenium::WebDriver.for(browser.to_sym, params)
       @browsers[local_browser.hash] = local_browser
       browser_instance_preferences(local_browser)
       return local_browser
@@ -2020,7 +2032,7 @@ wait untill text in selector disabppears
         assert_equal(3, count, 'check if owner selection is - selection + master + agent per default')
       else
 
-        # check count of agents, should be only 1 / - selection on init screen
+        # check count of agents, should be only 1 selection, the "-" selection on init screen
         if !params[:disable_group_check]
           count = instance.find_elements(css: '.content.active .newTicket select[name="owner_id"] option').count
           if count != 1
