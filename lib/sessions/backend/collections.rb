@@ -7,6 +7,7 @@ class Sessions::Backend::Collections < Sessions::Backend::Base
     @ttl          = ttl
     @asset_lookup = asset_lookup
     @backends     = backend
+    @time_now     = Time.zone.now.to_i
   end
 
   def push
