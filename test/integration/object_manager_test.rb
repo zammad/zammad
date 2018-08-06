@@ -428,6 +428,52 @@ class ObjectManagerTest < ActiveSupport::TestCase
     end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
+    attribute_count = ObjectManager::Attribute.count
+    assert_raises(RuntimeError) do
+      attribute19 = ObjectManager::Attribute.add(
+        object: 'Ticket',
+        name: 'updated_at',
+        display: 'Update Time',
+        data_type: 'datetime',
+        data_option: {
+          future: true,
+          past: true,
+          diff: 24,
+          null: true,
+        },
+        active: true,
+        screens: {},
+        position: 20,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+      assert_equal(false, ObjectManager::Attribute.pending_migration?)
+    end
+    assert_equal(attribute_count, ObjectManager::Attribute.count)
+
+    assert_raises(RuntimeError) do
+      attribute20 = ObjectManager::Attribute.add(
+        object: 'Ticket',
+        name: 'updated_AT',
+        display: 'Update Time',
+        data_type: 'datetime',
+        data_option: {
+          future: true,
+          past: true,
+          diff: 24,
+          null: true,
+        },
+        active: true,
+        screens: {},
+        position: 20,
+        created_by_id: 1,
+        updated_by_id: 1,
+      )
+      assert_equal(false, ObjectManager::Attribute.pending_migration?)
+    end
+
+    assert_equal(attribute_count, ObjectManager::Attribute.count)
+
   end
 
   test 'b object manager attribute' do
