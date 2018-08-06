@@ -2,6 +2,7 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
   class << self; attr_accessor :model, :permissions end
 
   attr_writer :user
+  attr_writer :time_now
 
   def initialize(user, asset_lookup, client, client_id, ttl)
     @user         = user
@@ -10,6 +11,7 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     @ttl          = ttl
     @asset_lookup = asset_lookup
     @last_change  = nil
+    @time_now     = Time.zone.now.to_i
   end
 
   def load
@@ -53,6 +55,7 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     end
 
     # collect assets
+    @time_now = Time.zone.now.to_i
     assets = {}
     items.each do |item|
       next if !asset_needed?(item)

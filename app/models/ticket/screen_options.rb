@@ -115,10 +115,13 @@ returns
       group_agent_roles_ids = Role.joins(', roles_groups').where("roles.id = roles_groups.role_id AND roles_groups.access = 'full' AND roles_groups.group_id = ? AND roles.id IN (?)", group.id, agent_role_ids).pluck(:id)
       group_agent_role_user_ids = User.joins(:roles).where(roles: { id: group_agent_roles_ids }).pluck(:id)
 
-      User.where(id: group_agent_user_ids.concat(group_agent_role_user_ids).uniq, active: true).each do |user|
-        dependencies[:group_id][group.id][:owner_id].push user.id
-        next if agents[user.id]
-        agents[user.id] = true
+      User.where(id: group_agent_user_ids.concat(group_agent_role_user_ids).uniq, active: true).pluck(:id).each do |user_id|
+        dependencies[:group_id][group.id][:owner_id].push user_id
+        next if agents[user_id]
+        agents[user_id] = true
+        next if assets[:User] && assets[:User][user_id]
+        user = User.lookup(id: user_id)
+        next if !user
         assets = user.assets(assets)
       end
 

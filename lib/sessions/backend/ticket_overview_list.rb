@@ -15,6 +15,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
     @last_overview        = {}
     @last_overview_change = nil
     @last_ticket_change   = nil
+    @time_now             = Time.zone.now.to_i
   end
 
   def load
@@ -87,6 +88,8 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       )
     end
 
+    @time_now = Time.zone.now.to_i
+
     # push overviews
     results = []
     index_and_lists.each do |data|
@@ -114,7 +117,6 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
         }
         results.push result
       else
-
         @client.log "push overview_list #{overview.link} for user #{@user.id}"
 
         # send update to browser
