@@ -1097,11 +1097,11 @@ class Table extends App.Controller
           id: object.organization_id
         value
       callbackCheckbox = (id, checked, e) =>
-        if @$('table').find('input[name="bulk"]:checked').length == 0
-          @bulkForm.hide()
-        else
+        if @shouldShowBulkForm()
           @bulkForm.render()
           @bulkForm.show()
+        else
+          @bulkForm.hide()
 
         if @lastChecked && e.shiftKey
           # check items in a row
@@ -1191,11 +1191,11 @@ class Table extends App.Controller
 
     # show/hide bulk action
     @$('.table-overview').delegate('input[name="bulk"], input[name="bulk_all"]', 'change', (e) =>
-      if @$('.table-overview').find('input[name="bulk"]:checked').length == 0
+      if @shouldShowBulkForm()
+        @bulkForm.show()
+      else
         @bulkForm.hide()
         @bulkForm.reset()
-      else
-        @bulkForm.show()
     )
 
     # deselect bulk_all if one item is uncheck observ
@@ -1214,6 +1214,17 @@ class Table extends App.Controller
           bulkAll.prop('checked', false)
           bulkAll.prop('indeterminate', true)
     )
+
+  shouldShowBulkForm: =>
+    items = @$('table').find('input[name="bulk"]:checked')
+    return false if items.length == 0
+
+    ticket_ids        = _.map(items, (el) -> $(el).val() )
+    ticket_group_ids  = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
+    ticket_group_ids  = _.uniq(ticket_group_ids)
+    user_permissions  = App.Session.get('group_ids')
+    group_permissions = ticket_group_ids.map (id) -> user_permissions[id]
+    _.every(group_permissions, (list) -> 'full' in list || 'change' in list)
 
   viewmode: (e) =>
     e.preventDefault()
