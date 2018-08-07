@@ -26,8 +26,10 @@
             <% if caller_id.user_id && App.User.exists(caller_id.user_id): %>
               <% shown = true %>
               <% user = App.User.find(caller_id.user_id) %>
+              <% classes = ['user-popover'] %>
+              <% classes.push('is-inactive') if !user.active %>
               <% if caller_id.level isnt 'known': %><%- @T('maybe') %> <% end %>
-              <span class="user-popover" data-id="<%- user.id %>"><%= user.displayNameLong() %></span><br>
+              <span class="<%= classes.join(' ') %>" data-id="<%- user.id %>"><%= user.displayNameLong() %></span><br>
             <% else if caller_id.comment: %>
               <% shown = true %>
               <%- @T('maybe') %> <%= caller_id.comment %><br>
@@ -52,8 +54,10 @@
             <% if caller_id.user_id && App.User.exists(caller_id.user_id): %>
               <% shown = true %>
               <% user = App.User.find(caller_id.user_id) %>
+              <% classes = ['user-popover'] %>
+              <% classes.push('is-inactive') if !user.active %>
               <% if caller_id.level isnt 'known': %><%- @T('maybe') %> <% end %>
-              <span class="user-popover" data-id="<%- user.id %>"><%= user.displayNameLong() %></span><br>
+              <span class="<%= classes.join(' ') %>" data-id="<%- user.id %>"><%= user.displayNameLong() %></span><br>
             <% else if caller_id.comment: %>
               <% shown = true %>
               <%- @T('maybe') %> <%= caller_id.comment %><br>

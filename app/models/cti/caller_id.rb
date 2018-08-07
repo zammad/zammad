@@ -47,25 +47,17 @@ returns
 =end
 
     def self.lookup(caller_id)
+      lookup_ids =
+        ['known', 'maybe', nil].lazy.map do |level|
+          Cti::CallerId.select('MAX(id) as caller_id')
+                       .where({ caller_id: caller_id, level: level }.compact)
+                       .group(:user_id)
+                       .order('caller_id DESC')
+                       .limit(20)
+                       .map(&:caller_id)
+        end.find(&:present?)
 
-      result = []
-      ['known', 'maybe', nil].each do |level|
-
-        search_params = {
-          caller_id: caller_id,
-        }
-
-        if level
-          search_params[:level] = level
-        end
-
-        caller_ids = Cti::CallerId.select('MAX(id) as caller_id').where(search_params).group(:user_id).order('caller_id DESC').limit(20).map(&:caller_id)
-        Cti::CallerId.where(id: caller_ids).order(id: :desc).each do |record|
-          result.push record
-        end
-        break if result.present?
-      end
-      result
+      Cti::CallerId.where(id: lookup_ids).order(id: :desc).to_a
     end
 
 =begin

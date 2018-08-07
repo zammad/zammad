@@ -1053,7 +1053,7 @@ th.align-right {
   padding: 0;
 }
 
-.table tr.is-inactive {
+.table tr.is-inactive, .table tr td span.is-inactive {
   color: #bbb;
   text-decoration: line-through;
 

@@ -150,4 +150,67 @@ class IntegrationCtiTest < TestCase
       value: '+49 30 609811111',
     )
   end
+
+  # Regression test for #2096
+  def test_inactive_users_displayed_with_strikethrough_in_caller_log
+    id = rand(99_999_999)
+
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+
+    # create inactive user with phone number (via API)
+    user_create(
+      data: {
+        login:     'test_user',
+        firstname: 'John',
+        lastname:  'Doe'
+      },
+    )
+
+    click(css: 'table.user-list > tbody > tr:first-of-type > td:first-of-type')
+    set(css: 'input[name="phone"]', value: '1234567890')
+    select(css: 'select[name="active"]', value: 'inactive')
+    click(css: 'button[type="submit"]')
+
+    # enable CTI
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#system/integration"]')
+    click(css: 'a[href="#system/integration/cti"]')
+
+    switch(
+      css: '.content.active .js-switch',
+      type: 'on'
+    )
+
+    watch_for(
+      css: 'a[href="#cti"]'
+    )
+
+    click(css: 'a[href="#cti"]')
+
+    # simulate CTI callback to/from inactive user
+    url = URI.join(browser_url, "api/v1/cti/#{ENV['CTI_TOKEN']}")
+    params = {
+      direction: 'in',
+      from: '1234567890',
+      to: '1234567890',
+      callId: "4991155921769858278-#{id}",
+      cause: 'busy'
+    }
+    Net::HTTP.post_form(url, params.merge(event: 'newCall'))
+    Net::HTTP.post_form(url, params.merge(event: 'hangup'))
+
+    # view caller log
+    click(css: 'a[href="#cti"]')
+
+    # assertion: names appear in strikethrough
+    match(
+      css: 'span.is-inactive',
+      value: 'John Doe',
+    )
+  end
 end
