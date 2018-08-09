@@ -21,3 +21,6 @@ class App.PostmasterFilter extends App.Model
     'name',
   ]
   @configure_clone = true
+
+  @on 'create', (newRecord) ->
+    newRecord.channel = 'email'
