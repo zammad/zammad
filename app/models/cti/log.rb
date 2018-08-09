@@ -149,8 +149,8 @@ example data, can be used for demo
     call_id: '00005',
     comment: '',
     state: 'hangup',
-    start: Time.zone.now - 15.seconds,
-    'end': Time.zone.now,
+    start_at: Time.zone.now - 15.seconds,
+    end_at: Time.zone.now,
     preferences: {
       from: [
         {
@@ -174,8 +174,8 @@ example data, can be used for demo
     call_id: '00006',
     comment: '',
     state: 'hangup',
-    start: Time.zone.now - 15.seconds,
-    'end': Time.zone.now,
+    start_at: Time.zone.now - 15.seconds,
+    end_at: Time.zone.now,
     preferences: {
       from: [
         {
@@ -199,8 +199,8 @@ example data, can be used for demo
     call_id: '00007',
     comment: '',
     state: 'hangup',
-    start: Time.zone.now - 15.seconds,
-    'end': Time.zone.now,
+    start_at: Time.zone.now - 15.seconds,
+    end_at: Time.zone.now,
     preferences: {
       from: [
         {
@@ -222,8 +222,8 @@ example data, can be used for demo
     call_id: '00008',
     comment: '',
     state: 'hangup',
-    start: Time.zone.now - 20.seconds,
-    'end': Time.zone.now,
+    start_at: Time.zone.now - 20.seconds,
+    end_at: Time.zone.now,
     preferences: {}
   )
 
@@ -306,13 +306,15 @@ Cti::Log.process(
           call_id: call_id,
           comment: comment,
           state: event,
+          initialized_at: Time.zone.now,
           preferences: preferences,
         )
       when 'answer'
         log = find_by(call_id: call_id)
         raise "No such call_id #{call_id}" if !log
         log.state = 'answer'
-        log.start = Time.zone.now
+        log.start_at = Time.zone.now
+        log.duration_waiting_time = log.start_at.to_i - log.initialized_at.to_i
         if user
           log.to_comment = user
         end
@@ -328,7 +330,12 @@ Cti::Log.process(
           log.done = false
         end
         log.state = 'hangup'
-        log.end = Time.zone.now
+        log.end_at = Time.zone.now
+        if log.start_at
+          log.duration_talking_time = log.start_at.to_i - log.end_at.to_i
+        elsif !log.duration_waiting_time && log.initialized_at
+          log.duration_waiting_time = log.end_at.to_i - log.initialized_at.to_i
+        end
         log.comment = comment
         log.save
       else

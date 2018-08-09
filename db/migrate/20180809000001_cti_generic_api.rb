@@ -1,4 +1,4 @@
-class SettingCti < ActiveRecord::Migration[5.1]
+class CtiGenericApi < ActiveRecord::Migration[5.1]
   def up
 
     # return if it's a new setup
@@ -66,5 +66,14 @@ class SettingCti < ActiveRecord::Migration[5.1]
       },
       frontend: false
     )
+
+    add_column :cti_logs, :queue, :string, limit: 250, null: true
+    add_column :cti_logs, :initialized_at, :string, limit: 250, null: true
+    add_column :cti_logs, :duration_waiting_time, :integer, null: true
+    add_column :cti_logs, :duration_talking_time, :integer, null: true
+
+    rename_column :cti_logs, :start, :start_at
+    rename_column :cti_logs, :end, :end_at
+
   end
 end

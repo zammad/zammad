@@ -180,6 +180,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert_nil(log.start_at)
+    assert_nil(log.end_at)
+    assert_nil(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # outbound - I - hangup by agent
     params = 'event=hangup&direction=out&call_id=1234567890-1&cause=cancel'
@@ -195,6 +200,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_equal('cancel', log.comment)
     assert_equal('hangup', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert_nil(log.start_at)
+    assert(log.end_at)
+    assert(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # outbound - II - new call
     params = 'event=newCall&direction=out&from=4930600000000&to=4912347114711&call_id=1234567890-2&user%5B%5D=user+1'
@@ -210,6 +220,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert_nil(log.start_at)
+    assert_nil(log.end_at)
+    assert_nil(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # outbound - II - answer by customer
     params = 'event=answer&direction=out&call_id=1234567890-2&from=4930600000000&to=4912347114711'
@@ -225,6 +240,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_nil(log.comment)
     assert_equal('answer', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert(log.start_at)
+    assert_nil(log.end_at)
+    assert(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # outbound - II - hangup by customer
     params = 'event=hangup&direction=out&call_id=1234567890-2&cause=normalClearing&from=4930600000000&to=4912347114711'
@@ -240,6 +260,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_equal('normalClearing', log.comment)
     assert_equal('hangup', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert(log.start_at)
+    assert(log.end_at)
+    assert(log.duration_waiting_time)
+    assert(log.duration_talking_time)
 
     # inbound - I - new call
     params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-3&user%5B%5D=user+1'
@@ -255,6 +280,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert_nil(log.start_at)
+    assert_nil(log.end_at)
+    assert_nil(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # inbound - I - answer by customer
     params = 'event=answer&direction=in&call_id=1234567890-3&to=4930600000000&from=4912347114711'
@@ -270,6 +300,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_nil(log.comment)
     assert_equal('answer', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert(log.start_at)
+    assert_nil(log.end_at)
+    assert(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # inbound - I - hangup by customer
     params = 'event=hangup&direction=in&call_id=1234567890-3&cause=normalClearing&to=4930600000000&from=4912347114711'
@@ -285,6 +320,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_equal('normalClearing', log.comment)
     assert_equal('hangup', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert(log.start_at)
+    assert(log.end_at)
+    assert(log.duration_waiting_time)
+    assert(log.duration_talking_time)
 
     # inbound - II - new call
     params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-4&user%5B%5D=user+1,user+2'
@@ -300,6 +340,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert_nil(log.start_at)
+    assert_nil(log.end_at)
+    assert_nil(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # inbound - II - answer by voicemail
     params = 'event=answer&direction=in&call_id=1234567890-4&to=4930600000000&from=4912347114711&user=voicemail'
@@ -315,6 +360,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_nil(log.comment)
     assert_equal('answer', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert(log.start_at)
+    assert_nil(log.end_at)
+    assert(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # inbound - II - hangup by customer
     params = 'event=hangup&direction=in&call_id=1234567890-4&cause=normalClearing&to=4930600000000&from=4912347114711'
@@ -330,6 +380,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_equal('normalClearing', log.comment)
     assert_equal('hangup', log.state)
     assert_equal(false, log.done)
+    assert(log.initialized_at)
+    assert(log.start_at)
+    assert(log.end_at)
+    assert(log.duration_waiting_time)
+    assert(log.duration_talking_time)
 
     # inbound - III - new call
     params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-5&user%5B%5D=user+1,user+2'
@@ -345,6 +400,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert_nil(log.start_at)
+    assert_nil(log.end_at)
+    assert_nil(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # inbound - III - hangup by customer
     params = 'event=hangup&direction=in&call_id=1234567890-5&cause=normalClearing&to=4930600000000&from=4912347114711'
@@ -360,6 +420,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_equal('normalClearing', log.comment)
     assert_equal('hangup', log.state)
     assert_equal(false, log.done)
+    assert(log.initialized_at)
+    assert_nil(log.start_at)
+    assert(log.end_at)
+    assert(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # inbound - IV - new call
     params = 'event=newCall&direction=in&to=4930600000000&from=49999992222222&call_id=1234567890-6&user%5B%5D=user+1,user+2'
@@ -377,6 +442,11 @@ class IntegrationCtiControllerTest < ActionDispatch::IntegrationTest
     assert_nil(log.comment)
     assert_equal('newCall', log.state)
     assert_equal(true, log.done)
+    assert(log.initialized_at)
+    assert_nil(log.start_at)
+    assert_nil(log.end_at)
+    assert_nil(log.duration_waiting_time)
+    assert_nil(log.duration_talking_time)
 
     # get caller list
     get '/api/v1/cti/log'
