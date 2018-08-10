@@ -1034,32 +1034,20 @@ class App.Utils
       # filter for uniq recipients
       recipientAddresses = {}
       addAddresses = (addressLine, line) ->
-        lineNew = ''
         recipients = App.Utils.parseAddressListLocal(addressLine)
 
-        if !_.isEmpty(recipients)
-          for recipient in recipients
-            if !_.isEmpty(recipient)
-              localRecipientAddress = recipient.toString().toLowerCase()
+        recipients = recipients.map((r) -> r.toString().toLowerCase())
+        recipients = _.reject(recipients, (r) -> _.isEmpty(r))
+        recipients = _.reject(recipients, (r) -> isLocalAddress(r))
+        recipients = _.reject(recipients, (r) -> recipientAddresses[r])
+        recipients = _.each(recipients, (r) -> recipientAddresses[r] = true)
 
-              # check if address is not local
-              if !isLocalAddress(localRecipientAddress)
+        recipients.push(line) if !_.isEmpty(line)
 
-                # filter for uniq recipients
-                if !recipientAddresses[localRecipientAddress]
-                  recipientAddresses[localRecipientAddress] = true
+        # see https://github.com/zammad/zammad/issues/2154
+        recipients = recipients.map((a) -> a.replace(/'(\S+@\S+\.\S+)'/, '$1'))
 
-                  # add recipient
-                  if lineNew
-                    lineNew = lineNew + ', '
-                  lineNew = lineNew + localRecipientAddress
-
-        lineNew
-        if !_.isEmpty(line)
-          if !_.isEmpty(lineNew)
-            lineNew += ', '
-          lineNew += line
-        lineNew
+        recipients.join(', ')
 
       if articleNew.to
         articleNew.to = addAddresses(articleNew.to)

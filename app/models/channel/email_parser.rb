@@ -491,14 +491,13 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     # imported_fields = mail.header.fields.map { |f| [f.name.downcase, f.to_utf8] }.to_h
     raw_fields = mail.header.fields.map { |f| ["raw-#{f.name.downcase}", f] }.to_h
     custom_fields = {}.tap do |h|
-      validated_recipients = imported_fields.slice(*RECIPIENT_FIELDS)
-                                            .transform_values { |v| v.match?(EMAIL_REGEX) ? v : '' }
-      h.merge!(validated_recipients)
+      h.replace(imported_fields.slice(*RECIPIENT_FIELDS)
+                               .transform_values { |v| v.match?(EMAIL_REGEX) ? v : '' })
 
+      h['x-any-recipient'] = h.values.select(&:present?).join(', ')
       h['date']            = Time.zone.parse(mail.date.to_s) || imported_fields['date']
       h['message_id']      = imported_fields['message-id']
       h['subject']         = imported_fields['subject']&.sub(/^=\?us-ascii\?Q\?(.+)\?=$/, '\1')
-      h['x-any-recipient'] = validated_recipients.values.select(&:present?).join(', ')
     end
 
     [imported_fields, raw_fields, custom_fields].reduce({}.with_indifferent_access, &:merge)

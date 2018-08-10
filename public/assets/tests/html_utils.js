@@ -2648,6 +2648,42 @@ test('check getRecipientArticle format', function() {
   verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, false)
   deepEqual(verify, result)
 
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: "'customer@example.com'",
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'agent@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id21',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: customer.email,
+    to: 'agent@example.com',
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id21',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
 });
 
 test("contentTypeCleanup", function() {

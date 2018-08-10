@@ -3034,6 +3034,40 @@ Content-Type: text/html; charset=us-ascii; format=flowed
         },
       },
       {
+        data: <<~RAW_MAIL.chomp,
+          From: me@example.com
+          To: Bob Smith <'customer_outlook_recipient_not_in_address_book@example.com'>
+          Subject: some subject for outlook recipient issue
+          Content-Type: text/html; charset=us-ascii;
+
+          test
+          RAW_MAIL
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'some subject for outlook recipient issue',
+          },
+          1 => {
+            content_type: 'text/html',
+            body: 'test',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Bob',
+              lastname: 'Smith',
+              fullname: 'Bob Smith',
+              email: 'customer_outlook_recipient_not_in_address_book@example.com',
+            },
+          ],
+        },
+      },
+      {
         data: File.read(Rails.root.join('test', 'data', 'mail', 'mail067.box')),
         success: true,
         result: {

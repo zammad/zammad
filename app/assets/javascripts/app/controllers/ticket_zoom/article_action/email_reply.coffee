@@ -30,11 +30,12 @@ class EmailReply extends App.Controller
 
       # remove system addresses
       localAddresses = App.EmailAddress.all()
-      forgeinRecipients = []
+      foreignRecipients = []
       recipientUsed = {}
       for recipient in recipients
         if !_.isEmpty(recipient.address)
           localRecipientAddress = recipient.address.toString().toLowerCase()
+
           if !recipientUsed[localRecipientAddress]
             recipientUsed[localRecipientAddress] = true
             localAddress = false
@@ -43,10 +44,10 @@ class EmailReply extends App.Controller
                 recipientUsed[localRecipientAddress] = true
                 localAddress = true
             if !localAddress
-              forgeinRecipients.push recipient
+              foreignRecipients.push recipient
 
       # check if reply all is neede
-      if forgeinRecipients.length > 1
+      if foreignRecipients.length > 1
         actions.push {
           name: 'reply all'
           type: 'emailReplyAll'

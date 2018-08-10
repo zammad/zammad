@@ -1,14 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Channel::EmailParser, type: :model do
-  let(:ticket) { create(:ticket) }
   let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail001.box') }
-  let(:raw_mail) { File.read(mail_file).sub(/(?<=^Subject: ).*$/, test_string) }
-  let(:test_string) do
-    Setting.get('ticket_hook') + Setting.get('ticket_hook_divider') + ticket.number
-  end
+  let(:raw_mail) { File.read(mail_file) }
 
   describe '#process' do
+    let(:raw_mail) { File.read(mail_file).sub(/(?<=^Subject: ).*$/, test_string) }
+    let(:test_string) do
+      Setting.get('ticket_hook') + Setting.get('ticket_hook_divider') + ticket.number
+    end
+    let(:ticket) { create(:ticket) }
+
     context 'when email subject contains ticket reference' do
       it 'adds message to ticket' do
         expect { described_class.new.process({}, raw_mail) }

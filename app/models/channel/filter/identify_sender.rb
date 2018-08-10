@@ -196,10 +196,10 @@ module Channel::Filter::IdentifySender
   end
 
   def self.cleanup_email(string)
-    string = string.downcase
-    string.strip!
-    string.delete!('"')
-    string
+    string.downcase
+          .strip
+          .delete('"')
+          .sub(/\A'(.*)'\z/, '\1')
   end
 
 end
