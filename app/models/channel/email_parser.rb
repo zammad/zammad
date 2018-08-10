@@ -70,7 +70,7 @@ class Channel::EmailParser
 =end
 
   def parse(msg)
-    mail = Mail.new(msg.utf8_encode)
+    mail = Mail.new(msg.utf8_encode(from: charset_from_headers_of(msg)))
 
     message_attributes = [
       { mail_instance: mail },
@@ -473,6 +473,13 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
   end
 
   private
+
+  def charset_from_headers_of(msg)
+    Mail.new(msg.b)
+        .header['Content-Type']
+        .try(:parameters)
+        .try(:[], :charset)
+  end
 
   def message_header_hash(mail)
     imported_fields = mail.header.fields.map do |f|
