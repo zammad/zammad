@@ -1,5 +1,6 @@
 class AddConfidentialToDoorkeeperApplication < ActiveRecord::Migration[5.1]
   def change
+    return if ActiveRecord::Base.connection.column_exists?(:oauth_applications, :confidential)
     add_column(
       :oauth_applications,
       :confidential,
