@@ -25,7 +25,8 @@ module Import
       end
 
       def find(id)
-        @lookup_map[id] ||= @connection.get_folder(id)
+        (@lookup_map[id] ||= @connection.get_folder(id)) ||
+          id_folder_map[id]
       end
 
       def all
@@ -42,21 +43,14 @@ module Import
       end
 
       def display_path(folder)
-        display_name = folder.display_name
-        return display_name if !folder.parent_folder_id
-
+        display_name  = folder.display_name.utf8_encode(fallback: :read_as_sanitized_binary)
         parent_folder = find(folder.parent_folder_id)
-        return display_name if !parent_folder
 
-        parent_folder = id_folder_map[folder.parent_folder_id]
-        return display_name if !parent_folder
+        return display_name if parent_folder.blank?
 
-        # recursive
-        parent_folder_path = display_path(parent_folder)
-
-        "#{parent_folder_path} -> #{display_name}"
+        "#{display_path(parent_folder)} -> #{display_name}"
       rescue Viewpoint::EWS::EwsError
-        folder.display_name
+        display_name
       end
 
       private
