@@ -72,6 +72,12 @@ class CtiGenericApi < ActiveRecord::Migration[5.1]
     add_column :cti_logs, :duration_waiting_time, :integer, null: true
     add_column :cti_logs, :duration_talking_time, :integer, null: true
 
+    # fixes issue #2183 - Mysql2::Error: Invalid default value for 'start_at'
+    if ActiveRecord::Base.connection_config[:adapter] == 'mysql2'
+      change_column_default :cti_logs, :start, '0000-00-00 00:00:00'
+      change_column_default :cti_logs, :end, '0000-00-00 00:00:00'
+    end
+
     rename_column :cti_logs, :start, :start_at
     rename_column :cti_logs, :end, :end_at
 
