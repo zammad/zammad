@@ -207,7 +207,6 @@ class TicketSelectorTest < ActiveSupport::TestCase
       },
       'ticket.state_id' => {
         operator: 'is',
-        value: '',
       },
     }
 
