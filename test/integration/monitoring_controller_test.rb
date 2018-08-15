@@ -368,7 +368,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     channel.last_log_out = nil
     channel.save!
 
-    # health_check
+    # health_check - channel
     get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
@@ -379,12 +379,28 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert_equal(false, result['healthy'])
     assert_equal('Channel: Email::Notification out  ', result['message'])
 
+    # health_check - scheduler may not run
+    scheduler = Scheduler.where(active: true).last
+    scheduler.last_run = Time.zone.now - 20.minutes
+    scheduler.period = 600
+    scheduler.save!
+
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['message'])
+    assert(result['issues'])
+    assert_equal(false, result['healthy'])
+    assert_equal("Channel: Email::Notification out  ;scheduler may not run (last execution of #{scheduler.method} 10 minutes over) - please contact your system administrator", result['message'])
+
+    # health_check - scheduler may not run
     scheduler = Scheduler.where(active: true).last
     scheduler.last_run = Time.zone.now - 1.day
     scheduler.period = 600
     scheduler.save!
 
-    # health_check
     get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
@@ -393,13 +409,53 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result['message'])
     assert(result['issues'])
     assert_equal(false, result['healthy'])
-    assert_equal('Channel: Email::Notification out  ;scheduler not running', result['message'])
+    assert_equal("Channel: Email::Notification out  ;scheduler may not run (last execution of #{scheduler.method} about 24 hours over) - please contact your system administrator", result['message'])
 
+    # health_check - scheduler job count
+    travel 2.seconds
+    8001.times do
+      Delayed::Job.enqueue( BackgroundJobSearchIndex.new('Ticket', 1))
+    end
+    Scheduler.where(active: true).each do |local_scheduler|
+      local_scheduler.last_run = Time.zone.now
+      local_scheduler.save!
+    end
+    total_jobs = Delayed::Job.count
+
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['message'])
+    assert(result['issues'])
+    assert_equal(false, result['healthy'])
+    assert_equal('Channel: Email::Notification out  ', result['message'])
+
+    travel 20.minutes
+    Scheduler.where(active: true).each do |local_scheduler|
+      local_scheduler.last_run = Time.zone.now
+      local_scheduler.save!
+    end
+
+    get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert(result['message'])
+    assert(result['issues'])
+    assert_equal(false, result['healthy'])
+    assert_equal("Channel: Email::Notification out  ;#{total_jobs} background jobs in queue", result['message'])
+
+    Delayed::Job.delete_all
+    travel_back
+
+    # health_check - unprocessable mail
     dir = Rails.root.join('tmp', 'unprocessable_mail')
     FileUtils.mkdir_p(dir)
     FileUtils.touch("#{dir}/test.eml")
 
-    # health_check
     get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
@@ -408,10 +464,10 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result['message'])
     assert(result['issues'])
     assert_equal(false, result['healthy'])
-    assert_equal('Channel: Email::Notification out  ;unprocessable mails: 1;scheduler not running', result['message'])
+    assert_equal('Channel: Email::Notification out  ;unprocessable mails: 1', result['message'])
 
+    # health_check - ldap
     Setting.set('ldap_integration', true)
-
     ImportJob.create(
       name:        'Import::Ldap',
       started_at:  Time.zone.now,
@@ -421,7 +477,6 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
       }
     )
 
-    # health_check
     get "/api/v1/monitoring/health_check?token=#{@token}", params: {}, headers: @headers
     assert_response(200)
 
@@ -430,7 +485,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result['message'])
     assert(result['issues'])
     assert_equal(false, result['healthy'])
-    assert_equal("Channel: Email::Notification out  ;unprocessable mails: 1;scheduler not running;Failed to run import backend 'Import::Ldap'. Cause: Some bad error", result['message'])
+    assert_equal("Channel: Email::Notification out  ;unprocessable mails: 1;Failed to run import backend 'Import::Ldap'. Cause: Some bad error", result['message'])
 
     stuck_updated_at_timestamp = 15.minutes.ago
     ImportJob.create(
@@ -449,7 +504,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result['message'])
     assert(result['issues'])
     assert_equal(false, result['healthy'])
-    assert_equal("Channel: Email::Notification out  ;unprocessable mails: 1;scheduler not running;Failed to run import backend 'Import::Ldap'. Cause: Some bad error;Stuck import backend 'Import::Ldap' detected. Last update: #{stuck_updated_at_timestamp}", result['message'])
+    assert_equal("Channel: Email::Notification out  ;unprocessable mails: 1;Failed to run import backend 'Import::Ldap'. Cause: Some bad error;Stuck import backend 'Import::Ldap' detected. Last update: #{stuck_updated_at_timestamp}", result['message'])
 
     Setting.set('ldap_integration', false)
   end
@@ -632,7 +687,7 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     assert(result['message'])
     assert(result['issues'])
     assert_equal(false, result['healthy'])
-    assert_equal("13 failing background jobs.;Failed to run background job #1 'Object' 8 time(s) with 40 attempt(s).;Failed to run background job #2 'BackgroundJobSearchIndex' 2 time(s) with 14 attempt(s).",  result['message'])
+    assert_equal("13 failing background jobs;Failed to run background job #1 'Object' 8 time(s) with 40 attempt(s).;Failed to run background job #2 'BackgroundJobSearchIndex' 2 time(s) with 14 attempt(s).",  result['message'])
 
     # cleanup
     Delayed::Job.delete_all
