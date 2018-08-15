@@ -913,4 +913,331 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
   end
 
+  test 'overview any owner / no owner is set' do
+
+    group = Group.create!(
+      name: 'OverviewTest',
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    roles = Role.where(name: 'Agent')
+    agent1 = User.create!(
+      login: 'ticket-overview-agent1@example.com',
+      firstname: 'Overview',
+      lastname: 'Agent1',
+      email: 'ticket-overview-agent1@example.com',
+      password: 'agentpw',
+      active: true,
+      roles: roles,
+      groups: [group],
+      updated_at: '2015-02-05 16:37:00',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    attribute1 = ObjectManager::Attribute.add(
+      object: 'Ticket',
+      name: 'watcher',
+      display: 'watcher',
+      data_type: 'select',
+      data_option: {
+        default: '',
+        maxlength: 200,
+        type: 'text',
+        null: true,
+        options: {
+          aa: 'agent a',
+          bb: 'agent b',
+          cc: 'agent c',
+        },
+      },
+      active: true,
+      screens: {},
+      position: 20,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    assert_equal(true, ObjectManager::Attribute.pending_migration?)
+    assert_equal(1, ObjectManager::Attribute.migrations.count)
+
+    assert(ObjectManager::Attribute.migration_execute)
+
+    Ticket.destroy_all
+    Overview.destroy_all
+
+    UserInfo.current_user_id = 1
+    overview_role = Role.find_by(name: 'Agent')
+    overview1 = Overview.create!(
+      name: 'not watched',
+      prio: 1000,
+      role_ids: [overview_role.id],
+      condition: {
+        'ticket.watcher' => {
+          operator: 'is',
+          value: '',
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
+        view_mode_default: 's',
+      },
+    )
+
+    overview2 = Overview.create!(
+      name: 'not watched by somebody',
+      prio: 2000,
+      role_ids: [overview_role.id],
+      condition: {
+        'ticket.watcher' => {
+          operator: 'is not',
+          value: '',
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
+        view_mode_default: 's',
+      },
+    )
+
+    overview3 = Overview.create!(
+      name: 'not watched as array',
+      prio: 3000,
+      role_ids: [overview_role.id],
+      condition: {
+        'ticket.watcher' => {
+          operator: 'is',
+          value: [''],
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
+        view_mode_default: 's',
+      },
+    )
+
+    overview4 = Overview.create!(
+      name: 'not watched by somebody as array',
+      prio: 4000,
+      role_ids: [overview_role.id],
+      condition: {
+        'ticket.watcher' => {
+          operator: 'is not',
+          value: [''],
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
+        view_mode_default: 's',
+      },
+    )
+
+    overview5 = Overview.create!(
+      name: 'watched by aa',
+      prio: 5000,
+      role_ids: [overview_role.id],
+      condition: {
+        'ticket.watcher' => {
+          operator: 'is',
+          value: 'aa',
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
+        view_mode_default: 's',
+      },
+    )
+
+    overview6 = Overview.create!(
+      name: 'not watched by aa',
+      prio: 6000,
+      role_ids: [overview_role.id],
+      condition: {
+        'ticket.watcher' => {
+          operator: 'is not',
+          value: 'aa',
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
+        view_mode_default: 's',
+      },
+    )
+
+    overview7 = Overview.create!(
+      name: 'watched by aa array',
+      prio: 7000,
+      role_ids: [overview_role.id],
+      condition: {
+        'ticket.watcher' => {
+          operator: 'is',
+          value: ['aa'],
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
+        view_mode_default: 's',
+      },
+    )
+
+    overview8 = Overview.create!(
+      name: 'not watched by aa array',
+      prio: 8000,
+      role_ids: [overview_role.id],
+      condition: {
+        'ticket.watcher' => {
+          operator: 'is not',
+          value: ['aa'],
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
+        view_mode_default: 's',
+      },
+    )
+
+    ticket1 = Ticket.create!(
+      title: 'overview test 1',
+      group: Group.lookup(name: 'OverviewTest'),
+      customer_id: 2,
+      owner_id: 1,
+      watcher: '',
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+    )
+
+    travel 2.seconds
+    ticket2 = Ticket.create!(
+      title: 'overview test 2',
+      group: Group.lookup(name: 'OverviewTest'),
+      customer_id: 2,
+      owner_id: nil,
+      watcher: nil,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+    )
+
+    travel 2.seconds
+    ticket3 = Ticket.create!(
+      title: 'overview test 3',
+      group: Group.lookup(name: 'OverviewTest'),
+      customer_id: 2,
+      owner_id: agent1.id,
+      watcher: 'aa',
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+    )
+
+    result = Ticket::Overviews.index(agent1)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'not watched')
+    assert_equal(result[0][:overview][:view], 'not_watched')
+    assert_equal(result[0][:tickets].class, Array)
+    assert_equal(result[0][:tickets][0][:id], ticket1.id)
+    assert_equal(result[0][:tickets][1][:id], ticket2.id)
+    assert_equal(result[0][:count], 2)
+
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'not watched by somebody')
+    assert_equal(result[1][:overview][:view], 'not_watched_by_somebody')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_equal(result[1][:tickets][0][:id], ticket3.id)
+    assert_equal(result[1][:count], 1)
+
+    assert_equal(result[2][:overview][:id], overview3.id)
+    assert_equal(result[2][:overview][:name], 'not watched as array')
+    assert_equal(result[2][:overview][:view], 'not_watched_as_array')
+    assert_equal(result[2][:tickets].class, Array)
+    assert_equal(result[2][:tickets][0][:id], ticket1.id)
+    assert_equal(result[2][:tickets][1][:id], ticket2.id)
+    assert_equal(result[2][:count], 2)
+
+    assert_equal(result[3][:overview][:id], overview4.id)
+    assert_equal(result[3][:overview][:name], 'not watched by somebody as array')
+    assert_equal(result[3][:overview][:view], 'not_watched_by_somebody_as_array')
+    assert_equal(result[3][:tickets].class, Array)
+    assert_equal(result[3][:tickets][0][:id], ticket3.id)
+    assert_equal(result[3][:count], 1)
+
+    assert_equal(result[4][:overview][:id], overview5.id)
+    assert_equal(result[4][:overview][:name], 'watched by aa')
+    assert_equal(result[4][:overview][:view], 'watched_by_aa')
+    assert_equal(result[4][:tickets].class, Array)
+    assert_equal(result[4][:tickets][0][:id], ticket3.id)
+    assert_equal(result[4][:count], 1)
+
+    assert_equal(result[5][:overview][:id], overview6.id)
+    assert_equal(result[5][:overview][:name], 'not watched by aa')
+    assert_equal(result[5][:overview][:view], 'not_watched_by_aa')
+    assert_equal(result[5][:tickets].class, Array)
+    assert_equal(result[5][:tickets][0][:id], ticket1.id)
+    assert_equal(result[5][:tickets][1][:id], ticket2.id)
+    assert_equal(result[5][:count], 2)
+
+    assert_equal(result[6][:overview][:id], overview7.id)
+    assert_equal(result[6][:overview][:name], 'watched by aa array')
+    assert_equal(result[6][:overview][:view], 'watched_by_aa_array')
+    assert_equal(result[6][:tickets].class, Array)
+    assert_equal(result[6][:tickets][0][:id], ticket3.id)
+    assert_equal(result[6][:count], 1)
+
+    assert_equal(result[7][:overview][:id], overview8.id)
+    assert_equal(result[7][:overview][:name], 'not watched by aa array')
+    assert_equal(result[7][:overview][:view], 'not_watched_by_aa_array')
+    assert_equal(result[7][:tickets].class, Array)
+    assert_equal(result[7][:tickets][0][:id], ticket1.id)
+    assert_equal(result[7][:tickets][1][:id], ticket2.id)
+    assert_equal(result[7][:count], 2)
+
+  end
+
 end

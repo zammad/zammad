@@ -465,7 +465,7 @@ condition example
       value: '2015-10-17T06:00:00.000Z',
     },
     'ticket.created_at' => {
-      operator: 'within next (relative)', # before,within,in,after
+      operator: 'within next (relative)', # within next, within last, after, before
       range: 'day', # minute|hour|day|month|year
       value: '25',
     },
@@ -544,9 +544,12 @@ condition example
       raise "Invalid selector #{selector_raw.inspect}" if !selector_raw.respond_to?(:key?)
       selector = selector_raw.stringify_keys
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
+      raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if selector['operator'] !~ /^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before)\s\(relative\))$/
 
       # validate value / allow blank but only if pre_condition exists and is not specific
-      if !selector.key?('value') || ((selector['value'].class == String || selector['value'].class == Array) && (selector['value'].respond_to?(:blank?) && selector['value'].blank?))
+      if !selector.key?('value') ||
+         (selector['value'].class == Array && selector['value'].respond_to?(:blank?) && selector['value'].blank?) ||
+         (selector['operator'] =~ /^contains/ && selector['value'].respond_to?(:blank?) && selector['value'].blank?)
         return nil if selector['pre_condition'].nil?
         return nil if selector['pre_condition'].respond_to?(:blank?) && selector['pre_condition'].blank?
         return nil if selector['pre_condition'] == 'specific'
@@ -598,10 +601,18 @@ condition example
           if selector['value'].nil?
             query += "#{attribute} IS NULL"
           else
-            query += "#{attribute} IN (?)"
             if attributes[1] == 'out_of_office_replacement_id'
+              query += "#{attribute} IN (?)"
               bind_params.push User.find(selector['value']).out_of_office_agent_of.pluck(:id)
             else
+              if selector['value'].class != Array
+                selector['value'] = [selector['value']]
+              end
+              query += if selector['value'].include?('')
+                         "(#{attribute} IN (?) OR #{attribute} IS NULL)"
+                       else
+                         "#{attribute} IN (?)"
+                       end
               bind_params.push selector['value']
             end
           end
@@ -631,10 +642,18 @@ condition example
           if selector['value'].nil?
             query += "#{attribute} IS NOT NULL"
           else
-            query += "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
             if attributes[1] == 'out_of_office_replacement_id'
               bind_params.push User.find(selector['value']).out_of_office_agent_of.pluck(:id)
+              query += "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
             else
+              if selector['value'].class != Array
+                selector['value'] = [selector['value']]
+              end
+              query += if selector['value'].include?('')
+                         "(#{attribute} IS NOT NULL AND #{attribute} NOT IN (?))"
+                       else
+                         "(#{attribute} IS NULL OR #{attribute} NOT IN (?))"
+                       end
               bind_params.push selector['value']
             end
           end
