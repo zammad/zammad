@@ -3,6 +3,29 @@
 class UserAccessTokenController < ApplicationController
   prepend_before_action { authentication_check(permission: 'user_preferences.access_token') }
 
+=begin
+
+Resource:
+GET /api/v1/user_access_token
+
+Response:
+{
+  "tokens":[
+    {"id":1,"label":"some user access token","preferences":{"permission":["cti.agent","ticket.agent"]},"last_used_at":null,"expires_at":null,"created_at":"2018-07-11T08:18:56.947Z"}
+    {"id":2,"label":"some user access token 2","preferences":{"permission":[ticket.agent"]},"last_used_at":null,"expires_at":null,"created_at":"2018-07-11T08:18:56.947Z"}
+  ],
+  "permissions":[
+    {id: 1, name: "admin", note: "Admin Interface", preferences: {}, active: true,...},
+    {id: 2, name: "admin.user", note: "Manage Users", preferences: {}, active: true,...},
+    ...
+  ]
+}
+
+Test:
+curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password}
+
+=end
+
   def index
     tokens = Token.where(action: 'api', persistent: true, user_id: current_user.id).order('updated_at DESC, label ASC')
     token_list = []
@@ -41,6 +64,28 @@ class UserAccessTokenController < ApplicationController
     }, status: :ok
   end
 
+=begin
+
+Resource:
+POST /api/v1/user_access_token
+
+Payload:
+{
+  "label":"some test",
+  "permission":["cti.agent","ticket.agent"],
+  "expires_at":null
+}
+
+Response:
+{
+  "name":"new_token_only_shown_once"
+}
+
+Test:
+curl http://localhost/api/v1/user_access_token -v -u #{login}:#{password} -H "Content-Type: application/json" -X PUT -d '{"label":"some test","permission":["cti.agent","ticket.agent"],"expires_at":null}'
+
+=end
+
   def create
     if Setting.get('api_token_access') == false
       raise Exceptions::UnprocessableEntity, 'API token access disabled!'
@@ -62,6 +107,19 @@ class UserAccessTokenController < ApplicationController
       name: token.name,
     }, status: :ok
   end
+
+=begin
+
+Resource:
+DELETE /api/v1/user_access_token/{id}
+
+Response:
+{}
+
+Test:
+curl http://localhost/api/v1/user_access_token/{id} -v -u #{login}:#{password} -H "Content-Type: application/json" -X DELETE
+
+=end
 
   def destroy
     token = Token.find_by(action: 'api', user_id: current_user.id, id: params[:id])
