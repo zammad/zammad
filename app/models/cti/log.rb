@@ -4,9 +4,7 @@ module Cti
 
     store :preferences
 
-    after_create :push_incoming_call, :push_caller_list_update
-    after_update :push_incoming_call, :push_caller_list_update
-    after_destroy :push_caller_list_update
+    after_commit :push_incoming_call, :push_caller_list_update
 
 =begin
 
@@ -366,12 +364,13 @@ Cti::Log.process(
     end
 
     def push_incoming_call
-      return if state != 'newCall'
-      return if direction != 'in'
+      return true if destroyed?
+      return true if state != 'newCall'
+      return true if direction != 'in'
+
+      # send notify about event
       users = User.with_permissions('cti.agent')
       users.each do |user|
-
-        # send notify about event
         Sessions.send_to(
           user.id,
           {
@@ -380,24 +379,21 @@ Cti::Log.process(
           },
         )
       end
+      true
     end
 
     def self.push_caller_list_update?(record)
       list_ids = Cti::Log.log_records.pluck(:id)
-      if list_ids.present?
-        last_caller_log = Cti::Log.find_by(id: list_ids.last)
-        return false if last_caller_log && last_caller_log.created_at > record.created_at - 1.day
-      end
-      true
+      return true if list_ids.include?(record.id)
+      false
     end
 
     def push_caller_list_update
-      return false if Cti::Log.push_caller_list_update?(self)
+      return false if !Cti::Log.push_caller_list_update?(self)
 
+      # send notify on create/update/delete
       users = User.with_permissions('cti.agent')
       users.each do |user|
-
-        # send notify on create/update/delete
         Sessions.send_to(
           user.id,
           {
@@ -405,7 +401,6 @@ Cti::Log.process(
           },
         )
       end
-
       true
     end
 
