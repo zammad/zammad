@@ -479,7 +479,18 @@ Mob: +49 333 8362222",
 
   test '5 probe if caller log need to be pushed'  do
 
-    60.times do |count|
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'newCall',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-0',
+      'direction' => 'in',
+    )
+    assert(Cti::Log.push_caller_list_update?(Cti::Log.last))
+
+    65.times do |count|
       travel 1.hour
       Cti::Log.process(
         'cause' => '',
@@ -487,12 +498,39 @@ Mob: +49 333 8362222",
         'user' => 'user 1',
         'from' => '491111222222',
         'to' => '4930600000000',
-        'callId' => "touch-loop-#{count}",
+        'callId' => "touch-loop-1-#{count}",
         'direction' => 'in',
       )
     end
     assert(Cti::Log.push_caller_list_update?(Cti::Log.last))
     assert_not(Cti::Log.push_caller_list_update?(Cti::Log.first))
+
+    65.times do |count|
+      travel 1.minute
+      Cti::Log.process(
+        'cause' => '',
+        'event' => 'newCall',
+        'user' => 'user 1',
+        'from' => '491111222222',
+        'to' => '4930600000000',
+        'callId' => "touch-loop-2-#{count}",
+        'direction' => 'in',
+      )
+    end
+    assert(Cti::Log.push_caller_list_update?(Cti::Log.last))
+    assert_not(Cti::Log.push_caller_list_update?(Cti::Log.first))
+
+    travel 2.seconds
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'newCall',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-3-1',
+      'direction' => 'in',
+    )
+    assert(Cti::Log.push_caller_list_update?(Cti::Log.last))
 
   end
 

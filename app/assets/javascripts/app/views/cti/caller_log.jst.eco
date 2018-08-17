@@ -30,21 +30,25 @@
               <% classes.push('is-inactive') if !user.active %>
               <% if caller_id.level isnt 'known': %><%- @T('maybe') %> <% end %>
               <span class="<%= classes.join(' ') %>" data-id="<%- user.id %>"><%= user.displayNameLong() %></span><br>
-            <% else if caller_id.comment: %>
+            <% else if !_.isEmpty(caller_id.comment): %>
               <% shown = true %>
               <%- @T('maybe') %> <%= caller_id.comment %><br>
             <% end %>
           <% end %>
         <% end %>
-        <% if !shown && item.from_comment: %>
+        <% if !shown && !_.isEmpty(item.from_comment): %>
           <% shown = true %>
-          <% if item.from_comment: %><%= item.from_comment %><% end %>
+          <%= item.from_comment %>
           <br>
         <% end %>
         <% if shown: %>
           <small><%= item.from_pretty %></small>
         <% else: %>
-          <span class="js-userNew u-clickable" href="#"><%= item.from_pretty %></span>
+          <% if !_.isEmpty(item.from_pretty): %>
+            <span class="js-userNew u-clickable" href="#"><%= item.from_pretty %></span>
+          <% else: %>
+            <span><%= item.from %></span>
+          <% end %>
         <% end %>
       </td>
       <td>
@@ -58,21 +62,25 @@
               <% classes.push('is-inactive') if !user.active %>
               <% if caller_id.level isnt 'known': %><%- @T('maybe') %> <% end %>
               <span class="<%= classes.join(' ') %>" data-id="<%- user.id %>"><%= user.displayNameLong() %></span><br>
-            <% else if caller_id.comment: %>
+            <% else if !_.isEmpty(caller_id.comment): %>
               <% shown = true %>
               <%- @T('maybe') %> <%= caller_id.comment %><br>
             <% end %>
           <% end %>
         <% end %>
-        <% if !shown && item.to_comment: %>
+        <% if !shown && !_.isEmpty(item.to_comment): %>
           <% shown = true %>
-          <% if item.to_comment: %><%= item.to_comment %><% end %>
+          <%= item.to_comment %>
           <br>
         <% end %>
         <% if shown: %>
           <small><%= item.to_pretty %></small>
         <% else: %>
-          <%= item.to_pretty %>
+          <% if !_.isEmpty(item.to_pretty): %>
+            <%= item.to_pretty %>
+          <% else: %>
+            <%= item.to %>
+          <% end %>
         <% end %>
       </td>
       <td style="vertical-align: middle">
