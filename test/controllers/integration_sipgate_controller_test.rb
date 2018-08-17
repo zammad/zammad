@@ -308,7 +308,7 @@ class IntegrationSipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('CallerId Customer1', log.from_comment)
     assert_nil(log.comment)
     assert_equal('newCall', log.state)
-    assert_equal(true, log.done)
+    assert_equal(false, log.done)
 
     # inbound - I - answer by customer
     params = 'event=answer&direction=in&callId=1234567890-3&to=4930600000000&from=4912347114711'
@@ -353,7 +353,7 @@ class IntegrationSipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('CallerId Customer1', log.from_comment)
     assert_nil(log.comment)
     assert_equal('newCall', log.state)
-    assert_equal(true, log.done)
+    assert_equal(false, log.done)
 
     # inbound - II - answer by voicemail
     params = 'event=answer&direction=in&callId=1234567890-4&to=4930600000000&from=4912347114711&user=voicemail'
@@ -398,7 +398,7 @@ class IntegrationSipgateControllerTest < ActionDispatch::IntegrationTest
     assert_equal('CallerId Customer1', log.from_comment)
     assert_nil(log.comment)
     assert_equal('newCall', log.state)
-    assert_equal(true, log.done)
+    assert_equal(false, log.done)
 
     # inbound - III - hangup by customer
     params = 'event=hangup&direction=in&callId=1234567890-5&cause=normalClearing&to=4930600000000&from=4912347114711'
@@ -430,7 +430,7 @@ class IntegrationSipgateControllerTest < ActionDispatch::IntegrationTest
     assert(log.preferences['from'])
     assert_nil(log.comment)
     assert_equal('newCall', log.state)
-    assert_equal(true, log.done)
+    assert_equal(false, log.done)
 
     # get caller list
     get '/api/v1/cti/log'

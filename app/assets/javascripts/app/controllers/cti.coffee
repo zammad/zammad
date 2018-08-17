@@ -25,6 +25,13 @@ class App.CTI extends App.Controller
       @delay(delay, 500, 'cti_list_push_render')
       'cti_list_push'
     )
+    @bind('cti_event', (data) =>
+      return if data.state isnt 'newCall'
+      return if data.direction isnt 'in'
+      return if @switch() isnt true
+      @notify(data)
+      'cti_event'
+    )
     @bind('auth', (data) =>
       @meta.counter = 0
     )
@@ -71,6 +78,7 @@ class App.CTI extends App.Controller
         # render new caller list
         if data.list
           @list = data.list
+          @updateNavMenu()
           if @renderDone
             @renderCallerLog()
             return
@@ -145,8 +153,8 @@ class App.CTI extends App.Controller
         if item.comment
           item.state_human += ", #{item.comment}"
 
-      if item.start && item.end
-        item.duration = format((Date.parse(item.end) - Date.parse(item.start))/1000)
+      if item.start_at && item.end_at
+        item.duration = format((Date.parse(item.end_at) - Date.parse(item.start_at))/1000)
 
       diff_in_min = ((Date.now() - Date.parse(item.created_at)) / 1000) / 60
       if diff_in_min > 1
@@ -198,9 +206,9 @@ class App.CTI extends App.Controller
   counter: =>
     count = 0
     for item in @list
-      if item.state is 'hangup' && !item.done
+      if !item.done
         count++
-    @meta.counter + count
+    @meta.counter = count
 
   switch: (state = undefined) =>
 

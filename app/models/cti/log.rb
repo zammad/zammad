@@ -4,13 +4,13 @@ module Cti
 
     store :preferences
 
-    after_create :push_event, :push_caller_list
-    after_update :push_event, :push_caller_list
-    after_destroy :push_event, :push_caller_list
+    after_create :push_incoming_call, :push_caller_list_update
+    after_update :push_incoming_call, :push_caller_list_update
+    after_destroy :push_caller_list_update
 
 =begin
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'in',
     from: '007',
     from_comment: 'AAA',
@@ -21,7 +21,7 @@ module Cti
     state: 'newCall',
   )
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'in',
     from: '007',
     from_comment: '',
@@ -32,7 +32,7 @@ module Cti
     state: 'answer',
   )
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'in',
     from: '009',
     from_comment: '',
@@ -45,13 +45,13 @@ module Cti
 
 example data, can be used for demo
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'in',
     from: '4930609854180',
     from_comment: 'Franz Bauer',
     to: '4930609811111',
     to_comment: 'Bob Smith',
-    call_id: '00001',
+    call_id: '435452113',
     comment: '',
     state: 'newCall',
     done: false,
@@ -69,13 +69,13 @@ example data, can be used for demo
     }
   )
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'out',
     from: '4930609854180',
     from_comment: 'Franz Bauer',
     to: '4930609811111',
     to_comment: 'Bob Smith',
-    call_id: '00002',
+    call_id: rand(999_999_999),
     comment: '',
     state: 'newCall',
     preferences: {
@@ -92,13 +92,13 @@ example data, can be used for demo
     }
   )
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'in',
     from: '4930609854180',
     from_comment: 'Franz Bauer',
     to: '4930609811111',
     to_comment: 'Bob Smith',
-    call_id: '00003',
+    call_id: rand(999_999_999),
     comment: '',
     state: 'answer',
     preferences: {
@@ -115,13 +115,13 @@ example data, can be used for demo
     }
   )
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'in',
     from: '4930609854180',
     from_comment: 'Franz Bauer',
     to: '4930609811111',
     to_comment: 'Bob Smith',
-    call_id: '00004',
+    call_id: rand(999_999_999),
     comment: '',
     state: 'hangup',
     comment: 'normalClearing',
@@ -140,13 +140,13 @@ example data, can be used for demo
     }
   )
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'in',
     from: '4930609854180',
     from_comment: 'Franz Bauer',
     to: '4930609811111',
     to_comment: 'Bob Smith',
-    call_id: '00005',
+    call_id: rand(999_999_999),
     comment: '',
     state: 'hangup',
     start_at: Time.zone.now - 15.seconds,
@@ -165,13 +165,13 @@ example data, can be used for demo
     }
   )
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'in',
     from: '4930609854180',
     from_comment: 'Franz Bauer',
     to: '4930609811111',
     to_comment: '',
-    call_id: '00006',
+    call_id: rand(999_999_999),
     comment: '',
     state: 'hangup',
     start_at: Time.zone.now - 15.seconds,
@@ -190,13 +190,13 @@ example data, can be used for demo
     }
   )
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'in',
     from: '4930609854180',
     from_comment: 'Franz Bauer',
     to: '4930609811111',
     to_comment: 'Bob Smith',
-    call_id: '00007',
+    call_id: rand(999_999_999),
     comment: '',
     state: 'hangup',
     start_at: Time.zone.now - 15.seconds,
@@ -215,11 +215,11 @@ example data, can be used for demo
     }
   )
 
-  Cti::Log.create(
+  Cti::Log.create!(
     direction: 'in',
     from: '4930609854180',
     to: '4930609811112',
-    call_id: '00008',
+    call_id: rand(999_999_999),
     comment: '',
     state: 'hangup',
     start_at: Time.zone.now - 20.seconds,
@@ -236,14 +236,14 @@ example data, can be used for demo
 returns
 
   {
-    list: [...]
-    assets: {...}
+    list: [log_record1, log_record2, log_record3],
+    assets: {...},
   }
 
 =end
 
     def self.log
-      list = Cti::Log.order('created_at DESC, id DESC').limit(60)
+      list = Cti::Log.log_records
 
       # add assets
       assets = list.map(&:preferences)
@@ -261,6 +261,20 @@ returns
 
 =begin
 
+  Cti::Log.log_records
+
+returns
+
+  [log_record1, log_record2, log_record3]
+
+=end
+
+    def self.log_records
+      Cti::Log.order('created_at DESC, id DESC').limit(60)
+    end
+
+=begin
+
 processes a incoming event
 
 Cti::Log.process(
@@ -269,7 +283,7 @@ Cti::Log.process(
   'user' => 'user 1',
   'from' => '4912347114711',
   'to' => '4930600000000',
-  'callId' => '4991155921769858278-1', # or call_id
+  'callId' => '43545211', # or call_id
   'direction' => 'in',
 )
 
@@ -287,6 +301,7 @@ Cti::Log.process(
       from_comment = nil
       to_comment = nil
       preferences = nil
+      done = true
       if params['direction'] == 'in'
         to_comment = user
         from_comment, preferences = CallerId.get_comment_preferences(params['from'], 'from')
@@ -297,6 +312,9 @@ Cti::Log.process(
 
       case event
       when 'newCall'
+        if params['direction'] == 'in'
+          done = false
+        end
         create(
           direction: params['direction'],
           from: params['from'],
@@ -308,6 +326,7 @@ Cti::Log.process(
           state: event,
           initialized_at: Time.zone.now,
           preferences: preferences,
+          done: done,
         )
       when 'answer'
         log = find_by(call_id: call_id)
@@ -318,16 +337,19 @@ Cti::Log.process(
         if user
           log.to_comment = user
         end
+        log.done = true
         log.comment = comment
         log.save
       when 'hangup'
         log = find_by(call_id: call_id)
         raise "No such call_id #{call_id}" if !log
-        if params['direction'] == 'in' && log.state == 'newCall'
-          log.done = false
-        end
-        if params['direction'] == 'in' && log.to_comment == 'voicemail'
-          log.done = false
+        log.done = done
+        if params['direction'] == 'in'
+          if log.state == 'newCall'
+            log.done = false
+          elsif log.to_comment == 'voicemail'
+            log.done = false
+          end
         end
         log.state = 'hangup'
         log.end_at = Time.zone.now
@@ -343,7 +365,9 @@ Cti::Log.process(
       end
     end
 
-    def push_event
+    def push_incoming_call
+      return if state != 'newCall'
+      return if direction != 'in'
       users = User.with_permissions('cti.agent')
       users.each do |user|
 
@@ -358,8 +382,17 @@ Cti::Log.process(
       end
     end
 
-    def push_caller_list
-      list = Cti::Log.log
+    def self.push_caller_list_update?(record)
+      list_ids = Cti::Log.log_records.pluck(:id)
+      if list_ids.present?
+        last_caller_log = Cti::Log.find_by(id: list_ids.last)
+        return false if last_caller_log && last_caller_log.created_at > record.created_at - 1.day
+      end
+      true
+    end
+
+    def push_caller_list_update
+      return false if Cti::Log.push_caller_list_update?(self)
 
       users = User.with_permissions('cti.agent')
       users.each do |user|
@@ -369,10 +402,11 @@ Cti::Log.process(
           user.id,
           {
             event: 'cti_list_push',
-            data: list,
           },
         )
       end
+
+      true
     end
 
 =begin
