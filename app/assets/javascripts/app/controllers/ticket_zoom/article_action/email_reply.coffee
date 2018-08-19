@@ -157,7 +157,7 @@ class EmailReply extends App.Controller
                                 (if d.getHours()>=12 then "PM" else "AM")
                     )
 
-      quote_header = "On #{date_format(article.updated_by.created_at)}, #{article.updated_by.firstname} #{article.updated_by.lastname} &lt;#{article.updated_by.email}&gt; wrote:"
+      quote_header = "On #{date_format(article.created_at)}, #{article.updated_by.firstname} #{article.updated_by.lastname} &lt;#{article.updated_by.email}&gt; wrote:"
       selected = "<div><br><br/></div><div><blockquote type=\"cite\"><br>#{quote_header}<br><br>#{selected}<br></blockquote></div><div><br></div>"
 
       # add selected text to body
