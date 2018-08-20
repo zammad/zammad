@@ -167,14 +167,11 @@ class IntegrationCtiTest < TestCase
       data: {
         login:     'test_user',
         firstname: 'John',
-        lastname:  'Doe'
+        lastname:  'Doe',
+        phone:     '1234567890',
+        active:    false,
       },
     )
-
-    click(css: 'table.user-list > tbody > tr:first-of-type > td:first-of-type')
-    set(css: 'input[name="phone"]', value: '1234567890')
-    select(css: 'select[name="active"]', value: 'inactive')
-    click(css: 'button[type="submit"]')
 
     # enable CTI
     click(css: 'a[href="#manage"]')

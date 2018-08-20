@@ -2861,6 +2861,14 @@ wait untill text in selector disabppears
     element = instance.find_elements(css: '.modal input[name=password_confirm]')[0]
     element.clear
     element.send_keys(data[:password])
+    element = instance.find_elements(css: '.modal input[name=phone]')[0]
+    element.clear
+    element.send_keys(data[:phone])
+
+    if data[:active] == false
+      select(css: 'select[name="active"]', value: 'inactive')
+    end
+
     if data[:organization]
       element = instance.find_elements(css: '.modal input.searchableSelect-main')[0]
       element.clear
