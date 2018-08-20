@@ -396,19 +396,13 @@ class AgentTicketOverviewLevel0Test < TestCase
       }
     )
 
-    # open Overview menu tab
-    click(
-      css: '.js-menu .js-overviewsMenuItem',
+    overview_open(
+      link:    '#ticket/view/all_unassigned',
     )
 
     # enable full overviews
     execute(
       js: '$(".content.active .sidebar").css("display", "block")',
-    )
-
-    # click Unassigned & Open tab
-    click(
-      css: '.content.active [href="#ticket/view/all_unassigned"]',
     )
 
     watch_for(
