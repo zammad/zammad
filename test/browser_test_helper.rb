@@ -3641,6 +3641,7 @@ wait untill text in selector disabppears
       data_type: 'Text',
       data_option: {
         default: 'abc',
+        maxlength: 20,
       },
     },
     error: 'already exists'
@@ -3717,6 +3718,12 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
+    # make sure that required params are supplied
+    %i[name display data_type].each do |s|
+      next if data.key? s
+      raise "missing required param #{s} in object_manager_attribute_create()"
+    end
+
     click(
       browser:  instance,
       css:      'a[href="#manage"]',
@@ -3736,94 +3743,8 @@ wait untill text in selector disabppears
       css:      '.content.active .js-new',
       mute_log: true,
     )
-    modal_ready(browser: instance)
-    element = instance.find_elements(css: '.modal input[name=name]')[0]
-    element.clear
-    element.send_keys(data[:name])
-    element = instance.find_elements(css: '.modal input[name=display]')[0]
-    element.clear
-    element.send_keys(data[:display])
-    select(
-      browser:  instance,
-      css:      '.modal select[name="data_type"]',
-      value:    data[:data_type],
-      mute_log: true,
-    )
-    if data[:data_option]
-      if data[:data_option][:options]
-        if data[:data_type] == 'Boolean'
-          # rubocop:disable Lint/BooleanSymbol
-          element = instance.find_elements(css: '.modal .js-valueTrue').first
-          element.clear
-          element.send_keys(data[:data_option][:options][:true])
-          element = instance.find_elements(css: '.modal .js-valueFalse').first
-          element.clear
-          element.send_keys(data[:data_option][:options][:false])
-          # rubocop:enable Lint/BooleanSymbol
-        elsif data[:data_type] == 'Tree Select'
-          add_tree_options(
-            instance: instance,
-            options:  data[:data_option][:options],
-          )
-        else
-          data[:data_option][:options].each do |key, value|
-            element = instance.find_elements(css: '.modal .js-Table .js-key').last
-            element.clear
-            element.send_keys(key)
-            element = instance.find_elements(css: '.modal .js-Table .js-value').last
-            element.clear
-            element.send_keys(value)
-            element = instance.find_elements(css: '.modal .js-Table .js-add')[0]
-            element.click
-          end
-        end
-      end
 
-      %i[default min max diff].each do |key|
-        next if !data[:data_option].key?(key)
-        element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
-        element.clear
-        element.send_keys(data[:data_option][key])
-      end
-
-      %i[future past].each do |key|
-        next if !data[:data_option].key?(key)
-        select(
-          browser:  instance,
-          css:      ".modal select[name=\"data_option::#{key}\"]",
-          value:    data[:data_option][key],
-          mute_log: true,
-        )
-      end
-
-    end
-    instance.find_elements(css: '.modal button.js-submit')[0].click
-    if params[:error]
-      sleep 4
-      watch_for(
-        css: '.modal',
-        value: params[:error],
-      )
-      click(
-        browser: instance,
-        css:  '.modal .js-close',
-      )
-      modal_disappear(browser: instance)
-      return
-    end
-
-    11.times do
-      element = instance.find_elements(css: 'body')[0]
-      text = element.text
-      if text.match?(/#{Regexp.quote(data[:name])}/)
-        assert(true, 'object manager attribute created')
-        sleep 1
-        return true
-      end
-      sleep 1
-    end
-    screenshot(browser: instance, comment: 'object_manager_attribute_create_failed')
-    raise 'object manager attribute creation failed'
+    object_manager_attribute_perform('create', params)
   end
 
 =begin
@@ -3870,92 +3791,8 @@ wait untill text in selector disabppears
       css:     '.content.active .js-new',
     )
     instance.execute_script("$(\".content.active td:contains('#{data[:name]}')\").first().click()")
-    modal_ready(browser: instance)
-    element = instance.find_elements(css: '.modal input[name=display]')[0]
-    element.clear
-    element.send_keys(data[:display])
-    select(
-      browser:  instance,
-      css:      '.modal select[name="data_type"]',
-      value:    data[:data_type],
-      mute_log: true,
-    )
 
-    # if attribute is created, do not be able to select other types anymore
-    if instance.find_elements(css: '.modal select[name="data_type"] option').count > 1
-      assert(false, 'able to change the data_type of existing attribute which should not be allowed')
-    end
-
-    if data[:data_option]
-      if data[:data_option][:options]
-        if data[:data_type] == 'Boolean'
-          # rubocop:disable Lint/BooleanSymbol
-          element = instance.find_elements(css: '.modal .js-valueTrue').first
-          element.clear
-          element.send_keys(data[:data_option][:options][:true])
-          element = instance.find_elements(css: '.modal .js-valueFalse').first
-          element.clear
-          element.send_keys(data[:data_option][:options][:false])
-          # rubocop:enable Lint/BooleanSymbol
-        else
-          data[:data_option][:options].each do |key, value|
-            element = instance.find_elements(css: '.modal .js-Table .js-key').last
-            element.clear
-            element.send_keys(key)
-            element = instance.find_elements(css: '.modal .js-Table .js-value').last
-            element.clear
-            element.send_keys(value)
-            element = instance.find_elements(css: '.modal .js-Table .js-add')[0]
-            element.click
-          end
-        end
-      end
-
-      %i[default min max diff].each do |key|
-        next if !data[:data_option].key?(key)
-        element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
-        element.clear
-        element.send_keys(data[:data_option][key])
-      end
-
-      %i[future past].each do |key|
-        next if !data[:data_option].key?(key)
-        select(
-          browser:  instance,
-          css:      ".modal select[name=\"data_option::#{key}\"]",
-          value:    data[:data_option][key],
-          mute_log: true,
-        )
-      end
-
-    end
-    instance.find_elements(css: '.modal button.js-submit')[0].click
-    if params[:error]
-      sleep 4
-      watch_for(
-        css: '.modal',
-        value: params[:error],
-      )
-      click(
-        browser: instance,
-        css:  '.modal .js-close',
-      )
-      modal_disappear(browser: instance)
-      return
-    end
-
-    11.times do
-      element = instance.find_elements(css: 'body')[0]
-      text = element.text
-      if text.match?(/#{Regexp.quote(data[:name])}/)
-        assert(true, 'object manager attribute updated')
-        sleep 1
-        return true
-      end
-      sleep 1
-    end
-    screenshot(browser: instance, comment: 'object_manager_attribute_update_failed')
-    raise 'object manager attribute update failed'
+    object_manager_attribute_perform('update', params)
   end
 
 =begin
@@ -4028,6 +3865,61 @@ wait untill text in selector disabppears
       css:     '.content.active .js-discard',
     )
 
+  end
+
+=begin
+
+    Execute any pending migrations in the object attribute manager
+
+    object_manager_attribute_migrate(
+      browser: browser2,
+    )
+
+=end
+
+  def object_manager_attribute_migrate(params = {})
+    switch_window_focus(params)
+    log('object_manager_attribute_migrate', params)
+
+    instance = params[:browser] || @browser
+
+    watch_for(
+      browser: instance,
+      css: '.content.active',
+      value: 'Database Update required',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css: '.content.active .tab-pane.active div.js-execute',
+      mute_log: true,
+    )
+    modal_ready(
+      browser: instance,
+    )
+    title_text = instance.find_elements(css: '.modal .modal-title').first.text
+    if title_text == 'Zammad is restarting...'
+      # in the complex case, wait for server to restart
+      modal_disappear(
+        browser: instance,
+        timeout: 7.minutes,
+      )
+    elsif title_text == 'Config has changed'
+      # in the simple case, just click the submit button
+      click(
+        browser: instance,
+        css: '.modal .js-submit',
+        mute_log: true,
+      )
+    else
+      raise "Unknown title text \"#{title_text}\" found when trying to update database"
+    end
+    sleep 5
+    watch_for(
+      browser: instance,
+      css: '.content.active',
+      mute_log: true,
+    )
   end
 
 =begin
@@ -4238,5 +4130,150 @@ wait untill text in selector disabppears
       http.request(req)
     end
     raise "HTTP error #{res.code} while POSTing to #{browser_url}/api/v1/settings/" if res.code != '200'
+  end
+
+=begin
+
+  Helper method for both object_manager_attribute_create and object_manager_attribute_update
+
+=end
+
+  def object_manager_attribute_perform(action = 'create', params = {})
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    modal_ready(browser: instance)
+
+    if action == 'create'
+      set(
+        browser:  instance,
+        css:      '.modal input[name=name]',
+        value:    data[:name],
+        mute_log: true,
+      )
+    end
+
+    if data[:display]
+      set(
+        browser:  instance,
+        css:      '.modal input[name=display]',
+        value:    data[:display],
+        mute_log: true,
+      )
+    end
+
+    if data[:data_type]
+      select(
+        browser:  instance,
+        css:      '.modal select[name="data_type"]',
+        value:    data[:data_type],
+        mute_log: true,
+      )
+    end
+
+    if data[:data_option]
+      if data[:data_option][:options]
+        if data[:data_type] == 'Boolean'
+          # rubocop:disable Lint/BooleanSymbol
+          element = instance.find_elements(css: '.modal .js-valueTrue').first
+          element.clear
+          element.send_keys(data[:data_option][:options][:true])
+          element = instance.find_elements(css: '.modal .js-valueFalse').first
+          element.clear
+          element.send_keys(data[:data_option][:options][:false])
+          # rubocop:enable Lint/BooleanSymbol
+        elsif data[:data_type] == 'Tree Select'
+          add_tree_options(
+            instance: instance,
+            options:  data[:data_option][:options],
+          )
+        else
+          # first clear all existing entries
+          loop do
+            target = {
+              browser:  instance,
+              css: '.modal .js-Table .js-remove',
+              mute_log: true,
+            }
+            break if !instance.find_elements(css: target[:css])[0]
+            click(target)
+          end
+          sleep 1
+
+          # then populate the table with the new values
+          data[:data_option][:options].each do |key, value|
+            element = instance.find_elements(css: '.modal .js-Table .js-key').last
+            element.clear
+            element.send_keys(key)
+            element = instance.find_elements(css: '.modal .js-Table .js-value').last
+            element.clear
+            element.send_keys(value)
+            element = instance.find_elements(css: '.modal .js-Table .js-add')[0]
+            element.click
+          end
+        end
+      end
+
+      %i[default min max diff].each do |key|
+        next if !data[:data_option].key?(key)
+        element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
+        element.clear
+        element.send_keys(data[:data_option][key])
+      end
+
+      %i[future past].each do |key|
+        next if !data[:data_option].key?(key)
+        select(
+          browser:  instance,
+          css:      ".modal select[name=\"data_option::#{key}\"]",
+          value:    data[:data_option][key],
+          mute_log: true,
+        )
+      end
+
+      %i[maxlength].each do |key|
+        next if !data[:data_option].key?(key)
+        set(
+          browser:  instance,
+          css:      ".modal input[name=\"data_option::#{key}\"]",
+          value:    data[:data_option][key],
+          mute_log: true,
+        )
+      end
+    end
+
+    if params[:do_not_submit]
+      assert(true, "attribute #{action}d without submit")
+      return true
+    end
+
+    instance.find_elements(css: '.modal button.js-submit')[0].click
+
+    if params[:error]
+      sleep 4
+      watch_for(
+        css: '.modal',
+        value: params[:error],
+      )
+      click(
+        browser: instance,
+        css:  '.modal .js-close',
+      )
+      modal_disappear(browser: instance)
+      return
+    end
+
+    11.times do
+      element = instance.find_elements(css: 'body')[0]
+      text = element.text
+      if text.match?(/#{Regexp.quote(data[:name])}/)
+        assert(true, 'object manager attribute updated')
+        sleep 1
+        return true
+      end
+      sleep 1
+    end
+    screenshot(browser: instance, comment: "object_manager_attribute_#{action}_failed")
+    raise "object_manager_attribute_#{action}_failed"
   end
 end
