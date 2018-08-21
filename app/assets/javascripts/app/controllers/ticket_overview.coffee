@@ -1281,7 +1281,7 @@ class BulkForm extends App.Controller
       continue if attribute.name != 'owner_id'
       {users, groups} = @validUsersForTicketSelection()
       options = _.map(users, (user) -> {value: user.id, name: user.displayName()} )
-      attribute.alternative_user_options = options
+      attribute.possible_groups_owners = options
 
     new App.ControllerForm(
       el: @$('#form-ticket-bulk')

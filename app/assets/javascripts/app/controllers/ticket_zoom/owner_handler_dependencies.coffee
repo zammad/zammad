@@ -7,14 +7,14 @@ class OwnerFormHandlerDependencies
 
     owner_attribute = _.find(attributes, (o) -> o.name == 'owner_id')
     return if !owner_attribute
-    return if 'alternative_user_options' not of owner_attribute
+    return if 'possible_groups_owners' not of owner_attribute
 
-    # fetch contents using User relation if a Group has been selected, otherwise render alternative_user_options
+    # fetch contents using User relation if a Group has been selected, otherwise render possible_groups_owners
     if params.group_id
       owner_attribute.relation = 'User'
       delete owner_attribute['options']
     else
-      owner_attribute.options = owner_attribute.alternative_user_options
+      owner_attribute.options = owner_attribute.possible_groups_owners
       delete owner_attribute['relation']
 
     # replace new option list
