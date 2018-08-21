@@ -2,20 +2,20 @@ class OwnerFormHandlerDependencies
 
   # central method, is getting called on every ticket form change
   @run: (params, attribute, attributes, classname, form, ui) ->
-    return if 'group_id' not of params || 'owner_id' not of params
+    return if 'group_id' not of params
+    return if 'owner_id' not of params
 
     owner_attribute = _.find(attributes, (o) -> o.name == 'owner_id')
     return if !owner_attribute
-    return if 'alt_options' not of owner_attribute
+    return if 'alternative_user_options' not of owner_attribute
 
-    if !params.group_id
-      # if no group is chosen, then we use the alt_options to populate the owner_id field
-      owner_attribute.options = owner_attribute.alt_options
-      delete owner_attribute['relation']
-    else
-      # if a group is chosen, then populate owner_id using attribute.relation
+    # fetch contents using User relation if a Group has been selected, otherwise render alternative_user_options
+    if params.group_id
       owner_attribute.relation = 'User'
       delete owner_attribute['options']
+    else
+      owner_attribute.options = owner_attribute.alternative_user_options
+      delete owner_attribute['relation']
 
     # replace new option list
     owner_attribute.default = params[owner_attribute.name]

@@ -400,11 +400,6 @@ class AgentTicketOverviewLevel0Test < TestCase
       link:    '#ticket/view/all_unassigned',
     )
 
-    # enable full overviews
-    execute(
-      js: '$(".content.active .sidebar").css("display", "block")',
-    )
-
     watch_for(
       css: '.content.active',
       value: 'overview owner change #2',

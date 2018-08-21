@@ -1,3 +1,47 @@
+ValidUsersForTicketSelectionMethods =
+  validUsersForTicketSelection: ->
+    items = $('.content.active .table-overview .table').find('[name="bulk"]:checked')
+
+    # we want to display all users for which we can assign the tickets directly
+    # for this we need to get the groups of all selected tickets
+    # after we got those we need to check which users are available in all groups
+    # users that are not in all groups can't get the tickets assigned
+    ticket_ids       = _.map(items, (el) -> $(el).val() )
+    ticket_group_ids = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
+    users            = @usersInGroups(ticket_group_ids)
+
+    # get the list of possible groups for the current user
+    # from the TicketCreateCollection
+    # (filled for e.g. the TicketCreation or TicketZoom assignment)
+    # and order them by name
+    group_ids     = _.keys(@formMeta?.dependencies?.group_id)
+    groups        = App.Group.findAll(group_ids)
+    groups_sorted = _.sortBy(groups, (group) -> group.name)
+
+    # get the number of visible users per group
+    # from the TicketCreateCollection
+    # (filled for e.g. the TicketCreation or TicketZoom assignment)
+    for group in groups
+      group.valid_users_count = @formMeta?.dependencies?.group_id?[group.id]?.owner_id.length || 0
+
+    {
+      users: users
+      groups: groups_sorted
+    }
+
+  usersInGroups: (group_ids) ->
+    ids_by_group = _.chain(@formMeta?.dependencies?.group_id)
+      .pick(group_ids)
+      .values()
+      .map( (e) -> e.owner_id)
+      .value()
+
+    # Underscore's intersection doesn't work when chained
+    ids_in_all_groups = _.intersection(ids_by_group...)
+
+    users = App.User.findAll(ids_in_all_groups)
+    _.sortBy(users, (user) -> user.firstname)
+
 class App.TicketOverview extends App.Controller
   className: 'overviews'
   activeFocus: 'nav'
@@ -24,6 +68,8 @@ class App.TicketOverview extends App.Controller
     'mousedown .item': 'startDragItem'
     'mouseenter .js-batch-hover-target': 'highlightBatchEntry'
     'mouseleave .js-batch-hover-target': 'unhighlightBatchEntry'
+
+  @include ValidUsersForTicketSelectionMethods
 
   constructor: ->
     super
@@ -540,19 +586,6 @@ class App.TicketOverview extends App.Controller
       .velocity({ opacity: [0.5, 1] }, { duration: 120 })
       .velocity({ opacity: [1, 0.5] }, { duration: 60, delay: 40 })
 
-  usersInGroups: (group_ids) ->
-    ids_by_group = _.chain(@formMeta?.dependencies?.group_id)
-      .pick(group_ids)
-      .values()
-      .map( (e) -> e.owner_id)
-      .value()
-
-    # Underscore's intersection doesn't work when chained
-    ids_in_all_groups = _.intersection(ids_by_group...)
-
-    users = App.User.findAll(ids_in_all_groups)
-    _.sortBy(users, (user) -> user.firstname)
-
   render: ->
     elLocal = $(App.view('ticket_overview/index')())
 
@@ -604,33 +637,8 @@ class App.TicketOverview extends App.Controller
     @renderOptionsMacros()
 
   renderOptionsGroups: =>
-    items = @el.find('[name="bulk"]:checked')
-
-    # we want to display all users for which we can assign the tickets directly
-    # for this we need to get the groups of all selected tickets
-    # after we got those we need to check which users are available in all groups
-    # users that are not in all groups can't get the tickets assigned
-    ticket_ids       = _.map(items, (el) -> $(el).val() )
-    ticket_group_ids = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
-    users            = @usersInGroups(ticket_group_ids)
-
-    # get the list of possible groups for the current user
-    # from the TicketCreateCollection
-    # (filled for e.g. the TicketCreation or TicketZoom assignment)
-    # and order them by name
-    group_ids     = _.keys(@formMeta?.dependencies?.group_id)
-    groups        = App.Group.findAll(group_ids)
-    groups_sorted = _.sortBy(groups, (group) -> group.name)
-
-    # get the number of visible users per group
-    # from the TicketCreateCollection
-    # (filled for e.g. the TicketCreation or TicketZoom assignment)
-    for group in groups
-      group.valid_users_count = @formMeta?.dependencies?.group_id?[group.id]?.owner_id.length || 0
-
     @batchAssignInner.html $(App.view('ticket_overview/batch_overlay_user_group')(
-      users: users
-      groups: groups_sorted
+      @validUsersForTicketSelection()
     ))
 
   renderOptionsMacros: =>
@@ -1234,6 +1242,8 @@ class BulkForm extends App.Controller
     'click .js-confirm': 'confirm'
     'click .js-cancel':  'reset'
 
+  @include ValidUsersForTicketSelectionMethods
+
   constructor: ->
     super
 
@@ -1269,7 +1279,9 @@ class BulkForm extends App.Controller
 
     for attribute in @configure_attributes_ticket
       continue if attribute.name != 'owner_id'
-      attribute.alt_options = @userOptionsForSelection()
+      {users, groups} = @validUsersForTicketSelection()
+      options = _.map(users, (user) -> {value: user.id, name: user.displayName()} )
+      attribute.alternative_user_options = options
 
     new App.ControllerForm(
       el: @$('#form-ticket-bulk')
@@ -1306,31 +1318,6 @@ class BulkForm extends App.Controller
         labelClass:           'input-group-addon'
       noFieldset: true
     )
-
-  userOptionsForSelection: =>
-    items = $('.content.active .table-overview .table').find('[name="bulk"]:checked')
-
-    # we want to display all users for which we can assign the tickets directly
-    # for this we need to get the groups of all selected tickets
-    # after we got those we need to check which users are available in all groups
-    # users that are not in all groups can't get the tickets assigned
-    ticket_ids       = _.map(items, (el) -> $(el).val() )
-    ticket_group_ids = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
-    users = @usersInGroups(ticket_group_ids)
-    users.map( (user) -> {value: user.id, name: user.displayName()} )
-
-  usersInGroups: (group_ids) ->
-    ids_by_group = _.chain(@formMeta?.dependencies?.group_id)
-      .pick(group_ids)
-      .values()
-      .map( (e) -> e.owner_id)
-      .value()
-
-    # Underscore's intersection doesn't work when chained
-    ids_in_all_groups = _.intersection(ids_by_group...)
-
-    users = App.User.findAll(ids_in_all_groups)
-    _.sortBy(users, (user) -> user.firstname)
 
   articleTypeFilter: (items) ->
     for item in items
