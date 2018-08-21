@@ -30,7 +30,8 @@ class Channel::Filter::MonitoringBase
 
     # get mail attibutes like host and state
     result = {}
-    mail[:body].gsub(%r{(Service|Host|State|Address|Date/Time|Additional\sInfo|Info|Action|Description):(.+?)\n}i) do |_match|
+
+    mail[:body].gsub(%r{(Service|Host|State|Address|Date/Time|Additional\sInfo|Info|Action|Description):(.+?)(\n|$)}i) do |_match|
       key = $1
       if key
         key = key.downcase
