@@ -10,24 +10,48 @@ RSpec.describe Import::Exchange::Folder do
     let(:child_folder)   { double('EWS Folder') }
     let(:exception_case) { double('EWS Folder') }
 
-    before do
-      allow(root_folder).to receive(:display_name).and_return('你好'.b)
-      allow(root_folder).to receive(:parent_folder_id).and_return(nil)
+    context 'when server returns valid UTF-8' do
+      before do
+        allow(root_folder).to receive(:display_name).and_return('Root')
+        allow(root_folder).to receive(:parent_folder_id).and_return(nil)
 
-      allow(child_folder).to receive(:display_name).and_return('你好'.b)
-      allow(child_folder).to receive(:parent_folder_id).and_return(1)
+        allow(child_folder).to receive(:display_name).and_return('Leaf')
+        allow(child_folder).to receive(:parent_folder_id).and_return(1)
 
-      allow(exception_case).to receive(:display_name).and_return('你好'.b)
-      allow(exception_case).to receive(:parent_folder_id).and_raise(Viewpoint::EWS::EwsError)
+        allow(exception_case).to receive(:display_name).and_return('Error-Raising Leaf')
+        allow(exception_case).to receive(:parent_folder_id).and_raise(Viewpoint::EWS::EwsError)
 
-      allow(subject).to receive(:find).with(any_args).and_return(root_folder)
-      allow(subject).to receive(:find).with(nil).and_return(nil)
+        allow(subject).to receive(:find).with(any_args).and_return(root_folder)
+        allow(subject).to receive(:find).with(nil).and_return(nil)
+      end
+
+      it 'returns a valid UTF-8 string' do
+        expect(subject.display_path(root_folder)).to eq('Root')
+        expect(subject.display_path(child_folder)).to eq('Root -> Leaf')
+        expect(subject.display_path(exception_case)).to eq('Error-Raising Leaf')
+      end
     end
 
-    it 'returns a valid UTF-8 string' do
-      expect { subject.display_path(root_folder).to_json }.not_to raise_error
-      expect { subject.display_path(child_folder).to_json }.not_to raise_error
-      expect { subject.display_path(exception_case).to_json }.not_to raise_error
+    context 'when server returns invalid UTF-8' do
+      before do
+        allow(root_folder).to receive(:display_name).and_return('你好'.b)
+        allow(root_folder).to receive(:parent_folder_id).and_return(nil)
+
+        allow(child_folder).to receive(:display_name).and_return('你好'.b)
+        allow(child_folder).to receive(:parent_folder_id).and_return(1)
+
+        allow(exception_case).to receive(:display_name).and_return('你好'.b)
+        allow(exception_case).to receive(:parent_folder_id).and_raise(Viewpoint::EWS::EwsError)
+
+        allow(subject).to receive(:find).with(any_args).and_return(root_folder)
+        allow(subject).to receive(:find).with(nil).and_return(nil)
+      end
+
+      it 'returns a valid UTF-8 string' do
+        expect { subject.display_path(root_folder).to_json }.not_to raise_error
+        expect { subject.display_path(child_folder).to_json }.not_to raise_error
+        expect { subject.display_path(exception_case).to_json }.not_to raise_error
+      end
     end
   end
 end
