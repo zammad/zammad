@@ -365,4 +365,107 @@ class AgentTicketOverviewLevel0Test < TestCase
     # cleanup
     tasks_close_all()
   end
+
+  # verify correct behaviour for issue #1864 - Bulk-Action: Not possible to change owner
+  def test_bulk_owner_change
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    # test bulk action
+
+    # create new ticket
+    ticket1 = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'overview owner change test #1',
+        body: 'overview owner change #1',
+      }
+    )
+    ticket2 = ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'overview owner change #2',
+        body: 'overview owner change #2',
+      }
+    )
+
+    overview_open(
+      link:    '#ticket/view/all_unassigned',
+    )
+
+    watch_for(
+      css: '.content.active',
+      value: 'overview owner change #2',
+      timeout: 8,
+    )
+
+    # remember current overview count
+    overview_counter_before = overview_counter()
+
+    # select both via bulk action
+    click(
+      css: '.content.active table tr td input[value="' + ticket1[:id] + '"] + .icon-checkbox.icon-unchecked',
+      fast: true,
+    )
+
+    # scroll to reply - needed for chrome
+    scroll_to(
+      position: 'top',
+      css:      '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+    )
+    click(
+      css: '.content.active table tr td input[value="' + ticket2[:id] + '"] + .icon-checkbox.icon-unchecked',
+      fast: true,
+    )
+
+    exists(
+      css: '.content.active table tr td input[value="' + ticket1[:id] + '"][type="checkbox"]:checked',
+    )
+    exists(
+      css: '.content.active table tr td input[value="' + ticket2[:id] + '"][type="checkbox"]:checked',
+    )
+
+    select(
+      css: '.content.active .bulkAction [name="owner_id"]',
+      value: 'Test Master Agent',
+    )
+
+    select(
+      css: '.content.active .bulkAction [name="state_id"]',
+      value: 'closed',
+    )
+
+    click(
+      css: '.content.active .bulkAction .js-confirm',
+    )
+    click(
+      css: '.content.active .bulkAction .js-submit',
+    )
+
+    watch_for_disappear(
+      css:     '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+      timeout: 12,
+    )
+
+    exists_not(
+      css: '.content.active table tr td input[value="' + ticket1[:id] + '"]',
+    )
+    exists_not(
+      css: '.content.active table tr td input[value="' + ticket2[:id] + '"]',
+    )
+
+    # get new overview count
+    overview_counter_new = overview_counter()
+    assert_equal(overview_counter_before['#ticket/view/all_unassigned'] - 2, overview_counter_new['#ticket/view/all_unassigned'])
+
+    # cleanup
+    tasks_close_all()
+  end
 end
