@@ -2265,7 +2265,7 @@ AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
     assert_response(200)
     result = JSON.parse(@response.body)
     assert_equal(Hash, result.class)
-    assert_equal([ticket1.id, ticket2.id], result['tickets'])
+    assert_equal([ticket2.id, ticket1.id], result['tickets'])
 
     credentials = ActionController::HttpAuthentication::Basic.encode_credentials('tickets-admin', 'adminpw')
     get "/api/v1/tickets/search?query=#{CGI.escape(title)}&limit=40", params: { sort_by: 'created_at', order_by: 'asc' }, headers: @headers.merge('Authorization' => credentials)
