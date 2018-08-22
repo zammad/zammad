@@ -70,15 +70,16 @@ class Channel::EmailParser
 =end
 
   def parse(msg)
-    mail = Mail.new(msg.utf8_encode(from: charset_from_headers_of(msg)))
+    mail = Mail.new(msg.force_encoding('binary'))
 
+    headers = message_header_hash(mail)
+    body = message_body_hash(mail)
     message_attributes = [
       { mail_instance: mail },
-      message_header_hash(mail),
-      message_body_hash(mail),
-      self.class.sender_attributes(mail),
+      headers,
+      body,
+      self.class.sender_attributes(headers),
     ]
-
     message_attributes.reduce({}.with_indifferent_access, &:merge)
   end
 
@@ -340,8 +341,8 @@ returns
   end
 
   def self.sender_attributes(from)
-    if from.is_a?(Mail::Message)
-      from = SENDER_FIELDS.map { |f| from.header[f] }.compact
+    if from.is_a?(HashWithIndifferentAccess)
+      from = SENDER_FIELDS.map { |f| from[f] }.compact
                           .map(&:to_utf8).reject(&:blank?)
                           .partition { |address| address.match?(EMAIL_REGEX) }
                           .flatten.first
@@ -474,21 +475,16 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
   private
 
-  def charset_from_headers_of(msg)
-    Mail.new(msg.b)
-        .header['Content-Type']
-        .try(:parameters)
-        .try(:[], :charset)
-  end
-
   def message_header_hash(mail)
     imported_fields = mail.header.fields.map do |f|
-      value = begin
-                f.to_utf8
-              rescue NameError # handle bug #1238 in Mail 2.7.1.rc1
-                ''             # swap out for commented line below once upgrade is available
-              end
-
+      begin
+        value = f.to_utf8
+        if value.blank?
+          value = f.raw_value.to_utf8
+        end
+      rescue
+        value = f.raw_value.to_utf8(fallback: :read_as_sanitized_binary)
+      end
       [f.name.downcase, value]
     end.to_h
 
@@ -577,7 +573,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
   def get_attachments(file, attachments, mail)
     return file.parts.map { |p| get_attachments(p, attachments, mail) } if file.parts.any?
-    return [] if [mail.text_part, mail.html_part].include?(file)
+    return [] if [mail.text_part&.body&.encoded, mail.html_part&.body&.encoded].include?(file.body.encoded)
 
     # get file preferences
     headers_store = {}
@@ -750,7 +746,11 @@ module Mail
   # workaround to get content of no parseable headers - in most cases with non 7 bit ascii signs
   class Field
     def raw_value
-      value = @raw_value.try(:utf8_encode)
+      begin
+        value = @raw_value.try(:utf8_encode)
+      rescue
+        value = @raw_value.utf8_encode(fallback: :read_as_sanitized_binary)
+      end
       return value if value.blank?
       value.sub(/^.+?:(\s|)/, '')
     end
@@ -791,4 +791,19 @@ module Mail
       end.join('')
     end
   end
+
+  # issue#348 - IMAP mail fetching stops because of broken spam email (e. g. broken Content-Transfer-Encoding value see test/fixtures/mail43.box)
+  # https://github.com/zammad/zammad/issues/348
+  class Body
+    def decoded
+      if !Encodings.defined?(encoding)
+        #raise UnknownEncodingType, "Don't know how to decode #{encoding}, please call #encoded and decode it yourself."
+        Rails.logger.info "UnknownEncodingType: Don't know how to decode #{encoding}!"
+        raw_source
+      else
+        Encodings.get_encoding(encoding).decode(raw_source)
+      end
+    end
+  end
+
 end

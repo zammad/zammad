@@ -1,0 +1,31 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Online-apotheke <ahromdn@example.com>
+from_email: ahromdn@example.com
+from_display_name: Online-apotheke
+to: kontakt@example.de
+subject: Online-apotheke. Günstigster Preis. Ohne Rezepte
+body: "Software zur Erkennung von \"Spam\" auf dem Rechner\n\n    hedwig.example.io\n\nhat
+  die eingegangene E-mail als mögliche \"Spam\"-Nachricht identifiziert.\nDie ursprüngliche
+  Nachricht wurde an diesen Bericht angehängt, so dass\nSie sie anschauen können (falls
+  es doch eine legitime E-Mail ist) oder\nähnliche unerwünschte Nachrichten in Zukunft
+  markieren können.\nBei Fragen zu diesem Vorgang wenden Sie sich bitte an\n\n    the
+  administrator of that system\n\nVorschau: [...] \n\nInhaltsanalyse im Detail:   (6.4
+  Punkte, 5.0 benötigt)\n\nPkte Regelname              Beschreibung\n---- ----------------------
+  --------------------------------------------------\n 2.5 URIBL_DBL_SPAM         Contains
+  a spam URL listed in the Spamhaus DBL\n                            blocklist\n                            [URIs:
+  chromis.group]\n 1.7 URIBL_BLACK            Contains an URL listed in the URIBL
+  blacklist\n                            [URIs: chromis.group]\n 1.9 URIBL_ABUSE_SURBL
+  \     Enthält URL in ABUSE-Liste (www.surbl.org) -\n                            changed
+  from JP to ABUSE bug 7279\n                            [URIs: chromis.group]\n-0.0
+  SPF_PASS               SPF: Senderechner entspricht SPF-Datensatz\n 0.7 MPART_ALT_DIFF
+  \        BODY: Nachrichtentext im Text- und HTML-Format\n                            unterscheiden
+  sich\n 0.0 HTML_MESSAGE           BODY: Nachricht enthält HTML\n 0.3 HTML_IMAGE_ONLY_04
+  \    BODY: Außer Bildern nur 0-400 Zeichen Text\n 0.1 HTML_SHORT_LINK_IMG_1  HTML
+  is very short with a linked image\n-1.0 MAILING_LIST_MULTI     Multiple indicators
+  imply a widely-seen list\n                            manager\n\nDie ursprüngliche
+  Nachricht enthielt nicht ausschließlich Klartext\n(plain text) und kann eventuell
+  eine Gefahr für einige E-Mail-Programme\ndarstellen (falls sie z.B. einen Computervirus
+  enthält).\nMöchten Sie die Nachricht dennoch ansehen, ist es wahrscheinlich\nsicherer,
+  sie zuerst in einer Datei zu speichern und diese Datei danach\nmit einem Texteditor
+  zu öffnen.\n\n"
+content_type: text/plain

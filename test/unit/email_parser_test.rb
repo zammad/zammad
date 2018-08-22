@@ -3,6 +3,15 @@
 require 'test_helper'
 
 class EmailParserTest < ActiveSupport::TestCase
+
+=begin
+
+to write new .yml files for emails you can use the following code:
+
+File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.read('test/data/mail/mailXXX.box')).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to').to_yaml)
+
+=end
+
   test 'parse' do
     msg_files = Dir.glob(Rails.root.join('test', 'data', 'mail', 'mail*.box')).sort
 
@@ -19,15 +28,10 @@ class EmailParserTest < ActiveSupport::TestCase
       # assert: raw content hash is a subset of parsed message hash
       expected_msg = m[:content].except(:attachments)
       parsed_msg = m[:parsed].slice(*expected_msg.keys)
-      failure_msg = [parsed_msg, expected_msg]
-                      .map(&:to_a).map(&:sort).reduce(&:zip)
-                      .reject { |a| a.uniq.one? }
-                      .map { |a, b| "#{a.first.upcase}\n  #{m[:source]}: #{a.last}\n  #{m[:source].ext('yml')}: #{b.last}" }
-                      .join("\n")
 
-      assert_operator(expected_msg, :<=, parsed_msg,
-                      "parsed message data does not match message content:\n" +
-                      failure_msg)
+      expected_msg.each do |key, value|
+        assert_equal(value, parsed_msg[key], "parsed message data does not match test/data/mail/#{m[:source]}: #{key}")
+      end
 
       # assert: attachments in parsed message hash match metadata in raw hash
       next if m[:content][:attachments].blank?

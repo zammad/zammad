@@ -48,7 +48,7 @@ Some Text",
       {
         data: "From: me@example.com
 To: customer@example.com
-Subject: äöü some subject
+Subject: äöü some subject 1
 
 Some Textäöü",
         channel: {
@@ -58,7 +58,7 @@ Some Textäöü",
         result: {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject',
+            title: 'äöü some subject 1',
           },
           1 => {
             body: 'Some Textäöü',
@@ -71,7 +71,7 @@ Some Textäöü",
       {
         data: "From: me@exampl'e.com
 To: customer@exampl'e.com
-Subject: äöü some subject
+Subject: äöü some subject 2
 
 Some Textäöü",
         channel: {
@@ -81,7 +81,7 @@ Some Textäöü",
         result: {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject',
+            title: 'äöü some subject 2',
           },
           1 => {
             body: 'Some Textäöü',
@@ -155,17 +155,17 @@ Some Textäöü without subject#2",
       {
         data: "From: me@example.com
 To: customer@example.com
-Subject: äöü some subject
+Subject: äöü some subject 3
 
 Some Textäöü".encode('ISO-8859-1'),
         success: true,
         result: {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject',
+            title: '??? some subject 3', # it's ok, because subject need to be 7bit encoded
           },
           1 => {
-            body: 'Some Textäöü',
+            body: 'Some Text???', # it's ok, because no content-type is given
             sender: 'Customer',
             type: 'email',
             internal: false,
@@ -627,7 +627,7 @@ Some Text",
         result: {
           0 => {
             priority: '2 normal',
-            title: 'Subject: 【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
+            title: '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
           },
           1 => {
             body: 'Some Text',
@@ -2758,7 +2758,7 @@ Some Text',
             title: '转发：整体提升企业服务水平',
           },
           1 => {
-            from: '"武兰成" <Glopelf7121@example.com>',
+            from: '"ÎäŔźłÉ" <Glopelf7121@example.com>',
             sender: 'Customer',
             type: 'email',
           },
@@ -2766,9 +2766,9 @@ Some Text',
         verify: {
           users: [
             {
-              firstname: '武兰成',
+              firstname: 'ÎäŔźłÉ',
               lastname: '',
-              fullname: '武兰成',
+              fullname: 'ÎäŔźłÉ',
               email: 'glopelf7121@example.com',
             },
           ],
@@ -2990,7 +2990,7 @@ Some Text',
             title: 'some subject 3',
           },
           1 => {
-            from: '"Vandromme, Frédéric" <fvandromme@example.com>',
+            from: '=?windows-1258?B?VmFuZHJvbW1lLCBGculk6XJpYw==?= <fvandromme@example.com>',
             sender: 'Customer',
             type: 'email',
             body: 'Some Text',
@@ -3008,18 +3008,16 @@ Some Text',
         },
       },
       {
-        data: <<~RAW_MAIL.chomp,
-          From: me@example.com
-          To: customer@example.com
-          Subject: some subject
-          Content-Type: text/html; charset=us-ascii; format=flowed
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject
+Content-Type: text/html; charset=us-ascii; format=flowed
 
-          <html>
-            <body>
-              <a href="mailto:testäöü@example.com">test</a>
-            </body>
-          </html>
-          RAW_MAIL
+<html>
+  <body>
+    <a href="mailto:testäöü@example.com">test</a>
+  </body>
+</html>',
         success: true,
         result: {
           0 => {
