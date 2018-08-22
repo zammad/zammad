@@ -148,7 +148,11 @@ class EmailReply extends App.Controller
         selected = App.Utils.text2html(selected)
 
     if selected
-      selected = "<div><br><br/></div><div><blockquote type=\"cite\">#{selected}</blockquote></div><div><br></div>"
+      date = @date_format(article.updated_by.created_at)
+      name = article.updated_by.displayName()
+      email = article.updated_by.email
+      quote_header = App.i18n.translateInline('On %s, %s <%s> wrote:', date, name, email)
+      selected = "<div><br><br/></div><div><blockquote type=\'cite\'><br>#{quote_header}<br><br>#{selected}<br></blockquote></div><div><br></div>"
 
       # add selected text to body
       body = selected + body
@@ -167,6 +171,15 @@ class EmailReply extends App.Controller
     })
 
     true
+
+  @date_format: (date_string) ->
+    options = {
+      weekday: 'long'
+      month: 'long'
+      day: 'numeric'
+      year: 'numeric'
+    }
+    new Date(date_string).toLocaleTimeString('en-US', options)
 
   @emailForward: (ticket, article, ui) ->
 
