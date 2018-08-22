@@ -5,10 +5,11 @@ class AAbUnitTest < TestCase
   def test_core
     @browser = browser_instance
     location(url: browser_url + '/tests_core')
+    sleep 5
     watch_for(
       css: '.result',
       value: 'Tests completed',
-      timeout: 8,
+      timeout: 4,
     )
     match(
       css: '.result .failed',
@@ -30,10 +31,11 @@ class AAbUnitTest < TestCase
     )
 
     location(url: browser_url + '/tests_model')
+    sleep 5
     watch_for(
       css: '.result',
       value: 'Tests completed',
-      timeout: 8,
+      timeout: 3,
     )
     match(
       css: '.result .failed',
@@ -77,10 +79,11 @@ class AAbUnitTest < TestCase
   def test_form
     @browser = browser_instance
     location(url: browser_url + '/tests_form')
+    sleep 5
     watch_for(
       css: '.result',
       value: 'Tests completed',
-      timeout: 8,
+      timeout: 2,
     )
     match(
       css: '.result .failed',
@@ -212,10 +215,11 @@ class AAbUnitTest < TestCase
     )
 
     location(url: browser_url + '/tests_taskbar')
+    sleep 5
     watch_for(
       css: '.result',
       value: 'Tests completed',
-      timeout: 8,
+      timeout: 3,
     )
     match(
       css: '.result .failed',
