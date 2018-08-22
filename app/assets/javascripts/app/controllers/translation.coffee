@@ -79,6 +79,14 @@ class Index extends App.ControllerSubContent
         @toggleAction()
     )
 
+  show: =>
+    # see https://github.com/zammad/zammad/issues/2056
+    @untranslatedAtLastRender ||= $.extend({}, App.i18n.getNotTranslated(@locale))
+    return if _.isEqual(@untranslatedAtLastRender, App.i18n.getNotTranslated(@locale))
+
+    @untranslatedAtLastRender = $.extend({}, App.i18n.getNotTranslated(@locale))
+    App.Event.trigger('ui:rerender')
+
   hide: =>
     @rerender()
 
