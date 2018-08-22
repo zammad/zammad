@@ -2,6 +2,11 @@
 require 'test_helper'
 
 class TicketTest < ActiveSupport::TestCase
+
+  setup do
+    Ticket.destroy_all
+  end
+
   test 'ticket create' do
     ticket = Ticket.create!(
       title: "some title\n äöüß",

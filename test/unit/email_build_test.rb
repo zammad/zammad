@@ -56,15 +56,14 @@ class EmailBuildTest < ActiveSupport::TestCase
       ],
     )
 
-    text_should = Mail::Utilities.to_crlf(<<~MSG_TEXT.chomp)
+    text_should = <<~MSG_TEXT.chomp
       > Welcome!
       >
       > Thank you for installing Zammad. äöüß
       >
       MSG_TEXT
-    html_should = Mail::Utilities.to_crlf(html)
     assert_equal(text_should, mail.text_part.body.to_s)
-    assert_equal(html_should, mail.html_part.body.to_s)
+    assert_equal(html, mail.html_part.body.to_s)
 
     parser = Channel::EmailParser.new
     data = parser.parse(mail.to_s)
@@ -115,9 +114,7 @@ class EmailBuildTest < ActiveSupport::TestCase
       ],
     )
 
-    mail_gem_should = Mail::Utilities.to_crlf(text)
-    email_parser_should = text
-    assert_equal(mail_gem_should, mail.text_part.body.to_s)
+    assert_equal(text, mail.text_part.body.to_s)
     assert_nil(mail.html_part)
     assert_equal('image/png; filename=somename.png', mail.attachments[0].content_type)
 
@@ -125,7 +122,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     data = parser.parse(mail.to_s)
 
     # check body
-    assert_equal(email_parser_should, data[:body])
+    assert_equal(text, data[:body])
 
     # check count of attachments, 2
     assert_equal(1, data[:attachments].length)
@@ -197,9 +194,7 @@ class EmailBuildTest < ActiveSupport::TestCase
       ],
     )
 
-    mail_gem_should = Mail::Utilities.to_crlf(text)
-    email_parser_should = text
-    assert_equal(mail_gem_should, mail.text_part.body.to_s)
+    assert_equal(text, mail.text_part.body.to_s)
     assert_nil(mail.html_part)
     assert_equal('text/calendar; filename=schedule.ics', mail.attachments[0].content_type)
 
@@ -207,7 +202,7 @@ class EmailBuildTest < ActiveSupport::TestCase
     data = parser.parse(mail.to_s)
 
     # check body
-    assert_equal(email_parser_should, data[:body])
+    assert_equal(text, data[:body])
 
     # check count of attachments, 2
     assert_equal(1, data[:attachments].length)
@@ -238,16 +233,14 @@ class EmailBuildTest < ActiveSupport::TestCase
       body: text,
     )
 
-    mail_gem_should = Mail::Utilities.to_crlf(text)
-    email_parser_should = text
-    assert_equal(mail_gem_should, mail.body.to_s)
+    assert_equal(text, mail.body.to_s)
     assert_nil(mail.html_part)
 
     parser = Channel::EmailParser.new
     data = parser.parse(mail.to_s)
 
     # check body
-    assert_equal(email_parser_should, data[:body])
+    assert_equal(text, data[:body])
 
     # check count of attachments, 0
     assert_equal(0, data[:attachments].length)

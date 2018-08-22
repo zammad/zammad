@@ -80,7 +80,7 @@ gem 'twitter'
 
 # channels - email additions
 gem 'htmlentities'
-gem 'mail', '>= 2.7.1.rc1'
+gem 'mail', '2.6.6'
 gem 'mime-types'
 gem 'rchardet', '>= 1.8.0'
 gem 'valid_email2'
