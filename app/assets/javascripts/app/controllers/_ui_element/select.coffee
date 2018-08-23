@@ -38,6 +38,7 @@ class App.UiElement.select extends App.UiElement.ApplicationUiElement
   # 1. If attribute.value is not among the current options, then search within historical options
   # 2. If attribute.value is not among current and historical options, then add the value itself as an option
   @addDeletedOptions: (attribute) ->
+    return if !_.isEmpty(attribute.relation) # do not apply for attributes with relation, relations will fill options automatically
     value = attribute.value
     return if !value
     return if _.isArray(value)
