@@ -25,10 +25,22 @@ RSpec.describe Import::Exchange::Folder do
         allow(subject).to receive(:find).with(nil).and_return(nil)
       end
 
-      it 'returns a valid UTF-8 string' do
-        expect(subject.display_path(root_folder)).to eq('Root')
-        expect(subject.display_path(child_folder)).to eq('Root -> Leaf')
-        expect(subject.display_path(exception_case)).to eq('Error-Raising Leaf')
+      context 'and target folder is directory root' do
+        it 'returns the display name of the folder' do
+          expect(subject.display_path(root_folder)).to eq('Root')
+        end
+      end
+
+      context 'and target folder is NOT directory root' do
+        it 'returns the full path from root to target' do
+          expect(subject.display_path(child_folder)).to eq('Root -> Leaf')
+        end
+      end
+
+      context 'and walking up directory tree raises EwsError' do
+        it 'returns the partial path from error to target folder' do
+          expect(subject.display_path(exception_case)).to eq('Error-Raising Leaf')
+        end
       end
     end
 
