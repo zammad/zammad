@@ -25,7 +25,7 @@
           <% for caller_id in item.preferences.from: %>
             <% if caller_id.user_id && App.User.exists(caller_id.user_id): %>
               <% shown = true %>
-              <% user = App.User.find(caller_id.user_id) %>
+              <% user = App.User.fullLocal(caller_id.user_id) %>
               <% if caller_id.level isnt 'known': %><%- @T('maybe') %> <% end %>
               <span class="user-popover" data-id="<%- user.id %>"><%= user.displayNameLong() %></span><br>
             <% else if !_.isEmpty(caller_id.comment): %>
@@ -55,7 +55,7 @@
           <% for caller_id in item.preferences.to: %>
             <% if caller_id.user_id && App.User.exists(caller_id.user_id): %>
               <% shown = true %>
-              <% user = App.User.find(caller_id.user_id) %>
+              <% user = App.User.fullLocal(caller_id.user_id) %>
               <% if caller_id.level isnt 'known': %><%- @T('maybe') %> <% end %>
               <span class="user-popover" data-id="<%- user.id %>"><%= user.displayNameLong() %></span><br>
             <% else if caller_id.comment: %>
