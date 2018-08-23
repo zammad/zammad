@@ -4196,17 +4196,19 @@ wait untill text in selector disabppears
             options:  data[:data_option][:options],
           )
         else
-          # first clear all existing entries
-          loop do
-            target = {
-              browser:  instance,
-              css: '.modal .js-Table .js-remove',
-              mute_log: true,
-            }
-            break if !instance.find_elements(css: target[:css])[0]
-            click(target)
+          if action == 'update'
+            # first clear all existing entries
+            loop do
+              target = {
+                browser:  instance,
+                css: '.modal .js-Table .js-remove',
+                mute_log: true,
+              }
+              break if !instance.find_elements(css: target[:css])[0]
+              click(target)
+            end
+            sleep 1
           end
-          sleep 1
 
           # then populate the table with the new values
           data[:data_option][:options].each do |key, value|
