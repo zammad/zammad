@@ -1223,10 +1223,9 @@ do($ = window.jQuery, window) ->
       document.getElementsByTagName('head')[0].appendChild(newSS)
 
     onCssLoaded: =>
+      @cssLoaded = true
       if @socketReady
         @onReady()
-      else
-        @cssLoaded = true
 
     startTimeoutObservers: =>
       @idleTimeout = new Timeout(

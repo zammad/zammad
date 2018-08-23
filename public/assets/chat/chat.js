@@ -1562,10 +1562,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.onCssLoaded = function() {
+      this.cssLoaded = true;
       if (this.socketReady) {
         return this.onReady();
-      } else {
-        return this.cssLoaded = true;
       }
     };
 
