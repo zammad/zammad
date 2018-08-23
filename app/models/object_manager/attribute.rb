@@ -621,7 +621,7 @@ to send no browser reload event, pass false
       # config changes
       if attribute.to_config
         execute_config_count += 1
-        if attribute.data_option[:options]
+        if attribute.data_type == 'select' && attribute.data_option[:options]
           historical_options = attribute.data_option[:historical_options] || {}
           historical_options.update(attribute.data_option[:options])
           historical_options.update(attribute.data_option_new[:options])
@@ -634,7 +634,7 @@ to send no browser reload event, pass false
         next if !attribute.to_create && !attribute.to_migrate && !attribute.to_delete
       end
 
-      if attribute.data_option[:options]
+      if attribute.data_type == 'select' && attribute.data_option[:options]
         attribute.data_option[:historical_options] = attribute.data_option[:options]
       end
 
