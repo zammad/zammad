@@ -1,4 +1,6 @@
 module NotificationFactory
+  TEMPLATE_PATH_STRING = Rails.root.join('app', 'views', '%<type>s', '%<template>s', '%<filename>s').to_s.freeze
+  APPLICATION_TEMPLATE_PATH_STRING = Rails.root.join('app', 'views', '%<type>s', 'application.%<format>s.erb').to_s.freeze
 
 =begin
 
@@ -28,39 +30,28 @@ returns
 =end
 
   def self.template_read(data)
+    template = File.readlines(template_path(data))
 
-    template_subject = nil
-    template_body = ''
-    locale = data[:locale] || Setting.get('locale_default') || 'en-us'
-    template = data[:template]
-    format = data[:format]
-    type = data[:type]
-    root = Rails.root
-    location = "#{root}/app/views/#{type}/#{template}/#{locale}.#{format}.erb"
-
-    # as fallback, use 2 char locale
-    if !File.exist?(location)
-      locale = locale[0, 2]
-      location = "#{root}/app/views/#{type}/#{template}/#{locale}.#{format}.erb"
-    end
-
-    # as fallback, use en
-    if !File.exist?(location)
-      location = "#{root}/app/views/#{type}/#{template}/en.#{format}.erb"
-    end
-
-    File.open(location, 'r:UTF-8').each do |line|
-      if !template_subject
-        template_subject = line
-        next
-      end
-      template_body += line
-    end
-    {
-      subject: template_subject,
-      body: template_body,
-    }
+    { subject: template.shift, body: template.join }
   end
+
+  def self.template_path(data)
+    template_filenames(data)
+      .map { |filename| data.merge(filename: filename) }
+      .map { |data_hash| TEMPLATE_PATH_STRING % data_hash }
+      .find(&File.method(:exist?))
+  end
+  private_class_method :template_path
+
+  def self.template_filenames(data)
+    locale = data[:locale] || Setting.get('locale_default') || 'en-us'
+
+    [locale, locale[0, 2], 'en']
+      .uniq
+      .map { |locale_code| "#{locale_code}.#{data[:format]}.erb" }
+      .map { |basename| ["#{basename}.custom", basename] }.flatten
+  end
+  private_class_method :template_filenames
 
 =begin
 
@@ -83,14 +74,7 @@ returns
 =end
 
   def self.application_template_read(data)
-    format = data[:format]
-    type = data[:type]
-    root = Rails.root
-    application_template = nil
-    File.open("#{root}/app/views/#{type}/application.#{format}.erb", 'r:UTF-8') do |file|
-      application_template = file.read
-    end
-    application_template
+    File.read(APPLICATION_TEMPLATE_PATH_STRING % data)
   end
 
 end
