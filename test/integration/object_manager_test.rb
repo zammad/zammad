@@ -109,7 +109,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
         updated_by_id: 1,
       )
     end
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       attribute4 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test4',
@@ -153,7 +153,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       name: 'test5',
     )
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       attribute6 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test6',
@@ -200,7 +200,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       name: 'test7',
     )
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       attribute8 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test8',
@@ -242,7 +242,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       name: 'test9',
     )
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       attribute10 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test10',
@@ -285,7 +285,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
       name: 'test11',
     )
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       attribute12 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test12',
@@ -368,27 +368,9 @@ class ObjectManagerTest < ActiveSupport::TestCase
     end
     assert_equal(false, ObjectManager::Attribute.pending_migration?)
 
-    assert_raises(RuntimeError) do
-      attribute16 = ObjectManager::Attribute.add(
-        object: 'Ticket',
-        name: 'test16',
-        display: 'Test 16',
-        data_type: 'integer',
-        data_option: {
-          default: 2,
-          min: 1,
-          max: 999,
-        },
-        active: true,
-        screens: {},
-        position: 20,
-        created_by_id: 1,
-        updated_by_id: 1,
-      )
-    end
-    assert_equal(false, ObjectManager::Attribute.pending_migration?)
+    # Test case #16 invalidated after callback added to set default #data_option[:null] value
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       attribute17 = ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'test17',
@@ -861,7 +843,7 @@ class ObjectManagerTest < ActiveSupport::TestCase
 
     assert(ObjectManager::Attribute.migration_execute)
 
-    assert_raises(RuntimeError) do
+    assert_raises(ActiveRecord::RecordInvalid) do
       ObjectManager::Attribute.add(
         object: 'Ticket',
         name: 'example_1',

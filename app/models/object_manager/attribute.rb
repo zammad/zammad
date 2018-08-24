@@ -2,18 +2,38 @@ class ObjectManager::Attribute < ApplicationModel
   include ChecksClientNotification
   include CanSeed
 
+  DATA_TYPES = %w[
+    input
+    user_autocompletion
+    checkbox
+    select
+    tree_select
+    datetime
+    date
+    tag
+    richtext
+    textarea
+    integer
+    autocompletion_ajax
+    boolean
+    user_permission
+    active
+  ].freeze
+
   self.table_name = 'object_manager_attributes'
 
   belongs_to :object_lookup
 
   validates :name, presence: true
+  validates :data_type, inclusion: { in: DATA_TYPES, msg: '%{value} is not a valid data type' }
+  validate :data_option_must_have_appropriate_values
+  validate :data_type_must_not_change, on: :update
 
   store :screens
   store :data_option
   store :data_option_new
 
-  before_create :check_datatype
-  before_update :check_datatype, :verify_possible_type_change
+  before_validation :set_base_options
 
 =begin
 
@@ -892,88 +912,87 @@ is certain attribute used by triggers, overviews or schedulers
 
   private
 
-  def check_datatype
-    local_data_option = data_option
-    if to_config == true
-      local_data_option = data_option_new
-    end
-    if !data_type
-      raise 'Need data_type param'
-    end
-    if !data_type.match?(/^(input|user_autocompletion|checkbox|select|tree_select|datetime|date|tag|richtext|textarea|integer|autocompletion_ajax|boolean|user_permission|active)$/)
-      raise "Invalid data_type param '#{data_type}'"
-    end
+  # when setting default values for boolean fields,
+  # favor #nil? tests over ||= (which will overwrite `false`)
+  def set_base_options
+    local_data_option[:null] = true if local_data_option[:null].nil?
 
-    if local_data_option.blank?
-      raise 'Need data_option param'
+    case data_type
+    when /^((tree_)?select|checkbox)$/
+      local_data_option[:nulloption] = true if local_data_option[:nulloption].nil?
+      local_data_option[:maxlength] ||= 255
     end
-    if local_data_option[:null].nil?
-      raise 'Need data_option[:null] param with true or false'
-    end
-
-    # validate data_option
-    if data_type == 'input'
-      raise 'Need data_option[:type] param e. g. (text|password|tel|fax|email|url)' if !local_data_option[:type]
-      raise "Invalid data_option[:type] param '#{local_data_option[:type]}' (text|password|tel|fax|email|url)" if local_data_option[:type] !~ /^(text|password|tel|fax|email|url)$/
-      raise 'Need data_option[:maxlength] param' if !local_data_option[:maxlength]
-      raise "Invalid data_option[:maxlength] param #{local_data_option[:maxlength]}" if local_data_option[:maxlength].to_s !~ /^\d+?$/
-    end
-
-    if data_type == 'richtext'
-      raise 'Need data_option[:maxlength] param' if !local_data_option[:maxlength]
-      raise "Invalid data_option[:maxlength] param #{local_data_option[:maxlength]}" if local_data_option[:maxlength].to_s !~ /^\d+?$/
-    end
-
-    if data_type == 'integer'
-      %i[min max].each do |item|
-        raise "Need data_option[#{item.inspect}] param" if !local_data_option[item]
-        raise "Invalid data_option[#{item.inspect}] param #{data_option[item]}" if local_data_option[item].to_s !~ /^\d+?$/
-      end
-    end
-
-    if data_type == 'select' || data_type == 'tree_select' || data_type == 'checkbox'
-      raise 'Need data_option[:default] param' if !local_data_option.key?(:default)
-      raise 'Invalid data_option[:options] or data_option[:relation] param' if local_data_option[:options].nil? && local_data_option[:relation].nil?
-      if !local_data_option.key?(:maxlength)
-        local_data_option[:maxlength] = 255
-      end
-      if !local_data_option.key?(:nulloption)
-        local_data_option[:nulloption] = true
-      end
-    end
-
-    if data_type == 'boolean'
-      raise 'Need data_option[:default] param true|false|undefined' if !local_data_option.key?(:default)
-      raise 'Invalid data_option[:options] param' if local_data_option[:options].nil?
-    end
-
-    if data_type == 'datetime'
-      raise 'Need data_option[:future] param true|false' if local_data_option[:future].nil?
-      raise 'Need data_option[:past] param true|false' if local_data_option[:past].nil?
-      raise 'Need data_option[:diff] param in hours' if local_data_option[:diff].nil?
-    end
-
-    if data_type == 'date'
-      raise 'Need data_option[:future] param true|false' if local_data_option[:future].nil?
-      raise 'Need data_option[:past] param true|false' if local_data_option[:past].nil?
-      raise 'Need data_option[:diff] param in days' if local_data_option[:diff].nil?
-    end
-
-    true
   end
 
-  def verify_possible_type_change
-    return true if changes_to_save['data_type'].blank?
+  def data_option_must_have_appropriate_values
+    data_option_validations
+      .select { |validation| validation[:failed] }
+      .each { |validation| errors.add(local_data_attr, validation[:message]) }
+  end
 
-    possible = {
-      'select' => %w[tree_select select input checkbox],
-      'tree_select' => %w[tree_select select input checkbox],
-      'checkbox' => %w[tree_select select input checkbox],
-      'input' => %w[tree_select select input checkbox],
-    }
+  def data_type_must_not_change
+    allowable_changes = %w[tree_select select input checkbox]
 
-    return true if possible[changes_to_save['data_type'][0]]&.include?(changes_to_save['data_type'][1])
+    return if !data_type_changed?
+    return if (data_type_change - allowable_changes).empty?
 
-    raise 'Can\'t be changed data_type of attribute. Drop the attribute and recreate it with new data_type.'
+    errors.add(:data_type, "can't be altered after creation " \
+                           '(delete the attribute and create another with the desired value)')
+  end
+
+  def local_data_option
+    @local_data_option ||= send(local_data_attr)
+  end
+
+  def local_data_attr
+    @local_data_attr ||= to_config ? :data_option_new : :data_option
+  end
+
+  def local_data_option=(val)
+    send("#{local_data_attr}=", val)
+  end
+
+  def data_option_validations
+    case data_type
+    when 'input'
+      [{ failed:  %w[text password tel fax email url].exclude?(local_data_option[:type]),
+         message: 'must have one of text/password/tel/fax/email/url for :type' },
+       { failed:  !local_data_option[:maxlength].to_s.match?(/^\d+$/),
+         message: 'must have integer for :maxlength' }]
+    when 'richtext'
+      [{ failed:  !local_data_option[:maxlength].to_s.match?(/^\d+$/),
+         message: 'must have integer for :maxlength' }]
+    when 'integer'
+      [{ failed:  !local_data_option[:min].to_s.match?(/^\d+$/),
+         message: 'must have integer for :min' },
+       { failed:  !local_data_option[:max].to_s.match?(/^\d+$/),
+         message: 'must have integer for :max' }]
+    when /^((tree_)?select|checkbox)$/
+      [{ failed:  !local_data_option.key?(:default),
+         message: 'must have value for :default' },
+       { failed:  local_data_option[:options].nil? && local_data_option[:relation].nil?,
+         message: 'must have non-nil value for either :options or :relation' }]
+    when 'boolean'
+      [{ failed:  !local_data_option.key?(:default),
+         message: 'must have boolean/undefined value for :default' },
+       { failed:  local_data_option[:options].nil?,
+         message: 'must have non-nil value for :options' }]
+    when 'datetime'
+      [{ failed:  local_data_option[:future].nil?,
+         message: 'must have boolean value for :future' },
+       { failed:  local_data_option[:past].nil?,
+         message: 'must have boolean value for :past' },
+       { failed:  local_data_option[:diff].nil?,
+         message: 'must have integer value for :diff (in hours)' }]
+    when 'date'
+      [{ failed:  local_data_option[:future].nil?,
+         message: 'must have boolean value for :future' },
+       { failed:  local_data_option[:past].nil?,
+         message: 'must have boolean value for :past' },
+       { failed:  local_data_option[:diff].nil?,
+         message: 'must have integer value for :diff (in days)' }]
+    else
+      []
+    end
   end
 end
