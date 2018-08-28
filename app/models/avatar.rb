@@ -123,7 +123,7 @@ add avatar by url
         data[:full][:content] = content
         data[:full][:mime_type] = mime_type
 
-      elsif data[:url].to_s.match?(/^http/)
+      elsif data[:url].to_s.match?(%r{^https?://})
         url = data[:url].to_s
 
         # check if source ist already updated within last 2 minutes
@@ -168,7 +168,7 @@ add avatar by url
         data[:full][:mime_type] = mime_type
 
       # try zammad backend to find image based on email
-      elsif data[:url].to_s.match?(/@/)
+      elsif data[:url].to_s.match?(URI::MailTo::EMAIL_REGEXP)
         url = data[:url].to_s
 
         # check if source ist already updated within last 3 minutes
@@ -179,9 +179,7 @@ add avatar by url
         # fetch image
         image = Service::Image.user(url)
         return if !image
-        data[:resize] ||= {}
         data[:resize] = image
-        data[:full] ||= {}
         data[:full] = image
       end
     end

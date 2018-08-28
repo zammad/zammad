@@ -3094,6 +3094,27 @@ Content-Type: text/html; charset=us-ascii; format=flowed
           ],
         },
       },
+      { # See https://github.com/zammad/zammad/issues/2199
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail070.box')),
+        success: true,
+        result: {
+          1 => {
+            from: '"http.abc" <http.abc@example.com>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'http.abc',
+              lastname: '',
+              fullname: 'http.abc',
+              email: 'http.abc@example.com',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end
