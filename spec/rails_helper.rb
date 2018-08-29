@@ -30,9 +30,6 @@ ActiveRecord::Migration.maintain_test_schema!
 # make sure that all migrations of linked packages are executed
 Package::Migration.linked
 
-# allow requests to Zammad webservices
-WebMock.disable_net_connect!(allow: /zammad\.com/)
-
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
