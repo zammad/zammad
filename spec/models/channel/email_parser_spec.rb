@@ -50,5 +50,25 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
       end
     end
+
+    # see https://github.com/zammad/zammad/issues/2198
+    context 'when sender address contains spaces (#2198)' do
+      let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail071.box') }
+      let(:sender_email) { 'powerquadrantsystem@example.com' }
+
+      it 'removes them before creating a new user' do
+        expect { described_class.new.process({}, raw_mail) }
+          .to change { User.where(email: sender_email).count }.to(1)
+      end
+
+      it 'marks new user email as invalid' do
+        described_class.new.process({}, raw_mail)
+
+        expect(User.find_by(email: sender_email).preferences)
+          .to include('mail_delivery_failed' => true)
+          .and include('mail_delivery_failed_reason' => 'invalid email')
+          .and include('mail_delivery_failed_data' => a_kind_of(ActiveSupport::TimeWithZone))
+      end
+    end
   end
 end

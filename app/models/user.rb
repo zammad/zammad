@@ -19,7 +19,8 @@ class User < ApplicationModel
   has_many                :authorizations, after_add: :cache_update, after_remove: :cache_update
   belongs_to              :organization,   inverse_of: :members
 
-  before_validation :check_name, :check_email, :check_login, :check_mail_delivery_failed, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
+  before_validation :check_name, :check_email, :check_login, :ensure_uniq_email, :ensure_password, :ensure_roles, :ensure_identifier
+  before_validation :check_mail_delivery_failed, on: :update
   before_create   :check_preferences_default, :validate_preferences, :validate_ooo, :domain_based_assignment, :set_locale
   before_update   :check_preferences_default, :validate_preferences, :validate_ooo, :reset_login_failed, :validate_agent_limit_by_attributes, :last_admin_check_by_attribute
   after_create    :avatar_for_email_check
@@ -891,6 +892,10 @@ try to find correct name
     nil
   end
 
+  def no_name?
+    firstname.blank? && lastname.blank?
+  end
+
   private
 
   def check_name
@@ -967,9 +972,8 @@ try to find correct name
   end
 
   def check_mail_delivery_failed
-    return true if !changes || !changes['email']
+    return if email_change.blank?
     preferences.delete(:mail_delivery_failed)
-    true
   end
 
   def ensure_roles
