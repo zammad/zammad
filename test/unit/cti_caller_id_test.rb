@@ -325,7 +325,7 @@ Mob: +49 333 8362222",
 
   end
 
-  test '4 touch caller log / don\'t touch caller log'  do
+  test '4 touch caller log / don\'t touch caller log' do
     5.times do |count|
       travel 2.seconds
       Cti::Log.process(
@@ -477,7 +477,7 @@ Mob: +49 333 8362222",
 
   end
 
-  test '5 probe if caller log need to be pushed'  do
+  test '5 probe if caller log need to be pushed' do
 
     Cti::Log.process(
       'cause' => '',
@@ -532,6 +532,19 @@ Mob: +49 333 8362222",
     )
     assert(Cti::Log.push_caller_list_update?(Cti::Log.last))
 
+  end
+
+  test 'user delete with caller log rebuild' do
+    assert_equal(2, Cti::CallerId.where(user_id: @agent2.id).count)
+
+    @agent2.destroy!
+
+    assert_equal(0, Cti::CallerId.where(user_id: @agent2.id).count)
+
+    Observer::Transaction.commit
+    Scheduler.worker(true)
+
+    assert_equal(0, Cti::CallerId.where(user_id: @agent2.id).count)
   end
 
 end
