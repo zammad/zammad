@@ -1,3 +1,12 @@
+html {
+  height: auto !important;
+}
+
+body, #app, .table-column-head, .fullscreenMessage, .horizontal, .tabsSidebar-holder,
+.ticketZoom-controls {
+  display: block !important;
+}
+
 #app > *:not(.content):not(.active),
 #app > .hide {
   display: none;
@@ -59,4 +68,16 @@
 
 .article-meta .article-meta-key {
   display: none;
+}
+
+.textBubble-content {
+  height: 100% !important;
+}
+
+.no-padding {
+  overflow: visible !important;
+}
+
+.tabsSidebar-tabsSpacer {
+  padding: 0 !important;
 }
