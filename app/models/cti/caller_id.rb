@@ -106,6 +106,10 @@ returns
       # set user id
       user_id = record[:created_by_id]
       if model == User
+        if record.destroyed?
+          Cti::CallerId.where(user_id: user_id).destroy_all
+          return
+        end
         user_id = record.id
       end
       return if !user_id

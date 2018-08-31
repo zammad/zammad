@@ -1153,15 +1153,15 @@ raise 'Minimum one user need to have admin permissions'
   end
 
   def destroy_longer_required_objects
-    Authorization.where(user_id: id).destroy_all
-    Avatar.remove('User', id)
-    Cti::CallerId.where(user_id: id).destroy_all
-    Taskbar.where(user_id: id).destroy_all
-    Karma::ActivityLog.where(user_id: id).destroy_all
-    Karma::User.where(user_id: id).destroy_all
-    OnlineNotification.where(user_id: id).destroy_all
-    RecentView.where(created_by_id: id).destroy_all
-    UserDevice.remove(id)
+    ::Authorization.where(user_id: id).destroy_all
+    ::Avatar.remove('User', id)
+    ::Cti::CallerId.where(user_id: id).destroy_all
+    ::Taskbar.where(user_id: id).destroy_all
+    ::Karma::ActivityLog.where(user_id: id).destroy_all
+    ::Karma::User.where(user_id: id).destroy_all
+    ::OnlineNotification.where(user_id: id).destroy_all
+    ::RecentView.where(created_by_id: id).destroy_all
+    ::UserDevice.remove(id)
     true
   end
 
