@@ -120,38 +120,34 @@ class Ldap
     #  #=> {:dn=>"dn (e. g. CN=Administrator,CN=Users,DC=domain,DC=tld)", ...}
     #
     # @return [Hash{Symbol=>String}] The available User attributes as key and the name and an example as value.
-    def attributes(filter: nil, base_dn: nil)
-
-      filter ||= filter()
-
-      attributes       = {}
-      known_attributes = BLACKLISTED.dup
-      lookup_counter   = 1
-
-      @ldap.search(filter, base: base_dn) do |entry|
-        new_attributes = entry.attribute_names - known_attributes
-
-        if new_attributes.blank?
-          lookup_counter += 1
-          # check max 50 entries with
-          # the same attributes in a row
-          break if lookup_counter == 50
-          next
-        end
-
-        new_attributes.each do |attribute|
-          value = entry[attribute]
-          next if value.blank?
-          next if value[0].blank?
-
-          example_value         = value[0].force_encoding('UTF-8').utf8_encode(fallback: :read_as_sanitized_binary)
-          attributes[attribute] = "#{attribute} (e. g. #{example_value})"
-        end
-
-        known_attributes.concat(new_attributes)
+    def attributes(custom_filter: nil, base_dn: nil)
+      @attributes ||= begin
+        attributes     = {}.with_indifferent_access
         lookup_counter = 0
+
+        # collect sample attributes
+        @ldap.search(custom_filter || filter, base: base_dn) do |entry|
+          pre_merge_count = attributes.count
+
+          attributes.reverse_merge!(entry.to_h
+                                         .except(*BLACKLISTED)
+                                         .transform_values(&:first)
+                                         .compact)
+
+          # check max 50 entries with the same attributes in a row
+          lookup_counter = (pre_merge_count < attributes.count ? 0 : lookup_counter.next)
+          break if lookup_counter >= 50
+        end
+
+        # format sample values for presentation
+        attributes.each do |name, value|
+          attributes[name] = if value.encoding == Encoding.find('ascii-8bit')
+                               "#{name} (binary data)"
+                             else
+                               "#{name} (e.g., #{value.utf8_encode})"
+                             end
+        end
       end
-      attributes
     end
 
     # The active filter of the instance. If none give on initialization an automatic lookup is performed.
