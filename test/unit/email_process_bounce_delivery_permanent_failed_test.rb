@@ -57,7 +57,7 @@ class EmailProcessBounceDeliveryPermanentFailedTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'bounce check',
       group: Group.lookup(name: 'Users'),
       customer: customer1,
@@ -66,7 +66,7 @@ class EmailProcessBounceDeliveryPermanentFailedTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -83,7 +83,7 @@ class EmailProcessBounceDeliveryPermanentFailedTest < ActiveSupport::TestCase
     assert_equal('new', ticket.state.name)
     assert_equal(2, ticket.articles.count)
 
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: customer1.email,
@@ -164,7 +164,7 @@ class EmailProcessBounceDeliveryPermanentFailedTest < ActiveSupport::TestCase
       updated_by_id: 1,
     )
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'bounce check',
       group: Group.lookup(name: 'Users'),
       customer: customer2,
@@ -173,7 +173,7 @@ class EmailProcessBounceDeliveryPermanentFailedTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -190,7 +190,7 @@ class EmailProcessBounceDeliveryPermanentFailedTest < ActiveSupport::TestCase
     assert_equal('new', ticket.state.name)
     assert_equal(2, ticket.articles.count)
 
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',

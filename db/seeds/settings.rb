@@ -3213,6 +3213,15 @@ Setting.create_if_not_exists(
 )
 Setting.create_if_not_exists(
   title: 'Defines postmaster filter.',
+  name: '0955_postmaster_filter_bounce_delivery_temporary_failed',
+  area: 'Postmaster::PreFilter',
+  description: 'Defines postmaster filter to identify postmaster bounced - reopen ticket on permanent temporary failed.',
+  options: {},
+  state: 'Channel::Filter::BounceDeliveryTemporaryFailed',
+  frontend: false
+)
+Setting.create_if_not_exists(
+  title: 'Defines postmaster filter.',
   name: '1000_postmaster_filter_database_check',
   area: 'Postmaster::PreFilter',
   description: 'Defines postmaster filter for filters managed via admin interface.',
