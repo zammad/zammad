@@ -11,6 +11,11 @@
   border-bottom: 1px solid hsl(0,0%,90%);
 }
 
+html,
+body {
+  height: auto;
+}
+
 /*
 
   Dashboard
@@ -59,4 +64,8 @@
 
 .article-meta .article-meta-key {
   display: none;
+}
+
+.textBubble-content {
+  height: auto !important;
 }
