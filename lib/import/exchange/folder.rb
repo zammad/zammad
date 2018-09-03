@@ -43,7 +43,7 @@ module Import
       end
 
       def display_path(folder)
-        display_name  = folder.display_name.utf8_encode(fallback: :read_as_sanitized_binary)
+        display_name  = folder.display_name&.utf8_encode(fallback: :read_as_sanitized_binary)
         parent_folder = find(folder.parent_folder_id)
 
         return display_name if parent_folder.blank?
