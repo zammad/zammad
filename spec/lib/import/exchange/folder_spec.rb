@@ -10,6 +10,20 @@ RSpec.describe Import::Exchange::Folder do
     let(:child_folder)   { double('EWS Folder') }
     let(:exception_case) { double('EWS Folder') }
 
+    context 'when folder.display_name returns nil' do
+      before do
+        allow(root_folder).to receive(:display_name).and_return(nil)
+        allow(root_folder).to receive(:parent_folder_id).and_return(nil)
+
+        allow(subject).to receive(:find).with(any_args).and_return(root_folder)
+        allow(subject).to receive(:find).with(nil).and_return(nil)
+      end
+
+      it 'returns nil' do
+        expect(subject.display_path(root_folder)).to be(nil)
+      end
+    end
+
     context 'when server returns valid UTF-8' do
       before do
         allow(root_folder).to receive(:display_name).and_return('Root')
