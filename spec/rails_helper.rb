@@ -31,7 +31,7 @@ ActiveRecord::Migration.maintain_test_schema!
 Package::Migration.linked
 
 # allow requests to Zammad webservices
-WebMock.disable_net_connect!(allow: /zammad\.com/)
+WebMock.disable_net_connect!(allow: /zammad\.com|exchange.example.com/)
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

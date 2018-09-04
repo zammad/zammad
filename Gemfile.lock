@@ -461,6 +461,7 @@ GEM
     valid_email2 (2.1.0)
       activemodel (>= 3.2)
       mail (~> 2.5)
+    vcr (4.0.0)
     viewpoint (1.1.0)
       httpclient
       logging
@@ -565,6 +566,7 @@ DEPENDENCIES
   uglifier
   unicorn
   valid_email2
+  vcr
   viewpoint
   webmock
   writeexcel
