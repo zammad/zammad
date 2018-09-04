@@ -2,7 +2,7 @@
 # - Zammad webservices
 # - Google (calendar)
 allowed_sites = lambda do |uri|
-  ['zammad.com', 'google.com'].any? do |site|
+  ['zammad.com', 'google.com', 'exchange.example.com'].any? do |site|
     uri.host.include?(site)
   end
 end

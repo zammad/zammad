@@ -2,81 +2,74 @@ require 'rails_helper'
 
 RSpec.describe Import::Exchange::Folder do
   # see https://github.com/zammad/zammad/issues/2152
-  # WARNING! This test is closely tied to the implementation. :(
   describe '#display_path (#2152)' do
-    let(:subject)        { described_class.new(connection) }
-    let(:connection)     { instance_double('Viewpoint::EWSClient') }
-    let(:root_folder)    { double('EWS Folder') }
-    let(:child_folder)   { double('EWS Folder') }
-    let(:exception_case) { double('EWS Folder') }
+    let(:subject)            { described_class.new(ews_connection) }
+    let(:ews_connection)     { Viewpoint::EWSClient.new(endpoint, user, pass) }
+    let(:endpoint)           { 'https://exchange.example.com/EWS/Exchange.asmx' }
+    let(:user)               { 'user@example.com' }
+    let(:pass)               { 'password' }
+    let(:grandchild_of_root) { ews_connection.get_folder_by_name('Inbox') }
+    let(:child_of_root)      { ews_connection.get_folder(grandchild_of_root.parent_folder_id) }
 
-    context 'when folder.display_name returns nil' do
-      before do
-        allow(root_folder).to receive(:display_name).and_return(nil)
-        allow(root_folder).to receive(:parent_folder_id).and_return(nil)
-
-        allow(subject).to receive(:find).with(any_args).and_return(root_folder)
-        allow(subject).to receive(:find).with(nil).and_return(nil)
-      end
-
-      it 'returns nil' do
-        expect(subject.display_path(root_folder)).to be(nil)
-      end
+    around do |example|
+      cassette_name = example.description.gsub(/[^0-9A-Za-z.\-]+/, '_')
+      VCR.use_cassette("lib/import/exchange/folder/#{cassette_name}") { example.run }
     end
 
     context 'when server returns valid UTF-8' do
-      before do
-        allow(root_folder).to receive(:display_name).and_return('Root')
-        allow(root_folder).to receive(:parent_folder_id).and_return(nil)
-
-        allow(child_folder).to receive(:display_name).and_return('Leaf')
-        allow(child_folder).to receive(:parent_folder_id).and_return(1)
-
-        allow(exception_case).to receive(:display_name).and_return('Error-Raising Leaf')
-        allow(exception_case).to receive(:parent_folder_id).and_raise(Viewpoint::EWS::EwsError)
-
-        allow(subject).to receive(:find).with(any_args).and_return(root_folder)
-        allow(subject).to receive(:find).with(nil).and_return(nil)
-      end
-
-      context 'and target folder is directory root' do
+      context 'and target folder is in root directory' do
         it 'returns the display name of the folder' do
-          expect(subject.display_path(root_folder)).to eq('Root')
+          expect(subject.display_path(child_of_root))
+            .to eq('Top of Information Store')
         end
       end
 
-      context 'and target folder is NOT directory root' do
+      context 'and target folder is in subfolder of root' do
         it 'returns the full path from root to target' do
-          expect(subject.display_path(child_folder)).to eq('Root -> Leaf')
+          expect(subject.display_path(grandchild_of_root))
+            .to eq('Top of Information Store -> Inbox')
         end
       end
 
       context 'and walking up directory tree raises EwsError' do
         it 'returns the partial path from error to target folder' do
-          expect(subject.display_path(exception_case)).to eq('Error-Raising Leaf')
+          allow(subject)
+            .to receive(:id_folder_map).with(any_args).and_raise(Viewpoint::EWS::EwsError)
+
+          expect(subject.display_path(grandchild_of_root))
+            .to eq('Inbox')
         end
       end
     end
 
     context 'when server returns invalid UTF-8' do
-      before do
-        allow(root_folder).to receive(:display_name).and_return('你好'.b)
-        allow(root_folder).to receive(:parent_folder_id).and_return(nil)
+      context 'and target folder is in root directory' do
+        it 'returns the display name of the folder in valid UTF-8' do
+          allow(child_of_root)
+            .to receive(:display_name).and_return('你好'.b)
 
-        allow(child_folder).to receive(:display_name).and_return('你好'.b)
-        allow(child_folder).to receive(:parent_folder_id).and_return(1)
-
-        allow(exception_case).to receive(:display_name).and_return('你好'.b)
-        allow(exception_case).to receive(:parent_folder_id).and_raise(Viewpoint::EWS::EwsError)
-
-        allow(subject).to receive(:find).with(any_args).and_return(root_folder)
-        allow(subject).to receive(:find).with(nil).and_return(nil)
+          expect { subject.display_path(child_of_root).to_json }.not_to raise_error
+        end
       end
 
-      it 'returns a valid UTF-8 string' do
-        expect { subject.display_path(root_folder).to_json }.not_to raise_error
-        expect { subject.display_path(child_folder).to_json }.not_to raise_error
-        expect { subject.display_path(exception_case).to_json }.not_to raise_error
+      context 'and target folder is in subfolder of root' do
+        it 'returns the full path from root to target in valid UTF-8' do
+          allow(grandchild_of_root)
+            .to receive(:display_name).and_return('你好'.b)
+
+          expect { subject.display_path(grandchild_of_root).to_json }.not_to raise_error
+        end
+      end
+
+      context 'and walking up directory tree raises EwsError' do
+        it 'returns the partial path from error to target folder in valid UTF-8' do
+          allow(grandchild_of_root)
+            .to receive(:display_name).and_return('你好'.b)
+          allow(subject)
+            .to receive(:id_folder_map).with(any_args).and_raise(Viewpoint::EWS::EwsError)
+
+          expect { subject.display_path(grandchild_of_root).to_json }.not_to raise_error
+        end
       end
     end
   end
