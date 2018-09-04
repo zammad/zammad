@@ -342,45 +342,37 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
     true
   end
 
+  def self.remote_translation_need_update?(raw, translations)
+    translations.each do |row|
+      next if row[1] != raw['locale']
+      next if row[2] != raw['source']
+      next if row[3] != raw['format']
+      return false if row[4] == raw['target'] # no update if target is still the same
+      return false if row[4] != row[5] # no update if translation has already changed
+      return [true, Translation.find(row[0])]
+    end
+    [true, nil]
+  end
+
   private_class_method def self.to_database(locale, data)
-    translations = Translation.where(locale: locale).all
+    translations = Translation.where(locale: locale).pluck(:id, :locale, :source, :format, :target, :target_initial).to_a
     ActiveRecord::Base.transaction do
+      translations_to_import = []
       data.each do |translation_raw|
-
-        # handle case insensitive sql
-        translation = nil
-        translations.each do |item|
-          next if item.format != translation_raw['format']
-          next if item.source != translation_raw['source']
-          translation = item
-          break
-        end
-        if translation
-
-          # verify if update is needed
-          update_needed = false
-          translation_raw.each_key do |key|
-
-            # if translation target has changes
-            next if translation_raw[key] == translation.target
-
-            # do not update translations which are already changed by user
-            if translation.target == translation.target_initial
-              update_needed = true
-              break
-            end
-          end
-          if update_needed
-            translation.update!(translation_raw.symbolize_keys!)
-            translation.save
-          end
+        result = Translation.remote_translation_need_update?(translation_raw, translations)
+        next if result == false
+        next if result.class != Array
+        if result[1]
+          result[1].update!(translation_raw.symbolize_keys!)
+          result[1].save
         else
-          if !UserInfo.current_user_id
-            translation_raw['updated_by_id'] = 1
-            translation_raw['created_by_id'] = 1
-          end
-          Translation.create(translation_raw.symbolize_keys!)
+          translation_raw['updated_by_id'] = UserInfo.current_user_id || 1
+          translation_raw['created_by_id'] = UserInfo.current_user_id || 1
+          translations_to_import.push Translation.new(translation_raw.symbolize_keys!)
         end
+      end
+      if translations_to_import.present?
+        Translation.import translations_to_import
       end
     end
   end
@@ -401,7 +393,7 @@ Get source file at https://i18n.zammad.com/api/v1/translations_empty_translation
   private
 
   def set_initial
-    return true if target_initial
+    return true if target_initial.present?
     return true if target_initial == ''
     self.target_initial = target
     true

@@ -5,6 +5,7 @@ ruby '2.4.4'
 gem 'rails', '5.1.5'
 
 # core - rails additions
+gem 'activerecord-import'
 gem 'activerecord-session_store'
 gem 'composite_primary_keys'
 gem 'json'
