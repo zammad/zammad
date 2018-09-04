@@ -31,8 +31,9 @@ Rails.application.configure do
   #config.assets.debug = true
   config.assets.debug = false
 
-  if defined?(Rack::LiveReload)
-    # Automatically inject JavaScript needed for LiveReload
+  # Automatically inject JavaScript needed for LiveReload
+  if ENV['RAKE_LIVE_RELOAD'].present?
+    require 'rack-livereload'
     config.middleware.insert_after(
       ActionDispatch::Static,
       Rack::LiveReload,
