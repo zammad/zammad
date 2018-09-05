@@ -134,7 +134,7 @@ returns
 =end
 
   def self.streamable?
-    true
+    false
   end
 
 =begin
