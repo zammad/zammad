@@ -476,11 +476,11 @@ class String
   def utf8_encode!(**options)
     return force_encoding('utf-8') if dup.force_encoding('utf-8').valid_encoding?
 
-    viable_encodings(try_first: options[:from]).each do |e|
+    viable_encodings(try_first: options[:from]).each do |enc|
       begin
-        return encode!('utf-8', e)
-      rescue Encoding::UndefinedConversionError
-        nil
+        return encode!('utf-8', enc)
+      rescue EncodingError => e
+        Rails.logger.error { e.inspect }
       end
     end
 

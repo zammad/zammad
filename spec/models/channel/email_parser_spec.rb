@@ -48,5 +48,15 @@ RSpec.describe Channel::EmailParser, type: :model do
         end
       end
     end
+
+    # see https://github.com/zammad/zammad/issues/2224
+    context 'when header specifies Windows-1258 charset (#2224)' do
+      let(:mail_file) { Rails.root.join('test', 'data', 'mail', 'mail072.box') }
+
+      it 'does not raise Encoding::ConverterNotFoundError' do
+        expect { described_class.new.process({}, raw_mail) }
+          .not_to raise_error
+      end
+    end
   end
 end
