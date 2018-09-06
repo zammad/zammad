@@ -93,6 +93,7 @@
         <div class="article-meta-value">
           <%- @Icon(@article.type.name, 'article-meta-icon') %>
           <%- @T(@article.type.name) %>
+          <div class="article-meta-links">
           <% if @links: %>
             <% count = 0 %>
             <% for link in @links: %>
@@ -101,6 +102,7 @@
               <% count =+ 1 %>
             <% end %>
           <% end %>
+          </div>
         </div>
       </div>
     </div>

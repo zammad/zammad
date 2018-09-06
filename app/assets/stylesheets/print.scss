@@ -160,17 +160,17 @@ th.js-tableHead:not([data-column-key="icon"]) {
   background: none;
   border: 1px dashed hsl(240,2%,60%);
   padding: 11px 10px 1px;
-  
+
   &.top {
     border-bottom-width: 0;
   }
-  
+
   &.bottom {
     border-top-width: 0;
     padding-top: 7px;
     padding-bottom: 3px;
   }
-  
+
   &-clip {
     height: auto !important;
   }
@@ -178,6 +178,10 @@ th.js-tableHead:not([data-column-key="icon"]) {
   &-icon {
     fill: currentColor;
   }
+}
+
+.article-meta-links {
+  display: none;
 }
 
 .article-content {
