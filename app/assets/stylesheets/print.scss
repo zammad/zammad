@@ -127,6 +127,10 @@ th.js-tableHead:not([data-column-key="icon"]) {
   overflow: visible;
 }
 
+.ticketZoom {
+  background: none;
+}
+
 .ticket-article,
 .article-new {
   max-width: none;
@@ -134,8 +138,10 @@ th.js-tableHead:not([data-column-key="icon"]) {
   padding-right: 0;
 }
 
-.ticketZoom {
-  background: none;
+.ticket-article {
+  a[href]:after {
+    content: none !important;
+  }
 }
 
 .textBubble {
@@ -176,10 +182,6 @@ th.js-tableHead:not([data-column-key="icon"]) {
 
 .article-content {
   color: inherit;
-  
-  a[href]:after {
-    content: none !important;
-  }
 }
 
 .article-content-meta {
