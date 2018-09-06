@@ -61,6 +61,10 @@ main {
   display: none;
 }
 
+.main {
+  padding: 0;
+}
+
 h1, .popover-notificationsHeader .popover-title, .ticket-title-update, h2, h3, h4, h5, h6 {
   color: inherit;
 }
