@@ -55,8 +55,54 @@ main {
 .bulkAction,
 .overviews .checkbox-replacement,
 .overviews .overview-header,
-.table-checkbox {
+.table-checkbox,
+.sidebar,
+.page-header-meta .btn {
   display: none;
+}
+
+h1, .popover-notificationsHeader .popover-title, .ticket-title-update, h2, h3, h4, h5, h6 {
+  color: inherit;
+}
+
+.table {
+  border: none;
+  color: black;
+  table-layout: auto;
+
+  thead tr {
+    border: none;
+  }
+
+  > thead > tr > th {
+    background: none;
+    color: inherit;
+  }
+
+  > tbody > tr > td {
+    border: none;
+  }
+
+  tbody tr {
+    border-top: 1px solid;
+  }
+}
+
+td a {
+  color: black;
+  font-weight: bold;
+}
+
+.table-col-resize {
+  display: none;
+}
+
+th.js-tableHead:not([data-column-key="icon"]) {
+  width: auto !important;
+}
+
+.icon-task-state.open {
+  fill: gray;
 }
 
 /*
