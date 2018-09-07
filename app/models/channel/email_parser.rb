@@ -600,15 +600,29 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     # get filename from content-disposition
 
     # workaround for: NoMethodError: undefined method `filename' for #<Mail::UnstructuredField:0x007ff109e80678>
-    filename = file.header[:content_disposition].try(:filename)
+    begin
+      filename = file.header[:content_disposition].try(:filename)
+    rescue
+      begin
+        if file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})="(.+?)"/i
+          filename = $3
+        elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})='(.+?)'/i
+          filename = $3
+        elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})=(.+?);/i
+          filename = $3
+        end
+      rescue
+        Rails.logger.debug { 'Unable to get filename' }
+      end
+    end
 
     begin
-      if file.header[:content_disposition].to_s =~ /filename="(.+?)"/i
-        filename = $1
-      elsif file.header[:content_disposition].to_s =~ /filename='(.+?)'/i
-        filename = $1
-      elsif file.header[:content_disposition].to_s =~ /filename=(.+?);/i
-        filename = $1
+      if file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})="(.+?)"/i
+        filename = $3
+      elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})='(.+?)'/i
+        filename = $3
+      elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})=(.+?);/i
+        filename = $3
       end
     rescue
       Rails.logger.debug { 'Unable to get filename' }
@@ -616,12 +630,12 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
     # as fallback, use raw values
     if filename.blank?
-      if headers_store['Content-Disposition'].to_s =~ /filename="(.+?)"/i
-        filename = $1
-      elsif headers_store['Content-Disposition'].to_s =~ /filename='(.+?)'/i
-        filename = $1
-      elsif headers_store['Content-Disposition'].to_s =~ /filename=(.+?);/i
-        filename = $1
+      if headers_store['Content-Disposition'].to_s =~ /(filename|name)(\*{0,1})="(.+?)"/i
+        filename = $3
+      elsif headers_store['Content-Disposition'].to_s =~ /(filename|name)(\*{0,1})='(.+?)'/i
+        filename = $3
+      elsif headers_store['Content-Disposition'].to_s =~ /(filename|name)(\*{0,1})=(.+?);/i
+        filename = $3
       end
     end
 
@@ -655,9 +669,9 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
       # e. g. Content-Type: video/quicktime; name="Video.MOV";
       if filename.blank?
-        ['name="(.+?)"(;|$)', "name='(.+?)'(;|$)", 'name=(.+?)(;|$)'].each do |regexp|
+        ['(filename|name)(\*{0,1})="(.+?)"(;|$)', '(filename|name)(\*{0,1})=\'(.+?)\'(;|$)', '(filename|name)(\*{0,1})=(.+?)(;|$)'].each do |regexp|
           if headers_store['Content-Type'] =~ /#{regexp}/i
-            filename = $1
+            filename = $3
             break
           end
         end

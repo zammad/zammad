@@ -8,23 +8,25 @@ class EmailParserTest < ActiveSupport::TestCase
 
 to write new .yml files for emails you can use the following code:
 
-File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.read('test/data/mail/mailXXX.box')).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to').to_yaml)
+File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.read('test/data/mail/mailXXX.box')).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml)
 
 =end
 
   test 'parse' do
     msg_files = Dir.glob(Rails.root.join('test', 'data', 'mail', 'mail*.box')).sort
-
-    messages = msg_files.select { |f| File.exists?(f.ext('yml')) }
-                        .map do |f|
-                          {
-                            source:  File.basename(f),
-                            content: YAML.load(File.read(f.ext('yml'))),
-                            parsed:  Channel::EmailParser.new.parse(File.read(f)),
-                          }
-                        end
+    messages = []
+    msg_files.each do |f|
+      next if !File.exists?(f.ext('yml'))
+      item = {
+        source:  File.basename(f),
+        content: YAML.load(File.read(f.ext('yml'))),
+        parsed:  Channel::EmailParser.new.parse(File.read(f)),
+      }
+      messages.push item
+    end
 
     messages.each do |m|
+
       # assert: raw content hash is a subset of parsed message hash
       expected_msg = m[:content].except(:attachments)
       parsed_msg = m[:parsed].slice(*expected_msg.keys)
@@ -35,23 +37,24 @@ File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.rea
 
       # assert: attachments in parsed message hash match metadata in raw hash
       next if m[:content][:attachments].blank?
-
-      # the formats of m[:content][:attachments] and m[:parsed][:attachments] don't match,
-      # so we have to convert one to the other
-      parsed_attachment_metadata = m[:parsed][:attachments].map do |a|
-                                     {
-                                       md5:      Digest::MD5.hexdigest(a[:data]),
-                                       cid:      a[:preferences]['Content-ID'],
-                                       filename: a[:filename],
-                                     }.with_indifferent_access
-                                   end
-
-      m[:content][:attachments].sort_by { |a| a[:md5] }
-       .zip(parsed_attachment_metadata.sort_by { |a| a[:md5] })
-       .each do |content, parsed|
-        assert_operator(content, :<=, parsed,
-                        "parsed attachment data from #{m[:source]} does not match " \
-                        "attachment metadata from #{m[:source].ext('yml')}")
+      attachments_found = []
+      m[:content][:attachments].each do |expected_attachment|
+        expected_attachment_md5 = Digest::MD5.hexdigest(expected_attachment[:data])
+        m[:parsed][:attachments].each do |parsed_attachment|
+          parsed_attachment_md5 = Digest::MD5.hexdigest(parsed_attachment[:data])
+          next if attachments_found.include?(parsed_attachment_md5)
+          next if expected_attachment_md5 != parsed_attachment_md5
+          attachments_found.push parsed_attachment_md5
+          expected_attachment.each do |key, value|
+            assert_equal(value, parsed_attachment[key], "#{key} is different")
+          end
+          next
+        end
+      end
+      next if attachments_found.count == m[:content][:attachments].count
+      m[:content][:attachments].each do |expected_attachment|
+        next if attachments_found.include?(Digest::MD5.hexdigest(expected_attachment[:data]))
+        assert(false, "Attachment not found test/data/mail/#{m[:source]}: #{expected_attachment.inspect}")
       end
     end
   end
