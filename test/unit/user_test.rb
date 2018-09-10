@@ -1258,6 +1258,8 @@ class UserTest < ActiveSupport::TestCase
     RecentView.log(ticket1.class.to_s, ticket1.id, agent1)
     assert_equal(1, RecentView.where(created_by_id: agent1_id).count)
 
+    Token.create!(action: 'api', user_id: agent1_id)
+
     agent1.destroy!
 
     assert_equal(0, UserDevice.where(user_id: agent1_id).count)
@@ -1268,6 +1270,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(0, Cti::CallerId.where(user_id: agent1_id).count)
     assert_equal(0, Taskbar.where(user_id: agent1_id).count)
     assert_equal(0, RecentView.where(created_by_id: agent1_id).count)
+    assert_equal(0, Token.where(user_id: agent1_id).count)
   end
 
   test 'adding group drops cache' do

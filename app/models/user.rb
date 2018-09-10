@@ -1166,6 +1166,7 @@ raise 'Minimum one user need to have admin permissions'
     ::OnlineNotification.where(user_id: id).destroy_all
     ::RecentView.where(created_by_id: id).destroy_all
     ::UserDevice.remove(id)
+    ::Token.where(user_id: id).destroy_all
     true
   end
 
