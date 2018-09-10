@@ -1,4 +1,7 @@
 class App.CTI extends App.Controller
+  @extend App.PopoverProvidable
+  @registerPopovers 'User'
+
   elements:
     '.js-callerLog': 'callerLog'
   events:
@@ -160,9 +163,10 @@ class App.CTI extends App.Controller
       if diff_in_min > 1
         item.disabled = false
 
-    @userPopupsDestroy()
+    @removePopovers()
     @callerLog.html( App.view('cti/caller_log')(list: @list))
-    @userPopups()
+    @renderPopovers()
+
     @updateNavMenu()
 
   done: (e) =>

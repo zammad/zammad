@@ -1,22 +1,22 @@
 <div>
-  <%- @Icon(@ticket.icon(), @ticket.iconClass()) %> <span class="<%- @T(@ticket.iconTextClass()) %>"><%- @ticket.iconTitle() %></span>
+  <%- @Icon(@object.icon(), @object.iconClass()) %> <span class="<%- @T(@object.iconTextClass()) %>"><%- @object.iconTitle() %></span>
 </div>
 <hr>
 <div class="popover-block">
   <label><%- @T('Agent') %></label>
   <div class="person">
-    <%= @ticket.owner.displayName() %>
-    <% if @ticket.owner.organization: %>
-      <span class="organization"><%= @ticket.owner.organization.displayName() %></span>
+    <%= @object.owner.displayName() %>
+    <% if @object.owner.organization: %>
+      <span class="organization"><%= @object.owner.organization.displayName() %></span>
     <% end %>
   </div>
 </div>
 <div class="popover-block">
   <label><%- @T('Customer') %></label>
   <div class="person">
-    <%= @ticket.customer.displayName() %>
-    <% if @ticket.customer.organization: %>
-      <span class="organization"><%= @ticket.customer.organization.displayName() %></span>
+    <%= @object.customer.displayName() %>
+    <% if @object.customer.organization: %>
+      <span class="organization"><%= @object.customer.organization.displayName() %></span>
     <% end %>
   </div>
 </div>
@@ -24,18 +24,18 @@
 <div class="horizontal two-columns">
   <div class="column">
     <label>#</label>
-    <div class="u-textTruncate"><%- @P(@ticket, 'number') %></div>
+    <div class="u-textTruncate"><%- @P(@object, 'number') %></div>
   </div>
   <div class="column">
     <label><%- @T('Priority') %></label>
-    <div class="u-textTruncate"><%- @P(@ticket, 'priority') %></div>
+    <div class="u-textTruncate"><%- @P(@object, 'priority') %></div>
   </div>
   <div class="column">
     <label><%- @T('Created') %></label>
-    <div class="u-textTruncate"><%- @P(@ticket, 'created_at') %></div>
+    <div class="u-textTruncate"><%- @P(@object, 'created_at') %></div>
   </div>
   <div class="column">
     <label><%- @T('Group') %></label>
-    <div class="u-textTruncate"><%- @P(@ticket, 'group') %></div>
+    <div class="u-textTruncate"><%- @P(@object, 'group') %></div>
   </div>
 </div>

@@ -926,6 +926,9 @@ class Navbar extends App.Controller
       @autoFoldTabs()
 
 class Table extends App.Controller
+  @extend App.PopoverProvidable
+  @registerPopovers 'Organization', 'User'
+
   events:
     'click [data-type=settings]': 'settings'
     'click [data-type=viewmode]': 'viewmode'
@@ -1174,11 +1177,7 @@ class Table extends App.Controller
             'click': callbackCheckbox
       )
 
-    # start user popups
-    @userPopups()
-
-    # start organization popups
-    @organizationPopups()
+    @renderPopovers()
 
     @bulkForm = new BulkForm(
       holder: @el

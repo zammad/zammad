@@ -1,4 +1,7 @@
 class App.TicketList extends App.Controller
+  @extend App.PopoverProvidable
+  @registerPopovers 'Organization', 'User'
+
   constructor: ->
     super
 
@@ -85,8 +88,4 @@ class App.TicketList extends App.Controller
       radio: @radio
     )
 
-    # start user popups
-    @userPopups()
-
-    # start organization popups
-    @organizationPopups()
+    @renderPopovers()

@@ -96,6 +96,7 @@ class App.TaskManager
     _instance.maxTaskCount = key
 
 class _taskManagerSingleton extends App.Controller
+  @extend App.PopoverProvidable
   @include App.LogInclude
 
   constructor: (params = {}) ->
@@ -394,7 +395,7 @@ class _taskManagerSingleton extends App.Controller
     if controller.hide && _.isFunction(controller.hide)
       controller.hide()
 
-    @anyPopoversDestroy()
+    @delayedRemoveAnyPopover()
 
     true
 

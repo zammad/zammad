@@ -1,4 +1,7 @@
 class App.Navigation extends App.ControllerWidgetPermanent
+  @extend App.PopoverProvidable
+  @registerAllPopovers()
+
   className: 'navigation vertical'
 
   elements:
@@ -157,6 +160,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
       )
 
   renderResult: (result = []) =>
+    @removePopovers()
 
     # remove result if not result exists
     if _.isEmpty(result)
@@ -174,14 +178,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
     # show result list
     @searchContainer.addClass('open')
 
-    # start ticket popups
-    @ticketPopups()
-
-    # start user popups
-    @userPopups()
-
-    # start oorganization popups
-    @organizationPopups()
+    @renderPopovers()
 
   render: ->
 
@@ -206,7 +203,7 @@ class App.Navigation extends App.ControllerWidgetPermanent
   searchFocus: (e) =>
     @query = '' # reset query cache
     @searchContainer.addClass('focused')
-    @anyPopoversDestroy()
+    App.PopoverProvidable.anyPopoversDestroy()
     @search()
 
   searchBlur: (e) =>
@@ -288,14 +285,14 @@ class App.Navigation extends App.ControllerWidgetPermanent
     @searchContainer.removeClass('filled').removeClass('open').removeClass('focused')
     @globalSearch.close()
 
-    # remove not needed popovers
-    @delay(@anyPopoversDestroy, 100, 'removePopovers')
+    @delayedRemoveAnyPopover()
 
   andClose: =>
     @searchInput.blur()
     @searchContainer.removeClass('open')
     @globalSearch.close()
-    @delay(@anyPopoversDestroy, 100, 'removePopovers')
+
+    @delayedRemoveAnyPopover()
 
   search: =>
     query = @searchInput.val().trim()

@@ -1,4 +1,10 @@
 class App.WidgetLink extends App.Controller
+  @extend App.PopoverProvidable
+  @registerPopovers 'Ticket'
+
+  @popoversDefaults:
+    position: 'left'
+
   events:
     'click .js-add': 'add'
     'click .js-delete': 'delete'
@@ -54,7 +60,8 @@ class App.WidgetLink extends App.Controller
     @html App.view('link/info')(
       links: list
     )
-    @ticketPopups('left')
+
+    @renderPopovers()
 
   delete: (e) =>
     e.preventDefault()

@@ -1,4 +1,7 @@
 class App.WidgetUser extends App.Controller
+  @extend App.PopoverProvidable
+  @registerPopovers 'UserTicket'
+
   events:
     'focusout [contenteditable]': 'update'
 
@@ -76,10 +79,9 @@ class App.WidgetUser extends App.Controller
       maxlength: 250
     )
 
-    @userTicketPopups(
-      selector: '.user-tickets'
+    @renderPopovers(
+      selector: '.user-tickets',
       user_id:  user.id
-      position: 'right'
     )
 
   update: (e) =>
