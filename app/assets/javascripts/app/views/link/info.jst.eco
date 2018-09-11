@@ -9,7 +9,7 @@
         <%- @Icon('task-state', item.iconClass()) %>
       </div>
       <div class="task-text">
-        <a class="name ticket-popover" data-id="<%- item.id %>" href="#ticket/zoom/<%= item.id %>"><%= item.title %></a>
+        <a class="name ticket-popover" data-id="<%- item.id %>" href="#ticket/zoom/<%= item.id %>"><%= item.title || '-' %></a>
         <%- @humanTime(item.created_at) %>
       </div>
       <div class="list-item-delete js-delete" data-object="Ticket" data-object-id="<%= item.id %>" data-link-type="<%= type %>" data-type="remove">

@@ -8,7 +8,7 @@
       <%- @Icon('task-state', ticket.iconClass()) %>
     </div>
     <div class="task-text">
-      <a class="name ticket-popover" data-id="<%- ticket_id %>" href="<%- ticket.uiUrl() %>"><%= ticket.title %></a>
+      <a class="name ticket-popover" data-id="<%- ticket_id %>" href="<%- ticket.uiUrl() %>"><%= ticket.title || '-' %></a>
        <%- @humanTime(ticket.created_at, false, 'time') %>
     </div>
   </li>

@@ -5,7 +5,7 @@
       <%- @Icon('task-state', ticket.iconClass()) %>
     </div>
     <div class="task-text">
-      <a class="name" data-id="<%- ticket.id %>" href="<%- ticket.uiUrl() %>">#<%= ticket.number %> <%= ticket.title %></a>
+      <a class="name" data-id="<%- ticket.id %>" href="<%- ticket.uiUrl() %>">#<%= ticket.number %> <%= ticket.title || '-' %></a>
       <%- @humanTime(ticket.created_at, false, 'time') %>
     </div>
   </li>
