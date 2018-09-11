@@ -9,7 +9,14 @@ FactoryBot.define do
 
     # select a random record of the given object class
     o_id do
-      type.to_s.camelcase.constantize.order('RANDOM()').first.id
+      random_function = case ActiveRecord::Base.connection_config[:adapter]
+                        when 'mysql2'
+                          'RAND'
+                        when 'postgresql'
+                          'RANDOM'
+                        end
+
+      type.to_s.camelcase.constantize.order("#{random_function}()").first.id
     end
 
     # assign to an existing user, if possible
