@@ -42,15 +42,17 @@ class RecentView < ApplicationModel
 
   def self.list(user, limit = 10, object_name = nil)
     recent_views = if !object_name
-                     RecentView.select('o_id, recent_view_object_id, MAX(created_at) as created_at, MAX(id) as id, created_by_id')
+                     RecentView.select('o_id, recent_view_object_id, created_by_id, MAX(created_at) as created_at, MAX(id) as id')
                                .group(:o_id, :recent_view_object_id, :created_by_id)
                                .where(created_by_id: user.id)
+                               .order('MAX(created_at) DESC, MAX(id) DESC')
                                .limit(limit)
                    elsif object_name == 'Ticket'
                      state_ids = Ticket::State.by_category(:viewable_agent_new).pluck(:id)
                      local_recent_views = RecentView.select('o_id, recent_view_object_id, MAX(created_at) as created_at, MAX(id) as id, created_by_id')
                                                     .group(:o_id, :recent_view_object_id, :created_by_id)
                                                     .where(created_by_id: user.id, recent_view_object_id: ObjectLookup.by_name(object_name))
+                                                    .order('MAX(created_at) DESC, MAX(id) DESC')
                                                     .limit(limit + 10)
                      clear_list = []
                      local_recent_views.each do |item|
@@ -65,6 +67,7 @@ class RecentView < ApplicationModel
                      RecentView.select('o_id, recent_view_object_id, MAX(created_at) as created_at, MAX(id) as id, created_by_id')
                                .group(:o_id, :recent_view_object_id, :created_by_id)
                                .where(created_by_id: user.id, recent_view_object_id: ObjectLookup.by_name(object_name))
+                               .order('MAX(created_at) DESC, MAX(id) DESC')
                                .limit(limit)
                    end
 

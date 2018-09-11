@@ -9,7 +9,7 @@ RSpec.describe RecentView, type: :model do
   let(:owner)    { admin }
 
   describe '::list' do
-    xit 'returns a sample of recently viewed objects (e.g., tickets/users/organizations)' do
+    it 'returns a sample of recently viewed objects (e.g., tickets/users/organizations)' do
       tickets.each { |t| described_class.log('Ticket', t.id, admin) }
 
       expect(described_class.list(admin).map(&:o_id)).to include(*tickets.last(10).map(&:id))
