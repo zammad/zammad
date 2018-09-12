@@ -32,7 +32,7 @@ pre:bundle-audit:
   script:
     - gem install bundler-audit
     - bundle-audit update
-    - bundle-audit --ignore CVE-2018-1000544
+    - bundle-audit
 
 pre:github:
   stage: pre
