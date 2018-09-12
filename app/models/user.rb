@@ -1066,18 +1066,18 @@ raise 'Minimum one user need to have admin permissions'
   end
 
   def validate_agent_limit_by_attributes
-    return true if !Setting.get('system_agent_limit')
+    return true if Setting.get('system_agent_limit').blank?
     return true if !will_save_change_to_attribute?('active')
     return true if active != true
     return true if !permissions?('ticket.agent')
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
     count                 = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count + 1
-    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
+    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
     true
   end
 
   def validate_agent_limit_by_role(role)
-    return true if !Setting.get('system_agent_limit')
+    return true if Setting.get('system_agent_limit').blank?
     return true if active != true
     return true if role.active != true
     return true if !role.with_permission?('ticket.agent')
@@ -1100,7 +1100,7 @@ raise 'Minimum one user need to have admin permissions'
         count += 1
       end
     end
-    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
+    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
     true
   end
 
