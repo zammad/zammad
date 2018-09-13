@@ -46,6 +46,13 @@ Permission.create_if_not_exists(
   },
 )
 Permission.create_if_not_exists(
+  name: 'admin.time_accounting',
+  note: 'Manage %s',
+  preferences: {
+    translations: ['Time Accounting']
+  },
+)
+Permission.create_if_not_exists(
   name: 'admin.macro',
   note: 'Manage %s',
   preferences: {
