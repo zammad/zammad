@@ -2555,6 +2555,17 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title: 'Bcc address for all outgoing emails',
+  name: 'system_bcc',
+  area: 'Email::Enhanced',
+  description: 'To archive all outgoing emails from Zammad to external, you can store a bcc email address here.',
+  options: {},
+  state: '',
+  preferences: { online_service_disable: true },
+  frontend: false
+)
+
+Setting.create_if_not_exists(
   title: 'API Token Access',
   name: 'api_token_access',
   area: 'API::Base',
