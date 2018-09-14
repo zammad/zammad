@@ -878,6 +878,13 @@ is certain attribute used by triggers, overviews or schedulers
     reserved_words = %w[destroy true false integer select drop create alter index table varchar blob date datetime timestamp]
     raise "#{name} is a reserved word, please choose a different one" if name.match?(/^(#{reserved_words.join('|')})$/)
 
+    # fixes issue #2236 - Naming an attribute "attribute" causes ActiveRecord failure
+    begin
+      ObjectLookup.by_id(object_lookup_id).constantize.instance_method_already_implemented? name
+    rescue  ActiveRecord::DangerousAttributeError => e
+      raise "#{name} is a reserved word, please choose a different one"
+    end
+
     record = object_lookup.name.constantize.new
     return true if !record.respond_to?(name.to_sym)
     raise "#{name} already exists!" if record.attributes.key?(name) && new_record?
