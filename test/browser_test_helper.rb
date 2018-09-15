@@ -3895,6 +3895,7 @@ wait untill text in selector disabppears
   object_manager_attribute_create(
     browser: browser2,
     data: {
+      object: 'Ticket', # optional, defaults to Ticket
       name: 'field_name' + random,
       display: 'Display Name of Field',
       data_type: 'Select',
@@ -3913,6 +3914,7 @@ wait untill text in selector disabppears
   object_manager_attribute_create(
     browser: browser2,
     data: {
+      object: 'Ticket', # optional, defaults to Ticket
       name: 'field_name' + random,
       display: 'Display Name of Field',
       data_type: 'Text',
@@ -3927,6 +3929,7 @@ wait untill text in selector disabppears
   object_manager_attribute_create(
     browser: browser2,
     data: {
+      object: 'Ticket', # optional, defaults to Ticket
       name: 'field_name' + random,
       display: 'Display Name of Field',
       data_type: 'Integer',
@@ -3942,6 +3945,7 @@ wait untill text in selector disabppears
   object_manager_attribute_create(
     browser: browser2,
     data: {
+      object: 'Ticket', # optional, defaults to Ticket
       name: 'field_name' + random,
       display: 'Display Name of Field',
       data_type: 'Datetime',
@@ -3957,6 +3961,7 @@ wait untill text in selector disabppears
   object_manager_attribute_create(
     browser: browser2,
     data: {
+      object: 'Ticket', # optional, defaults to Ticket
       name: 'field_name' + random,
       display: 'Display Name of Field',
       data_type: 'Date',
@@ -3972,6 +3977,7 @@ wait untill text in selector disabppears
   object_manager_attribute_create(
     browser: browser2,
     data: {
+      object: 'Ticket', # optional, defaults to Ticket
       name: 'field_name' + random,
       display: 'Display Name of Field',
       data_type: 'Boolean',
@@ -3995,6 +4001,9 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
+    data[:object] = data[:object] || 'Ticket'
+    raise 'invalid object parameter in object_manager_attribute_create' if %w[Ticket User Organization Group].exclude? data[:object]
+
     # make sure that required params are supplied
     %i[name display data_type].each do |s|
       next if data.key? s
@@ -4017,7 +4026,12 @@ wait untill text in selector disabppears
     )
     click(
       browser:  instance,
-      css:      '.content.active .js-new',
+      css:      ".content.active a[href='#c-#{data[:object]}']",
+      mute_log: true,
+    )
+    click(
+      browser:  instance,
+      css:      ".content.active #c-#{data[:object]} .js-new",
       mute_log: true,
     )
 
@@ -4029,6 +4043,7 @@ wait untill text in selector disabppears
   object_manager_attribute_update(
     browser: browser2,
     data: {
+      object: 'Ticket', # optional, defaults to Ticket
       name: 'field_name' + random,
       display: 'Display Name of Field',
       data_type: 'Select',
@@ -4053,6 +4068,9 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
+    data[:object] = data[:object] || 'Ticket'
+    raise 'invalid object parameter in object_manager_attribute_update' if %w[Ticket User Organization Group].exclude? data[:object]
+
     click(
       browser:  instance,
       css:      'a[href="#manage"]',
@@ -4067,7 +4085,12 @@ wait untill text in selector disabppears
       browser: instance,
       css:     '.content.active .js-new',
     )
-    instance.execute_script("$(\".content.active td:contains('#{data[:name]}')\").first().click()")
+    click(
+      browser:  instance,
+      css:      ".content.active a[href='#c-#{data[:object]}']",
+      mute_log: true,
+    )
+    instance.execute_script("$(\".content.active #c-#{data[:object]} td:contains('#{data[:name]}')\").first().click()")
 
     object_manager_attribute_perform('update', params)
   end
@@ -4077,6 +4100,7 @@ wait untill text in selector disabppears
   object_manager_attribute_delete(
     browser: browser2,
     data: {
+      object: 'Ticket', # optional, defaults to Ticket
       name: 'field_name' + random,
     },
   )
@@ -4090,6 +4114,9 @@ wait untill text in selector disabppears
     instance = params[:browser] || @browser
     data     = params[:data]
 
+    data[:object] = data[:object] || 'Ticket'
+    raise 'invalid object parameter in object_manager_attribute_delete' if %w[Ticket User Organization Group].exclude? data[:object]
+
     click(
       browser: instance,
       css: 'a[href="#manage"]',
@@ -4100,12 +4127,18 @@ wait untill text in selector disabppears
       css: '.content.active a[href="#system/object_manager"]',
       mute_log: true,
     )
+    watch_for(
+      browser: instance,
+      css:     '.content.active .js-new',
+    )
+    click(
+      browser:  instance,
+      css:      ".content.active a[href='#c-#{data[:object]}']",
+      mute_log: true,
+    )
     sleep 4
 
-    instance = params[:browser] || @browser
-    data     = params[:data]
-    r = instance.execute_script("$(\".content.active td:contains('#{data[:name]}')\").first().closest('tr').find('.js-delete').click()")
-    #p "rrr #{r.inspect}"
+    r = instance.execute_script("$(\".content.active #c-#{data[:object]} td:contains('#{data[:name]}')\").first().closest('tr').find('.js-delete').click()")
   end
 
 =begin
