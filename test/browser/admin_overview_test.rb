@@ -125,4 +125,59 @@ class AdminOverviewTest < TestCase
        get_location( css: "td[title='#{title}']").y]
     end.sort_by { |x| x[1] }.map { |x| x[0] }
   end
+
+  # verify fix for issue #2235 - Overview setting isn't applied on submit
+  def test_overview_toggle_out_of_office_setting
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    out_of_office_css = '.content.active .modal select[name="out_of_office"]'
+    first_overview_css = '.content.active tr[data-id="1"] td'
+
+    click( css: 'a[href="#manage"]' )
+    click( css: '.content.active a[href="#manage/overviews"]' )
+
+    # round 1, open the overview and set out_of_office to true
+    click( css: first_overview_css )
+    modal_ready
+    watch_for(
+      css: out_of_office_css,
+      value: 'no',
+    )
+    select(
+      css: out_of_office_css,
+      value: 'yes',
+    )
+    click( css: '.content.active .modal .js-submit' )
+    modal_disappear
+
+    # round 2, open the overview and set out_of_office back to false
+    click( css: first_overview_css )
+    modal_ready
+    watch_for(
+      css: out_of_office_css,
+      value: 'yes',
+    )
+    select(
+      css: out_of_office_css,
+      value: 'no',
+    )
+    click( css: '.content.active .modal .js-submit' )
+    modal_disappear
+
+    # round 3, open the overview and confirm that it's still false
+    click( css: first_overview_css )
+    modal_ready
+    watch_for(
+      css: out_of_office_css,
+      value: 'no',
+    )
+    click( css: '.content.active .modal .js-submit' )
+    modal_disappear
+  end
 end
