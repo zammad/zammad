@@ -345,7 +345,7 @@ class Scheduler < ApplicationModel
     end
 
     # used for production
-    wait = 8
+    wait = 4
     Thread.new do
       sleep wait
 

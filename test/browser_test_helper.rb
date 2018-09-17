@@ -2151,8 +2151,10 @@ wait untill text in selector disabppears
       css:  '.content.active .newTicket button.js-submit',
       mute_log: true,
     )
+    screenshot(browser: instance, comment: 'ticket_create_after_submit_1')
 
     sleep 1
+    screenshot(browser: instance, comment: 'ticket_create_after_submit_2')
     9.times do
       if instance.current_url.match?(/#{Regexp.quote('#ticket/zoom/')}/)
         assert(true, 'ticket created')
@@ -2644,7 +2646,10 @@ wait untill text in selector disabppears
     # open ticket
     #instance.find_element(partial_link_text: params[:number] } ).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:number]}') .nav-tab-icon\").first().click()")
-    sleep 1
+    watch_for(
+      browser: instance,
+      css: '.content.active .ticketZoom-header .ticket-number'
+    )
     number = instance.find_elements(css: '.content.active .ticketZoom-header .ticket-number')[0].text
     if !number.match?(/#{params[:number]}/)
       screenshot(browser: instance, comment: 'ticket_open_by_search_failed')
@@ -2765,7 +2770,10 @@ wait untill text in selector disabppears
     sleep 2
     #instance.find_element(partial_link_text: params[:value] } ).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
-    sleep 1
+    watch_for(
+      browser: instance,
+      css: '.content.active h1'
+    )
     name = instance.find_elements(css: '.content.active h1')[0].text
     if !name.match?(/#{params[:value]}/)
       screenshot(browser: instance, comment: 'organization_open_by_search_failed')
@@ -2798,7 +2806,10 @@ wait untill text in selector disabppears
 
     #instance.find_element(partial_link_text: params[:value]).click
     instance.execute_script("$(\".js-global-search-result a:contains('#{params[:value]}') .nav-tab-icon\").click()")
-    sleep 1
+    watch_for(
+      browser: instance,
+      css: '.content.active h1'
+    )
     name = instance.find_elements(css: '.content.active h1')[0].text
     if !name.match?(/#{params[:value]}/)
       screenshot(browser: instance, comment: 'user_open_by_search_failed')
@@ -2829,6 +2840,8 @@ wait untill text in selector disabppears
 
     instance = params[:browser] || @browser
     data     = params[:data]
+
+    raise 'user_create() requires either email or phone' if data[:email].blank? && data[:phone].blank?
 
     click(
       browser: instance,
@@ -2897,16 +2910,31 @@ wait untill text in selector disabppears
       browser: instance,
       timeout: 10,
     )
-    set(
-      browser: instance,
-      css: '.content .js-search',
-      value: data[:email],
-    )
-    watch_for(
-      browser: instance,
-      css: 'body',
-      value: data[:lastname],
-    )
+
+    if data[:email]
+      search_query =  data[:email]
+      search_target = data[:email]
+      search_css =    '.content.active .user-list .js-tableBody td:first-child'
+    else
+      search_query =  data[:phone]
+      search_target = data[:firstname]
+      search_css =    '.content.active .user-list .js-tableBody td:nth-child(2)'
+    end
+
+    60.times do |i|
+      if (i % 10).zero?
+        set(
+          browser: instance,
+          css: '.content.active .js-search',
+          value: search_query,
+        )
+      end
+      sleep 1
+      search_result = instance.find_elements(css: search_css).map(&:text).map(&:strip)
+      break if search_result.include? search_target
+      raise 'user creation failed' if i >= 19
+      log "new user #{search_query} not found on the #{i.ordinalize} try, retrying"
+    end
 
     assert(true, 'user created')
   end
@@ -3619,6 +3647,58 @@ wait untill text in selector disabppears
     end
     screenshot(browser: instance, comment: 'role_edit_failed')
     raise 'role edit failed'
+  end
+
+=begin
+
+  report_profile_create(
+    browser: browser2,
+    data: {
+      name: 'some profile' + random,
+      active: true
+    },
+  )
+
+=end
+
+  def report_profile_create(params = {})
+    switch_window_focus(params)
+    log('report_profile_create', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(
+      browser: instance,
+      css:  'a[href="#manage"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css: '.content.active a[href="#manage/report_profiles"]',
+      mute_log: true,
+    )
+    click(
+      browser: instance,
+      css: '.content.active a.btn.primary[data-type="new"]',
+      mute_log: true,
+    )
+    set(
+      browser:  instance,
+      css:      '.modal input[name=name]',
+      value:    data[:name],
+      mute_log: true,
+    )
+    if data[:active] == false
+      select(css: '.content.active .modal select[name="active"]', value: 'inactive')
+    end
+    sleep 0.5
+    click(
+      browser: instance,
+      css: '.content.active .modal .js-submit',
+      mute_log: true,
+    )
+    modal_disappear
   end
 
 =begin

@@ -31,6 +31,9 @@ class AutoWizardBrowserTest < TestCase
 
     clues_close
 
+    # wait unless elasticsearch has index all objects from auto wizard
+    sleep 10
+
     organization_open_by_search(
       value: 'Demo Organization',
     )

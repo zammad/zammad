@@ -550,9 +550,8 @@ class Sidebar extends App.Controller
     @render()
 
   render: =>
-
     metrics = @config.metric
-    profiles = App.ReportProfile.all()
+    profiles = App.ReportProfile.search(filter: { active: true })
     @html App.view('report/sidebar')(
       metrics:  metrics
       params:   @params
