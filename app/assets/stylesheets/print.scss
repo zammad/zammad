@@ -202,3 +202,50 @@ th.js-tableHead:not([data-column-key="icon"]) {
 .avatar {
   border: 1px solid black;
 }
+
+
+
+/*
+
+  Modal
+  =====
+
+*/
+
+.modal-open {
+  > *:not(.modal) {
+    display: none !important;
+  }
+}
+
+.modal {
+  width: auto !important;
+  position: static;
+  padding: 0 !important;
+}
+
+.modal-backdrop {
+  display: none;
+}
+
+.modal-dialog {
+  box-shadow: none !important;
+  max-width: none !important;
+  margin: 0;
+}
+
+.modal-content {
+  border: none;
+}
+
+.modal-close {
+  display: none;
+}
+
+.modal-footer {
+  display: none;
+}
+
+.modal-body {
+  padding: 0;
+}
