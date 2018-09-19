@@ -35,50 +35,51 @@ test("check pretty date", function() {
   // use date formatting as functions to make it more flexible
   prettyDateRelative(current, '', true, 'relative');
   prettyDateAbsolute(current, '', true, 'absolute');
+  prettyDateTimestamp(current, '', true, 'timestamp');
 
   // past
 
-  function prettyDateRelative(current, escalation, lng, type) {
-    var result = App.PrettyDate.humanTime(current, escalation, lng, type);
+  function prettyDateRelative(current, escalation, long, type) {
+    var result = App.PrettyDate.humanTime(current, escalation, long, type);
     equal(result, 'just now', 'just now')
 
-    result = App.PrettyDate.humanTime(current - 15000, escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - 15000, escalation, long, type);
     equal(result, 'just now', 'just now')
 
-    result = App.PrettyDate.humanTime(current - 60000, escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - 60000, escalation, long, type);
     equal(result, '1 minute ago', '1 min ago')
 
-    result = App.PrettyDate.humanTime(current - (2 * 60000), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (2 * 60000), escalation, long, type);
     equal(result, '2 minutes ago', '2 min ago')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60), escalation, long, type);
     equal(result, '1 hour ago', '1 hour')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 2), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 2), escalation, long, type);
     equal(result, '2 hours ago', '2 hours')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 2.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 2.5), escalation, long, type);
     equal(result, '2 hours 30 minutes ago', '2.5 hours')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 12.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 12.5), escalation, long, type);
     equal(result, '12 hours ago', '12.5 hours')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24), escalation, long, type);
     equal(result, '1 day ago', '1 day')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2), escalation, long, type);
     equal(result, '2 days ago', '2 days')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2) - (60000 * 5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2) - (60000 * 5), escalation, long, type);
     equal(result, '2 days ago', '2 days')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2.5), escalation, long, type);
     equal(result, '2 days 12 hours ago', '2.5 days')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2.5) - (60000 * 5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2.5) - (60000 * 5), escalation, long, type);
     equal(result, '2 days 12 hours ago', '2.5 days')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 10.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 10.5), escalation, long, type);
     var pastDate = new Date(current - (60000 * 60 * 24 * 10.5))
     var dd = pastDate.getDate();
     if(dd<10) {
@@ -92,7 +93,7 @@ test("check pretty date", function() {
     // mm/dd/yyyy
     equal(result, mm+'/'+dd+'/'+yyyy, '10.5 days')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 30), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 30), escalation, long, type);
     var pastDate = new Date(current - (60000 * 60 * 24 * 30))
     var dd = pastDate.getDate();
     if(dd<10) {
@@ -108,147 +109,228 @@ test("check pretty date", function() {
 
     // future
     current = new Date()
-    result = App.PrettyDate.humanTime(current, escalation, lng, type);
+    result = App.PrettyDate.humanTime(current, escalation, long, type);
     equal(result, 'just now', 'just now')
 
-    result = App.PrettyDate.humanTime(current.getTime() + 55000, escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + 55000, escalation, long, type);
     equal(result, 'just now', 'just now')
 
-    result = App.PrettyDate.humanTime(current.getTime() + 65000, escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + 65000, escalation, long, type);
     equal(result, 'in 1 minute', 'in 1 min')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (2 * 65000), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (2 * 65000), escalation, long, type);
     equal(result, 'in 2 minutes', 'in 2 min')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60500 * 60), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60500 * 60), escalation, long, type);
     equal(result, 'in 1 hour', 'in 1 hour')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 2), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 2), escalation, long, type);
     equal(result, 'in 2 hours', 'in 2 hours')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 2.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 2.5), escalation, long, type);
     equal(result, 'in 2 hours 30 minutes', 'in 2.5 hours')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24), escalation, lng, type) ;
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24), escalation, long, type) ;
     equal(result, 'in 1 day', 'in 1 day')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 2), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 2), escalation, long, type);
     equal(result, 'in 2 days', 'in 2 days')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 2.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 2.5), escalation, long, type);
     equal(result, 'in 2 days 12 hours', 'in 2.5 days')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 5.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 5.5), escalation, long, type);
     equal(result, 'in 5 days 12 hours', 'in 30.5 days')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 30.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 30.5), escalation, long, type);
     equal(result, 'in 30 days', 'in 30.5 days')
 
   };
 
-  function prettyDateAbsolute(current, escalation, lng, type) {
+  function prettyDateAbsolute(current, escalation, long, type) {
 
-    var result = App.PrettyDate.humanTime(current, escalation, lng, type);
+    var result = App.PrettyDate.humanTime(current, escalation, long, type);
     equal(result, 'just now', 'just now') // by defaul < 1 min is just now
 
-    result = App.PrettyDate.humanTime(current - 15000, escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - 15000, escalation, long, type);
     equal(result, 'just now', 'just now') // by default < 1 min is just now
 
-    result = App.PrettyDate.humanTime(current - 60000, escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - 60000, escalation, long, type);
     diff = 60
     equal(result, getAbsolute(new Date(current - 60000), diff), '1 min ago')
 
-    result = App.PrettyDate.humanTime(current - (2 * 60000), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (2 * 60000), escalation, long, type);
     diff = 2 * 60
     equal(result, getAbsolute(new Date(current - (2 * 60000)), diff), '2 min ago')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60), escalation, long, type);
     diff = 60 * 60
     equal(result, getAbsolute(new Date(current - (60000 * 60)), diff), '1 hour')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 2), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 2), escalation, long, type);
     diff = 60 * 60 * 2
     equal(result, getAbsolute(new Date(current - (60000 * 60 * 2)), diff), '2 hours')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 2.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 2.5), escalation, long, type);
     diff = 60 * 60 * 2.5
     equal(result, getAbsolute(new Date(current - (60000 * 60 * 2.5)), diff), '2.5 hours')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 12.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 12.5), escalation, long, type);
     diff = 60 * 60 * 12.5
     equal(result, getAbsolute(new Date(current - (60000 * 60 * 12.5)), diff), '12.5 hours')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24), escalation, long, type);
     diff = 60 * 60 * 25
     equal(result, getAbsolute(new Date(current - (60000 * 60 * 24)), diff), '1 day')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2), escalation, long, type);
     diff = 60 * 60 * 25 * 2
     equal(result, getAbsolute(new Date(current - (60000 * 60 * 24 * 2)), diff), '2 days')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2) - (60000 * 5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2) - (60000 * 5), escalation, long, type);
     diff = (60 * 60 * 24 * 2) - (60 * 5)
     equal(result, getAbsolute(new Date(current - (60000 * 60 * 24 * 2) - (60000 * 5)), diff), '2 days')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2.5), escalation, long, type);
     diff = (60 * 60 * 24 * 2.5)
     equal(result, getAbsolute(new Date(current - (60000 * 60 * 24 * 2.5)), diff), '2.5 days')
 
-    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2.5) - (60000 * 5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2.5) - (60000 * 5), escalation, long, type);
     diff = (60 * 60 * 24 * 2.5) - (60 * 5)
     equal(result, getAbsolute(new Date(current - (60000 * 60 * 24 * 2.5) - (60000 * 5)), diff), '2.5 days')
 
     // future
     current = new Date()
-    result = App.PrettyDate.humanTime(current, escalation, lng, type);
+    result = App.PrettyDate.humanTime(current, escalation, long, type);
     equal(result, 'just now', 'just now') // no change, because < 1 min = just now
 
-    result = App.PrettyDate.humanTime(current.getTime() + 55000, escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + 55000, escalation, long, type);
     equal(result, 'just now', 'just now') // no change, because < 1 min = just now
 
-    result = App.PrettyDate.humanTime(current.getTime() + 65000, escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + 65000, escalation, long, type);
     diff = 60
     equal(result, getAbsolute(new Date(current.getTime() + 65000), diff), 'in 1 min')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (2 * 65000), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (2 * 65000), escalation, long, type);
     diff = 2 * 60
     equal(result, getAbsolute(new Date(current.getTime() + (2 * 65000)), diff), 'in 2 min')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60500 * 60), escalation, lng, type) ;
+    result = App.PrettyDate.humanTime(current.getTime() + (60500 * 60), escalation, long, type) ;
     diff = 60 * 60
     equal(result, getAbsolute(new Date(current.getTime() + (60500 * 60)), diff), 'in 1 hour')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 2), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 2), escalation, long, type);
     diff = 60 * 60 * 2
     equal(result, getAbsolute(new Date(current.getTime() + (60050 * 60 * 2)), diff), 'in 2 hours')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 2.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 2.5), escalation, long, type);
     diff = 60 * 60 * 2.5
     equal(result, getAbsolute(new Date(current.getTime() + (60050 * 60 * 2.5)), diff), 'in 2.5 hours')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24), escalation, long, type);
     diff = 60 * 60 * 24
     equal(result, getAbsolute(new Date(current.getTime() + (60050 * 60 * 24)), diff), 'in 1 day')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 2), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 2), escalation, long, type);
     diff = 60 * 60 * 24 * 2
     equal(result, getAbsolute(new Date(current.getTime() + (60050 * 60 * 24 * 2)), diff), 'in 2 days')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 2.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 2.5), escalation, long, type);
     diff = 60 * 60 * 24 * 2.5
     equal(result, getAbsolute(new Date(current.getTime() + (60050 * 60 * 24 * 2.5)), diff), 'in 2.5 days')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 5.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 5.5), escalation, long, type);
     diff = 60 * 60 * 24 * 5.5
     equal(result, getAbsolute(new Date(current.getTime() + (60050 * 60 * 24 * 5.5)), diff), 'in 30.5 days')
 
-    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 30.5), escalation, lng, type);
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 30.5), escalation, long, type);
     diff = (60 * 60 * 24 * 30.5);
     equal(result, getAbsolute(new Date(current.getTime() + 60050 * 60 * 24 * 30.5), diff), 'in 30.5 days')
 
   };
 
-  function getAbsolute(date, diff){
+  function prettyDateTimestamp(current, escalation, long, type) {
+
+    var result = App.PrettyDate.humanTime(current, escalation, long, type);
+    equal(result, 'just now', 'just now') // by defaul < 1 min is just now
+
+    result = App.PrettyDate.humanTime(current - 15000, escalation, long, type);
+    equal(result, 'just now', 'just now') // by default < 1 min is just now
+
+    result = App.PrettyDate.humanTime(current - 60000, escalation, long, type);
+    equal(result, getTimestamp(new Date(current - 60000)), '1 min ago')
+
+    result = App.PrettyDate.humanTime(current - (2 * 60000), escalation, long, type);
+    equal(result, getTimestamp(new Date(current - (2 * 60000))), '2 min ago')
+
+    result = App.PrettyDate.humanTime(current - (60000 * 60), escalation, long, type);
+    equal(result, getTimestamp(new Date(current - (60000 * 60))), '1 hour')
+
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 2), escalation, long, type);
+    equal(result, getTimestamp(new Date(current - (60000 * 60 * 2))), '2 hours')
+
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 2.5), escalation, long, type);
+    equal(result, getTimestamp(new Date(current - (60000 * 60 * 2.5))), '2.5 hours')
+
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 12.5), escalation, long, type);
+    equal(result, getTimestamp(new Date(current - (60000 * 60 * 12.5))), '12.5 hours')
+
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24), escalation, long, type);
+    equal(result, getTimestamp(new Date(current - (60000 * 60 * 24))), '1 day')
+
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2), escalation, long, type);
+    equal(result, getTimestamp(new Date(current - (60000 * 60 * 24 * 2))), '2 days')
+
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2) - (60000 * 5), escalation, long, type);
+    equal(result, getTimestamp(new Date(current - (60000 * 60 * 24 * 2) - (60000 * 5))), '2 days')
+
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2.5), escalation, long, type);
+    equal(result, getTimestamp(new Date(current - (60000 * 60 * 24 * 2.5))), '2.5 days')
+
+    result = App.PrettyDate.humanTime(current - (60000 * 60 * 24 * 2.5) - (60000 * 5), escalation, long, type);
+    equal(result, getTimestamp(new Date(current - (60000 * 60 * 24 * 2.5) - (60000 * 5))), '2.5 days')
+
+    // future
+    current = new Date()
+    result = App.PrettyDate.humanTime(current, escalation, long, type);
+    equal(result, 'just now', 'just now') // no change, because < 1 min = just now
+
+    result = App.PrettyDate.humanTime(current.getTime() + 55000, escalation, long, type);
+    equal(result, 'just now', 'just now') // no change, because < 1 min = just now
+
+    result = App.PrettyDate.humanTime(current.getTime() + 65000, escalation, long, type);
+    equal(result, getTimestamp(new Date(current.getTime() + 65000)), 'in 1 min')
+
+    result = App.PrettyDate.humanTime(current.getTime() + (2 * 65000), escalation, long, type);
+    equal(result, getTimestamp(new Date(current.getTime() + (2 * 65000))), 'in 2 min')
+
+    result = App.PrettyDate.humanTime(current.getTime() + (60500 * 60), escalation, long, type) ;
+    equal(result, getTimestamp(new Date(current.getTime() + (60500 * 60))), 'in 1 hour')
+
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 2), escalation, long, type);
+    equal(result, getTimestamp(new Date(current.getTime() + (60050 * 60 * 2))), 'in 2 hours')
+
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 2.5), escalation, long, type);
+    equal(result, getTimestamp(new Date(current.getTime() + (60050 * 60 * 2.5))), 'in 2.5 hours')
+
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24), escalation, long, type);
+    equal(result, getTimestamp(new Date(current.getTime() + (60050 * 60 * 24))), 'in 1 day')
+
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 2), escalation, long, type);
+    equal(result, getTimestamp(new Date(current.getTime() + (60050 * 60 * 24 * 2))), 'in 2 days')
+
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 2.5), escalation, long, type);
+    equal(result, getTimestamp(new Date(current.getTime() + (60050 * 60 * 24 * 2.5))), 'in 2.5 days')
+
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 5.5), escalation, long, type);
+    equal(result, getTimestamp(new Date(current.getTime() + (60050 * 60 * 24 * 5.5))), 'in 30.5 days')
+
+    result = App.PrettyDate.humanTime(current.getTime() + (60050 * 60 * 24 * 30.5), escalation, long, type);
+    equal(result, getTimestamp(new Date(current.getTime() + 60050 * 60 * 24 * 30.5)), 'in 30.5 days')
+
+  };
+
+  function getAbsolute(date, diff) {
     weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     weekday = weekdays[date.getDay()];
 
@@ -264,6 +346,19 @@ test("check pretty date", function() {
     else
        string = weekday + ' ' + date
     return string;
+  }
+
+  function getTimestamp(date) {
+
+    d      = date.getDate()
+    m      = date.getMonth() + 1
+    yfull  = date.getFullYear()
+    yshort = date.getYear()-100
+    M      = date.getMinutes()
+    H      = date.getHours()
+
+    // YYYY-MM-DD HH::MM
+    return (m < 10 ? '0':'') + m + '/' + (d < 10 ? '0':'') + d + '/' + (yfull) + ' ' + (H < 10 ? '0':'') + H + ":" + (M < 10 ? '0':'') + M
   }
 
 });

@@ -31,6 +31,14 @@ class App.PrettyDate
 
     if type is undefined && window.App && window.App.Config
       type = window.App.Config.get('pretty_date_format')
+
+    # YYYY-MM-DD HH::MM
+    if type is 'timestamp'
+      string = App.i18n.translateTimestamp(time)
+      if escalation
+        string = "<span #{style}>#{string}</b>"
+      return string
+
     if type is 'absolute' && (direction is 'past' || direction is 'future')
       weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
       weekday = weekdays[created.getDay()]
