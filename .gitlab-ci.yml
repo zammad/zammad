@@ -78,7 +78,6 @@ test:unit:mysql:
     - rake db:migrate
     - rake db:seed
     - rake test:units
-    - rake test:controllers
     - ruby -I test/ test/integration/object_manager_test.rb
     - ruby -I test/ test/integration/object_manager_attributes_controller_test.rb
     - ruby -I test/ test/integration/package_test.rb
@@ -96,7 +95,6 @@ test:unit:postgresql:
     - rake db:migrate
     - rake db:seed
     - rake test:units
-    - rake test:controllers
     - ruby -I test/ test/integration/object_manager_test.rb
     - ruby -I test/ test/integration/object_manager_attributes_controller_test.rb
     - ruby -I test/ test/integration/package_test.rb
@@ -242,11 +240,8 @@ test:integration:es_mysql:
     - rake db:migrate
     - ruby -I test/ test/integration/elasticsearch_active_test.rb
     - ruby -I test/ test/integration/elasticsearch_test.rb
-    - ruby -I test/ test/controllers/search_controller_test.rb
     - ruby -I test/ test/integration/report_test.rb
-    - ruby -I test/ test/controllers/form_controller_test.rb
-    - ruby -I test/ test/controllers/users_controller_test.rb
-    - ruby -I test/ test/controllers/organizations_controller_test.rb
+    - bundle exec rspec --tag searchindex
     - rake db:drop
 
 test:integration:es_postgresql:
@@ -262,11 +257,8 @@ test:integration:es_postgresql:
     - rake db:migrate
     - ruby -I test/ test/integration/elasticsearch_active_test.rb
     - ruby -I test/ test/integration/elasticsearch_test.rb
-    - ruby -I test/ test/controllers/search_controller_test.rb
     - ruby -I test/ test/integration/report_test.rb
-    - ruby -I test/ test/controllers/form_controller_test.rb
-    - ruby -I test/ test/controllers/users_controller_test.rb
-    - ruby -I test/ test/controllers/organizations_controller_test.rb
+    - bundle exec rspec --tag searchindex
     - rake db:drop
 
 test:integration:zendesk_mysql:
