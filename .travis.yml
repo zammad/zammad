@@ -65,7 +65,6 @@ script:
   - bundle exec rspec
   - rake db:reset
   - rake test:units
-  - rake test:controllers
   - ruby -I test/ test/integration/object_manager_test.rb
   - ruby -I test/ test/integration/package_test.rb
 after_success:
