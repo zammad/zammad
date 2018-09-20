@@ -495,9 +495,13 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
                                .transform_values { |v| v.match?(EMAIL_REGEX) ? v : '' })
 
       h['x-any-recipient'] = h.values.select(&:present?).join(', ')
-      h['date']            = Time.zone.parse(mail.date.to_s) || imported_fields['date']
       h['message_id']      = imported_fields['message-id']
-      h['subject']         = imported_fields['subject']&.sub(/^=\?us-ascii\?Q\?(.+)\?=$/, '\1')
+      h['subject']         = imported_fields['subject']&.sub(/^=\?us-ascii\?Q\?(.+)\s*\?=\s*$/, '\1')
+      begin
+        h['date'] = Time.zone.parse(mail.date.to_s) || imported_fields['date']
+      rescue
+        h['date'] = nil
+      end
     end
 
     [imported_fields, raw_fields, custom_fields].reduce({}.with_indifferent_access, &:merge)
