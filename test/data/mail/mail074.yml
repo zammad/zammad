@@ -1,0 +1,16 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: Martin Edenhofer <martin@example.de>
+from_email: martin@example.de
+from_display_name: Martin Edenhofer
+date:
+to: me@example.de
+subject: Test with different content type file name options
+body: |
+  Enjoy!
+
+  -Martin
+
+  --
+  Old programmers never die. They just branch to a new address.
+content_type: text/plain
+attachments: []
