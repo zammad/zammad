@@ -56,7 +56,7 @@ RSpec.describe 'Basics', type: :request do
       expect(response).to have_http_status(404)
       expect(response.body).to match(/<html/)
       expect(response.body).to match(%r{<title>404: Not Found</title>})
-      expect(response.body).to match(%r{<h1>404: Requested Ressource was not found.</h1>})
+      expect(response.body).to match(%r{<h1>404: Requested resource was not found</h1>})
       expect(response.body).to match(%r{No route matches \[GET\] /not_existing_url})
 
       # 401
@@ -88,7 +88,7 @@ RSpec.describe 'Basics', type: :request do
       expect(response).to have_http_status(404)
       expect(response.body).to match(/<html/)
       expect(response.body).to match(%r{<title>404: Not Found</title>})
-      expect(response.body).to match(%r{<h1>404: Requested Ressource was not found.</h1>})
+      expect(response.body).to match(%r{<h1>404: Requested resource was not found</h1>})
       expect(response.body).to match(/some error message/)
 
       # 500
