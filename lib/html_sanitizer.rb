@@ -387,7 +387,7 @@ cleanup html string:
     end
 
     uri.to_s
-  rescue URI::Error
+  rescue
     url
   end
 
