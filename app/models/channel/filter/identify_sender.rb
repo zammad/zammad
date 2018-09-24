@@ -156,7 +156,7 @@ module Channel::Filter::IdentifySender
   end
 
   def self.populate_attributes!(attrs, **extras)
-    if attrs[:email].match?(/\S\s+\S/)
+    if attrs[:email].match?(/\S\s+\S/) || attrs[:email].match?(/^<|>$/)
       attrs[:preferences] = { mail_delivery_failed: true,
                               mail_delivery_failed_reason: 'invalid email',
                               mail_delivery_failed_data: Time.zone.now }
@@ -190,6 +190,8 @@ module Channel::Filter::IdentifySender
     string.downcase
           .strip
           .delete('"')
+          .delete(' ')             # see https://github.com/zammad/zammad/issues/2254
+          .sub(/^<|>$/, '')        # see https://github.com/zammad/zammad/issues/2254
           .sub(/\A'(.*)'\z/, '\1') # see https://github.com/zammad/zammad/issues/2154
           .gsub(/\s/, '')          # see https://github.com/zammad/zammad/issues/2198
   end
