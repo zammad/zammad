@@ -3081,6 +3081,27 @@ Content-Type: text/html; charset=us-ascii; format=flowed
           ],
         },
       },
+      { # See https://github.com/zammad/zammad/issues/2254
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail076.box')),
+        success: true,
+        result: {
+          1 => {
+            from: '"Millions Lottery Spain transfer"@example.com>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Millions',
+              lastname: 'Lottery Spain transfer@example.com>',
+              fullname: 'Millions Lottery Spain transfer@example.com>',
+              email: 'millionslotteryspaintransfer@example.com',
+            },
+          ],
+        },
+      },
     ]
     assert_process(files)
   end
