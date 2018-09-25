@@ -18,7 +18,10 @@ satinize html string based on whiltelist
     attributes_whitelist = Rails.configuration.html_sanitizer_attributes_whitelist
     css_properties_whitelist = Rails.configuration.html_sanitizer_css_properties_whitelist
     css_values_blacklist = Rails.application.config.html_sanitizer_css_values_backlist
-    classes_whitelist = ['js-signatureMarker']
+
+    # We whitelist yahoo_quoted because Yahoo Mail marks quoted email content using
+    # <div class='yahoo_quoted'> and we rely on this class to identify quoted messages
+    classes_whitelist = ['js-signatureMarker', 'yahoo_quoted']
     attributes_2_css = %w[width height]
 
     # remove html comments

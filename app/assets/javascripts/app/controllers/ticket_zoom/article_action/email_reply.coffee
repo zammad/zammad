@@ -296,6 +296,7 @@ class EmailReply extends App.Controller
         App.Utils.htmlStrip(signature)
         if signaturePosition is 'top'
           body.prepend(signature)
+          body.prepend('<br>')
         else
           body.append(signature)
         ui.$('[data-name=body]').replaceWith(body)
