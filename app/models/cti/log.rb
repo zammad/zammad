@@ -4,6 +4,8 @@ module Cti
 
     store :preferences
 
+    validates :state, format: { with: /\A(newCall|answer|hangup)\z/,  message: 'newCall|answer|hangup is allowed' }
+
     after_commit :push_incoming_call, :push_caller_list_update
 
 =begin
@@ -288,7 +290,7 @@ Cti::Log.process(
 =end
 
     def self.process(params)
-      comment = params['cause']
+      cause   = params['cause']
       event   = params['event']
       user    = params['user']
       call_id = params['callId'] || params['call_id']
@@ -308,11 +310,14 @@ Cti::Log.process(
         to_comment, preferences = CallerId.get_comment_preferences(params['to'], 'to')
       end
 
+      log = find_by(call_id: call_id)
+
       case event
       when 'newCall'
         if params['direction'] == 'in'
           done = false
         end
+        raise "call_id #{call_id} already exists!" if log
         create(
           direction: params['direction'],
           from: params['from'],
@@ -320,44 +325,47 @@ Cti::Log.process(
           to: params['to'],
           to_comment: to_comment,
           call_id: call_id,
-          comment: comment,
+          comment: cause,
           state: event,
           initialized_at: Time.zone.now,
           preferences: preferences,
           done: done,
         )
       when 'answer'
-        log = find_by(call_id: call_id)
         raise "No such call_id #{call_id}" if !log
-        log.state = 'answer'
-        log.start_at = Time.zone.now
-        log.duration_waiting_time = log.start_at.to_i - log.initialized_at.to_i
-        if user
-          log.to_comment = user
-        end
-        log.done = true
-        log.comment = comment
-        log.save
-      when 'hangup'
-        log = find_by(call_id: call_id)
-        raise "No such call_id #{call_id}" if !log
-        log.done = done
-        if params['direction'] == 'in'
-          if log.state == 'newCall'
-            log.done = false
-          elsif log.to_comment == 'voicemail'
-            log.done = false
+        return if log.state == 'hangup' # call is already hangup, ignore answer
+        log.with_lock do
+          log.state = 'answer'
+          log.start_at = Time.zone.now
+          log.duration_waiting_time = log.start_at.to_i - log.initialized_at.to_i
+          if user
+            log.to_comment = user
           end
+          log.done = true
+          log.comment = cause
+          log.save
         end
-        log.state = 'hangup'
-        log.end_at = Time.zone.now
-        if log.start_at
-          log.duration_talking_time = log.start_at.to_i - log.end_at.to_i
-        elsif !log.duration_waiting_time && log.initialized_at
-          log.duration_waiting_time = log.end_at.to_i - log.initialized_at.to_i
+      when 'hangup'
+        raise "No such call_id #{call_id}" if !log
+        log.with_lock do
+          log.done = done
+          if params['direction'] == 'in'
+            if log.state == 'newCall' && cause != 'forwarded'
+              log.done = false
+            elsif log.to_comment == 'voicemail'
+              log.done = false
+            end
+          end
+          log.state = 'hangup'
+          log.end_at = Time.zone.now
+          if log.start_at
+            log.duration_talking_time = log.start_at.to_i - log.end_at.to_i
+          elsif !log.duration_waiting_time && log.initialized_at
+            log.duration_waiting_time = log.end_at.to_i - log.initialized_at.to_i
+          end
+          log.comment = cause
+          log.save
         end
-        log.comment = comment
-        log.save
       else
         raise ArgumentError, "Unknown event #{event.inspect}"
       end

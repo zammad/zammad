@@ -547,4 +547,200 @@ Mob: +49 333 8362222",
     assert_equal(0, Cti::CallerId.where(user_id: @agent2.id).count)
   end
 
+  test 'order of events' do
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'newCall',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+
+    last = Cti::Log.last
+    assert_equal(last.state, 'newCall')
+    assert_equal(last.done, false)
+
+    travel 2.seconds
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'hangup',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+    last.reload
+    assert_equal(last.state, 'hangup')
+    assert_equal(last.done, false)
+
+    travel 2.seconds
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'answer',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+    last.reload
+    assert_equal(last.state, 'hangup')
+    assert_equal(last.done, false)
+
+  end
+
+  test 'not answered should be not marked as done' do
+
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'newCall',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+
+    last = Cti::Log.last
+    assert_equal(last.state, 'newCall')
+    assert_equal(last.done, false)
+
+    travel 2.seconds
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'hangup',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+    last.reload
+    assert_equal(last.state, 'hangup')
+    assert_equal(last.done, false)
+  end
+
+  test 'answered should be marked as done' do
+
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'newCall',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+
+    last = Cti::Log.last
+    assert_equal(last.state, 'newCall')
+    assert_equal(last.done, false)
+
+    travel 2.seconds
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'answer',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+    last = Cti::Log.last
+    assert_equal(last.state, 'answer')
+    assert_equal(last.done, true)
+
+    travel 2.seconds
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'hangup',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+    last.reload
+    assert_equal(last.state, 'hangup')
+    assert_equal(last.done, true)
+  end
+
+  test 'voicemail should not be marked as done' do
+
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'newCall',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+
+    last = Cti::Log.last
+    assert_equal(last.state, 'newCall')
+    assert_equal(last.done, false)
+
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'answer',
+      'user' => 'voicemail',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+    last = Cti::Log.last
+    assert_equal(last.state, 'answer')
+    assert_equal(last.done, true)
+
+    travel 2.seconds
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'hangup',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+    last.reload
+    assert_equal(last.state, 'hangup')
+    assert_equal(last.done, false)
+  end
+
+  test 'forwarded should be marked as done' do
+
+    Cti::Log.process(
+      'cause' => '',
+      'event' => 'newCall',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+
+    last = Cti::Log.last
+    assert_equal(last.state, 'newCall')
+    assert_equal(last.done, false)
+
+    travel 2.seconds
+    Cti::Log.process(
+      'cause' => 'forwarded',
+      'event' => 'hangup',
+      'user' => 'user 1',
+      'from' => '491111222222',
+      'to' => '4930600000000',
+      'callId' => 'touch-loop-1',
+      'direction' => 'in',
+    )
+    last.reload
+    assert_equal(last.state, 'hangup')
+    assert_equal(last.done, true)
+  end
+
 end
