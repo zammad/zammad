@@ -125,7 +125,7 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
 
     full_text = @browser.find_element(css: '.content.active .article-new .articleNewEdit-body').text
 
-    match = full_text.match(/\nOn (.*?) Nicole Braun <nicole\.braun@zammad\.org> wrote:/)
+    match = full_text.match(/\nOn (.*?) Nicole Braun wrote:/)
     assert match
     assert match[1]
     assert Time.zone.parse(match[1])

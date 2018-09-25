@@ -152,7 +152,7 @@ class EmailReply extends App.Controller
       date = @date_format(article.created_at)
       name = article.updated_by.displayName()
       email = article.updated_by.email
-      quote_header = App.i18n.translateInline('On %s, %s <%s> wrote:', date, name, email)
+      quote_header = App.i18n.translateInline('On %s, %s wrote:', date, name)
       selected = "<div><br><br/></div><div><blockquote type=\'cite\'>#{quote_header}<br><br>#{selected}<br></blockquote></div><div><br></div>"
 
       # add selected text to body

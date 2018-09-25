@@ -32,7 +32,11 @@ File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.rea
       parsed_msg = m[:parsed].slice(*expected_msg.keys)
 
       expected_msg.each do |key, value|
-        assert_equal(value, parsed_msg[key], "parsed message data does not match test/data/mail/#{m[:source]}: #{key}")
+        if value.nil?
+          assert_nil(parsed_msg[key], "parsed message data does not match test/data/mail/#{m[:source]}: #{key}")
+        else
+          assert_equal(value, parsed_msg[key], "parsed message data does not match test/data/mail/#{m[:source]}: #{key}")
+        end
       end
 
       # assert: attachments in parsed message hash match metadata in raw hash
