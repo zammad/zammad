@@ -3,7 +3,7 @@
   <h3 title="<%- @Ti('Name') %>"><%= @user.displayName() %></h3>
 </div>
 <% for row in @userData: %>
-  <% if @user[row.name] || row.name is 'note': %>
+  <% if @user[row.name]? || row.name is 'note': %>
     <div class="sidebar-block">
     <label><%- @T(row.display) %></label>
     <% if row.tag isnt 'richtext': %>

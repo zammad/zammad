@@ -774,4 +774,145 @@ class AdminObjectManagerTest < TestCase
     object_manager_attribute_migrate
   end
 
+  # verify fix for issue #2233 - Boolean object set to false is not visible
+  def test_false_boolean_attributes_gets_displayed_for_organizations
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    object_manager_attribute_create(
+      data: {
+        object: 'Organization',
+        name: 'bool_test',
+        display: 'bool_test',
+        data_type: 'Boolean',
+        data_option: {
+          options: {
+            # rubocop:disable Lint/BooleanSymbol
+            true: 'YES',
+            false: 'NO',
+            # rubocop:enable Lint/BooleanSymbol
+          }
+        },
+      },
+    )
+    object_manager_attribute_create(
+      data: {
+        object: 'Organization',
+        name: 'text_test',
+        display: 'text_test',
+        data_type: 'Text',
+      },
+    )
+    object_manager_attribute_migrate
+
+    ticket_open_by_title(title: 'select')
+
+    click( css: '.content.active .tabsSidebar-tab[data-tab="organization"]' )
+    click( css: '.content.active .sidebar[data-tab="organization"] .js-actions .dropdown-toggle' )
+    click( css: '.content.active .sidebar[data-tab="organization"] .js-actions [data-type="organization-edit"]' )
+
+    modal_ready
+    select(css: '.content.active .modal select[name="bool_test"]', value: 'NO')
+    click( css: '.content.active .modal .js-submit' )
+    modal_disappear
+
+    watch_for(
+      css: '.content.active .sidebar[data-tab="organization"] .sidebar-content',
+      value: 'bool_test',
+    )
+    match_not(
+      css: '.content.active .sidebar[data-tab="organization"] .sidebar-content',
+      value: 'text_test',
+    )
+
+    object_manager_attribute_delete(
+      data: {
+        object: 'Organization',
+        name: 'bool_test',
+      },
+    )
+    object_manager_attribute_delete(
+      data: {
+        object: 'Organization',
+        name: 'text_test',
+      },
+    )
+    object_manager_attribute_migrate
+  end
+
+  # verify fix for issue #2233 - Boolean object set to false is not visible
+  def test_false_boolean_attributes_gets_displayed_for_users
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    object_manager_attribute_create(
+      data: {
+        object: 'User',
+        name: 'bool_test',
+        display: 'bool_test',
+        data_type: 'Boolean',
+        data_option: {
+          options: {
+            # rubocop:disable Lint/BooleanSymbol
+            true: 'YES',
+            false: 'NO',
+            # rubocop:enable Lint/BooleanSymbol
+          }
+        },
+      },
+    )
+    object_manager_attribute_create(
+      data: {
+        object: 'User',
+        name: 'text_test',
+        display: 'text_test',
+        data_type: 'Text',
+      },
+    )
+    object_manager_attribute_migrate
+
+    ticket_open_by_title(title: 'select')
+
+    click( css: '.content.active .tabsSidebar-tab[data-tab="customer"]' )
+    click( css: '.content.active .sidebar[data-tab="customer"] .js-actions .dropdown-toggle' )
+    click( css: '.content.active .sidebar[data-tab="customer"] .js-actions [data-type="customer-edit"]' )
+
+    modal_ready
+    select(css: '.content.active .modal select[name="bool_test"]', value: 'NO')
+    click( css: '.content.active .modal .js-submit' )
+    modal_disappear
+
+    watch_for(
+      css: '.content.active .sidebar[data-tab="customer"] .sidebar-content',
+      value: 'bool_test',
+    )
+    match_not(
+      css: '.content.active .sidebar[data-tab="customer"] .sidebar-content',
+      value: 'text_test',
+    )
+
+    object_manager_attribute_delete(
+      data: {
+        object: 'User',
+        name: 'bool_test',
+      },
+    )
+    object_manager_attribute_delete(
+      data: {
+        object: 'User',
+        name: 'text_test',
+      },
+    )
+    object_manager_attribute_migrate
+  end
 end
