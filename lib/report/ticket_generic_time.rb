@@ -169,8 +169,10 @@ returns
 
     assets = {}
     result[:ticket_ids].each do |ticket_id|
-      ticket_full = Ticket.find(ticket_id)
-      assets = ticket_full.assets(assets)
+      suppress(ActiveRecord::RecordNotFound) do
+        ticket_full = Ticket.find(ticket_id)
+        assets = ticket_full.assets(assets)
+      end
     end
     result[:assets] = assets
     result
