@@ -77,15 +77,24 @@ examples how to use
       return "\#{#{key} / no such method}"
     end
 
+    previous_object_refs = ''
     object_methods_s = ''
     object_methods.each do |method_raw|
 
       method = method_raw.strip
 
+      if method == 'value'
+        temp = object_refs
+        object_refs = display_value(previous_object_refs, method, object_methods_s, object_refs)
+        previous_object_refs = temp
+      end
+
       if object_methods_s != ''
         object_methods_s += '.'
       end
       object_methods_s += method
+
+      next if method == 'value'
 
       if object_methods_s == ''
         value = "\#{#{object_name}.#{object_methods_s} / no such method}"
@@ -115,6 +124,7 @@ examples how to use
         break
       end
       begin
+        previous_object_refs = object_refs
         object_refs = object_refs.send(method.to_sym, *arguments)
       rescue => e
         value = "\#{#{object_name}.#{object_methods_s} / #{e.message}}"
@@ -166,4 +176,16 @@ examples how to use
     true
   end
 
+  def display_value(object, method_name, previous_method_names, key)
+    return key if method_name != 'value' ||
+                  !key.instance_of?(String)
+
+    attributes = ObjectManager::Attribute
+                 .where(object_lookup_id: ObjectLookup.by_name(object.class.to_s))
+                 .where(name: previous_method_names.split('.').last)
+
+    return key if attributes.count.zero? || attributes.first.data_type != 'select'
+
+    attributes.first.data_option['options'][key] || key
+  end
 end

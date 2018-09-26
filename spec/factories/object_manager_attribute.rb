@@ -53,6 +53,32 @@ FactoryBot.define do
     end
   end
 
+  factory :object_manager_attribute_date, parent: :object_manager_attribute do
+    name        'date_attribute'
+    data_type   'date'
+    data_option do
+      {
+        'future' => true,
+        'past' => true,
+        'diff' => 24,
+        'null' => true,
+      }
+    end
+  end
+
+  factory :object_manager_attribute_datetime, parent: :object_manager_attribute do
+    name        'datetime_attribute'
+    data_type   'datetime'
+    data_option do
+      {
+        'future' => true,
+        'past' => true,
+        'diff' => 24,
+        'null' => true,
+      }
+    end
+  end
+
   factory :object_manager_attribute_select, parent: :object_manager_attribute do
     data_type   'select'
     data_option do
