@@ -2694,7 +2694,7 @@ Setting.create_if_not_exists(
   area: 'Models::Base',
   description: 'Defines the searchable models.',
   options: {},
-  state: [],
+  state: Models.searchable.map(&:to_s),
   preferences: {
     authentication: true,
   },
