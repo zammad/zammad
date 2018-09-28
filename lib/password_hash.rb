@@ -50,11 +50,10 @@ module PasswordHash
   end
 
   def argon2
-    return @argon2 if @argon2
-    @argon2 = Argon2::Password.new(secret: secret)
+    @argon2 ||= Argon2::Password.new(secret: secret)
   end
 
   def secret
-    Setting.get('application_secret')
+    @secret ||= Setting.get('application_secret')
   end
 end
