@@ -150,7 +150,7 @@ reload config settings
       return true
     end
     change_id = Cache.get('Setting::ChangeId')
-    if change_id == @@change_id
+    if @@change_id && change_id == @@change_id
       @@lookup_at = Time.zone.now # rubocop:disable Style/ClassVars
       #logger.debug "Setting.cache_valid?: cache still valid, #{@@change_id}/#{change_id}"
       return true
