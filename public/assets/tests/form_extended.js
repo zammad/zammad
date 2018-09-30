@@ -93,6 +93,8 @@ test('form checks', function() {
     priority1_id: '1',
     priority2_id: ['1', '2'],
     priority3_id: '2',
+    priority4_id: '2',
+    priority5_id: '1',
     working_hours: {
       mon: {
         active: true,
@@ -146,9 +148,11 @@ test('form checks', function() {
     el:        el,
     model:     {
       configure_attributes: [
-        { name: 'priority1_id', display: 'Priroity1', tag: 'select', relation: 'TicketPriority', null: true, options: {} },
-        { name: 'priority2_id', display: 'Priroity2', tag: 'select', multiple: true, relation: 'TicketPriority', null: true, options: {} },
-        { name: 'priority3_id', display: 'Priroity3', tag: 'select', relation: 'TicketPriority', null: true },
+        { name: 'priority1_id', display: 'Priroity1 (with active selection)', tag: 'select', relation: 'TicketPriority', null: true, options: {} },
+        { name: 'priority2_id', display: 'Priroity2 (with active and inactive selection)', tag: 'select', multiple: true, relation: 'TicketPriority', null: true, options: {} },
+        { name: 'priority3_id', display: 'Priroity3 (with inactive selection)', tag: 'select', relation: 'TicketPriority', null: true, options: {} },
+        { name: 'priority4_id', display: 'Priroity4 (with inactive selection)', tag: 'select', multiple: true, relation: 'TicketPriority', null: true, options: {} },
+        { name: 'priority5_id', display: 'Priroity5 (with active selection)', tag: 'select', multiple: true, relation: 'TicketPriority', null: true, options: {} },
         { name: 'escalation_times', display: 'Times', tag: 'sla_times', null: true },
         { name: 'working_hours',    display: 'Hours', tag: 'business_hours', null: true },
       ]
@@ -161,6 +165,8 @@ test('form checks', function() {
     priority1_id: '1',
     priority2_id: ['1', '2'],
     priority3_id: '2',
+    priority4_id: '2',
+    priority5_id: '1',
     first_response_time: '150',
     first_response_time_in_text: '02:30',
     solution_time: '',
@@ -219,6 +225,36 @@ test('form checks', function() {
   equal(el.find('[name="priority1_id"] option').length, 3)
   equal(el.find('[name="priority2_id"] option').length, 4)
   equal(el.find('[name="priority3_id"] option').length, 4)
+  equal(el.find('[name="priority4_id"] option').length, 4)
+  equal(el.find('[name="priority5_id"] option').length, 3)
+
+  // check priority1_id selection order
+  equal(el.find('[name="priority1_id"] option:nth-child(1)').text(), '1 low')
+  equal(el.find('[name="priority1_id"] option:nth-child(2)').text(), '3 high')
+  equal(el.find('[name="priority1_id"] option:nth-child(3)').text(), '4 very high')
+
+  // check priority2_id selection order
+  equal(el.find('[name="priority2_id"] option:nth-child(1)').text(), '1 low')
+  equal(el.find('[name="priority2_id"] option:nth-child(2)').text(), '2 normal')
+  equal(el.find('[name="priority2_id"] option:nth-child(3)').text(), '3 high')
+  equal(el.find('[name="priority2_id"] option:nth-child(4)').text(), '4 very high')
+
+  // check priority3_id selection order
+  equal(el.find('[name="priority3_id"] option:nth-child(1)').text(), '1 low')
+  equal(el.find('[name="priority3_id"] option:nth-child(2)').text(), '2 normal')
+  equal(el.find('[name="priority3_id"] option:nth-child(3)').text(), '3 high')
+  equal(el.find('[name="priority3_id"] option:nth-child(4)').text(), '4 very high')
+
+  // check priority4_id selection order
+  equal(el.find('[name="priority4_id"] option:nth-child(1)').text(), '1 low')
+  equal(el.find('[name="priority4_id"] option:nth-child(2)').text(), '2 normal')
+  equal(el.find('[name="priority4_id"] option:nth-child(3)').text(), '3 high')
+  equal(el.find('[name="priority4_id"] option:nth-child(4)').text(), '4 very high')
+
+  // check priority5_id selection order
+  equal(el.find('[name="priority5_id"] option:nth-child(1)').text(), '1 low')
+  equal(el.find('[name="priority5_id"] option:nth-child(2)').text(), '3 high')
+  equal(el.find('[name="priority5_id"] option:nth-child(3)').text(), '4 very high')
 
   // change sla times
   el.find('[name="first_response_time_in_text"]').val('0:30').trigger('blur')
@@ -229,6 +265,8 @@ test('form checks', function() {
     priority1_id: '1',
     priority2_id: ['1', '2'],
     priority3_id: '2',
+    priority4_id: '2',
+    priority5_id: '1',
     working_hours: {
       mon: {
         active: true,
@@ -564,7 +602,7 @@ test('form checks', function() {
   el.find('.js-attributeSelector').last().find('select').val('notification.email').trigger('change')
   el.find('[name="executions::notification.email::subject"]').val('some subject')
   el.find('[data-name="executions::notification.email::body"]').html('lala')
-  el.find('[data-name="executions::notification.email::recipient"] .js-option[data-value="ticket_owner"]').click()
+  el.find('[data-name="executions::notification.email::recipient"] .js-select.js-option[data-value="ticket_owner"]').click()
 
   var params = App.ControllerForm.params(el)
   var test_params = {
@@ -666,4 +704,49 @@ test('form checks', function() {
   }
   deepEqual(params, test_params, 'form param check')
 
+  $('#forms').append('<hr><h1>form 5</h1><form id="form5"></form>')
+  var el = $('#form5')
+  var defaults = {
+    condition: {
+      'article.body': {
+        operator: 'contains',
+        value: 'some body',
+      },
+    },
+    executions: {
+      'notification.email': {
+        recipient: 'ticket_customer',
+        subject: 'some subject',
+        body: "some<br>\nbody",
+      },
+    },
+  } 
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        { name: 'condition',  display: 'Conditions', tag: 'ticket_selector', null: true },
+        { name: 'executions', display: 'Executions', tag: 'ticket_perform_action', null: true, notification: true },
+      ]
+    },
+    params: defaults,
+    autofocus: true
+  })
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    condition: {
+      'article.body': {
+        operator: 'contains',
+        value: 'some body',
+      },
+    },
+    executions: {
+      'notification.email': {
+        recipient: 'ticket_customer',
+        subject: 'some subject',
+        body: "some<br>\nbody",
+      },
+    },
+  }
+  deepEqual(params, test_params, 'form article body param check')
 });

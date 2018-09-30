@@ -203,7 +203,7 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
 
     # check if organization has been touched
     organization1 = Organization.find(organization1.id)
-    assert_equal(organization1_updated_at.to_s, ticket.updated_at.to_s)
+    assert_in_delta(organization1_updated_at, ticket.updated_at, 1.second)
 
     travel 4.seconds
 

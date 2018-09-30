@@ -2,6 +2,10 @@
 module Ticket::Search
   extend ActiveSupport::Concern
 
+  included do
+    include HasSearchSortable
+  end
+
   # methods defined here are going to extend the class, not the instance of it
   class_methods do
 
@@ -84,6 +88,15 @@ search tickets via database
     },
     limit: 15,
     offset: 100,
+
+    # sort single column
+    sort_by: 'created_at',
+    order_by: 'asc',
+
+    # sort multiple columns
+    sort_by: [ 'created_at', 'updated_at' ],
+    order_by: [ 'asc', 'desc' ],
+
     full: false,
   )
 
@@ -105,6 +118,12 @@ returns
       if params[:full] == true || params[:full] == 'true' || !params.key?(:full)
         full = true
       end
+
+      # check sort
+      sort_by = search_get_sort_by(params, 'updated_at')
+
+      # check order
+      order_by = search_get_order_by(params, 'desc')
 
       # try search index backend
       if condition.blank? && SearchIndexBackend.enabled?
@@ -135,7 +154,7 @@ returns
 
         query_extention['bool']['must'].push access_condition
 
-        items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention, offset)
+        items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention, offset, sort_by, order_by)
         if !full
           ids = []
           items.each do |item|
@@ -157,22 +176,25 @@ returns
 
       # do query
       # - stip out * we already search for *query* -
+
+      order_select_sql = search_get_order_select_sql(sort_by, order_by, 'tickets.updated_at')
+      order_sql        = search_get_order_sql(sort_by, order_by, 'tickets.updated_at DESC')
       if query
         query.delete! '*'
-        tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
+        tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
                             .where(access_condition)
                             .where('(tickets.title LIKE ? OR tickets.number LIKE ? OR ticket_articles.body LIKE ? OR ticket_articles.from LIKE ? OR ticket_articles.to LIKE ? OR ticket_articles.subject LIKE ?)', "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%" )
                             .joins(:articles)
-                            .order('tickets.created_at DESC')
+                            .order(order_sql)
                             .offset(offset)
                             .limit(limit)
       else
         query_condition, bind_condition, tables = selector2sql(condition)
-        tickets_all = Ticket.select('DISTINCT(tickets.id), tickets.created_at')
+        tickets_all = Ticket.select("DISTINCT(tickets.id), #{order_select_sql}")
                             .joins(tables)
                             .where(access_condition)
                             .where(query_condition, *bind_condition)
-                            .order('tickets.created_at DESC')
+                            .order(order_sql)
                             .offset(offset)
                             .limit(limit)
       end
@@ -193,4 +215,5 @@ returns
       tickets
     end
   end
+
 end

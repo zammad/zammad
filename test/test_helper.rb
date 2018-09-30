@@ -49,6 +49,10 @@ class ActiveSupport::TestCase
     travel_back
   end
 
+  teardown do
+    travel_back
+  end
+
   # Add more helper methods to be used by all tests here...
   def email_notification_count(type, recipient)
 

@@ -2,7 +2,7 @@
 require 'browser_test_helper'
 
 class CustomerTicketCreateTest < TestCase
-  def test_customer_ticket_create
+  def test_customer_ticket_create_and_verify_state_after_update
     @browser = browser_instance
     login(
       username: 'nicole.braun@zammad.org',
@@ -47,6 +47,12 @@ class CustomerTicketCreateTest < TestCase
       no_quote: true,
     )
 
+    # verify if the state has changed to open
+    match(
+      css: '.content.active .sidebar [name="state_id"]',
+      value: 'new',
+    )
+
     # update ticket
     set(
       css: '.content.active [data-name="body"]',
@@ -63,6 +69,12 @@ class CustomerTicketCreateTest < TestCase
     watch_for(
       css: '.content.active div.ticket-article',
       value: 'some body 1234 äöüß',
+    )
+
+    # check if the ticket state is new after update by customer
+    match(
+      css: '.content.active .sidebar [name="state_id"]',
+      value: 'new',
     )
 
     # now we want to verify the default followup state
@@ -153,7 +165,7 @@ class CustomerTicketCreateTest < TestCase
     )
   end
 
-  def test_customer_ticket_create_relogin_with_agent_ticket_crearte
+  def test_customer_ticket_create_relogin_with_agent_ticket_create
     @browser = browser_instance
     login(
       username: 'nicole.braun@zammad.org',

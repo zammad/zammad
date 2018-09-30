@@ -55,20 +55,29 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
 
     travel 120.minutes
 
+    client1.time_now = Time.zone.now.to_i
     assert(client1.asset_needed_by_updated_at?(ticket.class.to_s, ticket.id, ticket.updated_at))
     client1.asset_push(ticket, {})
+
+    client2.time_now = Time.zone.now.to_i
     assert(client2.asset_needed_by_updated_at?(ticket.class.to_s, ticket.id, ticket.updated_at))
     client2.asset_push(ticket, {})
 
+    client1.time_now = Time.zone.now.to_i
     assert_not(client1.asset_needed_by_updated_at?(ticket.class.to_s, ticket.id, ticket.updated_at))
     client1.asset_push(ticket, {})
+
+    client2.time_now = Time.zone.now.to_i
     assert_not(client2.asset_needed_by_updated_at?(ticket.class.to_s, ticket.id, ticket.updated_at))
     client2.asset_push(ticket, {})
 
     ticket.touch
 
+    client1.time_now = Time.zone.now.to_i
     assert(client1.asset_needed_by_updated_at?(ticket.class.to_s, ticket.id, ticket.updated_at))
     client1.asset_push(ticket, {})
+
+    client2.time_now = Time.zone.now.to_i
     assert(client2.asset_needed_by_updated_at?(ticket.class.to_s, ticket.id, ticket.updated_at))
     client2.asset_push(ticket, {})
 
@@ -77,8 +86,11 @@ class SessionBasicTicketTest < ActiveSupport::TestCase
 
     travel 125.minutes
 
+    client1.time_now = Time.zone.now.to_i
     assert(client1.asset_needed?(ticket))
     client1.asset_push(ticket, {})
+
+    client2.time_now = Time.zone.now.to_i
     assert(client2.asset_needed?(ticket))
     client2.asset_push(ticket, {})
 

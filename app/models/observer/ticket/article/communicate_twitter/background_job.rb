@@ -105,7 +105,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
 
   def log_error(local_record, message)
     local_record.preferences['delivery_status'] = 'fail'
-    local_record.preferences['delivery_status_message'] = message
+    local_record.preferences['delivery_status_message'] = message.encode!('UTF-8', 'UTF-8', invalid: :replace, replace: '?')
     local_record.preferences['delivery_status_date'] = Time.zone.now
     local_record.save
     Rails.logger.error message

@@ -1,6 +1,7 @@
 class Sessions::Backend::Base
 
   attr_writer :user
+  attr_writer :time_now
 
   def initialize(user, asset_lookup, client, client_id, ttl = 10)
     @user         = user
@@ -9,6 +10,7 @@ class Sessions::Backend::Base
     @ttl          = ttl
     @asset_lookup = asset_lookup
     @last_change  = nil
+    @time_now     = Time.zone.now.to_i
   end
 
   def asset_push(record, assets)
@@ -16,7 +18,7 @@ class Sessions::Backend::Base
     @asset_lookup[class_name] ||= {}
     @asset_lookup[class_name][record.id] = {
       updated_at: record.updated_at,
-      pushed_at: Time.zone.now,
+      pushed_at: @time_now,
     }
     record.assets(assets)
   end
@@ -32,7 +34,7 @@ class Sessions::Backend::Base
     return true if @asset_lookup[class_name][record_id].blank?
     return true if @asset_lookup[class_name][record_id][:updated_at] < updated_at
     return true if @asset_lookup[class_name][record_id][:pushed_at].blank?
-    return true if @asset_lookup[class_name][record_id][:pushed_at] < Time.zone.now - 2.hours
+    return true if @asset_lookup[class_name][record_id][:pushed_at] < @time_now - 7200
     false
   end
 

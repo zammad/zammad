@@ -545,6 +545,9 @@ class App.ControllerNavSidbar extends App.Controller
       sidebar: @$('.sidebar').scrollTop()
 
 class App.GenericHistory extends App.ControllerModal
+  @extend App.PopoverProvidable
+  @registerPopovers 'User'
+
   buttonClose: true
   buttonCancel: false
   buttonSubmit: false
@@ -568,7 +571,7 @@ class App.GenericHistory extends App.ControllerModal
     content
 
   onShown: =>
-    @userPopups()
+    @renderPopovers()
 
   sortorder: =>
     @items = @items.reverse()

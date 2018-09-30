@@ -8,6 +8,7 @@ module CreatesTicketArticles
     # create article if given
     form_id = params[:form_id]
     params.delete(:form_id)
+    subtype = params.delete(:subtype)
 
     # check min. params
     raise Exceptions::UnprocessableEntity, 'Need at least article: { body: "some text" }' if !params[:body]
@@ -59,6 +60,10 @@ module CreatesTicketArticles
         o_id: form_id,
       )
     end
+
+    # set subtype of present
+    article.preferences[:subtype] = subtype if subtype.present?
+
     article.save!
 
     # store inline attachments
@@ -89,14 +94,17 @@ module CreatesTicketArticles
           preferences[store_key] = attachment[key]
         end
 
-        if !attachment[:data].match?(%r{^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$})
+        begin
+          base64_data = attachment[:data].gsub(/[\r\n]/, '')
+          attachment_data = Base64.strict_decode64(base64_data)
+        rescue ArgumentError => e
           raise Exceptions::UnprocessableEntity, "Invalid base64 for attachment with index '#{index}'"
         end
 
         Store.add(
           object: 'Ticket::Article',
           o_id: article.id,
-          data: Base64.decode64(attachment[:data]),
+          data: attachment_data,
           filename: attachment[:filename],
           preferences: preferences,
         )
@@ -113,6 +121,12 @@ module CreatesTicketArticles
     end
 
     return article if form_id.blank?
+
+    # clear in-progress state from taskbar
+    Taskbar
+      .where(user_id: current_user.id)
+      .first { |taskbar| taskbar.persisted_form_id == form_id }
+      &.update!(state: {})
 
     # remove attachments from upload cache
     Store.remove(

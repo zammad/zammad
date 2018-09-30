@@ -355,6 +355,39 @@ test('table test', function() {
   el.find('tbody > tr:nth-child(5) > td:nth-child(1) label').click()
   equal(el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').prop('checked'), true, 'check row 5')
   equal(el.find('tbody > tr:nth-child(5) > td:nth-child(1) input').val(), '1', 'check row 5')
+
+
+  $('#table').append('<hr><h1>table Group By Direction DESC</h1><div id="table6"></div>')
+  el = $('#table6')
+  var clickCheckbox = function (id, checked, e) {
+    console.log('clickCheckbox', id, checked, e.target)
+  };
+  new App.ControllerTable({
+    el:             el,
+    overview:       ['number', 'title', 'owner', 'customer', 'priority', 'group', 'state', 'created_at'],
+    model:          App.Ticket,
+    objects:        App.Ticket.search({sortBy:'created_at', order: 'DESC'}),
+    groupBy:        'priority',
+    groupDirection: 'DESC',
+  })
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), '2 normal', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(3) > td:nth-child(1)').text().trim(), '1 niedrig', 'check row 3')
+
+  $('#table').append('<hr><h1>table Group By Direction ASC</h1><div id="table7"></div>')
+  el = $('#table7')
+  var clickCheckbox = function (id, checked, e) {
+    console.log('clickCheckbox', id, checked, e.target)
+  };
+  new App.ControllerTable({
+    el:             el,
+    overview:       ['number', 'title', 'owner', 'customer', 'priority', 'group', 'state', 'created_at'],
+    model:          App.Ticket,
+    objects:        App.Ticket.search({sortBy:'created_at', order: 'DESC'}),
+    groupBy:        'priority',
+    groupDirection: 'ASC',
+  })
+  equal(el.find('tbody > tr:nth-child(1) > td:nth-child(1)').text().trim(), '1 niedrig', 'check row 1')
+  equal(el.find('tbody > tr:nth-child(4) > td:nth-child(1)').text().trim(), '2 normal', 'check row 4')
 });
 
 test('table test 2.1', function() {

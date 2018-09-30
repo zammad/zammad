@@ -85,6 +85,10 @@ class App extends Spine.Controller
     S: (key) ->
       App.Session.get(key)
 
+    # define view helper for rendering partial views
+    V: (name, params) ->
+      App.view(name)(params)
+
     # define address line helper
     AddressLine: (line) ->
       return '' if !line

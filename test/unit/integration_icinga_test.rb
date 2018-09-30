@@ -745,5 +745,52 @@ IPv4:	 192.168.1.8
     assert(ticket_1.preferences)
     assert(ticket_1.preferences['icinga'])
     assert_equal('DOWN', ticket_1.preferences['icinga']['state'])
+
+  end
+
+  test 'match also values without new line at the end of a line' do
+
+    email_raw_string = 'Return-Path: <icinga2@monitoring.example.com>
+Date: Tue, 21 Aug 2018 03:05:01 +0200
+To: hostmaster@example.com
+Subject: [PROBLEM] OS Updates (yum) on host.example.com is CRITICAL!
+User-Agent: Heirloom mailx 12.5 7/5/10
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <20180821010501.4A182846DBA@monitoring.example.com>
+From: icinga2@monitoring.example.com (icinga)
+
+***** Service Monitoring on monitoring.example.com *****
+
+OS Updates (yum) on host.example.com is CRITICAL!
+
+Info:    CHECK_UPDATES CRITICAL - 12 non-critical updates available=20
+audit-libs.x86_64
+dracut.x86_64
+initscripts.x86_64
+kpartx.x86_64
+libblkid.x86_64
+libmount.x86_64
+libuuid.x86_64
+mariadb-libs.x86_64
+systemd.x86_64
+systemd-libs.x86_64
+systemd-sysv.x86_64
+util-linux.x86_64
+
+When:    2018-08-21 03:05:01 +0200
+Service: OS Updates (yum)
+Host:    host.example.com'
+
+    ticket_1, article_p, user_p, mail = Channel::EmailParser.new.process({}, email_raw_string)
+    assert_equal('new', ticket_1.state.name)
+    assert(ticket_1.preferences)
+    assert(ticket_1.preferences['icinga'])
+    assert_equal('CRITICAL', ticket_1.preferences['icinga']['state'])
+    assert_equal('CHECK_UPDATES CRITICAL - 12 non-critical updates available', ticket_1.preferences['icinga']['info'])
+    assert_equal('OS Updates (yum)', ticket_1.preferences['icinga']['service'])
+    assert_equal('host.example.com', ticket_1.preferences['icinga']['host'])
+
   end
 end

@@ -4,83 +4,83 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
-# Ignore .swp files
-.*.swp
+# Configuration ================================================================
+# These files will differ from one user to another;
+# committing them may cause Zammad to behave unexpectedly on other machines
 
-# Ignore bundler config
-/.bundle
+# Zammad -----------------------------------------------------------------------
 
-# Ignore mac stuff
-.DS_Store
-
-# Ignore Rubymine config
-/.idea
-
-# Ignore .project files
-/.project
-
-# Ignore .rbenv-vars
-/.rbenv-vars
-
-# exclude the figaro ENV setting helper file - run 'bundle exec figaro install' for creating your own
-# see: https://github.com/laserlemon/figaro
-# Ignore application configuration
-/config/application.yml
-
-# Ignore .envrc for direnv
-/.envrc
-
-# Ignore database config
+# database (copy from config/database/database.yml, or use `rails bs:init`)
 /config/database.yml
 
-# Ignore translation cache files
+# Third-Party ------------------------------------------------------------------
+# The config files / dev tools listed below are optional
+# and may not be present on most users' machines
+
+# Bundler
+/.bundle
+/Gemfile.local
+
+# Clutter ======================================================================
+# These files are automatically generated;
+# in most cases, committing them won't do anything other than bloat the repo
+
+# Zammad -----------------------------------------------------------------------
+
+# database files
+/db/*.sqlite3
+/db/schema.rb
+
+# translation cache files
 /config/locales*.yml
 /config/translations/*.yml
 
-# Ignore generated documentation
-/doc
-
-# Ignore coverage stuff
-/coverage
-
-# Ignore the default SQLite database.
-/db/*.sqlite3
-
-# Ignore local changes to schema.rb (e. g. through extentions)
-/db/schema.rb
-
-# Ignore custom gem file
-/Gemfile.local
-
-# Ignore node modules
+# NPM / Yarn
 /node_modules
 
-# Ignore all logfiles and tempfiles.
+# logfiles and tempfiles
 /log
 /public/assets/*.*
 /public/assets/app
 /public/assets/custom
 /public/assets/chat/node_modules
 /tmp/*
+!/tmp/pids
 /tmp/pids/*
+!/tmp/pids/.keep
 /storage/fs
 
-# except /tmp/pids/ which is needed for certain Zammad processes
-!/tmp
-!/tmp/pids
-!/tmp/pids/.keep
-
-# ignore doorkeeper auto generated folder
+# doorkeeper (OAuth 2)
 /public/assets/doorkeeper
 
-# ignore all automatically downloaded images except the default ones
+# images
 /public/assets/images/*
-!/public/assets/images/icons
+!/public/assets/images/icons/
 !/public/assets/images/avatar-bg.png
 !/public/assets/images/chat-demo-avatar.png
 !/public/assets/images/eyedropper.gif
 !/public/assets/images/icons.svg
 !/public/assets/images/logo.svg
 
-# ignore byebug history
+# Third-Party ------------------------------------------------------------------
+
+# macOS
+.DS_Store
+
+# vim
+.*.sw[pon]
+
+# RubyMine
+/.idea
+
+# Eclipse
+/.project
+
+# Byebug
 /.byebug_history
+
+# SimpleCov
+/coverage
+
+# RDoc / YARD
+/doc

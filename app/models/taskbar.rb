@@ -16,8 +16,9 @@ class Taskbar < ApplicationModel
     return false if state.blank?
     state.each_value do |value|
       if value.is_a? Hash
-        value.each_value do |value1|
+        value.each do |key1, value1|
           next if value1.blank?
+          next if key1 == 'form_id'
           return true
         end
       else
@@ -28,7 +29,36 @@ class Taskbar < ApplicationModel
     false
   end
 
+  def attributes_with_association_names
+    add_attachments_to_attributes(super)
+  end
+
+  def attributes_with_association_ids
+    add_attachments_to_attributes(super)
+  end
+
+  def as_json(options = {})
+    add_attachments_to_attributes(super)
+  end
+
+  # form_id is saved directly in a new ticket, but inside of the article when updating an existing ticket
+  def persisted_form_id
+    state&.dig(:form_id) || state&.dig(:article, :form_id)
+  end
+
   private
+
+  def attachments
+    return [] if persisted_form_id.blank?
+
+    Store.list(object: 'UploadCache', o_id: persisted_form_id)
+  end
+
+  def add_attachments_to_attributes(attributes)
+    attributes.tap do |result|
+      result['attachments'] = attachments.map(&:attributes_for_display)
+    end
+  end
 
   def update_last_contact
     return true if local_update

@@ -7,6 +7,7 @@ class ExternalCredential::Twitter
 
   def self.request_account_to_link(credentials = {})
     external_credential = ExternalCredential.find_by(name: 'twitter')
+    raise Exceptions::UnprocessableEntity, 'No twitter app configured!' if !external_credential
     if !credentials[:consumer_key]
       credentials[:consumer_key] = external_credential.credentials['consumer_key']
     end

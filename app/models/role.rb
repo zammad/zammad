@@ -16,6 +16,8 @@ class Role < ApplicationModel
   before_create  :validate_permissions, :check_default_at_signup_permissions
   before_update  :validate_permissions, :last_admin_check_by_attribute, :validate_agent_limit_by_attributes, :check_default_at_signup_permissions
 
+  # ignore Users because this will lead to huge
+  # results for e.g. the Customer role
   association_attributes_ignored :users
 
   activity_stream_permission 'admin.role'
@@ -184,7 +186,7 @@ returns
   end
 
   def validate_agent_limit_by_attributes
-    return true if !Setting.get('system_agent_limit')
+    return true if Setting.get('system_agent_limit').blank?
     return true if !will_save_change_to_attribute?('active')
     return true if active != true
     return true if !with_permission?('ticket.agent')
@@ -192,19 +194,19 @@ returns
     currents = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().pluck(:id)
     news = User.joins(:roles).where(roles: { id: id }, users: { active: true }).distinct().pluck(:id)
     count = currents.concat(news).uniq.count
-    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
+    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
     true
   end
 
   def validate_agent_limit_by_permission(permission)
-    return true if !Setting.get('system_agent_limit')
+    return true if Setting.get('system_agent_limit').blank?
     return true if active != true
     return true if permission.active != true
     return true if permission.name != 'ticket.agent'
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent' }, roles: { active: true }).pluck(:id)
     ticket_agent_role_ids.push(id)
     count = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count
-    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit')
+    raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
     true
   end
 

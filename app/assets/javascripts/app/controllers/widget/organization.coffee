@@ -1,4 +1,7 @@
 class App.WidgetOrganization extends App.Controller
+  @extend App.PopoverProvidable
+  @registerPopovers 'User'
+
   events:
     'focusout [contenteditable]': 'update'
 
@@ -26,10 +29,10 @@ class App.WidgetOrganization extends App.Controller
         name = nameNew
 
       # add to show if value exists
-      if ( organization[name] || attributeConfig.tag is 'richtext' ) && attributeConfig.shown
+      if ( organization[name]? || attributeConfig.tag is 'richtext' ) && attributeConfig.shown
 
         # do not show firstname and lastname / already show via diplayName()
-        if name isnt 'name'
+        if name isnt 'name' && organization[name] isnt ''
           organizationData.push attributeConfig
 
     # insert userData
@@ -44,16 +47,7 @@ class App.WidgetOrganization extends App.Controller
       maxlength: 250
     )
 
-    # enable user popups
-    @userPopups()
-
-    ###
-    @userTicketPopups(
-      selector: '.user-tickets'
-      user_id:  user.id
-      position: 'right'
-    )
-    ###
+    @renderPopovers()
 
   update: (e) =>
     name  = $(e.target).attr('data-name')

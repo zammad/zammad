@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Translation do
 
+  Translation.where(locale: 'de-de').destroy_all
+  Translation.sync('de-de')
+
   context 'default translations' do
-    Translation.reset('de-de')
-    Translation.sync('de-de')
 
     it 'en with existing word' do
       expect(Translation.translate('en', 'New')).to eq('New')
@@ -28,13 +29,82 @@ RSpec.describe Translation do
 
   end
 
-  context 'custom translation tests' do
-    Translation.where(locale: 'de-de').destroy_all
-    Translation.sync('de-de')
+  context 'remote_translation_need_update? tests' do
 
-    locale = 'de-de'
+    it 'translation is still the same' do
+      translation = Translation.where(locale: 'de-de', format: 'string').last
+      translations = Translation.where(locale: 'de-de').pluck(:id, :locale, :source, :format, :target, :target_initial).to_a
+      expect(
+        Translation.remote_translation_need_update?(
+          {
+            'source' => translation.source,
+            'format' => translation.format,
+            'locale' => translation.locale,
+            'target' => translation.target,
+            'target_initial' => translation.target_initial,
+          }, translations
+        )
+      ).to be false
+    end
+
+    it 'translation target has locally changed' do
+      translation = Translation.where(locale: 'de-de', format: 'string').last
+      translation.target = 'some new translation'
+      translation.save!
+      translations = Translation.where(locale: 'de-de').pluck(:id, :locale, :source, :format, :target, :target_initial).to_a
+      expect(
+        Translation.remote_translation_need_update?(
+          {
+            'source' => translation.source,
+            'format' => translation.format,
+            'locale' => translation.locale,
+            'target' => translation.target,
+            'target_initial' => translation.target_initial,
+          }, translations
+        )
+      ).to be false
+    end
+
+    it 'translation target has remotely changed' do
+      translation = Translation.where(locale: 'de-de', format: 'string').last
+      translations = Translation.where(locale: 'de-de').pluck(:id, :locale, :source, :format, :target, :target_initial).to_a
+      (result, translation_result) = Translation.remote_translation_need_update?(
+        {
+          'source' => translation.source,
+          'format' => translation.format,
+          'locale' => translation.locale,
+          'target' => 'some new translation by remote',
+          'target_initial' => 'some new translation by remote',
+        }, translations
+      )
+      expect(result).to be true
+      expect(translation_result.attributes).to eq translation.attributes
+    end
+
+    it 'translation target has remotely and locally changed' do
+      translation = Translation.where(locale: 'de-de', format: 'string').last
+      translation.target = 'some new translation'
+      translation.save!
+      translations = Translation.where(locale: 'de-de').pluck(:id, :locale, :source, :format, :target, :target_initial).to_a
+      expect(
+        Translation.remote_translation_need_update?(
+          {
+            'source' => translation.source,
+            'format' => translation.format,
+            'locale' => translation.locale,
+            'target' => 'some new translation by remote',
+            'target_initial' => 'some new translation by remote',
+          }, translations
+        )
+      ).to be false
+    end
+
+  end
+
+  context 'custom translation tests' do
 
     it 'cycle of change and reload translation' do
+      locale = 'de-de'
 
       # check for non existing custom changes
       list = Translation.lang(locale)
@@ -119,6 +189,20 @@ RSpec.describe Translation do
       expect(File.exist?(file)).to be false
       Translation.fetch(locale)
       expect(File.exist?(file)).to be true
+    end
+
+  end
+
+  context 'sync duplicate tests' do
+
+    it 'check duplication of entries' do
+      Translation.where(locale: 'de-de').destroy_all
+      Translation.sync('de-de')
+      translation_count = Translation.where(locale: 'de-de').count
+      Translation.sync('de-de')
+      expect(
+        Translation.where(locale: 'de-de').count
+      ).to be translation_count
     end
 
   end

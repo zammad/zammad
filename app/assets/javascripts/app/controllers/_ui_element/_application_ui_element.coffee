@@ -52,11 +52,9 @@ class App.UiElement.ApplicationUiElement
           row.name = App.i18n.translateInline(row.name)
         attribute.options.push row
     else
-      order = _.sortBy(
-        _.keys(selection), (item) ->
-          return '' if !selection[item] || !selection[item].toString
-          selection[item].toString().toLowerCase()
-      )
+      forceString = (s) ->
+        return if !selection[s] || !selection[s].toString then '' else selection[s].toString()
+      order = _.keys(selection).sort( (a, b) -> forceString(a).localeCompare(forceString(b)) )
       for key in order
         name_new = selection[key]
         if attribute.translate

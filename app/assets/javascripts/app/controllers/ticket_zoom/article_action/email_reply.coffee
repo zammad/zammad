@@ -30,11 +30,12 @@ class EmailReply extends App.Controller
 
       # remove system addresses
       localAddresses = App.EmailAddress.all()
-      forgeinRecipients = []
+      foreignRecipients = []
       recipientUsed = {}
       for recipient in recipients
         if !_.isEmpty(recipient.address)
           localRecipientAddress = recipient.address.toString().toLowerCase()
+
           if !recipientUsed[localRecipientAddress]
             recipientUsed[localRecipientAddress] = true
             localAddress = false
@@ -43,10 +44,10 @@ class EmailReply extends App.Controller
                 recipientUsed[localRecipientAddress] = true
                 localAddress = true
             if !localAddress
-              forgeinRecipients.push recipient
+              foreignRecipients.push recipient
 
       # check if reply all is neede
-      if forgeinRecipients.length > 1
+      if foreignRecipients.length > 1
         actions.push {
           name: 'reply all'
           type: 'emailReplyAll'
@@ -148,7 +149,11 @@ class EmailReply extends App.Controller
         selected = App.Utils.text2html(selected)
 
     if selected
-      selected = "<div><br><br/></div><div><blockquote type=\"cite\">#{selected}</blockquote></div><div><br></div>"
+      date = @date_format(article.created_at)
+      name = article.updated_by.displayName()
+      email = article.updated_by.email
+      quote_header = App.i18n.translateInline('On %s, %s wrote:', date, name)
+      selected = "<div><br><br/></div><div><blockquote type=\'cite\'>#{quote_header}<br><br>#{selected}<br></blockquote></div><div><br></div>"
 
       # add selected text to body
       body = selected + body
@@ -156,6 +161,8 @@ class EmailReply extends App.Controller
     articleNew.body = body
 
     type = App.TicketArticleType.findByAttribute(name:'email')
+
+    articleNew.subtype = 'reply'
 
     App.Event.trigger('ui::ticket::setArticleType', {
       ticket: ticket
@@ -165,6 +172,15 @@ class EmailReply extends App.Controller
     })
 
     true
+
+  @date_format: (date_string) ->
+    options = {
+      weekday: 'long'
+      month: 'long'
+      day: 'numeric'
+      year: 'numeric'
+    }
+    new Date(date_string).toLocaleTimeString('en-US', options)
 
   @emailForward: (ticket, article, ui) ->
 
@@ -187,11 +203,13 @@ class EmailReply extends App.Controller
 
     if ui.Config.get('ui_ticket_zoom_article_email_subject')
       if _.isEmpty(article.subject)
-        articleNew.subject = "FW: #{ticket.title}"
+        articleNew.subject = ticket.title
       else
-        articleNew.subject = "FW: #{article.subject}"
+        articleNew.subject = article.subject
 
     type = App.TicketArticleType.findByAttribute(name:'email')
+
+    articleNew.subtype = 'forward'
 
     App.Event.trigger('ui::ticket::setArticleType', {
       ticket: ticket
@@ -278,6 +296,7 @@ class EmailReply extends App.Controller
         App.Utils.htmlStrip(signature)
         if signaturePosition is 'top'
           body.prepend(signature)
+          body.prepend('<br>')
         else
           body.append(signature)
         ui.$('[data-name=body]').replaceWith(body)

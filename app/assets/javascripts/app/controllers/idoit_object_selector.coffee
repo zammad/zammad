@@ -22,11 +22,11 @@ class App.IdoitObjectSelector extends App.ControllerModal
 
         @contentInline.find('.js-typeSelect').html(@renderTypeSelector(result))
 
-        @contentInline.filter('.js-search').on('change', 'select, input', (e) =>
+        @contentInline.on('change', 'input.js-shadow', (e) =>
           params = @formParam(e.target)
           @search(params)
         )
-        @contentInline.filter('.js-search').on('keyup', 'input', (e) =>
+        @contentInline.on('keyup', 'input.js-searchField', (e) =>
           params = @formParam(e.target)
           @search(params)
         )

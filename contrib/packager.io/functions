@@ -228,11 +228,17 @@ function create_webserver_config () {
 function setup_elasticsearch () {
   echo "# Configuring Elasticsearch..."
 
+  ES_CONNECTION="$(zammad run rails r "puts Setting.get('es_url')" 2>> /dev/null)"
+
+  if [ -z "${ES_CONNECTION}" ]; then
+    ES_CONNECTION="http://127.0.0.1:9200"
+  fi
+
   if [ -n "$(/usr/share/elasticsearch/bin/elasticsearch-plugin list | grep mapper-attachments)" ]; then
     REBUILD_ES_SEARCHINDEX="yes"
 
-    echo "# Deleting old zammad_production elasticsearch index..."
-    curl -XDELETE "${ES_CONNECTION:-http://127.0.0.1:9200}/zammad_production"
+    echo "# Deleting old elasticsearch index..."
+    zammad run rake searchindex:drop
 
     yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s remove mapper-attachments
 
@@ -242,21 +248,29 @@ function setup_elasticsearch () {
 
   yes | /usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-attachment
 
-  ${INIT_CMD} restart elasticsearch
+  if [ "${ES_CONNECTION}" == "http://127.0.0.1:9200" ]; then
+    ${INIT_CMD} restart elasticsearch
+  else
+    echo -e "\n It seems you're running an external Elasticsearch server on ${ES_CONNECTION}"
+    echo -e "Stopping local elasticsearch server..."
+    ${INIT_CMD} stop elasticsearch
+    echo -e "\n Please get sure to install the 'ingest-attachment' plugin on your Elasticsearch server by:"
+    echo -e "/usr/share/elasticsearch/bin/elasticsearch-plugin -s install ingest-attachment"
+    echo -e "\nAfter this you might need to rebuild the searchindex by:"
+    echo -e "zammad run rake searchindex:rebuild"
+  fi
 }
 
 function elasticsearch_searchindex_rebuild () {
-  zammad run rails r "Setting.set('es_url', \"${ES_CONNECTION:-http://127.0.0.1:9200}\")"
+  zammad run rails r "Setting.set('es_url', \"${ES_CONNECTION}\")"
 
   if [ "${REBUILD_ES_SEARCHINDEX}" == "yes" ]; then
     echo "# (Re)building Elasticsearch searchindex..."
-
     nohup zammad run rake searchindex:rebuild &> ${ZAMMAD_DIR}/log/searchindex-rebuild.log &
   fi
 }
 
 function update_or_install () {
-  setup_elasticsearch
 
   if [ -f ${ZAMMAD_DIR}/config/database.yml ]; then
     update_database
@@ -278,6 +292,8 @@ function update_or_install () {
 
     initialise_database
   fi
+
+  setup_elasticsearch
 
   elasticsearch_searchindex_rebuild
 }

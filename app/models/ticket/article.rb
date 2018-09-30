@@ -238,16 +238,7 @@ returns
 
   def attributes_with_association_names
     attributes = super
-    attributes['attachments'] = []
-    attachments.each do |attachment|
-      item = {
-        id: attachment['id'],
-        filename: attachment['filename'],
-        size: attachment['size'],
-        preferences: attachment['preferences'],
-      }
-      attributes['attachments'].push item
-    end
+    add_attachments_to_attributes(attributes)
     Ticket::Article.insert_urls(attributes)
   end
 
@@ -266,16 +257,7 @@ returns
 
   def attributes_with_association_ids
     attributes = super
-    attributes['attachments'] = []
-    attachments.each do |attachment|
-      item = {
-        id: attachment['id'],
-        filename: attachment['filename'],
-        size: attachment['size'],
-        preferences: attachment['preferences'],
-      }
-      attributes['attachments'].push item
-    end
+    add_attachments_to_attributes(attributes)
     if attributes['body'] && attributes['content_type'] =~ %r{text/html}i
       attributes['body'] = HtmlSanitizer.dynamic_image_size(attributes['body'])
     end
@@ -283,6 +265,11 @@ returns
   end
 
   private
+
+  def add_attachments_to_attributes(attributes)
+    attributes['attachments'] = attachments.map(&:attributes_for_display)
+    attributes
+  end
 
   # strip not wanted chars
   def check_subject

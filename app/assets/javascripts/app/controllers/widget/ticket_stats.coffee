@@ -138,6 +138,9 @@ class App.TicketStats extends App.Controller
       )
 
 class App.TicketStatsList extends App.Controller
+  @extend App.PopoverProvidable
+  @registerPopovers 'Ticket'
+
   events:
     'click .js-showAll': 'showAll'
 
@@ -166,7 +169,7 @@ class App.TicketStatsList extends App.Controller
       limit:           @limit
     )
 
-    @ticketPopups()
+    @renderPopovers()
 
   showAll: (e) =>
     e.preventDefault()

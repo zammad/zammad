@@ -2,6 +2,7 @@ require 'rails_helper'
 # rails autoloading issue
 require 'ldap'
 require 'ldap/user'
+require 'tcr/net/ldap'
 
 RSpec.describe Ldap::User do
 
@@ -192,6 +193,53 @@ RSpec.describe Ldap::User do
       it 'fails if no uid attribute could be found' do
         expect(mocked_ldap).to receive(:search)
         expect(instance.uid_attribute).to be nil
+      end
+    end
+  end
+
+  # Each of these test cases depends on
+  # sample TCP transmission data recorded with TCR,
+  # stored in test/data/tcr_cassettes.
+  context 'on mocked LDAP connections' do
+    around do |example|
+      cassette_name = example.description.gsub(/[^0-9A-Za-z.\-]+/, '_')
+
+      begin
+        original_tcr_format = TCR.configuration.format
+        TCR.configuration.format = 'marshal'
+        TCR.use_cassette("lib/ldap/user/#{cassette_name}") { example.run }
+      ensure
+        TCR.configuration.format = original_tcr_format
+      end
+    end
+
+    describe '#attributes' do
+      let(:subject) { described_class.new(config, ldap: ldap) }
+      let(:ldap)    { Ldap.new(config) }
+      let(:config) do
+        { 'host_url'  => 'ldap://localhost',
+          'options'   => { 'dc=example,dc=org' => 'dc=example,dc=org' },
+          'option'    => 'dc=example,dc=org',
+          'base_dn'   => 'dc=example,dc=org',
+          'bind_user' => 'cn=admin,dc=example,dc=org',
+          'bind_pw'   => 'admin' }.with_indifferent_access
+      end
+
+      # see https://github.com/zammad/zammad/issues/2140
+      #
+      # This method grabs sample values of user attributes on the LDAP server.
+      # It used to coerce ALL values to Unicode strings, including binary attributes
+      # (e.g., usersmimecertificate / msexchmailboxsecuritydescriptor),
+      # which led to valid Unicode gibberish (e.g., "\u0001\u0001\u0004...")
+      #
+      # When saving these values to the database,
+      # ActiveRecord::Store would convert them to binary (ASCII-8BIT) strings,
+      # which would then break #to_json with an Encoding::UndefinedConversion error.
+      it 'skips binary attributes (#2140)' do
+        Setting.set('ldap_config', subject.attributes)
+
+        expect { Setting.get('ldap_config').to_json }
+          .not_to raise_error
       end
     end
   end

@@ -92,6 +92,9 @@ class SidebarIdoit extends App.Controller
   showError: (message) =>
     @html App.i18n.translateInline(message)
 
+  reload: =>
+    @showObjectsContent()
+
   delete: (objectId) =>
     localObjects = []
     for localObjectId in @objectIds
@@ -102,13 +105,14 @@ class SidebarIdoit extends App.Controller
       @updateTicket(@ticket.id, @objectIds)
     @showObjectsContent()
 
-  commit: (args) =>
-    return if @ticket && @ticket.id
+  postParams: (args) =>
+    return if !args.ticket
+    return if args.ticket.created_at
     return if !@objectIds
     return if _.isEmpty(@objectIds)
-    return if !args
-    return if !args.ticket_id
-    @updateTicket(args.ticket_id, @objectIds)
+    args.ticket.preferences ||= {}
+    args.ticket.preferences.idoit ||= {}
+    args.ticket.preferences.idoit.object_ids = @objectIds
 
   updateTicket: (ticket_id, objectIds, callback) =>
     App.Ajax.request(

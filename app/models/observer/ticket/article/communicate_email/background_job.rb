@@ -9,11 +9,10 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
     # build subject
     ticket = Ticket.lookup(id: record.ticket_id)
     article_count = Ticket::Article.where(ticket_id: ticket.id).count
-    subject = if article_count > 1
-                ticket.subject_build(record.subject, true)
-              else
-                ticket.subject_build(record.subject)
-              end
+
+    subject_prefix_mode = record.preferences[:subtype]
+
+    subject = ticket.subject_build(record.subject,  subject_prefix_mode)
 
     # set retry count
     if !record.preferences['delivery_retry']
@@ -122,7 +121,7 @@ class Observer::Ticket::Article::CommunicateEmail::BackgroundJob
       local_record.preferences['delivery_channel_id'] = channel.id
     end
     local_record.preferences['delivery_status'] = 'fail'
-    local_record.preferences['delivery_status_message'] = message
+    local_record.preferences['delivery_status_message'] = message.encode!('UTF-8', 'UTF-8', invalid: :replace, replace: '?')
     local_record.preferences['delivery_status_date'] = Time.zone.now
     local_record.save!
     Rails.logger.error message

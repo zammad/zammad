@@ -1,5 +1,5 @@
 class App.TicketArticle extends App.Model
-  @configure 'TicketArticle', 'from', 'to', 'cc', 'subject', 'body', 'content_type', 'ticket_id', 'type_id', 'sender_id', 'internal', 'in_reply_to', 'form_id', 'time_unit', 'preferences', 'updated_at'
+  @configure 'TicketArticle', 'from', 'to', 'cc', 'subject', 'body', 'content_type', 'ticket_id', 'type_id', 'sender_id', 'internal', 'in_reply_to', 'form_id', 'subtype', 'time_unit', 'preferences', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/ticket_articles'
   @configure_attributes = [
@@ -8,7 +8,7 @@ class App.TicketArticle extends App.Model
       { name: 'to',             display: 'To',          tag: 'input',    type: 'text', limit: 100, null: true },
       { name: 'cc',             display: 'Cc',          tag: 'input',    type: 'text', limit: 100, null: true },
       { name: 'subject',        display: 'Subject',     tag: 'input',    type: 'text', limit: 100, null: true },
-      { name: 'body',           display: 'Text',        tag: 'textarea', rows: 5,      limit: 100, null: false, searchable: false },
+      { name: 'body',           display: 'Text',        tag: 'textarea', rows: 5,      limit: 100, null: false, searchable: true },
       { name: 'type_id',        display: 'Type',        tag: 'select',   multiple: false, null: false, relation: 'TicketArticleType', default: '' },
       { name: 'sender_id',      display: 'Sender',      tag: 'select',   multiple: false, null: false, relation: 'TicketArticleSender', default: '' },
       { name: 'internal',       display: 'Visibility',  tag: 'radio',  default: false,  null: true, options: { true: 'internal', false: 'public' } },

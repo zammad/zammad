@@ -148,13 +148,13 @@ class ArticleViewItem extends App.ObserverController
         body.splice(article.preferences.signature_detection, 0, signatureDetected)
         body = body.join('<br>')
       else
-        body = App.Utils.signatureIdentify(body)
+        body = App.Utils.signatureIdentifyByHtml(body)
       article['html'] = body
     else
 
       # client signature detection
       bodyHtml = App.Utils.text2html(article.body)
-      article['html'] = App.Utils.signatureIdentify(bodyHtml)
+      article['html'] = App.Utils.signatureIdentifyByPlaintext(bodyHtml)
 
       # if no signature detected or within frist 25 lines, check if signature got detected in backend
       if article['html'] is bodyHtml || (article.preferences && article.preferences.signature_detection < 25)

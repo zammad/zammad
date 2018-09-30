@@ -5,6 +5,7 @@ ruby '2.4.4'
 gem 'rails', '5.1.5'
 
 # core - rails additions
+gem 'activerecord-import'
 gem 'activerecord-session_store'
 gem 'composite_primary_keys'
 gem 'json'
@@ -80,7 +81,7 @@ gem 'twitter'
 
 # channels - email additions
 gem 'htmlentities'
-gem 'mail', '>= 2.7.1.rc1'
+gem 'mail', '2.6.6'
 gem 'mime-types'
 gem 'rchardet', '>= 1.8.0'
 gem 'valid_email2'
@@ -158,14 +159,15 @@ group :development, :test do
   # changelog generation
   gem 'github_changelog_generator'
 
-  # Setting ENV for testing purposes
-  gem 'figaro'
-
   # Use Factory Bot for generating random test data
   gem 'factory_bot_rails'
 
   # mock http calls
   gem 'webmock'
+
+  # record and replay TCP/HTTP transactions
+  gem 'tcr'
+  gem 'vcr'
 end
 
 # Want to extend Zammad with additional gems?
@@ -174,4 +176,5 @@ end
 #               without having your changes overwritten during upgrades.)
 # ZAMMAD DEVS:  Consult the internal wiki
 #               (or else risk pushing unwanted changes to Gemfile.lock!)
+#               https://git.znuny.com/zammad/zammad/wikis/Tips#user-content-customizing-the-gemfile
 eval_gemfile 'Gemfile.local' if File.exist?('Gemfile.local')

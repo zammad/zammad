@@ -7,13 +7,13 @@ class ExternalCredential::Facebook
 
   def self.request_account_to_link(credentials = {})
     external_credential = ExternalCredential.find_by(name: 'facebook')
+    raise Exceptions::UnprocessableEntity, 'No facebook app configured!' if !external_credential
     if !credentials[:application_id]
       credentials[:application_id] = external_credential.credentials['application_id']
     end
     if !credentials[:application_secret]
       credentials[:application_secret] = external_credential.credentials['application_secret']
     end
-
     oauth = Koala::Facebook::OAuth.new(
       credentials[:application_id],
       credentials[:application_secret],

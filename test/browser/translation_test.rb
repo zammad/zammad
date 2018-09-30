@@ -283,13 +283,14 @@ class TranslationTest < TestCase
     )
 
     click(css: '.content.active .js-syncChanges')
+
+    modal_ready()
     watch_for(
       css: '.content.active .modal',
       value: 'Letzte Übersetzung laden',
     )
-    watch_for_disappear(
-      css: '.content.active .modal',
-      timeout: 6 * 60,
+    modal_disappear(
+      timeout: 6.minutes,
     )
 
     click(css: 'a[href="#current_user"]')
@@ -303,6 +304,68 @@ class TranslationTest < TestCase
     watch_for(
       css: 'body',
       value: 'Language',
+    )
+
+  end
+
+  # see https://github.com/zammad/zammad/issues/2056
+  #
+  # The purpose of this test is to verify that
+  # the Translation admin panel automatically re-renders
+  # under certain edge cases:
+  #
+  # Clicking into the Translation panel from another admin panel ALWAYS causes a rerender,
+  # but clicking into it from, e.g., a Ticket or the Dashboard does not.
+  #
+  # We want to ensure that in the latter case,
+  # the Translation panel rerenders automatically if there are new phrases to translate.
+  def test_rerender_when_new_phrases_detected
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    click(css: 'a[href="#current_user"]')
+    click(css: 'a[href="#profile"]')
+    click(css: 'a[href="#profile/language"]')
+    select(
+      css: '.language_item [name="locale"]',
+      value: 'Deutsch',
+    )
+    click(css: '.content.active button[type="submit"]')
+    watch_for(
+      css: 'body',
+      value: 'Sprache',
+    )
+
+    # The only way to test the edge case describe above
+    # (i.e., visiting the Translation panel directly from a Ticket or the Dashboard)
+    # is to first click into the admin settings and visit the Translation panel,
+    # then leave, then come back.
+    #
+    # (/#manage remembers the most-recent admin panel.)
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#system/translation"]')
+
+    watch_for(
+      css: '.content.active',
+      value: 'Inline Übersetzung',
+    )
+
+    click(css: 'a[href="#dashboard"]')
+
+    new_ui_phrase = 'Charlie bit me!'
+    @browser.execute_script("App.i18n.translateContent('#{new_ui_phrase}')")
+
+    click(css: 'a[href="#manage"]')
+
+    watch_for(
+      css: %(td[title="#{new_ui_phrase}"]),
+      value: new_ui_phrase,
+      timeout: 3
     )
 
   end

@@ -879,4 +879,102 @@ class TicketOverviewTest < ActiveSupport::TestCase
 
   end
 
+  test 'overview any owner / no owner is set' do
+
+    Ticket.destroy_all
+    Overview.destroy_all
+
+    UserInfo.current_user_id = 1
+    overview_role = Role.find_by(name: 'Agent')
+    overview1 = Overview.create_or_update(
+      name: 'not owned',
+      prio: 1000,
+      role_ids: [overview_role.id],
+      condition: {
+        'ticket.owner_id' => {
+          operator: 'is',
+          pre_condition: 'not_set',
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
+        view_mode_default: 's',
+      },
+    )
+
+    overview2 = Overview.create_or_update(
+      name: 'not owned by somebody',
+      prio: 2000,
+      role_ids: [overview_role.id],
+      condition: {
+        'ticket.owner_id' => {
+          operator: 'is not',
+          pre_condition: 'not_set',
+        },
+      },
+      order: {
+        by: 'created_at',
+        direction: 'ASC',
+      },
+      view: {
+        d: %w[title customer group created_at],
+        s: %w[title customer group created_at],
+        m: %w[number title customer group created_at],
+        view_mode_default: 's',
+      },
+    )
+
+    ticket1 = Ticket.create!(
+      title: 'overview test 1',
+      group: Group.lookup(name: 'OverviewTest'),
+      customer_id: 2,
+      owner_id: 1,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+    )
+
+    travel 2.seconds
+    ticket2 = Ticket.create!(
+      title: 'overview test 2',
+      group: Group.lookup(name: 'OverviewTest'),
+      customer_id: 2,
+      owner_id: nil,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+    )
+
+    travel 2.seconds
+    ticket3 = Ticket.create!(
+      title: 'overview test 3',
+      group: Group.lookup(name: 'OverviewTest'),
+      customer_id: 2,
+      owner_id: @agent1.id,
+      state: Ticket::State.lookup(name: 'new'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+    )
+
+    result = Ticket::Overviews.index(@agent1)
+    assert_equal(result[0][:overview][:id], overview1.id)
+    assert_equal(result[0][:overview][:name], 'not owned')
+    assert_equal(result[0][:overview][:view], 'not_owned')
+    assert_equal(result[0][:tickets].class, Array)
+
+    assert_equal(result[0][:tickets][0][:id], ticket1.id)
+    assert_equal(result[0][:tickets][1][:id], ticket2.id)
+    assert_equal(result[0][:count], 2)
+
+    assert_equal(result[1][:overview][:id], overview2.id)
+    assert_equal(result[1][:overview][:name], 'not owned by somebody')
+    assert_equal(result[1][:overview][:view], 'not_owned_by_somebody')
+    assert_equal(result[1][:tickets].class, Array)
+    assert_equal(result[1][:tickets][0][:id], ticket3.id)
+    assert_equal(result[1][:count], 1)
+
+  end
 end

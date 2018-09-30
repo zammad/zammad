@@ -51,7 +51,7 @@ get config setting
 
   def self.get(name)
     load
-    @@current[name]
+    @@current[name].deep_dup # prevents accidental modification of settings in console
   end
 
 =begin

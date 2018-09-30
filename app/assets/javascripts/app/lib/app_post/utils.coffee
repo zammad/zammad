@@ -262,6 +262,10 @@ class App.Utils
     # remove word markup
     @_removeWordMarkup(html)
 
+    # strip out browser-inserted (broken) link
+    # (see https://github.com/zammad/zammad/issues/2019)
+    @_stripDoubleDomainAnchors(html)
+
     # remove tags, keep content
     html.find('font, small, time, form, label').replaceWith( ->
       $(@).contents()
@@ -395,6 +399,15 @@ class App.Utils
       return window.word_filter(html)
     html
 
+  @_stripDoubleDomainAnchors: (html) ->
+    html.find('a').each( ->
+      origHref  = $(@).attr('href')
+      return if !origHref?
+
+      fixedHref = origHref.replace(/^https?:\/\/.*(?=(https?|#{config.http_type}):\/\/)/, '')
+      if origHref != fixedHref then $(@).attr('href', fixedHref)
+    )
+
   # signatureNeeded = App.Utils.signatureCheck(message, signature)
   @signatureCheck: (message, signature) ->
     messageText   = $('<div>' + message + '</div>').text().trim()
@@ -412,8 +425,8 @@ class App.Utils
     else
       true
 
-  # messageWithMarker = App.Utils.signatureIdentify(message, false)
-  @signatureIdentify: (message, test = false, internal = false) ->
+  # messageWithMarker = App.Utils.signatureIdentifyByPlaintext(message, false)
+  @signatureIdentifyByPlaintext: (message, test = false, internal = false) ->
     textToSearch = @html2text(message)
 
     # if we do have less then 10 lines and less then 300 chars ignore this
@@ -631,6 +644,64 @@ class App.Utils
     else
       regex = new RegExp("\>(\s{0,10}#{quote(App.Utils.htmlEscape(markers[0].line))})")
       message.replace(regex, ">#{markerTemplate}\$1")
+
+  @isMicrosoftOffice: (message) ->
+    regex = new RegExp('-----(Ursprüngliche Nachricht|Original Message|Mensaje original|Message d\'origine|Messaggio originale|邮件原件|原始郵件)-----')
+    message.match(regex)
+
+  # messageWithMarker = App.Utils.signatureIdentifyByHtml(message)
+  @signatureIdentifyByHtml: (message) ->
+    # use the plaintext fallback method if message is composed by Microsoft Office
+    if @isMicrosoftOffice message
+      return @signatureIdentifyByPlaintext message
+
+    message_element = $($.parseHTML(message))
+    if message_element.length == 1 && $(message_element[0])?.children()?.length
+      message_element[0].innerHTML = @signatureIdentifyByHtmlHelper(message_element[0].innerHTML)
+      return message_element[0].outerHTML
+
+    @signatureIdentifyByHtmlHelper(message)
+
+  @signatureIdentifyByHtmlHelper: (message, internal = false) ->
+    # blockquotes and signature blocks are considered "dismiss nodes" and their indice will be stored
+    dismissNodes = []
+    contentNodes = []
+    res = []
+
+    isQuoteOrSignature = (el) ->
+      el = $(el)
+      tag = el.prop("tagName")
+      return true if tag is 'BLOCKQUOTE'
+      # detect Zammad's own <div data-signature='true'> marker
+      return true if tag is 'DIV' && (el.data('signature') || el.prop('class') is 'yahoo_quoted')
+      _.some el.children(), (el) -> isQuoteOrSignature el
+
+    $('<div/>').html(message).contents().each (index, node) ->
+      text = $(node).text()
+      if node.nodeType == Node.TEXT_NODE
+        res.push text
+        if text.trim().length
+          contentNodes.push index
+      else if node.nodeType == Node.ELEMENT_NODE
+        res.push node.outerHTML
+        if isQuoteOrSignature node
+          dismissNodes.push index
+        else if text.trim().length
+          contentNodes.push index
+
+    # filter out all dismiss nodes smaller than the largest content node
+    max_content = _.max contentNodes || 0
+    dismissNodes = _.filter dismissNodes, (x) -> x >= max_content
+
+    # return the message unchanged if there are no nodes to dismiss
+    return message if !dismissNodes.length
+
+    # insert marker template at the earliest valid location
+    markerIndex = _.min dismissNodes
+    markerTemplate = '<span class="js-signatureMarker"></span>'
+
+    res.splice(markerIndex, 0, markerTemplate)
+    res.join('')
 
   # textReplaced = App.Utils.replaceTags( template, { user: { firstname: 'Bob', lastname: 'Smith' } } )
   @replaceTags: (template, objects) ->
@@ -1021,32 +1092,20 @@ class App.Utils
       # filter for uniq recipients
       recipientAddresses = {}
       addAddresses = (addressLine, line) ->
-        lineNew = ''
         recipients = App.Utils.parseAddressListLocal(addressLine)
 
-        if !_.isEmpty(recipients)
-          for recipient in recipients
-            if !_.isEmpty(recipient)
-              localRecipientAddress = recipient.toString().toLowerCase()
+        recipients = recipients.map((r) -> r.toString().toLowerCase())
+        recipients = _.reject(recipients, (r) -> _.isEmpty(r))
+        recipients = _.reject(recipients, (r) -> isLocalAddress(r))
+        recipients = _.reject(recipients, (r) -> recipientAddresses[r])
+        recipients = _.each(recipients, (r) -> recipientAddresses[r] = true)
 
-              # check if address is not local
-              if !isLocalAddress(localRecipientAddress)
+        recipients.push(line) if !_.isEmpty(line)
 
-                # filter for uniq recipients
-                if !recipientAddresses[localRecipientAddress]
-                  recipientAddresses[localRecipientAddress] = true
+        # see https://github.com/zammad/zammad/issues/2154
+        recipients = recipients.map((a) -> a.replace(/'(\S+@\S+\.\S+)'/, '$1'))
 
-                  # add recipient
-                  if lineNew
-                    lineNew = lineNew + ', '
-                  lineNew = lineNew + localRecipientAddress
-
-        lineNew
-        if !_.isEmpty(line)
-          if !_.isEmpty(lineNew)
-            lineNew += ', '
-          lineNew += line
-        lineNew
+        recipients.join(', ')
 
       if articleNew.to
         articleNew.to = addAddresses(articleNew.to)

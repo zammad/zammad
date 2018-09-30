@@ -2,6 +2,7 @@
   <input type="hidden" name="type" value="<%= @article.type %>">
   <input type="hidden" name="internal" value="<%= @article.internal %>">
   <input type="hidden" name="form_id" value="<%= @form_id %>">
+  <input type="hidden" name="subtype" value="<%= @article.subtype %>">
   <input type="hidden" name="in_reply_to" value="<%= @article.in_reply_to %>">
   <div class="editControls">
     <div class="js-avatar"></div>
@@ -68,9 +69,12 @@
         <div class="article-attachment">
           <div class="attachmentPlaceholder">
             <span class="attachmentPlaceholder-hint"><%- @T('Enter Answer or') %></span>
-            <span class="attachmentPlaceholder-inputHolder">
-              <%- @T('select attachment...') %>
-              <input multiple="multiple" type="file" name="file" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0;">
+            <span class="attachmentPlaceholder-inputHolder fileUpload">
+              <% uid =  _.uniqueId('fileUpload_') %>
+              <input multiple="multiple" type="file" name="file" id="<%- uid %>">
+              <label class="attachmentPlaceholder-label" for="<%- uid %>">
+                <%- @T('select attachment...') %>
+              </label>
             </span>
           </div>
           <div class="attachmentUpload hide">

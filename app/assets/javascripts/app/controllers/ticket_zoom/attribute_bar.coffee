@@ -1,13 +1,11 @@
 class App.TicketZoomAttributeBar extends App.Controller
-  @include App.TicketNavigable
-
   elements:
     '.js-submitDropdown': 'buttonDropdown'
     '.js-reset': 'resetButton'
 
   events:
     'mousedown .js-openDropdownMacro':    'toggleMacroMenu'
-    'click .js-openDropdownMacro':        'stopPropagation'
+    'click .js-openDropdownMacro':        'preventDefaultAndstopPropagation'
     'mouseup .js-dropdownActionMacro':    'performTicketMacro'
     'mouseenter .js-dropdownActionMacro': 'onActionMacroMouseEnter'
     'mouseleave .js-dropdownActionMacro': 'onActionMacroMouseLeave'
@@ -72,7 +70,10 @@ class App.TicketZoomAttributeBar extends App.Controller
     @render()
 
   toggleMacroMenu: =>
-    if @buttonDropdown.hasClass('is-open') then @closeMacroMenu() else @openMacroMenu()
+    if @buttonDropdown.hasClass('is-open')
+      @closeMacroMenu()
+      return
+    @openMacroMenu()
 
   openMacroMenu: =>
     @buttonDropdown.addClass 'is-open'
@@ -86,19 +87,8 @@ class App.TicketZoomAttributeBar extends App.Controller
     macroId = $(e.currentTarget).data('id')
     macro = App.Macro.find(macroId)
 
-    @callback(e, macro.perform)
+    @callback(e, macro)
     @closeMacroMenu()
-    @replaceTabWith(macro.ux_flow_next_up)
-
-  replaceTabWith: (dest) =>
-    switch dest
-      when 'none'
-        return
-      when 'next_task'
-        @closeTab()
-      when 'next_from_overview'
-        @closeTab()
-        @openNextTicketInOverview()
 
   onActionMacroMouseEnter: (e) =>
     @$(e.currentTarget).addClass('is-active')

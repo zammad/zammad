@@ -222,6 +222,9 @@ class TicketsController < ApplicationController
     clean_params = Ticket.association_name_to_id_convert(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
 
+    # only apply preferences changes (keep not updated keys/values)
+    clean_params = ticket.param_preferences_merge(clean_params)
+
     # overwrite params
     if !current_user.permissions?('ticket.agent')
       %i[owner owner_id customer customer_id organization organization_id preferences].each do |key|
@@ -445,6 +448,8 @@ class TicketsController < ApplicationController
       condition: params[:condition].to_h,
       limit: per_page,
       offset: offset,
+      order_by: params[:order_by],
+      sort_by: params[:sort_by],
       current_user: current_user,
     )
 

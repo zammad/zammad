@@ -1076,7 +1076,7 @@ class ObjectManagerAttributesControllerTest < ActionDispatch::IntegrationTest
     assert_response(422)
     result = JSON.parse(@response.body)
     assert(result)
-    assert(result['error']['Can\'t be changed data_type of attribute. Drop the attribute and recreate it with new data_type.'])
+    assert(result['error'])
 
   end
 

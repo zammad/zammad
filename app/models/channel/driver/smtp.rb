@@ -52,6 +52,15 @@ class Channel::Driver::Smtp
     if !options.key?(:openssl_verify_mode)
       options[:openssl_verify_mode] = 'none'
     end
+
+    # set system_bcc of config if defined
+    system_bcc = Setting.get('system_bcc')
+    if system_bcc.present? && system_bcc =~ /@/
+      attr[:bcc] ||= ''
+      attr[:bcc] += ', ' if attr[:bcc].present?
+      attr[:bcc] += system_bcc
+    end
+
     mail = Channel::EmailBuild.build(attr, notification)
     smtp_params = {
       openssl_verify_mode: options[:openssl_verify_mode],

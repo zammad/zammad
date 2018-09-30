@@ -4,6 +4,11 @@ module Cti
 
     DEFAULT_COUNTRY_ID = '49'.freeze
 
+    # adopt/orphan matching Cti::Log records
+    # (see https://github.com/zammad/zammad/issues/2057)
+    after_commit :update_cti_logs, on: :destroy
+    after_commit :update_cti_logs_with_fg_optimization, on: :create
+
 =begin
 
   Cti::CallerId.maybe_add(
@@ -42,25 +47,17 @@ returns
 =end
 
     def self.lookup(caller_id)
+      lookup_ids =
+        ['known', 'maybe', nil].lazy.map do |level|
+          Cti::CallerId.select('MAX(id) as caller_id')
+                       .where({ caller_id: caller_id, level: level }.compact)
+                       .group(:user_id)
+                       .order('caller_id DESC')
+                       .limit(20)
+                       .map(&:caller_id)
+        end.find(&:present?)
 
-      result = []
-      ['known', 'maybe', nil].each do |level|
-
-        search_params = {
-          caller_id: caller_id,
-        }
-
-        if level
-          search_params[:level] = level
-        end
-
-        caller_ids = Cti::CallerId.select('MAX(id) as caller_id').where(search_params).group(:user_id).order('caller_id DESC').limit(20).map(&:caller_id)
-        Cti::CallerId.where(id: caller_ids).order(id: :desc).each do |record|
-          result.push record
-        end
-        break if result.present?
-      end
-      result
+      Cti::CallerId.where(id: lookup_ids).order(id: :desc).to_a
     end
 
 =begin
@@ -101,6 +98,10 @@ returns
       # set user id
       user_id = record[:created_by_id]
       if model == User
+        if record.destroyed?
+          Cti::CallerId.where(user_id: user_id).destroy_all
+          return
+        end
         user_id = record.id
       end
       return if !user_id
@@ -116,9 +117,31 @@ returns
         caller_ids = caller_ids.concat(local_caller_ids)
       end
 
-      # store caller ids
-      Cti::CallerId.where(object: model.to_s, o_id: record.id).destroy_all
-      caller_ids.each do |caller_id|
+      # search for caller ids to keep
+      caller_ids_to_add = []
+      existing_record_ids = Cti::CallerId.where(object: model.to_s, o_id: record.id).pluck(:id)
+      caller_ids.uniq.each do |caller_id|
+        existing_record_id = Cti::CallerId.where(
+          object: model.to_s,
+          o_id: record.id,
+          caller_id: caller_id,
+          level: level,
+          user_id: user_id,
+        ).pluck(:id)
+        if existing_record_id[0]
+          existing_record_ids.delete(existing_record_id[0])
+          next
+        end
+        caller_ids_to_add.push caller_id
+      end
+
+      # delete not longer existing caller ids
+      existing_record_ids.each do |record_id|
+        Cti::CallerId.destroy(record_id)
+      end
+
+      # create new caller ids
+      caller_ids_to_add.each do |caller_id|
         Cti::CallerId.maybe_add(
           caller_id: caller_id,
           level: level,
@@ -253,5 +276,16 @@ returns
       nil
     end
 
+    def update_cti_logs
+      return if object != 'User'
+      UpdateCtiLogsByCallerJob.perform_later(caller_id)
+    end
+
+    def update_cti_logs_with_fg_optimization
+      return if object != 'User'
+      return if level != 'known'
+      UpdateCtiLogsByCallerJob.perform_now(caller_id, limit: 20)
+      UpdateCtiLogsByCallerJob.perform_later(caller_id, limit: 40, offset: 20)
+    end
   end
 end

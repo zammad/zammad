@@ -1,4 +1,6 @@
 class App.Search extends App.Controller
+  @extend App.PopoverProvidable
+
   elements:
     '.js-search': 'searchInput'
 
@@ -112,8 +114,7 @@ class App.Search extends App.Controller
     @updateFilledClass()
     @updateTask()
 
-    # remove not needed popovers
-    @delay(@anyPopoversDestroy, 100, 'removePopovers')
+    @delayedRemoveAnyPopover()
 
   search: (force = false) =>
     query = @searchInput.val().trim()

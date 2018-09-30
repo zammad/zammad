@@ -1,4 +1,6 @@
 class App.TicketZoom extends App.Controller
+  @include App.TicketNavigable
+
   elements:
     '.main':             'main'
     '.ticketZoom':       'ticketZoom'
@@ -291,6 +293,7 @@ class App.TicketZoom extends App.Controller
 
   hide: =>
     @activeState = false
+    $('body > .modal').modal('hide')
     @positionPageHeaderStop()
     @autosaveStop()
     @shortcutNavigationstop()
@@ -383,6 +386,7 @@ class App.TicketZoom extends App.Controller
     # if page header is not possible to use - mainScrollHeigth to low - hide page header
     if not mainScrollHeigth > mainHeigth + headerHeight
       @scrollPageHeader.css('transform', "translateY(#{-headerHeight}px)")
+      return
 
     if scroll > headerHeight
       scroll = headerHeight
@@ -439,17 +443,19 @@ class App.TicketZoom extends App.Controller
       #if @shown
       #  @attributeBar.start()
 
-      @form_id = App.ControllerForm.formId()
+      @form_id = @taskGet('article').form_id || App.ControllerForm.formId()
 
       @articleNew = new App.TicketZoomArticleNew(
-        ticket:    @ticket
-        ticket_id: @ticket_id
-        el:        elLocal.find('.article-new')
-        formMeta:  @formMeta
-        form_id:   @form_id
-        defaults:  @taskGet('article')
-        taskKey:   @taskKey
-        ui:        @
+        ticket:                  @ticket
+        ticket_id:               @ticket_id
+        el:                      elLocal.find('.article-new')
+        formMeta:                @formMeta
+        form_id:                 @form_id
+        defaults:                @taskGet('article')
+        taskKey:                 @taskKey
+        ui:                      @
+        callbackFileUploadStart: @submitDisable
+        callbackFileUploadStop:  @submitEnable
       )
 
       @highligher = new App.TicketZoomHighlighter(
@@ -605,6 +611,7 @@ class App.TicketZoom extends App.Controller
         body:        ''
         internal:    internal
         in_reply_to: ''
+        subtype:     ''
 
     if @permissionCheck('ticket.customer')
       currentStore.article.internal = ''
@@ -633,6 +640,11 @@ class App.TicketZoom extends App.Controller
     # and the default is was not set before
     return if @isDefaultFollowUpStateSet
 
+    # and only if ticket is not in "new" state
+    if @ticket && @ticket.state_id
+      state = App.TicketState.findByAttribute('id', @ticket.state_id)
+      return if state && state.default_create is true
+
     # prevent multiple changes for the default follow up state
     @isDefaultFollowUpStateSet = true
 
@@ -660,7 +672,6 @@ class App.TicketZoom extends App.Controller
     else
       delete currentParams.article.attachments
 
-    # remove not needed attributes
     delete currentParams.article.form_id
 
     if @permissionCheck('ticket.customer')
@@ -730,16 +741,28 @@ class App.TicketZoom extends App.Controller
 
       resetButton.removeClass('hide')
 
+  submitDisable: (e) =>
+    if e
+      @formDisable(e)
+      return
+    @formDisable(@$('.js-submitDropdown'))
+
+  submitEnable: (e) =>
+    if e
+      @formEnable(e)
+      return
+    @formEnable(@$('.js-submitDropdown'))
+
   submit: (e, macro = {}) =>
     e.stopPropagation()
     e.preventDefault()
 
     # disable form
-    @formDisable(e)
+    @submitDisable(e)
 
     # validate new article
     if !@articleNew.validate()
-      @formEnable(e)
+      @submitEnable(e)
       return
 
     ticketParams = @formParam(@$('.edit'))
@@ -757,19 +780,20 @@ class App.TicketZoom extends App.Controller
     for key, value of ticketParams
       ticket[key] = value
 
-    App.Ticket.macro(
-      macro: macro
-      ticket: ticket
-      callback:
-        tagAdd: (tag) =>
-          return if !@sidebarWidget
-          return if !@sidebarWidget.reload
-          @sidebarWidget.reload(tagAdd: tag, source: 'macro')
-        tagRemove: (tag) =>
-          return if !@sidebarWidget
-          return if !@sidebarWidget.reload
-          @sidebarWidget.reload(tagRemove: tag)
-    )
+    if macro.perform
+      App.Ticket.macro(
+        macro: macro.perform
+        ticket: ticket
+        callback:
+          tagAdd: (tag) =>
+            return if !@sidebarWidget
+            return if !@sidebarWidget.reload
+            @sidebarWidget.reload(tagAdd: tag, source: 'macro')
+          tagRemove: (tag) =>
+            return if !@sidebarWidget
+            return if !@sidebarWidget.reload
+            @sidebarWidget.reload(tagRemove: tag)
+      )
 
     # set defaults
     if !@permissionCheck('ticket.customer')
@@ -794,7 +818,7 @@ class App.TicketZoom extends App.Controller
         errors: errors
         screen: 'edit'
       )
-      @formEnable(e)
+      @submitEnable(e)
       @autosaveStart()
       return
 
@@ -810,46 +834,52 @@ class App.TicketZoom extends App.Controller
           errors: errors
           screen: 'edit'
         )
-        @formEnable(e)
+        @submitEnable(e)
         @autosaveStart()
         return
 
       ticket.article = article
 
+    # add sidebar params
+    if @sidebarWidget && @sidebarWidget.postParams
+      @sidebarWidget.postParams(ticket: ticket)
+
     if !ticket.article
-      @submitPost(e, ticket)
+      @submitPost(e, ticket, macro)
       return
 
     # verify if time accounting is enabled
     if @Config.get('time_accounting') isnt true
-      @submitPost(e, ticket)
+      @submitPost(e, ticket, macro)
       return
 
     # verify if time accounting is active for ticket
     time_accounting_selector = @Config.get('time_accounting_selector')
     if !App.Ticket.selector(ticket, time_accounting_selector['condition'])
-      @submitPost(e, ticket)
+      @submitPost(e, ticket, macro)
       return
 
     # time tracking
     if @permissionCheck('ticket.customer')
-      @submitPost(e, ticket)
+      @submitPost(e, ticket, macro)
       return
 
     new App.TicketZoomTimeAccounting(
       container: @el.closest('.content')
       ticket: ticket
       cancelCallback: =>
-        @formEnable(e)
+        @submitEnable(e)
       submitCallback: (params) =>
         if params.time_unit
           ticket.article.time_unit = params.time_unit
-        @submitPost(e, ticket)
+        @submitPost(e, ticket, macro)
     )
 
-  submitPost: (e, ticket) =>
-
+  submitPost: (e, ticket, macro) =>
     taskAction = @$('.js-secondaryActionButtonLabel').data('type')
+
+    if macro && macro.ux_flow_next_up
+      taskAction = macro.ux_flow_next_up
 
     # submit changes
     @ajax(
@@ -872,59 +902,33 @@ class App.TicketZoom extends App.Controller
         if @sidebarWidget
           @sidebarWidget.commit()
 
-        if taskAction is 'closeNextInOverview'
-          if @overview_id
-            current_position = 0
-            overview = App.Overview.find(@overview_id)
-            list = App.OverviewListCollection.get(overview.link)
-            for ticket in list.tickets
-              current_position += 1
-              if ticket.id is @ticket_id
-                next = list.tickets[current_position]
-                if next
-                  # close task
-                  App.TaskManager.remove(@taskKey)
+        if taskAction is 'closeNextInOverview' || taskAction is 'next_from_overview'
+          App.Event.trigger('overview:fetch')
+          @taskOpenNextTicketInOverview()
+          return
 
-                  # open task via task manager to get overview information
-                  App.TaskManager.execute(
-                    key:        'Ticket-' + next.id
-                    controller: 'TicketZoom'
-                    params:
-                      ticket_id:   next.id
-                      overview_id: @overview_id
-                    show:       true
-                  )
-                  @navigate "ticket/zoom/#{next.id}"
-                  return
-
-          # fallback, close task
-          taskAction = 'closeTab'
-
-        if taskAction is 'closeTab'
-          App.TaskManager.remove(@taskKey)
-          nextTaskUrl = App.TaskManager.nextTaskUrl()
-          if nextTaskUrl
-            @navigate nextTaskUrl
-            return
-
-          @navigate '#'
+        if taskAction is 'closeTab' || taskAction is 'next_task'
+          App.Event.trigger('overview:fetch')
+          @taskCloseTicket(true)
           return
 
         @autosaveStart()
         @muteTask()
-        @formEnable(e)
-        App.Event.trigger('overview:fetch')
+        @submitEnable(e)
 
       error: (settings, details) =>
+        error = undefined
+        if settings && settings.responseJSON && settings.responseJSON.error
+          error = settings.responseJSON.error
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || settings.responseJSON.error || 'Unable to update!')
+          msg:     App.i18n.translateContent(details.error_human || details.error || error || 'Unable to update!')
           timeout: 2000
         }
         @autosaveStart()
         @muteTask()
         @fetch()
-        @formEnable(e)
+        @submitEnable(e)
     )
 
   bookmark: (e) ->
@@ -960,6 +964,10 @@ class App.TicketZoom extends App.Controller
   taskGet: (area) =>
     return {} if !App.TaskManager.get(@taskKey)
     @localTaskData = App.TaskManager.get(@taskKey).state || {}
+
+    if _.isObject(@localTaskData.article) && _.isArray(App.TaskManager.get(@taskKey).attachments)
+      @localTaskData.article['attachments'] = App.TaskManager.get(@taskKey).attachments
+
     if area
       if !@localTaskData[area]
         @localTaskData[area] = {}
@@ -974,10 +982,15 @@ class App.TicketZoom extends App.Controller
 
   taskUpdateAll: (data) =>
     @localTaskData = data
+    @localTaskData.article['form_id'] = @form_id
     App.TaskManager.update(@taskKey, { 'state': @localTaskData })
 
   # reset task state
   taskReset: =>
+    @form_id = App.ControllerForm.formId()
+    @articleNew.form_id = @form_id
+    @articleNew.render()
+
     @localTaskData =
       ticket:  {}
       article: {}

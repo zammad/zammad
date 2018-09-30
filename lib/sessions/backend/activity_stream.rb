@@ -31,8 +31,13 @@ class Sessions::Backend::ActivityStream
     assets = {}
     item_ids = []
     activity_stream.each do |item|
+      begin
+        assets = item.assets(assets)
+      rescue ActiveRecord::RecordNotFound
+        next
+      end
+
       item_ids.push item.id
-      assets = item.assets(assets)
     end
 
     {

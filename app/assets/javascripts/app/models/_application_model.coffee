@@ -69,12 +69,15 @@ class App.Model extends Spine.Model
       return @login
     return '???'
 
+  # shows the icon representing the object itself (e. g. the organization icon in organization profile or ticket sidebar)
   icon: (user) ->
     ''
 
+  # shows icons in a list of objects (e. g. the traffic light rings in the ticket list in user profile)
   iconTitle: (user) ->
     ''
 
+  # shows icons in the activity stream (e. g. show ! if the activity stream icon is belonging to the session user)
   iconActivity: (user) ->
     ''
 

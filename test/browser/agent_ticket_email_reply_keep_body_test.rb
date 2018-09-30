@@ -79,4 +79,55 @@ class AgentTicketEmailReplyKeepBodyTest < TestCase
     )
 
   end
+
+  def test_full_quote
+    @browser = instance = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    ticket_open_by_title(
+      title: 'Welcome to Zammad',
+    )
+    watch_for(
+      css:      '.content.active .js-settingContainer .js-setting .dropdown-icon',
+    )
+
+    # enable email full quote in the ticket zoom config page
+    scroll_to(
+      position: 'botton',
+      css:      '.content.active .js-settingContainer .js-setting .dropdown-icon',
+    )
+    click(css: '.content.active .js-settingContainer .js-setting .dropdown-icon')
+    modal_ready()
+    select(
+      css: '.modal #ui_ticket_zoom_article_email_full_quote select[name="ui_ticket_zoom_article_email_full_quote"]',
+      value: 'yes'
+    )
+    click(
+      css: '.modal #ui_ticket_zoom_article_email_full_quote .btn[type="submit"]',
+    )
+    modal_close()
+    modal_disappear()
+
+    exists(css: '.content.active .ticket-article [data-type="emailReply"]')
+
+    # scroll to reply - needed for chrome
+    scroll_to(
+      position: 'botton',
+      css:      '.content.active .ticket-article [data-type="emailReply"]',
+    )
+
+    click(css: '.content.active .ticket-article [data-type="emailReply"]')
+
+    full_text = @browser.find_element(css: '.content.active .article-new .articleNewEdit-body').text
+
+    match = full_text.match(/\nOn (.*?) Nicole Braun wrote:/)
+    assert match
+    assert match[1]
+    assert Time.zone.parse(match[1])
+  end
 end

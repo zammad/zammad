@@ -128,4 +128,56 @@ class AdminChannelEmailTest < TestCase
 
   end
 
+  # test the creation and cloning of Postmaster filters
+  # confirm fix for issue #2170 - Cannot clone PostmasterFilter
+  def test_filter_clone
+    filter_name = "Test Filter #{rand(999_999)}"
+
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+    tasks_close_all()
+
+    click(css: 'a[href="#manage"]')
+    click(css: '.content.active a[href="#channels/email"]')
+
+    click(css: '.content.active a[href="#c-filter"]')
+
+    # create a new email filter
+    click(css: '.content.active a[data-type="new"]')
+
+    modal_ready()
+    set(
+      css: '.modal input[name="name"]',
+      value: filter_name,
+    )
+    set(
+      css: '.modal input[name="match::from::value"]',
+      value: 'target',
+    )
+    click(css: '.modal .js-submit')
+    modal_disappear()
+
+    watch_for(
+      css: '.content.active .table',
+      value: filter_name,
+    )
+
+    # now clone filter that we just created
+    click(css: '.content.active .table #tableActions')
+    click(css: '.content.active .table .dropdown .js-clone')
+
+    modal_ready()
+    click(css: '.modal .js-submit')
+    modal_disappear()
+
+    # confirm the clone exists in the table
+    watch_for(
+      css: '.content.active .table',
+      value: "Clone: #{filter_name}",
+    )
+  end
 end

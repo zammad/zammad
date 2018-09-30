@@ -150,7 +150,11 @@ class JobTest < ActiveSupport::TestCase
     assert_not(job1.executable?)
 
     assert_not(job1.in_timeplan?)
-    time    = Time.zone.now
+
+    time = Time.zone.now
+    # "freeze" time to avoid timing issues
+    travel_to(time)
+
     day_map = {
       0 => 'Sun',
       1 => 'Mon',
@@ -930,4 +934,136 @@ class JobTest < ActiveSupport::TestCase
 
   end
 
+  test 'delete spam on time' do
+
+    # create ticket
+    group1 = Group.lookup(name: 'Users')
+    group2 = Group.create_or_update(
+      name: 'JobTest2',
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    ticket1 = Ticket.create!(
+      title: 'job test 1',
+      group: group1,
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'closed'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    ticket2 = Ticket.create!(
+      title: 'job test 2',
+      group: group2,
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'closed'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    travel_to Time.zone.parse('2018-08-13T23:01:01Z')
+    job1 = Job.create_or_update(
+      name: 'Spam entfernen',
+      timeplan: {
+        days: {
+          Mon: true,
+          Tue: false,
+          Wed: true,
+          Thu: false,
+          Fri: true,
+          Sat: false,
+          Sun: false,
+        },
+        hours: {
+          '0' => false,
+          '1' => false,
+          '2' => false,
+          '3' => false,
+          '4' => false,
+          '5' => false,
+          '6' => false,
+          '7' => false,
+          '8' => false,
+          '9' => false,
+          '10' => false,
+          '11' => false,
+          '12' => false,
+          '13' => false,
+          '14' => false,
+          '15' => false,
+          '16' => false,
+          '17' => false,
+          '18' => false,
+          '19' => false,
+          '20' => false,
+          '21' => false,
+          '22' => false,
+          '23' => true,
+        },
+        minutes: {
+          '0' => true,
+          '10' => false,
+          '20' => false,
+          '30' => false,
+          '40' => false,
+          '50' => false,
+        }
+      },
+      condition: {
+        'ticket.group_id' => { 'operator' => 'is', 'value' => group1.id },
+        'ticket.state_id' => { 'operator' => 'is', 'value' => Ticket::State.find_by(name: 'closed').id }
+      },
+      perform: {
+        'ticket.action' => { 'value' => 'delete' }
+      },
+      disable_notification: true,
+      last_run_at: nil,
+      next_run_at: '2018-08-13 23:00:00',
+      running: false,
+      processed: 19_393,
+      matching: 19_428,
+      updated_at: Time.zone.now - 15.minutes,
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    assert(job1.executable?)
+    assert(job1.in_timeplan?)
+    Job.run
+
+    assert_not(Ticket.find_by(id: ticket1.id))
+    assert(Ticket.find_by(id: ticket2.id))
+
+    ticket1 = Ticket.create!(
+      title: 'job test 1',
+      group: group1,
+      customer_id: 2,
+      state: Ticket::State.lookup(name: 'closed'),
+      priority: Ticket::Priority.lookup(name: '2 normal'),
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    travel_to Time.zone.parse('2018-08-15T23:01:01Z')
+
+    job1.running = true
+    job1.save!
+
+    assert_not(job1.executable?)
+    assert(job1.in_timeplan?)
+    Job.run
+
+    assert(Ticket.find_by(id: ticket1.id))
+    assert(Ticket.find_by(id: ticket2.id))
+
+    travel_to Time.zone.parse('2018-08-17T23:08:01Z')
+    assert(job1.executable?)
+    assert(job1.in_timeplan?)
+    Job.run
+
+    assert_not(Ticket.find_by(id: ticket1.id))
+    assert(Ticket.find_by(id: ticket2.id))
+
+  end
 end

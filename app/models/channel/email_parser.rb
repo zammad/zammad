@@ -70,15 +70,16 @@ class Channel::EmailParser
 =end
 
   def parse(msg)
-    mail = Mail.new(msg.utf8_encode)
+    mail = Mail.new(msg.force_encoding('binary'))
 
+    headers = message_header_hash(mail)
+    body = message_body_hash(mail)
     message_attributes = [
       { mail_instance: mail },
-      message_header_hash(mail),
-      message_body_hash(mail),
-      self.class.sender_attributes(mail),
+      headers,
+      body,
+      self.class.sender_attributes(headers),
     ]
-
     message_attributes.reduce({}.with_indifferent_access, &:merge)
   end
 
@@ -340,8 +341,8 @@ returns
   end
 
   def self.sender_attributes(from)
-    if from.is_a?(Mail::Message)
-      from = SENDER_FIELDS.map { |f| from.header[f] }.compact
+    if from.is_a?(HashWithIndifferentAccess)
+      from = SENDER_FIELDS.map { |f| from[f] }.compact
                           .map(&:to_utf8).reject(&:blank?)
                           .partition { |address| address.match?(EMAIL_REGEX) }
                           .flatten.first
@@ -365,7 +366,7 @@ returns
       data[:from_local]        = mail_address.local
       data[:from_domain]       = mail_address.domain
       data[:from_display_name] = mail_address.display_name || mail_address.comments&.first
-    elsif from =~ /^(.+?)<((.+?)@(.+?))>$/
+    elsif from =~ /^(.+?)<((.+?)@(.+?))>/
       data[:from_email]        = $2
       data[:from_local]        = $3
       data[:from_domain]       = $4
@@ -476,26 +477,31 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
   def message_header_hash(mail)
     imported_fields = mail.header.fields.map do |f|
-      value = begin
-                f.to_utf8
-              rescue NameError # handle bug #1238 in Mail 2.7.1.rc1
-                ''             # swap out for commented line below once upgrade is available
-              end
-
+      begin
+        value = f.to_utf8
+        if value.blank?
+          value = f.raw_value.to_utf8
+        end
+      rescue
+        value = f.raw_value.to_utf8(fallback: :read_as_sanitized_binary)
+      end
       [f.name.downcase, value]
     end.to_h
 
     # imported_fields = mail.header.fields.map { |f| [f.name.downcase, f.to_utf8] }.to_h
     raw_fields = mail.header.fields.map { |f| ["raw-#{f.name.downcase}", f] }.to_h
     custom_fields = {}.tap do |h|
-      validated_recipients = imported_fields.slice(*RECIPIENT_FIELDS)
-                                            .transform_values { |v| v.match?(EMAIL_REGEX) ? v : '' }
-      h.merge!(validated_recipients)
+      h.replace(imported_fields.slice(*RECIPIENT_FIELDS)
+                               .transform_values { |v| v.match?(EMAIL_REGEX) ? v : '' })
 
-      h['date']            = Time.zone.parse(mail.date.to_s) || imported_fields['date']
+      h['x-any-recipient'] = h.values.select(&:present?).join(', ')
       h['message_id']      = imported_fields['message-id']
-      h['subject']         = imported_fields['subject']&.sub(/^=\?us-ascii\?Q\?(.+)\?=$/, '\1')
-      h['x-any-recipient'] = validated_recipients.values.select(&:present?).join(', ')
+      h['subject']         = imported_fields['subject']&.sub(/^=\?us-ascii\?Q\?(.+)\s*\?=\s*$/, '\1')
+      begin
+        h['date'] = Time.zone.parse(mail.date.to_s) || imported_fields['date']
+      rescue
+        h['date'] = nil
+      end
     end
 
     [imported_fields, raw_fields, custom_fields].reduce({}.with_indifferent_access, &:merge)
@@ -570,7 +576,7 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
   def get_attachments(file, attachments, mail)
     return file.parts.map { |p| get_attachments(p, attachments, mail) } if file.parts.any?
-    return [] if [mail.text_part, mail.html_part].include?(file)
+    return [] if [mail.text_part&.body&.encoded, mail.html_part&.body&.encoded].include?(file.body.encoded)
 
     # get file preferences
     headers_store = {}
@@ -597,15 +603,29 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
     # get filename from content-disposition
 
     # workaround for: NoMethodError: undefined method `filename' for #<Mail::UnstructuredField:0x007ff109e80678>
-    filename = file.header[:content_disposition].try(:filename)
+    begin
+      filename = file.header[:content_disposition].try(:filename)
+    rescue
+      begin
+        if file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})="(.+?)"/i
+          filename = $3
+        elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})='(.+?)'/i
+          filename = $3
+        elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})=(.+?);/i
+          filename = $3
+        end
+      rescue
+        Rails.logger.debug { 'Unable to get filename' }
+      end
+    end
 
     begin
-      if file.header[:content_disposition].to_s =~ /filename="(.+?)"/i
-        filename = $1
-      elsif file.header[:content_disposition].to_s =~ /filename='(.+?)'/i
-        filename = $1
-      elsif file.header[:content_disposition].to_s =~ /filename=(.+?);/i
-        filename = $1
+      if file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})="(.+?)"/i
+        filename = $3
+      elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})='(.+?)'/i
+        filename = $3
+      elsif file.header[:content_disposition].to_s =~ /(filename|name)(\*{0,1})=(.+?);/i
+        filename = $3
       end
     rescue
       Rails.logger.debug { 'Unable to get filename' }
@@ -613,12 +633,12 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
     # as fallback, use raw values
     if filename.blank?
-      if headers_store['Content-Disposition'].to_s =~ /filename="(.+?)"/i
-        filename = $1
-      elsif headers_store['Content-Disposition'].to_s =~ /filename='(.+?)'/i
-        filename = $1
-      elsif headers_store['Content-Disposition'].to_s =~ /filename=(.+?);/i
-        filename = $1
+      if headers_store['Content-Disposition'].to_s =~ /(filename|name)(\*{0,1})="(.+?)"/i
+        filename = $3
+      elsif headers_store['Content-Disposition'].to_s =~ /(filename|name)(\*{0,1})='(.+?)'/i
+        filename = $3
+      elsif headers_store['Content-Disposition'].to_s =~ /(filename|name)(\*{0,1})=(.+?);/i
+        filename = $3
       end
     end
 
@@ -652,9 +672,9 @@ process unprocessable_mails (tmp/unprocessable_mail/*.eml) again
 
       # e. g. Content-Type: video/quicktime; name="Video.MOV";
       if filename.blank?
-        ['name="(.+?)"(;|$)', "name='(.+?)'(;|$)", 'name=(.+?)(;|$)'].each do |regexp|
+        ['(filename|name)(\*{0,1})="(.+?)"(;|$)', '(filename|name)(\*{0,1})=\'(.+?)\'(;|$)', '(filename|name)(\*{0,1})=(.+?)(;|$)'].each do |regexp|
           if headers_store['Content-Type'] =~ /#{regexp}/i
-            filename = $1
+            filename = $3
             break
           end
         end
@@ -743,7 +763,11 @@ module Mail
   # workaround to get content of no parseable headers - in most cases with non 7 bit ascii signs
   class Field
     def raw_value
-      value = @raw_value.try(:utf8_encode)
+      begin
+        value = @raw_value.try(:utf8_encode)
+      rescue
+        value = @raw_value.utf8_encode(fallback: :read_as_sanitized_binary)
+      end
       return value if value.blank?
       value.sub(/^.+?:(\s|)/, '')
     end
@@ -784,4 +808,19 @@ module Mail
       end.join('')
     end
   end
+
+  # issue#348 - IMAP mail fetching stops because of broken spam email (e. g. broken Content-Transfer-Encoding value see test/fixtures/mail43.box)
+  # https://github.com/zammad/zammad/issues/348
+  class Body
+    def decoded
+      if !Encodings.defined?(encoding)
+        #raise UnknownEncodingType, "Don't know how to decode #{encoding}, please call #encoded and decode it yourself."
+        Rails.logger.info "UnknownEncodingType: Don't know how to decode #{encoding}!"
+        raw_source
+      else
+        Encodings.get_encoding(encoding).decode(raw_source)
+      end
+    end
+  end
+
 end

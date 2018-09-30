@@ -1,0 +1,16 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: xxxxx@xxxxx.cz
+from_email: xxxxx@xxxxx.cz
+from_display_name: ''
+subject: Contact from Server
+to: helpdek@xxxxx.cz
+body: 'Contact form Odeslano dne: Čtvrtek 2. srpna 2018 16:58.28 Uzivatel: Jmeno:
+  Peter E-mail: xxxxx@xxxxxx.cz Problem: jine Contact form<br><br> Odeslano dne: Čtvrtek
+  2. srpna 2018 16:58.28<br><br> Uzivatel: <br> Jmeno: <b>Peter</b><br> E-mail: <b>xxxxx@xxxxx.cz</b><br>
+  Problem: <b>jine</b><br><br> Text: <b>Po zavolání uvádí, že garáž není jeho, ale
+  strýce. Dále již nezvedá telefon a na SMS zprávy neodpovídá. Když jsem dojel na
+  místo a zazvonil. Jsem přesvědčen, že tato osoba vyvíjí činnost v oblasti nemovitostí.
+  Dále mlžení a zapírání své osoby coby statutárního orgánu společnosti, kterou zastupuje,
+  nesvědčí o seriozním jednání, ale spíše o protiprávním. Jeho jednáním mi mimo jiné
+  vznikly zbytečné finanční náklady a čas</b>'
+content_type: text/html

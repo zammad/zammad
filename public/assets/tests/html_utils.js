@@ -651,6 +651,12 @@ test("htmlCleanup", function() {
   result = App.Utils.htmlCleanup(source)
   equal(result.get(0).outerHTML, should, source)
 
+  // strip out browser-inserted (broken) link (see https://github.com/zammad/zammad/issues/2019)
+  source = "<div><a href=\"https://example.com/#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\">test</a></div>"
+  should = "<a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\">test</a>"
+  result = App.Utils.htmlCleanup(source)
+  equal(result.html(), should, source)
+
   source = "<table bgcolor=\"green\" aaa=\"1\" style=\"color: red\"><thead><tr style=\"margin-top: 10px\"><th colspan=\"2\" abc=\"a\" style=\"margin-top: 12px\">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>"
   should = "<table bgcolor=\"green\" style=\"color:red;\"><thead><tr style=\"margin-top:10px;\"><th colspan=\"2\" style=\"margin-top:12px;\">aaa</th></tr></thead><tbody><tr><td>value</td></tr></tbody></table>"
   result = App.Utils.htmlCleanup(source)
@@ -794,218 +800,449 @@ test("check signature", function() {
 });
 
 // identify signature
-test("identify signature", function() {
+test("identify signature by plaintext", function() {
 
   var message = "<div>test 123 </div>"
   var should  = '<div>test 123 </div>'
-  var result  = App.Utils.signatureIdentify(message)
+  var result  = App.Utils.signatureIdentifyByPlaintext(message)
   equal(result, should)
 
   message = "<div>test 123 <br/>--<br/>Bob Smith</div>"
   should  = '<div>test 123 <br/>--<br/>Bob Smith</div>'
-  result  = App.Utils.signatureIdentify(message)
+  result  = App.Utils.signatureIdentifyByPlaintext(message)
   equal(result, should)
 
   message = "<div>test 123 <br/>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/><br/>--<br/>Bob Smith</div>"
   should  = '<div>test 123 <br/>1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7<br/>8<br/>9<br/><br/><span class="js-signatureMarker"></span>--<br/>Bob Smith</div>'
-  result  = App.Utils.signatureIdentify(message)
+  result  = App.Utils.signatureIdentifyByPlaintext(message)
   equal(result, should)
 
   message = "<div>test 123 <br/><br/>--no not match--<br/>--<br/>Bob Smith</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><span class="js-signatureMarker"></span>--<br/>Bob Smith</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>test 123 <br/><br/>--no not match--<br/> -- <br/>Bob Smith</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><span class="js-signatureMarker"></span> -- <br/>Bob Smith</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>test 123 <br/><br/>--<br/>Bob Smith<br/><br/><br/><br/><br/>--<br/>Bob Smith</div>"
   should  = '<div>test 123 <br/><br/><span class="js-signatureMarker"></span>--<br/>Bob Smith<br/><br/><br/><br/><br/>--<br/>Bob Smith</div>'
   //should  = '<div>test 123 <br><br><br><br><br><br><br><br><br><br><br><span class="js-signatureMarker"></span>--<br>Bob Smith<br/><br/><br/><br/><br/>--<br/>Bob Smith</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>test 123</div><div>test 123</div><div>--</div><div>Bob Smith</div>"
   should  = "<div>test 123</div><div>test 123</div><div><span class=\"js-signatureMarker\"></span>--</div><div>Bob Smith</div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<p><span>test 123</span></p><p><span>test 123</span></p><p><span>--</span></p><p><span>Bob Smith</span></p><div></div>"
   should  = "<p><span>test 123</span></p><p><span>test 123</span></p><p><span><span class=\"js-signatureMarker\"></span>--</span></p><p><span>Bob Smith</span></p><div></div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "Test reply to zammad<br><br>Am 24.10.2016 18:55 schrieb &quot;Android Support&quot; &lt;android-support@example.com&gt;:<br><br>&gt; <u></u><br>&gt; Sehr geehrte Damen"
   should  = "Test reply to zammad<br><br><span class=\"js-signatureMarker\"></span>Am 24.10.2016 18:55 schrieb &quot;Android Support&quot; &lt;android-support@example.com&gt;:<br><br>&gt; <u></u><br>&gt; Sehr geehrte Damen"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<br>&lt; On 20 Oct 2016, at 12:23, Martin Edenhofer via Zammad Helpdesk wrote:<br>"
   should = "<br><span class=\"js-signatureMarker\"></span>&lt; On 20 Oct 2016, at 12:23, Martin Edenhofer via Zammad Helpdesk wrote:<br>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // apple
   // en
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>On 01/04/15 10:55, Bob Smith wrote:<br/>lalala<p>--</p>some test</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>On 01/04/15 10:55, Bob Smith wrote:<br/>lalala<p>--</p>some test</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // de
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Am 03.04.2015 um 20:58 schrieb Bob Smith &lt;bob@example.com&gt;:<br/>lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Am 03.04.2015 um 20:58 schrieb Bob Smith &lt;bob@example.com&gt;:<br/>lalala</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // ms
   // en
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>lalala</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>Subject: lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>Subject: lalala</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>1<br/>2<br/>3<br/>4<br/>4<br/>Subject: lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>From: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Sent: Donnerstag, 2. April 2015 10:00<br/>1<br/>2<br/>3<br/>4<br/>4<br/>Subject: lalala</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // de
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>Betreff: lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Von: Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Gesendet: Donnerstag, 2. April 2015 10:00<br/>Betreff: lalala</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
   should  = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
   should  = "<div>1<br><br></div><div><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Znuny Support [<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>]</div>\n<div>Gesendet: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>1<br><br></div><div>Von: Martin Edenhofer via Znuny Support &lt;<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>&gt;</div>\n<div>An: somebody</div><div>Datum: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
   should  = "<div>1<br><br></div><div><span class=\"js-signatureMarker\"></span>Von: Martin Edenhofer via Znuny Support &lt;<a href=\"mailto:support@znuny.inc\" title=\"mailto:support@znuny.inc\" target=\"_blank\">mailto:support@znuny.inc</a>&gt;</div>\n<div>An: somebody</div><div>Datum: Donnerstag, 2. April 2015 11:32</div><div>Betreff: lalala</div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>Von: &quot;Johannes Nickel via Znuny Projects&quot; &lt;<a href=\"mailto:projects@znuny.inc\" title=\"mailto:projects@znuny.inc\">projects@znuny.inc</a>&gt;</div><div>An: \"Lisa Smith\" &lt;<a href=\"mailto:lisa.smith@example.com\" title=\"mailto:lisa.smith@example.com\">lisa.smith@example.com</a>&gt;</div><div>Gesendet: Donnerstag, 2. April 2015 10:11:12</div><div>Betreff: Angebot Redundanz / Paket mit Silver Subscription [Ticket#424242]</div><div><br></div><div>Hallo Frau Smith,</div>"
   should  = "<div><span class=\"js-signatureMarker\"></span>Von: &quot;Johannes Nickel via Znuny Projects&quot; &lt;<a href=\"mailto:projects@znuny.inc\" title=\"mailto:projects@znuny.inc\">projects@znuny.inc</a>&gt;</div><div>An: \"Lisa Smith\" &lt;<a href=\"mailto:lisa.smith@example.com\" title=\"mailto:lisa.smith@example.com\">lisa.smith@example.com</a>&gt;</div><div>Gesendet: Donnerstag, 2. April 2015 10:11:12</div><div>Betreff: Angebot Redundanz / Paket mit Silver Subscription [Ticket#424242]</div><div><br></div><div>Hallo Frau Smith,</div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>Hi Johannes,</div><div><br></div><div>das Angebot für den halben Tag bitte an uns.</div><div>Der Termin hat sich jetzt auf 10-12 Uhr verschoben, hab ich dir weitergeleitet.</div><div><br></div><div>Viele Grüße</div><div>Max</div><div><br></div><div>&gt; On 07 Oct 2015, at 11:55, Johannes Smith &lt;<a href=mailto:smith@example.com title=mailto:smith@example.com target=_blank>smith@example.com</a> &lt;<a href=mailto:smith@example.com title=mailto:smith@example.com target=_blank>mailto:smith@example.com</a>&gt;&gt; wrote:</div><div>&gt;</div><div>&gt; Hi,</div><div>&gt;</div><div>&gt; OK. Wer kriegt das Angebot? Ist das wirklich nur ein halber Tag?</div></div>"
   should  = "<div>Hi Johannes,</div><div><br></div><div>das Angebot für den halben Tag bitte an uns.</div><div>Der Termin hat sich jetzt auf 10-12 Uhr verschoben, hab ich dir weitergeleitet.</div><div><br></div><div>Viele Grüße</div><div>Max</div><div><br></div><div><span class=\"js-signatureMarker\"></span>&gt; On 07 Oct 2015, at 11:55, Johannes Smith &lt;<a href=mailto:smith@example.com title=mailto:smith@example.com target=_blank>smith@example.com</a> &lt;<a href=mailto:smith@example.com title=mailto:smith@example.com target=_blank>mailto:smith@example.com</a>&gt;&gt; wrote:</div><div>&gt;</div><div>&gt; Hi,</div><div>&gt;</div><div>&gt; OK. Wer kriegt das Angebot? Ist das wirklich nur ein halber Tag?</div></div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "Dear Mr. Smith,<div><br></div><div>it seems to be, dass Sie den AutoIncrement Nummerngenerator für Ihre ITSMChangeManagement Installation verwenden. Seit ABC 3.2 wird führend vor der sich in der Datei&nbsp;<span style=\"line-height: 1.45; background-color: initial;\">&lt;ABC_CONFIG_Home&gt;/war/log/ITSMChangeCounter.log &nbsp;befindenden Zahl die SystemID (SysConfig) geschrieben. Dies ist ein Standardverhalten, dass auch bei der Ticketnummer verwendet wird.<br><br>Please ask me if you have questions.</span></div><div><span style=\"line-height: 1.45; background-color: initial;\"><br></span></div><div><span style=\"line-height: 1.45; background-color: initial;\">Viele Grüße,</span></div><div><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n<br>Enterprise Services for ABC\n<br>\n<br>Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany\n<br>\n<br>P: +49 (0) 30 111 111 111-0\n<br>F: +49 (0) 30 111 111 111-8\n<br>W: http://znuny.com \n<br>\n<br>Location: Berlin - HRB 12345678 B Amtsgericht Berlin-Charlottenburg\n<br>Managing Director: Martin Edenhofer\n<br></div></div>"
   should  = "Dear Mr. Smith,<div><br></div><div>it seems to be, dass Sie den AutoIncrement Nummerngenerator für Ihre ITSMChangeManagement Installation verwenden. Seit ABC 3.2 wird führend vor der sich in der Datei&nbsp;<span style=\"line-height: 1.45; background-color: initial;\">&lt;ABC_CONFIG_Home&gt;/war/log/ITSMChangeCounter.log &nbsp;befindenden Zahl die SystemID (SysConfig) geschrieben. Dies ist ein Standardverhalten, dass auch bei der Ticketnummer verwendet wird.<br><br>Please ask me if you have questions.</span></div><div><span style=\"line-height: 1.45; background-color: initial;\"><br></span></div><div><span style=\"line-height: 1.45; background-color: initial;\">Viele Grüße,</span></div><div><span class=\"js-signatureMarker\"></span><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n<br>Enterprise Services for ABC\n<br>\n<br>Znuny GmbH // Marienstraße 11 // 10117 Berlin // Germany\n<br>\n<br>P: +49 (0) 30 111 111 111-0\n<br>F: +49 (0) 30 111 111 111-8\n<br>W: http://znuny.com \n<br>\n<br>Location: Berlin - HRB 12345678 B Amtsgericht Berlin-Charlottenburg\n<br>Managing Director: Martin Edenhofer\n<br></div></div>"
-  result  = App.Utils.signatureIdentify(message, true, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true, true)
   equal(result, should)
 
   message = "Dear Mr. Smith, nice to read you,<div><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n</div></div>"
   should  = "Dear Mr. Smith, nice to read you,<div><span class=\"js-signatureMarker\"></span><div data-signature=\"true\" data-signature-id=\"1\">&nbsp; Thorsten Smith\n<br>\n<br>--\n</div></div>"
-  result  = App.Utils.signatureIdentify(message, true, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true, true)
   equal(result, should)
 
   message = "Dear Mr. Smith, nice to read you,<div><div data-signature=\"true\" data-signature-id=\"9999\">&nbsp; Thorsten Smith\n<br>\n<br>--\n</div></div>"
   should  = "Dear Mr. Smith, nice to read you,<div><div data-signature=\"true\" data-signature-id=\"9999\">&nbsp; Thorsten Smith\n<br>\n<br>--\n</div></div>"
-  result  = App.Utils.signatureIdentify(message, false, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, false, true)
   equal(result, should)
 
   // fr
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>De : Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Envoyé : mercredi 29 avril 2015 17:31<br/>Objet : lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>De : Martin Edenhofer via Znuny Support [mailto:support@znuny.inc]<br/>Envoyé : mercredi 29 avril 2015 17:31<br/>Objet : lalala</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // thunderbird
   // de
   message = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div>Am 04.03.2015 um 12:47 schrieb Martin Edenhofer via Znuny Sales:</div><div>&gt; Hallo Christian,</div>"
   should  = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div><span class=\"js-signatureMarker\"></span>Am 04.03.2015 um 12:47 schrieb Martin Edenhofer via Znuny Sales:</div><div>&gt; Hallo Christian,</div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // en - Thunderbird default - http://kb.mozillazine.org/Reply_header_settings
   message = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div>On 01-01-2007 11:00 AM, Alf Aardvark wrote:</div><div>&gt; Hallo Christian,</div>"
   should  = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div><span class=\"js-signatureMarker\"></span>On 01-01-2007 11:00 AM, Alf Aardvark wrote:</div><div>&gt; Hallo Christian,</div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // en - http://kb.mozillazine.org/Reply_header_settings
   message = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div>Alf Aardvark wrote, on 01-01-2007 11:00 AM:</div><div>&gt; Hallo Christian,</div>"
   should  = "<div><br></div><div>Viele Grüße,</div><div>Christian</div><div><br></div><div><span class=\"js-signatureMarker\"></span>Alf Aardvark wrote, on 01-01-2007 11:00 AM:</div><div>&gt; Hallo Christian,</div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // otrs
   // en
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>01/04/15 10:55 - Bob Smith wrote:<br/>lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>01/04/15 10:55 - Bob Smith wrote:<br/>lalala</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // de
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>01/04/15 10:55 - Bob Smith schrieb:<br/>lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>01/04/15 10:55 - Bob Smith schrieb:<br/>lalala</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>test 123 <br/><br/></div><div>24.02.2015 14:20 - Roy Kaldung via Znuny Sales schrieb: &nbsp;</div>"
   should  = "<div>test 123 <br/><br/></div><div><span class=\"js-signatureMarker\"></span>24.02.2015 14:20 - Roy Kaldung via Znuny Sales schrieb: &nbsp;</div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // zammad
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><div data-signature=\"true\" data-signature-id=\"5\">lalala</div></div>"
   should  = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class=\"js-signatureMarker\"></span><div data-signature=\"true\" data-signature-id=\"5\">lalala</div></div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><blockquote type=\"cite\">lalala</blockquote></div>"
   should  = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class=\"js-signatureMarker\"></span><blockquote type=\"cite\">lalala</blockquote></div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // gmail
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><blockquote class=\"ecxgmail_quote\">lalala</blockquote></div>"
   should  = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class=\"js-signatureMarker\"></span><blockquote class=\"ecxgmail_quote\">lalala</blockquote></div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><blockquote class=\"gmail_quote\">lalala</blockquote></div>"
   should  = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class=\"js-signatureMarker\"></span><blockquote class=\"gmail_quote\">lalala</blockquote></div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Am 24. Dezember 2015 um 07:45 schrieb kathrine &lt;kathrine@example.com&gt;:<br/>lalala</div>"
   should = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class=\"js-signatureMarker\"></span>Am 24. Dezember 2015 um 07:45 schrieb kathrine &lt;kathrine@example.com&gt;:<br/>lalala</div>"
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // word 14
   // en
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Bob Smith wrote:<br/>lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Bob Smith wrote:<br/>lalala</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
   // de
   message = "<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/>Bob Smith schrieb:<br/>lalala</div>"
   should  = '<div>test 123 <br/><br/>--no not match--<br/><br/>Bob Smith<br/><span class="js-signatureMarker"></span>Bob Smith schrieb:<br/>lalala</div>'
-  result  = App.Utils.signatureIdentify(message, true)
+  result  = App.Utils.signatureIdentifyByPlaintext(message, true)
   equal(result, should)
 
+});
+
+
+test("identify signature by HTML", function() {
+
+  var message = "<div>test 123 </div>"
+  var should  = message
+  var result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // simple case 1
+  message = '<div>actual content</div><blockquote>quoted content</blockquote>'
+  should  = '<div>actual content</div><span class="js-signatureMarker"></span><blockquote>quoted content</blockquote>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // simple case 2
+  message = '<div>actual content</div><blockquote>quoted content</blockquote><br><div><br></div><div><br>   </div>'
+  should  = '<div>actual content</div><span class="js-signatureMarker"></span><blockquote>quoted content</blockquote><br><div><br></div><div><br>   </div>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // simple case 3
+  message = '<div>actual content</div><blockquote>quoted content</blockquote><br><div>actual content 2</div>'
+  should  = message
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // simple case 4
+  message = '  content 0  <div>content 1</div> content 2  <blockquote>quoted content</blockquote><br><div><br></div><div><br>   </div>'
+  should  = '  content 0  <div>content 1</div> content 2  <span class="js-signatureMarker"></span><blockquote>quoted content</blockquote><br><div><br></div><div><br>   </div>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // Gmail via Safari on MacOS 10.12
+  message = '<div dir="ltr">Reply with <b>gmail</b> via Safari on MacOS 10.12</div><br>\
+    <div>\
+    <div dir="ltr">Am Mi., 5. Sep. 2018 um 09:22 Uhr schrieb Billy Zhou &lt;bz@zammad.com&gt;:<br>\
+    </div>\
+    <blockquote>test email content<br>\
+    <br>\
+    </blockquote>\
+    </div>'
+  should = '<div dir="ltr">Reply with <b>gmail</b> via Safari on MacOS 10.12</div><br>\
+    <span class=\"js-signatureMarker\"></span><div>\
+    <div dir="ltr">Am Mi., 5. Sep. 2018 um 09:22 Uhr schrieb Billy Zhou &lt;bz@zammad.com&gt;:<br>\
+    </div>\
+    <blockquote>test email content<br>\
+    <br>\
+    </blockquote>\
+    </div>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // Yahoo Mail via Safari on MacOS 10.12
+  message = '<div style="color:#000; background-color:#fff; font-family:Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-size:16px"><div id="yui_3_16_0_ym19_1_1536132243868_2594"><span id="yui_3_16_0_ym19_1_1536132243868_2593">Reply with <b id="yui_3_16_0_ym19_1_1536132243868_2597">Yahoo Mail</b> via Safari on MacOS 10.12</span></div> <div class="qtdSeparateBR"><br><br></div><div class="yahoo_quoted" style="display: block;"> <div style="font-family: Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif; font-size: 16px;"> <div style="font-family: HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif; font-size: 16px;"> <div dir="ltr"><font size="2" face="Arial"> Billy Zhou &lt;bz@zammad.com&gt; schrieb am 9:08 Mittwoch, 5.September 2018:<br></font></div>  <br><br> <div class="y_msg_container"><div dir="ltr">test email content<br></div><div dir="ltr"><br></div><br><br></div>  </div> </div>  </div></div>'
+  should  = '<div style="color:#000; background-color:#fff; font-family:Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;font-size:16px"><div id="yui_3_16_0_ym19_1_1536132243868_2594"><span id="yui_3_16_0_ym19_1_1536132243868_2593">Reply with <b id="yui_3_16_0_ym19_1_1536132243868_2597">Yahoo Mail</b> via Safari on MacOS 10.12</span></div> <div class="qtdSeparateBR"><br><br></div><span class="js-signatureMarker"></span><div class="yahoo_quoted" style="display: block;"> <div style="font-family: Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif; font-size: 16px;"> <div style="font-family: HelveticaNeue, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif; font-size: 16px;"> <div dir="ltr"><font size="2" face="Arial"> Billy Zhou &lt;bz@zammad.com&gt; schrieb am 9:08 Mittwoch, 5.September 2018:<br></font></div>  <br><br> <div class="y_msg_container"><div dir="ltr">test email content<br></div><div dir="ltr"><br></div><br><br></div>  </div> </div>  </div></div>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // Thunderbird 52 on MacOS 10.12
+  message = 'Reply with <b>Thunderbird 52</b> on MacOS 10.12<br>\
+    <br>\
+    <div class="moz-cite-prefix">Am 04.09.18 um 15:32 schrieb Billy\
+      Zhou:<br>\
+    </div>\
+    <blockquote type="cite"\
+      cite="mid:da18ed01-b187-a383-bfe7-72663cf82a83@zammad.com">test\
+      email content\
+      <br>\
+      <br>\
+    </blockquote>\
+    <br>'
+  should = 'Reply with <b>Thunderbird 52</b> on MacOS 10.12<br>\
+    <br>\
+    <div class="moz-cite-prefix">Am 04.09.18 um 15:32 schrieb Billy\
+      Zhou:<br>\
+    </div>\
+    <span class=\"js-signatureMarker\"></span><blockquote type="cite" cite="mid:da18ed01-b187-a383-bfe7-72663cf82a83@zammad.com">test\
+      email content\
+      <br>\
+      <br>\
+    </blockquote>\
+    <br>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // Apple Mail on MacOS 10
+  message = '<div class="">Reply by <b class="">Apple Mail</b> on MacOS 10.</div><div class=""><br class=""></div><br class=""><div><blockquote type="cite" class=""><div class="">On 4. Sep 2018, at 15:32, Billy Zhou &lt;<a href="mailto:bz@zammad.com" class="">bz@zammad.com</a>&gt; wrote:</div><br class="Apple-interchange-newline"><div class=""><div class="">test email content<br class=""><br class=""></div></div></blockquote></div><br class="">'
+  should  = '<div class="">Reply by <b class="">Apple Mail</b> on MacOS 10.</div><div class=""><br class=""></div><br class=""><span class=\"js-signatureMarker\"></span><div><blockquote type="cite" class=""><div class="">On 4. Sep 2018, at 15:32, Billy Zhou &lt;<a href="mailto:bz@zammad.com" class="">bz@zammad.com</a>&gt; wrote:</div><br class="Apple-interchange-newline"><div class=""><div class="">test email content<br class=""><br class=""></div></div></blockquote></div><br class="">'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // Office 365 (10325.20118) on Windows 10 Build 1803
+  // With German marker: -----Ursprüngliche Nachricht-----
+  // Using fallback to signatureIdentifyByPlaintext
+  message = '<div>\
+<p>Reply with Office 365 (10325.20118) on Windows 10 Build 1803</p>\
+<p> </p>\
+<p><b>fett</b></p>\
+<p> </p>\
+<span class="js-signatureMarker"></span><p>--</p>\
+<p>Zammad GmbH // Marienstraße 11 // 10117 Berlin // Germany</p>\
+<p> </p>\
+<p>P: +49 (0) 30 55 57 160-0</p>\
+<p>F: +49 (0) 30 55 57 160-99</p>\
+<p>W: <a href="https://zammad.com" rel="nofollow noreferrer noopener" target="_blank">https://zammad.com</a></p>\
+<p> </p>\
+<p>Location: Berlin - HRB 163946 B Amtsgericht Berlin-Charlottenburg</p>\
+<p>Managing Director: Martin Edenhofer</p>\
+<p> </p>\
+<p>-----Ursprüngliche Nachricht-----<br>Von: Billy Zhou &lt;bz@zammad.com&gt; <br>Gesendet: Dienstag, 4. September 2018 15:33<br>An: me@zammad.com<br>Betreff: test email title</p>\
+<p> </p>\
+<p>test email content</p>\
+<p> </p>\
+</div>'
+  should = '<div>\
+<p>Reply with Office 365 (10325.20118) on Windows 10 Build 1803</p>\
+<p> </p>\
+<p><b>fett</b></p>\
+<p> </p>\
+<span class="js-signatureMarker"></span><p><span class=\"js-signatureMarker\"></span>--</p>\
+<p>Zammad GmbH // Marienstraße 11 // 10117 Berlin // Germany</p>\
+<p> </p>\
+<p>P: +49 (0) 30 55 57 160-0</p>\
+<p>F: +49 (0) 30 55 57 160-99</p>\
+<p>W: <a href="https://zammad.com" rel="nofollow noreferrer noopener" target="_blank">https://zammad.com</a></p>\
+<p> </p>\
+<p>Location: Berlin - HRB 163946 B Amtsgericht Berlin-Charlottenburg</p>\
+<p>Managing Director: Martin Edenhofer</p>\
+<p> </p>\
+<p>-----Ursprüngliche Nachricht-----<br>Von: Billy Zhou &lt;bz@zammad.com&gt; <br>Gesendet: Dienstag, 4. September 2018 15:33<br>An: me@zammad.com<br>Betreff: test email title</p>\
+<p> </p>\
+<p>test email content</p>\
+<p> </p>\
+</div>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // Office 365 (10325.20118) on Windows 10 Build 1803
+  // With English marker: -----Original Message-----
+  // Using fallback to signatureIdentifyByPlaintext
+  message = '<div>\
+<p>Reply with Office 365 (10325.20118) on Windows 10 Build 1803</p>\
+<p> </p>\
+<p><b>fett</b></p>\
+<p> </p>\
+<span class="js-signatureMarker"></span><p>--</p>\
+<p>Zammad GmbH // Marienstraße 11 // 10117 Berlin // Germany</p>\
+<p> </p>\
+<p>P: +49 (0) 30 55 57 160-0</p>\
+<p>F: +49 (0) 30 55 57 160-99</p>\
+<p>W: <a href="https://zammad.com" rel="nofollow noreferrer noopener" target="_blank">https://zammad.com</a></p>\
+<p> </p>\
+<p>Location: Berlin - HRB 163946 B Amtsgericht Berlin-Charlottenburg</p>\
+<p>Managing Director: Martin Edenhofer</p>\
+<p> </p>\
+<p>-----Original Message-----<br>Von: Billy Zhou &lt;bz@zammad.com&gt; <br>Gesendet: Dienstag, 4. September 2018 15:33<br>An: me@zammad.com<br>Betreff: test email title</p>\
+<p> </p>\
+<p>test email content</p>\
+<p> </p>\
+</div>'
+  should = '<div>\
+<p>Reply with Office 365 (10325.20118) on Windows 10 Build 1803</p>\
+<p> </p>\
+<p><b>fett</b></p>\
+<p> </p>\
+<span class="js-signatureMarker"></span><p><span class=\"js-signatureMarker\"></span>--</p>\
+<p>Zammad GmbH // Marienstraße 11 // 10117 Berlin // Germany</p>\
+<p> </p>\
+<p>P: +49 (0) 30 55 57 160-0</p>\
+<p>F: +49 (0) 30 55 57 160-99</p>\
+<p>W: <a href="https://zammad.com" rel="nofollow noreferrer noopener" target="_blank">https://zammad.com</a></p>\
+<p> </p>\
+<p>Location: Berlin - HRB 163946 B Amtsgericht Berlin-Charlottenburg</p>\
+<p>Managing Director: Martin Edenhofer</p>\
+<p> </p>\
+<p>-----Original Message-----<br>Von: Billy Zhou &lt;bz@zammad.com&gt; <br>Gesendet: Dienstag, 4. September 2018 15:33<br>An: me@zammad.com<br>Betreff: test email title</p>\
+<p> </p>\
+<p>test email content</p>\
+<p> </p>\
+</div>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
+
+  // Office 365 (10325.20118) on Windows 10 Build 1803
+  // With German marker: -----Ursprüngliche Nachricht-----
+  // Without any existing <span class="js-signatureMarker"></span>
+  // Using fallback to signatureIdentifyByPlaintext
+  message = '<div>\
+<p>Reply with Office 365 (10325.20118) on Windows 10 Build 1803</p>\
+<p> </p>\
+<p><b>fett</b></p>\
+<p> </p>\
+<p>--</p>\
+<p>Zammad GmbH // Marienstraße 11 // 10117 Berlin // Germany</p>\
+<p> </p>\
+<p>P: +49 (0) 30 55 57 160-0</p>\
+<p>F: +49 (0) 30 55 57 160-99</p>\
+<p>W: <a href="https://zammad.com" rel="nofollow noreferrer noopener" target="_blank">https://zammad.com</a></p>\
+<p> </p>\
+<p>Location: Berlin - HRB 163946 B Amtsgericht Berlin-Charlottenburg</p>\
+<p>Managing Director: Martin Edenhofer</p>\
+<p> </p>\
+<p>-----Ursprüngliche Nachricht-----<br>Von: Billy Zhou &lt;bz@zammad.com&gt; <br>Gesendet: Dienstag, 4. September 2018 15:33<br>An: me@zammad.com<br>Betreff: test email title</p>\
+<p> </p>\
+<p>test email content</p>\
+<p> </p>\
+</div>'
+  should = '<div>\
+<p>Reply with Office 365 (10325.20118) on Windows 10 Build 1803</p>\
+<p> </p>\
+<p><b>fett</b></p>\
+<p> </p>\
+<p><span class=\"js-signatureMarker\"></span>--</p>\
+<p>Zammad GmbH // Marienstraße 11 // 10117 Berlin // Germany</p>\
+<p> </p>\
+<p>P: +49 (0) 30 55 57 160-0</p>\
+<p>F: +49 (0) 30 55 57 160-99</p>\
+<p>W: <a href="https://zammad.com" rel="nofollow noreferrer noopener" target="_blank">https://zammad.com</a></p>\
+<p> </p>\
+<p>Location: Berlin - HRB 163946 B Amtsgericht Berlin-Charlottenburg</p>\
+<p>Managing Director: Martin Edenhofer</p>\
+<p> </p>\
+<p>-----Ursprüngliche Nachricht-----<br>Von: Billy Zhou &lt;bz@zammad.com&gt; <br>Gesendet: Dienstag, 4. September 2018 15:33<br>An: me@zammad.com<br>Betreff: test email title</p>\
+<p> </p>\
+<p>test email content</p>\
+<p> </p>\
+</div>'
+  result  = App.Utils.signatureIdentifyByHtml(message)
+  equal(result, should)
 });
 
 // check attachment references
@@ -2640,6 +2877,42 @@ test('check getRecipientArticle format', function() {
     }
   ]
   verify = App.Utils.getRecipientArticle(ticket, article, agent, article.type, email_addresses, false)
+  deepEqual(verify, result)
+
+  customer = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: "'customer@example.com'",
+  }
+  agent = {
+    login: 'login',
+    firstname: 'firstname',
+    lastname: 'lastname',
+    email: 'agent@example.com',
+  }
+  ticket = {
+    customer: customer,
+  }
+  article = {
+    message_id: 'message_id21',
+    created_by: agent,
+    type: {
+      name: 'email',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: customer.email,
+    to: 'agent@example.com',
+  }
+  result = {
+    to:          'customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id21',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
   deepEqual(verify, result)
 
 });

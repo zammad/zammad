@@ -23,49 +23,25 @@ namespace :searchindex do
     if info.present?
       number = info['version']['number'].to_s
     end
-    if number.blank? || number =~ /^[2-4]\./ || number =~ /^5\.[0-5]\./
 
-      # create indexes
-      SearchIndexBackend.index(
-        action: 'create',
-        data: {
-          mappings: {
-            Ticket: {
-              _source: { excludes: [ 'article.attachment' ] },
-              properties: {
-                article: {
-                  type: 'nested',
-                  include_in_parent: true,
-                  properties: {
-                    attachment: {
-                      type: 'attachment',
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      )
-      puts 'done'
-      Setting.set('es_pipeline', '')
-
-    # es with ingest-attachment plugin
-    else
-
-      # create indexes
-      SearchIndexBackend.index(
-        action: 'create',
-        data: {
-          mappings: {
-            Ticket: {
-              _source: { excludes: [ 'article.attachment' ] },
-            }
-          }
-        }
-      )
-      puts 'done'
+    mapping = {}
+    Models.searchable.each do |local_object|
+      mapping.merge!(get_mapping_properties_object(local_object))
     end
+
+    # create indexes
+    SearchIndexBackend.index(
+      action: 'create',
+      data: {
+        mappings: mapping
+      }
+    )
+
+    if number.blank? || number =~ /^[2-4]\./ || number =~ /^5\.[0-5]\./
+      Setting.set('es_pipeline', '')
+    end
+
+    puts 'done'
 
     Rake::Task['searchindex:create_pipeline'].execute
   end
@@ -167,4 +143,108 @@ namespace :searchindex do
     Rake::Task['searchindex:reload'].execute
 
   end
+end
+
+=begin
+
+This function will return a index mapping based on the
+attributes of the database table of the existing object.
+
+mapping = get_mapping_properties_object(Ticket)
+
+Returns:
+
+mapping = {
+  User: {
+    properties: {
+      firstname: {
+        type: 'keyword',
+      },
+    }
+  }
+}
+
+=end
+
+def get_mapping_properties_object(object)
+  result = {
+    object.name => {
+      properties: {}
+    }
+  }
+
+  store_columns = %w[preferences data]
+
+  object.columns_hash.each do |key, value|
+    if value.type == :string && value.limit && value.limit <= 5000 && store_columns.exclude?(key)
+      result[object.name][:properties][key] = {
+        type: 'string',
+        fields: {
+          raw: { 'type': 'string', 'index': 'not_analyzed' }
+        }
+      }
+    elsif value.type == :integer
+      result[object.name][:properties][key] = {
+        type: 'integer',
+      }
+    elsif value.type == :datetime
+      result[object.name][:properties][key] = {
+        type: 'date',
+      }
+    elsif value.type == :boolean
+      result[object.name][:properties][key] = {
+        type: 'boolean',
+        fields: {
+          raw: { 'type': 'boolean', 'index': 'not_analyzed' }
+        }
+      }
+    elsif value.type == :binary
+      result[object.name][:properties][key] = {
+        type: 'binary',
+      }
+    elsif value.type == :bigint
+      result[object.name][:properties][key] = {
+        type: 'long',
+      }
+    elsif value.type == :decimal
+      result[object.name][:properties][key] = {
+        type: 'float',
+      }
+    elsif value.type == :date
+      result[object.name][:properties][key] = {
+        type: 'date',
+      }
+    end
+  end
+
+  # es with mapper-attachments plugin
+  info = SearchIndexBackend.info
+  number = nil
+  if info.present?
+    number = info['version']['number'].to_s
+  end
+
+  if object.name == 'Ticket'
+
+    result[object.name][:_source] = {
+      excludes: ['article.attachment']
+    }
+
+    if number.blank? || number =~ /^[2-4]\./ || number =~ /^5\.[0-5]\./
+      result[object.name][:_source] = {
+        excludes: ['article.attachment']
+      }
+      result[object.name][:properties][:article] = {
+        type: 'nested',
+        include_in_parent: true,
+        properties: {
+          attachment: {
+            type: 'attachment',
+          }
+        }
+      }
+    end
+  end
+
+  result
 end

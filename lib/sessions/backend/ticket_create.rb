@@ -1,7 +1,6 @@
 class Sessions::Backend::TicketCreate < Sessions::Backend::Base
 
   def load
-
     # get attributes to update
     ticket_create_attributes = Ticket::ScreenOptions.attributes_to_change(
       current_user: @user,

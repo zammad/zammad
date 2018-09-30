@@ -233,7 +233,9 @@ class Scheduler < ApplicationModel
 
       # start loop for periods equal or under 5 minutes
       if job.period && job.period <= 5.minutes
+        loop_count = 0
         loop do
+          loop_count += 1
           _start_job(job)
           job = Scheduler.lookup(id: job.id)
 
@@ -245,6 +247,9 @@ class Scheduler < ApplicationModel
 
           # exit if there is no loop period defined
           break if !job.period
+
+          # only do a certain amount of loops in this thread
+          break if loop_count == 1800
 
           # wait until next run
           sleep job.period
@@ -340,7 +345,7 @@ class Scheduler < ApplicationModel
     end
 
     # used for production
-    wait = 8
+    wait = 4
     Thread.new do
       sleep wait
 

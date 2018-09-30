@@ -16,18 +16,21 @@ class Integration::ExchangeController < ApplicationController
         client.http.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
 
-      {
-        endpoint: client.try(:autodiscover).try(:ews_url),
-      }
+      begin
+        { endpoint: client.autodiscover&.ews_url }
+      rescue Errno::EADDRNOTAVAIL
+        {}
+      end
     end
   end
 
   def folders
     answer_with do
       Sequencer.process('Import::Exchange::AvailableFolders',
-                        parameters: {
-                          ews_config: ews_config
-                        })
+                        parameters: { ews_config: ews_config })
+               .tap do |res|
+                 raise 'No folders found for given user credentials.' if res[:folders].blank?
+               end
     end
   end
 
@@ -35,14 +38,12 @@ class Integration::ExchangeController < ApplicationController
     answer_with do
       raise 'Please select at least one folder.' if params[:folders].blank?
 
-      examples = Sequencer.process('Import::Exchange::AttributesExamples',
-                                   parameters: {
-                                     ews_folder_ids: params[:folders],
-                                     ews_config:     ews_config
-                                   })
-      examples.tap do |result|
-        raise 'No entries found in selected folder(s).' if result[:attributes].blank?
-      end
+      Sequencer.process('Import::Exchange::AttributesExamples',
+                        parameters: { ews_folder_ids: params[:folders],
+                                      ews_config:     ews_config })
+               .tap do |res|
+                 raise 'No entries found in selected folder(s).' if res[:attributes].blank?
+               end
     end
   end
 

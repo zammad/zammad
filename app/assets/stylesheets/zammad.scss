@@ -1053,7 +1053,7 @@ th.align-right {
   padding: 0;
 }
 
-.table tr.is-inactive {
+.table tr.is-inactive, .table tr td span.is-inactive {
   color: #bbb;
   text-decoration: line-through;
 
@@ -1358,7 +1358,8 @@ label,
 .inline-label,
 .label-success,
 .label-warning,
-.label-danger {
+.label-danger,
+.fileUpload label {
   font-size: inherit;
   font-weight: inherit;
   text-align: inherit;
@@ -4728,11 +4729,6 @@ footer {
 
 .ticketZoom {
   background: #f8f9fa;
-  /*
-    force ticket zoom to show scrollbars
-    because we offset the tabs bar when the os shows scrollbars
-  */
-  min-height: 101%;
 }
 
 .ticketZoom-controls {
@@ -5545,6 +5541,12 @@ footer {
 
 .tabsSidebar-tabsSpacer {
   @include bidi-style(padding-right, 62px !important, padding-left, 0);
+  /*
+    force div to show scrollbars
+    because we offset the sidebar tabs when the os shows scrollbars
+  */
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .tabsSidebar-sidebarSpacer {
@@ -7377,6 +7379,10 @@ label + .wizard-buttonList {
   padding: 0;
   @extend %clickable;
   opacity: 0;
+  
+  &:focus + label {
+    text-decoration: underline;
+  }
 }
 
 .imagePreview img {

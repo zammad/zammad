@@ -405,6 +405,8 @@ class UsersController < ApplicationController
       query: query,
       limit: per_page,
       offset: offset,
+      sort_by: params[:sort_by],
+      order_by: params[:order_by],
       current_user: current_user,
     }
     %i[role_ids permissions].each do |key|
@@ -472,67 +474,6 @@ class UsersController < ApplicationController
       list.push user.attributes_with_association_ids
     end
     render json: list, status: :ok
-  end
-
-  # @path       [GET] /users/recent
-  #
-  # @tag Search
-  # @tag User
-  #
-  # @summary          Recent creates Users.
-  # @notes            Recent creates Users.
-  #
-  # @parameter        limit           [Integer]       The limit of search results.
-  # @parameter        role_ids(multi) [Array<String>] A list of Role identifiers to which the Users have to be allocated to.
-  # @parameter        full            [Boolean]       Defines if the result should be
-  #                                                   true: { user_ids => [1,2,...], assets => {...} }
-  #                                                   or false: [{:id => user.id, :label => "firstname lastname <email>", :value => "firstname lastname <email>"},...].
-  #
-  # @response_message 200 [Array<User>] A list of User records matching the search term.
-  # @response_message 401               Invalid session.
-  def recent
-
-    if !current_user.permissions?('admin.user')
-      response_access_deny
-      return
-    end
-
-    # do query
-    user_all = if params[:role_ids].present?
-                 User.joins(:roles).where('roles.id' => params[:role_ids]).where('users.id != 1').order('users.created_at DESC').limit(params[:limit] || 20)
-               else
-                 User.where('id != 1').order('created_at DESC').limit(params[:limit] || 20)
-               end
-
-    # build result list
-    if !response_full?
-      users = []
-      user_all.each do |user|
-        realname = user.firstname.to_s + ' ' + user.lastname.to_s
-        if user.email && user.email.to_s != ''
-          realname = realname + ' <' + user.email.to_s + '>'
-        end
-        a = { id: user.id, label: realname, value: realname }
-        users.push a
-      end
-
-      # return result
-      render json: users
-      return
-    end
-
-    user_ids = []
-    assets   = {}
-    user_all.each do |user|
-      assets = user.assets(assets)
-      user_ids.push user.id
-    end
-
-    # return result
-    render json: {
-      assets: assets,
-      user_ids: user_ids.uniq,
-    }
   end
 
   # @path       [GET] /users/history/{id}

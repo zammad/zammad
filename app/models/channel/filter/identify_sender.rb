@@ -143,55 +143,57 @@ module Channel::Filter::IdentifySender
     end
   end
 
-  def self.user_create(data, role_ids = nil)
-    data[:email] += '@local' if !data[:email].match?(/@/)
-    user = User.find_by(email: data[:email].downcase) ||
-           User.find_by(login: data[:email].downcase)
+  def self.user_create(attrs, role_ids = nil)
+    populate_attributes!(attrs, role_ids: role_ids)
 
-    # check if firstname or lastname need to be updated
-    if user
-      if user.firstname.blank? && user.lastname.blank?
-        if data[:firstname].present?
-          data[:firstname] = cleanup_name(data[:firstname])
-          user.update!(
-            firstname: data[:firstname]
-          )
-        end
-      end
-      return user
+    if (user = User.find_by('email = :email OR login = :email', attrs))
+      user.update!(attrs.slice(:firstname)) if user.no_name? && attrs[:firstname].present?
+    elsif (user = User.create!(attrs))
+      user.update!(updated_by_id: user.id, created_by_id: user.id)
     end
 
-    # create new user
-    role_ids ||= Role.signup_role_ids
-
-    # fillup
-    %w[firstname lastname].each do |item|
-      if data[item.to_sym].nil?
-        data[item.to_sym] = ''
-      end
-      data[item.to_sym] = cleanup_name(data[item.to_sym])
-    end
-    data[:password]      = ''
-    data[:active]        = true
-    data[:role_ids]      = role_ids
-    data[:updated_by_id] = 1
-    data[:created_by_id] = 1
-
-    user = User.create!(data)
-    user.update!(
-      updated_by_id: user.id,
-      created_by_id: user.id,
-    )
     user
   end
 
-  def self.cleanup_name(string)
-    string.strip!
-    string.delete!('"')
-    string.gsub!(/^'/, '')
-    string.gsub!(/'$/, '')
-    string.gsub!(/.+?\s\(.+?\)$/, '')
-    string
+  def self.populate_attributes!(attrs, **extras)
+    if attrs[:email].match?(/\S\s+\S/) || attrs[:email].match?(/^<|>$/)
+      attrs[:preferences] = { mail_delivery_failed: true,
+                              mail_delivery_failed_reason: 'invalid email',
+                              mail_delivery_failed_data: Time.zone.now }
+    end
+
+    attrs.merge!(
+      email: sanitize_email(attrs[:email]),
+      firstname: sanitize_name(attrs[:firstname]),
+      lastname: sanitize_name(attrs[:lastname]),
+      password: '',
+      active: true,
+      role_ids: extras[:role_ids] || Role.signup_role_ids,
+      updated_by_id: 1,
+      created_by_id: 1
+    )
+  end
+
+  def self.sanitize_name(string)
+    return '' if string.nil?
+
+    string.strip
+          .delete('"')
+          .gsub(/^'/, '')
+          .gsub(/'$/, '')
+          .gsub(/.+?\s\(.+?\)$/, '')
+  end
+
+  def self.sanitize_email(string)
+    string += '@local' if !string.include?('@')
+
+    string.downcase
+          .strip
+          .delete('"')
+          .delete(' ')             # see https://github.com/zammad/zammad/issues/2254
+          .sub(/^<|>$/, '')        # see https://github.com/zammad/zammad/issues/2254
+          .sub(/\A'(.*)'\z/, '\1') # see https://github.com/zammad/zammad/issues/2154
+          .gsub(/\s/, '')          # see https://github.com/zammad/zammad/issues/2198
   end
 
 end

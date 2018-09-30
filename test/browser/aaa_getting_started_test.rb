@@ -129,6 +129,9 @@ class AaaGettingStartedTest < TestCase
     location_check(
       url: '#getting_started/agents',
     )
+    watch_for(
+      css: '.js-agent input[name="firstname"]',
+    )
     set(
       css: '.js-agent input[name="firstname"]',
       value: 'Agent 1',

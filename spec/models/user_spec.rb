@@ -2,9 +2,10 @@ require 'rails_helper'
 require 'models/concerns/has_groups_examples'
 require 'models/concerns/has_roles_examples'
 require 'models/concerns/has_groups_permissions_examples'
+require 'models/concerns/can_lookup_examples'
 
 RSpec.describe User do
-
+  let(:subject) { create(:user, user_attrs || {}) }
   let(:group_access_instance) { create(:agent_user) }
   let(:new_group_access_instance) { build(:agent_user) }
   let(:group_access_no_permission_instance) { build(:user) }
@@ -12,6 +13,7 @@ RSpec.describe User do
   include_examples 'HasGroups'
   include_examples 'HasRoles'
   include_examples 'HasGroups and Permissions'
+  include_examples 'CanLookup'
 
   let(:new_password) { 'N3W54V3PW!' }
 
@@ -661,6 +663,202 @@ RSpec.describe User do
 
           expect(current_agent_count).to eq(initial_agent_count)
         end
+      end
+    end
+
+    context '#validate_agent_limit_by_role by string' do
+
+      context 'agent creation limit not reached' do
+
+        it 'grants agent creation' do
+          Setting.set('system_agent_limit', (current_agent_count + 1).to_s)
+
+          expect do
+            create(:agent_user)
+          end.to change {
+            current_agent_count
+          }.by(1)
+        end
+
+        it 'grants role change' do
+          Setting.set('system_agent_limit', (current_agent_count + 1).to_s)
+
+          future_agent = create(:customer_user)
+
+          expect do
+            future_agent.roles = [agent_role]
+          end.to change {
+            current_agent_count
+          }.by(1)
+        end
+
+        context 'role updates' do
+
+          it 'grants update by instances' do
+            Setting.set('system_agent_limit', (current_agent_count + 1).to_s)
+
+            agent = create(:agent_user)
+
+            expect do
+              agent.roles = [
+                admin_role,
+                agent_role
+              ]
+              agent.save!
+            end.not_to raise_error
+          end
+
+          it 'grants update by id (Integer)' do
+            Setting.set('system_agent_limit', (current_agent_count + 1).to_s)
+
+            agent = create(:agent_user)
+
+            expect do
+              agent.role_ids = [
+                admin_role.id,
+                agent_role.id
+              ]
+              agent.save!
+            end.not_to raise_error
+          end
+
+          it 'grants update by id (String)' do
+            Setting.set('system_agent_limit', (current_agent_count + 1).to_s)
+
+            agent = create(:agent_user)
+
+            expect do
+              agent.role_ids = [
+                admin_role.id.to_s,
+                agent_role.id.to_s
+              ]
+              agent.save!
+            end.not_to raise_error
+          end
+        end
+      end
+
+      context 'agent creation limit surpassing prevention' do
+
+        it 'creation of new agents' do
+          Setting.set('system_agent_limit', (current_agent_count + 2).to_s)
+
+          create_list(:agent_user, 2)
+
+          initial_agent_count = current_agent_count
+
+          expect do
+            create(:agent_user)
+          end.to raise_error(Exceptions::UnprocessableEntity)
+
+          expect(current_agent_count).to eq(initial_agent_count)
+        end
+
+        it 'prevents role change' do
+          Setting.set('system_agent_limit', current_agent_count.to_s)
+
+          future_agent = create(:customer_user)
+
+          initial_agent_count = current_agent_count
+
+          expect do
+            future_agent.roles = [agent_role]
+          end.to raise_error(Exceptions::UnprocessableEntity)
+
+          expect(current_agent_count).to eq(initial_agent_count)
+        end
+      end
+    end
+
+    context '#validate_agent_limit_by_attributes' do
+
+      context 'agent creation limit surpassing prevention' do
+
+        it 'prevents re-activation of agents' do
+          Setting.set('system_agent_limit', current_agent_count.to_s)
+
+          inactive_agent = create(:agent_user, active: false)
+
+          initial_agent_count = current_agent_count
+
+          expect do
+            inactive_agent.update!(active: true)
+          end.to raise_error(Exceptions::UnprocessableEntity)
+
+          expect(current_agent_count).to eq(initial_agent_count)
+        end
+      end
+    end
+
+  end
+
+  context 'when phone attribute' do
+    let(:user_attrs) { { phone: orig_number } }
+
+    context 'included on create' do
+      let(:orig_number) { '1234567890' }
+
+      it 'adds corresponding CallerId record' do
+        expect { subject }
+          .to change { Cti::CallerId.where(caller_id: orig_number).count }.by(1)
+      end
+    end
+
+    context 'added on update' do
+      let(:orig_number) { nil }
+      let(:new_number) { '1234567890' }
+
+      before { subject } # create user
+
+      it 'adds corresponding CallerId record' do
+        expect { subject.update(phone: new_number) }
+          .to change { Cti::CallerId.where(caller_id: new_number).count }.by(1)
+      end
+    end
+
+    context 'falsely added on update (change: [nil, ""])' do
+      let(:orig_number) { nil }
+      let(:new_number)  { '' }
+
+      before { subject } # create user
+
+      it 'does not attempt to update CallerId record' do
+        allow(Cti::CallerId).to receive(:build).with(any_args)
+
+        expect(Cti::CallerId.where(object: 'User', o_id: subject.id).count)
+          .to eq(0)
+
+        expect { subject.update(phone: new_number) }
+          .to change { Cti::CallerId.where(object: 'User', o_id: subject.id).count }.by(0)
+
+        expect(Cti::CallerId).not_to have_received(:build)
+      end
+    end
+
+    context 'removed on update' do
+      let(:orig_number) { '1234567890' }
+      let(:new_number) { nil }
+
+      before { subject } # create user
+
+      it 'removes corresponding CallerId record' do
+        expect { subject.update(phone: nil) }
+          .to change { Cti::CallerId.where(caller_id: orig_number).count }.by(-1)
+      end
+    end
+
+    context 'changed on update' do
+      let(:orig_number) { '1234567890' }
+      let(:new_number)  { orig_number.next }
+
+      before { subject } # create user
+
+      it 'replaces CallerId record' do
+        # rubocop:disable Layout/MultilineMethodCallIndentation
+        expect { subject.update(phone: new_number) }
+          .to change { Cti::CallerId.where(caller_id: orig_number).count }.by(-1)
+          .and change { Cti::CallerId.where(caller_id: new_number).count }.by(1)
+        # rubocop:enable Layout/MultilineMethodCallIndentation
       end
     end
   end

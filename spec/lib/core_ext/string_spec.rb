@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe String do
   describe '#utf8_encode' do
-    context 'for valid, UTF-8-encoded strings' do
+    context 'on valid, UTF-8-encoded strings' do
       let(:subject) { 'hello' }
 
       it 'returns an identical copy' do
@@ -10,9 +10,17 @@ RSpec.describe String do
         expect(subject.utf8_encode.encoding).to be(subject.encoding)
         expect(subject.utf8_encode).not_to be(subject)
       end
+
+      context 'which are incorrectly set to other, technically valid encodings' do
+        let(:subject) { 'ö'.force_encoding('tis-620') }
+
+        it 'sets input encoding to UTF-8 instead of attempting conversion' do
+          expect(subject.utf8_encode).to eq(subject.force_encoding('utf-8'))
+        end
+      end
     end
 
-    context 'for strings in other encodings' do
+    context 'on strings in other encodings' do
       let(:subject) { original_string.encode(input_encoding) }
 
       context 'with no from: option' do

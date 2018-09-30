@@ -1,0 +1,16 @@
+Return-Path: <http.abc@example.com>
+Delivered-To: xxx
+Received: from xxx
+        for <xxx>; Tue, 21 Aug 2018 09:49:58 +0000
+To: xxx
+From: "http.abc" <http.abc@example.com>
+Subject: test
+Message-ID: <xxx>
+Date: Tue, 21 Aug 2018 11:49:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:xxx) Gecko/xxx
+ Thunderbird/xxx
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Virus-Scanned: clamav-milter 0.100.1
+X-Virus-Status: Clean

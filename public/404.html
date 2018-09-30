@@ -4,10 +4,13 @@
 <title>404: Not Found</title>
 <link rel="stylesheet" href="/assets/error/style.css">
 <body <% if @traceback %>class="error-message"<% end %>>
-  <h1>404: Requested Ressource was not found.</h1>
+  <h1>404: Requested resource was not found</h1>
+<% if @message.present? %>
+  <div><%= @message %></div>
+<% end %>
 <% if !@traceback %>
   <div class="error-image" style="background-image: url(/assets/error/error-2.svg)"></div>
-  <p>Sorry, but the Phoenix is not able to find your ressource. Try checking the URL for errors.</p>
+  <p>Sorry, but the Phoenix is not able to find your resource. Try checking the URL for errors.</p>
 <% else %>
   <div><%= @exception.message %></div>
   <% if @exception.backtrace %>

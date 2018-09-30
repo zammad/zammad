@@ -1,0 +1,34 @@
+--- !ruby/hash:ActiveSupport::HashWithIndifferentAccess
+from: '"ÎäŔźłÉ" <Glopelf7121@example.com>'
+from_email: Glopelf7121@example.com
+from_display_name: ÎäŔźłÉ
+to: info@example.de
+subject: '转发：整体提升企业服务水平'
+body: "Software zur Erkennung von \"Spam\" auf dem Rechner\n\n    bob.example.io\n\nhat
+  die eingegangene E-mail als mögliche \"Spam\"-Nachricht identifiziert.\nDie ursprüngliche
+  Nachricht wurde an diesen Bericht angehängt, so dass\nSie sie anschauen können (falls
+  es doch eine legitime E-Mail ist) oder\nähnliche unerwünschte Nachrichten in Zukunft
+  markieren können.\nBei Fragen zu diesem Vorgang wenden Sie sich bitte an\n\n    the
+  administrator of that system\n\nVorschau: ¡°Ladies and gentlemen,¡± he said loudly,
+  waving for quiet.\n   ¡°What an extraordinary moment this is! The perfect moment
+  for me to make\n   a little announcement I've been sitting on for some time! [...]
+  \n\nInhaltsanalyse im Detail:   (9.4 Punkte, 5.0 benötigt)\n\nPkte Regelname              Beschreibung\n----
+  ---------------------- --------------------------------------------------\n 0.0
+  RCVD_IN_DNSWL_BLOCKED  RBL: ADMINISTRATOR NOTICE: The query to DNSWL\n                            was
+  blocked.  See\n                            http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block\n
+  \                            for more information.\n                            [127.0.0.1
+  listed in list.dnswl.org]\n 1.6 RCVD_IN_BRBL_LASTEXT   RBL: No description available.\n
+  \                           [127.0.0.1 listed in bb.barracudacentral.org]\n 1.0
+  RCVD_IN_PBL            RBL: Received via a relay in Spamhaus PBL\n                            [127.0.0.1
+  listed in zen.spamhaus.org]\n 0.0 MIME_HTML_MOSTLY       BODY: Mehrteilige MIME-Nachricht
+  überwiegend in HTML\n 0.0 HTML_MESSAGE           BODY: Nachricht enthält HTML\n
+  0.7 MPART_ALT_DIFF         BODY: Nachrichtentext im Text- und HTML-Format\n                            unterscheiden
+  sich\n 1.6 RDNS_NONE              Delivered to internal network by a host with no
+  rDNS\n 1.1 SUBJ_ILLEGAL_CHARS     Betreff enthält zu viele ungültige Zeichen\n 0.1
+  SUBJECT_NEEDS_ENCODING Subject is encoded but does not specify the\n                            encoding\n
+  3.2 HELO_DYNAMIC_IPADDR    HELO-Rechnername verdächtig (IP-Adresse 1)\n\nDie ursprüngliche
+  Nachricht enthielt nicht ausschließlich Klartext\n(plain text) und kann eventuell
+  eine Gefahr für einige E-Mail-Programme\ndarstellen (falls sie z.B. einen Computervirus
+  enthält).\nMöchten Sie die Nachricht dennoch ansehen, ist es wahrscheinlich\nsicherer,
+  sie zuerst in einer Datei zu speichern und diese Datei danach\nmit einem Texteditor
+  zu öffnen.\n\n"

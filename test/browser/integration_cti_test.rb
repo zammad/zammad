@@ -150,4 +150,141 @@ class IntegrationCtiTest < TestCase
       value: '+49 30 609811111',
     )
   end
+
+  # Regression test for #2096
+  def test_inactive_users_displayed_with_strikethrough_in_caller_log
+    id = rand(99_999_999)
+
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+
+    # create inactive user with phone number (via API)
+    user_create(
+      data: {
+        login:     'test_user',
+        firstname: 'John',
+        lastname:  'Doe',
+        phone:     '1234567890',
+        active:    false,
+      },
+    )
+
+    # enable CTI
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#system/integration"]')
+    click(css: 'a[href="#system/integration/cti"]')
+
+    switch(
+      css: '.content.active .js-switch',
+      type: 'on'
+    )
+
+    watch_for(
+      css: 'a[href="#cti"]'
+    )
+
+    click(css: 'a[href="#cti"]')
+
+    # simulate CTI callback to/from inactive user
+    url = URI.join(browser_url, "api/v1/cti/#{ENV['CTI_TOKEN']}")
+    params = {
+      direction: 'in',
+      from: '1234567890',
+      to: '1234567890',
+      callId: "4991155921769858278-#{id}",
+      cause: 'busy'
+    }
+    Net::HTTP.post_form(url, params.merge(event: 'newCall'))
+    Net::HTTP.post_form(url, params.merge(event: 'hangup'))
+
+    # view caller log
+    click(css: 'a[href="#cti"]')
+
+    # assertion: names appear in strikethrough
+    match(
+      css: 'span.is-inactive',
+      value: 'John Doe',
+    )
+  end
+
+  # Regression test for #2075
+  def test_caller_ids_include_organization_names
+    id = rand(99_999_999)
+
+    @browser = browser_instance
+    login(
+      username: 'master@example.com',
+      password: 'test',
+      url: browser_url,
+    )
+
+    # create user with organization (via API)
+    user_create(
+      data: {
+        login:        'test_user',
+        firstname:    'John',
+        lastname:     'Doe',
+        phone:        '1234567890',
+        organization: 'Zammad Foundation'
+      },
+    )
+
+    # enable CTI
+    click(css: 'a[href="#manage"]')
+    click(css: 'a[href="#system/integration"]')
+    click(css: 'a[href="#system/integration/cti"]')
+
+    switch(
+      css: '.content.active .js-switch',
+      type: 'on'
+    )
+
+    watch_for(
+      css: 'a[href="#cti"]'
+    )
+
+    # view caller log
+    click(css: 'a[href="#cti"]')
+
+    # simulate CTI callbacks to/from target user
+    url = URI.join(browser_url, "api/v1/cti/#{ENV['CTI_TOKEN']}")
+    params = {
+      direction: 'out',
+      from: '1234567890',
+      to: '1234567890',
+      callId: "4991155921769858278-#{id}",
+      cause: 'busy'
+    }
+    Net::HTTP.post_form(url, params.merge(event: 'newCall'))
+    Net::HTTP.post_form(url, params.merge(event: 'hangup'))
+
+    params = {
+      direction: 'in',
+      from: '1234567890',
+      to: '1234567890',
+      callId: "4991155921769858278-#{id.next}",
+      cause: 'busy'
+    }
+    Net::HTTP.post_form(url, params.merge(event: 'newCall'))
+    Net::HTTP.post_form(url, params.merge(event: 'hangup'))
+
+    watch_for(
+      css: '.js-callerLog tr:nth-of-type(2)'
+    )
+
+    # assertions: Caller ID includes user organization
+    match(
+      css: '.js-callerLog tr:first-of-type span.user-popover',
+      value: 'John Doe (Zammad Foundation)',
+    )
+
+    match(
+      css: '.js-callerLog tr:last-of-type span.user-popover',
+      value: 'John Doe (Zammad Foundation)',
+    )
+  end
 end

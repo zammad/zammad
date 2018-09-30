@@ -107,10 +107,10 @@ returns
 
   success = NotificationFactory::Mailer.send(
     recipient:    User.find(123),
-    subject:      'sime subject',
+    subject:      'some subject',
     body:         'some body',
     content_type: '', # optional, e. g. 'text/html'
-    message_id: '<some_message_id@fqdn>', # optional
+    message_id:   '<some_message_id@fqdn>', # optional
     references:   ['message-id123', 'message-id456'], # optional
     attachments:  [attachments...], # optional
   )
@@ -119,7 +119,7 @@ returns
 
   def self.send(data)
     sender = Setting.get('notification_sender')
-    Rails.logger.info "Send notification to: #{data[:recipient][:email]} (from #{sender})"
+    Rails.logger.info "Send notification to: #{data[:recipient][:email]} (from:#{sender}/subject:#{data[:subject]})"
 
     content_type = 'text/plain'
     if data[:content_type]

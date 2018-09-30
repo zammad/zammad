@@ -8,6 +8,6 @@
 <div class="batch-overlay-assign-entry js-batch-overlay-entry" data-action="group_assign" data-id="<%= group.id %>">
 	<div class="js-batch-hover-target"><%- group.avatar(80) %></div>
   <div class="batch-overlay-assign-entry-name"><%- group.displayName() %></div>
-  <div class="batch-overlay-assign-entry-detail"><%- @T('%s people', group.valid_user_ids.length) %></div>
+  <div class="batch-overlay-assign-entry-detail"><%- @T('%s people', group.valid_users_count) %></div>
 </div>
 <% end %>

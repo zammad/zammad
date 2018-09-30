@@ -11,6 +11,29 @@
   border-bottom: 1px solid hsl(0,0%,90%);
 }
 
+html {
+  height: auto;
+}
+
+body,
+.content {
+  background: none;
+  color: black;
+}
+
+// Disable flex to allow multi page prints in Firefox: https://bugzilla.mozilla.org/show_bug.cgi?id=939897
+body,
+#app,
+#app > .content.active,
+.tabsSidebar-holder,
+main {
+  display: block;
+}
+
+#app {
+  min-width: 0;
+}
+
 /*
 
   Dashboard
@@ -32,8 +55,45 @@
 .bulkAction,
 .overviews .checkbox-replacement,
 .overviews .overview-header,
-.table-checkbox {
+.table-checkbox,
+.sidebar,
+.page-header-meta .btn {
   display: none;
+}
+
+.main {
+  padding: 0;
+}
+
+h1, .popover-notificationsHeader .popover-title, .ticket-title-update, h2, h3, h4, h5, h6 {
+  color: inherit;
+}
+
+.table {
+  border: none;
+  color: black;
+
+  > thead > tr > th {
+    background: none;
+    color: inherit;
+  }
+}
+
+td a {
+  color: black;
+  font-weight: 500;
+}
+
+.table-col-resize {
+  display: none;
+}
+
+th.js-tableHead:not([data-column-key="icon"]) {
+  width: auto !important;
+}
+
+.icon-task-state.open {
+  fill: gray;
 }
 
 /*
@@ -54,9 +114,138 @@
 }
 
 .tabsSidebar-sidebarSpacer {
-  margin-right: 0;
+  margin: 0;
+  transition: none;
 }
 
-.article-meta .article-meta-key {
+.textBubble-content {
+  height: auto !important;
+}
+
+.tabsSidebar-tabsSpacer {
+  padding: 0 !important;
+  overflow: visible;
+}
+
+.ticketZoom {
+  background: none;
+}
+
+.ticket-article,
+.article-new {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.ticket-article {
+  a[href]:after {
+    content: none !important;
+  }
+}
+
+.textBubble {
+  padding: 20px;
+  border: 1px solid !important;
+  background: white !important;
+}
+
+.bubble-arrow:after {
+  background: white !important;
+  border-color: black !important;
+}
+
+.article-meta {
+  color: black;
+  background: none;
+  border: 1px dashed hsl(240,2%,60%);
+  padding: 11px 10px 1px;
+
+  &.top {
+    border-bottom-width: 0;
+  }
+
+  &.bottom {
+    border-top-width: 0;
+    padding-top: 7px;
+    padding-bottom: 3px;
+  }
+
+  &-clip {
+    height: auto !important;
+  }
+
+  &-icon {
+    fill: currentColor;
+  }
+}
+
+.article-meta-links {
   display: none;
+}
+
+.article-content {
+  color: inherit;
+}
+
+.article-content-meta {
+  opacity: 1 !important;
+  display: block !important;
+  transform: none !important;
+  position: static;
+}
+
+.attachments.attachments--list {
+  border-color: currentColor !important;
+}
+
+.avatar {
+  border: 1px solid black;
+}
+
+
+
+/*
+
+  Modal
+  =====
+
+*/
+
+.modal-open {
+  > *:not(.modal) {
+    display: none !important;
+  }
+}
+
+.modal {
+  width: auto !important;
+  position: static;
+  padding: 0 !important;
+}
+
+.modal-backdrop {
+  display: none;
+}
+
+.modal-dialog {
+  box-shadow: none !important;
+  max-width: none !important;
+  margin: 0;
+}
+
+.modal-content {
+  border: none;
+}
+
+.modal-close {
+  display: none;
+}
+
+.modal-footer {
+  display: none;
+}
+
+.modal-body {
+  padding: 0;
 }

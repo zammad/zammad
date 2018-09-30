@@ -510,6 +510,24 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> got closed.': '由於你超過 %s 分鐘沒有回應, 你與 <strong>%s</strong> 的對話已被關閉.',
         'Since you didn\'t respond in the last %s minutes your conversation got closed.': '由於你超過 %s 分鐘沒有任何回應, 該對話已被關閉.',
         'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': '非常抱歉, 當前需要等候更長的時間方可排入對話程序, 請稍後重試或向我們寄送電子郵件. 謝謝!'
+      },
+      'ru': {
+        '<strong>Chat</strong> with us!': 'Напишите нам!',
+        'Scroll down to see new messages': 'Прокрутите, чтобы увидеть новые сообщения',
+        'Online': 'Онлайн',
+        'Offline': 'Оффлайн',
+        'Connecting': 'Подключение',
+        'Connection re-established': 'Подключение восстановлено',
+        'Today': 'Сегодня',
+        'Send': 'Отправить',
+        'Chat closed by %s': '%s закрыл чат',
+        'Compose your message...': 'Напишите сообщение...',
+        'All colleagues are busy.': 'Все сотрудники заняты',
+        'You are on waiting list position %s.': 'Вы в списке ожидания под номером %s',
+        'Start new conversation': 'Начать новую переписку.',
+        'Since you didn\'t respond in the last %s minutes your conversation with %s got closed.': 'Поскольку вы не отвечали в течение последних %s минут, ваш разговор с %s был закрыт.',
+        'Since you didn\'t respond in the last %s minutes your conversation got closed.': 'Поскольку вы не отвечали в течение последних %s минут, ваш разговор был закрыт.',
+        'We are sorry, it takes longer as expected to get an empty slot. Please try again later or send us an email. Thank you!': 'К сожалению, ожидание свободного места требует больше времени. Повторите попытку позже или отправьте нам электронное письмо. Спасибо!'
       }
     };
 
@@ -1544,10 +1562,9 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     };
 
     ZammadChat.prototype.onCssLoaded = function() {
+      this.cssLoaded = true;
       if (this.socketReady) {
         return this.onReady();
-      } else {
-        return this.cssLoaded = true;
       }
     };
 

@@ -474,10 +474,15 @@ class String
   end
 
   def utf8_encode!(**options)
-    return self if (encoding == Encoding::UTF_8) && valid_encoding?
+    return force_encoding('utf-8') if dup.force_encoding('utf-8').valid_encoding?
 
-    input_encoding = viable_encodings(try_first: options[:from]).first
-    return encode!('utf-8', input_encoding) if input_encoding.present?
+    viable_encodings(try_first: options[:from]).each do |enc|
+      begin
+        return encode!('utf-8', enc)
+      rescue EncodingError => e
+        Rails.logger.error { e.inspect }
+      end
+    end
 
     case options[:fallback]
     when :output_to_binary
@@ -501,6 +506,7 @@ class String
     [provided, original, detected]
       .compact
       .reject { |e| Encoding.find(e) == Encoding::ASCII_8BIT }
+      .reject { |e| Encoding.find(e) == Encoding::UTF_8 }
       .select { |e| force_encoding(e).valid_encoding? }
       .tap { force_encoding(original) } # clean up changes from previous line
 

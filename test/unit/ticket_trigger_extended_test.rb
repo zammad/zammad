@@ -715,4 +715,141 @@ Some Text'
 
   end
 
+  test 'recursive trigger with auto responder' do
+
+    group1 = Group.create!(
+      name: 'Group dispatch',
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+    group2 = Group.create!(
+      name: 'Group with auto responder',
+      active: true,
+      email_address: EmailAddress.first,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    trigger1 = Trigger.create!(
+      name: "002 - move ticket to #{group2.name}",
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.group_id' => {
+          'operator' => 'is',
+          'value' => group1.id.to_s,
+        },
+        'ticket.organization_id' => {
+          'operator' => 'is',
+          'pre_condition' => 'specific',
+          'value' => User.lookup(email: 'nicole.braun@zammad.org').organization_id.to_s,
+        }
+      },
+      perform: {
+        'ticket.group_id' => {
+          'value' => group2.id.to_s,
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    trigger2 = Trigger.create_or_update(
+      name: "001 auto reply for tickets in group #{group1.name}",
+      condition: {
+        'ticket.action' => {
+          'operator' => 'is',
+          'value' => 'create',
+        },
+        'ticket.state_id' => {
+          'operator' => 'is',
+          'value' => Ticket::State.lookup(name: 'new').id.to_s,
+        },
+        'ticket.group_id' => {
+          'operator' => 'is not',
+          'value' => group1.id.to_s,
+        },
+      },
+      perform: {
+        'notification.email' => {
+          'body' => "some text<br>\#{ticket.customer.lastname}<br>\#{ticket.title}<br>\#{article.body}",
+          'recipient' => 'ticket_customer',
+          'subject' => "Thanks for your inquiry (\#{ticket.title})!",
+        },
+        'ticket.priority_id' => {
+          'value' => Ticket::Priority.lookup(name: '3 high').id.to_s,
+        },
+        'ticket.tags' => {
+          'operator' => 'add',
+          'value' => 'aa, kk',
+        },
+      },
+      disable_notification: true,
+      active: true,
+      created_by_id: 1,
+      updated_by_id: 1,
+    )
+
+    ticket1 = Ticket.create!(
+      title: "some <b>title</b>\n äöüß",
+      group: group1,
+      customer: User.lookup(email: 'nicole.braun@zammad.org'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    Ticket::Article.create!(
+      ticket_id: ticket1.id,
+      from: 'some_sender@example.com',
+      to: 'some_recipient@example.com',
+      subject: 'some subject',
+      message_id: 'some@id',
+      body: "some message <b>note</b>\nnew line",
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'Customer'),
+      type: Ticket::Article::Type.find_by(name: 'web'),
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    ticket1.reload
+    assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
+    assert_equal('Group dispatch', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(1, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal([], ticket1.tag_list)
+
+    Observer::Transaction.commit
+
+    ticket1.reload
+    assert_equal('some <b>title</b>  äöüß', ticket1.title, 'ticket1.title verify')
+    assert_equal('Group with auto responder', ticket1.group.name, 'ticket1.group verify')
+    assert_equal('new', ticket1.state.name, 'ticket1.state verify')
+    assert_equal('3 high', ticket1.priority.name, 'ticket1.priority verify')
+    assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
+    assert_equal(%w[aa kk], ticket1.tag_list)
+
+    email_raw = "From: nicole.braun@zammad.org
+To: zammad@example.com
+Subject: test 1
+X-Zammad-Ticket-Group: #{group1.name}
+
+test 1"
+
+    ticket2, article2, user2 = Channel::EmailParser.new.process({ trusted: true }, email_raw)
+
+    assert_equal('test 1', ticket2.title, 'ticket2.title verify')
+    assert_equal('Group with auto responder', ticket2.group.name, 'ticket2.group verify')
+    assert_equal('new', ticket2.state.name, 'ticket2.state verify')
+    assert_equal('3 high', ticket2.priority.name, 'ticket2.priority verify')
+    assert_equal(2, ticket2.articles.count, 'ticket2.articles verify')
+    assert_equal(%w[aa kk], ticket2.tag_list)
+
+  end
+
 end

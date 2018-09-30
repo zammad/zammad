@@ -46,7 +46,7 @@ class TimeAccountingsController < ApplicationController
           end
         end
       end
-      if !customers[local_time_unit[:agent_id]]
+      if !agents[local_time_unit[:agent_id]]
         agent_user = User.lookup(id: local_time_unit[:agent_id])
         agent = '-'
         if agent_user

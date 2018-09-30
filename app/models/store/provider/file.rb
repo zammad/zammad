@@ -7,6 +7,17 @@ class Store::Provider::File
     # install file
     location = get_location(sha)
     permission = '600'
+
+    # verify if file already is in file system and if it's not corrupt
+    if File.exist?(location)
+      begin
+        get(sha)
+      rescue
+        delete(sha)
+      end
+    end
+
+    # write file to file system
     if !File.exist?(location)
       Rails.logger.debug { "storge write '#{location}' (#{permission})" }
       file = File.new(location, 'wb')

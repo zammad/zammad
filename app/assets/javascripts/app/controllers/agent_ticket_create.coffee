@@ -256,6 +256,8 @@ class App.TicketCreate extends App.Controller
       params = template.options
     else if App.TaskManager.get(@taskKey) && !_.isEmpty(App.TaskManager.get(@taskKey).state)
       params = App.TaskManager.get(@taskKey).state
+      params.attachments = App.TaskManager.get(@taskKey).attachments
+
       if !_.isEmpty(params['form_id'])
         @formId = params['form_id']
 
@@ -308,6 +310,9 @@ class App.TicketCreate extends App.Controller
       form_id: @formId
       model:   App.TicketArticle
       screen:  'create_top'
+      events:
+        'fileUploadStart .richtext': => @submitDisable()
+        'fileUploadStop .richtext': => @submitEnable()
       params:  params
       taskKey: @taskKey
     )
@@ -503,8 +508,12 @@ class App.TicketCreate extends App.Controller
           if !confirm(App.i18n.translateContent('You use %s in text but no attachment is attached. Do you want to continue?', matchingWord))
             return
 
+    # add sidebar params
+    if @sidebarWidget && @sidebarWidget.postParams
+      @sidebarWidget.postParams(ticket: ticket)
+
     # disable form
-    @formDisable(e)
+    @submitDisable(e)
     ui = @
     ticket.save(
       done: ->
@@ -536,13 +545,25 @@ class App.TicketCreate extends App.Controller
 
       fail: (settings, details) ->
         ui.log 'errors', details
-        ui.formEnable(e)
+        ui.submitEnable(e)
         ui.notify(
           type:    'error'
           msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to create object!')
           timeout: 6000
         )
     )
+
+  submitDisable: (e) =>
+    if e
+      @formDisable(e)
+      return
+    @formDisable(@$('.js-submit'), 'button')
+
+  submitEnable: (e) =>
+    if e
+      @formEnable(e)
+      return
+    @formEnable(@$('.js-submit'), 'button')
 
 class Router extends App.ControllerPermanent
   requiredPermission: 'ticket.agent'

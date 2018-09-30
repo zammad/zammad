@@ -37,27 +37,15 @@ class KeyboardShortcutsTest < TestCase
         shortcut(key: 'h')
       end
     end
-    watch_for(
-      css:     '.modal',
-      value:   'Keyboard Shortcuts',
-      timeout: 6,
-    )
 
+    modal_ready()
     # hide shortkeys
     shortcut(key: 'h')
-    watch_for_disappear(
-      css:     '.modal',
-      value:   'Keyboard Shortcuts',
-      timeout: 2,
-    )
+    modal_disappear()
 
     # show shortkeys
     shortcut(key: 'h')
-    watch_for(
-      css:     '.modal',
-      value:   'Keyboard Shortcuts',
-      timeout: 2,
-    )
+    modal_ready()
 
     # show notifications
     shortcut(key: 'a')

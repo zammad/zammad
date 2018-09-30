@@ -48,7 +48,7 @@ Some Text",
       {
         data: "From: me@example.com
 To: customer@example.com
-Subject: äöü some subject
+Subject: äöü some subject 1
 
 Some Textäöü",
         channel: {
@@ -58,7 +58,7 @@ Some Textäöü",
         result: {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject',
+            title: 'äöü some subject 1',
           },
           1 => {
             body: 'Some Textäöü',
@@ -71,7 +71,7 @@ Some Textäöü",
       {
         data: "From: me@exampl'e.com
 To: customer@exampl'e.com
-Subject: äöü some subject
+Subject: äöü some subject 2
 
 Some Textäöü",
         channel: {
@@ -81,7 +81,7 @@ Some Textäöü",
         result: {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject',
+            title: 'äöü some subject 2',
           },
           1 => {
             body: 'Some Textäöü',
@@ -155,21 +155,252 @@ Some Textäöü without subject#2",
       {
         data: "From: me@example.com
 To: customer@example.com
-Subject: äöü some subject
+Subject: äöü some subject 3
 
 Some Textäöü".encode('ISO-8859-1'),
         success: true,
         result: {
           0 => {
             priority: '2 normal',
-            title: 'äöü some subject',
+            title: '??? some subject 3', # it's ok, because subject need to be 7bit encoded
           },
           1 => {
-            body: 'Some Textäöü',
+            body: 'Some Text???', # it's ok, because no content-type is given
             sender: 'Customer',
             type: 'email',
             internal: false,
           },
+        },
+      },
+      {
+        data: 'From: Bob Smith <customer_with_blank_at_end@example.com>                                                                                                                          >
+To: zammad@example.com
+Subject: abc some subject
+
+Some Text with stange from line',
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'abc some subject',
+          },
+          1 => {
+            body: 'Some Text with stange from line',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Bob',
+              lastname: 'Smith',
+              fullname: 'Bob Smith',
+              email: 'customer_with_blank_at_end@example.com',
+            },
+          ],
+        },
+      },
+      {
+        data: 'From: dr. daniel rodriguez <info_dr_daniel"@example.de>
+To: zammad@example.com
+Subject: abc some subject
+
+Some Text with stange from line',
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'abc some subject',
+          },
+          1 => {
+            body: 'Some Text with stange from line',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'dr. daniel',
+              lastname: 'Rodriguez',
+              fullname: 'dr. daniel Rodriguez',
+              email: 'info_dr_daniel@example.de',
+            },
+          ],
+        },
+      },
+      {
+        data: 'From: Dr. Daniel Rodriguez <info_dr_daniel_r"@example.de>
+To: zammad@example.com
+Subject: abc some subject
+
+Some Text with stange from line',
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'abc some subject',
+          },
+          1 => {
+            body: 'Some Text with stange from line',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Dr. Daniel',
+              lastname: 'Rodriguez',
+              fullname: 'Dr. Daniel Rodriguez',
+              email: 'info_dr_daniel_r@example.de',
+            },
+          ],
+        },
+      },
+      {
+        data: 'From: akademie@example.com> <ilka.mueller@example.com>
+To: zammad@example.com
+Subject: abc some subject
+
+Some Text with stange from line',
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'abc some subject',
+          },
+          1 => {
+            body: 'Some Text with stange from line',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'akademie@example.com>',
+              lastname: '',
+              fullname: 'akademie@example.com>',
+              email: 'ilka.mueller@example.com',
+            },
+          ],
+        },
+      },
+      {
+        data: 'From: yann degran <yann@example.com>
+To: zammad@example.com
+Subject: test name in downcase #1
+
+test name in downcase #1',
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'test name in downcase #1',
+          },
+          1 => {
+            body: 'test name in downcase #1',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Yann',
+              lastname: 'Degran',
+              fullname: 'Yann Degran',
+              email: 'yann@example.com',
+            },
+          ],
+        },
+      },
+      {
+        data: 'From: yann Degran <yann2@example.com>
+To: zammad@example.com
+Subject: test name in downcase #2
+
+test name in downcase #2',
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'test name in downcase #2',
+          },
+          1 => {
+            body: 'test name in downcase #2',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Yann',
+              lastname: 'Degran',
+              fullname: 'Yann Degran',
+              email: 'yann2@example.com',
+            },
+          ],
+        },
+      },
+      {
+        data: 'From: YANN DEGRAN <yann3@example.com>
+To: zammad@example.com
+Subject: test name in downcase #3
+
+test name in downcase #3',
+        channel: {
+          trusted: false,
+        },
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'test name in downcase #3',
+          },
+          1 => {
+            body: 'test name in downcase #3',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Yann',
+              lastname: 'Degran',
+              fullname: 'Yann Degran',
+              email: 'yann3@example.com',
+            },
+          ],
         },
       },
       {
@@ -226,9 +457,9 @@ Some Text",
         verify: {
           users: [
             {
-              firstname: 'max',
+              firstname: 'Max',
               lastname: '',
-              fullname: 'max',
+              fullname: 'Max',
               email: 'somebody_else@example.com',
             },
             {
@@ -396,7 +627,7 @@ Some Text",
         result: {
           0 => {
             priority: '2 normal',
-            title: 'Subject: 【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
+            title: '【专业为您注册香港及海外公司（好处多多）】　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　',
           },
           1 => {
             body: 'Some Text',
@@ -2354,9 +2585,9 @@ Some Text',
         verify: {
           users: [
             {
-              firstname: 'bertha　mou',
-              lastname: '',
-              fullname: 'bertha　mou',
+              firstname: 'Bertha',
+              lastname: 'Mou',
+              fullname: 'Bertha Mou',
               email: 'zhengkang@ha.chinamobile.com',
             },
           ],
@@ -2404,8 +2635,8 @@ Some Text',
             {
               firstname: '',
               lastname: '',
-              fullname: '"finances8@firstfinanceloanfirm.example.com"',
-              email: '"finances8@firstfinanceloanfirm.example.com"',
+              fullname: 'finances8@firstfinanceloanfirm.example.com',
+              email: 'finances8@firstfinanceloanfirm.example.com',
             },
           ],
         }
@@ -2527,7 +2758,7 @@ Some Text',
             title: '转发：整体提升企业服务水平',
           },
           1 => {
-            from: '"武兰成" <Glopelf7121@example.com>',
+            from: '"ÎäŔźłÉ" <Glopelf7121@example.com>',
             sender: 'Customer',
             type: 'email',
           },
@@ -2535,9 +2766,9 @@ Some Text',
         verify: {
           users: [
             {
-              firstname: '武兰成',
+              firstname: 'ÎäŔźłÉ',
               lastname: '',
-              fullname: '武兰成',
+              fullname: 'ÎäŔźłÉ',
               email: 'glopelf7121@example.com',
             },
           ],
@@ -2560,9 +2791,9 @@ Some Text',
         verify: {
           users: [
             {
-              firstname: 'EXAMPLE',
+              firstname: 'Example',
               lastname: 'HotPriceMail',
-              fullname: 'EXAMPLE HotPriceMail',
+              fullname: 'Example HotPriceMail',
               email: 'anja.weber@example.de',
             },
           ],
@@ -2759,7 +2990,7 @@ Some Text',
             title: 'some subject 3',
           },
           1 => {
-            from: '"Vandromme, Frédéric" <fvandromme@example.com>',
+            from: '=?windows-1258?B?VmFuZHJvbW1lLCBGculk6XJpYw==?= <fvandromme@example.com>',
             sender: 'Customer',
             type: 'email',
             body: 'Some Text',
@@ -2777,18 +3008,16 @@ Some Text',
         },
       },
       {
-        data: <<~RAW_MAIL.chomp,
-          From: me@example.com
-          To: customer@example.com
-          Subject: some subject
-          Content-Type: text/html; charset=us-ascii; format=flowed
+        data: 'From: me@example.com
+To: customer@example.com
+Subject: some subject
+Content-Type: text/html; charset=us-ascii; format=flowed
 
-          <html>
-            <body>
-              <a href="mailto:testäöü@example.com">test</a>
-            </body>
-          </html>
-          RAW_MAIL
+<html>
+  <body>
+    <a href="mailto:testäöü@example.com">test</a>
+  </body>
+</html>',
         success: true,
         result: {
           0 => {
@@ -2802,6 +3031,40 @@ Some Text',
             type: 'email',
             internal: false,
           },
+        },
+      },
+      {
+        data: <<~RAW_MAIL.chomp,
+          From: me@example.com
+          To: Bob Smith <'customer_outlook_recipient_not_in_address_book@example.com'>
+          Subject: some subject for outlook recipient issue
+          Content-Type: text/html; charset=us-ascii;
+
+          test
+          RAW_MAIL
+        success: true,
+        result: {
+          0 => {
+            priority: '2 normal',
+            title: 'some subject for outlook recipient issue',
+          },
+          1 => {
+            content_type: 'text/html',
+            body: 'test',
+            sender: 'Customer',
+            type: 'email',
+            internal: false,
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Bob',
+              lastname: 'Smith',
+              fullname: 'Bob Smith',
+              email: 'customer_outlook_recipient_not_in_address_book@example.com',
+            },
+          ],
         },
       },
       {
@@ -2827,6 +3090,48 @@ Some Text',
               lastname: 'Smith | deal',
               fullname: 'Bob Smith | deal',
               email: 'info@example.de',
+            },
+          ],
+        },
+      },
+      { # See https://github.com/zammad/zammad/issues/2199
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail070.box')),
+        success: true,
+        result: {
+          1 => {
+            from: '"http.abc" <http.abc@example.com>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'http.abc',
+              lastname: '',
+              fullname: 'http.abc',
+              email: 'http.abc@example.com',
+            },
+          ],
+        },
+      },
+      { # See https://github.com/zammad/zammad/issues/2254
+        data: File.read(Rails.root.join('test', 'data', 'mail', 'mail076.box')),
+        success: true,
+        result: {
+          1 => {
+            from: '"Millions Lottery Spain transfer"@example.com>',
+            sender: 'Customer',
+            type: 'email',
+          },
+        },
+        verify: {
+          users: [
+            {
+              firstname: 'Millions',
+              lastname: 'Lottery Spain transfer@example.com>',
+              fullname: 'Millions Lottery Spain transfer@example.com>',
+              email: 'millionslotteryspaintransfer@example.com',
             },
           ],
         },

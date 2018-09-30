@@ -1,0 +1,12 @@
+<% if !_.isEmpty(@attributes): %>
+  <hr>
+<% end %>
+
+<% for row in @attributes: %>
+  <% if @object[row.name]: %>
+    <div class="popover-block">
+      <label><%- @T( row.display ) %></label>
+      <%- @P( @object, row.name ) %>
+    </div>
+  <% end %>
+<% end %>
