@@ -120,6 +120,11 @@ gem 'viewpoint'
 # in production environments by default.
 group :development, :test do
 
+  # app boottime improvement
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'spring-commands-testunit'
+
   # debugging
   gem 'byebug'
   gem 'pry-rails'

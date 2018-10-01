@@ -1,27 +1,26 @@
 #!/usr/bin/env ruby
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
+begin
+  load File.expand_path('../bin/spring', __dir__)
+rescue LoadError => e
+  raise unless e.message.include?('spring')
+end
 
-$LOAD_PATH << './lib'
-require 'rubygems'
-
-# load rails env
-dir = File.expand_path('..', __dir__)
+dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 Dir.chdir dir
-RAILS_ENV = ENV['RAILS_ENV'] || 'development'
 
-require 'rails/all'
 require 'bundler'
+
 require File.join(dir, 'config', 'environment')
+
 require 'eventmachine'
 require 'em-websocket'
 require 'json'
 require 'fileutils'
 require 'optparse'
 require 'daemons'
-require 'sessions'
 
 def before_fork
-
   # remember open file handles
   @files_to_reopen = []
   ObjectSpace.each_object(File) do |file|
@@ -38,8 +37,17 @@ def after_fork(dir)
     file.sync = true
   end
 
-  $stdout.reopen( "#{dir}/log/websocket-server_out.log", 'w').sync = true
-  $stderr.reopen( "#{dir}/log/websocket-server_err.log", 'w').sync = true
+  # Spring redirects STDOUT and STDERR to /dev/null
+  # before we get here. This causes the `reopen` lines
+  # below to fail because the handles are already
+  # opened for write
+  if defined?(Spring)
+    $stdout.close
+    $stderr.close
+  end
+
+  $stdout.reopen("#{dir}/log/websocket-server_out.log", 'w').sync = true
+  $stderr.reopen("#{dir}/log/websocket-server_err.log", 'w').sync = true
 end
 
 before_fork
@@ -53,7 +61,7 @@ before_fork
   d: false,
   k: '/path/to/server.key',
   c: '/path/to/server.crt',
-  i: Dir.pwd.to_s + '/tmp/pids/websocket.pid'
+  i: "#{dir}/tmp/pids/websocket.pid"
 }
 
 tls_options = {}
@@ -111,7 +119,7 @@ if ARGV[0] == 'start' && @options[:d]
   Daemons.daemonize(
     app_name: File.basename(@options[:i], '.pid'),
     dir_mode: :normal,
-    dir: File.dirname(@options[:i])
+    dir:      File.dirname(@options[:i])
   )
 
   after_fork(dir)
