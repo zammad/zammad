@@ -1,5 +1,3 @@
-require 'rake'
-
 module SearchindexBackendHelper
 
   def configure_elasticsearch(required: false)
@@ -32,8 +30,6 @@ module SearchindexBackendHelper
   end
 
   def rebuild_searchindex
-    Rake::Task.clear
-    Zammad::Application.load_tasks
     Rake::Task['searchindex:rebuild'].execute
   end
 
