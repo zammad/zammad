@@ -309,6 +309,10 @@ test( "datetime selector check", function() {
   }
   deepEqual(params, test_params, 'params check')
 
+  // Regression test for issue #2173 - Invalid date causes errors
+  el.find('.js-datepicker').datepicker('setDate', '01/01/99999')
+  el.find('.js-datepicker').datepicker('setDate', '01/01/1ABCDEFG')
+  el.find('.js-datepicker').datepicker('setDate', '01/01/1äöüß')
 });
 
 test( "date selector check", function() {
