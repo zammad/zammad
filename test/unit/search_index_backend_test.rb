@@ -29,6 +29,22 @@ class SearchIndexBackendTest < ActiveSupport::TestCase
         article.from: bob # also article.from can be used
         article.body: heat~ # using the fuzzy operator will also find terms that are similar, in this case also “head”
         article.body: /joh?n(ath[oa]n)/ # using regular expressions
+        user:M
+        user:Max
+        user:Max.
+        user:Max*
+        organization:A_B
+        organization:A_B*
+        user: M
+        user: Max
+        user: Max.
+        user: Max*
+        organization: A_B
+        organization: A_B*
+        id:123
+        number:123
+        id:"123"
+        number:"123"
     )
 
     simple_queries = clean_queries %(
@@ -39,14 +55,14 @@ class SearchIndexBackendTest < ActiveSupport::TestCase
         A_B
         äöü
         123
-        user:M
-        user:Max
-        user:Max.
-        organization:A_B
-        user: M
-        user: Max
-        user: Max.
-        organization: A_B
+        *ax  # wildcards are allowed in simple queries
+        Max*
+        M*x
+        M?x
+        test@example.com
+        test@example.
+        test@example
+        test@
     )
 
     complex_queries.each do |query|

@@ -342,6 +342,7 @@ return search result
       'query_string' => {
         'query' => append_wildcard_to_simple_query(query),
         'default_operator' => 'AND',
+        'analyze_wildcard' => true,
       }
     }
     data['query']['bool']['must'].push condition
@@ -717,10 +718,10 @@ return true if backend is configured
     result
   end
 
-  # add * on simple query like "somephrase23" or "attribute: somephrase23"
+  # add * on simple query like "somephrase23"
   def self.append_wildcard_to_simple_query(query)
     query.strip!
-    query += '*' if query.match?(/^([[:alnum:]._]+|[[:alnum:]]+\:\s*[[:alnum:]._]+)$/)
+    query += '*' if !query.match?(/:/)
     query
   end
 end
