@@ -2100,7 +2100,7 @@ test('check getRecipientArticle format', function() {
     },
   }
   result = {
-    to:          customer.email,
+    to:          'customer@example.com',
     cc:          '',
     body:        '',
     in_reply_to: 'message_id3',
@@ -2911,6 +2911,102 @@ test('check getRecipientArticle format', function() {
     cc:          '',
     body:        '',
     in_reply_to: 'message_id21',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  // Regression test for issue #2184
+  // Case 1
+  // 1. Create a "Received Call" Ticket for article_customer
+  // 2. Change the Customer of the ticket to ticket_customer (but article.from still points to article_customer)
+  // 3. Reply to the first Article
+  // Recipient SHOULD BE Article.from
+
+  var article_customer = {
+    login: 'login',
+    firstname: 'article',
+    lastname: 'lastname',
+    email: 'article_customer@example.com',
+  }
+  var ticket_customer = {
+    login: 'login2',
+    firstname: 'ticket',
+    lastname: 'lastname',
+    email: 'ticket_customer@example.com',
+  }
+  ticket = {
+    customer: ticket_customer,
+  }
+  article = {
+    type: {
+      name: 'phone',
+    },
+    sender: {
+      name: 'Customer',
+    },
+    from: article_customer.email,
+    to: 'some group',
+    message_id: 'message_id22',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    },
+  }
+  result = {
+    to:          'article_customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id22',
+  }
+  verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
+  deepEqual(verify, result)
+
+  // Regression test for issue #2184
+  // Case 2
+  // 1. Create a "Outbound Call" Ticket for article_customer
+  // 2. Change the Customer of the Ticket to ticket_customer (but article.to still points to article_customer)
+  // 3. Reply to the first Article
+  // Recipient SHOULD BE Article.to
+
+  article_customer = {
+    login: 'login',
+    firstname: 'article',
+    lastname: 'lastname',
+    email: 'article_customer@example.com',
+  }
+  ticket_customer = {
+    login: 'login2',
+    firstname: 'ticket',
+    lastname: 'lastname',
+    email: 'ticket_customer@example.com',
+  }
+  ticket = {
+    customer: ticket_customer,
+  }
+  article = {
+    type: {
+      name: 'phone',
+    },
+    sender: {
+      name: 'Agent',
+    },
+    from: 'agent1@example.com',
+    to: article_customer.email,
+    message_id: 'message_id23',
+    created_by: {
+      login: 'login',
+      firstname: 'firstname',
+      lastname: 'lastname',
+      email: 'article_created_by@example.com',
+    },
+  }
+  result = {
+    to:          'article_customer@example.com',
+    cc:          '',
+    body:        '',
+    in_reply_to: 'message_id23',
   }
   verify = App.Utils.getRecipientArticle(ticket, article, article.created_by, article.type)
   deepEqual(verify, result)

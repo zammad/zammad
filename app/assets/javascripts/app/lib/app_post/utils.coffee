@@ -1021,14 +1021,14 @@ class App.Utils
 
     if type.name is 'phone'
 
-      # inbound call
+      # the article we are replying to is an outbound call
       if article.sender.name is 'Agent'
-        if article.to
+        if article.to?.match(/@/)
           articleNew.to = article.to
 
-      # outbound call
-      else if article.to
-        articleNew.to = article.to
+      # the article we are replying to is an incoming call
+      else if article.from?.match(/@/)
+        articleNew.to = article.from
 
       # if sender is customer but in article.from is no email, try to get
       # customers email via customer user
