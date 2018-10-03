@@ -60,7 +60,7 @@ returns
 
 =begin
 
-get list of searchable models
+get list of searchable models for UI
 
   result = Models.searchable
 
@@ -75,6 +75,28 @@ returns
     all.each_key do |model_class|
       next if !model_class
       next if !model_class.respond_to? :search_preferences
+      models.push model_class
+    end
+    models
+  end
+
+=begin
+
+get list of indexable models
+
+  result = Models.indexable
+
+returns
+
+  [Model1, Model2, Model3]
+
+=end
+
+  def self.indexable
+    models = []
+    all.each_key do |model_class|
+      next if !model_class
+      next if !model_class.new.respond_to? :search_index_update_backend
       models.push model_class
     end
     models

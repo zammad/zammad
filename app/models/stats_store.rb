@@ -1,6 +1,14 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class StatsStore < ApplicationModel
+  include HasSearchIndexBackend
+  include StatsStore::SearchIndex
+
+  # rubocop:disable Rails/InverseOf
+  belongs_to :stats_store_object, class_name: 'ObjectLookup', foreign_key: 'stats_store_object_id'
+  belongs_to :related_stats_store_object, class_name: 'ObjectLookup', foreign_key: 'related_stats_store_object_id'
+  # rubocop:enable Rails/InverseOf
+
   store :data
 
 =begin
@@ -19,7 +27,7 @@ class StatsStore < ApplicationModel
 
     # lookups
     if data[:object]
-      object_id = ObjectLookup.by_name( data[:object] )
+      object_id = ObjectLookup.by_name(data[:object])
     end
 
     StatsStore.where(stats_store_object_id: object_id, o_id: data[:o_id], key: data[:key])
@@ -40,7 +48,7 @@ class StatsStore < ApplicationModel
 
     # lookups
     if data[:object]
-      data[:stats_store_object_id] = ObjectLookup.by_name( data[:object] )
+      data[:stats_store_object_id] = ObjectLookup.by_name(data[:object])
       data.delete(:object)
     end
 
@@ -73,7 +81,7 @@ class StatsStore < ApplicationModel
 
     # lookups
     if data[:object]
-      data[:stats_store_object_id] = ObjectLookup.by_name( data[:object] )
+      data[:stats_store_object_id] = ObjectLookup.by_name(data[:object])
       data.delete(:object)
     end
 
@@ -98,7 +106,7 @@ class StatsStore < ApplicationModel
 
     # lookups
     if data[:object]
-      object_id = ObjectLookup.by_name( data[:object] )
+      object_id = ObjectLookup.by_name(data[:object])
     end
 
     # create history
@@ -116,17 +124,42 @@ class StatsStore < ApplicationModel
 
 =begin
 
+  StatsStore.remove(
+    object: 'User',
+    o_id: ticket.owner_id,
+  )
+
+=end
+
+  def self.remove(data)
+
+    # lookups
+    if data[:object]
+      object_id = ObjectLookup.by_name(data[:object])
+    end
+
+    # create history
+    record = {
+      stats_store_object_id: object_id,
+      o_id: data[:o_id],
+    }
+
+    StatsStore.where(record).destroy_all
+  end
+
+=begin
+
 cleanup old stats store
 
   StatsStore.cleanup
 
 optional you can put the max oldest stats store entries as argument
 
-  StatsStore.cleanup(3.months)
+  StatsStore.cleanup(12.months)
 
 =end
 
-  def self.cleanup(diff = 3.months)
+  def self.cleanup(diff = 12.months)
     StatsStore.where('updated_at < ?', Time.zone.now - diff).delete_all
     true
   end

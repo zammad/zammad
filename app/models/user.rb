@@ -1167,6 +1167,10 @@ raise 'Minimum one user need to have admin permissions'
     ::RecentView.where(created_by_id: id).destroy_all
     ::UserDevice.remove(id)
     ::Token.where(user_id: id).destroy_all
+    ::StatsStore.remove(
+      object: 'User',
+      o_id: id,
+    )
     true
   end
 

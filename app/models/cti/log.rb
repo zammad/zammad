@@ -1,5 +1,7 @@
 module Cti
   class Log < ApplicationModel
+    include HasSearchIndexBackend
+
     self.table_name = 'cti_logs'
 
     store :preferences
