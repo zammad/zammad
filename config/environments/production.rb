@@ -80,4 +80,9 @@ Rails.application.configure do
   # format log
   config.log_formatter = Logger::Formatter.new
 
+  # overwrite default Rails TRUSTED_PROXIES
+  # because otherwise IPs from private ranges will be
+  # ignored for Session logging and fall back to localhost
+  # see https://github.com/zammad/zammad/issues/742
+  config.action_dispatch.trusted_proxies = ['127.0.0.1', '::1']
 end
