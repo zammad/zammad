@@ -71,13 +71,7 @@ returns
 =end
 
   def self.searchable
-    models = []
-    all.each_key do |model_class|
-      next if !model_class
-      next if !model_class.respond_to? :search_preferences
-      models.push model_class
-    end
-    models
+    @searchable ||= Models.all.keys.select { |model| model.respond_to?(:search_preferences) }
   end
 
 =begin
@@ -93,13 +87,7 @@ returns
 =end
 
   def self.indexable
-    models = []
-    all.each_key do |model_class|
-      next if !model_class
-      next if !model_class.new.respond_to? :search_index_update_backend
-      models.push model_class
-    end
-    models
+    @indexable ||= Models.all.keys.select { |model| model.method_defined?(:search_index_update_backend) }
   end
 
 =begin
