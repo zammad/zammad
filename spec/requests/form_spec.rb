@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Form', type: :request, searchindex: true do
 
   before(:each) do
+    configure_elasticsearch
     rebuild_searchindex
   end
 
