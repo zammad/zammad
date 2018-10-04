@@ -9,7 +9,6 @@
  /*
   modified by Felix Jan-2014
   - add this.$body = $(options.container || document.body)
-  - adjustBackdrop: also adopt left, top and width from $body
   modified by Felix Jul-2017
   - add rtl support
 */
@@ -248,19 +247,8 @@
 
   Modal.prototype.adjustBackdrop = function () {
     this.$backdrop
-      .css('left', this.$body.offset().left)
-      .css('top', this.$body.offset().top)
-      .css('width', this.$body.width())
       .css('height', 0)
       .css('height', this.$element[0].scrollHeight)
-
-    if(App.i18n.dir() == 'rtl'){
-      this.$backdrop.css('right', 'auto')
-    }
-
-    if(this.scrollbarWidth){
-      this.$backdrop.css('width', this.$body.width() - this.scrollbarWidth)
-    }
   }
 
   Modal.prototype.adjustDialog = function () {
