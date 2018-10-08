@@ -2899,17 +2899,24 @@ wait untill text in selector disabppears
     end
 
     if data[:organization]
-      element = instance.find_elements(css: '.modal input.searchableSelect-main')[0]
-      element.clear
-      element.send_keys(data[:organization])
 
       begin
+        target = nil
         retries ||= 0
-        target    = nil
-        until target
-          sleep 0.5
-          target = instance.find_elements(css: ".modal li[title='#{data[:organization]}']")[0]
+
+        5.times do
+          element = instance.find_elements(css: '.modal input.searchableSelect-main')[0]
+          element.clear
+          element.send_keys(data[:organization])
+
+          10.times do
+            sleep 0.5
+            target = instance.find_elements(css: ".modal li[title='#{data[:organization]}']")[0]
+            break if target
+          end
+          break if target
         end
+        raise "Can't find organization #{data[:organization]}" if target.blank?
         target.click()
       rescue Selenium::WebDriver::Error::StaleElementReferenceError
         sleep retries
