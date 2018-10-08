@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Zammad Customer Chat Javascript Widget",
   "scripts": {
-    "test": "node_modules/jest/bin/jest.js"
+    "test": "node_modules/gulp/bin/gulp.js js && node_modules/jest/bin/jest.js"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

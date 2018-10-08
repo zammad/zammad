@@ -685,7 +685,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       if (!this.el || !$('.zammad-chat').get(0)) {
         this.renderBase();
       }
-      $("." + this.options.buttonClass).addClass(this.inactiveClass);
+      $("." + this.options.buttonClass).addClass(this.options.inactiveClass);
       this.setAgentOnlineState('online');
       this.log.debug('widget rendered');
       this.startTimeoutObservers();
@@ -1023,7 +1023,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
 
     ZammadChat.prototype.onReady = function() {
       this.log.debug('widget ready for use');
-      $("." + this.options.buttonClass).click(this.open).removeClass(this.inactiveClass);
+      $("." + this.options.buttonClass).click(this.open).removeClass(this.options.inactiveClass);
       if (this.options.show) {
         return this.show();
       }
@@ -1189,7 +1189,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     ZammadChat.prototype.open = function() {
       this.setOpen();
       this.show();
-      return this.renderModal();
+      this.renderModal();
+      return $("." + this.options.buttonClass).addClass(this.options.inactiveClass);
     };
 
     ZammadChat.prototype.onOpenAnimation = function() {
@@ -1251,9 +1252,10 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
         this.enableScrollOnRoot();
       }
       remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
-      return this.el.animate({
+      this.el.animate({
         bottom: -remainerHeight
       }, 500, this.onCloseAnimationEnd);
+      return $("." + this.options.buttonClass).removeClass(this.options.inactiveClass);
     };
 
     ZammadChat.prototype.onCloseAnimationEnd = function() {

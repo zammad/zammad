@@ -429,7 +429,7 @@ do($ = window.jQuery, window) ->
         @renderBase()
 
       # disable open button
-      $(".#{ @options.buttonClass }").addClass @inactiveClass
+      $(".#{ @options.buttonClass }").addClass @options.inactiveClass
 
       @setAgentOnlineState 'online'
 
@@ -737,7 +737,7 @@ do($ = window.jQuery, window) ->
 
     onReady: ->
       @log.debug 'widget ready for use'
-      $(".#{ @options.buttonClass }").click(@open).removeClass(@inactiveClass)
+      $(".#{ @options.buttonClass }").click(@open).removeClass(@options.inactiveClass)
 
       if @options.show
         @show()
@@ -896,6 +896,7 @@ do($ = window.jQuery, window) ->
       @setOpen()
       @show()
       @renderModal()
+      $(".#{ @options.buttonClass }").addClass @options.inactiveClass
 
     onOpenAnimation: ->
       @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
@@ -955,6 +956,8 @@ do($ = window.jQuery, window) ->
       # close window
       remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
       @el.animate { bottom: -remainerHeight }, 500, @onCloseAnimationEnd
+
+      $(".#{ @options.buttonClass }").removeClass @options.inactiveClass
 
     onCloseAnimationEnd: =>
       @el.css 'bottom', ''
