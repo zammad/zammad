@@ -1,0 +1,21 @@
+#{config.product_name}-acceso desde otro país
+
+<div>Buenos días #{user.firstname},</div>
+<br>
+<div>parece haber accedido a las "#{user_device.created_at}" desde un <b>dispositivo conocido desde un otro país</b>:</div>
+<br>
+<div>
+Su dispositivo: #{user_device.name}<br>
+Su posición (relativa): #{user_device.location}<br>
+Su dirección IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>El nuevo país se ha agregado a la lista de dispositivos conocidos, esta lista se puede ver aquí:</div>
+<br>
+<div>#{config.http_type}://#{config.fqdn}/#profile/devices</div>
+<br>
+<div>En caso contrario, eliminar la nueva ubicación de la lista, cambiar la contraseña de la cuenta y contactar su administrador. Alguien puede tener acceso no autorizado a su cuenta.</div>
+<br>
+<div>Siempre atentamente </div>
+<br>
+<div>El equipo #{config.product_name} </div>

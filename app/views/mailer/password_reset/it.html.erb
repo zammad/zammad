@@ -1,0 +1,18 @@
+Reimpostare password per #{config.product_name}
+
+<div>Buongiorno #{user.firstname},</div>
+<br>
+<div>abbiamo ricevuto una richiesta di reimpostazione password per #{config.product_name} account <b>#{user.login}</b>.</div>
+<br>
+<div>Se desidera reimpostare la password, fare un clic sul collegamento sotto (o copiare l'URL nel browser
+inserire):</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}">#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.name}</a></div>
+<br>
+<div>Questo link porta a una pagina nella quale è possibile modificare la password.</div>
+<br>
+<div>Se non si desidera reimpostare la password, ignorare questo messaggio. La password rimane invariata.</div>
+<br>
+<div>Sempre cordiali saluti</div>
+<br>
+<div>Il team #{config.product_name} </div>

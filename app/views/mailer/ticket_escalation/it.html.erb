@@ -1,0 +1,18 @@
+Il ticket si è intensificato (#{ticket.title})
+
+<div>Buongiorno #{recipient.firstname},</div>
+<br>
+<div>Un ticket (#{ticket.title}) da "<b>#{ticket.customer.longname}</b>" si è intensificato a "#{ticket.escalation_at}"!</div>.
+<br>
+<% if @objects[:article] %>
+  <div>
+  #{t('Information')}:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+</div>
