@@ -68,8 +68,10 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
   var Base, Io, Log, Timeout, ZammadChat, myScript, scriptHost, scriptProtocol, scripts;
   scripts = document.getElementsByTagName('script');
   myScript = scripts[scripts.length - 1];
-  scriptHost = myScript.src.match('.*://([^:/]*).*')[1];
-  scriptProtocol = myScript.src.match('(.*)://[^:/]*.*')[1];
+  if (scripts.length > 0) {
+    scriptHost = myScript.src.match('.*://([^:/]*).*')[1];
+    scriptProtocol = myScript.src.match('(.*)://[^:/]*.*')[1];
+  }
   Base = (function() {
     Base.prototype.defaults = {
       debug: false
@@ -1159,31 +1161,44 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       return this.el.find('.zammad-chat-body').append(this.view('message')(data));
     };
 
-    ZammadChat.prototype.open = function() {
-      var remainerHeight;
+    ZammadChat.prototype.setOpen = function() {
       if (this.isOpen) {
         this.log.debug('widget already open, block');
         return;
       }
       this.isOpen = true;
-      this.log.debug('open widget');
-      if (!this.sessionId) {
-        this.showLoader();
-      }
+      return this.log.debug('open widget');
+    };
+
+    ZammadChat.prototype.getRemainerHeight = function() {
+      return this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
+    };
+
+    ZammadChat.prototype.renderModal = function() {
       this.el.addClass('zammad-chat-is-open');
-      remainerHeight = this.el.height() - this.el.find('.zammad-chat-header').outerHeight();
-      this.el.css('bottom', -remainerHeight);
       if (!this.sessionId) {
-        this.el.animate({
-          bottom: 0
-        }, 500, this.onOpenAnimationEnd);
-        return this.send('chat_session_init', {
-          url: window.location.href
-        });
+        this.el.css('bottom', -this.getRemainerHeight);
+        this.showLoader();
+        return this.onOpenAnimation();
       } else {
         this.el.css('bottom', 0);
         return this.onOpenAnimationEnd();
       }
+    };
+
+    ZammadChat.prototype.open = function() {
+      this.setOpen();
+      this.show();
+      return this.renderModal();
+    };
+
+    ZammadChat.prototype.onOpenAnimation = function() {
+      this.el.animate({
+        bottom: 0
+      }, 500, this.onOpenAnimationEnd);
+      return this.send('chat_session_init', {
+        url: window.location.href
+      });
     };
 
     ZammadChat.prototype.onOpenAnimationEnd = function() {
@@ -1896,7 +1911,8 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
     return ZammadChat;
 
   })(Base);
-  return window.ZammadChat = ZammadChat;
+  window.ZammadChat = ZammadChat;
+  return window.ZammadIo = Io;
 })(window.jQuery, window);
 
 if (!window.zammadChatTemplates) {

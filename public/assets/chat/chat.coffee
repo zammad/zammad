@@ -2,8 +2,10 @@ do($ = window.jQuery, window) ->
 
   scripts = document.getElementsByTagName('script')
   myScript = scripts[scripts.length - 1]
-  scriptHost = myScript.src.match('.*://([^:/]*).*')[1]
-  scriptProtocol = myScript.src.match('(.*)://[^:/]*.*')[1]
+
+  if scripts.length > 0
+    scriptHost = myScript.src.match('.*://([^:/]*).*')[1]
+    scriptProtocol = myScript.src.match('(.*)://[^:/]*.*')[1]
 
   # Define the plugin class
   class Base
@@ -868,7 +870,7 @@ do($ = window.jQuery, window) ->
       data.unreadClass = if document.hidden then ' zammad-chat-message--unread' else ''
       @el.find('.zammad-chat-body').append @view('message')(data)
 
-    open: =>
+    setOpen: ->
       if @isOpen
         @log.debug 'widget already open, block'
         return
@@ -876,23 +878,30 @@ do($ = window.jQuery, window) ->
       @isOpen = true
       @log.debug 'open widget'
 
-      if !@sessionId
-        @showLoader()
+    getRemainerHeight: ->
+      @el.height() - @el.find('.zammad-chat-header').outerHeight()
 
+    renderModal: ->
       @el.addClass('zammad-chat-is-open')
 
-      remainerHeight = @el.height() - @el.find('.zammad-chat-header').outerHeight()
-
-      @el.css 'bottom', -remainerHeight
-
       if !@sessionId
-        @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
-        @send('chat_session_init'
-          url: window.location.href
-        )
+        @el.css 'bottom', -@getRemainerHeight
+        @showLoader()
+        @onOpenAnimation()
       else
         @el.css 'bottom', 0
         @onOpenAnimationEnd()
+
+    open: =>
+      @setOpen()
+      @show()
+      @renderModal()
+
+    onOpenAnimation: ->
+      @el.animate { bottom: 0 }, 500, @onOpenAnimationEnd
+      @send('chat_session_init'
+        url: window.location.href
+      )
 
     onOpenAnimationEnd: =>
       @idleTimeout.stop()
@@ -1523,3 +1532,4 @@ do($ = window.jQuery, window) ->
       html
 
   window.ZammadChat = ZammadChat
+  window.ZammadIo = Io

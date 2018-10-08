@@ -2,6 +2,9 @@
   "name": "zammad-chat",
   "version": "1.0.0",
   "description": "Zammad Customer Chat Javascript Widget",
+  "scripts": {
+    "test": "node_modules/jest/bin/jest.js"
+  },
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.1",
@@ -13,6 +16,8 @@
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
+    "jest": "^23.6.0",
+    "jquery": "2.1.4",
     "merge-stream": "^1.0.1",
     "sass.js": "^0.10.5"
   }
