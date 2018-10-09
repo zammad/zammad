@@ -2930,6 +2930,7 @@ wait untill text in selector disabppears
           break if target
         end
         raise "Can't find organization #{data[:organization]}" if target.blank?
+
         target.click()
       rescue Selenium::WebDriver::Error::StaleElementReferenceError
         sleep retries
