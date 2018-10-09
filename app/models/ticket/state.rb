@@ -2,10 +2,8 @@
 class Ticket::State < ApplicationModel
   include ChecksLatestChangeObserved
 
-  # rubocop:disable Rails/InverseOf
   belongs_to :state_type, class_name: 'Ticket::StateType', inverse_of: :states
   belongs_to :next_state, class_name: 'Ticket::State'
-  # rubocop:enable Rails/InverseOf
 
   after_create  :ensure_defaults
   after_update  :ensure_defaults
@@ -81,6 +79,7 @@ returns:
 
   def ignore_escalation?
     return true if ignore_escalation
+
     false
   end
 
@@ -102,6 +101,7 @@ returns:
       Ticket::State.all.each do |local_state|
         next if local_state.id == id
         next if local_state[default_field] == false
+
         local_state[default_field] = false
         local_state.callback_loop = true
         local_state.save!

@@ -9,6 +9,7 @@ class Sequencer
 
               def process
                 return if resources.blank?
+
                 sequence_resources(resources)
               end
 

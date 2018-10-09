@@ -37,6 +37,7 @@ returns
 
   def escalation_calculation(force = false)
     return if !escalation_calculation_int(force)
+
     self.callback_loop = true
     save!
     self.callback_loop = false
@@ -51,6 +52,7 @@ returns
 
     # set escalation off if current state is not escalation relativ (e. g. ticket is closed)
     return if !state_id
+
     state = Ticket::State.lookup(id: state_id)
     escalation_disabled = false
     if state.ignore_escalation?
@@ -59,6 +61,7 @@ returns
       # early exit if nothing current state is not escalation relativ
       if !force
         return false if escalation_at.nil?
+
         self.escalation_at = nil
         if preferences['escalation_calculation']
           preferences['escalation_calculation']['escalation_disabled'] = escalation_disabled
@@ -79,6 +82,7 @@ returns
 
       # nothing to change
       return false if !escalation_at && !first_response_escalation_at && !update_escalation_at && !close_escalation_at
+
       preferences['escalation_calculation'] = {}
       self.escalation_at = nil
       self.first_response_escalation_at = nil
@@ -155,10 +159,12 @@ returns
       calendar.business_hours.each do |day, meta|
         next if !meta[:active]
         next if !meta[:timeframes]
+
         hours[day.to_sym] = {}
         meta[:timeframes].each do |frame|
           next if !frame[0]
           next if !frame[1]
+
           hours[day.to_sym][frame[0]] = frame[1]
         end
       end
@@ -173,6 +179,7 @@ returns
         next if !meta
         next if !meta['active']
         next if meta['removed']
+
         holidays.push Date.parse(day)
       end
       config.holidays = holidays
@@ -298,6 +305,7 @@ returns
         query_condition, bind_condition, tables = Ticket.selector2sql(sla.condition)
         ticket = Ticket.where(query_condition, *bind_condition).joins(tables).find_by(id: id)
         next if !ticket
+
         sla_selected = sla
         break
       end
@@ -356,6 +364,7 @@ returns
         next if !history_item['attribute']
         next if history_item['attribute'] != 'state'
         next if history_item['id']
+
         last_history_state = history_item
       end
       local_updated_at = updated_at

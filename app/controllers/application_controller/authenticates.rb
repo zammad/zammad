@@ -15,10 +15,12 @@ module ApplicationController::Authenticates
         permission: key,
       )
       return false if user
+
       raise Exceptions::NotAuthorized, 'Not authorized (token)!'
     end
 
     return false if current_user&.permissions?(key)
+
     raise Exceptions::NotAuthorized, 'Not authorized (user)!'
   end
 
@@ -68,6 +70,7 @@ module ApplicationController::Authenticates
       if Setting.get('api_password_access') == false
         raise Exceptions::NotAuthorized, 'API password access disabled!'
       end
+
       user = User.authenticate(username, password)
       return authentication_check_prerequesits(user, 'basic_auth', auth_param) if user
     end
@@ -79,6 +82,7 @@ module ApplicationController::Authenticates
       if Setting.get('api_token_access') == false
         raise Exceptions::NotAuthorized, 'API token access disabled!'
       end
+
       user = Token.check(
         action: 'api',
         name: token_string,

@@ -27,6 +27,7 @@ returns if user has no permissions to search
 
       def search_preferences(current_user)
         return false if Setting.get('chat') != true || !current_user.permissions?('chat.agent')
+
         {
           prio: 900,
           direct_search_index: true,
@@ -68,6 +69,7 @@ returns
           items.each do |item|
             chat_session = Chat::Session.lookup(id: item[:id])
             next if !chat_session
+
             chat_sessions.push chat_session
           end
           return chat_sessions

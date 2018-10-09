@@ -14,6 +14,7 @@ class Sequencer
               # since we have no other confidential value
               # that is known to Zammad and the User
               return Setting.get('import_zendesk_endpoint_key') if initiator
+
               # otherwise set an empty password so the user
               # has to re-set a new password for Zammad
               ''

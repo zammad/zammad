@@ -1,4 +1,3 @@
-
 require 'browser_test_helper'
 
 class TwitterBrowserTest < TestCase
@@ -369,30 +368,36 @@ class TwitterBrowserTest < TestCase
     if !ENV['TWITTER_BT_CONSUMER_KEY']
       raise "ERROR: Need TWITTER_BT_CONSUMER_KEY - hint TWITTER_BT_CONSUMER_KEY='1234'"
     end
+
     consumer_key = ENV['TWITTER_BT_CONSUMER_KEY']
     if !ENV['TWITTER_BT_CONSUMER_SECRET']
       raise "ERROR: Need TWITTER_BT_CONSUMER_SECRET - hint TWITTER_BT_CONSUMER_SECRET='1234'"
     end
+
     consumer_secret = ENV['TWITTER_BT_CONSUMER_SECRET']
 
     if !ENV['TWITTER_BT_USER_LOGIN']
       raise "ERROR: Need TWITTER_BT_USER_LOGIN - hint TWITTER_BT_USER_LOGIN='1234'"
     end
+
     twitter_user_login = ENV['TWITTER_BT_USER_LOGIN']
 
     if !ENV['TWITTER_BT_USER_PW']
       raise "ERROR: Need TWITTER_BT_USER_PW - hint TWITTER_BT_USER_PW='1234'"
     end
+
     twitter_user_pw = ENV['TWITTER_BT_USER_PW']
 
     if !ENV['TWITTER_BT_CUSTOMER_TOKEN']
       raise "ERROR: Need TWITTER_BT_CUSTOMER_TOKEN - hint TWITTER_BT_CUSTOMER_TOKEN='1234'"
     end
+
     twitter_customer_token = ENV['TWITTER_BT_CUSTOMER_TOKEN']
 
     if !ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
       raise "ERROR: Need TWITTER_BT_CUSTOMER_TOKEN_SECRET - hint TWITTER_BT_CUSTOMER_TOKEN_SECRET='1234'"
     end
+
     twitter_customer_token_secret = ENV['TWITTER_BT_CUSTOMER_TOKEN_SECRET']
 
     hash = {

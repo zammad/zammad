@@ -41,6 +41,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
         message = "Channel: #{channel.area} in "
         %w[host user uid].each do |key|
           next if channel.options[key].blank?
+
           message += "key:#{channel.options[key]};"
         end
         issues.push "#{message} #{channel.last_log_in}"
@@ -52,9 +53,11 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
 
       # outbound channel
       next if channel.status_out != 'error'
+
       message = "Channel: #{channel.area} out "
       %w[host user uid].each do |key|
         next if channel.options[key].blank?
+
         message += "key:#{channel.options[key]};"
       end
       issues.push "#{message} #{channel.last_log_out}"
@@ -76,6 +79,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
     Scheduler.where('active = ? AND period > 300', true).where.not(last_run: nil).order(last_run: :asc, period: :asc).each do |scheduler|
       diff = Time.zone.now - (scheduler.last_run + scheduler.period.seconds)
       next if diff < 8.minutes
+
       issues.push "scheduler may not run (last execution of #{scheduler.method} #{helpers.time_ago_in_words(Time.zone.now - diff.seconds)} over) - please contact your system administrator"
       break
     end
@@ -259,11 +263,13 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
     user = authentication_check_only(permission: 'admin.monitoring')
     return if user
     return if Setting.get('monitoring_token') == params[:token]
+
     raise Exceptions::NotAuthorized
   end
 
   def access_check
     return if Permission.find_by(name: 'admin.monitoring', active: true)
+
     raise Exceptions::NotAuthorized
   end
 

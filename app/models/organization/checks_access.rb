@@ -21,12 +21,14 @@ class Organization
         # access ok if its own organization
         return false if access != 'read'
         return false if !user.organization_id
+
         return id == user.organization_id
       end
 
       # check agent
       return true if user.permissions?('admin')
       return true if user.permissions?('ticket.agent')
+
       false
     end
 
@@ -42,6 +44,7 @@ class Organization
     # @return [nil]
     def access!(user, access)
       return if access?(user, access)
+
       raise Exceptions::NotAuthorized
     end
   end

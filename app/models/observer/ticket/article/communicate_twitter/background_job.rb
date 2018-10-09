@@ -138,6 +138,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     if Rails.env.production?
       return current_time + attempts * 120.seconds
     end
+
     current_time + 5.seconds
   end
 end

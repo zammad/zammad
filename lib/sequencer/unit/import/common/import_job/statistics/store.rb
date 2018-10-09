@@ -16,6 +16,7 @@ class Sequencer
                 import_job.result = statistics
 
                 return if !store?
+
                 import_job.save!
               end
 
@@ -23,6 +24,7 @@ class Sequencer
 
               def store?
                 return true if import_job.updated_at.blank?
+
                 next_update_at < Time.zone.now
               end
 

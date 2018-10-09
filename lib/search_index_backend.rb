@@ -13,6 +13,7 @@ info about used search index machine
   def self.info
     url = Setting.get('es_url').to_s
     return if url.blank?
+
     Rails.logger.info "# curl -X GET \"#{url}\""
     response = UserAgent.get(
       url,
@@ -29,8 +30,10 @@ info about used search index machine
     if response.success?
       installed_version = response.data.dig('version', 'number')
       raise "Unable to get elasticsearch version from response: #{response.inspect}" if installed_version.blank?
+
       version_supported = Gem::Version.new(installed_version) < Gem::Version.new('5.7')
       raise "Version #{installed_version} of configured elasticsearch is not supported" if !version_supported
+
       return response.data
     end
 
@@ -300,6 +303,7 @@ return search result
   def self.search(query, limit = 10, index = nil, query_extention = {}, from = 0, sort_by = [], order_by = [])
     # rubocop:enable Metrics/ParameterLists
     return [] if query.blank?
+
     if index.class == Array
       ids = []
       index.each do |local_index|
@@ -318,6 +322,7 @@ return search result
 
     url = build_url
     return if url.blank?
+
     url += if index
              if index.class == Array
                "/#{index.join(',')}/_search"
@@ -377,6 +382,7 @@ return search result
     return ids if !data
     return ids if !data['hits']
     return ids if !data['hits']['hits']
+
     data['hits']['hits'].each do |item|
       Rails.logger.info "... #{item['_type']} #{item['_id']}"
       data = {
@@ -471,6 +477,7 @@ get count of tickets and tickets which match on selector
 
     url = build_url
     return if url.blank?
+
     url += if index
              if index.class == Array
                "/#{index.join(',')}/_search"
@@ -574,6 +581,7 @@ get count of tickets and tickets which match on selector
           if range.blank?
             raise "Invalid relative_map for range '#{data['range']}'."
           end
+
           t[:range] = {}
           t[:range][key_tmp] = {}
           if data['operator'] == 'within last (relative)'
@@ -589,6 +597,7 @@ get count of tickets and tickets which match on selector
           if range.blank?
             raise "Invalid relative_map for range '#{data['range']}'."
           end
+
           t[:range] = {}
           t[:range][key_tmp] = {}
           if data['operator'] == 'before (relative)'
@@ -673,11 +682,13 @@ return true if backend is configured
 
   def self.enabled?
     return false if Setting.get('es_url').blank?
+
     true
   end
 
   def self.build_url(type = nil, o_id = nil)
     return if !SearchIndexBackend.enabled?
+
     index = "#{Setting.get('es_index')}_#{Rails.env}"
     url   = Setting.get('es_url')
     url = if type

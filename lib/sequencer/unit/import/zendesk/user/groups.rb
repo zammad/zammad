@@ -17,6 +17,7 @@ class Sequencer
 
             def remote_ids
               return [] if user_group_map.blank?
+
               user_group_map.fetch(resource.id, [])
             end
           end

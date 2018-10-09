@@ -14,6 +14,7 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
 
     # set from on all article types excluding email|twitter status|twitter direct-message|facebook feed post|facebook feed comment
     return true if record.type_id.blank?
+
     type = Ticket::Article::Type.lookup(id: record.type_id)
     return true if type['name'] == 'email'
 
@@ -41,6 +42,7 @@ class Observer::Ticket::Article::FillupFromGeneral < ActiveRecord::Observer
       end
     end
     return true if user_id.blank?
+
     user = User.find(user_id)
     if type.name == 'web' || type.name == 'phone'
       record.from = "#{user.firstname} #{user.lastname} <#{user.email}>"

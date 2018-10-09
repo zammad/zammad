@@ -68,6 +68,7 @@ class Sequencer
 
               unit[:provides].try(:each) do |attribute|
                 next if result[attribute].will_be_provided?
+
                 result[attribute].from = index
               end
             end

@@ -84,12 +84,14 @@ module CreatesTicketArticles
         # validation
         ['mime-type', 'filename', 'data'].each do |key|
           next if attachment[key]
+
           raise Exceptions::UnprocessableEntity, "Attachment needs '#{key}' param for attachment with index '#{index}'"
         end
 
         preferences = {}
         ['charset', 'mime-type'].each do |key|
           next if !attachment[key]
+
           store_key = key.tr('-', '_').camelize.gsub(/(.+)([A-Z])/, '\1_\2').tr('_', '-')
           preferences[store_key] = attachment[key]
         end

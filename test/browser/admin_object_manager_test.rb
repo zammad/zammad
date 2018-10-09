@@ -565,6 +565,7 @@ class AdminObjectManagerTest < TestCase
     30.times do
       deletable_attribute = instance.find_elements(xpath: '//td[text()="deletable_attribute"]/following-sibling::*[2]')[0]
       break if deletable_attribute
+
       sleep 1
     end
 

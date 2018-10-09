@@ -31,6 +31,7 @@ returns
     users.each do |user|
       next if user.id == 1
       next if !user.active
+
       agent_count += 1
       data = {}
       backends.each do |backend|
@@ -44,6 +45,7 @@ returns
     user_result.each_value do |data|
       data.each do |backend_model, backend_result|
         next if !backend_result.key?(:used_for_average)
+
         if !backend_average_sum[backend_model]
           backend_average_sum[backend_model] = 0
         end
@@ -57,6 +59,7 @@ returns
       user_result.each do |user_id, data|
         next if !data[backend_model_average]
         next if !data[backend_model_average].key?(:used_for_average)
+
         data[backend_model_average][:average_per_agent] = average
 
         # generate icon state

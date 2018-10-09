@@ -1,4 +1,3 @@
-
 require 'test_helper'
 require 'net/imap'
 
@@ -11,6 +10,7 @@ class EmailKeepOnServerTest < ActiveSupport::TestCase
     if ENV['KEEP_ON_MAIL_SERVER_ACCOUNT'].blank?
       raise "Need KEEP_ON_MAIL_SERVER_ACCOUNT as ENV variable like export KEEP_ON_MAIL_SERVER_ACCOUNT='user:somepass'"
     end
+
     @server_login = ENV['KEEP_ON_MAIL_SERVER_ACCOUNT'].split(':')[0]
     @server_password = ENV['KEEP_ON_MAIL_SERVER_ACCOUNT'].split(':')[1]
 

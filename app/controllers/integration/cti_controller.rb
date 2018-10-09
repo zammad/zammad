@@ -48,6 +48,7 @@ class Integration::CtiController < ApplicationController
         routing_table.each do |row|
           dest = row[:dest].gsub(/\*/, '.+?')
           next if to !~ /^#{dest}$/
+
           from = row[:caller_id]
           data = {
             action: 'dial',

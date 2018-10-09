@@ -28,12 +28,14 @@ class Sequencer
               # always returns true
               def log_associations_error
                 return true if %i[failed deactivated].include?(action)
+
                 logger.error { 'associations cannot be nil' } if associations.nil?
                 true
               end
 
               def register_changes
                 return if !(action == :unchanged && changes.any?)
+
                 logger.debug { "Changed instance associations: #{changes.inspect}" }
                 state.provide(:action, :updated)
               end

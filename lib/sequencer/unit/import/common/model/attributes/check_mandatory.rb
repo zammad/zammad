@@ -15,6 +15,7 @@ class Sequencer
               def process
                 mandatory.each do |mapped_attribute|
                   next if mapped[mapped_attribute].present?
+
                   state.provide(:action, :skipped)
                   break
                 end

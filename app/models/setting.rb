@@ -36,6 +36,7 @@ set config setting
     if !setting
       raise "Can't find config setting '#{name}'"
     end
+
     setting.state_current = { value: value }
     setting.save!
     logger.info "Setting.set('#{name}', #{value.inspect})"
@@ -70,6 +71,7 @@ reset config setting to default
       raise "Can't find config setting '#{name}'"
     end
     return true if !force && setting.state_current == setting.state_initial
+
     setting.state_current = setting.state_initial
     setting.save!
     logger.info "Setting.reset('#{name}', #{setting.state_current.inspect})"
@@ -149,6 +151,7 @@ reload config settings
       #logger.debug "Setting.cache_valid?: cache_id has been set within last #{@@lookup_timeout} seconds"
       return true
     end
+
     change_id = Cache.get('Setting::ChangeId')
     if @@change_id && change_id == @@change_id
       @@lookup_at = Time.zone.now # rubocop:disable Style/ClassVars
@@ -164,6 +167,7 @@ reload config settings
   def state_check
     return true if !state
     return true if state.try(:key?, :value)
+
     self.state_current = { value: state }
     true
   end
@@ -171,6 +175,7 @@ reload config settings
   # notify clients about public config changes
   def check_broadcast
     return true if frontend != true
+
     value = state_current
     if state_current.key?(:value)
       value = state_current[:value]

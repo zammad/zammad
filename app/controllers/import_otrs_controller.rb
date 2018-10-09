@@ -103,6 +103,7 @@ class ImportOtrsController < ApplicationController
 
   def import_start
     return if setup_done_response
+
     Setting.set('import_mode', true)
     welcome = Import::OTRS.connection_test
     if !welcome
@@ -130,6 +131,7 @@ class ImportOtrsController < ApplicationController
     dynamic_fields = Import::OTRS::Requester.load('DynamicField')
     dynamic_fields.each do |dynamic_field|
       next if dynamic_field['ValidID'].to_i != 1
+
       dynamic_field_count += 1
     end
     if dynamic_field_count > 20
@@ -140,6 +142,7 @@ class ImportOtrsController < ApplicationController
     sys_configs = Import::OTRS::Requester.load('SysConfig')
     sys_configs.each do |sys_config|
       next if sys_config['Key'] != 'Process'
+
       issues.push 'otrsProcesses'
     end
 
@@ -176,6 +179,7 @@ class ImportOtrsController < ApplicationController
     if !setup_done
       return false
     end
+
     render json: {
       setup_done: true,
     }

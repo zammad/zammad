@@ -27,6 +27,7 @@ Job.run
     jobs = Job.where(active: true)
     jobs.each do |job|
       next if !job.executable?
+
       job.run(false, start_at)
     end
     true
@@ -199,10 +200,12 @@ job.run(true)
         (0..5).each do |minute_counter|
           if minute_counter.nonzero?
             break if day_to_check.min.zero?
+
             day_to_check = day_to_check + 10.minutes
           end
           next if !timeplan['hours'][day_to_check.hour] && !timeplan['hours'][day_to_check.hour.to_s]
           next if !timeplan['minutes'][match_minutes(day_to_check.min)] && !timeplan['minutes'][match_minutes(day_to_check.min).to_s]
+
           return day_to_check
         end
       end
@@ -227,10 +230,12 @@ job.run(true)
         (0..5).each do |minute_counter|
           minute_to_check = hour_to_check + minute_counter.minutes * 10
           next if !timeplan['minutes'][match_minutes(minute_to_check.min)] && !timeplan['minutes'][match_minutes(minute_to_check.min).to_s]
+
           time_to_check = minute_to_check
           break
         end
         next if !minute_to_check
+
         return time_to_check
       end
 
@@ -252,6 +257,7 @@ job.run(true)
 
   def match_minutes(minutes)
     return 0 if minutes < 10
+
     "#{minutes.to_s.gsub(/(\d)\d/, '\\1')}0".to_i
   end
 

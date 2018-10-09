@@ -29,6 +29,7 @@ module ChecksUserAttributesByCurrentUserPermission
     return true if params[:id].present?
     return true if params[:role_ids]
     return true if params[:roles]
+
     params[:role_ids] = Role.signup_role_ids
     true
   end

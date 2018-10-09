@@ -81,6 +81,7 @@ returns
     if data[:permission]
       return if !user.permissions?(data[:permission])
       return if !token.preferences[:permission]
+
       local_permissions = data[:permission]
       if data[:permission].class != Array
         local_permissions = [data[:permission]]
@@ -90,10 +91,12 @@ returns
         local_permissions = Permission.with_parents(local_permission)
         local_permissions.each do |local_permission_name|
           next if !token.preferences[:permission].include?(local_permission_name)
+
           match = true
           break
         end
         next if !match
+
         break
       end
       return if !match

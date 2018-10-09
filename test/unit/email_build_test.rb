@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class EmailBuildTest < ActiveSupport::TestCase
@@ -41,7 +40,7 @@ class EmailBuildTest < ActiveSupport::TestCase
           <div>&gt; Welcome!</div><div>&gt;</div><div>&gt; Thank you for installing Zammad. äöüß</div><div>&gt;</div>
         </body>
       </html>
-      MSG_HTML
+    MSG_HTML
     mail = Channel::EmailBuild.build(
       from: 'sender@example.com',
       to: 'recipient@example.com',
@@ -61,7 +60,7 @@ class EmailBuildTest < ActiveSupport::TestCase
       >
       > Thank you for installing Zammad. äöüß
       >
-      MSG_TEXT
+    MSG_TEXT
     assert_equal(text_should, mail.text_part.body.to_s)
     assert_equal(html, mail.html_part.body.to_s)
 
@@ -100,7 +99,7 @@ class EmailBuildTest < ActiveSupport::TestCase
       >
       > Thank you for installing Zammad. äöüß
       >
-      MSG_TEXT
+    MSG_TEXT
     mail = Channel::EmailBuild.build(
       from: 'sender@example.com',
       to: 'recipient@example.com',
@@ -184,7 +183,7 @@ class EmailBuildTest < ActiveSupport::TestCase
       >
       > Thank you for installing Zammad. äöüß
       >
-      MSG_TEXT
+    MSG_TEXT
     mail = Channel::EmailBuild.build(
       from: 'sender@example.com',
       to: 'recipient@example.com',
@@ -226,7 +225,7 @@ class EmailBuildTest < ActiveSupport::TestCase
       >
       > Thank you for installing Zammad. äöüß
       >
-      MSG_TEXT
+    MSG_TEXT
     mail = Channel::EmailBuild.build(
       from: 'sender@example.com',
       to: 'recipient@example.com',

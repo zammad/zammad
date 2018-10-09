@@ -1,4 +1,3 @@
-
 require 'integration_test_helper'
 
 class TwitterTest < ActiveSupport::TestCase
@@ -28,6 +27,7 @@ class TwitterTest < ActiveSupport::TestCase
     'TWITTER_CUSTOMER_TOKEN_SECRET' => '1234',
   }.each do |key, example_value|
     next if ENV[key]
+
     raise "ERROR: Need ENV #{key} - hint: export #{key}='#{example_value}'"
   end
 
@@ -142,6 +142,7 @@ class TwitterTest < ActiveSupport::TestCase
     tweet_found = false
     client.user_timeline(system_login_without_at).each do |tweet|
       next if tweet.id.to_s != article.message_id.to_s
+
       tweet_found = true
       break
     end
@@ -164,6 +165,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if follow up article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
+
       sleep 10
     end
 
@@ -208,6 +210,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
+
       sleep 20
     end
     assert(article, "Can't find tweet id #{tweet.id}/#{text}")
@@ -240,6 +243,7 @@ class TwitterTest < ActiveSupport::TestCase
     client.user_timeline(system_login_without_at).each do |local_tweet|
       sleep 10
       next if local_tweet.id.to_s != article.message_id.to_s
+
       tweet_found = true
       break
     end
@@ -278,6 +282,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
+
       sleep 20
     end
 
@@ -325,6 +330,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
+
       sleep 10
     end
 
@@ -375,6 +381,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
+
       sleep 10
     end
 
@@ -408,6 +415,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
+
       sleep 15
     end
 
@@ -467,6 +475,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
+
       sleep 10
     end
 
@@ -531,6 +540,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: retweet.id)
       break if article
+
       sleep 10
     end
 
@@ -572,6 +582,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: retweet.id)
       break if article
+
       sleep 10
     end
 
@@ -603,6 +614,7 @@ class TwitterTest < ActiveSupport::TestCase
       Scheduler.worker(true)
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
+
       ActiveRecord::Base.clear_all_connections!
       ActiveRecord::Base.connection.query_cache.clear
       sleep 10
@@ -630,6 +642,7 @@ class TwitterTest < ActiveSupport::TestCase
       Scheduler.worker(true)
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
+
       ActiveRecord::Base.clear_all_connections!
       ActiveRecord::Base.connection.query_cache.clear
       sleep 10
@@ -662,6 +675,7 @@ class TwitterTest < ActiveSupport::TestCase
     client.user_timeline(system_login_without_at).each do |local_tweet|
       sleep 10
       next if local_tweet.id.to_s != article.message_id.to_s
+
       tweet_found = true
       break
     end
@@ -696,6 +710,7 @@ class TwitterTest < ActiveSupport::TestCase
       Scheduler.worker(true)
       article = Ticket::Article.find_by(message_id: dm.id)
       break if article
+
       sleep 10
     end
     assert(article, "inbound article '#{text}' message_id '#{dm.id}' created")
@@ -747,6 +762,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: retweet.id)
       break if article
+
       ActiveRecord::Base.clear_all_connections!
       ActiveRecord::Base.connection.query_cache.clear
       sleep 10
@@ -797,6 +813,7 @@ class TwitterTest < ActiveSupport::TestCase
       # check if ticket and article has been created
       article = Ticket::Article.find_by(message_id: retweet.id)
       break if article
+
       sleep 10
     end
 
@@ -842,6 +859,7 @@ class TwitterTest < ActiveSupport::TestCase
       Scheduler.worker(true)
       article = Ticket::Article.find_by(message_id: tweet.id)
       break if article
+
       ActiveRecord::Base.clear_all_connections!
       ActiveRecord::Base.connection.query_cache.clear
       sleep 10

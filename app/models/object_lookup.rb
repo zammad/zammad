@@ -6,6 +6,7 @@ class ObjectLookup < ApplicationModel
     # lookup
     lookup = self.lookup(id: id)
     return if !lookup
+
     lookup.name
   end
 

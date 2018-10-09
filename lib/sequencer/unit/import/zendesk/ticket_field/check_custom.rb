@@ -10,6 +10,7 @@ class Sequencer
 
             def process
               return if custom?
+
               state.provide(:action, :skipped)
             end
 

@@ -41,6 +41,7 @@ class TestCase < Test::Unit::TestCase
     if browser.match?(/(internet_explorer|ie)/i)
       return false
     end
+
     true
   end
 
@@ -111,6 +112,7 @@ class TestCase < Test::Unit::TestCase
 
   def browser_instance_close(local_browser)
     return if !@browsers[local_browser.hash]
+
     @browsers.delete(local_browser.hash)
     local_browser.quit
   end
@@ -131,6 +133,7 @@ class TestCase < Test::Unit::TestCase
 
   def teardown
     return if !@browsers
+
     @browsers.each_value do |local_browser|
       screenshot(browser: local_browser, comment: 'teardown')
       browser_instance_close(local_browser)
@@ -275,6 +278,7 @@ class TestCase < Test::Unit::TestCase
       login = instance.find_elements(css: '#login')[0]
 
       next if !login
+
       assert(true, 'logout ok')
       return
     end
@@ -303,6 +307,7 @@ class TestCase < Test::Unit::TestCase
       raise 'Unable to closes clues, no clues found!'
     end
     return if !clues
+
     instance.execute_script("$('.js-modal--clue .js-close').click()")
     assert(true, 'clues closed')
     sleep 1
@@ -329,6 +334,7 @@ class TestCase < Test::Unit::TestCase
       raise 'Unable to closes notify, no notify found!'
     end
     return if !notify
+
     notify.click
     assert(true, 'notify closed')
     sleep 1
@@ -449,6 +455,7 @@ class TestCase < Test::Unit::TestCase
 
       if elements.empty?
         return if params[:only_if_exists] == true
+
         raise "No such element '#{params[param_key]}'"
       end
 
@@ -611,6 +618,7 @@ class TestCase < Test::Unit::TestCase
     if params[:js]
       return instance.execute_script(params[:js])
     end
+
     raise "Invalid execute params #{params.inspect}"
   end
 
@@ -722,6 +730,7 @@ class TestCase < Test::Unit::TestCase
       log('set', { rescure: true })
       element = instance.find_elements(css: params[:css])[0]
       raise "No such element '#{params[:css]}'" if !element
+
       if !params[:slow]
         element.send_keys(params[:value])
       else
@@ -1335,6 +1344,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
       instance.find_elements(css: params[:css])[0].send_keys(Rails.root.join(file))
     end
     return if params[:no_sleep]
+
     sleep 2 * params[:files].count
   end
 
@@ -1407,6 +1417,7 @@ set type of task (closeTab, closeNextInOverview, stayOnTab)
     if !params[:attribute] && !params[:value]
       raise "'#{selector}' not found"
     end
+
     raise "'#{params[:value]}' not found in '#{text}'"
   end
 
@@ -1737,6 +1748,7 @@ wait untill text in selector disabppears
         begin
           element = instance.find_elements(css: '.modal .js-selected[data-name=role_ids] .js-option:not(.is-hidden)')[0]
           break if !element
+
           element.click
           sleep 0.1
         end
@@ -1868,6 +1880,7 @@ wait untill text in selector disabppears
         begin
           element = instance.find_elements(css: '.modal .js-selected[data-name=role_ids] .js-option:not(.is-hidden)')[0]
           break if !element
+
           element.click
           sleep 0.1
         end
@@ -2991,6 +3004,7 @@ wait untill text in selector disabppears
       search_result = instance.find_elements(css: search_css).map(&:text).map(&:strip)
       break if search_result.include? search_target
       raise 'user creation failed' if i >= 19
+
       log "new user #{search_query} not found on the #{i.ordinalize} try, retrying"
     end
 
@@ -3034,6 +3048,7 @@ wait untill text in selector disabppears
     )
     instance.find_elements(css: '.content.active .user-list td:first-child').each do |element|
       next if element.text.strip != data[:login]
+
       element.click
       break
     end
@@ -4014,6 +4029,7 @@ wait untill text in selector disabppears
     # make sure that required params are supplied
     %i[name display data_type].each do |s|
       next if data.key? s
+
       raise "missing required param #{s} in object_manager_attribute_create()"
     end
 
@@ -4304,6 +4320,7 @@ wait untill text in selector disabppears
         logs = instance.manage.logs.get(:browser)
         logs.each do |log|
           next if log.level == 'WARNING' && log.message =~ /Declaration\sdropped./ # ignore ff css warnings
+
           time = Time.zone.parse(Time.zone.at(log.timestamp / 1000).to_datetime.to_s)
           puts "#{time}/#{log.level}: #{log.message}"
         end
@@ -4313,6 +4330,7 @@ wait untill text in selector disabppears
     end
     return if !DEBUG
     return if params[:mute_log]
+
     puts "#{Time.zone.now}/#{method}: #{params.inspect}"
   end
 
@@ -4423,6 +4441,7 @@ wait untill text in selector disabppears
       http.request(req)
     end
     raise "HTTP error #{res.code} while fetching #{browser_url}/api/v1/settings/" if res.code != '200'
+
     JSON.parse(res.body)
   end
 
@@ -4514,6 +4533,7 @@ wait untill text in selector disabppears
                 mute_log: true,
               }
               break if !instance.find_elements(css: target[:css])[0]
+
               click(target)
             end
             sleep 1
@@ -4535,6 +4555,7 @@ wait untill text in selector disabppears
 
       %i[default min max diff].each do |key|
         next if !data[:data_option].key?(key)
+
         element = instance.find_elements(css: ".modal [name=\"data_option::#{key}\"]").first
         element.clear
         element.send_keys(data[:data_option][key])
@@ -4542,6 +4563,7 @@ wait untill text in selector disabppears
 
       %i[future past].each do |key|
         next if !data[:data_option].key?(key)
+
         select(
           browser:  instance,
           css:      ".modal select[name=\"data_option::#{key}\"]",
@@ -4552,6 +4574,7 @@ wait untill text in selector disabppears
 
       %i[maxlength].each do |key|
         next if !data[:data_option].key?(key)
+
         set(
           browser:  instance,
           css:      ".modal input[name=\"data_option::#{key}\"]",

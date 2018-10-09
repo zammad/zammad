@@ -1,4 +1,3 @@
-
 require 'browser_test_helper'
 
 class PreferencesPermissionCheckTest < TestCase

@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
@@ -270,6 +269,7 @@ class UserTest < ActiveSupport::TestCase
 
       test[:create_verify].each do |key, value|
         next if key == :image_md5
+
         if user.respond_to?(key)
           result = user.send(key)
           if value.nil?
@@ -291,6 +291,7 @@ class UserTest < ActiveSupport::TestCase
 
         test[:update_verify].each do |key, value|
           next if key == :image_md5
+
           if user.respond_to?(key)
             assert_equal(user.send(key), value, "update check #{key} in (#{test[:name]})")
           else

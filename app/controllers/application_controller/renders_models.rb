@@ -156,6 +156,7 @@ module ApplicationController::RendersModels
     generic_object = object.find(params[:id])
     result = Models.references(object, generic_object.id)
     return false if result.blank?
+
     raise Exceptions::UnprocessableEntity, 'Can\'t delete, object has references.'
   rescue => e
     raise Exceptions::UnprocessableEntity, e

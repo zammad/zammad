@@ -54,6 +54,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT']}
       ticket_ids_found.each do |ticket_id|
         ticket = Ticket.find_by(id: ticket_id)
         next if !ticket
+
         article = Ticket::Article.create!(
           ticket_id: ticket_id,
           type_id: Ticket::Article::Type.find_by(name: 'web').id,
@@ -84,6 +85,7 @@ UserAgent: #{request.env['HTTP_USER_AGENT']}
       ticket_ids_found.each do |ticket_id|
         ticket = Ticket.find_by(id: ticket_id)
         next if !ticket
+
         ticket.state_id = auto_close_state_id
         ticket.save!
       end

@@ -17,6 +17,7 @@ class TweetRest < TweetBase
 
   def disconnect
     return if !@client
+
     @client = nil
   end
 

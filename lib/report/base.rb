@@ -236,6 +236,7 @@ class Report::Base
     ticket_list.each do |ticket|
       timestamp = ticket[ data[:type].to_sym ]
       next if !timestamp
+
       #          puts 'FR:' + first_response.to_s
       #          puts 'CT:' + ticket.created_at.to_s
       diff = timestamp - ticket.created_at
@@ -268,6 +269,7 @@ class Report::Base
     ticket_list.each do |ticket|
       timestamp = ticket[ data[:type].to_sym ]
       next if !timestamp
+
       ticket_ids.push ticket.id
       #          puts 'FR:' + first_response.to_s
       #          puts 'CT:' + ticket.created_at.to_s
@@ -305,6 +307,7 @@ class Report::Base
     ticket_list.each do |ticket|
       timestamp = ticket[ data[:type].to_sym ]
       next if !timestamp
+
       ticket_ids.push ticket.id
       #        puts "#{data[:type].to_s} - #{timestamp} - #{ticket.inspect}"
       #          puts 'FR:' + ticket.first_response.to_s

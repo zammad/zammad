@@ -9,6 +9,7 @@ class Karma::User < ApplicationModel
     record = Karma::User.find_by(user_id: user.id)
     if record
       return record if record.score == score && record.level == level
+
       record.score = score
       record.level = level
       record.save
@@ -24,6 +25,7 @@ class Karma::User < ApplicationModel
   def self.by_user(user)
     record = Karma::User.find_by(user_id: user.id)
     return record if record
+
     sync(user)
   end
 
@@ -36,6 +38,7 @@ class Karma::User < ApplicationModel
       end
       next if local_level[:start] && score < local_level[:start]
       next if local_level[:end] && score > local_level[:end]
+
       level = local_level[:name]
     end
     level

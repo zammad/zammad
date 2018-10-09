@@ -8,6 +8,7 @@ class ExternalCredential::Twitter
   def self.request_account_to_link(credentials = {})
     external_credential = ExternalCredential.find_by(name: 'twitter')
     raise Exceptions::UnprocessableEntity, 'No twitter app configured!' if !external_credential
+
     if !credentials[:consumer_key]
       credentials[:consumer_key] = external_credential.credentials['consumer_key']
     end
@@ -29,6 +30,7 @@ class ExternalCredential::Twitter
 
   def self.link_account(request_token, params)
     raise if request_token.params[:oauth_token] != params[:oauth_token]
+
     external_credential = ExternalCredential.find_by(name: 'twitter')
     access_token = request_token.get_access_token(oauth_verifier: params[:oauth_verifier])
     client = Twitter::REST::Client.new(

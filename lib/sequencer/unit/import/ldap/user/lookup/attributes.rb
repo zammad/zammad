@@ -13,6 +13,7 @@ class Sequencer
               def lookup(attribute:, value:)
                 entries = model_class.where(attribute => value).to_a
                 return if entries.blank?
+
                 not_synced(entries)
               end
 

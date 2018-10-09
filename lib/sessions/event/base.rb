@@ -7,6 +7,7 @@ class Sessions::Event::Base
 
     @is_web_socket = false
     return if !@clients[@client_id]
+
     @is_web_socket = true
   end
 
@@ -76,6 +77,7 @@ class Sessions::Event::Base
   def current_user
     user_id = current_user_id
     return if !user_id
+
     user = User.find_by(id: user_id)
     if !user
       error = {
@@ -93,6 +95,7 @@ class Sessions::Event::Base
   def permission_check(key, event)
     user = current_user
     return if !user
+
     if !user.permissions?(key)
       error = {
         event: "#{event}_error",

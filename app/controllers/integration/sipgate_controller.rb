@@ -14,6 +14,7 @@ class Integration::SipgateController < ApplicationController
       # check if call need to be blocked
       block_caller_ids.each do |item|
         next if item[:caller_id] != params['from']
+
         xml = Builder::XmlMarkup.new(indent: 2)
         xml.instruct!
         content = xml.Response(onHangup: url, onAnswer: url) do
@@ -61,6 +62,7 @@ class Integration::SipgateController < ApplicationController
       routing_table.each do |row|
         dest = row[:dest].gsub(/\*/, '.+?')
         next if to !~ /^#{dest}$/
+
         from = row[:caller_id]
         content = xml.Response(onHangup: url, onAnswer: url) do
           xml.Dial(callerId: from) { xml.Number(params[:to]) }

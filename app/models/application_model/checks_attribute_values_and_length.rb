@@ -19,6 +19,7 @@ module ApplicationModel::ChecksAttributeValuesAndLength
     columns = self.class.columns_hash
     attributes.each do |name, value|
       next if !value.instance_of?(String)
+
       column = columns[name]
       next if !column
 
@@ -52,6 +53,7 @@ module ApplicationModel::ChecksAttributeValuesAndLength
 
       # strip 4 bytes utf8 chars if needed (mysql/mariadb will complain it)
       next if self[name].blank?
+
       self[name] = self[name].utf8_to_3bytesutf8
     end
     true

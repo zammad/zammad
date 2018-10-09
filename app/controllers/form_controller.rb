@@ -230,6 +230,7 @@ class FormController < ApplicationController
 
   def fingerprint_exists?
     return true if params[:fingerprint].present? && params[:fingerprint].length > 30
+
     Rails.logger.info 'No fingerprint given!'
     response_access_deny
     false
@@ -238,6 +239,7 @@ class FormController < ApplicationController
   def enabled?
     return true if params[:test] && current_user && current_user.permissions?('admin.channel_formular')
     return true if Setting.get('form_ticket_create')
+
     response_access_deny
     false
   end

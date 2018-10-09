@@ -8,6 +8,7 @@ module Import
       pre_import_hook(records, *args)
       import_loop(records, *args) do |record|
         next if skip?(record, *args)
+
         backend_instance = create_instance(record, *args)
         post_import_hook(record, backend_instance, *args)
       end

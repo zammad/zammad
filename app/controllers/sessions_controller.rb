@@ -288,10 +288,13 @@ class SessionsController < ApplicationController
     sessions_clean = []
     SessionHelper.list.each do |session|
       next if session.data['user_id'].blank?
+
       sessions_clean.push session
       next if session.data['user_id']
+
       user = User.lookup(id: session.data['user_id'])
       next if !user
+
       assets = user.assets(assets)
     end
     render json: {
@@ -314,8 +317,10 @@ class SessionsController < ApplicationController
     config = {}
     Setting.select('name, preferences').where(frontend: true).each do |setting|
       next if setting.preferences[:authentication] == true && !current_user
+
       value = Setting.get(setting.name)
       next if !current_user && (value == false || value.nil?)
+
       config[setting.name] = value
     end
 

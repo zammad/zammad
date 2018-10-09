@@ -17,6 +17,7 @@ module ApplicationController::HasResponseExtentions
     return true if params[:full] == 'true'
     return true if params[:full] == 1
     return true if params[:full] == '1'
+
     false
   end
 
@@ -25,6 +26,7 @@ module ApplicationController::HasResponseExtentions
     return true if params[:all] == 'true'
     return true if params[:all] == 1
     return true if params[:all] == '1'
+
     false
   end
 

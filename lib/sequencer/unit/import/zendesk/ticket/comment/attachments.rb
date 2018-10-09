@@ -9,6 +9,7 @@ class Sequencer
               def process
                 # check if we need to import the attachments
                 return if skip?
+
                 # if so call the original .process from SubObject class
                 super
               end
@@ -30,11 +31,13 @@ class Sequencer
 
               def ensure_common_ground
                 return if common_ground?
+
                 local_attachments.each(&:delete)
               end
 
               def common_ground?
                 return false if remote_attachments.blank?
+
                 attachments_equal?
               end
 

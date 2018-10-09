@@ -27,6 +27,7 @@ returns
       updated_at = order(updated_at: :desc, id: :desc).limit(1).pluck(:updated_at).first
 
       return if !updated_at
+
       latest_change_set(updated_at)
       updated_at
     end

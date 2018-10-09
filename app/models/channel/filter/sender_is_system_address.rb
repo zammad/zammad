@@ -16,9 +16,11 @@ module Channel::Filter::SenderIsSystemAddress
     # in case, set sender
     begin
       return if !mail[form].addrs
+
       items = mail[form].addrs
       items.each do |item|
         next if !EmailAddress.find_by(email: item.address.downcase)
+
         mail['x-zammad-ticket-create-article-sender'.to_sym] = 'Agent'
         mail['x-zammad-article-sender'.to_sym] = 'Agent'
         return true
@@ -29,10 +31,12 @@ module Channel::Filter::SenderIsSystemAddress
 
     # check if sender is agent
     return if mail[:from_email].blank?
+
     begin
       user = User.find_by(email: mail[:from_email].downcase)
       return if !user
       return if !user.permissions?('ticket.agent')
+
       mail['x-zammad-ticket-create-article-sender'.to_sym] = 'Agent'
       mail['x-zammad-article-sender'.to_sym] = 'Agent'
       return true

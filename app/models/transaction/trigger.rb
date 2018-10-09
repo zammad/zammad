@@ -31,6 +31,7 @@ class Transaction::Trigger
 
     ticket = Ticket.find_by(id: @item[:object_id])
     return if !ticket
+
     if @item[:article_id]
       article = Ticket::Article.find_by(id: @item[:article_id])
     end

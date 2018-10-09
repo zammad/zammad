@@ -1,4 +1,3 @@
-
 require 'test_helper'
 require 'rexml/document'
 require 'webmock/minitest'

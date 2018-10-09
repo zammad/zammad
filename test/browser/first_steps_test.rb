@@ -1,4 +1,3 @@
-
 require 'browser_test_helper'
 
 class FirstStepsTest < TestCase
@@ -126,6 +125,7 @@ class FirstStepsTest < TestCase
     hit = false
     37.times do
       next if !@browser.find_elements(css: '.active.content a[href="#channels/form"].todo.is-done')[0]
+
       hit = true
       break
     end

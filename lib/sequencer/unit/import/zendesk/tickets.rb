@@ -42,6 +42,7 @@ class Sequencer
 
           def update_import_job
             return if !update_required?
+
             state.provide(import_job, updated_import_job)
           end
 
@@ -54,6 +55,7 @@ class Sequencer
           def update_required?
             return false if previous_page.blank?
             return false if previous_page == next_page
+
             current_request_count.present?
           end
 

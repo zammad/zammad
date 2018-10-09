@@ -177,10 +177,13 @@ class TicketsController < ApplicationController
     if params[:links].present?
       link = params[:links].permit!.to_h
       raise Exceptions::UnprocessableEntity, 'Invalid link structure' if !link.is_a? Hash
+
       link.each do |target_object, link_types_with_object_ids|
         raise Exceptions::UnprocessableEntity, 'Invalid link structure (Object)' if !link_types_with_object_ids.is_a? Hash
+
         link_types_with_object_ids.each do |link_type, object_ids|
           raise Exceptions::UnprocessableEntity, 'Invalid link structure (Object->LinkType)' if !object_ids.is_a? Array
+
           object_ids.each do |local_object_id|
             link = Link.add(
               link_type: link_type,
@@ -342,6 +345,7 @@ class TicketsController < ApplicationController
     recent_views.each do |recent_view|
       next if recent_view.object.name != 'Ticket'
       next if recent_view.o_id == ticket.id
+
       ticket_ids_recent_viewed.push recent_view.o_id
       recent_view_ticket = Ticket.find(recent_view.o_id)
       assets = recent_view_ticket.assets(assets)
@@ -516,6 +520,7 @@ class TicketsController < ApplicationController
       if !user
         raise "No such user with id #{params[:user_id]}"
       end
+
       conditions = {
         closed_ids: {
           'ticket.state_id' => {
@@ -557,6 +562,7 @@ class TicketsController < ApplicationController
       if !organization
         raise "No such organization with id #{params[:organization_id]}"
       end
+
       conditions = {
         closed_ids: {
           'ticket.state_id' => {
@@ -634,6 +640,7 @@ class TicketsController < ApplicationController
     if Setting.get('import_mode') != true
       raise 'Only can import tickets if system is in import mode.'
     end
+
     string = params[:data] || params[:file].read.force_encoding('utf-8')
     result = Ticket.csv_import(
       string: string,
@@ -652,6 +659,7 @@ class TicketsController < ApplicationController
 
     return true if ticket.group.follow_up_possible != 'new_ticket' # check if the setting for follow_up_possible is disabled
     return true if ticket.state.name != 'closed' # check if the ticket state is already closed
+
     raise Exceptions::UnprocessableEntity, 'Cannot follow up on a closed ticket. Please create a new ticket.'
   end
 

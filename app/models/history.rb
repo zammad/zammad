@@ -5,11 +5,9 @@ class History < ApplicationModel
 
   self.table_name = 'histories'
 
-  # rubocop:disable Rails/InverseOf
   belongs_to :history_type,      class_name: 'History::Type'
   belongs_to :history_object,    class_name: 'History::Object'
   belongs_to :history_attribute, class_name: 'History::Attribute'
-  # rubocop:enable Rails/InverseOf
 
   # the noop is needed since Layout/EmptyLines detects
   # the block commend below wrongly as the measurement of
@@ -101,6 +99,7 @@ remove whole history entries of an object
   def self.remove(requested_object, requested_object_id)
     history_object = History::Object.find_by(name: requested_object)
     return if !history_object
+
     History.where(
       history_object_id: history_object.id,
       o_id: requested_object_id,

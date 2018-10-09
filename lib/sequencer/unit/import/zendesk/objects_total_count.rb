@@ -19,6 +19,7 @@ class Sequencer
 
           def request(object)
             return tickets if object == 'Tickets'
+
             generic(object)
           end
 

@@ -8,6 +8,7 @@ class SettingsController < ApplicationController
     list = []
     Setting.all.each do |setting|
       next if setting.preferences[:permission] && !current_user.permissions?(setting.preferences[:permission])
+
       list.push setting
     end
     render json: list, status: :ok

@@ -39,6 +39,7 @@ class CustomLdapLoginAttribute < ActiveRecord::Migration[5.1]
   def no_change_needed?
     return true if ldap_config.blank?
     return true if ldap_config[:user_attributes].blank?
+
     ldap_config[:user_attributes].values.count('login') < 2
   end
 

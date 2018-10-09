@@ -62,6 +62,7 @@ class Ldap
       result = nil
       %i[objectguid entryuuid samaccountname userprincipalname uid dn].each do |attribute|
         next if attributes[attribute].blank?
+
         result = attribute.to_s
         break
       end
@@ -182,6 +183,7 @@ class Ldap
 
     def handle_config
       return if config.blank?
+
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
     end

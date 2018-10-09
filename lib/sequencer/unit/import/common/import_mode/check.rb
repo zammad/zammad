@@ -8,6 +8,7 @@ class Sequencer
             def process
               # check if system is in import mode
               return if Setting.get('import_mode')
+
               raise 'System is not in import mode!'
             end
           end

@@ -28,6 +28,7 @@ do also verify of written data
         if !adapter_name
           raise 'Missing storage_provider setting option'
         end
+
         adapter = load_adapter("Store::Provider::#{adapter_name}")
         adapter.add(data, sha)
         file = Store::File.create(
@@ -85,6 +86,7 @@ in case of fixing sha hash use:
         sha = Digest::SHA256.hexdigest(content)
         logger.info "CHECK: Store::File.find(#{item.id})"
         next if sha == item.sha
+
         success = false
         logger.error "DIFF: sha diff of Store::File.find(#{item.id}) current:#{sha}/db:#{item.sha}/provider:#{item.provider}"
         store = Store.find_by(store_file_id: item.id)
@@ -122,6 +124,7 @@ nice move to keep system responsive
       file_ids.each do |item_id|
         item = Store::File.find(item_id)
         next if item.provider == target
+
         content = item.content
 
         # add to new provider

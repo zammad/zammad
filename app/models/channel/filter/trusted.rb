@@ -9,6 +9,7 @@ module Channel::Filter::Trusted
     if !channel[:trusted]
       mail.each_key do |key|
         next if key !~ /^x-zammad/i
+
         mail.delete(key)
       end
       return
@@ -20,6 +21,7 @@ module Channel::Filter::Trusted
 
       # no assoc exists, remove header
       next if Channel::EmailParser.check_attributes_by_x_headers(key, value)
+
       mail.delete(key.to_sym)
     end
 

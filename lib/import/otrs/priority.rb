@@ -26,12 +26,14 @@ module Import
 
       def create_or_update(priority)
         return if updated?(priority)
+
         create(priority)
       end
 
       def updated?(priority)
         @local_priority = ::Ticket::Priority.find_by(id: priority[:id])
         return false if !@local_priority
+
         log "update Ticket::Priority.find_by(id: #{priority[:id]})"
         @local_priority.update!(priority)
         true

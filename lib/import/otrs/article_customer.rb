@@ -14,6 +14,7 @@ module Import
         def find(article)
           email = local_email(article['From'])
           return if !email
+
           user   = ::User.find_by(email: email)
           user ||= ::User.find_by(login: email)
           user
@@ -23,6 +24,7 @@ module Import
           # TODO: should get unified with User#check_email
           email = extract_email(from)
           return if !email
+
           email.downcase
         end
 
@@ -32,6 +34,7 @@ module Import
           Mail::Address.new(from).address
         rescue
           return from if from !~ /<\s*([^>]+)/
+
           $1.strip
         end
       end
@@ -44,6 +47,7 @@ module Import
 
       def find_or_create(article)
         return if self.class.find(article)
+
         create(article)
       end
 
@@ -85,6 +89,7 @@ module Import
         parsed_address = Mail::Address.new(from)
         return parsed_address.display_name if parsed_address.display_name
         return from if parsed_address.comments.blank?
+
         parsed_address.comments[0]
       rescue
         from

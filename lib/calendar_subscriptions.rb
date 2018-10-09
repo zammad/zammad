@@ -16,6 +16,7 @@ class CalendarSubscriptions
     end
 
     return if @user.preferences[:calendar_subscriptions].blank?
+
     @preferences = @preferences.merge(@user.preferences[:calendar_subscriptions])
   end
 

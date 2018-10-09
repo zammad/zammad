@@ -45,5 +45,5 @@ module ExtraCollection
 
     [collections, assets]
   end
-  module_function :session
+  module_function :session # rubocop:disable Style/AccessModifierDeclarations
 end

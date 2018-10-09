@@ -23,6 +23,7 @@ returns
     return false if !user.active?
 
     return true if !user.max_login_failed?
+
     Rails.logger.info "Max login failed reached for user #{user.login}."
 
     false
@@ -96,6 +97,7 @@ returns
     # added configured backends
     Setting.where(area: 'Security::Authentication').each do |setting|
       next if setting.state_current[:value].blank?
+
       config.push setting.state_current[:value]
     end
 

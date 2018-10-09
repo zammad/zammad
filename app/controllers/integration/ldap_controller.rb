@@ -19,6 +19,7 @@ class Integration::LdapController < ApplicationController
       rescue => e
         # workaround for issue #1114
         raise if !e.message.end_with?(', 48, Inappropriate Authentication')
+
         # return empty result
         {}
       end

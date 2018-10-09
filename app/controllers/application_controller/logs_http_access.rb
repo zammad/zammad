@@ -24,6 +24,7 @@ module ApplicationController::LogsHttpAccess
     }
     request.headers.each do |key, value|
       next if key[0, 5] != 'HTTP_'
+
       request_data[:content] += if key == 'HTTP_COOKIE'
                                   "#{key}: xxxxx\n"
                                 else

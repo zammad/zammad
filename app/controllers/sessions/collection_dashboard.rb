@@ -10,9 +10,10 @@ module ExtraCollection
       key: 'dashboard',
     )
     return [collections, assets] if !item
+
     collections['StatsStore'] = [item]
 
     [collections, assets]
   end
-  module_function :session
+  module_function :session # rubocop:disable Style/AccessModifierDeclarations
 end

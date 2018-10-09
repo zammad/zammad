@@ -31,6 +31,7 @@ class Transaction::Notification
 
     ticket = Ticket.find_by(id: @item[:object_id])
     return if !ticket
+
     if @item[:article_id]
       article = Ticket::Article.find(@item[:article_id])
 
@@ -38,6 +39,7 @@ class Transaction::Notification
       sender = Ticket::Article::Sender.lookup(id: article.sender_id)
       if sender&.name == 'System'
         return if @item[:changes].blank? && article.preferences[:notification] != true
+
         if article.preferences[:notification] != true
           article = nil
         end
@@ -77,9 +79,11 @@ class Transaction::Notification
       result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])
       next if !result
       next if already_checked_recipient_ids[user.id]
+
       already_checked_recipient_ids[user.id] = true
       recipients_and_channels.push result
       next if recipients_reason[user.id]
+
       recipients_reason[user.id] = 'are in group'
     end
 
@@ -114,6 +118,7 @@ class Transaction::Notification
           next if history['value_to'] !~ /\(#{Regexp.escape(@item[:type])}:/
           next if history['value_to'] !~ /#{Regexp.escape(identifier)}\(/
           next if !history['created_at'].today?
+
           already_notified = true
         end
         next if already_notified
@@ -214,6 +219,7 @@ class Transaction::Notification
 
   def add_recipient_list(ticket, user, channels, type)
     return if channels.blank?
+
     identifier = user.email
     if !identifier || identifier == ''
       identifier = user.login
@@ -231,6 +237,7 @@ class Transaction::Notification
   def human_changes(user, record)
 
     return {} if !@item[:changes]
+
     locale = user.preferences[:locale] || Setting.get('locale_default') || 'en-us'
 
     # only show allowed attributes
@@ -330,6 +337,7 @@ class Transaction::Notification
     # return for already found, added and checked users
     # to prevent re-doing complete lookup paths
     return if !replacements.add?(replacement)
+
     reasons[replacement.id] = 'are the out-of-office replacement of the owner'
 
     recursive_ooo_replacements(

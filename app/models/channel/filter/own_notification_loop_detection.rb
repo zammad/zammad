@@ -6,6 +6,7 @@ module Channel::Filter::OwnNotificationLoopDetection
 
     message_id = mail['message-id'.to_sym]
     return if !message_id
+
     recedence = mail['precedence'.to_sym]
     return if !recedence
     return if recedence !~ /bulk/i

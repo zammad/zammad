@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class EmailHelperTest < ActiveSupport::TestCase
@@ -251,6 +250,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     if !ENV['EMAILHELPER_MAILBOX_1']
       raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
     end
+
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
     user, domain = EmailHelper.parse_email(mailbox_user)
@@ -403,6 +403,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     if !ENV['EMAILHELPER_MAILBOX_1']
       raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
     end
+
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
     user, domain = EmailHelper.parse_email(mailbox_user)
@@ -435,6 +436,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     if !ENV['EMAILHELPER_MAILBOX_1']
       raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
     end
+
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
 
@@ -450,6 +452,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     if !ENV['EMAILHELPER_MAILBOX_2']
       raise "Need EMAILHELPER_MAILBOX_2 as ENV variable like export EMAILHELPER_MAILBOX_2='hansb36621@gmail.com:somepass'"
     end
+
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_2'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_2'].split(':')[1]
 
@@ -470,6 +473,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     if !ENV['EMAILHELPER_MAILBOX_1']
       raise "Need EMAILHELPER_MAILBOX_1 as ENV variable like export EMAILHELPER_MAILBOX_1='unittestemailhelper01@znuny.com:somepass'"
     end
+
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_1'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_1'].split(':')[1]
     user, domain = EmailHelper.parse_email(mailbox_user)
@@ -502,6 +506,7 @@ class EmailHelperTest < ActiveSupport::TestCase
     if !ENV['EMAILHELPER_MAILBOX_2']
       raise "Need EMAILHELPER_MAILBOX_2 as ENV variable like export EMAILHELPER_MAILBOX_2='hansb36621@gmail.com:somepass'"
     end
+
     mailbox_user     = ENV['EMAILHELPER_MAILBOX_2'].split(':')[0]
     mailbox_password = ENV['EMAILHELPER_MAILBOX_2'].split(':')[1]
     user, domain = EmailHelper.parse_email(mailbox_user)

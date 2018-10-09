@@ -10,9 +10,11 @@ class FixedTwitterTicketArticlePreferences4 < ActiveRecord::Migration[5.0]
     article_ids.each do |article_id|
       article = Ticket::Article.find(article_id)
       next if !article.preferences
+
       changed = false
       article.preferences.each_value do |value|
         next if value.class != ActiveSupport::HashWithIndifferentAccess
+
         value.each do |sub_key, sub_level|
           if sub_level.class == NilClass
             value[sub_key] = nil
@@ -24,11 +26,13 @@ class FixedTwitterTicketArticlePreferences4 < ActiveRecord::Migration[5.0]
             next
           end
           next if sub_level.class != Twitter::NullObject
+
           value[sub_key] = nil
           changed = true
         end
       end
       next if !changed
+
       article.save!
     end
 

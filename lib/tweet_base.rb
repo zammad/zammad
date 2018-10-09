@@ -47,8 +47,10 @@ class TweetBase
       # ignore if value is already set
       map.each do |target, source|
         next if user[target].present?
+
         new_value = tweet_user.send(source).to_s
         next if new_value.blank?
+
         user_data[target] = new_value
       end
       user.update!(user_data)
@@ -328,6 +330,7 @@ class TweetBase
     state = Ticket::State.find_by(default_create: true)
     return state if !ticket
     return ticket.state if ticket.state_id == state.id
+
     Ticket::State.find_by(default_follow_up: true)
   end
 
@@ -368,6 +371,7 @@ class TweetBase
     # replace Twitter::NullObject with nill to prevent elasticsearch index issue
     preferences.each_value do |value|
       next if !value.is_a?(Hash)
+
       value.each do |sub_key, sub_level|
         if sub_level.class == NilClass
           value[sub_key] = nil
@@ -378,6 +382,7 @@ class TweetBase
           next
         end
         next if sub_level.class != Twitter::NullObject
+
         value[sub_key] = nil
       end
     end
@@ -391,6 +396,7 @@ class TweetBase
       next if !local_channel.options[:user]
       next if !local_channel.options[:user][:id]
       next if local_channel.options[:user][:id].to_s != tweet_user.id.to_s
+
       Rails.logger.debug { "Tweet is sent by local account with user id #{tweet_user.id} and tweet.id #{tweet.id}" }
       return true
     end

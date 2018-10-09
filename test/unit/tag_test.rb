@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class TagTest < ActiveSupport::TestCase
@@ -144,7 +143,7 @@ class TagTest < ActiveSupport::TestCase
         if value == true
           assert(list.include?(key), "Tag verify - should exists but exists #{key}")
         else
-          assert(!list.include?(key), "Tag verify - exists but should not #{key}")
+          assert_not(list.include?(key), "Tag verify - exists but should not #{key}")
         end
       end
     end
@@ -152,15 +151,11 @@ class TagTest < ActiveSupport::TestCase
     # delete tags
     tests.each do |test|
       tags = nil
-      tags = if test[:tag_add]
-               test[:tag_add]
-             else
-               test[:tag_remove]
-             end
+      tags = test[:tag_add] || test[:tag_remove]
       success = Tag.tag_remove(tags)
       assert(success, 'Tag.tag_remove successful')
       list = Tag.tag_list(tags)
-      assert(!list.include?(tags[:item]), 'Tag entry destroyed')
+      assert_not(list.include?(tags[:item]), 'Tag entry destroyed')
     end
   end
 

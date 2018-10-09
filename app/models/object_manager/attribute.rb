@@ -319,6 +319,7 @@ possible types
       if !force
         %i[name display data_type position active].each do |key|
           next if record[key] == data[key]
+
           record[:data_option_new] = data[:data_option] if data[:data_option] # bring the data options over as well, when there are changes to the fields above
           data[:to_config] = true
           break
@@ -491,9 +492,11 @@ returns:
       }
       if item.data_option[:permission]&.any?
         next if !user
+
         hint = false
         item.data_option[:permission].each do |permission|
           next if !user.permissions?(permission)
+
           hint = true
           break
         end
@@ -584,6 +587,7 @@ returns
 
   def self.pending_migration?
     return false if migrations.blank?
+
     true
   end
 
@@ -802,6 +806,7 @@ where attributes are used by triggers, overviews or schedulers
         attribute_list[condition_key] ||= {}
         attribute_list[condition_key][item.class.name] ||= []
         next if attribute_list[condition_key][item.class.name].include?(item.name)
+
         attribute_list[condition_key][item.class.name].push item.name
       end
     end
@@ -821,6 +826,7 @@ is certain attribute used by triggers, overviews or schedulers
       local_object, local_attribute = reference_key.split('.')
       next if local_object != object_name.downcase
       next if local_attribute != attribute_name
+
       return true
     end
     false
@@ -845,6 +851,7 @@ is certain attribute used by triggers, overviews or schedulers
       local_object, local_attribute = reference_key.split('.')
       next if local_object != object_name.downcase
       next if local_attribute != attribute_name
+
       relations.each do |relation, relation_names|
         result[relation] ||= []
         result[relation].push relation_names.sort
@@ -909,11 +916,13 @@ is certain attribute used by triggers, overviews or schedulers
     return true if !record.respond_to?(name.to_sym)
     raise "#{name} already exists!" if record.attributes.key?(name) && new_record?
     return true if record.attributes.key?(name)
+
     raise "#{name} is a reserved word, please choose a different one"
   end
 
   def check_editable
     return if editable
+
     raise 'Attribute not editable!'
   end
 

@@ -107,6 +107,7 @@ returns
       selector: params[:selector]
     )
     return result if params[:sheet].present?
+
     assets = {}
     result[:ticket_ids].each do |ticket_id|
       ticket_full = Ticket.find(ticket_id)
@@ -120,6 +121,7 @@ returns
     key = 'Report::TicketReopened::StateList'
     ticket_state_ids = Cache.get( key )
     return ticket_state_ids if ticket_state_ids
+
     ticket_state_types = Ticket::StateType.where( name: %w[closed merged removed] )
     ticket_state_ids = []
     ticket_state_types.each do |ticket_state_type|

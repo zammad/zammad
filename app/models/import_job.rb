@@ -51,8 +51,10 @@ class ImportJob < ApplicationModel
   # return [Boolean] whether the ImportJob should get rescheduled (true) or destroyed (false)
   def reschedule?(delayed_job)
     return false if finished_at.present?
+
     instance = name.constantize.new(self)
     return false if !instance.respond_to?(:reschedule?)
+
     instance.reschedule?(delayed_job)
   end
 

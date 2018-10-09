@@ -45,6 +45,7 @@ class Transaction::Slack
       sender = Ticket::Article::Sender.lookup(id: article.sender_id)
       if sender&.name == 'System'
         return if @item[:changes].blank?
+
         article = nil
       end
     end
@@ -133,6 +134,7 @@ class Transaction::Slack
         hit = false
         local_config['types'].each do |type|
           next if type.to_s != @item[:type].to_s
+
           hit = true
           break
         end
@@ -146,6 +148,7 @@ class Transaction::Slack
         hit = false
         local_config['group_ids'].each do |group_id|
           next if group_id.to_s != ticket.group_id.to_s
+
           hit = true
           break
         end
@@ -196,6 +199,7 @@ class Transaction::Slack
   def human_changes(record)
 
     return {} if !@item[:changes]
+
     user = User.find(1)
     locale = user.preferences[:locale] || Setting.get('locale_default') || 'en-us'
 

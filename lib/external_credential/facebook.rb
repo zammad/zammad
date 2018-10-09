@@ -8,6 +8,7 @@ class ExternalCredential::Facebook
   def self.request_account_to_link(credentials = {})
     external_credential = ExternalCredential.find_by(name: 'facebook')
     raise Exceptions::UnprocessableEntity, 'No facebook app configured!' if !external_credential
+
     if !credentials[:application_id]
       credentials[:application_id] = external_credential.credentials['application_id']
     end
@@ -32,6 +33,7 @@ class ExternalCredential::Facebook
     #    fail if request_token.params[:oauth_token] != params[:state]
     external_credential = ExternalCredential.find_by(name: 'facebook')
     raise 'No such account' if !external_credential
+
     oauth = Koala::Facebook::OAuth.new(
       external_credential.credentials['application_id'],
       external_credential.credentials['application_secret'],
@@ -58,6 +60,7 @@ class ExternalCredential::Facebook
       next if !channel.options['user']
       next if !channel.options['user']['id']
       next if channel.options['user']['id'] != user['id']
+
       channel.options['auth']['access_token'] = access_token
       channel.options['pages'] = pages
       channel.save

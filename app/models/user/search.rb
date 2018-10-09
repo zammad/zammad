@@ -32,6 +32,7 @@ returns if user has no permissions to search
 
       def search_preferences(current_user)
         return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.user')
+
         {
           prio: 2000,
           direct_search_index: true,
@@ -117,6 +118,7 @@ returns
           items.each do |item|
             user = User.lookup(id: item[:id])
             next if !user
+
             users.push user
           end
           return users

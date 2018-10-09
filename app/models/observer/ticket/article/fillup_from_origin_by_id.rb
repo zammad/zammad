@@ -16,6 +16,7 @@ class Observer::Ticket::Article::FillupFromOriginById < ActiveRecord::Observer
     return if record.origin_by_id.present?
     return if record.ticket.customer_id.blank?
     return if record.sender.name != 'Customer'
+
     type_name = record.type.name
     return if type_name != 'phone' && type_name != 'note' && type_name != 'web'
 

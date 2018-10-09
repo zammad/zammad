@@ -66,6 +66,7 @@ examples how to use
 
     # if no object is given, just return
     return '#{no such object}' if object_name.blank? # rubocop:disable Lint/InterpolationCheck
+
     object_refs = @objects[object_name] || @objects[object_name.to_sym]
 
     # if object is not in avalable objects, just return
@@ -75,6 +76,7 @@ examples how to use
     if object_methods.blank? && object_refs.class != String && object_refs.class != Float && object_refs.class != Integer
       return "\#{#{key} / no such method}"
     end
+
     object_methods_s = ''
     object_methods.each do |method_raw|
 
@@ -127,6 +129,7 @@ examples how to use
   # h('fqdn', htmlEscape)
   def h(key)
     return key if !key
+
     CGI.escapeHTML(key.to_s)
   end
 
@@ -135,11 +138,13 @@ examples how to use
   def escaping(key, escape)
     return key if escape == false
     return key if escape.nil? && !@escape
+
     h key
   end
 
   def data_key_valid?(key)
     return false if key =~ /`|\.(|\s*)(save|destroy|delete|remove|drop|update|create|new|all|where|find|raise|dump|rollback|freeze)/i && key !~ /(update|create)d_(at|by)/i
+
     true
   end
 

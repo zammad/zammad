@@ -3,6 +3,7 @@ class Sessions::Event::ChatSessionMessage < Sessions::Event::ChatBase
   def run
     return super if super
     return if !check_chat_session_exists
+
     chat_session = current_chat_session
 
     user_id = nil

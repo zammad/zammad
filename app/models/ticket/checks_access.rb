@@ -25,6 +25,7 @@ class Ticket
         return false if organization_id.blank?
         return false if user.organization_id.blank?
         return false if organization_id != user.organization_id
+
         return organization.shared?
       end
 
@@ -49,6 +50,7 @@ class Ticket
     # @return [nil]
     def access!(user, access)
       return if access?(user, access)
+
       raise Exceptions::NotAuthorized
     end
   end

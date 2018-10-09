@@ -6,6 +6,7 @@ class FixedTypos622 < ActiveRecord::Migration[4.2]
 
     setting = Setting.find_by(name: 'ticket_define_email_from_seperator')
     return if !setting
+
     setting.name = 'ticket_define_email_from_separator'
     setting.options[:form][0][:name] = 'ticket_define_email_from_separator'
     setting.save!
@@ -21,6 +22,7 @@ class FixedTypos622 < ActiveRecord::Migration[4.2]
     setting_map.each do |key, description|
       local_setting = Setting.find_by(name: key)
       next if !local_setting
+
       local_setting.description = description
       local_setting.save!
     end

@@ -37,8 +37,10 @@ class ExternalSync < ApplicationModel
         local_key_sym = local_key.to_sym
 
         next if result[local_key_sym].present?
+
         value = extract(remote_key, information_source)
         next if value.blank?
+
         result[local_key_sym] = value
       end
       result

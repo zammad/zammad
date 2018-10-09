@@ -41,6 +41,7 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     # check if update has been done
     last_change = self.class.model.constantize.latest_change
     return if last_change.to_s == @last_change
+
     @last_change = last_change.to_s
 
     # load current data
@@ -59,6 +60,7 @@ class Sessions::Backend::Collections::Base < Sessions::Backend::Base
     assets = {}
     items.each do |item|
       next if !asset_needed?(item)
+
       assets = asset_push(item, assets)
     end
     if !@client

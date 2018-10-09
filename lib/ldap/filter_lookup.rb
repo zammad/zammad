@@ -12,6 +12,7 @@ class Ldap
       result = nil
       possible_filters.each do |possible_filter|
         next if !@ldap.entries?(possible_filter)
+
         result = possible_filter
         break
       end

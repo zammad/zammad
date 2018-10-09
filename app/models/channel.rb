@@ -58,6 +58,7 @@ fetch one account
       driver_class    = Object.const_get("Channel::Driver::#{adapter.to_classname}")
       driver_instance = driver_class.new
       return if !force && !driver_instance.fetchable?(self)
+
       result = driver_instance.fetch(adapter_options, self)
       self.status_in   = result[:result]
       self.last_log_in = result[:notice]
@@ -103,6 +104,7 @@ stream instance of account
 
       # check is stream exists
       return if !driver_instance.respond_to?(:stream_instance)
+
       driver_instance.stream_instance(self)
 
       # set scheduler job to active
@@ -142,9 +144,11 @@ stream all accounts
       channels.each do |channel|
         adapter = channel.options[:adapter]
         next if adapter.blank?
+
         driver_class = Object.const_get("Channel::Driver::#{adapter.to_classname}")
         next if !driver_class.respond_to?(:streamable?)
         next if !driver_class.streamable?
+
         channel_id = channel.id.to_s
 
         current_channels.push channel_id
@@ -225,6 +229,7 @@ stream all accounts
       last_channels.each do |channel_id|
         next if @@channel_stream[channel_id].blank?
         next if current_channels.include?(channel_id)
+
         logger.info "channel (#{channel_id}) not longer active, stop stream thread"
         @@channel_stream[channel_id][:thread].exit
         @@channel_stream[channel_id][:thread].join

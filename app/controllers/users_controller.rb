@@ -411,6 +411,7 @@ class UsersController < ApplicationController
     }
     %i[role_ids permissions].each do |key|
       next if params[key].blank?
+
       query_params[key] = params[key]
     end
 
@@ -827,6 +828,7 @@ curl http://localhost/api/v1/users/out_of_office -v -u #{login}:#{password} -H "
 
   def out_of_office
     raise Exceptions::UnprocessableEntity, 'No current user!' if !current_user
+
     user = User.find(current_user.id)
     user.with_lock do
       user.assign_attributes(
@@ -1065,6 +1067,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     if Setting.get('password_min_2_lower_2_upper_characters').to_i == 1 && ( password !~ /[A-Z].*[A-Z]/ || password !~ /[a-z].*[a-z]/ )
       return ["Can't update password, it must contain at least 2 lowercase and 2 uppercase characters!"]
     end
+
     true
   end
 end

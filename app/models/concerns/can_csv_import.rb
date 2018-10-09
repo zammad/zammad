@@ -70,6 +70,7 @@ returns
 
       if data[:file].present?
         raise Exceptions::UnprocessableEntity, "No such file '#{data[:file]}'" if !File.exist?(data[:file])
+
         begin
           file = File.open(data[:file], 'r:UTF-8')
           data[:string] = file.read
@@ -103,6 +104,7 @@ returns
           item.strip!
         end
         next if !item.respond_to?(:downcase!)
+
         item.downcase!
       end
 
@@ -124,6 +126,7 @@ returns
           row.each_with_index do |item, count|
             next if item.blank?
             next if header[count].nil?
+
             if payload_last[header[count].to_sym].class != Array
               payload_last[header[count].to_sym] = [payload_last[header[count].to_sym]]
             end
@@ -136,6 +139,7 @@ returns
           next if !item
           next if header[count].blank?
           next if @csv_attributes_ignored&.include?(header[count].to_sym)
+
           attributes[header[count].to_sym] = if item.respond_to?(:strip)
                                                item.strip
                                              else
@@ -170,6 +174,7 @@ returns
         record = nil
         %i[id number name login email].each do |lookup_by|
           next if !attributes[lookup_by]
+
           params = {}
           params[lookup_by] = attributes[lookup_by]
           record = lookup(params)
@@ -208,6 +213,7 @@ returns
               end
               record = new(clean_params)
               next if try == true
+
               record.associations_from_param(attributes)
               record.save!
             rescue => e
@@ -217,6 +223,7 @@ returns
           else
             stats[:updated] += 1
             next if try == true
+
             begin
               csv_verify_attributes(clean_params)
               clean_params = param_cleanup(clean_params)
@@ -278,6 +285,7 @@ verify if attributes are valid, will raise an ArgumentError with "unknown attrib
       end
       clean_params.each_key do |key|
         next if all_clean_attributes.key?(key.to_sym)
+
         raise ArgumentError, "unknown attribute '#{key}' for #{new.class}."
       end
       true
@@ -319,6 +327,7 @@ returns
           next if key == 'created_at'
           next if key == 'updated_at'
           next if header.include?(key)
+
           header.push key
         end
       end
@@ -339,6 +348,7 @@ returns
             record[key].each do |entry|
               entry_count += 1
               next if entry_count == -1
+
               if !rows_to_add[entry_count]
                 rows_to_add[entry_count] = Array.new(header.count + 1) { '' }
               end
@@ -350,6 +360,7 @@ returns
         end
         rows.push row
         next if rows_to_add.count.zero?
+
         rows_to_add.each do |item|
           rows.push item
         end

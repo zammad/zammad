@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class OrganizationAssetsTest < ActiveSupport::TestCase
@@ -109,7 +108,7 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
     org_new = Organization.find(org.id)
     attributes = org_new.attributes_with_association_ids
     attributes.delete('user_ids')
-    assert( !diff(attributes, assets[:Organization][org_new.id]), 'check assets' )
+    assert_not(diff(attributes, assets[:Organization][org_new.id]), 'check assets' )
 
     attributes = user_new_2.attributes_with_association_ids
     attributes['accounts'] = {}
@@ -141,6 +140,7 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
 
   def diff(object1, object2)
     return true if object1 == object2
+
     %w[updated_at created_at].each do |item|
       if object1[item]
         object1[item] = object1[item].to_s
@@ -150,6 +150,7 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
       end
     end
     return true if (object1.to_a - object2.to_a).blank?
+
     #puts "ERROR: difference \n1: #{object1.inspect}\n2: #{object2.inspect}\ndiff: #{(object1.to_a - object2.to_a).inspect}"
     false
   end

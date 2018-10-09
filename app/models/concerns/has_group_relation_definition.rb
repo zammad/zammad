@@ -47,6 +47,7 @@ module HasGroupRelationDefinition
             end
 
     return if !query.exists?
+
     errors.add(:access, "#{group_relation_model_identifier.to_s.capitalize} can have full or granular access to group")
   end
 

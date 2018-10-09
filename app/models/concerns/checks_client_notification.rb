@@ -29,6 +29,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
+
     logger.debug { "#{self.class.name}.find(#{id}) notify created #{created_at}" }
     class_name = self.class.name
     class_name.gsub!(/::/, '')
@@ -61,6 +62,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
+
     logger.debug { "#{self.class.name}.find(#{id}) notify UPDATED #{updated_at}" }
     class_name = self.class.name
     class_name.gsub!(/::/, '')
@@ -93,6 +95,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
+
     logger.debug { "#{self.class.name}.find(#{id}) notify TOUCH #{updated_at}" }
     class_name = self.class.name
     class_name.gsub!(/::/, '')
@@ -124,6 +127,7 @@ class OwnModel < ApplicationModel
 
     # return if we run import mode
     return if Setting.get('import_mode')
+
     logger.debug { "#{self.class.name}.find(#{id}) notify DESTOY #{updated_at}" }
     class_name = self.class.name
     class_name.gsub!(/::/, '')

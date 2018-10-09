@@ -3,6 +3,7 @@ class AgendBasedSenderIssue1351 < ActiveRecord::Migration[4.2]
 
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
+
     EmailAddress.all.each do |email_address|
       begin
         email_address.save!

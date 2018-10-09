@@ -164,6 +164,7 @@ example
         subject = message_meta['ENVELOPE'].subject
         next if !subject
         next if subject !~ /#{verify_string}/
+
         Rails.logger.info " - verify email #{verify_string} found"
         @imap.store(message_id, '+FLAGS', [:Deleted])
         @imap.expunge()
@@ -206,6 +207,7 @@ example
       # delete email from server after article was created
       msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
       next if !msg
+
       process(channel, msg, false)
       if !keep_on_server
         @imap.store(message_id, '+FLAGS', [:Deleted])
@@ -231,6 +233,7 @@ example
 
   def disconnect
     return if !@imap
+
     @imap.disconnect()
   end
 
@@ -256,8 +259,10 @@ returns
     return false if !keep_on_server
     return false if !message_meta.attr
     return false if !message_meta.attr['ENVELOPE']
+
     local_message_id = message_meta.attr['ENVELOPE'].message_id
     return false if local_message_id.blank?
+
     local_message_id_md5 = Digest::MD5.hexdigest(local_message_id)
     article = Ticket::Article.where(message_id_md5: local_message_id_md5).order('created_at DESC, id DESC').limit(1).first
     return false if !article
@@ -275,6 +280,7 @@ returns
 
   def deleted?(message_meta, count, count_all)
     return false if !message_meta.attr['FLAGS'].include?(:Deleted)
+
     Rails.logger.info "  - ignore message #{count}/#{count_all} - because message has already delete flag"
     true
   end

@@ -36,6 +36,7 @@ check and if channel not exists reset configured channels for email addresses
 
       # set in inactive if channel not longer exists
       next if !email_address.active
+
       email_address.save!
     end
   end
@@ -45,9 +46,11 @@ check and if channel not exists reset configured channels for email addresses
   def check_email
     return true if Setting.get('import_mode')
     return true if email.blank?
+
     self.email = email.downcase.strip
     raise Exceptions::UnprocessableEntity, 'Invalid email' if email !~ /@/
     raise Exceptions::UnprocessableEntity, 'Invalid email' if email.match?(/\s/)
+
     true
   end
 
@@ -79,6 +82,7 @@ check and if channel not exists reset configured channels for email addresses
     total = Group.count
     return if not_configured.zero?
     return if total != 1
+
     group = Group.find_by(email_address_id: nil)
     group.email_address_id = id
     group.updated_by_id = updated_by_id

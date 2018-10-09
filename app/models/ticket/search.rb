@@ -166,6 +166,7 @@ returns
         items.each do |item|
           ticket = Ticket.lookup(id: item[:id])
           next if !ticket
+
           tickets.push ticket
         end
         return tickets

@@ -64,6 +64,7 @@ returns
     state_types.each do |type|
       state_type = Ticket::StateType.find_by(name: type)
       next if !state_type
+
       state_type.states.each do |state|
         assets = state.assets(assets)
         state_ids.push state.id
@@ -88,6 +89,7 @@ returns
       types.each do |type_name|
         type = Ticket::Article::Type.lookup(name: type_name)
         next if type.blank?
+
         type_ids.push type.id
       end
     end
@@ -118,10 +120,13 @@ returns
       User.where(id: group_agent_user_ids.concat(group_agent_role_user_ids).uniq, active: true).pluck(:id).each do |user_id|
         dependencies[:group_id][group.id][:owner_id].push user_id
         next if agents[user_id]
+
         agents[user_id] = true
         next if assets[:User] && assets[:User][user_id]
+
         user = User.lookup(id: user_id)
         next if !user
+
         assets = user.assets(assets)
       end
 

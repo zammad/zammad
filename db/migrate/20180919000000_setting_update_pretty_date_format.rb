@@ -6,6 +6,7 @@ class SettingUpdatePrettyDateFormat < ActiveRecord::Migration[5.1]
 
     setting = Setting.find_by(name: 'pretty_date_format')
     return if !setting
+
     setting.options[:form][0][:options][:timestamp] = 'timestamp - e. g. "2018-08-30 14:30"'
     setting.save!
   end

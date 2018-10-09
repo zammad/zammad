@@ -39,6 +39,7 @@ class Sessions::Event::ChatStatusCustomer < Sessions::Event::ChatBase
   def check_chat_block_by_ip
     chat = current_chat
     return true if !chat.blocked_ip?(@remote_ip)
+
     error = {
       event: 'chat_error',
       data: {
@@ -52,6 +53,7 @@ class Sessions::Event::ChatStatusCustomer < Sessions::Event::ChatBase
   def check_chat_block_by_country
     chat = current_chat
     return true if !chat.blocked_country?(@remote_ip)
+
     error = {
       event: 'chat_error',
       data: {

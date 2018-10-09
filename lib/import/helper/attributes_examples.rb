@@ -21,6 +21,7 @@ module Import
         #     extractor.extract(attributes)
         #   end
         return if !block_given?
+
         if block.arity.zero?
           instance_eval(&block)
         else

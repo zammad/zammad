@@ -1,4 +1,3 @@
-
 require 'browser_test_helper'
 
 class AdminChannelEmailTest < TestCase
@@ -70,6 +69,7 @@ class AdminChannelEmailTest < TestCase
     # delete all channels
     loop do
       break if !@browser.find_elements(css: '.content.active .js-channelDelete')[0]
+
       click(css: '.content.active .js-channelDelete')
       sleep 2
       click(css: '.modal .js-submit')

@@ -34,6 +34,7 @@ grant permission to role
     permission = Permission.lookup(name: key)
     raise "Invalid permission #{key}" if !permission
     return true if permission_ids.include?(permission.id)
+
     self.permission_ids = permission_ids.push permission.id
     true
   end
@@ -50,6 +51,7 @@ revoke permission of role
     permission = Permission.lookup(name: key)
     raise "Invalid permission #{key}" if !permission
     return true if !permission_ids.include?(permission.id)
+
     self.permission_ids = self.permission_ids -= [permission.id]
     true
   end
@@ -131,16 +133,16 @@ returns
     return true if Role.joins(:roles_permissions).joins(:permissions).where(
       'roles.id = ? AND permissions_roles.permission_id IN (?) AND permissions.active = ?', id, permission_ids, true
     ).distinct().count.nonzero?
+
     false
   end
-
-  private_class_method
 
   def self.permission_ids_by_name(keys)
     Array(keys).each_with_object([]) do |key, result|
       ::Permission.with_parents(key).each do |local_key|
         permission = ::Permission.lookup(name: local_key)
         next if !permission
+
         result.push permission.id
       end
     end
@@ -151,11 +153,13 @@ returns
   def validate_permissions
     Rails.logger.debug { "self permission: #{self.permission_ids}" }
     return true if !self.permission_ids
+
     permission_ids.each do |permission_id|
       permission = Permission.lookup(id: permission_id)
       raise "Unable to find permission for id #{permission_id}" if !permission
       raise "Permission #{permission.name} is disabled" if permission.preferences[:disabled] == true
       next if !permission.preferences[:not]
+
       permission.preferences[:not].each do |local_permission_name|
         local_permission = Permission.lookup(name: local_permission_name)
         next if !local_permission
@@ -170,6 +174,7 @@ returns
     return true if active != false
     return true if !with_permission?(['admin', 'admin.user'])
     raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+
     true
   end
 
@@ -177,6 +182,7 @@ returns
     return true if Setting.get('import_mode')
     return true if permission.name != 'admin' && permission.name != 'admin.user'
     raise Exceptions::UnprocessableEntity, 'Minimum one user needs to have admin permissions.' if last_admin_check_admin_count < 1
+
     true
   end
 
@@ -190,11 +196,13 @@ returns
     return true if !will_save_change_to_attribute?('active')
     return true if active != true
     return true if !with_permission?('ticket.agent')
+
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent', active: true }, roles: { active: true }).pluck(:id)
     currents = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().pluck(:id)
     news = User.joins(:roles).where(roles: { id: id }, users: { active: true }).distinct().pluck(:id)
     count = currents.concat(news).uniq.count
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
+
     true
   end
 
@@ -203,10 +211,12 @@ returns
     return true if active != true
     return true if permission.active != true
     return true if permission.name != 'ticket.agent'
+
     ticket_agent_role_ids = Role.joins(:permissions).where(permissions: { name: 'ticket.agent' }, roles: { active: true }).pluck(:id)
     ticket_agent_role_ids.push(id)
     count = User.joins(:roles).where(roles: { id: ticket_agent_role_ids }, users: { active: true }).distinct().count
     raise Exceptions::UnprocessableEntity, 'Agent limit exceeded, please check your account settings.' if count > Setting.get('system_agent_limit').to_i
+
     true
   end
 
@@ -216,6 +226,7 @@ returns
     normal_permissions = (all_permissions - admin_permissions) | (admin_permissions - all_permissions) # all other permissions besides admin.*/ticket.agent
     return true if default_at_signup != true # means if default_at_signup = false, no need further checks
     return true if self.permission_ids.all? { |i| normal_permissions.include? i } # allow user to choose only normal permissions
+
     raise Exceptions::UnprocessableEntity, 'Cannot set default at signup when role has admin or ticket.agent permissions.'
   end
 

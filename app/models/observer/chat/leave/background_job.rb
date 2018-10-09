@@ -11,6 +11,7 @@ class Observer::Chat::Leave::BackgroundJob
     chat_session = Chat::Session.find_by(id: @chat_session_id)
     return if !chat_session
     return if chat_session.recipients_active?
+
     chat_session.state = 'closed'
     chat_session.save
 

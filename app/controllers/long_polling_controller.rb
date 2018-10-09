@@ -103,8 +103,10 @@ class LongPollingController < ApplicationController
 
   def client_id_verify
     return if !params[:client_id]
+
     sessions = Sessions.sessions
     return if !sessions.include?(params[:client_id].to_s)
+
     params[:client_id].to_s
   end
 

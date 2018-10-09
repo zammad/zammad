@@ -29,6 +29,7 @@ returns
 
     # get agent overviews
     return [] if !current_user.permissions?('ticket.agent')
+
     overview_filter = { active: true }
     overview_filter_not = { out_of_office: true }
     if User.where('out_of_office = ? AND out_of_office_start_at <= ? AND out_of_office_end_at >= ? AND out_of_office_replacement_id = ? AND active = ?', true, Time.zone.today, Time.zone.today, current_user.id, true).count.positive?

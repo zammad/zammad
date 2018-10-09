@@ -32,6 +32,7 @@ returns if user has no permissions to search
 
       def search_preferences(current_user)
         return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('admin.organization')
+
         {
           prio: 1000,
           direct_search_index: true,
@@ -87,6 +88,7 @@ returns
           items.each do |item|
             organization = Organization.lookup(id: item[:id])
             next if !organization
+
             organizations.push organization
           end
           return organizations
@@ -121,12 +123,14 @@ returns
           organization_exists = false
           organizations.each do |organization|
             next if organization.id != organization_by_user.id
+
             organization_exists = true
             break
           end
 
           # get model with full data
           next if organization_exists
+
           organizations.push Organization.find(organization_by_user.id)
         end
         organizations

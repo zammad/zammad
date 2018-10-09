@@ -320,6 +320,7 @@ Cti::Log.process(
           done = false
         end
         raise "call_id #{call_id} already exists!" if log
+
         create(
           direction: params['direction'],
           from: params['from'],
@@ -336,6 +337,7 @@ Cti::Log.process(
       when 'answer'
         raise "No such call_id #{call_id}" if !log
         return if log.state == 'hangup' # call is already hangup, ignore answer
+
         log.with_lock do
           log.state = 'answer'
           log.start_at = Time.zone.now
@@ -349,6 +351,7 @@ Cti::Log.process(
         end
       when 'hangup'
         raise "No such call_id #{call_id}" if !log
+
         log.with_lock do
           log.done = done
           if params['direction'] == 'in'
@@ -395,6 +398,7 @@ Cti::Log.process(
     def self.push_caller_list_update?(record)
       list_ids = Cti::Log.log_records.pluck(:id)
       return true if list_ids.include?(record.id)
+
       false
     end
 

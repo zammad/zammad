@@ -228,11 +228,13 @@ EventMachine.run do
     clients = 0
     client_list.each_value do |client|
       next if client[:meta][:type] == 'websocket'
+
       clients = clients + 1
     end
     log 'notice', "Status: ajax clients: #{clients}"
     client_list.each do |client_id, client|
       next if client[:meta][:type] == 'websocket'
+
       log 'notice', 'working...', client_id
     end
 
@@ -240,13 +242,16 @@ EventMachine.run do
 
   EventMachine.add_periodic_timer(0.4) do
     next if @clients.size.zero?
+
     #log 'debug', 'checking for data to send...'
     @clients.each do |client_id, client|
       next if client[:disconnect]
+
       log 'debug', 'checking for data...', client_id
       begin
         queue = Sessions.queue(client_id)
         next if queue.blank?
+
         log 'notice', 'send data to client', client_id
         websocket_send(client_id, queue)
       rescue => e
@@ -265,6 +270,7 @@ EventMachine.run do
 
   def get_remote_ip(headers)
     return headers['X-Forwarded-For'] if headers && headers['X-Forwarded-For']
+
     nil
   end
 

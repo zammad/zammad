@@ -29,6 +29,7 @@ class ChannelsEmailController < ApplicationController
     end
     EmailAddress.all.each do |email_address|
       next if system_online_service && email_address.preferences && email_address.preferences['online_service_disable']
+
       email_address_ids.push email_address.id
       assets = email_address.assets(assets)
       if !email_address.channel_id || !email_address.active || !Channel.find_by(id: email_address.channel_id)
@@ -256,6 +257,7 @@ class ChannelsEmailController < ApplicationController
       next if channel.options[:inbound][:options][:user] != result[:setting][:inbound][:options][:user]
       next if channel.options[:inbound][:options][:folder].to_s != result[:setting][:inbound][:options][:folder].to_s
       next if channel.id.to_s == channel_id.to_s
+
       render json: {
         result: 'duplicate',
         message: 'Account already exists!',
@@ -267,6 +269,7 @@ class ChannelsEmailController < ApplicationController
 
   def check_online_service
     return true if !Setting.get('system_online_service')
+
     raise Exceptions::NotAuthorized
   end
 

@@ -7,6 +7,7 @@ module ApplicationController::HandlesDevices
 
   def user_device_check
     return false if !user_device_log(current_user, 'session')
+
     true
   end
 
@@ -39,6 +40,7 @@ module ApplicationController::HandlesDevices
     # if ip has not changed and ttl in still valid
     remote_ip = ENV['TEST_REMOTE_IP'] || request.remote_ip
     return true if time_to_check == false && session[:user_device_remote_ip] == remote_ip
+
     session[:user_device_remote_ip] = remote_ip
 
     # for sessions we need the fingperprint
@@ -46,6 +48,7 @@ module ApplicationController::HandlesDevices
       if !session[:user_device_updated_at] && !params[:fingerprint] && !session[:user_device_fingerprint]
         raise Exceptions::UnprocessableEntity, 'Need fingerprint param!'
       end
+
       if params[:fingerprint]
         UserDevice.fingerprint_validation(params[:fingerprint])
         session[:user_device_fingerprint] = params[:fingerprint]

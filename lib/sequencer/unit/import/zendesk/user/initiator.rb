@@ -16,6 +16,7 @@ class Sequencer
 
             def initiator?
               return false if resource.email.blank?
+
               resource.email == Setting.get('import_zendesk_endpoint_username')
             end
           end

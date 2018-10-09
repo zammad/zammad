@@ -50,6 +50,7 @@ class Observer::Ticket::ArticleChanges < ActiveRecord::Observer
     sender = Ticket::Article::Sender.lookup(name: 'System')
     count = Ticket::Article.where(ticket_id: record.ticket_id).where('sender_id NOT IN (?)', sender.id).count
     return false if current_count == count
+
     record.ticket.article_count = count
     true
   end

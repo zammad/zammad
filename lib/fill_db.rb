@@ -170,6 +170,7 @@ or if you only want to create 100 tickets
     state_pool = Ticket::State.all
 
     return if !tickets || tickets.zero?
+
     (1..tickets).each do
       ActiveRecord::Base.transaction do
         customer = customer_pool[ rand(customer_pool.length - 1) ]

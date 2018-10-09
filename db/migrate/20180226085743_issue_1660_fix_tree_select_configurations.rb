@@ -5,6 +5,7 @@ class Issue1660FixTreeSelectConfigurations < ActiveRecord::Migration[5.1]
     return if !Setting.find_by(name: 'system_init_done')
 
     return if attributes.blank?
+
     attributes.each do |attribute|
 
       next if attribute.data_option.blank?

@@ -5,6 +5,7 @@ class TypeLookup < ApplicationModel
   def self.by_id( id )
     lookup = self.lookup( id: id )
     return if !lookup
+
     lookup.name
   end
 

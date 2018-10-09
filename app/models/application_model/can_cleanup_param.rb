@@ -50,10 +50,12 @@ returns
         reflect_on_all_associations.map do |assoc|
           class_name = assoc.options[:class_name]
           next if !class_name
+
           name = "#{assoc.name}_id"
           next if !data.key?(name)
           next if data[name].blank?
           next if assoc.klass.lookup(id: data[name])
+
           raise ArgumentError, "Invalid value for param '#{name}': #{data[name].inspect}"
         end
         clean_params[attribute] = data[attribute]
@@ -105,6 +107,7 @@ merge preferences param
   def param_preferences_merge(new_params)
     return new_params if new_params.blank?
     return new_params if preferences.blank?
+
     new_params[:preferences] = preferences.merge(new_params[:preferences] || {})
     new_params
   end

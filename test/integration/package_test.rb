@@ -1,4 +1,3 @@
-
 require 'integration_test_helper'
 
 class PackageTest < ActiveSupport::TestCase
@@ -312,9 +311,9 @@ class PackageTest < ActiveSupport::TestCase
         if test[:result]
           assert(package, 'install package not successful')
           issues = package.verify
-          assert(!issues, 'package verify not successful')
+          assert_not(issues, 'package verify not successful')
         else
-          assert(!package, 'install package successful but should not')
+          assert_not(package, 'install package successful but should not')
         end
       elsif test[:action] == 'reinstall'
         begin
@@ -325,9 +324,9 @@ class PackageTest < ActiveSupport::TestCase
         if test[:result]
           assert(package, 'reinstall package not successful')
           issues = package.verify
-          assert(!issues, 'package verify not successful')
+          assert_not(issues, 'package verify not successful')
         else
-          assert(!package, 'reinstall package successful but should not')
+          assert_not(package, 'reinstall package successful but should not')
         end
       elsif test[:action] == 'uninstall'
         if test[:zpm]
@@ -346,7 +345,7 @@ class PackageTest < ActiveSupport::TestCase
         if test[:result]
           assert(package, 'uninstall package not successful')
         else
-          assert(!package, 'uninstall package successful but should not')
+          assert_not(package, 'uninstall package successful but should not')
         end
       elsif test[:action] == 'auto_install'
         if test[:zpm]
@@ -379,7 +378,7 @@ class PackageTest < ActiveSupport::TestCase
         if item[:result]
           assert(exists, "'#{item[:location]}' exists" )
         else
-          assert(!exists, "'#{item[:location]}' doesn't exists" )
+          assert_not(exists, "'#{item[:location]}' doesn't exists" )
         end
       end
     end

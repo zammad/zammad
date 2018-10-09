@@ -88,6 +88,7 @@ class Sequencer
     # @return [Object, nil]
     def optional(attribute)
       return get(attribute) if @attributes.known?(attribute)
+
       logger.public_send(log_level[:optional]) { "Access to unknown optional attribute '#{attribute}'." }
       nil
     end

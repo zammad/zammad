@@ -1,4 +1,3 @@
-
 require 'integration_test_helper'
 require 'webmock/minitest'
 

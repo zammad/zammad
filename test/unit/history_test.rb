@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class HistoryTest < ActiveSupport::TestCase
@@ -345,6 +344,7 @@ class HistoryTest < ActiveSupport::TestCase
         next if match
         next if history_item['object'] != check_item[:history_object]
         next if history_item['type'] != check_item[:history_type]
+
         if check_item[:history_attribute]
           next if check_item[:history_attribute] != history_item['attribute']
         end

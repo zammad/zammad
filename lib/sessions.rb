@@ -53,6 +53,7 @@ returns
 
     # send update to browser
     return if !session || session['id'].blank?
+
     send(
       client_id,
       {
@@ -88,6 +89,7 @@ returns
       next if entry == '..'
       next if entry == 'tmp'
       next if entry == 'spool'
+
       data.push entry.to_s
     end
     data
@@ -108,8 +110,10 @@ returns
   def self.session_exists?(client_id)
     session_dir = "#{@path}/#{client_id}"
     return false if !File.exist?(session_dir)
+
     session_file = "#{session_dir}/session"
     return false if !File.exist?(session_file)
+
     true
   end
 
@@ -150,6 +154,7 @@ returns
     client_ids.each do |client_id|
       data = get(client_id)
       next if !data
+
       session_list[client_id] = data
     end
     session_list
@@ -211,6 +216,7 @@ returns
   def self.touch(client_id)
     data = get(client_id)
     return false if !data
+
     path = "#{@path}/#{client_id}"
     data[:meta][:last_ping] = Time.now.utc.to_i
     File.open("#{path}/session", 'wb' ) do |file|
@@ -306,6 +312,7 @@ returns
       end
     end
     return false if !File.directory? path
+
     begin
       File.open(location, 'wb') do |file|
         file.flock(File::LOCK_EX)
@@ -343,6 +350,7 @@ returns
       next if !session[:user]
       next if !session[:user]['id']
       next if session[:user]['id'].to_i != user_id.to_i
+
       Sessions.send(client_id, data)
     end
     true
@@ -419,13 +427,16 @@ returns
     Dir.foreach(path) do |entry|
       next if entry == '.'
       next if entry == '..'
+
       files.push entry
     end
     files.sort.each do |entry|
       filename = "#{path}/#{entry}"
       next if entry !~ /^send/
+
       message = Sessions.queue_file_read(path, entry)
       next if !message
+
       data.push message
     end
     data
@@ -441,6 +452,7 @@ returns
     end
     File.delete(location)
     return if message.blank?
+
     begin
       return JSON.parse(message)
     rescue => e
@@ -459,6 +471,7 @@ remove all session and spool messages
 
   def self.cleanup
     return true if !File.exist?(@path)
+
     FileUtils.rm_rf @path
     true
   end
@@ -488,11 +501,13 @@ remove all session and spool messages
     Dir.foreach(path) do |entry|
       next if entry == '.'
       next if entry == '..'
+
       files.push entry
     end
     files.sort.each do |entry|
       filename = "#{path}/#{entry}"
       next if !File.exist?(filename)
+
       File.open(filename, 'rb') do |file|
         file.flock(File::LOCK_SH)
         message = file.read
@@ -610,6 +625,7 @@ remove all session and spool messages
         next if session_data.blank?
         next if session_data[:user].blank?
         next if session_data[:user]['id'].blank?
+
         user = User.lookup(id: session_data[:user]['id'])
         next if user.blank?
 

@@ -9,10 +9,12 @@ class SlackGroupConfigIssue587 < ActiveRecord::Migration[4.2]
 
     return if !setting.state_current['value']
     return if !setting.state_current['value']['items']
+
     config_item = setting.state_current['value']['items'].first
     return if !config_item
 
     return if !config_item.key?('group_id')
+
     config_item['group_ids'] = config_item.delete('group_id')
 
     setting.save!

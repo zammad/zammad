@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class TicketNotificationTest < ActiveSupport::TestCase

@@ -37,6 +37,7 @@ module Channel::EmailBuild
       next if key.to_s == 'attachments'
       next if key.to_s == 'body'
       next if key.to_s == 'content_type'
+
       mail[key.to_s] = if value && value.class != Array
                          value.to_s
                        else
@@ -84,6 +85,7 @@ module Channel::EmailBuild
       attr[:attachments]&.each do |attachment|
         next if attachment.class == Hash
         next if attachment.preferences['Content-ID'].blank?
+
         attachment = Mail::Part.new do
           content_type attachment.preferences['Content-Type']
           content_id "<#{attachment.preferences['Content-ID']}>"
@@ -105,6 +107,7 @@ module Channel::EmailBuild
         mail.attachments[attachment[:filename]] = attachment
       else
         next if attachment.preferences['Content-ID'].present?
+
         filename = attachment.filename
         encoded_filename = Mail::Encodings.decode_encode filename, :encode
         disposition = attachment.preferences['Content-Disposition'] || 'attachment'
@@ -131,6 +134,7 @@ returns
 
   def self.recipient_line(realname, email)
     return "#{realname} <#{email}>" if realname.match?(/^[A-z]+$/i)
+
     "\"#{realname.gsub('"', '\"')}\" <#{email}>"
   end
 

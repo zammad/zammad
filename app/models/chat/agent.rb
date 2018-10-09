@@ -14,6 +14,7 @@ class Chat::Agent < ApplicationModel
     )
     if state.nil?
       return false if !chat_agent
+
       return chat_agent.active
     end
     if chat_agent

@@ -43,12 +43,14 @@ module Import
 
       def create_or_update(ticket)
         return if updated?(ticket)
+
         create(ticket)
       end
 
       def updated?(ticket)
         @local_ticket = ::Ticket.find_by(id: ticket[:id])
         return false if !@local_ticket
+
         log "update Ticket.find_by(id: #{ticket[:id]})"
         @local_ticket.update!(ticket)
         true
@@ -70,6 +72,7 @@ module Import
 
       def ensure_map(mapped)
         return mapped if mapped[:title]
+
         mapped[:title] = '**EMPTY**'
         mapped
       end
@@ -92,9 +95,11 @@ module Import
           key_string = key.to_s
 
           next if !key_string.start_with?('DynamicField_')
+
           dynamic_field_name = key_string[13, key_string.length]
 
           next if Import::OTRS::DynamicFieldFactory.skip_field?( dynamic_field_name )
+
           dynamic_field_name = Import::OTRS::DynamicField.convert_name(dynamic_field_name)
 
           result[dynamic_field_name.to_sym] = ticket[key_string]
@@ -107,9 +112,11 @@ module Import
         owner   = ticket['Owner']
 
         return default if !owner
+
         user = user_lookup(owner)
 
         return user.id if user
+
         default
       end
 
@@ -133,6 +140,7 @@ module Import
         return ticket['CreateBy'] if ticket['CreateBy'].to_i != default
         return default if ticket['Articles'].blank?
         return default if ticket['Articles'].first['SenderType'] != 'customer'
+
         customer_id(ticket)
       end
 
@@ -145,8 +153,10 @@ module Import
         articles.each do |article|
           next if article['SenderType'] != 'customer'
           next if article['From'].blank?
+
           user = Import::OTRS::ArticleCustomer.find(article)
           break if !user
+
           user_id = user.id
           break
         end
@@ -163,6 +173,7 @@ module Import
       def fix_timestamps(ticket)
         ticket.each do |key, value|
           next if value != '0000-00-00 00:00:00'
+
           ticket[key] = nil
         end
       end
@@ -172,6 +183,7 @@ module Import
         return if ticket['StateType'] != 'closed'
         return if ticket['Closed']
         return if ticket['Closed'].present?
+
         ticket['Closed'] = ticket['Created']
       end
     end

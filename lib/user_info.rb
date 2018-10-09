@@ -16,6 +16,7 @@ module UserInfo
     yield
 
     return if !reset_current_user_id
+
     UserInfo.current_user_id = nil
   end
 end

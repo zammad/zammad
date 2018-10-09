@@ -57,17 +57,14 @@ class Ticket < ApplicationModel
   belongs_to    :organization
   has_many      :articles,               class_name: 'Ticket::Article', after_add: :cache_update, after_remove: :cache_update, dependent: :destroy, inverse_of: :ticket
   has_many      :ticket_time_accounting, class_name: 'Ticket::TimeAccounting', dependent: :destroy, inverse_of: :ticket
-
-  # rubocop:disable Rails/InverseOf
-  belongs_to    :state,                 class_name: 'Ticket::State'
-  belongs_to    :priority,              class_name: 'Ticket::Priority'
-  belongs_to    :owner,                 class_name: 'User'
-  belongs_to    :customer,              class_name: 'User'
-  belongs_to    :created_by,            class_name: 'User'
-  belongs_to    :updated_by,            class_name: 'User'
-  belongs_to    :create_article_type,   class_name: 'Ticket::Article::Type'
-  belongs_to    :create_article_sender, class_name: 'Ticket::Article::Sender'
-  # rubocop:enable Rails/InverseOf
+  belongs_to    :state,                  class_name: 'Ticket::State'
+  belongs_to    :priority,               class_name: 'Ticket::Priority'
+  belongs_to    :owner,                  class_name: 'User'
+  belongs_to    :customer,               class_name: 'User'
+  belongs_to    :created_by,             class_name: 'User'
+  belongs_to    :updated_by,             class_name: 'User'
+  belongs_to    :create_article_type,    class_name: 'Ticket::Article::Type'
+  belongs_to    :create_article_sender,  class_name: 'Ticket::Article::Sender'
 
   self.inheritance_column = nil
 
@@ -244,17 +241,22 @@ returns
     # process pending action tickets
     state_ids = Ticket::State.by_category(:work_on).pluck(:id)
     return [] if state_ids.blank?
+
     result = []
     groups = Group.where(active: true).where('assignment_timeout IS NOT NULL AND groups.assignment_timeout != 0')
     return [] if groups.blank?
+
     groups.each do |group|
       next if group.assignment_timeout.blank?
+
       ticket_ids = Ticket.where('state_id IN (?) AND owner_id != 1 AND group_id = ? AND last_owner_update_at IS NOT NULL', state_ids, group.id).limit(600).pluck(:id)
       ticket_ids.each do |ticket_id|
         ticket = Ticket.find_by(id: ticket_id)
         next if !ticket
+
         minutes_since_last_assignment = Time.zone.now - ticket.last_owner_update_at
         next if (minutes_since_last_assignment / 60) <= group.assignment_timeout
+
         Transaction.execute do
           ticket.owner_id      = 1
           ticket.updated_at    = Time.zone.now
@@ -397,6 +399,7 @@ returns
       if user_id_check
         return false if owner_id == 1
         return false if updated_by_id != owner_id && user_id_check == owner_id
+
         return true
       end
       return true
@@ -405,6 +408,7 @@ returns
     # set all to seen if new state is a closed or merged state
     return true if state_type.name == 'closed'
     return true if state_type.name == 'merged'
+
     false
   end
 
@@ -418,6 +422,7 @@ get count of tickets and tickets which match on selector
 
   def self.selectors(selectors, limit = 10, current_user = nil, access = 'full')
     raise 'no selectors given' if !selectors
+
     query, bind_params, tables = selector2sql(selectors, current_user)
     return [] if !query
 
@@ -513,6 +518,7 @@ condition example
       next if !selector[1]
       next if selector[0] == 'ticket'
       next if tables.include?(selector[0])
+
       if query != ''
         query += ' AND '
       end
@@ -542,6 +548,7 @@ condition example
       # validation
       raise "Invalid selector #{selector_raw.inspect}" if !selector_raw
       raise "Invalid selector #{selector_raw.inspect}" if !selector_raw.respond_to?(:key?)
+
       selector = selector_raw.stringify_keys
       raise "Invalid selector, operator missing #{selector.inspect}" if !selector['operator']
       raise "Invalid selector, operator #{selector['operator']} is invalid #{selector.inspect}" if selector['operator'] !~ /^(is|is\snot|contains|contains\s(not|all|one|all\snot|one\snot)|(after|before)\s\(absolute\)|(within\snext|within\slast|after|before)\s\(relative\))$/
@@ -585,6 +592,7 @@ condition example
           end
         elsif selector['pre_condition'] == 'current_user.id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
+
           query += "#{attribute} IN (?)"
           if attributes[1] == 'out_of_office_replacement_id'
             bind_params.push User.find(current_user_id).out_of_office_agent_of.pluck(:id)
@@ -593,6 +601,7 @@ condition example
           end
         elsif selector['pre_condition'] == 'current_user.organization_id'
           raise "Use current_user.id in selector, but no current_user is set #{selector.inspect}" if !current_user_id
+
           query += "#{attribute} IN (?)"
           user = User.find_by(id: current_user_id)
           bind_params.push user.organization_id
@@ -858,6 +867,7 @@ perform changes on ticket
       # update tags
       if key == 'ticket.tags'
         next if value['value'].blank?
+
         tags = value['value'].split(/,/)
         if value['operator'] == 'add'
           tags.each do |tag|
@@ -877,6 +887,7 @@ perform changes on ticket
       if key == 'ticket.action'
         next if value['value'].blank?
         next if value['value'] != 'delete'
+
         logger.debug { "Deleted ticket from #{perform_origin} #{perform.inspect} Ticket.find(#{id})" }
         destroy!
         next
@@ -888,12 +899,14 @@ perform changes on ticket
           value['value'] = 1
         elsif value['pre_condition'].match?(/^current_user\./)
           raise 'Unable to use current_user, got no current_user_id for ticket.perform_changes' if !current_user_id
+
           value['value'] = current_user_id
         end
       end
 
       # update ticket
       next if self[attribute].to_s == value['value'].to_s
+
       changed = true
 
       self[attribute] = value['value']
@@ -959,8 +972,10 @@ perform changes on ticket
       users.each do |user|
         next if user.preferences[:mail_delivery_failed] != true
         next if !user.preferences[:mail_delivery_failed_data]
+
         till_blocked = ((user.preferences[:mail_delivery_failed_data] - Time.zone.now - 60.days) / 60 / 60 / 24).round
         next if till_blocked.positive?
+
         logger.info "Send no trigger based notification to #{recipient_email} because email is marked as mail_delivery_failed for #{till_blocked} days"
         skip_user = true
         break
@@ -982,6 +997,7 @@ perform changes on ticket
           if recipient_email !~ /^(.+?)<(.+?)@(.+?)>$/
             next # no usable format found
           end
+
           recipient_email = "#{$2}@#{$3}"
         end
         next if recipient_email.blank?
@@ -1021,11 +1037,13 @@ perform changes on ticket
           type: Ticket::Article::Type.find_by(name: 'email'),
         ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{recipient_email.strip}%").count
         next if already_sent < count
+
         logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} for this ticket within last #{minutes} minutes (loop protection)"
         skip = true
         break
       end
       next if skip
+
       map = {
         10 => 30,
         30 => 60,
@@ -1040,6 +1058,7 @@ perform changes on ticket
           type: Ticket::Article::Type.find_by(name: 'email'),
         ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{recipient_email.strip}%").count
         next if already_sent < count
+
         logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{minutes} minutes (loop protection)"
         skip = true
         break
@@ -1048,14 +1067,17 @@ perform changes on ticket
 
       email = recipient_email.downcase.strip
       next if recipients_checked.include?(email)
+
       recipients_checked.push(email)
     end
 
     return if recipients_checked.blank?
+
     recipient_string = recipients_checked.join(', ')
 
     group_id = self.group_id
     return if !group_id
+
     email_address = Group.find(group_id).email_address
     if !email_address
       logger.info "Unable to send trigger based notification to #{recipient_string} because no email address is set for group '#{group.name}'"
@@ -1180,6 +1202,7 @@ perform active triggers on ticket
           (object_name, attribute) = key.split('.', 2)
           next if object_name != 'article'
           next if attribute == 'id'
+
           article_selector = true
         end
         if article && article_selector
@@ -1201,6 +1224,7 @@ perform active triggers on ticket
           next if object_name != 'ticket'
           next if item[:changes].blank?
           next if !item[:changes].key?(attribute)
+
           condition.delete(key)
           one_has_changed_done = true
         end
@@ -1210,6 +1234,7 @@ perform active triggers on ticket
           next if value.blank?
           next if value['operator'].blank?
           next if !value['operator']['has changed']
+
           has_changed_done = false
           break
         end
@@ -1218,6 +1243,7 @@ perform active triggers on ticket
         if condition['ticket.action']
           next if condition['ticket.action']['operator'] == 'is' && condition['ticket.action']['value'] != type
           next if condition['ticket.action']['operator'] != 'is' && condition['ticket.action']['value'] == type
+
           condition.delete('ticket.action')
         end
         next if !has_changed_done
@@ -1230,9 +1256,11 @@ perform active triggers on ticket
           condition.each_key do |key|
             (object_name, attribute) = key.split('.', 2)
             next if object_name != 'ticket'
+
             one_has_changed_condition = true
             next if item[:changes].blank?
             next if !item[:changes].key?(attribute)
+
             one_has_changed_done = true
             break
           end
@@ -1260,6 +1288,7 @@ perform active triggers on ticket
         next if ticket_count.blank?
         next if ticket_count.zero?
         next if tickets.first.id != ticket.id
+
         user_id = ticket.updated_by_id
         if article
           user_id = article.updated_by_id
@@ -1326,6 +1355,7 @@ result
         references.push article.in_reply_to
       end
       next if article.message_id.blank?
+
       references.push article.message_id
     end
     ignore.each do |item|
@@ -1375,12 +1405,14 @@ result
 
   def check_generate
     return true if number
+
     self.number = Ticket::Number.generate
     true
   end
 
   def check_title
     return true if !title
+
     title.gsub!(/\s|\t|\r/, ' ')
     true
   end
@@ -1390,9 +1422,11 @@ result
       self.owner_id = 1
     end
     return true if !customer_id
+
     customer = User.find_by(id: customer_id)
     return true if !customer
     return true if organization_id == customer.organization_id
+
     self.organization_id = customer.organization_id
     true
   end
@@ -1412,22 +1446,27 @@ result
 
     # in case, set pending_time to nil
     return true if current_state_type.name.match?(/^pending/i)
+
     self.pending_time = nil
     true
   end
 
   def set_default_state
     return true if state_id
+
     default_ticket_state = Ticket::State.find_by(default_create: true)
     return true if !default_ticket_state
+
     self.state_id = default_ticket_state.id
     true
   end
 
   def set_default_priority
     return true if priority_id
+
     default_ticket_priority = Ticket::Priority.find_by(default_create: true)
     return true if !default_ticket_priority
+
     self.priority_id = default_ticket_priority.id
     true
   end

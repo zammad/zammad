@@ -26,6 +26,7 @@ class Sequencer
               def statistics
                 import_job = state.optional(:import_job)
                 return {} if import_job.nil?
+
                 import_job.result
               end
 

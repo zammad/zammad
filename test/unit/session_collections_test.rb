@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class SessionCollectionsTest < ActiveSupport::TestCase
@@ -89,8 +88,8 @@ class SessionCollectionsTest < ActiveSupport::TestCase
     assert(result3, 'check collections')
     assert(check_if_collection_exists(result3, :Group), 'check collections - after init')
     assert(check_if_collection_exists(result3, :Role), 'check collections - after init')
-    assert(!check_if_collection_exists(result3, :Signature), 'check collections - after init')
-    assert(!check_if_collection_exists(result3, :EmailAddress), 'check collections - after init')
+    assert_not(check_if_collection_exists(result3, :Signature), 'check collections - after init')
+    assert_not(check_if_collection_exists(result3, :EmailAddress), 'check collections - after init')
 
     # next check should be empty
     result1 = collection_client1.push

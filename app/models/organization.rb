@@ -13,9 +13,7 @@ class Organization < ApplicationModel
   include Organization::Search
   include Organization::SearchIndex
 
-  # rubocop:disable Rails/InverseOf
   has_many :members, class_name: 'User'
-  # rubocop:enable Rails/InverseOf
 
   before_create :domain_cleanup
   before_update :domain_cleanup
@@ -28,6 +26,7 @@ class Organization < ApplicationModel
 
   def domain_cleanup
     return true if domain.blank?
+
     domain.gsub!(/@/, '')
     domain.gsub!(/\s*/, '')
     domain.strip!

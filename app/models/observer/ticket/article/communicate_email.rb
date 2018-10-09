@@ -14,12 +14,14 @@ class Observer::Ticket::Article::CommunicateEmail < ActiveRecord::Observer
 
     # if sender is customer, do not communicate
     return if !record.sender_id
+
     sender = Ticket::Article::Sender.lookup(id: record.sender_id)
     return 1 if sender.nil?
     return 1 if sender['name'] == 'Customer'
 
     # only apply on emails
     return if !record.type_id
+
     type = Ticket::Article::Type.lookup(id: record.type_id)
     return if type['name'] != 'email'
 

@@ -1,5 +1,5 @@
 # Default enabled cops
-# https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
+# https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
 
 inherit_from: .rubocop_todo.yml
 
@@ -142,6 +142,10 @@ Style/SelfAssignment:
 
 Style/BracesAroundHashParameters:
   Description: 'Enforce braces style around hash parameters.'
+  Enabled: false
+
+Rails/BulkChangeTable:
+  Description: 'Check whether alter queries are combinable.'
   Enabled: false
 
 Rails/FindEach:

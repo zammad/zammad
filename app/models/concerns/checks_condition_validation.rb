@@ -28,6 +28,7 @@ module ChecksConditionValidation
 
     ticket_count, tickets = Ticket.selectors(validate_condition, 1, User.find(1))
     return true if ticket_count.present?
+
     raise Exceptions::UnprocessableEntity, 'Invalid ticket selector conditions'
   end
 end

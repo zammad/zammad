@@ -12,6 +12,7 @@ class TriggerRecipientUpdate < ActiveRecord::Migration[4.2]
         next if trigger.perform['notification.email'].blank?
         next if trigger.perform['notification.email']['recipient'].blank?
         next if trigger.perform['notification.email']['recipient'] != 'ticket_customer'
+
         trigger.perform['notification.email']['recipient'] = 'article_last_sender'
         trigger.save!
       rescue => e

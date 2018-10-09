@@ -46,6 +46,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       return true
     end
     return false if Sessions::CacheIn.get(client_key)
+
     true
   end
 
@@ -60,6 +61,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
     last_overview_change = Overview.latest_change
     last_ticket_change = Ticket.latest_change
     return if last_ticket_change == @last_ticket_change && last_overview_change == @last_overview_change
+
     @last_overview_change = last_overview_change
     @last_ticket_change = last_ticket_change
 
@@ -96,6 +98,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
 
       # do not deliver unchanged lists
       next if @last_overview[data[:overview][:id]] == data
+
       @last_overview[data[:overview][:id]] = data
 
       assets = {}
@@ -105,6 +108,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       end
       data[:tickets].each do |ticket_meta|
         next if !asset_needed_by_updated_at?('Ticket', ticket_meta[:id], ticket_meta[:updated_at])
+
         ticket = Ticket.lookup(id: ticket_meta[:id])
         assets = asset_push(ticket, assets)
       end
@@ -127,6 +131,7 @@ class Sessions::Backend::TicketOverviewList < Sessions::Backend::Base
       end
     end
     return results if !@client
+
     nil
   end
 

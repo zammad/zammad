@@ -36,6 +36,7 @@ class Sequencer
       def namespace(name_string)
         prefix = const_get(:PREFIX)
         return name_string if name_string.start_with?(prefix)
+
         "#{prefix}#{name_string}"
       end
     end

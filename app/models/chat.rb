@@ -64,6 +64,7 @@ class Chat < ApplicationModel
 
   def self.agent_state(user_id)
     return { state: 'chat_disabled' } if !Setting.get('chat')
+
     assets = {}
     Chat.where(active: true).each do |chat|
       assets = chat.assets(assets)
@@ -76,8 +77,10 @@ class Chat < ApplicationModel
     runningchat_session_list_local = running_chat_session_list
     runningchat_session_list_local.each do |session|
       next if !session['user_id']
+
       user = User.lookup(id: session['user_id'])
       next if !user
+
       assets = user.assets(assets)
     end
     {
@@ -96,6 +99,7 @@ class Chat < ApplicationModel
 
   def self.agent_state_with_sessions(user_id)
     return { state: 'chat_disabled' } if !Setting.get('chat')
+
     result = agent_state(user_id)
     result[:active_sessions] = Chat::Session.active_chats_by_user_id(user_id)
     result
@@ -146,6 +150,7 @@ class Chat < ApplicationModel
     Chat::Agent.where(active: true).where('updated_at > ?', Time.zone.now - diff).each do |record|
       user = User.lookup(id: record.updated_by_id)
       next if !user
+
       users.push user
     end
     users
@@ -180,6 +185,7 @@ optional you can ignore it for dedecated user
     # send broadcast to agents
     Chat::Agent.where('active = ? OR updated_at > ?', true, Time.zone.now - 8.hours).each do |item|
       next if item.updated_by_id == ignore_user_id
+
       data = {
         event: 'chat_status_agent',
         data: Chat.agent_state(item.updated_by_id),
@@ -250,6 +256,7 @@ optional you can put the max oldest chat sessions as argument
   def self.cleanup_close(diff = 5.minutes)
     Chat::Session.where.not(state: 'closed').where('updated_at < ?', Time.zone.now - diff).each do |chat_session|
       next if chat_session.recipients_active?
+
       chat_session.state = 'closed'
       chat_session.save
       message = {
@@ -276,6 +283,7 @@ check if ip address is blocked for chat
   def blocked_ip?(ip)
     return false if ip.blank?
     return false if block_ip.blank?
+
     ips = block_ip.split(';')
     ips.each do |local_ip|
       return true if ip == local_ip.strip
@@ -296,9 +304,11 @@ check if country is blocked for chat
   def blocked_country?(ip)
     return false if ip.blank?
     return false if block_country.blank?
+
     geo_ip = Service::GeoIp.location(ip)
     return false if geo_ip.blank?
     return false if geo_ip['country_code'].blank?
+
     countries = block_country.split(';')
     countries.each do |local_country|
       return true if geo_ip['country_code'] == local_country

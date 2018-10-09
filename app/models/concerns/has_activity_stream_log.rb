@@ -40,9 +40,11 @@ log object update activity stream, if configured - will be executed automaticall
     log = false
     saved_changes.each_key do |key|
       next if ignored_attributes.include?(key.to_sym)
+
       log = true
     end
     return true if !log
+
     activity_stream_log('update', self['updated_by_id'])
     true
   end

@@ -83,6 +83,7 @@ returns
     return true if !channel.preferences
     return true if !channel.preferences[:last_fetch]
     return false if channel.preferences[:last_fetch] > Time.zone.now - 20.minutes
+
     true
   end
 
@@ -206,6 +207,7 @@ returns
         if loop_count >= 2
           raise "Unable to stream, try #{loop_count}, error #{e.inspect}"
         end
+
         Rails.logger.info "wait for #{sleep_on_unauthorized} sec. and try it again"
         sleep sleep_on_unauthorized
       end
@@ -224,6 +226,7 @@ returns
         next if item['term'].blank?
         next if item['term'] == '#'
         next if item['group_id'].blank?
+
         hashtags.push item['term']
       end
       filter[:track] = hashtags.join(',')
@@ -246,6 +249,7 @@ returns
       if tweet.class == Twitter::DirectMessage
         if sync['direct_messages'] && sync['direct_messages']['group_id'] != ''
           next if @stream_client.direct_message_limit_reached(tweet, 2)
+
           @stream_client.to_group(tweet, sync['direct_messages']['group_id'], @channel)
         end
         next
@@ -275,8 +279,10 @@ returns
           next if item['term'].blank?
           next if item['term'] == '#'
           next if item['group_id'].blank?
+
           tweet.hashtags.each do |hashtag|
             next if item['term'] !~ /^#/
+
             if item['term'].sub(/^#/, '') == hashtag.text
               hit = item
             end
@@ -296,6 +302,7 @@ returns
           next if item['term'].blank?
           next if item['term'] == '#'
           next if item['group_id'].blank?
+
           if body.match?(/#{item['term']}/)
             hit = item
           end
@@ -312,10 +319,12 @@ returns
 
   def fetch_search
     return if @sync[:search].blank?
+
     @sync[:search].each do |search|
       next if search[:term].blank?
       next if search[:term] == '#'
       next if search[:group_id].blank?
+
       result_type = search[:type] || 'mixed'
       Rails.logger.debug { " - searching for '#{search[:term]}'" }
       older_import = 0
@@ -333,6 +342,7 @@ returns
         next if @rest_client.locale_sender?(tweet) && own_tweet_already_imported?(tweet)
         next if Ticket::Article.find_by(message_id: tweet.id)
         break if @rest_client.tweet_limit_reached(tweet)
+
         @rest_client.to_group(tweet, search[:group_id], @channel)
       end
     end
@@ -341,6 +351,7 @@ returns
   def fetch_mentions
     return if @sync[:mentions].blank?
     return if @sync[:mentions][:group_id].blank?
+
     Rails.logger.debug { ' - searching for mentions' }
     older_import = 0
     older_import_max = 20
@@ -355,6 +366,7 @@ returns
       end
       next if Ticket::Article.find_by(message_id: tweet.id)
       break if @rest_client.tweet_limit_reached(tweet)
+
       @rest_client.to_group(tweet, @sync[:mentions][:group_id], @channel)
     end
   end
@@ -362,6 +374,7 @@ returns
   def fetch_direct_messages
     return if @sync[:direct_messages].blank?
     return if @sync[:direct_messages][:group_id].blank?
+
     Rails.logger.debug { ' - searching for direct_messages' }
     older_import = 0
     older_import_max = 20
@@ -375,6 +388,7 @@ returns
       end
       next if Ticket::Article.find_by(message_id: tweet.id)
       break if @rest_client.direct_message_limit_reached(tweet)
+
       @rest_client.to_group(tweet, @sync[:direct_messages][:group_id], @channel)
     end
   end
@@ -383,6 +397,7 @@ returns
     if options[:auth] && options[:auth][:external_credential_id]
       external_credential = ExternalCredential.find_by(id: options[:auth][:external_credential_id])
       raise "No such ExternalCredential.find(#{options[:auth][:external_credential_id]})" if !external_credential
+
       options[:auth][:consumer_key] = external_credential.credentials['consumer_key']
       options[:auth][:consumer_secret] = external_credential.credentials['consumer_secret']
     end
@@ -403,6 +418,7 @@ returns
       end
       count = Delayed::Job.where('created_at < ?', event_time).count
       break if count.zero?
+
       sleep_time = 2 * count
       sleep_time = 5 if sleep_time > 5
       Rails.logger.debug { "Delay importing own tweets - sleep #{sleep_time} (loop #{loop_count})" }

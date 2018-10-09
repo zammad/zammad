@@ -1,4 +1,3 @@
-
 require 'test_helper'
 
 class StoreTest < ActiveSupport::TestCase
@@ -18,11 +17,11 @@ class StoreTest < ActiveSupport::TestCase
     assert(exists)
     result = Store::Provider::File.delete(sha)
     exists = File.exist?(location)
-    assert(!exists)
+    assert_not(exists)
     exists = File.exist?(Rails.root.join('storage', 'fs', 'ed70', '02b4'))
-    assert(!exists)
+    assert_not(exists)
     exists = File.exist?(Rails.root.join('storage', 'fs', 'ed70'))
-    assert(!exists)
+    assert_not(exists)
     exists = File.exist?(Rails.root.join('storage', 'fs'))
     assert(exists)
     exists = File.exist?(Rails.root.join('storage'))

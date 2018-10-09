@@ -95,6 +95,7 @@ module Import
     # return [nil]
     def start
       return if !requirements_completed?
+
       start_import
     end
 
@@ -130,6 +131,7 @@ module Import
       end
 
       return true if !message
+
       inform(message)
       false
     end

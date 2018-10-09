@@ -1,4 +1,5 @@
-if Kernel.respond_to?(:open_uri_original_open) # rubocop:disable Naming/FileName
+# rubocop:disable Naming/FileName
+if Kernel.respond_to?(:open_uri_original_open)
   module Kernel
     private
 
@@ -14,6 +15,7 @@ if Kernel.respond_to?(:open_uri_original_open) # rubocop:disable Naming/FileName
         open_uri_original_open(name, *rest, &block)
       end
     end
-    module_function :open
+    module_function :open # rubocop:disable Style/AccessModifierDeclarations
   end
 end
+# rubocop:enable Naming/FileName

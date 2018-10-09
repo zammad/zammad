@@ -22,6 +22,7 @@ class TweetStream < TweetBase
     end
 
     return if !@client
+
     @client = nil
   end
 

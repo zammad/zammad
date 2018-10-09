@@ -13,6 +13,7 @@ module Import
 
       def update_attribute_settings
         return if Import::OTRS.diff?
+
         update_attribute
       end
 

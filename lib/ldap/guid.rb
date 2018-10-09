@@ -96,6 +96,7 @@ class Ldap
 
       # add dashes if requested
       return result if !dashify
+
       [
         result[0..7],
         result[8..11],

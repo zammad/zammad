@@ -3,6 +3,7 @@ class Sessions::Event::ChatSessionNotice < Sessions::Event::ChatBase
   def run
     return super if super
     return if !check_chat_session_exists
+
     chat_session = current_chat_session
     return if !chat_session
     return if !@payload['data']['message']

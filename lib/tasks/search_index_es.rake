@@ -111,6 +111,7 @@ namespace :searchindex do
     # update processors
     pipeline = Setting.get('es_pipeline')
     next if pipeline.blank?
+
     print 'delete pipeline (pipeline)... '
     SearchIndexBackend.processors(
       "_ingest/pipeline/#{pipeline}": [

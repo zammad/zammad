@@ -18,6 +18,7 @@ class Sequencer
                 # the HEX values cause errors otherwise
                 return if remote_id.nil?
                 return if remote_id.ascii_only?
+
                 state.provide(:remote_id, unhexed)
               end
 

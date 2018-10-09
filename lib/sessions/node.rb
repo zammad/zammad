@@ -25,6 +25,7 @@ module Sessions::Node
     node_count = nil
     session_count.each do |local_node_id, count|
       next if !node_count.nil? && count > node_count
+
       node_count = count
       node_id = local_node_id
     end
@@ -99,9 +100,11 @@ module Sessions::Node
         file.flock(File::LOCK_UN)
         begin
           next if content.blank?
+
           data = JSON.parse(content)
           next if data.blank?
           next if data['client_id'].blank?
+
           sessions[data['client_id']] = data['node_id']
         rescue => e
           Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"
@@ -151,10 +154,12 @@ module Sessions::Node
         file.flock(File::LOCK_UN)
         begin
           next if content.blank?
+
           data = JSON.parse(content)
           next if data.blank?
           next if data['client_id'].blank?
           next if !Sessions.session_exists?(data['client_id']) && force == false
+
           sessions.push data['client_id']
         rescue => e
           Rails.logger.error "can't parse session file #{filename}, #{e.inspect}"

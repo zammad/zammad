@@ -48,6 +48,7 @@ class Observer::User::RefObjectTouch < ActiveRecord::Observer
     # touch old/current customer
     member_ids.uniq.each do |user_id|
       next if user_id == record.id
+
       User.find(user_id).touch # rubocop:disable Rails/SkipsModelValidations
     end
     true

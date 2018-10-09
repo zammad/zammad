@@ -34,6 +34,7 @@ class Observer::Transaction < ActiveRecord::Observer
     Setting.where(area: 'Transaction::Backend::Sync').order(:name).each do |setting|
       backend = Setting.get(setting.name)
       next if params[:disable]&.include?(backend)
+
       sync_backends.push Kernel.const_get(backend)
     end
 
@@ -211,6 +212,7 @@ class Observer::Transaction < ActiveRecord::Observer
       next if key == 'article_count'
       next if key == 'create_article_type_id'
       next if key == 'create_article_sender_id'
+
       real_changes[key] = value
     end
 

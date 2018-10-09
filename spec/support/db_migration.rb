@@ -48,6 +48,7 @@ module DbMigrationHelper
   def witout_foreign_key(from_table, column:)
     suppress_messages do
       break if !foreign_key_exists?(from_table, column: column)
+
       remove_foreign_key(from_table, column: column)
     end
   end

@@ -16,6 +16,7 @@ class Store
       def self.get(sha)
         file = Store::Provider::DB.find_by(sha: sha)
         return if !file
+
         file.data
       end
 

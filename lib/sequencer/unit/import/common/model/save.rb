@@ -17,6 +17,7 @@ class Sequencer
             def process
               return if dry_run
               return if instance.blank?
+
               instance.save!
             rescue => e
               handle_failure(e)

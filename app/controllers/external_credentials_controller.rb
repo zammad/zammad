@@ -58,6 +58,7 @@ class ExternalCredentialsController < ApplicationController
     if params[:id].present? && ExternalCredential.exists?(params[:id])
       external_credential = ExternalCredential.find(params[:id])
       raise 'No such ExternalCredential!' if !external_credential
+
       authentication_check(permission: ["admin.channel_#{external_credential.name}"])
       return
     end

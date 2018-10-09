@@ -12,6 +12,7 @@ module Import
           local_article = args[:local_article]
 
           return if skip_import?(attachments, local_article)
+
           perform_import(attachments, local_article)
         end
 
@@ -65,9 +66,11 @@ module Import
         def skip_import?(attachments, local_article)
           local_attachments = local_article.attachments
           return true if local_attachments.count == attachments.count
+
           # get a common ground
           local_attachments.each(&:delete)
           return true if attachments.blank?
+
           false
         end
 
@@ -79,6 +82,7 @@ module Import
           @sha_queue[sha] ||= []
 
           return if !queueing_active?
+
           @sha_queue[sha].push(queue_id)
 
           while @sha_queue[sha].first != queue_id
@@ -90,11 +94,13 @@ module Import
 
         def queue_cleanup(sha)
           return if !queueing_active?
+
           @sha_queue[sha].shift
         end
 
         def queueing_active?
           return if !queue_id
+
           true
         end
 

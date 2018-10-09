@@ -190,6 +190,7 @@ curl http://localhost/api/v1/overviews_prio -v -u #{login}:#{password} -H "Conte
       params[:prios].each do |overview_prio|
         overview = Overview.find(overview_prio[0])
         next if overview.prio == overview_prio[1]
+
         overview.prio = overview_prio[1]
         overview.save!
       end

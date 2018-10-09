@@ -87,6 +87,7 @@ class String
   # More details: http://pjambet.github.io/blog/emojis-and-mysql/
   def utf8_to_3bytesutf8
     return self if Rails.application.config.db_4bytes_utf8
+
     each_char.select do |c|
       if c.bytes.count > 3
         Rails.logger.warn "strip out 4 bytes utf8 chars '#{c}' of '#{self}'"
