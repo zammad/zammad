@@ -27,7 +27,7 @@ class Sequencer
 
               # always returns true
               def log_associations_error
-                return true if %i[failed deactivated].include?(action)
+                return true if %i[skipped failed deactivated].include?(action)
 
                 logger.error { 'associations cannot be nil' } if associations.nil?
                 true
