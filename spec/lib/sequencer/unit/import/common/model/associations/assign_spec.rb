@@ -56,6 +56,20 @@ RSpec.describe Sequencer::Unit::Import::Common::Model::Associations::Assign, seq
     let(:instance)     { create(:user) }
     let(:associations) { nil }
 
+    context 'and `action == :skipped`' do
+      let(:action) { :skipped }
+
+      it 'makes no changes' do
+        allow(Rails.logger).to receive(:error).and_call_original
+
+        provided = process(parameters)
+
+        expect(Rails.logger).not_to have_received(:error)
+        expect(provided).to include(action: action)
+        expect(instance.changed?).to be(false)
+      end
+    end
+
     context 'and `action == :failed`' do
       let(:action) { :failed }
 
