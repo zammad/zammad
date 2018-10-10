@@ -118,7 +118,10 @@ class Integration::SipgateController < ApplicationController
 
   def base_url
     http_type = Setting.get('http_type')
-    fqdn      = Setting.get('fqdn')
+    fqdn = Setting.get('sipgate_alternative_fqdn')
+    if fqdn.blank?
+      fqdn = Setting.get('fqdn')
+    end
     "#{http_type}://#{fqdn}/api/v1/sipgate"
   end
 

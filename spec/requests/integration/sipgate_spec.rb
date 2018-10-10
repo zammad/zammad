@@ -441,5 +441,24 @@ RSpec.describe 'Integration Sipgate', type: :request do
       expect(json_response['list'][4]['state']).to eq('hangup')
       expect(json_response['list'][5]['call_id']).to eq('1234567890-1')
     end
+
+    it 'alternative fqdn' do
+      Setting.set('sipgate_alternative_fqdn', 'external.host.example.com')
+
+      # inbound - I
+      params = 'event=newCall&direction=in&from=4912347114711&to=4930600000000&callId=4991155921769858278-1&user%5B%5D=user+1&user%5B%5D=user+2'
+      post '/api/v1/sipgate/in', params: params
+      expect(@response).to have_http_status(200)
+      on_hangup = nil
+      on_answer = nil
+      content = @response.body
+      response = REXML::Document.new(content)
+      response.elements.each('Response') do |element|
+        on_hangup = element.attributes['onHangup']
+        on_answer = element.attributes['onAnswer']
+      end
+      expect(on_hangup).to eq('http://external.host.example.com/api/v1/sipgate/in')
+      expect(on_answer).to eq('http://external.host.example.com/api/v1/sipgate/in')
+    end
   end
 end
