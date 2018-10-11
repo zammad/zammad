@@ -356,26 +356,30 @@ returns
 
   def self.create_from_hash!(hash)
 
-    role_ids = Role.signup_role_ids
     url = ''
     hash['info']['urls']&.each_value do |local_url|
       next if local_url.blank?
       url = local_url
     end
     begin
-      create!(
+      data = {
         login: hash['info']['nickname'] || hash['uid'],
-        firstname: hash['info']['name'],
+        firstname: hash['info']['name'] || hash['info']['display_name'],
         email: hash['info']['email'],
         image_source: hash['info']['image'],
         web: url,
         address: hash['info']['location'],
         note: hash['info']['description'],
         source: hash['provider'],
-        role_ids: role_ids,
+        role_ids: Role.signup_role_ids,
         updated_by_id: 1,
         created_by_id: 1,
-      )
+      }
+      if hash['info']['first_name'].present? && hash['info']['last_name'].present?
+        data[:firstname] = hash['info']['first_name']
+        data[:lastname] = hash['info']['last_name']
+      end
+      create!(data)
     rescue => e
       logger.error e
       raise Exceptions::UnprocessableEntity, e.message

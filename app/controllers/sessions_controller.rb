@@ -69,7 +69,7 @@ class SessionsController < ApplicationController
       user_id = session[:user_id]
     end
 
-    if !user_id
+    if !user_id || !User.exists?(user_id)
       # get models
       models = SessionHelper.models()
 
