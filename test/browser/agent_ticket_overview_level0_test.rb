@@ -486,11 +486,12 @@ class AgentTicketOverviewLevel0Test < TestCase
       },
     )
 
-    click(
-      css: 'a[href="#manage"]',
-    )
-    click(
-      css: '.content.active a[href="#manage/groups"]',
+    role_edit(
+      data: {
+        name:                'Agent',
+        group_permissions: { 2 => ['full'],
+                             3 => ['full'], }
+      },
     )
 
     user_edit(
@@ -509,9 +510,7 @@ class AgentTicketOverviewLevel0Test < TestCase
         email:       'agent2@example.com',
         password:    'test',
         role:        'Agent',
-        permissions: { 1 => %w[read create overview],
-                       2 => ['full'],
-                       3 => ['full'], }
+        permissions: { 1 => %w[read create overview] }
       },
     )
 

@@ -3765,6 +3765,17 @@ wait untill text in selector disabppears
       end
     end
 
+    if data.key?(:group_permissions)
+      data[:group_permissions].each do |key, value|
+        value.each do |permission|
+          check(
+            browser: instance,
+            css:     ".modal input[name=\"group_ids::#{key}\"][value=\"#{permission}\"]",
+          )
+        end
+      end
+    end
+
     if data.key?(:active)
       element = instance.find_elements(css: '.modal select[name="active"]')[0]
       dropdown = Selenium::WebDriver::Support::Select.new(element)

@@ -249,7 +249,7 @@ class App.Ticket extends App.Model
     user_id = App.Session.get('id')
     return true if user_id is @customer_id
     return false if !App.User.exists(user_id)
-    group_ids = App.User.find(user_id).all_group_ids(permission)
+    group_ids = App.User.find(user_id).allGroupIds(permission)
     for local_group_id in group_ids
       if local_group_id.toString() is @group_id.toString()
         return true

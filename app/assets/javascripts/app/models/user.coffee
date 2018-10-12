@@ -254,7 +254,19 @@ class App.User extends App.Model
       return access if access
     false
 
-  all_group_ids: (permission = 'full') ->
+  ###
+
+    Returns a list of all groups for which the user is permitted to perform the given permission key
+
+    user = App.User.find(3)
+    result = user.allGroupIds('change') # access to a given permission key
+
+  returns
+
+    ["1", "2"]
+
+  ###
+  allGroupIds: (permission = 'full') ->
     group_ids = []
     user_group_ids = App.Session.get('group_ids')
     if user_group_ids

@@ -1223,9 +1223,9 @@ class Table extends App.Controller
     ticket_ids        = _.map(items, (el) -> $(el).val() )
     ticket_group_ids  = _.map(App.Ticket.findAll(ticket_ids), (ticket) -> ticket.group_id)
     ticket_group_ids  = _.uniq(ticket_group_ids)
-    user_permissions  = App.Session.get('group_ids')
-    group_permissions = ticket_group_ids.map (id) -> user_permissions[id]
-    _.every(group_permissions, (list) -> 'full' in list || 'change' in list)
+    allowed_group_ids = App.User.find(@Session.get('id')).allGroupIds('change')
+    allowed_group_ids = _.map(allowed_group_ids, (id_string) -> parseInt(id_string, 10) )
+    _.every(ticket_group_ids, (id) -> id in allowed_group_ids)
 
   viewmode: (e) =>
     e.preventDefault()
