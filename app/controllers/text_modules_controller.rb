@@ -49,7 +49,7 @@ curl http://localhost/api/v1/text_modules.json -v -u #{login}:#{password}
 =end
 
   def index
-    permission_check('ticket.agent')
+    permission_check(['admin.text_module', 'ticket.agent'])
     model_index_render(TextModule, params)
   end
 
@@ -71,7 +71,7 @@ curl http://localhost/api/v1/text_modules/#{id}.json -v -u #{login}:#{password}
 =end
 
   def show
-    permission_check('ticket.agent')
+    permission_check(['admin.text_module', 'ticket.agent'])
     model_show_render(TextModule, params)
   end
 
