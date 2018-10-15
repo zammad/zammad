@@ -99,6 +99,7 @@ class App.CTI extends App.Controller
   featureActive: =>
     return true if @Config.get('sipgate_integration')
     return true if @Config.get('cti_integration')
+    return true if @Config.get('placetel_integration')
     false
 
   render: ->
