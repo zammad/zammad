@@ -134,7 +134,7 @@ returns
       next if association_attributes_ignored.include?(assoc_name)
 
       eager_load.push(assoc_name)
-      pluck.push("#{assoc.table_name}.id")
+      pluck.push("#{assoc.table_name}.id AS #{assoc_name}")
       keys.push("#{assoc_name.to_s.singularize}_ids")
     end
 
