@@ -52,7 +52,7 @@ class CleanupUserPreferencesNotificationSound2 < ActiveRecord::Migration[5.1]
       end
     end
 
-    Delayed::Job.all.each do |job|
+    Delayed::Job.limit(2_000).each do |job|
       Delayed::Worker.new.run(job)
     end
   end
