@@ -17,6 +17,9 @@ fill your database with demo records
 or if you only want to create 100 tickets
 
   FillDB.load(tickets: 100)
+  FillDB.load(agents: 20)
+  FillDB.load(overviews: 20)
+  FillDB.load(tickets: 10000)
 
 =end
 
