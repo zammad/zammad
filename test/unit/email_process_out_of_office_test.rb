@@ -4,7 +4,7 @@ class EmailProcessOutOfOfficeTest < ActiveSupport::TestCase
 
   test 'process with out of office check - ms' do
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'ooo check - ms',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -13,7 +13,7 @@ class EmailProcessOutOfOfficeTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -90,7 +90,7 @@ Some Text"
 
   test 'process with out of office check - zimbra' do
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'ooo check - zimbra',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -99,7 +99,7 @@ Some Text"
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -168,7 +168,7 @@ Some Text"
 
   test 'process with out of office check - cloud' do
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'ooo check - cloud',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -177,7 +177,7 @@ Some Text"
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
@@ -241,7 +241,7 @@ Some Text"
 
   test 'process with out of office check - gmail' do
 
-    ticket = Ticket.create(
+    ticket = Ticket.create!(
       title: 'ooo check - gmail',
       group: Group.lookup(name: 'Users'),
       customer_id: 2,
@@ -250,7 +250,7 @@ Some Text"
       updated_by_id: 1,
       created_by_id: 1,
     )
-    article = Ticket::Article.create(
+    article = Ticket::Article.create!(
       ticket_id: ticket.id,
       from: 'some_sender@example.com',
       to: 'some_recipient@example.com',
