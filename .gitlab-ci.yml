@@ -232,6 +232,18 @@ test:integration:telegram:
     - ruby -I test test/integration/telegram_controller_test.rb
     - rake db:drop
 
+test:integration:twilio:
+  <<: *artifacts_error
+  stage: test
+  variables:
+    RAILS_ENV: "test"
+  tags:
+    - core
+  script:
+    - rake zammad:db:init
+    - ruby -I test test/integration/twilio_sms_controller_test.rb
+    - rake db:drop
+
 test:integration:idoit:
   <<: *artifacts_error
   stage: test
