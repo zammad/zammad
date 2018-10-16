@@ -280,13 +280,14 @@ returns
 processes a incoming event
 
 Cti::Log.process(
-  'cause' => '',
-  'event' => 'newCall',
-  'user' => 'user 1',
-  'from' => '4912347114711',
-  'to' => '4930600000000',
-  'callId' => '43545211', # or call_id
-  'direction' => 'in',
+  cause: '',
+  event: 'newCall',
+  user: 'user 1',
+  from: '4912347114711',
+  to: '4930600000000',
+  callId: '43545211', # or call_id
+  direction: 'in',
+  queue: 'helpdesk', # optional
 )
 
 =end
@@ -295,6 +296,7 @@ Cti::Log.process(
       cause   = params['cause']
       event   = params['event']
       user    = params['user']
+      queue   = params['queue']
       call_id = params['callId'] || params['call_id']
       if user.class == Array
         user = user.join(', ')
@@ -329,6 +331,7 @@ Cti::Log.process(
           to_comment: to_comment,
           call_id: call_id,
           comment: cause,
+          queue: queue,
           state: event,
           initialized_at: Time.zone.now,
           preferences: preferences,

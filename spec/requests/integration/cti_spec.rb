@@ -153,6 +153,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.from_comment).to eq('user 1')
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
+      expect(log.queue).to be_nil
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -173,6 +174,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.from_comment).to eq('user 1')
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('cancel')
+      expect(log.queue).to be_nil
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -193,6 +195,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.from_comment).to eq('user 1')
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
+      expect(log.queue).to be_nil
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -213,6 +216,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.from_comment).to eq('user 1')
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
+      expect(log.queue).to be_nil
       expect(log.state).to eq('answer')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -233,6 +237,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.from_comment).to eq('user 1')
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
+      expect(log.queue).to be_nil
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -253,6 +258,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
+      expect(log.queue).to be_nil
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -273,6 +279,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
+      expect(log.queue).to be_nil
       expect(log.state).to eq('answer')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -293,6 +300,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
+      expect(log.queue).to be_nil
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -313,6 +321,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1,user 2')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
+      expect(log.queue).to be_nil
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -333,6 +342,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('voicemail')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
+      expect(log.queue).to be_nil
       expect(log.state).to eq('answer')
       expect(log.done).to eq(true)
       expect(log.initialized_at).to be_truthy
@@ -353,6 +363,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('voicemail')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
+      expect(log.queue).to be_nil
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -373,6 +384,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1,user 2')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
+      expect(log.queue).to be_nil
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -393,6 +405,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.to_comment).to eq('user 1,user 2')
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
+      expect(log.queue).to be_nil
       expect(log.state).to eq('hangup')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -415,6 +428,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.preferences['to']).to be_falsey
       expect(log.preferences['from']).to be_truthy
       expect(log.comment).to be_nil
+      expect(log.queue).to be_nil
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
@@ -424,7 +438,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_talking_time).to be_nil
 
       # inbound - IV - new call
-      params = 'event=newCall&direction=in&to=4930600000000&from=anonymous&call_id=1234567890-7&user%5B%5D=user+1,user+2'
+      params = 'event=newCall&direction=in&to=4930600000000&from=anonymous&call_id=1234567890-7&user%5B%5D=user+1,user+2&queue=some_queue_name'
       post "/api/v1/cti/#{token}", params: params
       expect(response).to have_http_status(200)
       log = Cti::Log.find_by(call_id: '1234567890-7')
@@ -437,6 +451,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.preferences['to']).to be_falsey
       expect(log.preferences['from']).to be_falsey
       expect(log.comment).to be_nil
+      expect(log.queue).to eq('some_queue_name')
       expect(log.state).to eq('newCall')
       expect(log.done).to eq(false)
       expect(log.initialized_at).to be_truthy
