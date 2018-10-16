@@ -7,10 +7,8 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     article = Ticket::Article.find(@article_id)
 
     # set retry count
-    if !article.preferences['delivery_retry']
-      article.preferences['delivery_retry'] = 0
-    end
-    article.preferences['delivery_retry'] += 1
+    record.preferences['delivery_retry'] ||= 0
+    record.preferences['delivery_retry'] += 1
 
     ticket = Ticket.lookup(id: article.ticket_id)
     log_error(article, "Can't find ticket.preferences for Ticket.find(#{article.ticket_id})") if !ticket.preferences

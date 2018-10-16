@@ -23,6 +23,10 @@ class Ticket::Article < ApplicationModel
 
   store :preferences
 
+  validates :ticket_id, presence: true
+  validates :type_id, presence: true
+  validates :sender_id, presence: true
+
   sanitized_html :body
 
   activity_stream_permission 'ticket.agent'

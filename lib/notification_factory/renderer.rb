@@ -92,15 +92,33 @@ examples how to use
         break
       end
 
+      arguments = nil
+      if /\A(?<method_id>[^\(]+)\((?<parameter>[^\)]+)\)\z/ =~ method
+
+        if parameter != parameter.to_i.to_s
+          value = "\#{#{object_name}.#{object_methods_s} / invalid parameter: #{parameter}}"
+          break
+        end
+
+        begin
+          arguments = Array(parameter.to_i)
+          method    = method_id
+        rescue
+          value = "\#{#{object_name}.#{object_methods_s} / #{e.message}}"
+          break
+        end
+      end
+
       # if method exists
       if !object_refs.respond_to?(method.to_sym)
         value = "\#{#{object_name}.#{object_methods_s} / no such method}"
         break
       end
       begin
-        object_refs = object_refs.send(method.to_sym)
+        object_refs = object_refs.send(method.to_sym, *arguments)
       rescue => e
-        object_refs = "\#{#{object_name}.#{object_methods_s} / e.message}"
+        value = "\#{#{object_name}.#{object_methods_s} / #{e.message}}"
+        break
       end
     end
     placeholder = if !value

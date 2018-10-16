@@ -583,4 +583,56 @@ class NotificationFactoryRendererTest < ActiveSupport::TestCase
 
   end
 
+  test 'methods with single Integer parameter' do
+
+    template = "\#{ticket.title.first(3)}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(CGI.escapeHTML('<b>'), result)
+
+    template = "\#{ticket.title.last(4)}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(CGI.escapeHTML('</b>'), result)
+
+    template = "\#{ticket.title.slice(3, 4)}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal(CGI.escapeHTML("\#{ticket.title.slice(3,4) / invalid parameter: 3,4}"), result)
+
+    template = "\#{ticket.title.first('some invalid parameter')}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal("\#{ticket.title.first(someinvalidparameter) / invalid parameter: someinvalidparameter}", result)
+
+    template = "\#{ticket.title.chomp(`cat /etc/passwd`)}"
+    result = described_class.new(
+      {
+        ticket: ticket,
+      },
+      'en-us',
+      template,
+    ).render
+    assert_equal("\#{ticket.title.chomp(`cat/etc/passwd`) / not allowed}", result)
+  end
 end

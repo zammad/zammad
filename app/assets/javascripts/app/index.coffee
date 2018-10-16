@@ -44,6 +44,7 @@ class App extends Spine.Controller
       App.Utils.decimal(data, positions)
 
     # define mask helper
+    # mask an value like 'a***********yz'
     M: (item, start = 1, end = 2) ->
       return '' if !item
       string = ''

@@ -18,6 +18,7 @@ class App.UiElement.ticket_perform_action
     for groupKey, groupMeta of groups
       if !groupMeta.model || !App[groupMeta.model]
         elements["#{groupKey}.email"] = { name: 'email', display: 'Email' }
+        elements["#{groupKey}.sms"] = { name: 'sms', display: 'SMS' }
       else
 
         for row in App[groupMeta.model].configure_attributes
@@ -161,9 +162,11 @@ class App.UiElement.ticket_perform_action
     if groupAndAttribute
       elementRow.find('.js-attributeSelector select').val(groupAndAttribute)
 
-    if groupAndAttribute is 'notification.email'
+    notificationTypeMatch = groupAndAttribute.match(/^notification.([\w]+)$/)
+
+    if _.isArray(notificationTypeMatch) && notificationType = notificationTypeMatch[1]
       elementRow.find('.js-setAttribute').html('')
-      @buildRecipientList(elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
+      @buildRecipientList(notificationType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute)
     else
       elementRow.find('.js-setNotification').html('')
       if !elementRow.find('.js-setAttribute div').get(0)
@@ -304,9 +307,11 @@ class App.UiElement.ticket_perform_action
 
     elementRow.find('.js-value').removeClass('hide').html(item)
 
-  @buildRecipientList: (elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
+  @buildRecipientList: (notificationType, elementFull, elementRow, groupAndAttribute, elements, meta, attribute) ->
 
-    return if elementRow.find('.js-setNotification .js-body').get(0)
+    return if elementRow.find(".js-setNotification .js-body-#{notificationType}").get(0)
+
+    elementRow.find('.js-setNotification').empty()
 
     options =
       'article_last_sender': 'Article Last Sender'
@@ -314,7 +319,11 @@ class App.UiElement.ticket_perform_action
       'ticket_customer': 'Customer'
       'ticket_agents': 'All Agents'
 
-    name = "#{attribute.name}::notification.email"
+    name = "#{attribute.name}::notification.#{notificationType}"
+
+    messageLength = switch notificationType
+      when 'sms' then 160
+      else 200000
 
     # meta.recipient was a string in the past (single-select) so we convert it to array if needed
     if !_.isArray(meta.recipient)
@@ -338,13 +347,14 @@ class App.UiElement.ticket_perform_action
     notificationElement = $( App.view('generic/ticket_perform_action/notification_email')(
       attribute: attribute
       name: name
+      notificationType: notificationType
       meta: meta || {}
     ))
     notificationElement.find('.js-recipient select').replaceWith(selection)
     notificationElement.find('.js-body div[contenteditable="true"]').ce(
       mode: 'richtext'
       placeholder: 'message'
-      maxlength: 200000
+      maxlength: messageLength
     )
     new App.WidgetPlaceholder(
       el: notificationElement.find('.js-body div[contenteditable="true"]').parent()

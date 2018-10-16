@@ -98,7 +98,7 @@ class App.TicketZoomArticleNew extends App.Controller
     # set expand of text area only once
     @bind('ui::ticket::shown', (data) =>
       return if data.ticket_id.toString() isnt @ticket.id.toString()
-      @tokanice()
+      @tokanice(@type)
     )
 
     # rerender, e. g. on language change
@@ -106,8 +106,8 @@ class App.TicketZoomArticleNew extends App.Controller
       @render()
     )
 
-  tokanice: ->
-    App.Utils.tokaniceEmails('.content.active .js-to, .js-cc, js-bcc')
+  tokanice: (type = 'email') ->
+    App.Utils.tokanice('.content.active .js-to, .js-cc, js-bcc', type)
 
   setPossibleArticleTypes: =>
     @articleTypes = []
@@ -163,7 +163,7 @@ class App.TicketZoomArticleNew extends App.Controller
       position:  'right'
     )
 
-    @tokanice()
+    @tokanice(@type)
 
     @$('[data-name="body"]').ce({
       mode:      'richtext'
@@ -346,7 +346,7 @@ class App.TicketZoomArticleNew extends App.Controller
     @setArticleTypePost(articleTypeToSet)
 
     $(window).off('click.ticket-zoom-select-type')
-    @tokanice()
+    @tokanice(articleTypeToSet)
 
   hideSelectableArticleType: =>
     @el.find('.js-articleTypes').addClass('is-hidden')

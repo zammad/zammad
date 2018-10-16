@@ -918,227 +918,15 @@ perform changes on ticket
     end
 
     perform_notification.each do |key, value|
-      perform_changes_notification(key, value, perform_origin, article)
-    end
 
-    true
-  end
-
-  def perform_changes_notification(_key, value, perform_origin, article)
-
-    # value['recipient'] was a string in the past (single-select) so we convert it to array if needed
-    value_recipient = value['recipient']
-    if !value_recipient.is_a?(Array)
-      value_recipient = [value_recipient]
-    end
-
-    recipients_raw = []
-    value_recipient.each do |recipient|
-      if recipient == 'article_last_sender'
-        if article.present?
-          if article.reply_to.present?
-            recipients_raw.push(article.reply_to)
-          elsif article.from.present?
-            recipients_raw.push(article.from)
-          elsif article.origin_by_id
-            email = User.find_by(id: article.origin_by_id).email
-            recipients_raw.push(email)
-          elsif article.created_by_id
-            email = User.find_by(id: article.created_by_id).email
-            recipients_raw.push(email)
-          end
-        end
-      elsif recipient == 'ticket_customer'
-        email = User.find_by(id: customer_id).email
-        recipients_raw.push(email)
-      elsif recipient == 'ticket_owner'
-        email = User.find_by(id: owner_id).email
-        recipients_raw.push(email)
-      elsif recipient == 'ticket_agents'
-        User.group_access(group_id, 'full').sort_by(&:login).each do |user|
-          recipients_raw.push(user.email)
-        end
-      else
-        logger.error "Unknown email notification recipient '#{recipient}'"
+      # send notification
+      case key
+      when 'notification.sms'
+        send_sms_notification(value, article, perform_origin)
         next
+      when 'notification.email'
+        send_email_notification(value, article, perform_origin)
       end
-    end
-
-    recipients_checked = []
-    recipients_raw.each do |recipient_email|
-
-      skip_user = false
-      users = User.where(email: recipient_email)
-      users.each do |user|
-        next if user.preferences[:mail_delivery_failed] != true
-        next if !user.preferences[:mail_delivery_failed_data]
-
-        till_blocked = ((user.preferences[:mail_delivery_failed_data] - Time.zone.now - 60.days) / 60 / 60 / 24).round
-        next if till_blocked.positive?
-
-        logger.info "Send no trigger based notification to #{recipient_email} because email is marked as mail_delivery_failed for #{till_blocked} days"
-        skip_user = true
-        break
-      end
-      next if skip_user
-
-      # send notifications only to email adresses
-      next if recipient_email.blank?
-      next if recipient_email !~ /@/
-
-      # check if address is valid
-      begin
-        Mail::AddressList.new(recipient_email).addresses.each do |address|
-          recipient_email = address.address
-          break if recipient_email.present? && recipient_email =~ /@/ && !recipient_email.match?(/\s/)
-        end
-      rescue
-        if recipient_email.present?
-          if recipient_email !~ /^(.+?)<(.+?)@(.+?)>$/
-            next # no usable format found
-          end
-
-          recipient_email = "#{$2}@#{$3}"
-        end
-        next if recipient_email.blank?
-        next if recipient_email !~ /@/
-        next if recipient_email.match?(/\s/)
-      end
-
-      # do not sent notifications to this recipients
-      send_no_auto_response_reg_exp = Setting.get('send_no_auto_response_reg_exp')
-      begin
-        next if recipient_email.match?(/#{send_no_auto_response_reg_exp}/i)
-      rescue => e
-        logger.error "ERROR: Invalid regex '#{send_no_auto_response_reg_exp}' in setting send_no_auto_response_reg_exp"
-        logger.error 'ERROR: ' + e.inspect
-        next if recipient_email.match?(/(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?/i)
-      end
-
-      # check if notification should be send because of customer emails
-      if article.present? && article.preferences.fetch('is-auto-response', false) == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
-        logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
-        next
-      end
-
-      # loop protection / check if maximal count of trigger mail has reached
-      map = {
-        10 => 10,
-        30 => 15,
-        60 => 25,
-        180 => 50,
-        600 => 100,
-      }
-      skip = false
-      map.each do |minutes, count|
-        already_sent = Ticket::Article.where(
-          ticket_id: id,
-          sender: Ticket::Article::Sender.find_by(name: 'System'),
-          type: Ticket::Article::Type.find_by(name: 'email'),
-        ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{recipient_email.strip}%").count
-        next if already_sent < count
-
-        logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} for this ticket within last #{minutes} minutes (loop protection)"
-        skip = true
-        break
-      end
-      next if skip
-
-      map = {
-        10 => 30,
-        30 => 60,
-        60 => 120,
-        180 => 240,
-        600 => 360,
-      }
-      skip = false
-      map.each do |minutes, count|
-        already_sent = Ticket::Article.where(
-          sender: Ticket::Article::Sender.find_by(name: 'System'),
-          type: Ticket::Article::Type.find_by(name: 'email'),
-        ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{recipient_email.strip}%").count
-        next if already_sent < count
-
-        logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{minutes} minutes (loop protection)"
-        skip = true
-        break
-      end
-      next if skip
-
-      email = recipient_email.downcase.strip
-      next if recipients_checked.include?(email)
-
-      recipients_checked.push(email)
-    end
-
-    return if recipients_checked.blank?
-
-    recipient_string = recipients_checked.join(', ')
-
-    group_id = self.group_id
-    return if !group_id
-
-    email_address = Group.find(group_id).email_address
-    if !email_address
-      logger.info "Unable to send trigger based notification to #{recipient_string} because no email address is set for group '#{group.name}'"
-      return
-    end
-
-    if !email_address.channel_id
-      logger.info "Unable to send trigger based notification to #{recipient_string} because no channel is set for email address '#{email_address.email}' (id: #{email_address.id})"
-      return
-    end
-
-    # articles.last breaks (returns the wrong article)
-    # if another email notification trigger preceded this one
-    # (see https://github.com/zammad/zammad/issues/1543)
-    objects = {
-      ticket: self,
-      article: article || articles.last
-    }
-
-    # get subject
-    subject = NotificationFactory::Mailer.template(
-      templateInline: value['subject'],
-      locale: 'en-en',
-      objects: objects,
-      quote: false,
-    )
-    subject = subject_build(subject)
-
-    body = NotificationFactory::Mailer.template(
-      templateInline: value['body'],
-      locale: 'en-en',
-      objects: objects,
-      quote: true,
-    )
-
-    (body, attachments_inline) = HtmlSanitizer.replace_inline_images(body, id)
-
-    message = Ticket::Article.create(
-      ticket_id: id,
-      to: recipient_string,
-      subject: subject,
-      content_type: 'text/html',
-      body: body,
-      internal: false,
-      sender: Ticket::Article::Sender.find_by(name: 'System'),
-      type: Ticket::Article::Type.find_by(name: 'email'),
-      preferences: {
-        perform_origin: perform_origin,
-      },
-      updated_by_id: 1,
-      created_by_id: 1,
-    )
-
-    attachments_inline.each do |attachment|
-      Store.add(
-        object: 'Ticket::Article',
-        o_id: message.id,
-        data: attachment[:data],
-        filename: attachment[:filename],
-        preferences: attachment[:preferences],
-      )
     end
 
     true
@@ -1484,5 +1272,297 @@ result
     # else set the owner of the ticket to the default user as unassigned
     self.owner_id = 1
     true
+  end
+
+  # articles.last breaks (returns the wrong article)
+  # if another email notification trigger preceded this one
+  # (see https://github.com/zammad/zammad/issues/1543)
+  def build_notification_template_objects(article)
+    {
+      ticket: self,
+      article: article || articles.last
+    }
+  end
+
+  def send_email_notification(value, article, perform_origin)
+    # value['recipient'] was a string in the past (single-select) so we convert it to array if needed
+    value_recipient = Array(value['recipient'])
+
+    recipients_raw = []
+    value_recipient.each do |recipient|
+      if recipient == 'article_last_sender'
+        if article.present?
+          if article.reply_to.present?
+            recipients_raw.push(article.reply_to)
+          elsif article.from.present?
+            recipients_raw.push(article.from)
+          elsif article.origin_by_id
+            email = User.find_by(id: article.origin_by_id).email
+            recipients_raw.push(email)
+          elsif article.created_by_id
+            email = User.find_by(id: article.created_by_id).email
+            recipients_raw.push(email)
+          end
+        end
+      elsif recipient == 'ticket_customer'
+        email = User.find_by(id: customer_id).email
+        recipients_raw.push(email)
+      elsif recipient == 'ticket_owner'
+        email = User.find_by(id: owner_id).email
+        recipients_raw.push(email)
+      elsif recipient == 'ticket_agents'
+        User.group_access(group_id, 'full').sort_by(&:login).each do |user|
+          recipients_raw.push(user.email)
+        end
+      else
+        logger.error "Unknown email notification recipient '#{recipient}'"
+        next
+      end
+    end
+
+    recipients_checked = []
+    recipients_raw.each do |recipient_email|
+
+      skip_user = false
+      users = User.where(email: recipient_email)
+      users.each do |user|
+        next if user.preferences[:mail_delivery_failed] != true
+        next if !user.preferences[:mail_delivery_failed_data]
+
+        till_blocked = ((user.preferences[:mail_delivery_failed_data] - Time.zone.now - 60.days) / 60 / 60 / 24).round
+        next if till_blocked.positive?
+
+        logger.info "Send no trigger based notification to #{recipient_email} because email is marked as mail_delivery_failed for #{till_blocked} days"
+        skip_user = true
+        break
+      end
+      next if skip_user
+
+      # send notifications only to email adresses
+      next if recipient_email.blank?
+      next if recipient_email !~ /@/
+
+      # check if address is valid
+      begin
+        Mail::AddressList.new(recipient_email).addresses.each do |address|
+          recipient_email = address.address
+          break if recipient_email.present? && recipient_email =~ /@/ && !recipient_email.match?(/\s/)
+        end
+      rescue
+        if recipient_email.present?
+          if recipient_email !~ /^(.+?)<(.+?)@(.+?)>$/
+            next # no usable format found
+          end
+
+          recipient_email = "#{$2}@#{$3}"
+        end
+        next if recipient_email.blank?
+        next if recipient_email !~ /@/
+        next if recipient_email.match?(/\s/)
+      end
+
+      # do not sent notifications to this recipients
+      send_no_auto_response_reg_exp = Setting.get('send_no_auto_response_reg_exp')
+      begin
+        next if recipient_email.match?(/#{send_no_auto_response_reg_exp}/i)
+      rescue => e
+        logger.error "ERROR: Invalid regex '#{send_no_auto_response_reg_exp}' in setting send_no_auto_response_reg_exp"
+        logger.error 'ERROR: ' + e.inspect
+        next if recipient_email.match?(/(mailer-daemon|postmaster|abuse|root|noreply|noreply.+?|no-reply|no-reply.+?)@.+?/i)
+      end
+
+      # check if notification should be send because of customer emails
+      if article.present? && article.preferences.fetch('is-auto-response', false) == true && article.from && article.from =~ /#{Regexp.quote(recipient_email)}/i
+        logger.info "Send no trigger based notification to #{recipient_email} because of auto response tagged incoming email"
+        next
+      end
+
+      # loop protection / check if maximal count of trigger mail has reached
+      map = {
+        10 => 10,
+        30 => 15,
+        60 => 25,
+        180 => 50,
+        600 => 100,
+      }
+      skip = false
+      map.each do |minutes, count|
+        already_sent = Ticket::Article.where(
+          ticket_id: id,
+          sender: Ticket::Article::Sender.find_by(name: 'System'),
+          type: Ticket::Article::Type.find_by(name: 'email'),
+        ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{recipient_email.strip}%").count
+        next if already_sent < count
+
+        logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} for this ticket within last #{minutes} minutes (loop protection)"
+        skip = true
+        break
+      end
+      next if skip
+
+      map = {
+        10 => 30,
+        30 => 60,
+        60 => 120,
+        180 => 240,
+        600 => 360,
+      }
+      skip = false
+      map.each do |minutes, count|
+        already_sent = Ticket::Article.where(
+          sender: Ticket::Article::Sender.find_by(name: 'System'),
+          type: Ticket::Article::Type.find_by(name: 'email'),
+        ).where('ticket_articles.created_at > ? AND ticket_articles.to LIKE ?', Time.zone.now - minutes.minutes, "%#{recipient_email.strip}%").count
+        next if already_sent < count
+
+        logger.info "Send no trigger based notification to #{recipient_email} because already sent #{count} in total within last #{minutes} minutes (loop protection)"
+        skip = true
+        break
+      end
+      next if skip
+
+      email = recipient_email.downcase.strip
+      next if recipients_checked.include?(email)
+
+      recipients_checked.push(email)
+    end
+
+    return if recipients_checked.blank?
+
+    recipient_string = recipients_checked.join(', ')
+
+    group_id = self.group_id
+    return if !group_id
+
+    email_address = Group.find(group_id).email_address
+    if !email_address
+      logger.info "Unable to send trigger based notification to #{recipient_string} because no email address is set for group '#{group.name}'"
+      return
+    end
+
+    if !email_address.channel_id
+      logger.info "Unable to send trigger based notification to #{recipient_string} because no channel is set for email address '#{email_address.email}' (id: #{email_address.id})"
+      return
+    end
+
+    objects = build_notification_template_objects(article)
+
+    # get subject
+    subject = NotificationFactory::Mailer.template(
+      templateInline: value['subject'],
+      locale: 'en-en',
+      objects: objects,
+      quote: false,
+    )
+    subject = subject_build(subject)
+
+    body = NotificationFactory::Mailer.template(
+      templateInline: value['body'],
+      locale: 'en-en',
+      objects: objects,
+      quote: true,
+    )
+
+    (body, attachments_inline) = HtmlSanitizer.replace_inline_images(body, id)
+
+    message = Ticket::Article.create(
+      ticket_id: id,
+      to: recipient_string,
+      subject: subject,
+      content_type: 'text/html',
+      body: body,
+      internal: false,
+      sender: Ticket::Article::Sender.find_by(name: 'System'),
+      type: Ticket::Article::Type.find_by(name: 'email'),
+      preferences: {
+        perform_origin: perform_origin,
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
+    attachments_inline.each do |attachment|
+      Store.add(
+        object: 'Ticket::Article',
+        o_id: message.id,
+        data: attachment[:data],
+        filename: attachment[:filename],
+        preferences: attachment[:preferences],
+      )
+    end
+  end
+
+  def sms_recipients_by_type(recipient_type, article)
+    case recipient_type
+    when 'article_last_sender'
+      return nil if article.blank?
+
+      if article.origin_by_id
+        article.origin_by_id
+      elsif article.created_by_id
+        article.created_by_id
+      end
+    when 'ticket_customer'
+      customer_id
+    when 'ticket_owner'
+      owner_id
+    when 'ticket_agents'
+      User.group_access(group_id, 'full').sort_by(&:login)
+    else
+      logger.error "Unknown sms notification recipient '#{recipient}'"
+      nil
+    end
+  end
+
+  def build_sms_recipients_list(value, article)
+    Array(value['recipient'])
+      .each_with_object([]) { |recipient_type, sum| sum.concat(Array(sms_recipients_by_type(recipient_type, article))) }
+      .map { |user_or_id| User.lookup(id: user_or_id) }
+      .select { |user| user.mobile.present? }
+  end
+
+  def send_sms_notification(value, article, perform_origin)
+    sms_recipients = build_sms_recipients_list(value, article)
+
+    if sms_recipients.blank?
+      logger.debug "No SMS recipients found for Ticket# #{number}"
+      return
+    end
+
+    sms_recipients_to = sms_recipients
+                        .map { |recipient| "#{recipient.fullname} (#{recipient.mobile})" }
+                        .join(', ')
+
+    channel = Channel.find_by(area: 'Sms::Notification')
+    if !channel.active?
+      # write info message since we have an active trigger
+      logger.info "Found possible SMS recipient(s) (#{sms_recipients_to}) for Ticket# #{number} but SMS channel is not active."
+      return
+    end
+
+    objects = build_notification_template_objects(article)
+    body = NotificationFactory::Renderer.new(objects, 'en-en', value['body'], false)
+                                        .render
+                                        .html2text
+                                        .tr(' ', ' ') # convert non-breaking space to simple space
+
+    # attributes content_type is not needed for SMS
+    article = Ticket::Article.create(
+      ticket_id:   id,
+      subject:     'SMS notification',
+      to:          sms_recipients_to,
+      body:        body,
+      internal:    true,
+      sender:      Ticket::Article::Sender.find_by(name: 'System'),
+      type:        Ticket::Article::Type.find_by(name: 'sms'),
+      preferences: {
+        perform_origin: perform_origin,
+        sms_recipients: sms_recipients.map(&:mobile),
+        channel_id: channel.id,
+      },
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+
   end
 end

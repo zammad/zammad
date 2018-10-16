@@ -216,6 +216,7 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
       overviews: Overview,
       tickets: Ticket,
       ticket_articles: Ticket::Article,
+      text_modules: TextModule,
     }
     map.each do |key, class_name|
       status[:counts][key] = class_name.count

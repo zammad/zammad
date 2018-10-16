@@ -243,6 +243,34 @@ returns
       end
     end
 
+=begin
+
+  from_comment, preferences = Cti::CallerId.get_comment_preferences('00491710000000', 'from')
+
+  returns
+
+  [
+    "Bob Smith",
+    {
+      "from"=>[
+        {
+          "id"=>1961634,
+          "caller_id"=>"491710000000",
+          "comment"=>nil,
+          "level"=>"known",
+          "object"=>"User",
+          "o_id"=>3,
+          "user_id"=>3,
+          "preferences"=>nil,
+          "created_at"=>Mon, 24 Sep 2018 15:19:48 UTC +00:00,
+          "updated_at"=>Mon, 24 Sep 2018 15:19:48 UTC +00:00,
+        }
+      ]
+    }
+  ]
+
+=end
+
     def self.get_comment_preferences(caller_id, direction)
       from_comment_known = ''
       from_comment_maybe = ''

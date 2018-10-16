@@ -105,6 +105,9 @@ gem 'icalendar-recurrence'
 # feature - phone number formatting
 gem 'telephone_number'
 
+# feature - SMS
+gem 'twilio-ruby'
+
 # integrations
 gem 'clearbit'
 gem 'net-ldap'

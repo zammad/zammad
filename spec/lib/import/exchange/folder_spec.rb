@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Import::Exchange::Folder do
   # see https://github.com/zammad/zammad/issues/2152
+
   describe '#display_path (#2152)' do
     let(:subject)            { described_class.new(ews_connection) }
     let(:ews_connection)     { Viewpoint::EWSClient.new(endpoint, user, pass) }

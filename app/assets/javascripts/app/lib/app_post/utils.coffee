@@ -1121,7 +1121,7 @@ class App.Utils
     articleNew
 
   # apply email token field with autocompletion
-  @tokaniceEmails: (selector) ->
+  @tokanice: (selector, type) ->
     source = "#{App.Config.get('api_path')}/users/search"
     a = ->
       $(selector).tokenfield(
@@ -1131,7 +1131,7 @@ class App.Utils
           minLength: 2
         },
       ).on('tokenfield:createtoken', (e) ->
-        if !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
+        if type is 'email' && !e.attrs.value.match(/@/) || e.attrs.value.match(/\s/)
           e.preventDefault()
           return false
         e.attrs.label = e.attrs.value

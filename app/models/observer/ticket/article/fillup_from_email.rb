@@ -17,13 +17,14 @@ class Observer::Ticket::Article::FillupFromEmail < ActiveRecord::Observer
 
     sender = Ticket::Article::Sender.lookup(id: record.sender_id)
     return true if sender.nil?
-    return true if sender['name'] == 'Customer'
+    return true if sender.name == 'Customer'
 
     # set email attributes
     return true if !record.type_id
 
     type = Ticket::Article::Type.lookup(id: record.type_id)
-    return true if type['name'] != 'email'
+    return true if type.nil?
+    return true if type.name != 'email'
 
     # set subject if empty
     ticket = record.ticket

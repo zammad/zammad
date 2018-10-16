@@ -295,15 +295,15 @@ class App.ControllerGenericDestroyConfirm extends App.ControllerModal
     App.i18n.translateContent('Sure to delete this object?')
 
   onSubmit: =>
-    @item.destroy(
-      done: =>
-        @close()
-        if @callback
-          @callback()
-      fail: =>
-        @log 'errors'
-        @close()
-    )
+    options = @options || {}
+    options.done = =>
+      @close()
+      if @callback
+        @callback()
+    options.fail = =>
+      @log 'errors'
+      @close()
+    @item.destroy(options)
 
 class App.ControllerConfirm extends App.ControllerModal
   buttonClose: true

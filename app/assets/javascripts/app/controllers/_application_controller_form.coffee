@@ -25,7 +25,8 @@ class App.ControllerForm extends App.Controller
       @form = @formGen()
 
     # add alert placeholder
-    @form.prepend('<div class="alert alert--danger js-alert hide" role="alert"></div>')
+    @form.prepend('<div class="alert alert--danger js-danger js-alert hide" role="alert"></div>')
+    @form.prepend('<div class="alert alert--success js-success hide" role="alert"></div>')
 
     # if element is given, prepend form to it
     if @el

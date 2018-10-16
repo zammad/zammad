@@ -2240,6 +2240,10 @@ kbd {
   .help-block {
     color: hsl(198,19%,72%);
   }
+  .content-controls-align-right {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 .page-description p {
@@ -7788,6 +7792,10 @@ output {
     cursor: not-allowed;
     background: hsl(210,17%,93%);
     border-color: hsl(210,10%,85%);
+  }
+
+  &[disabled] + label:after {
+    background: hsl(210,17%,97%);
   }
 
   &:focus + label {
