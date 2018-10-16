@@ -775,6 +775,7 @@ class AdminObjectManagerTest < TestCase
   end
 
   # verify fix for issue #2233 - Boolean object set to false is not visible
+  # verify fix for issue #2277 - Note is not shown for customer / organisations if it's empty
   def test_false_boolean_attributes_gets_displayed_for_organizations
     @browser = browser_instance
     login(
@@ -829,6 +830,10 @@ class AdminObjectManagerTest < TestCase
       css: '.content.active .sidebar[data-tab="organization"] .sidebar-content',
       value: 'text_test',
     )
+    match(
+      css: '.content.active .sidebar[data-tab="organization"] .sidebar-content',
+      value: 'note',
+    )
 
     object_manager_attribute_delete(
       data: {
@@ -846,6 +851,7 @@ class AdminObjectManagerTest < TestCase
   end
 
   # verify fix for issue #2233 - Boolean object set to false is not visible
+  # verify fix for issue #2277 - Note is not shown for customer / organisations if it's empty
   def test_false_boolean_attributes_gets_displayed_for_users
     @browser = browser_instance
     login(
@@ -899,6 +905,10 @@ class AdminObjectManagerTest < TestCase
     match_not(
       css: '.content.active .sidebar[data-tab="customer"] .sidebar-content',
       value: 'text_test',
+    )
+    match(
+      css: '.content.active .sidebar[data-tab="customer"] .sidebar-content',
+      value: 'note',
     )
 
     object_manager_attribute_delete(
