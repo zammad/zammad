@@ -738,6 +738,8 @@ test:browser:integration:facebook_ff:
 
 test:browser:integration:idoit_chrome:
   <<: *browser_integration_auto_wizard_definition
+  tags:
+    - browser
   variables:
     <<: *variables_browser_definition
     BROWSER: "chrome"
