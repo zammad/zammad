@@ -167,10 +167,8 @@ class TwilioSmsControllerTest < ActionDispatch::IntegrationTest
         headers: {
           'Accept' => 'application/json',
           'Accept-Charset' => 'utf-8',
-          'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
           'Authorization' => 'Basic MTExOjIyMw==',
           'Content-Type' => 'application/x-www-form-urlencoded',
-          'User-Agent' => 'twilio-ruby/5.10.2 (ruby/x86_64-darwin16 2.4.4-p296)'
         }
       ).to_return(status: 200, body: '', headers: {})
 
