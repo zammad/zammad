@@ -1394,10 +1394,20 @@ result
   end
 
   def check_defaults
+    puts "Ticket check_defaults"
+    puts owner_id
     self.owner_id = 1 if !owner_id
     return true if !customer_id
     customer = User.find_by(id: customer_id)
     return true if !customer
+    # testing ids
+    puts "Ticket check_defaults oid"
+    puts .organization_id
+    puts "Ticket check_defaults c.oid"
+    puts customer.organization_id
+    puts "Ticket check_defaults c.oids"
+    puts customer.organization_ids
+
     return true if customer.organization_ids.include?(organization_id)
     return true if customer.organization_id? && customer.organization_id == organization_id
     return true if organization_id

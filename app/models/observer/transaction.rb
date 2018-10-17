@@ -114,6 +114,8 @@ class Observer::Transaction < ActiveRecord::Observer
 =end
 
   def self.get_uniq_changes(events)
+    puts "get_uniq_changes?"
+    puts events.inspect
     list_objects = {}
     events.each do |event|
 
@@ -121,6 +123,8 @@ class Observer::Transaction < ActiveRecord::Observer
       article = nil
       if event[:object] == 'Ticket::Article'
         article = Ticket::Article.find_by(id: event[:id])
+        puts "Transaction article=====>"
+        puts article
         next if !article
         next if event[:type] == 'update'
 
@@ -155,11 +159,16 @@ class Observer::Transaction < ActiveRecord::Observer
       end
 
       # merge changes
+      puts "event[:changes]"
+      puts event[:changes]
       if event[:changes]
+        puts store[:changes]
         if !store[:changes]
           store[:changes] = event[:changes]
         else
           event[:changes].each do |key, value|
+            puts "changes"
+            puts key, value
             if !store[:changes][key]
               store[:changes][key] = value
             else
@@ -174,6 +183,8 @@ class Observer::Transaction < ActiveRecord::Observer
         store[:article_id] = article.id
       end
     end
+    puts "list_objects"
+    puts list_objects.inspect
     list_objects
   end
 

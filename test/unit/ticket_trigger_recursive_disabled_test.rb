@@ -1574,6 +1574,8 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    puts 'Agent'
+    puts agent.inspect
     roles = Role.where(name: 'Customer')
     customer = User.create_or_update(
       login: 'customer@example.com',
@@ -1587,7 +1589,8 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
-
+    puts 'Customer'
+    puts customer.inspect
     ticket1 = Ticket.create!(
       title: 'test 123',
       group: Group.lookup(name: 'Users'),
@@ -1595,6 +1598,8 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    puts 'Ticket1'
+    puts ticket1.inspect
     Ticket::Article.create!(
       ticket_id: ticket1.id,
       from: 'some_sender@example.com',
@@ -1620,6 +1625,8 @@ class TicketTriggerRecursiveDisabledTest < ActiveSupport::TestCase
 
     ticket1.update!(customer: customer )
 
+    puts 'Ticket1 with customer'
+    puts ticket1.inspect
     UserInfo.current_user_id = agent.id
     Ticket::Article.create!(
       ticket_id: ticket1.id,

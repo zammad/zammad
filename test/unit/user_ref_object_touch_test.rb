@@ -78,7 +78,7 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
     if organization1.updated_at > 3.seconds.ago
       assert(true, 'organization1.updated_at has been updated')
     else
-      assert(false, 'organization1.updated_at has not been updated')
+      assert(false, 'organization1.updated_at has not been updated') ##############
     end
 
     travel 4.seconds

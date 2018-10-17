@@ -105,7 +105,7 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
     if customer1.updated_at > 2.seconds.ago
       assert(true, 'customer1.updated_at has been updated')
     else
-      assert(false, 'customer1.updated_at has not been updated')
+      assert(false, 'customer1.updated_at has not been updated') ######################
     end
 
     organization1.reload
