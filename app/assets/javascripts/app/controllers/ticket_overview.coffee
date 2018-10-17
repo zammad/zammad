@@ -1175,6 +1175,7 @@ class Table extends App.Controller
         bindCheckbox:
           events:
             'click': callbackCheckbox
+          select_all: callbackCheckbox
       )
 
     @renderPopovers()
