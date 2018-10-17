@@ -115,8 +115,8 @@ gem 'slack-notifier'
 gem 'zendesk_api'
 
 # integrations - exchange
-gem 'autodiscover', git: 'https://github.com/thorsteneckel/autodiscover.git'
-gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm.git'
+gem 'autodiscover', git: 'https://github.com/zammad-deps/autodiscover'
+gem 'rubyntlm', git: 'https://github.com/wimm/rubyntlm'
 gem 'viewpoint'
 
 # Gems used only for develop/test and not required
@@ -174,7 +174,7 @@ group :development, :test do
   gem 'webmock'
 
   # record and replay TCP/HTTP transactions
-  gem 'tcr'
+  gem 'tcr', git: 'https://github.com/zammad-deps/tcr'
   gem 'vcr'
 end
 
