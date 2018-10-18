@@ -11,7 +11,7 @@ end
 FactoryBot.define do
   factory :object_manager_attribute, class: ObjectManager::Attribute do
 
-    object_lookup_id 2
+    object_lookup_id { ObjectLookup.by_name('Ticket') }
     name    { generate(:object_manager_attribute_name) }
     display { generate(:object_manager_attribute_display) }
     data_option_new do
