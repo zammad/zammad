@@ -1,6 +1,7 @@
 module EventBuffer
 
   def self.list(key)
+    puts "#=#= EventBuffer list", key
     if !Thread.current[:event_buffer]
       Thread.current[:event_buffer] = {}
     end
@@ -8,6 +9,7 @@ module EventBuffer
   end
 
   def self.add(key, item)
+    puts "#=#= EventBuffer add", key
     if !Thread.current[:event_buffer]
       Thread.current[:event_buffer] = {}
     end
@@ -18,6 +20,7 @@ module EventBuffer
   end
 
   def self.reset(key)
+    puts "#=#= EventBuffer RESET", key
     return if !Thread.current[:event_buffer]
     return if !Thread.current[:event_buffer][key]
     Thread.current[:event_buffer][key] = []

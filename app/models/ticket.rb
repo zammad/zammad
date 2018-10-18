@@ -422,12 +422,15 @@ get count of tickets and tickets which match on selector
     raise 'no selectors given' if !selectors
     query, bind_params, tables = selector2sql(selectors, current_user)
     return [] if !query
-
+    puts "===Ticket.selectors","q",query,"b",bind_params,"t",tables
     ActiveRecord::Base.transaction(requires_new: true) do
       begin
+        puts "===Ticket.selectors current_user", current_user
+
         if !current_user
           ticket_count = Ticket.distinct.where(query, *bind_params).joins(tables).count
           tickets = Ticket.distinct.where(query, *bind_params).joins(tables).limit(limit)
+          puts "TICKETS SQL",tickets.to_sql
           return [ticket_count, tickets]
         end
 
@@ -1139,6 +1142,7 @@ perform active triggers on ticket
 =end
 
   def self.perform_triggers(ticket, article, item, options = {})
+    puts "Ticket.perform_triggers","t",ticket,"a", article,"i", item,"o", options
     recursive = Setting.get('ticket_trigger_recursive')
     type = options[:type] || item[:type]
     local_options = options.clone
@@ -1176,8 +1180,10 @@ perform active triggers on ticket
     end
 
     Transaction.execute(local_options) do
+      puts "TICKET TRANSACTION local_option", local_options.pretty_inspect
+      puts "TICKET TRANSACTION triggers", triggers.pretty_inspect
       triggers.each do |trigger|
-        logger.debug { "Probe trigger (#{trigger.name}/#{trigger.id}) for this object (Ticket:#{ticket.id}/Loop:#{local_options[:loop_count]})" }
+        puts "Probe trigger (#{trigger.name}/#{trigger.id}) for this object (Ticket:#{ticket.id}/Loop:#{local_options[:loop_count]})"
 
         condition = trigger.condition
 
@@ -1228,6 +1234,7 @@ perform active triggers on ticket
           next if condition['ticket.action']['operator'] != 'is' && condition['ticket.action']['value'] == type
           condition.delete('ticket.action')
         end
+        puts "TICKET TRANSACTION triggers has_changed_done", !has_changed_done
         next if !has_changed_done
 
         # check in min one attribute of condition has changed on update
@@ -1262,8 +1269,11 @@ perform active triggers on ticket
           }
         end
 
+        puts "TICKET TRANSACTION triggers condition", condition.pretty_inspect
         # verify is condition is matching
         ticket_count, tickets = Ticket.selectors(condition, 1)
+
+        puts "TICKET TRANSACTION triggers ticket_count, tickets", ticket_count, tickets.pretty_inspect
 
         next if ticket_count.blank?
         next if ticket_count.zero?
@@ -1396,13 +1406,14 @@ result
   def check_defaults
     puts "Ticket check_defaults"
     puts owner_id
+    puts "Ticket check_defaults SELF:before", self.pretty_inspect
     self.owner_id = 1 if !owner_id
     return true if !customer_id
     customer = User.find_by(id: customer_id)
     return true if !customer
     # testing ids
     puts "Ticket check_defaults oid"
-    puts .organization_id
+    puts organization_id
     puts "Ticket check_defaults c.oid"
     puts customer.organization_id
     puts "Ticket check_defaults c.oids"
@@ -1412,6 +1423,7 @@ result
     return true if customer.organization_id? && customer.organization_id == organization_id
     return true if organization_id
     self.organization_id = customer.organization_id ? customer.organization_id : customer.organization_ids[0]
+    puts "Ticket check_defaults SELF:after", self.pretty_inspect
     true
   end
 

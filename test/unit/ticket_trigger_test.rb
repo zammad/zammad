@@ -1585,6 +1585,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
       created_by_id: 1,
       updated_by_id: 1,
     )
+    puts "Triger", trigger1.pretty_inspect
     groups = Group.where(name: 'Users')
     roles = Role.where(name: 'Agent')
     agent = User.create_or_update(
@@ -1647,6 +1648,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
 
     ticket1.update!(customer: customer )
     puts "Before article"
+    puts agent.pretty_inspect
     UserInfo.current_user_id = agent.id
     Ticket::Article.create!(
       ticket_id: ticket1.id,
@@ -1671,6 +1673,9 @@ class TicketTriggerTest < ActiveSupport::TestCase
     puts agent.id
     puts ticket1.owner_id
 
+    assert_equal('test 123', ticket1.title, 'ticket1.title verify')
+    assert_equal('Users', ticket1.group.name, 'ticket1.group verify')
+    assert_equal(agent.id, ticket1.owner_id, 'ticket1.owner_id verify')
     assert_equal('new', ticket1.state.name, 'ticket1.state verify')
     assert_equal('2 normal', ticket1.priority.name, 'ticket1.priority verify')
     assert_equal(2, ticket1.articles.count, 'ticket1.articles verify')
