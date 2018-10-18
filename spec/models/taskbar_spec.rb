@@ -3,20 +3,16 @@ require 'rails_helper'
 RSpec.describe Taskbar do
 
   context 'single creation' do
-    Taskbar.destroy_all
-    UserInfo.current_user_id = 1
 
-    taskbar = Taskbar.create(
-      client_id: 123,
-      key: 'Ticket-1234',
-      callback: 'TicketZoom',
-      params: {
-        id: 1234,
-      },
-      state: {},
-      prio: 1,
-      notify: false,
-    )
+    let(:taskbar) do
+
+      Taskbar.destroy_all
+      UserInfo.current_user_id = 1
+
+      create(:taskbar, params: {
+               id: 1234,
+             })
+    end
 
     it 'existing key' do
       expect(taskbar.key).to eq('Ticket-1234')
@@ -79,8 +75,6 @@ RSpec.describe Taskbar do
       expect(taskbar.last_contact.to_s).not_to eq(last_contact1.to_s)
       expect(taskbar.last_contact.to_s).not_to eq(last_contact2.to_s)
     end
-
-    UserInfo.current_user_id = nil
   end
 
   context 'multible creation' do

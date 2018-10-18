@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Translation do
 
-  Translation.where(locale: 'de-de').destroy_all
-  Translation.sync('de-de')
+  before(:all) do
+    Translation.where(locale: 'de-de').destroy_all
+    Translation.sync('de-de')
+  end
 
   context 'default translations' do
 
