@@ -24,6 +24,9 @@ namespace :searchindex do
       number = info['version']['number'].to_s
     end
 
+    settings = {
+      'index.mapping.total_fields.limit': 2000,
+    }
     mapping = {}
     Models.indexable.each do |local_object|
       mapping.merge!(get_mapping_properties_object(local_object))
@@ -33,7 +36,8 @@ namespace :searchindex do
     SearchIndexBackend.index(
       action: 'create',
       data: {
-        mappings: mapping
+        mappings: mapping,
+        settings: settings,
       }
     )
 
