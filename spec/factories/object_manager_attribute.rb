@@ -17,7 +17,7 @@ FactoryBot.define do
     data_option_new do
       {}
     end
-    editable false
+    editable true
     active   true
     screens  do
       {
@@ -29,8 +29,8 @@ FactoryBot.define do
         'edit' => {}
       }
     end
-    add_attribute(:to_create) { false }
-    to_migrate    false
+    add_attribute(:to_create) { true }
+    to_migrate    true
     to_delete     false
     to_config     false
     position      15
