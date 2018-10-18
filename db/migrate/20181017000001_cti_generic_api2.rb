@@ -4,7 +4,7 @@ class CtiGenericApi2 < ActiveRecord::Migration[5.1]
     # return if it's a new setup
     return if !Setting.find_by(name: 'system_init_done')
     return if !column_exists?(:cti_logs, :initialized_at)
-    return if !column_exists?(:cti_logs, :initialized_at_cleanup)
+    return if column_exists?(:cti_logs, :initialized_at_cleanup)
 
     add_column :cti_logs, :initialized_at_cleanup, :timestamp, limit: 3, null: true
     Cti::Log.connection.schema_cache.clear!
@@ -18,13 +18,17 @@ class CtiGenericApi2 < ActiveRecord::Migration[5.1]
           log.update_column(:initialized_at_cleanup, initialized_at) # rubocop:disable Rails/SkipsModelValidations
           if initialized_at && log.start_at
             log.update_column(:duration_waiting_time, log.start_at.to_i - initialized_at.to_i) # rubocop:disable Rails/SkipsModelValidations
+          else
+            log.update_column(:duration_waiting_time, nil) # rubocop:disable Rails/SkipsModelValidations
           end
         rescue => e
-          logger.error e
+          Rails.logger.error e
         end
       end
       if log.end_at && log.start_at
         log.update_column(:duration_talking_time, log.end_at.to_i - log.start_at.to_i) # rubocop:disable Rails/SkipsModelValidations
+      else
+        log.update_column(:duration_talking_time, nil) # rubocop:disable Rails/SkipsModelValidations
       end
     end
 
