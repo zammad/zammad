@@ -162,6 +162,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
 
+      travel 2.seconds
+
       # outbound - I - hangup by agent
       params = 'event=hangup&direction=out&call_id=1234567890-1&cause=cancel'
       post "/api/v1/cti/#{token}", params: params
@@ -180,7 +182,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
+      expect(log.duration_waiting_time).to eq(2)
       expect(log.duration_talking_time).to be_nil
 
       # outbound - II - new call
@@ -204,6 +206,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
 
+      travel 2.seconds
+
       # outbound - II - answer by customer
       params = 'event=answer&direction=out&call_id=1234567890-2&from=4930600000000&to=4912347114711'
       post "/api/v1/cti/#{token}", params: params
@@ -222,8 +226,10 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_truthy
       expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to be_truthy
+      expect(log.duration_waiting_time).to eq(2)
       expect(log.duration_talking_time).to be_nil
+
+      travel 2.seconds
 
       # outbound - II - hangup by customer
       params = 'event=hangup&direction=out&call_id=1234567890-2&cause=normalClearing&from=4930600000000&to=4912347114711'
@@ -243,8 +249,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_truthy
       expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to be_truthy
-      expect(log.duration_talking_time).to be_truthy
+      expect(log.duration_waiting_time).to eq(2)
+      expect(log.duration_talking_time).to eq(2)
 
       # inbound - I - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-3&user%5B%5D=user+1'
@@ -487,6 +493,57 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(json_response['list'][5]['comment']).to eq('normalClearing')
       expect(json_response['list'][5]['state']).to eq('hangup')
       expect(json_response['list'][6]['call_id']).to eq('1234567890-1')
+    end
+
+    it 'does queue param tests' do
+      token = Setting.get('cti_token')
+
+      # inbound - queue & user
+      params = 'event=newCall&direction=in&to=4930600000000&from=anonymous&call_id=1234567890-1&user%5B%5D=user+1,user+2&queue=some_queue_name'
+      post "/api/v1/cti/#{token}", params: params
+      expect(response).to have_http_status(200)
+      log = Cti::Log.find_by(call_id: '1234567890-1')
+      expect(log).to be_truthy
+      expect(log.to).to eq('4930600000000')
+      expect(log.from).to eq('anonymous')
+      expect(log.direction).to eq('in')
+      expect(log.to_comment).to eq('user 1,user 2')
+      expect(log.from_comment).to be_nil
+      expect(log.preferences['to']).to be_falsey
+      expect(log.preferences['from']).to be_falsey
+      expect(log.comment).to be_nil
+      expect(log.queue).to eq('some_queue_name')
+      expect(log.state).to eq('newCall')
+      expect(log.done).to eq(false)
+      expect(log.initialized_at).to be_truthy
+      expect(log.start_at).to be_nil
+      expect(log.end_at).to be_nil
+      expect(log.duration_waiting_time).to be_nil
+      expect(log.duration_talking_time).to be_nil
+
+      # inbound - queue & no user
+      params = 'event=newCall&direction=in&to=4930600000000&from=anonymous&call_id=1234567890-2&user%5B%5D=&queue=some_queue_name'
+      post "/api/v1/cti/#{token}", params: params
+      expect(response).to have_http_status(200)
+      log = Cti::Log.find_by(call_id: '1234567890-2')
+      expect(log).to be_truthy
+      expect(log.to).to eq('4930600000000')
+      expect(log.from).to eq('anonymous')
+      expect(log.direction).to eq('in')
+      expect(log.to_comment).to eq('some_queue_name')
+      expect(log.from_comment).to be_nil
+      expect(log.preferences['to']).to be_falsey
+      expect(log.preferences['from']).to be_falsey
+      expect(log.comment).to be_nil
+      expect(log.queue).to eq('some_queue_name')
+      expect(log.state).to eq('newCall')
+      expect(log.done).to eq(false)
+      expect(log.initialized_at).to be_truthy
+      expect(log.start_at).to be_nil
+      expect(log.end_at).to be_nil
+      expect(log.duration_waiting_time).to be_nil
+      expect(log.duration_talking_time).to be_nil
+
     end
   end
 end

@@ -121,20 +121,6 @@ class App.CTI extends App.Controller
     @renderCallerLog()
 
   renderCallerLog: ->
-    format = (time) ->
-
-      # Hours, minutes and seconds
-      hrs = ~~parseInt((time / 3600))
-      mins = ~~parseInt(((time % 3600) / 60))
-      secs = parseInt(time % 60)
-
-      # Output like "1:01" or "4:03:59" or "123:03:59"
-      mins = "0#{mins}" if mins < 10
-      secs = "0#{secs}" if secs < 10
-      if hrs > 0
-        return "#{hrs}:#{mins}:#{secs}"
-      "#{mins}:#{secs}"
-
     for item in @list
       item.status_class = ''
       item.disabled = true
@@ -157,15 +143,12 @@ class App.CTI extends App.Controller
         if item.comment
           item.state_human += ", #{item.comment}"
 
-      if item.start_at && item.end_at
-        item.duration = format((Date.parse(item.end_at) - Date.parse(item.start_at))/1000)
-
       diff_in_min = ((Date.now() - Date.parse(item.created_at)) / 1000) / 60
       if diff_in_min > 1
         item.disabled = false
 
     @removePopovers()
-    @callerLog.html( App.view('cti/caller_log')(list: @list))
+    @callerLog.html(App.view('cti/caller_log')(list: @list))
     @renderPopovers()
 
     @updateNavMenu()
