@@ -1,6 +1,6 @@
 <div class="alert alert--danger hidden" role="alert"></div>
 <p>
-  <%- @T('The tutorial on how to manage a %s is hosted on our [online documentation](https://zammad.org/documentation/channel/telegram).', 'Telegram Bot') %>
+  <%- @T('The tutorial on how to manage a %s is hosted on our [online documentation](https://docs.zammad.org/en/latest/channel-telegram.html).', 'Telegram Bot') %>
 </p>
 <fieldset>
   <h2><%- @T('Enter your %s App Keys', 'Telegram') %></h2>
