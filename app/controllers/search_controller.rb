@@ -66,7 +66,7 @@ class SearchController < ApplicationController
       if objects_with_direct_search_index.present?
         items = SearchIndexBackend.search(query, limit, objects_with_direct_search_index)
         items.each do |item|
-          require item[:type].to_filename
+          require_dependency item[:type].to_filename
           local_class = Kernel.const_get(item[:type])
           record = local_class.lookup(id: item[:id])
           next if !record

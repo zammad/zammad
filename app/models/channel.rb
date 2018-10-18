@@ -318,7 +318,7 @@ load channel driver and return class
     # 'warning: toplevel constant Twitter referenced by Channel::Driver::Twitter' error e.g.
     # so we have to convert the channel name to the filename via Rails String.underscore
     # http://stem.ps/rails/2015/01/25/ruby-gotcha-toplevel-constant-referenced-by.html
-    require "channel/driver/#{adapter.to_filename}"
+    require_dependency "channel/driver/#{adapter.to_filename}"
 
     Object.const_get("::Channel::Driver::#{adapter.to_classname}")
   end

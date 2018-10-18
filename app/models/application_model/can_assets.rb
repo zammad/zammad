@@ -144,7 +144,7 @@ get assets of object list
 
     def assets_of_object_list(list, assets = {})
       list.each do |item|
-        require item['object'].to_filename
+        require_dependency item['object'].to_filename
         record = Kernel.const_get(item['object']).find(item['o_id'])
         assets = record.assets(assets)
         if item['created_by_id'].present?
