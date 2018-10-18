@@ -176,10 +176,6 @@ group :development, :test do
   # record and replay TCP/HTTP transactions
   gem 'tcr'
   gem 'vcr'
-
-  # database cleanup when transactions are not possible
-  # and DB initialization before running RSpec suite
-  gem 'database_cleaner'
 end
 
 # Want to extend Zammad with additional gems?
