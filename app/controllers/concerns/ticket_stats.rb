@@ -8,6 +8,7 @@ module TicketStats
       limit: limit,
       condition: condition,
       current_user: current_user,
+      sort_by: 'created_at',
     )
     assets_of_tickets(tickets, assets)
   end
