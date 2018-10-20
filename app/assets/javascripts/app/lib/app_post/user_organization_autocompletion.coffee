@@ -36,6 +36,7 @@ class UserNew extends App.ControllerModal
   buttonSubmit: true
   head: 'User'
   headPrefix: 'New'
+  backdrop: 'static'
 
   content: ->
     @controller = new App.ControllerForm(
