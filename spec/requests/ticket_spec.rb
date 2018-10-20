@@ -2079,4 +2079,27 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
     end
   end
+
+  describe 'stats' do
+    it 'orders tickets based on created_at desc' do
+      organization = create(:organization, shared: false)
+      customer     = create(:customer_user, organization: organization)
+
+      ticket1       = create(:ticket, customer: customer, organization: organization)
+      ticket2       = create(:ticket, customer: customer, organization: organization)
+      ticket3       = create(:ticket, customer: customer, organization: organization)
+
+      ticket2.update_attributes(title: 'Some title')
+
+      authenticated_as(admin_user)
+      get "/api/v1/ticket_stats", params: { organization_id: organization.id, user_id: customer.id }, as: :json
+
+      expect(response).to have_http_status(200)
+      expect(json_response).to be_a_kind_of(Hash)
+      expect(json_response['user']['open_ids']).to eq([ticket3.id, ticket2.id, ticket1.id])
+      expect(json_response['organization']['open_ids']).to eq([ticket3.id, ticket2.id, ticket1.id])
+    end
+
+  end
+
 end
