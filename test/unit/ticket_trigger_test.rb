@@ -1637,6 +1637,7 @@ class TicketTriggerTest < ActiveSupport::TestCase
     )
     Observer::Transaction.commit
     puts "After create"
+    puts ticket1.pretty_inspect
 
     assert_equal('test 123', ticket1.title, 'ticket1.title verify')
     assert_equal('Users', ticket1.group.name, 'ticket1.group verify')

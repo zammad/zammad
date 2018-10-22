@@ -1420,8 +1420,9 @@ result
     puts customer.organization_ids
 
     return true if customer.organization_ids.include?(organization_id)
+    puts "------------------1"
     return true if customer.organization_id? && customer.organization_id == organization_id
-    return true if organization_id
+    puts "------------------2"
     self.organization_id = customer.organization_id ? customer.organization_id : customer.organization_ids[0]
     puts "Ticket check_defaults SELF:after", self.pretty_inspect
     true
