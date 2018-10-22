@@ -2944,7 +2944,7 @@ test('check getRecipientArticle format', function() {
     sender: {
       name: 'Customer',
     },
-    from: article_customer.email,
+    from: 'article lastname <article_customer@example.com>',
     to: 'some group',
     message_id: 'message_id22',
     created_by: {

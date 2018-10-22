@@ -1028,7 +1028,7 @@ class App.Utils
 
       # the article we are replying to is an incoming call
       else if article.from?.match(/@/)
-        articleNew.to = article.from
+        articleNew.to = App.Utils.parseAddressListLocal(article.from).join(', ')
 
       # if sender is customer but in article.from is no email, try to get
       # customers email via customer user
