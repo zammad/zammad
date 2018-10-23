@@ -20,6 +20,7 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    puts "USER_REF  agent1 after create/update", agent1
     roles = Role.where(name: 'Customer')
     organization1 = Organization.create_if_not_exists(
       name: 'Ref Object Update Org',
@@ -27,6 +28,7 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    puts "USER_REF  organization1 after create", organization1
     customer1 = User.create_or_update(
       login: 'user-ref-object-update-customer1@example.com',
       firstname: 'Notification',
@@ -40,6 +42,7 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    puts "USER_REF  customer1 after create/update", customer1
     customer2 = User.create_or_update(
       login: 'user-ref-object-update-customer2@example.com',
       firstname: 'Notification',
@@ -54,6 +57,7 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
       created_by_id: 1,
     )
 
+    puts "USER_REF  customer2 after create/update", customer2
     ticket = Ticket.create(
       title: "some title1\n äöüß",
       group: Group.lookup(name: 'Users'),
@@ -64,6 +68,7 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    puts "USER_REF  ticket after create", ticket
     assert(ticket, 'ticket created')
     assert_equal(ticket.customer.id, customer1.id)
     assert_equal(ticket.organization.id, organization1.id)
@@ -72,12 +77,16 @@ class UserRefObjectTouchTest < ActiveSupport::TestCase
 
     customer1.firstname = 'firstname customer1'
     customer1.save
+    puts "USER_REF  customer1 after update", customer1
 
     # check if organization has been touched
     organization1 = Organization.find(organization1.id)
+    puts "USER_REF  organization", organization1
     if organization1.updated_at > 3.seconds.ago
+      puts "USER_REF  organization.updated"
       assert(true, 'organization1.updated_at has been updated')
     else
+      puts "USER_REF  organization.not_updated"
       assert(false, 'organization1.updated_at has not been updated') ##############
     end
 
