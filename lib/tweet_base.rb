@@ -208,7 +208,7 @@ class TweetBase
     end
 
     article_preferences = {
-      twitter: twitter_preferences,
+      twitter: self.class.preferences_cleanup(twitter_preferences),
       links: [
         {
           url: "https://twitter.com/statuses/#{tweet.id}",
@@ -228,7 +228,7 @@ class TweetBase
       type_id:     Ticket::Article::Type.find_by(name: article_type).id,
       sender_id:   Ticket::Article::Sender.find_by(name: 'Customer').id,
       internal:    false,
-      preferences: preferences_cleanup(article_preferences),
+      preferences: article_preferences,
     )
   end
 
@@ -366,7 +366,7 @@ class TweetBase
     false
   end
 
-  def preferences_cleanup(preferences)
+  def self.preferences_cleanup(preferences)
 
     # replace Twitter::NullObject with nill to prevent elasticsearch index issue
     preferences.each_value do |value|
@@ -378,7 +378,7 @@ class TweetBase
           next
         end
         if sub_level.class == Twitter::Place || sub_level.class == Twitter::Geo
-          value[sub_key] = sub_level.attrs
+          value[sub_key] = sub_level.to_h
           next
         end
         next if sub_level.class != Twitter::NullObject
@@ -386,6 +386,14 @@ class TweetBase
         value[sub_key] = nil
       end
     end
+
+    if preferences[:geo].blank?
+      preferences[:geo] = {}
+    end
+    if preferences[:place].blank?
+      preferences[:place] = {}
+    end
+
     preferences
   end
 

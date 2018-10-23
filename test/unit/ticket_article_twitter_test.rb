@@ -56,7 +56,7 @@ class TicketArticleTwitter < ActiveSupport::TestCase
       from: '@example',
       body: 'some tweet',
       internal: false,
-      preferences: TweetBase.new.preferences_cleanup(preferences),
+      preferences: TweetBase.preferences_cleanup(preferences),
       updated_by_id: 1,
       created_by_id: 1,
     )
@@ -97,7 +97,7 @@ class TicketArticleTwitter < ActiveSupport::TestCase
       from: '@example',
       body: 'some tweet',
       internal: false,
-      preferences: TweetBase.new.preferences_cleanup(preferences),
+      preferences: TweetBase.preferences_cleanup(preferences),
       updated_by_id: 1,
       created_by_id: 1,
     )

@@ -6,6 +6,7 @@ class Observer::Ticket::Article::CommunicateSms::BackgroundJob
   def perform
     article = Ticket::Article.find(@article_id)
 
+    # set retry count
     article.preferences['delivery_retry'] ||= 0
     article.preferences['delivery_retry'] += 1
 
