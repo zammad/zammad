@@ -23,6 +23,7 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
       updated_by_id: admin1.id,
       created_by_id: 1,
     )
+    puts "organization_assets_test FIRST ORG", org.pretty_inspect
 
     user1 = User.create_or_update(
       login: 'assets1@example.org',
@@ -63,9 +64,8 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
     )
 
     org = Organization.find(org.id)
+    puts "organization_assets_test ORG after user created", org.pretty_inspect
     assets = org.assets({})
-    puts 'ASSETS #><#'
-    puts assets.inspect
     attributes = org.attributes_with_association_ids
     attributes.delete('user_ids')
     assert( diff(attributes, assets[:Organization][org.id]), 'check assets' )
@@ -102,26 +102,19 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
     attributes.delete('authorization_ids')
     assert_nil( assets[:User][user3.id], 'check assets' )
 
+    puts "organization_assets_test ORG before travel", Organization.find(org.id).pretty_inspect
     # touch user 2, check if org has changed
     travel 2.seconds
     user_new_2 = User.find(user2.id)
     user_new_2.lastname = 'assets2'
     user_new_2.save!
-    puts 'ORGANIZATION_ASSETS_TEST'
     org_new = Organization.find(org.id)
-    puts org_new.inspect
+    puts "organization_assets_test ORG after travel", org_new.pretty_inspect
     attributes = org_new.attributes_with_association_ids
-    puts 'attr #'
-    puts attributes.inspect
-    puts 'attr user_ids# '
-    puts attributes['user_ids']
+    # puts "organization_assets_test ATTRIBUTES", attributes.pretty_inspect
     attributes.delete('user_ids')
-    puts 'attr #----#'
-    puts attributes
-    puts 'assets #----#'
-    puts assets[:Organization][org_new.id]
-    puts 'diff #----#'
-    puts !diff(attributes, assets[:Organization][org_new.id])
+    # puts "organization_assets_test ATTRIBUTES__", attributes.pretty_inspect
+    # puts "organization_assets_test ASSETS", assets.pretty_inspect
     assert( !diff(attributes, assets[:Organization][org_new.id]), 'check assets' ) ############
 
     attributes = user_new_2.attributes_with_association_ids
@@ -163,7 +156,7 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
       end
     end
     return true if (object1.to_a - object2.to_a).blank?
-    #puts "ERROR: difference \n1: #{object1.inspect}\n2: #{object2.inspect}\ndiff: #{(object1.to_a - object2.to_a).inspect}"
+    puts "ERROR: difference \n1: #{object1.inspect}\n2: #{object2.inspect}\ndiff: #{(object1.to_a - object2.to_a).inspect}"
     false
   end
 
