@@ -366,10 +366,50 @@ class TweetBase
     false
   end
 
+=begin
+
+  replace Twitter::Place and Twitter::Geo as hash and replace Twitter::NullObject with nil
+
+  preferences = TweetBase.preferences_cleanup(
+    twitter: twitter_preferences,
+    links: [
+      {
+        url: 'https://twitter.com/statuses/123',
+        target: '_blank',
+        name: 'on Twitter',
+      },
+    ],
+  )
+
+or
+
+  preferences = {
+    twitter: TweetBase.preferences_cleanup(twitter_preferences),
+    links: [
+      {
+        url: 'https://twitter.com/statuses/123',
+        target: '_blank',
+        name: 'on Twitter',
+      },
+    ],
+  }
+
+=end
+
   def self.preferences_cleanup(preferences)
 
     # replace Twitter::NullObject with nill to prevent elasticsearch index issue
-    preferences.each_value do |value|
+    preferences.each do |key, value|
+
+      if value.class == Twitter::Place || value.class == Twitter::Geo
+        preferences[key] = value.to_h
+        next
+      end
+      if value.class == Twitter::NullObject
+        preferences[key] = nil
+        next
+      end
+
       next if !value.is_a?(Hash)
 
       value.each do |sub_key, sub_level|
@@ -387,11 +427,20 @@ class TweetBase
       end
     end
 
-    if preferences[:geo].blank?
-      preferences[:geo] = {}
-    end
-    if preferences[:place].blank?
-      preferences[:place] = {}
+    if preferences[:twitter]
+      if preferences[:twitter][:geo].blank?
+        preferences[:twitter][:geo] = {}
+      end
+      if preferences[:twitter][:place].blank?
+        preferences[:twitter][:place] = {}
+      end
+    else
+      if preferences[:geo].blank?
+        preferences[:geo] = {}
+      end
+      if preferences[:place].blank?
+        preferences[:place] = {}
+      end
     end
 
     preferences

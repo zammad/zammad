@@ -40,7 +40,7 @@ class TicketArticleTwitter < ActiveSupport::TestCase
       truncated: false
     }
     preferences = {
-      twitter: twitter_preferences,
+      twitter: TweetBase.preferences_cleanup(twitter_preferences),
       links: [
         {
           url: 'https://twitter.com/statuses/123',
@@ -56,18 +56,58 @@ class TicketArticleTwitter < ActiveSupport::TestCase
       from: '@example',
       body: 'some tweet',
       internal: false,
-      preferences: TweetBase.preferences_cleanup(preferences),
+      preferences: preferences,
       updated_by_id: 1,
       created_by_id: 1,
     )
     assert(article1.preferences[:twitter])
     assert_equal(1_234_567_890, article1.preferences[:twitter][:mention_ids][0])
-    assert_nil(article1.preferences[:twitter][:geo])
-    assert_equal(NilClass, article1.preferences[:twitter][:geo].class)
-    assert_nil(article1.preferences[:twitter][:place])
-    assert_equal(NilClass, article1.preferences[:twitter][:place].class)
+    assert_equal(ActiveSupport::HashWithIndifferentAccess, article1.preferences[:twitter][:geo].class)
+    assert(article1.preferences[:twitter][:geo].blank?)
+    assert_equal(ActiveSupport::HashWithIndifferentAccess, article1.preferences[:twitter][:place].class)
+    assert(article1.preferences[:twitter][:place].blank?)
 
-    twitter_preferences =  {
+    twitter_preferences = {
+      mention_ids: [1_234_567_890],
+      geo: Twitter::NullObject.new,
+      retweeted: false,
+      possibly_sensitive: false,
+      in_reply_to_user_id: 1_234_567_890,
+      place: Twitter::NullObject.new,
+      retweet_count: 0,
+      source: '<a href="http://example.com/software/tweetbot/mac" rel="nofollow">Tweetbot for Mac</a>',
+      favorited: false,
+      truncated: false
+    }
+    preferences = TweetBase.preferences_cleanup(
+      twitter: twitter_preferences,
+      links: [
+        {
+          url: 'https://twitter.com/statuses/123',
+          target: '_blank',
+          name: 'on Twitter',
+        },
+      ],
+    )
+    article2 = Ticket::Article.create!(
+      ticket_id: ticket1.id,
+      type_id: Ticket::Article::Type.find_by(name: 'twitter status').id,
+      sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
+      from: '@example',
+      body: 'some tweet',
+      internal: false,
+      preferences: preferences,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(article2.preferences[:twitter])
+    assert_equal(1_234_567_890, article2.preferences[:twitter][:mention_ids][0])
+    assert_equal(ActiveSupport::HashWithIndifferentAccess, article2.preferences[:twitter][:geo].class)
+    assert(article2.preferences[:twitter][:geo].blank?)
+    assert_equal(ActiveSupport::HashWithIndifferentAccess, article2.preferences[:twitter][:place].class)
+    assert(article2.preferences[:twitter][:place].blank?)
+
+    twitter_preferences = {
       mention_ids: [1_234_567_890],
       geo: Twitter::Geo.new(coordinates: [1, 1]),
       retweeted: false,
@@ -80,7 +120,7 @@ class TicketArticleTwitter < ActiveSupport::TestCase
       truncated: false
     }
     preferences = {
-      twitter: twitter_preferences,
+      twitter: TweetBase.preferences_cleanup(twitter_preferences),
       links: [
         {
           url: 'https://twitter.com/statuses/123',
@@ -90,23 +130,64 @@ class TicketArticleTwitter < ActiveSupport::TestCase
       ],
     }
 
-    article2 = Ticket::Article.create!(
+    article3 = Ticket::Article.create!(
       ticket_id: ticket1.id,
       type_id: Ticket::Article::Type.find_by(name: 'twitter status').id,
       sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
       from: '@example',
       body: 'some tweet',
       internal: false,
-      preferences: TweetBase.preferences_cleanup(preferences),
+      preferences: preferences,
       updated_by_id: 1,
       created_by_id: 1,
     )
-    assert(article2.preferences[:twitter])
-    assert_equal(1_234_567_890, article2.preferences[:twitter][:mention_ids][0])
-    assert_equal(ActiveSupport::HashWithIndifferentAccess, article2.preferences[:twitter][:geo].class)
-    assert_equal({ 'coordinates' => [1, 1] }, article2.preferences[:twitter][:geo])
-    assert_equal(ActiveSupport::HashWithIndifferentAccess, article2.preferences[:twitter][:place].class)
-    assert_equal({ 'country' => 'da', 'name' => 'do', 'woeid' => 1, 'id' => 1 }, article2.preferences[:twitter][:place])
+    assert(article3.preferences[:twitter])
+    assert_equal(1_234_567_890, article3.preferences[:twitter][:mention_ids][0])
+    assert_equal(ActiveSupport::HashWithIndifferentAccess, article3.preferences[:twitter][:geo].class)
+    assert_equal({ 'coordinates' => [1, 1] }, article3.preferences[:twitter][:geo])
+    assert_equal(ActiveSupport::HashWithIndifferentAccess, article3.preferences[:twitter][:place].class)
+    assert_equal({ 'country' => 'da', 'name' => 'do', 'woeid' => 1, 'id' => 1 }, article3.preferences[:twitter][:place])
+
+    twitter_preferences = {
+      mention_ids: [1_234_567_890],
+      geo: Twitter::Geo.new(coordinates: [1, 1]),
+      retweeted: false,
+      possibly_sensitive: false,
+      in_reply_to_user_id: 1_234_567_890,
+      place: Twitter::Place.new(country: 'da', name: 'do', woeid: 1, id: 1),
+      retweet_count: 0,
+      source: '<a href="http://example.com/software/tweetbot/mac" rel="nofollow">Tweetbot for Mac</a>',
+      favorited: false,
+      truncated: false
+    }
+    preferences = TweetBase.preferences_cleanup(
+      twitter: twitter_preferences,
+      links: [
+        {
+          url: 'https://twitter.com/statuses/123',
+          target: '_blank',
+          name: 'on Twitter',
+        },
+      ],
+    )
+
+    article4 = Ticket::Article.create!(
+      ticket_id: ticket1.id,
+      type_id: Ticket::Article::Type.find_by(name: 'twitter status').id,
+      sender_id: Ticket::Article::Sender.find_by(name: 'Customer').id,
+      from: '@example',
+      body: 'some tweet',
+      internal: false,
+      preferences: preferences,
+      updated_by_id: 1,
+      created_by_id: 1,
+    )
+    assert(article4.preferences[:twitter])
+    assert_equal(1_234_567_890, article4.preferences[:twitter][:mention_ids][0])
+    assert_equal(ActiveSupport::HashWithIndifferentAccess, article4.preferences[:twitter][:geo].class)
+    assert_equal({ 'coordinates' => [1, 1] }, article4.preferences[:twitter][:geo])
+    assert_equal(ActiveSupport::HashWithIndifferentAccess, article4.preferences[:twitter][:place].class)
+    assert_equal({ 'country' => 'da', 'name' => 'do', 'woeid' => 1, 'id' => 1 }, article4.preferences[:twitter][:place])
 
   end
 
