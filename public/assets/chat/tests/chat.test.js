@@ -3,11 +3,10 @@ const $ = window.jQuery
 
 require('../chat.js')
 
-const chatHTML = require('./chat.view.js')
 const show = jest.fn()
 
 window.ZammadChat.prototype.show = show
-window.ZammadChat.prototype.view = (name) => () => name === 'chat' ? chatHTML : '<div />'
+window.ZammadChat.prototype.view = () => () => '<div />'
 window.ZammadIo.prototype.send = jest.fn()
 
 describe('ZammadChat', () => {
