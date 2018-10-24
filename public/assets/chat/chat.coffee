@@ -159,7 +159,7 @@ do($ = window.jQuery, window) ->
       cssUrl: undefined
       fontSize: undefined
       buttonClass: 'open-zammad-chat'
-      inactiveClass: 'is-inactive'
+      inactiveClass: 'zammad-chat--is-inactive'
       title: '<strong>Chat</strong> with us!'
       scrollHint: 'Scroll down to see new messages'
       idleTimeout: 6

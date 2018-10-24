@@ -272,7 +272,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       cssUrl: void 0,
       fontSize: void 0,
       buttonClass: 'open-zammad-chat',
-      inactiveClass: 'is-inactive',
+      inactiveClass: 'zammad-chat--is-inactive',
       title: '<strong>Chat</strong> with us!',
       scrollHint: 'Scroll down to see new messages',
       idleTimeout: 6,
