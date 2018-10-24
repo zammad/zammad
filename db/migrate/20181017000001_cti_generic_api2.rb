@@ -6,7 +6,14 @@ class CtiGenericApi2 < ActiveRecord::Migration[5.1]
     return if !column_exists?(:cti_logs, :initialized_at)
     return if column_exists?(:cti_logs, :initialized_at_cleanup)
 
-    add_column :cti_logs, :initialized_at_cleanup, :timestamp, limit: 3, null: true
+    if ActiveRecord::Base.connection_config[:adapter] == 'mysql2'
+      # disable the MySQL strict_mode for the current connection
+      execute("SET sql_mode = ''")
+      add_column :cti_logs, :initialized_at_cleanup, :timestamp, limit: 3, null: true, default: '0000-00-00 00:00:00'
+    else
+      add_column :cti_logs, :initialized_at_cleanup, :timestamp, limit: 3, null: true
+    end
+
     Cti::Log.connection.schema_cache.clear!
     Cti::Log.reset_column_information
 
