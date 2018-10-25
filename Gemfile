@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 
 # core - base
-ruby '2.4.4'
-gem 'rails', '5.1.5'
+ruby '>= 2.4.4'
+gem 'rails','>= 5.2.1'
+gem 'activerecord','>= 5.2.1'
 
 # core - rails additions
 gem 'activerecord-session_store'
@@ -55,7 +56,7 @@ gem 'autoprefixer-rails'
 # asset handling - javascript execution for e.g. linux
 gem 'execjs'
 gem 'libv8'
-gem 'therubyracer'
+gem 'mini_racer'
 
 # authentication - provider
 gem 'doorkeeper'
