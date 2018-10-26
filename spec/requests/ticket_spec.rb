@@ -2081,18 +2081,21 @@ RSpec.describe 'Ticket', type: :request do
   end
 
   describe 'stats' do
-    it 'orders tickets based on created_at desc' do
+    it 'does orders tickets based on created_at desc' do
       organization = create(:organization, shared: false)
-      customer     = create(:customer_user, organization: organization)
+      customer = create(:customer_user, organization: organization)
 
-      ticket1       = create(:ticket, customer: customer, organization: organization)
-      ticket2       = create(:ticket, customer: customer, organization: organization)
-      ticket3       = create(:ticket, customer: customer, organization: organization)
+      travel 2.minutes
+      ticket1 = create(:ticket, customer: customer, organization: organization)
+      travel 2.minutes
+      ticket2 = create(:ticket, customer: customer, organization: organization)
+      travel 2.minutes
+      ticket3 = create(:ticket, customer: customer, organization: organization)
 
-      ticket2.update_attributes(title: 'Some title')
+      ticket2.update(title: 'Updated lately')
 
       authenticated_as(admin_user)
-      get "/api/v1/ticket_stats", params: { organization_id: organization.id, user_id: customer.id }, as: :json
+      get '/api/v1/ticket_stats', params: { organization_id: organization.id, user_id: customer.id }, as: :json
 
       expect(response).to have_http_status(200)
       expect(json_response).to be_a_kind_of(Hash)

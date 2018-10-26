@@ -9,6 +9,7 @@ module TicketStats
       condition: condition,
       current_user: current_user,
       sort_by: 'created_at',
+      order_by: 'desc',
     )
     assets_of_tickets(tickets, assets)
   end
