@@ -88,22 +88,65 @@ class AgentUserProfileTest < TestCase
       }
     )
 
-    # create new ticket
+    # create new ticket 1
     ticket_create(
       data: {
         customer: 'nico',
         group: 'Users',
-        title: 'user profile check ' + message,
-        body: 'user profile check ' + message,
+        title: 'user profile check 1 ' + message,
+        body: 'user profile check 1 ' + message,
       },
     )
 
-    # switch to org tab, verify if ticket is shown
+    # create new ticket 2
+    ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'user profile check 2 ' + message,
+        body: 'user profile check 2 ' + message,
+      },
+    )
+
+    # create new ticket 3
+    ticket_create(
+      data: {
+        customer: 'nico',
+        group: 'Users',
+        title: 'user profile check 3 ' + message,
+        body: 'user profile check 3 ' + message,
+      },
+    )
+
+    #switch to second ticket and update
+    ticket_open_by_title(title: 'user profile check 2 ' + message,)
+    ticket_update(
+      data: {
+        body: 'updated ticket'
+      },
+    )
+
+    # switch to user tab, verify if ticket is shown
     user_open_by_search(value: 'Braun')
     watch_for(
       css: '.active .profile-window',
-      value: 'user profile check ' + message,
+      value: 'user profile check 1 ' + message,
     )
+
+    # check if tickets are ordered by "created_at:desc" and not "updated_at"
+    match(
+      css: '.js-user-open-tickets .tasks .task:nth-child(1) .task-text',
+      value: 'user profile check 3 ' + message,
+    )
+    match(
+      css: '.js-user-open-tickets .tasks .task:nth-child(2) .task-text',
+      value: 'user profile check 2 ' + message,
+    )
+    match(
+      css: '.js-user-open-tickets .tasks .task:nth-child(3) .task-text',
+      value: 'user profile check 1 ' + message,
+    )
+
     tasks_close_all()
 
     # work with two browser windows
