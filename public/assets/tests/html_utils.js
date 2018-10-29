@@ -3079,6 +3079,11 @@ test("htmlImage2DataUrl", function() {
   result = App.Utils.htmlImage2DataUrl(source)
   equal(result, should, source)
 
+  source = '<img src="cid:1234">some test'
+  should = '<img src="cid:1234">some test'
+  result = App.Utils.htmlImage2DataUrl(source)
+  equal(result, should, source)
+
 });
 
 source = '<img src="/assets/images/avatar-bg.png">some test'

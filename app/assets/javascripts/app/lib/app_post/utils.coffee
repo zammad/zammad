@@ -1146,7 +1146,7 @@ class App.Utils
 
     html.find('img').each( (index) ->
       src = $(@).attr('src')
-      if !src.match(/^data:/i)
+      if !src.match(/^(data|cid):/i) # <img src="cid: ..."> may mean broken emails (see issue #2305)
         base64 = App.Utils._htmlImage2DataUrl(@)
         $(@).attr('src', base64)
     )
