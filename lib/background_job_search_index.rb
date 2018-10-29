@@ -20,4 +20,9 @@ class BackgroundJobSearchIndex
     Rails.logger.info "Can't index #{@object}.lookup(id: #{@o_id}), no such record found"
     false
   end
+
+  def max_attempts
+    20
+  end
+
 end
