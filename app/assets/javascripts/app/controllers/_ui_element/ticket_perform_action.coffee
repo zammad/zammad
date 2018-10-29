@@ -365,6 +365,11 @@ class App.UiElement.ticket_perform_action
           display: 'Ticket'
         },
         {
+          prefix: 'article'
+          object: 'TicketArticle'
+          display: 'Article'
+        },
+        {
           prefix: 'user'
           object: 'User'
           display: 'Current User'

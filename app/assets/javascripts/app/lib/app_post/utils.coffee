@@ -1028,7 +1028,7 @@ class App.Utils
 
       # the article we are replying to is an incoming call
       else if article.from?.match(/@/)
-        articleNew.to = article.from
+        articleNew.to = App.Utils.parseAddressListLocal(article.from).join(', ')
 
       # if sender is customer but in article.from is no email, try to get
       # customers email via customer user
@@ -1146,7 +1146,7 @@ class App.Utils
 
     html.find('img').each( (index) ->
       src = $(@).attr('src')
-      if !src.match(/^data:/i)
+      if !src.match(/^(data|cid):/i) # <img src="cid: ..."> may mean broken emails (see issue #2305)
         base64 = App.Utils._htmlImage2DataUrl(@)
         $(@).attr('src', base64)
     )

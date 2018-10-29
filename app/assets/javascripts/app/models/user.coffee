@@ -105,6 +105,7 @@ class App.User extends App.Model
       placement: placement
       vip: vip
       url: @imageUrl()
+      initials: @initials()
 
   isOutOfOffice: ->
     return false if @out_of_office isnt true

@@ -7,8 +7,8 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
     article = Ticket::Article.find(@article_id)
 
     # set retry count
-    record.preferences['delivery_retry'] ||= 0
-    record.preferences['delivery_retry'] += 1
+    article.preferences['delivery_retry'] ||= 0
+    article.preferences['delivery_retry'] += 1
 
     ticket = Ticket.lookup(id: article.ticket_id)
     log_error(article, "Can't find ticket.preferences for Ticket.find(#{article.ticket_id})") if !ticket.preferences
@@ -62,7 +62,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
           mention_ids.push user.id
         end
         article.to = to
-        article.preferences['twitter'] = {
+        article.preferences['twitter'] = TweetBase.preferences_cleanup(
           mention_ids: mention_ids,
           geo: tweet.geo,
           retweeted: tweet.retweeted?,
@@ -74,7 +74,7 @@ class Observer::Ticket::Article::CommunicateTwitter::BackgroundJob
           favorited: tweet.favorited?,
           truncated: tweet.truncated?,
           created_at: tweet.created_at,
-        }
+        )
       end
     else
       raise "Unknown tweet type '#{tweet.class}'"

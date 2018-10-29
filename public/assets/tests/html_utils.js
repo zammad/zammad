@@ -2944,7 +2944,7 @@ test('check getRecipientArticle format', function() {
     sender: {
       name: 'Customer',
     },
-    from: article_customer.email,
+    from: 'article lastname <article_customer@example.com>',
     to: 'some group',
     message_id: 'message_id22',
     created_by: {
@@ -3076,6 +3076,11 @@ test("htmlImage2DataUrl", function() {
 
   source = '<img src="data:image/jpeg;base64,some_data_123">some <img src="some url">test'
   should = '<img src="data:image/jpeg;base64,some_data_123">some <img src="data:,">test'
+  result = App.Utils.htmlImage2DataUrl(source)
+  equal(result, should, source)
+
+  source = '<img src="cid:1234">some test'
+  should = '<img src="cid:1234">some test'
   result = App.Utils.htmlImage2DataUrl(source)
   equal(result, should, source)
 

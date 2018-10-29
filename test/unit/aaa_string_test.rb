@@ -991,7 +991,7 @@ html.html2html_strict
     html   = '<img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">'
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
     assert_match(/<img style="width: 181px; height: 125px" src="cid:.+?">/, body)
-    assert(1, attachments_inline.count)
+    assert_equal(1, attachments_inline.count)
     assert_equal('image1.jpeg', attachments_inline[0][:filename])
     assert_equal('image/jpeg', attachments_inline[0][:preferences]['Content-Type'])
     assert_match(/@#{Setting.get('fqdn')}/, attachments_inline[0][:preferences]['Content-ID'])
@@ -1000,7 +1000,7 @@ html.html2html_strict
     html   = '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc">'
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
     assert_match(/<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">/, body)
-    assert(1, attachments_inline.count)
+    assert_equal(1, attachments_inline.count)
     assert_equal('image1.jpeg', attachments_inline[0][:filename])
     assert_equal('image/jpeg', attachments_inline[0][:preferences]['Content-Type'])
     assert_match(/@#{Setting.get('fqdn')}/, attachments_inline[0][:preferences]['Content-ID'])
@@ -1009,7 +1009,7 @@ html.html2html_strict
     html   = '<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..." style="width: 181px; height: 125px" alt="abc"><invalid what ever'
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
     assert_match(/<img src="cid:.+?" style="width: 181px; height: 125px" alt="abc">/, body)
-    assert(1, attachments_inline.count)
+    assert_equal(1, attachments_inline.count)
     assert_equal('image1.jpeg', attachments_inline[0][:filename])
     assert_equal('image/jpeg', attachments_inline[0][:preferences]['Content-Type'])
     assert_match(/@#{Setting.get('fqdn')}/, attachments_inline[0][:preferences]['Content-ID'])
@@ -1018,12 +1018,12 @@ html.html2html_strict
     html   = '<img src="/some_one.png" style="width: 181px; height: 125px" alt="abc">'
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
     assert_match(/<img src="\/some_one.png" style="width: 181px; height: 125px" alt="abc">/, body)
-    assert(0, attachments_inline.count)
+    assert_equal(0, attachments_inline.count)
 
     html   = '<div><img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."><p>123</p><img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/..."></div>'
     (body, attachments_inline) = HtmlSanitizer.replace_inline_images(html)
     assert_match(/<div>\s+<img style="width: 181px; height: 125px" src="cid:.+?"><p>123<\/p>\s+<img style="width: 181px; height: 125px" src="cid:.+?">\s+<\/div>/, body)
-    assert(2, attachments_inline.count)
+    assert_equal(2, attachments_inline.count)
     assert_equal('image1.jpeg', attachments_inline[0][:filename])
     assert_equal('image/jpeg', attachments_inline[0][:preferences]['Content-Type'])
     assert_match(/@#{Setting.get('fqdn')}/, attachments_inline[0][:preferences]['Content-ID'])

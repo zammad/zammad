@@ -1,4 +1,4 @@
-class FixedTwitterTicketArticlePreferences5 < ActiveRecord::Migration[5.0]
+class FixedTwitterTicketArticlePreferences7 < ActiveRecord::Migration[5.0]
   def up
 
     # return if it's a new setup
@@ -21,7 +21,7 @@ class FixedTwitterTicketArticlePreferences5 < ActiveRecord::Migration[5.0]
             next
           end
           if sub_level.class == Twitter::Place || sub_level.class == Twitter::Geo
-            value[sub_key] = sub_level.attrs
+            value[sub_key] = sub_level.to_h
             changed = true
             next
           end
@@ -31,6 +31,17 @@ class FixedTwitterTicketArticlePreferences5 < ActiveRecord::Migration[5.0]
           changed = true
         end
       end
+
+      if article.preferences[:twitter]&.key?(:geo) && article.preferences[:twitter][:geo].nil?
+        article.preferences[:twitter][:geo] = {}
+        changed = true
+      end
+
+      if article.preferences[:twitter]&.key?(:place) && article.preferences[:twitter][:place].nil?
+        article.preferences[:twitter][:place] = {}
+        changed = true
+      end
+
       next if !changed
 
       article.save!
