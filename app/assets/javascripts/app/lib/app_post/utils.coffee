@@ -753,6 +753,11 @@ class App.Utils
             changes[dataNowkey] = diff
         else if _.isObject( dataNow[dataNowkey] ) &&  _.isObject( dataLast[dataNowkey] )
           changes = @_formDiffChanges( dataNow[dataNowkey], dataLast[dataNowkey], changes )
+        # fix for issue #2042 - incorrect notification when closing a tab after setting up an object
+        # Ignore the diff if both conditions are true:
+        # 1. current value is the empty string (no user input yet)
+        # 2. no previous value (it's a newly added attribute)
+        else if dataNow[dataNowkey] == '' && !dataLast[dataNowkey]?
         else
           changes[dataNowkey] = dataNow[dataNowkey]
     changes

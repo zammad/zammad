@@ -1508,7 +1508,6 @@ test("check form diff", function() {
      pending_date: '2015-01-28T09:39:00Z',
   }
   diff = {
-    owner_id: '',
   }
   result = App.Utils.formDiff(dataNow, dataLast)
   deepEqual(result, diff, 'check form diff')
@@ -1520,7 +1519,6 @@ test("check form diff", function() {
   }
   dataLast = {}
   diff = {
-    owner_id:  '',
     state_ids: ['1','5','6','7'],
   }
   result = App.Utils.formDiff(dataNow, dataLast)
@@ -1548,7 +1546,6 @@ test("check form diff", function() {
     state_ids: ['1','5','7'],
   }
   diff = {
-    owner_id:  '',
     state_ids: ['6'],
   }
   result = App.Utils.formDiff(dataNow, dataLast)
@@ -1712,6 +1709,30 @@ test("check form diff", function() {
   }
   result = App.Utils.formDiff(dataNow, dataLast)
   deepEqual(result, diff, 'check form diff')
+
+
+  // regression test for issue #2042 - incorrect notification when closing a tab after setting up an object
+  // A newly created attribute will have the empty string as its value, this should be ignored for formDiff comparison
+  dataNow = {
+    test: '',
+  }
+  dataLast = {}
+  diff = {}
+  result = App.Utils.formDiff(dataNow, dataLast)
+  deepEqual(result, diff, 'check form diff for a newly created attribute that is blank')
+
+
+  dataNow = {
+    test: '',
+  }
+  dataLast = {
+    test: '123',
+  }
+  diff = {
+    test: '',
+  }
+  result = App.Utils.formDiff(dataNow, dataLast)
+  deepEqual(result, diff, 'check form diff for setting a previously valid value to blank')
 
 
   dataNow = {
