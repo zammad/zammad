@@ -187,7 +187,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.from).to eq('4930777000000')
       expect(log.to).to eq('01114100300')
       expect(log.direction).to eq('out')
-      #expect(log.from_comment).to eq('user 1')
+      expect(log.from_comment).to eq(nil)
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
@@ -207,7 +207,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.from).to eq('4930777000000')
       expect(log.to).to eq('01114100300')
       expect(log.direction).to eq('out')
-      #expect(log.from_comment).to eq('user 1')
+      expect(log.from_comment).to eq(nil)
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('cancel')
       expect(log.state).to eq('hangup')
@@ -227,7 +227,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.from).to eq('4930777000000')
       expect(log.to).to eq('01114100300')
       expect(log.direction).to eq('out')
-      # expect(log.from_comment).to eq('user 1')
+      expect(log.from_comment).to eq(nil)
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
@@ -247,7 +247,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.from).to eq('4930777000000')
       expect(log.to).to eq('01114100300')
       expect(log.direction).to eq('out')
-      # expect(log.from_comment).to eq('user 1')
+      expect(log.from_comment).to eq(nil)
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('answer')
@@ -267,7 +267,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.from).to eq('4930777000000')
       expect(log.to).to eq('01114100300')
       expect(log.direction).to eq('out')
-      # expect(log.from_comment).to eq('user 1')
+      expect(log.from_comment).to eq(nil)
       expect(log.to_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
       expect(log.state).to eq('hangup')
@@ -287,7 +287,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.to).to eq('030600000000')
       expect(log.from).to eq('01114100300')
       expect(log.direction).to eq('in')
-      #expect(log.to_comment).to eq('user 1')
+      expect(log.to_comment).to eq(nil)
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
@@ -307,7 +307,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.to).to eq('030600000000')
       expect(log.from).to eq('01114100300')
       expect(log.direction).to eq('in')
-      #expect(log.to_comment).to eq('user 1')
+      expect(log.to_comment).to eq(nil)
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('answer')
@@ -327,7 +327,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.to).to eq('030600000000')
       expect(log.from).to eq('01114100300')
       expect(log.direction).to eq('in')
-      #expect(log.to_comment).to eq('user 1')
+      expect(log.to_comment).to eq(nil)
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
       expect(log.state).to eq('hangup')
@@ -347,7 +347,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.to).to eq('030600000000')
       expect(log.from).to eq('01114100300')
       expect(log.direction).to eq('in')
-      #expect(log.to_comment).to eq('user 1,user 2')
+      expect(log.to_comment).to eq(nil)
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
@@ -407,7 +407,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.to).to eq('030600000000')
       expect(log.from).to eq('01114100300')
       expect(log.direction).to eq('in')
-      #expect(log.to_comment).to eq('user 1,user 2')
+      expect(log.to_comment).to eq(nil)
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to be_nil
       expect(log.state).to eq('newCall')
@@ -427,7 +427,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.to).to eq('030600000000')
       expect(log.from).to eq('01114100300')
       expect(log.direction).to eq('in')
-      #expect(log.to_comment).to eq('user 1,user 2')
+      expect(log.to_comment).to eq(nil)
       expect(log.from_comment).to eq('CallerId Customer1')
       expect(log.comment).to eq('normalClearing')
       expect(log.state).to eq('hangup')
@@ -447,7 +447,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.to).to eq('030600000000')
       expect(log.from).to eq('49999992222222')
       expect(log.direction).to eq('in')
-      #expect(log.to_comment).to eq('user 1,user 2')
+      expect(log.to_comment).to eq(nil)
       expect(log.from_comment).to eq('CallerId Customer3,CallerId Customer2')
       expect(log.preferences['to']).to be_falsey
       expect(log.preferences['from']).to be_truthy
@@ -469,7 +469,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.to).to eq('030600000000')
       expect(log.from).to eq('anonymous')
       expect(log.direction).to eq('in')
-      #expect(log.to_comment).to eq('user 1,user 2')
+      expect(log.to_comment).to eq(nil)
       expect(log.from_comment).to be_nil
       expect(log.preferences['to']).to be_falsey
       expect(log.preferences['from']).to be_falsey
@@ -503,12 +503,66 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(json_response['list'][5]['call_id']).to eq('1234567890-2')
       expect(json_response['list'][5]['state']).to eq('hangup')
       expect(json_response['list'][5]['from']).to eq('4930777000000')
-      #expect(json_response['list'][5]['from_comment']).to eq('user 1')
+      expect(json_response['list'][5]['from_comment']).to eq(nil)
       expect(json_response['list'][5]['to']).to eq('01114100300')
       expect(json_response['list'][5]['to_comment']).to eq('CallerId Customer1')
       expect(json_response['list'][5]['comment']).to eq('normalClearing')
       expect(json_response['list'][5]['state']).to eq('hangup')
       expect(json_response['list'][6]['call_id']).to eq('1234567890-1')
+    end
+
+    it 'does log call with peer' do
+      token = Setting.get('placetel_token')
+
+      # outbound - I - new call
+      params = 'event=newCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-1&peer=something@example.com'
+      post "/api/v1/placetel/#{token}", params: params
+      expect(response).to have_http_status(200)
+      log = Cti::Log.find_by(call_id: '1234567890-1')
+      expect(log).to be_truthy
+      expect(log.from).to eq('4930777000000')
+      expect(log.to).to eq('01114100300')
+      expect(log.direction).to eq('out')
+      expect(log.from_comment).to eq(nil)
+      expect(log.to_comment).to eq('CallerId Customer1')
+      expect(log.comment).to be_nil
+      expect(log.state).to eq('newCall')
+      expect(log.done).to eq(true)
+      expect(log.initialized_at).to be_truthy
+      expect(log.start_at).to be_nil
+      expect(log.end_at).to be_nil
+      expect(log.duration_waiting_time).to be_nil
+      expect(log.duration_talking_time).to be_nil
+
+      config = Setting.get('placetel_config')
+      config[:api_token] = '123'
+      Setting.set('placetel_config', config)
+
+      stub_request(:post, 'https://api.placetel.de/api/getVoIPUsers.json')
+        .to_return(status: 200, body: [{ 'callerid' => '03055571600', 'did' => 10, 'name' => 'Bob Smith', 'stype' => 3, 'uid' => '777008478072@example.com', 'uid2' => nil }, { 'callerid' => '03055571600', 'did' => 12, 'name' => 'Josef Müller', 'stype' => 3, 'uid' => '777042617425@example.com', 'uid2' => nil }].to_json)
+
+      params = 'event=newCall&direction=out&from=030600000000&to=01114100300&call_id=1234567890-2&peer=777008478072@example.com'
+      post "/api/v1/placetel/#{token}", params: params
+      expect(response).to have_http_status(200)
+      log = Cti::Log.find_by(call_id: '1234567890-2')
+      expect(log).to be_truthy
+      expect(log.from).to eq('4930777000000')
+      expect(log.to).to eq('01114100300')
+      expect(log.direction).to eq('out')
+      expect(log.from_comment).to eq('Bob Smith')
+      expect(log.to_comment).to eq('CallerId Customer1')
+      expect(log.comment).to be_nil
+      expect(log.state).to eq('newCall')
+      expect(log.done).to eq(true)
+      expect(log.initialized_at).to be_truthy
+      expect(log.start_at).to be_nil
+      expect(log.end_at).to be_nil
+      expect(log.duration_waiting_time).to be_nil
+      expect(log.duration_talking_time).to be_nil
+
+      # check if cache is filled
+      expect(Cache.get('placetelGetVoipUsers')['777008478072@example.com']).to eq('Bob Smith')
+
     end
   end
 end

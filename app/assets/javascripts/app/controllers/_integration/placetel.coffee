@@ -60,6 +60,8 @@ class Form extends App.Controller
     config = @config
     cleanupInput = @cleanupInput
 
+    config.api_token = @$('input[name=api_token]').val()
+
     # default caller_id
     default_caller_id = @$('input[name=default_caller_id]').val()
     config.outbound.default_caller_id = cleanupInput(default_caller_id)

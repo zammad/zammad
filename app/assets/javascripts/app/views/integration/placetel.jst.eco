@@ -19,6 +19,22 @@
     </table>
   </div>
 
+  <p><%- @T('In order for Zammad to access %s, the %s API token must be stored here', 'Placetel', 'Placetel') %>:<p>
+  <div class="settings-entry">
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="20%"><%- @T('Type') %>
+          <th width="80%"><%- @T('Content') %>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="settings-list-row-control"><%- @T('API Token') %>
+          <td class="settings-list-control-cell"><input type="input" class="form-control form-control--small js-select" value="<%= @config.api_token %>" name="api_token" placeholder="">
+      </tbody>
+    </table>
+  </div>
+
   <h2><%- @T('Inbound') %></h2>
 
   <p><%- @T('Blocked caller ids based on sender caller id.') %>

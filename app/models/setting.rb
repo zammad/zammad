@@ -7,8 +7,8 @@ class Setting < ApplicationModel
   store         :preferences
   before_create :state_check, :set_initial, :check_broadcast
   before_update :state_check, :check_broadcast
-  after_create  :reset_change_id
-  after_update  :reset_change_id
+  after_create  :reset_change_id, :reset_cache
+  after_update  :reset_change_id, :reset_cache
 
   attr_accessor :state
 
@@ -40,6 +40,7 @@ set config setting
     setting.state_current = { value: value }
     setting.save!
     logger.info "Setting.set('#{name}', #{value.inspect})"
+    true
   end
 
 =begin
@@ -75,6 +76,7 @@ reset config setting to default
     setting.state_current = setting.state_initial
     setting.save!
     logger.info "Setting.reset('#{name}', #{setting.state_current.inspect})"
+    true
   end
 
 =begin
@@ -142,6 +144,15 @@ reload config settings
     logger.debug { "Setting.reset_change_id: set new cache, #{change_id}" }
     Cache.write('Setting::ChangeId', change_id, { expires_in: 24.hours })
     @@lookup_at = nil # rubocop:disable Style/ClassVars
+    true
+  end
+
+  def reset_cache
+    return true if preferences[:cache].blank?
+
+    preferences[:cache].each do |key|
+      Cache.delete(key)
+    end
     true
   end
 

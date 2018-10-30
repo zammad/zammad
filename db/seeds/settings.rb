@@ -4034,6 +4034,7 @@ Setting.create_if_not_exists(
   preferences: {
     prio: 2,
     permission: ['admin.integration'],
+    cache: ['placetelGetVoipUsers'],
   },
   frontend: false,
 )
@@ -4041,7 +4042,7 @@ Setting.create_if_not_exists(
   title: 'PLACETEL Token',
   name: 'placetel_token',
   area: 'Integration::Placetel',
-  description: 'Token for placetel.',
+  description: 'Token for Placetel.',
   options: {
     form: [
       {
