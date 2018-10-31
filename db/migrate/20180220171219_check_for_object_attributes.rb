@@ -7,6 +7,7 @@ class CheckForObjectAttributes < ActiveRecord::Migration[5.1]
       fix_nil_data_option(attribute)
       fix_options(attribute)
       fix_relation(attribute)
+      fix_interger_missing_min_max(attribute)
 
       next if !attribute.changed?
 
@@ -37,5 +38,13 @@ class CheckForObjectAttributes < ActiveRecord::Migration[5.1]
     return if attribute[:data_option][:relation].is_a?(String)
 
     attribute[:data_option][:relation] = ''
+  end
+
+  # fixes issue #2318 - Upgrade to Zammad 2.7 was not possible (migration 20180220171219 CheckForObjectAttributes failed)
+  def fix_interger_missing_min_max(attribute)
+    return if attribute[:data_type] != 'integer'
+
+    attribute[:data_option][:min] = 0 if !attribute[:data_option][:min]
+    attribute[:data_option][:max] = 1_000_000 if !attribute[:data_option][:max]
   end
 end

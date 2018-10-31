@@ -53,6 +53,17 @@ FactoryBot.define do
     end
   end
 
+  factory :object_manager_attribute_integer, parent: :object_manager_attribute do
+    data_type   'integer'
+    data_option do
+      {
+        'default'   => 0,
+        'min'       => 0,
+        'max'       => 9999,
+      }
+    end
+  end
+
   factory :object_manager_attribute_date, parent: :object_manager_attribute do
     name        'date_attribute'
     data_type   'date'

@@ -112,4 +112,19 @@ RSpec.describe CheckForObjectAttributes, type: :db_migration do
       end
     end
   end
+
+  # regression test for issue #2318 - Upgrade to Zammad 2.7 was not possible (migration 20180220171219 CheckForObjectAttributes failed)
+  context 'for interger attributes' do
+    it 'missing :min and :max' do
+      attribute = create(:object_manager_attribute_integer)
+      attribute.update_columns(data_option: {}) # rubocop:disable Rails/SkipsModelValidations
+
+      expect { migrate }.not_to raise_error
+
+      attribute.reload
+
+      expect(attribute[:data_option][:min]).to be_a(Integer)
+      expect(attribute[:data_option][:max]).to be_a(Integer)
+    end
+  end
 end
