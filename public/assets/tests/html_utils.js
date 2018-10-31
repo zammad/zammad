@@ -1246,7 +1246,7 @@ test("identify signature by HTML", function() {
 });
 
 // check attachment references
-test("check replace tags", function() {
+test("check check attachment reference", function() {
   var message = 'some not existing'
   var result = false
   var verify = App.Utils.checkAttachmentReference(message)
@@ -1389,6 +1389,35 @@ test("check replace tags", function() {
       firstname: 'Bob',
       lastname: 'Smith',
     },
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  user = new App.User({
+    firstname: 'Bob',
+    lastname: 'Smith',
+    created_at: '2018-10-31T10:00:00Z',
+  })
+  message = "<div>#{user.firstname} #{user.created_at}</div>"
+  result  = '<div>Bob 10/31/2018 10:00</div>'
+  data    = {
+    user: user
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{user.created_at.date}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: user
+  }
+  verify = App.Utils.replaceTags(message, data)
+  equal(verify, result)
+
+  message = "<div>#{user.firstname} #{user.created.date}</div>"
+  result  = '<div>Bob -</div>'
+  data    = {
+    user: user
   }
   verify = App.Utils.replaceTags(message, data)
   equal(verify, result)
