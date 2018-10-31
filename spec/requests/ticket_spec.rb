@@ -2079,4 +2079,37 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['tickets']).to eq([ticket2.id, ticket1.id])
     end
   end
+
+  describe 'stats' do
+    let(:ticket1) { create(:ticket, customer: customer, organization: organization) }
+    let(:ticket2) { create(:ticket, customer: customer, organization: organization) }
+    let(:ticket3) { create(:ticket, customer: customer, organization: organization) }
+    let(:customer) { create(:customer_user, organization: organization) }
+    let(:organization) { create(:organization, shared: false) }
+
+    before do
+      authenticated_as(admin_user)
+
+      ticket1
+      travel 2.minutes
+      ticket2
+      travel 2.minutes
+      ticket3
+      travel 2.minutes
+      ticket2.touch # rubocop:disable Rails/SkipsModelValidations
+    end
+
+    # https://github.com/zammad/zammad/issues/2296
+    it 'orders tickets by created_at desc (#2296)' do
+      get '/api/v1/ticket_stats', params: { organization_id: organization.id, user_id: customer.id }, as: :json
+
+      expect(response).to have_http_status(200)
+      expect(json_response)
+        .to be_a_kind_of(Hash)
+        .and include('user' => hash_including('open_ids' => [ticket3.id, ticket2.id, ticket1.id]))
+        .and include('organization' => hash_including('open_ids' => [ticket3.id, ticket2.id, ticket1.id]))
+    end
+
+  end
+
 end
