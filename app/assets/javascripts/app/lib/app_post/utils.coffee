@@ -709,16 +709,29 @@ class App.Utils
       key = key.replace(/<.+?>/g, '')
       levels  = key.split(/\./)
       dataRef = objects
+      dataRefLast = undefined
       for level in levels
-        if level of dataRef
+        if typeof dataRef is 'object' && level of dataRef
+          dataRefLast = dataRef
           dataRef = dataRef[level]
         else
           dataRef = ''
           break
+      value = undefined
       if typeof dataRef is 'function'
         value = dataRef()
       else if dataRef isnt undefined && dataRef isnt null && dataRef.toString
-        value = dataRef.toString()
+        if dataRefLast && dataRefLast.constructor && dataRefLast.constructor.className
+          localClassRef = App[dataRefLast.constructor.className]
+          if localClassRef && localClassRef.attributesGet
+            attributes = localClassRef.attributesGet()
+            if attributes && attributes[level]
+              if attributes[level]['tag'] is 'datetime'
+                value = App.i18n.translateTimestamp(dataRef)
+              else if attributes[level]['tag'] is 'date'
+                value = App.i18n.translateDate(dataRef)
+        if !value
+          value = dataRef.toString()
       else
         value = ''
       #console.log( "tag replacement #{key}, #{value} env: ", objects)
