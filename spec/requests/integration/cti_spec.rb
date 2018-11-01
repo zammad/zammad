@@ -182,7 +182,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_nil
       expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to eq(2)
+      expect(log.duration_waiting_time).to be_between(2, 3)
       expect(log.duration_talking_time).to be_nil
 
       # outbound - II - new call
@@ -226,7 +226,7 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_truthy
       expect(log.end_at).to be_nil
-      expect(log.duration_waiting_time).to eq(2)
+      expect(log.duration_waiting_time).to be_between(2, 3)
       expect(log.duration_talking_time).to be_nil
 
       travel 2.seconds
@@ -249,8 +249,8 @@ RSpec.describe 'Integration CTI', type: :request do
       expect(log.initialized_at).to be_truthy
       expect(log.start_at).to be_truthy
       expect(log.end_at).to be_truthy
-      expect(log.duration_waiting_time).to eq(2)
-      expect(log.duration_talking_time).to eq(2)
+      expect(log.duration_waiting_time).to be_between(2, 3)
+      expect(log.duration_talking_time).to be_between(2, 3)
 
       # inbound - I - new call
       params = 'event=newCall&direction=in&to=4930600000000&from=4912347114711&call_id=1234567890-3&user%5B%5D=user+1'
