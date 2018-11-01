@@ -1285,6 +1285,21 @@ test("check check attachment reference", function() {
 
 // replace tags
 test("check replace tags", function() {
+  var formatNumber = function(num, digits) {
+    while (num.toString().length < digits) {
+      num = '0' + num
+    }
+    return num
+  }
+  var formatTimestamp = function(timestamp) {
+    localTime = new Date(Date.parse(timestamp))
+    d         = formatNumber(localTime.getDate(), 2)
+    m         = formatNumber(localTime.getMonth() + 1, 2)
+    yfull     = localTime.getFullYear()
+    M         = formatNumber(localTime.getMinutes(), 2)
+    H         = formatNumber(localTime.getHours(), 2)
+    return m + '/' + d + '/' + yfull + ' ' + H + ':' + M
+  }
 
   var message = "<div>#{user.firstname} #{user.lastname}</div>"
   var result  = '<div>Bob Smith</div>'
@@ -1399,7 +1414,7 @@ test("check replace tags", function() {
     created_at: '2018-10-31T10:00:00Z',
   })
   message = "<div>#{user.firstname} #{user.created_at}</div>"
-  result  = '<div>Bob 10/31/2018 10:00</div>'
+  result  = '<div>Bob ' + formatTimestamp('2018-10-31T10:00:00Z') + '</div>'
   data    = {
     user: user
   }

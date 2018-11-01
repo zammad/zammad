@@ -718,25 +718,32 @@ class App.Utils
           dataRef = ''
           break
       value = undefined
+
+      # if value is a function, execute function
       if typeof dataRef is 'function'
         value = dataRef()
+
+      # if value has content
       else if dataRef isnt undefined && dataRef isnt null && dataRef.toString
-        if dataRefLast && dataRefLast.constructor && dataRefLast.constructor.className
+
+        # in case if we have a references object, check what datatype the attribute has
+        # and e. g. convert timestamps/dates to browser locale
+        if dataRefLast?.constructor?.className
           localClassRef = App[dataRefLast.constructor.className]
-          if localClassRef && localClassRef.attributesGet
+          if localClassRef?.attributesGet
             attributes = localClassRef.attributesGet()
-            if attributes && attributes[level]
+            if attributes?[level]
               if attributes[level]['tag'] is 'datetime'
                 value = App.i18n.translateTimestamp(dataRef)
               else if attributes[level]['tag'] is 'date'
                 value = App.i18n.translateDate(dataRef)
+
+        # as fallback use value of toString()
         if !value
           value = dataRef.toString()
       else
         value = ''
-      #console.log( "tag replacement #{key}, #{value} env: ", objects)
-      if value is ''
-        value = '-'
+      value = '-' if value is ''
       value
     )
 

@@ -343,11 +343,12 @@ class _i18nSingleton extends Spine.Module
     return time if !time
     @convert(time, offset, @mapTime['timestamp'] || @timestampFormat)
 
+  formatNumber: (num, digits) ->
+    while num.toString().length < digits
+      num = '0' + num
+    num
+
   convert: (time, offset, format) ->
-    s = (num, digits) ->
-      while num.toString().length < digits
-        num = '0' + num
-      num
 
     timeObject = new Date(time)
 
@@ -363,13 +364,13 @@ class _i18nSingleton extends Spine.Module
     M      = timeObject.getMinutes()
     H      = timeObject.getHours()
     format = format
-      .replace(/dd/, s(d, 2))
+      .replace(/dd/, @formatNumber(d, 2))
       .replace(/d/, d)
-      .replace(/mm/, s(m, 2))
+      .replace(/mm/, @formatNumber(m, 2))
       .replace(/m/, m)
       .replace(/yyyy/, yfull)
       .replace(/yy/, yshort)
-      .replace(/SS/, s(S, 2))
-      .replace(/MM/, s(M, 2))
-      .replace(/HH/, s(H, 2))
+      .replace(/SS/, @formatNumber(S, 2))
+      .replace(/MM/, @formatNumber(M, 2))
+      .replace(/HH/, @formatNumber(H, 2))
     format
