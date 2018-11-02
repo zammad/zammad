@@ -1,6 +1,15 @@
 class Sessions::Event::Spool < Sessions::Event::Base
 
-  # get spool messages and send them to new client connection
+=begin
+
+Event module to serve spool messages and send them to new client connection.
+
+To execute this manually, just paste the following into the browser console
+
+  App.WebSocket.send({event:'spool'})
+
+=end
+
   def run
 
     # error handling
@@ -11,8 +20,13 @@ class Sessions::Event::Spool < Sessions::Event::Base
     end
 
     if !@session || !@session['id']
-      log 'error', "can't send spool, session not authenticated"
-      return
+      log 'error', "Can't send spool, session not authenticated"
+      return {
+        event: 'error',
+        data: {
+          error: 'Can\'t send spool, session not authenticated',
+        },
+      }
     end
 
     spool = Sessions.spool_list(@payload['timestamp'], @session['id'])

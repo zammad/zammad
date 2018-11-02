@@ -9,6 +9,10 @@ class Sessions::Event::Base
     return if !@clients[@client_id]
 
     @is_web_socket = true
+
+    return if !self.class.instance_variable_get(:@database_connection)
+
+    ActiveRecord::Base.establish_connection
   end
 
   def websocket_send(recipient_client_id, data)
@@ -120,8 +124,18 @@ class Sessions::Event::Base
     puts "#{Time.now.utc.iso8601}:client(#{client_id}) #{data}"
     #puts "#{Time.now.utc.iso8601}:#{ level }:client(#{ client_id }) #{ data }"
     # rubocop:enable Rails/Output
+    #Rails.logger.info "#{Time.now.utc.iso8601}:client(#{client_id}) #{data}"
   end
 
-  def destroy; end
+  def self.database_connection_required
+    @database_connection = true
+  end
+
+  def destroy
+    return if !@is_web_socket
+    return if !self.class.instance_variable_get(:@database_connection)
+
+    ActiveRecord::Base.remove_connection
+  end
 
 end

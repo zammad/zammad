@@ -35,6 +35,11 @@ class App.WebSocket
       _instance ?= new _webSocketSingleton
     _instance.support()
 
+  @queue: ->
+    if _instance == undefined
+      _instance ?= new _webSocketSingleton
+    _instance.queue
+
 # The actual Singleton class
 class _webSocketSingleton extends App.Controller
   @include App.LogInclude
@@ -355,10 +360,10 @@ class _webSocketSingleton extends App.Controller
         success: (data) =>
           if data && data.error
             @client_id = undefined
-            @_ajaxInit( force: true )
+            @_ajaxInit(force: true)
         error: =>
           @client_id = undefined
-          @_ajaxInit( force: true )
+          @_ajaxInit(force: true)
       )
 
   _ajaxReceive: =>

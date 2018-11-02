@@ -1,17 +1,5 @@
 class Sessions::Event::ChatBase < Sessions::Event::Base
-
-  def initialize(params)
-    super(params)
-    return if !@is_web_socket
-
-    ActiveRecord::Base.establish_connection
-  end
-
-  def destroy
-    return if !@is_web_socket
-
-    ActiveRecord::Base.remove_connection
-  end
+  database_connection_required
 
   def run
 

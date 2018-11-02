@@ -1,17 +1,15 @@
 class Sessions::Event::Maintenance < Sessions::Event::Base
+  database_connection_required
 
-  def initialize(params)
-    super(params)
-    return if !@is_web_socket
+=begin
 
-    ActiveRecord::Base.establish_connection
-  end
+Event module to broadcast maintenance messages to all client connections.
 
-  def destroy
-    return if !@is_web_socket
+To execute this manually, just paste the following into the browser console
 
-    ActiveRecord::Base.remove_connection
-  end
+  App.WebSocket.send({event:'maintenance', data: {some: 'key'}})
+
+=end
 
   def run
 
