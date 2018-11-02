@@ -63,6 +63,36 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
       roles: roles,
     )
 
+    temp_testing_user = User.create_or_update(
+      login: 'test_user@example.org',
+      firstname: 'test_user',
+      lastname: 'test_user',
+      email: 'test_user@example.org',
+      password: 'some_pass',
+      active: true,
+      updated_by_id: 1,
+      created_by_id: 1,
+      organization_id: org.id,
+      roles: roles,
+    )
+
+    puts "Organization_assets_test user with org created by 1", temp_testing_user.pretty_inspect
+
+    temp_testing_user2 = User.create_or_update(
+      login: 'test_user2@example.org',
+      firstname: 'test_user2',
+      lastname: 'test_user2',
+      email: 'test_user2@example.org',
+      password: 'some_pass',
+      active: true,
+      updated_by_id: user2.id,
+      created_by_id: user2.id,
+      organization_id: org.id,
+      roles: roles,
+    )
+
+    puts "Organization_assets_test user with org created by user2", temp_testing_user2.pretty_inspect
+
     org = Organization.find(org.id)
     puts "1 organization_assets_test ORG after user created", org.pretty_inspect
     assets = org.assets({})
@@ -101,7 +131,23 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
     attributes.delete('token_ids')
     attributes.delete('authorization_ids')
     assert_nil( assets[:User][user3.id], 'check assets' )
+    #====
+    temp_testing_user = User.find(temp_testing_user.id)
+    attributes = temp_testing_user.attributes_with_association_ids
+    attributes['accounts'] = {}
+    attributes.delete('password')
+    attributes.delete('token_ids')
+    attributes.delete('authorization_ids')
+    assert_nil( assets[:User][temp_testing_user.id], 'check assets' )
 
+    temp_testing_user2 = User.find(temp_testing_user2.id)
+    attributes = temp_testing_user2.attributes_with_association_ids
+    attributes['accounts'] = {}
+    attributes.delete('password')
+    attributes.delete('token_ids')
+    attributes.delete('authorization_ids')
+    assert_nil( assets[:User][temp_testing_user2.id], 'check assets' )
+    #====
     puts "organization_assets_test ORG before travel", Organization.find(org.id).pretty_inspect
     # touch user 2, check if org has changed
     travel 2.seconds
@@ -115,8 +161,30 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
     attributes.delete('user_ids')
     # puts "organization_assets_test ATTRIBUTES__", attributes.pretty_inspect
     # puts "organization_assets_test ASSETS", assets.pretty_inspect
-    assert( !diff(attributes, assets[:Organization][org_new.id]), 'check assets' ) ############
 
+    #>test_new_user
+    #
+    #temp_testing_user = User.find(temp_testing_user.id)
+    #temp_testing_user.lastname = 'new_lastname'
+    #temp_testing_user.save!
+    #organizaion = Organization.find(org.id)
+    #assert( !diff(attributes, assets[:Organization][organizaion.id])
+    #
+    #<test_new_user
+
+    #>test_new_user2
+
+    temp_testing_user2 = User.find(temp_testing_user2.id)
+    temp_testing_user2.lastname = 'new_lastname'
+    temp_testing_user2.save!
+    organizaion = Organization.find(org.id)
+    assert( !diff(attributes, assets[:Organization][organizaion.id])
+
+    #<test_new_user2
+
+
+
+    assert( !diff(attributes, assets[:Organization][org_new.id]), 'check assets' ) ############
     attributes = user_new_2.attributes_with_association_ids
     attributes['accounts'] = {}
     attributes.delete('password')
