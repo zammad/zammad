@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2016 Zammad Foundation, http://zammad-foundation.org/
 
 class MonitoringController < ApplicationController
-  prepend_before_action -> { authentication_check(permission: 'admin.monitoring') }, except: %i[health_check status]
+  prepend_before_action -> { authentication_check(permission: 'admin.monitoring') }, except: %i[health_check status amount_check]
   skip_before_action :verify_csrf_token
 
 =begin
@@ -237,6 +237,112 @@ curl http://localhost/api/v1/monitoring/status?token=XXX
       end
     end
     render json: status
+  end
+
+=begin
+
+get counts about created ticket in certain time slot. s, m, h and d possible.
+
+Resource:
+
+GET /api/v1/monitoring/amount_check?token=XXX&max_warning=2000&max_critical=3000&periode=1h
+
+GET /api/v1/monitoring/amount_check?token=XXX&min_warning=2000&min_critical=3000&periode=1h
+
+GET /api/v1/monitoring/amount_check?token=XXX&periode=1h
+
+Response:
+{
+  "state": "ok",
+  "message": "",
+  "count": 123,
+}
+
+{
+  "state": "warning",
+  "message": "limit of 2000 tickets in 1h reached",
+  "count": 123,
+}
+
+{
+  "state": "critical",
+  "message": "limit of 3000 tickets in 1h reached",
+  "count": 123,
+}
+
+Test:
+curl http://localhost/api/v1/monitoring/amount_check?token=XXX&max_warning=2000&max_critical=3000&periode=1h
+
+curl http://localhost/api/v1/monitoring/amount_check?token=XXX&min_warning=2000&min_critical=3000&periode=1h
+
+curl http://localhost/api/v1/monitoring/amount_check?token=XXX&periode=1h
+
+=end
+
+  def amount_check
+    token_or_permission_check
+
+    raise Exceptions::UnprocessableEntity, 'periode is missing!' if params[:periode].blank?
+
+    scale = params[:periode][-1, 1]
+    raise Exceptions::UnprocessableEntity, 'periode need to have s, m, h or d as last!' if scale !~ /^(s|m|h|d)$/
+
+    periode = params[:periode][0, params[:periode].length - 1]
+    raise Exceptions::UnprocessableEntity, 'periode need to be an integer!' if periode.to_i.zero?
+
+    if scale == 's'
+      created_at = Time.zone.now - periode.to_i.seconds
+    elsif scale == 'm'
+      created_at = Time.zone.now - periode.to_i.minutes
+    elsif scale == 'h'
+      created_at = Time.zone.now - periode.to_i.hours
+    elsif scale == 'd'
+      created_at = Time.zone.now - periode.to_i.days
+    end
+
+    map = [
+      { param: :max_critical, notice: 'critical', type: 'gt' },
+      { param: :min_critical, notice: 'critical', type: 'lt' },
+      { param: :max_warning, notice: 'warning', type: 'gt' },
+      { param: :min_warning, notice: 'warning', type: 'lt' },
+    ]
+    result = {}
+    map.each do |row|
+      next if params[row[:param]].blank?
+      raise Exceptions::UnprocessableEntity, "#{row[:param]} need to be an integer!" if params[row[:param]].to_i.zero?
+
+      count = Ticket.where('created_at >= ?', created_at).count
+
+      if row[:type] == 'gt'
+        if count > params[row[:param]].to_i
+          result = {
+            state: row[:notice],
+            message: "The limit of #{params[row[:param]]} was exceeded with #{count} in the last #{params[:periode]}",
+            count: count,
+          }
+          break
+        end
+        next
+      end
+      next if count > params[row[:param]].to_i
+
+      result = {
+        state: row[:notice],
+        message: "The minimum of #{params[row[:param]]} was undercut by #{count} in the last #{params[:periode]}",
+        count: count,
+      }
+      break
+    end
+
+    if result.blank?
+      result = {
+        state: 'ok',
+        message: '',
+        count: Ticket.where('created_at >= ?', created_at).count,
+      }
+    end
+
+    render json: result
   end
 
   def token

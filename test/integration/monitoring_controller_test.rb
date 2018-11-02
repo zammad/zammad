@@ -692,4 +692,125 @@ class MonitoringControllerTest < ActionDispatch::IntegrationTest
     # cleanup
     Delayed::Job.delete_all
   end
+
+  test '11 check amount' do
+    Ticket.destroy_all
+
+    # amount_check - ok
+    get "/api/v1/monitoring/amount_check?token=#{@token}&periode=1h", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('ok', result['state'])
+    assert_equal('', result['message'])
+    assert_equal(0, result['count'])
+
+    Ticket.destroy_all
+    (1..6).each do |i|
+      Ticket.create!(
+        title: "Ticket-#{i}",
+        group: Group.lookup(name: 'Users'),
+        customer_id: 1,
+        state: Ticket::State.lookup(name: 'new'),
+        priority: Ticket::Priority.lookup(name: '2 normal'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      travel 10.seconds
+    end
+
+    get "/api/v1/monitoring/amount_check?token=#{@token}&periode=1h&min_warning=10&min_critical=8", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('critical', result['state'])
+    assert_equal('The minimum of 8 was undercut by 6 in the last 1h', result['message'])
+    assert_equal(6, result['count'])
+
+    get "/api/v1/monitoring/amount_check?token=#{@token}&periode=1h&min_warning=7&min_critical=2", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('warning', result['state'])
+    assert_equal('The minimum of 7 was undercut by 6 in the last 1h', result['message'])
+    assert_equal(6, result['count'])
+
+    get "/api/v1/monitoring/amount_check?token=#{@token}&periode=1h&max_warning=10&max_critical=20", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('ok', result['state'])
+    assert_equal('', result['message'])
+    assert_equal(6, result['count'])
+
+    (1..6).each do |i|
+      Ticket.create!(
+        title: "Ticket-#{i}",
+        group: Group.lookup(name: 'Users'),
+        customer_id: 1,
+        state: Ticket::State.lookup(name: 'new'),
+        priority: Ticket::Priority.lookup(name: '2 normal'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      travel 1.second
+    end
+
+    get "/api/v1/monitoring/amount_check?token=#{@token}&periode=1h&max_warning=10&max_critical=20", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('warning', result['state'])
+    assert_equal('The limit of 10 was exceeded with 12 in the last 1h', result['message'])
+    assert_equal(12, result['count'])
+
+    (1..10).each do |i|
+      Ticket.create!(
+        title: "Ticket-#{i}",
+        group: Group.lookup(name: 'Users'),
+        customer_id: 1,
+        state: Ticket::State.lookup(name: 'new'),
+        priority: Ticket::Priority.lookup(name: '2 normal'),
+        updated_by_id: 1,
+        created_by_id: 1,
+      )
+      travel 1.second
+    end
+
+    get "/api/v1/monitoring/amount_check?token=#{@token}&periode=1h&max_warning=10&max_critical=20", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('critical', result['state'])
+    assert_equal('The limit of 20 was exceeded with 22 in the last 1h', result['message'])
+    assert_equal(22, result['count'])
+
+    get "/api/v1/monitoring/amount_check?token=#{@token}&periode=1h", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('ok', result['state'])
+    assert_equal('', result['message'])
+    assert_equal(22, result['count'])
+
+    travel 2.hours
+
+    get "/api/v1/monitoring/amount_check?token=#{@token}&periode=1h", params: {}, headers: @headers
+    assert_response(200)
+
+    result = JSON.parse(@response.body)
+    assert_equal(Hash, result.class)
+    assert_equal('ok', result['state'])
+    assert_equal('', result['message'])
+    assert_equal(0, result['count'])
+
+  end
+
 end
