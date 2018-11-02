@@ -64,7 +64,7 @@ class OrganizationAssetsTest < ActiveSupport::TestCase
     )
 
     org = Organization.find(org.id)
-    puts "organization_assets_test ORG after user created", org.pretty_inspect
+    puts "1 organization_assets_test ORG after user created", org.pretty_inspect
     assets = org.assets({})
     attributes = org.attributes_with_association_ids
     attributes.delete('user_ids')

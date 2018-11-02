@@ -18,12 +18,16 @@ class Transaction::Trigger
 =end
 
   def initialize(item, params = {})
+    puts "Trigger initialize"
+    puts item.pretty_inspect
+    puts params.pretty_inspect
     @item = item
     @params = params
   end
 
   def perform
-
+    puts "Transaction::Trigger perform Setting", Setting.get('import_mode')
+    puts "Transaction::Trigger perform object", @item[:object]
     # return if we run import mode
     return if Setting.get('import_mode')
 
@@ -31,7 +35,7 @@ class Transaction::Trigger
 
     ticket = Ticket.find_by(id: @item[:object_id])
 
-    puts "Transaction::Trigger", ticket.pretty_inspect
+    puts "Transaction::Trigger perform ticket", ticket.pretty_inspect
     return if !ticket
     if @item[:article_id]
       article = Ticket::Article.find_by(id: @item[:article_id])

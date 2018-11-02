@@ -25,7 +25,7 @@ returns
     def assets (data)
 
       app_model = User.to_app_model
-
+      puts "User assets data", data[ app_model ].pretty_inspect
       if !data[ app_model ]
         data[ app_model ] = {}
       end

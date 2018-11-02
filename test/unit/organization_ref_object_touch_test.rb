@@ -71,6 +71,9 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
       updated_by_id: 1,
       created_by_id: 1,
     )
+    puts "TEST Organization_ref ticket", ticket.pretty_inspect
+    puts "TEST Organization_ref organization", organization1.pretty_inspect
+    puts "TEST Organization_ref customer", customer1.pretty_inspect
     assert(ticket, 'ticket created')
     assert_equal(ticket.customer.id, customer1.id)
     assert_equal(ticket.organization.id, organization1.id)
@@ -79,9 +82,11 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
 
     organization1.name = 'Ref Object Update Org 1/1'
     organization1.save!
-
+    puts "TEST Organization_ref 4 sec passed"
     # check if ticket and customer has been touched
     ticket = Ticket.find(ticket.id)
+    puts "TEST Organization_ref ticket", ticket.pretty_inspect
+    puts "TEST Organization_ref organization", organization1.pretty_inspect
     if ticket.updated_at > 2.seconds.ago
       assert(true, 'ticket.updated_at has been updated')
     else
@@ -89,6 +94,9 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
     end
 
     customer1.reload
+    puts "TEST Organization_ref 4 sec passed customer reloaded"
+    puts "TEST Organization_ref ticket", Ticket.find(ticket.id)
+    puts "TEST Organization_ref customer", customer1.pretty_inspect
     if customer1.updated_at > 2.seconds.ago
       assert(true, 'customer1.updated_at has been updated')
     else
@@ -97,11 +105,16 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
 
     travel 4.seconds
 
+    puts "TEST Organization_ref 4 more sec passed"
     customer2.organization_id = organization1.id
     customer2.save!
 
+    puts "TEST Organization_ref ticket", Ticket.find(ticket.id)
+    puts "TEST Organization_ref organization", Organization.find(organization1.id).pretty_inspect
+    puts "TEST Organization_ref customer", customer2.pretty_inspect
     # check if customer1 and organization has been touched
     customer1.reload
+    puts "TEST Organization_ref customer reloaded", customer1.pretty_inspect
     if customer1.updated_at > 2.seconds.ago
       assert(true, 'customer1.updated_at has been updated')
     else
@@ -109,6 +122,7 @@ class OrganizationRefObjectTouchTest < ActiveSupport::TestCase
     end
 
     organization1.reload
+    puts "TEST Organization_ref organization reloaded", Organization.find(organization1.id).pretty_inspect
     if organization1.updated_at > 2.seconds.ago
       assert(true, 'organization1.updated_at has been updated')
     else

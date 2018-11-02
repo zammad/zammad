@@ -1155,6 +1155,7 @@ perform active triggers on ticket
     local_options[:loop_count] += 1
 
     ticket_trigger_recursive_max_loop = Setting.get('ticket_trigger_recursive_max_loop')&.to_i || 10
+    puts "local_options", local_options.pretty_inspect
     if local_options[:loop_count] > ticket_trigger_recursive_max_loop
       message = "Stopped perform_triggers for this object (Ticket/#{ticket.id}), because loop count was #{local_options[:loop_count]}!"
       logger.info { message }
@@ -1166,6 +1167,8 @@ perform active triggers on ticket
                else
                  ::Trigger.where(active: true).order(:name)
                end
+
+    puts "triggers", triggers.pretty_inspect
     return [true, 'No triggers active'] if triggers.blank?
 
     # check if notification should be send because of customer emails
