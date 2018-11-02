@@ -1,4 +1,5 @@
 class Sessions::Event::TicketOverviewList < Sessions::Event::Base
+  database_connection_required
 
   def run
     return if !valid_session?

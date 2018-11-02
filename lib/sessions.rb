@@ -334,6 +334,15 @@ send message to recipient client
 
   Sessions.send_to(user_id, data)
 
+e. g.
+
+  Sessions.send_to(user_id, {
+    event: 'session:takeover',
+    data: {
+      taskbar_id: 12312
+    },
+  })
+
 returns
 
   true|false
@@ -476,6 +485,14 @@ remove all session and spool messages
     true
   end
 
+=begin
+
+create spool messages
+
+  Sessions.spool_create(some: 'data')
+
+=end
+
   def self.spool_create(data)
     msg = JSON.generate(data)
     path = "#{@path}/spool/"
@@ -491,6 +508,14 @@ remove all session and spool messages
       file.flock(File::LOCK_UN)
     end
   end
+
+=begin
+
+get spool messages
+
+  Sessions.spool_list(junger_then, for_user_id)
+
+=end
 
   def self.spool_list(timestamp, current_user_id)
     path = "#{@path}/spool/"
@@ -512,6 +537,7 @@ remove all session and spool messages
         file.flock(File::LOCK_SH)
         message = file.read
         file.flock(File::LOCK_UN)
+        message_parsed = {}
         begin
           spool = JSON.parse(message)
           message_parsed = JSON.parse(spool['msg'])
@@ -530,7 +556,7 @@ remove all session and spool messages
         # add spool attribute to push spool info to clients
         message_parsed['spool'] = true
 
-        # only send not already now messages
+        # only send not already older messages
         if !timestamp || timestamp < spool['timestamp']
 
           # spool to recipient list
@@ -571,6 +597,19 @@ remove all session and spool messages
       File.delete(file)
     end
     data
+  end
+
+=begin
+
+delete spool messages
+
+  Sessions.spool_delete
+
+=end
+
+  def self.spool_delete
+    path = "#{@path}/spool/"
+    FileUtils.rm_rf path
   end
 
   def self.jobs(node_id = nil)

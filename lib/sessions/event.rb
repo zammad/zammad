@@ -7,7 +7,7 @@ class Sessions::Event
     begin
       backend = load_adapter(adapter)
     rescue => e
-      return { event: 'error', data: { error: "No such event #{params[:event]}", payload: params[:payload] } }
+      return { event: 'error', data: { error: "No such event #{params[:event]}: #{e.inspect}", payload: params[:payload] } }
     end
 
     begin
