@@ -59,8 +59,8 @@ RSpec.describe 'Text Module', type: :request do
       expect(json_response['records'].count).to eq(2)
       expect(json_response['result']).to eq('failed')
       expect(json_response['errors'].count).to eq(2)
-      expect(json_response['errors'][0]).to eq("Line 1: unknown attribute 'keywords2' for TextModule.")
-      expect(json_response['errors'][1]).to eq("Line 2: unknown attribute 'keywords2' for TextModule.")
+      expect(json_response['errors'][0]).to eq("Line 1: Unable to create record - unknown attribute 'keywords2' for TextModule.")
+      expect(json_response['errors'][1]).to eq("Line 2: Unable to create record - unknown attribute 'keywords2' for TextModule.")
 
       # valid file try
       csv_file_path = Rails.root.join('test', 'data', 'csv', 'text_module_simple.csv')

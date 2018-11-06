@@ -4,8 +4,8 @@ RSpec.shared_examples 'CanLookup' do
   describe '::lookup' do
     let(:subject)            { described_class }
     let(:ensure_instance)    { create(subject.to_s.downcase) if subject.none? }
-    let(:string_attributes)  { (%i[name login email number] & subject.attribute_names.map(&:to_sym)) }
-    let(:non_attributes)     { (%i[id name login email number] - subject.attribute_names.map(&:to_sym)) }
+    let(:string_attributes)  { subject.lookup_keys }
+    let(:non_attributes)     { (subject.attribute_names.map(&:to_sym) - subject.lookup_keys) }
     let(:lookup_id)          { 1 }
     let(:cache_key)          { "#{subject}::#{lookup_id}" }
     let(:cache_expiry_param) { { expires_in: 7.days } }
@@ -35,7 +35,7 @@ RSpec.shared_examples 'CanLookup' do
     end
 
     it 'accepts exactly one attribute-value pair' do
-      expect { subject.lookup(:id => lookup_id, string_attributes.sample => 'foo') }
+      expect { subject.lookup(id: lookup_id, some_attribute: 'foo') }
         .to raise_error(ArgumentError)
     end
 
@@ -69,5 +69,10 @@ RSpec.shared_examples 'CanLookup' do
         .to have_received(:read)
         .with(cache_key)
     end
+
+    it 'verify lookup keys' do
+      expect(subject.lookup_keys).to match_array((%i[id name login email number] & subject.attribute_names.map(&:to_sym)))
+    end
+
   end
 end

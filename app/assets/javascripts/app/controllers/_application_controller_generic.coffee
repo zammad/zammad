@@ -1320,6 +1320,7 @@ class App.Import extends App.ControllerModal
     params.set('try', true)
     if _.isEmpty(params.get('data'))
       params.delete('data')
+    @formDisable(e)
     @ajax(
       id:          'csv_import'
       type:        'POST'
@@ -1341,6 +1342,14 @@ class App.Import extends App.ControllerModal
           return
         @data = data
         @update()
+        @formEnable(e)
+      error: (data) =>
+        details = data.responseJSON || {}
+        @notify
+          type:    'error'
+          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to import!')
+          timeout: 6000
+        @formEnable(e)
     )
 
 class App.ImportTryResult extends App.ControllerModal
@@ -1361,10 +1370,23 @@ class App.ImportTryResult extends App.ControllerModal
       import_example_url: "#{@baseUrl}/import"
       result: @result
     ))
+
+    # check if data is processing...
+    if @data
+      result = App.view("#{@templateDirectory}/result")(
+        @data
+      )
+      content.find('.js-error').html(result)
+      if result
+        content.find('.js-error').removeClass('hide')
+      else
+        content.find('.js-error').addClass('hide')
+
     content
 
   onSubmit: (e) =>
     @params.set('try', false)
+    @formDisable(e)
     @ajax(
       id:          'csv_import'
       type:        'POST'
@@ -1386,6 +1408,14 @@ class App.ImportTryResult extends App.ControllerModal
           return
         @data = data
         @update()
+        @formEnable(e)
+      error: (data) =>
+        details = data.responseJSON || {}
+        @notify
+          type:    'error'
+          msg:     App.i18n.translateContent(details.error_human || details.error || 'Unable to import!')
+          timeout: 6000
+        @formEnable(e)
     )
 
 class App.ImportResult extends App.ControllerModal

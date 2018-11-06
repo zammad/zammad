@@ -512,8 +512,8 @@ RSpec.describe 'Organization', type: :request, searchindex: true do
       expect(json_response['records'].count).to eq(2)
       expect(json_response['result']).to eq('failed')
       expect(json_response['errors'].count).to eq(2)
-      expect(json_response['errors'][0]).to eq("Line 1: unknown attribute 'name2' for Organization.")
-      expect(json_response['errors'][1]).to eq("Line 2: unknown attribute 'name2' for Organization.")
+      expect(json_response['errors'][0]).to eq("Line 1: Unable to create record - unknown attribute 'name2' for Organization.")
+      expect(json_response['errors'][1]).to eq("Line 2: Unable to create record - unknown attribute 'name2' for Organization.")
 
       # valid file try
       csv_file_path = Rails.root.join('test', 'data', 'csv', 'organization_simple.csv')

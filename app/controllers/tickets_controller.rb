@@ -641,7 +641,12 @@ class TicketsController < ApplicationController
       raise 'Only can import tickets if system is in import mode.'
     end
 
-    string = params[:data] || params[:file].read.force_encoding('utf-8')
+    string = params[:data]
+    if string.blank? && params[:file].present?
+      string = params[:file].read.force_encoding('utf-8')
+    end
+    raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
+
     result = Ticket.csv_import(
       string: string,
       parse_params: {
