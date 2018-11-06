@@ -9,6 +9,9 @@ module Cti
     after_commit :update_cti_logs, on: :destroy
     after_commit :update_cti_logs_with_fg_optimization, on: :create
 
+    skip_callback :commit, :after, :update_cti_logs, if: -> { BulkImportInfo.enabled? }
+    skip_callback :commit, :after, :update_cti_logs_with_fg_optimization, if: -> { BulkImportInfo.enabled? }
+
 =begin
 
   Cti::CallerId.maybe_add(

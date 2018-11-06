@@ -118,6 +118,17 @@ returns
         return result
       end
 
+      # check if min one lookup key exists
+      if header.count == (header - lookup_keys.map(&:to_s)).count
+        errors.push "No lookup column like #{lookup_keys.map(&:to_s).join(',')} for #{new.class} found."
+        result = {
+          errors: errors,
+          try: try,
+          result: 'failed',
+        }
+        return result
+      end
+
       # get payload based on csv
       payload = []
       rows.each do |row|
@@ -172,11 +183,15 @@ returns
       payload.each do |attributes|
         line_count += 1
         record = nil
-        %i[id number name login email].each do |lookup_by|
-          next if !attributes[lookup_by]
+        lookup_keys.each do |lookup_by|
+          next if attributes[lookup_by].blank?
 
           params = {}
-          params[lookup_by] = attributes[lookup_by]
+          params[lookup_by] = if %i[email login].include?(lookup_by)
+                                attributes[lookup_by].downcase
+                              else
+                                attributes[lookup_by]
+                              end
           record = lookup(params)
           break if record
         end
@@ -199,6 +214,7 @@ returns
         end
 
         # create object
+        BulkImportInfo.enable
         Transaction.execute(disable_notification: true, reset_user_id: true) do
           UserInfo.current_user_id = clean_params[:updated_by_id] || clean_params[:created_by_id]
           if !record || delete == true
@@ -217,7 +233,7 @@ returns
               record.associations_from_param(attributes)
               record.save!
             rescue => e
-              errors.push "Line #{line_count}: #{e.message}"
+              errors.push "Line #{line_count}: Unable to create record - #{e.message}"
               next
             end
           else
@@ -234,14 +250,20 @@ returns
 
               record.with_lock do
                 record.associations_from_param(attributes)
-                record.update!(clean_params)
+                clean_params.each do |key, value|
+                  record[key] = value
+                end
+                next if !record.changed?
+
+                record.save!
               end
             rescue => e
-              errors.push "Line #{line_count}: #{e.message}"
+              errors.push "Line #{line_count}: Unable to update record - #{e.message}"
               next
             end
           end
         end
+        BulkImportInfo.disable
 
         records.push record
       end
@@ -258,7 +280,6 @@ returns
         try: try,
         result: result,
       }
-
     end
 
 =begin

@@ -20,19 +20,32 @@ returns
 =end
 
     def lookup(**attr)
+      raise ArgumentError, "Multiple lookup attributes given (#{attr.keys.join(', ')}), only support (#{lookup_keys.join(', ')})" if attr.many?
+
       attr.transform_keys!(&:to_sym).slice!(*lookup_keys)
       raise ArgumentError, "Valid lookup attribute required (#{lookup_keys.join(', ')})" if attr.empty?
-      raise ArgumentError, "Multiple lookup attributes given (#{attr.keys.join(', ')})" if attr.many?
 
       record   = cache_get(attr.values.first)
       record ||= find_and_save_to_cache_by(attr)
     end
 
-    private
+=begin
+
+return possible lookup keys for model
+
+  result = Model.lookup_keys
+
+returns
+
+  [:id, :name] # or fror users [:id, :login, :email]
+
+=end
 
     def lookup_keys
       @lookup_keys ||= %i[id name login email number] & attribute_names.map(&:to_sym)
     end
+
+    private
 
     def find_and_save_to_cache_by(attr)
       if !Rails.application.config.db_case_sensitive && string_key?(attr.keys.first)

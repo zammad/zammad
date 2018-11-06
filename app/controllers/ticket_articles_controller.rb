@@ -318,8 +318,14 @@ class TicketArticlesController < ApplicationController
       raise 'Only can import tickets if system is in import mode.'
     end
 
+    string = params[:data]
+    if string.blank? && params[:file].present?
+      string = params[:file].read.force_encoding('utf-8')
+    end
+    raise Exceptions::UnprocessableEntity, 'No source data submitted!' if string.blank?
+
     result = Ticket::Article.csv_import(
-      string: params[:file].read.force_encoding('utf-8'),
+      string: string,
       parse_params: {
         col_sep: ';',
       },
