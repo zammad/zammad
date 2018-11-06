@@ -2770,6 +2770,20 @@ ol.tabs li {
   }
 }
 
+.icon-spinner-medium {
+  animation: spinIcon .9s steps(12) infinite;
+}
+
+.icon-spinner-small {
+  animation: spinIcon .9s steps(8) infinite;
+}
+
+@keyframes spinIcon {
+  to {
+    transform: rotate(-1turn);
+  }
+}
+
 .color-swatch {
   padding: 2px;
   margin: -2px 0 -4px;
@@ -3424,12 +3438,25 @@ footer {
   fill: $task-state-pending-color;
 }
 
+.state-badge {
+  display: flex;
+  align-items: center;
+  
+  .icon-task-state {
+    margin-right: 2px;
+    margin-top: 0;
+    display: inline;
+    vertical-align: middle;
+  }
+}
+
 .search {
   padding: 11px 5px 4px 10px;
   @include rtl(padding, 11px 10px 4px 0px);
   border-bottom: 1px solid rgba(240,250,255,.05);
   flex-shrink: 0;
   display: flex;
+  align-items: flex-start;
   background-color: inherit;
 }
 
@@ -3437,7 +3464,8 @@ footer {
     flex: 1;
     border-radius: 15px;
     position: relative;
-    transition: 240ms;
+    transition: margin-right 120ms;
+    will-change: margin-right;
   }
 
   .empty-search {
@@ -3483,18 +3511,46 @@ footer {
     -webkit-appearance: none;
   }
 
+  .search .search-loader {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    z-index: 2;
+    opacity: 0;
+    transition: 0s;
+    transition: .1s 0s;
+    
+    .icon {
+      fill: white;
+      opacity: 0.5;
+    }
+  }
+
+  .search.loading .search-loader {
+    opacity: 1;
+    transition: .2s .5s;
+  }
+
   .search .icon-magnifier {
     position: absolute;
     top: 8px;
     left: 10px;
     @include bidi-style(left, 10px, right, auto);
     z-index: 2;
-    opacity: 0.5;
+    opacity: .5;
     fill: white;
+    transition: 0s;
+    transition: .1s 0s;
+  }
+
+  .search.loading .icon-magnifier {
+    opacity: 0;
+    transition: .2s .5s;
   }
 
   .search.focused .search-holder {
-    @include bidi-style(margin-right, -46px, margin-left, 0);
+    transition: margin-right 240ms;
+    @include bidi-style(margin-right, -59px, margin-left, 0);
   }
 
   .search.focused .logo {
@@ -3560,6 +3616,10 @@ footer {
     padding: 9px 15px 8px 0;
     margin-bottom: 7px;
     height: auto !important;
+    
+    .no-match & {
+      display: none;
+    }
 
     .nav-tab-icon {
       width: 18px;
@@ -3585,6 +3645,15 @@ footer {
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  .global-search-detail-no-result {
+    margin: 0 10px;
+    
+    .icon {
+      width: 30px;
+      height: 29px;
+    }
   }
 
   .user-menu {
@@ -5848,6 +5917,11 @@ footer {
   border-radius: 3px;
   color: white;
   border: none;
+  
+  .icon {
+    margin-right: 10px;
+    fill: currentColor;
+  }
 
   &.alert--info {
     background: hsl(203,65%,55%);

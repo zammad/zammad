@@ -45,10 +45,12 @@ class App.GlobalSearch extends App.Controller
   renderTry: (result, query) =>
 
     # if result hasn't changed, do not rerender
-    diff = false
     if @lastQuery is query && @searchResultCache[query]
       diff = difference(@searchResultCache[query].result, result)
-    return if diff isnt false && _.isEmpty(diff)
+      if _.isEmpty(diff)
+        @render(result, true)
+        return
+
     @lastQuery = query
 
     # cache search result
