@@ -1,6 +1,21 @@
 require 'test_helper'
 
 class SearchIndexBackendTest < ActiveSupport::TestCase
+  test 'query extension keys are normalized to symbols' do
+    query_strings = SearchIndexBackend.build_query('', query_extension: { 'bool' => { 'filter' => { 'term' => { 'a' => 'b' } } } })
+    query_symbols = SearchIndexBackend.build_query('', query_extension: { bool: { filter: { term: { a: 'b' } } } })
+
+    assert_equal query_strings, query_symbols
+    assert_not_nil query_strings.dig(:query, :bool, :filter, :term, :a)
+  end
+
+  test 'search with ES off never returns nil in array' do
+    index_one   = SearchIndexBackend.search('preferences.notification_sound.enabled:*', 'User', limit: 3000)
+    index_multi = SearchIndexBackend.search('preferences.notification_sound.enabled:*', %w[User Organization], limit: 3000)
+
+    assert_nil index_one
+    assert index_multi.empty?
+  end
 
   test 'simple_query_append_wildcard correctly modifies simple queries' do
     def clean_queries(query_string)
@@ -48,6 +63,7 @@ class SearchIndexBackendTest < ActiveSupport::TestCase
 
     simple_queries = clean_queries %(
         M
+
         Max
         Max. # dot and underscore are acceptable characters in simple queries
         A_

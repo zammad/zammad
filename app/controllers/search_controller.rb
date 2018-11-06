@@ -64,7 +64,7 @@ class SearchController < ApplicationController
 
       # do only one query to index search backend
       if objects_with_direct_search_index.present?
-        items = SearchIndexBackend.search(query, limit, objects_with_direct_search_index)
+        items = SearchIndexBackend.search(query, objects_with_direct_search_index, limit: limit)
         items.each do |item|
           require_dependency item[:type].to_filename
           local_class = Kernel.const_get(item[:type])

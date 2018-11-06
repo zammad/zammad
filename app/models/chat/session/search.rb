@@ -64,7 +64,7 @@ returns
 
         # try search index backend
         if SearchIndexBackend.enabled?
-          items = SearchIndexBackend.search(query, limit, 'Chat::Session', {}, offset)
+          items = SearchIndexBackend.search(query, 'Chat::Session', limit: limit, from: offset)
           chat_sessions = []
           items.each do |item|
             chat_session = Chat::Session.lookup(id: item[:id])

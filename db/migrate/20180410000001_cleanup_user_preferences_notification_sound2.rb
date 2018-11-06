@@ -36,7 +36,7 @@ class CleanupUserPreferencesNotificationSound2 < ActiveRecord::Migration[5.1]
       user.save!
     end
 
-    items = SearchIndexBackend.search('preferences.notification_sound.enabled:*', 3000, 'User') || []
+    items = SearchIndexBackend.search('preferences.notification_sound.enabled:*', 'User', limit: 3000) || []
     items.each do |item|
       next if !item[:id]
 

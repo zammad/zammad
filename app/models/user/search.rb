@@ -101,19 +101,24 @@ returns
 
         # try search index backend
         if SearchIndexBackend.enabled?
-          query_extention = {}
+          query_extension = {}
           if params[:role_ids].present?
-            query_extention['bool'] = {}
-            query_extention['bool']['must'] = []
+            query_extension['bool'] = {}
+            query_extension['bool']['must'] = []
             if !params[:role_ids].is_a?(Array)
               params[:role_ids] = [params[:role_ids]]
             end
             access_condition = {
               'query_string' => { 'default_field' => 'role_ids', 'query' => "\"#{params[:role_ids].join('" OR "')}\"" }
             }
-            query_extention['bool']['must'].push access_condition
+            query_extension['bool']['must'].push access_condition
           end
-          items = SearchIndexBackend.search(query, limit, 'User', query_extention, offset, sort_by, order_by)
+
+          items = SearchIndexBackend.search(query, 'User', limit: limit,
+                                                           query_extension: query_extension,
+                                                           from: offset,
+                                                           sort_by: sort_by,
+                                                           order_by: order_by)
           users = []
           items.each do |item|
             user = User.lookup(id: item[:id])

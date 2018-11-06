@@ -83,7 +83,10 @@ returns
 
         # try search index backend
         if SearchIndexBackend.enabled?
-          items = SearchIndexBackend.search(query, limit, 'Organization', {}, offset, sort_by, order_by)
+          items = SearchIndexBackend.search(query, 'Organization', limit: limit,
+                                                                   from: offset,
+                                                                   sort_by: sort_by,
+                                                                   order_by: order_by)
           organizations = []
           items.each do |item|
             organization = Organization.lookup(id: item[:id])

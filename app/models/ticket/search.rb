@@ -127,9 +127,9 @@ returns
 
       # try search index backend
       if condition.blank? && SearchIndexBackend.enabled?
-        query_extention = {}
-        query_extention['bool'] = {}
-        query_extention['bool']['must'] = []
+        query_extension = {}
+        query_extension['bool'] = {}
+        query_extension['bool']['must'] = []
 
         if current_user.permissions?('ticket.agent')
           group_ids = current_user.group_ids_access('read')
@@ -152,9 +152,13 @@ returns
                              end
         end
 
-        query_extention['bool']['must'].push access_condition
+        query_extension['bool']['must'].push access_condition
 
-        items = SearchIndexBackend.search(query, limit, 'Ticket', query_extention, offset, sort_by, order_by)
+        items = SearchIndexBackend.search(query, 'Ticket', limit: limit,
+                                                           query_extension: query_extension,
+                                                           from: offset,
+                                                           sort_by: sort_by,
+                                                           order_by: order_by)
         if !full
           ids = []
           items.each do |item|

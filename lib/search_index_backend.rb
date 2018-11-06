@@ -274,13 +274,19 @@ remove whole data from index
 
 =begin
 
-return search result
+@param query   [String]  search query
+@param index   [String, Array<String>, nil] indexes to search in (see search_by_index)
+@param options [Hash] search options (see build_query)
 
-  result = SearchIndexBackend.search('search query', limit, ['User', 'Organization'])
+@return search result
 
-  result = SearchIndexBackend.search('search query', limit, 'User')
+@example Sample queries
 
-  result = SearchIndexBackend.search('search query', limit, 'User', ['updated_at'], ['desc'])
+  result = SearchIndexBackend.search('search query', ['User', 'Organization'], limit: limit)
+
+  result = SearchIndexBackend.search('search query', 'User', limit: limit)
+
+  result = SearchIndexBackend.search('search query', 'User', limit: limit, sort_by: ['updated_at'], order_by: ['desc'])
 
   result = [
     {
@@ -299,25 +305,28 @@ return search result
 
 =end
 
-  # rubocop:disable Metrics/ParameterLists
-  def self.search(query, limit = 10, index = nil, query_extention = {}, from = 0, sort_by = [], order_by = [])
-    # rubocop:enable Metrics/ParameterLists
-    return [] if query.blank?
-
-    if index.class == Array
-      ids = []
-      index.each do |local_index|
-        local_ids = search_by_index(query, limit, local_index, query_extention, from, sort_by, order_by )
-        ids = ids.concat(local_ids)
-      end
-      return ids
+  def self.search(query, index = nil, options = {})
+    if !index.is_a? Array
+      return search_by_index(query, index, options)
     end
-    search_by_index(query, limit, index, query_extention, from, sort_by, order_by)
+
+    index
+      .map { |local_index| search_by_index(query, local_index, options) }
+      .compact
+      .flatten(1)
   end
 
-  # rubocop:disable Metrics/ParameterLists
-  def self.search_by_index(query, limit = 10, index = nil, query_extention = {}, from = 0, sort_by = [], order_by = [])
-    # rubocop:enable Metrics/ParameterLists
+=begin
+
+@param query   [String]  search query
+@param index   [String, Array<String>, nil] index name or list of index names. If index is nil or not present will, search will be performed globally
+@param options [Hash] search options (see build_query)
+
+@return search result
+
+=end
+
+  def self.search_by_index(query, index = nil, options = {})
     return [] if query.blank?
 
     url = build_url
@@ -332,15 +341,6 @@ return search result
            else
              '/_search'
            end
-    data = {}
-    data['from'] = from
-    data['size'] = limit
-
-    data['sort'] = search_by_index_sort(sort_by, order_by)
-
-    data['query'] = query_extention || {}
-    data['query']['bool'] ||= {}
-    data['query']['bool']['must'] ||= []
 
     # real search condition
     condition = {
@@ -350,14 +350,15 @@ return search result
         'analyze_wildcard' => true,
       }
     }
-    data['query']['bool']['must'].push condition
+
+    query_data = build_query(condition, options)
 
     Rails.logger.info "# curl -X POST \"#{url}\" \\"
-    Rails.logger.debug { " -d'#{data.to_json}'" }
+    Rails.logger.debug { " -d'#{query_data.to_json}'" }
 
     response = UserAgent.get(
       url,
-      data,
+      query_data,
       {
         json: true,
         open_timeout: 5,
@@ -372,35 +373,31 @@ return search result
       Rails.logger.error humanized_error(
         verb:     'GET',
         url:      url,
-        payload:  data,
+        payload:  query_data,
         response: response,
       )
       return []
     end
-    data = response.data
+    data = response.data&.dig('hits', 'hits')
 
-    ids = []
-    return ids if !data
-    return ids if !data['hits']
-    return ids if !data['hits']['hits']
+    return [] if !data
 
-    data['hits']['hits'].each do |item|
+    data.map do |item|
       Rails.logger.info "... #{item['_type']} #{item['_id']}"
-      data = {
+
+      {
         id: item['_id'],
         type: item['_type'],
       }
-      ids.push data
     end
-    ids
   end
 
-  def self.search_by_index_sort(sort_by = [], order_by = [])
+  def self.search_by_index_sort(sort_by = nil, order_by = nil)
     result = []
 
-    sort_by.each_with_index do |value, index|
+    sort_by&.each_with_index do |value, index|
       next if value.blank?
-      next if order_by[index].blank?
+      next if order_by&.at(index).blank?
 
       if value !~ /\./ && value !~ /_(time|date|till|id|ids|at)$/
         value += '.raw'
@@ -734,5 +731,45 @@ return true if backend is configured
     query.strip!
     query += '*' if !query.match?(/:/)
     query
+  end
+
+=begin
+
+@param condition [Hash] search condition
+@param options [Hash] search options
+@option options [Integer] :from
+@option options [Integer] :limit
+@option options [Hash] :query_extension applied to ElasticSearch query
+@option options [Array<String>] :order_by ordering directions, desc or asc
+@option options [Array<String>] :sort_by fields to sort by
+
+=end
+
+  DEFAULT_QUERY_OPTIONS = {
+    from:  0,
+    limit: 10
+  }.freeze
+
+  def self.build_query(condition, options = {})
+    options = DEFAULT_QUERY_OPTIONS.merge(options.deep_symbolize_keys)
+
+    data = {
+      from:  options[:from],
+      size:  options[:limit],
+      sort:  search_by_index_sort(options[:sort_by], options[:order_by]),
+      query: {
+        bool: {
+          must: []
+        }
+      }
+    }
+
+    if (extension = options.dig(:query_extension))
+      data[:query].deep_merge! extension.deep_dup
+    end
+
+    data[:query][:bool][:must].push condition
+
+    data
   end
 end
