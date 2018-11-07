@@ -27,7 +27,7 @@
     this.active     = false
     this.buffer     = ''
 
-    this._width = 380
+    this._width = 600
 
     // check if ce exists
     if ( $.data(element, 'plugin_ce') ) {
