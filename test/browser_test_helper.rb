@@ -3712,6 +3712,10 @@ wait untill text in selector disabppears
       end
     end
 
+    if data[:active] == false
+      select(css: 'select[name="active"]', value: 'inactive')
+    end
+
     instance.find_elements(css: '.modal button.js-submit')[0].click
     modal_disappear(browser: instance)
     11.times do

@@ -18,7 +18,7 @@ class Index extends App.ControllerSubContent
         { name: 'Import', 'data-type': 'import', class: 'btn' }
         { name: 'New User', 'data-type': 'new', class: 'btn--success' }
       ]
-      roles: App.Role.all()
+      roles: App.Role.findAllByAttribute('active', true)
     )
 
     @$('.tab').on(
