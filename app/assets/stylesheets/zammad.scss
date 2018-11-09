@@ -2017,7 +2017,7 @@ input.has-error {
 }
 
 .selected-clue {
-  @extend .zIndex-6;
+  @extend .zIndex-7;
   pointer-events: none;
 }
 
@@ -3591,7 +3591,7 @@ footer {
     }
 
   .global-search-menu {
-    @extend .zIndex-6;
+    @extend .zIndex-7;
     background: #26272e;
     position: absolute;
     left: 0;
@@ -4120,7 +4120,7 @@ footer {
 }
 
 .popover {
-  @extend .zIndex-6;
+  @extend .zIndex-7;
   position: absolute;
   font-family: inherit;
   width: 372px;
@@ -6578,11 +6578,11 @@ footer {
 
 .dropdown-backdrop {
   position: fixed;
-  @extend .zIndex-5; // has to be behind dropdown-menu (dropdown-menu is also zIndex-5 but behind dropdown-backdrop in dom)
+  @extend .zIndex-5; // has to be behind dropdown-menu
 }
 
 .dropdown-menu {
-  @extend .zIndex-5; // has to be behind modal windows and beneath notifications (popover)
+  @extend .zIndex-6; // has to be behind modal windows and beneath notifications (popover)
   position: absolute;
   margin: 0;
   padding: 0;
