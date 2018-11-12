@@ -94,23 +94,23 @@ example
     Rails.logger.info "fetching imap (#{options[:host]}/#{options[:user]} port=#{port},ssl=#{ssl},starttls=#{starttls},folder=#{folder},keep_on_server=#{keep_on_server})"
 
     # on check, reduce open_timeout to have faster probing
-    @timeout = 45
+    check_type_timeout = 45
     if check_type == 'check'
-      @timeout = 6
+      check_type_timeout = 6
     end
 
-    timeout do
+    timeout(check_type_timeout) do
       @imap = ::Net::IMAP.new(options[:host], port, ssl, nil, false)
       if starttls
         @imap.starttls()
       end
     end
 
-    timeout do
+    timeout(check_type_timeout) do
       @imap.login(options[:user], options[:password])
     end
 
-    timeout do
+    timeout(check_type_timeout) do
       # select folder
       @imap.select(folder)
     end
@@ -122,7 +122,7 @@ example
     end
 
     message_ids = nil
-    timeout do
+    timeout(6.minutes) do
       begin
         message_ids = @imap.sort(['DATE'], filter, 'US-ASCII')
       rescue
@@ -140,7 +140,7 @@ example
       message_ids.each do |message_id|
 
         message_meta = nil
-        timeout do
+        timeout(1.minute) do
           message_meta = @imap.fetch(message_id, ['RFC822.HEADER'])[0].attr
         end
 
@@ -170,7 +170,7 @@ example
       message_ids.each do |message_id|
 
         message_meta = nil
-        timeout do
+        timeout(1.minute) do
           message_meta = @imap.fetch(message_id, ['ENVELOPE'])[0].attr
         end
 
@@ -180,7 +180,7 @@ example
         next if subject !~ /#{verify_string}/
 
         Rails.logger.info " - verify email #{verify_string} found"
-        timeout do
+        timeout(600) do
           @imap.store(message_id, '+FLAGS', [:Deleted])
           @imap.expunge()
         end
@@ -206,7 +206,7 @@ example
       Rails.logger.info " - message #{count}/#{count_all}"
 
       message_meta = nil
-      timeout do
+      timeout(1.minute) do
         message_meta = @imap.fetch(message_id, ['RFC822.SIZE', 'ENVELOPE', 'FLAGS', 'INTERNALDATE'])[0]
       end
 
@@ -225,14 +225,14 @@ example
 
       # delete email from server after article was created
       msg = nil
-      timeout do
+      timeout(1.minute) do
         msg = @imap.fetch(message_id, 'RFC822')[0].attr['RFC822']
       end
       next if !msg
 
       process(channel, msg, false)
 
-      timeout do
+      timeout(1.minute) do
         if !keep_on_server
           @imap.store(message_id, '+FLAGS', [:Deleted])
         else
@@ -243,7 +243,7 @@ example
     end
 
     if !keep_on_server
-      timeout do
+      timeout(10.minutes) do
         @imap.expunge()
       end
     end
@@ -262,7 +262,7 @@ example
   def disconnect
     return if !@imap
 
-    timeout do
+    timeout(1.minute) do
       @imap.disconnect()
     end
   end
@@ -303,7 +303,7 @@ returns
       return false if ticket.preferences[:channel_id] != channel[:id]
     end
 
-    timeout do
+    timeout(1.minute) do
       @imap.store(message_id, '+FLAGS', [:Seen])
     end
     Rails.logger.info "  - ignore message #{count}/#{count_all} - because message message id already imported"
@@ -328,8 +328,8 @@ returns
     false
   end
 
-  def timeout
-    Timeout.timeout(@timeout) do
+  def timeout(seconds)
+    Timeout.timeout(seconds) do
       yield
     end
   end
