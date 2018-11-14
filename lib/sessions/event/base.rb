@@ -131,6 +131,10 @@ class Sessions::Event::Base
     @database_connection = true
   end
 
+  def self.inherited(subclass)
+    subclass.instance_variable_set(:@database_connection, @database_connection)
+  end
+
   def destroy
     return if !@is_web_socket
     return if !self.class.instance_variable_get(:@database_connection)
