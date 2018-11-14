@@ -47,10 +47,10 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
         user: agent1,
       },
     )
-    assert_match('Zurücksetzen Deines', result[:subject])
+    assert_match('Zurücksetzen Ihres', result[:subject])
     assert_match('wir haben eine Anfrage zum Zurücksetzen', result[:body])
-    assert_match('Dein', result[:body])
-    assert_match('Dein', result[:body])
+    assert_match('Ihr', result[:body])
+    assert_match('Ihr', result[:body])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_no_match('Your', result[:body])
 
@@ -61,9 +61,9 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
         user: agent1,
       },
     )
-    assert_match('Zurücksetzen Deines', result[:subject])
+    assert_match('Zurücksetzen Ihres', result[:subject])
     assert_match('wir haben eine Anfrage zum Zurücksetzen', result[:body])
-    assert_match('Dein', result[:body])
+    assert_match('Ihr', result[:body])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
     assert_no_match('Your', result[:body])
 
@@ -78,7 +78,7 @@ class NotificationFactoryMailerTemplateTest < ActiveSupport::TestCase
     assert_match('We received a request to reset the password', result[:body])
     assert_match('Your', result[:body])
     assert_match('Notification&lt;b&gt;xxx&lt;/b&gt;', result[:body])
-    assert_no_match('Dein', result[:body])
+    assert_no_match('Ihr', result[:body])
 
     ticket = Ticket.create(
       group_id: Group.lookup(name: 'Users').id,
