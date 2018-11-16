@@ -213,19 +213,6 @@ ol, ul {
   cursor: not-allowed;
 }
 
-.zIndex-1,
-.zIndex-2,
-.zIndex-3,
-.zIndex-4,
-.zIndex-5,
-.zIndex-6,
-.zIndex-7,
-.zIndex-8,
-.zIndex-9,
-.zIndex-10 {
-  position: relative;
-}
-
 .zIndex-1 {
   z-index: 100;
 }
@@ -2017,6 +2004,7 @@ input.has-error {
 }
 
 .selected-clue {
+  position: relative;
   @extend .zIndex-7;
   pointer-events: none;
 }
@@ -4031,7 +4019,7 @@ footer {
   padding: 10px 20px;
   overflow: auto;
   position: relative;
-  
+
   &--large-padding {
     padding: 30px 40px;
   }
@@ -4173,6 +4161,7 @@ footer {
     max-width: 400px;
     min-width: 350px;
     flex-direction: column;
+    @extend .zIndex-10;
 
     &.is-visible {
       display: flex;
@@ -4682,18 +4671,18 @@ footer {
       left: 0;
       padding: 0 5px 0 20px;
       width: 100%;
-      
+
       .controls-label {
         display: none;
       }
-      
+
       .form-control {
         width: 70px;
         line-height: inherit;
         position: static;
         padding: 0;
         height: auto;
-        
+
         &.time {
           margin-left: 5px;
           width: 38px;
@@ -5410,7 +5399,7 @@ footer {
       color: inherit;
       align-items: center;
       border-bottom: 1px solid hsl(0,0%,96%);
-      
+
       &:last-child {
         border-bottom: none;
       }
@@ -5422,11 +5411,11 @@ footer {
         top: 9px;
         width: 38px;
         text-align: center;
-        
+
         svg {
           vertical-align: bottom;
         }
-        
+
         img {
           width: 30px;
           height: 30px;
@@ -6225,7 +6214,7 @@ footer {
 
 /* allow/show autocomplete in modal dialog */
 .ui-autocomplete.ui-widget-content {
-  @extend .zIndex-9;
+  @extend .zIndex-8;
   position: absolute;
 }
 
@@ -6235,11 +6224,11 @@ footer {
   color: white;
   font-family: inherit;
   font-size: inherit;
-  
+
   .ui-menu-item {
     padding: 9px 15px;
     list-style-image: none;
-    
+
     &:not(:first-child) {
       box-shadow: 0 1px rgba(255,255,255,.13) inset;
     }
@@ -6388,8 +6377,7 @@ footer {
   }
 
 .modal {
-  position: fixed;
-  @extend .zIndex-9;
+  @extend .zIndex-10;
 }
 
 .modal-dialog {
@@ -6397,7 +6385,7 @@ footer {
   max-width: 660px;
   margin-top: 35px;
   margin-bottom: 35px;
-  
+
   &.wizard {
     margin: 35px auto;
   }
@@ -6484,6 +6472,7 @@ footer {
 .modal.modal--local {
   display: block;
   padding: 0 40px;
+  @extend .zIndex-9;
 
   .modal-backdrop {
     background: hsla(210,17%,93%,.55);
@@ -6503,13 +6492,11 @@ footer {
 }
 
 .dropdown-backdrop {
-  position: fixed;
   @extend .zIndex-5; // has to be behind dropdown-menu
 }
 
 .dropdown-menu {
   @extend .zIndex-6; // has to be behind modal windows and beneath notifications (popover)
-  position: absolute;
   margin: 0;
   padding: 0;
   min-width: 100%;
@@ -7383,7 +7370,7 @@ label + .wizard-buttonList {
   padding: 0;
   @extend %clickable;
   opacity: 0;
-  
+
   &:focus + label {
     text-decoration: underline;
   }
@@ -7683,7 +7670,7 @@ label + .wizard-buttonList {
 
 .horizontal-filter-value {
   flex-shrink: 0;
-  
+
   // lower the min-width of url input fields (normally 400px) so that it fits in
   input[type=url] {
     min-width: 200px;
@@ -8465,7 +8452,7 @@ output {
   top: 10px;
   left: 0;
   right: 0;
-  @extend .zIndex-10;
+  @extend .zIndex-9;
   pointer-events: none;
 
   .noty_bar {
@@ -9366,6 +9353,7 @@ output {
   width: 250px;
   height: 40px;
   will-change: transform;
+  @extend .zIndex-10;
 
   &-item {
     position: absolute;
