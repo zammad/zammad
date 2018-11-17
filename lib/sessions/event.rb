@@ -7,6 +7,7 @@ class Sessions::Event
     begin
       backend = load_adapter(adapter)
     rescue => e
+      Rails.logger.error e
       return { event: 'error', data: { error: "No such event #{params[:event]}: #{e.inspect}", payload: params[:payload] } }
     end
 
@@ -16,6 +17,7 @@ class Sessions::Event
       instance.destroy
       result
     rescue => e
+      Rails.logger.error e
       return { event: 'error', data: { error: e.message, payload: params[:payload] } }
     end
   end

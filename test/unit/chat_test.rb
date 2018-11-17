@@ -39,6 +39,91 @@ class ChatTest < ActiveSupport::TestCase
     Setting.set('chat', false)
   end
 
+  test 'instance_variable test' do
+    assert_nil(Sessions::Event::Base.instance_variable_get(:@database_connection))
+    assert_equal(Sessions::Event::ChatBase.instance_variable_get(:@database_connection), true)
+    assert_equal(Sessions::Event::ChatStatusAgent.instance_variable_get(:@database_connection), true)
+  end
+
+  # check if db connection is available for chat events
+  # see: https://github.com/zammad/zammad/issues/2353
+  test 'chat event db connection test' do
+
+    class DummyWs
+      def send(msg)
+        Rails.logger.info "WS send: #{msg}"
+      end
+    end
+
+    # with websockets
+    assert(User.first)
+
+    message = Sessions::Event.run(
+      event: 'login',
+      payload: {},
+      session: 123,
+      remote_ip: '127.0.0.1',
+      client_id: '123',
+      clients: {
+        '123' => {
+          websocket: DummyWs.new # to simulate a ws connection
+        }
+      },
+      options: {},
+    )
+    assert_equal(message, false)
+
+    assert_raises(ActiveRecord::ConnectionNotEstablished) do
+      User.first
+    end
+
+    message = Sessions::Event.run(
+      event: 'chat_status_customer',
+      payload: {},
+      session: 123,
+      remote_ip: '127.0.0.1',
+      client_id: '123',
+      clients: {
+        '123' => DummyWs.new # to simulate a ws connection
+      },
+      options: {},
+    )
+    assert_equal(message[:event], 'chat_error')
+
+    assert_raises(ActiveRecord::ConnectionNotEstablished) do
+      User.first
+    end
+
+    # re-establish connection
+    ActiveRecord::Base.establish_connection
+
+    # with ajax long polling
+    assert(User.first)
+    message = Sessions::Event.run(
+      event: 'login',
+      payload: {},
+      session: 123,
+      remote_ip: '127.0.0.1',
+      client_id: '123',
+      clients: {},
+      options: {},
+    )
+    assert_equal(message, false)
+    assert(User.first)
+
+    message = Sessions::Event.run(
+      event: 'chat_status_customer',
+      payload: {},
+      session: 123,
+      remote_ip: '127.0.0.1',
+      client_id: '123',
+      clients: {},
+      options: {},
+    )
+    assert_equal(message[:event], 'chat_error')
+    assert(User.first)
+  end
+
   test 'default test' do
 
     chat = Chat.create_or_update(
