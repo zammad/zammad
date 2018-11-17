@@ -15,6 +15,10 @@ class Sessions::Event::Base
     ActiveRecord::Base.establish_connection
   end
 
+  def self.inherited(subclass)
+    subclass.instance_variable_set(:@database_connection, @database_connection)
+  end
+
   def websocket_send(recipient_client_id, data)
     msg = if data.class != Array
             "[#{data.to_json}]"
