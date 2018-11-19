@@ -100,9 +100,6 @@ class App.ControllerTable extends App.Controller
   destroyColWidth: 70
   cloneColWidth: 70
 
-  elements:
-    '.js-tableHead': 'tableHead'
-
   events:
     'click .js-sort': 'sortByColumn'
 
@@ -167,9 +164,10 @@ class App.ControllerTable extends App.Controller
       for key, value of data.headerWidth
         @headerWidth[key] = value
 
-    @availableWidth = @el.width()
-    if @availableWidth is 0
-      @availableWidth = @minTableWidth
+    if !@availableWidth
+      @availableWidth = @el.width()
+      if @availableWidth is 0
+        @availableWidth = @minTableWidth
 
     @renderQueue()
 
@@ -837,7 +835,7 @@ class App.ControllerTable extends App.Controller
     roundingLeftOver = availableWidth - @getHeaderWidths()
 
     # but only if there is something left over (will get negative when there are too many columns for each column to stay in their min width)
-    if roundingLeftOver > 0
+    if roundingLeftOver > 0 && roundingLeftOver < 10
       @headers[@headers.length - 1].displayWidth = @headers[@headers.length - 1].displayWidth + roundingLeftOver
 
     @storeHeaderWidths()
@@ -872,7 +870,7 @@ class App.ControllerTable extends App.Controller
   setHeaderWidths: =>
     @calculateHeaderWidths()
 
-    @tableHead.each (i, el) =>
+    @$('.js-tableHead').each (i, el) =>
       el.style.width = @headers[i].displayWidth + 'px'
 
   storeHeaderWidths: ->
@@ -885,7 +883,13 @@ class App.ControllerTable extends App.Controller
 
   onResize: =>
     @availableWidth = @el.width()
-    @setHeaderWidths()
+    localDelay = =>
+      localSetHeaderWidths = =>
+        @setHeaderWidths()
+      App.QueueManager.add('tableRender', localSetHeaderWidths)
+      App.QueueManager.run('tableRender')
+
+    @delay(localDelay, 200, 'table-resize-finish')
 
   stopPropagation: (event) ->
     event.stopPropagation()

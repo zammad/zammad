@@ -1181,7 +1181,7 @@ class Table extends App.Controller
       if @el.width() != 0
         @elWidth = @el.width()
       if @elWidth
-        tableArguments.minTableWidth = @elWidth
+        tableArguments.availableWidth = @elWidth
 
       @table = new App.ControllerTable(tableArguments)
 
