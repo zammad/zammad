@@ -1139,7 +1139,7 @@ class Table extends App.Controller
         attribute.title  = object.iconTitle()
         value
 
-      @table = new App.ControllerTable(
+      tableArguments =
         tableId:        "ticket_overview_#{@overview.id}"
         overview:       @overview.view.s
         el:             @$('.table-overview')
@@ -1150,7 +1150,7 @@ class Table extends App.Controller
         groupDirection: @overview.group_direction
         orderBy:        @overview.order.by
         orderDirection: @overview.order.direction
-        class: 'table--light'
+        class:          'table--light'
         bindRow:
           events:
             'click': openTicket
@@ -1176,7 +1176,14 @@ class Table extends App.Controller
           events:
             'click': callbackCheckbox
           select_all: callbackCheckbox
-      )
+
+      # remember elWidth even if table is not shown but rerendered
+      if @el.width() != 0
+        @elWidth = @el.width()
+      if @elWidth
+        tableArguments.minTableWidth = @elWidth
+
+      @table = new App.ControllerTable(tableArguments)
 
     @renderPopovers()
 

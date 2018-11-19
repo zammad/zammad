@@ -168,6 +168,8 @@ class App.ControllerTable extends App.Controller
         @headerWidth[key] = value
 
     @availableWidth = @el.width()
+    if @availableWidth is 0
+      @availableWidth = @minTableWidth
 
     @renderQueue()
 
@@ -819,9 +821,6 @@ class App.ControllerTable extends App.Controller
 
   calculateHeaderWidths: ->
     return if !@headers
-
-    if @availableWidth is 0
-      @availableWidth = @minTableWidth
 
     availableWidth = @availableWidth
 
