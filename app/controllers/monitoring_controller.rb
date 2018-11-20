@@ -48,7 +48,7 @@ curl http://localhost/api/v1/monitoring/health_check?token=XXX
       end
       if channel.preferences && channel.preferences['last_fetch'] && channel.preferences['last_fetch'] < last_run_tolerance
         diff = Time.zone.now - channel.preferences['last_fetch']
-        issues.push "#{message} channel is active but not fetched for #{helpers.time_ago_in_words(Time.zone.now - diff.seconds)} hour"
+        issues.push "#{message} channel is active but not fetched for #{helpers.time_ago_in_words(Time.zone.now - diff.seconds)}"
       end
 
       # outbound channel
