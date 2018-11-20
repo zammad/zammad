@@ -5184,7 +5184,7 @@ footer {
   background: none;
 }
 
-.shortcut .dropdown-menu {
+.shortcut > .dropdown-menu {
   overflow: auto;
   position: absolute;
   max-width: 100%;
