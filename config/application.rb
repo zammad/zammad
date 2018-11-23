@@ -50,6 +50,9 @@ module Zammad
 
     config.active_job.queue_adapter = :delayed_job
 
+    # Use custom logger to log Thread id next to Process pid
+    config.log_formatter = ::Logger::Formatter.new
+
     # REST api path
     config.api_path = '/api/v1'
 
