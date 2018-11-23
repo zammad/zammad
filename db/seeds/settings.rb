@@ -2761,7 +2761,7 @@ Setting.create_if_not_exists(
   name: 'es_attachment_max_size_in_mb',
   area: 'SearchIndex::Elasticsearch',
   description: 'Define max. attachment size for Elasticsearch.',
-  state: 50,
+  state: 10,
   preferences: { online_service_disable: true },
   frontend: false
 )
