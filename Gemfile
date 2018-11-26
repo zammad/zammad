@@ -34,22 +34,19 @@ gem 'argon2'
 # performance - Memcached
 gem 'dalli'
 
-# asset handling
-group :assets do
-  # asset handling - coffee-script
-  gem 'coffee-rails'
-  gem 'coffee-script-source'
+# asset handling - coffee-script
+gem 'coffee-rails'
+gem 'coffee-script-source'
 
-  # asset handling - frontend templating
-  gem 'eco'
+# asset handling - frontend templating
+gem 'eco'
 
-  # asset handling - SASS
-  gem 'sass-rails'
+# asset handling - SASS
+gem 'sassc-rails'
 
-  # asset handling - pipeline
-  gem 'sprockets'
-  gem 'uglifier'
-end
+# asset handling - pipeline
+gem 'sprockets'
+gem 'uglifier'
 
 gem 'autoprefixer-rails'
 
