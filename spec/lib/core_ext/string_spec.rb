@@ -62,5 +62,42 @@ RSpec.describe String do
         end
       end
     end
+
+    context 'perforamnce' do
+      let(:subject) { original_string.encode(input_encoding) }
+
+      context 'with utf8_encode in iso-8859-1' do
+        let(:original_string) { 'äöü0' * 999_999 }
+        let(:input_encoding) { Encoding::ISO_8859_1 }
+
+        it 'detects the input encoding' do
+          Timeout.timeout(1) do
+            expect(subject.utf8_encode(from: 'iso-8859-1')).to eq(original_string)
+          end
+        end
+      end
+
+      context 'with utf8_encode in utf-8' do
+        let(:original_string) { 'äöü0' * 999_999 }
+        let(:input_encoding) { Encoding::UTF_8 }
+
+        it 'detects the input encoding' do
+          Timeout.timeout(1) do
+            expect(subject.utf8_encode(from: 'utf-8')).to eq(original_string)
+          end
+        end
+      end
+
+      context 'with utf8_encode in iso-8859-1 and charset detection' do
+        let(:original_string) { 'äöü0' * 199_999 }
+        let(:input_encoding) { Encoding::ISO_8859_1 }
+
+        it 'detects the input encoding' do
+          Timeout.timeout(8) do
+            expect(subject.utf8_encode(from: 'utf-8')).to eq(original_string)
+          end
+        end
+      end
+    end
   end
 end

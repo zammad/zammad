@@ -56,64 +56,64 @@ class AaaStringTest < ActiveSupport::TestCase
     modul  = 'test'
     result = 'test'
     modul.to_filename
-    assert_equal(result,  modul)
+    assert_equal(result, modul)
 
     modul  = 'Some::File'
     result = 'Some::File'
     modul.to_filename
-    assert_equal(result,  modul)
+    assert_equal(result, modul)
   end
 
   test 'to_filename function' do
     modul  = 'test'
     result = 'test'
-    assert_equal(result,  modul.to_filename)
+    assert_equal(result, modul.to_filename)
 
     modul  = 'Some::File'
     result = 'some/file'
-    assert_equal(result,  modul.to_filename)
+    assert_equal(result, modul.to_filename)
   end
 
   test 'to_classname ref' do
     modul  = 'test'
     result = 'test'
     modul.to_filename
-    assert_equal(result,  modul)
+    assert_equal(result, modul)
 
     modul  = 'some/file'
     result = 'some/file'
     modul.to_filename
-    assert_equal(result,  modul)
+    assert_equal(result, modul)
   end
 
   test 'to_classname function' do
     modul  = 'test'
     result = 'Test'
-    assert_equal(result,  modul.to_classname)
+    assert_equal(result, modul.to_classname)
 
     modul  = 'some/file'
     result = 'Some::File'
-    assert_equal(result,  modul.to_classname)
+    assert_equal(result, modul.to_classname)
 
     modul  = 'some/files'
     result = 'Some::Files'
-    assert_equal(result,  modul.to_classname)
+    assert_equal(result, modul.to_classname)
 
     modul  = 'some_test/files'
     result = 'SomeTest::Files'
-    assert_equal(result,  modul.to_classname)
+    assert_equal(result, modul.to_classname)
   end
 
   test 'html2text ref' do
     html   = 'test'
     result = 'test'
     html.html2text
-    assert_equal(result,  html)
+    assert_equal(result, html)
 
     html   = '<div>test</div>'
     result = '<div>test</div>'
     html.html2text
-    assert_equal(result,  html)
+    assert_equal(result, html)
   end
 
   test 'html2text function' do
@@ -458,6 +458,17 @@ Well as though adam took out here. Melvin will be more money. Called him into th
 Men-----------------------'
     assert_equal(result, html.html2text)
 
+    Timeout::timeout(2) do
+      html   = File.read(Rails.root.join('test', 'data', 'string', 'html2text1.html'))
+      result = File.read(Rails.root.join('test', 'data', 'string', 'html2text1.txt'))
+      assert_equal(result, html.html2text)
+    end
+
+    Timeout::timeout(2) do
+      html   = File.read(Rails.root.join('test', 'data', 'string', 'html2text2.html'))
+      result = File.read(Rails.root.join('test', 'data', 'string', 'html2text2.txt'))
+      assert_equal(result, html.html2text)
+    end
   end
 
   test 'html2html_strict function' do
