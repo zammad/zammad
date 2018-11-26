@@ -10,6 +10,7 @@ satinize html string based on whiltelist
 =end
 
   def self.strict(string, external = false)
+    @fqdn = Setting.get('fqdn')
 
     # config
     tags_remove_content = Rails.configuration.html_sanitizer_tags_remove_content
@@ -396,9 +397,10 @@ cleanup html string:
   end
 
   def self.sanitize_attachment_disposition(url)
+    @fqdn ||= Setting.get('fqdn')
     uri = URI(url)
 
-    if uri.host == Setting.get('fqdn') && uri.query.present?
+    if uri.host == @fqdn && uri.query.present?
       params = CGI.parse(uri.query || '')
                   .tap { |p| p.merge!('disposition' => 'attachment') if p.include?('disposition') }
       uri.query = URI.encode_www_form(params)
@@ -432,6 +434,7 @@ reolace inline images with cid images
 =end
 
   def self.replace_inline_images(string, prefix = rand(999_999_999))
+    fqdn = Setting.get('fqdn')
     attachments_inline = []
     filename_counter = 0
     scrubber = Loofah::Scrubber.new do |node|
@@ -439,7 +442,7 @@ reolace inline images with cid images
         if node['src'] && node['src'] =~ %r{^(data:image/(jpeg|png);base64,.+?)$}i
           filename_counter += 1
           file_attributes = StaticAssets.data_url_attributes($1)
-          cid = "#{prefix}.#{rand(999_999_999)}@#{Setting.get('fqdn')}"
+          cid = "#{prefix}.#{rand(999_999_999)}@#{fqdn}"
           filename = cid
           if file_attributes[:file_extention].present?
             filename = "image#{filename_counter}.#{file_attributes[:file_extention]}"
