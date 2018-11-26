@@ -132,6 +132,14 @@ class App.ControllerGenericIndex extends App.Controller
         clear: true
       )
 
+  show: =>
+    if @table
+      @table.show()
+
+  hide: =>
+    if @table
+      @table.hide()
+
   release: =>
     if @subscribeId
       App[ @genericObject ].unsubscribe(@subscribeId)
@@ -371,6 +379,18 @@ class App.ControllerTabs extends App.Controller
       if !@permissionCheckRedirect(@requiredPermission)
         throw "No permission for #{@requiredPermission}"
 
+  show: =>
+    return if !@controllerList
+    for localeController in @controllerList
+      if localeController && localeController.show
+        localeController.show()
+
+  hide: =>
+    return if !@controllerList
+    for localeController in @controllerList
+      if localeController && localeController.hide
+        localeController.hide()
+
   render: ->
     @html App.view('generic/tabs')(
       header: @header
@@ -386,8 +406,9 @@ class App.ControllerTabs extends App.Controller
         params = tab.params || {}
         params.name = tab.name
         params.target = tab.target
-        params.el = @$( "##{tab.target}" )
-        new tab.controller( params )
+        params.el = @$("##{tab.target}")
+        @controllerList ||= []
+        @controllerList.push new tab.controller(params)
 
     # check if tabs need to be show / cant' use .tab(), because tabs are note shown (only one tab exists)
     if @tabs.length <= 1
@@ -422,12 +443,13 @@ class App.ControllerNavSidbar extends App.Controller
         @updateNavigation(true)
     )
 
-  show: (params) =>
+  show: (params = {}) =>
     @navupdate ''
     @shown = true
-    for key, value of params
-      if key isnt 'el' && key isnt 'shown' && key isnt 'match'
-        @[key] = value
+    if params
+      for key, value of params
+        if key isnt 'el' && key isnt 'shown' && key isnt 'match'
+          @[key] = value
     @updateNavigation()
     if @activeController && _.isFunction(@activeController.show)
       @activeController.show(params)

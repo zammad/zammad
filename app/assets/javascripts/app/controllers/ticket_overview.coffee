@@ -669,17 +669,22 @@ class App.TicketOverview extends App.Controller
 
     # build nav bar
     if @navBarController
-      @navBarController.update
+      @navBarController.update(
         view:        @view
         activeState: true
+      )
 
     if @navBarControllerVertical
-      @navBarControllerVertical.update
+      @navBarControllerVertical.update(
         view:        @view
         activeState: true
+      )
 
     # do not rerender overview if current overview is requested again
-    return if @viewLast is @view
+    if @viewLast is @view
+      if @contentController
+        @contentController.show()
+      return
 
     # remember last view
     @viewLast = @view
@@ -699,6 +704,8 @@ class App.TicketOverview extends App.Controller
       @navBarController.active(false)
     if @navBarControllerVertical
       @navBarControllerVertical.active(false)
+    if @contentController
+      @contentController.hide()
 
   setPosition: (position) =>
     @$('.main').scrollTop(position)
@@ -945,6 +952,14 @@ class Table extends App.Controller
       return if !@view
       @render(App.OverviewListCollection.get(@view))
 
+  show: =>
+    if @table
+      @table.show()
+
+  hide: =>
+    if @table
+      @table.hide()
+
   release: =>
     if @bindId
       App.OverviewListCollection.unbind(@bindId)
@@ -1123,12 +1138,12 @@ class Table extends App.Controller
         @lastChecked = e.currentTarget
       callbackIconHeader = (headers) ->
         attribute =
-          name:        'icon'
-          display:     ''
-          translation: false
-          width:       '28px'
-          displayWidth:28
-          unresizable: true
+          name:         'icon'
+          display:      ''
+          translation:  false
+          width:        '28px'
+          displayWidth: 28
+          unresizable:  true
         headers.unshift(0)
         headers[0] = attribute
         headers

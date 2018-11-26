@@ -55,6 +55,8 @@ class App.Search extends App.Controller
     '#search'
 
   show: (params) =>
+    if @table
+      @table.show()
     @navupdate(url: '#search', type: 'menu')
     return if _.isEmpty(params.query)
     @$('.js-search').val(params.query).trigger('change')
@@ -63,6 +65,8 @@ class App.Search extends App.Controller
 
   hide: ->
     @shown = false
+    if @table
+      @table.hide()
 
   changed: ->
     # nothing
@@ -158,7 +162,7 @@ class App.Search extends App.Controller
       ticket_ids = []
       for item in localList
         ticket_ids.push item.id
-      new App.TicketList(
+      @table = new App.TicketList(
         tableId:   "find_#{model}"
         el:         @$('.js-content')
         columns:    [ 'number', 'title', 'customer', 'group', 'owner', 'created_at' ]
@@ -169,7 +173,7 @@ class App.Search extends App.Controller
       openObject = (id,e) =>
         object = App[@model].fullLocal(id)
         @navigate object.uiUrl()
-      new App.ControllerTable(
+      @table = new App.ControllerTable(
         tableId: "find_#{model}"
         el:      @$('.js-content')
         model:   App[model]

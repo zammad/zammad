@@ -171,8 +171,15 @@ class App.ControllerTable extends App.Controller
 
     @renderQueue()
 
+  show: =>
+    return if @windowIsResized isnt true
+    @windowIsResized = false
+    @onResize()
+
+  hide: ->
+
   release: =>
-    $(window).off 'resize.table', @onResize
+    $(window).off('resize.table', @onResize)
 
   update: (params) =>
     if params.sync is true
@@ -214,12 +221,12 @@ class App.ControllerTable extends App.Controller
       if _.isEmpty(@objects)
         @renderState = 'emptyList'
         @el.html(@renderEmptyList())
-        $(window).on 'resize.table', @onResize
+        $(window).on('resize.table', @onResize)
         return ['emptyList.new']
       else
         @renderState = 'List'
         @renderTableFull()
-        $(window).on 'resize.table', @onResize
+        $(window).on('resize.table', @onResize)
         return ['fullRender.new']
     else if @renderState is 'emptyList' && !_.isEmpty(@objects)
       @renderState = 'List'
@@ -342,7 +349,7 @@ class App.ControllerTable extends App.Controller
               do (container, event, callback) ->
                 if cursorMap[event]
                   container.find("tbody > tr > td:nth-child(#{position})").css('cursor', cursorMap[event])
-                container.on( event, "tbody > tr > td:nth-child(#{position})",
+                container.on(event, "tbody > tr > td:nth-child(#{position})",
                   (e) ->
                     e.stopPropagation()
                     id = $(e.target).parents('tr').data('id')
@@ -356,7 +363,7 @@ class App.ControllerTable extends App.Controller
           do (container, event, callback) ->
             if cursorMap[event]
               container.find('tbody > tr').css( 'cursor', cursorMap[event] )
-            container.on( event, 'tbody > tr',
+            container.on(event, 'tbody > tr',
               (e) ->
                 id = $(e.target).parents('tr').data('id')
                 callback(id, e)
@@ -378,8 +385,8 @@ class App.ControllerTable extends App.Controller
     if @tableId
 
       # enable resize column
-      container.on 'mousedown', '.js-col-resize', @onColResizeMousedown
-      container.on 'click', '.js-col-resize', @stopPropagation
+      container.on('mousedown', '.js-col-resize', @onColResizeMousedown)
+      container.on('click', '.js-col-resize', @stopPropagation)
 
     # enable checkbox bulk selection
     if @checkbox
@@ -626,20 +633,19 @@ class App.ControllerTable extends App.Controller
 
     if @actions.length
       @headers.push
-        name: 'action'
-        display: 'Action'
-        width: '38px'
-        displayWidth: 38
-        unresizeable: true
-        align: 'right'
-        parentClass: 'noTruncate no-padding'
+        name:         'action'
+        display:      'Action'
+        width:        '50px'
+        displayWidth: 50
+        align:        'right'
+        parentClass:  'noTruncate no-padding'
+        unresizable:  true
 
       @bindCol['action'] =
         events:
           click: @toggleActionDropdown
 
-    if @tableId
-      @calculateHeaderWidths()
+    @calculateHeaderWidths()
 
     @columnsLength = @headers.length
     if @checkbox || @radio
@@ -818,6 +824,7 @@ class App.ControllerTable extends App.Controller
       @runAction(name, id)
 
   calculateHeaderWidths: ->
+    return if !@tableId
     return if !@headers
 
     availableWidth = @availableWidth
@@ -838,7 +845,7 @@ class App.ControllerTable extends App.Controller
     if roundingLeftOver > 0 && roundingLeftOver < 10
       @headers[@headers.length - 1].displayWidth = @headers[@headers.length - 1].displayWidth + roundingLeftOver
 
-    @storeHeaderWidths()
+    true
 
   getShrinkableHeadersCount: ->
     _.reduce @headers, (memo, col) ->
@@ -868,10 +875,12 @@ class App.ControllerTable extends App.Controller
     widths
 
   setHeaderWidths: =>
-    @calculateHeaderWidths()
+    return if !@calculateHeaderWidths()
 
     @$('.js-tableHead').each (i, el) =>
       el.style.width = @headers[i].displayWidth + 'px'
+
+    @storeHeaderWidths()
 
   storeHeaderWidths: ->
     widths = {}
@@ -882,7 +891,12 @@ class App.ControllerTable extends App.Controller
     App.LocalStorage.set(@preferencesStoreKey(), { headerWidth: widths }, @Session.get('id'))
 
   onResize: =>
-    @availableWidth = @el.width()
+    localWidth = @el.width()
+    if localWidth is 0
+      @windowIsResized = true
+      return
+
+    @availableWidth = localWidth
     localDelay = =>
       localSetHeaderWidths = =>
         @setHeaderWidths()
@@ -901,8 +915,8 @@ class App.ControllerTable extends App.Controller
     @resizeLeftStartWidth = @resizeTargetLeft.width()
     @resizeRightStartWidth = @resizeTargetRight.width()
 
-    $(document).on 'mousemove.resizeCol', @onColResizeMousemove
-    $(document).one 'mouseup', @onColResizeMouseup
+    $(document).on('mousemove.resizeCol', @onColResizeMousemove)
+    $(document).one('mouseup', @onColResizeMouseup)
 
     @tableWidth = @el.width()
 
@@ -920,7 +934,7 @@ class App.ControllerTable extends App.Controller
     @resizeTargetRight.width @resizeRightStartWidth - difference
 
   onColResizeMouseup: =>
-    $(document).off 'mousemove.resizeCol'
+    $(document).off('mousemove.resizeCol')
 
     # switch to percentage
     resizeBaseWidth = @resizeTargetLeft.parents('table').width()

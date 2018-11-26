@@ -11,6 +11,16 @@ class Index extends App.ControllerSubContent
     super
     @render()
 
+  show: =>
+    super
+    return if !@table
+    @table.show()
+
+  hide: =>
+    super
+    return if !@table
+    @table.hide()
+
   render: ->
     @html App.view('user')(
       head: 'Users'
@@ -47,11 +57,13 @@ class Index extends App.ControllerSubContent
 
     callbackHeader = (header) ->
       attribute =
-        name:       'switch_to'
-        display:    'Action'
-        className:  'actionCell'
-        translation: true
-        width: '200px'
+        name:         'switch_to'
+        display:      'Action'
+        className:    'actionCell'
+        translation:  true
+        width:        '200px'
+        displayWidth: 200
+        unresizable:  true
       header.push attribute
       header
 
@@ -111,7 +123,7 @@ class Index extends App.ControllerSubContent
       users.push user
 
     @$('.table-overview').html('')
-    new App.ControllerTable(
+    @table = new App.ControllerTable(
       tableId: 'users_admin_overview'
       el:      @$('.table-overview')
       model:   App.User

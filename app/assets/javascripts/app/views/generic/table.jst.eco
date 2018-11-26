@@ -24,7 +24,7 @@
           <div class="table-column-title"><%- @T(header.display) %></div>
           <div class="table-column-sortIcon"><% if header.sortOrderIcon: %><%- @Icon(header.sortOrderIcon[0], header.sortOrderIcon[1]) %><% end %></div>
         </div>
-        <% if @tableId && !header.unresizable && i < @headers.length - 1: %>
+        <% if @tableId && !header.unresizable && i < @headers.length - 1 && (@headers.length - 1 != i && @headers[ i + 1 ] && !@headers[ i + 1 ].unresizable): %>
           <div class="table-col-resize js-col-resize"></div>
         <% end %>
       </th>

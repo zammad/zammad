@@ -307,12 +307,12 @@ class Download extends App.Controller
       value
     callbackIconHeader = (headers) ->
       attribute =
-        name:        'icon'
-        display:     ''
-        translation: false
-        width:       '28px'
-        displayWidth:28
-        unresizable: true
+        name:         'icon'
+        display:      ''
+        translation:  false
+        width:        '28px'
+        displayWidth: 28
+        unresizable:  true
       headers.unshift(0)
       headers[0] = attribute
       headers

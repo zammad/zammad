@@ -425,8 +425,14 @@ class App.ControllerSubContent extends App.Controller
     super
 
   show: =>
+    if @genericController && @genericController.show
+      @genericController.show()
     return if !@header
     @title @header, true
+
+  hide: =>
+    if @genericController && @genericController.hide
+      @genericController.hide()
 
 class App.ControllerContent extends App.Controller
   constructor: ->
