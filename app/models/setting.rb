@@ -127,7 +127,7 @@ reload config settings
     end
 
     @@change_id = Cache.get('Setting::ChangeId') # rubocop:disable Style/ClassVars
-    @@lookup_at = Time.zone.now # rubocop:disable Style/ClassVars
+    @@lookup_at = Time.now.to_i # rubocop:disable Style/ClassVars
     true
   end
   private_class_method :load
@@ -158,14 +158,14 @@ reload config settings
 
   # check if cache is still valid
   def self.cache_valid?
-    if @@lookup_at && @@lookup_at > Time.zone.now - @@lookup_timeout
+    if @@lookup_at && @@lookup_at > Time.now.to_i - @@lookup_timeout
       #logger.debug "Setting.cache_valid?: cache_id has been set within last #{@@lookup_timeout} seconds"
       return true
     end
 
     change_id = Cache.get('Setting::ChangeId')
     if @@change_id && change_id == @@change_id
-      @@lookup_at = Time.zone.now # rubocop:disable Style/ClassVars
+      @@lookup_at = Time.now.to_i # rubocop:disable Style/ClassVars
       #logger.debug "Setting.cache_valid?: cache still valid, #{@@change_id}/#{change_id}"
       return true
     end
