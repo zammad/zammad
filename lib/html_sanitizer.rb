@@ -30,7 +30,7 @@ satinize html string based on whiltelist
     scrubber_link = Loofah::Scrubber.new do |node|
 
       # wrap plain-text URLs in <a> tags
-      if node.is_a?(Nokogiri::XML::Text) && node.ancestors.map(&:name).exclude?('a')
+      if node.is_a?(Nokogiri::XML::Text) && node.content.present? && node.content.include?(':') && node.ancestors.map(&:name).exclude?('a')
         urls = URI.extract(node.content, LINKABLE_URL_SCHEMES)
                   .map { |u| u.sub(/[,.]$/, '') }      # URI::extract captures trailing dots/commas
                   .reject { |u| u.match?(/^[^:]+:$/) } # URI::extract will match, e.g., 'tel:'
