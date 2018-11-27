@@ -61,9 +61,7 @@ class Observer::Transaction < ActiveRecord::Observer
       integration = backend.new(item, params)
       integration.perform
     rescue => e
-      Rails.logger.error 'ERROR: ' + backend.inspect
-      Rails.logger.error 'ERROR: ' + e.inspect
-      Rails.logger.error e.backtrace.inspect
+      Rails.logger.error e
     end
   end
 

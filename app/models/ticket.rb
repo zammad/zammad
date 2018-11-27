@@ -440,8 +440,7 @@ get count of tickets and tickets which match on selector
 
         return [ticket_count, tickets]
       rescue ActiveRecord::StatementInvalid => e
-        Rails.logger.error e.inspect
-        Rails.logger.error e.backtrace
+        Rails.logger.error e
         raise ActiveRecord::Rollback
       end
     end

@@ -62,7 +62,7 @@ fetch one account
     rescue => e
       error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
       logger.error error
-      logger.error e.backtrace
+      logger.error e
       self.status_in = 'error'
       self.last_log_in = error
       preferences[:last_fetch] = Time.zone.now
@@ -102,7 +102,7 @@ stream instance of account
     rescue => e
       error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
       logger.error error
-      logger.error e.backtrace
+      logger.error e
       self.status_in = 'error'
       self.last_log_in = error
       save!
@@ -204,7 +204,7 @@ stream all accounts
           rescue => e
             error = "Can't use stream for channel (#{channel.id}): #{e.inspect}"
             logger.error error
-            logger.error e.backtrace
+            logger.error e
             channel.status_in = 'error'
             channel.last_log_in = error
             channel.save!
@@ -261,7 +261,7 @@ send via account
     rescue => e
       error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
       logger.error error
-      logger.error e.backtrace
+      logger.error e
       self.status_out = 'error'
       self.last_log_out = error
       save!
@@ -297,7 +297,7 @@ process via account
     rescue => e
       error = "Can't use Channel::Driver::#{adapter.to_classname}: #{e.inspect}"
       logger.error error
-      logger.error e.backtrace
+      logger.error e
       self.status_in = 'error'
       self.last_log_in = error
       save!
