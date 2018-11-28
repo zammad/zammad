@@ -180,7 +180,11 @@ class EmailReply extends App.Controller
       day: 'numeric'
       year: 'numeric'
     }
-    new Date(date_string).toLocaleTimeString('en-US', options)
+    locale = App.i18n.get() || 'en-US'
+    try
+      new Date(date_string).toLocaleTimeString(locale, options)
+    catch e
+      new Date(date_string).toLocaleTimeString('en-US', options)
 
   @emailForward: (ticket, article, ui) ->
 
