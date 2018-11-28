@@ -4442,6 +4442,55 @@ wait untill text in selector disabppears
 
 =begin
 
+  Switch the current logged in user's profile language to a new language
+
+  switch_language(
+    browser: browser2,
+    data: {
+      language: 'Deutsch'
+    },
+  )
+
+  IMPORTANT REMINDER! At the end of tests, the caller must manually set the language back to English again:
+
+  switch_language(
+    browser: browser2,
+    data: {
+      language: 'English (United States)'
+    },
+  )
+
+  Failure to switch back to English will cause large amounts of subsequent tests to fail due to the UI language differences.
+
+=end
+
+  def switch_language(params = {})
+    switch_window_focus(params)
+    log('switch_language', params)
+
+    instance = params[:browser] || @browser
+    data     = params[:data]
+
+    click(browser: instance, css: '#navigation .user-menu .js-avatar')
+
+    click(browser: instance, css: '#navigation .user-menu a[href="#profile"]')
+
+    select(
+      browser: instance,
+      css: '.content.active .searchableSelect-shadow',
+      value: data[:language],
+    )
+
+    click(browser: instance, css: '.content.active .btn--primary')
+
+    watch_for(
+      browser: instance,
+      css: '#notify',
+    )
+  end
+
+=begin
+
   Retrieve a hash of all the avaiable Zammad settings and their current values.
 
   settings = fetch_settings()
