@@ -35,6 +35,7 @@ module Zammad
       'observer::_ticket::_article::_communicate_sms',
       'observer::_ticket::_article::_communicate_twitter',
       'observer::_ticket::_article::_communicate_telegram',
+      'observer::_ticket::_article::_communicate_signal',
       'observer::_ticket::_reset_new_state',
       'observer::_ticket::_ref_object_touch',
       'observer::_ticket::_online_notification_seen',

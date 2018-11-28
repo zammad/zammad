@@ -1,0 +1,37 @@
+<div class="alert alert--danger hidden" role="alert"></div>
+<fieldset>
+  <h2><%- @T('Enter your %s API Key', 'Sigarillo') %></h2>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="api_token"><%- @T('%s Api Token', 'Sigarillo') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="api_token" type="text" name="api_token" value="<%= @channel.options.api_token %>" class="form-control" required autocomplete="off">
+    </div>
+  </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="api_url"><%- @T('Sigarillo API URL') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="api_url" type="text" name="api_url" value="<%= @channel.options.api_url %>" placeholder="https://" class="form-control" required autocomplete="off">
+    </div>
+  </div>
+  <h2><%- @T('Settings') %></h2>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for="welcome"><%- @T('welcome message') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <input id="welcome" type="text" name="welcome" value="<%= @channel.options.welcome %>" placeholder="<%- @Ti('You are welcome! Just ask me something!') %>" class="form-control" required autocomplete="off">
+    </div>
+  </div>
+  <div class="input form-group">
+    <div class="formGroup-label">
+      <label for=""><%- @T('Choose which group %s will get added to.', 'messages') %> <span>*</span></label>
+    </div>
+    <div class="controls">
+      <div class="js-messagesGroup"></div>
+    </div>
+  </div>
+</fieldset>

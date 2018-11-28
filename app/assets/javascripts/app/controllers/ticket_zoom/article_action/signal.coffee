@@ -1,11 +1,11 @@
-class SmsReply
+class SignalReply
   @action: (actions, ticket, article, ui) ->
     return actions if ui.permissionCheck('ticket.customer')
 
-    if article.sender.name is 'Customer' && article.type.name is 'sms'
+    if article.sender.name is 'Customer' && article.type.name is 'signal personal-message'
       actions.push {
         name: 'reply'
-        type: 'smsMessageReply'
+        type: 'signalPersonalMessageReply'
         icon: 'reply'
         href: '#'
       }
@@ -13,7 +13,7 @@ class SmsReply
     actions
 
   @perform: (articleContainer, type, ticket, article, ui) ->
-    return true if type isnt 'smsMessageReply'
+    return true if type isnt 'signalPersonalMessageReply'
 
     ui.scrollToCompose()
 
@@ -21,7 +21,7 @@ class SmsReply
     type = App.TicketArticleType.find(article.type_id)
 
     articleNew = {
-      to:          article.from
+      to:          ''
       cc:          ''
       body:        ''
       in_reply_to: ''
@@ -49,31 +49,31 @@ class SmsReply
 
     articleTypeCreate = App.TicketArticleType.find(ticket.create_article_type_id).name
 
-    return articleTypes if articleTypeCreate isnt 'sms'
+    return articleTypes if articleTypeCreate isnt 'signal personal-message'
     articleTypes.push {
-      name:              'sms'
-      icon:              'sms'
-      attributes:        ['to']
+      name:              'signal personal-message'
+      icon:              'signal'
+      attributes:        []
       internal:          false,
-      features:          ['body:limit']
-      maxTextLength:     160
-      warningTextLength: 30
+      features:          ['attachment']
+      maxTextLength:     10000
+      warningTextLength: 5000
     }
     articleTypes
 
   @setArticleTypePost: (type, ticket, ui) ->
-    return if type isnt 'telegram personal-message' and type isnt 'signal personal-message'
+    return if type isnt 'signal personal-message'
     rawHTML = ui.$('[data-name=body]').html()
     cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
     if cleanHTML && cleanHTML.html() != rawHTML
       ui.$('[data-name=body]').html(cleanHTML)
 
   @params: (type, params, ui) ->
-    if type is 'sms'
+    if type is 'signal personal-message'
       App.Utils.htmlRemoveRichtext(ui.$('[data-name=body]'), false)
       params.content_type = 'text/plain'
       params.body = App.Utils.html2text(params.body, true)
 
     params
 
-App.Config.set('300-SmsReply', SmsReply, 'TicketZoomArticleAction')
+App.Config.set('300-SignalReply', SignalReply, 'TicketZoomArticleAction')
